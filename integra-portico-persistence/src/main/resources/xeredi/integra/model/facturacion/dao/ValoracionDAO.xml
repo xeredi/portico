@@ -256,6 +256,22 @@
     ]]>
 	</insert>
 
+	<update id="update" parameterType="ValoracionVO">
+    <![CDATA[
+        UPDATE tbl_valoracion_vlrc SET
+            vlrc_pagador_prmt_pk = #{pagador.id}
+            , vlrc_es_suj_pasivo = #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}
+            , vlrc_cod_exen = #{codExencion}
+            , vlrc_info1 = #{info1}
+            , vlrc_info2 = #{info2}
+            , vlrc_info3 = #{info3}
+            , vlrc_info4 = #{info4}
+            , vlrc_info5 = #{info5}
+            , vlrc_info6 = #{info6}
+        WHERE vlrc_pk = #{id}
+    ]]>
+	</update>
+
 	<delete id="delete" parameterType="ValoracionCriterioVO">
     <![CDATA[
         DELETE FROM tbl_valoracion_vlrc

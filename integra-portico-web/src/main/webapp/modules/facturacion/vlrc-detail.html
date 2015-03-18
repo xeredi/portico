@@ -75,6 +75,12 @@
                     ng-bind="vm.vlrc.pagador.etiqueta"></a>
             </p>
         </div>
+        <div class="col-md-2 col-lg-1 form-group">
+            <label translate="vlrc_sujPasivo"></label>
+            <p class="form-control-static">
+                <i class="glyphicon glyphicon-{{vm.vlrc.sujPasivo ? 'ok' : 'remove'}}"></i>
+            </p>
+        </div>
         <div class="col-md-2 form-group">
             <label translate="vlrc_falta"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.falta | date: ('format_datetime' | translate)"></p>

@@ -46,6 +46,50 @@ import com.google.common.base.Preconditions;
  * The Class ValoracionBO.
  */
 public class ValoracionBO {
+
+    /**
+     * Insert.
+     *
+     * @param vlrc
+     *            the vlrc
+     */
+    public void insert(final ValoracionVO vlrc) {
+        Preconditions.checkNotNull(vlrc);
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
+            final IgBO igBO = new IgBO();
+
+            vlrc.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+
+            vlrcDAO.insert(vlrc);
+
+            session.commit();
+        }
+    }
+
+    /**
+     * Update.
+     *
+     * @param vlrc
+     *            the vlrc
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public void update(final ValoracionVO vlrc) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(vlrc);
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
+
+            if (vlrcDAO.update(vlrc) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.vlrc, vlrc.getId());
+            }
+
+            session.commit();
+        }
+    }
+
     /**
      * Delete.
      *

@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
@@ -123,6 +125,54 @@ public final class ValoracionAction extends BaseAction {
         tpsrList = TipoServicioProxy.selectLabelValues();
         pagadorEntiId = Entidad.ORGANIZACION.getId();
         tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
+
+        return SUCCESS;
+    }
+
+    /**
+     * Save.
+     *
+     * @return the string
+     */
+    @Action("vlrc-save")
+    public String save() throws ApplicationException {
+        Preconditions.checkNotNull(accion);
+
+        if (vlrc == null) {
+            vlrc = new ValoracionVO();
+        }
+
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(vlrc.getId());
+        }
+
+        if (accion == ACCION_EDICION.create) {
+            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_srvc, vlrc.getSrvc());
+            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_aspc, vlrc.getAspc());
+            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_fliq, vlrc.getFliq());
+            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_fref, vlrc.getFref());
+        }
+
+        FieldValidator.validateRequired(this, MessageI18nKey.vlrc_pagador, vlrc.getPagador());
+        FieldValidator.validateRequired(this, MessageI18nKey.vlrc_sujPasivo, vlrc.getSujPasivo());
+        FieldValidator.validateRequired(this, MessageI18nKey.vlrc_codExencion, vlrc.getCodExencion());
+
+        if (!hasErrors()) {
+            final ValoracionBO vlrcBO = new ValoracionBO();
+
+            switch (accion) {
+            case create:
+                vlrcBO.insert(vlrc);
+
+                break;
+            case edit:
+                vlrcBO.update(vlrc);
+
+                break;
+            default:
+                throw new Error("No implementado");
+            }
+        }
 
         return SUCCESS;
     }

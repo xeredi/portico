@@ -24,6 +24,15 @@ public interface ValoracionDAO {
     void insert(final @Nonnull ValoracionVO vlrcVO);
 
     /**
+     * Update.
+     *
+     * @param vlrcVO
+     *            the vlrc vo
+     * @return the int
+     */
+    int update(final @Nonnull ValoracionVO vlrcVO);
+
+    /**
      * Borrado de las valoraciones que cumplan un criterio de busqueda.
      *
      * @param vlrcCriterioVO

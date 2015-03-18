@@ -746,7 +746,14 @@ function VlrcEditController($http, $location, $routeParams, pageTitleService) {
 	vm.cancel = cancel;
 
 	function save() {
-		alert('save');
+		$http.post("facturacion/vlrc-save.action", {
+			vlrc : vm.vlrc,
+			accion : vm.accion
+		}).success(
+				function(data) {
+					$location.path("/facturacion/vlrc/detail/" + data.vlrc.id)
+							.replace();
+				});
 	}
 
 	function cancel() {
@@ -775,7 +782,14 @@ function VlrcCreateController($http, $location, $routeParams, pageTitleService) 
 	vm.cancel = cancel;
 
 	function save() {
-		alert('save');
+		$http.post("facturacion/vlrc-save.action", {
+			vlrc : vm.vlrc,
+			accion : vm.accion
+		}).success(
+				function(data) {
+					$location.path("/facturacion/vlrc/detail/" + data.vlrc.id)
+							.replace();
+				});
 	}
 
 	function cancel() {

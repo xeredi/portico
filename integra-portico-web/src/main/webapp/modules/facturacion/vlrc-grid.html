@@ -35,12 +35,12 @@
                 <th class="codigo" nowrap="nowrap" translate="vlrc_srvc"></th>
                 <th translate="vlrc_aspc"></th>
                 <th translate="vlrc_pagador"></th>
+                <th translate="vlrc_sujPasivo"></th>
                 <th translate="vlrc_importe"></th>
                 <th translate="vlrc_impuesto"></th>
                 <th translate="vlrc_fliq"></th>
                 <th translate="vlrc_fini"></th>
                 <th translate="vlrc_ffin"></th>
-                <th translate="vlrc_sujPasivo"></th>
                 <th translate="vlrc_codExencion"></th>
 
                 <th translate="vlrc_info1"></th>
@@ -61,12 +61,12 @@
                 <td ng-bind="item.srvc.etiqueta"></td>
                 <td ng-bind="item.aspc.codigo" bs-tooltip data-title="{{item.aspc.etiqueta}}"></td>
                 <td ng-bind="item.pagador.parametro" bs-tooltip data-title="{{item.pagador.etiqueta}}"></td>
+                <td><i class="glyphicon glyphicon-{{item.sujPasivo ? 'ok' : 'remove'}}"></i></td>
                 <td nowrap="nowrap" class="number">{{item.importe | number:2}} &euro;</td>
                 <td nowrap="nowrap" class="number">{{item.impuesto | number:2}} &euro;</td>
                 <td ng-bind="item.fliq | date: ('format_date' | translate)"></td>
                 <td ng-bind="item.fini | date: ('format_datetime' | translate)"></td>
                 <td ng-bind="item.ffin | date: ('format_datetime' | translate)"></td>
-                <td><i class="glyphicon glyphicon-{{item.sujPasivo ? 'ok' : 'remove'}}"></i></td>
                 <td ng-bind="item.codExencion" bs-tooltip
                     data-title="{{'cdrf_' + vm.tpdtCodExencion.id + '_' + item.codExencion | translate}}"></td>
 
