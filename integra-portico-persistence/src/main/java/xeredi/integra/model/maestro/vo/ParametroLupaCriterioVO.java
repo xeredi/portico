@@ -13,9 +13,6 @@ public final class ParametroLupaCriterioVO extends BaseCriterioVO {
     /** The tpdt nombre id. */
     private Long tpdtNombreId;
 
-    /** The texto busqueda. */
-    private String textoBusqueda;
-
     /**
      * Gets the enti id.
      *
@@ -33,25 +30,6 @@ public final class ParametroLupaCriterioVO extends BaseCriterioVO {
      */
     public void setEntiId(final Long value) {
         entiId = value;
-    }
-
-    /**
-     * Gets the texto busqueda.
-     *
-     * @return the texto busqueda
-     */
-    public String getTextoBusqueda() {
-        return textoBusqueda;
-    }
-
-    /**
-     * Sets the texto busqueda.
-     *
-     * @param value
-     *            the new texto busqueda
-     */
-    public void setTextoBusqueda(final String value) {
-        textoBusqueda = value;
     }
 
     /**

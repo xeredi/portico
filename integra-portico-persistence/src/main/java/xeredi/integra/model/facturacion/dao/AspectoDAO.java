@@ -34,7 +34,7 @@ public interface AspectoDAO {
      *            the bounds
      * @return the list
      */
-    List<AspectoVO> selectPaginatedList(final @Nonnull AspectoCriterioVO criterioVO, final @Nonnull RowBounds bounds);
+    List<AspectoVO> selectList(final @Nonnull AspectoCriterioVO criterioVO, final @Nonnull RowBounds bounds);
 
     /**
      * Count.

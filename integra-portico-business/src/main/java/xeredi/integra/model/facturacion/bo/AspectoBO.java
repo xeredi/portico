@@ -53,7 +53,7 @@ public class AspectoBO {
             final List<AspectoVO> aspcList = new ArrayList<>();
 
             if (count >= offset) {
-                aspcList.addAll(aspcDAO.selectPaginatedList(aspcCriterioVO, new RowBounds(offset, limit)));
+                aspcList.addAll(aspcDAO.selectList(aspcCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<AspectoVO>(aspcList, offset, limit, count);
@@ -79,6 +79,25 @@ public class AspectoBO {
             }
 
             return list;
+        }
+    }
+
+    /**
+     * Select label value list.
+     *
+     * @param aspcCriterioVO
+     *            the aspc criterio vo
+     * @param limit
+     *            the limit
+     * @return the list
+     */
+    public List<AspectoVO> selectLupaList(final AspectoCriterioVO aspcCriterioVO, final int limit) {
+        Preconditions.checkNotNull(aspcCriterioVO);
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
+
+            return aspcDAO.selectList(aspcCriterioVO, new RowBounds(PaginatedList.MIN_OFFSET, limit));
         }
     }
 
@@ -209,7 +228,7 @@ public class AspectoBO {
      *             the overlap exception
      */
     public void update(final AspectoVO aspc, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException,
-    OverlapException {
+            OverlapException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getAspv());
         Preconditions.checkNotNull(aspc.getId());

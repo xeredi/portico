@@ -61,7 +61,8 @@
         </div>
         <div class="col-md-2 form-group">
             <label translate="vlrc_codExencion"></label>
-            <p class="form-control-static" ng-bind="vm.vlrc.codExencion"></p>
+            <p class="form-control-static"
+                ng-bind="'cdrf_' + vm.tpdtCodExencion.id + '_' + vm.vlrc.codExencion | translate"></p>
         </div>
     </div>
 
@@ -226,7 +227,8 @@
                 <td nowrap="nowrap" translate="{{'enti_' + vlrl.rgla.enti.id}}"></td>
                 <td nowrap="nowrap" ng-bind="vlrl.rgla.crgo.codigo"></td>
                 <td nowrap="nowrap" ng-bind="vlrl.rgla.codigo"></td>
-                <td ng-bind="vlrl.rgla.tipo" bs-tooltip data-title="{{'ReglaTipo_' + vlrl.rgla.tipo | translate}}"></td>
+                <td ng-bind="vlrl.rgla.tipo" bs-tooltip
+                    data-title="{{'ReglaTipo_' + vlrl.rgla.tipo | translate}}"></td>
                 <td nowrap="nowrap" class="number"><span ng-if="vlrl.rgla.tipo != 'T'">{{vlrl.importeBase
                         | number:2}} &euro;</span></td>
                 <td nowrap="nowrap" class="number">{{vlrl.importe | number:2}} &euro;</td>

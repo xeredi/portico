@@ -43,6 +43,13 @@
 
 			<association property="aspv" javaType="AspectoVersionVO">
 				<result property="descripcion" column="aspc_descripcion" />
+
+				<result property="cetiqInfo1" column="aspv_cetiq_info1" />
+				<result property="cetiqInfo2" column="aspv_cetiq_info2" />
+				<result property="cetiqInfo3" column="aspv_cetiq_info3" />
+				<result property="cetiqInfo4" column="aspv_cetiq_info4" />
+				<result property="cetiqInfo5" column="aspv_cetiq_info5" />
+				<result property="cetiqInfo6" column="aspv_cetiq_info6" />
 			</association>
 		</association>
 
@@ -50,6 +57,7 @@
 			<result property="id" column="vlrc_pagador_prmt_pk" />
 			<result property="parametro" column="vlrc_pagador_prmt" />
 			<result property="entiId" column="vlrc_pagador_tppr_pk" />
+			<result property="texto" column="vlrc_pagador_texto" />
 		</association>
 	</resultMap>
 
@@ -64,6 +72,26 @@
 
 		    , prmt_parametro AS vlrc_pagador_prmt
 		    , prmt_tppr_pk AS vlrc_pagador_tppr_pk
+
+		    , aspv_cetiq_info1, aspv_cetiq_info2, aspv_cetiq_info3, aspv_cetiq_info4, aspv_cetiq_info5, aspv_cetiq_info6
+
+			, (
+				SELECT prdt_cadena
+				FROM tbl_parametro_dato_prdt
+				WHERE
+					prdt_prvr_pk = (
+						SELECT prvr_pk
+						FROM tbl_parametro_version_prvr
+						WHERE
+							prvr_prmt_pk = vlrc_pagador_prmt_pk
+							AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
+					)
+					AND prdt_tpdt_pk = (
+						SELECT tppr_tpdt_pk
+						FROM tbl_tipo_parametro_tppr
+						WHERE tppr_pk = prmt_tppr_pk
+					)
+			) AS vlrc_pagador_texto
 
 		    , (
 		        SELECT aspc_codigo
@@ -121,12 +149,7 @@
 				FROM tbl_i18n_i18n
 				WHERE
 					i18n_pref = 'aspv'
-					AND i18n_ext_pk = (
-				        SELECT aspv_pk
-				        FROM tbl_aspecto_version_aspv
-				        WHERE aspv_aspc_pk = vlrc_aspc_pk
-				            AND vlrc_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, vlrc_fref)
-					)
+					AND i18n_ext_pk = aspv_pk
 					AND i18n_lang = #{idioma}
 			) AS aspc_descripcion
         ]]>
@@ -138,6 +161,9 @@
 		        srvc_pk = vlrc_srvc_pk
 		    INNER JOIN tbl_parametro_prmt ON
 		        prmt_pk = vlrc_pagador_prmt_pk
+		    LEFT JOIN tbl_aspecto_version_aspv ON
+		    	aspv_aspc_pk = vlrc_aspc_pk
+	            AND vlrc_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, vlrc_fref)
     ]]>
 	</sql>
 
@@ -159,20 +185,28 @@
 			<if test="tpsrId != null">
 				AND srvc_tpsr_pk = #{tpsrId}
 			</if>
-			<if test="aspcId != null">
-				AND vlrc_aspc_pk = #{aspcId}
+			<if test="codExencion != null">
+				AND vlrc_cod_exen = #{codExencion}
+			</if>
+			<if test="aspc != null and aspc.id != null">
+				AND vlrc_aspc_pk = #{aspc.id}
 			</if>
 			<if test="pagador != null and pagador.id != null">
 				AND vlrc_pagador_prmt_pk = #{pagador.id}
 			</if>
-			<if test="crgoId != null">
+			<if test="crgo != null and crgo.id != null">
             <![CDATA[
                 AND EXISTS (
                     SELECT 1
-                    FROM tbl_valoracion_cargo_vlrg
+                    FROM tbl_valoracion_lin_vlrl
                     WHERE
-                        vlrg_vlrc_pk = vlrc_pk
-                        AND vlrg_crgo_pk = #{crgoId}
+                        vlrl_vlrc_pk = vlrc_pk
+                        AND vlrl_rgla_pk = ANY (
+                        	SELECT rgla_pk
+                        	FROM tbl_regla_rgla
+                        	WHERE
+                        		rgla_crgo_pk = #{crgo.id}
+                        )
                 )
             ]]>
 			</if>

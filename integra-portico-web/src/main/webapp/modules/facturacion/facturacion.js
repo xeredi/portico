@@ -25,6 +25,8 @@ angular.module("facturacion", [])
 
 .controller("VlrcEditController", VlrcEditController)
 
+.controller("VlrcCreateController", VlrcCreateController)
+
 .controller("VlrlDetailController", VlrlDetailController)
 
 .controller("VlrlEditController", VlrlEditController)
@@ -51,6 +53,8 @@ angular.module("facturacion", [])
 
 .controller("CrgoEditController", CrgoEditController)
 
+.controller('CrgoLupaController', CrgoLupaController)
+
 .controller("RglaDetailController", RglaDetailController)
 
 .controller("RglaEditController", RglaEditController)
@@ -73,6 +77,8 @@ angular.module("facturacion", [])
 .controller("AspcEditController", AspcEditController)
 
 .controller("AspcDuplicateController", AspcDuplicateController)
+
+.controller('AspcLupaController', AspcLupaController)
 
 .controller("AscrCreateController", AscrCreateController)
 
@@ -141,6 +147,12 @@ function config($routeProvider) {
 	.when("/facturacion/vlrc/edit/:vlrcId", {
 		templateUrl : "modules/facturacion/vlrc-edit.html",
 		controller : "VlrcEditController",
+		controllerAs : "vm"
+	})
+
+	.when("/facturacion/vlrc/create", {
+		templateUrl : "modules/facturacion/vlrc-edit.html",
+		controller : "VlrcCreateController",
 		controllerAs : "vm"
 	})
 
@@ -621,6 +633,7 @@ function VlrcGridController($http, $location, $routeParams, $modal,
 			vm.page = data.vlrcList.page;
 			vm.vlrcList = data.vlrcList;
 			vm.vlrcCriterio = data.vlrcCriterio;
+			vm.tpdtCodExencion = data.tpdtCodExencion;
 
 			$location.search({
 				page : vm.page,
@@ -640,16 +653,8 @@ function VlrcGridController($http, $location, $routeParams, $modal,
 	}
 
 	function tpsrChanged(tpsrId) {
-		if (tpsrId != null) {
-			$http.post("facturacion/vlrc-reload-filter.action", {
-				vlrcCriterio : {
-					tpsrId : tpsrId
-				}
-			}).success(function(data) {
-				vm.crgoList = data.crgoList;
-				vm.aspcList = data.aspcList;
-			});
-		}
+		vm.vlrc.srvc = null;
+		vm.vlrc.aspc = null;
 	}
 
 	search($routeParams.page ? $routeParams.page : 1);
@@ -726,6 +731,7 @@ function VlrcDetailController($http, $location, $routeParams, pageTitleService) 
 		vm.aspc = data.aspc;
 		vm.vlrgList = data.vlrgList;
 		vm.vlriList = data.vlriList;
+		vm.tpdtCodExencion = data.tpdtCodExencion;
 
 		findVlrlList($routeParams.page ? $routeParams.page : 1);
 	});
@@ -755,9 +761,36 @@ function VlrcEditController($http, $location, $routeParams, pageTitleService) {
 		vm.vlrc = data.vlrc;
 		vm.tpsrId = data.vlrc.srvc.entiId;
 		vm.accion = data.accion;
+		vm.pagadorEntiId = data.pagadorEntiId;
+		vm.tpdtCodExencion = data.tpdtCodExencion;
 	});
 
 	pageTitleService.setTitle("vlrc", "page_edit");
+}
+
+function VlrcCreateController($http, $location, $routeParams, pageTitleService) {
+	var vm = this;
+
+	vm.save = save;
+	vm.cancel = cancel;
+
+	function save() {
+		alert('save');
+	}
+
+	function cancel() {
+		window.history.back();
+	}
+
+	$http.post("facturacion/vlrc-create.action").success(function(data) {
+		vm.vlrc = data.vlrc;
+		vm.accion = data.accion;
+		vm.tpsrList = data.tpsrList;
+		vm.pagadorEntiId = data.pagadorEntiId;
+		vm.tpdtCodExencion = data.tpdtCodExencion;
+	});
+
+	pageTitleService.setTitle("vlrc", "page_create");
 }
 
 function VlrlDetailController($http, $location, $routeParams, pageTitleService) {
@@ -1171,6 +1204,24 @@ function CrgoEditController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("crgo", "page_edit");
 }
 
+function CrgoLupaController($http, $scope) {
+	$scope.getLabelValuesTpsr = function(entiId, textoBusqueda, fechaVigencia) {
+		if (textoBusqueda.length <= 0) {
+			return null;
+		}
+
+		return $http.post("facturacion/crgo-lupa.action", {
+			crgoCriterio : {
+				tpsrId : entiId,
+				textoBusqueda : textoBusqueda,
+				fechaVigencia : fechaVigencia
+			}
+		}).then(function(res) {
+			return res.data.crgoList;
+		});
+	};
+}
+
 function RglaDetailController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
@@ -1566,6 +1617,24 @@ function AspcDuplicateController($http, $location, $routeParams,
 	});
 
 	pageTitleService.setTitle("aspc", "page_duplicate");
+}
+
+function AspcLupaController($http, $scope) {
+	$scope.getLabelValues = function(entiId, textoBusqueda, fechaVigencia) {
+		if (textoBusqueda.length <= 0) {
+			return null;
+		}
+
+		return $http.post("facturacion/aspc-lupa.action", {
+			aspcCriterio : {
+				tpsrId : entiId,
+				textoBusqueda : textoBusqueda,
+				fechaVigencia : fechaVigencia
+			}
+		}).then(function(res) {
+			return res.data.aspcList;
+		});
+	};
 }
 
 function AscrDetailController($http, $routeParams, pageTitleService) {

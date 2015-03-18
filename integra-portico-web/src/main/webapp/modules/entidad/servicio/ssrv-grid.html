@@ -34,7 +34,7 @@
                 <th ng-if="vm.enti.tpdtEstado" translate>ssrv_estado</th>
                 <th ng-if="vm.enti.temporal" translate>ssrv_fini</th>
                 <th ng-if="vm.enti.temporal" translate>ssrv_ffin</th>
-                <th ng-repeat="entd in ::vm.enti.entdList track by entd.tpdt.id" ng-if="entd.gridable"
+                <th ng-repeat="entd in vm.enti.entdList track by entd.tpdt.id" ng-if="entd.gridable"
                     ng-bind="'entd_' + entd.id | translate"></th>
             </tr>
         </thead>
@@ -44,13 +44,13 @@
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="item.srvc.etiqueta" nowrap="nowrap"></td>
                 <td ng-bind="item.numero" class="number"></td>
-                <td ng-if="::vm.enti.tpdtEstado" nowrap="nowrap" bs-tooltip
+                <td ng-if="vm.enti.tpdtEstado" nowrap="nowrap" bs-tooltip
                     data-title="{{'cdrf_' + vm.enti.tpdtEstado.id + '_' + item.estado | translate}}"
                     ng-bind="item.estado"></td>
-                <td ng-if="::vm.enti.temporal" ng-bind="item.fini | date: ('format_date' | translate)"></td>
-                <td ng-if="::vm.enti.temporal" ng-bind="item.ffin | date: ('format_date' | translate)"></td>
-                <td ng-repeat="entd in ::vm.enti.entdList track by entd.tpdt.id" ng-if="entd.gridable"
-                    ng-switch on="::entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
+                <td ng-if="vm.enti.temporal" ng-bind="item.fini | date: ('format_date' | translate)"></td>
+                <td ng-if="vm.enti.temporal" ng-bind="item.ffin | date: ('format_date' | translate)"></td>
+                <td ng-repeat="entd in vm.enti.entdList track by entd.tpdt.id" ng-if="entd.gridable" ng-switch
+                    on="entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
                         class="glyphicon glyphicon-{{item.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span>
                     <span ng-switch-when="ND" class="pull-right"
                     ng-bind="item.itdtMap[entd.tpdt.id].cantidadDecimal | number:2"></span> <span

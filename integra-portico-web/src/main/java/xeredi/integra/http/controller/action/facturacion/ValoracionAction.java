@@ -13,7 +13,11 @@ import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionVO;
+import xeredi.integra.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.integra.model.metamodelo.vo.Entidad;
+import xeredi.integra.model.metamodelo.vo.TipoDato;
+import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
@@ -45,6 +49,12 @@ public final class ValoracionAction extends BaseAction {
     /** The tpsr list. */
     private List<LabelValueVO> tpsrList;
 
+    /** The pagador enti id. */
+    private Long pagadorEntiId;
+
+    /** The tpdt cod exencion. */
+    private TipoDatoVO tpdtCodExencion;
+
     // acciones web
 
     /**
@@ -66,6 +76,7 @@ public final class ValoracionAction extends BaseAction {
         vlriList = vlrcBO.selectVlriList(vlrc.getId(), getIdioma());
         vlrgList = vlrcBO.selectVlrgList(vlrc.getId(), getIdioma());
         aspc = aspcBO.select(vlrc.getAspc().getId(), vlrc.getFref(), getIdioma());
+        tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
 
         return SUCCESS;
     }
@@ -91,7 +102,8 @@ public final class ValoracionAction extends BaseAction {
         vlrc = vlrcBO.select(vlrc.getId(), getIdioma());
         accion = ACCION_EDICION.edit;
 
-        loadLabelValues();
+        pagadorEntiId = Entidad.ORGANIZACION.getId();
+        tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
 
         return SUCCESS;
     }
@@ -106,9 +118,11 @@ public final class ValoracionAction extends BaseAction {
     @Action("vlrc-create")
     public String create() throws ApplicationException {
         vlrc = new ValoracionVO();
-        accion = ACCION_EDICION.edit;
+        accion = ACCION_EDICION.create;
 
-        loadLabelValues();
+        tpsrList = TipoServicioProxy.selectLabelValues();
+        pagadorEntiId = Entidad.ORGANIZACION.getId();
+        tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
 
         return SUCCESS;
     }
@@ -130,15 +144,6 @@ public final class ValoracionAction extends BaseAction {
         vlrcBO.delete(vlrc.getId());
 
         return SUCCESS;
-    }
-
-    /**
-     * Load label values.
-     */
-    private void loadLabelValues() {
-        if (ACCION_EDICION.create == accion) {
-            tpsrList = TipoServicioProxy.selectLabelValues();
-        }
     }
 
     // get / set
@@ -215,6 +220,24 @@ public final class ValoracionAction extends BaseAction {
      */
     public AspectoVO getAspc() {
         return aspc;
+    }
+
+    /**
+     * Gets the pagador enti id.
+     *
+     * @return the pagador enti id
+     */
+    public Long getPagadorEntiId() {
+        return pagadorEntiId;
+    }
+
+    /**
+     * Gets the tpdt cod exencion.
+     *
+     * @return the tpdt cod exencion
+     */
+    public TipoDatoVO getTpdtCodExencion() {
+        return tpdtCodExencion;
     }
 
 }

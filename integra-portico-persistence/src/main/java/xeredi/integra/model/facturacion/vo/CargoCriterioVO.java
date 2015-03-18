@@ -39,6 +39,9 @@ public final class CargoCriterioVO extends BaseCriterioVO {
     /** The srvc id. */
     private Long srvcId;
 
+    /** The aspc id. */
+    private Long aspcId;
+
     /**
      * Gets the id.
      *
@@ -227,5 +230,24 @@ public final class CargoCriterioVO extends BaseCriterioVO {
      */
     public void setTpsrId(final Long value) {
         tpsrId = value;
+    }
+
+    /**
+     * Gets the aspc id.
+     *
+     * @return the aspc id
+     */
+    public Long getAspcId() {
+        return aspcId;
+    }
+
+    /**
+     * Sets the aspc id.
+     *
+     * @param value
+     *            the new aspc id
+     */
+    public void setAspcId(final Long value) {
+        aspcId = value;
     }
 }

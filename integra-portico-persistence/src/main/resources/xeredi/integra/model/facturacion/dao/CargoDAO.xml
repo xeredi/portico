@@ -77,12 +77,36 @@
 			</if>
 
 			<if test="srvcId != null">
+            <![CDATA[
 				AND EXISTS (
 					SELECT 1
 					FROM tbl_servicio_srvc
 					WHERE
 						srvc_tpsr_pk = crgo_tpsr_pk
 						AND srvc_pk = #{srvcId}
+				)
+            ]]>
+			</if>
+
+			<if test="aspcId != null">
+            <![CDATA[
+				AND EXISTS (
+					SELECT 1
+					FROM tbl_aspecto_cargo_ascr
+					WHERE
+						ascr_crgo_pk = crgo_pk
+						AND ascr_aspc_pk = #{aspcId}
+            ]]>
+				<if test="fechaVigencia != null">
+                <![CDATA[
+                        AND EXISTS (
+                            SELECT 1
+                            FROM tbl_aspecto_cargo_version_ascv
+                            WHERE ascv_ascr_pk = ascr_pk
+                                AND #{fechaVigencia} BETWEEN ascv_fini AND COALESCE(ascv_ffin, #{fechaVigencia})
+                        )
+                ]]>
+				</if>
 				)
 			</if>
 
@@ -143,6 +167,10 @@
 
 			<if test="codigo != null">
 				AND crgo_codigo LIKE #{codigo}
+			</if>
+
+			<if test="textoBusqueda != null">
+				AND crgo_codigo LIKE #{textoBusqueda}
 			</if>
 
 			<if test="codigoNormalizado != null">

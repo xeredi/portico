@@ -42,7 +42,7 @@ public interface CargoDAO {
      *            the bounds
      * @return the list
      */
-    List<CargoVO> selectPaginatedList(final @Nonnull CargoCriterioVO criterioVO, final @Nonnull RowBounds bounds);
+    List<CargoVO> selectList(final @Nonnull CargoCriterioVO criterioVO, final @Nonnull RowBounds bounds);
 
     /**
      * Count.

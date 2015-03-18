@@ -10,9 +10,6 @@ public final class ServicioLupaCriterioVO extends BaseCriterioVO {
     /** The enti id. */
     private Long entiId;
 
-    /** The texto busqueda. */
-    private String textoBusqueda;
-
     /** The subpuerto. */
     private String subpuerto;
 
@@ -46,7 +43,7 @@ public final class ServicioLupaCriterioVO extends BaseCriterioVO {
      *
      * @return the subpuerto
      */
-    public final String getSubpuerto() {
+    public String getSubpuerto() {
         return subpuerto;
     }
 
@@ -56,7 +53,7 @@ public final class ServicioLupaCriterioVO extends BaseCriterioVO {
      * @param value
      *            the new subpuerto
      */
-    public final void setSubpuerto(final String value) {
+    public void setSubpuerto(final String value) {
         subpuerto = value;
     }
 
@@ -65,7 +62,7 @@ public final class ServicioLupaCriterioVO extends BaseCriterioVO {
      *
      * @return the anno
      */
-    public final String getAnno() {
+    public String getAnno() {
         return anno;
     }
 
@@ -75,7 +72,7 @@ public final class ServicioLupaCriterioVO extends BaseCriterioVO {
      * @param value
      *            the new anno
      */
-    public final void setAnno(final String value) {
+    public void setAnno(final String value) {
         anno = value;
     }
 
@@ -84,7 +81,7 @@ public final class ServicioLupaCriterioVO extends BaseCriterioVO {
      *
      * @return the numero
      */
-    public final String getNumero() {
+    public String getNumero() {
         return numero;
     }
 
@@ -94,27 +91,8 @@ public final class ServicioLupaCriterioVO extends BaseCriterioVO {
      * @param value
      *            the new numero
      */
-    public final void setNumero(final String value) {
+    public void setNumero(final String value) {
         numero = value;
-    }
-
-    /**
-     * Gets the texto busqueda.
-     *
-     * @return the texto busqueda
-     */
-    public final String getTextoBusqueda() {
-        return textoBusqueda;
-    }
-
-    /**
-     * Sets the texto busqueda.
-     *
-     * @param value
-     *            the new texto busqueda
-     */
-    public final void setTextoBusqueda(final String value) {
-        textoBusqueda = value;
     }
 
 }

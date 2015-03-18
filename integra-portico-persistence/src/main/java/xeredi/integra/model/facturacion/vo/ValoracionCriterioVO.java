@@ -28,10 +28,13 @@ public final class ValoracionCriterioVO extends BaseCriterioVO {
     private ParametroVO pagador;
 
     /** The aspc. */
-    private Long aspcId;
+    private AspectoVO aspc;
 
     /** The crgo. */
-    private Long crgoId;
+    private CargoVO crgo;
+
+    /** The cod exencion. */
+    private String codExencion;
 
     /**
      * Gets the id.
@@ -129,41 +132,60 @@ public final class ValoracionCriterioVO extends BaseCriterioVO {
     }
 
     /**
-     * Gets the aspc id.
+     * Gets the aspc.
      *
-     * @return the aspc id
+     * @return the aspc
      */
-    public Long getAspcId() {
-        return aspcId;
+    public AspectoVO getAspc() {
+        return aspc;
     }
 
     /**
-     * Sets the aspc id.
+     * Sets the aspc.
      *
      * @param value
-     *            the new aspc id
+     *            the new aspc
      */
-    public void setAspcId(final Long value) {
-        aspcId = value;
+    public void setAspc(final AspectoVO value) {
+        aspc = value;
     }
 
     /**
-     * Gets the crgo id.
+     * Gets the crgo.
      *
-     * @return the crgo id
+     * @return the crgo
      */
-    public Long getCrgoId() {
-        return crgoId;
+    public CargoVO getCrgo() {
+        return crgo;
     }
 
     /**
-     * Sets the crgo id.
+     * Sets the crgo.
      *
      * @param value
-     *            the new crgo id
+     *            the new crgo
      */
-    public void setCrgoId(final Long value) {
-        crgoId = value;
+    public void setCrgo(final CargoVO value) {
+        crgo = value;
+    }
+
+    /**
+     * Gets the cod exencion.
+     *
+     * @return the cod exencion
+     */
+    public String getCodExencion() {
+        return codExencion;
+    }
+
+    /**
+     * Sets the cod exencion.
+     *
+     * @param value
+     *            the new cod exencion
+     */
+    public void setCodExencion(final String value) {
+        codExencion = value;
     }
 
 }

@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.facturacion;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -9,18 +8,15 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.controller.action.PaginatedGrid;
-import xeredi.integra.model.facturacion.bo.AspectoBO;
-import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
-import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
-import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionVO;
+import xeredi.integra.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.integra.model.metamodelo.vo.TipoDato;
+import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -46,14 +42,11 @@ public final class ValoracionListadoAction extends BaseAction implements Paginat
     /** The limit. */
     private int limit = ROWS_PER_PAGE_DEFAULT;
 
+    /** The tpdt cod exencion. */
+    private TipoDatoVO tpdtCodExencion;
+
     /** The tpsr list. */
-    private final List<LabelValueVO> tpsrList = new ArrayList<>();
-
-    /** The crgo list. */
-    private final List<LabelValueVO> crgoList = new ArrayList<>();
-
-    /** The aspc list. */
-    private final List<LabelValueVO> aspcList = new ArrayList<>();
+    private List<LabelValueVO> tpsrList;
 
     // acciones web
 
@@ -73,6 +66,7 @@ public final class ValoracionListadoAction extends BaseAction implements Paginat
         final ValoracionBO vlrcBO = new ValoracionBO();
 
         vlrcList = vlrcBO.selectList(vlrcCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
+        tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
 
         return SUCCESS;
     }
@@ -84,42 +78,8 @@ public final class ValoracionListadoAction extends BaseAction implements Paginat
      */
     @Action("vlrc-filter")
     public String editarFiltro() {
-        tpsrList.addAll(TipoServicioProxy.selectLabelValues());
-
-        return SUCCESS;
-    }
-
-    /**
-     * Reload filtro.
-     *
-     * @return the string
-     */
-    @Action("vlrc-reload-filter")
-    public String reloadFiltro() {
-        Preconditions.checkNotNull(vlrcCriterio);
-        Preconditions.checkNotNull(vlrcCriterio.getTpsrId());
-
-        {
-            final CargoBO crgoBO = new CargoBO();
-            final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
-
-            crgoCriterioVO.setTpsrId(vlrcCriterio.getTpsrId());
-            crgoCriterioVO.setFechaVigencia(fechaVigencia);
-            crgoCriterioVO.setIdioma(getIdioma());
-
-            crgoList.addAll(crgoBO.selectLabelValueList(crgoCriterioVO));
-        }
-
-        {
-            final AspectoBO aspcBO = new AspectoBO();
-            final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
-
-            aspcCriterioVO.setTpsrId(vlrcCriterio.getTpsrId());
-            aspcCriterioVO.setFechaVigencia(fechaVigencia);
-            aspcCriterioVO.setIdioma(getIdioma());
-
-            aspcList.addAll(aspcBO.selectLabelValueList(aspcCriterioVO));
-        }
+        tpsrList = TipoServicioProxy.selectLabelValues();
+        tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
 
         return SUCCESS;
     }
@@ -202,21 +162,12 @@ public final class ValoracionListadoAction extends BaseAction implements Paginat
     }
 
     /**
-     * Gets the crgo list.
+     * Gets the tpdt cod exencion.
      *
-     * @return the crgo list
+     * @return the tpdt cod exencion
      */
-    public List<LabelValueVO> getCrgoList() {
-        return crgoList;
-    }
-
-    /**
-     * Gets the aspc list.
-     *
-     * @return the aspc list
-     */
-    public List<LabelValueVO> getAspcList() {
-        return aspcList;
+    public TipoDatoVO getTpdtCodExencion() {
+        return tpdtCodExencion;
     }
 
 }

@@ -30,6 +30,7 @@ import com.google.common.base.Preconditions;
  * The Class CargoBO.
  */
 public class CargoBO {
+
     /**
      * Select list.
      *
@@ -50,10 +51,32 @@ public class CargoBO {
             final List<CargoVO> crgoList = new ArrayList<>();
 
             if (count >= offset) {
-                crgoList.addAll(crgoDAO.selectPaginatedList(crgoCriterioVO, new RowBounds(offset, limit)));
+                crgoList.addAll(crgoDAO.selectList(crgoCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<CargoVO>(crgoList, offset, limit, count);
+        }
+    }
+
+    /**
+     * Select label value list.
+     *
+     * @param crgoCriterio
+     *            the crgo criterio
+     * @param limit
+     *            the limit
+     * @return the list
+     */
+    public List<CargoVO> selectLupaList(final CargoCriterioVO crgoCriterio, final int limit) {
+        Preconditions.checkNotNull(crgoCriterio);
+        Preconditions.checkNotNull(crgoCriterio.getTpsrId());
+        Preconditions.checkNotNull(crgoCriterio.getFechaVigencia());
+        Preconditions.checkNotNull(crgoCriterio.getIdioma());
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
+
+            return crgoDAO.selectList(crgoCriterio, new RowBounds(PaginatedList.MIN_OFFSET, limit));
         }
     }
 
@@ -171,7 +194,7 @@ public class CargoBO {
      *             the overlap exception
      */
     public void update(final CargoVO crgo, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException,
-    OverlapException {
+            OverlapException {
         Preconditions.checkNotNull(crgo);
         Preconditions.checkNotNull(crgo.getCrgv());
         Preconditions.checkNotNull(crgo.getCrgv().getId());

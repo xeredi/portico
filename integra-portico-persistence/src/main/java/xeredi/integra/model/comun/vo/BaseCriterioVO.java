@@ -19,6 +19,9 @@ public abstract class BaseCriterioVO {
     /** The fecha vigencia. */
     private Date fechaVigencia;
 
+    /** The texto busqueda. */
+    private String textoBusqueda;
+
     /** The limit. */
     private Integer limit;
 
@@ -150,4 +153,24 @@ public abstract class BaseCriterioVO {
         maxLimit = value;
     }
 
+    /**
+     * Gets the texto busqueda.
+     *
+     * @return the texto busqueda
+     */
+    public final String getTextoBusqueda() {
+        return textoBusqueda;
+    }
+
+    /**
+     * Sets the texto busqueda.
+     *
+     * @param value
+     *            the new texto busqueda
+     */
+    public final void setTextoBusqueda(final String value) {
+        if (value != null) {
+            textoBusqueda = value.trim().toUpperCase() + "%";
+        }
+    }
 }
