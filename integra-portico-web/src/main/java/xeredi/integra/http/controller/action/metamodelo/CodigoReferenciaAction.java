@@ -37,23 +37,7 @@ public final class CodigoReferenciaAction extends BaseAction {
 
     // Acciones Web
     /**
-     * Alta.
-     *
-     * @return the string
-     */
-    @Action("cdrf-create")
-    public String create() {
-        Preconditions.checkNotNull(cdrf);
-        Preconditions.checkNotNull(cdrf.getTpdtId());
-
-        i18nMap = new HashMap<>();
-        accion = ACCION_EDICION.create;
-
-        return SUCCESS;
-    }
-
-    /**
-     * Modificar.
+     * Editar.
      *
      * @return the string
      * @throws ApplicationException
@@ -61,14 +45,20 @@ public final class CodigoReferenciaAction extends BaseAction {
      */
     @Action("cdrf-edit")
     public String edit() throws ApplicationException {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(cdrf);
-        Preconditions.checkNotNull(cdrf.getId());
+        Preconditions.checkNotNull(cdrf.getTpdtId());
 
-        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(cdrf.getId());
 
-        cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
-        accion = ACCION_EDICION.edit;
+            final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
+
+            cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
+        } else {
+            i18nMap = new HashMap<>();
+        }
 
         return SUCCESS;
     }
@@ -158,16 +148,6 @@ public final class CodigoReferenciaAction extends BaseAction {
     }
 
     // get / set
-
-    /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
-    }
-
     /**
      * Sets the accion.
      *
@@ -215,5 +195,4 @@ public final class CodigoReferenciaAction extends BaseAction {
     public void setI18nMap(final Map<String, I18nVO> value) {
         i18nMap = value;
     }
-
 }

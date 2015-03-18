@@ -1,8 +1,8 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/tpsp/edit/{{vm.enti.id}}"><i
+        <a class="btn btn-default" ng-href="#/metamodelo/tpsp/edit/edit/{{vm.enti.tpprId}}/{{vm.enti.id}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
-        <button data-ng-click="remove()" class="btn btn-default">
+        <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>

@@ -44,23 +44,6 @@ public final class TipoSubparametroAction extends BaseAction {
 
     // Acciones Web
     /**
-     * Alta.
-     *
-     * @return the string
-     */
-    @Action("tpsp-create")
-    public String create() {
-        Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getTpprId());
-
-        accion = ACCION_EDICION.create;
-
-        loadLabelValues();
-
-        return SUCCESS;
-    }
-
-    /**
      * Modificar.
      *
      * @return the string
@@ -69,14 +52,19 @@ public final class TipoSubparametroAction extends BaseAction {
      */
     @Action("tpsp-edit")
     public String edit() throws ApplicationException {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getId());
+        Preconditions.checkNotNull(enti.getTpprId());
 
-        final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(enti.getId());
 
-        enti = tpspBO.select(enti.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
-        accion = ACCION_EDICION.edit;
+            final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
+
+            enti = tpspBO.select(enti.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+            accion = ACCION_EDICION.edit;
+        }
 
         loadLabelValues();
 
@@ -94,6 +82,7 @@ public final class TipoSubparametroAction extends BaseAction {
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(enti);
+        Preconditions.checkNotNull(enti.getTpprId());
 
         // Validaciones
         if (accion == ACCION_EDICION.create) {

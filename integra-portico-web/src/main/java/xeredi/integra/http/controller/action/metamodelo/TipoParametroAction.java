@@ -12,14 +12,15 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
-import xeredi.integra.model.metamodelo.bo.EntidadBO;
+import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.bo.TipoParametroBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametroBO;
-import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
+import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
 
@@ -41,30 +42,13 @@ public final class TipoParametroAction extends BaseAction {
     /** The tpsp list. */
     private List<TipoSubparametroVO> subentiList;
 
-    /** The enti hijas list. */
-    private List<EntidadVO> entiHijasList;
-
-    /** The enti padres list. */
-    private List<EntidadVO> entiPadresList;
-
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
 
+    /** The tpdt nombre list. */
+    private List<LabelValueVO> tpdtNombreList;
+
     // Acciones Web
-    /**
-     * Alta.
-     *
-     * @return the string
-     */
-    @Action("tppr-create")
-    public String create() {
-        accion = ACCION_EDICION.create;
-
-        enti = new TipoParametroVO();
-
-        return SUCCESS;
-    }
-
     /**
      * Modificar.
      *
@@ -74,32 +58,29 @@ public final class TipoParametroAction extends BaseAction {
      */
     @Action("tppr-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getId());
+        Preconditions.checkNotNull(accion);
 
-        final TipoParametroBO tpprBO = new TipoParametroBO();
-        final EntidadBO entiBO = new EntidadBO();
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(enti);
+            Preconditions.checkNotNull(enti.getId());
 
-        enti = tpprBO.select(enti.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
-        accion = ACCION_EDICION.edit;
+            final TipoParametroBO tpprBO = new TipoParametroBO();
 
-        EntidadCriterioVO entiCriterioVO = null;
-
-        if (enti.getEntiPadresList() != null && !enti.getEntiPadresList().isEmpty()) {
-            entiCriterioVO = new EntidadCriterioVO();
-            entiCriterioVO.setEntiHijaId(enti.getId());
-            entiCriterioVO.setIdioma(getIdioma());
-
-            entiPadresList = entiBO.selectList(entiCriterioVO);
+            enti = tpprBO.select(enti.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+            accion = ACCION_EDICION.edit;
+        } else {
+            enti = new TipoParametroVO();
         }
 
-        if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
-            entiCriterioVO = new EntidadCriterioVO();
-            entiCriterioVO.setEntiPadreId(enti.getId());
-            entiCriterioVO.setIdioma(getIdioma());
+        {
+            final TipoDatoBO tpdtBO = new TipoDatoBO();
+            final TipoDatoCriterioVO tpdtCriterio = new TipoDatoCriterioVO();
 
-            entiHijasList = entiBO.selectList(entiCriterioVO);
+            tpdtCriterio.setTipoElemento(TipoElemento.TX);
+            tpdtCriterio.setIdioma(getIdioma());
+
+            tpdtNombreList = tpdtBO.selectLabelValues(tpdtCriterio);
         }
 
         return SUCCESS;
@@ -206,15 +187,6 @@ public final class TipoParametroAction extends BaseAction {
 
     // get / set
     /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
-    }
-
-    /**
      * Sets the accion.
      *
      * @param value
@@ -222,24 +194,6 @@ public final class TipoParametroAction extends BaseAction {
      */
     public void setAccion(final ACCION_EDICION value) {
         accion = value;
-    }
-
-    /**
-     * Gets the enti hijas list.
-     *
-     * @return the enti hijas list
-     */
-    public List<EntidadVO> getEntiHijasList() {
-        return entiHijasList;
-    }
-
-    /**
-     * Gets the enti padres list.
-     *
-     * @return the enti padres list
-     */
-    public List<EntidadVO> getEntiPadresList() {
-        return entiPadresList;
     }
 
     /**
@@ -287,6 +241,15 @@ public final class TipoParametroAction extends BaseAction {
      */
     public void setI18nMap(final Map<String, I18nVO> value) {
         i18nMap = value;
+    }
+
+    /**
+     * Gets the tpdt nombre list.
+     *
+     * @return the tpdt nombre list
+     */
+    public List<LabelValueVO> getTpdtNombreList() {
+        return tpdtNombreList;
     }
 
 }

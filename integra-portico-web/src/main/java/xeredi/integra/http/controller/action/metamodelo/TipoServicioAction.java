@@ -13,13 +13,17 @@ import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
+import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.bo.TipoServicioBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
+import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
 
@@ -47,21 +51,10 @@ public final class TipoServicioAction extends BaseAction {
     /** The enti hijas list. */
     private List<EntidadVO> entiHijasList;
 
+    /** The tpdt estado list. */
+    private List<LabelValueVO> tpdtEstadoList;
+
     // Acciones Web
-    /**
-     * Alta.
-     *
-     * @return the string
-     */
-    @Action("tpsr-create")
-    public String create() {
-        accion = ACCION_EDICION.create;
-
-        enti = new TipoServicioVO();
-
-        return SUCCESS;
-    }
-
     /**
      * Modificar.
      *
@@ -71,14 +64,30 @@ public final class TipoServicioAction extends BaseAction {
      */
     @Action("tpsr-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getId());
+        Preconditions.checkNotNull(accion);
 
-        final TipoServicioBO tpsrBO = new TipoServicioBO();
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(enti);
+            Preconditions.checkNotNull(enti.getId());
 
-        enti = tpsrBO.select(enti.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
-        accion = ACCION_EDICION.edit;
+            final TipoServicioBO tpsrBO = new TipoServicioBO();
+
+            enti = tpsrBO.select(enti.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+            accion = ACCION_EDICION.edit;
+        } else {
+            enti = new TipoServicioVO();
+        }
+
+        {
+            final TipoDatoBO tpdtBO = new TipoDatoBO();
+            final TipoDatoCriterioVO tpdtCriterio = new TipoDatoCriterioVO();
+
+            tpdtCriterio.setTipoElemento(TipoElemento.CR);
+            tpdtCriterio.setIdioma(getIdioma());
+
+            tpdtEstadoList = tpdtBO.selectLabelValues(tpdtCriterio);
+        }
 
         return SUCCESS;
     }
@@ -220,15 +229,6 @@ public final class TipoServicioAction extends BaseAction {
     }
 
     /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
-    }
-
-    /**
      * Sets the accion.
      *
      * @param value
@@ -264,6 +264,15 @@ public final class TipoServicioAction extends BaseAction {
      */
     public void setI18nMap(final Map<String, I18nVO> value) {
         i18nMap = value;
+    }
+
+    /**
+     * Gets the tpdt estado list.
+     *
+     * @return the tpdt estado list
+     */
+    public List<LabelValueVO> getTpdtEstadoList() {
+        return tpdtEstadoList;
     }
 
 }

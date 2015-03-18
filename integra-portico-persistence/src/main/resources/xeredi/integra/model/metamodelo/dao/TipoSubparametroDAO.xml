@@ -104,7 +104,7 @@
         INSERT INTO tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp)
         VALUES (
             #{id}
-            , #{tppr.id}
+            , #{tpprId}
             , #{tpprAsociado.id}
             , #{i18n, jdbcType=INTEGER, javaType=Boolean}
             , #{tempExp, jdbcType=INTEGER, javaType=Boolean}
@@ -119,6 +119,13 @@
             , tpsp_es_i18n = #{i18n, jdbcType=INTEGER, javaType=Boolean}
             , tpsp_es_tmp_exp = #{tempExp, jdbcType=INTEGER, javaType=Boolean}
         WHERE tpsp_pk = #{id}
+    ]]>
+	</insert>
+
+	<insert id="delete" parameterType="Long">
+    <![CDATA[
+        DELETE FROM tbl_tipo_subparametro_tpsp
+        WHERE tpsp_pk = #{value}
     ]]>
 	</insert>
 </mapper>

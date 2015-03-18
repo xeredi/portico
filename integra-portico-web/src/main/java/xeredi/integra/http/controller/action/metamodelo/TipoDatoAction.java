@@ -54,23 +54,7 @@ public final class TipoDatoAction extends BaseAction {
 
     // Acciones Web
     /**
-     * Alta.
-     *
-     * @return the string
-     */
-    @Action("tpdt-create")
-    public String create() {
-        accion = ACCION_EDICION.create;
-
-        tpdt = new TipoDatoVO();
-
-        loadLabelValues();
-
-        return SUCCESS;
-    }
-
-    /**
-     * Modificar.
+     * Editar.
      *
      * @return the string
      * @throws ApplicationException
@@ -78,14 +62,19 @@ public final class TipoDatoAction extends BaseAction {
      */
     @Action("tpdt-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(tpdt);
-        Preconditions.checkNotNull(tpdt.getId());
+        Preconditions.checkNotNull(accion);
 
-        final TipoDatoBO tpdtBO = new TipoDatoBO();
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(tpdt);
+            Preconditions.checkNotNull(tpdt.getId());
 
-        tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
-        accion = ACCION_EDICION.edit;
+            final TipoDatoBO tpdtBO = new TipoDatoBO();
+
+            tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
+        } else {
+            tpdt = new TipoDatoVO();
+        }
 
         loadLabelValues();
 
@@ -239,15 +228,6 @@ public final class TipoDatoAction extends BaseAction {
      */
     public TipoElemento[] getTpelList() {
         return TipoElemento.values();
-    }
-
-    /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
     }
 
     /**
