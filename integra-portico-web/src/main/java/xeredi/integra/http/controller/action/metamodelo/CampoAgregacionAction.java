@@ -34,21 +34,6 @@ public final class CampoAgregacionAction extends BaseAction {
 
     // Acciones web
     /**
-     * Creates the.
-     *
-     * @return the string
-     */
-    @Action("cmag-create")
-    public String create() {
-        Preconditions.checkNotNull(cmag);
-        Preconditions.checkNotNull(cmag.getTpesId());
-
-        accion = ACCION_EDICION.create;
-
-        return SUCCESS;
-    }
-
-    /**
      * Edits the.
      *
      * @return the string
@@ -57,15 +42,18 @@ public final class CampoAgregacionAction extends BaseAction {
      */
     @Action("cmag-edit")
     public String edit() throws ApplicationException {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(cmag);
         Preconditions.checkNotNull(cmag.getTpesId());
-        Preconditions.checkNotNull(cmag.getEntd());
-        Preconditions.checkNotNull(cmag.getEntd().getId());
 
-        final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(cmag.getEntd());
+            Preconditions.checkNotNull(cmag.getEntd().getId());
 
-        cmag = cmagBO.select(cmag.getTpesId(), cmag.getEntd().getId(), getIdioma());
-        accion = ACCION_EDICION.edit;
+            final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
+
+            cmag = cmagBO.select(cmag.getTpesId(), cmag.getEntd().getId(), getIdioma());
+        }
 
         return SUCCESS;
     }
@@ -160,15 +148,6 @@ public final class CampoAgregacionAction extends BaseAction {
     }
 
     // get / set
-    /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
-    }
-
     /**
      * Sets the accion.
      *

@@ -48,23 +48,6 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
     // Acciones Web
     /**
-     * Alta.
-     *
-     * @return the string
-     */
-    @Action("entd-create")
-    public String create() {
-        Preconditions.checkNotNull(entd);
-        Preconditions.checkNotNull(entd.getEntiId());
-
-        accion = ACCION_EDICION.create;
-
-        loadLabelValues();
-
-        return SUCCESS;
-    }
-
-    /**
      * Modificar.
      *
      * @return the string
@@ -73,17 +56,19 @@ public final class EntidadTipoDatoAction extends BaseAction {
      */
     @Action("entd-edit")
     public String edit() throws ApplicationException {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(entd);
         Preconditions.checkNotNull(entd.getEntiId());
-        Preconditions.checkNotNull(entd.getTpdt());
-        Preconditions.checkNotNull(entd.getTpdt().getId());
 
-        accion = ACCION_EDICION.edit;
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(entd.getTpdt());
+            Preconditions.checkNotNull(entd.getTpdt().getId());
 
-        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
+            final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-        entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.entd, entd.getId());
+            entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.entd, entd.getId());
+        }
 
         loadLabelValues();
 
@@ -235,15 +220,6 @@ public final class EntidadTipoDatoAction extends BaseAction {
      */
     public List<LabelValueVO> getTpdtList() {
         return tpdtList;
-    }
-
-    /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
     }
 
     /**

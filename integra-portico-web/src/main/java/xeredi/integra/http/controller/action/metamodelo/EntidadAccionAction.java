@@ -36,21 +36,6 @@ public final class EntidadAccionAction extends BaseAction {
 
     // Acciones Web
     /**
-     * Creates the.
-     *
-     * @return the string
-     */
-    @Action("enac-create")
-    public String create() {
-        Preconditions.checkNotNull(enac);
-        Preconditions.checkNotNull(enac.getEntiId());
-
-        accion = ACCION_EDICION.create;
-
-        return SUCCESS;
-    }
-
-    /**
      * Edits the.
      *
      * @return the string
@@ -59,14 +44,18 @@ public final class EntidadAccionAction extends BaseAction {
      */
     @Action("enac-edit")
     public String edit() throws ApplicationException {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(enac);
-        Preconditions.checkNotNull(enac.getId());
+        Preconditions.checkNotNull(enac.getEntiId());
 
-        final EntidadAccionBO enacBO = new EntidadAccionBO();
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(enac.getId());
 
-        enac = enacBO.select(enac.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.enac, enac.getId());
-        accion = ACCION_EDICION.edit;
+            final EntidadAccionBO enacBO = new EntidadAccionBO();
+
+            enac = enacBO.select(enac.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enac, enac.getId());
+        }
 
         return SUCCESS;
     }
@@ -153,16 +142,6 @@ public final class EntidadAccionAction extends BaseAction {
     }
 
     // get / set
-
-    /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
-    }
-
     /**
      * Sets the accion.
      *

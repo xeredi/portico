@@ -42,10 +42,6 @@ angular.module("metamodelo", [])
 
 .controller("TpesEditController", TpesEditController)
 
-.controller("TpesCreateController", TpesCreateController)
-
-.controller("CmagCreateController", CmagCreateController)
-
 .controller("CmagDetailController", CmagDetailController)
 
 .controller("CmagEditController", CmagEditController)
@@ -55,28 +51,20 @@ angular.module("metamodelo", [])
 
 .controller("EngdEditController", EngdEditController)
 
-.controller("EngdCreateController", EngdCreateController)
-
 // ------------------- DATO DE ENTIDAD --------------------
-.controller("EntdEditController", EntdEditController)
+.controller("EntdDetailController", EntdDetailController)
 
 .controller("EntdEditController", EntdEditController)
-
-.controller("EntdCreateController", EntdCreateController)
 
 // ------------------- ACCION DE ENTIDAD --------------------
 .controller("EnacDetailController", EnacDetailController)
 
 .controller("EnacEditController", EnacEditController)
 
-.controller("EnacCreateController", EnacCreateController)
-
 // ------------------- ACCION DE GRID DE ENTIDAD --------------------
 .controller("EnagDetailController", EnagDetailController)
 
 .controller("EnagEditController", EnagEditController)
-
-.controller("EnagCreateController", EnagCreateController)
 
 // ------------------- DEPENDENCIA ENTRE ENTIDADES --------------------
 .controller("EnenCreateController", EnenCreateController);
@@ -226,15 +214,15 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/tpes/edit/:entiId", {
+	.when("/metamodelo/tpes/edit/:accion/:entiId", {
 		templateUrl : "modules/metamodelo/tpes-edit.html",
 		controller : "TpesEditController",
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/tpes/create", {
+	.when("/metamodelo/tpes/edit/:accion", {
 		templateUrl : "modules/metamodelo/tpes-edit.html",
-		controller : "TpesCreateController",
+		controller : "TpesEditController",
 		controllerAs : 'vm'
 	})
 
@@ -244,33 +232,33 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/cmag/edit/:tpesId/:entdId", {
+	.when("/metamodelo/cmag/edit/:accion/:tpesId/:entdId", {
 		templateUrl : "modules/metamodelo/cmag-edit.html",
 		controller : "CmagEditController",
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/cmag/create/:tpesId", {
+	.when("/metamodelo/cmag/edit/:accion/:tpesId", {
 		templateUrl : "modules/metamodelo/cmag-edit.html",
-		controller : "CmagCreateController",
+		controller : "CmagEditController",
 		controllerAs : 'vm'
 	})
 
 	.when("/metamodelo/entd/detail/:entiId/:tpdtId", {
 		templateUrl : "modules/metamodelo/entd-detail.html",
-		controller : "EntdEditController",
+		controller : "EntdDetailController",
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/entd/edit/:entiId/:tpdtId", {
+	.when("/metamodelo/entd/edit/:accion/:entiId/:tpdtId", {
 		templateUrl : "modules/metamodelo/entd-edit.html",
 		controller : "EntdEditController",
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/entd/create/:entiId", {
+	.when("/metamodelo/entd/edit/:accion/:entiId", {
 		templateUrl : "modules/metamodelo/entd-edit.html",
-		controller : "EntdCreateController",
+		controller : "EntdEditController",
 		controllerAs : 'vm'
 	})
 
@@ -280,15 +268,15 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/engd/edit/:engdId", {
+	.when("/metamodelo/engd/edit/:accion/:entiId/:engdId", {
 		templateUrl : "modules/metamodelo/engd-edit.html",
 		controller : "EngdEditController",
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/engd/create/:entiId", {
+	.when("/metamodelo/engd/edit/:accion/:entiId", {
 		templateUrl : "modules/metamodelo/engd-edit.html",
-		controller : "EngdCreateController",
+		controller : "EngdEditController",
 		controllerAs : 'vm'
 	})
 
@@ -298,15 +286,15 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/enac/edit/:id", {
+	.when("/metamodelo/enac/edit/:accion/:entiId/:id", {
 		templateUrl : "modules/metamodelo/enac-edit.html",
 		controller : "EnacEditController",
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/enac/create/:entiId", {
+	.when("/metamodelo/enac/edit/:accion/:entiId", {
 		templateUrl : "modules/metamodelo/enac-edit.html",
-		controller : "EnacCreateController",
+		controller : "EnacEditController",
 		controllerAs : 'vm'
 	})
 
@@ -316,15 +304,15 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/enag/edit/:id", {
+	.when("/metamodelo/enag/edit/:accion/:entiId/:id", {
 		templateUrl : "modules/metamodelo/enag-edit.html",
 		controller : "EnagEditController",
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/enag/create/:entiId", {
+	.when("/metamodelo/enag/edit/:accion/:entiId", {
 		templateUrl : "modules/metamodelo/enag-edit.html",
-		controller : "EnagCreateController",
+		controller : "EnagEditController",
 		controllerAs : 'vm'
 	})
 
@@ -944,9 +932,10 @@ function TpesDetailController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("tpes", "page_detail");
 }
 
-function TpesEditController($http, $routeParams, pageTitleService) {
+function TpesEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
+	vm.accion = $routeParams.accion;
 	vm.save = save;
 	vm.cancel = cancel;
 
@@ -955,11 +944,14 @@ function TpesEditController($http, $routeParams, pageTitleService) {
 			enti : vm.enti,
 			i18nMap : vm.i18nMap,
 			accion : vm.accion
-		}).success(function(data) {
-			setTimeout(function() {
-				window.history.back();
-			}, 0);
-		});
+		}).success(
+				function(data) {
+					vm.accion == 'edit' ? setTimeout(function() {
+						window.history.back();
+					}, 0) : $location.path(
+							"/metamodelo/tpes/detail/" + data.enti.id)
+							.replace();
+				});
 	}
 
 	function cancel() {
@@ -969,78 +961,14 @@ function TpesEditController($http, $routeParams, pageTitleService) {
 	$http.post("metamodelo/tpes-edit.action", {
 		enti : {
 			id : $routeParams.entiId
-		}
+		},
+		accion : vm.accion
 	}).success(function(data) {
 		vm.enti = data.enti;
 		vm.i18nMap = data.i18nMap;
-		vm.accion = data.accion;
 	});
 
-	pageTitleService.setTitle("tpes", "page_edit");
-}
-
-function TpesCreateController($http, $location, $routeParams, pageTitleService) {
-	var vm = this;
-
-	vm.save = save;
-	vm.cancel = cancel;
-
-	function save() {
-		$http.post("metamodelo/tpes-save.action", {
-			enti : vm.enti,
-			i18nMap : vm.i18nMap,
-			accion : vm.accion
-		}).success(
-				function(data) {
-					$location.path("/metamodelo/tpes/detail/" + data.enti.id)
-							.replace();
-				});
-	}
-
-	function cancel() {
-		window.history.back();
-	}
-
-	$http.post("metamodelo/tpes-create.action").success(function(data) {
-		vm.enti = data.enti;
-		vm.accion = data.accion;
-	});
-
-	pageTitleService.setTitle("tpes", "page_create");
-}
-
-function CmagCreateController($http, $location, $routeParams, pageTitleService) {
-	var vm = this;
-
-	vm.save = save;
-	vm.cancel = cancel;
-
-	function save() {
-		$http.post("metamodelo/cmag-save.action", {
-			cmag : vm.cmag,
-			accion : vm.accion
-		}).success(
-				function(data) {
-					$location.path(
-							"/metamodelo/cmag/detail/" + data.cmag.tpesId + "/"
-									+ data.cmag.entd.id).replace();
-				});
-	}
-
-	function cancel() {
-		window.history.back();
-	}
-
-	$http.post("metamodelo/cmag-create.action", {
-		cmag : {
-			tpesId : $routeParams.tpesId
-		}
-	}).success(function(data) {
-		vm.cmag = data.cmag;
-		vm.accion = data.accion;
-	});
-
-	pageTitleService.setTitle("cmag", "page_create");
+	pageTitleService.setTitle("tpes", "page_" + vm.accion);
 }
 
 function CmagDetailController($http, $location, $routeParams, pageTitleService) {
@@ -1072,9 +1000,10 @@ function CmagDetailController($http, $location, $routeParams, pageTitleService) 
 	pageTitleService.setTitle("cmag", "page_detail");
 }
 
-function CmagEditController($http, $routeParams, pageTitleService) {
+function CmagEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
+	vm.accion = $routeParams.accion;
 	vm.save = save;
 	vm.cancel = cancel;
 
@@ -1082,33 +1011,36 @@ function CmagEditController($http, $routeParams, pageTitleService) {
 		$http.post("metamodelo/cmag-save.action", {
 			cmag : vm.cmag,
 			accion : vm.accion
-		}).success(function(data) {
-			setTimeout(function() {
-				window.history.back();
-			}, 0);
-		});
+		}).success(
+				function(data) {
+					vm.accion == 'edit' ? setTimeout(function() {
+						window.history.back();
+					}, 0) : $location.path(
+							"/metamodelo/cmag/detail/" + data.cmag.tpesId + "/"
+									+ data.cmag.entd.id).replace();
+				});
 	}
 
 	function cancel() {
 		window.history.back();
 	}
 
-	$http.post("metamodelo/cmag-edit.action?cmag.tpesId=", {
+	$http.post("metamodelo/cmag-edit.action", {
 		cmag : {
 			tpesId : $routeParams.tpesId,
 			entd : {
 				id : $routeParams.entdId
 			}
-		}
+		},
+		accion : vm.accion
 	}).success(function(data) {
 		vm.cmag = data.cmag;
-		vm.accion = data.accion;
 	});
 
-	pageTitleService.setTitle("cmag", "page_edit");
+	pageTitleService.setTitle("cmag", "page_" + vm.accion);
 }
 
-function EntdEditController($http, $routeParams, pageTitleService) {
+function EntdDetailController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.remove = remove;
@@ -1140,9 +1072,10 @@ function EntdEditController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("entd", "page_detail");
 }
 
-function EntdEditController($http, $routeParams, pageTitleService) {
+function EntdEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
+	vm.accion = $routeParams.accion;
 	vm.save = save;
 	vm.cancel = cancel;
 
@@ -1151,11 +1084,14 @@ function EntdEditController($http, $routeParams, pageTitleService) {
 			entd : vm.entd,
 			i18nMap : vm.i18nMap,
 			accion : vm.accion
-		}).success(function(data) {
-			setTimeout(function() {
-				window.history.back();
-			}, 0);
-		});
+		}).success(
+				function(data) {
+					vm.accion == 'edit' ? setTimeout(function() {
+						window.history.back();
+					}, 0) : $location.path(
+							"/metamodelo/entd/detail/" + data.entd.entiId + "/"
+									+ data.entd.tpdt.id).replace();
+				});
 	}
 
 	function cancel() {
@@ -1168,53 +1104,16 @@ function EntdEditController($http, $routeParams, pageTitleService) {
 			tpdt : {
 				id : $routeParams.tpdtId
 			}
-		}
+		},
+		accion : vm.accion
 	}).success(function(data) {
 		vm.entd = data.entd;
 		vm.i18nMap = data.i18nMap;
-		vm.accion = data.accion;
 		vm.tpdtList = data.tpdtList;
 		vm.engdList = data.engdList;
 	});
 
-	pageTitleService.setTitle("entd", "page_edit");
-}
-
-function EntdCreateController($http, $location, $routeParams, pageTitleService) {
-	var vm = this;
-
-	vm.save = save;
-	vm.cancel = cancel;
-
-	function save() {
-		$http.post("metamodelo/entd-save.action", {
-			entd : vm.entd,
-			i18nMap : vm.i18nMap,
-			accion : vm.accion
-		}).success(
-				function(data) {
-					$location.path(
-							"/metamodelo/entd/detail/" + data.entd.entiId + "/"
-									+ data.entd.tpdt.id).replace();
-				});
-	}
-
-	function cancel() {
-		window.history.back();
-	}
-
-	$http.post("metamodelo/entd-create.action", {
-		entd : {
-			entiId : $routeParams.entiId
-		}
-	}).success(function(data) {
-		vm.entd = data.entd;
-		vm.tpdtList = data.tpdtList;
-		vm.engdList = data.engdList;
-		vm.accion = data.accion;
-	});
-
-	pageTitleService.setTitle("entd", "page_create");
+	pageTitleService.setTitle("entd", "page_" + vm.accion);
 }
 
 function EngdDetailController($http, $location, $routeParams, pageTitleService) {
@@ -1246,44 +1145,10 @@ function EngdDetailController($http, $location, $routeParams, pageTitleService) 
 	pageTitleService.setTitle("engd", "page_detail");
 }
 
-function EngdEditController($http, $routeParams, pageTitleService) {
+function EngdEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
-	vm.save = save;
-	vm.cancel = cancel;
-
-	function save() {
-		$http.post("metamodelo/engd-save.action", {
-			engd : vm.engd,
-			i18nMap : vm.i18nMap,
-			accion : vm.accion
-		}).success(function(data) {
-			setTimeout(function() {
-				window.history.back();
-			}, 0);
-		});
-	}
-
-	function cancel() {
-		window.history.back();
-	}
-
-	$http.post("metamodelo/engd-edit.action", {
-		engd : {
-			id : $routeParams.engdId
-		}
-	}).success(function(data) {
-		vm.engd = data.engd;
-		vm.i18nMap = data.i18nMap;
-		vm.accion = data.accion;
-	});
-
-	pageTitleService.setTitle("engd", "page_edit");
-}
-
-function EngdCreateController($http, $location, $routeParams, pageTitleService) {
-	var vm = this;
-
+	vm.accion = $routeParams.accion;
 	vm.save = save;
 	vm.cancel = cancel;
 
@@ -1294,7 +1159,10 @@ function EngdCreateController($http, $location, $routeParams, pageTitleService) 
 			accion : vm.accion
 		}).success(
 				function(data) {
-					$location.path("/metamodelo/engd/detail/" + data.engd.id)
+					vm.accion == 'edit' ? setTimeout(function() {
+						window.history.back();
+					}, 0) : $location.path(
+							"/metamodelo/engd/detail/" + data.engd.id)
 							.replace();
 				});
 	}
@@ -1303,16 +1171,18 @@ function EngdCreateController($http, $location, $routeParams, pageTitleService) 
 		window.history.back();
 	}
 
-	$http.post("metamodelo/engd-create.action", {
+	$http.post("metamodelo/engd-edit.action", {
 		engd : {
-			entiId : $routeParams.entiId
-		}
+			entiId : $routeParams.entiId,
+			id : $routeParams.engdId
+		},
+		accion : vm.accion
 	}).success(function(data) {
 		vm.engd = data.engd;
-		vm.accion = data.accion;
+		vm.i18nMap = data.i18nMap;
 	});
 
-	pageTitleService.setTitle("engd", "page_create");
+	pageTitleService.setTitle("engd", "page_" + vm.accion);
 }
 
 function EnacDetailController($http, $location, $routeParams, pageTitleService) {
@@ -1344,44 +1214,10 @@ function EnacDetailController($http, $location, $routeParams, pageTitleService) 
 	pageTitleService.setTitle("enac", "page_detail");
 }
 
-function EnacEditController($http, $routeParams, pageTitleService) {
+function EnacEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
-	vm.save = save;
-	vm.cancel = cancel;
-
-	function save() {
-		$http.post("metamodelo/enac-save.action", {
-			enac : vm.enac,
-			i18nMap : vm.i18nMap,
-			accion : vm.accion
-		}).success(function(data) {
-			setTimeout(function() {
-				window.history.back();
-			}, 0);
-		});
-	}
-
-	function cancel() {
-		window.history.back();
-	}
-
-	$http.post("metamodelo/enac-edit.action", {
-		enac : {
-			id : $routeParams.id
-		}
-	}).success(function(data) {
-		vm.enac = data.enac;
-		vm.i18nMap = data.i18nMap;
-		vm.accion = data.accion;
-	});
-
-	pageTitleService.setTitle("enac", "page_edit");
-}
-
-function EnacCreateController($http, $location, $routeParams, pageTitleService) {
-	var vm = this;
-
+	vm.accion = $routeParams.accion;
 	vm.save = save;
 	vm.cancel = cancel;
 
@@ -1392,7 +1228,10 @@ function EnacCreateController($http, $location, $routeParams, pageTitleService) 
 			accion : vm.accion
 		}).success(
 				function(data) {
-					$location.path("/metamodelo/enac/detail/" + data.enac.id)
+					vm.accion == 'edit' ? setTimeout(function() {
+						window.history.back();
+					}, 0) : $location.path(
+							"/metamodelo/enac/detail/" + data.enac.id)
 							.replace();
 				});
 	}
@@ -1401,16 +1240,18 @@ function EnacCreateController($http, $location, $routeParams, pageTitleService) 
 		window.history.back();
 	}
 
-	$http.post("metamodelo/enac-create.action", {
+	$http.post("metamodelo/enac-edit.action", {
 		enac : {
-			entiId : $routeParams.entiId
-		}
+			entiId : $routeParams.entiId,
+			id : $routeParams.id
+		},
+		accion : vm.accion
 	}).success(function(data) {
 		vm.enac = data.enac;
-		vm.accion = data.accion;
+		vm.i18nMap = data.i18nMap;
 	});
 
-	pageTitleService.setTitle("enac", "page_create");
+	pageTitleService.setTitle("enac", "page_" + vm.accion);
 }
 
 function EnagDetailController($http, $location, $routeParams, pageTitleService) {
@@ -1442,44 +1283,10 @@ function EnagDetailController($http, $location, $routeParams, pageTitleService) 
 	pageTitleService.setTitle("enag", "page_detail");
 }
 
-function EnagEditController($http, $routeParams, pageTitleService) {
+function EnagEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
-	vm.save = save;
-	vm.cancel = cancel;
-
-	function save() {
-		$http.post("metamodelo/enag-save.action", {
-			enag : vm.enag,
-			i18nMap : vm.i18nMap,
-			accion : vm.accion
-		}).success(function(data) {
-			setTimeout(function() {
-				window.history.back();
-			}, 0);
-		});
-	}
-
-	function cancel() {
-		window.history.back();
-	}
-
-	$http.post("metamodelo/enag-edit.action", {
-		enag : {
-			id : $routeParams.id
-		}
-	}).success(function(data) {
-		vm.enag = data.enag;
-		vm.i18nMap = data.i18nMap;
-		vm.accion = data.accion;
-	});
-
-	pageTitleService.setTitle("enag", "page_edit");
-}
-
-function EnagCreateController($http, $location, $routeParams, pageTitleService) {
-	var vm = this;
-
+	vm.accion = $routeParams.accion;
 	vm.save = save;
 	vm.cancel = cancel;
 
@@ -1490,7 +1297,10 @@ function EnagCreateController($http, $location, $routeParams, pageTitleService) 
 			accion : vm.accion
 		}).success(
 				function(data) {
-					$location.path("/metamodelo/enag/detail/" + data.enag.id)
+					vm.accion == 'edit' ? setTimeout(function() {
+						window.history.back();
+					}, 0) : $location.path(
+							"/metamodelo/enag/detail/" + data.enag.id)
 							.replace();
 				});
 	}
@@ -1499,16 +1309,18 @@ function EnagCreateController($http, $location, $routeParams, pageTitleService) 
 		window.history.back();
 	}
 
-	$http.post("metamodelo/enag-create.action", {
+	$http.post("metamodelo/enag-edit.action", {
 		enag : {
-			entiId : $routeParams.entiId
-		}
+			entiId : $routeParams.entiId,
+			id : $routeParams.id
+		},
+		accion : vm.accion
 	}).success(function(data) {
 		vm.enag = data.enag;
-		vm.accion = data.accion;
+		vm.i18nMap = data.i18nMap;
 	});
 
-	pageTitleService.setTitle("enag", "page_create");
+	pageTitleService.setTitle("enag", "page_" + vm.accion);
 }
 
 function EnenCreateController($http, $routeParams, pageTitleService) {

@@ -36,21 +36,6 @@ public final class EntidadGrupoDatoAction extends BaseAction {
 
     // Acciones Web
     /**
-     * Alta.
-     *
-     * @return the string
-     */
-    @Action("engd-create")
-    public String create() {
-        Preconditions.checkNotNull(engd);
-        Preconditions.checkNotNull(engd.getEntiId());
-
-        accion = ACCION_EDICION.create;
-
-        return SUCCESS;
-    }
-
-    /**
      * Modificar.
      *
      * @return the string
@@ -59,14 +44,18 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      */
     @Action("engd-edit")
     public String edit() throws ApplicationException {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(engd);
-        Preconditions.checkNotNull(engd.getId());
+        Preconditions.checkNotNull(engd.getEntiId());
 
-        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(engd.getId());
 
-        engd = engdBO.select(engd.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.engd, engd.getId());
-        accion = ACCION_EDICION.edit;
+            final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+
+            engd = engdBO.select(engd.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.engd, engd.getId());
+        }
 
         return SUCCESS;
     }
@@ -147,15 +136,6 @@ public final class EntidadGrupoDatoAction extends BaseAction {
     }
 
     // get/set
-    /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
-    }
-
     /**
      * Sets the accion.
      *

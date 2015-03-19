@@ -36,20 +36,6 @@ public final class TipoEstadisticaAction extends BaseAction {
 
     // Acciones Web
     /**
-     * Alta.
-     *
-     * @return the string
-     */
-    @Action("tpes-create")
-    public String create() {
-        accion = ACCION_EDICION.create;
-
-        enti = new TipoEstadisticaVO();
-
-        return SUCCESS;
-    }
-
-    /**
      * Modificar.
      *
      * @return the string
@@ -58,14 +44,19 @@ public final class TipoEstadisticaAction extends BaseAction {
      */
     @Action("tpes-edit")
     public String modificar() throws ApplicationException {
-        Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getId());
+        Preconditions.checkNotNull(accion);
 
-        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(enti);
+            Preconditions.checkNotNull(enti.getId());
 
-        enti = tpesBO.select(enti.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
-        accion = ACCION_EDICION.edit;
+            final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
+
+            enti = tpesBO.select(enti.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+        } else {
+            enti = new TipoEstadisticaVO();
+        }
 
         return SUCCESS;
     }
@@ -155,16 +146,6 @@ public final class TipoEstadisticaAction extends BaseAction {
     }
 
     // get / set
-
-    /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
-    }
-
     /**
      * Sets the accion.
      *
