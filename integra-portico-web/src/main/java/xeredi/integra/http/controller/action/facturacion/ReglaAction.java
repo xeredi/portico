@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.facturacion;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -44,10 +43,10 @@ public final class ReglaAction extends BaseAction {
     private ReglaVO rgla;
 
     /** The rgin list. */
-    private final List<ReglaIncompatibleVO> rginList = new ArrayList<>();
+    private List<ReglaIncompatibleVO> rginList;
 
     /** The enti facturable list. */
-    private final List<LabelValueVO> entiFacturableList = new ArrayList<>();
+    private List<LabelValueVO> entiFacturableList;
 
     // acciones web
 
@@ -76,41 +75,7 @@ public final class ReglaAction extends BaseAction {
 
         rginCriterioVO.setRgla1Id(rgla.getId());
 
-        rginList.addAll(rginBO.selectList(rginCriterioVO));
-
-        return SUCCESS;
-    }
-
-    /**
-     * Creates the.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action("rgla-create")
-    public String create() throws ApplicationException {
-        Preconditions.checkNotNull(rgla);
-        Preconditions.checkNotNull(rgla.getCrgo());
-        Preconditions.checkNotNull(rgla.getCrgo().getId());
-
-        if (getFechaVigencia() == null) {
-            setFechaVigencia(Calendar.getInstance().getTime());
-        }
-
-        accion = ACCION_EDICION.create;
-
-        final CargoBO crgoBO = new CargoBO();
-        final CargoVO crgo = crgoBO.select(rgla.getCrgo().getId(), getFechaVigencia(), getIdioma());
-        final ReglaVersionVO rglv = new ReglaVersionVO();
-
-        rglv.setFini(Calendar.getInstance().getTime());
-
-        rgla = new ReglaVO();
-        rgla.setRglv(rglv);
-        rgla.setCrgo(crgo);
-
-        loadEntiFacturables();
+        rginList = rginBO.selectList(rginCriterioVO);
 
         return SUCCESS;
     }
@@ -124,18 +89,31 @@ public final class ReglaAction extends BaseAction {
      */
     @Action("rgla-edit")
     public String edit() throws ApplicationException {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(rgla);
-        Preconditions.checkNotNull(rgla.getId());
+        Preconditions.checkNotNull(rgla.getCrgo());
+        Preconditions.checkNotNull(rgla.getCrgo().getId());
+        Preconditions.checkNotNull(getFechaVigencia());
 
-        if (getFechaVigencia() == null) {
-            setFechaVigencia(Calendar.getInstance().getTime());
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(rgla.getId());
+
+            final ReglaBO rglaBO = new ReglaBO();
+
+            rgla = rglaBO.select(rgla.getId(), getFechaVigencia());
+        } else {
+            final CargoBO crgoBO = new CargoBO();
+            final CargoVO crgo = crgoBO.select(rgla.getCrgo().getId(), getFechaVigencia(), getIdioma());
+            final ReglaVersionVO rglv = new ReglaVersionVO();
+
+            rglv.setFini(Calendar.getInstance().getTime());
+
+            rgla = new ReglaVO();
+            rgla.setRglv(rglv);
+            rgla.setCrgo(crgo);
+
+            loadEntiFacturables();
         }
-
-        accion = ACCION_EDICION.edit;
-
-        final ReglaBO rglaBO = new ReglaBO();
-
-        rgla = rglaBO.select(rgla.getId(), getFechaVigencia());
 
         return SUCCESS;
     }
@@ -154,7 +132,7 @@ public final class ReglaAction extends BaseAction {
         tpsrCriterioVO.setFacturable(Boolean.TRUE);
         tpsrCriterioVO.setIdioma(getIdioma());
 
-        entiFacturableList.addAll(tpsrBO.selectLabelValues(tpsrCriterioVO));
+        entiFacturableList = tpsrBO.selectLabelValues(tpsrCriterioVO);
 
         final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
         final TipoSubservicioCriterioVO tpssCriterioVO = new TipoSubservicioCriterioVO();
@@ -344,15 +322,6 @@ public final class ReglaAction extends BaseAction {
      */
     public void setRgla(final ReglaVO value) {
         rgla = value;
-    }
-
-    /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
     }
 
     /**

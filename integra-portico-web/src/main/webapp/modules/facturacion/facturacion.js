@@ -38,16 +38,12 @@ angular.module("facturacion", [])
 // ----------- SERIE DE FACTURA ------------------
 .controller("FcsrGridController", FcsrGridController)
 
-.controller("FcsrCreateController", FcsrCreateController)
-
 .controller("FcsrDetailController", FcsrDetailController)
 
 .controller("FcsrEditController", FcsrEditController)
 
 // ----------- CARGO y REGLA ------------------
 .controller("CrgoGridController", CrgoGridController)
-
-.controller("CrgoCreateController", CrgoCreateController)
 
 .controller("CrgoDetailController", CrgoDetailController)
 
@@ -58,8 +54,6 @@ angular.module("facturacion", [])
 .controller("RglaDetailController", RglaDetailController)
 
 .controller("RglaEditController", RglaEditController)
-
-.controller("RglaCreateController", RglaCreateController)
 
 .controller("RginDetailController", RginDetailController)
 
@@ -200,15 +194,9 @@ function config($routeProvider) {
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/fcsr/edit/:fcsrId", {
+	.when("/facturacion/fcsr/edit/:accion/:fcsrId?", {
 		templateUrl : "modules/facturacion/fcsr-edit.html",
 		controller : "FcsrEditController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/fcsr/create", {
-		templateUrl : "modules/facturacion/fcsr-edit.html",
-		controller : "FcsrCreateController",
 		controllerAs : "vm"
 	})
 
@@ -219,79 +207,31 @@ function config($routeProvider) {
 		reloadOnSearch : false
 	})
 
-	.when("/facturacion/crgo/detail/:crgoId", {
+	.when("/facturacion/crgo/detail/:crgoId/:fechaVigencia?", {
 		templateUrl : "modules/facturacion/crgo-detail.html",
 		controller : "CrgoDetailController",
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/crgo/detail/:crgoId/:fechaVigencia", {
-		templateUrl : "modules/facturacion/crgo-detail.html",
-		controller : "CrgoDetailController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/crgo/edit/:crgoId", {
+	.when("/facturacion/crgo/edit/:accion/:crgoId?/:fechaVigencia?", {
 		templateUrl : "modules/facturacion/crgo-edit.html",
 		controller : "CrgoEditController",
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/crgo/edit/:crgoId/:fechaVigencia", {
-		templateUrl : "modules/facturacion/crgo-edit.html",
-		controller : "CrgoEditController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/crgo/create", {
-		templateUrl : "modules/facturacion/crgo-edit.html",
-		controller : "CrgoCreateController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/rgla/detail/:rglaId", {
+	.when("/facturacion/rgla/detail/:rglaId/:fechaVigencia?", {
 		templateUrl : "modules/facturacion/rgla-detail.html",
 		controller : "RglaDetailController",
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/rgla/detail/:rglaId/:fechaVigencia", {
-		templateUrl : "modules/facturacion/rgla-detail.html",
-		controller : "RglaDetailController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/rgla/edit/:rglaId", {
+	.when("/facturacion/rgla/edit/:accion/:crgoId/:fechaVigencia?/:rglaId?", {
 		templateUrl : "modules/facturacion/rgla-edit.html",
 		controller : "RglaEditController",
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/rgla/edit/:rglaId/:fechaVigencia", {
-		templateUrl : "modules/facturacion/rgla-edit.html",
-		controller : "RglaEditController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/rgla/create/:crgoId", {
-		templateUrl : "modules/facturacion/rgla-edit.html",
-		controller : "RglaCreateController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/rgla/create/:crgoId/:fechaVigencia", {
-		templateUrl : "modules/facturacion/rgla-edit.html",
-		controller : "RglaCreateController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/rgin/detail/:rginId", {
-		templateUrl : "modules/facturacion/rgin-detail.html",
-		controller : "RginDetailController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/rgin/detail/:rginId/:fechaVigencia", {
+	.when("/facturacion/rgin/detail/:rginId/:fechaVigencia?", {
 		templateUrl : "modules/facturacion/rgin-detail.html",
 		controller : "RginDetailController",
 		controllerAs : "vm"
@@ -322,61 +262,37 @@ function config($routeProvider) {
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/aspc/detail/:aspcId", {
+	.when("/facturacion/aspc/detail/:aspcId/:fechaVigencia?", {
 		templateUrl : "modules/facturacion/aspc-detail.html",
 		controller : "AspcDetailController",
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/aspc/detail/:aspcId/:fechaVigencia", {
-		templateUrl : "modules/facturacion/aspc-detail.html",
-		controller : "AspcDetailController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/aspc/edit/:aspcId", {
+	.when("/facturacion/aspc/edit/:aspcId/:fechaVigencia?", {
 		templateUrl : "modules/facturacion/aspc-edit.html",
 		controller : "AspcEditController",
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/aspc/edit/:aspcId/:fechaVigencia", {
-		templateUrl : "modules/facturacion/aspc-edit.html",
-		controller : "AspcEditController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/aspc/duplicate/:aspcId", {
+	.when("/facturacion/aspc/duplicate/:aspcId/:fechaVigencia?", {
 		templateUrl : "modules/facturacion/aspc-edit.html",
 		controller : "AspcDuplicateController",
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/aspc/duplicate/:aspcId/:fechaVigencia", {
-		templateUrl : "modules/facturacion/aspc-edit.html",
-		controller : "AspcDuplicateController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/ascr/create/:aspcId/:fechaVigencia", {
+	.when("/facturacion/ascr/create/:aspcId", {
 		templateUrl : "modules/facturacion/ascr-edit.html",
 		controller : "AscrCreateController",
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/ascr/detail/:ascrId/:fechaVigencia", {
+	.when("/facturacion/ascr/detail/:ascrId/:fechaVigencia?", {
 		templateUrl : "modules/facturacion/ascr-detail.html",
 		controller : "AscrDetailController",
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/ascr/edit/:ascrId", {
-		templateUrl : "modules/facturacion/ascr-edit.html",
-		controller : "AscrEditController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/ascr/edit/:ascrId/:fechaVigencia", {
+	.when("/facturacion/ascr/edit/:ascrId/:fechaVigencia?", {
 		templateUrl : "modules/facturacion/ascr-edit.html",
 		controller : "AscrEditController",
 		controllerAs : "vm"
@@ -1006,9 +922,10 @@ function FcsrDetailController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("fcsr", "page_detail");
 }
 
-function FcsrCreateController($http, $location, $routeParams, pageTitleService) {
+function FcsrEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
+	vm.accion = $routeParams.accion;
 	vm.save = save;
 	vm.cancel = cancel;
 
@@ -1018,38 +935,12 @@ function FcsrCreateController($http, $location, $routeParams, pageTitleService) 
 			accion : vm.accion
 		}).success(
 				function(data) {
-					$location.path("/facturacion/fcsr/detail/" + data.fcsr.id)
+					vm.accion == 'edit' ? setTimeout(function() {
+						window.history.back();
+					}, 0) : $location.path(
+							"/facturacion/fcsr/detail/" + data.fcsr.id)
 							.replace();
 				});
-	}
-
-	function cancel() {
-		window.history.back();
-	}
-
-	$http.post("facturacion/fcsr-create.action").success(function(data) {
-		vm.fcsr = data.fcsr;
-		vm.accion = data.accion;
-	});
-
-	pageTitleService.setTitle("fcsr", "page_create");
-}
-
-function FcsrEditController($http, $routeParams, pageTitleService) {
-	var vm = this;
-
-	vm.save = save;
-	vm.cancel = cancel;
-
-	function save() {
-		$http.post("facturacion/fcsr-save.action", {
-			fcsr : vm.fcsr,
-			accion : vm.accion
-		}).success(function(data) {
-			setTimeout(function() {
-				window.history.back();
-			}, 0);
-		});
 	}
 
 	function cancel() {
@@ -1059,13 +950,13 @@ function FcsrEditController($http, $routeParams, pageTitleService) {
 	$http.post("facturacion/fcsr-edit.action", {
 		fcsr : {
 			id : $routeParams.fcsrId
-		}
+		},
+		accion : vm.accion
 	}).success(function(data) {
 		vm.fcsr = data.fcsr;
-		vm.accion = data.accion;
 	});
 
-	pageTitleService.setTitle("fcsr", "page_edit");
+	pageTitleService.setTitle("fcsr", "page_" + vm.accion);
 }
 
 function CrgoGridController($http, $location, $routeParams, $modal,
@@ -1088,6 +979,7 @@ function CrgoGridController($http, $location, $routeParams, $modal,
 		}).success(function(data) {
 			vm.crgoList = data.crgoList;
 			vm.page = data.crgoList.page;
+			vm.crgoCriterio = data.crgoCriterio;
 
 			$location.search({
 				page : vm.page,
@@ -1148,9 +1040,10 @@ function CrgoDetailController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("crgo", "page_detail");
 }
 
-function CrgoCreateController($http, $location, $routeParams, pageTitleService) {
+function CrgoEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
+	vm.accion = $routeParams.accion;
 	vm.save = save;
 	vm.cancel = cancel;
 
@@ -1161,42 +1054,12 @@ function CrgoCreateController($http, $location, $routeParams, pageTitleService) 
 			accion : vm.accion
 		}).success(
 				function(data) {
-					$location.path(
-							"/facturacion/crgo/detail/" + data.crgo.crgv.id)
-							.replace();
+					vm.accion == 'edit' ? setTimeout(function() {
+						window.history.back();
+					}, 0) : $location.path(
+							"/facturacion/crgo/detail/" + data.crgo.id + "/"
+									+ data.crgo.crgv.fini).replace();
 				});
-	}
-
-	function cancel() {
-		window.history.back();
-	}
-
-	$http.post("facturacion/crgo-create.action").success(function(data) {
-		vm.crgo = data.crgo;
-		vm.tipos = data.tipos;
-		vm.accion = data.accion;
-		vm.entiList = data.tpsrList;
-	});
-
-	pageTitleService.setTitle("crgo", "page_create");
-}
-
-function CrgoEditController($http, $routeParams, pageTitleService) {
-	var vm = this;
-
-	vm.save = save;
-	vm.cancel = cancel;
-
-	function save() {
-		$http.post("facturacion/crgo-save.action", {
-			crgo : vm.crgo,
-			i18nMap : vm.i18nMap,
-			accion : vm.accion
-		}).success(function(data) {
-			setTimeout(function() {
-				window.history.back();
-			}, 0);
-		});
 	}
 
 	function cancel() {
@@ -1207,15 +1070,16 @@ function CrgoEditController($http, $routeParams, pageTitleService) {
 		crgo : {
 			id : $routeParams.crgoId
 		},
-		fechaVigencia : $routeParams.fechaVigencia
+		fechaVigencia : $routeParams.fechaVigencia,
+		accion : vm.accion
 	}).success(function(data) {
 		vm.crgo = data.crgo;
 		vm.i18nMap = data.i18nMap;
 		vm.tipos = data.tipos;
-		vm.accion = data.accion;
+		vm.entiList = data.tpsrList;
 	});
 
-	pageTitleService.setTitle("crgo", "page_edit");
+	pageTitleService.setTitle("crgo", "page_" + vm.accion);
 }
 
 function CrgoLupaController($http, $scope) {
@@ -1269,45 +1133,10 @@ function RglaDetailController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("rgla", "page_detail");
 }
 
-function RglaEditController($http, $routeParams, pageTitleService) {
+function RglaEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
-	vm.save = save;
-	vm.cancel = cancel;
-
-	function save() {
-		$http.post("facturacion/rgla-save.action", {
-			rgla : vm.rgla,
-			accion : vm.accion
-		}).success(function(data) {
-			setTimeout(function() {
-				window.history.back();
-			}, 0);
-		});
-	}
-
-	function cancel() {
-		window.history.back();
-	}
-
-	$http.post("facturacion/rgla-edit.action", {
-		rgla : {
-			id : $routeParams.rglaId
-		},
-		fechaVigencia : $routeParams.fechaVigencia
-	}).success(function(data) {
-		vm.rgla = data.rgla;
-		vm.tipos = data.tipos;
-		vm.entiFacturableList = data.entiFacturableList;
-		vm.accion = data.accion;
-	});
-
-	pageTitleService.setTitle("rgla", "page_edit");
-}
-
-function RglaCreateController($http, $location, $routeParams, pageTitleService) {
-	var vm = this;
-
+	vm.accion = $routeParams.accion;
 	vm.save = save;
 	vm.cancel = cancel;
 
@@ -1317,7 +1146,9 @@ function RglaCreateController($http, $location, $routeParams, pageTitleService) 
 			accion : vm.accion
 		}).success(
 				function(data) {
-					$location.path(
+					vm.accion == 'edit' ? setTimeout(function() {
+						window.history.back();
+					}, 0) : $location.path(
 							"/facturacion/rgla/detail/" + data.rgla.id + "/"
 									+ data.rgla.rglv.fini).replace();
 				});
@@ -1327,21 +1158,22 @@ function RglaCreateController($http, $location, $routeParams, pageTitleService) 
 		window.history.back();
 	}
 
-	$http.post("facturacion/rgla-create.action", {
+	$http.post("facturacion/rgla-edit.action", {
 		rgla : {
 			crgo : {
 				id : $routeParams.crgoId
 			},
-			fechaVigencia : $routeParams.fechaVigencia
-		}
+			id : $routeParams.rglaId
+		},
+		fechaVigencia : $routeParams.fechaVigencia,
+		accion : vm.accion
 	}).success(function(data) {
 		vm.rgla = data.rgla;
 		vm.tipos = data.tipos;
 		vm.entiFacturableList = data.entiFacturableList;
-		vm.accion = data.accion;
 	});
 
-	pageTitleService.setTitle("rgla", "page_create");
+	pageTitleService.setTitle("rgla", "page_" + vm.accion);
 }
 
 function RginDetailController($http, $routeParams, pageTitleService) {

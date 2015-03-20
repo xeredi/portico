@@ -85,13 +85,7 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/tpdt/edit/:accion/:tpdtId", {
-		templateUrl : "modules/metamodelo/tpdt-edit.html",
-		controller : "TpdtEditController",
-		controllerAs : 'vm'
-	})
-
-	.when("/metamodelo/tpdt/edit/:accion", {
+	.when("/metamodelo/tpdt/edit/:accion/:tpdtId?", {
 		templateUrl : "modules/metamodelo/tpdt-edit.html",
 		controller : "TpdtEditController",
 		controllerAs : 'vm'
@@ -103,13 +97,7 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/cdrf/edit/:accion/:tpdtId/:cdrfId", {
-		templateUrl : "modules/metamodelo/cdrf-edit.html",
-		controller : "CdrfEditController",
-		controllerAs : 'vm'
-	})
-
-	.when("/metamodelo/cdrf/edit/:accion/:tpdtId", {
+	.when("/metamodelo/cdrf/edit/:accion/:tpdtId/:cdrfId?", {
 		templateUrl : "modules/metamodelo/cdrf-edit.html",
 		controller : "CdrfEditController",
 		controllerAs : 'vm'
@@ -128,13 +116,7 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/tppr/edit/:accion/:entiId", {
-		templateUrl : "modules/metamodelo/tppr-edit.html",
-		controller : "TpprEditController",
-		controllerAs : 'vm'
-	})
-
-	.when("/metamodelo/tppr/edit/:accion", {
+	.when("/metamodelo/tppr/edit/:accion/:entiId?", {
 		templateUrl : "modules/metamodelo/tppr-edit.html",
 		controller : "TpprEditController",
 		controllerAs : 'vm'
@@ -146,13 +128,7 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/tpsp/edit/:accion/:tpprId/:entiId", {
-		templateUrl : "modules/metamodelo/tpsp-edit.html",
-		controller : "TpspEditController",
-		controllerAs : 'vm'
-	})
-
-	.when("/metamodelo/tpsp/edit/:accion/:tpprId", {
+	.when("/metamodelo/tpsp/edit/:accion/:tpprId/:entiId?", {
 		templateUrl : "modules/metamodelo/tpsp-edit.html",
 		controller : "TpspEditController",
 		controllerAs : 'vm'
@@ -171,13 +147,7 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/tpsr/edit/:accion/:entiId", {
-		templateUrl : "modules/metamodelo/tpsr-edit.html",
-		controller : "TpsrEditController",
-		controllerAs : 'vm'
-	})
-
-	.when("/metamodelo/tpsr/edit/:accion", {
+	.when("/metamodelo/tpsr/edit/:accion/:entiId?", {
 		templateUrl : "modules/metamodelo/tpsr-edit.html",
 		controller : "TpsrEditController",
 		controllerAs : 'vm'
@@ -189,13 +159,7 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/tpss/edit/:accion/:tpsrId/:entiId", {
-		templateUrl : "modules/metamodelo/tpss-edit.html",
-		controller : "TpssEditController",
-		controllerAs : 'vm'
-	})
-
-	.when("/metamodelo/tpss/edit/:accion/:tpsrId", {
+	.when("/metamodelo/tpss/edit/:accion/:tpsrId/:entiId?", {
 		templateUrl : "modules/metamodelo/tpss-edit.html",
 		controller : "TpssEditController",
 		controllerAs : 'vm'
@@ -214,13 +178,7 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/tpes/edit/:accion/:entiId", {
-		templateUrl : "modules/metamodelo/tpes-edit.html",
-		controller : "TpesEditController",
-		controllerAs : 'vm'
-	})
-
-	.when("/metamodelo/tpes/edit/:accion", {
+	.when("/metamodelo/tpes/edit/:accion/:entiId?", {
 		templateUrl : "modules/metamodelo/tpes-edit.html",
 		controller : "TpesEditController",
 		controllerAs : 'vm'
@@ -232,13 +190,7 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/cmag/edit/:accion/:tpesId/:entdId", {
-		templateUrl : "modules/metamodelo/cmag-edit.html",
-		controller : "CmagEditController",
-		controllerAs : 'vm'
-	})
-
-	.when("/metamodelo/cmag/edit/:accion/:tpesId", {
+	.when("/metamodelo/cmag/edit/:accion/:tpesId/:entdId?", {
 		templateUrl : "modules/metamodelo/cmag-edit.html",
 		controller : "CmagEditController",
 		controllerAs : 'vm'
@@ -250,13 +202,7 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/entd/edit/:accion/:entiId/:tpdtId", {
-		templateUrl : "modules/metamodelo/entd-edit.html",
-		controller : "EntdEditController",
-		controllerAs : 'vm'
-	})
-
-	.when("/metamodelo/entd/edit/:accion/:entiId", {
+	.when("/metamodelo/entd/edit/:accion/:entiId/:tpdtId?", {
 		templateUrl : "modules/metamodelo/entd-edit.html",
 		controller : "EntdEditController",
 		controllerAs : 'vm'
@@ -268,13 +214,7 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/engd/edit/:accion/:entiId/:engdId", {
-		templateUrl : "modules/metamodelo/engd-edit.html",
-		controller : "EngdEditController",
-		controllerAs : 'vm'
-	})
-
-	.when("/metamodelo/engd/edit/:accion/:entiId", {
+	.when("/metamodelo/engd/edit/:accion/:entiId/:engdId?", {
 		templateUrl : "modules/metamodelo/engd-edit.html",
 		controller : "EngdEditController",
 		controllerAs : 'vm'
@@ -286,13 +226,7 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/enac/edit/:accion/:entiId/:id", {
-		templateUrl : "modules/metamodelo/enac-edit.html",
-		controller : "EnacEditController",
-		controllerAs : 'vm'
-	})
-
-	.when("/metamodelo/enac/edit/:accion/:entiId", {
+	.when("/metamodelo/enac/edit/:accion/:entiId/:id?", {
 		templateUrl : "modules/metamodelo/enac-edit.html",
 		controller : "EnacEditController",
 		controllerAs : 'vm'
@@ -304,13 +238,7 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/metamodelo/enag/edit/:accion/:entiId/:id", {
-		templateUrl : "modules/metamodelo/enag-edit.html",
-		controller : "EnagEditController",
-		controllerAs : 'vm'
-	})
-
-	.when("/metamodelo/enag/edit/:accion/:entiId", {
+	.when("/metamodelo/enag/edit/:accion/:entiId/:id?", {
 		templateUrl : "modules/metamodelo/enag-edit.html",
 		controller : "EnagEditController",
 		controllerAs : 'vm'

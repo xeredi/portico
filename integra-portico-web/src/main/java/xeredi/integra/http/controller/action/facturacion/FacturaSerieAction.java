@@ -56,27 +56,18 @@ public final class FacturaSerieAction extends BaseAction {
      */
     @Action("fcsr-edit")
     public String edit() throws ModelException {
-        Preconditions.checkNotNull(fcsr);
-        Preconditions.checkNotNull(fcsr.getId());
+        Preconditions.checkNotNull(accion);
 
-        final FacturaSerieBO fcsrBO = new FacturaSerieBO();
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(fcsr);
+            Preconditions.checkNotNull(fcsr.getId());
 
-        fcsr = fcsrBO.select(fcsr.getId());
-        accion = ACCION_EDICION.edit;
+            final FacturaSerieBO fcsrBO = new FacturaSerieBO();
 
-        return SUCCESS;
-    }
-
-    /**
-     * Creates the.
-     *
-     * @return the string
-     */
-    @Action("fcsr-create")
-    public String create() {
-        accion = ACCION_EDICION.create;
-
-        fcsr = new FacturaSerieVO();
+            fcsr = fcsrBO.select(fcsr.getId());
+        } else {
+            fcsr = new FacturaSerieVO();
+        }
 
         return SUCCESS;
     }
@@ -165,15 +156,6 @@ public final class FacturaSerieAction extends BaseAction {
      */
     public void setFcsr(final FacturaSerieVO value) {
         fcsr = value;
-    }
-
-    /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
     }
 
     /**

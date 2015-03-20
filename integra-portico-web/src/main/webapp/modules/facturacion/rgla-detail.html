@@ -1,6 +1,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/facturacion/rgla/edit/{{vm.rgla.id}}/{{vm.fechaVigencia}}"><i
+        <a class="btn btn-default"
+            ng-href="#/facturacion/rgla/edit/edit/{{vm.rgla.crgo.id}}/{{vm.fechaVigencia}}/{{vm.rgla.id}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
@@ -28,10 +29,8 @@
         <div class="col-md-2 form-group">
             <label translate>rgla_enti</label>
             <p class="form-control-static">
-                <a ng-if="vm.rgla.enti.tipo == 'T'"
-                    ng-href="#/metamodelo/tpsr/detail/{{vm.rgla.enti.id}}"
-                    ng-bind="'enti_' + vm.rgla.enti.id | translate"></a> <a
-                    ng-if="vm.rgla.enti.tipo == 'S'"
+                <a ng-if="vm.rgla.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{vm.rgla.enti.id}}"
+                    ng-bind="'enti_' + vm.rgla.enti.id | translate"></a> <a ng-if="vm.rgla.enti.tipo == 'S'"
                     ng-href="#/metamodelo/tpss/detail/{{vm.rgla.enti.id}}"
                     ng-bind="'enti_' + vm.rgla.enti.id | translate"></a>
             </p>
