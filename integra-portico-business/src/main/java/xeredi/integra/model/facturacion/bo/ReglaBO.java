@@ -165,22 +165,20 @@ public class ReglaBO {
     /**
      * Delete.
      *
-     * @param rgla
-     *            the rgla
+     * @param rglvId
+     *            the rglv id
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final ReglaVO rgla) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(rgla);
-        Preconditions.checkNotNull(rgla.getRglv());
-        Preconditions.checkNotNull(rgla.getRglv().getId());
+    public void delete(final Long rglvId) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(rglvId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
-            final int updated = rglaDAO.deleteVersion(rgla);
+            final int updated = rglaDAO.deleteVersion(rglvId);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.rgla, rgla);
+                throw new InstanceNotFoundException(MessageI18nKey.rgla, rglvId);
             }
 
             session.commit();

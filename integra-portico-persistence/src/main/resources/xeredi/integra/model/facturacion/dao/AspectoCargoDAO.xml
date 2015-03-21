@@ -136,10 +136,10 @@
     ]]>
 	</update>
 
-	<delete id="deleteVersion" parameterType="AspectoCargoVO">
+	<delete id="deleteVersion" parameterType="Long">
     <![CDATA[
         DELETE FROM tbl_aspecto_cargo_version_ascv
-        WHERE ascv_pk = #{ascv.id}
+        WHERE ascv_pk = #{value}
     ]]>
 	</delete>
 </mapper>

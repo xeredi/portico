@@ -112,6 +112,6 @@ public interface CargoDAO {
      *            the crgo
      * @return the int
      */
-    int deleteVersion(final @Nonnull CargoVO crgo);
+    int deleteVersion(final @Nonnull Long crgvId);
 
 }

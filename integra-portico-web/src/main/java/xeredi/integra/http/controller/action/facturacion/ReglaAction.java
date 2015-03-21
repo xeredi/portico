@@ -289,7 +289,7 @@ public final class ReglaAction extends BaseAction {
 
         final ReglaBO rglaBO = new ReglaBO();
 
-        rglaBO.delete(rgla);
+        rglaBO.delete(rgla.getRglv().getId());
 
         return SUCCESS;
     }

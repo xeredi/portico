@@ -86,10 +86,10 @@ public interface AspectoCargoDAO {
     /**
      * Delete version.
      *
-     * @param vo
-     *            the vo
+     * @param ascvId
+     *            the ascv id
      * @return the int
      */
-    int deleteVersion(final @Nonnull AspectoCargoVO vo);
+    int deleteVersion(final @Nonnull Long ascvId);
 
 }

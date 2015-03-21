@@ -59,22 +59,14 @@ angular.module("facturacion", [])
 
 .controller("RginEditController", RginEditController)
 
-.controller("RginCreateController", RginCreateController)
-
 // ----------- ASPECTO y ASPECTO CARGO ------------------
 .controller("AspcGridController", AspcGridController)
-
-.controller("AspcCreateController", AspcCreateController)
 
 .controller("AspcDetailController", AspcDetailController)
 
 .controller("AspcEditController", AspcEditController)
 
-.controller("AspcDuplicateController", AspcDuplicateController)
-
 .controller('AspcLupaController', AspcLupaController)
-
-.controller("AscrCreateController", AscrCreateController)
 
 .controller("AscrDetailController", AscrDetailController)
 
@@ -237,15 +229,9 @@ function config($routeProvider) {
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/rgin/edit/:rgivId", {
+	.when("/facturacion/rgin/edit/:accion/:rgla1Id/:fechaVigencia?/:rginId?", {
 		templateUrl : "modules/facturacion/rgin-edit.html",
 		controller : "RginEditController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/rgin/create/:crgoId/:rgla1Id", {
-		templateUrl : "modules/facturacion/rgin-edit.html",
-		controller : "RginCreateController",
 		controllerAs : "vm"
 	})
 
@@ -256,33 +242,15 @@ function config($routeProvider) {
 		reloadOnSearch : false
 	})
 
-	.when("/facturacion/aspc/create", {
-		templateUrl : "modules/facturacion/aspc-edit.html",
-		controller : "AspcCreateController",
-		controllerAs : "vm"
-	})
-
 	.when("/facturacion/aspc/detail/:aspcId/:fechaVigencia?", {
 		templateUrl : "modules/facturacion/aspc-detail.html",
 		controller : "AspcDetailController",
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/aspc/edit/:aspcId/:fechaVigencia?", {
+	.when("/facturacion/aspc/edit/:accion/:aspcId?/:fechaVigencia?", {
 		templateUrl : "modules/facturacion/aspc-edit.html",
 		controller : "AspcEditController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/aspc/duplicate/:aspcId/:fechaVigencia?", {
-		templateUrl : "modules/facturacion/aspc-edit.html",
-		controller : "AspcDuplicateController",
-		controllerAs : "vm"
-	})
-
-	.when("/facturacion/ascr/create/:aspcId", {
-		templateUrl : "modules/facturacion/ascr-edit.html",
-		controller : "AscrCreateController",
 		controllerAs : "vm"
 	})
 
@@ -292,7 +260,7 @@ function config($routeProvider) {
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/ascr/edit/:ascrId/:fechaVigencia?", {
+	.when("/facturacion/ascr/edit/:accion/:aspcId/:fechaVigencia?/:ascrId?", {
 		templateUrl : "modules/facturacion/ascr-edit.html",
 		controller : "AscrEditController",
 		controllerAs : "vm"
@@ -1208,44 +1176,10 @@ function RginDetailController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("rgin", "page_detail");
 }
 
-function RginEditController($http, $routeParams, pageTitleService) {
+function RginEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
-	vm.save = save;
-	vm.cancel = cancel;
-
-	function save() {
-		$http.post("facturacion/rgin-save.action", {
-			rgin : vm.rgin,
-			accion : vm.accion
-		}).success(function(data) {
-			setTimeout(function() {
-				window.history.back();
-			}, 0);
-		});
-	}
-
-	function cancel() {
-		window.history.back();
-	}
-
-	$http.post("facturacion/rgin-edit.action", {
-		rgin : {
-			rgiv : {
-				id : $routeParams.rgivId
-			}
-		}
-	}).success(function(data) {
-		vm.rgin = data.rgin;
-		vm.accion = data.accion;
-	});
-
-	pageTitleService.setTitle("rgin", "page_edit");
-}
-
-function RginCreateController($http, $location, $routeParams, pageTitleService) {
-	var vm = this;
-
+	vm.accion = $routeParams.accion;
 	vm.save = save;
 	vm.cancel = cancel;
 
@@ -1255,8 +1189,11 @@ function RginCreateController($http, $location, $routeParams, pageTitleService) 
 			accion : vm.accion
 		}).success(
 				function(data) {
-					$location.path("/facturacion/rgin/detail/" + data.rgin.id)
-							.replace();
+					vm.accion == 'edit' ? setTimeout(function() {
+						window.history.back();
+					}, 0) : $location.path(
+							"/facturacion/rgin/detail/" + data.rgin.id + "/"
+									+ data.rgin.rgiv.fini).replace();
 				});
 	}
 
@@ -1264,18 +1201,19 @@ function RginCreateController($http, $location, $routeParams, pageTitleService) 
 		window.history.back();
 	}
 
-	$http.post("facturacion/rgin-create.action", {
+	$http.post("facturacion/rgin-edit.action", {
 		rgin : {
-			rgla1Id : $routeParams.rgla1Id
+			rgla1Id : $routeParams.rgla1Id,
+			id : $routeParams.rginId
 		},
-		crgoId : $routeParams.crgoId
+		accion : vm.accion,
+		fechaVigencia : $routeParams.fechaVigencia
 	}).success(function(data) {
 		vm.rgin = data.rgin;
-		vm.accion = data.accion;
 		vm.rgla2List = data.rgla2List;
 	});
 
-	pageTitleService.setTitle("rgin", "page_create");
+	pageTitleService.setTitle("rgin", "page_" + vm.accion);
 }
 
 function AspcGridController($http, $location, $routeParams, $modal,
@@ -1359,9 +1297,10 @@ function AspcDetailController($http, $location, $routeParams, pageTitleService) 
 	pageTitleService.setTitle("aspc", "page_detail");
 }
 
-function AspcCreateController($http, $location, $routeParams, pageTitleService) {
+function AspcEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
+	vm.accion = $routeParams.accion;
 	vm.save = save;
 	vm.cancel = cancel;
 
@@ -1372,41 +1311,12 @@ function AspcCreateController($http, $location, $routeParams, pageTitleService) 
 			accion : vm.accion
 		}).success(
 				function(data) {
-					$location.path(
+					vm.accion == 'edit' ? setTimeout(function() {
+						window.history.back();
+					}, 0) : $location.path(
 							"/facturacion/aspc/detail/" + data.aspc.id + "/"
 									+ data.aspc.aspv.fini).replace();
 				});
-	}
-
-	function cancel() {
-		window.history.back();
-	}
-
-	$http.post("facturacion/aspc-create.action").success(function(data) {
-		vm.aspc = data.aspc;
-		vm.accion = data.accion;
-		vm.entiTpsrList = data.entiList;
-	});
-
-	pageTitleService.setTitle("aspc", "page_create");
-}
-
-function AspcEditController($http, $routeParams, pageTitleService) {
-	var vm = this;
-
-	vm.save = save;
-	vm.cancel = cancel;
-
-	function save() {
-		$http.post("facturacion/aspc-save.action", {
-			aspc : vm.aspc,
-			i18nMap : vm.i18nMap,
-			accion : vm.accion
-		}).success(function(data) {
-			setTimeout(function() {
-				window.history.back();
-			}, 0);
-		});
 	}
 
 	function cancel() {
@@ -1417,52 +1327,15 @@ function AspcEditController($http, $routeParams, pageTitleService) {
 		aspc : {
 			id : $routeParams.aspcId
 		},
-		fechaVigencia : $routeParams.fechaVigencia
+		fechaVigencia : $routeParams.fechaVigencia,
+		accion : vm.accion
 	}).success(function(data) {
 		vm.aspc = data.aspc;
 		vm.i18nMap = data.i18nMap;
-		vm.accion = data.accion;
+		vm.entiTpsrList = data.entiList;
 	});
 
-	pageTitleService.setTitle("aspc", "page_edit");
-}
-
-function AspcDuplicateController($http, $location, $routeParams,
-		pageTitleService) {
-	var vm = this;
-
-	vm.save = save;
-	vm.cancel = cancel;
-
-	function save() {
-		$http.post("facturacion/aspc-save.action", {
-			aspc : vm.aspc,
-			i18nMap : vm.i18nMap,
-			accion : vm.accion
-		}).success(
-				function(data) {
-					$location.path(
-							"/facturacion/aspc/detail/" + data.aspc.id + "/"
-									+ data.aspc.aspv.fini).replace();
-				});
-	}
-
-	function cancel() {
-		window.history.back();
-	}
-
-	$http.post("facturacion/aspc-duplicate.action", {
-		aspc : {
-			id : $routeParams.aspcId
-		},
-		fechaVigencia : $routeParams.fechaVigencia
-	}).success(function(data) {
-		vm.aspc = data.aspc;
-		vm.i18nMap = data.i18nMap;
-		vm.accion = data.accion;
-	});
-
-	pageTitleService.setTitle("aspc", "page_duplicate");
+	pageTitleService.setTitle("aspc", "page_" + vm.accion);
 }
 
 function AspcLupaController($http, $scope) {
@@ -1515,9 +1388,10 @@ function AscrDetailController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("ascr", "page_detail");
 }
 
-function AscrCreateController($http, $location, $routeParams, pageTitleService) {
+function AscrEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
+	vm.accion = $routeParams.accion;
 	vm.save = save;
 	vm.cancel = cancel;
 
@@ -1527,7 +1401,9 @@ function AscrCreateController($http, $location, $routeParams, pageTitleService) 
 			accion : vm.accion
 		}).success(
 				function(data) {
-					$location.path(
+					vm.accion == 'edit' ? setTimeout(function() {
+						window.history.back();
+					}, 0) : $location.path(
 							"/facturacion/ascr/detail/" + data.ascr.id + "/"
 									+ data.ascr.ascv.fini).replace();
 				});
@@ -1537,50 +1413,17 @@ function AscrCreateController($http, $location, $routeParams, pageTitleService) 
 		window.history.back();
 	}
 
-	$http.post("facturacion/ascr-create.action", {
+	$http.post("facturacion/ascr-edit.action", {
 		ascr : {
-			aspcId : $routeParams.aspcId
+			aspcId : $routeParams.aspcId,
+			id : $routeParams.ascrId
 		},
-		fechaVigencia : $routeParams.fechaVigencia
+		fechaVigencia : $routeParams.fechaVigencia,
+		accion : vm.accion
 	}).success(function(data) {
 		vm.ascr = data.ascr;
 		vm.crgoList = data.crgoList;
-		vm.accion = data.accion;
 	});
 
-	pageTitleService.setTitle("ascr", "page_create");
-}
-
-function AscrEditController($http, $routeParams, pageTitleService) {
-	var vm = this;
-
-	vm.save = save;
-	vm.cancel = cancel;
-
-	function save() {
-		$http.post("facturacion/ascr-save.action", {
-			ascr : vm.ascr,
-			accion : vm.accion
-		}).success(function(data) {
-			setTimeout(function() {
-				window.history.back();
-			}, 0);
-		});
-	}
-
-	function cancel() {
-		window.history.back();
-	}
-
-	$http.post("facturacion/ascr-edit.action", {
-		ascr : {
-			id : $routeParams.ascrId
-		},
-		fechaVigencia : $routeParams.fechaVigencia
-	}).success(function(data) {
-		vm.ascr = data.ascr;
-		vm.accion = data.accion;
-	});
-
-	pageTitleService.setTitle("ascr", "page_edit");
+	pageTitleService.setTitle("ascr", "page_" + vm.accion);
 }

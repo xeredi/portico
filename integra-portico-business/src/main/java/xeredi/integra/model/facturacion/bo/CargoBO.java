@@ -221,25 +221,23 @@ public class CargoBO {
     /**
      * Delete.
      *
-     * @param crgo
-     *            the crgo
+     * @param crgvId
+     *            the crgvId
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final CargoVO crgo) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(crgo);
-        Preconditions.checkNotNull(crgo.getCrgv());
-        Preconditions.checkNotNull(crgo.getCrgv().getId());
+    public void delete(final Long crgvId) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(crgvId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
-            final int updated = crgoDAO.deleteVersion(crgo);
+            final int updated = crgoDAO.deleteVersion(crgvId);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.crgo, crgo);
+                throw new InstanceNotFoundException(MessageI18nKey.crgo, crgvId);
             }
 
-            I18nBO.deleteMap(session, I18nPrefix.crgv, crgo.getCrgv().getId());
+            I18nBO.deleteMap(session, I18nPrefix.crgv, crgvId);
 
             session.commit();
         }

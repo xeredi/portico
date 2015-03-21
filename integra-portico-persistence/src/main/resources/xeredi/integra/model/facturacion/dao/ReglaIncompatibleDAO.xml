@@ -91,7 +91,10 @@
 	<select id="existsOverlap" parameterType="ReglaIncompatibleVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
-        FROM vw_regla_inc_rgin
+        FROM
+        	tbl_regla_inc_rgin
+		    INNER JOIN tbl_regla_inc_version_rgiv ON
+		        rgiv_rgin_pk = rgin_pk
         WHERE
             rgin_pk = #{id}
             AND (

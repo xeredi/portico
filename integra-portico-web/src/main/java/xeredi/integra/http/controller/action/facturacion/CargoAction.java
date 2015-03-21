@@ -184,7 +184,7 @@ public final class CargoAction extends BaseAction {
 
         final CargoBO crgoBO = new CargoBO();
 
-        crgoBO.delete(crgo);
+        crgoBO.delete(crgo.getCrgv().getId());
 
         return SUCCESS;
     }

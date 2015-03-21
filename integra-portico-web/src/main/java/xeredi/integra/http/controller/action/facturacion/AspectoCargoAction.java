@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.facturacion;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public final class AspectoCargoAction extends BaseAction {
     private AspectoCargoVO ascr;
 
     /** The crgo list. */
-    private final List<LabelValueVO> crgoList = new ArrayList<LabelValueVO>();
+    private List<LabelValueVO> crgoList;
 
     /**
      * Detail.
@@ -62,37 +61,6 @@ public final class AspectoCargoAction extends BaseAction {
     }
 
     /**
-     * Creates the.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action("ascr-create")
-    public String create() throws ApplicationException {
-        Preconditions.checkNotNull(ascr);
-        Preconditions.checkNotNull(ascr.getAspcId());
-
-        if (getFechaVigencia() == null) {
-            setFechaVigencia(Calendar.getInstance().getTime());
-        }
-
-        accion = ACCION_EDICION.create;
-
-        final AspectoBO aspcBO = new AspectoBO();
-        final AspectoVO aspc = aspcBO.select(ascr.getAspcId(), getFechaVigencia(), getIdioma());
-        final CargoBO crgoBO = new CargoBO();
-        final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
-
-        crgoCriterioVO.setTpsrId(aspc.getTpsr().getId());
-        crgoCriterioVO.setFechaVigencia(getFechaVigencia());
-
-        crgoList.addAll(crgoBO.selectLabelValueList(crgoCriterioVO));
-
-        return SUCCESS;
-    }
-
-    /**
      * Edits the.
      *
      * @return the string
@@ -101,17 +69,29 @@ public final class AspectoCargoAction extends BaseAction {
      */
     @Action("ascr-edit")
     public String edit() throws ApplicationException {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(ascr);
-        Preconditions.checkNotNull(ascr.getId());
+        Preconditions.checkNotNull(ascr.getAspcId());
+        Preconditions.checkNotNull(getFechaVigencia());
 
-        if (getFechaVigencia() == null) {
-            setFechaVigencia(Calendar.getInstance().getTime());
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(ascr.getId());
+
+            final AspectoCargoBO ascrBO = new AspectoCargoBO();
+
+            ascr = ascrBO.select(ascr.getId(), getFechaVigencia());
+        } else {
+            final AspectoBO aspcBO = new AspectoBO();
+            final AspectoVO aspc = aspcBO.select(ascr.getAspcId(), getFechaVigencia(), getIdioma());
+            final CargoBO crgoBO = new CargoBO();
+            final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
+
+            crgoCriterio.setTpsrId(aspc.getTpsr().getId());
+            crgoCriterio.setFechaVigencia(getFechaVigencia());
+            crgoCriterio.setIdioma(getIdioma());
+
+            crgoList = crgoBO.selectLabelValueList(crgoCriterio);
         }
-
-        final AspectoCargoBO ascrBO = new AspectoCargoBO();
-
-        ascr = ascrBO.select(ascr.getId(), getFechaVigencia());
-        accion = ACCION_EDICION.edit;
 
         return SUCCESS;
     }
@@ -180,21 +160,12 @@ public final class AspectoCargoAction extends BaseAction {
 
         final AspectoCargoBO ascrBO = new AspectoCargoBO();
 
-        ascrBO.delete(ascr);
+        ascrBO.delete(ascr.getAscv().getId());
 
         return SUCCESS;
     }
 
     // get / set
-    /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
-    }
-
     /**
      * Sets the accion.
      *
@@ -232,5 +203,4 @@ public final class AspectoCargoAction extends BaseAction {
     public List<LabelValueVO> getCrgoList() {
         return crgoList;
     }
-
 }

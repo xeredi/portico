@@ -315,11 +315,11 @@
     ]]>
 	</update>
 
-	<delete id="deleteVersion" parameterType="ReglaVO">
+	<delete id="deleteVersion" parameterType="Long">
     <![CDATA[
         DELETE FROM tbl_regla_version_rglv
         WHERE
-            rglv_pk = #{rglv.id}
+            rglv_pk = #{value}
     ]]>
 	</delete>
 </mapper>

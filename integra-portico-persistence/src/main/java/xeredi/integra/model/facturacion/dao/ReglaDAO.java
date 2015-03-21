@@ -108,9 +108,9 @@ public interface ReglaDAO {
     /**
      * Delete version.
      *
-     * @param rgla
-     *            the rgla
+     * @param rglvId
+     *            the rglv id
      * @return the int
      */
-    int deleteVersion(final @Nonnull ReglaVO rgla);
+    int deleteVersion(final @Nonnull Long rglvId);
 }

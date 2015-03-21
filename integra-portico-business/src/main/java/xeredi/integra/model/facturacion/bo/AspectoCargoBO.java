@@ -136,9 +136,7 @@ public final class AspectoCargoBO {
                 throw new OverlapException(MessageI18nKey.ascr, vo);
             }
 
-            final int updated = ascrDAO.updateVersion(vo);
-
-            if (updated == 0) {
+            if (ascrDAO.updateVersion(vo) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.ascr, vo);
             }
 
@@ -154,18 +152,14 @@ public final class AspectoCargoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final AspectoCargoVO vo) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(vo);
-        Preconditions.checkNotNull(vo.getAscv());
-        Preconditions.checkNotNull(vo.getAscv().getId());
+    public void delete(final Long ascvId) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(ascvId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoCargoDAO ascrDAO = session.getMapper(AspectoCargoDAO.class);
 
-            final int updated = ascrDAO.deleteVersion(vo);
-
-            if (updated == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.ascr, vo);
+            if (ascrDAO.deleteVersion(ascvId) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.ascr, ascvId);
             }
 
             session.commit();

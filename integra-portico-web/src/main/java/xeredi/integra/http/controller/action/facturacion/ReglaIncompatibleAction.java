@@ -1,8 +1,6 @@
 package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -17,6 +15,7 @@ import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVersionVO;
+import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
@@ -33,17 +32,11 @@ public final class ReglaIncompatibleAction extends BaseAction {
     /** The accion. */
     private ACCION_EDICION accion;
 
-    /** The crgo id. */
-    private Long crgoId;
-
     /** The crgo. */
     private ReglaIncompatibleVO rgin;
 
     /** The rgla2 list. */
-    private final List<LabelValueVO> rgla2List = new ArrayList<>();
-
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
+    private List<LabelValueVO> rgla2List = new ArrayList<>();
 
     // acciones web
 
@@ -60,44 +53,12 @@ public final class ReglaIncompatibleAction extends BaseAction {
         Preconditions.checkNotNull(rgin.getId());
 
         final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
-        final ReglaIncompatibleCriterioVO rginCriterioVO = new ReglaIncompatibleCriterioVO();
+        final ReglaIncompatibleCriterioVO rginCriterio = new ReglaIncompatibleCriterioVO();
 
-        rginCriterioVO.setId(rgin.getId());
-        rginCriterioVO.setFechaVigencia(fechaVigencia);
+        rginCriterio.setId(rgin.getId());
+        rginCriterio.setFechaVigencia(getFechaVigencia());
 
-        if (rgin.getRgiv() != null) {
-            rginCriterioVO.setRgivId(rgin.getRgiv().getId());
-        }
-
-        rgin = rginBO.select(rginCriterioVO);
-
-        return SUCCESS;
-    }
-
-    /**
-     * Creates the.
-     *
-     * @return the string
-     */
-    @Action("rgin-create")
-    public String create() {
-        Preconditions.checkNotNull(crgoId);
-        Preconditions.checkNotNull(rgin);
-        Preconditions.checkNotNull(rgin.getRgla1Id());
-
-        accion = ACCION_EDICION.create;
-
-        rgin.setRgiv(new ReglaIncompatibleVersionVO());
-        rgin.getRgiv().setFini(Calendar.getInstance().getTime());
-
-        {
-            final ReglaBO rglaBO = new ReglaBO();
-            final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
-
-            rglaCriterioVO.setCrgoId(crgoId);
-
-            rgla2List.addAll(rglaBO.selectLabelValueList(rglaCriterioVO));
-        }
+        rgin = rginBO.select(rginCriterio);
 
         return SUCCESS;
     }
@@ -111,17 +72,39 @@ public final class ReglaIncompatibleAction extends BaseAction {
      */
     @Action("rgin-edit")
     public String edit() throws ApplicationException {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(rgin);
-        Preconditions.checkNotNull(rgin.getRgiv().getId());
+        Preconditions.checkNotNull(rgin.getRgla1Id());
+        Preconditions.checkNotNull(getFechaVigencia());
 
-        accion = ACCION_EDICION.edit;
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(rgin.getId());
 
-        final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
-        final ReglaIncompatibleCriterioVO rginCriterioVO = new ReglaIncompatibleCriterioVO();
+            final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
+            final ReglaIncompatibleCriterioVO rginCriterio = new ReglaIncompatibleCriterioVO();
 
-        rginCriterioVO.setRgivId(rgin.getRgiv().getId());
+            rginCriterio.setId(rgin.getId());
+            rginCriterio.setFechaVigencia(getFechaVigencia());
+            rginCriterio.setIdioma(getIdioma());
 
-        rgin = rginBO.select(rginCriterioVO);
+            rgin = rginBO.select(rginCriterio);
+        } else {
+            rgin.setRgiv(new ReglaIncompatibleVersionVO());
+            rgin.getRgiv().setFini(getFechaVigencia());
+
+            {
+                final ReglaBO rglaBO = new ReglaBO();
+                final ReglaVO rgla = rglaBO.select(rgin.getRgla1Id(), getFechaVigencia());
+
+                final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
+
+                rglaCriterio.setCrgoId(rgla.getCrgo().getId());
+                rglaCriterio.setFechaVigencia(getFechaVigencia());
+                rglaCriterio.setIdioma(getIdioma());
+
+                rgla2List = rglaBO.selectLabelValueList(rglaCriterio);
+            }
+        }
 
         return SUCCESS;
     }
@@ -192,16 +175,6 @@ public final class ReglaIncompatibleAction extends BaseAction {
     }
 
     // get / set
-
-    /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
-    }
-
     /**
      * Sets the accion.
      *
@@ -239,24 +212,4 @@ public final class ReglaIncompatibleAction extends BaseAction {
     public List<LabelValueVO> getRgla2List() {
         return rgla2List;
     }
-
-    /**
-     * Gets the crgo id.
-     *
-     * @return the crgo id
-     */
-    public Long getCrgoId() {
-        return crgoId;
-    }
-
-    /**
-     * Sets the crgo id.
-     *
-     * @param value
-     *            the new crgo id
-     */
-    public void setCrgoId(final Long value) {
-        crgoId = value;
-    }
-
 }

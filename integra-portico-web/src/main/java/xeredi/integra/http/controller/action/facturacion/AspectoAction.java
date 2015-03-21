@@ -86,30 +86,6 @@ public final class AspectoAction extends BaseAction {
     }
 
     /**
-     * Alta.
-     *
-     * @return the string
-     */
-    @Action("aspc-create")
-    public String create() {
-        accion = ACCION_EDICION.create;
-
-        aspc = new AspectoVO();
-        aspc.setAspv(new AspectoVersionVO());
-        aspc.getAspv().setFini(Calendar.getInstance().getTime());
-
-        final EntidadBO entiBO = new EntidadBO();
-        final EntidadCriterioVO entiCriterioVO = new EntidadCriterioVO();
-
-        entiCriterioVO.setTipo(TipoEntidad.T);
-        entiCriterioVO.setIdioma(getIdioma());
-
-        entiList = entiBO.selectLabelValues(entiCriterioVO);
-
-        return SUCCESS;
-    }
-
-    /**
      * Modificar.
      *
      * @return the string
@@ -118,43 +94,30 @@ public final class AspectoAction extends BaseAction {
      */
     @Action("aspc-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(aspc);
-        Preconditions.checkNotNull(aspc.getId());
+        Preconditions.checkNotNull(accion);
 
-        if (getFechaVigencia() == null) {
-            setFechaVigencia(Calendar.getInstance().getTime());
+        if (accion == ACCION_EDICION.create) {
+            aspc = new AspectoVO();
+            aspc.setAspv(new AspectoVersionVO());
+            aspc.getAspv().setFini(Calendar.getInstance().getTime());
+
+            final EntidadBO entiBO = new EntidadBO();
+            final EntidadCriterioVO entiCriterioVO = new EntidadCriterioVO();
+
+            entiCriterioVO.setTipo(TipoEntidad.T);
+            entiCriterioVO.setIdioma(getIdioma());
+
+            entiList = entiBO.selectLabelValues(entiCriterioVO);
+        } else {
+            Preconditions.checkNotNull(aspc);
+            Preconditions.checkNotNull(aspc.getId());
+            Preconditions.checkNotNull(getFechaVigencia());
+
+            final AspectoBO aspcBO = new AspectoBO();
+
+            aspc = aspcBO.select(aspc.getId(), getFechaVigencia(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
         }
-
-        final AspectoBO aspcBO = new AspectoBO();
-
-        aspc = aspcBO.select(aspc.getId(), getFechaVigencia(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
-        accion = ACCION_EDICION.edit;
-
-        return SUCCESS;
-    }
-
-    /**
-     * Duplicar.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action("aspc-duplicate")
-    public String duplicate() throws ApplicationException {
-        Preconditions.checkNotNull(aspc);
-        Preconditions.checkNotNull(aspc.getId());
-
-        if (getFechaVigencia() == null) {
-            setFechaVigencia(Calendar.getInstance().getTime());
-        }
-
-        final AspectoBO aspcBO = new AspectoBO();
-
-        aspc = aspcBO.select(aspc.getId(), getFechaVigencia(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
-        accion = ACCION_EDICION.duplicate;
 
         return SUCCESS;
     }
