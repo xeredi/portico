@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.maestro;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -41,30 +40,6 @@ public final class ParametroAction extends ItemAction {
 
     // Acciones web
     /**
-     * Alta.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action("prmt-create")
-    public String create() throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getEntiId());
-
-        accion = ACCION_EDICION.create;
-        i18nMap = new HashMap<>();
-
-        setFechaVigencia(Calendar.getInstance().getTime());
-
-        enti = TipoParametroProxy.select(item.getEntiId());
-
-        loadLabelValuesMap(enti);
-
-        return SUCCESS;
-    }
-
-    /**
      * Modificar.
      *
      * @return the string
@@ -73,54 +48,23 @@ public final class ParametroAction extends ItemAction {
      */
     @Action("prmt-edit")
     public String edit() throws ApplicationException {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getEntiId());
+        Preconditions.checkNotNull(getFechaVigencia());
 
-        if (getFechaVigencia() == null) {
-            setFechaVigencia(Calendar.getInstance().getTime());
-        }
-
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(item.getEntiId());
-
-        item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
         enti = TipoParametroProxy.select(item.getEntiId());
-        accion = ACCION_EDICION.edit;
 
-        if (enti.getI18n()) {
-            i18nMap = I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
-        }
+        if (accion != ACCION_EDICION.create) {
+            Preconditions.checkNotNull(item.getId());
 
-        loadLabelValuesMap(enti);
+            final ParametroBO prmtBO = ParametroBOFactory.newInstance(item.getEntiId());
 
-        return SUCCESS;
-    }
+            item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
 
-    /**
-     * Duplicar.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action("prmt-duplicate")
-    public String duplicate() throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
-        Preconditions.checkNotNull(item.getEntiId());
-
-        if (getFechaVigencia() == null) {
-            setFechaVigencia(Calendar.getInstance().getTime());
-        }
-
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(item.getEntiId());
-
-        item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
-        enti = TipoParametroProxy.select(item.getEntiId());
-        accion = ACCION_EDICION.duplicate;
-
-        if (enti.getI18n()) {
-            i18nMap = I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
+            if (enti.getI18n()) {
+                i18nMap = I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
+            }
         }
 
         loadLabelValuesMap(enti);

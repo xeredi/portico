@@ -1,11 +1,11 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default"
-            ng-href="#/maestro/sprm/edit/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
+            ng-href="#/maestro/sprm/edit/edit/{{vm.enti.id}}/{{vm.item.prmtId}}/{{vm.fechaVigencia}}/{{vm.item.id}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a> <a class="btn btn-default"
-            ng-href="#/maestro/sprm/duplicate/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
+            ng-href="#/maestro/sprm/edit/duplicate/{{vm.enti.id}}/{{vm.item.prmtId}}/{{vm.fechaVigencia}}/{{vm.item.id}}"><i
             class="glyphicon glyphicon-tags"></i> <span translate>btn_duplicar</span></a>
-        <button data-ng-click="remove()" class="btn btn-default">
+        <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>

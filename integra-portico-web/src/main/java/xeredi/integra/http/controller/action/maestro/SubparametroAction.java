@@ -31,33 +31,6 @@ public final class SubparametroAction extends ItemAction {
     private SubparametroVO item;
 
     // Acciones Web
-
-    /**
-     * Alta.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action("sprm-create")
-    public String create() throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getEntiId());
-        Preconditions.checkNotNull(item.getPrmtId());
-
-        if (getFechaVigencia() == null) {
-            setFechaVigencia(Calendar.getInstance().getTime());
-        }
-
-        accion = ACCION_EDICION.create;
-
-        enti = TipoSubparametroProxy.select(item.getEntiId());
-
-        loadLabelValuesMap(enti);
-
-        return SUCCESS;
-    }
-
     /**
      * Modificar.
      *
@@ -67,45 +40,21 @@ public final class SubparametroAction extends ItemAction {
      */
     @Action("sprm-edit")
     public String edit() throws ApplicationException {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getEntiId());
+        Preconditions.checkNotNull(item.getPrmtId());
+        Preconditions.checkNotNull(getFechaVigencia());
 
-        if (getFechaVigencia() == null) {
-            setFechaVigencia(Calendar.getInstance().getTime());
+        if (accion != ACCION_EDICION.create) {
+            Preconditions.checkNotNull(item.getId());
+
+            final SubparametroBO sprmBO = new SubparametroBO();
+
+            item = sprmBO.selectObject(item.getId(), getIdioma(), getFechaVigencia());
         }
 
-        final SubparametroBO sprmBO = new SubparametroBO();
-
-        item = sprmBO.selectObject(item.getId(), getIdioma(), getFechaVigencia());
         enti = TipoSubparametroProxy.select(item.getEntiId());
-        accion = ACCION_EDICION.edit;
-
-        loadLabelValuesMap(enti);
-
-        return SUCCESS;
-    }
-
-    /**
-     * Duplicar.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action("sprm-duplicate")
-    public String duplicate() throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
-
-        if (getFechaVigencia() == null) {
-            setFechaVigencia(Calendar.getInstance().getTime());
-        }
-
-        final SubparametroBO sprmBO = new SubparametroBO();
-
-        item = sprmBO.selectObject(item.getId(), getIdioma(), getFechaVigencia());
-        enti = TipoSubparametroProxy.select(item.getEntiId());
-        accion = ACCION_EDICION.duplicate;
 
         loadLabelValuesMap(enti);
 

@@ -3,10 +3,10 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default"
-            ng-href="#/maestro/prmt/edit/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
+            ng-href="#/maestro/prmt/edit/edit/{{vm.enti.id}}/{{vm.fechaVigencia}}/{{vm.item.id}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a> <a
             class="btn btn-default"
-            ng-href="#/maestro/prmt/duplicate/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
+            ng-href="#/maestro/prmt/edit/duplicate/{{vm.enti.id}}/{{vm.fechaVigencia}}/{{vm.item.id}}"><i
             class="glyphicon glyphicon-tags"></i> <span translate="btn_duplicar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
@@ -58,7 +58,7 @@
 
         <div class="btn-group">
             <a class="btn btn-default"
-                ng-href="#/maestro/sprm/create/{{entiHijaId}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
+                ng-href="#/maestro/sprm/edit/create/{{entiHijaId}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>
@@ -95,10 +95,11 @@
                         ng-if="entd.gridable" ng-switch on="entd.tpdt.tipoElemento" nowrap="nowrap"><span
                         ng-switch-when="BO"><i
                             class="glyphicon glyphicon-{{itemHijo.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span>
-                        <span ng-switch-when="ND"
-                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].cantidadEntera | number:2"></span> <span
-                        ng-switch-when="NE" ng-bind="itemHijo.itdtMap[entd.tpdt.id].cantidadEntera | number:0"></span>
-                        <span ng-switch-when="CR">{{("cdrf_" + entd.tpdt.id + "_" +
+                        <span ng-switch-when="ND" class="pull-right"
+                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].cantidadDecimal | number:2"></span> <span
+                        ng-switch-when="NE" class="pull-right"
+                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].cantidadEntera | number:0"></span> <span
+                        ng-switch-when="CR">{{("cdrf_" + entd.tpdt.id + "_" +
                             item.itdtMap[entd.tpdt.id].cadena) | translate}}</span> <span ng-switch-when="TX"
                         ng-bind="itemHijo.itdtMap[entd.tpdt.id].cadena"></span> <span ng-switch-when="PR"
                         bs-tooltip data-title="{{itemHijo.itdtMap[entd.tpdt.id].prmt.etiqueta}}"
