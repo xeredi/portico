@@ -1,7 +1,4 @@
-
 <form role="form">
-    <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.vlrc.id" />
-
     <fieldset>
         <div class="row">
             <div class="col-md-2 col-lg-1 form-group">
@@ -14,7 +11,8 @@
                     class="form-control input-sm">
                     <option />
                 </select>
-                <p ng-if="vm.accion == 'edit'" class="form-control-static" translate="{{'enti_' + vm.tpsrId}}"></p>
+                <p ng-if="vm.accion == 'edit'" class="form-control-static"
+                    translate="{{'enti_' + vm.vlrc.srvc.entiId}}"></p>
             </div>
             <div class="col-md-2 col-lg-1 form-group" ng-if="vm.tpsrId">
                 <label translate="srvc"></label>

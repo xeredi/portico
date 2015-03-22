@@ -61,29 +61,17 @@ public final class ValoracionLineaAction extends BaseAction {
      */
     @Action("vlrl-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(vlrl);
-        Preconditions.checkNotNull(vlrl.getId());
-
-        accion = ACCION_EDICION.edit;
-
-        final ValoracionBO vlrcBO = new ValoracionBO();
-
-        vlrl = vlrcBO.selectVlrl(vlrl.getId(), getIdioma());
-
-        return SUCCESS;
-    }
-
-    /**
-     * Creates the.
-     *
-     * @return the string
-     */
-    @Action("vlrl-create")
-    public String create() {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(vlrl);
         Preconditions.checkNotNull(vlrl.getVlrcId());
 
-        accion = ACCION_EDICION.create;
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(vlrl.getId());
+
+            final ValoracionBO vlrcBO = new ValoracionBO();
+
+            vlrl = vlrcBO.selectVlrl(vlrl.getId(), getIdioma());
+        }
 
         return SUCCESS;
     }
@@ -107,15 +95,6 @@ public final class ValoracionLineaAction extends BaseAction {
      */
     public void setVlrl(final ValoracionLineaVO value) {
         vlrl = value;
-    }
-
-    /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
     }
 
     /**

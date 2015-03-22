@@ -38,14 +38,7 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/maestro/prmt/grid/:entiId", {
-		templateUrl : "modules/entidad/maestro/prmt-grid.html",
-		controller : "PrmtGridController",
-		controllerAs : 'vm',
-		reloadOnSearch : false
-	})
-
-	.when("/maestro/prmt/grid/:entiId/:page", {
+	.when("/maestro/prmt/grid/:entiId/:page?", {
 		templateUrl : "modules/entidad/maestro/prmt-grid.html",
 		controller : "PrmtGridController",
 		controllerAs : 'vm',
@@ -58,89 +51,45 @@ function config($routeProvider) {
 		controllerAs : 'vm'
 	})
 
-	.when("/maestro/prmt/detail/:entiId/:itemId", {
+	.when("/maestro/prmt/detail/:entiId/:itemId/:fechaVigencia?", {
 		templateUrl : "modules/entidad/maestro/prmt-detail.html",
 		controller : "PrmtDetailController",
 		controllerAs : 'vm',
 		reloadOnSearch : false
 	})
 
-	.when("/maestro/prmt/detail/:entiId/:itemId/:fechaVigencia", {
-		templateUrl : "modules/entidad/maestro/prmt-detail.html",
-		controller : "PrmtDetailController",
-		controllerAs : 'vm',
-		reloadOnSearch : false
-	})
-
-	.when("/maestro/prmt/edit/:entiId/:itemId", {
+	.when("/maestro/prmt/edit/:entiId/:itemId/:fechaVigencia?", {
 		templateUrl : "modules/entidad/maestro/prmt-edit.html",
 		controller : "PrmtEditController",
 		controllerAs : 'vm'
 	})
 
-	.when("/maestro/prmt/edit/:entiId/:itemId/:fechaVigencia", {
-		templateUrl : "modules/entidad/maestro/prmt-edit.html",
-		controller : "PrmtEditController",
-		controllerAs : 'vm'
-	})
-
-	.when("/maestro/prmt/duplicate/:entiId/:itemId", {
+	.when("/maestro/prmt/duplicate/:entiId/:itemId/:fechaVigencia?", {
 		templateUrl : "modules/entidad/maestro/prmt-edit.html",
 		controller : "PrmtDuplicateController",
 		controllerAs : 'vm',
 		reloadOnSearch : false
 	})
 
-	.when("/maestro/prmt/duplicate/:entiId/:itemId/:fechaVigencia", {
-		templateUrl : "modules/entidad/maestro/prmt-edit.html",
-		controller : "PrmtDuplicateController",
-		controllerAs : 'vm',
-		reloadOnSearch : false
-	})
-
-	.when("/maestro/sprm/detail/:entiId/:itemId", {
+	.when("/maestro/sprm/detail/:entiId/:itemId/:fechaVigencia?", {
 		templateUrl : "modules/entidad/maestro/sprm-detail.html",
 		controller : "SprmDetailController",
 		controllerAs : 'vm'
 	})
 
-	.when("/maestro/sprm/detail/:entiId/:itemId/:fechaVigencia", {
-		templateUrl : "modules/entidad/maestro/sprm-detail.html",
-		controller : "SprmDetailController",
-		controllerAs : 'vm'
-	})
-
-	.when("/maestro/sprm/create/:entiId/:prmtId", {
+	.when("/maestro/sprm/create/:entiId/:prmtId/:fechaVigencia?", {
 		templateUrl : "modules/entidad/maestro/sprm-edit.html",
 		controller : "SprmCreateController",
 		controllerAs : 'vm'
 	})
 
-	.when("/maestro/sprm/create/:entiId/:prmtId/:fechaVigencia", {
-		templateUrl : "modules/entidad/maestro/sprm-edit.html",
-		controller : "SprmCreateController",
-		controllerAs : 'vm'
-	})
-
-	.when("/maestro/sprm/edit/:entiId/:itemId", {
+	.when("/maestro/sprm/edit/:entiId/:itemId/:fechaVigencia?", {
 		templateUrl : "modules/entidad/maestro/sprm-edit.html",
 		controller : "SprmEditController",
 		controllerAs : 'vm'
 	})
 
-	.when("/maestro/sprm/edit/:entiId/:itemId/:fechaVigencia", {
-		templateUrl : "modules/entidad/maestro/sprm-edit.html",
-		controller : "SprmEditController",
-		controllerAs : 'vm'
-	})
-
-	.when("/maestro/sprm/duplicate/:entiId/:itemId", {
-		templateUrl : "modules/entidad/maestro/sprm-edit.html",
-		controller : "SprmDuplicateController",
-		controllerAs : 'vm'
-	})
-
-	.when("/maestro/sprm/duplicate/:entiId/:itemId/:fechaVigencia", {
+	.when("/maestro/sprm/duplicate/:entiId/:itemId/:fechaVigencia?", {
 		templateUrl : "modules/entidad/maestro/sprm-edit.html",
 		controller : "SprmDuplicateController",
 		controllerAs : 'vm'

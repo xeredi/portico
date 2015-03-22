@@ -92,37 +92,23 @@ public final class ValoracionAction extends BaseAction {
      */
     @Action("vlrc-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(vlrc);
-        Preconditions.checkNotNull(vlrc.getId());
+        Preconditions.checkNotNull(accion);
 
-        final ValoracionBO vlrcBO = new ValoracionBO();
-        final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
+        if (accion == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(vlrc);
+            Preconditions.checkNotNull(vlrc.getId());
 
-        vlrcCriterio.setId(vlrc.getId());
-        vlrcCriterio.setIdioma(getIdioma());
+            final ValoracionBO vlrcBO = new ValoracionBO();
+            final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
-        vlrc = vlrcBO.select(vlrc.getId(), getIdioma());
-        accion = ACCION_EDICION.edit;
+            vlrcCriterio.setId(vlrc.getId());
+            vlrcCriterio.setIdioma(getIdioma());
 
-        pagadorEntiId = Entidad.ORGANIZACION.getId();
-        tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
+            vlrc = vlrcBO.select(vlrc.getId(), getIdioma());
+        } else {
+            tpsrList = TipoServicioProxy.selectLabelValues();
+        }
 
-        return SUCCESS;
-    }
-
-    /**
-     * Creates the.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action("vlrc-create")
-    public String create() throws ApplicationException {
-        vlrc = new ValoracionVO();
-        accion = ACCION_EDICION.create;
-
-        tpsrList = TipoServicioProxy.selectLabelValues();
         pagadorEntiId = Entidad.ORGANIZACION.getId();
         tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
 
@@ -236,15 +222,6 @@ public final class ValoracionAction extends BaseAction {
     }
 
     /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
-    }
-
-    /**
      * Sets the accion.
      *
      * @param value
@@ -289,5 +266,4 @@ public final class ValoracionAction extends BaseAction {
     public TipoDatoVO getTpdtCodExencion() {
         return tpdtCodExencion;
     }
-
 }
