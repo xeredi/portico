@@ -49,7 +49,7 @@ public final class SubservicioAction extends ItemAction {
      *             the application exception
      */
     @Action("ssrv-detail")
-    public String detalle() throws ApplicationException {
+    public String detail() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getEntiId());
@@ -75,38 +75,6 @@ public final class SubservicioAction extends ItemAction {
         }
 
         setFechaVigencia(item.getFref());
-
-        return SUCCESS;
-    }
-
-    /**
-     * Alta.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action("ssrv-create")
-    public String alta() throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getEntiId());
-
-        accion = ACCION_EDICION.create;
-
-        enti = TipoSubservicioProxy.select(item.getEntiId());
-        item.setFref(Calendar.getInstance().getTime());
-
-        if (item.getSrvc() != null && item.getSrvc().getId() != null) {
-            final ServicioBO srvcBO = ServicioBOFactory.newInstance(enti.getTpsrId());
-
-            item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
-            item.setFref(item.getSrvc().getFref());
-        } else {
-            item.setSrvc(null);
-        }
-
-        setFechaVigencia(item.getFref());
-        loadLabelValuesMap(enti);
 
         return SUCCESS;
     }
@@ -119,56 +87,48 @@ public final class SubservicioAction extends ItemAction {
      *             the application exception
      */
     @Action("ssrv-edit")
-    public String modificar() throws ApplicationException {
+    public String edit() throws ApplicationException {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getEntiId());
 
-        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(item.getEntiId());
-
-        item = ssrvBO.select(item.getId(), getIdioma());
         enti = TipoSubservicioProxy.select(item.getEntiId());
-        accion = ACCION_EDICION.edit;
 
-        if (enti.getEntiPadresList() != null) {
-            itemPadresMap = new HashMap<Long, LabelValueVO>();
+        if (accion == ACCION_EDICION.create) {
+            if (item.getSrvc() != null && item.getSrvc().getId() != null) {
+                final ServicioBO srvcBO = ServicioBOFactory.newInstance(enti.getTpsrId());
 
-            for (final Long entiId : enti.getEntiPadresList()) {
-                if (!enti.getTpsrId().equals(entiId)) {
-                    final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+                item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
+                item.setFref(item.getSrvc().getFref());
+            } else {
+                item.setFref(Calendar.getInstance().getTime());
+            }
+        } else {
+            Preconditions.checkNotNull(item.getSrvc());
+            Preconditions.checkNotNull(item.getSrvc().getId());
+            Preconditions.checkNotNull(item.getId());
 
-                    ssrvCriterioVO.setHijoId(item.getId());
-                    ssrvCriterioVO.setEntiId(entiId);
+            final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(item.getEntiId());
 
-                    itemPadresMap.put(entiId, ssrvBO.selectLabelValueObject(ssrvCriterioVO));
+            item = ssrvBO.select(item.getId(), getIdioma());
+
+            if (accion == ACCION_EDICION.edit) {
+                if (enti.getEntiPadresList() != null) {
+                    itemPadresMap = new HashMap<Long, LabelValueVO>();
+
+                    for (final Long entiId : enti.getEntiPadresList()) {
+                        if (!enti.getTpsrId().equals(entiId)) {
+                            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+
+                            ssrvCriterioVO.setHijoId(item.getId());
+                            ssrvCriterioVO.setEntiId(entiId);
+
+                            itemPadresMap.put(entiId, ssrvBO.selectLabelValueObject(ssrvCriterioVO));
+                        }
+                    }
                 }
             }
         }
-
-        setFechaVigencia(item.getFref());
-        loadLabelValuesMap(enti);
-
-        return SUCCESS;
-    }
-
-    /**
-     * Duplicar.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action("ssrv-duplicate")
-    public String duplicar() throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
-        Preconditions.checkNotNull(item.getEntiId());
-
-        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(item.getEntiId());
-
-        item = ssrvBO.select(item.getId(), getIdioma());
-        enti = TipoSubservicioProxy.select(item.getEntiId());
-        accion = ACCION_EDICION.duplicate;
 
         setFechaVigencia(item.getFref());
         loadLabelValuesMap(enti);
@@ -184,7 +144,7 @@ public final class SubservicioAction extends ItemAction {
      *             the application exception
      */
     @Action("ssrv-save")
-    public String guardar() throws ApplicationException {
+    public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());

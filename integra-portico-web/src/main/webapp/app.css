@@ -91,8 +91,8 @@ td span {
 }
 
 .form-control-static {
-	padding-top: 7px;
-	padding-bottom: 7px;
+	padding-top: 8px;
+	padding-bottom: 6px;
 	padding-right: 5px;
 	padding-left: 3px;
 	background-color: #4e5d6c;

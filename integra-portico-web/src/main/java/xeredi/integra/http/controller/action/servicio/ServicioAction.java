@@ -57,7 +57,7 @@ public final class ServicioAction extends ItemAction {
      *             the application exception
      */
     @Action("srvc-detail")
-    public String detalle() throws ApplicationException {
+    public String detail() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getEntiId());
@@ -81,33 +81,6 @@ public final class ServicioAction extends ItemAction {
     }
 
     /**
-     * Alta.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action("srvc-create")
-    public String alta() throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getEntiId());
-
-        accion = ACCION_EDICION.create;
-        enti = TipoServicioProxy.select(item.getEntiId());
-
-        item.setFref(Calendar.getInstance().getTime());
-        item.setAnno(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
-
-        FieldFiller.fillDefaultValues(item, enti);
-
-        setFechaVigencia(item.getFref());
-        loadLabelValuesMap(enti);
-        loadSubpList();
-
-        return SUCCESS;
-    }
-
-    /**
      * Modificar.
      *
      * @return the string
@@ -115,42 +88,25 @@ public final class ServicioAction extends ItemAction {
      *             the application exception
      */
     @Action(value = "srvc-edit")
-    public String modificar() throws ApplicationException {
+    public String edit() throws ApplicationException {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getEntiId());
 
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(item.getEntiId());
-
-        item = srvcBO.select(item.getId(), getIdioma());
         enti = TipoServicioProxy.select(item.getEntiId());
-        accion = ACCION_EDICION.edit;
 
-        setFechaVigencia(item.getFref());
-        loadLabelValuesMap(enti);
-        loadSubpList();
+        if (accion == ACCION_EDICION.create) {
+            item.setFref(Calendar.getInstance().getTime());
+            item.setAnno(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
-        return SUCCESS;
-    }
+            FieldFiller.fillDefaultValues(item, enti);
+        } else {
+            Preconditions.checkNotNull(item.getId());
 
-    /**
-     * Duplicar.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action("srvc-duplicate")
-    public String duplicar() throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
-        Preconditions.checkNotNull(item.getEntiId());
+            final ServicioBO srvcBO = ServicioBOFactory.newInstance(item.getEntiId());
 
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(item.getEntiId());
-
-        item = srvcBO.select(item.getId(), getIdioma());
-        enti = TipoServicioProxy.select(item.getEntiId());
-        accion = ACCION_EDICION.duplicate;
+            item = srvcBO.select(item.getId(), getIdioma());
+        }
 
         setFechaVigencia(item.getFref());
         loadLabelValuesMap(enti);
@@ -167,7 +123,7 @@ public final class ServicioAction extends ItemAction {
      *             the application exception
      */
     @Action("srvc-save")
-    public String guardar() throws ApplicationException {
+    public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());

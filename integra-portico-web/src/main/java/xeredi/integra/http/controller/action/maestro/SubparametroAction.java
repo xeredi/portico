@@ -72,6 +72,7 @@ public final class SubparametroAction extends ItemAction {
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getEntiId());
 
         final SubparametroBO sprmBO = new SubparametroBO();
 
