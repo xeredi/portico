@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.comun.dao.SuperpuertoDAO">
+	<resultMap type="SuperpuertoVO" id="ResultMap">
+		<id column="sprt_pk" />
+
+		<result column="sprt_pk" property="id" />
+		<result column="sprt_codigo" property="codigo" />
+
+		<result column="sprt_nombre" property="nombre" />
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+	    SELECT
+	        sprt_pk, sprt_codigo
+    ]]>
+    	<if test="idioma != null">
+	    <![CDATA[
+	    	, (
+	    		SELECT i18n_text
+	    		FROM tbl_i18n_i18n
+	    		WHERE
+	    			i18n_ext_pk = sprt_pk
+	    			AND i18n_lang = #{idioma}
+	    			AND i18n_pref = 'sprt'
+	    	) AS sprt_nombre
+	    ]]>
+    	</if>
+	    FROM tbl_superpuerto_sprt
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND sprt_pk = #{id}
+			</if>
+			<if test="codigo != null">
+				AND sprt_codigo = #{codigo}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectObject" parameterType="SuperpuertoCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="selectList" parameterType="SuperpuertoCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY sprt_codigo
+	</select>
+
+	<select id="count" parameterType="SuperpuertoCriterioVO" resultType="Integer">
+    <![CDATA[
+	    SELECT
+	        COUNT(1)
+	    FROM tbl_superpuerto_sprt
+    ]]>
+		<include refid="SelectWhere" />
+	</select>
+</mapper>

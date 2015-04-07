@@ -93,11 +93,11 @@ public final class OppeFileExport {
         for (final EstadisticaVO estdVO : estdList) {
             final StringBuffer buffer = new StringBuffer();
 
-            subportCodes.add(estdVO.getSubp().getParametro());
+            subportCodes.add(estdVO.getPrto().getCodigo());
 
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Anio, estdVO.getPepr().getAnio()));
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Mes, estdVO.getPepr().getMes()));
-            buffer.append(getTokenString(EstadisticaFileKeyword.Autp, estdVO.getSubp().getParametro()));
+            buffer.append(getTokenString(EstadisticaFileKeyword.Autp, estdVO.getPrto().getCodigo()));
 
             buffer.append(getTokenPrmt(EstadisticaFileKeyword.EAP_TipoCaptura,
                     estdVO.getItdtMap().get(TipoDato.TIPO_CAPTURA_PESCA.getId()).getPrmt()));
@@ -129,11 +129,11 @@ public final class OppeFileExport {
         for (final EstadisticaVO estdVO : estdList) {
             final StringBuffer buffer = new StringBuffer();
 
-            subportCodes.add(estdVO.getSubp().getParametro());
+            subportCodes.add(estdVO.getPrto().getCodigo());
 
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Anio, estdVO.getPepr().getAnio()));
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Mes, estdVO.getPepr().getMes()));
-            buffer.append(getTokenString(EstadisticaFileKeyword.Autp, estdVO.getSubp().getParametro()));
+            buffer.append(getTokenString(EstadisticaFileKeyword.Autp, estdVO.getPrto().getCodigo()));
 
             buffer.append(getTokenPrmt(EstadisticaFileKeyword.EAV_TipoSuministro,
                     estdVO.getItdtMap().get(TipoDato.TIPO_SUM.getId()).getPrmt()));
@@ -163,11 +163,11 @@ public final class OppeFileExport {
         for (final EstadisticaVO estdVO : estdList) {
             final StringBuffer buffer = new StringBuffer();
 
-            subportCodes.add(estdVO.getSubp().getParametro());
+            subportCodes.add(estdVO.getPrto().getCodigo());
 
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Anio, estdVO.getPepr().getAnio()));
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Mes, estdVO.getPepr().getMes()));
-            buffer.append(getTokenString(EstadisticaFileKeyword.Autp, estdVO.getSubp().getParametro()));
+            buffer.append(getTokenString(EstadisticaFileKeyword.Autp, estdVO.getPrto().getCodigo()));
 
             // FIXME Conversion de Tipo de Buque
             buffer.append(getTokenPrmt(EstadisticaFileKeyword.EAE_TipoBuque,
@@ -208,11 +208,11 @@ public final class OppeFileExport {
         for (final EstadisticaVO estdVO : estdList) {
             final StringBuffer buffer = new StringBuffer();
 
-            subportCodes.add(estdVO.getSubp().getParametro());
+            subportCodes.add(estdVO.getPrto().getCodigo());
 
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Anio, estdVO.getPepr().getAnio()));
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Mes, estdVO.getPepr().getMes()));
-            buffer.append(getTokenString(EstadisticaFileKeyword.Autp, estdVO.getSubp().getParametro()));
+            buffer.append(getTokenString(EstadisticaFileKeyword.Autp, estdVO.getPrto().getCodigo()));
 
             final String tipoOperacionBl = getTokenPrmt(EstadisticaFileKeyword.EMM_TipoOperacion, estdVO.getItdtMap()
                     .get(TipoDato.TIPO_OP_BL.getId()).getPrmt());
@@ -284,11 +284,11 @@ public final class OppeFileExport {
         for (final EstadisticaVO estdVO : estdList) {
             final StringBuffer buffer = new StringBuffer();
 
-            subportCodes.add(estdVO.getSubp().getParametro());
+            subportCodes.add(estdVO.getPrto().getCodigo());
 
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Anio, estdVO.getPepr().getAnio()));
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Mes, estdVO.getPepr().getMes()));
-            buffer.append(getTokenString(EstadisticaFileKeyword.Autp, estdVO.getSubp().getParametro()));
+            buffer.append(getTokenString(EstadisticaFileKeyword.Autp, estdVO.getPrto().getCodigo()));
 
             buffer.append(getTokenPrmt(EstadisticaFileKeyword.EME_UnloCargaDescarga,
                     estdVO.getItdtMap().get(TipoDato.UNLOCODE.getId()).getPrmt()));
@@ -346,11 +346,11 @@ public final class OppeFileExport {
         for (final EstadisticaVO estdVO : estdList) {
             final StringBuffer buffer = new StringBuffer();
 
-            subportCodes.add(estdVO.getSubp().getParametro());
+            subportCodes.add(estdVO.getPrto().getCodigo());
 
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Anio, estdVO.getPepr().getAnio()));
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Mes, estdVO.getPepr().getMes()));
-            buffer.append(getTokenString(EstadisticaFileKeyword.Autp, estdVO.getSubp().getParametro()));
+            buffer.append(getTokenString(EstadisticaFileKeyword.Autp, estdVO.getPrto().getCodigo()));
 
             buffer.append(getTokenPrmt(EstadisticaFileKeyword.EMT_TipoBuqueEstEEE,
                     estdVO.getItdtMap().get(TipoDato.TIPO_BUQUE_EEE.getId()).getPrmt()));

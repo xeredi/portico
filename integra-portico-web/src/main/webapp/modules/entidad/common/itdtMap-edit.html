@@ -4,53 +4,48 @@
     <div class="row">
         <div ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.grupo == engd.numero" ng-switch
             on="entd.tpdt.tipoElemento"
-            class="col-sm-{{entd.spanSm}} col-md-{{entd.span}} col-lg-{{entd.spanLg}} col-xl-{{entd.spanXl}} form-group">
+            class="col-sm-{{entd.spanSm}} col-md-{{entd.span}} col-lg-{{entd.spanLg}} col-xl-{{entd.spanXl}} form-group-sm">
             <label>{{'entd_' + entd.id | translate}}</label> <select ng-switch-when="BO"
                 ng-model="vm.item.itdtMap[entd.tpdt.id].cantidadEntera"
                 ng-options="item as ('format_' + item | translate) for item in [1 , 0]"
-                ng-required="entd.obligatorio" class="form-control input-sm">
+                ng-required="entd.obligatorio" class="form-control">
                 <option />
             </select> <input ng-switch-when="ND" type="text" ng-model="vm.item.itdtMap[entd.tpdt.id].cantidadDecimal"
-                ng-required="entd.obligatorio" class="form-control input-sm number" /> <input
-                ng-switch-when="NE" type="text" ng-model="vm.item.itdtMap[entd.tpdt.id].cantidadEntera"
-                ng-pattern="/^\d+$/" class="form-control input-sm number" />
-            <div ng-switch-when="FE">
-                <input type="text" class="form-control input-sm"
-                    ng-model="vm.item.itdtMap[entd.tpdt.id].fecha" bs-datepicker />
-            </div>
+                ng-required="entd.obligatorio" class="form-control number" /> <input ng-switch-when="NE"
+                type="text" ng-model="vm.item.itdtMap[entd.tpdt.id].cantidadEntera" ng-pattern="/^\d+$/"
+                class="form-control number" /> <input ng-switch-when="FE" type="text" class="form-control"
+                ng-model="vm.item.itdtMap[entd.tpdt.id].fecha" bs-datepicker />
             <div ng-switch-when="FH">
-                <input type="text" class="form-control input-sm"
-                    ng-model="vm.item.itdtMap[entd.tpdt.id].fecha" bs-datepicker /><input type="text"
-                    class="form-control input-sm" ng-model="vm.item.itdtMap[entd.tpdt.id].fecha" bs-timepicker />
+                <input type="text" class="form-control" ng-model="vm.item.itdtMap[entd.tpdt.id].fecha"
+                    bs-datepicker /><input type="text" class="form-control"
+                    ng-model="vm.item.itdtMap[entd.tpdt.id].fecha" bs-timepicker />
             </div>
             <select ng-switch-when="CR" ng-model="vm.item.itdtMap[entd.tpdt.id].cadena"
                 ng-required="entd.obligatorio"
                 ng-options="cdrf.valor as ('cdrf_' + entd.tpdt.id + '_' + cdrf.valor | translate) for cdrf in entd.tpdt.cdrfList"
-                class="form-control input-sm">
+                class="form-control">
                 <option />
             </select> <input ng-switch-when="TX" ng-if="entd.tpdt.tpht == 'T'" type="text"
                 ng-model="vm.item.itdtMap[entd.tpdt.id].cadena" ng-required="entd.obligatorio"
-                class="form-control input-sm" />
+                class="form-control" />
             <textarea ng-switch-when="TX" ng-if="entd.tpdt.tpht == 'TA'" rows="4"
                 ng-model="vm.item.itdtMap[entd.tpdt.id].cadena" ng-required="entd.obligatorio"
-                class="form-control input-sm" ng-bind="vm.item.itdtMap[entd.tpdt.id].cadena"></textarea>
+                class="form-control" ng-bind="vm.item.itdtMap[entd.tpdt.id].cadena"></textarea>
             <select ng-switch-when="PR" ng-if="entd.tpdt.tpht == 'S'"
                 ng-model="vm.item.itdtMap[entd.tpdt.id].prmt.id" ng-required="entd.obligatorio"
                 ng-options="labelValue.value as labelValue.label for labelValue in vm.labelValuesMap[entd.tpdt.enti.id]"
-                class="form-control input-sm">
+                class="form-control">
                 <option />
-            </select>
-            <div ng-switch-when="PR" ng-if="entd.tpdt.tpht == 'F'" class="input-group-sm"
-                ng-controller="PrmtsLupaController">
-                <input type="text" autocomplete="off" ng-model="vm.item.itdtMap[entd.tpdt.id].prmt"
-                    typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(entd.tpdt.enti.id, $viewValue, vm.fechaVigencia)"
-                    typeahead-editable="false" typeahead-wait-ms="250" class="form-control input-sm">
-            </div>
-            <div ng-switch-when="SR" class="input-group-sm" ng-controller="SrvcLupaController">
-                <input type="text" autocomplete="off" ng-model="vm.item.itdtMap[entd.tpdt.id].srvc"
-                    typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(entd.tpdt.enti.id, $viewValue)"
-                    typeahead-editable="false" typeahead-wait-ms="250" class="form-control input-sm">
-            </div>
+            </select> <input ng-switch-when="PR" ng-if="entd.tpdt.tpht == 'F'"
+                ng-disabled="entd.tpdt.enti.puerto && vm.prtoId == null" class="form-control"
+                ng-controller="PrmtsLupaController" type="text" autocomplete="off"
+                ng-model="vm.item.itdtMap[entd.tpdt.id].prmt"
+                typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(entd.tpdt.enti.id, $viewValue, vm.prtoId, vm.fechaVigencia)"
+                typeahead-editable="false" typeahead-wait-ms="250" class="form-control"> <input
+                ng-switch-when="SR" class="form-control" ng-controller="SrvcLupaController" type="text"
+                autocomplete="off" ng-model="vm.item.itdtMap[entd.tpdt.id].srvc"
+                typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(entd.tpdt.enti.id, $viewValue)"
+                typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
         </div>
     </div>
 </div>

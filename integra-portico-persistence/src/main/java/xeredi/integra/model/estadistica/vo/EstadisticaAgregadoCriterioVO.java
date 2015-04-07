@@ -1,7 +1,6 @@
 package xeredi.integra.model.estadistica.vo;
 
 import java.util.Date;
-import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -16,9 +15,6 @@ public final class EstadisticaAgregadoCriterioVO {
 
     /** The ffin. */
     private Date ffin;
-
-    /** The subp ids. */
-    private List<Long> subpIds;
 
     /** The pepr id. */
     private Long peprId;
@@ -67,25 +63,6 @@ public final class EstadisticaAgregadoCriterioVO {
      */
     public void setFfin(final Date value) {
         ffin = value;
-    }
-
-    /**
-     * Gets the subp ids.
-     *
-     * @return the subp ids
-     */
-    public List<Long> getSubpIds() {
-        return subpIds;
-    }
-
-    /**
-     * Sets the subp ids.
-     *
-     * @param value
-     *            the new subp ids
-     */
-    public void setSubpIds(final List<Long> value) {
-        subpIds = value;
     }
 
     /**

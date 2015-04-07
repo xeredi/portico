@@ -160,6 +160,7 @@ function PrmtGridController($location, $routeParams, $http, $modal, pageTitleSer
         }).success(function(data) {
             vm.labelValuesMap = data.labelValuesMap;
             vm.limits = data.limits;
+            vm.prtoList = data.prtoList;
         });
     }
 
@@ -243,19 +244,25 @@ function PrmtDetailController($http, $location, $routeParams, sprmService, pageT
         vm.tabActive[$routeParams.tab] = true;
     }
 
+    vm.fechaVigencia = $routeParams.fechaVigencia ? $routeParams.fechaVigencia : new Date();
+
     $http.post("maestro/prmt-detail.action", {
         item : {
             id : $routeParams.itemId,
             entiId : $routeParams.entiId
         },
-        fechaVigencia : $routeParams.fechaVigencia
+        fechaVigencia : vm.fechaVigencia
     }).success(
             function(data) {
                 if (data.enti) {
                     vm.enti = data.enti;
-                    vm.fechaVigencia = data.fechaVigencia;
                     vm.item = data.item;
                     vm.i18nMap = data.i18nMap;
+
+                    if (data.item.prto) {
+                        vm.prtoId = data.item.prto.id;
+                    }
+
                     vm.itemHijosMap = {};
                     vm.entiHijasMap = {};
 
@@ -300,26 +307,32 @@ function PrmtEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
+    vm.fechaVigencia = $routeParams.fechaVigencia ? $routeParams.fechaVigencia : new Date();
+
     $http.post("maestro/prmt-edit.action", {
         item : {
             id : $routeParams.itemId,
             entiId : $routeParams.entiId
         },
         accion : vm.accion,
-        fechaVigencia : $routeParams.fechaVigencia
+        fechaVigencia : vm.fechaVigencia
     }).success(function(data) {
         vm.enti = data.enti;
-        vm.fechaVigencia = data.fechaVigencia;
         vm.item = data.item;
         vm.i18nMap = data.i18nMap;
         vm.labelValuesMap = data.labelValuesMap;
+        vm.prtoList = data.prtoList;
+
+        if (data.item.prto) {
+            vm.prtoId = data.item.prto.id;
+        }
     });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);
 }
 
 function PrmtsLupaController($http, $scope) {
-    $scope.getLabelValues = function(entiId, textoBusqueda, fechaVigencia) {
+    $scope.getLabelValues = function(entiId, textoBusqueda, prtoId, fechaVigencia) {
         if (textoBusqueda.length <= 0) {
             return null;
         }
@@ -328,7 +341,8 @@ function PrmtsLupaController($http, $scope) {
             itemLupaCriterio : {
                 entiId : entiId,
                 textoBusqueda : textoBusqueda,
-                fechaVigencia : fechaVigencia
+                fechaVigencia : fechaVigencia,
+                prtoId : prtoId
             }
         }).then(function(res) {
             return res.data.itemList;
@@ -363,6 +377,7 @@ function SprmDetailController($http, $routeParams, pageTitleService) {
     }).success(function(data) {
         vm.enti = data.enti;
         vm.fechaVigencia = data.fechaVigencia;
+        vm.prtoId = data.prtoId;
         vm.item = data.item;
     });
 
@@ -405,6 +420,7 @@ function SprmEditController($http, $location, $routeParams, pageTitleService) {
     }).success(function(data) {
         vm.enti = data.enti;
         vm.fechaVigencia = data.fechaVigencia;
+        vm.prtoId = data.prtoId;
         vm.item = data.item;
         vm.labelValuesMap = data.labelValuesMap;
     });

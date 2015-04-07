@@ -246,14 +246,14 @@ public final class ManifiestoFileImport {
                 proceso.addCodigoMaestro(
                         Entidad.MERCANCIAS_PELIGROSAS,
                         getTokenString(ManifiestoKeyword.DGS_NumeroONU, line, i)
-                                + getTokenString(ManifiestoKeyword.DGS_Clase, line, i));
+                        + getTokenString(ManifiestoKeyword.DGS_Clase, line, i));
 
                 break;
             case EQD:
                 proceso.addCodigoMaestro(
                         Entidad.TIPO_EQUIPAMIENTO,
                         getTokenString(ManifiestoKeyword.EQD_CodigoTipoEquipamiento, line, i)
-                                + getTokenString(ManifiestoKeyword.EQD_TamanioEquipamiento, line, i));
+                        + getTokenString(ManifiestoKeyword.EQD_TamanioEquipamiento, line, i));
 
                 break;
             case SEL:
@@ -307,7 +307,7 @@ public final class ManifiestoFileImport {
 
             switch (segmento) {
             case IFC:
-                manifiestoVO.setSubp(escalaVO.getSubp());
+                manifiestoVO.setPrto(escalaVO.getPrto());
                 // FIXME Calcular Año
                 manifiestoVO.setAnno(escalaVO.getAnno());
                 // FIXME Calcular fechaReferencia
@@ -316,10 +316,10 @@ public final class ManifiestoFileImport {
                 manifiestoVO.addItdt(TipoDato.CADENA_01.getId(),
                         getTokenString(ManifiestoKeyword.IFC_NumeroEDI, line, i));
                 manifiestoVO
-                        .addItdt(
-                                TipoDato.REC_ADU.getId(),
-                                getTokenMaestro(ManifiestoKeyword.IFC_CodigoRecintoAduanero, line, i,
-                                        Entidad.RECINTO_ADUANERO));
+                .addItdt(
+                        TipoDato.REC_ADU.getId(),
+                        getTokenMaestro(ManifiestoKeyword.IFC_CodigoRecintoAduanero, line, i,
+                                Entidad.RECINTO_ADUANERO));
 
                 final String tipoManifiestoEDI = getTokenString(ManifiestoKeyword.IFC_TipoManifiesto, line, i);
                 final String tipoManifiesto = getTipoManifiesto(tipoManifiestoEDI);
@@ -436,17 +436,17 @@ public final class ManifiestoFileImport {
                         Entidad.ALINEACION);
 
                 blActualVO
-                        .addItdt(TipoDato.ALIN.getId(),
-                                alineacionBlVO == null ? manifiestoVO.getItdt(TipoDato.ALIN.getId()).getPrmt()
-                                        : alineacionBlVO);
+                .addItdt(TipoDato.ALIN.getId(),
+                        alineacionBlVO == null ? manifiestoVO.getItdt(TipoDato.ALIN.getId()).getPrmt()
+                                : alineacionBlVO);
 
                 final ParametroVO terminalBlVO = getTokenMaestro(ManifiestoKeyword.CNI_CodigoTerminal, line, i,
                         Entidad.TERMINAL);
 
                 blActualVO
-                        .addItdt(TipoDato.TERMINAL.getId(),
-                                terminalBlVO == null ? manifiestoVO.getItdt(TipoDato.TERMINAL.getId()).getPrmt()
-                                        : terminalBlVO);
+                .addItdt(TipoDato.TERMINAL.getId(),
+                        terminalBlVO == null ? manifiestoVO.getItdt(TipoDato.TERMINAL.getId()).getPrmt()
+                                : terminalBlVO);
 
                 final ParametroVO acuerdoBlVO = getTokenMaestro(ManifiestoKeyword.CNI_CodigoAcuerdo, line, i,
                         Entidad.ACUERDO);
@@ -592,10 +592,10 @@ public final class ManifiestoFileImport {
                 }
 
                 padoActualVO
-                        .addItdt(
-                                TipoDato.TIPO_DOC_AEAT.getId(),
-                                getTokenMaestro(ManifiestoKeyword.DOC_CodigoTipoDocumento, line, i,
-                                        Entidad.TIPO_DOCUMENTO_AEAT));
+                .addItdt(
+                        TipoDato.TIPO_DOC_AEAT.getId(),
+                        getTokenMaestro(ManifiestoKeyword.DOC_CodigoTipoDocumento, line, i,
+                                Entidad.TIPO_DOCUMENTO_AEAT));
                 padoActualVO.addItdt(TipoDato.FECHA_01.getId(),
                         getTokenDate(ManifiestoKeyword.DOC_FechaEmision, line, i, "ddMMyy"));
                 padoActualVO.addItdt(TipoDato.CADENA_01.getId(),

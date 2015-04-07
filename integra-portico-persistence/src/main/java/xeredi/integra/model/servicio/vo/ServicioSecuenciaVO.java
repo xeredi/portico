@@ -2,6 +2,9 @@ package xeredi.integra.model.servicio.vo;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import xeredi.integra.model.comun.vo.PuertoVO;
+import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServicioSecuenciaVO.
@@ -9,10 +12,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public final class ServicioSecuenciaVO {
 
     /** The tpsr id. */
-    private Long tpsrId;
+    private TipoServicioVO tpsr;
 
     /** The subp id. */
-    private Long subpId;
+    private PuertoVO prto;
 
     /** The anno. */
     private Integer anno;
@@ -29,46 +32,8 @@ public final class ServicioSecuenciaVO {
     }
 
     /**
-     * Gets the tpsr id.
-     * 
-     * @return the tpsr id
-     */
-    public Long getTpsrId() {
-        return tpsrId;
-    }
-
-    /**
-     * Sets the tpsr id.
-     * 
-     * @param value
-     *            the new tpsr id
-     */
-    public void setTpsrId(final Long value) {
-        tpsrId = value;
-    }
-
-    /**
-     * Gets the subp id.
-     * 
-     * @return the subp id
-     */
-    public Long getSubpId() {
-        return subpId;
-    }
-
-    /**
-     * Sets the subp id.
-     * 
-     * @param value
-     *            the new subp id
-     */
-    public void setSubpId(final Long value) {
-        subpId = value;
-    }
-
-    /**
      * Gets the anno.
-     * 
+     *
      * @return the anno
      */
     public Integer getAnno() {
@@ -77,7 +42,7 @@ public final class ServicioSecuenciaVO {
 
     /**
      * Sets the anno.
-     * 
+     *
      * @param value
      *            the new anno
      */
@@ -87,7 +52,7 @@ public final class ServicioSecuenciaVO {
 
     /**
      * Gets the ultimo numero.
-     * 
+     *
      * @return the ultimo numero
      */
     public Integer getUltimoNumero() {
@@ -96,12 +61,50 @@ public final class ServicioSecuenciaVO {
 
     /**
      * Sets the ultimo numero.
-     * 
+     *
      * @param value
      *            the new ultimo numero
      */
     public void setUltimoNumero(final Integer value) {
         ultimoNumero = value;
+    }
+
+    /**
+     * Gets the tpsr.
+     *
+     * @return the tpsr
+     */
+    public TipoServicioVO getTpsr() {
+        return tpsr;
+    }
+
+    /**
+     * Sets the tpsr.
+     *
+     * @param value
+     *            the new tpsr
+     */
+    public void setTpsr(final TipoServicioVO value) {
+        tpsr = value;
+    }
+
+    /**
+     * Gets the prto.
+     *
+     * @return the prto
+     */
+    public PuertoVO getPrto() {
+        return prto;
+    }
+
+    /**
+     * Sets the prto.
+     *
+     * @param value
+     *            the new prto
+     */
+    public void setPrto(final PuertoVO value) {
+        prto = value;
     }
 
 }

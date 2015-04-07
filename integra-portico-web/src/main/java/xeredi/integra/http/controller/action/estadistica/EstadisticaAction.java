@@ -65,6 +65,14 @@ public final class EstadisticaAction extends ItemAction {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Long getPrtoId() {
+        return item == null || item.getPrto() == null ? null : item.getPrto().getId();
+    }
+
+    /**
      * Sets the item.
      *
      * @param item

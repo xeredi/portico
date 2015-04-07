@@ -36,6 +36,7 @@
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
+                <th ng-if="vm.enti.puerto" class="codigo" nowrap="nowrap" translate="prto"></th>
                 <th class="codigo" nowrap="nowrap" translate="prmt_parametro"></th>
                 <th ng-if="vm.enti.i18n" translate="i18n_text"></th>
                 <th translate="prmt_fini"></th>
@@ -49,6 +50,7 @@
                 <td><a
                     ng-href="#/maestro/prmt/detail/{{vm.enti.id}}/{{item.id}}/{{vm.itemCriterio.fechaVigencia}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
+                <td ng-if="vm.enti.puerto" class="codigo" nowrap="nowrap" ng-bind="item.prto.etiqueta"></td>
                 <td nowrap="nowrap" ng-bind="item.parametro"></td>
                 <td nowrap="nowrap" ng-if="vm.enti.i18n" ng-bind="item.texto"></td>
                 <td nowrap="nowrap" ng-bind="item.prvr.fini | date: ('format_date' | translate)"></td>

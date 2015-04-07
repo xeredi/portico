@@ -6,7 +6,7 @@ angular.module("estadistica", [])
 
 .controller("PeprDetailController", PeprDetailController)
 
-.controller("PeprPrepareLoadController", PeprPrepareLoadController)
+.controller("PeprLoadController", PeprLoadController)
 
 .controller("PeprCreateController", PeprCreateController)
 
@@ -32,9 +32,9 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    .when("/estadistica/pepr/prepareLoad", {
-        templateUrl : "modules/entidad/estadistica/pepr-prepare-load.html",
-        controller : "PeprPrepareLoadController",
+    .when("/estadistica/pepr/load", {
+        templateUrl : "modules/entidad/estadistica/pepr-load.html",
+        controller : "PeprLoadController",
         controllerAs : "vm"
     })
 
@@ -151,7 +151,7 @@ function PeprDetailController($http, $routeParams, pageTitleService) {
     pageTitleService.setTitle("pepr", "page_detail");
 }
 
-function PeprPrepareLoadController($http, $location, $upload, pageTitleService) {
+function PeprLoadController($http, $location, pageTitleService) {
     var vm = this;
 
     vm.load = load;
@@ -173,7 +173,7 @@ function PeprPrepareLoadController($http, $location, $upload, pageTitleService) 
     }
 
     $http.post("estadistica/pepr-preparar-carga.action").success(function(data) {
-        vm.autpList = data.autpList;
+        vm.sprtList = data.sprtList;
     });
 
     pageTitleService.setTitle("pepr", "page_pepr_load");
@@ -200,7 +200,7 @@ function PeprCreateController($http, $location, pageTitleService) {
     }
 
     $http.post("estadistica/pepr-preparar-creacion.action").success(function(data) {
-        vm.autpList = data.autpList;
+        vm.sprtList = data.sprtList;
     });
 
     pageTitleService.setTitle("pepr", "page_pepr_create");
@@ -278,7 +278,7 @@ function EstdGridController($http, $location, $routeParams, $modal, pageTitleSer
             itemCriterio : vm.itemCriterio
         }).success(function(data) {
             vm.labelValuesMap = data.labelValuesMap;
-            vm.subpList = data.subpList;
+            vm.prtoList = data.prtoList;
             vm.limits = data.limits;
             vm.fechaVigencia = data.fechaVigencia;
         });

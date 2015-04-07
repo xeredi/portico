@@ -9,13 +9,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public final class TipoServicioVO extends EntidadVO {
 
     /** The temporal. */
-    private Boolean temporal;
+    private boolean temporal;
 
     /** The facturable. */
-    private Boolean facturable;
+    private boolean facturable;
 
     /** The exencionable. */
-    private Boolean exencionable;
+    private boolean exencionable;
 
     /** The tpdt estado. */
     private TipoDatoVO tpdtEstado;
@@ -33,7 +33,7 @@ public final class TipoServicioVO extends EntidadVO {
      *
      * @return the temporal
      */
-    public Boolean getTemporal() {
+    public boolean isTemporal() {
         return temporal;
     }
 
@@ -43,7 +43,7 @@ public final class TipoServicioVO extends EntidadVO {
      * @param value
      *            the new temporal
      */
-    public void setTemporal(final Boolean value) {
+    public void setTemporal(final boolean value) {
         temporal = value;
     }
 
@@ -52,7 +52,7 @@ public final class TipoServicioVO extends EntidadVO {
      *
      * @return the facturable
      */
-    public Boolean getFacturable() {
+    public boolean isFacturable() {
         return facturable;
     }
 
@@ -62,7 +62,7 @@ public final class TipoServicioVO extends EntidadVO {
      * @param value
      *            the new facturable
      */
-    public void setFacturable(final Boolean value) {
+    public void setFacturable(final boolean value) {
         facturable = value;
     }
 
@@ -90,7 +90,7 @@ public final class TipoServicioVO extends EntidadVO {
      *
      * @return the exencionable
      */
-    public Boolean getExencionable() {
+    public boolean isExencionable() {
         return exencionable;
     }
 
@@ -100,7 +100,7 @@ public final class TipoServicioVO extends EntidadVO {
      * @param value
      *            the new exencionable
      */
-    public void setExencionable(final Boolean value) {
+    public void setExencionable(final boolean value) {
         exencionable = value;
     }
 

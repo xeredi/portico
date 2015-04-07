@@ -178,6 +178,16 @@ public final class SubparametroAction extends ItemAction {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Long getPrtoId() {
+        // FIXME Implementar
+
+        return null;
+    }
+
+    /**
      * Sets the item.
      *
      * @param value

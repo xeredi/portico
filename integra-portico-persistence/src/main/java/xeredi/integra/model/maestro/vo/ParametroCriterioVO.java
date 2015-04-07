@@ -3,6 +3,7 @@ package xeredi.integra.model.maestro.vo;
 import java.util.Set;
 
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -21,6 +22,9 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
 
     /** The parametros. */
     private Set<String> parametros;
+
+    /** The prto. */
+    private PuertoCriterioVO prto;
 
     /**
      * Gets the prvr ids.
@@ -98,5 +102,24 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
      */
     public void setPrvrId(final Long value) {
         prvrId = value;
+    }
+
+    /**
+     * Gets the prto.
+     *
+     * @return the prto
+     */
+    public PuertoCriterioVO getPrto() {
+        return prto;
+    }
+
+    /**
+     * Sets the prto.
+     *
+     * @param value
+     *            the new prto
+     */
+    public void setPrto(final PuertoCriterioVO value) {
+        prto = value;
     }
 }

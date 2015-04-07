@@ -3,56 +3,56 @@
         <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
 
         <div class="row">
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                 <label translate>entd_tpdt</label> <select ng-if="vm.accion == 'create'"
                     ng-model="vm.entd.tpdt.id"
                     ng-options="labelValue.value as labelValue.label for labelValue in vm.tpdtList"
-                    class="form-control input-sm">
+                    class="form-control">
                     <option />
                 </select>
                 <p ng-if="vm.accion != 'create'" class="form-control-static" ng-bind="vm.entd.tpdt.nombre"></p>
             </div>
-            <div class="col-sm-3 col-md-2 form-group">
+            <div class="col-sm-3 col-md-2 form-group-sm">
                 <label translate>entd_valorDefecto</label> <input type="text" ng-model="vm.entd.valorDefecto"
-                    class="form-control input-sm" />
+                    class="form-control" />
             </div>
         </div>
 
         <div class="row">
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label translate>entd_grupo</label> <input type="text" ng-model="vm.entd.grupo"
-                    class="form-control input-sm" />
+                    class="form-control" />
             </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label translate>entd_fila</label> <input type="text" ng-model="vm.entd.fila"
-                    class="form-control input-sm" />
+                    class="form-control" />
             </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label translate>entd_orden</label> <input type="text" ng-model="vm.entd.orden"
-                    class="form-control input-sm" />
+                    class="form-control" />
             </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label translate>entd_span</label> <input type="text" ng-model="vm.entd.span"
-                    class="form-control input-sm" />
+                    class="form-control" />
             </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label translate>entd_obligatorio</label> <select ng-model="vm.entd.obligatorio"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control input-sm">
+                    class="form-control">
                     <option />
                 </select>
             </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label translate>entd_gridable</label> <select ng-model="vm.entd.gridable"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control input-sm">
+                    class="form-control">
                     <option />
                 </select>
             </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label translate>entd_filtrable</label> <select ng-model="vm.entd.filtrable"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control input-sm">
+                    class="form-control">
                     <option />
                 </select>
             </div>

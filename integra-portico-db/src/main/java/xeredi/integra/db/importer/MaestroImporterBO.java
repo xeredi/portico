@@ -29,6 +29,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
@@ -37,6 +38,8 @@ import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.PuertoCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
@@ -99,6 +102,8 @@ public final class MaestroImporterBO {
     /** The prmt map. */
     private final Map<Long, Map<String, Long>> tpprPrmtMap = new HashMap<>();
 
+    private final Map<String, PuertoVO> prtoMap = new HashMap<>();
+
     /**
      * Instantiates a new parametro importer2 bo.
      *
@@ -129,6 +134,13 @@ public final class MaestroImporterBO {
         LOG.info("Importacion de maestros");
 
         try {
+            final PuertoBO prtoBO = new PuertoBO();
+            final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+
+            for (final PuertoVO prto : prtoBO.selectList(prtoCriterio)) {
+                prtoMap.put(prto.getCodigoCorto(), prto);
+            }
+
             Class.forName(ConfigurationProxy.getString(ConfigurationKey.db_migration_dataSource_driver));
 
             try (final Connection con = DriverManager.getConnection(
@@ -210,7 +222,7 @@ public final class MaestroImporterBO {
         try (final PreparedStatement stmt = con.prepareStatement(sql.toString());) {
             int i = 1;
 
-            if (tpprVO.getI18n()) {
+            if (tpprVO.isI18n()) {
                 stmt.setString(i++, idioma);
                 stmt.setDate(i++, new java.sql.Date(fechaVigencia.getTime()));
                 stmt.setDate(i++, new java.sql.Date(fechaVigencia.getTime()));
@@ -226,28 +238,34 @@ public final class MaestroImporterBO {
             while (rs.next()) {
                 i = 1;
 
-                final String parametro = rs.getString(i++);
+                final ParametroVO prmtVO = new ParametroVO();
 
-                Date fechaInicio = null;
-                Date fechaFin = null;
+                prmtVO.setEntiId(tpprVO.getId());
+                prmtVO.setPrvr(new ParametroVersionVO());
 
-                if (tpprVO.getTempExp()) {
-                    fechaInicio = rs.getDate(i++);
-                    fechaFin = rs.getDate(i++);
+                if (tpprVO.isPuerto()) {
+                    final String codigoPuerto = rs.getString(i++);
+
+                    if (!prtoMap.containsKey(codigoPuerto)) {
+                        final String mensaje = "Puerto " + codigoPuerto + " no encontrado";
+
+                        LOG.fatal(mensaje);
+                        throw new Error(mensaje);
+                    }
+
+                    prmtVO.setPrto(prtoMap.get(codigoPuerto));
+                }
+
+                prmtVO.setParametro(rs.getString(i++));
+
+                if (tpprVO.isTempExp()) {
+                    prmtVO.getPrvr().setFini(rs.getDate(i++));
+                    prmtVO.getPrvr().setFfin(rs.getDate(i++));
                 } else {
-                    fechaInicio = fechaInicioReferencia;
+                    prmtVO.getPrvr().setFini(fechaInicioReferencia);
                 }
 
                 // Creacion del parametro
-                final ParametroVO prmtVO = new ParametroVO();
-
-                prmtVO.setPrvr(new ParametroVersionVO());
-
-                prmtVO.setEntiId(tpprVO.getId());
-                prmtVO.setParametro(parametro);
-                prmtVO.getPrvr().setFini(fechaInicio);
-                prmtVO.getPrvr().setFfin(fechaFin);
-
                 if (tpprVO.getEntdList() != null) {
                     prmtVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
@@ -261,7 +279,7 @@ public final class MaestroImporterBO {
 
                 final Map<String, I18nVO> i18nMap = new HashMap<>();
 
-                if (tpprVO.getI18n()) {
+                if (tpprVO.isI18n()) {
                     final I18nVO i18nVO = new I18nVO();
                     final String texto = rs.getString(i++);
 
@@ -282,7 +300,10 @@ public final class MaestroImporterBO {
                 try {
                     prmtBO.insert(prmtVO, tpprVO, i18nMap);
 
-                    tpprPrmtMap.get(prmtVO.getEntiId()).put(prmtVO.getParametro(), prmtVO.getId());
+                    final String prmtKey = (prmtVO.getPrto() == null ? "" : prmtVO.getPrto().getCodigoCorto())
+                            + prmtVO.getParametro();
+
+                    tpprPrmtMap.get(prmtVO.getEntiId()).put(prmtKey, prmtVO.getId());
                 } catch (final OverlapException ex) {
                     LOG.info(entiName + " Solapado: " + prmtVO.getEtiqueta());
                 }
@@ -329,7 +350,7 @@ public final class MaestroImporterBO {
         try (final PreparedStatement stmt = con.prepareStatement(sql.toString());) {
             int i = 1;
 
-            if (tpspVO.getI18n()) {
+            if (tpspVO.isI18n()) {
                 stmt.setString(i++, idioma);
                 stmt.setDate(i++, new java.sql.Date(fechaVigencia.getTime()));
                 stmt.setDate(i++, new java.sql.Date(fechaVigencia.getTime()));
@@ -359,7 +380,7 @@ public final class MaestroImporterBO {
 
                 sprmVO.setSpvr(new SubparametroVersionVO());
 
-                if (tpspVO.getTempExp()) {
+                if (tpspVO.isTempExp()) {
                     sprmVO.getSpvr().setFini(rs.getDate(i++));
                     sprmVO.getSpvr().setFfin(rs.getDate(i++));
                 } else {
@@ -491,7 +512,7 @@ public final class MaestroImporterBO {
      *             Signals that an I/O exception has occurred.
      */
     private void parseXml(final List<MaestroNodoVO> amaestrosList) throws ParserConfigurationException, SAXException,
-            IOException {
+    IOException {
         LOG.info("Lectura del Archivo XML de consultas de Maestros");
 
         final SAXParserFactory factory = SAXParserFactory.newInstance();

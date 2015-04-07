@@ -2,7 +2,6 @@ package xeredi.integra.http.controller.action.servicio;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
 
@@ -10,22 +9,20 @@ import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.FieldFiller;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.ArchivoBO;
+import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ArchivoCriterioVO;
 import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
-import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.maestro.bo.ParametroBOFactory;
+import xeredi.integra.model.comun.vo.PuertoCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.vo.ServicioVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Sets;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -46,7 +43,7 @@ public final class ServicioAction extends ItemAction {
     private List<ArchivoInfoVO> arinList;
 
     /** The subps. */
-    private List<LabelValueVO> subpList;
+    private List<PuertoVO> prtoList;
 
     // Acciones web
     /**
@@ -110,7 +107,7 @@ public final class ServicioAction extends ItemAction {
 
         setFechaVigencia(item.getFref());
         loadLabelValuesMap(enti);
-        loadSubpList();
+        loadPrtoList();
 
         return SUCCESS;
     }
@@ -131,7 +128,7 @@ public final class ServicioAction extends ItemAction {
         final TipoServicioVO enti = TipoServicioProxy.select(item.getEntiId());
 
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.srvc_subp, item.getSubp());
+            FieldValidator.validateRequired(this, MessageI18nKey.prto, item.getPrto());
             FieldValidator.validateRequired(this, MessageI18nKey.srvc_anno, item.getAnno());
             FieldValidator.validateRequired(this, MessageI18nKey.srvc_numero, item.getNumero());
         } else {
@@ -142,7 +139,7 @@ public final class ServicioAction extends ItemAction {
             FieldValidator.validateRequired(this, MessageI18nKey.srvc_estado, item.getEstado());
         }
 
-        if (enti.getTemporal()) {
+        if (enti.isTemporal()) {
             FieldValidator.validateRequired(this, MessageI18nKey.srvc_fini, item.getFini());
             FieldValidator.validateRequired(this, MessageI18nKey.srvc_ffin, item.getFfin());
         } else {
@@ -199,26 +196,17 @@ public final class ServicioAction extends ItemAction {
     /**
      * Load subp list.
      */
-    private void loadSubpList() {
-        if (subpList == null) {
-            final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.SUBPUERTO.getId());
-            final Set<Long> tpprIds = Sets.newHashSet(Entidad.SUBPUERTO.getId());
+    private void loadPrtoList() {
+        final PuertoBO prtoBO = new PuertoBO();
+        final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-            subpList = prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma())
-                    .get(Entidad.SUBPUERTO.getId());
-        }
+        prtoCriterio.setSprtId(getSprtId());
+        prtoCriterio.setIdioma(getIdioma());
+
+        prtoList = prtoBO.selectList(prtoCriterio);
     }
 
     // get / set
-
-    /**
-     * Gets the subps.
-     *
-     * @return the subps
-     */
-    public List<LabelValueVO> getSubpList() {
-        return subpList;
-    }
 
     /**
      * {@inheritDoc}
@@ -226,6 +214,23 @@ public final class ServicioAction extends ItemAction {
     @Override
     public ServicioVO getItem() {
         return item;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Long getPrtoId() {
+        return item == null || item.getPrto() == null ? null : item.getPrto().getId();
+    }
+
+    /**
+     * Gets the prto list.
+     *
+     * @return the prto list
+     */
+    public List<PuertoVO> getPrtoList() {
+        return prtoList;
     }
 
     /**

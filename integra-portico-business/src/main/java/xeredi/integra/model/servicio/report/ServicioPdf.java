@@ -19,6 +19,7 @@ import xeredi.integra.model.comun.report.BasePdf;
 import xeredi.integra.model.comun.report.PdfCell;
 import xeredi.integra.model.comun.report.PdfConstants;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
@@ -75,11 +76,11 @@ public final class ServicioPdf extends BasePdf {
 
             rowCells.add(new PdfCell(tpsrVO.getNombre(), srvcVO.getEtiqueta(), 4, TipoElemento.TX));
 
-            if (tpsrVO.getTemporal()) {
-                rowCells.add(new PdfCell("F. Inicio", PdfConstants.DATE_FORMAT.format(srvcVO.getFini()), 4,
+            if (tpsrVO.isTemporal()) {
+                rowCells.add(new PdfCell(MessageI18nKey.srvc_fini.name(), formatDate(srvcVO.getFini()), 4,
                         TipoElemento.FE));
-                rowCells.add(new PdfCell("F. Fin", srvcVO.getFfin() == null ? "" : PdfConstants.DATE_FORMAT
-                        .format(srvcVO.getFfin()), 4, TipoElemento.FE));
+                rowCells.add(new PdfCell(MessageI18nKey.srvc_ffin.name(), formatDate(srvcVO.getFfin()), 4,
+                        TipoElemento.FE));
             }
 
             listCells.add(rowCells);

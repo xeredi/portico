@@ -8,10 +8,10 @@
 		<result column="estd_tpes_pk" property="entiId" />
 		<result column="pepr_freferencia" property="fref" />
 
-		<association property="subp" javaType="ParametroVO">
+		<association property="prto" javaType="PuertoVO">
 			<result column="estd_subp_pk" property="id" />
-			<result column="estd_subp" property="parametro" />
-			<result column="p18n_texto" property="texto" />
+			<result column="prto_codigo" property="codigo" />
+			<result column="i18n_text" property="nombre" />
 		</association>
 
 		<association property="pepr" javaType="PeriodoProcesoVO">
@@ -53,11 +53,11 @@
 		estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
 		, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
 		, (
-			SELECT prmt_parametro
-			FROM tbl_parametro_prmt
+			SELECT prto_codigo
+			FROM tbl_puerto_prto
 			WHERE
-				prmt_pk = estd_subp_pk
-		) AS estd_subp
+				prto_pk = estd_subp_pk
+		) AS prto_codigo
 		, (
 			SELECT prmt_parametro
 			FROM tbl_parametro_prmt
@@ -98,11 +98,11 @@
 		estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
 		, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
 		, (
-			SELECT prmt_parametro
-			FROM tbl_parametro_prmt
+			SELECT prto_codigo
+			FROM tbl_puerto_prto
 			WHERE
-				prmt_pk = estd_subp_pk
-		) AS estd_subp
+				prto_pk = estd_subp_pk
+		) AS prto_codigo
 		, (
 			SELECT prmt_parametro
 			FROM tbl_parametro_prmt
@@ -143,11 +143,11 @@
 		estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
 		, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
 		, (
-			SELECT prmt_parametro
-			FROM tbl_parametro_prmt
+			SELECT prto_codigo
+			FROM tbl_puerto_prto
 			WHERE
-				prmt_pk = estd_subp_pk
-		) AS estd_subp
+				prto_pk = estd_subp_pk
+		) AS prto_codigo
 		, (
 			SELECT prmt_parametro
 			FROM tbl_parametro_prmt
@@ -226,9 +226,13 @@
 		    	)
 		    ]]>
 		</if>
-		<if test="subpId != null">
-			AND estd_subp_pk = #{subpId}
+
+		<if test="prto != null">
+			<if test="prto.id != null">
+				AND estd_subp_pk = #{prto.id}
+			</if>
 		</if>
+
 		<if test="itdtMap != null and !itdtMap.empty">
 			<foreach collection="itdtMap" index="key" item="itdt">
 				<!-- FIXME ojo, faltan las fechas -->
@@ -260,28 +264,25 @@
 		</if>
 	</sql>
 
-	<select id="selectCount" parameterType="EstadisticaCriterioVO"
-		resultType="Integer">
+	<select id="selectCount" parameterType="EstadisticaCriterioVO" resultType="Integer">
 		<include refid="SelectCountPrefix" />
 		<where>
 			<include refid="SelectWhere" />
 		</where>
 	</select>
 
-	<select id="selectList" parameterType="EstadisticaCriterioVO"
-		resultMap="ResultMap">
+	<select id="selectList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 	</select>
 
-	<select id="selectObject" parameterType="EstadisticaCriterioVO"
-		resultMap="ResultMap">
+	<select id="selectObject" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 	</select>
 
 	<insert id="insert" parameterType="EstadisticaVO">
         <![CDATA[
         INSERT INTO tbl_estadistica_estd (estd_pk, estd_tpes_pk, estd_pepr_pk, estd_subp_pk)
-        VALUES (#{id}, #{entiId}, #{pepr.id}, #{subp.id})
+        VALUES (#{id}, #{entiId}, #{pepr.id}, #{prto.id})
         ]]>
 	</insert>
 

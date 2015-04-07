@@ -4,7 +4,7 @@
 
     <div ng-repeat="entd in ::vm.enti.entdList track by $index" ng-if="entd.grupo == engd.numero" ng-switch
         on="entd.tpdt.tipoElemento"
-        class="col-sm-{{::entd.spanSm}} col-md-{{::entd.span}} col-lg-{{::entd.spanLg}} col-xl-{{::entd.spanXl}} form-group">
+        class="col-sm-{{::entd.spanSm}} col-md-{{::entd.span}} col-lg-{{::entd.spanLg}} col-xl-{{::entd.spanXl}} form-group-sm">
         <label translate="{{'entd_' + entd.id}}"></label>
         <p ng-switch-when="BO" class="form-control-static">
             <i class="glyphicon glyphicon-{{vm.item.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i>

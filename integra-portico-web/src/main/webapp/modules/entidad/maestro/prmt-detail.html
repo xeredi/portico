@@ -22,17 +22,22 @@
 
 <fieldset>
     <div class="row">
-        <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+        <div ng-if="vm.enti.puerto" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+            <label translate="prto"></label>
+            <p class="form-control-static" ng-bind="vm.item.prto.etiqueta"></p>
+        </div>
+
+        <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate="prmt_parametro"></label>
             <p class="form-control-static" ng-bind="vm.item.parametro"></p>
         </div>
 
-        <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+        <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
             <label translate="prmt_fini"></label>
             <p class="form-control-static" ng-bind="vm.item.prvr.fini | date: ('format_date' | translate)"></p>
         </div>
 
-        <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+        <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
             <label translate="prmt_ffin"></label>
             <p class="form-control-static" ng-bind="vm.item.prvr.ffin | date: ('format_date' | translate)"></p>
         </div>

@@ -4,14 +4,15 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
+import xeredi.integra.model.comun.bo.PuertoBO;
+import xeredi.integra.model.comun.bo.SuperpuertoBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.PuertoCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
+import xeredi.integra.model.comun.vo.SuperpuertoVO;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.maestro.bo.ParametroBOFactory;
-import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
-import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
@@ -98,8 +99,9 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
         if (prmnList.isEmpty()) {
             try {
                 // Comprobar que existe la AP
-                final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.AUTORIDAD_PORTUARIA.getId());
-                final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+                final SuperpuertoBO sprtBO = new SuperpuertoBO();
+                final SuperpuertoVO sprt = sprtBO.select(autpId, null);
+
                 final Calendar calendar = Calendar.getInstance();
 
                 calendar.setTimeInMillis(0);
@@ -107,33 +109,35 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
                 calendar.set(Calendar.MONTH, mes - 1);
                 calendar.set(Calendar.YEAR, anio);
 
-                prmtCriterioVO.setId(autpId);
-                prmtCriterioVO.setFechaVigencia(calendar.getTime());
-
-                final ParametroVO autp = prmtBO.selectObject(prmtCriterioVO);
-
                 // Busqueda de los subpuertos de la AP
+                final PuertoBO prtoBO = new PuertoBO();
+                final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+
+                prtoCriterio.setSprtId(autpId);
+
+                final List<PuertoVO> prtoList = prtoBO.selectList(prtoCriterio);
 
                 final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
-                final List<Long> subpIds = peprBO.selectSubpIds(autpId, calendar.getTime());
 
-                if (subpIds.isEmpty()) {
+                if (prtoList.isEmpty()) {
                     addError(MensajeCodigo.E_002, Entidad.AUTORIDAD_PORTUARIA.name() + ": " + autpId);
                 } else {
                     final PeriodoProcesoVO pepr = new PeriodoProcesoVO();
 
-                    pepr.setAutp(autp);
+                    pepr.setSprt(sprt);
                     pepr.setAnio(anio);
                     pepr.setMes(mes);
                     pepr.setFreferencia(calendar.getTime());
 
                     try {
-                        peprBO.agregarServicios(pepr, subpIds, sobreescribir);
+                        peprBO.agregarServicios(pepr, sobreescribir);
 
                         itemSalidaList.add(pepr.getId());
                     } catch (final DuplicateInstanceException ex) {
-                        addError(MensajeCodigo.E_001, "Periodo de Proceso: " + pepr.getAutp().getParametro() + " "
-                                + pepr.getAnio() + " " + pepr.getMes());
+                        addError(
+                                MensajeCodigo.E_001,
+                                "Periodo de Proceso: " + pepr.getSprt().getCodigo() + " " + pepr.getAnio() + " "
+                                        + pepr.getMes());
                     } catch (final IOException ex) {
                         addError(MensajeCodigo.G_000, ex.getMessage());
                     }

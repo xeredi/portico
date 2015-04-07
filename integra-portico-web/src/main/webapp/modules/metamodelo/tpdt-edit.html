@@ -1,36 +1,36 @@
 <form role="form">
     <fieldset>
         <div class="row">
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                 <label translate>tpdt_codigo</label> <input ng-if="vm.accion == 'create'" type="text"
-                    ng-model="vm.tpdt.codigo" class="form-control input-sm" />
+                    ng-model="vm.tpdt.codigo" class="form-control" />
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.tpdt.codigo"></p>
             </div>
-            <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+            <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                 <label translate>tpdt_tpht</label> <select ng-model="vm.tpdt.tpht"
                     ng-options="cdrf as ('HtmlTipo_' + cdrf | translate) for cdrf in vm.tphtList"
-                    class="form-control input-sm">
+                    class="form-control">
                     <option />
                 </select>
             </div>
-            <div class="col-sm-2 col-md-2 col-lg-2 form-group">
+            <div class="col-sm-2 col-md-2 col-lg-2 form-group-sm">
                 <label translate>tpdt_tpel</label> <select
                     ng-options="cdrf as ('ElementoTipo_' + cdrf | translate) for cdrf in vm.tpelList"
-                    ng-model="vm.tpdt.tipoElemento" class="form-control input-sm">
+                    ng-model="vm.tpdt.tipoElemento" class="form-control">
                     <option />
                 </select>
             </div>
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group" ng-show="vm.tpdt.tipoElemento == 'PR'">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" ng-show="vm.tpdt.tipoElemento == 'PR'">
                 <label translate>tpdt_enti</label> <select ng-model="vm.tpdt.enti.id"
                     ng-options="labelValue.value as labelValue.label for labelValue in vm.entiTpprList"
-                    class="form-control input-sm">
+                    class="form-control">
                     <option />
                 </select>
             </div>
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group" ng-show="vm.tpdt.tipoElemento == 'SR'">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" ng-show="vm.tpdt.tipoElemento == 'SR'">
                 <label translate>tpdt_enti</label> <select ng-model="vm.entd.tpdt.id"
                     ng-options="labelValue.value as labelValue.label for labelValue in vm.entiTpsrList"
-                    class="form-control input-sm">
+                    class="form-control">
                     <option />
                 </select>
             </div>

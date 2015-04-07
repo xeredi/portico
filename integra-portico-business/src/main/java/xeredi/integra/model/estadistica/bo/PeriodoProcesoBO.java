@@ -29,6 +29,7 @@ import xeredi.integra.model.comun.vo.ArchivoSentido;
 import xeredi.integra.model.comun.vo.ArchivoVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.estadistica.dao.CuadroMesDAO;
 import xeredi.integra.model.estadistica.dao.EstadisticaAgregadoDAO;
 import xeredi.integra.model.estadistica.dao.EstadisticaDAO;
@@ -177,8 +178,8 @@ public class PeriodoProcesoBO {
         Preconditions.checkNotNull(peprVO);
         Preconditions.checkNotNull(peprVO.getAnio());
         Preconditions.checkNotNull(peprVO.getMes());
-        Preconditions.checkNotNull(peprVO.getAutp());
-        Preconditions.checkNotNull(peprVO.getAutp().getId());
+        Preconditions.checkNotNull(peprVO.getSprt());
+        Preconditions.checkNotNull(peprVO.getSprt().getId());
 
         final PeriodoProcesoCriterioVO peprCriterioVO = new PeriodoProcesoCriterioVO();
 
@@ -190,7 +191,7 @@ public class PeriodoProcesoBO {
 
         peprCriterioVO.setAnio(peprVO.getAnio());
         peprCriterioVO.setMes(peprVO.getMes());
-        peprCriterioVO.setAutpId(peprVO.getAutp().getId());
+        peprCriterioVO.setSprtId(peprVO.getSprt().getId());
 
         final PeriodoProcesoVO peprActualVO = peprDAO.selectObject(peprCriterioVO);
 
@@ -218,7 +219,7 @@ public class PeriodoProcesoBO {
      *             the duplicate instance exception
      */
     public final void cargarArchivo(final @Nonnull PeriodoProcesoVO peprVO,
-            final @Nonnull Map<String, ParametroVO> autpMap, final @Nonnull List<EstadisticaVO> estdList,
+            final @Nonnull Map<String, PuertoVO> prtoMap, final @Nonnull List<EstadisticaVO> estdList,
             final boolean removeIfExists) throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
@@ -316,8 +317,6 @@ public class PeriodoProcesoBO {
      *
      * @param pepr
      *            the pepr
-     * @param subpIds
-     *            the subp ids
      * @param removeIfExists
      *            the remove if exists
      * @throws DuplicateInstanceException
@@ -325,12 +324,12 @@ public class PeriodoProcesoBO {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public final void agregarServicios(final @Nonnull PeriodoProcesoVO pepr, final @Nonnull List<Long> subpIds,
-            final boolean removeIfExists) throws DuplicateInstanceException, IOException {
-        Preconditions.checkNotNull(pepr.getAutp());
+    public final void agregarServicios(final @Nonnull PeriodoProcesoVO pepr, final boolean removeIfExists)
+            throws DuplicateInstanceException, IOException {
+        Preconditions.checkNotNull(pepr.getSprt());
+        Preconditions.checkNotNull(pepr.getSprt().getId());
         Preconditions.checkNotNull(pepr.getAnio());
         Preconditions.checkNotNull(pepr.getMes());
-        Preconditions.checkArgument(!subpIds.isEmpty());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
@@ -374,7 +373,6 @@ public class PeriodoProcesoBO {
 
             esagCriterioVO.setFini(finicio.getTime());
             esagCriterioVO.setFfin(ffin.getTime());
-            esagCriterioVO.setSubpIds(subpIds);
             esagCriterioVO.setPeprId(pepr.getId());
 
             final Map<Entidad, List<EstadisticaVO>> estdMap = new HashMap<Entidad, List<EstadisticaVO>>();
@@ -620,11 +618,10 @@ public class PeriodoProcesoBO {
 
         for (final EstadisticaAgregadoVO esagVO : esagList) {
             final EstadisticaVO estdVO = new EstadisticaVO();
-            final ParametroVO autp = new ParametroVO();
 
             estdVO.setEntiId(tpesId);
             estdVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            estdVO.setSubp(esagVO.getSubp());
+            estdVO.setPrto(esagVO.getPrto());
             estdVO.setPepr(peprVO);
             estdVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 

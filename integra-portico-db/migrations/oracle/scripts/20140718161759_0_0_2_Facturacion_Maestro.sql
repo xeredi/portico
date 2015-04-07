@@ -325,6 +325,7 @@ INSERT INTO portico.tbl_factura_serie_fcsr (fcsr_pk, fcsr_serie, fcsr_anio, fcsr
 
 -- //@UNDO
 -- SQL to undo the change goes here.
+
 TRUNCATE TABLE tbl_servicio_cargo_srcr\
 
 TRUNCATE TABLE tbl_factura_det_fctd\

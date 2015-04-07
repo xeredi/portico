@@ -117,13 +117,13 @@ public final class TipoServicioAction extends BaseAction {
 
         FieldValidator.validateI18n(this, i18nMap);
 
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdAlta, enti.getCmdAlta());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdBaja, enti.getCmdBaja());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdEdicion, enti.getCmdEdicion());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdDuplicado, enti.getCmdDuplicado());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_temporal, enti.getTemporal());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_exencionable, enti.getExencionable());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_facturable, enti.getFacturable());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdAlta, enti.isCmdAlta());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdBaja, enti.isCmdBaja());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdEdicion, enti.isCmdEdicion());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdDuplicado, enti.isCmdDuplicado());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_temporal, enti.isTemporal());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_exencionable, enti.isExencionable());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_facturable, enti.isFacturable());
 
         if (!hasErrors()) {
             final TipoServicioBO tpsrBO = new TipoServicioBO();

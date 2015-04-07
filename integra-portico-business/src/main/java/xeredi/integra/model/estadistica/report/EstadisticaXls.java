@@ -71,7 +71,7 @@ public final class EstadisticaXls extends BaseXls {
 
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.estd_tpes.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.estd_pepr.name()));
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.estd_subp.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prto.name()));
 
             for (final EntidadTipoDatoVO entd : tpesVO.getEntdList()) {
                 setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
@@ -85,7 +85,7 @@ public final class EstadisticaXls extends BaseXls {
 
                 setCellValue(row, j++, bundle.getString("enti_" + tpesVO.getId()));
                 setCellValue(row, j++, estdVO.getPepr().getEtiqueta());
-                setCellValue(row, j++, estdVO.getSubp().getEtiqueta());
+                setCellValue(row, j++, estdVO.getPrto().getEtiqueta());
 
                 for (final EntidadTipoDatoVO entd : tpesVO.getEntdList()) {
                     final ItemDatoVO itdtVO = estdVO.getItdtMap().get(entd.getTpdt().getId());

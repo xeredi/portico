@@ -93,16 +93,19 @@ public final class ParametroPdf extends BasePdf {
             List<PdfCell> rowCells = new ArrayList<>();
             int accWidth = 0;
 
-            rowCells.add(new PdfCell(tpprLabel, prmtVO.getEtiqueta(), 8, TipoElemento.TX));
+            if (tpprVO.isPuerto()) {
+                rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.prto.name()), prmtVO.getPrto().getEtiqueta(),
+                        2, TipoElemento.TX));
+            }
 
-            rowCells.add(new PdfCell(prmtFiniLabel, PdfConstants.DATE_FORMAT.format(prmtVO.getPrvr().getFini()), 2,
-                    TipoElemento.FE));
-            rowCells.add(new PdfCell(prmtFfinLabel, prmtVO.getPrvr().getFfin() == null ? "" : PdfConstants.DATE_FORMAT
-                    .format(prmtVO.getPrvr().getFfin()), 2, TipoElemento.FE));
+            rowCells.add(new PdfCell(tpprLabel, prmtVO.getEtiqueta(), 6, TipoElemento.TX));
+
+            rowCells.add(new PdfCell(prmtFiniLabel, formatDate(prmtVO.getPrvr().getFini()), 2, TipoElemento.FE));
+            rowCells.add(new PdfCell(prmtFfinLabel, formatDate(prmtVO.getPrvr().getFfin()), 2, TipoElemento.FE));
 
             listCells.add(rowCells);
 
-            if (tpprVO.getI18n()) {
+            if (tpprVO.isI18n()) {
                 for (final I18nVO i18nVO : i18nMap.values()) {
                     rowCells = new ArrayList<>();
 
@@ -236,10 +239,8 @@ public final class ParametroPdf extends BasePdf {
 
             objects[i++] = itemVO.getPrmtAsociado().getEtiqueta();
 
-            objects[i++] = itemVO.getSpvr().getFini() == null ? "" : PdfConstants.DATE_FORMAT.format(itemVO.getSpvr()
-                    .getFini());
-            objects[i++] = itemVO.getSpvr().getFfin() == null ? "" : PdfConstants.DATE_FORMAT.format(itemVO.getSpvr()
-                    .getFfin());
+            objects[i++] = formatDate(itemVO.getSpvr().getFini());
+            objects[i++] = formatDate(itemVO.getSpvr().getFfin());
 
             if (entiVO.getEntdList() != null) {
                 for (final EntidadTipoDatoVO entd : entiVO.getEntdList()) {

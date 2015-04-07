@@ -1,14 +1,14 @@
 <form novalidate role="form">
     <fieldset>
         <div class="row">
-            <div class="col-md-3 form-group">
+            <div class="col-md-3 form-group-sm">
                 <label translate>cdrf_valor</label> <input ng-if="vm.accion == 'create'" type="text"
-                    ng-model="vm.cdrf.valor" class="form-control input-sm" />
+                    ng-model="vm.cdrf.valor" class="form-control" />
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.cdrf.valor"></p>
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-md-1 form-group-sm">
                 <label translate>cdrf_orden</label> <input type="text" ng-model="vm.cdrf.orden"
-                    class="form-control input-sm number" />
+                    class="form-control number" />
             </div>
         </div>
 

@@ -1,28 +1,27 @@
 <form enctype="multipart/form-data" method="post">
     <fieldset>
         <div class="row">
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                <label translate>pepr_autp</label> <select ng-model="vm.pepr.autp.id"
-                    ng-options="labelValue.value as labelValue.label for labelValue in vm.autpList"
-                    class="form-control input-sm">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                <label translate>sprt</label> <select ng-model="vm.pepr.sprt"
+                    ng-options="sprt as sprt.etiqueta for sprt in vm.sprtList" class="form-control">
                     <option />
                 </select>
             </div>
-            <div class="col-sm-2 col-md-1 form-group">
+            <div class="col-sm-2 col-md-1 form-group-sm">
                 <label translate>pepr_anio</label> <input type="text" ng-model="vm.pepr.anio"
-                    class="form-control input-sm" />
+                    class="form-control" />
             </div>
-            <div class="col-sm-2 col-md-1 form-group">
+            <div class="col-sm-2 col-md-1 form-group-sm">
                 <label translate>pepr_mes</label> <input type="text" ng-model="vm.pepr.mes"
-                    class="form-control input-sm" />
+                    class="form-control" />
             </div>
         </div>
 
         <div class="row">
-            <div class="col-sm-1 form-group">
+            <div class="col-sm-1 form-group-sm">
                 <label translate>pepr_sobreescribir</label> <select ng-model="vm.sobreescribir"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control input-sm">
+                    class="form-control">
                     <option />
                 </select>
             </div>

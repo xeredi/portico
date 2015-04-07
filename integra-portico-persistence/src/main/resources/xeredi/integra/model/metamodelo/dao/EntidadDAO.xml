@@ -12,6 +12,8 @@
 		<result column="enti_cmd_baja" property="cmdBaja" />
 		<result column="enti_cmd_edicion" property="cmdEdicion" />
 		<result column="enti_cmd_duplicado" property="cmdDuplicado" />
+		<result column="enti_gis" property="gis" />
+		<result column="enti_puerto" property="puerto" />
 		<result column="enti_max_grid" property="maxGrid" />
 		<result column="enti_classpath" property="classpath" />
 	</resultMap>
@@ -21,7 +23,7 @@
         SELECT
             enti_pk, enti_codigo, enti_tipo
             , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
-            , enti_max_grid, enti_classpath
+            , enti_gis, enti_puerto, enti_max_grid, enti_classpath
     ]]>
 		<if test="idioma != null">
         <![CDATA[
@@ -47,8 +49,7 @@
 
 			<if test="ids != null">
 				AND enti_pk IN
-				<foreach collection="ids" item="item" open="(" close=")"
-					separator=", ">#{item}
+				<foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}
 				</foreach>
 			</if>
 
@@ -90,8 +91,7 @@
 		</where>
 	</sql>
 
-	<select id="selectList" parameterType="EntidadCriterioVO"
-		resultMap="ResultMap">
+	<select id="selectList" parameterType="EntidadCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
         <![CDATA[
@@ -99,8 +99,7 @@
         ]]>
 	</select>
 
-	<select id="selectMap" parameterType="EntidadCriterioVO"
-		resultMap="ResultMap">
+	<select id="selectMap" parameterType="EntidadCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 	</select>
@@ -116,53 +115,57 @@
 	</select>
 
 	<select id="exists" parameterType="EntidadVO" resultType="boolean">
-        <![CDATA[
+    <![CDATA[
         SELECT COUNT(1)
         FROM
             tbl_entidad_enti
         WHERE
             enti_codigo = #{codigo}
-        ]]>
+    ]]>
 	</select>
 
 	<select id="nextSequence" resultType="Long">
-        <![CDATA[
+    <![CDATA[
         SELECT COALESCE(MAX(enti_pk), 20000) + 1 as enti_pk FROM tbl_entidad_enti
-        ]]>
+    ]]>
 	</select>
 
 	<insert id="insert" parameterType="EntidadVO">
-        <![CDATA[
+    <![CDATA[
         INSERT INTO tbl_entidad_enti(enti_pk, enti_codigo, enti_tipo
             , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
-            , enti_max_grid, enti_classpath)
+            , enti_gis, enti_puerto, enti_max_grid, enti_classpath)
         VALUES (
         	#{id}, #{codigo}, #{tipo}
             , #{cmdAlta, jdbcType=INTEGER, javaType=Boolean}
             , #{cmdBaja, jdbcType=INTEGER, javaType=Boolean}
             , #{cmdEdicion, jdbcType=INTEGER, javaType=Boolean}
             , #{cmdDuplicado, jdbcType=INTEGER, javaType=Boolean}
+            , #{gis, jdbcType=INTEGER, javaType=Boolean}
+            , #{puerto, jdbcType=INTEGER, javaType=Boolean}
             , #{maxGrid}, #{classpath}
         )
-        ]]>
+    ]]>
 	</insert>
 
 	<update id="update" parameterType="EntidadVO">
-        <![CDATA[
+    <![CDATA[
         UPDATE tbl_entidad_enti SET
             enti_cmd_alta = #{cmdAlta, jdbcType=INTEGER, javaType=Boolean}
             , enti_cmd_baja = #{cmdBaja, jdbcType=INTEGER, javaType=Boolean}
             , enti_cmd_edicion = #{cmdEdicion, jdbcType=INTEGER, javaType=Boolean}
             , enti_cmd_duplicado = #{cmdDuplicado, jdbcType=INTEGER, javaType=Boolean}
+            , enti_gis = #{gis, jdbcType=INTEGER, javaType=Boolean}
+            , enti_puerto = #{puerto, jdbcType=INTEGER, javaType=Boolean}
             , enti_max_grid = #{maxGrid}, enti_classpath = #{classpath}
         WHERE enti_pk = #{id}
-        ]]>
+    ]]>
 	</update>
 
 	<delete id="delete" parameterType="Long">
-        <![CDATA[
+    <![CDATA[
         DELETE FROM tbl_entidad_enti
         WHERE enti_pk = #{value}
-        ]]>
+    ]]>
 	</delete>
 </mapper>

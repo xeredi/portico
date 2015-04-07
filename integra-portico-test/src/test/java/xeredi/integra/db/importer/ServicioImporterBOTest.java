@@ -16,7 +16,7 @@ public final class ServicioImporterBOTest {
     private static final Log LOG = LogFactory.getLog(ServicioImporterBOTest.class);
 
     /** The Constant NUM_ITERATIONS. */
-    private static final int NUM_ITERATIONS = 100;
+    private static final int NUM_ITERATIONS = 10;
 
     /**
      * Test.

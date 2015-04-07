@@ -1,32 +1,32 @@
 <form role="form">
     <fieldset>
         <div class="row">
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                 <label translate>aspc_tpsr</label> <select ng-if="vm.accion == 'create'"
                     ng-model="vm.aspc.tpsr.id"
                     ng-options="labelValue.value as labelValue.label for labelValue in vm.entiTpsrList"
-                    class="form-control input-sm">
+                    class="form-control">
                     <option />
                 </select>
                 <p ng-if="vm.accion != 'create'" class="form-control-static"
                     ng-bind="'enti_' + vm.aspc.tpsr.id | translate"></p>
             </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label translate>aspc_codigo</label> <input ng-if="vm.accion != 'edit'" type="text"
-                    ng-model="vm.aspc.codigo" class="form-control input-sm" />
+                    ng-model="vm.aspc.codigo" class="form-control" />
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.aspc.codigo"></p>
             </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label translate>aspc_fini</label><input type="text" class="form-control input-sm"
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                <label translate>aspc_fini</label><input type="text" class="form-control"
                     ng-model="vm.aspc.aspv.fini" data-max-date="{{vm.aspc.aspv.ffin}}" bs-datepicker />
             </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label translate>aspc_ffin</label><input type="text" class="form-control input-sm"
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                <label translate>aspc_ffin</label><input type="text" class="form-control"
                     ng-model="vm.aspc.aspv.ffin" data-min-date="{{vm.aspc.aspv.fini}}" bs-datepicker />
             </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label translate>aspc_prioridad</label> <input type="text" ng-model="vm.aspc.aspv.prioridad"
-                    class="form-control input-sm number" />
+                    class="form-control number" />
             </div>
         </div>
 
@@ -48,61 +48,61 @@
         <tbody>
             <tr>
                 <td>info1</td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo1" class="form-control input-sm" /></td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo1" class="form-control input-sm" /></td>
+                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo1" class="form-control" /></td>
+                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo1" class="form-control" /></td>
                 <td><select ng-model="vm.aspc.aspv.cgrpInfo1"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control input-sm">
+                    class="form-control">
                         <option />
                 </select></td>
             </tr>
             <tr>
                 <td>info2</td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo2" class="form-control input-sm" /></td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo2" class="form-control input-sm" /></td>
+                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo2" class="form-control" /></td>
+                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo2" class="form-control" /></td>
                 <td><select ng-model="vm.aspc.aspv.cgrpInfo2"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control input-sm">
+                    class="form-control">
                         <option />
                 </select></td>
             </tr>
             <tr>
                 <td>info3</td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo3" class="form-control input-sm" /></td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo3" class="form-control input-sm" /></td>
+                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo3" class="form-control" /></td>
+                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo3" class="form-control" /></td>
                 <td><select ng-model="vm.aspc.aspv.cgrpInfo3"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control input-sm">
+                    class="form-control">
                         <option />
                 </select></td>
             </tr>
             <tr>
                 <td>info4</td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo4" class="form-control input-sm" /></td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo4" class="form-control input-sm" /></td>
+                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo4" class="form-control" /></td>
+                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo4" class="form-control" /></td>
                 <td><select ng-model="vm.aspc.aspv.cgrpInfo4"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control input-sm">
+                    class="form-control">
                         <option />
                 </select></td>
             </tr>
             <tr>
                 <td>info5</td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo5" class="form-control input-sm" /></td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo5" class="form-control input-sm" /></td>
+                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo5" class="form-control" /></td>
+                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo5" class="form-control" /></td>
                 <td><select ng-model="vm.aspc.aspv.cgrpInfo5"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control input-sm">
+                    class="form-control">
                         <option />
                 </select></td>
             </tr>
             <tr>
                 <td>info6</td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo6" class="form-control input-sm" /></td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo6" class="form-control input-sm" /></td>
+                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo6" class="form-control" /></td>
+                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo6" class="form-control" /></td>
                 <td><select ng-model="vm.aspc.aspv.cgrpInfo6"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control input-sm">
+                    class="form-control">
                         <option />
                 </select></td>
             </tr>
@@ -110,7 +110,7 @@
     </table>
 
     <div class="row">
-        <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+        <div class="col-sm-6 col-md-4 col-lg-3 form-group-sm">
             <legend ng-bind="'Elementos Cuantitativos de Linea'"></legend>
 
             <table class="table-condensed table-nonfluid">
@@ -126,7 +126,7 @@
                         <td>cuant1</td>
                         <td><select ng-model="vm.aspc.aspv.lsumCuant1"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control input-sm">
+                            class="form-control">
                                 <option />
                         </select></td>
                     </tr>
@@ -134,7 +134,7 @@
                         <td>cuant2</td>
                         <td><select ng-model="vm.aspc.aspv.lsumCuant2"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control input-sm">
+                            class="form-control">
                                 <option />
                         </select></td>
                     </tr>
@@ -142,7 +142,7 @@
                         <td>cuant3</td>
                         <td><select ng-model="vm.aspc.aspv.lsumCuant3"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control input-sm">
+                            class="form-control">
                                 <option />
                         </select></td>
                     </tr>
@@ -150,7 +150,7 @@
                         <td>cuant4</td>
                         <td><select ng-model="vm.aspc.aspv.lsumCuant4"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control input-sm">
+                            class="form-control">
                                 <option />
                         </select></td>
                     </tr>
@@ -158,7 +158,7 @@
                         <td>cuant5</td>
                         <td><select ng-model="vm.aspc.aspv.lsumCuant5"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control input-sm">
+                            class="form-control">
                                 <option />
                         </select></td>
                     </tr>
@@ -166,7 +166,7 @@
                         <td>cuant6</td>
                         <td><select ng-model="vm.aspc.aspv.lsumCuant6"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control input-sm">
+                            class="form-control">
                                 <option />
                         </select></td>
                     </tr>
@@ -174,7 +174,7 @@
             </table>
         </div>
 
-        <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+        <div class="col-sm-6 col-md-4 col-lg-3 form-group-sm">
             <legend ng-bind="'Elementos Informativos de Linea'"></legend>
 
             <table class="table-condensed table-nonfluid">
@@ -190,7 +190,7 @@
                         <td>info1</td>
                         <td><select ng-model="vm.aspc.aspv.lgrpInfo1"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control input-sm">
+                            class="form-control">
                                 <option />
                         </select></td>
                     </tr>
@@ -198,7 +198,7 @@
                         <td>info2</td>
                         <td><select ng-model="vm.aspc.aspv.lgrpInfo2"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control input-sm">
+                            class="form-control">
                                 <option />
                         </select></td>
                     </tr>
@@ -206,7 +206,7 @@
                         <td>info3</td>
                         <td><select ng-model="vm.aspc.aspv.lgrpInfo3"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control input-sm">
+                            class="form-control">
                                 <option />
                         </select></td>
                     </tr>
@@ -214,7 +214,7 @@
                         <td>info4</td>
                         <td><select ng-model="vm.aspc.aspv.lgrpInfo4"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control input-sm">
+                            class="form-control">
                                 <option />
                         </select></td>
                     </tr>
@@ -222,7 +222,7 @@
                         <td>info5</td>
                         <td><select ng-model="vm.aspc.aspv.lgrpInfo5"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control input-sm">
+                            class="form-control">
                                 <option />
                         </select></td>
                     </tr>
@@ -230,7 +230,7 @@
                         <td>info6</td>
                         <td><select ng-model="vm.aspc.aspv.lgrpInfo6"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control input-sm">
+                            class="form-control">
                                 <option />
                         </select></td>
                     </tr>

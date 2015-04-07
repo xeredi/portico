@@ -12,6 +12,13 @@
 		<result column="prmt_tppr_pk" property="entiId" />
 		<result column="p18n_texto" property="texto" />
 
+		<association property="prto" javaType="PuertoVO">
+			<result column="prmt_prto_pk" property="id" />
+			<result column="prto_codigo" property="codigo" />
+			<result column="prto_codigo_corto" property="codigoCorto" />
+			<result column="prto_nombre" property="nombre" />
+		</association>
+
 		<association property="prvr" javaType="ParametroVersionVO">
 			<result column="prvr_pk" property="id" />
 			<result column="prvr_fini" property="fini" />
@@ -22,11 +29,22 @@
 	<sql id="SelectPrefix">
     <![CDATA[
 		SELECT
-		    prmt_pk, prmt_tppr_pk, prmt_parametro
+		    prmt_pk, prmt_tppr_pk, prmt_parametro, prmt_prto_pk
+
+		    , prto_codigo, prto_codigo_corto
+
 		    , prvr_pk, prvr_fini, prvr_ffin
     ]]>
 		<if test="idioma != null">
         <![CDATA[
+        	, (
+        		SELECT i18n_text
+        		FROM tbl_i18n_i18n
+        		WHERE
+        			i18n_pref = 'prto'
+        			AND i18n_lang = #{idioma}
+        			AND i18n_ext_pk = prto_pk
+        	) AS prto_nombre
 		    , (
 		        CASE
 		            WHEN tppr_es_i18n = 1 THEN (
@@ -48,7 +66,6 @@
 		    ) AS p18n_texto
         ]]>
 		</if>
-		<include refid="SelectPrefixSpecific" />
         <![CDATA[
 		FROM
 		    tbl_parametro_prmt
@@ -56,19 +73,9 @@
 		        tppr_pk = prmt_tppr_pk
 		    INNER JOIN tbl_parametro_version_prvr ON
 		        prvr_prmt_pk = prmt_pk
+		    LEFT JOIN tbl_puerto_prto ON
+		    	prto_pk = prmt_prto_pk
         ]]>
-	</sql>
-
-	<sql id="SelectPrefixSpecific" databaseId="postgres">
-		, NULL AS rownumVar
-	</sql>
-
-	<sql id="SelectPrefixSpecific" databaseId="sqlserver">
-		, NULL AS rownumVar
-	</sql>
-
-	<sql id="SelectPrefixSpecific" databaseId="oracle">
-		, row_number() over (order by prmt_tppr_pk, prmt_parametro) rownumVar
 	</sql>
 
 	<sql id="SelectCountPrefix">
@@ -79,6 +86,8 @@
 		    tbl_parametro_prmt
 		    INNER JOIN tbl_parametro_version_prvr ON
 		        prvr_prmt_pk = prmt_pk
+		    LEFT JOIN tbl_puerto_prto ON
+		    	prto_pk = prmt_prto_pk
     ]]>
 	</sql>
 
@@ -111,6 +120,12 @@
 			AND prmt_parametro IN
 			<foreach collection="parametros" item="item" open="(" close=")" separator=",">#{item}
 			</foreach>
+		</if>
+
+		<if test="prto != null">
+			<if test="prto.id != null">
+				AND prmt_prto_pk = #{prto.id}
+			</if>
 		</if>
 
 		<if test="prvrId != null">
@@ -179,36 +194,6 @@
 		ORDER BY prmt_tppr_pk, prmt_parametro
 	</select>
 
-	<select id="selectPaginatedList" parameterType="ParametroCriterioVO" resultMap="ResultMap" databaseId="postgres">
-		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-		ORDER BY prmt_tppr_pk, prmt_parametro
-		OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
-	</select>
-
-	<select id="selectPaginatedList" parameterType="ParametroCriterioVO" resultMap="ResultMap" databaseId="sqlserver">
-		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-		ORDER BY prmt_tppr_pk, prmt_parametro
-		OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
-	</select>
-
-	<select id="selectPaginatedList" parameterType="ParametroCriterioVO" resultMap="ResultMap" databaseId="oracle">
-		SELECT * FROM (
-		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-        <![CDATA[
-        ORDER BY prmt_tppr_pk, prmt_parametro
-        ) WHERE rownumVar > ${offset} AND rownumVar <= (${offset} + ${limit})
-        ]]>
-	</select>
-
 	<select id="selectMap" parameterType="ParametroCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<where>
@@ -266,6 +251,16 @@
                 prmt_parametro LIKE #{textoBusqueda}
             )
             AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
+            AND EXISTS (
+            	SELECT 1
+            	FROM tbl_entidad_enti
+            	WHERE
+            		enti_pk = #{entiId}
+            		AND (
+            			enti_puerto = 0
+            			OR prmt_prto_pk = #{prtoId}
+            		)
+            )
         ]]>
 	</select>
 
@@ -286,6 +281,11 @@
         WHERE prmt_tppr_pk = #{entiId}
             AND prmt_parametro = #{parametro}
         ]]>
+		<if test="prto != null">
+			<if test="prto.id != null">
+				AND prmt_prto_pk = #{prto.id}
+			</if>
+		</if>
 	</select>
 
 	<select id="existsOverlap" parameterType="ParametroVO" resultType="Boolean">
@@ -312,8 +312,8 @@
 
 	<insert id="insert" parameterType="ParametroVO">
         <![CDATA[
-        INSERT INTO tbl_parametro_prmt(prmt_pk, prmt_tppr_pk, prmt_parametro)
-        VALUES (#{id}, #{entiId}, #{parametro})
+        INSERT INTO tbl_parametro_prmt(prmt_pk, prmt_tppr_pk, prmt_parametro, prmt_prto_pk)
+        VALUES (#{id}, #{entiId}, #{parametro}, #{prto.id})
         ]]>
 	</insert>
 

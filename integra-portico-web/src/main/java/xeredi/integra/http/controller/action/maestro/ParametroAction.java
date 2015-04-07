@@ -1,6 +1,7 @@
 package xeredi.integra.http.controller.action.maestro;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -8,10 +9,13 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.comun.vo.PuertoCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -38,6 +42,9 @@ public final class ParametroAction extends ItemAction {
     /** The p18n map. */
     private Map<String, I18nVO> i18nMap;
 
+    /** The prto list. */
+    private List<PuertoVO> prtoList;
+
     // Acciones web
     /**
      * Modificar.
@@ -62,12 +69,13 @@ public final class ParametroAction extends ItemAction {
 
             item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
 
-            if (enti.getI18n()) {
+            if (enti.isI18n()) {
                 i18nMap = I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
             }
         }
 
         loadLabelValuesMap(enti);
+        loadLabelValues();
 
         return SUCCESS;
     }
@@ -89,6 +97,14 @@ public final class ParametroAction extends ItemAction {
 
         // Validacion de Datos
         if (accion != ACCION_EDICION.edit) {
+            if (enti.isPuerto()) {
+                FieldValidator.validateRequired(this, MessageI18nKey.prto, item.getPrto());
+
+                if (!hasErrors()) {
+                    FieldValidator.validateRequired(this, MessageI18nKey.prto, item.getPrto().getId());
+                }
+            }
+
             FieldValidator.validateRequired(this, MessageI18nKey.prmt_parametro, item.getParametro());
         }
 
@@ -105,7 +121,7 @@ public final class ParametroAction extends ItemAction {
             FieldValidator.validatePeriod(this, item.getPrvr().getFini(), item.getPrvr().getFfin());
         }
 
-        if (enti.getI18n()) {
+        if (enti.isI18n()) {
             FieldValidator.validateI18n(this, i18nMap);
         }
 
@@ -180,11 +196,28 @@ public final class ParametroAction extends ItemAction {
         item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
         enti = TipoParametroProxy.select(item.getEntiId());
 
-        if (enti.getI18n()) {
+        if (enti.isI18n()) {
             i18nMap = I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
         }
 
         return SUCCESS;
+    }
+
+    /**
+     * Load label values.
+     */
+    private void loadLabelValues() {
+        Preconditions.checkNotNull(enti);
+
+        if (enti.isPuerto()) {
+            final PuertoBO prtoBO = new PuertoBO();
+            final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+
+            prtoCriterio.setSprtId(getSprtId());
+            prtoCriterio.setIdioma(getIdioma());
+
+            prtoList = prtoBO.selectList(prtoCriterio);
+        }
     }
 
     // get / set
@@ -195,6 +228,23 @@ public final class ParametroAction extends ItemAction {
     @Override
     public final ParametroVO getItem() {
         return item;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Long getPrtoId() {
+        return item == null || item.getPrto() == null ? null : item.getPrto().getId();
+    }
+
+    /**
+     * Gets the prto list.
+     *
+     * @return the prto list
+     */
+    public List<PuertoVO> getPrtoList() {
+        return prtoList;
     }
 
     /**

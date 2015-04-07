@@ -13,7 +13,7 @@
 
 <fieldset>
     <div class="row">
-        <div class="col-sm-4 col-md-2 col-md-2 form-group">
+        <div class="col-sm-4 col-md-2 col-md-2 form-group-sm">
             <label ng-bind="'enti_' + vm.enti.tpprAsociado.id | translate"></label>
             <p class="form-control-static">
                 <a
@@ -21,11 +21,11 @@
                     ng-bind="vm.item.prmtAsociado.etiqueta"></a>
             </p>
         </div>
-        <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+        <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
             <label translate>sprm_fini</label>
             <p class="form-control-static" ng-bind="vm.item.spvr.fini | date: ('format_date' | translate)"></p>
         </div>
-        <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+        <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
             <label translate>sprm_ffin</label>
             <p class="form-control-static" ng-bind="vm.item.spvr.ffin | date: ('format_date' | translate)"></p>
         </div>

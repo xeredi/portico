@@ -165,7 +165,7 @@ public final class SubservicioAction extends ItemAction {
             FieldValidator.validateRequired(this, MessageI18nKey.ssrv_estado, item.getEstado());
         }
 
-        if (enti.getTemporal()) {
+        if (enti.isTemporal()) {
             FieldValidator.validateRequired(this, MessageI18nKey.ssrv_fini, item.getFini());
             FieldValidator.validateRequired(this, MessageI18nKey.ssrv_ffin, item.getFfin());
         }
@@ -204,6 +204,15 @@ public final class SubservicioAction extends ItemAction {
     @Override
     public final SubservicioVO getItem() {
         return item;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Long getPrtoId() {
+        return item == null || item.getSrvc() == null || item.getSrvc().getPrto() == null ? null : item.getSrvc()
+                .getPrto().getId();
     }
 
     /**

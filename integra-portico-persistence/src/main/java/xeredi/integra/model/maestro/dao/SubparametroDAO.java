@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import org.apache.ibatis.session.RowBounds;
+
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 
@@ -93,13 +95,15 @@ public interface SubparametroDAO {
     List<SubparametroVO> selectList(final @Nonnull SubparametroCriterioVO sprmCriterioVO);
 
     /**
-     * Select paginated list.
+     * Select list.
      *
      * @param sprmCriterioVO
      *            the sprm criterio vo
+     * @param bounds
+     *            the bounds
      * @return the list
      */
-    List<SubparametroVO> selectPaginatedList(final @Nonnull SubparametroCriterioVO sprmCriterioVO);
+    List<SubparametroVO> selectList(final @Nonnull SubparametroCriterioVO sprmCriterioVO, final RowBounds bounds);
 
     /**
      * Select object.

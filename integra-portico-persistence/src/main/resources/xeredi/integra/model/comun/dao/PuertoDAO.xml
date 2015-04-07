@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.comun.dao.PuertoDAO">
+	<resultMap type="PuertoVO" id="ResultMap">
+		<id column="prto_pk" />
+
+		<result column="prto_pk" property="id" />
+		<result column="prto_codigo" property="codigo" />
+		<result column="prto_codigo_corto" property="codigoCorto" />
+		<result column="prto_codigo_edi" property="codigoEdi" />
+		<result column="prto_rec_aduanero" property="recAduanero" />
+		<result column="prto_unlocode" property="unlocode" />
+
+		<result column="prto_nombre" property="nombre" />
+
+		<association property="sprt" javaType="SuperPuertoVO">
+			<result column="prto_sprt_pk" property="id" />
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+	    SELECT
+	        prto_pk, prto_codigo, prto_codigo_corto, prto_codigo_edi, prto_rec_aduanero, prto_sprt_pk, prto_unlocode
+    ]]>
+    	<if test="idioma != null">
+	    <![CDATA[
+	    	, (
+	    		SELECT i18n_text
+	    		FROM tbl_i18n_i18n
+	    		WHERE
+	    			i18n_ext_pk = prto_pk
+	    			AND i18n_lang = #{idioma}
+	    			AND i18n_pref = 'prto'
+	    	) AS prto_nombre
+	    ]]>
+    	</if>
+	    FROM tbl_puerto_prto
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND prto_pk = #{id}
+			</if>
+			<if test="sprtId != null">
+				AND prto_sprt_pk = #{sprtId}
+			</if>
+			<if test="codigo != null">
+				AND prto_codigo = #{codigo}
+			</if>
+			<if test="codigoCorto != null">
+				AND prto_codigo_corto = #{codigoCorto}
+			</if>
+			<if test="codigoEdi != null">
+				AND prto_codigo_edi = #{codigoEdi}
+			</if>
+			<if test="recAduanero != null">
+				AND prto_rec_aduanero = #{recAduanero}
+			</if>
+			<if test="unlocode != null">
+				AND prto_unlocode = #{unlocode}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectObject" parameterType="PuertoCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="selectList" parameterType="PuertoCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY prto_codigo
+	</select>
+
+	<select id="count" parameterType="PuertoCriterioVO" resultType="Integer">
+    <![CDATA[
+	    SELECT
+	        COUNT(1)
+	    FROM tbl_puerto_prto
+    ]]>
+		<include refid="SelectWhere" />
+	</select>
+</mapper>

@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.ArchivoInfoVO;
-import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.comun.vo.SuperpuertoVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -19,7 +19,7 @@ public final class PeriodoProcesoVO {
     private Long id;
 
     /** The autp. */
-    private ParametroVO autp;
+    private SuperpuertoVO sprt;
 
     /** The anio. */
     private Integer anio;
@@ -56,11 +56,11 @@ public final class PeriodoProcesoVO {
      * @return the filename
      */
     public String getFilename() {
-        if (autp == null || anio == null || mes == null) {
+        if (sprt == null || anio == null || mes == null) {
             return null;
         }
 
-        return autp.getParametro() + anio + StringUtils.leftPad(mes.toString(), 2, '0');
+        return sprt.getCodigo() + anio + StringUtils.leftPad(mes.toString(), 2, '0');
     }
 
     /**
@@ -69,14 +69,14 @@ public final class PeriodoProcesoVO {
      * @return the etiqueta
      */
     public String getEtiqueta() {
-        if (autp == null) {
+        if (sprt == null) {
             return null;
         }
 
         final StringBuffer buffer = new StringBuffer();
 
-        if (autp != null && autp.getParametro() != null) {
-            buffer.append(autp.getParametro());
+        if (sprt.getCodigo() != null) {
+            buffer.append(sprt.getCodigo());
         }
 
         if (anio != null) {
@@ -127,22 +127,22 @@ public final class PeriodoProcesoVO {
     }
 
     /**
-     * Gets the autp.
+     * Gets the sprt.
      *
-     * @return the autp
+     * @return the sprt
      */
-    public ParametroVO getAutp() {
-        return autp;
+    public SuperpuertoVO getSprt() {
+        return sprt;
     }
 
     /**
-     * Sets the autp.
+     * Sets the sprt.
      *
      * @param value
-     *            the new autp
+     *            the new sprt
      */
-    public void setAutp(final ParametroVO value) {
-        autp = value;
+    public void setSprt(final SuperpuertoVO value) {
+        sprt = value;
     }
 
     /**

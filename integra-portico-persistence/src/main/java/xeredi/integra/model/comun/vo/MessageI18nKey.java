@@ -86,6 +86,8 @@ public enum MessageI18nKey {
     /** The sec_job. */
     sec_job,
 
+    sprt, prto,
+
     /** The enti. */
     enti,
     /** The enti list. */
@@ -350,7 +352,7 @@ public enum MessageI18nKey {
     /** The sprm_fini. */
     sprm_fini,
     /** The sprm_ffin. */
-    sprm_ffin,
+    sprm_ffin, srsc, srscList, srsc_anno, srsc_ultimo_numero,
     /** The srvc. */
     srvc,
     /** The srvc list. */

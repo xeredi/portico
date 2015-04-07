@@ -13,6 +13,9 @@ public final class ParametroLupaCriterioVO extends BaseCriterioVO {
     /** The tpdt nombre id. */
     private Long tpdtNombreId;
 
+    /** The prto id. */
+    private Long prtoId;
+
     /**
      * Gets the enti id.
      *
@@ -49,6 +52,25 @@ public final class ParametroLupaCriterioVO extends BaseCriterioVO {
      */
     public final void setTpdtNombreId(final Long value) {
         tpdtNombreId = value;
+    }
+
+    /**
+     * Gets the prto id.
+     *
+     * @return the prto id
+     */
+    public Long getPrtoId() {
+        return prtoId;
+    }
+
+    /**
+     * Sets the prto id.
+     *
+     * @param value
+     *            the new prto id
+     */
+    public void setPrtoId(final Long value) {
+        prtoId = value;
     }
 
 }

@@ -13,6 +13,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 
 import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
@@ -323,7 +324,8 @@ public class SubparametroBO {
                 sprmCriterioVO.setOffset(offset);
                 sprmCriterioVO.setLimit(limit);
 
-                sprmList.addAll(sprmDAO.selectPaginatedList(sprmCriterioVO));
+                sprmList.addAll(sprmDAO.selectList(sprmCriterioVO, new RowBounds(offset, limit)));
+
                 fillDependencies(session, sprmList, sprmCriterioVO);
             }
 

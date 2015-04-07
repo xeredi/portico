@@ -13,29 +13,29 @@
 
 <fieldset>
     <div class="row">
-        <div class="col-sm-4 col-md-3 col-md-2 form-group">
+        <div class="col-sm-4 col-md-3 col-md-2 form-group-sm">
             <label translate="pepr_autp"></label>
             <p class="form-control-static" ng-bind="vm.pepr.autp.parametro"></p>
         </div>
-        <div class="col-sm-2 col-md-1 col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 col-md-1 form-group-sm">
             <label translate="pepr_anio"></label>
             <p class="form-control-static number" ng-bind="vm.pepr.anio" class="number"></p>
         </div>
-        <div class="col-sm-2 col-md-1 col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 col-md-1 form-group-sm">
             <label translate="pepr_mes"></label>
             <p class="form-control-static number" ng-bind="vm.pepr.mes"></p>
         </div>
-        <div class="col-sm-3 col-md-2 col-md-1 form-group">
+        <div class="col-sm-3 col-md-2 col-md-1 form-group-sm">
             <label translate="pepr_cdmsGenerado"></label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{vm.pepr.cdmsGenerado ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
-        <div class="col-sm-2 col-md-2 form-group">
+        <div class="col-sm-2 col-md-2 form-group-sm">
             <label translate>pepr_falta</label>
             <p class="form-control-static" ng-bind="vm.pepr.falta | date: ('format_datetime' | translate)"></p>
         </div>
-        <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+        <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
             <label translate>pepr_arch</label>
             <p class="form-control-static" ng-bind="vm.pepr.arin.nombre"></p>
         </div>

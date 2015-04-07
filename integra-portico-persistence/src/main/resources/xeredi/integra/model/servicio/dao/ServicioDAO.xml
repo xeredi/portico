@@ -14,18 +14,22 @@
 		<result column="srvc_ffin" property="ffin" />
 		<result column="srvc_estado" property="estado" />
 
-		<association property="subp" javaType="ParametroVO">
+		<association property="prto" javaType="PuertoVO">
 			<result column="srvc_subp_pk" property="id" />
-			<result column="srvc_subp" property="parametro" />
+			<result column="prto_codigo" property="codigo" />
+			<result column="prto_codigo_corto" property="codigoCorto" />
 		</association>
 	</resultMap>
 
 	<sql id="SelectPrefix" databaseId="postgres">
     <![CDATA[
 		SELECT srvc_pk, srvc_tpsr_pk, srvc_anno, srvc_numero, srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado, srvc_subp_pk
-			, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+			, prto_codigo, prto_codigo_corto
 			, NULL AS rownumVar
-		FROM tbl_servicio_srvc
+		FROM
+			tbl_servicio_srvc
+			INNER JOIN tbl_puerto_prto ON
+				prto_pk = srvc_subp_pk
     ]]>
 		<where>
 			<include refid="SelectWhere" />
@@ -42,7 +46,7 @@
 	<sql id="SelectPrefix" databaseId="sqlserver">
     <![CDATA[
 		SELECT srvc_pk, srvc_tpsr_pk, srvc_anno, srvc_numero, srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado, srvc_subp_pk
-			, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+			, (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk) AS prto_codigo
 			, NULL AS rownumVar
 		FROM tbl_servicio_srvc
     ]]>
@@ -63,7 +67,7 @@
     	SELECT *
     	FROM (
 			SELECT srvc_pk, srvc_tpsr_pk, srvc_anno, srvc_numero, srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado, srvc_subp_pk
-				, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+				, (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk) AS prto_codigo
 				, row_number() over (order by srvc_falta DESC) rownumVar
 			FROM tbl_servicio_srvc
     ]]>
@@ -103,16 +107,17 @@
 		</if>
 		<if test="ids != null and !ids.empty">
 			AND srvc_pk IN
-			<foreach collection="ids" item="item" open="(" close=")"
-				separator=",">#{item}
+			<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
 			</foreach>
 		</if>
 
 		<if test="entiId != null">
 			AND srvc_tpsr_pk = #{entiId}
 		</if>
-		<if test="subp != null and subp.id != null">
-			AND srvc_subp_pk = #{subp.id}
+		<if test="prto != null">
+			<if test="prto.id != null">
+				AND srvc_subp_pk = #{prto.id}
+			</if>
 		</if>
 		<if test="anno != null and !anno.empty">
 			AND srvc_anno = #{anno}
@@ -191,46 +196,43 @@
         SELECT COUNT(1)
         FROM tbl_servicio_srvc
         WHERE srvc_tpsr_pk = #{entiId}
-            AND srvc_subp_pk = #{subp.id}
+            AND srvc_subp_pk = #{prto.id}
             AND srvc_anno = #{anno}
             AND srvc_numero = #{numero}
         ]]>
 	</select>
 
-	<select id="selectCount" parameterType="ServicioCriterioVO"
-		resultType="Integer">
+	<select id="selectCount" parameterType="ServicioCriterioVO" resultType="Integer">
 		<include refid="SelectCountPrefix" />
 		<where>
 			<include refid="SelectWhere" />
 		</where>
 	</select>
 
-	<select id="selectList" parameterType="ServicioCriterioVO"
-		resultMap="ResultMap">
+	<select id="selectList" parameterType="ServicioCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 	</select>
 
-	<select id="selectObject" parameterType="ServicioCriterioVO"
-		resultMap="ResultMap">
+	<select id="selectObject" parameterType="ServicioCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 	</select>
 
-	<select id="selectLupaList" parameterType="ServicioLupaCriterioVO"
-		resultMap="ResultMap" fetchSize="10">
+	<select id="selectLupaList" parameterType="ServicioLupaCriterioVO" resultMap="ResultMap" fetchSize="10">
         <![CDATA[
         select
             srvc_pk
-            , prmt_parametro AS srvc_subp
             , srvc_anno
             , srvc_numero
+            , prto_codigo
+            , prto_codigo_corto
         from tbl_servicio_srvc
-            JOIN tbl_parametro_prmt ON
-                prmt_pk = srvc_subp_pk
+            JOIN tbl_puerto_prto ON
+                prto_pk = srvc_subp_pk
         WHERE
             srvc_tpsr_pk = #{entiId}
         ]]>
 		<if test="subpuerto != null and !subpuerto.empty">
-			AND prmt_parametro LIKE #{subpuerto}
+			AND prto_codigo_corto LIKE #{subpuerto}
 		</if>
 		<if test="anno != null and !anno.empty">
 			AND srvc_anno LIKE #{anno}
@@ -246,7 +248,7 @@
             srvc_pk, srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_numero
             , srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado
         ) VALUES (
-            #{id}, #{entiId}, #{subp.id}, #{anno}, #{numero}
+            #{id}, #{entiId}, #{prto.id}, #{anno}, #{numero}
             , portico.getSysDatetime(), #{fref}, #{fini}, #{ffin}, #{estado}
         )
         ]]>

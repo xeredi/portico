@@ -18,7 +18,6 @@ import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.exception.DRException;
 import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.report.BasePdf;
-import xeredi.integra.model.comun.report.PdfConstants;
 import xeredi.integra.model.facturacion.bo.FacturaImpresionVO;
 import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
 import xeredi.integra.model.facturacion.vo.FacturaLineaVO;
@@ -130,7 +129,7 @@ public final class FacturaPdf extends BasePdf {
         final HorizontalListBuilder content = DynamicReports.cmp.horizontalList();
 
         content.add(createEtiquetaValorComponent("Liquidación Provisional", fctr.getEtiqueta()));
-        content.add(createEtiquetaValorComponent("Fecha", PdfConstants.DATE_FORMAT.format(fctr.getFref())));
+        content.add(createEtiquetaValorComponent("Fecha", formatDate(fctr.getFref())));
 
         return content;
     }
@@ -145,14 +144,13 @@ public final class FacturaPdf extends BasePdf {
     private ComponentBuilder<?, ?> createImportesComponent(final FacturaImpresionVO vo) {
         final VerticalListBuilder content = DynamicReports.cmp.verticalList();
 
-        content.add(DynamicReports.cmp.text(PdfConstants.CURRENCY_FORMAT.format(vo.getFctr().getImporte())));
+        content.add(DynamicReports.cmp.text(formatCurrency(vo.getFctr().getImporte())));
 
         for (final FacturaImpuestoVO fcti : vo.getFctiList()) {
-            content.add(DynamicReports.cmp.text(PdfConstants.CURRENCY_FORMAT.format(fcti.getImporteImpuesto())));
+            content.add(DynamicReports.cmp.text(formatCurrency(fcti.getImporteImpuesto())));
         }
 
-        content.add(DynamicReports.cmp.text(PdfConstants.CURRENCY_FORMAT.format(vo.getFctr().getImporte()
-                + vo.getFctr().getImpuesto())));
+        content.add(DynamicReports.cmp.text(formatCurrency(vo.getFctr().getImporte() + vo.getFctr().getImpuesto())));
 
         return content;
     }
@@ -251,10 +249,9 @@ public final class FacturaPdf extends BasePdf {
 
         linea.add(DynamicReports.cmp.horizontalFlowList(
                 createEtiquetaValorComponent("Concepto", fctl.getRgla().getCodigo()),
-                createEtiquetaValorComponent("Cuota",
-                        PdfConstants.DOUBLE_FORMAT.format(fctl.getRgla().getRglv().getImporteBase())),
+                createEtiquetaValorComponent("Cuota", formatDouble(fctl.getRgla().getRglv().getImporteBase())),
                 createEtiquetaValorComponent("IVA", fctl.getImpuesto().getEtiqueta()),
-                createEtiquetaValorComponent("Importe", PdfConstants.CURRENCY_FORMAT.format(fctl.getImporte()))));
+                createEtiquetaValorComponent("Importe", formatCurrency(fctl.getImporte()))));
 
         final HorizontalListBuilder infos = DynamicReports.cmp.horizontalList();
 
@@ -287,27 +284,27 @@ public final class FacturaPdf extends BasePdf {
 
         if (fctl.getCuant1() != null) {
             infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqCuant1(),
-                    PdfConstants.DOUBLE_FORMAT.format(fctl.getCuant1())));
+                    formatDouble(fctl.getCuant1())));
         }
         if (fctl.getCuant2() != null) {
             infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqCuant2(),
-                    PdfConstants.DOUBLE_FORMAT.format(fctl.getCuant2())));
+                    formatDouble(fctl.getCuant2())));
         }
         if (fctl.getCuant3() != null) {
             infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqCuant3(),
-                    PdfConstants.DOUBLE_FORMAT.format(fctl.getCuant3())));
+                    formatDouble(fctl.getCuant3())));
         }
         if (fctl.getCuant4() != null) {
             infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqCuant4(),
-                    PdfConstants.DOUBLE_FORMAT.format(fctl.getCuant4())));
+                    formatDouble(fctl.getCuant4())));
         }
         if (fctl.getCuant5() != null) {
             infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqCuant5(),
-                    PdfConstants.DOUBLE_FORMAT.format(fctl.getCuant5())));
+                    formatDouble(fctl.getCuant5())));
         }
         if (fctl.getCuant6() != null) {
             infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqCuant6(),
-                    PdfConstants.DOUBLE_FORMAT.format(fctl.getCuant6())));
+                    formatDouble(fctl.getCuant6())));
         }
 
         linea.add(cuants);

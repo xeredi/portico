@@ -66,7 +66,7 @@ public final class ServicioXls extends BaseXls {
             int i = 0;
 
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_tpsr.name()));
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_subp.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prto.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_anno.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_numero.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_falta.name()));
@@ -76,7 +76,7 @@ public final class ServicioXls extends BaseXls {
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_estado.name()));
             }
 
-            if (tpsrVO.getTemporal()) {
+            if (tpsrVO.isTemporal()) {
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_fini.name()));
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_ffin.name()));
             }
@@ -92,7 +92,7 @@ public final class ServicioXls extends BaseXls {
                 int j = 0;
 
                 setCellValue(row, j++, bundle.getString("enti_" + tpsrVO.getId()));
-                setCellValue(row, j++, srvcVO.getSubp().getParametro());
+                setCellValue(row, j++, srvcVO.getPrto().getCodigoCorto());
                 setCellValue(row, j++, srvcVO.getAnno());
                 setCellValue(row, j++, srvcVO.getNumero());
                 setCellValue(row, j++, srvcVO.getFalta());
@@ -102,7 +102,7 @@ public final class ServicioXls extends BaseXls {
                     setCellValue(row, j++, srvcVO.getEstado());
                 }
 
-                if (tpsrVO.getTemporal()) {
+                if (tpsrVO.isTemporal()) {
                     setCellValue(row, j++, srvcVO.getFini());
                     setCellValue(row, j++, srvcVO.getFfin());
                 }

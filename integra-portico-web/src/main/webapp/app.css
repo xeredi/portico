@@ -1,12 +1,101 @@
+.number {
+	text-align: right;
+}
+
+a {
+	color: orange;
+}
+
+.table-condensed>tbody>tr>td>a {
+	display: block;
+	width: 100%;
+	text-decoration: none;
+	color: orange;
+}
+
 #body-content {
 	margin-top: 50px;
+	padding-left: 2px;
+}
+
+.container-fluid, .modal-body {
+	padding-left: 5px;
+}
+
+.row {
+	margin: 0px;
+}
+
+.navbar {
+	padding-right: 22px;
+}
+
+.nav-pills, .btn-toolbar {
+	margin-bottom: 5px;
 }
 
 body, .tooltip {
 	font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif;
 }
 
-p, label, li, .btn, .form-control, .input-group-sm>.form-control, .form-control-static,
+label, .btn, .form-group-sm>.form-control-static, .form-group-sm>.form-control, .form-control, .tooltip,
+	.pagination>li>a, .alert li {
+	font-size: 11px;
+}
+
+.nav-pills>li, .modal-title, legend, .bg-primary, .nav-tabs, .list-group-item, .alert ul {
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+legend {
+	margin-top: 15px;
+	margin-bottom: 5px;
+}
+
+.form-group-sm {
+	padding-right: 0px;
+	padding-left: 5px;
+	margin-bottom: 10px;
+}
+
+.form-control:FOCUS {
+	background-color: orange;
+}
+
+.form-group-sm>.form-control-static {
+	background-color: #4e5d6c;
+	padding-top: 8px;
+	padding-bottom: 4px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.form-control, .form-group-sm>.form-control {
+	padding: 5px;
+}
+
+.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td,
+	.table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td {
+	padding: 4px;
+	font-size: 11px;
+}
+
+td span {
+	display: block;
+}
+
+.modal.custom, .modal-dialog {
+	width: 95%;
+}
+
+.pagination {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+/*
+p, label, li, .btn, .form-group-sm>.form-control-static, .form-group-sm>.form-control, .input-group-sm>.form-control,
 	.bootstrap-datetimepicker-widget, .table-condensed, .dropdown-menu, .list-group, .tt-dropdown-menu,
 	.typeahead>li>a, .pagination-sm>li>a, .tooltip, .text-strong, .text-center {
 	font-size: 11px;
@@ -18,10 +107,6 @@ p, label, li, .btn, .form-control, .input-group-sm>.form-control, .form-control-
 
 .form-control {
 	color: black;
-}
-
-.form-control:FOCUS {
-	background-color: orange;
 }
 
 .nav-pills>li, .modal-title, legend, .bg-primary, .nav-tabs {
@@ -74,10 +159,6 @@ td span {
 	font-weight: normal;
 }
 
-.number {
-	text-align: right;
-}
-
 .navbar-right {
 	padding-right: 30px;
 }
@@ -99,7 +180,7 @@ td span {
 }
 
 a {
-	color: orange /*#df691a*/;
+	color: orange;
 }
 
 .dropdown-menu {
@@ -170,7 +251,7 @@ legend {
 	border: 0px;
 }
 
-.form-group {
+.form-group, .form-group-sm {
 	padding-right: 0px;
 	padding-left: 5px;
 	margin-bottom: 10px;
@@ -182,7 +263,7 @@ legend {
 	padding-left: 1px;
 	padding-right: 1px;
 }
-
+*/
 .error {
 	background-color: red;
 }

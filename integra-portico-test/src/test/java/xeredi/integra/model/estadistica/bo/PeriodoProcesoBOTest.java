@@ -6,14 +6,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
+import xeredi.integra.model.comun.bo.SuperpuertoBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.SuperpuertoCriterioVO;
+import xeredi.integra.model.comun.vo.SuperpuertoVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.maestro.bo.ParametroBOFactory;
-import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
-import xeredi.integra.model.maestro.vo.ParametroVO;
-import xeredi.integra.model.metamodelo.vo.Entidad;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -38,27 +36,25 @@ public final class PeriodoProcesoBOTest {
     public void testAgregacion() throws InstanceNotFoundException, DuplicateInstanceException, IOException {
         LOG.info("Start test");
 
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.AUTORIDAD_PORTUARIA.getId());
+        final SuperpuertoBO sprtBO = new SuperpuertoBO();
+        final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
+
+        sprtCriterio.setCodigo("80");
+
+        final SuperpuertoVO sprt = sprtBO.selectObject(sprtCriterio);
+
         final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
-
-        final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
-
-        prmtCriterioVO.setEntiId(Entidad.AUTORIDAD_PORTUARIA.getId());
-        prmtCriterioVO.setParametro("80");
-
-        final ParametroVO autpVO = prmtBO.selectObject(prmtCriterioVO);
-
         final PeriodoProcesoVO peprVO = new PeriodoProcesoVO();
 
         for (int anio = 2013; anio < 2015; anio++) {
             for (int mes = 0; mes < 12; mes++) {
-                peprVO.setAutp(autpVO);
+                peprVO.setSprt(sprt);
                 peprVO.setAnio(anio);
                 peprVO.setMes(mes + 1);
 
                 LOG.info("Agregacion de servicios. Anio: " + peprVO.getAnio() + ", mes: " + peprVO.getMes());
 
-                peprBO.agregarServicios(peprVO, peprBO.selectSubpIds(autpVO.getId(), peprVO.getFreferencia()), true);
+                peprBO.agregarServicios(peprVO, true);
             }
         }
 

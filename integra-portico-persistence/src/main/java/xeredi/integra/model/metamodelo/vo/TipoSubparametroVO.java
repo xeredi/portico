@@ -15,10 +15,10 @@ public final class TipoSubparametroVO extends EntidadVO {
     private TipoParametroVO tpprAsociado;
 
     /** The i18n. */
-    private Boolean i18n;
+    private boolean i18n;
 
     /** The temp exp. */
-    private Boolean tempExp;
+    private boolean tempExp;
 
     /**
      * {@inheritDoc}
@@ -71,7 +71,7 @@ public final class TipoSubparametroVO extends EntidadVO {
      *
      * @return the i18n
      */
-    public Boolean getI18n() {
+    public boolean isI18n() {
         return i18n;
     }
 
@@ -81,7 +81,7 @@ public final class TipoSubparametroVO extends EntidadVO {
      * @param value
      *            the new i18n
      */
-    public void setI18n(final Boolean value) {
+    public void setI18n(final boolean value) {
         i18n = value;
     }
 
@@ -90,7 +90,7 @@ public final class TipoSubparametroVO extends EntidadVO {
      *
      * @return the temp exp
      */
-    public Boolean getTempExp() {
+    public boolean isTempExp() {
         return tempExp;
     }
 
@@ -100,7 +100,7 @@ public final class TipoSubparametroVO extends EntidadVO {
      * @param value
      *            the new temp exp
      */
-    public void setTempExp(final Boolean value) {
+    public void setTempExp(final boolean value) {
         tempExp = value;
     }
 

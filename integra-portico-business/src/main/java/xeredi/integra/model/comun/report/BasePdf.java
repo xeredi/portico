@@ -1,5 +1,9 @@
 package xeredi.integra.model.comun.report;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -22,6 +26,21 @@ import com.google.common.base.Preconditions;
  * The Class BasePdf.
  */
 public abstract class BasePdf {
+    /** The Constant DATE_FORMAT. */
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+
+    /** The Constant DATETIME_FORMAT. */
+    private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+    /** The Constant INTEGER_FORMAT. */
+    private static final DecimalFormat INTEGER_FORMAT = new DecimalFormat("###,###,##0");
+
+    /** The Constant DOUBLE_FORMAT. */
+    private static final DecimalFormat DOUBLE_FORMAT = new DecimalFormat("###,###,##0.00####");
+
+    /** The Constant CURRENCY_FORMAT. */
+    private static final DecimalFormat CURRENCY_FORMAT = new DecimalFormat("###,###,##0.00");
+
     /** The locale. */
     protected final Locale locale;
 
@@ -54,54 +73,35 @@ public abstract class BasePdf {
         Preconditions.checkNotNull(entdVO.getTpdt());
         Preconditions.checkNotNull(entdVO.getTpdt().getTipoElemento());
 
-        String value = "";
-
         switch (entdVO.getTpdt().getTipoElemento()) {
         case BO:
-            value = bundle.getString("format_"
-                    + (itdtVO.getCantidadEntera() == null ? false : itdtVO.getCantidadEntera() == 1));
-            break;
+            return formatBoolean(itdtVO.getCantidadEntera());
+
         case TX:
         case CR:
-            if (itdtVO.getCadena() != null) {
-                value = itdtVO.getCadena();
-            }
-            break;
+            return itdtVO.getCadena() == null ? "" : itdtVO.getCadena();
+
         case ND:
-            if (itdtVO.getCantidadDecimal() != null) {
-                value = PdfConstants.DOUBLE_FORMAT.format(itdtVO.getCantidadDecimal());
-            }
-            break;
+            return formatDouble(itdtVO.getCantidadDecimal());
+
         case NE:
-            if (itdtVO.getCantidadEntera() != null) {
-                value = PdfConstants.INTEGER_FORMAT.format(itdtVO.getCantidadEntera());
-            }
-            break;
+            return formatInteger(itdtVO.getCantidadEntera());
+
         case FE:
-            if (itdtVO.getFecha() != null) {
-                value = PdfConstants.DATE_FORMAT.format(itdtVO.getFecha());
-            }
-            break;
+            return formatDate(itdtVO.getFecha());
+
         case FH:
-            if (itdtVO.getFecha() != null) {
-                value = PdfConstants.DATETIME_FORMAT.format(itdtVO.getFecha());
-            }
-            break;
+            return formatDatetime(itdtVO.getFecha());
+
         case PR:
-            if (itdtVO.getPrmt() != null) {
-                value = itdtVO.getPrmt().getEtiqueta();
-            }
-            break;
+            return itdtVO.getPrmt() == null ? "" : itdtVO.getPrmt().getEtiqueta();
+
         case SR:
-            if (itdtVO.getSrvc() != null) {
-                value = itdtVO.getSrvc().getEtiqueta();
-            }
-            break;
+            return itdtVO.getSrvc() == null ? "" : itdtVO.getSrvc().getEtiqueta();
+
         default:
             throw new Error("Tipo de dato no soportado: " + entdVO.getTpdt().getTipoElemento());
         }
-
-        return value;
     }
 
     /**
@@ -163,4 +163,69 @@ public abstract class BasePdf {
         return data;
     }
 
+    /**
+     * Format date.
+     *
+     * @param value
+     *            the value
+     * @return the string
+     */
+    protected final String formatDate(final Date value) {
+        return value == null ? "" : DATE_FORMAT.format(value);
+    }
+
+    /**
+     * Format datetime.
+     *
+     * @param value
+     *            the value
+     * @return the string
+     */
+    protected final String formatDatetime(final Date value) {
+        return value == null ? "" : DATETIME_FORMAT.format(value);
+    }
+
+    /**
+     * Format integer.
+     *
+     * @param value
+     *            the value
+     * @return the string
+     */
+    protected final String formatInteger(final Number value) {
+        return value == null ? "" : INTEGER_FORMAT.format(value);
+    }
+
+    /**
+     * Format double.
+     *
+     * @param value
+     *            the value
+     * @return the string
+     */
+    protected final String formatDouble(final Double value) {
+        return value == null ? "" : DOUBLE_FORMAT.format(value);
+    }
+
+    /**
+     * Format currency.
+     *
+     * @param value
+     *            the value
+     * @return the string
+     */
+    protected final String formatCurrency(final Double value) {
+        return value == null ? "" : CURRENCY_FORMAT.format(value);
+    }
+
+    /**
+     * Format boolean.
+     *
+     * @param value
+     *            the value
+     * @return the string
+     */
+    protected final String formatBoolean(final Long value) {
+        return bundle.getString("format_" + (1 == value));
+    }
 }

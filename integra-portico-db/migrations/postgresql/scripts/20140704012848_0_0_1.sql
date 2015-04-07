@@ -410,9 +410,6 @@ CREATE TABLE portico.tbl_parametro_dato_prdt
 )
 \
 
-CREATE INDEX ix_prdt_prmt_pk ON portico.tbl_parametro_dato_prdt (prdt_tpdt_pk, prdt_prmt_pk, prdt_prvr_pk)\
-CREATE INDEX ix_prdt_cadena ON portico.tbl_parametro_dato_prdt (prdt_tpdt_pk, prdt_cadena, prdt_prvr_pk)\
-
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_parametro_dato_prdt TO portico\
 
 COMMENT ON TABLE portico.tbl_parametro_dato_prdt IS 'Datos Asociados a las Versiones de Parametros de la aplicacion (Datos de Maestros)'\
@@ -542,9 +539,6 @@ CREATE TABLE portico.tbl_subparametro_dato_spdt
 		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 )
 \
-
-CREATE INDEX ix_spdt_prmt_pk ON portico.tbl_subparametro_dato_spdt (spdt_prmt_pk)\
-CREATE INDEX ix_spdt_cadena ON portico.tbl_subparametro_dato_spdt (spdt_tpdt_pk, spdt_cadena)\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_subparametro_dato_spdt TO portico\
 

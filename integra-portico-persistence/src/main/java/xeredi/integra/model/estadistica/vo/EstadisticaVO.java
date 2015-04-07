@@ -5,7 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.ItemVO;
-import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -16,7 +16,7 @@ public final class EstadisticaVO extends ItemVO {
     private PeriodoProcesoVO pepr;
 
     /** The autp. */
-    private ParametroVO subp;
+    private PuertoVO prto;
 
     /** The fref. */
     private Date fref;
@@ -39,22 +39,22 @@ public final class EstadisticaVO extends ItemVO {
     }
 
     /**
-     * Gets the subp.
+     * Gets the prto.
      *
-     * @return the subp
+     * @return the prto
      */
-    public ParametroVO getSubp() {
-        return subp;
+    public PuertoVO getPrto() {
+        return prto;
     }
 
     /**
-     * Sets the subp.
+     * Sets the prto.
      *
      * @param value
-     *            the new subp
+     *            the new prto
      */
-    public void setSubp(final ParametroVO value) {
-        subp = value;
+    public void setPrto(final PuertoVO value) {
+        prto = value;
     }
 
     /**

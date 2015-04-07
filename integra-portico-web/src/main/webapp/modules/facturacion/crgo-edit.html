@@ -1,55 +1,55 @@
 <form role="form">
     <fieldset>
         <div class="row">
-            <div class="col-sm-3 col-md-2 form-group">
+            <div class="col-sm-3 col-md-2 form-group-sm">
                 <label translate>crgo_tpsr</label> <select ng-if="vm.accion == 'create'"
                     ng-model="vm.crgo.tpsr.id"
                     ng-options="labelValue.value as labelValue.label for labelValue in vm.entiList"
-                    class="form-control input-sm">
+                    class="form-control">
                     <option />
                 </select>
                 <p ng-if="vm.accion != 'create'" class="form-control-static"
                     ng-bind="'enti_' + vm.crgo.tpsr.id | translate"></p>
             </div>
-            <div class="col-sm-2 col-md-1 form-group">
+            <div class="col-sm-2 col-md-1 form-group-sm">
                 <label translate>crgo_codigo</label> <input ng-if="vm.accion == 'create'" type="text"
-                    ng-model="vm.crgo.codigo" class="form-control input-sm" />
+                    ng-model="vm.crgo.codigo" class="form-control" />
                 <p ng-if="vm.accion != 'create'" class="form-control-static" ng-bind="vm.crgo.codigo"></p>
             </div>
-            <div class="col-sm-2 col-md-2 form-group">
+            <div class="col-sm-2 col-md-2 form-group-sm">
                 <label translate>crgo_codigoNormalizado</label> <input type="text"
-                    ng-model="vm.crgo.crgv.codigoNormalizado" class="form-control input-sm" />
+                    ng-model="vm.crgo.crgv.codigoNormalizado" class="form-control" />
             </div>
-            <div class="col-sm-2 col-md-1 form-group">
+            <div class="col-sm-2 col-md-1 form-group-sm">
                 <label translate>crgo_tipo</label> <select ng-model="vm.crgo.crgv.tipo"
                     ng-options="cdrf as ('CargoTipo_' + cdrf | translate) for cdrf in vm.tipos"
-                    class="form-control input-sm">
+                    class="form-control">
                     <option />
                 </select>
             </div>
-            <div class="col-sm-1 col-md-1 form-group">
+            <div class="col-sm-1 col-md-1 form-group-sm">
                 <label translate>crgo_principal</label> <select ng-model="vm.crgo.crgv.principal"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control input-sm">
+                    class="form-control">
                     <option />
                 </select>
             </div>
-            <div class="col-sm-1 col-md-1 form-group">
+            <div class="col-sm-1 col-md-1 form-group-sm">
                 <label translate>crgo_temporal</label> <select ng-model="vm.crgo.crgv.temporal"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control input-sm">
+                    class="form-control">
                     <option />
                 </select>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-sm-2 col-md-1 form-group">
-                <label translate>crgo_fini</label><input type="text" class="form-control input-sm"
+            <div class="col-sm-2 col-md-1 form-group-sm">
+                <label translate>crgo_fini</label><input type="text" class="form-control"
                     ng-model="vm.crgo.crgv.fini" data-max-date="{{vm.crgo.crgv.ffin}}" bs-datepicker />
             </div>
-            <div class="col-sm-2 col-md-1 form-group">
-                <label translate>crgo_ffin</label><input type="text" class="form-control input-sm"
+            <div class="col-sm-2 col-md-1 form-group-sm">
+                <label translate>crgo_ffin</label><input type="text" class="form-control"
                     ng-model="vm.crgo.crgv.ffin" data-min-date="{{vm.crgo.crgv.fini}}" bs-datepicker />
             </div>
         </div>

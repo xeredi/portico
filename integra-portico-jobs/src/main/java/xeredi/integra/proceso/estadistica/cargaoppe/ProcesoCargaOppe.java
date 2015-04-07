@@ -5,7 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,18 +18,18 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import xeredi.integra.model.comun.bo.ArchivoBO;
+import xeredi.integra.model.comun.bo.PuertoBO;
+import xeredi.integra.model.comun.bo.SuperpuertoBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ArchivoInfoVO;
-import xeredi.integra.model.comun.vo.ConfigurationKey;
+import xeredi.integra.model.comun.vo.PuertoCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
+import xeredi.integra.model.comun.vo.SuperpuertoVO;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.io.EstadisticaFileType;
 import xeredi.integra.model.estadistica.io.OppeFileImport;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.maestro.bo.ParametroBOFactory;
-import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
@@ -77,24 +76,36 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
         final ArchivoBO flsrBO = new ArchivoBO();
         final OppeFileImport fileImport = new OppeFileImport(this);
         final PeriodoProcesoVO pepr = new PeriodoProcesoVO();
+        final Map<String, PuertoVO> prtoMap = new HashMap<>();
 
         // Lectura de los parametros de entrada
-        final long autpId = Long.parseLong(prpmMap.get(AUTP_PARAM).getValor());
+        final long sprtId = Long.parseLong(prpmMap.get(AUTP_PARAM).getValor());
         final int anio = Integer.parseInt(prpmMap.get(ANIO_PARAM).getValor());
         final int mes = Integer.parseInt(prpmMap.get(MES_PARAM).getValor());
         final boolean sobreescribir = Boolean.parseBoolean(prpmMap.get(SOBREESCRIBIR_PARAM).getValor());
 
-        LOG.info("Carga estadisticas: " + autpId + ", " + anio + ", " + mes);
+        LOG.info("Carga estadisticas: " + sprtId + ", " + anio + ", " + mes);
 
         try {
-            final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.AUTORIDAD_PORTUARIA.getId());
+            final SuperpuertoBO sprtBO = new SuperpuertoBO();
+            final SuperpuertoVO sprt = sprtBO.select(sprtId, null);
 
-            pepr.setAutp(prmtBO.select(autpId, ConfigurationProxy.getString(ConfigurationKey.language_default),
-                    new Date()));
+            final PuertoBO prtoBO = new PuertoBO();
+            final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+
+            prtoCriterio.setSprtId(sprtId);
+
+            for (final PuertoVO prto : prtoBO.selectList(prtoCriterio)) {
+                prtoMap.put(prto.getCodigo(), prto);
+            }
+
+            fileImport.setPrtoMap(prtoMap);
+
+            pepr.setSprt(sprt);
             pepr.setAnio(anio);
             pepr.setMes(mes);
         } catch (final InstanceNotFoundException ex) {
-            addError(MensajeCodigo.G_001, "entidad: " + Entidad.AUTORIDAD_PORTUARIA.name() + ", codigo: " + autpId);
+            addError(MensajeCodigo.E_003, String.valueOf(sprtId));
         }
 
         if (prmnList.isEmpty()) {
@@ -153,7 +164,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
             final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
             try {
-                peprBO.cargarArchivo(pepr, fileImport.getAutpMap(), fileImport.getEstdList(), sobreescribir);
+                peprBO.cargarArchivo(pepr, prtoMap, fileImport.getEstdList(), sobreescribir);
 
                 itemSalidaList.add(pepr.getId());
             } catch (final DuplicateInstanceException ex) {

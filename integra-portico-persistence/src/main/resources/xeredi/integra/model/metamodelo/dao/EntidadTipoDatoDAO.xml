@@ -28,6 +28,7 @@
 				<result column="enti_pk" property="id" />
 				<result column="enti_codigo" property="codigo" />
 				<result column="enti_tipo" property="tipo" />
+				<result column="enti_puerto" property="puerto" />
 				<result column="enti_nombre" property="nombre" />
 			</association>
 		</association>
@@ -39,7 +40,7 @@
             entd_pk, entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio
             , entd_gridable, entd_filtrable, entd_valor_defecto
             , tpdt_pk, tpdt_tipo_elemento, tpdt_tipo_html
-            , enti_pk, enti_codigo, enti_tipo
+            , enti_pk, enti_codigo, enti_tipo, enti_puerto
     ]]>
 		<if test="idioma != null">
         <![CDATA[

@@ -10,27 +10,27 @@
 
 <fieldset>
     <div class="row">
-        <div class="col-sm-3 col-md-2 col-lg-1 form-group">
+        <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
             <label translate>enti_codigo</label>
             <p class="form-control-static" ng-bind="vm.enti.codigo"></p>
         </div>
-        <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+        <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate>enti_tipo</label>
             <p class="form-control-static" bs-tooltip
                 data-title="{{'EntidadTipo_' + vm.enti.tipo | translate}}" ng-bind="vm.enti.tipo"></p>
         </div>
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+        <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate>enti_tpsr</label>
             <p class="form-control-static">
                 <a ng-href="#/metamodelo/tpsr/detail/{{vm.enti.tpsrId}}"
                     ng-bind="{{'enti_' + vm.enti.tpsrId | translate}}"></a>
             </p>
         </div>
-        <div class="col-sm-3 col-md-2 form-group">
+        <div class="col-sm-3 col-md-2 form-group-sm">
             <label translate>enti_maxGrid</label>
             <p class="form-control-static number" ng-bind="vm.enti.maxGrid | number:0"></p>
         </div>
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+        <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate>enti_tpdtEstado</label>
             <p class="form-control-static">
                 <a ng-if="vm.enti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{vm.enti.tpdtEstado.id}}"
@@ -42,49 +42,49 @@
     <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
 
     <div class="row">
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate>enti_cmdAlta</label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{vm.enti.cmdAlta ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate>enti_cmdBaja</label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{vm.enti.cmdBaja ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate>enti_cmdEdicion</label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{vm.enti.cmdEdicion ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate>enti_cmdDuplicado</label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{vm.enti.cmdDuplicado ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate>enti_temporal</label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{vm.enti.temporal ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate>enti_facturable</label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{vm.enti.facturable ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate>enti_exencionable</label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{vm.enti.exencionable ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+        <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate>enti_classpath</label>
             <p class="form-control-static" ng-bind="vm.enti.classpath"></p>
         </div>

@@ -15,6 +15,7 @@
 			<result column="enti_codigo" property="codigo" />
 			<result column="enti_nombre" property="nombre" />
 			<result column="enti_tipo" property="tipo" />
+			<result column="enti_puerto" property="puerto" />
 		</association>
 	</resultMap>
 
@@ -22,7 +23,8 @@
     <![CDATA[
     SELECT
         tpdt_pk, tpdt_codigo, tpdt_tipo_elemento, tpdt_tipo_html
-        , enti_pk, enti_codigo, enti_tipo
+
+        , enti_pk, enti_codigo, enti_tipo, enti_puerto
     ]]>
 		<if test="idioma != null">
         <![CDATA[

@@ -24,16 +24,22 @@ public class EntidadVO {
     private String nombre;
 
     /** The cmd alta. */
-    private Boolean cmdAlta;
+    private boolean cmdAlta;
 
     /** The cmd baja. */
-    private Boolean cmdBaja;
+    private boolean cmdBaja;
 
     /** The cmd edicion. */
-    private Boolean cmdEdicion;
+    private boolean cmdEdicion;
 
     /** The cmd duplicado. */
-    private Boolean cmdDuplicado;
+    private boolean cmdDuplicado;
+
+    /** The gis. */
+    private boolean gis;
+
+    /** The subpuerto. */
+    private boolean puerto;
 
     /** The max grid. */
     private Integer maxGrid;
@@ -77,7 +83,7 @@ public class EntidadVO {
      *
      * @return the etiqueta
      */
-    public String getEtiqueta() {
+    public final String getEtiqueta() {
         if (codigo == null) {
             return null;
         }
@@ -99,7 +105,7 @@ public class EntidadVO {
      *
      * @return the id
      */
-    public Long getId() {
+    public final Long getId() {
         return id;
     }
 
@@ -109,7 +115,7 @@ public class EntidadVO {
      * @param value
      *            the new id
      */
-    public void setId(final Long value) {
+    public final void setId(final Long value) {
         id = value;
     }
 
@@ -118,7 +124,7 @@ public class EntidadVO {
      *
      * @return the codigo
      */
-    public String getCodigo() {
+    public final String getCodigo() {
         return codigo;
     }
 
@@ -128,7 +134,7 @@ public class EntidadVO {
      * @param value
      *            the new codigo
      */
-    public void setCodigo(final String value) {
+    public final void setCodigo(final String value) {
         codigo = value;
     }
 
@@ -137,7 +143,7 @@ public class EntidadVO {
      *
      * @return the tipo
      */
-    public TipoEntidad getTipo() {
+    public final TipoEntidad getTipo() {
         return tipo;
     }
 
@@ -147,7 +153,7 @@ public class EntidadVO {
      * @param value
      *            the new tipo
      */
-    public void setTipo(final TipoEntidad value) {
+    public final void setTipo(final TipoEntidad value) {
         tipo = value;
     }
 
@@ -156,7 +162,7 @@ public class EntidadVO {
      *
      * @return the nombre
      */
-    public String getNombre() {
+    public final String getNombre() {
         return nombre;
     }
 
@@ -166,65 +172,8 @@ public class EntidadVO {
      * @param value
      *            the new nombre
      */
-    public void setNombre(final String value) {
+    public final void setNombre(final String value) {
         nombre = value;
-    }
-
-    /**
-     * Gets the enti padres list.
-     *
-     * @return the enti padres list
-     */
-    public List<Long> getEntiPadresList() {
-        return entiPadresList;
-    }
-
-    /**
-     * Sets the enti padres list.
-     *
-     * @param value
-     *            the new enti padres list
-     */
-    public void setEntiPadresList(final List<Long> value) {
-        entiPadresList = value;
-    }
-
-    /**
-     * Gets the enti hijas list.
-     *
-     * @return the enti hijas list
-     */
-    public List<Long> getEntiHijasList() {
-        return entiHijasList;
-    }
-
-    /**
-     * Sets the enti hijas list.
-     *
-     * @param value
-     *            the new enti hijas list
-     */
-    public void setEntiHijasList(final List<Long> value) {
-        entiHijasList = value;
-    }
-
-    /**
-     * Gets the enac list.
-     *
-     * @return the enac list
-     */
-    public List<EntidadAccionVO> getEnacList() {
-        return enacList;
-    }
-
-    /**
-     * Sets the enac list.
-     *
-     * @param value
-     *            the new enac list
-     */
-    public void setEnacList(final List<EntidadAccionVO> value) {
-        enacList = value;
     }
 
     /**
@@ -232,7 +181,7 @@ public class EntidadVO {
      *
      * @return true, if is cmd alta
      */
-    public final Boolean getCmdAlta() {
+    public final boolean isCmdAlta() {
         return cmdAlta;
     }
 
@@ -242,7 +191,7 @@ public class EntidadVO {
      * @param value
      *            the new cmd alta
      */
-    public final void setCmdAlta(final Boolean value) {
+    public final void setCmdAlta(final boolean value) {
         cmdAlta = value;
     }
 
@@ -251,7 +200,7 @@ public class EntidadVO {
      *
      * @return true, if is cmd baja
      */
-    public final Boolean getCmdBaja() {
+    public final boolean isCmdBaja() {
         return cmdBaja;
     }
 
@@ -261,7 +210,7 @@ public class EntidadVO {
      * @param value
      *            the new cmd baja
      */
-    public final void setCmdBaja(final Boolean value) {
+    public final void setCmdBaja(final boolean value) {
         cmdBaja = value;
     }
 
@@ -270,7 +219,7 @@ public class EntidadVO {
      *
      * @return true, if get cmd edicion
      */
-    public final Boolean getCmdEdicion() {
+    public final boolean isCmdEdicion() {
         return cmdEdicion;
     }
 
@@ -280,7 +229,7 @@ public class EntidadVO {
      * @param value
      *            the new cmd edicion
      */
-    public final void setCmdEdicion(final Boolean value) {
+    public final void setCmdEdicion(final boolean value) {
         cmdEdicion = value;
     }
 
@@ -289,7 +238,7 @@ public class EntidadVO {
      *
      * @return true, if get cmd duplicado
      */
-    public final Boolean getCmdDuplicado() {
+    public final boolean isCmdDuplicado() {
         return cmdDuplicado;
     }
 
@@ -299,7 +248,7 @@ public class EntidadVO {
      * @param value
      *            the new cmd duplicado
      */
-    public final void setCmdDuplicado(final Boolean value) {
+    public final void setCmdDuplicado(final boolean value) {
         cmdDuplicado = value;
     }
 
@@ -308,7 +257,7 @@ public class EntidadVO {
      *
      * @return the max grid
      */
-    public Integer getMaxGrid() {
+    public final Integer getMaxGrid() {
         return maxGrid;
     }
 
@@ -318,46 +267,8 @@ public class EntidadVO {
      * @param value
      *            the new max grid
      */
-    public void setMaxGrid(final Integer value) {
+    public final void setMaxGrid(final Integer value) {
         maxGrid = value;
-    }
-
-    /**
-     * Gets the engd list.
-     *
-     * @return the engd list
-     */
-    public List<EntidadGrupoDatoVO> getEngdList() {
-        return engdList;
-    }
-
-    /**
-     * Sets the engd list.
-     *
-     * @param value
-     *            the new engd list
-     */
-    public void setEngdList(final List<EntidadGrupoDatoVO> value) {
-        engdList = value;
-    }
-
-    /**
-     * Gets the entd list.
-     *
-     * @return the entd list
-     */
-    public List<EntidadTipoDatoVO> getEntdList() {
-        return entdList;
-    }
-
-    /**
-     * Sets the entd list.
-     *
-     * @param value
-     *            the new entd list
-     */
-    public void setEntdList(final List<EntidadTipoDatoVO> value) {
-        entdList = value;
     }
 
     /**
@@ -365,7 +276,7 @@ public class EntidadVO {
      *
      * @return the classpath
      */
-    public String getClasspath() {
+    public final String getClasspath() {
         return classpath;
     }
 
@@ -375,8 +286,84 @@ public class EntidadVO {
      * @param value
      *            the new classpath
      */
-    public void setClasspath(final String value) {
+    public final void setClasspath(final String value) {
         classpath = value;
+    }
+
+    /**
+     * Gets the gis.
+     *
+     * @return the gis
+     */
+    public final boolean isGis() {
+        return gis;
+    }
+
+    /**
+     * Sets the gis.
+     *
+     * @param value
+     *            the new gis
+     */
+    public final void setGis(final boolean value) {
+        gis = value;
+    }
+
+    /**
+     * Gets the subpuerto.
+     *
+     * @return the subpuerto
+     */
+    public final boolean isPuerto() {
+        return puerto;
+    }
+
+    /**
+     * Sets the subpuerto.
+     *
+     * @param value
+     *            the new subpuerto
+     */
+    public final void setPuerto(final boolean value) {
+        puerto = value;
+    }
+
+    /**
+     * Gets the engd list.
+     *
+     * @return the engd list
+     */
+    public final List<EntidadGrupoDatoVO> getEngdList() {
+        return engdList;
+    }
+
+    /**
+     * Sets the engd list.
+     *
+     * @param value
+     *            the new engd list
+     */
+    public final void setEngdList(final List<EntidadGrupoDatoVO> value) {
+        engdList = value;
+    }
+
+    /**
+     * Gets the entd list.
+     *
+     * @return the entd list
+     */
+    public final List<EntidadTipoDatoVO> getEntdList() {
+        return entdList;
+    }
+
+    /**
+     * Sets the entd list.
+     *
+     * @param value
+     *            the new entd list
+     */
+    public final void setEntdList(final List<EntidadTipoDatoVO> value) {
+        entdList = value;
     }
 
     /**
@@ -384,7 +371,7 @@ public class EntidadVO {
      *
      * @return the enag list
      */
-    public List<EntidadAccionGridVO> getEnagList() {
+    public final List<EntidadAccionGridVO> getEnagList() {
         return enagList;
     }
 
@@ -394,8 +381,65 @@ public class EntidadVO {
      * @param value
      *            the new enag list
      */
-    public void setEnagList(final List<EntidadAccionGridVO> value) {
+    public final void setEnagList(final List<EntidadAccionGridVO> value) {
         enagList = value;
+    }
+
+    /**
+     * Gets the enti padres list.
+     *
+     * @return the enti padres list
+     */
+    public final List<Long> getEntiPadresList() {
+        return entiPadresList;
+    }
+
+    /**
+     * Sets the enti padres list.
+     *
+     * @param value
+     *            the new enti padres list
+     */
+    public final void setEntiPadresList(final List<Long> value) {
+        entiPadresList = value;
+    }
+
+    /**
+     * Gets the enti hijas list.
+     *
+     * @return the enti hijas list
+     */
+    public final List<Long> getEntiHijasList() {
+        return entiHijasList;
+    }
+
+    /**
+     * Sets the enti hijas list.
+     *
+     * @param value
+     *            the new enti hijas list
+     */
+    public final void setEntiHijasList(final List<Long> value) {
+        entiHijasList = value;
+    }
+
+    /**
+     * Gets the enac list.
+     *
+     * @return the enac list
+     */
+    public final List<EntidadAccionVO> getEnacList() {
+        return enacList;
+    }
+
+    /**
+     * Sets the enac list.
+     *
+     * @param value
+     *            the new enac list
+     */
+    public final void setEnacList(final List<EntidadAccionVO> value) {
+        enacList = value;
     }
 
 }

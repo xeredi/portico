@@ -1,6 +1,7 @@
 package xeredi.integra.model.estadistica.vo;
 
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -12,7 +13,7 @@ public final class EstadisticaCriterioVO extends ItemCriterioVO {
     private PeriodoProcesoCriterioVO pepr;
 
     /** The subp id. */
-    private Long subpId;
+    private PuertoCriterioVO prto;
 
     /**
      * Gets the pepr id.
@@ -34,21 +35,21 @@ public final class EstadisticaCriterioVO extends ItemCriterioVO {
     }
 
     /**
-     * Gets the subp id.
+     * Gets the prto.
      *
-     * @return the subp id
+     * @return the prto
      */
-    public Long getSubpId() {
-        return subpId;
+    public PuertoCriterioVO getPrto() {
+        return prto;
     }
 
     /**
-     * Sets the subp id.
+     * Sets the prto.
      *
      * @param value
-     *            the new subp id
+     *            the new prto
      */
-    public void setSubpId(final Long value) {
-        subpId = value;
+    public void setPrto(final PuertoCriterioVO value) {
+        prto = value;
     }
 }

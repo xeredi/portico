@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.ItemVO;
-import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -18,7 +18,7 @@ public final class ServicioVO extends ItemVO {
     public static final int NUMERO_LENGTH = 5;
 
     /** The subpuerto. */
-    private ParametroVO subp;
+    private PuertoVO prto;
 
     /** The anno. */
     private String anno;
@@ -68,34 +68,34 @@ public final class ServicioVO extends ItemVO {
      */
     @Override
     public String getEtiqueta() {
-        if ((subp == null || subp.getParametro() == null) && anno == null && numero == null) {
+        if ((prto == null || prto.getCodigo() == null) && anno == null && numero == null) {
             return null;
         }
 
         final StringBuffer buffer = new StringBuffer();
 
-        buffer.append(subp == null ? "-" : subp.getParametro()).append('/').append(anno).append('/').append(numero);
+        buffer.append(prto == null ? "-" : prto.getCodigo()).append('/').append(anno).append('/').append(numero);
 
         return buffer.toString();
     }
 
     /**
-     * Gets the subpuerto.
+     * Gets the prto.
      *
-     * @return the subpuerto
+     * @return the prto
      */
-    public ParametroVO getSubp() {
-        return subp;
+    public PuertoVO getPrto() {
+        return prto;
     }
 
     /**
-     * Sets the subpuerto.
+     * Sets the prto.
      *
      * @param value
-     *            the new subpuerto
+     *            the new prto
      */
-    public void setSubp(final ParametroVO value) {
-        subp = value;
+    public void setPrto(final PuertoVO value) {
+        prto = value;
     }
 
     /**

@@ -1036,7 +1036,8 @@
 	<sql id="TERMINAL" tempImp="true">
 	<![CDATA[
 		SELECT
-			MAES.TERM_CODIGO
+			SUBSTR(MAES.TERM_CODIGO, 1, 1)
+			, SUBSTR(MAES.TERM_CODIGO, 2)
 		    , TEMP.TERM_ES_CONCESION
 			, (SELECT IVAT_CODIGO
 		 		FROM IFAC_IVATIPO_IVAT
@@ -1416,8 +1417,8 @@
             select SUBP_CODIGO
             from IGEN_SUBPUERTO_SUBP
             where SUBP_ID = maes.ZONS_SUBP_ID
-        ) ||
-        maes.ZONS_CODIGO as codigo
+        ) AS SUBP_CODIGO
+        , maes.ZONS_CODIGO as codigo
 
         , (
             select SUBP_CODIGO
@@ -1458,8 +1459,8 @@
 	<![CDATA[
 		SELECT
 	        (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP
-	            WHERE SUBP_ID = TRAF_SUBP_ID)
-	        || MAES.TRAF_CODIGO AS CODIGO
+	            WHERE SUBP_ID = TRAF_SUBP_ID) AS SUBP_CODIGO
+	        , MAES.TRAF_CODIGO AS CODIGO
 	        , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP
 	            WHERE SUBP_ID = TRAF_SUBP_ID) AS TRAF_SUBP
 	        , MAES.TRAF_INCREMENTA_CONTADORES
@@ -1476,7 +1477,8 @@
 	<sql id="MUELLE" tempImp="true">
 	<![CDATA[
 		SELECT
-	        MAES.MUEL_CODIGO
+	        SUBSTR(MAES.MUEL_CODIGO, 1, 1) AS SUBP_CODIGO
+	        , SUBSTR(MAES.MUEL_CODIGO, 2)
 	        , (SELECT subp_CODIGO
 	          FROM IGEN_SUBPUERTO_SUBP
 	            WHERE SUBP_ID = TEMP.muel_SUBP_ID
@@ -1499,8 +1501,8 @@
     <sql id="INSTALACION_DEP_AUT" tempImp="false">
     <![CDATA[
         SELECT
-              (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDA_SUBPUERTO_ID)
-              || INDA_CODIGO as codigo
+              (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDA_SUBPUERTO_ID) AS SUBP_CODIGO
+              , INDA_CODIGO as codigo
               , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDA_SUBPUERTO_ID) AS SUBP
               , (
                   SELECT
@@ -1524,8 +1526,8 @@
     <sql id="INSTALACION_DEP" tempImp="false">
     <![CDATA[
         SELECT
-            (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDP_SUBPUERTO_ID)
-            || MAES.INDP_CODIGO AS MAES_CODIGO
+            (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDP_SUBPUERTO_ID) AS SUBP_CODIGO
+            , MAES.INDP_CODIGO AS MAES_CODIGO
             , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDP_SUBPUERTO_ID) AS MAES_SUBP
             , (SELECT TAMD_CODIGO FROM IEMD_TIPOAMARRE_TAMD WHERE TAMD_ID = INDP_TIPO_AMARRE_ID) AS MAES_TAMD
             , (SELECT TEMD_CODIGO FROM IEMD_TIPOEMBARCACION_TEMD WHERE TEMD_ID = INDP_TIPO_EMBARCACION_ID) AS MAES_TEMD
@@ -1559,10 +1561,19 @@
     <![CDATA[
         SELECT
             (
+            	select subp_codigo
+            	from IGEN_SUBPUERTO_SUBP
+            	where
+            		subp_id = (
+		                select
+		                    INDP_SUBPUERTO_ID
+		                from IEMD_INSTALACIONDEP_INDP
+		                WHERE indp_id = maes.AMAD_INSTALACIONDEP_ID
+            		)
+            ) AS subp_codigo
+            , (
                 select
-                    (select subp_codigo
-                    from IGEN_SUBPUERTO_SUBP where subp_id = INDP_SUBPUERTO_ID)
-                    || indp_codigo
+                    indp_codigo
                 from IEMD_INSTALACIONDEP_INDP
                 WHERE indp_id = maes.AMAD_INSTALACIONDEP_ID
             ) || '-' || maes.AMAD_PANTALAN || '-' || maes.AMAD_PUESTO
@@ -1588,7 +1599,8 @@
 	<sql id="ALINEACION" tempImp="true">
 	<![CDATA[
 		SELECT
-	        MAES.ALIN_CODIGO
+	        SUBSTR(MAES.ALIN_CODIGO, 1, 1) AS subp_codigo
+	        , SUBSTR(MAES.ALIN_CODIGO, 2)
 	        , (SELECT muel_CODIGO
 	          FROM IESC_MUELLE_MUEL
 	            WHERE MUEL_ID = TEMP.ALIN_MUEL_ID
@@ -1742,7 +1754,8 @@
 	<sql id="INSTALACION_ESPECIAL" tempImp="true">
 	<![CDATA[
 		SELECT
-	        MAES.iesp_CODIGO
+	        SUBSTR(MAES.iesp_CODIGO, 1, 1) AS subp_codigo
+	        , SUBSTR(MAES.iesp_CODIGO, 2)
 	        , (SELECT alin_CODIGO
 	          FROM IGEN_ALINEACION_ALIN
 	            WHERE alin_ID = TEMP.iesp_alineacion
@@ -1827,7 +1840,8 @@
 		        SELECT SUBP_CODIGO
 		        FROM IGEN_SUBPUERTO_SUBP
 		        WHERE SUBP_ID = REDS_SUBP_ID
-		    ) || MAES.REDS_CODIGO as CODIGO
+		    ) AS subp_codigo
+		    , MAES.REDS_CODIGO as CODIGO
 		    , (SELECT SUBP_CODIGO
 		        FROM IGEN_SUBPUERTO_SUBP
 		        WHERE SUBP_ID = REDS_SUBP_ID
@@ -1853,8 +1867,8 @@
 	    SELECT subp_codigo
 	    FROM IGEN_SUBPUERTO_SUBP
 	    WHERE SUBP_ID = COSU_SUBP_ID
-	  ) ||
-	  MAES.COSU_CODIGO as COSU_CODIGO
+	  ) AS subp_codigo
+	  , MAES.COSU_CODIGO as COSU_CODIGO
 	  , MAES.COSU_FECHA_INSTALACION
 	  , MAES.COSU_FECHA_BAJA
 	  , (
@@ -1887,9 +1901,20 @@
     <![CDATA[
         SELECT
             (
+            	SELECT
+            		SUBP_CODIGO
+            	FROM IGEN_SUBPUERTO_SUBP
+            	WHERE
+            		SUBP_ID = (
+            			SELECT REDS_SUBP_ID
+            			FROM ISUM_RED_REDS
+                		WHERE
+                			REDS_ID = PRSU_REDS_ID
+                	)
+            ) AS subp_codigo
+            , (
                 SELECT
-                    (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = REDS_SUBP_ID)
-                    || REDS_CODIGO
+                    REDS_CODIGO
                 FROM ISUM_RED_REDS
                 WHERE REDS_ID = PRSU_REDS_ID
             ) || '-' || maes.prsu_codigo AS CODIGO

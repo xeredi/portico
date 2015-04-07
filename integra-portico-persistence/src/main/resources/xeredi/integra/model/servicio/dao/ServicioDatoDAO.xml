@@ -22,8 +22,8 @@
 			<result column="srvc_anno" property="anno" />
 			<result column="srvc_numero" property="numero" />
 
-			<association property="subp" javaType="ParametroVO">
-				<result column="srvc_subp" property="parametro" />
+			<association property="prto" javaType="PuertoVO">
+				<result column="prto_codigo" property="codigo" />
 			</association>
 		</association>
 	</resultMap>
@@ -37,7 +37,7 @@
 
 		    , srvc_anno, srvc_numero
 
-		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+		    , (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk) AS prto_codigo
         ]]>
 		<if test="idioma != null">
         <![CDATA[

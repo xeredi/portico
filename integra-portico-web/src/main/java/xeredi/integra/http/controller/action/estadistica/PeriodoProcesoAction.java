@@ -5,31 +5,28 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.bo.SuperpuertoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.comun.vo.SuperpuertoCriterioVO;
+import xeredi.integra.model.comun.vo.SuperpuertoVO;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.maestro.bo.ParametroBOFactory;
-import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
-import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.proceso.estadistica.cargaoppe.ProcesoCargaOppe;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Sets;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -44,7 +41,7 @@ public final class PeriodoProcesoAction extends BaseAction {
     private PeriodoProcesoVO pepr;
 
     /** The autp list. */
-    private List<LabelValueVO> autpList;
+    private List<SuperpuertoVO> sprtList;
 
     /** The file. */
     private File file;
@@ -86,10 +83,10 @@ public final class PeriodoProcesoAction extends BaseAction {
             pepr = new PeriodoProcesoVO();
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.pepr_autp, pepr.getAutp());
+        FieldValidator.validateRequired(this, MessageI18nKey.sprt, pepr.getSprt());
 
         if (!hasErrors()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.pepr_autp, pepr.getAutp().getId());
+            FieldValidator.validateRequired(this, MessageI18nKey.sprt, pepr.getSprt().getId());
         }
 
         FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, pepr.getAnio());
@@ -100,19 +97,12 @@ public final class PeriodoProcesoAction extends BaseAction {
             final ProcesoBO prbtBO = new ProcesoBO();
             final Map<String, String> parametroMap = new HashMap<>();
 
-            // FIXME Deberia llegar por el formulario
-            final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.AUTORIDAD_PORTUARIA.getId());
-            final ParametroVO autp = prmtBO.select(pepr.getAutp().getId(), getIdioma(), Calendar.getInstance()
-                    .getTime());
-
-            pepr.setAutp(autp);
-
             final String foldername = ConfigurationProxy
                     .getString(ConfigurationKey.estadistica_files_oppe_entrada_home);
             final String filepath = foldername + "/" + pepr.getFilename() + ".zip";
             final File file = new File(filepath);
 
-            parametroMap.put(ProcesoCargaOppe.AUTP_PARAM, pepr.getAutp().getId().toString());
+            parametroMap.put(ProcesoCargaOppe.AUTP_PARAM, pepr.getSprt().getId().toString());
             parametroMap.put(ProcesoCargaOppe.ANIO_PARAM, pepr.getAnio().toString());
             parametroMap.put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
             parametroMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
@@ -148,10 +138,10 @@ public final class PeriodoProcesoAction extends BaseAction {
             pepr = new PeriodoProcesoVO();
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.pepr_autp, pepr.getAutp());
+        FieldValidator.validateRequired(this, MessageI18nKey.sprt, pepr.getSprt());
 
         if (!hasErrors()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.pepr_autp, pepr.getAutp().getId());
+            FieldValidator.validateRequired(this, MessageI18nKey.sprt, pepr.getSprt().getId());
         }
 
         FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, pepr.getAnio());
@@ -162,7 +152,7 @@ public final class PeriodoProcesoAction extends BaseAction {
             final ProcesoBO prbtBO = new ProcesoBO();
             final Map<String, String> parametroMap = new HashMap<>();
 
-            parametroMap.put(ProcesoCargaOppe.AUTP_PARAM, pepr.getAutp().getId().toString());
+            parametroMap.put(ProcesoCargaOppe.AUTP_PARAM, pepr.getSprt().getId().toString());
             parametroMap.put(ProcesoCargaOppe.ANIO_PARAM, pepr.getAnio().toString());
             parametroMap.put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
             parametroMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
@@ -213,11 +203,12 @@ public final class PeriodoProcesoAction extends BaseAction {
      * Load label values map.
      */
     private void loadLabelValuesMap() {
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.AUTORIDAD_PORTUARIA.getId());
-        final Set<Long> tpprIds = Sets.newHashSet(Entidad.AUTORIDAD_PORTUARIA.getId());
+        final SuperpuertoBO sprtBO = new SuperpuertoBO();
+        final SuperpuertoCriterioVO sprtCriterioVO = new SuperpuertoCriterioVO();
 
-        autpList = prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()).get(
-                Entidad.AUTORIDAD_PORTUARIA.getId());
+        sprtCriterioVO.setIdioma(getIdioma());
+
+        sprtList = sprtBO.selectList(sprtCriterioVO);
     }
 
     // get / set
@@ -251,12 +242,12 @@ public final class PeriodoProcesoAction extends BaseAction {
     }
 
     /**
-     * Gets the autp list.
+     * Gets the sprt list.
      *
-     * @return the autp list
+     * @return the sprt list
      */
-    public List<LabelValueVO> getAutpList() {
-        return autpList;
+    public List<SuperpuertoVO> getSprtList() {
+        return sprtList;
     }
 
     /**

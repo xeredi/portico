@@ -1,0 +1,38 @@
+<form role="form">
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-1 col-md-1 form-group-sm">
+                <label translate>srsc_anno</label> <input ng-if="vm.accion != 'edit'" type="text"
+                    ng-model="vm.srsc.anno" class="form-control number" />
+                <p ng-if="vm.accion == 'edit'" class="form-control-static number"
+                    ng-bind="vm.srsc.anno | number:0"></p>
+            </div>
+            <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
+                <label translate>tpsr</label> <select ng-if="vm.accion != 'edit'" ng-model="vm.srsc.tpsr.id"
+                    ng-options="tpsr.id as tpsr.nombre for tpsr in vm.tpsrList" class="form-control">
+                    <option />
+                </select>
+                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.srsc.tpsr.nombre"></p>
+            </div>
+            <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
+                <label translate>prto</label> <select ng-if="vm.accion != 'edit'" ng-model="vm.srsc.prto.id"
+                    ng-options="prto.id as prto.etiqueta for prto in vm.prtoList" class="form-control">
+                    <option />
+                </select>
+                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.srsc.prto.etiqueta"></p>
+            </div>
+            <div class="col-sm-1 col-md-1 form-group-sm">
+                <label translate>srsc_ultimo_numero</label> <input type="text" ng-model="vm.srsc.ultimoNumero"
+                    class="form-control number" />
+            </div>
+    </fieldset>
+
+    <div class="btn-group">
+        <button data-ng-click="vm.save()" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+        </button>
+        <button data-ng-click="vm.cancel()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+        </button>
+    </div>
+</form>

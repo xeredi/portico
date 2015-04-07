@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -13,6 +14,9 @@ public final class ParametroVO extends ItemVO {
 
     /** Descripcion del parametro. */
     private String parametro;
+
+    /** The prto. */
+    private PuertoVO prto;
 
     /** The prvr. */
     private ParametroVersionVO prvr;
@@ -56,7 +60,10 @@ public final class ParametroVO extends ItemVO {
     public String getEtiqueta() {
         final StringBuffer buffer = getEtiquetaStringBuffer();
 
-        return buffer.length() == 0 ? null : buffer.toString()/* StringEscapeUtils.escapeHtml4(buffer.toString()) */;
+        return buffer.length() == 0 ? null : buffer.toString()/*
+         * StringEscapeUtils.escapeHtml4(buffer.toString(
+         * ))
+         */;
     }
 
     /**
@@ -127,6 +134,25 @@ public final class ParametroVO extends ItemVO {
      */
     public void setPrvr(final ParametroVersionVO value) {
         prvr = value;
+    }
+
+    /**
+     * Gets the prto.
+     *
+     * @return the prto
+     */
+    public PuertoVO getPrto() {
+        return prto;
+    }
+
+    /**
+     * Sets the prto.
+     *
+     * @param value
+     *            the new prto
+     */
+    public void setPrto(final PuertoVO value) {
+        prto = value;
     }
 
 }

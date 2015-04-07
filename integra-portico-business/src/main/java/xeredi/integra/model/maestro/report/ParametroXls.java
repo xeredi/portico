@@ -29,6 +29,7 @@ import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
  */
 public final class ParametroXls extends BaseXls {
 
+    /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ParametroXls.class);
 
     /** The bundle. */
@@ -73,9 +74,13 @@ public final class ParametroXls extends BaseXls {
             final HSSFRow rowhead = sheet.createRow(rownum++);
             int i = 0;
 
+            if (tpprVO.isPuerto()) {
+                setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prto.name()));
+            }
+
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prmt_parametro.name()));
 
-            if (tpprVO.getI18n()) {
+            if (tpprVO.isI18n()) {
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.i18n_text.name()));
             }
 
@@ -94,9 +99,13 @@ public final class ParametroXls extends BaseXls {
 
                 int j = 0;
 
+                if (tpprVO.isPuerto()) {
+                    setCellValue(rowhead, i++, prmtVO.getPrto().getEtiqueta());
+                }
+
                 setCellValue(row, j++, prmtVO.getParametro());
 
-                if (tpprVO.getI18n()) {
+                if (tpprVO.isI18n()) {
                     setCellValue(row, j++, prmtVO.getTexto());
                 }
 

@@ -14,6 +14,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoDatoProxy;
@@ -41,7 +42,7 @@ public final class OppeFileImport {
     private static final String SIGMA_TOKEN = "SIGMA";
 
     /** The autp map. */
-    private final Map<String, ParametroVO> autpMap = new HashMap<String, ParametroVO>();
+    private Map<String, PuertoVO> prtoMap;
 
     /** The estd list. */
     private final List<EstadisticaVO> estdList = new ArrayList<EstadisticaVO>();
@@ -58,15 +59,6 @@ public final class OppeFileImport {
     public OppeFileImport(final @Nonnull ProcesoTemplate aproceso) {
         super();
         proceso = aproceso;
-    }
-
-    /**
-     * Gets the autp map.
-     *
-     * @return the autp map
-     */
-    public Map<String, ParametroVO> getAutpMap() {
-        return autpMap;
     }
 
     /**
@@ -108,9 +100,12 @@ public final class OppeFileImport {
             i++;
 
             if (!line.isEmpty() && !line.startsWith(SIGMA_TOKEN)) {
-                proceso.addCodigoMaestro(Entidad.AUTORIDAD_PORTUARIA,
-                        getTokenString(EstadisticaFileKeyword.Autp, line, i));
+                getPrto(EstadisticaFileKeyword.Autp, line, i);
             }
+        }
+
+        for (final PuertoVO prto : prtoMap.values()) {
+            proceso.addCodigoMaestro(Entidad.UNLOCODE, prto.getUnlocode());
         }
     }
 
@@ -312,8 +307,7 @@ public final class OppeFileImport {
                 getTokenInteger(EstadisticaFileKeyword.Mes, line, i);
                 getTokenDate(EstadisticaFileKeyword.EPP_FechaTransmision, line, i, DATE_PATTERN);
 
-                autpMap.put(getTokenString(EstadisticaFileKeyword.Autp, line, i),
-                        getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+                getPrto(EstadisticaFileKeyword.Autp, line, i);
             }
         }
     }
@@ -337,7 +331,7 @@ public final class OppeFileImport {
 
                 estd.setEntiId(tpesVO.getId());
                 estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
-                estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+                estd.setPrto(getPrto(EstadisticaFileKeyword.Autp, line, i));
 
                 estd.addItdt(TipoDato.TIPO_CAPTURA_PESCA.getId(),
                         getTokenMaestro(EstadisticaFileKeyword.EAP_TipoCaptura, line, i, Entidad.TIPO_CAPTURA_PESCA));
@@ -369,7 +363,7 @@ public final class OppeFileImport {
 
                 estd.setEntiId(tpesVO.getId());
                 estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
-                estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+                estd.setPrto(getPrto(EstadisticaFileKeyword.Autp, line, i));
 
                 final String tipoSuministro = getTipoSuministroNormalizado(getTokenString(
                         EstadisticaFileKeyword.EAV_TipoSuministro, line, i));
@@ -404,7 +398,7 @@ public final class OppeFileImport {
 
                 estd.setEntiId(tpesVO.getId());
                 estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
-                estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+                estd.setPrto(getPrto(EstadisticaFileKeyword.Autp, line, i));
 
                 // FIXME Conversion de Tipo de Buque
                 estd.addItdt(TipoDato.TIPO_BUQUE.getId(),
@@ -444,7 +438,7 @@ public final class OppeFileImport {
 
                 estd.setEntiId(tpesVO.getId());
                 estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
-                estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+                estd.setPrto(getPrto(EstadisticaFileKeyword.Autp, line, i));
 
                 estd.addItdt(TipoDato.TIPO_OP_BL.getId(),
                         getTokenMaestro(EstadisticaFileKeyword.EMM_TipoOperacion, line, i, Entidad.TIPO_OPERACION_BL));
@@ -495,7 +489,8 @@ public final class OppeFileImport {
 
                 if (unloCargaDescargaVO != null) {
                     final String tipoOperacion = getTokenString(EstadisticaFileKeyword.EMM_TipoOperacion, line, i);
-                    final ParametroVO autpUnlo = estd.getSubp().getItdtMap().get(TipoDato.UNLOCODE.getId()).getPrmt();
+                    final ParametroVO autpUnlo = getMaestro(EstadisticaFileKeyword.EMM_UnloCargaDescarga, line, i,
+                            Entidad.UNLOCODE, estd.getPrto().getUnlocode());
 
                     if ("TE".equals(tipoOperacion) || tipoOperacion.startsWith("E")) {
                         estd.addItdt(TipoDato.UNLOCODE.getId(), autpUnlo);
@@ -532,7 +527,7 @@ public final class OppeFileImport {
 
                 estd.setEntiId(tpesVO.getId());
                 estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
-                estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+                estd.setPrto(getPrto(EstadisticaFileKeyword.Autp, line, i));
 
                 estd.addItdt(TipoDato.UNLOCODE.getId(),
                         getTokenMaestro(EstadisticaFileKeyword.EME_UnloCargaDescarga, line, i, Entidad.UNLOCODE));
@@ -606,7 +601,7 @@ public final class OppeFileImport {
 
                 estd.setEntiId(tpesVO.getId());
                 estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
-                estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+                estd.setPrto(getPrto(EstadisticaFileKeyword.Autp, line, i));
 
                 final String tipoBuque = getTokenString(EstadisticaFileKeyword.EMT_TipoBuqueEstEEE, line, i);
 
@@ -944,6 +939,21 @@ public final class OppeFileImport {
         }
 
         return prmt;
+    }
+
+    public PuertoVO getPrto(final @Nonnull EstadisticaFileKeyword keyword, final @Nonnull String line,
+            final int lineNumber) {
+        final String codigo = getTokenString(keyword, line, lineNumber);
+
+        if (codigo == null || !prtoMap.containsKey(getTokenString(keyword, line, lineNumber))) {
+            throw new Error("Puerto no encontrado: " + codigo);
+        }
+
+        return prtoMap.get(codigo);
+    }
+
+    public void setPrtoMap(final Map<String, PuertoVO> value) {
+        prtoMap = value;
     }
 
 }

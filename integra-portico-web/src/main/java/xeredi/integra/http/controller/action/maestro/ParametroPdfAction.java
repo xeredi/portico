@@ -107,7 +107,7 @@ public final class ParametroPdfAction extends BaseAction {
 
         final Map<String, I18nVO> i18nMap = new HashMap<>();
 
-        if (enti.getI18n()) {
+        if (enti.isI18n()) {
             i18nMap.putAll(I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId()));
         }
 

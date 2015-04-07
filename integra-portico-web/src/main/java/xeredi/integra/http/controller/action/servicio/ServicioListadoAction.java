@@ -8,11 +8,13 @@ import java.util.Set;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
+import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.PuertoCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
@@ -20,11 +22,9 @@ import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Sets;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -45,7 +45,7 @@ public final class ServicioListadoAction extends ItemListadoAction {
     private ServicioCriterioVO itemCriterio;
 
     /** The subps. */
-    private List<LabelValueVO> subpList;
+    private List<PuertoVO> prtoList;
 
     // Acciones web
     /**
@@ -124,17 +124,22 @@ public final class ServicioListadoAction extends ItemListadoAction {
                     .getIdioma());
         }
 
-        subpList = prmtBO.selectLabelValues(Sets.newHashSet(Entidad.SUBPUERTO.getId()),
-                Calendar.getInstance().getTime(), getIdioma()).get(Entidad.SUBPUERTO.getId());
+        final PuertoBO prtoBO = new PuertoBO();
+        final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+
+        prtoCriterio.setSprtId(getSprtId());
+        prtoCriterio.setIdioma(getIdioma());
+
+        prtoList = prtoBO.selectList(prtoCriterio);
     }
 
     /**
-     * Gets the subps.
+     * Gets the prto list.
      *
-     * @return the subps
+     * @return the prto list
      */
-    public List<LabelValueVO> getSubpList() {
-        return subpList;
+    public List<PuertoVO> getPrtoList() {
+        return prtoList;
     }
 
     /**

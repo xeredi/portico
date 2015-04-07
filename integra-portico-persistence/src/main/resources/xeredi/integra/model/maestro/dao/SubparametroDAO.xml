@@ -69,7 +69,6 @@
             END) as prmt_texto
         ]]>
         </if>
-        <include refid="SelectPrefixSpecific" />
     <![CDATA[
 		FROM
 		    tbl_subparametro_sprm
@@ -80,19 +79,6 @@
 		    INNER JOIN tbl_tipo_parametro_tppr ON
 		        tppr_pk = prmt_tppr_pk
     ]]>
-    </sql>
-
-    <sql id="SelectPrefixSpecific" databaseId="postgres">
-        , NULL AS rownumVar
-    </sql>
-
-    <sql id="SelectPrefixSpecific" databaseId="sqlserver">
-        , NULL AS rownumVar
-    </sql>
-
-    <sql id="SelectPrefixSpecific" databaseId="oracle">
-        , row_number() over (order by sprm_prmt_pk, sprm_tpsp_pk,
-        prmt_parametro, spvr_fini DESC) rownumVar
     </sql>
 
     <sql id="SelectWhere">
@@ -144,38 +130,6 @@
         </where>
 
         ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
-    </select>
-
-    <select id="selectPaginatedList" parameterType="SubparametroCriterioVO" resultMap="ResultMap" databaseId="postgres">
-        <include refid="SelectPrefix" />
-        <where>
-            <include refid="SelectWhere" />
-        </where>
-        ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
-        OFFSET ${offset} ROWS FETCH NEXT ${limit}
-        ROWS ONLY
-    </select>
-
-    <select id="selectPaginatedList" parameterType="SubparametroCriterioVO" resultMap="ResultMap" databaseId="sqlserver">
-        <include refid="SelectPrefix" />
-        <where>
-            <include refid="SelectWhere" />
-        </where>
-        ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
-        OFFSET ${offset} ROWS FETCH NEXT ${limit}
-        ROWS ONLY
-    </select>
-
-    <select id="selectPaginatedList" parameterType="SubparametroCriterioVO" resultMap="ResultMap" databaseId="oracle">
-        SELECT * FROM (
-        <include refid="SelectPrefix" />
-        <where>
-            <include refid="SelectWhere" />
-        </where>
-        <![CDATA[
-        ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
-        ) WHERE rownumVar > ${offset} AND rownumVar <= (${offset} + ${limit})
-        ]]>
     </select>
 
     <select id="selectObject" parameterType="SubparametroCriterioVO" resultMap="ResultMap">

@@ -10,49 +10,49 @@
 
     <fieldset>
         <div class="row">
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                 <label translate="prbt_modulo"></label>
                 <p class="form-control-static" ng-bind="'ProcesoModulo_' + vm.prbt.modulo | translate"></p>
             </div>
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                 <label translate="prbt_tipo"></label>
                 <p class="form-control-static" ng-bind="'ProcesoTipo_' + vm.prbt.tipo | translate"></p>
             </div>
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                 <label translate="prbt_estado"></label>
                 <p class="form-control-static" ng-bind="'ProcesoEstado_' + vm.prbt.estado | translate"></p>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                 <label translate="prbt_falta"></label>
                 <p class="form-control-static" ng-bind="vm.prbt.falta | date: ('format_datetime' | translate)"></p>
             </div>
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                 <label translate="prbt_fini"></label>
                 <p class="form-control-static"
                     ng-bind="vm.prbt.finicio | date: ('format_datetime' | translate)"></p>
             </div>
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                 <label translate="prbt_ffin"></label>
                 <p class="form-control-static" ng-bind="vm.prbt.ffin | date: ('format_datetime' | translate)"></p>
             </div>
-            <div class="col-sm-2 col-md-2 form-group">
+            <div class="col-sm-2 col-md-2 form-group-sm">
                 <label translate="prbt_duracion"></label>
                 <p class="form-control-static number" ng-bind="vm.prbt.duracion | number:0"></p>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+            <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                 <label translate="prbt_erroresCnt"></label>
                 <p class="form-control-static number" ng-bind="vm.prbt.erroresCnt | number:0"></p>
             </div>
-            <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+            <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                 <label translate="prbt_alertasCnt"></label>
                 <p class="form-control-static number" ng-bind="vm.prbt.alertasCnt | number:0"></p>
             </div>
-            <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+            <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                 <label translate="prbt_mensajesCnt"></label>
                 <p class="form-control-static number" ng-bind="vm.prbt.mensajesCnt | number:0"></p>
             </div>

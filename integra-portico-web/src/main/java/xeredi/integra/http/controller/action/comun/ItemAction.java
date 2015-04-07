@@ -1,5 +1,6 @@
 package xeredi.integra.http.controller.action.comun;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +27,9 @@ public abstract class ItemAction extends BaseAction {
 
     /** The accion. */
     protected ACCION_EDICION accion;
+
+    /** The fecha vigencia. */
+    private Date fechaVigencia;
 
     /** The label values map. */
     protected Map<Long, List<LabelValueVO>> labelValuesMap;
@@ -91,10 +95,36 @@ public abstract class ItemAction extends BaseAction {
     }
 
     /**
+     * Gets the fecha vigencia.
+     *
+     * @return the fecha vigencia
+     */
+    public final Date getFechaVigencia() {
+        return fechaVigencia;
+    }
+
+    /**
+     * Sets the fecha vigencia.
+     *
+     * @param value
+     *            the new fecha vigencia
+     */
+    public final void setFechaVigencia(final Date value) {
+        fechaVigencia = value;
+    }
+
+    /**
      * Gets the item.
      *
      * @return the item
      */
     public abstract ItemVO getItem();
+
+    /**
+     * Gets the prto id.
+     *
+     * @return the prto id
+     */
+    public abstract Long getPrtoId();
 
 }

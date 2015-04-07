@@ -12,7 +12,7 @@ public final class PeriodoProcesoCriterioVO extends BaseCriterioVO {
     private Long id;
 
     /** The autp id. */
-    private Long autpId;
+    private Long sprtId;
 
     /** The anio. */
     private Integer anio;
@@ -43,22 +43,22 @@ public final class PeriodoProcesoCriterioVO extends BaseCriterioVO {
     }
 
     /**
-     * Gets the autp id.
+     * Gets the sprt id.
      *
-     * @return the autp id
+     * @return the sprt id
      */
-    public Long getAutpId() {
-        return autpId;
+    public Long getSprtId() {
+        return sprtId;
     }
 
     /**
-     * Sets the autp id.
+     * Sets the sprt id.
      *
      * @param value
-     *            the new autp id
+     *            the new sprt id
      */
-    public void setAutpId(final Long value) {
-        autpId = value;
+    public void setSprtId(final Long value) {
+        sprtId = value;
     }
 
     /**

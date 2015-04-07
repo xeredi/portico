@@ -9,20 +9,20 @@
                 <form>
                     <fieldset>
                         <div class="row">
-                            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+                            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                                 <label translate>aspc_codigo</label> <input type="text"
-                                    ng-model="vm.aspcCriterio.codigo" class="form-control input-sm" />
+                                    ng-model="vm.aspcCriterio.codigo" class="form-control" />
                             </div>
-                            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                                 <label translate>aspc_tpsr</label> <select ng-model="vm.aspcCriterio.tpsrId"
                                     ng-options="labelValue.value as labelValue.label for labelValue in vm.entiList"
-                                    class="form-control input-sm">
+                                    class="form-control">
                                     <option />
                                 </select>
                             </div>
-                            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+                            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                                 <label translate>aspc_fechaVigencia</label> <input type="text"
-                                    class="form-control input-sm" data-container=".modal-body"
+                                    class="form-control" data-container=".modal-body"
                                     ng-model="vm.aspcCriterio.fechaVigencia" bs-datepicker />
                             </div>
                         </div>

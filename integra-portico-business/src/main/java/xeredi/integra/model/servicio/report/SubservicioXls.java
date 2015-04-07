@@ -73,7 +73,7 @@ public final class SubservicioXls extends BaseXls {
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_estado.name()));
             }
 
-            if (tpssVO.getTemporal()) {
+            if (tpssVO.isTemporal()) {
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_fini.name()));
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_ffin.name()));
             }
@@ -96,7 +96,7 @@ public final class SubservicioXls extends BaseXls {
                     setCellValue(row, j++, ssrvVO.getEstado());
                 }
 
-                if (tpssVO.getTemporal()) {
+                if (tpssVO.isTemporal()) {
                     setCellValue(row, j++, ssrvVO.getFini());
                     setCellValue(row, j++, ssrvVO.getFfin());
                 }

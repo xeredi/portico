@@ -3,12 +3,16 @@ package xeredi.integra.http.controller.action.maestro;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
+import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.PuertoCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
@@ -39,6 +43,9 @@ public final class ParametroListadoAction extends ItemListadoAction {
 
     /** The enti id. */
     private TipoParametroVO enti;
+
+    /** The prto list. */
+    private List<PuertoVO> prtoList;
 
     // Acciones web
     /**
@@ -101,29 +108,37 @@ public final class ParametroListadoAction extends ItemListadoAction {
      *             the application exception
      */
     protected final void loadLabelValuesMap() throws ApplicationException {
-        if (labelValuesMap == null) {
-            labelValuesMap = new HashMap<>();
+        Preconditions.checkNotNull(enti);
 
-            final TipoParametroVO enti = TipoParametroProxy.select(itemCriterio.getEntiId());
+        if (enti.isPuerto()) {
+            final PuertoBO prtoBO = new PuertoBO();
+            final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-            // Carga de los labelValues (Si los hay)
-            final Set<Long> tpprIds = new HashSet<>();
+            prtoCriterio.setSprtId(getSprtId());
+            prtoCriterio.setIdioma(getIdioma());
 
-            if (enti.getEntdList() != null) {
-                for (final EntidadTipoDatoVO entdVO : enti.getEntdList()) {
-                    if (entdVO.getFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
-                            && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
-                        tpprIds.add(entdVO.getTpdt().getEnti().getId());
-                    }
+            prtoList = prtoBO.selectList(prtoCriterio);
+        }
+
+        // Carga de los labelValues (Si los hay)
+        labelValuesMap = new HashMap<>();
+
+        final Set<Long> tpprIds = new HashSet<>();
+
+        if (enti.getEntdList() != null) {
+            for (final EntidadTipoDatoVO entdVO : enti.getEntdList()) {
+                if (entdVO.getFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
+                        && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
+                    tpprIds.add(entdVO.getTpdt().getEnti().getId());
                 }
             }
+        }
 
-            if (!tpprIds.isEmpty()) {
-                final ParametroBO prmtBO = new DefaultParametroBO();
+        if (!tpprIds.isEmpty()) {
+            final ParametroBO prmtBO = new DefaultParametroBO();
 
-                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
-                        getItemCriterio().getIdioma()));
-            }
+            labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
+                    getItemCriterio().getIdioma()));
         }
     }
 
@@ -173,6 +188,15 @@ public final class ParametroListadoAction extends ItemListadoAction {
      */
     public void setEnti(final TipoParametroVO value) {
         enti = value;
+    }
+
+    /**
+     * Gets the prto list.
+     *
+     * @return the prto list
+     */
+    public List<PuertoVO> getPrtoList() {
+        return prtoList;
     }
 
 }

@@ -285,7 +285,7 @@ INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text)
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-TRUNCATE TABLE portico.tbl_estadistica_dato_esdt\
+TRUNCATE TABLE tbl_estadistica_dato_esdt\
 DELETE FROM portico.tbl_estadistica_estd\
 DELETE FROM portico.tbl_cuadro_mes_cdms\
 DELETE FROM portico.tbl_periodo_proceso_pepr\

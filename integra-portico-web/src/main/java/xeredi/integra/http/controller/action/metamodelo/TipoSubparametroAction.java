@@ -94,12 +94,12 @@ public final class TipoSubparametroAction extends BaseAction {
         FieldValidator.validateI18n(this, i18nMap);
 
         FieldValidator.validateRequired(this, MessageI18nKey.enti_tpprAsociado, enti.getTpprAsociado());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdAlta, enti.getCmdAlta());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdBaja, enti.getCmdBaja());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdEdicion, enti.getCmdEdicion());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdDuplicado, enti.getCmdDuplicado());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_i18n, enti.getI18n());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_tempExp, enti.getTempExp());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdAlta, enti.isCmdAlta());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdBaja, enti.isCmdBaja());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdEdicion, enti.isCmdEdicion());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdDuplicado, enti.isCmdDuplicado());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_i18n, enti.isI18n());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_tempExp, enti.isTempExp());
 
         if (!hasErrors()) {
             final TipoSubparametroBO tpspBO = new TipoSubparametroBO();

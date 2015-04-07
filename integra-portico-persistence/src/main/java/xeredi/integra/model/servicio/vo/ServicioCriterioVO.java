@@ -3,7 +3,7 @@ package xeredi.integra.model.servicio.vo;
 import java.util.Date;
 
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
-import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.comun.vo.PuertoCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -12,7 +12,7 @@ import xeredi.integra.model.maestro.vo.ParametroVO;
 public final class ServicioCriterioVO extends ItemCriterioVO {
 
     /** The subp id. */
-    private ParametroVO subp;
+    private PuertoCriterioVO prto;
 
     /** The anno. */
     private String anno;
@@ -42,22 +42,22 @@ public final class ServicioCriterioVO extends ItemCriterioVO {
     private Date ffinMax;
 
     /**
-     * Gets the subp.
+     * Gets the prto.
      *
-     * @return the subp
+     * @return the prto
      */
-    public ParametroVO getSubp() {
-        return subp;
+    public PuertoCriterioVO getPrto() {
+        return prto;
     }
 
     /**
-     * Sets the subp.
+     * Sets the prto.
      *
      * @param value
-     *            the new subp
+     *            the new prto
      */
-    public void setSubp(final ParametroVO value) {
-        subp = value;
+    public void setPrto(final PuertoCriterioVO value) {
+        prto = value;
     }
 
     /**

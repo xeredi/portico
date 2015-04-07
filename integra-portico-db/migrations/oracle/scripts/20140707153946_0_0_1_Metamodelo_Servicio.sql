@@ -1245,10 +1245,10 @@ INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text)
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-TRUNCATE TABLE portico.tbl_subserv_subserv_ssss\
-TRUNCATE TABLE portico.tbl_subservicio_dato_ssdt\
+TRUNCATE TABLE tbl_subserv_subserv_ssss\
+TRUNCATE TABLE tbl_subservicio_dato_ssdt\
 DELETE FROM portico.tbl_subservicio_ssrv\
-TRUNCATE TABLE portico.tbl_servicio_dato_srdt\
+TRUNCATE TABLE tbl_servicio_dato_srdt\
 DELETE FROM portico.tbl_servicio_srvc\
 DELETE FROM portico.tbl_servicio_secuencia_srsc\
 

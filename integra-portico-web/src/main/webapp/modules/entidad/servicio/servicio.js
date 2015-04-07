@@ -6,6 +6,12 @@ angular.module("servicio", [])
 .controller("ServicioController", ServicioController)
 
 // ----------- SERVICIOS ------------------
+.controller("SrscGridController", SrscGridController)
+
+.controller("SrscDetailController", SrscDetailController)
+
+.controller("SrscEditController", SrscEditController)
+
 .controller("SrvcGridController", SrvcGridController)
 
 .controller("SrvcDetailController", SrvcDetailController)
@@ -41,6 +47,26 @@ angular.module("servicio", [])
 
 function config($routeProvider) {
     $routeProvider
+
+    .when("/servicio/srsc/grid", {
+        templateUrl : "modules/entidad/servicio/srsc-grid.html",
+        controller : "SrscGridController",
+        controllerAs : "vm",
+        reloadOnSearch : false
+    })
+
+    .when("/servicio/srsc/detail/:prtoId/:tpsrId/:anno", {
+        templateUrl : "modules/entidad/servicio/srsc-detail.html",
+        controller : "SrscDetailController",
+        controllerAs : "vm",
+        reloadOnSearch : false
+    })
+
+    .when("/servicio/srsc/edit/:accion/:prtoId?/:tpsrId?/:anno?", {
+        templateUrl : "modules/entidad/servicio/srsc-edit.html",
+        controller : "SrscEditController",
+        controllerAs : "vm"
+    })
 
     .when("/servicio", {
         title : 'servicio_main',
@@ -146,6 +172,126 @@ function config($routeProvider) {
     ;
 }
 
+function SrscGridController($http, $location, $routeParams, $modal, pageTitleService) {
+    var vm = this;
+
+    vm.search = search;
+    vm.pageChanged = pageChanged;
+    vm.filter = filter;
+
+    vm.srscCriterio = $routeParams.srscCriterio ? angular.fromJson($routeParams.srscCriterio) : {};
+
+    function search(page) {
+        $http.post("servicio/srsc-list.action", {
+            model : vm.srscCriterio,
+            page : page
+        }).success(function(data) {
+            vm.page = data.srscList.page;
+            vm.srscList = data.srscList;
+
+            $location.search({
+                page : vm.page,
+                srscCriterio : JSON.stringify(vm.srscCriterio)
+            }).replace();
+        });
+    }
+
+    function pageChanged() {
+        search(vm.page);
+    }
+
+    function filter(size) {
+        $http.post("servicio/srsc-filter.action", {
+            model : vm.srscCriterio
+        }).success(function(data) {
+            vm.tpsrList = data.tpsrList;
+            vm.prtoList = data.prtoList;
+        });
+    }
+
+    search($routeParams.page ? $routeParams.page : 1);
+    pageTitleService.setTitle("srsc", "page_grid");
+}
+
+function SrscDetailController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.remove = remove;
+
+    vm.path = $location.path();
+
+    function remove() {
+        if (confirm("Are you sure?")) {
+            $http.post("servicio/srsc-remove.action", {
+                model : vm.srsc
+            }).success(function(data) {
+                window.history.back();
+            });
+        }
+    }
+
+    $http.post("servicio/srsc-detail.action", {
+        model : {
+            prto : {
+                id : $routeParams.prtoId
+            },
+            tpsr : {
+                id : $routeParams.tpsrId
+            },
+            anno : $routeParams.anno
+        }
+    }).success(function(data) {
+        vm.srsc = data.model;
+    });
+
+    pageTitleService.setTitle("srsc", "page_detail");
+}
+
+function SrscEditController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.accion = $routeParams.accion;
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("servicio/srsc-save.action", {
+            model : vm.srsc,
+            accion : vm.accion
+        }).success(
+                function(data) {
+                    vm.accion == 'edit' ? setTimeout(function() {
+                        window.history.back();
+                    }, 0) : $location.path(
+                            "/servicio/srsc/detail/" + data.model.prto.id + "/" + data.model.tpsr.id + "/"
+                                    + data.model.anno).replace();
+                });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    $http.post("servicio/srsc-edit.action", {
+        model : {
+            prto : {
+                id : $routeParams.prtoId
+            },
+            tpsr : {
+                id : $routeParams.tpsrId
+            },
+            anno : $routeParams.anno
+        },
+        accion : vm.accion
+    }).success(function(data) {
+        vm.srsc = data.model;
+        vm.prtoList = data.prtoList;
+        vm.tpsrList = data.tpsrList;
+    });
+
+    pageTitleService.setTitle("srsc", "page_" + vm.accion);
+}
+
 function ServicioController($http, pageTitleService) {
     var vm = this;
 
@@ -211,7 +357,7 @@ function SrvcGridController($http, $location, $routeParams, $modal, pageTitleSer
             itemCriterio : vm.itemCriterio
         }).success(function(data) {
             vm.labelValuesMap = data.labelValuesMap;
-            vm.subpList = data.subpList;
+            vm.prtoList = data.prtoList;
             vm.limits = data.limits;
             vm.fechaVigencia = data.fechaVigencia;
         });
@@ -363,6 +509,7 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
     }).success(function(data) {
         vm.enti = data.enti;
         vm.item = data.item;
+        vm.prtoId = data.item.prto.id;
         vm.fechaVigencia = data.fechaVigencia;
         vm.arinList = data.arinList;
 
@@ -414,7 +561,11 @@ function SrvcEditController($http, $location, $routeParams, pageTitleService) {
         vm.fechaVigencia = data.fechaVigencia;
         vm.item = data.item;
         vm.labelValuesMap = data.labelValuesMap;
-        vm.subpList = data.subpList;
+        vm.prtoList = data.prtoList;
+
+        if (data.item.prto) {
+            vm.prtoId = data.item.prto.id;
+        }
     });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);

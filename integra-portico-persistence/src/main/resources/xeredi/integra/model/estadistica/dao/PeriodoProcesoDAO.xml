@@ -12,9 +12,9 @@
 		<result column="pepr_falta" property="falta" />
 		<result column="pepr_cdms_generado" property="cdmsGenerado" />
 
-		<association property="autp" javaType="ParametroVO">
+		<association property="sprt" javaType="SuperpuertoVO">
 			<id column="pepr_autp_pk" property="id" />
-			<result column="prmt_parametro" property="parametro" />
+			<result column="sprt_codigo" property="codigo" />
 		</association>
 
 		<association property="arin" javaType="ArchivoInfoVO">
@@ -27,8 +27,15 @@
 	<sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        pepr_pk, pepr_anio, pepr_mes, pepr_trimestre, pepr_freferencia, pepr_falta
-        , pepr_autp_pk, prmt_parametro, pepr_arch_pk, arch_nombre, arch_tamanio
+        pepr_pk, pepr_anio, pepr_mes, pepr_trimestre, pepr_freferencia, pepr_falta, pepr_autp_pk, pepr_arch_pk
+
+        , (
+        	SELECT sprt_codigo
+        	FROM tbl_superpuerto_sprt
+        	WHERE sprt_pk = pepr_autp_pk
+        ) AS sprt_codigo
+
+        , arch_nombre, arch_tamanio
         , (
             CASE
                 WHEN EXISTS (
@@ -41,8 +48,6 @@
             END
         ) AS pepr_cdms_generado
     FROM tbl_periodo_proceso_pepr
-        JOIN tbl_parametro_prmt ON
-            prmt_pk = pepr_autp_pk
         LEFT JOIN tbl_archivo_arch ON
             arch_pk = pepr_arch_pk
     ]]>
@@ -53,8 +58,6 @@
     SELECT
         COUNT(1)
     FROM tbl_periodo_proceso_pepr
-        JOIN tbl_parametro_prmt ON
-            prmt_pk = pepr_autp_pk
     ]]>
 	</sql>
 
@@ -69,8 +72,8 @@
 			<if test="trimestre != null">
 				AND pepr_trimestre = #{trimestre}
 			</if>
-			<if test="autpId != null">
-				AND pepr_autp_pk = #{autpId}
+			<if test="sprtId != null">
+				AND pepr_autp_pk = #{sprtId}
 			</if>
 		</where>
 	</sql>
@@ -85,14 +88,14 @@
 		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
-		ORDER BY prmt_parametro, pepr_anio DESC, pepr_mes DESC
+		ORDER BY pepr_autp_pk, pepr_anio DESC, pepr_mes DESC
 	</select>
 
 	<select id="selectPaginatedList" parameterType="PeriodoProcesoCriterioVO"
 		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
-		ORDER BY prmt_parametro, pepr_anio DESC, pepr_mes DESC
+		ORDER BY pepr_autp_pk, pepr_anio DESC, pepr_mes DESC
 	</select>
 
 	<select id="selectObject" parameterType="PeriodoProcesoCriterioVO"
@@ -106,20 +109,20 @@
 		WHERE pepr_pk = #{value}
 	</select>
 
-	<select id="exists" parameterType="ParametroVO" resultType="Boolean">
+	<select id="exists" parameterType="PeriodoProcesoVO" resultType="Boolean">
         <![CDATA[
         SELECT COUNT(1)
         FROM tbl_periodo_proceso_pepr
-        WHERE pepr_autp_pk = #{autp.id}
+        WHERE pepr_autp_pk = #{sprt.id}
             AND pepr_anio = #{anio}
             AND pepr_mes = #{mes}
         ]]>
 	</select>
 
-	<insert id="insert" parameterType="ParametroVO">
+	<insert id="insert" parameterType="PeriodoProcesoVO">
         <![CDATA[
         INSERT INTO tbl_periodo_proceso_pepr(pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_trimestre, pepr_freferencia, pepr_falta, pepr_arch_pk)
-        VALUES (#{id}, #{autp.id}, #{anio}, #{mes}, #{trimestre}, #{freferencia}, #{falta}, #{arin.id})
+        VALUES (#{id}, #{sprt.id}, #{anio}, #{mes}, #{trimestre}, #{freferencia}, #{falta}, #{arin.id})
         ]]>
 	</insert>
 

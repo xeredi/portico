@@ -60,7 +60,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
         Preconditions.checkNotNull(prmt.getPrvr().getFini());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            if (tpprVO.getI18n()) {
+            if (tpprVO.isI18n()) {
                 Preconditions.checkNotNull(i18nMap);
             }
 
@@ -97,7 +97,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
 
             prmtDAO.insertVersion(prmt);
 
-            if (tpprVO.getI18n()) {
+            if (tpprVO.isI18n()) {
                 I18nBO.insertMap(session, I18nPrefix.prvr, prmt.getPrvr().getId(), i18nMap);
             }
 
@@ -141,7 +141,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
         Preconditions.checkNotNull(prmt.getPrvr().getFini());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            if (tpprVO.getI18n()) {
+            if (tpprVO.isI18n()) {
                 Preconditions.checkNotNull(i18nMap);
             }
 
@@ -198,7 +198,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
 
             prmtDAO.insertVersion(prmt);
 
-            if (tpprVO.getI18n()) {
+            if (tpprVO.isI18n()) {
                 I18nBO.duplicateMap(session, I18nPrefix.prvr, prmt.getPrvr().getId(), i18nMap);
             }
 
@@ -229,7 +229,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
                     for (final SubparametroVO sprmVO : sprmList) {
                         final TipoSubparametroVO tpspVO = TipoSubparametroProxy.select(sprmVO.getEntiId());
 
-                        if (tpspVO.getCmdDuplicado()) {
+                        if (tpspVO.isCmdDuplicado()) {
                             sprmMap.put(sprmVO.getSpvr().getId(), sprmVO);
                             spvrIds.add(sprmVO.getSpvr().getId());
                         }
@@ -321,11 +321,11 @@ public abstract class AbstractParametroBO implements ParametroBO {
         Preconditions.checkNotNull(prmt.getPrvr().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            if (tpprVO.getI18n()) {
+            if (tpprVO.isI18n()) {
                 Preconditions.checkNotNull(i18nMap);
             }
 
-            if (tpprVO.getTempExp()) {
+            if (tpprVO.isTempExp()) {
                 Preconditions.checkNotNull(prmt.getPrvr().getFini());
             }
 
@@ -352,7 +352,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
                 throw new InstanceNotFoundException(prmt.getEntiId(), prmt);
             }
 
-            if (tpprVO.getI18n()) {
+            if (tpprVO.isI18n()) {
                 I18nBO.updateMap(session, I18nPrefix.prvr, prmt.getPrvr().getId(), i18nMap);
             }
 
@@ -457,10 +457,8 @@ public abstract class AbstractParametroBO implements ParametroBO {
             final int count = prmtDAO.count(prmtCriterioVO);
 
             if (count > offset) {
-                prmtCriterioVO.setOffset(offset);
-                prmtCriterioVO.setLimit(limit);
+                prmtList.addAll(prmtDAO.selectList(prmtCriterioVO, new RowBounds(offset, limit)));
 
-                prmtList.addAll(prmtDAO.selectPaginatedList(prmtCriterioVO));
                 fillDependencies(session, prmtList, prmtCriterioVO, true);
             }
 
@@ -508,7 +506,15 @@ public abstract class AbstractParametroBO implements ParametroBO {
             final Map<String, Long> map = new HashMap<>();
 
             for (final ParametroVO prmtVO : prmtDAO.selectList(prmtCriterioVO)) {
-                map.put(prmtVO.getParametro(), prmtVO.getId());
+                final StringBuffer code = new StringBuffer();
+
+                if (prmtVO.getPrto() != null) {
+                    code.append(prmtVO.getPrto().getCodigoCorto());
+                }
+
+                code.append(prmtVO.getParametro());
+
+                map.put(code.toString(), prmtVO.getId());
             }
 
             return map;

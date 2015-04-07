@@ -22,7 +22,7 @@ public abstract class ItemVO implements ItemEntidad {
     private Long entiId;
 
     /** The itdt map. */
-    private Map<Long, ItemDatoVO> itdtMap = new HashMap<>();
+    private Map<Long, ItemDatoVO> itdtMap;
 
     /**
      * Gets the itdt.
@@ -32,7 +32,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @return the itdt
      */
     public final ItemDatoVO getItdt(final @Nonnull Long tpdtId) {
-        return itdtMap.get(tpdtId);
+        return itdtMap == null ? null : itdtMap.get(tpdtId);
     }
 
     /**
@@ -49,7 +49,7 @@ public abstract class ItemVO implements ItemEntidad {
         itdt.setTpdtId(tpdtId);
         itdt.setCantidadEntera(value);
 
-        itdtMap.put(tpdtId, itdt);
+        addItdt(itdt);
     }
 
     /**
@@ -66,7 +66,7 @@ public abstract class ItemVO implements ItemEntidad {
         itdt.setTpdtId(tpdtId);
         itdt.setCantidadDecimal(value);
 
-        itdtMap.put(tpdtId, itdt);
+        addItdt(itdt);
     }
 
     /**
@@ -83,7 +83,7 @@ public abstract class ItemVO implements ItemEntidad {
         itdt.setTpdtId(tpdtId);
         itdt.setCadena(value);
 
-        itdtMap.put(tpdtId, itdt);
+        addItdt(itdt);
     }
 
     /**
@@ -100,7 +100,7 @@ public abstract class ItemVO implements ItemEntidad {
         itdt.setTpdtId(tpdtId);
         itdt.setPrmt(value);
 
-        itdtMap.put(tpdtId, itdt);
+        addItdt(itdt);
     }
 
     /**
@@ -117,7 +117,7 @@ public abstract class ItemVO implements ItemEntidad {
         itdt.setTpdtId(tpdtId);
         itdt.setSrvc(value);
 
-        itdtMap.put(tpdtId, itdt);
+        addItdt(itdt);
     }
 
     /**
@@ -134,7 +134,21 @@ public abstract class ItemVO implements ItemEntidad {
         itdt.setTpdtId(tpdtId);
         itdt.setFecha(value);
 
-        itdtMap.put(tpdtId, itdt);
+        addItdt(itdt);
+    }
+
+    /**
+     * Adds the itdt.
+     *
+     * @param itdt
+     *            the itdt
+     */
+    private final void addItdt(final ItemDatoVO itdt) {
+        if (itdtMap == null) {
+            itdtMap = new HashMap<>();
+        }
+
+        itdtMap.put(itdt.getTpdtId(), itdt);
     }
 
     /**

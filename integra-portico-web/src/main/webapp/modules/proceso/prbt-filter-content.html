@@ -9,47 +9,47 @@
                 <form>
                     <fieldset>
                         <div class="row">
-                            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                                 <label translate="prbt_modulo"></label> <select
                                     ng-model="vm.prbtCriterio.modulo"
                                     ng-options="valor as ('ProcesoModulo_' + valor | translate) for valor in vm.procesoModulos"
-                                    class="form-control input-sm">
+                                    class="form-control">
                                     <option />
                                 </select>
                             </div>
-                            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                                 <label translate="prbt_tipo"></label> <select ng-model="vm.prbtCriterio.tipo"
                                     ng-options="valor as ('ProcesoTipo_' + valor | translate) for valor in vm.procesoTipos"
-                                    class="form-control input-sm">
+                                    class="form-control">
                                     <option />
                                 </select>
                             </div>
-                            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                                 <label translate="prbt_estado"></label> <select
                                     ng-model="vm.prbtCriterio.estado"
                                     ng-options="valor as ('ProcesoEstado_' + valor | translate) for valor in vm.procesoEstados"
-                                    class="form-control input-sm">
+                                    class="form-control">
                                     <option />
                                 </select>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3 col-md-2 col-lg-1 form-group">
-                                <label translate="prbt_falta"></label> <input type="text"
-                                    class="form-control input-sm" ng-model="vm.prbtCriterio.faltaMin"
-                                    data-container=".modal-body" bs-datepicker />
+                            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
+                                <label translate="prbt_falta"></label> <input type="text" class="form-control"
+                                    ng-model="vm.prbtCriterio.faltaMin" data-container=".modal-body"
+                                    bs-datepicker />
                             </div>
-                            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                                <label>Hora</label> <input type="text" class="form-control input-sm"
+                            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                                <label>Hora</label> <input type="text" class="form-control"
                                     ng-model="vm.prbtCriterio.faltaMin" bs-timepicker />
                             </div>
-                            <div class="col-sm-3 col-md-2 col-lg-1 form-group">
-                                <label translate="prbt_falta"></label> <input type="text"
-                                    class="form-control input-sm" ng-model="vm.prbtCriterio.faltaMax"
-                                    data-container=".modal-body" bs-datepicker />
+                            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
+                                <label translate="prbt_falta"></label> <input type="text" class="form-control"
+                                    ng-model="vm.prbtCriterio.faltaMax" data-container=".modal-body"
+                                    bs-datepicker />
                             </div>
-                            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                                <label>Hora</label> <input type="text" class="form-control input-sm"
+                            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                                <label>Hora</label> <input type="text" class="form-control"
                                     ng-model="vm.prbtCriterio.faltaMax" bs-timepicker />
                             </div>
                         </div>

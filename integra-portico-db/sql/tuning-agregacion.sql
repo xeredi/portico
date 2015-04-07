@@ -1,4 +1,5 @@
-﻿		SELECT
+﻿
+		SELECT
 			estd_subp_pk
 			, (SELECT prmt_parametro FROM tbl_parametro_prmt
 				WHERE prmt_pk = estd_subp_pk) AS estd_subp
@@ -448,14 +449,14 @@ WITH ucList AS (
 			prvr_prmt_pk = prmt_pk
 		INNER JOIN tbl_parametro_dato_prdt ON
 			prdt_prvr_pk = prvr_pk
-	WHERE 
+	WHERE
 		prmt_tppr_pk = portico.getEntidad('UNIDAD_CARGA')
 		AND prdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
 )
 SELECT *
-FROM 
+FROM
 	tbl_subservicio_ssrv
-WHERE 
+WHERE
 	(
 		(
 			ssrv_tpss_pk = portico.getEntidad('PARTIDA')
@@ -496,10 +497,10 @@ WHERE
 		WHERE ssss_ssrvp_pk = ANY (
 			SELECT ssrv_pk
 			FROM tbl_subservicio_ssrv ssrv
-			WHERE 
+			WHERE
 				ssrv_tpss_pk = portico.getEntidad('BL')
 				AND EXISTS (
-					SELECT 1 
+					SELECT 1
 					FROM tbl_servicio_srvc
 					WHERE
 						srvc_pk = ssrv_srvc_pk
@@ -525,10 +526,10 @@ WHERE
 
 SELECT *
 FROM tbl_subservicio_ssrv ssrv
-WHERE 
+WHERE
 	ssrv_tpss_pk = portico.getEntidad('BL')
 	AND EXISTS (
-		SELECT 1 
+		SELECT 1
 		FROM tbl_servicio_srvc
 		WHERE
 			srvc_pk = ssrv_srvc_pk
@@ -553,10 +554,10 @@ WHERE
 
 SELECT *
 FROM tbl_subservicio_ssrv ssrv
-WHERE 
+WHERE
 	ssrv_tpss_pk IN (portico.getEntidad('PARTIDA'), portico.getEntidad('EQUIPAMIENTO'))
 	AND EXISTS (
-		SELECT 1 
+		SELECT 1
 		FROM tbl_servicio_srvc
 		WHERE
 			srvc_pk = ssrv_srvc_pk
@@ -567,9 +568,9 @@ WHERE
 	AND EXISTS (
 		SELECT 1
 		FROM tbl_subserv_subserv_ssss
-		WHERE 
+		WHERE
 			ssss_ssrvh_pk = ssrv.ssrv_pk
-/*							
+/*
 			AND EXISTS (
 				SELECT 1
 				FROM tbl_subservicio_ssrv ssrvBl

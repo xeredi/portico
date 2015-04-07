@@ -74,11 +74,17 @@
 					)
 					AND srdt_srvc_pk = srvc_pk
 			)
-			AND srvc_subp_pk IN
+			AND srvc_subp_pk IN (
+				SELECT prto_pk
+				FROM tbl_puerto_prto
+				WHERE
+					prto_sprt_pk = (
+						SELECT pepr_autp_pk
+						FROM tbl_periodo_proceso_pepr
+						WHERE pepr_pk = #{peprId}
+					)
+			)
     ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
 	</update>
 
 	<resultMap id="ResultMapActividadPesquera" type="EstadisticaAgregadoVO">
@@ -246,12 +252,16 @@
 					srvc_fref >= #{fini}
 					AND srvc_fref < #{ffin}
 				)
-			AND srvc_subp_pk IN
-    ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
-    <![CDATA[
+				AND srvc_subp_pk IN (
+					SELECT prto_pk
+					FROM tbl_puerto_prto
+					WHERE
+						prto_sprt_pk = (
+							SELECT pepr_autp_pk
+							FROM tbl_periodo_proceso_pepr
+							WHERE pepr_pk = #{peprId}
+						)
+				)
 		) sql
 		GROUP BY
 			estd_subp_pk, TIPO_CAPTURA_PESCA
@@ -314,12 +324,16 @@
 								WHERE srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
 							)
 					)
-					AND srvc_subp_pk IN
-		    ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
-	    <![CDATA[
+					AND srvc_subp_pk IN (
+						SELECT prto_pk
+						FROM tbl_puerto_prto
+						WHERE
+							prto_sprt_pk = (
+								SELECT pepr_autp_pk
+								FROM tbl_periodo_proceso_pepr
+								WHERE pepr_pk = #{peprId}
+							)
+					)
 
 				UNION
 
@@ -365,12 +379,16 @@
 									)
 							)
 					)
-					AND srvc_subp_pk IN
-		    ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
-	    <![CDATA[
+					AND srvc_subp_pk IN (
+						SELECT prto_pk
+						FROM tbl_puerto_prto
+						WHERE
+							prto_sprt_pk = (
+								SELECT pepr_autp_pk
+								FROM tbl_periodo_proceso_pepr
+								WHERE pepr_pk = #{peprId}
+							)
+					)
 			)
 	    ]]>
 	</update>
@@ -482,12 +500,16 @@
 							WHERE srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
 						)
 				)
-				AND srvc_subp_pk IN
-		    ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
-	    <![CDATA[
+				AND srvc_subp_pk IN (
+					SELECT prto_pk
+					FROM tbl_puerto_prto
+					WHERE
+						prto_sprt_pk = (
+							SELECT pepr_autp_pk
+							FROM tbl_periodo_proceso_pepr
+							WHERE pepr_pk = #{peprId}
+						)
+				)
 
 			UNION
 
@@ -551,12 +573,16 @@
 					srvc_fref >= #{fini}
 					AND srvc_fref < #{ffin}
 				)
-				AND srvc_subp_pk IN
-		    ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
-	    <![CDATA[
+				AND srvc_subp_pk IN (
+					SELECT prto_pk
+					FROM tbl_puerto_prto
+					WHERE
+						prto_sprt_pk = (
+							SELECT pepr_autp_pk
+							FROM tbl_periodo_proceso_pepr
+							WHERE pepr_pk = #{peprId}
+						)
+				)
 		) sql
 		GROUP BY estd_subp_pk, TIPO_SUM
     ]]>
@@ -590,11 +616,17 @@
 					AND ssrv_ffin >= #{fini}
 					AND ssrv_ffin < #{ffin}
 			)
-			AND srvc_subp_pk IN
+			AND srvc_subp_pk IN (
+				SELECT prto_pk
+				FROM tbl_puerto_prto
+				WHERE
+					prto_sprt_pk = (
+						SELECT pepr_autp_pk
+						FROM tbl_periodo_proceso_pepr
+						WHERE pepr_pk = #{peprId}
+					)
+			)
     ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
 	</update>
 
 	<resultMap id="ResultMapAgregacionSuperficie" type="EstadisticaAgregadoVO">
@@ -739,12 +771,16 @@
 					ssrv_ffin >= #{fini}
 					AND ssrv_ffin < #{ffin}
 				)
-				AND srvc_subp_pk IN
-		    ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
-	    <![CDATA[
+				AND srvc_subp_pk IN (
+					SELECT prto_pk
+					FROM tbl_puerto_prto
+					WHERE
+						prto_sprt_pk = (
+							SELECT pepr_autp_pk
+							FROM tbl_periodo_proceso_pepr
+							WHERE pepr_pk = #{peprId}
+						)
+				)
 		) sql
 		GROUP BY
 			estd_subp_pk, ZONA_DEP, UNID_SUP, TIPO_MERC_EST, TIPO_OP_SUP, ORGA, BOOLEANO_01
@@ -794,11 +830,17 @@
 				srvc_ffin >= #{fini}
 				AND srvc_ffin < #{ffin}
 			)
-			AND srvc_subp_pk IN
+			AND srvc_subp_pk IN (
+				SELECT prto_pk
+				FROM tbl_puerto_prto
+				WHERE
+					prto_sprt_pk = (
+						SELECT pepr_autp_pk
+						FROM tbl_periodo_proceso_pepr
+						WHERE pepr_pk = #{peprId}
+					)
+			)
     ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
 	</update>
 
 	<resultMap id="ResultMapAgregacionEscala" type="EstadisticaAgregadoVO">
@@ -1125,12 +1167,16 @@
 						srvc_ffin >= #{fini}
 						AND srvc_ffin < #{ffin}
 					)
-					AND srvc_subp_pk IN
-    ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
-    <![CDATA[
+					AND srvc_subp_pk IN (
+						SELECT prto_pk
+						FROM tbl_puerto_prto
+						WHERE
+							prto_sprt_pk = (
+								SELECT pepr_autp_pk
+								FROM tbl_periodo_proceso_pepr
+								WHERE pepr_pk = #{peprId}
+							)
+					)
 			) sql
 		) sql
 		GROUP BY
@@ -1182,11 +1228,17 @@
 				srvc_ffin >= #{fini}
 				AND srvc_ffin < #{ffin}
 			)
-			AND srvc_subp_pk IN
+			AND srvc_subp_pk IN (
+				SELECT prto_pk
+				FROM tbl_puerto_prto
+				WHERE
+					prto_sprt_pk = (
+						SELECT pepr_autp_pk
+						FROM tbl_periodo_proceso_pepr
+						WHERE pepr_pk = #{peprId}
+					)
+			)
     ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
 	</update>
 
 	<resultMap id="ResultMapMovimientoTipoBuqueEEE" type="EstadisticaAgregadoVO">
@@ -1382,12 +1434,16 @@
 						srvc_ffin >= #{fini}
 						AND srvc_ffin < #{ffin}
 					)
-					AND srvc_subp_pk IN
-    ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
-    <![CDATA[
+					AND srvc_subp_pk IN (
+						SELECT prto_pk
+						FROM tbl_puerto_prto
+						WHERE
+							prto_sprt_pk = (
+								SELECT pepr_autp_pk
+								FROM tbl_periodo_proceso_pepr
+								WHERE pepr_pk = #{peprId}
+							)
+					)
 			) sql
 		) sql
 		GROUP BY
@@ -1485,11 +1541,17 @@
 					)
 			)
 
-			AND srvc_subp_pk IN
+			AND srvc_subp_pk IN (
+				SELECT prto_pk
+				FROM tbl_puerto_prto
+				WHERE
+					prto_sprt_pk = (
+						SELECT pepr_autp_pk
+						FROM tbl_periodo_proceso_pepr
+						WHERE pepr_pk = #{peprId}
+					)
+			)
     ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
 	</update>
 
 	<resultMap id="ResultMapBuqueFondeadoAtracado" type="EstadisticaAgregadoVO">
@@ -1717,12 +1779,16 @@
 							)
 					)
 
-					AND srvc_subp_pk IN
-    ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
-    <![CDATA[
+					AND srvc_subp_pk IN (
+						SELECT prto_pk
+						FROM tbl_puerto_prto
+						WHERE
+							prto_sprt_pk = (
+								SELECT pepr_autp_pk
+								FROM tbl_periodo_proceso_pepr
+								WHERE pepr_pk = #{peprId}
+							)
+					)
 			) sql
 		) sql
 		GROUP BY
@@ -1784,11 +1850,17 @@
 					)
 			)
 
-			AND srvc_subp_pk IN
+			AND srvc_subp_pk IN (
+				SELECT prto_pk
+				FROM tbl_puerto_prto
+				WHERE
+					prto_sprt_pk = (
+						SELECT pepr_autp_pk
+						FROM tbl_periodo_proceso_pepr
+						WHERE pepr_pk = #{peprId}
+					)
+			)
     ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
 	</update>
 
 
@@ -2215,12 +2287,16 @@
 						srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
 						AND srvc_fref >= #{fini}
 						AND srvc_fref < #{ffin}
-						AND srvc_subp_pk IN
-    ]]>
-		<foreach collection="subpIds" item="item" open="(" close=")"
-			separator=",">#{item}
-		</foreach>
-    <![CDATA[
+						AND srvc_subp_pk IN (
+							SELECT prto_pk
+							FROM tbl_puerto_prto
+							WHERE
+								prto_sprt_pk = (
+									SELECT pepr_autp_pk
+									FROM tbl_periodo_proceso_pepr
+									WHERE pepr_pk = #{peprId}
+								)
+						)
 				)
 				SELECT ssrv_pk, ssrv_tpss_pk, srvc_pk, srvc_subp_pk, srvc_fref, estd_subp_pk, BUQUE
 					, (

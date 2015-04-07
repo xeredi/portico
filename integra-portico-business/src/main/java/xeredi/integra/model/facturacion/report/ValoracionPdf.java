@@ -73,7 +73,7 @@ public final class ValoracionPdf extends BasePdf {
      */
     public void imprimir(final AspectoVO aspc, final ValoracionVO vlrc, final List<ValoracionCargoVO> vlrgList,
             final List<ValoracionImpuestoVO> vlriList, final List<ValoracionLineaVO> vlrlList, final OutputStream stream)
-            throws InternalErrorException {
+                    throws InternalErrorException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(vlrc);
         Preconditions.checkNotNull(vlrgList);
@@ -131,8 +131,8 @@ public final class ValoracionPdf extends BasePdf {
                     TipoElemento.TX));
             rowCells.add(new PdfCell(bundle.getString("enti_" + aspc.getTpsr().getId()), vlrc.getSrvc().getEtiqueta(),
                     3, TipoElemento.TX));
-            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_fliq.name()), PdfConstants.DATE_FORMAT
-                    .format(vlrc.getFliq()), 1, TipoElemento.FH));
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_fliq.name()), formatDate(vlrc.getFliq()), 1,
+                    TipoElemento.FH));
 
             listCells.add(rowCells);
         }
@@ -140,10 +140,10 @@ public final class ValoracionPdf extends BasePdf {
         {
             final List<PdfCell> rowCells = new ArrayList<>();
 
-            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_importe.name()), PdfConstants.CURRENCY_FORMAT
-                    .format(vlrc.getImporte()), 1, TipoElemento.ND));
-            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_impuesto.name()),
-                    PdfConstants.CURRENCY_FORMAT.format(vlrc.getImpuesto()), 1, TipoElemento.ND));
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_importe.name()), formatCurrency(vlrc
+                    .getImporte()), 1, TipoElemento.ND));
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_impuesto.name()), formatCurrency(vlrc
+                    .getImpuesto()), 1, TipoElemento.ND));
 
             listCells.add(rowCells);
         }
@@ -340,7 +340,7 @@ public final class ValoracionPdf extends BasePdf {
             dataSource.add(vlrl.getPadreId().toString(), vlrl.getRgla().getTipo().name() + " - "
                     + vlrl.getRgla().getCodigo(), vlrl.getCuant1(), vlrl.getCuant2(), vlrl.getCuant3(), vlrl
                     .getCuant4(), vlrl.getCuant5(), vlrl.getCuant6(), vlrl.getRgla().getTipo() == ReglaTipo.T ? null
-                    : new BigDecimal(vlrl.getImporteBase()), new BigDecimal(vlrl.getImporte()));
+                            : new BigDecimal(vlrl.getImporteBase()), new BigDecimal(vlrl.getImporte()));
         }
 
         report.setDataSource(dataSource);

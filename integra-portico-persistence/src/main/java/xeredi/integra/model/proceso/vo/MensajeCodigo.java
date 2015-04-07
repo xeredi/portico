@@ -39,6 +39,8 @@ public enum MensajeCodigo {
     E_001,
     /** No hay subpuertos para la AP seleccionada. */
     E_002,
+    /** AP no encontrada. */
+    E_003,
 
     ;
 }

@@ -31,12 +31,15 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.PuertoCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
@@ -91,6 +94,8 @@ public final class ServicioImporterBO {
 
     /** Map de parametros (codigo, id), indexados por tipo de parametro. */
     private final Map<Long, Map<String, Long>> tpprPrmtMap = new HashMap<>();
+
+    private final Map<String, PuertoVO> prtoMap = new HashMap<>();
 
     /**
      * Import entities.
@@ -198,11 +203,12 @@ public final class ServicioImporterBO {
         }
 
         // Obtencion de Subpuertos
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.SUBPUERTO.getId());
-        final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+        final PuertoBO prtoBO = new PuertoBO();
+        final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-        prmtCriterioVO.setEntiId(Entidad.SUBPUERTO.getId());
-        tpprPrmtMap.put(Entidad.SUBPUERTO.getId(), prmtBO.selectMapCodigoId(prmtCriterioVO));
+        for (final PuertoVO prto : prtoBO.selectList(prtoCriterio)) {
+            prtoMap.put(prto.getCodigoCorto(), prto);
+        }
 
         ResultSet rs = null;
 
@@ -253,24 +259,18 @@ public final class ServicioImporterBO {
                         fechaReferencia = new Date(tsReferencia.getTime());
                     }
 
-                    final Long prmtSubpuertoId = tpprPrmtMap.get(Entidad.SUBPUERTO.getId()).get(subpuertoCod);
-
-                    if (prmtSubpuertoId == null) {
+                    if (!prtoMap.containsKey(subpuertoCod)) {
                         throw new Error("Subpuerto " + subpuertoCod + " no encontrado");
                     }
 
-                    final ParametroVO prmtSubpuertoVO = new ParametroVO();
-
-                    prmtSubpuertoVO.setId(prmtSubpuertoId);
-
-                    srvcVO.setSubp(prmtSubpuertoVO);
+                    srvcVO.setPrto(prtoMap.get(subpuertoCod));
                     srvcVO.setAnno(anno);
                     srvcVO.setNumero(numero);
                     srvcVO.setFalta(fechaCreacion);
                     srvcVO.setFbaja(fechaBaja);
                     srvcVO.setFref(fechaReferencia);
 
-                    if (tpsrVO.getTemporal()) {
+                    if (tpsrVO.isTemporal()) {
                         Date fechaInicio = null;
                         Date fechaFin = null;
 
@@ -349,7 +349,7 @@ public final class ServicioImporterBO {
                         rs.getInt(i++);
                         ssrvVO.setNumero(numeroSubservicio++);
 
-                        if (tpssVO.getTemporal()) {
+                        if (tpssVO.isTemporal()) {
                             Date fechaInicio = null;
                             Date fechaFin = null;
 

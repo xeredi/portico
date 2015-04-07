@@ -1,0 +1,44 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <p class="modal-title" translate="filtro"></p>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-sm-1 col-md-1 form-group-sm">
+                                <label translate>srsc_anno</label> <input type="text"
+                                    ng-model="vm.srscCriterio.anno" class="form-control number" />
+                            </div>
+                            <div class="col-sm-3 col-md-2 form-group-sm">
+                                <label translate>tpsr</label> <select ng-model="vm.srscCriterio.tpsrId"
+                                    ng-options="tpsr.id as tpsr.nombre for tpsr in vm.tpsrList"
+                                    class="form-control">
+                                    <option />
+                                </select>
+                            </div>
+                            <div class="col-sm-3 col-md-2 form-group-sm">
+                                <label translate>prto</label> <select ng-model="vm.srscCriterio.prtoId"
+                                    ng-options="prto.id as prto.etiqueta for prto in vm.prtoList"
+                                    class="form-control">
+                                    <option />
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-ng-click="vm.search(1);$hide()">
+                    <i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
+                </button>
+                <button class="btn btn-default" data-ng-click="$hide()">
+                    <i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

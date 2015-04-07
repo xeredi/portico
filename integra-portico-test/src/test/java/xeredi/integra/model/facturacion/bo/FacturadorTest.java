@@ -1,6 +1,5 @@
 package xeredi.integra.model.facturacion.bo;
 
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,7 +32,6 @@ public final class FacturadorTest {
             // final Long prbtId = 1644001L;
             final Long prbtId = 1237001L;
             final ValoracionBO vlrcBO = new ValoracionBO();
-            final FacturadorBO facturador = new FacturadorBO();
 
             final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
             final PaginatedList<ValoracionVO> vlrcList = vlrcBO.selectList(vlrcCriterioVO, 0, 20);
@@ -46,8 +44,9 @@ public final class FacturadorTest {
                 vlrcIds.add(vlrc.getId());
             }
 
-            facturador
-            .facturarValoraciones(vlrcIds, /* 61001L */null, 68001L, Calendar.getInstance().getTime(), prbtId);
+            // final FacturadorBO facturador = new FacturadorBO();
+            //
+            // facturador.facturarValoraciones(vlrcIds, 68001L, null, Calendar.getInstance().getTime());
         } catch (final Throwable ex) {
             LOG.error(ex, ex);
 

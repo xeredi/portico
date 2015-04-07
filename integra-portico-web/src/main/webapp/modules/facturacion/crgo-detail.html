@@ -11,32 +11,32 @@
 
 <fieldset>
     <div class="row">
-        <div class="col-sm-3 col-md-2 form-group">
+        <div class="col-sm-3 col-md-2 form-group-sm">
             <label translate>crgo_tpsr</label>
             <p class="form-control-static">
                 <a ng-href="#/metamodelo/tpsr/detail/{{vm.crgo.tpsr.id}}"
                     ng-bind="'enti_' + vm.crgo.tpsr.id | translate"></a>
             </p>
         </div>
-        <div class="col-sm-2 col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 form-group-sm">
             <label translate>crgo_codigo</label>
             <p class="form-control-static" ng-bind="vm.crgo.codigo"></p>
         </div>
-        <div class="col-sm-2 col-md-2 form-group">
+        <div class="col-sm-2 col-md-2 form-group-sm">
             <label translate>crgo_codigoNormalizado</label>
             <p class="form-control-static" ng-bind="vm.crgo.crgv.codigoNormalizado"></p>
         </div>
-        <div class="col-sm-2 col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 form-group-sm">
             <label translate>crgo_tipo</label>
             <p class="form-control-static" ng-bind="'CargoTipo_' + vm.crgo.crgv.tipo | translate"></p>
         </div>
-        <div class="col-sm-1 col-md-1 form-group">
+        <div class="col-sm-1 col-md-1 form-group-sm">
             <label translate>crgo_principal</label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{vm.crgo.crgv.principal ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
-        <div class="col-sm-1 col-md-1 form-group">
+        <div class="col-sm-1 col-md-1 form-group-sm">
             <label translate>crgo_temporal</label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{vm.crgo.crgv.temporal ? 'ok' : 'remove'}}"></i>
@@ -45,11 +45,11 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-2 col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 form-group-sm">
             <label translate>crgo_fini</label>
             <p class="form-control-static" ng-bind="vm.crgo.crgv.fini | date: ('format_date' | translate)"></p>
         </div>
-        <div class="col-sm-2 col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 form-group-sm">
             <label translate>crgo_ffin</label>
             <p class="form-control-static" ng-bind="vm.crgo.crgv.ffin | date: ('format_date' | translate)"></p>
         </div>
