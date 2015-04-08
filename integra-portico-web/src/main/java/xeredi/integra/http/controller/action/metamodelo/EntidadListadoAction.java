@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -10,20 +9,22 @@ import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 
+import com.opensymphony.xwork2.ModelDriven;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadListadoAction.
  */
-public final class EntidadListadoAction extends BaseAction {
+public final class EntidadListadoAction extends BaseAction implements ModelDriven<EntidadCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1250990272188228335L;
 
     /** The entis. */
-    private final List<EntidadVO> entiList = new ArrayList<>();
+    private List<EntidadVO> entiList;
 
     /** The enti criterio form. */
-    private EntidadCriterioVO entiCriterio;
+    private EntidadCriterioVO model;
 
     /**
      * Instantiates a new entidad listado action.
@@ -31,7 +32,7 @@ public final class EntidadListadoAction extends BaseAction {
     public EntidadListadoAction() {
         super();
 
-        entiCriterio = new EntidadCriterioVO();
+        model = new EntidadCriterioVO();
     }
 
     // Acciones Web
@@ -44,11 +45,11 @@ public final class EntidadListadoAction extends BaseAction {
     public String hijaListado() {
         final EntidadBO entiBO = new EntidadBO();
 
-        if (entiCriterio.getEntiPadreId() == null) {
+        if (model.getEntiPadreId() == null) {
             throw new Error("No se ha proporcionado una entidad padre");
         }
 
-        entiList.addAll(entiBO.selectList(entiCriterio));
+        entiList = entiBO.selectList(model);
 
         return SUCCESS;
     }
@@ -62,11 +63,11 @@ public final class EntidadListadoAction extends BaseAction {
     public String padreListado() {
         final EntidadBO entiBO = new EntidadBO();
 
-        if (entiCriterio.getEntiHijaId() == null) {
+        if (model.getEntiHijaId() == null) {
             throw new Error("No se ha proporcionado una entidad hija");
         }
 
-        entiList.addAll(entiBO.selectList(entiCriterio));
+        entiList.addAll(entiBO.selectList(model));
 
         return SUCCESS;
     }
@@ -82,22 +83,21 @@ public final class EntidadListadoAction extends BaseAction {
     }
 
     /**
-     * Gets the enti criterio.
-     *
-     * @return the enti criterio
+     * {@inheritDoc}
      */
-    public EntidadCriterioVO getEntiCriterio() {
-        return entiCriterio;
+    @Override
+    public EntidadCriterioVO getModel() {
+        return model;
     }
 
     /**
-     * Sets the enti criterio.
+     * Sets the model.
      *
-     * @param value
-     *            the new enti criterio
+     * @param model
+     *            the new model
      */
-    public void setEntiCriterio(final EntidadCriterioVO value) {
-        entiCriterio = value;
+    public void setModel(final EntidadCriterioVO value) {
+        model = value;
     }
 
 }

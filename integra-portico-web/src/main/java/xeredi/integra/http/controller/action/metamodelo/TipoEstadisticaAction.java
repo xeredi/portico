@@ -15,12 +15,13 @@ import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoEstadisticaAction.
  */
-public final class TipoEstadisticaAction extends BaseAction {
+public final class TipoEstadisticaAction extends BaseAction implements ModelDriven<TipoEstadisticaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3174617805403065108L;
@@ -29,7 +30,7 @@ public final class TipoEstadisticaAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The tpes form. */
-    private TipoEstadisticaVO enti;
+    private TipoEstadisticaVO model;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -47,15 +48,15 @@ public final class TipoEstadisticaAction extends BaseAction {
         Preconditions.checkNotNull(accion);
 
         if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(enti);
-            Preconditions.checkNotNull(enti.getId());
+            Preconditions.checkNotNull(model);
+            Preconditions.checkNotNull(model.getId());
 
             final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-            enti = tpesBO.select(enti.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+            model = tpesBO.select(model.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
         } else {
-            enti = new TipoEstadisticaVO();
+            model = new TipoEstadisticaVO();
         }
 
         return SUCCESS;
@@ -72,15 +73,15 @@ public final class TipoEstadisticaAction extends BaseAction {
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
 
-        if (enti == null) {
-            enti = new TipoEstadisticaVO();
+        if (model == null) {
+            model = new TipoEstadisticaVO();
         }
 
         // Validaciones
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.enti_codigo, enti.getCodigo());
+            FieldValidator.validateRequired(this, MessageI18nKey.enti_codigo, model.getCodigo());
         } else {
-            Preconditions.checkNotNull(enti.getId());
+            Preconditions.checkNotNull(model.getId());
         }
 
         FieldValidator.validateI18n(this, i18nMap);
@@ -90,12 +91,12 @@ public final class TipoEstadisticaAction extends BaseAction {
 
             switch (accion) {
             case create:
-                enti.setCodigo(enti.getCodigo().toUpperCase());
-                tpesBO.insert(enti, i18nMap);
+                model.setCodigo(model.getCodigo().toUpperCase());
+                tpesBO.insert(model, i18nMap);
 
                 break;
             case edit:
-                tpesBO.update(enti, i18nMap);
+                tpesBO.update(model, i18nMap);
 
                 break;
             default:
@@ -115,12 +116,12 @@ public final class TipoEstadisticaAction extends BaseAction {
      */
     @Action("tpes-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-        tpesBO.delete(enti.getId());
+        tpesBO.delete(model.getId());
 
         return SUCCESS;
     }
@@ -134,13 +135,13 @@ public final class TipoEstadisticaAction extends BaseAction {
      */
     @Action("tpes-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-        enti = tpesBO.select(enti.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+        model = tpesBO.select(model.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
 
         return SUCCESS;
     }
@@ -157,22 +158,21 @@ public final class TipoEstadisticaAction extends BaseAction {
     }
 
     /**
-     * Gets the enti.
-     *
-     * @return the enti
+     * {@inheritDoc}
      */
-    public TipoEstadisticaVO getEnti() {
-        return enti;
+    @Override
+    public TipoEstadisticaVO getModel() {
+        return model;
     }
 
     /**
-     * Sets the enti.
+     * Sets the model.
      *
      * @param value
-     *            the enti
+     *            the new model
      */
-    public void setEnti(final TipoEstadisticaVO value) {
-        enti = value;
+    public void setModel(final TipoEstadisticaVO value) {
+        model = value;
     }
 
     /**

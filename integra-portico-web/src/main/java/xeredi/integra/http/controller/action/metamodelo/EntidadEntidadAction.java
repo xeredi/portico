@@ -17,12 +17,13 @@ import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadEntidadAction.
  */
-public final class EntidadEntidadAction extends BaseAction {
+public final class EntidadEntidadAction extends BaseAction implements ModelDriven<EntidadEntidadVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7902127201717597996L;
@@ -31,7 +32,7 @@ public final class EntidadEntidadAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The enen. */
-    private EntidadEntidadVO enen;
+    private EntidadEntidadVO model;
 
     /** The tppr list. */
     private List<LabelValueVO> tpssList;
@@ -43,8 +44,8 @@ public final class EntidadEntidadAction extends BaseAction {
      */
     @Action("enen-create")
     public String create() {
-        Preconditions.checkNotNull(enen);
-        Preconditions.checkNotNull(enen.getEntiPadreId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiPadreId());
 
         accion = ACCION_EDICION.create;
 
@@ -62,18 +63,18 @@ public final class EntidadEntidadAction extends BaseAction {
      */
     @Action("enen-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(enen);
-        Preconditions.checkNotNull(enen.getEntiPadreId());
-        Preconditions.checkNotNull(enen.getEntiHija());
-        Preconditions.checkNotNull(enen.getEntiHija().getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiPadreId());
+        Preconditions.checkNotNull(model.getEntiHija());
+        Preconditions.checkNotNull(model.getEntiHija().getId());
 
         final EntidadEntidadBO enenBO = new EntidadEntidadBO();
         final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
 
-        enenCriterioVO.setEntiPadreId(enen.getEntiPadreId());
-        enenCriterioVO.setEntiHijaId(enen.getEntiHija().getId());
+        enenCriterioVO.setEntiPadreId(model.getEntiPadreId());
+        enenCriterioVO.setEntiHijaId(model.getEntiHija().getId());
 
-        enen = enenBO.selectObject(enenCriterioVO);
+        model = enenBO.selectObject(enenCriterioVO);
         accion = ACCION_EDICION.edit;
 
         loadLabelValues();
@@ -91,25 +92,25 @@ public final class EntidadEntidadAction extends BaseAction {
     @Action("enen-save")
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(enen);
-        Preconditions.checkNotNull(enen.getEntiPadreId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiPadreId());
 
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.enen_entiHija, enen.getEntiHija());
+            FieldValidator.validateRequired(this, MessageI18nKey.enen_entiHija, model.getEntiHija());
         } else {
-            Preconditions.checkNotNull(enen.getEntiHija());
-            Preconditions.checkNotNull(enen.getEntiHija().getId());
+            Preconditions.checkNotNull(model.getEntiHija());
+            Preconditions.checkNotNull(model.getEntiHija().getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.enen_orden, enen.getOrden());
+        FieldValidator.validateRequired(this, MessageI18nKey.enen_orden, model.getOrden());
 
         if (!hasErrors()) {
             final EntidadEntidadBO enenBO = new EntidadEntidadBO();
 
             if (accion == ACCION_EDICION.create) {
-                enenBO.insert(enen);
+                enenBO.insert(model);
             } else {
-                enenBO.update(enen);
+                enenBO.update(model);
             }
         }
 
@@ -125,14 +126,14 @@ public final class EntidadEntidadAction extends BaseAction {
      */
     @Action("enen-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(enen);
-        Preconditions.checkNotNull(enen.getEntiPadreId());
-        Preconditions.checkNotNull(enen.getEntiHija());
-        Preconditions.checkNotNull(enen.getEntiHija().getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiPadreId());
+        Preconditions.checkNotNull(model.getEntiHija());
+        Preconditions.checkNotNull(model.getEntiHija().getId());
 
         final EntidadEntidadBO enenBO = new EntidadEntidadBO();
 
-        enenBO.delete(enen);
+        enenBO.delete(model);
 
         return SUCCESS;
     }
@@ -146,18 +147,18 @@ public final class EntidadEntidadAction extends BaseAction {
      */
     @Action("enen-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(enen);
-        Preconditions.checkNotNull(enen.getEntiPadreId());
-        Preconditions.checkNotNull(enen.getEntiHija());
-        Preconditions.checkNotNull(enen.getEntiHija().getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiPadreId());
+        Preconditions.checkNotNull(model.getEntiHija());
+        Preconditions.checkNotNull(model.getEntiHija().getId());
 
         final EntidadEntidadBO enenBO = new EntidadEntidadBO();
         final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
 
-        enenCriterioVO.setEntiPadreId(enen.getEntiPadreId());
-        enenCriterioVO.setEntiHijaId(enen.getEntiHija().getId());
+        enenCriterioVO.setEntiPadreId(model.getEntiPadreId());
+        enenCriterioVO.setEntiHijaId(model.getEntiHija().getId());
 
-        enen = enenBO.selectObject(enenCriterioVO);
+        model = enenBO.selectObject(enenCriterioVO);
 
         return SUCCESS;
     }
@@ -206,21 +207,20 @@ public final class EntidadEntidadAction extends BaseAction {
     }
 
     /**
-     * Gets the enen.
-     *
-     * @return the enen
+     * {@inheritDoc}
      */
-    public EntidadEntidadVO getEnen() {
-        return enen;
+    @Override
+    public EntidadEntidadVO getModel() {
+        return model;
     }
 
     /**
-     * Sets the enen.
+     * Sets the model.
      *
-     * @param value
-     *            the new enen
+     * @param model
+     *            the new model
      */
-    public void setEnen(final EntidadEntidadVO value) {
-        enen = value;
+    public void setModel(final EntidadEntidadVO value) {
+        model = value;
     }
 }

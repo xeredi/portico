@@ -24,12 +24,13 @@ import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoDatoAction.
  */
-public final class TipoDatoAction extends BaseAction {
+public final class TipoDatoAction extends BaseAction implements ModelDriven<TipoDatoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7405460701196255597L;
@@ -38,7 +39,7 @@ public final class TipoDatoAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The tppr. */
-    private TipoDatoVO tpdt;
+    private TipoDatoVO model;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -65,15 +66,15 @@ public final class TipoDatoAction extends BaseAction {
         Preconditions.checkNotNull(accion);
 
         if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(tpdt);
-            Preconditions.checkNotNull(tpdt.getId());
+            Preconditions.checkNotNull(model);
+            Preconditions.checkNotNull(model.getId());
 
             final TipoDatoBO tpdtBO = new TipoDatoBO();
 
-            tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
+            model = tpdtBO.select(model.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, model.getId());
         } else {
-            tpdt = new TipoDatoVO();
+            model = new TipoDatoVO();
         }
 
         loadLabelValues();
@@ -92,21 +93,21 @@ public final class TipoDatoAction extends BaseAction {
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
 
-        if (tpdt == null) {
-            tpdt = new TipoDatoVO();
+        if (model == null) {
+            model = new TipoDatoVO();
         }
 
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.tpdt_codigo, tpdt.getCodigo());
+            FieldValidator.validateRequired(this, MessageI18nKey.tpdt_codigo, model.getCodigo());
         } else {
-            Preconditions.checkNotNull(tpdt.getId());
+            Preconditions.checkNotNull(model.getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.tpdt_tpht, tpdt.getTpht());
-        FieldValidator.validateRequired(this, MessageI18nKey.tpdt_tpel, tpdt.getTipoElemento());
+        FieldValidator.validateRequired(this, MessageI18nKey.tpdt_tpht, model.getTpht());
+        FieldValidator.validateRequired(this, MessageI18nKey.tpdt_tpel, model.getTipoElemento());
 
-        if (FieldValidator.isInList(tpdt.getTipoElemento(), TipoElemento.PR, TipoElemento.SR)) {
-            FieldValidator.validateRequired(this, MessageI18nKey.tpdt_enti, tpdt.getEnti());
+        if (FieldValidator.isInList(model.getTipoElemento(), TipoElemento.PR, TipoElemento.SR)) {
+            FieldValidator.validateRequired(this, MessageI18nKey.tpdt_enti, model.getEnti());
         }
 
         FieldValidator.validateI18n(this, i18nMap);
@@ -116,11 +117,11 @@ public final class TipoDatoAction extends BaseAction {
 
             switch (accion) {
             case create:
-                tpdtBO.insert(tpdt, i18nMap);
+                tpdtBO.insert(model, i18nMap);
 
                 break;
             case edit:
-                tpdtBO.update(tpdt, i18nMap);
+                tpdtBO.update(model, i18nMap);
 
                 break;
             default:
@@ -140,12 +141,12 @@ public final class TipoDatoAction extends BaseAction {
      */
     @Action("tpdt-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(tpdt);
-        Preconditions.checkNotNull(tpdt.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final TipoDatoBO tpdtBO = new TipoDatoBO();
 
-        tpdtBO.delete(tpdt);
+        tpdtBO.delete(model);
 
         return SUCCESS;
     }
@@ -159,15 +160,15 @@ public final class TipoDatoAction extends BaseAction {
      */
     @Action("tpdt-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(tpdt);
-        Preconditions.checkNotNull(tpdt.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final TipoDatoBO tpdtBO = new TipoDatoBO();
         final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
-        tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
-        cdrfList = cdrfBO.selectList(tpdt.getId(), getIdioma());
+        model = tpdtBO.select(model.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, model.getId());
+        cdrfList = cdrfBO.selectList(model.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -241,22 +242,21 @@ public final class TipoDatoAction extends BaseAction {
     }
 
     /**
-     * Gets the tpdt.
-     *
-     * @return the tpdt
+     * {@inheritDoc}
      */
-    public TipoDatoVO getTpdt() {
-        return tpdt;
+    @Override
+    public TipoDatoVO getModel() {
+        return model;
     }
 
     /**
-     * Sets the tpdt.
+     * Sets the model.
      *
      * @param value
-     *            the new tpdt
+     *            the new model
      */
-    public void setTpdt(final TipoDatoVO value) {
-        tpdt = value;
+    public void setModel(final TipoDatoVO value) {
+        model = value;
     }
 
     /**

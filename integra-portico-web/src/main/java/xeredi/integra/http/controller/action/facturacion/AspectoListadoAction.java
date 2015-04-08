@@ -1,19 +1,25 @@
 package xeredi.integra.http.controller.action.facturacion;
 
+import java.util.Calendar;
+import java.util.List;
+
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.http.controller.action.PaginatedGrid;
+import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
+
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoListadoAction.
  */
-public final class AspectoListadoAction extends BaseAction implements PaginatedGrid {
+public final class AspectoListadoAction extends PaginableAction implements ModelDriven<AspectoCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7615445979289765235L;
@@ -22,15 +28,23 @@ public final class AspectoListadoAction extends BaseAction implements PaginatedG
     private PaginatedList<AspectoVO> aspcList;
 
     /** The aspc criterio. */
-    private AspectoCriterioVO aspcCriterio;
+    private AspectoCriterioVO model;
 
-    /** The page. */
-    private int page = PaginatedList.FIRST_PAGE;
-
-    /** The limit. */
-    private int limit = ROWS_PER_PAGE_DEFAULT;
+    /** The tpsr list. */
+    private List<LabelValueVO> tpsrList;
 
     // acciones web
+    /**
+     * Filter.
+     *
+     * @return the string
+     */
+    @Action("aspc-filter")
+    public String filter() {
+        tpsrList = TipoServicioProxy.selectLabelValues();
+
+        return SUCCESS;
+    }
 
     /**
      * Listado.
@@ -39,15 +53,19 @@ public final class AspectoListadoAction extends BaseAction implements PaginatedG
      */
     @Action("aspc-list")
     public String list() {
-        if (aspcCriterio == null) {
-            aspcCriterio = new AspectoCriterioVO();
+        if (model == null) {
+            model = new AspectoCriterioVO();
         }
 
-        aspcCriterio.setIdioma(getIdioma());
+        if (model.getFechaVigencia() == null) {
+            model.setFechaVigencia(Calendar.getInstance().getTime());
+        }
+
+        model.setIdioma(getIdioma());
 
         final AspectoBO aspcBO = new AspectoBO();
 
-        aspcList = aspcBO.selectList(aspcCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
+        aspcList = aspcBO.selectList(model, getOffset(), getLimit());
 
         return SUCCESS;
     }
@@ -55,21 +73,11 @@ public final class AspectoListadoAction extends BaseAction implements PaginatedG
     // get / set
 
     /**
-     * Gets the page.
-     *
-     * @return the page
+     * {@inheritDoc}
      */
-    public int getPage() {
-        return page;
-    }
-
-    /**
-     * Gets the aspc criterio.
-     *
-     * @return the aspc criterio
-     */
-    public AspectoCriterioVO getAspcCriterio() {
-        return aspcCriterio;
+    @Override
+    public AspectoCriterioVO getModel() {
+        return model;
     }
 
     /**
@@ -78,8 +86,8 @@ public final class AspectoListadoAction extends BaseAction implements PaginatedG
      * @param value
      *            the aspc criterio
      */
-    public void setAspcCriterio(final AspectoCriterioVO value) {
-        aspcCriterio = value;
+    public void setModel(final AspectoCriterioVO value) {
+        model = value;
     }
 
     /**
@@ -92,32 +100,12 @@ public final class AspectoListadoAction extends BaseAction implements PaginatedG
     }
 
     /**
-     * Sets the page.
+     * Gets the tpsr list.
      *
-     * @param value
-     *            the page
+     * @return the tpsr list
      */
-    public void setPage(final int value) {
-        page = value;
-    }
-
-    /**
-     * Gets the limit.
-     *
-     * @return the limit
-     */
-    public int getLimit() {
-        return limit;
-    }
-
-    /**
-     * Sets the limit.
-     *
-     * @param value
-     *            the limit
-     */
-    public void setLimit(final int value) {
-        limit = value;
+    public List<LabelValueVO> getTpsrList() {
+        return tpsrList;
     }
 
 }

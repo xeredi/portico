@@ -2,8 +2,7 @@ package xeredi.integra.http.controller.action.proceso;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.http.controller.action.PaginatedGrid;
+import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoCriterioVO;
 import xeredi.integra.model.proceso.vo.ProcesoEstado;
@@ -12,23 +11,22 @@ import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.util.pagination.PaginatedList;
 
+import com.opensymphony.xwork2.ModelDriven;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ProcesoListadoAction.
  */
-public final class ProcesoListadoAction extends BaseAction implements PaginatedGrid {
+public final class ProcesoListadoAction extends PaginableAction implements ModelDriven<ProcesoCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8194151847278687792L;
 
     /** The prbt criterio vo. */
-    private ProcesoCriterioVO prbtCriterio;
+    private ProcesoCriterioVO model;
 
     /** The prbt list. */
     private PaginatedList<ProcesoVO> prbtList;
-
-    /** The page. */
-    private int page = PaginatedList.FIRST_PAGE;
 
     /**
      * Listado.
@@ -39,12 +37,11 @@ public final class ProcesoListadoAction extends BaseAction implements PaginatedG
     public String listado() {
         final ProcesoBO prbtBO = new ProcesoBO();
 
-        if (prbtCriterio == null) {
-            prbtCriterio = new ProcesoCriterioVO();
+        if (model == null) {
+            model = new ProcesoCriterioVO();
         }
 
-        prbtList = prbtBO.selectList(prbtCriterio, PaginatedList.getOffset(page, ROWS_PER_PAGE_DEFAULT),
-                ROWS_PER_PAGE_DEFAULT);
+        prbtList = prbtBO.selectList(model, getOffset(), getLimit());
 
         return SUCCESS;
     }
@@ -89,22 +86,21 @@ public final class ProcesoListadoAction extends BaseAction implements PaginatedG
     }
 
     /**
-     * Gets the prbt criterio vo.
-     *
-     * @return the prbt criterio vo
+     * {@inheritDoc}
      */
-    public ProcesoCriterioVO getPrbtCriterio() {
-        return prbtCriterio;
+    @Override
+    public ProcesoCriterioVO getModel() {
+        return model;
     }
 
     /**
-     * Sets the prbt criterio vo.
+     * Sets the model.
      *
      * @param value
-     *            the new prbt criterio vo
+     *            the new model
      */
-    public void setPrbtCriterio(final ProcesoCriterioVO value) {
-        prbtCriterio = value;
+    public void setModel(final ProcesoCriterioVO value) {
+        model = value;
     }
 
     /**
@@ -114,25 +110,6 @@ public final class ProcesoListadoAction extends BaseAction implements PaginatedG
      */
     public PaginatedList<ProcesoVO> getPrbtList() {
         return prbtList;
-    }
-
-    /**
-     * Gets the page.
-     *
-     * @return the page
-     */
-    public int getPage() {
-        return page;
-    }
-
-    /**
-     * Sets the page.
-     *
-     * @param value
-     *            the new page
-     */
-    public void setPage(final int value) {
-        page = value;
     }
 
 }

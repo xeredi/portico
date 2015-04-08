@@ -2,8 +2,7 @@ package xeredi.integra.http.controller.action.proceso;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.http.controller.action.PaginatedGrid;
+import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoMensajeVO;
 import xeredi.util.pagination.PaginatedList;
@@ -14,7 +13,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ProcesoMensajeListadoAction.
  */
-public final class ProcesoMensajeListadoAction extends BaseAction implements PaginatedGrid {
+public final class ProcesoMensajeListadoAction extends PaginableAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2398654673428203733L;
@@ -24,9 +23,6 @@ public final class ProcesoMensajeListadoAction extends BaseAction implements Pag
 
     /** The prmn list. */
     private PaginatedList<ProcesoMensajeVO> prmnList;
-
-    /** The page. */
-    private int page = PaginatedList.FIRST_PAGE;
 
     /**
      * List.
@@ -39,8 +35,7 @@ public final class ProcesoMensajeListadoAction extends BaseAction implements Pag
 
         final ProcesoBO prbtBO = new ProcesoBO();
 
-        prmnList = prbtBO.selectPrmnList(prbtId, PaginatedList.getOffset(page, ROWS_PER_PAGE_DEFAULT),
-                ROWS_PER_PAGE_DEFAULT);
+        prmnList = prbtBO.selectPrmnList(prbtId, getOffset(), getLimit());
 
         return SUCCESS;
     }
@@ -71,25 +66,6 @@ public final class ProcesoMensajeListadoAction extends BaseAction implements Pag
      */
     public PaginatedList<ProcesoMensajeVO> getPrmnList() {
         return prmnList;
-    }
-
-    /**
-     * Gets the page.
-     *
-     * @return the page
-     */
-    public int getPage() {
-        return page;
-    }
-
-    /**
-     * Sets the page.
-     *
-     * @param value
-     *            the new page
-     */
-    public void setPage(final int value) {
-        page = value;
     }
 
 }

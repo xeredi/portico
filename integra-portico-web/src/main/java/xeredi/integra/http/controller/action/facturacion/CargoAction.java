@@ -1,6 +1,7 @@
 package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,18 +21,17 @@ import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.integra.model.facturacion.vo.CargoVersionVO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
-import xeredi.integra.model.metamodelo.bo.EntidadBO;
-import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
-import xeredi.integra.model.metamodelo.vo.TipoEntidad;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CargoAction.
  */
-public final class CargoAction extends BaseAction {
+public final class CargoAction extends BaseAction implements ModelDriven<CargoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5711768506965624584L;
@@ -40,7 +40,10 @@ public final class CargoAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The crgo. */
-    private CargoVO crgo;
+    private CargoVO model;
+
+    /** The fecha vigencia. */
+    private Date fechaVigencia;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -62,8 +65,8 @@ public final class CargoAction extends BaseAction {
      */
     @Action("crgo-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(crgo);
-        Preconditions.checkNotNull(crgo.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         if (getFechaVigencia() == null) {
             setFechaVigencia(Calendar.getInstance().getTime());
@@ -71,13 +74,13 @@ public final class CargoAction extends BaseAction {
 
         final CargoBO crgoBO = new CargoBO();
 
-        crgo = crgoBO.select(crgo.getId(), getFechaVigencia(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
+        model = crgoBO.select(model.getId(), getFechaVigencia(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.crgv, model.getCrgv().getId());
 
         final ReglaBO rglaBO = new ReglaBO();
         final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
 
-        rglaCriterioVO.setCrgoId(crgo.getId());
+        rglaCriterioVO.setCrgoId(model.getId());
         rglaCriterioVO.setFechaVigencia(getFechaVigencia());
 
         rglaList = rglaBO.selectList(rglaCriterioVO);
@@ -97,8 +100,8 @@ public final class CargoAction extends BaseAction {
         Preconditions.checkNotNull(accion);
 
         if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(crgo);
-            Preconditions.checkNotNull(crgo.getId());
+            Preconditions.checkNotNull(model);
+            Preconditions.checkNotNull(model.getId());
 
             if (getFechaVigencia() == null) {
                 setFechaVigencia(Calendar.getInstance().getTime());
@@ -106,14 +109,14 @@ public final class CargoAction extends BaseAction {
 
             final CargoBO crgoBO = new CargoBO();
 
-            crgo = crgoBO.select(crgo.getId(), getFechaVigencia(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
+            model = crgoBO.select(model.getId(), getFechaVigencia(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.crgv, model.getCrgv().getId());
         } else {
-            crgo = new CargoVO();
-            crgo.setCrgv(new CargoVersionVO());
-            crgo.getCrgv().setFini(Calendar.getInstance().getTime());
+            model = new CargoVO();
+            model.setCrgv(new CargoVersionVO());
+            model.getCrgv().setFini(Calendar.getInstance().getTime());
 
-            loadLabelValues();
+            tpsrList = TipoServicioProxy.selectLabelValues();
         }
 
         return SUCCESS;
@@ -129,36 +132,36 @@ public final class CargoAction extends BaseAction {
     @Action("crgo-save")
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(crgo);
-        Preconditions.checkNotNull(crgo.getCrgv());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getCrgv());
 
         if (ACCION_EDICION.create == accion) {
-            FieldValidator.validateRequired(this, MessageI18nKey.crgo_codigo, crgo.getCodigo());
-            FieldValidator.validateRequired(this, MessageI18nKey.crgo_tpsr, crgo.getTpsr());
+            FieldValidator.validateRequired(this, MessageI18nKey.crgo_codigo, model.getCodigo());
+            FieldValidator.validateRequired(this, MessageI18nKey.crgo_tpsr, model.getTpsr());
         }
 
         if (ACCION_EDICION.create != accion) {
-            Preconditions.checkNotNull(crgo.getId());
-            Preconditions.checkNotNull(crgo.getCrgv().getId());
+            Preconditions.checkNotNull(model.getId());
+            Preconditions.checkNotNull(model.getCrgv().getId());
         }
 
         FieldValidator.validateI18n(this, i18nMap);
 
-        FieldValidator.validateRequired(this, MessageI18nKey.crgo_tipo, crgo.getCrgv().getTipo());
-        FieldValidator.validateRequired(this, MessageI18nKey.crgo_temporal, crgo.getCrgv().getTemporal());
-        FieldValidator.validateRequired(this, MessageI18nKey.crgo_principal, crgo.getCrgv().getPrincipal());
-        FieldValidator.validateRequired(this, MessageI18nKey.crgo_fini, crgo.getCrgv().getFini());
+        FieldValidator.validateRequired(this, MessageI18nKey.crgo_tipo, model.getCrgv().getTipo());
+        FieldValidator.validateRequired(this, MessageI18nKey.crgo_temporal, model.getCrgv().getTemporal());
+        FieldValidator.validateRequired(this, MessageI18nKey.crgo_principal, model.getCrgv().getPrincipal());
+        FieldValidator.validateRequired(this, MessageI18nKey.crgo_fini, model.getCrgv().getFini());
 
         if (!hasErrors()) {
             final CargoBO crgoBO = new CargoBO();
 
             switch (accion) {
             case create:
-                crgoBO.insert(crgo, i18nMap);
+                crgoBO.insert(model, i18nMap);
 
                 break;
             case edit:
-                crgoBO.update(crgo, i18nMap);
+                crgoBO.update(model, i18nMap);
 
                 break;
             default:
@@ -178,28 +181,15 @@ public final class CargoAction extends BaseAction {
      */
     @Action("crgo-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(crgo);
-        Preconditions.checkNotNull(crgo.getCrgv());
-        Preconditions.checkNotNull(crgo.getCrgv().getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getCrgv());
+        Preconditions.checkNotNull(model.getCrgv().getId());
 
         final CargoBO crgoBO = new CargoBO();
 
-        crgoBO.delete(crgo.getCrgv().getId());
+        crgoBO.delete(model.getCrgv().getId());
 
         return SUCCESS;
-    }
-
-    /**
-     * Load label values.
-     */
-    private void loadLabelValues() {
-        final EntidadBO entiBO = new EntidadBO();
-        final EntidadCriterioVO entiCriterioVO = new EntidadCriterioVO();
-
-        entiCriterioVO.setTipo(TipoEntidad.T);
-        entiCriterioVO.setIdioma(getIdioma());
-
-        tpsrList = entiBO.selectLabelValues(entiCriterioVO);
     }
 
     // get / set
@@ -223,12 +213,11 @@ public final class CargoAction extends BaseAction {
     }
 
     /**
-     * Gets the crgo.
-     *
-     * @return the crgo
+     * {@inheritDoc}
      */
-    public CargoVO getCrgo() {
-        return crgo;
+    @Override
+    public CargoVO getModel() {
+        return model;
     }
 
     /**
@@ -237,8 +226,8 @@ public final class CargoAction extends BaseAction {
      * @param value
      *            the new crgo
      */
-    public void setCrgo(final CargoVO value) {
-        crgo = value;
+    public void setModel(final CargoVO value) {
+        model = value;
     }
 
     /**
@@ -277,6 +266,25 @@ public final class CargoAction extends BaseAction {
      */
     public void setI18nMap(final Map<String, I18nVO> value) {
         i18nMap = value;
+    }
+
+    /**
+     * Gets the fecha vigencia.
+     *
+     * @return the fecha vigencia
+     */
+    public Date getFechaVigencia() {
+        return fechaVigencia;
+    }
+
+    /**
+     * Sets the fecha vigencia.
+     *
+     * @param value
+     *            the new fecha vigencia
+     */
+    public void setFechaVigencia(final Date value) {
+        fechaVigencia = value;
     }
 
 }

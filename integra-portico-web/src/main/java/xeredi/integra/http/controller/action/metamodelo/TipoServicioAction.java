@@ -26,12 +26,13 @@ import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoServicioAction.
  */
-public final class TipoServicioAction extends BaseAction {
+public final class TipoServicioAction extends BaseAction implements ModelDriven<TipoServicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5123740111042031938L;
@@ -40,7 +41,7 @@ public final class TipoServicioAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The tpsr. */
-    private TipoServicioVO enti;
+    private TipoServicioVO model;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -67,16 +68,16 @@ public final class TipoServicioAction extends BaseAction {
         Preconditions.checkNotNull(accion);
 
         if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(enti);
-            Preconditions.checkNotNull(enti.getId());
+            Preconditions.checkNotNull(model);
+            Preconditions.checkNotNull(model.getId());
 
             final TipoServicioBO tpsrBO = new TipoServicioBO();
 
-            enti = tpsrBO.select(enti.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+            model = tpsrBO.select(model.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
             accion = ACCION_EDICION.edit;
         } else {
-            enti = new TipoServicioVO();
+            model = new TipoServicioVO();
         }
 
         {
@@ -103,39 +104,39 @@ public final class TipoServicioAction extends BaseAction {
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
 
-        if (enti == null) {
-            enti = new TipoServicioVO();
+        if (model == null) {
+            model = new TipoServicioVO();
         }
 
         // Validaciones
 
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.enti_codigo, enti.getCodigo());
+            FieldValidator.validateRequired(this, MessageI18nKey.enti_codigo, model.getCodigo());
         } else {
-            Preconditions.checkNotNull(enti.getId());
+            Preconditions.checkNotNull(model.getId());
         }
 
         FieldValidator.validateI18n(this, i18nMap);
 
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdAlta, enti.isCmdAlta());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdBaja, enti.isCmdBaja());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdEdicion, enti.isCmdEdicion());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdDuplicado, enti.isCmdDuplicado());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_temporal, enti.isTemporal());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_exencionable, enti.isExencionable());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_facturable, enti.isFacturable());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdAlta, model.isCmdAlta());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdBaja, model.isCmdBaja());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdEdicion, model.isCmdEdicion());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdDuplicado, model.isCmdDuplicado());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_temporal, model.isTemporal());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_exencionable, model.isExencionable());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_facturable, model.isFacturable());
 
         if (!hasErrors()) {
             final TipoServicioBO tpsrBO = new TipoServicioBO();
 
             switch (accion) {
             case create:
-                enti.setCodigo(enti.getCodigo().toUpperCase());
-                tpsrBO.insert(enti, i18nMap);
+                model.setCodigo(model.getCodigo().toUpperCase());
+                tpsrBO.insert(model, i18nMap);
 
                 break;
             case edit:
-                tpsrBO.update(enti, i18nMap);
+                tpsrBO.update(model, i18nMap);
 
                 break;
             default:
@@ -157,7 +158,7 @@ public final class TipoServicioAction extends BaseAction {
     public String remove() throws ApplicationException {
         final TipoServicioBO tpsrBO = new TipoServicioBO();
 
-        tpsrBO.delete(enti.getId());
+        tpsrBO.delete(model.getId());
 
         return SUCCESS;
     }
@@ -175,22 +176,22 @@ public final class TipoServicioAction extends BaseAction {
         final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
         final EntidadBO entiBO = new EntidadBO();
 
-        enti = tpsrBO.select(enti.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+        model = tpsrBO.select(model.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
 
         TipoSubservicioCriterioVO tpssCriterioVO = null;
 
         tpssCriterioVO = new TipoSubservicioCriterioVO();
-        tpssCriterioVO.setTpsrId(enti.getId());
+        tpssCriterioVO.setTpsrId(model.getId());
         tpssCriterioVO.setIdioma(getIdioma());
 
         subentiList = tpssBO.selectList(tpssCriterioVO);
 
-        if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
+        if (model.getEntiHijasList() != null && !model.getEntiHijasList().isEmpty()) {
             EntidadCriterioVO entiCriterioVO = null;
 
             entiCriterioVO = new EntidadCriterioVO();
-            entiCriterioVO.setEntiPadreId(enti.getId());
+            entiCriterioVO.setEntiPadreId(model.getId());
             entiCriterioVO.setIdioma(getIdioma());
 
             entiHijasList = entiBO.selectList(entiCriterioVO);
@@ -201,22 +202,21 @@ public final class TipoServicioAction extends BaseAction {
 
     // get / set
     /**
-     * Gets the tpsr form.
-     *
-     * @return the tpsr form
+     * {@inheritDoc}
      */
-    public TipoServicioVO getEnti() {
-        return enti;
+    @Override
+    public TipoServicioVO getModel() {
+        return model;
     }
 
     /**
-     * Sets the tpsr form.
+     * Sets the model.
      *
      * @param value
-     *            the new tpsr form
+     *            the new model
      */
-    public void setEnti(final TipoServicioVO value) {
-        enti = value;
+    public void setModel(final TipoServicioVO value) {
+        model = value;
     }
 
     /**

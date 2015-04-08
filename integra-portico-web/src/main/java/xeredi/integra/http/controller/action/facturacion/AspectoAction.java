@@ -1,6 +1,7 @@
 package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,18 +21,17 @@ import xeredi.integra.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.AspectoVersionVO;
-import xeredi.integra.model.metamodelo.bo.EntidadBO;
-import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
-import xeredi.integra.model.metamodelo.vo.TipoEntidad;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoAction.
  */
-public final class AspectoAction extends BaseAction {
+public final class AspectoAction extends BaseAction implements ModelDriven<AspectoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4939833753699919759L;
@@ -40,7 +40,10 @@ public final class AspectoAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The aspc. */
-    private AspectoVO aspc;
+    private AspectoVO model;
+
+    /** The fecha vigencia. */
+    private Date fechaVigencia;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -49,7 +52,7 @@ public final class AspectoAction extends BaseAction {
     private List<AspectoCargoVO> ascrList;
 
     /** The enti list. */
-    private List<LabelValueVO> entiList;
+    private List<LabelValueVO> tpsrList;
 
     // acciones web
 
@@ -62,8 +65,8 @@ public final class AspectoAction extends BaseAction {
      */
     @Action("aspc-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(aspc);
-        Preconditions.checkNotNull(aspc.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         if (getFechaVigencia() == null) {
             setFechaVigencia(Calendar.getInstance().getTime());
@@ -71,13 +74,13 @@ public final class AspectoAction extends BaseAction {
 
         final AspectoBO aspcBO = new AspectoBO();
 
-        aspc = aspcBO.select(aspc.getId(), getFechaVigencia(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
+        model = aspcBO.select(model.getId(), getFechaVigencia(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.aspv, model.getAspv().getId());
 
         final AspectoCargoBO ascrBO = new AspectoCargoBO();
         final AspectoCargoCriterioVO ascrCriterioVO = new AspectoCargoCriterioVO();
 
-        ascrCriterioVO.setAspcId(aspc.getId());
+        ascrCriterioVO.setAspcId(model.getId());
         ascrCriterioVO.setFechaVigencia(getFechaVigencia());
 
         ascrList = ascrBO.selectList(ascrCriterioVO);
@@ -97,26 +100,20 @@ public final class AspectoAction extends BaseAction {
         Preconditions.checkNotNull(accion);
 
         if (accion == ACCION_EDICION.create) {
-            aspc = new AspectoVO();
-            aspc.setAspv(new AspectoVersionVO());
-            aspc.getAspv().setFini(Calendar.getInstance().getTime());
+            model = new AspectoVO();
+            model.setAspv(new AspectoVersionVO());
+            model.getAspv().setFini(Calendar.getInstance().getTime());
 
-            final EntidadBO entiBO = new EntidadBO();
-            final EntidadCriterioVO entiCriterioVO = new EntidadCriterioVO();
-
-            entiCriterioVO.setTipo(TipoEntidad.T);
-            entiCriterioVO.setIdioma(getIdioma());
-
-            entiList = entiBO.selectLabelValues(entiCriterioVO);
+            tpsrList = TipoServicioProxy.selectLabelValues();
         } else {
-            Preconditions.checkNotNull(aspc);
-            Preconditions.checkNotNull(aspc.getId());
+            Preconditions.checkNotNull(model);
+            Preconditions.checkNotNull(model.getId());
             Preconditions.checkNotNull(getFechaVigencia());
 
             final AspectoBO aspcBO = new AspectoBO();
 
-            aspc = aspcBO.select(aspc.getId(), getFechaVigencia(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
+            model = aspcBO.select(model.getId(), getFechaVigencia(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.aspv, model.getAspv().getId());
         }
 
         return SUCCESS;
@@ -132,71 +129,71 @@ public final class AspectoAction extends BaseAction {
     @Action("aspc-save")
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(aspc);
-        Preconditions.checkNotNull(aspc.getAspv());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getAspv());
 
         if (ACCION_EDICION.create == accion) {
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_codigo, aspc.getCodigo());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_tpsr, aspc.getTpsr());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_codigo, model.getCodigo());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_tpsr, model.getTpsr());
         }
 
         if (ACCION_EDICION.create != accion) {
-            Preconditions.checkNotNull(aspc.getId());
-            Preconditions.checkNotNull(aspc.getAspv().getId());
+            Preconditions.checkNotNull(model.getId());
+            Preconditions.checkNotNull(model.getAspv().getId());
         }
 
         FieldValidator.validateI18n(this, i18nMap);
 
-        FieldValidator.validateRequired(this, MessageI18nKey.aspc_fini, aspc.getAspv().getFini());
-        FieldValidator.validatePeriod(this, aspc.getAspv().getFini(), aspc.getAspv().getFfin());
-        FieldValidator.validateRequired(this, MessageI18nKey.aspc_prioridad, aspc.getAspv().getPrioridad());
+        FieldValidator.validateRequired(this, MessageI18nKey.aspc_fini, model.getAspv().getFini());
+        FieldValidator.validatePeriod(this, model.getAspv().getFini(), model.getAspv().getFfin());
+        FieldValidator.validateRequired(this, MessageI18nKey.aspc_prioridad, model.getAspv().getPrioridad());
 
-        if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo1())
-                || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo1())
-                || aspc.getAspv().getCgrpInfo1() != null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo1, aspc.getAspv().getCetiqInfo1());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo1, aspc.getAspv().getCpathInfo1());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo1, aspc.getAspv().getCgrpInfo1());
+        if (!GenericValidator.isBlankOrNull(model.getAspv().getCetiqInfo1())
+                || !GenericValidator.isBlankOrNull(model.getAspv().getCpathInfo1())
+                || model.getAspv().getCgrpInfo1() != null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo1, model.getAspv().getCetiqInfo1());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo1, model.getAspv().getCpathInfo1());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo1, model.getAspv().getCgrpInfo1());
         }
 
-        if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo2())
-                || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo2())
-                || aspc.getAspv().getCgrpInfo2() != null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo2, aspc.getAspv().getCetiqInfo2());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo2, aspc.getAspv().getCpathInfo2());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo2, aspc.getAspv().getCgrpInfo2());
+        if (!GenericValidator.isBlankOrNull(model.getAspv().getCetiqInfo2())
+                || !GenericValidator.isBlankOrNull(model.getAspv().getCpathInfo2())
+                || model.getAspv().getCgrpInfo2() != null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo2, model.getAspv().getCetiqInfo2());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo2, model.getAspv().getCpathInfo2());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo2, model.getAspv().getCgrpInfo2());
         }
 
-        if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo3())
-                || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo3())
-                || aspc.getAspv().getCgrpInfo3() != null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo3, aspc.getAspv().getCetiqInfo3());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo3, aspc.getAspv().getCpathInfo3());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo3, aspc.getAspv().getCgrpInfo3());
+        if (!GenericValidator.isBlankOrNull(model.getAspv().getCetiqInfo3())
+                || !GenericValidator.isBlankOrNull(model.getAspv().getCpathInfo3())
+                || model.getAspv().getCgrpInfo3() != null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo3, model.getAspv().getCetiqInfo3());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo3, model.getAspv().getCpathInfo3());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo3, model.getAspv().getCgrpInfo3());
         }
 
-        if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo4())
-                || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo4())
-                || aspc.getAspv().getCgrpInfo4() != null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo4, aspc.getAspv().getCetiqInfo4());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo4, aspc.getAspv().getCpathInfo4());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo4, aspc.getAspv().getCgrpInfo4());
+        if (!GenericValidator.isBlankOrNull(model.getAspv().getCetiqInfo4())
+                || !GenericValidator.isBlankOrNull(model.getAspv().getCpathInfo4())
+                || model.getAspv().getCgrpInfo4() != null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo4, model.getAspv().getCetiqInfo4());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo4, model.getAspv().getCpathInfo4());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo4, model.getAspv().getCgrpInfo4());
         }
 
-        if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo5())
-                || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo5())
-                || aspc.getAspv().getCgrpInfo5() != null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo5, aspc.getAspv().getCetiqInfo5());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo5, aspc.getAspv().getCpathInfo5());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo5, aspc.getAspv().getCgrpInfo5());
+        if (!GenericValidator.isBlankOrNull(model.getAspv().getCetiqInfo5())
+                || !GenericValidator.isBlankOrNull(model.getAspv().getCpathInfo5())
+                || model.getAspv().getCgrpInfo5() != null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo5, model.getAspv().getCetiqInfo5());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo5, model.getAspv().getCpathInfo5());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo5, model.getAspv().getCgrpInfo5());
         }
 
-        if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo6())
-                || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo6())
-                || aspc.getAspv().getCgrpInfo6() != null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo6, aspc.getAspv().getCetiqInfo6());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo6, aspc.getAspv().getCpathInfo6());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo6, aspc.getAspv().getCgrpInfo6());
+        if (!GenericValidator.isBlankOrNull(model.getAspv().getCetiqInfo6())
+                || !GenericValidator.isBlankOrNull(model.getAspv().getCpathInfo6())
+                || model.getAspv().getCgrpInfo6() != null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo6, model.getAspv().getCetiqInfo6());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo6, model.getAspv().getCpathInfo6());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo6, model.getAspv().getCgrpInfo6());
         }
 
         if (hasErrors()) {
@@ -207,15 +204,15 @@ public final class AspectoAction extends BaseAction {
 
         switch (accion) {
         case create:
-            aspcBO.insert(aspc, i18nMap);
+            aspcBO.insert(model, i18nMap);
 
             break;
         case duplicate:
-            aspcBO.duplicate(aspc, i18nMap);
+            aspcBO.duplicate(model, i18nMap);
 
             break;
         case edit:
-            aspcBO.update(aspc, i18nMap);
+            aspcBO.update(model, i18nMap);
 
             break;
 
@@ -229,12 +226,11 @@ public final class AspectoAction extends BaseAction {
     // get / set
 
     /**
-     * Gets the aspc.
-     *
-     * @return the aspc
+     * {@inheritDoc}
      */
-    public AspectoVO getAspc() {
-        return aspc;
+    @Override
+    public AspectoVO getModel() {
+        return model;
     }
 
     /**
@@ -243,17 +239,8 @@ public final class AspectoAction extends BaseAction {
      * @param value
      *            the aspc
      */
-    public void setAspc(final AspectoVO value) {
-        aspc = value;
-    }
-
-    /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
+    public void setModel(final AspectoVO value) {
+        model = value;
     }
 
     /**
@@ -299,8 +286,27 @@ public final class AspectoAction extends BaseAction {
      *
      * @return the enti list
      */
-    public List<LabelValueVO> getEntiList() {
-        return entiList;
+    public List<LabelValueVO> getTpsrList() {
+        return tpsrList;
+    }
+
+    /**
+     * Gets the fecha vigencia.
+     *
+     * @return the fecha vigencia
+     */
+    public Date getFechaVigencia() {
+        return fechaVigencia;
+    }
+
+    /**
+     * Sets the fecha vigencia.
+     *
+     * @param value
+     *            the new fecha vigencia
+     */
+    public void setFechaVigencia(final Date value) {
+        fechaVigencia = value;
     }
 
 }

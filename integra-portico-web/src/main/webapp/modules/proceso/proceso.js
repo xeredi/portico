@@ -36,7 +36,7 @@ function PrbtGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     function search(page) {
         $http.post("proceso/prbt-list.action", {
-            prbtCriterio : vm.prbtCriterio,
+            model : vm.prbtCriterio,
             page : page,
             limit : vm.limit
         }).success(function(data) {

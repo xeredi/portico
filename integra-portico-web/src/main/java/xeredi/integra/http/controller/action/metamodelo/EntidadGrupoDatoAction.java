@@ -15,12 +15,13 @@ import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadGrupoDatoAction.
  */
-public final class EntidadGrupoDatoAction extends BaseAction {
+public final class EntidadGrupoDatoAction extends BaseAction implements ModelDriven<EntidadGrupoDatoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3556845527608258423L;
@@ -29,7 +30,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The entd form. */
-    private EntidadGrupoDatoVO engd;
+    private EntidadGrupoDatoVO model;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -45,16 +46,16 @@ public final class EntidadGrupoDatoAction extends BaseAction {
     @Action("engd-edit")
     public String edit() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(engd);
-        Preconditions.checkNotNull(engd.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
         if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(engd.getId());
+            Preconditions.checkNotNull(model.getId());
 
             final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
-            engd = engdBO.select(engd.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.engd, engd.getId());
+            model = engdBO.select(model.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.engd, model.getId());
         }
 
         return SUCCESS;
@@ -70,10 +71,10 @@ public final class EntidadGrupoDatoAction extends BaseAction {
     @Action("engd-save")
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(engd);
-        Preconditions.checkNotNull(engd.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
-        FieldValidator.validateRequired(this, MessageI18nKey.engd_numero, engd.getNumero());
+        FieldValidator.validateRequired(this, MessageI18nKey.engd_numero, model.getNumero());
         FieldValidator.validateI18n(this, i18nMap);
 
         if (!hasErrors()) {
@@ -81,11 +82,11 @@ public final class EntidadGrupoDatoAction extends BaseAction {
 
             switch (accion) {
             case create:
-                engdBO.insert(engd, i18nMap);
+                engdBO.insert(model, i18nMap);
 
                 break;
             case edit:
-                engdBO.update(engd, i18nMap);
+                engdBO.update(model, i18nMap);
 
                 break;
             default:
@@ -105,13 +106,13 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      */
     @Action("engd-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(engd);
-        Preconditions.checkNotNull(engd.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
-        engd = engdBO.select(engd.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.engd, engd.getId());
+        model = engdBO.select(model.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.engd, model.getId());
 
         return SUCCESS;
     }
@@ -125,12 +126,12 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      */
     @Action("engd-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(engd);
-        Preconditions.checkNotNull(engd.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
-        engdBO.delete(engd.getId());
+        engdBO.delete(model.getId());
 
         return SUCCESS;
     }
@@ -147,22 +148,21 @@ public final class EntidadGrupoDatoAction extends BaseAction {
     }
 
     /**
-     * Gets the engd.
-     *
-     * @return the engd
+     * {@inheritDoc}
      */
-    public EntidadGrupoDatoVO getEngd() {
-        return engd;
+    @Override
+    public EntidadGrupoDatoVO getModel() {
+        return model;
     }
 
     /**
-     * Sets the engd.
+     * Sets the model.
      *
-     * @param value
-     *            the new engd
+     * @param model
+     *            the new model
      */
-    public void setEngd(final EntidadGrupoDatoVO value) {
-        engd = value;
+    public void setModel(final EntidadGrupoDatoVO value) {
+        model = value;
     }
 
     /**

@@ -1,21 +1,25 @@
 package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.Calendar;
+import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.http.controller.action.PaginatedGrid;
+import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
+
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CargoListadoAction.
  */
-public final class CargoListadoAction extends BaseAction implements PaginatedGrid {
+public final class CargoListadoAction extends PaginableAction implements ModelDriven<CargoCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6194164339064073309L;
@@ -24,15 +28,23 @@ public final class CargoListadoAction extends BaseAction implements PaginatedGri
     private PaginatedList<CargoVO> crgoList;
 
     /** The aspc criterio. */
-    private CargoCriterioVO crgoCriterio;
+    private CargoCriterioVO model;
 
-    /** The page. */
-    private int page = PaginatedList.FIRST_PAGE;
-
-    /** The limit. */
-    private int limit = ROWS_PER_PAGE_DEFAULT;
+    /** The tpsr list. */
+    private List<LabelValueVO> tpsrList;
 
     // acciones web
+    /**
+     * Filter.
+     *
+     * @return the string
+     */
+    @Action("crgo-filter")
+    public String filter() {
+        tpsrList = TipoServicioProxy.selectLabelValues();
+
+        return SUCCESS;
+    }
 
     /**
      * Listado.
@@ -41,27 +53,19 @@ public final class CargoListadoAction extends BaseAction implements PaginatedGri
      */
     @Action("crgo-list")
     public String listado() {
-        if (crgoCriterio == null) {
-            crgoCriterio = new CargoCriterioVO();
+        if (model == null) {
+            model = new CargoCriterioVO();
         }
 
-        crgoCriterio.setIdioma(getIdioma());
+        if (model.getFechaVigencia() == null) {
+            model.setFechaVigencia(Calendar.getInstance().getTime());
+        }
+
+        model.setIdioma(getIdioma());
 
         final CargoBO crgoBO = new CargoBO();
 
-        crgoList = crgoBO.selectList(crgoCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
-
-        return SUCCESS;
-    }
-
-    /**
-     * Filtro.
-     *
-     * @return the string
-     */
-    @Action("crgo-filter")
-    public String filtro() {
-        crgoCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        crgoList = crgoBO.selectList(model, getOffset(), getLimit());
 
         return SUCCESS;
     }
@@ -69,50 +73,11 @@ public final class CargoListadoAction extends BaseAction implements PaginatedGri
     // get / set
 
     /**
-     * Gets the page.
-     *
-     * @return the page
+     * {@inheritDoc}
      */
-    public int getPage() {
-        return page;
-    }
-
-    /**
-     * Sets the page.
-     *
-     * @param value
-     *            the page
-     */
-    public void setPage(final int value) {
-        page = value;
-    }
-
-    /**
-     * Gets the limit.
-     *
-     * @return the limit
-     */
-    public int getLimit() {
-        return limit;
-    }
-
-    /**
-     * Sets the limit.
-     *
-     * @param value
-     *            the limit
-     */
-    public void setLimit(final int value) {
-        limit = value;
-    }
-
-    /**
-     * Gets the crgo criterio.
-     *
-     * @return the crgo criterio
-     */
-    public CargoCriterioVO getCrgoCriterio() {
-        return crgoCriterio;
+    @Override
+    public CargoCriterioVO getModel() {
+        return model;
     }
 
     /**
@@ -121,8 +86,8 @@ public final class CargoListadoAction extends BaseAction implements PaginatedGri
      * @param value
      *            the new crgo criterio
      */
-    public void setCrgoCriterio(final CargoCriterioVO value) {
-        crgoCriterio = value;
+    public void setModel(final CargoCriterioVO value) {
+        model = value;
     }
 
     /**
@@ -132,6 +97,15 @@ public final class CargoListadoAction extends BaseAction implements PaginatedGri
      */
     public PaginatedList<CargoVO> getCrgoList() {
         return crgoList;
+    }
+
+    /**
+     * Gets the tpsr list.
+     *
+     * @return the tpsr list
+     */
+    public List<LabelValueVO> getTpsrList() {
+        return tpsrList;
     }
 
 }

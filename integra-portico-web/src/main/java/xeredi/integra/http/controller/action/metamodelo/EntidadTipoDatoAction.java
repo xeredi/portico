@@ -21,12 +21,13 @@ import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadTipoDatoAction.
  */
-public final class EntidadTipoDatoAction extends BaseAction {
+public final class EntidadTipoDatoAction extends BaseAction implements ModelDriven<EntidadTipoDatoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -9005055738040850443L;
@@ -35,7 +36,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The entd form. */
-    private EntidadTipoDatoVO entd;
+    private EntidadTipoDatoVO model;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -57,17 +58,17 @@ public final class EntidadTipoDatoAction extends BaseAction {
     @Action("entd-edit")
     public String edit() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(entd);
-        Preconditions.checkNotNull(entd.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
         if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(entd.getTpdt());
-            Preconditions.checkNotNull(entd.getTpdt().getId());
+            Preconditions.checkNotNull(model.getTpdt());
+            Preconditions.checkNotNull(model.getTpdt().getId());
 
             final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-            entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.entd, entd.getId());
+            model = entdBO.select(model.getEntiId(), model.getTpdt().getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.entd, model.getId());
         }
 
         loadLabelValues();
@@ -85,37 +86,37 @@ public final class EntidadTipoDatoAction extends BaseAction {
     @Action("entd-save")
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(entd);
-        Preconditions.checkNotNull(entd.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.entd_tpdt, entd.getTpdt());
+            FieldValidator.validateRequired(this, MessageI18nKey.entd_tpdt, model.getTpdt());
         } else {
-            Preconditions.checkNotNull(entd.getTpdt());
-            Preconditions.checkNotNull(entd.getTpdt().getId());
+            Preconditions.checkNotNull(model.getTpdt());
+            Preconditions.checkNotNull(model.getTpdt().getId());
         }
 
         FieldValidator.validateI18n(this, i18nMap);
 
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_grupo, entd.getGrupo());
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_fila, entd.getFila());
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_orden, entd.getOrden());
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_span, entd.getSpan());
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_spanLg, entd.getSpanLg());
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_obligatorio, entd.getObligatorio());
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_gridable, entd.getGridable());
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_filtrable, entd.getFiltrable());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_grupo, model.getGrupo());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_fila, model.getFila());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_orden, model.getOrden());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_span, model.getSpan());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_spanLg, model.getSpanLg());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_obligatorio, model.getObligatorio());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_gridable, model.getGridable());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_filtrable, model.getFiltrable());
 
         if (!hasErrors()) {
             final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
             switch (accion) {
             case create:
-                entdBO.insert(entd, i18nMap);
+                entdBO.insert(model, i18nMap);
 
                 break;
             case edit:
-                entdBO.update(entd, i18nMap);
+                entdBO.update(model, i18nMap);
 
                 break;
             default:
@@ -135,12 +136,12 @@ public final class EntidadTipoDatoAction extends BaseAction {
      */
     @Action("entd-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(entd);
-        Preconditions.checkNotNull(entd.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-        entdBO.delete(entd);
+        entdBO.delete(model);
 
         return SUCCESS;
     }
@@ -154,15 +155,15 @@ public final class EntidadTipoDatoAction extends BaseAction {
      */
     @Action("entd-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(entd);
-        Preconditions.checkNotNull(entd.getEntiId());
-        Preconditions.checkNotNull(entd.getTpdt());
-        Preconditions.checkNotNull(entd.getTpdt().getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
+        Preconditions.checkNotNull(model.getTpdt());
+        Preconditions.checkNotNull(model.getTpdt().getId());
 
         final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-        entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.entd, entd.getId());
+        model = entdBO.select(model.getEntiId(), model.getTpdt().getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.entd, model.getId());
 
         return SUCCESS;
     }
@@ -173,7 +174,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
     private void loadLabelValues() {
         final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
-        engdList.addAll(engdBO.selectLabelValues(entd.getEntiId(), getIdioma()));
+        engdList.addAll(engdBO.selectLabelValues(model.getEntiId(), getIdioma()));
 
         final TipoDatoBO tpdtBO = new TipoDatoBO();
         final TipoDatoCriterioVO tpdtCriterioVO = new TipoDatoCriterioVO();
@@ -233,22 +234,21 @@ public final class EntidadTipoDatoAction extends BaseAction {
     }
 
     /**
-     * Gets the entd.
-     *
-     * @return the entd
+     * {@inheritDoc}
      */
-    public EntidadTipoDatoVO getEntd() {
-        return entd;
+    @Override
+    public EntidadTipoDatoVO getModel() {
+        return model;
     }
 
     /**
-     * Sets the entd.
+     * Sets the model.
      *
      * @param value
-     *            the new entd
+     *            the new model
      */
-    public void setEntd(final EntidadTipoDatoVO value) {
-        entd = value;
+    public void setModel(final EntidadTipoDatoVO value) {
+        model = value;
     }
 
 }

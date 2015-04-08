@@ -9,11 +9,13 @@ import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.util.pagination.PaginatedList;
 
+import com.opensymphony.xwork2.ModelDriven;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoServicioListadoAction.
  */
-public final class TipoServicioListadoAction extends PaginableAction {
+public final class TipoServicioListadoAction extends PaginableAction implements ModelDriven<TipoServicioCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1106261956835773345L;
@@ -22,7 +24,7 @@ public final class TipoServicioListadoAction extends PaginableAction {
     private PaginatedList<TipoServicioVO> entiList;
 
     /** The tppr criterio. */
-    private TipoServicioCriterioVO entiCriterio;
+    private TipoServicioCriterioVO model;
 
     // Acciones Web
     /**
@@ -32,22 +34,21 @@ public final class TipoServicioListadoAction extends PaginableAction {
      */
     @Action("tpsr-list")
     public String list() {
-        if (entiCriterio == null) {
-            entiCriterio = new TipoServicioCriterioVO();
+        if (model == null) {
+            model = new TipoServicioCriterioVO();
         }
 
-        if (entiCriterio.getCodigo() != null) {
-            entiCriterio.setCodigo(entiCriterio.getCodigo().toUpperCase());
+        if (model.getCodigo() != null) {
+            model.setCodigo(model.getCodigo().toUpperCase());
         }
 
         // Traemos solo los tipos de servicio
-        entiCriterio.setTipo(TipoEntidad.T);
-        entiCriterio.setIdioma(getIdioma());
+        model.setTipo(TipoEntidad.T);
+        model.setIdioma(getIdioma());
 
         final TipoServicioBO tpsrBO = new TipoServicioBO();
 
-        entiList = tpsrBO.selectList(entiCriterio, PaginatedList.getOffset(getPage(), ROWS_PER_PAGE_DEFAULT),
-                ROWS_PER_PAGE_DEFAULT);
+        entiList = tpsrBO.selectList(model, getOffset(), getLimit());
 
         return SUCCESS;
     }
@@ -64,22 +65,21 @@ public final class TipoServicioListadoAction extends PaginableAction {
 
     // get / set
     /**
-     * Gets the enti criterio.
-     *
-     * @return the enti criterio
+     * {@inheritDoc}
      */
-    public TipoServicioCriterioVO getEntiCriterio() {
-        return entiCriterio;
+    @Override
+    public TipoServicioCriterioVO getModel() {
+        return model;
     }
 
     /**
-     * Sets the enti criterio.
+     * Sets the model.
      *
      * @param value
-     *            the enti criterio
+     *            the new model
      */
-    public void setEntiCriterio(final TipoServicioCriterioVO value) {
-        entiCriterio = value;
+    public void setModel(final TipoServicioCriterioVO value) {
+        model = value;
     }
 
     /**

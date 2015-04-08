@@ -13,12 +13,13 @@ import xeredi.integra.model.metamodelo.vo.CampoAgregacionVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CampoAgregacionAction.
  */
-public final class CampoAgregacionAction extends BaseAction {
+public final class CampoAgregacionAction extends BaseAction implements ModelDriven<CampoAgregacionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -155844770147053708L;
@@ -26,8 +27,8 @@ public final class CampoAgregacionAction extends BaseAction {
     /** The accion. */
     private ACCION_EDICION accion;
 
-    /** The cmag. */
-    private CampoAgregacionVO cmag;
+    /** The model. */
+    private CampoAgregacionVO model;
 
     /** The entd list. */
     private List<EntidadTipoDatoVO> entdList;
@@ -43,16 +44,16 @@ public final class CampoAgregacionAction extends BaseAction {
     @Action("cmag-edit")
     public String edit() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(cmag);
-        Preconditions.checkNotNull(cmag.getTpesId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getTpesId());
 
         if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(cmag.getEntd());
-            Preconditions.checkNotNull(cmag.getEntd().getId());
+            Preconditions.checkNotNull(model.getEntd());
+            Preconditions.checkNotNull(model.getEntd().getId());
 
             final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
 
-            cmag = cmagBO.select(cmag.getTpesId(), cmag.getEntd().getId(), getIdioma());
+            model = cmagBO.select(model.getTpesId(), model.getEntd().getId(), getIdioma());
         }
 
         return SUCCESS;
@@ -68,33 +69,34 @@ public final class CampoAgregacionAction extends BaseAction {
     @Action("cmag-save")
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(cmag.getTpesId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getTpesId());
 
         // Validacion de datos
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.cmag_entd, cmag.getEntd());
+            FieldValidator.validateRequired(this, MessageI18nKey.cmag_entd, model.getEntd());
 
             if (!hasErrors()) {
-                FieldValidator.validateRequired(this, MessageI18nKey.cmag_entd, cmag.getEntd().getId());
+                FieldValidator.validateRequired(this, MessageI18nKey.cmag_entd, model.getEntd().getId());
             }
         } else {
-            Preconditions.checkNotNull(cmag.getEntd());
-            Preconditions.checkNotNull(cmag.getEntd().getId());
+            Preconditions.checkNotNull(model.getEntd());
+            Preconditions.checkNotNull(model.getEntd().getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.cmag_nombre, cmag.getNombre());
-        FieldValidator.validateRequired(this, MessageI18nKey.cmag_agregar, cmag.getAgregar());
+        FieldValidator.validateRequired(this, MessageI18nKey.cmag_nombre, model.getNombre());
+        FieldValidator.validateRequired(this, MessageI18nKey.cmag_agregar, model.getAgregar());
 
         if (!hasErrors()) {
             final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
 
             switch (accion) {
             case create:
-                cmagBO.insert(cmag);
+                cmagBO.insert(model);
 
                 break;
             case edit:
-                cmagBO.update(cmag);
+                cmagBO.update(model);
 
                 break;
             default:
@@ -114,14 +116,14 @@ public final class CampoAgregacionAction extends BaseAction {
      */
     @Action("cmag-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(cmag);
-        Preconditions.checkNotNull(cmag.getTpesId());
-        Preconditions.checkNotNull(cmag.getEntd());
-        Preconditions.checkNotNull(cmag.getEntd().getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getTpesId());
+        Preconditions.checkNotNull(model.getEntd());
+        Preconditions.checkNotNull(model.getEntd().getId());
 
         final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
 
-        cmagBO.delete(cmag);
+        cmagBO.delete(model);
 
         return SUCCESS;
     }
@@ -135,19 +137,38 @@ public final class CampoAgregacionAction extends BaseAction {
      */
     @Action("cmag-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(cmag);
-        Preconditions.checkNotNull(cmag.getTpesId());
-        Preconditions.checkNotNull(cmag.getEntd());
-        Preconditions.checkNotNull(cmag.getEntd().getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getTpesId());
+        Preconditions.checkNotNull(model.getEntd());
+        Preconditions.checkNotNull(model.getEntd().getId());
 
         final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
 
-        cmag = cmagBO.select(cmag.getTpesId(), cmag.getEntd().getId(), getIdioma());
+        model = cmagBO.select(model.getTpesId(), model.getEntd().getId(), getIdioma());
 
         return SUCCESS;
     }
 
     // get / set
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CampoAgregacionVO getModel() {
+        return model;
+    }
+
+    /**
+     * Sets the model.
+     *
+     * @param model
+     *            the new model
+     */
+    public void setModel(final CampoAgregacionVO model) {
+        this.model = model;
+    }
+
     /**
      * Sets the accion.
      *
@@ -156,25 +177,6 @@ public final class CampoAgregacionAction extends BaseAction {
      */
     public void setAccion(final ACCION_EDICION value) {
         accion = value;
-    }
-
-    /**
-     * Gets the cmag.
-     *
-     * @return the cmag
-     */
-    public CampoAgregacionVO getCmag() {
-        return cmag;
-    }
-
-    /**
-     * Sets the cmag.
-     *
-     * @param value
-     *            the new cmag
-     */
-    public void setCmag(final CampoAgregacionVO value) {
-        cmag = value;
     }
 
     /**

@@ -16,12 +16,13 @@ import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CodigoReferenciaAction.
  */
-public final class CodigoReferenciaAction extends BaseAction {
+public final class CodigoReferenciaAction extends BaseAction implements ModelDriven<CodigoReferenciaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4021150215007821288L;
@@ -30,7 +31,7 @@ public final class CodigoReferenciaAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The cdrf form. */
-    private CodigoReferenciaVO cdrf;
+    private CodigoReferenciaVO model;
 
     /** The cdri map. */
     private Map<String, I18nVO> i18nMap;
@@ -46,16 +47,16 @@ public final class CodigoReferenciaAction extends BaseAction {
     @Action("cdrf-edit")
     public String edit() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(cdrf);
-        Preconditions.checkNotNull(cdrf.getTpdtId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getTpdtId());
 
         if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(cdrf.getId());
+            Preconditions.checkNotNull(model.getId());
 
             final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
-            cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
+            model = cdrfBO.select(model.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, model.getId());
         } else {
             i18nMap = new HashMap<>();
         }
@@ -73,19 +74,19 @@ public final class CodigoReferenciaAction extends BaseAction {
     @Action("cdrf-save")
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(cdrf);
-        Preconditions.checkNotNull(cdrf.getTpdtId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getTpdtId());
         Preconditions.checkNotNull(i18nMap);
 
         // Validacion de datos
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.cdrf_valor, cdrf.getValor());
+            FieldValidator.validateRequired(this, MessageI18nKey.cdrf_valor, model.getValor());
         } else {
-            Preconditions.checkNotNull(cdrf.getId());
-            Preconditions.checkNotNull(cdrf.getValor());
+            Preconditions.checkNotNull(model.getId());
+            Preconditions.checkNotNull(model.getValor());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.cdrf_orden, cdrf.getOrden());
+        FieldValidator.validateRequired(this, MessageI18nKey.cdrf_orden, model.getOrden());
         FieldValidator.validateI18n(this, i18nMap);
 
         if (!hasErrors()) {
@@ -93,11 +94,11 @@ public final class CodigoReferenciaAction extends BaseAction {
 
             switch (accion) {
             case create:
-                cdrfBO.insert(cdrf, i18nMap);
+                cdrfBO.insert(model, i18nMap);
 
                 break;
             case edit:
-                cdrfBO.update(cdrf, i18nMap);
+                cdrfBO.update(model, i18nMap);
 
                 break;
             default:
@@ -117,12 +118,12 @@ public final class CodigoReferenciaAction extends BaseAction {
      */
     @Action("cdrf-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(cdrf);
-        Preconditions.checkNotNull(cdrf.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
-        cdrfBO.delete(cdrf);
+        cdrfBO.delete(model);
 
         return SUCCESS;
     }
@@ -136,18 +137,37 @@ public final class CodigoReferenciaAction extends BaseAction {
      */
     @Action("cdrf-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(cdrf);
-        Preconditions.checkNotNull(cdrf.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
-        cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
+        model = cdrfBO.select(model.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, model.getId());
 
         return SUCCESS;
     }
 
     // get / set
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CodigoReferenciaVO getModel() {
+        return model;
+    }
+
+    /**
+     * Sets the model.
+     *
+     * @param model
+     *            the new model
+     */
+    public void setModel(final CodigoReferenciaVO value) {
+        model = value;
+    }
+
     /**
      * Sets the accion.
      *
@@ -156,25 +176,6 @@ public final class CodigoReferenciaAction extends BaseAction {
      */
     public void setAccion(final ACCION_EDICION value) {
         accion = value;
-    }
-
-    /**
-     * Gets the cdrf.
-     *
-     * @return the cdrf
-     */
-    public CodigoReferenciaVO getCdrf() {
-        return cdrf;
-    }
-
-    /**
-     * Sets the cdrf.
-     *
-     * @param value
-     *            the new cdrf
-     */
-    public void setCdrf(final CodigoReferenciaVO value) {
-        cdrf = value;
     }
 
     /**

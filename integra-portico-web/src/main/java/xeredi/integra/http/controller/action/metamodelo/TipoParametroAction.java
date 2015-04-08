@@ -23,12 +23,13 @@ import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoParametroAction.
  */
-public final class TipoParametroAction extends BaseAction {
+public final class TipoParametroAction extends BaseAction implements ModelDriven<TipoParametroVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2717067151021279223L;
@@ -37,7 +38,7 @@ public final class TipoParametroAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The tppr. */
-    private TipoParametroVO enti;
+    private TipoParametroVO model;
 
     /** The tpsp list. */
     private List<TipoSubparametroVO> subentiList;
@@ -61,16 +62,16 @@ public final class TipoParametroAction extends BaseAction {
         Preconditions.checkNotNull(accion);
 
         if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(enti);
-            Preconditions.checkNotNull(enti.getId());
+            Preconditions.checkNotNull(model);
+            Preconditions.checkNotNull(model.getId());
 
             final TipoParametroBO tpprBO = new TipoParametroBO();
 
-            enti = tpprBO.select(enti.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+            model = tpprBO.select(model.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
             accion = ACCION_EDICION.edit;
         } else {
-            enti = new TipoParametroVO();
+            model = new TipoParametroVO();
         }
 
         {
@@ -97,37 +98,37 @@ public final class TipoParametroAction extends BaseAction {
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
 
-        if (enti == null) {
-            enti = new TipoParametroVO();
+        if (model == null) {
+            model = new TipoParametroVO();
         }
 
         // Validaciones
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.enti_codigo, enti.getCodigo());
+            FieldValidator.validateRequired(this, MessageI18nKey.enti_codigo, model.getCodigo());
         } else {
-            Preconditions.checkNotNull(enti.getId());
+            Preconditions.checkNotNull(model.getId());
         }
 
         FieldValidator.validateI18n(this, i18nMap);
 
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdAlta, enti.isCmdAlta());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdBaja, enti.isCmdBaja());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdEdicion, enti.isCmdEdicion());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdDuplicado, enti.isCmdDuplicado());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_i18n, enti.isI18n());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_tempExp, enti.isTempExp());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdAlta, model.isCmdAlta());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdBaja, model.isCmdBaja());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdEdicion, model.isCmdEdicion());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdDuplicado, model.isCmdDuplicado());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_i18n, model.isI18n());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_tempExp, model.isTempExp());
 
         if (!hasErrors()) {
             final TipoParametroBO tpprBO = new TipoParametroBO();
 
             switch (accion) {
             case create:
-                enti.setCodigo(enti.getCodigo().toUpperCase());
-                tpprBO.insert(enti, i18nMap);
+                model.setCodigo(model.getCodigo().toUpperCase());
+                tpprBO.insert(model, i18nMap);
 
                 break;
             case edit:
-                tpprBO.update(enti, i18nMap);
+                tpprBO.update(model, i18nMap);
 
                 break;
             default:
@@ -147,12 +148,12 @@ public final class TipoParametroAction extends BaseAction {
      */
     @Action("tppr-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final TipoParametroBO tpprBO = new TipoParametroBO();
 
-        tpprBO.delete(enti.getId());
+        tpprBO.delete(model.getId());
 
         return SUCCESS;
     }
@@ -166,18 +167,18 @@ public final class TipoParametroAction extends BaseAction {
      */
     @Action("tppr-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final TipoParametroBO tpprBO = new TipoParametroBO();
         final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
-        enti = tpprBO.select(enti.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+        model = tpprBO.select(model.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
 
         final TipoSubparametroCriterioVO entiCriterioVO = new TipoSubparametroCriterioVO();
 
-        entiCriterioVO.setTpprId(enti.getId());
+        entiCriterioVO.setTpprId(model.getId());
         entiCriterioVO.setIdioma(getIdioma());
 
         subentiList = tpspBO.selectList(entiCriterioVO);
@@ -206,22 +207,21 @@ public final class TipoParametroAction extends BaseAction {
     }
 
     /**
-     * Gets the enti.
-     *
-     * @return the enti
+     * {@inheritDoc}
      */
-    public TipoParametroVO getEnti() {
-        return enti;
+    @Override
+    public TipoParametroVO getModel() {
+        return model;
     }
 
     /**
-     * Sets the enti.
+     * Sets the model.
      *
      * @param value
-     *            the enti
+     *            the new model
      */
-    public void setEnti(final TipoParametroVO value) {
-        enti = value;
+    public void setModel(final TipoParametroVO value) {
+        model = value;
     }
 
     /**

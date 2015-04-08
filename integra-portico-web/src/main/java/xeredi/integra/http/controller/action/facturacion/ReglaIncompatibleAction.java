@@ -1,6 +1,7 @@
 package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -19,12 +20,13 @@ import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReglaIncompatibleAction.
  */
-public final class ReglaIncompatibleAction extends BaseAction {
+public final class ReglaIncompatibleAction extends BaseAction implements ModelDriven<ReglaIncompatibleVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -8806246091503780542L;
@@ -33,7 +35,10 @@ public final class ReglaIncompatibleAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The crgo. */
-    private ReglaIncompatibleVO rgin;
+    private ReglaIncompatibleVO model;
+
+    /** The fecha vigencia. */
+    private Date fechaVigencia;
 
     /** The rgla2 list. */
     private List<LabelValueVO> rgla2List = new ArrayList<>();
@@ -49,16 +54,16 @@ public final class ReglaIncompatibleAction extends BaseAction {
      */
     @Action("rgin-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(rgin);
-        Preconditions.checkNotNull(rgin.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
         final ReglaIncompatibleCriterioVO rginCriterio = new ReglaIncompatibleCriterioVO();
 
-        rginCriterio.setId(rgin.getId());
+        rginCriterio.setId(model.getId());
         rginCriterio.setFechaVigencia(getFechaVigencia());
 
-        rgin = rginBO.select(rginCriterio);
+        model = rginBO.select(rginCriterio);
 
         return SUCCESS;
     }
@@ -73,28 +78,28 @@ public final class ReglaIncompatibleAction extends BaseAction {
     @Action("rgin-edit")
     public String edit() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(rgin);
-        Preconditions.checkNotNull(rgin.getRgla1Id());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getRgla1Id());
         Preconditions.checkNotNull(getFechaVigencia());
 
         if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(rgin.getId());
+            Preconditions.checkNotNull(model.getId());
 
             final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
             final ReglaIncompatibleCriterioVO rginCriterio = new ReglaIncompatibleCriterioVO();
 
-            rginCriterio.setId(rgin.getId());
+            rginCriterio.setId(model.getId());
             rginCriterio.setFechaVigencia(getFechaVigencia());
             rginCriterio.setIdioma(getIdioma());
 
-            rgin = rginBO.select(rginCriterio);
+            model = rginBO.select(rginCriterio);
         } else {
-            rgin.setRgiv(new ReglaIncompatibleVersionVO());
-            rgin.getRgiv().setFini(getFechaVigencia());
+            model.setRgiv(new ReglaIncompatibleVersionVO());
+            model.getRgiv().setFini(getFechaVigencia());
 
             {
                 final ReglaBO rglaBO = new ReglaBO();
-                final ReglaVO rgla = rglaBO.select(rgin.getRgla1Id(), getFechaVigencia());
+                final ReglaVO rgla = rglaBO.select(model.getRgla1Id(), getFechaVigencia());
 
                 final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
 
@@ -119,31 +124,31 @@ public final class ReglaIncompatibleAction extends BaseAction {
     @Action("rgin-save")
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(rgin);
-        Preconditions.checkNotNull(rgin.getRgiv());
-        Preconditions.checkNotNull(rgin.getRgla1Id());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getRgiv());
+        Preconditions.checkNotNull(model.getRgla1Id());
 
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.rgin_rgla2, rgin.getRgla2());
+            FieldValidator.validateRequired(this, MessageI18nKey.rgin_rgla2, model.getRgla2());
         } else {
-            Preconditions.checkNotNull(rgin.getId());
-            Preconditions.checkNotNull(rgin.getRgiv().getId());
-            Preconditions.checkNotNull(rgin.getRgla2());
-            Preconditions.checkNotNull(rgin.getRgla2().getId());
+            Preconditions.checkNotNull(model.getId());
+            Preconditions.checkNotNull(model.getRgiv().getId());
+            Preconditions.checkNotNull(model.getRgla2());
+            Preconditions.checkNotNull(model.getRgla2().getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.rgin_fini, rgin.getRgiv().getFini());
+        FieldValidator.validateRequired(this, MessageI18nKey.rgin_fini, model.getRgiv().getFini());
 
         if (!hasErrors()) {
             final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
 
             switch (accion) {
             case create:
-                rginBO.insert(rgin);
+                rginBO.insert(model);
 
                 break;
             case edit:
-                rginBO.update(rgin);
+                rginBO.update(model);
 
                 break;
 
@@ -164,12 +169,12 @@ public final class ReglaIncompatibleAction extends BaseAction {
      */
     @Action("rgin-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(rgin);
-        Preconditions.checkNotNull(rgin.getRgiv().getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getRgiv().getId());
 
         final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
 
-        rginBO.delete(rgin);
+        rginBO.delete(model);
 
         return SUCCESS;
     }
@@ -186,12 +191,11 @@ public final class ReglaIncompatibleAction extends BaseAction {
     }
 
     /**
-     * Gets the rgin.
-     *
-     * @return the rgin
+     * {@inheritDoc}
      */
-    public ReglaIncompatibleVO getRgin() {
-        return rgin;
+    @Override
+    public ReglaIncompatibleVO getModel() {
+        return model;
     }
 
     /**
@@ -200,8 +204,8 @@ public final class ReglaIncompatibleAction extends BaseAction {
      * @param value
      *            the new rgin
      */
-    public void setRgin(final ReglaIncompatibleVO value) {
-        rgin = value;
+    public void setModel(final ReglaIncompatibleVO value) {
+        model = value;
     }
 
     /**
@@ -211,5 +215,24 @@ public final class ReglaIncompatibleAction extends BaseAction {
      */
     public List<LabelValueVO> getRgla2List() {
         return rgla2List;
+    }
+
+    /**
+     * Gets the fecha vigencia.
+     *
+     * @return the fecha vigencia
+     */
+    public Date getFechaVigencia() {
+        return fechaVigencia;
+    }
+
+    /**
+     * Sets the fecha vigencia.
+     *
+     * @param value
+     *            the new fecha vigencia
+     */
+    public void setFechaVigencia(final Date value) {
+        fechaVigencia = value;
     }
 }

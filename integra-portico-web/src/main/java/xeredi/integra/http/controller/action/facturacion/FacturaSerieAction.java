@@ -10,12 +10,13 @@ import xeredi.integra.model.facturacion.bo.FacturaSerieBO;
 import xeredi.integra.model.facturacion.vo.FacturaSerieVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturaSerieAction.
  */
-public final class FacturaSerieAction extends BaseAction {
+public final class FacturaSerieAction extends BaseAction implements ModelDriven<FacturaSerieVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2617347238199516008L;
@@ -24,7 +25,7 @@ public final class FacturaSerieAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The fcsr. */
-    private FacturaSerieVO fcsr;
+    private FacturaSerieVO model;
 
     // acciones web
 
@@ -37,12 +38,12 @@ public final class FacturaSerieAction extends BaseAction {
      */
     @Action("fcsr-detail")
     public String detail() throws ModelException {
-        Preconditions.checkNotNull(fcsr);
-        Preconditions.checkNotNull(fcsr.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final FacturaSerieBO fcsrBO = new FacturaSerieBO();
 
-        fcsr = fcsrBO.select(fcsr.getId());
+        model = fcsrBO.select(model.getId());
 
         return SUCCESS;
     }
@@ -59,14 +60,14 @@ public final class FacturaSerieAction extends BaseAction {
         Preconditions.checkNotNull(accion);
 
         if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(fcsr);
-            Preconditions.checkNotNull(fcsr.getId());
+            Preconditions.checkNotNull(model);
+            Preconditions.checkNotNull(model.getId());
 
             final FacturaSerieBO fcsrBO = new FacturaSerieBO();
 
-            fcsr = fcsrBO.select(fcsr.getId());
+            model = fcsrBO.select(model.getId());
         } else {
-            fcsr = new FacturaSerieVO();
+            model = new FacturaSerieVO();
         }
 
         return SUCCESS;
@@ -83,31 +84,31 @@ public final class FacturaSerieAction extends BaseAction {
     public String save() throws ModelException {
         Preconditions.checkNotNull(accion);
 
-        if (fcsr == null) {
-            fcsr = new FacturaSerieVO();
+        if (model == null) {
+            model = new FacturaSerieVO();
         }
 
         if (ACCION_EDICION.edit == accion) {
-            Preconditions.checkNotNull(fcsr.getId());
+            Preconditions.checkNotNull(model.getId());
         }
 
         if (ACCION_EDICION.create == accion) {
-            FieldValidator.validateRequired(this, MessageI18nKey.fcsr_serie, fcsr.getSerie());
-            FieldValidator.validateRequired(this, MessageI18nKey.fcsr_anio, fcsr.getAnio());
+            FieldValidator.validateRequired(this, MessageI18nKey.fcsr_serie, model.getSerie());
+            FieldValidator.validateRequired(this, MessageI18nKey.fcsr_anio, model.getAnio());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.fcsr_numeroUltimo, fcsr.getNumeroUltimo());
+        FieldValidator.validateRequired(this, MessageI18nKey.fcsr_numeroUltimo, model.getNumeroUltimo());
 
         if (!hasErrors()) {
             final FacturaSerieBO fcsrBO = new FacturaSerieBO();
 
             switch (accion) {
             case create:
-                fcsrBO.insert(fcsr);
+                fcsrBO.insert(model);
 
                 break;
             case edit:
-                fcsrBO.update(fcsr);
+                fcsrBO.update(model);
 
                 break;
             default:
@@ -127,12 +128,12 @@ public final class FacturaSerieAction extends BaseAction {
      */
     @Action("fcsr-remove")
     public String remove() throws ModelException {
-        Preconditions.checkNotNull(fcsr);
-        Preconditions.checkNotNull(fcsr.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final FacturaSerieBO fcsrBO = new FacturaSerieBO();
 
-        fcsrBO.delete(fcsr.getId());
+        fcsrBO.delete(model.getId());
 
         return SUCCESS;
     }
@@ -140,12 +141,11 @@ public final class FacturaSerieAction extends BaseAction {
     // get / set
 
     /**
-     * Gets the fcsr.
-     *
-     * @return the fcsr
+     * {@inheritDoc}
      */
-    public FacturaSerieVO getFcsr() {
-        return fcsr;
+    @Override
+    public FacturaSerieVO getModel() {
+        return model;
     }
 
     /**
@@ -154,8 +154,8 @@ public final class FacturaSerieAction extends BaseAction {
      * @param value
      *            the new fcsr
      */
-    public void setFcsr(final FacturaSerieVO value) {
-        fcsr = value;
+    public void setModel(final FacturaSerieVO value) {
+        model = value;
     }
 
     /**

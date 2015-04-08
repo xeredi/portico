@@ -23,12 +23,13 @@ import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoSubservicioAction.
  */
-public final class TipoSubservicioAction extends BaseAction {
+public final class TipoSubservicioAction extends BaseAction implements ModelDriven<TipoSubservicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1943908334114266376L;
@@ -37,7 +38,7 @@ public final class TipoSubservicioAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The tpss form. */
-    private TipoSubservicioVO enti;
+    private TipoSubservicioVO model;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -62,16 +63,16 @@ public final class TipoSubservicioAction extends BaseAction {
     @Action("tpss-edit")
     public String edit() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getTpsrId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getTpsrId());
 
         if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(enti.getId());
+            Preconditions.checkNotNull(model.getId());
 
             final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
 
-            enti = tpssBO.select(enti.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+            model = tpssBO.select(model.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
         }
 
         {
@@ -96,37 +97,37 @@ public final class TipoSubservicioAction extends BaseAction {
      */
     @Action("tpss-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getTpsrId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getTpsrId());
 
         // Validaciones
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.enti_codigo, enti.getCodigo());
+            FieldValidator.validateRequired(this, MessageI18nKey.enti_codigo, model.getCodigo());
         } else {
-            Preconditions.checkNotNull(enti.getId());
+            Preconditions.checkNotNull(model.getId());
         }
 
         FieldValidator.validateI18n(this, i18nMap);
 
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdAlta, enti.isCmdAlta());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdBaja, enti.isCmdBaja());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdEdicion, enti.isCmdEdicion());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdDuplicado, enti.isCmdDuplicado());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_temporal, enti.isTemporal());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_facturable, enti.isFacturable());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_exencionable, enti.isExencionable());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdAlta, model.isCmdAlta());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdBaja, model.isCmdBaja());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdEdicion, model.isCmdEdicion());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdDuplicado, model.isCmdDuplicado());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_temporal, model.isTemporal());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_facturable, model.isFacturable());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_exencionable, model.isExencionable());
 
         if (!hasErrors()) {
             final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
 
             switch (accion) {
             case create:
-                enti.setCodigo(enti.getCodigo().toUpperCase());
-                tpssBO.insert(enti, i18nMap);
+                model.setCodigo(model.getCodigo().toUpperCase());
+                tpssBO.insert(model, i18nMap);
 
                 break;
             case edit:
-                tpssBO.update(enti, i18nMap);
+                tpssBO.update(model, i18nMap);
 
                 break;
             default:
@@ -146,12 +147,12 @@ public final class TipoSubservicioAction extends BaseAction {
      */
     @Action("tpss-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
 
-        tpssBO.delete(enti.getId());
+        tpssBO.delete(model.getId());
 
         return SUCCESS;
     }
@@ -165,28 +166,28 @@ public final class TipoSubservicioAction extends BaseAction {
      */
     @Action("tpss-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
         final EntidadBO entiBO = new EntidadBO();
 
-        enti = tpssBO.select(enti.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+        model = tpssBO.select(model.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
 
         EntidadCriterioVO entiCriterioVO = null;
 
-        if (enti.getEntiPadresList() != null && !enti.getEntiPadresList().isEmpty()) {
+        if (model.getEntiPadresList() != null && !model.getEntiPadresList().isEmpty()) {
             entiCriterioVO = new EntidadCriterioVO();
-            entiCriterioVO.setEntiHijaId(enti.getId());
+            entiCriterioVO.setEntiHijaId(model.getId());
             entiCriterioVO.setIdioma(getIdioma());
 
             entiPadresList = entiBO.selectList(entiCriterioVO);
         }
 
-        if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
+        if (model.getEntiHijasList() != null && !model.getEntiHijasList().isEmpty()) {
             entiCriterioVO = new EntidadCriterioVO();
-            entiCriterioVO.setEntiPadreId(enti.getId());
+            entiCriterioVO.setEntiPadreId(model.getId());
             entiCriterioVO.setIdioma(getIdioma());
 
             entiHijasList = entiBO.selectList(entiCriterioVO);
@@ -207,22 +208,21 @@ public final class TipoSubservicioAction extends BaseAction {
     }
 
     /**
-     * Gets the enti.
-     *
-     * @return the enti
+     * {@inheritDoc}
      */
-    public TipoSubservicioVO getEnti() {
-        return enti;
+    @Override
+    public TipoSubservicioVO getModel() {
+        return model;
     }
 
     /**
-     * Sets the enti.
+     * Sets the model.
      *
      * @param value
-     *            the new enti
+     *            the new model
      */
-    public void setEnti(final TipoSubservicioVO value) {
-        enti = value;
+    public void setModel(final TipoSubservicioVO value) {
+        model = value;
     }
 
     /**

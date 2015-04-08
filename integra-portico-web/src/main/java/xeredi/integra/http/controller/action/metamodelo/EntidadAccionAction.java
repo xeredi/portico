@@ -15,12 +15,13 @@ import xeredi.integra.model.metamodelo.bo.EntidadAccionBO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadAccionAction.
  */
-public final class EntidadAccionAction extends BaseAction {
+public final class EntidadAccionAction extends BaseAction implements ModelDriven<EntidadAccionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -8430223895677320578L;
@@ -29,7 +30,7 @@ public final class EntidadAccionAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The entd form. */
-    private EntidadAccionVO enac;
+    private EntidadAccionVO model;
 
     /** The cdri map. */
     private Map<String, I18nVO> i18nMap;
@@ -45,16 +46,16 @@ public final class EntidadAccionAction extends BaseAction {
     @Action("enac-edit")
     public String edit() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(enac);
-        Preconditions.checkNotNull(enac.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
         if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(enac.getId());
+            Preconditions.checkNotNull(model.getId());
 
             final EntidadAccionBO enacBO = new EntidadAccionBO();
 
-            enac = enacBO.select(enac.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.enac, enac.getId());
+            model = enacBO.select(model.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enac, model.getId());
         }
 
         return SUCCESS;
@@ -70,16 +71,16 @@ public final class EntidadAccionAction extends BaseAction {
     @Action("enac-save")
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(enac);
-        Preconditions.checkNotNull(enac.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.enac_path, enac.getPath());
+            FieldValidator.validateRequired(this, MessageI18nKey.enac_path, model.getPath());
         } else {
-            Preconditions.checkNotNull(enac.getPath());
+            Preconditions.checkNotNull(model.getPath());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.enac_orden, enac.getOrden());
+        FieldValidator.validateRequired(this, MessageI18nKey.enac_orden, model.getOrden());
         FieldValidator.validateI18n(this, i18nMap);
 
         if (!hasErrors()) {
@@ -87,11 +88,11 @@ public final class EntidadAccionAction extends BaseAction {
 
             switch (accion) {
             case create:
-                enacBO.insert(enac, i18nMap);
+                enacBO.insert(model, i18nMap);
 
                 break;
             case edit:
-                enacBO.update(enac, i18nMap);
+                enacBO.update(model, i18nMap);
 
                 break;
             default:
@@ -111,12 +112,12 @@ public final class EntidadAccionAction extends BaseAction {
      */
     @Action("enac-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(enac);
-        Preconditions.checkNotNull(enac.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final EntidadAccionBO enacBO = new EntidadAccionBO();
 
-        enacBO.delete(enac.getId());
+        enacBO.delete(model.getId());
 
         return SUCCESS;
     }
@@ -130,13 +131,13 @@ public final class EntidadAccionAction extends BaseAction {
      */
     @Action("enac-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(enac);
-        Preconditions.checkNotNull(enac.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final EntidadAccionBO enacBO = new EntidadAccionBO();
 
-        enac = enacBO.select(enac.getId(), getIdioma());
-        i18nMap = I18nBO.selectMap(I18nPrefix.enac, enac.getId());
+        model = enacBO.select(model.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.enac, model.getId());
 
         return SUCCESS;
     }
@@ -153,22 +154,21 @@ public final class EntidadAccionAction extends BaseAction {
     }
 
     /**
-     * Gets the enac.
-     *
-     * @return the enac
+     * {@inheritDoc}
      */
-    public EntidadAccionVO getEnac() {
-        return enac;
+    @Override
+    public EntidadAccionVO getModel() {
+        return model;
     }
 
     /**
-     * Sets the enac.
+     * Sets the model.
      *
      * @param value
-     *            the new enac
+     *            the new model
      */
-    public void setEnac(final EntidadAccionVO value) {
-        enac = value;
+    public void setModel(final EntidadAccionVO value) {
+        model = value;
     }
 
     /**

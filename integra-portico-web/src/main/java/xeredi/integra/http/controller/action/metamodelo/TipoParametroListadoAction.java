@@ -10,11 +10,13 @@ import xeredi.integra.model.metamodelo.vo.TipoParametroCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.util.pagination.PaginatedList;
 
+import com.opensymphony.xwork2.ModelDriven;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoParametroListadoAction.
  */
-public final class TipoParametroListadoAction extends PaginableAction {
+public final class TipoParametroListadoAction extends PaginableAction implements ModelDriven<TipoParametroCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2703813016286375196L;
@@ -23,7 +25,7 @@ public final class TipoParametroListadoAction extends PaginableAction {
     private PaginatedList<TipoParametroVO> entiList;
 
     /** The tppr criterio. */
-    private TipoParametroCriterioVO entiCriterio;
+    private TipoParametroCriterioVO model;
 
     // Acciones Web
     /**
@@ -33,22 +35,21 @@ public final class TipoParametroListadoAction extends PaginableAction {
      */
     @Action("tppr-list")
     public String list() {
-        if (entiCriterio == null) {
-            entiCriterio = new TipoParametroCriterioVO();
+        if (model == null) {
+            model = new TipoParametroCriterioVO();
         }
 
-        if (entiCriterio.getCodigo() != null) {
-            entiCriterio.setCodigo(entiCriterio.getCodigo().toUpperCase());
+        if (model.getCodigo() != null) {
+            model.setCodigo(model.getCodigo().toUpperCase());
         }
 
         final TipoParametroBO tpprBO = new TipoParametroBO();
 
         // Traemos solo los maestros
-        entiCriterio.setTipo(TipoEntidad.P);
-        entiCriterio.setIdioma(getIdioma());
+        model.setTipo(TipoEntidad.P);
+        model.setIdioma(getIdioma());
 
-        entiList = tpprBO.selectList(entiCriterio, PaginatedList.getOffset(getPage(), ROWS_PER_PAGE_DEFAULT),
-                ROWS_PER_PAGE_DEFAULT);
+        entiList = tpprBO.selectList(model, getOffset(), getLimit());
 
         return SUCCESS;
     }
@@ -65,22 +66,21 @@ public final class TipoParametroListadoAction extends PaginableAction {
 
     // get / set
     /**
-     * Gets the enti criterio.
-     *
-     * @return the enti criterio
+     * {@inheritDoc}
      */
-    public TipoParametroCriterioVO getEntiCriterio() {
-        return entiCriterio;
+    @Override
+    public TipoParametroCriterioVO getModel() {
+        return model;
     }
 
     /**
-     * Sets the enti criterio.
+     * Sets the model.
      *
      * @param value
-     *            the enti criterio
+     *            the new model
      */
-    public void setEntiCriterio(final TipoParametroCriterioVO value) {
-        entiCriterio = value;
+    public void setModel(final TipoParametroCriterioVO value) {
+        model = value;
     }
 
     /**

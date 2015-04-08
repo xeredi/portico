@@ -20,6 +20,9 @@ public abstract class PaginableAction extends BaseAction {
     /** The page. */
     private int page = PaginatedList.FIRST_PAGE;
 
+    /** The limit. */
+    private int limit = ROWS_PER_PAGE_DEFAULT;
+
     /**
      * Gets the page.
      *
@@ -37,6 +40,34 @@ public abstract class PaginableAction extends BaseAction {
      */
     public final void setPage(final int value) {
         page = value;
+    }
+
+    /**
+     * Gets the limit.
+     *
+     * @return the limit
+     */
+    public final int getLimit() {
+        return limit;
+    }
+
+    /**
+     * Sets the limit.
+     *
+     * @param value
+     *            the new limit
+     */
+    public final void setLimit(final int value) {
+        limit = value;
+    }
+
+    /**
+     * Gets the offset.
+     *
+     * @return the offset
+     */
+    public final int getOffset() {
+        return (page - PaginatedList.FIRST_PAGE) * limit;
     }
 
 }

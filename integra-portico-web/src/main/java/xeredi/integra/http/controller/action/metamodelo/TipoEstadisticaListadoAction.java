@@ -10,11 +10,14 @@ import xeredi.integra.model.metamodelo.vo.TipoEstadisticaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.util.pagination.PaginatedList;
 
+import com.opensymphony.xwork2.ModelDriven;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoEstadisticaListadoAction.
  */
-public final class TipoEstadisticaListadoAction extends PaginableAction {
+public final class TipoEstadisticaListadoAction extends PaginableAction implements
+ModelDriven<TipoEstadisticaCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3298081565039330996L;
@@ -23,7 +26,7 @@ public final class TipoEstadisticaListadoAction extends PaginableAction {
     private PaginatedList<TipoEstadisticaVO> entiList;
 
     /** The tpes criterio. */
-    private TipoEstadisticaCriterioVO entiCriterio;
+    private TipoEstadisticaCriterioVO model;
 
     // Acciones Web
     /**
@@ -33,22 +36,21 @@ public final class TipoEstadisticaListadoAction extends PaginableAction {
      */
     @Action("tpes-list")
     public String list() {
-        if (entiCriterio == null) {
-            entiCriterio = new TipoEstadisticaCriterioVO();
+        if (model == null) {
+            model = new TipoEstadisticaCriterioVO();
         }
 
-        if (entiCriterio.getCodigo() != null) {
-            entiCriterio.setCodigo(entiCriterio.getCodigo().toUpperCase());
+        if (model.getCodigo() != null) {
+            model.setCodigo(model.getCodigo().toUpperCase());
         }
 
         // Traemos solo los tipos de estadistica
-        entiCriterio.setTipo(TipoEntidad.E);
-        entiCriterio.setIdioma(getIdioma());
+        model.setTipo(TipoEntidad.E);
+        model.setIdioma(getIdioma());
 
         final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-        entiList = tpesBO.selectList(entiCriterio, PaginatedList.getOffset(getPage(), ROWS_PER_PAGE_DEFAULT),
-                ROWS_PER_PAGE_DEFAULT);
+        entiList = tpesBO.selectList(model, getOffset(), getLimit());
 
         return SUCCESS;
     }
@@ -65,22 +67,21 @@ public final class TipoEstadisticaListadoAction extends PaginableAction {
 
     // get / set
     /**
-     * Gets the enti criterio.
-     *
-     * @return the enti criterio
+     * {@inheritDoc}
      */
-    public TipoEstadisticaCriterioVO getEntiCriterio() {
-        return entiCriterio;
+    @Override
+    public TipoEstadisticaCriterioVO getModel() {
+        return model;
     }
 
     /**
-     * Sets the enti criterio.
+     * Sets the model.
      *
      * @param value
-     *            the enti criterio
+     *            the new model
      */
-    public void setEntiCriterio(final TipoEstadisticaCriterioVO value) {
-        entiCriterio = value;
+    public void setModel(final TipoEstadisticaCriterioVO value) {
+        model = value;
     }
 
     /**

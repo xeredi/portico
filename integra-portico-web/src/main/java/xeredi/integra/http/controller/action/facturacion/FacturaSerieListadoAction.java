@@ -2,18 +2,19 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.http.controller.action.PaginatedGrid;
+import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.facturacion.bo.FacturaSerieBO;
 import xeredi.integra.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaSerieVO;
 import xeredi.util.pagination.PaginatedList;
 
+import com.opensymphony.xwork2.ModelDriven;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturaSerieListadoAction.
  */
-public final class FacturaSerieListadoAction extends BaseAction implements PaginatedGrid {
+public final class FacturaSerieListadoAction extends PaginableAction implements ModelDriven<FacturaSerieCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1189138882681211082L;
@@ -22,10 +23,7 @@ public final class FacturaSerieListadoAction extends BaseAction implements Pagin
     private PaginatedList<FacturaSerieVO> fcsrList;
 
     /** The srvc criterio form. */
-    private FacturaSerieCriterioVO fcsrCriterio;
-
-    /** The page. */
-    private int page = PaginatedList.FIRST_PAGE;
+    private FacturaSerieCriterioVO model;
 
     // acciones web
 
@@ -38,12 +36,11 @@ public final class FacturaSerieListadoAction extends BaseAction implements Pagin
     public String list() {
         final FacturaSerieBO fcsrBO = new FacturaSerieBO();
 
-        if (fcsrCriterio == null) {
-            fcsrCriterio = new FacturaSerieCriterioVO();
+        if (model == null) {
+            model = new FacturaSerieCriterioVO();
         }
 
-        fcsrList = fcsrBO.selectList(fcsrCriterio, PaginatedList.getOffset(page, ROWS_PER_PAGE_DEFAULT),
-                ROWS_PER_PAGE_DEFAULT);
+        fcsrList = fcsrBO.selectList(model, getOffset(), getLimit());
 
         return SUCCESS;
     }
@@ -51,12 +48,11 @@ public final class FacturaSerieListadoAction extends BaseAction implements Pagin
     // get / set
 
     /**
-     * Gets the fcsr criterio.
-     *
-     * @return the fcsr criterio
+     * {@inheritDoc}
      */
-    public FacturaSerieCriterioVO getFcsrCriterio() {
-        return fcsrCriterio;
+    @Override
+    public FacturaSerieCriterioVO getModel() {
+        return model;
     }
 
     /**
@@ -65,8 +61,8 @@ public final class FacturaSerieListadoAction extends BaseAction implements Pagin
      * @param value
      *            the new fcsr criterio
      */
-    public void setFcsrCriterio(final FacturaSerieCriterioVO value) {
-        fcsrCriterio = value;
+    public void setModel(final FacturaSerieCriterioVO value) {
+        model = value;
     }
 
     /**
@@ -76,25 +72,6 @@ public final class FacturaSerieListadoAction extends BaseAction implements Pagin
      */
     public PaginatedList<FacturaSerieVO> getFcsrList() {
         return fcsrList;
-    }
-
-    /**
-     * Gets the page.
-     *
-     * @return the page
-     */
-    public int getPage() {
-        return page;
-    }
-
-    /**
-     * Sets the page.
-     *
-     * @param value
-     *            the new page
-     */
-    public void setPage(final int value) {
-        page = value;
     }
 
 }

@@ -1,6 +1,7 @@
 package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -18,12 +19,13 @@ import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoCargoAction.
  */
-public final class AspectoCargoAction extends BaseAction {
+public final class AspectoCargoAction extends BaseAction implements ModelDriven<AspectoCargoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1550351663461650264L;
@@ -32,7 +34,10 @@ public final class AspectoCargoAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The ascr. */
-    private AspectoCargoVO ascr;
+    private AspectoCargoVO model;
+
+    /** The fecha vigencia. */
+    private Date fechaVigencia;
 
     /** The crgo list. */
     private List<LabelValueVO> crgoList;
@@ -46,8 +51,8 @@ public final class AspectoCargoAction extends BaseAction {
      */
     @Action("ascr-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(ascr);
-        Preconditions.checkNotNull(ascr.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         if (getFechaVigencia() == null) {
             setFechaVigencia(Calendar.getInstance().getTime());
@@ -55,7 +60,7 @@ public final class AspectoCargoAction extends BaseAction {
 
         final AspectoCargoBO ascrBO = new AspectoCargoBO();
 
-        ascr = ascrBO.select(ascr.getId(), getFechaVigencia());
+        model = ascrBO.select(model.getId(), getFechaVigencia());
 
         return SUCCESS;
     }
@@ -70,19 +75,19 @@ public final class AspectoCargoAction extends BaseAction {
     @Action("ascr-edit")
     public String edit() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(ascr);
-        Preconditions.checkNotNull(ascr.getAspcId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getAspcId());
         Preconditions.checkNotNull(getFechaVigencia());
 
         if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(ascr.getId());
+            Preconditions.checkNotNull(model.getId());
 
             final AspectoCargoBO ascrBO = new AspectoCargoBO();
 
-            ascr = ascrBO.select(ascr.getId(), getFechaVigencia());
+            model = ascrBO.select(model.getId(), getFechaVigencia());
         } else {
             final AspectoBO aspcBO = new AspectoBO();
-            final AspectoVO aspc = aspcBO.select(ascr.getAspcId(), getFechaVigencia(), getIdioma());
+            final AspectoVO aspc = aspcBO.select(model.getAspcId(), getFechaVigencia(), getIdioma());
             final CargoBO crgoBO = new CargoBO();
             final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
@@ -106,22 +111,22 @@ public final class AspectoCargoAction extends BaseAction {
     @Action("ascr-save")
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(ascr);
+        Preconditions.checkNotNull(model);
 
         if (ACCION_EDICION.create == accion) {
-            Preconditions.checkNotNull(ascr.getAspcId());
+            Preconditions.checkNotNull(model.getAspcId());
 
-            FieldValidator.validateRequired(this, MessageI18nKey.ascr_crgo, ascr.getCrgo());
+            FieldValidator.validateRequired(this, MessageI18nKey.ascr_crgo, model.getCrgo());
         } else {
-            Preconditions.checkNotNull(ascr.getId());
-            Preconditions.checkNotNull(ascr.getAscv());
-            Preconditions.checkNotNull(ascr.getAscv().getId());
+            Preconditions.checkNotNull(model.getId());
+            Preconditions.checkNotNull(model.getAscv());
+            Preconditions.checkNotNull(model.getAscv().getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.ascr_fini, ascr.getAscv());
+        FieldValidator.validateRequired(this, MessageI18nKey.ascr_fini, model.getAscv());
 
         if (!hasErrors()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.ascr_fini, ascr.getAscv().getFini());
+            FieldValidator.validateRequired(this, MessageI18nKey.ascr_fini, model.getAscv().getFini());
         }
 
         if (!hasErrors()) {
@@ -129,11 +134,11 @@ public final class AspectoCargoAction extends BaseAction {
 
             switch (accion) {
             case create:
-                ascrBO.insert(ascr);
+                ascrBO.insert(model);
 
                 break;
             case edit:
-                ascrBO.update(ascr);
+                ascrBO.update(model);
 
                 break;
 
@@ -154,13 +159,13 @@ public final class AspectoCargoAction extends BaseAction {
      */
     @Action("ascr-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(ascr);
-        Preconditions.checkNotNull(ascr.getAscv());
-        Preconditions.checkNotNull(ascr.getAscv().getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getAscv());
+        Preconditions.checkNotNull(model.getAscv().getId());
 
         final AspectoCargoBO ascrBO = new AspectoCargoBO();
 
-        ascrBO.delete(ascr.getAscv().getId());
+        ascrBO.delete(model.getAscv().getId());
 
         return SUCCESS;
     }
@@ -177,12 +182,11 @@ public final class AspectoCargoAction extends BaseAction {
     }
 
     /**
-     * Gets the ascr.
-     *
-     * @return the ascr
+     * {@inheritDoc}
      */
-    public AspectoCargoVO getAscr() {
-        return ascr;
+    @Override
+    public AspectoCargoVO getModel() {
+        return model;
     }
 
     /**
@@ -191,8 +195,8 @@ public final class AspectoCargoAction extends BaseAction {
      * @param value
      *            the new ascr
      */
-    public void setAscr(final AspectoCargoVO value) {
-        ascr = value;
+    public void setModel(final AspectoCargoVO value) {
+        model = value;
     }
 
     /**
@@ -202,5 +206,24 @@ public final class AspectoCargoAction extends BaseAction {
      */
     public List<LabelValueVO> getCrgoList() {
         return crgoList;
+    }
+
+    /**
+     * Gets the fecha vigencia.
+     *
+     * @return the fecha vigencia
+     */
+    public Date getFechaVigencia() {
+        return fechaVigencia;
+    }
+
+    /**
+     * Sets the fecha vigencia.
+     *
+     * @param value
+     *            the new fecha vigencia
+     */
+    public void setFechaVigencia(final Date value) {
+        fechaVigencia = value;
     }
 }

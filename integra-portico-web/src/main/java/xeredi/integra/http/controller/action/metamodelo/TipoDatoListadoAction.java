@@ -10,20 +10,22 @@ import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.util.pagination.PaginatedList;
 
+import com.opensymphony.xwork2.ModelDriven;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoDatoListadoAction.
  */
-public final class TipoDatoListadoAction extends PaginableAction {
+public final class TipoDatoListadoAction extends PaginableAction implements ModelDriven<TipoDatoCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -9073603323433179379L;
 
+    /** The tpdt criterio. */
+    private TipoDatoCriterioVO model;
+
     /** The list. */
     private PaginatedList<TipoDatoVO> tpdtList;
-
-    /** The tpdt criterio. */
-    private TipoDatoCriterioVO tpdtCriterio;
 
     // Acciones Web
     /**
@@ -33,16 +35,15 @@ public final class TipoDatoListadoAction extends PaginableAction {
      */
     @Action("tpdt-list")
     public String list() {
-        if (tpdtCriterio == null) {
-            tpdtCriterio = new TipoDatoCriterioVO();
+        if (model == null) {
+            model = new TipoDatoCriterioVO();
         }
 
-        tpdtCriterio.setIdioma(getIdioma());
+        model.setIdioma(getIdioma());
 
         final TipoDatoBO tpdtBO = new TipoDatoBO();
 
-        tpdtList = tpdtBO.selectList(tpdtCriterio, PaginatedList.getOffset(getPage(), ROWS_PER_PAGE_DEFAULT),
-                ROWS_PER_PAGE_DEFAULT);
+        tpdtList = tpdtBO.selectList(model, getOffset(), getLimit());
 
         return SUCCESS;
     }
@@ -55,6 +56,25 @@ public final class TipoDatoListadoAction extends PaginableAction {
     @Action("tpdt-filter")
     public static String filter() {
         return SUCCESS;
+    }
+
+    // get / set
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TipoDatoCriterioVO getModel() {
+        return model;
+    }
+
+    /**
+     * Sets the model.
+     *
+     * @param value
+     *            the new model
+     */
+    public void setModel(final TipoDatoCriterioVO value) {
+        model = value;
     }
 
     /**
@@ -82,24 +102,5 @@ public final class TipoDatoListadoAction extends PaginableAction {
      */
     public TipoElemento[] getTpelList() {
         return TipoElemento.values();
-    }
-
-    /**
-     * Gets the tpdt criterio.
-     *
-     * @return the tpdt criterio
-     */
-    public TipoDatoCriterioVO getTpdtCriterio() {
-        return tpdtCriterio;
-    }
-
-    /**
-     * Sets the tpdt criterio.
-     *
-     * @param value
-     *            the new tpdt criterio
-     */
-    public void setTpdtCriterio(final TipoDatoCriterioVO value) {
-        tpdtCriterio = value;
     }
 }

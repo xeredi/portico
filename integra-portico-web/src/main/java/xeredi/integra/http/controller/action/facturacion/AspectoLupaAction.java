@@ -5,29 +5,25 @@ import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.proxy.ConfigurationProxy;
-import xeredi.integra.model.comun.vo.ConfigurationKey;
+import xeredi.integra.http.controller.action.LupaAction;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoLupaAction.
  */
-public final class AspectoLupaAction extends BaseAction {
+public final class AspectoLupaAction extends LupaAction implements ModelDriven<AspectoCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -764613729784237979L;
 
-    /** The Constant ROWS. */
-    private static final int ROWS = ConfigurationProxy.getInt(ConfigurationKey.filter_limit);
-
     /** The crgo criterio. */
-    private AspectoCriterioVO aspcCriterio;
+    private AspectoCriterioVO model;
 
     /** The crgo list. */
     private List<AspectoVO> aspcList;
@@ -39,22 +35,24 @@ public final class AspectoLupaAction extends BaseAction {
      */
     @Action("aspc-lupa")
     public String lupa() {
-        Preconditions.checkNotNull(aspcCriterio);
-        Preconditions.checkNotNull(aspcCriterio.getTpsrId());
-        Preconditions.checkNotNull(aspcCriterio.getTextoBusqueda());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getTpsrId());
+        Preconditions.checkNotNull(model.getTextoBusqueda());
 
-        aspcCriterio.setIdioma(getIdioma());
+        model.setIdioma(getIdioma());
 
-        if (aspcCriterio.getFechaVigencia() == null) {
-            aspcCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        if (model.getFechaVigencia() == null) {
+            model.setFechaVigencia(Calendar.getInstance().getTime());
         }
 
         final AspectoBO aspcBO = new AspectoBO();
 
-        aspcList = aspcBO.selectLupaList(aspcCriterio, ROWS);
+        aspcList = aspcBO.selectLupaList(model, getLimit());
 
         return SUCCESS;
     }
+
+    // get / set
 
     /**
      * Gets the aspc list.
@@ -66,13 +64,21 @@ public final class AspectoLupaAction extends BaseAction {
     }
 
     /**
-     * Sets the aspc criterio.
+     * {@inheritDoc}
+     */
+    @Override
+    public AspectoCriterioVO getModel() {
+        return model;
+    }
+
+    /**
+     * Sets the model.
      *
      * @param value
-     *            the new aspc criterio
+     *            the new model
      */
-    public void setAspcCriterio(final AspectoCriterioVO value) {
-        aspcCriterio = value;
+    public void setModel(final AspectoCriterioVO value) {
+        model = value;
     }
 
 }
