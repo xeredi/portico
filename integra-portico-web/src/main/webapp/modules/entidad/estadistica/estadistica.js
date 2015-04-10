@@ -293,12 +293,12 @@ function EstdDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
     $http.post("estadistica/estd-detail.action", {
-        item : {
+        model : {
             id : $routeParams.itemId
         }
     }).success(function(data) {
+        vm.item = data.model;
         vm.enti = data.enti;
-        vm.item = data.item;
         vm.fechaVigencia = data.fechaVigencia;
     });
 

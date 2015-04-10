@@ -46,6 +46,9 @@ public final class PescaFileImport {
     /** The ssrv list. */
     private List<SubservicioVO> ssrvList;
 
+    /** The fecha referencia. */
+    private Date fechaReferencia;
+
     /** The prmn list. */
     private final ProcesoCargaPesca proceso;
 
@@ -92,6 +95,7 @@ public final class PescaFileImport {
 
             srvc.setPrto(getTokenPrto(PescaKeyword.MAN_Subp, line, i));
             srvc.setEstado(ESTADO_MANIFIESTO);
+            srvc.setFref(fechaReferencia);
 
             srvc.addItdt(TipoDato.BUQUE_PESCA.getId(),
                     getTokenMaestro(PescaKeyword.MAN_Buque, line, i, Entidad.BUQUE_PESCA));
@@ -155,7 +159,7 @@ public final class PescaFileImport {
         for (final String line : lines) {
             i++;
 
-            srvc.setFref(getTokenDate(PescaKeyword.MAN_FechaRecepcion, line, i, DATE_FORMAT));
+            fechaReferencia = getTokenDate(PescaKeyword.MAN_FechaRecepcion, line, i, DATE_FORMAT);
 
             final String buque = getTokenString(PescaKeyword.MAN_Buque, line, i);
 
@@ -183,6 +187,17 @@ public final class PescaFileImport {
         proceso.addCodigoMaestro(Entidad.TIPO_IVA, TIPO_IVA);
     }
 
+    /**
+     * Gets the token prto.
+     *
+     * @param keyword
+     *            the keyword
+     * @param line
+     *            the line
+     * @param lineNumber
+     *            the line number
+     * @return the token prto
+     */
     private PuertoVO getTokenPrto(final PescaKeyword keyword, final String line, final int lineNumber) {
         final String codigo = getTokenString(keyword, line, lineNumber);
 
@@ -354,6 +369,15 @@ public final class PescaFileImport {
      */
     public List<SubservicioVO> getSsrvList() {
         return ssrvList;
+    }
+
+    /**
+     * Gets the fecha referencia.
+     *
+     * @return the fecha referencia
+     */
+    public Date getFechaReferencia() {
+        return fechaReferencia;
     }
 
 }

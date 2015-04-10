@@ -73,20 +73,13 @@
 		</where>
 	</sql>
 
-	<select id="selectCount" parameterType="ProcesoCriterioVO"
+	<select id="count" parameterType="ProcesoCriterioVO"
 		resultType="Integer">
 		<include refid="SelectCountPrefix" />
 		<include refid="SelectWhere" />
 	</select>
 
 	<select id="selectList" parameterType="ProcesoCriterioVO"
-		resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-		ORDER BY prbt.prbt_falta DESC
-	</select>
-
-	<select id="selectPaginatedList" parameterType="ProcesoCriterioVO"
 		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />

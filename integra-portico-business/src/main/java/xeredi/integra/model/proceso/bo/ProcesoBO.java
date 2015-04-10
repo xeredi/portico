@@ -162,8 +162,8 @@ public class ProcesoBO {
             prbtCriterioVO.setModulo(tipo.getModulo());
             prbtCriterioVO.setTipo(tipo);
 
-            final List<ProcesoVO> prbtList = prbtDAO.selectPaginatedList(prbtCriterioVO, new RowBounds(
-                    RowBounds.NO_ROW_OFFSET, 1));
+            final List<ProcesoVO> prbtList = prbtDAO.selectList(prbtCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET,
+                    1));
 
             if (!prbtList.isEmpty()) {
                 final ProcesoVO prbtVO = prbtList.get(0);
@@ -199,7 +199,7 @@ public class ProcesoBO {
      */
     public final void finalizar(final @Nonnull Long prbtId, final List<ProcesoMensajeVO> prmnList,
             final ItemTipo itemSalidaTipo, final List<Long> itemSalidaList, final File fileSalida)
-            throws InstanceNotFoundException, OperacionNoPermitidaException {
+                    throws InstanceNotFoundException, OperacionNoPermitidaException {
         // Lectura del Archivo (si lo hay)
         byte[] buffer = null;
 
@@ -287,7 +287,7 @@ public class ProcesoBO {
      *             the operacion no permitida exception
      */
     public final void cancelar(final @Nonnull Long prbtId) throws InstanceNotFoundException,
-            OperacionNoPermitidaException {
+    OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
@@ -330,11 +330,11 @@ public class ProcesoBO {
             final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
-            final int count = prbtDAO.selectCount(prbtCriterioVO);
+            final int count = prbtDAO.count(prbtCriterioVO);
             final List<ProcesoVO> prbtList = new ArrayList<>();
 
             if (count > offset) {
-                prbtList.addAll(prbtDAO.selectPaginatedList(prbtCriterioVO, new RowBounds(offset, limit)));
+                prbtList.addAll(prbtDAO.selectList(prbtCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<>(prbtList, offset, limit, count);

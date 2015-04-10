@@ -41,9 +41,9 @@
 							CONCAT(
 								CONCAT(
 									(
-										SELECT prmt_parametro
-										FROM tbl_parametro_prmt
-										WHERE prmt_pk = srvc_subp_pk
+										SELECT prto_codigo
+										FROM tbl_puerto_prto
+										WHERE prto_pk = srvc_subp_pk
 									)
 									, '/'
 								)

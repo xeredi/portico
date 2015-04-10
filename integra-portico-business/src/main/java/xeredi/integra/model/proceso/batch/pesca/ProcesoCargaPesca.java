@@ -98,7 +98,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
                     pescaFileImport.readMaestros(lines);
 
                     if (prmnList.isEmpty()) {
-                        buscarMaestros(pescaFileImport.getSrvc().getFref());
+                        buscarMaestros(pescaFileImport.getFechaReferencia());
                     }
 
                     if (prmnList.isEmpty()) {

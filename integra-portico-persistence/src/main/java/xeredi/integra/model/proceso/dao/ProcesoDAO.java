@@ -75,7 +75,7 @@ public interface ProcesoDAO {
      *            the prbt criterio vo
      * @return the int
      */
-    int selectCount(final @Nonnull ProcesoCriterioVO prbtCriterioVO);
+    int count(final @Nonnull ProcesoCriterioVO prbtCriterioVO);
 
     /**
      * Select list.
@@ -86,7 +86,7 @@ public interface ProcesoDAO {
      *            the bounds
      * @return the list
      */
-    List<ProcesoVO> selectPaginatedList(final @Nonnull ProcesoCriterioVO prbtCriterioVO, final @Nonnull RowBounds bounds);
+    List<ProcesoVO> selectList(final @Nonnull ProcesoCriterioVO prbtCriterioVO, final @Nonnull RowBounds bounds);
 
     /**
      * Select list.
