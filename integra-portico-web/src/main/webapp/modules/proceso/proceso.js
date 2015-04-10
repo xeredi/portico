@@ -21,7 +21,9 @@ function config($routeProvider) {
     .when("/proceso/prbt/detail/:prbtId", {
         templateUrl : "modules/proceso/prbt-detail.html",
         controller : "PrbtDetailController",
-        controllerAs : 'vm'
+        controllerAs : 'vm',
+        reloadOnSearch : false
+
     });
 }
 
@@ -71,12 +73,11 @@ function PrbtDetailController($http, $location, $routeParams, pageTitleService) 
 
     vm.cancel = cancel;
     vm.download = download;
+    vm.pageChanged = pageChanged;
 
     function cancel() {
         $http.post("proceso/prbt-cancel.action", {
-            prbt : {
-                id : vm.prbt.id
-            }
+            model : vm.prbt
         }).success(function(data) {
             window.history.back();
         });
@@ -99,23 +100,37 @@ function PrbtDetailController($http, $location, $routeParams, pageTitleService) 
         });
     }
 
+    function pageChanged() {
+        search(vm.page);
+    }
+
+    function search(page) {
+        $http.post("proceso/prmn-list.action", {
+            prbtId : $routeParams.prbtId,
+            page : page
+        }).success(function(data) {
+            vm.prmnList = data.prmnList;
+            vm.page = data.prmnList.page;
+
+            $location.search({
+                page : vm.page
+            }).replace();
+        });
+    }
+
     $http.post("proceso/prbt-detail.action", {
-        prbt : {
+        model : {
             id : $routeParams.prbtId
         }
     }).success(function(data) {
-        vm.prbt = data.prbt;
+        vm.prbt = data.model;
         vm.arinEntradaList = data.arinEntradaList;
         vm.arinSalidaList = data.arinSalidaList;
         vm.pritEntradaList = data.pritEntradaList;
         vm.pritSalidaList = data.pritSalidaList;
         vm.prpmMap = data.prpmMap;
 
-        $http.post("proceso/prmn-list.action", {
-            prbtId : $routeParams.prbtId
-        }).success(function(data) {
-            vm.prmnList = data.prmnList;
-        });
+        search($routeParams.page ? $routeParams.page : 1);
     });
 
     pageTitleService.setTitle("prbt", "page_detail");

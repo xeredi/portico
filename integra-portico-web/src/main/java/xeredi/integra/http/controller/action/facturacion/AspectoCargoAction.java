@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -25,13 +25,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class AspectoCargoAction.
  */
-public final class AspectoCargoAction extends BaseAction implements ModelDriven<AspectoCargoVO> {
+public final class AspectoCargoAction extends ItemAction implements ModelDriven<AspectoCargoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1550351663461650264L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The ascr. */
     private AspectoCargoVO model;
@@ -74,12 +71,12 @@ public final class AspectoCargoAction extends BaseAction implements ModelDriven<
      */
     @Action("ascr-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getAspcId());
         Preconditions.checkNotNull(getFechaVigencia());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model.getId());
 
             final AspectoCargoBO ascrBO = new AspectoCargoBO();
@@ -110,10 +107,10 @@ public final class AspectoCargoAction extends BaseAction implements ModelDriven<
      */
     @Action("ascr-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
 
-        if (ACCION_EDICION.create == accion) {
+        if (ACCION_EDICION.create == getAccion()) {
             Preconditions.checkNotNull(model.getAspcId());
 
             FieldValidator.validateRequired(this, MessageI18nKey.ascr_crgo, model.getCrgo());
@@ -132,7 +129,7 @@ public final class AspectoCargoAction extends BaseAction implements ModelDriven<
         if (!hasErrors()) {
             final AspectoCargoBO ascrBO = new AspectoCargoBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 ascrBO.insert(model);
 
@@ -143,7 +140,7 @@ public final class AspectoCargoAction extends BaseAction implements ModelDriven<
                 break;
 
             default:
-                throw new Error("Accion no valida: " + accion);
+                throw new Error("Accion no valida: " + getAccion());
             }
         }
 
@@ -172,16 +169,6 @@ public final class AspectoCargoAction extends BaseAction implements ModelDriven<
 
     // get / set
     /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -206,24 +193,5 @@ public final class AspectoCargoAction extends BaseAction implements ModelDriven<
      */
     public List<LabelValueVO> getCrgoList() {
         return crgoList;
-    }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 }

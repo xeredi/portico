@@ -1,11 +1,15 @@
 package xeredi.integra.http.controller.action.servicio;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.comun.ItemAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldFiller;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.ArchivoBO;
@@ -16,34 +20,43 @@ import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.comun.vo.PuertoCriterioVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
+import xeredi.integra.model.maestro.bo.DefaultParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.vo.ServicioVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServicioAction.
  */
-public final class ServicioAction extends ItemAction {
+public final class ServicioAction extends ItemAction implements ModelDriven<ServicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2809685065940465041L;
 
+    /** The srvc form. */
+    private ServicioVO model;
+
     /** The enti. */
     private TipoServicioVO enti;
-
-    /** The srvc form. */
-    private ServicioVO item;
 
     /** The arin list. */
     private List<ArchivoInfoVO> arinList;
 
-    /** The subps. */
+    /** The prto list. */
     private List<PuertoVO> prtoList;
+
+    /** The label values map. */
+    private Map<Long, List<LabelValueVO>> labelValuesMap;
 
     // Acciones web
     /**
@@ -55,24 +68,24 @@ public final class ServicioAction extends ItemAction {
      */
     @Action("srvc-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
-        Preconditions.checkNotNull(item.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
+        Preconditions.checkNotNull(model.getEntiId());
 
-        enti = TipoServicioProxy.select(item.getEntiId());
+        enti = TipoServicioProxy.select(model.getEntiId());
 
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(item.getEntiId());
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId());
 
-        item = srvcBO.select(item.getId(), getIdioma());
+        model = srvcBO.select(model.getId(), getIdioma());
 
         final ArchivoBO archBO = new ArchivoBO();
         final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
 
-        archCriterio.setSrvcId(item.getId());
+        archCriterio.setSrvcId(model.getId());
 
         arinList = archBO.selectInfoList(archCriterio);
 
-        setFechaVigencia(item.getFref());
+        setFechaVigencia(model.getFref());
 
         return SUCCESS;
     }
@@ -86,28 +99,27 @@ public final class ServicioAction extends ItemAction {
      */
     @Action(value = "srvc-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getEntiId());
+        Preconditions.checkNotNull(getAccion());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
-        enti = TipoServicioProxy.select(item.getEntiId());
+        enti = TipoServicioProxy.select(model.getEntiId());
 
-        if (accion == ACCION_EDICION.create) {
-            item.setFref(Calendar.getInstance().getTime());
-            item.setAnno(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+        if (getAccion() == ACCION_EDICION.create) {
+            model.setFref(Calendar.getInstance().getTime());
+            model.setAnno(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
-            FieldFiller.fillDefaultValues(item, enti);
+            FieldFiller.fillDefaultValues(model, enti);
         } else {
-            Preconditions.checkNotNull(item.getId());
+            Preconditions.checkNotNull(model.getId());
 
-            final ServicioBO srvcBO = ServicioBOFactory.newInstance(item.getEntiId());
+            final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId());
 
-            item = srvcBO.select(item.getId(), getIdioma());
+            model = srvcBO.select(model.getId(), getIdioma());
         }
 
-        setFechaVigencia(item.getFref());
-        loadLabelValuesMap(enti);
-        loadPrtoList();
+        setFechaVigencia(model.getFref());
+        loadLabelValuesMap();
 
         return SUCCESS;
     }
@@ -121,52 +133,52 @@ public final class ServicioAction extends ItemAction {
      */
     @Action("srvc-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getEntiId());
+        Preconditions.checkNotNull(getAccion());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
-        final TipoServicioVO enti = TipoServicioProxy.select(item.getEntiId());
+        final TipoServicioVO enti = TipoServicioProxy.select(model.getEntiId());
 
-        if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.prto, item.getPrto());
-            FieldValidator.validateRequired(this, MessageI18nKey.srvc_anno, item.getAnno());
-            FieldValidator.validateRequired(this, MessageI18nKey.srvc_numero, item.getNumero());
+        if (getAccion() == ACCION_EDICION.create) {
+            FieldValidator.validateRequired(this, MessageI18nKey.prto, model.getPrto());
+            FieldValidator.validateRequired(this, MessageI18nKey.srvc_anno, model.getAnno());
+            FieldValidator.validateRequired(this, MessageI18nKey.srvc_numero, model.getNumero());
         } else {
-            Preconditions.checkNotNull(item.getId());
+            Preconditions.checkNotNull(model.getId());
         }
 
         if (enti.getTpdtEstado() != null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.srvc_estado, item.getEstado());
+            FieldValidator.validateRequired(this, MessageI18nKey.srvc_estado, model.getEstado());
         }
 
         if (enti.isTemporal()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.srvc_fini, item.getFini());
-            FieldValidator.validateRequired(this, MessageI18nKey.srvc_ffin, item.getFfin());
+            FieldValidator.validateRequired(this, MessageI18nKey.srvc_fini, model.getFini());
+            FieldValidator.validateRequired(this, MessageI18nKey.srvc_ffin, model.getFfin());
         } else {
-            FieldValidator.validateRequired(this, MessageI18nKey.srvc_fref, item.getFref());
+            FieldValidator.validateRequired(this, MessageI18nKey.srvc_fref, model.getFref());
         }
 
-        FieldValidator.validateItem(this, enti, item);
+        FieldValidator.validateItem(this, enti, model);
 
         if (!hasErrors()) {
             // FIXME ACABAR
-            final ServicioBO srvcBO = ServicioBOFactory.newInstance(item.getEntiId());
+            final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId());
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
-                srvcBO.insert(item, null, null, null);
+                srvcBO.insert(model, null, null, null);
 
                 break;
             case edit:
-                srvcBO.update(item);
+                srvcBO.update(model);
 
                 break;
             case duplicate:
-                srvcBO.duplicate(item);
+                srvcBO.duplicate(model);
 
                 break;
             default:
-                throw new Error("Accion no soportada: " + accion);
+                throw new Error("Accion no soportada: " + getAccion());
             }
         }
 
@@ -182,21 +194,26 @@ public final class ServicioAction extends ItemAction {
      */
     @Action("srvc-remove")
     public String borrar() throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
-        Preconditions.checkNotNull(item.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
+        Preconditions.checkNotNull(model.getEntiId());
 
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(item.getEntiId());
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId());
 
-        srvcBO.delete(item.getId());
+        srvcBO.delete(model.getId());
 
         return SUCCESS;
     }
 
     /**
-     * Load subp list.
+     * Load label values map.
+     *
+     * @throws ApplicationException
+     *             the application exception
      */
-    private void loadPrtoList() {
+    private void loadLabelValuesMap() throws ApplicationException {
+        Preconditions.checkNotNull(enti);
+
         final PuertoBO prtoBO = new PuertoBO();
         final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
@@ -204,6 +221,26 @@ public final class ServicioAction extends ItemAction {
         prtoCriterio.setIdioma(getIdioma());
 
         prtoList = prtoBO.selectList(prtoCriterio);
+
+        // Carga de los labelValues (Si los hay)
+        labelValuesMap = new HashMap<>();
+
+        final Set<Long> tpprIds = new HashSet<>();
+
+        if (enti.getEntdList() != null) {
+            for (final EntidadTipoDatoVO entdVO : enti.getEntdList()) {
+                if (entdVO.getFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
+                        && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
+                    tpprIds.add(entdVO.getTpdt().getEnti().getId());
+                }
+            }
+        }
+
+        if (!tpprIds.isEmpty()) {
+            final ParametroBO prmtBO = new DefaultParametroBO();
+
+            labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()));
+        }
     }
 
     // get / set
@@ -212,16 +249,25 @@ public final class ServicioAction extends ItemAction {
      * {@inheritDoc}
      */
     @Override
-    public ServicioVO getItem() {
-        return item;
+    public ServicioVO getModel() {
+        return model;
+    }
+
+    /**
+     * Sets the item.
+     *
+     * @param value
+     *            the new item
+     */
+    public void setModel(final ServicioVO value) {
+        model = value;
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public Long getPrtoId() {
-        return item == null || item.getPrto() == null ? null : item.getPrto().getId();
+        return model == null || model.getPrto() == null ? null : model.getPrto().getId();
     }
 
     /**
@@ -231,16 +277,6 @@ public final class ServicioAction extends ItemAction {
      */
     public List<PuertoVO> getPrtoList() {
         return prtoList;
-    }
-
-    /**
-     * Sets the item.
-     *
-     * @param value
-     *            the new item
-     */
-    public void setItem(final ServicioVO value) {
-        item = value;
     }
 
     /**
@@ -259,6 +295,15 @@ public final class ServicioAction extends ItemAction {
      */
     public List<ArchivoInfoVO> getArinList() {
         return arinList;
+    }
+
+    /**
+     * Gets the label values map.
+     *
+     * @return the label values map
+     */
+    public Map<Long, List<LabelValueVO>> getLabelValuesMap() {
+        return labelValuesMap;
     }
 
 }

@@ -1,44 +1,37 @@
 package xeredi.integra.http.controller.action.estadistica;
 
-import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.http.controller.action.PaginatedGrid;
+import xeredi.integra.http.controller.action.PaginableAction;
+import xeredi.integra.model.comun.bo.SuperpuertoBO;
+import xeredi.integra.model.comun.vo.SuperpuertoCriterioVO;
+import xeredi.integra.model.comun.vo.SuperpuertoVO;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.maestro.bo.ParametroBOFactory;
-import xeredi.integra.model.metamodelo.vo.Entidad;
-import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
-import com.google.common.collect.Sets;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PeriodoProcesoListadoAction.
  */
-public final class PeriodoProcesoListadoAction extends BaseAction implements PaginatedGrid {
+public final class PeriodoProcesoListadoAction extends PaginableAction implements ModelDriven<PeriodoProcesoCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3153358700832148921L;
 
+    /** The pepr criterio form. */
+    private PeriodoProcesoCriterioVO model;
+
     /** The peprs. */
     private PaginatedList<PeriodoProcesoVO> peprList;
 
-    /** The page. */
-    private int page = PaginatedList.FIRST_PAGE;
-
-    /** The pepr criterio form. */
-    private PeriodoProcesoCriterioVO peprCriterio;
-
     /** The subps. */
-    private List<LabelValueVO> autpList;
+    private List<SuperpuertoVO> sprtList;
 
     // Acciones web
     /**
@@ -48,8 +41,6 @@ public final class PeriodoProcesoListadoAction extends BaseAction implements Pag
      */
     @Action("pepr-filter")
     public String filtro() {
-        setFechaVigencia(Calendar.getInstance().getTime());
-
         loadLabelValuesMap();
 
         return SUCCESS;
@@ -62,14 +53,13 @@ public final class PeriodoProcesoListadoAction extends BaseAction implements Pag
      */
     @Action("pepr-list")
     public String listado() {
-        if (peprCriterio == null) {
-            peprCriterio = new PeriodoProcesoCriterioVO();
+        if (model == null) {
+            model = new PeriodoProcesoCriterioVO();
         }
 
         final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
-        peprList = peprBO.selectList(peprCriterio, PaginatedList.getOffset(page, ROWS_PER_PAGE_DEFAULT),
-                ROWS_PER_PAGE_DEFAULT);
+        peprList = peprBO.selectList(model, getOffset(), getLimit());
 
         return SUCCESS;
     }
@@ -77,41 +67,20 @@ public final class PeriodoProcesoListadoAction extends BaseAction implements Pag
     /**
      * Load label values map.
      */
-    protected final void loadLabelValuesMap() {
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.AUTORIDAD_PORTUARIA.getId());
-        final Set<Long> tpprIds = Sets.newHashSet(Entidad.AUTORIDAD_PORTUARIA.getId());
+    private void loadLabelValuesMap() {
+        final SuperpuertoBO sprtBO = new SuperpuertoBO();
+        final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
 
-        autpList = prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()).get(
-                Entidad.AUTORIDAD_PORTUARIA.getId());
+        sprtList = sprtBO.selectList(sprtCriterio);
     }
 
     // get / set
     /**
-     * Gets the page.
-     *
-     * @return the page
+     * {@inheritDoc}
      */
-    public int getPage() {
-        return page;
-    }
-
-    /**
-     * Sets the page.
-     *
-     * @param value
-     *            the new page
-     */
-    public void setPage(final int value) {
-        page = value;
-    }
-
-    /**
-     * Gets the pepr criterio.
-     *
-     * @return the pepr criterio
-     */
-    public PeriodoProcesoCriterioVO getPeprCriterio() {
-        return peprCriterio;
+    @Override
+    public PeriodoProcesoCriterioVO getModel() {
+        return model;
     }
 
     /**
@@ -120,8 +89,8 @@ public final class PeriodoProcesoListadoAction extends BaseAction implements Pag
      * @param value
      *            the new pepr criterio
      */
-    public void setPeprCriterio(final PeriodoProcesoCriterioVO value) {
-        peprCriterio = value;
+    public void setModel(final PeriodoProcesoCriterioVO value) {
+        model = value;
     }
 
     /**
@@ -138,17 +107,8 @@ public final class PeriodoProcesoListadoAction extends BaseAction implements Pag
      *
      * @return the autp list
      */
-    public List<LabelValueVO> getAutpList() {
-        return autpList;
-    }
-
-    /**
-     * Gets the limits.
-     *
-     * @return the limits
-     */
-    public int[] getLimits() {
-        return VALID_ROWS_PER_PAGE;
+    public List<SuperpuertoVO> getSprtList() {
+        return sprtList;
     }
 
 }

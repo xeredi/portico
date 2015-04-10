@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -21,13 +21,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class EntidadGrupoDatoAction.
  */
-public final class EntidadGrupoDatoAction extends BaseAction implements ModelDriven<EntidadGrupoDatoVO> {
+public final class EntidadGrupoDatoAction extends ItemAction implements ModelDriven<EntidadGrupoDatoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3556845527608258423L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The entd form. */
     private EntidadGrupoDatoVO model;
@@ -45,11 +42,11 @@ public final class EntidadGrupoDatoAction extends BaseAction implements ModelDri
      */
     @Action("engd-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getEntiId());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model.getId());
 
             final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
@@ -70,7 +67,7 @@ public final class EntidadGrupoDatoAction extends BaseAction implements ModelDri
      */
     @Action("engd-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getEntiId());
 
@@ -80,7 +77,7 @@ public final class EntidadGrupoDatoAction extends BaseAction implements ModelDri
         if (!hasErrors()) {
             final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 engdBO.insert(model, i18nMap);
 
@@ -90,7 +87,7 @@ public final class EntidadGrupoDatoAction extends BaseAction implements ModelDri
 
                 break;
             default:
-                throw new Error("No implementado :" + accion);
+                throw new Error("No implementado :" + getAccion());
             }
         }
 
@@ -137,16 +134,6 @@ public final class EntidadGrupoDatoAction extends BaseAction implements ModelDri
     }
 
     // get/set
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
-    }
-
     /**
      * {@inheritDoc}
      */

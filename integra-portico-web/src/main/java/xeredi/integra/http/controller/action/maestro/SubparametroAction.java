@@ -1,34 +1,48 @@
 package xeredi.integra.http.controller.action.maestro;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.comun.ItemAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.maestro.bo.DefaultParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class SubparametroAction.
  */
-public final class SubparametroAction extends ItemAction {
+public final class SubparametroAction extends ItemAction implements ModelDriven<SubparametroVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2326503947837608186L;
 
+    /** The item. */
+    private SubparametroVO model;
+
     /** The enti. */
     private TipoSubparametroVO enti;
 
-    /** The item. */
-    private SubparametroVO item;
+    /** The label values map. */
+    private Map<Long, List<LabelValueVO>> labelValuesMap;
 
     // Acciones Web
     /**
@@ -40,23 +54,23 @@ public final class SubparametroAction extends ItemAction {
      */
     @Action("sprm-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getEntiId());
-        Preconditions.checkNotNull(item.getPrmtId());
+        Preconditions.checkNotNull(getAccion());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
+        Preconditions.checkNotNull(model.getPrmtId());
         Preconditions.checkNotNull(getFechaVigencia());
 
-        if (accion != ACCION_EDICION.create) {
-            Preconditions.checkNotNull(item.getId());
+        if (getAccion() != ACCION_EDICION.create) {
+            Preconditions.checkNotNull(model.getId());
 
             final SubparametroBO sprmBO = new SubparametroBO();
 
-            item = sprmBO.selectObject(item.getId(), getIdioma(), getFechaVigencia());
+            model = sprmBO.selectObject(model.getId(), getIdioma(), getFechaVigencia());
         }
 
-        enti = TipoSubparametroProxy.select(item.getEntiId());
+        enti = TipoSubparametroProxy.select(model.getEntiId());
 
-        loadLabelValuesMap(enti);
+        loadLabelValuesMap();
 
         return SUCCESS;
     }
@@ -70,53 +84,53 @@ public final class SubparametroAction extends ItemAction {
      */
     @Action("sprm-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getEntiId());
+        Preconditions.checkNotNull(getAccion());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
         final SubparametroBO sprmBO = new SubparametroBO();
 
-        enti = TipoSubparametroProxy.select(item.getEntiId());
+        enti = TipoSubparametroProxy.select(model.getEntiId());
 
         // Validacion de Datos
-        if (accion != ACCION_EDICION.edit) {
+        if (getAccion() != ACCION_EDICION.edit) {
             FieldValidator.validateRequired(this, getText("enti_" + enti.getTpprAsociado().getId()),
-                    item.getPrmtAsociado());
+                    model.getPrmtAsociado());
         }
 
-        if (accion != ACCION_EDICION.create) {
-            Preconditions.checkNotNull(item.getId());
-            Preconditions.checkNotNull(item.getSpvr());
-            Preconditions.checkNotNull(item.getSpvr().getId());
+        if (getAccion() != ACCION_EDICION.create) {
+            Preconditions.checkNotNull(model.getId());
+            Preconditions.checkNotNull(model.getSpvr());
+            Preconditions.checkNotNull(model.getSpvr().getId());
         }
 
-        if (item.getSpvr() == null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.sprm_fini, item.getSpvr());
+        if (model.getSpvr() == null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.sprm_fini, model.getSpvr());
         } else {
-            FieldValidator.validateRequired(this, MessageI18nKey.sprm_fini, item.getSpvr().getFini());
-            FieldValidator.validatePeriod(this, item.getSpvr().getFini(), item.getSpvr().getFfin());
+            FieldValidator.validateRequired(this, MessageI18nKey.sprm_fini, model.getSpvr().getFini());
+            FieldValidator.validatePeriod(this, model.getSpvr().getFini(), model.getSpvr().getFfin());
         }
 
-        FieldValidator.validateItem(this, enti, item);
+        FieldValidator.validateItem(this, enti, model);
 
         // Fin de validacion de datos
 
         if (!hasErrors()) {
-            switch (accion) {
+            switch (getAccion()) {
             case create:
-                sprmBO.insert(item, enti);
+                sprmBO.insert(model, enti);
 
                 break;
             case edit:
-                sprmBO.update(item, enti);
+                sprmBO.update(model, enti);
 
                 break;
             case duplicate:
-                sprmBO.duplicate(item, enti);
+                sprmBO.duplicate(model, enti);
 
                 break;
             default:
-                throw new Error("Accion no valida: " + accion);
+                throw new Error("Accion no valida: " + getAccion());
             }
         }
 
@@ -132,13 +146,13 @@ public final class SubparametroAction extends ItemAction {
      */
     @Action("sprm-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getSpvr());
-        Preconditions.checkNotNull(item.getSpvr().getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getSpvr());
+        Preconditions.checkNotNull(model.getSpvr().getId());
 
         final SubparametroBO sprmBO = new SubparametroBO();
 
-        sprmBO.delete(item);
+        sprmBO.delete(model);
 
         return SUCCESS;
     }
@@ -152,8 +166,8 @@ public final class SubparametroAction extends ItemAction {
      */
     @Action("sprm-detail")
     public String detalle() throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         if (getFechaVigencia() == null) {
             setFechaVigencia(Calendar.getInstance().getTime());
@@ -161,10 +175,40 @@ public final class SubparametroAction extends ItemAction {
 
         final SubparametroBO sprmBO = new SubparametroBO();
 
-        item = sprmBO.selectObject(item.getId(), getIdioma(), getFechaVigencia());
-        enti = TipoSubparametroProxy.select(item.getEntiId());
+        model = sprmBO.selectObject(model.getId(), getIdioma(), getFechaVigencia());
+        enti = TipoSubparametroProxy.select(model.getEntiId());
 
         return SUCCESS;
+    }
+
+    /**
+     * Load label values map.
+     *
+     * @throws ApplicationException
+     *             the application exception
+     */
+    private void loadLabelValuesMap() throws ApplicationException {
+        Preconditions.checkNotNull(enti);
+
+        // Carga de los labelValues (Si los hay)
+        labelValuesMap = new HashMap<>();
+
+        final Set<Long> tpprIds = new HashSet<>();
+
+        if (enti.getEntdList() != null) {
+            for (final EntidadTipoDatoVO entdVO : enti.getEntdList()) {
+                if (entdVO.getFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
+                        && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
+                    tpprIds.add(entdVO.getTpdt().getEnti().getId());
+                }
+            }
+        }
+
+        if (!tpprIds.isEmpty()) {
+            final ParametroBO prmtBO = new DefaultParametroBO();
+
+            labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()));
+        }
     }
 
     // get / set
@@ -173,18 +217,8 @@ public final class SubparametroAction extends ItemAction {
      * {@inheritDoc}
      */
     @Override
-    public SubparametroVO getItem() {
-        return item;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getPrtoId() {
-        // FIXME Implementar
-
-        return null;
+    public SubparametroVO getModel() {
+        return model;
     }
 
     /**
@@ -193,8 +227,17 @@ public final class SubparametroAction extends ItemAction {
      * @param value
      *            the new item
      */
-    public void setItem(final SubparametroVO value) {
-        item = value;
+    public void setModel(final SubparametroVO value) {
+        model = value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Long getPrtoId() {
+        // FIXME Implementar
+
+        return null;
     }
 
     /**
@@ -204,6 +247,15 @@ public final class SubparametroAction extends ItemAction {
      */
     public TipoSubparametroVO getEnti() {
         return enti;
+    }
+
+    /**
+     * Gets the label values map.
+     *
+     * @return the label values map
+     */
+    public Map<Long, List<LabelValueVO>> getLabelValuesMap() {
+        return labelValuesMap;
     }
 
 }

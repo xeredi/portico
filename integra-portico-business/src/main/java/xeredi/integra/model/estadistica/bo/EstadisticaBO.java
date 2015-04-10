@@ -11,6 +11,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 
 import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
@@ -47,10 +48,8 @@ public class EstadisticaBO {
             final List<EstadisticaVO> estdList = new ArrayList<>();
 
             if (count > offset) {
-                estdCriterioVO.setOffset(offset);
-                estdCriterioVO.setLimit(limit);
+                estdList.addAll(estdDAO.selectList(estdCriterioVO, new RowBounds(offset, limit)));
 
-                estdList.addAll(estdDAO.selectList(estdCriterioVO));
                 fillDependencies(session, estdList, estdCriterioVO, true);
             }
 

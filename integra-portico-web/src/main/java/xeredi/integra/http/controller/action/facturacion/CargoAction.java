@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -31,13 +31,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class CargoAction.
  */
-public final class CargoAction extends BaseAction implements ModelDriven<CargoVO> {
+public final class CargoAction extends ItemAction implements ModelDriven<CargoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5711768506965624584L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The crgo. */
     private CargoVO model;
@@ -97,9 +94,9 @@ public final class CargoAction extends BaseAction implements ModelDriven<CargoVO
      */
     @Action("crgo-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model);
             Preconditions.checkNotNull(model.getId());
 
@@ -131,16 +128,16 @@ public final class CargoAction extends BaseAction implements ModelDriven<CargoVO
      */
     @Action("crgo-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getCrgv());
 
-        if (ACCION_EDICION.create == accion) {
+        if (ACCION_EDICION.create == getAccion()) {
             FieldValidator.validateRequired(this, MessageI18nKey.crgo_codigo, model.getCodigo());
             FieldValidator.validateRequired(this, MessageI18nKey.crgo_tpsr, model.getTpsr());
         }
 
-        if (ACCION_EDICION.create != accion) {
+        if (ACCION_EDICION.create != getAccion()) {
             Preconditions.checkNotNull(model.getId());
             Preconditions.checkNotNull(model.getCrgv().getId());
         }
@@ -155,7 +152,7 @@ public final class CargoAction extends BaseAction implements ModelDriven<CargoVO
         if (!hasErrors()) {
             final CargoBO crgoBO = new CargoBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 crgoBO.insert(model, i18nMap);
 
@@ -165,7 +162,7 @@ public final class CargoAction extends BaseAction implements ModelDriven<CargoVO
 
                 break;
             default:
-                throw new Error("Accion no valida: " + accion);
+                throw new Error("Accion no valida: " + getAccion());
             }
         }
 
@@ -231,16 +228,6 @@ public final class CargoAction extends BaseAction implements ModelDriven<CargoVO
     }
 
     /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
-    }
-
-    /**
      * Gets the rgla list.
      *
      * @return the rgla list
@@ -267,24 +254,4 @@ public final class CargoAction extends BaseAction implements ModelDriven<CargoVO
     public void setI18nMap(final Map<String, I18nVO> value) {
         i18nMap = value;
     }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
-    }
-
 }

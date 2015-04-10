@@ -2,12 +2,11 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-4 col-md-2 col-md-2 form-group-sm">
-                <label ng-bind="'enti_' + vm.enti.tpprAsociado.id | translate"></label>
-                <div ng-if="vm.accion != 'edit'" class="input-group-sm" ng-controller="PrmtsLupaController">
-                    <input type="text" autocomplete="off" ng-model="vm.item.prmtAsociado"
-                        typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.tpprAsociado.id, $viewValue, vm.fechaVigencia)"
-                        typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
-                </div>
+                <label ng-bind="'enti_' + vm.enti.tpprAsociado.id | translate"></label> <input
+                    ng-if="vm.accion != 'edit'" ng-controller="PrmtsLupaController" type="text"
+                    autocomplete="off" ng-model="vm.item.prmtAsociado"
+                    typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.tpprAsociado.id, $viewValue, null, vm.fechaVigencia)"
+                    typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                 <p ng-if="vm.accion == 'edit'" class="form-control-static"
                     ng-bind="vm.item.prmtAsociado.etiqueta"></p>
             </div>

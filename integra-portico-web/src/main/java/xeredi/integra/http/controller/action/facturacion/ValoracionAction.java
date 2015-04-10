@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -23,21 +23,19 @@ import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionAction.
  */
-public final class ValoracionAction extends BaseAction {
+public final class ValoracionAction extends ItemAction implements ModelDriven<ValoracionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4129919965585365201L;
 
-    /** The accion. */
-    private ACCION_EDICION accion;
-
     /** The vlrc. */
-    private ValoracionVO vlrc;
+    private ValoracionVO model;
 
     /** The aspc. */
     private AspectoVO aspc;
@@ -68,16 +66,16 @@ public final class ValoracionAction extends BaseAction {
      */
     @Action("vlrc-detail")
     public String detalle() throws ApplicationException {
-        Preconditions.checkNotNull(vlrc);
-        Preconditions.checkNotNull(vlrc.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final AspectoBO aspcBO = new AspectoBO();
         final ValoracionBO vlrcBO = new ValoracionBO();
 
-        vlrc = vlrcBO.select(vlrc.getId(), getIdioma());
-        vlriList = vlrcBO.selectVlriList(vlrc.getId(), getIdioma());
-        vlrgList = vlrcBO.selectVlrgList(vlrc.getId(), getIdioma());
-        aspc = aspcBO.select(vlrc.getAspc().getId(), vlrc.getFref(), getIdioma());
+        model = vlrcBO.select(model.getId(), getIdioma());
+        vlriList = vlrcBO.selectVlriList(model.getId(), getIdioma());
+        vlrgList = vlrcBO.selectVlrgList(model.getId(), getIdioma());
+        aspc = aspcBO.select(model.getAspc().getId(), model.getFref(), getIdioma());
         tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
 
         return SUCCESS;
@@ -92,19 +90,19 @@ public final class ValoracionAction extends BaseAction {
      */
     @Action("vlrc-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
-        if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(vlrc);
-            Preconditions.checkNotNull(vlrc.getId());
+        if (getAccion() == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(model);
+            Preconditions.checkNotNull(model.getId());
 
             final ValoracionBO vlrcBO = new ValoracionBO();
             final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
-            vlrcCriterio.setId(vlrc.getId());
+            vlrcCriterio.setId(model.getId());
             vlrcCriterio.setIdioma(getIdioma());
 
-            vlrc = vlrcBO.select(vlrc.getId(), getIdioma());
+            model = vlrcBO.select(model.getId(), getIdioma());
         } else {
             tpsrList = TipoServicioProxy.selectLabelValues();
         }
@@ -122,37 +120,37 @@ public final class ValoracionAction extends BaseAction {
      */
     @Action("vlrc-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
-        if (vlrc == null) {
-            vlrc = new ValoracionVO();
+        if (model == null) {
+            model = new ValoracionVO();
         }
 
-        if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(vlrc.getId());
+        if (getAccion() == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(model.getId());
         }
 
-        if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_srvc, vlrc.getSrvc());
-            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_aspc, vlrc.getAspc());
-            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_fliq, vlrc.getFliq());
-            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_fref, vlrc.getFref());
+        if (getAccion() == ACCION_EDICION.create) {
+            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_srvc, model.getSrvc());
+            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_aspc, model.getAspc());
+            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_fliq, model.getFliq());
+            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_fref, model.getFref());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.vlrc_pagador, vlrc.getPagador());
-        FieldValidator.validateRequired(this, MessageI18nKey.vlrc_sujPasivo, vlrc.getSujPasivo());
-        FieldValidator.validateRequired(this, MessageI18nKey.vlrc_codExencion, vlrc.getCodExencion());
+        FieldValidator.validateRequired(this, MessageI18nKey.vlrc_pagador, model.getPagador());
+        FieldValidator.validateRequired(this, MessageI18nKey.vlrc_sujPasivo, model.getSujPasivo());
+        FieldValidator.validateRequired(this, MessageI18nKey.vlrc_codExencion, model.getCodExencion());
 
         if (!hasErrors()) {
             final ValoracionBO vlrcBO = new ValoracionBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
-                vlrcBO.insert(vlrc);
+                vlrcBO.insert(model);
 
                 break;
             case edit:
-                vlrcBO.update(vlrc);
+                vlrcBO.update(model);
 
                 break;
             default:
@@ -172,12 +170,12 @@ public final class ValoracionAction extends BaseAction {
      */
     @Action("vlrc-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(vlrc);
-        Preconditions.checkNotNull(vlrc.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final ValoracionBO vlrcBO = new ValoracionBO();
 
-        vlrcBO.delete(vlrc.getId());
+        vlrcBO.delete(model.getId());
 
         return SUCCESS;
     }
@@ -189,8 +187,9 @@ public final class ValoracionAction extends BaseAction {
      *
      * @return the vlrc
      */
-    public ValoracionVO getVlrc() {
-        return vlrc;
+    @Override
+    public ValoracionVO getModel() {
+        return model;
     }
 
     /**
@@ -199,8 +198,8 @@ public final class ValoracionAction extends BaseAction {
      * @param value
      *            the vlrc
      */
-    public void setVlrc(final ValoracionVO value) {
-        vlrc = value;
+    public void setModel(final ValoracionVO value) {
+        model = value;
     }
 
     /**
@@ -219,16 +218,6 @@ public final class ValoracionAction extends BaseAction {
      */
     public List<ValoracionImpuestoVO> getVlriList() {
         return vlriList;
-    }
-
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
     }
 
     /**

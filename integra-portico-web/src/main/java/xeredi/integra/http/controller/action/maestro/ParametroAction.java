@@ -1,12 +1,15 @@
 package xeredi.integra.http.controller.action.maestro;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.comun.ItemAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.bo.PuertoBO;
@@ -16,19 +19,24 @@ import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.comun.vo.PuertoCriterioVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
+import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ParametroAction.
  */
-public final class ParametroAction extends ItemAction {
+public final class ParametroAction extends ItemAction implements ModelDriven<ParametroVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 477492673223023219L;
@@ -37,13 +45,16 @@ public final class ParametroAction extends ItemAction {
     private TipoParametroVO enti;
 
     /** The prmt . */
-    private ParametroVO item;
+    private ParametroVO model;
 
     /** The p18n map. */
     private Map<String, I18nVO> i18nMap;
 
     /** The prto list. */
     private List<PuertoVO> prtoList;
+
+    /** The label values map. */
+    private Map<Long, List<LabelValueVO>> labelValuesMap;
 
     // Acciones web
     /**
@@ -55,27 +66,26 @@ public final class ParametroAction extends ItemAction {
      */
     @Action("prmt-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getEntiId());
+        Preconditions.checkNotNull(getAccion());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
         Preconditions.checkNotNull(getFechaVigencia());
 
-        enti = TipoParametroProxy.select(item.getEntiId());
+        enti = TipoParametroProxy.select(model.getEntiId());
 
-        if (accion != ACCION_EDICION.create) {
-            Preconditions.checkNotNull(item.getId());
+        if (getAccion() != ACCION_EDICION.create) {
+            Preconditions.checkNotNull(model.getId());
 
-            final ParametroBO prmtBO = ParametroBOFactory.newInstance(item.getEntiId());
+            final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
 
-            item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
+            model = prmtBO.select(model.getId(), getIdioma(), getFechaVigencia());
 
             if (enti.isI18n()) {
-                i18nMap = I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
+                i18nMap = I18nBO.selectMap(I18nPrefix.prvr, model.getPrvr().getId());
             }
         }
 
-        loadLabelValuesMap(enti);
-        loadLabelValues();
+        loadLabelValuesMap();
 
         return SUCCESS;
     }
@@ -89,64 +99,64 @@ public final class ParametroAction extends ItemAction {
      */
     @Action("prmt-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getEntiId());
+        Preconditions.checkNotNull(getAccion());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
-        enti = TipoParametroProxy.select(item.getEntiId());
+        enti = TipoParametroProxy.select(model.getEntiId());
 
         // Validacion de Datos
-        if (accion != ACCION_EDICION.edit) {
+        if (getAccion() != ACCION_EDICION.edit) {
             if (enti.isPuerto()) {
-                FieldValidator.validateRequired(this, MessageI18nKey.prto, item.getPrto());
+                FieldValidator.validateRequired(this, MessageI18nKey.prto, model.getPrto());
 
                 if (!hasErrors()) {
-                    FieldValidator.validateRequired(this, MessageI18nKey.prto, item.getPrto().getId());
+                    FieldValidator.validateRequired(this, MessageI18nKey.prto, model.getPrto().getId());
                 }
             }
 
-            FieldValidator.validateRequired(this, MessageI18nKey.prmt_parametro, item.getParametro());
+            FieldValidator.validateRequired(this, MessageI18nKey.prmt_parametro, model.getParametro());
         }
 
-        if (accion != ACCION_EDICION.create) {
-            Preconditions.checkNotNull(item.getPrvr());
-            Preconditions.checkNotNull(item.getId());
-            Preconditions.checkNotNull(item.getPrvr().getId());
+        if (getAccion() != ACCION_EDICION.create) {
+            Preconditions.checkNotNull(model.getPrvr());
+            Preconditions.checkNotNull(model.getId());
+            Preconditions.checkNotNull(model.getPrvr().getId());
         }
 
-        if (item.getPrvr() == null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.prmt_fini, item.getPrvr());
+        if (model.getPrvr() == null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.prmt_fini, model.getPrvr());
         } else {
-            FieldValidator.validateRequired(this, MessageI18nKey.prmt_fini, item.getPrvr().getFini());
-            FieldValidator.validatePeriod(this, item.getPrvr().getFini(), item.getPrvr().getFfin());
+            FieldValidator.validateRequired(this, MessageI18nKey.prmt_fini, model.getPrvr().getFini());
+            FieldValidator.validatePeriod(this, model.getPrvr().getFini(), model.getPrvr().getFfin());
         }
 
         if (enti.isI18n()) {
             FieldValidator.validateI18n(this, i18nMap);
         }
 
-        FieldValidator.validateItem(this, enti, item);
+        FieldValidator.validateItem(this, enti, model);
 
         // Fin de validacion de datos
 
         if (!hasErrors()) {
-            final ParametroBO prmtBO = ParametroBOFactory.newInstance(item.getEntiId());
+            final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
-                prmtBO.insert(item, enti, i18nMap);
+                prmtBO.insert(model, enti, i18nMap);
 
                 break;
             case edit:
-                prmtBO.update(item, enti, i18nMap);
+                prmtBO.update(model, enti, i18nMap);
 
                 break;
             case duplicate:
-                prmtBO.duplicate(item, enti, i18nMap);
+                prmtBO.duplicate(model, enti, i18nMap);
 
                 break;
             default:
-                throw new Error("Accion no valida: " + accion);
+                throw new Error("Accion no valida: " + getAccion());
             }
         }
 
@@ -162,14 +172,14 @@ public final class ParametroAction extends ItemAction {
      */
     @Action("prmt-remove")
     public String remove() throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getPrvr());
-        Preconditions.checkNotNull(item.getPrvr().getId());
-        Preconditions.checkNotNull(item.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getPrvr());
+        Preconditions.checkNotNull(model.getPrvr().getId());
+        Preconditions.checkNotNull(model.getEntiId());
 
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(item.getEntiId());
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
 
-        prmtBO.delete(item);
+        prmtBO.delete(model);
 
         return SUCCESS;
     }
@@ -183,30 +193,33 @@ public final class ParametroAction extends ItemAction {
      */
     @Action("prmt-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
-        Preconditions.checkNotNull(item.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
+        Preconditions.checkNotNull(model.getEntiId());
 
         if (getFechaVigencia() == null) {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(item.getEntiId());
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
 
-        item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
-        enti = TipoParametroProxy.select(item.getEntiId());
+        model = prmtBO.select(model.getId(), getIdioma(), getFechaVigencia());
+        enti = TipoParametroProxy.select(model.getEntiId());
 
         if (enti.isI18n()) {
-            i18nMap = I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
+            i18nMap = I18nBO.selectMap(I18nPrefix.prvr, model.getPrvr().getId());
         }
 
         return SUCCESS;
     }
 
     /**
-     * Load label values.
+     * Load label values map.
+     *
+     * @throws ApplicationException
+     *             the application exception
      */
-    private void loadLabelValues() {
+    private void loadLabelValuesMap() throws ApplicationException {
         Preconditions.checkNotNull(enti);
 
         if (enti.isPuerto()) {
@@ -218,6 +231,26 @@ public final class ParametroAction extends ItemAction {
 
             prtoList = prtoBO.selectList(prtoCriterio);
         }
+
+        // Carga de los labelValues (Si los hay)
+        labelValuesMap = new HashMap<>();
+
+        final Set<Long> tpprIds = new HashSet<>();
+
+        if (enti.getEntdList() != null) {
+            for (final EntidadTipoDatoVO entdVO : enti.getEntdList()) {
+                if (entdVO.getFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
+                        && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
+                    tpprIds.add(entdVO.getTpdt().getEnti().getId());
+                }
+            }
+        }
+
+        if (!tpprIds.isEmpty()) {
+            final ParametroBO prmtBO = new DefaultParametroBO();
+
+            labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()));
+        }
     }
 
     // get / set
@@ -225,17 +258,8 @@ public final class ParametroAction extends ItemAction {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public final ParametroVO getItem() {
-        return item;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Long getPrtoId() {
-        return item == null || item.getPrto() == null ? null : item.getPrto().getId();
+        return model == null || model.getPrto() == null ? null : model.getPrto().getId();
     }
 
     /**
@@ -245,16 +269,6 @@ public final class ParametroAction extends ItemAction {
      */
     public List<PuertoVO> getPrtoList() {
         return prtoList;
-    }
-
-    /**
-     * Sets the item.
-     *
-     * @param value
-     *            the new item
-     */
-    public final void setItem(final ParametroVO value) {
-        item = value;
     }
 
     /**
@@ -283,5 +297,32 @@ public final class ParametroAction extends ItemAction {
      */
     public TipoParametroVO getEnti() {
         return enti;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ParametroVO getModel() {
+        return model;
+    }
+
+    /**
+     * Sets the model.
+     *
+     * @param model
+     *            the new model
+     */
+    public void setModel(final ParametroVO model) {
+        this.model = model;
+    }
+
+    /**
+     * Gets the label values map.
+     *
+     * @return the label values map
+     */
+    public Map<Long, List<LabelValueVO>> getLabelValuesMap() {
+        return labelValuesMap;
     }
 }

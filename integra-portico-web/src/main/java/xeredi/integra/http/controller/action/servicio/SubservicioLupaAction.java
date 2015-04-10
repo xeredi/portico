@@ -4,33 +4,29 @@ import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.proxy.ConfigurationProxy;
-import xeredi.integra.model.comun.vo.ConfigurationKey;
+import xeredi.integra.http.controller.action.LupaAction;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBOFactory;
 import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class SubservicioLupaAction.
  */
-public final class SubservicioLupaAction extends BaseAction {
+public final class SubservicioLupaAction extends LupaAction implements ModelDriven<SubservicioLupaCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -979190040769739626L;
 
-    /** The Constant ROWS. */
-    private static final int ROWS = ConfigurationProxy.getInt(ConfigurationKey.filter_limit);
+    /** The item lupa criterio. */
+    private SubservicioLupaCriterioVO model;
 
     /** The item list. */
     private List<SubservicioVO> itemList;
-
-    /** The item lupa criterio. */
-    private SubservicioLupaCriterioVO itemLupaCriterio;
 
     /**
      * Lupa.
@@ -39,14 +35,14 @@ public final class SubservicioLupaAction extends BaseAction {
      */
     @Action("ssrv-lupa")
     public String lupa() {
-        Preconditions.checkNotNull(itemLupaCriterio);
-        Preconditions.checkNotNull(itemLupaCriterio.getEntiId());
-        Preconditions.checkNotNull(itemLupaCriterio.getSrvcId());
-        Preconditions.checkNotNull(itemLupaCriterio.getNumero());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
+        Preconditions.checkNotNull(model.getSrvcId());
+        Preconditions.checkNotNull(model.getNumero());
 
-        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(itemLupaCriterio.getEntiId());
+        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId());
 
-        itemList = ssrvBO.selectLupaList(itemLupaCriterio, ROWS);
+        itemList = ssrvBO.selectLupaList(model, getLimit());
 
         return SUCCESS;
     }
@@ -54,12 +50,11 @@ public final class SubservicioLupaAction extends BaseAction {
     // get / set
 
     /**
-     * Gets the item lupa criterio.
-     *
-     * @return the item lupa criterio
+     * {@inheritDoc}
      */
-    public SubservicioLupaCriterioVO getItemLupaCriterio() {
-        return itemLupaCriterio;
+    @Override
+    public SubservicioLupaCriterioVO getModel() {
+        return model;
     }
 
     /**
@@ -68,8 +63,8 @@ public final class SubservicioLupaAction extends BaseAction {
      * @param value
      *            the new item lupa criterio
      */
-    public void setItemLupaCriterio(final SubservicioLupaCriterioVO value) {
-        itemLupaCriterio = value;
+    public void setModel(final SubservicioLupaCriterioVO value) {
+        model = value;
     }
 
     /**

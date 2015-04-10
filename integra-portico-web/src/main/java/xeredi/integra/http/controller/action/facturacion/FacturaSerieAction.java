@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -16,13 +16,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class FacturaSerieAction.
  */
-public final class FacturaSerieAction extends BaseAction implements ModelDriven<FacturaSerieVO> {
+public final class FacturaSerieAction extends ItemAction implements ModelDriven<FacturaSerieVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2617347238199516008L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The fcsr. */
     private FacturaSerieVO model;
@@ -57,9 +54,9 @@ public final class FacturaSerieAction extends BaseAction implements ModelDriven<
      */
     @Action("fcsr-edit")
     public String edit() throws ModelException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model);
             Preconditions.checkNotNull(model.getId());
 
@@ -82,17 +79,17 @@ public final class FacturaSerieAction extends BaseAction implements ModelDriven<
      */
     @Action("fcsr-save")
     public String save() throws ModelException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
         if (model == null) {
             model = new FacturaSerieVO();
         }
 
-        if (ACCION_EDICION.edit == accion) {
+        if (ACCION_EDICION.edit == getAccion()) {
             Preconditions.checkNotNull(model.getId());
         }
 
-        if (ACCION_EDICION.create == accion) {
+        if (ACCION_EDICION.create == getAccion()) {
             FieldValidator.validateRequired(this, MessageI18nKey.fcsr_serie, model.getSerie());
             FieldValidator.validateRequired(this, MessageI18nKey.fcsr_anio, model.getAnio());
         }
@@ -102,7 +99,7 @@ public final class FacturaSerieAction extends BaseAction implements ModelDriven<
         if (!hasErrors()) {
             final FacturaSerieBO fcsrBO = new FacturaSerieBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 fcsrBO.insert(model);
 
@@ -112,7 +109,7 @@ public final class FacturaSerieAction extends BaseAction implements ModelDriven<
 
                 break;
             default:
-                throw new Error("Accion no soportada: " + accion);
+                throw new Error("Accion no soportada: " + getAccion());
             }
         }
 
@@ -157,15 +154,4 @@ public final class FacturaSerieAction extends BaseAction implements ModelDriven<
     public void setModel(final FacturaSerieVO value) {
         model = value;
     }
-
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
-    }
-
 }

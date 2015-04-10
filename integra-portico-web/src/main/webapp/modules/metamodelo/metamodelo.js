@@ -67,7 +67,7 @@ angular.module("metamodelo", [])
 .controller("EnagEditController", EnagEditController)
 
 // ------------------- DEPENDENCIA ENTRE ENTIDADES --------------------
-.controller("EnenCreateController", EnenCreateController);
+.controller("EnenEditController", EnenEditController);
 
 function config($routeProvider) {
     $routeProvider
@@ -244,7 +244,7 @@ function config($routeProvider) {
         controllerAs : 'vm'
     })
 
-    .when("/metamodelo/enen/create/:entipId", {
+    .when("/metamodelo/enen/edit/:accion/:entipId", {
         templateUrl : "modules/metamodelo/enen-edit.html",
         controller : "EnenCreateController",
         controllerAs : 'vm'
@@ -1199,9 +1199,10 @@ function EnagEditController($http, $location, $routeParams, pageTitleService) {
     pageTitleService.setTitle("enag", "page_" + vm.accion);
 }
 
-function EnenCreateController($http, $routeParams, pageTitleService) {
+function EnenEditController($http, $routeParams, pageTitleService) {
     var vm = this;
 
+    vm.accion = $routeParams.accion;
     vm.save = save;
     vm.cancel = cancel;
 
@@ -1221,7 +1222,8 @@ function EnenCreateController($http, $routeParams, pageTitleService) {
     $http.post("metamodelo/enen-create.action", {
         model : {
             entiPadreId : $routeParams.entipId
-        }
+        },
+        accion : vm.accion
     }).success(function(data) {
         vm.enen = data.model;
         vm.entiList = data.tpssList;

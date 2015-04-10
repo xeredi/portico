@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import org.apache.ibatis.session.RowBounds;
+
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 
@@ -38,6 +40,17 @@ public interface EstadisticaDAO {
      * @return the list
      */
     List<EstadisticaVO> selectList(final @Nonnull EstadisticaCriterioVO estdCriterioVO);
+
+    /**
+     * Select list.
+     *
+     * @param estdCriterioVO
+     *            the estd criterio vo
+     * @param bounds
+     *            the bounds
+     * @return the list
+     */
+    List<EstadisticaVO> selectList(final @Nonnull EstadisticaCriterioVO estdCriterioVO, final RowBounds bounds);
 
     /**
      * Select object.

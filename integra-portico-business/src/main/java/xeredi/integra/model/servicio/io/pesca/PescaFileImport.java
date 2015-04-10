@@ -11,15 +11,16 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
+import xeredi.integra.model.proceso.batch.pesca.ProcesoCargaPesca;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.integra.proceso.ProcesoTemplate;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -40,13 +41,13 @@ public final class PescaFileImport {
     private static final Boolean SUJ_PAS_SUST = false;
 
     /** The srvc. */
-    private final ServicioVO srvc = new ServicioVO();
+    private ServicioVO srvc;
 
     /** The ssrv list. */
-    private final List<SubservicioVO> ssrvList = new ArrayList<>();
+    private List<SubservicioVO> ssrvList;
 
     /** The prmn list. */
-    private final ProcesoTemplate proceso;
+    private final ProcesoCargaPesca proceso;
 
     /**
      * Instantiates a new pesca file import.
@@ -54,7 +55,7 @@ public final class PescaFileImport {
      * @param aproceso
      *            the aproceso
      */
-    public PescaFileImport(final @Nonnull ProcesoTemplate aproceso) {
+    public PescaFileImport(final @Nonnull ProcesoCargaPesca aproceso) {
         super();
 
         proceso = aproceso;
@@ -72,6 +73,9 @@ public final class PescaFileImport {
         // Generacion del servicio
         final Calendar calendar = Calendar.getInstance();
 
+        srvc = new ServicioVO();
+        ssrvList = new ArrayList<SubservicioVO>();
+
         srvc.setAnno(String.valueOf(calendar.get(Calendar.YEAR)));
         srvc.setEntiId(Entidad.MANIFIESTO_PESCA.getId());
         srvc.setItdtMap(new HashMap<Long, ItemDatoVO>());
@@ -86,7 +90,7 @@ public final class PescaFileImport {
         for (final String line : lines) {
             i++;
 
-            srvc.setSubp(getTokenMaestro(PescaKeyword.MAN_Subp, line, i, Entidad.SUBPUERTO));
+            srvc.setPrto(getTokenPrto(PescaKeyword.MAN_Subp, line, i));
             srvc.setEstado(ESTADO_MANIFIESTO);
 
             srvc.addItdt(TipoDato.BUQUE_PESCA.getId(),
@@ -161,7 +165,6 @@ public final class PescaFileImport {
                 proceso.addCodigoMaestro(Entidad.BUQUE_PESCA, getTokenString(PescaKeyword.MAN_BuqueAlt, line, i));
             }
 
-            proceso.addCodigoMaestro(Entidad.SUBPUERTO, getTokenString(PescaKeyword.MAN_Subp, line, i));
             proceso.addCodigoMaestro(Entidad.BUQUE_PESCA, getTokenString(PescaKeyword.MAN_Buque, line, i));
             proceso.addCodigoMaestro(Entidad.TIPO_OPERACION_PESCA,
                     getTokenString(PescaKeyword.MAN_TipoOperacion, line, i));
@@ -178,6 +181,16 @@ public final class PescaFileImport {
         }
 
         proceso.addCodigoMaestro(Entidad.TIPO_IVA, TIPO_IVA);
+    }
+
+    private PuertoVO getTokenPrto(final PescaKeyword keyword, final String line, final int lineNumber) {
+        final String codigo = getTokenString(keyword, line, lineNumber);
+
+        if (!proceso.getPrtoMap().containsKey(codigo)) {
+            proceso.addError(MensajeCodigo.G_001, "linea: " + lineNumber + ", puerto: " + codigo);
+        }
+
+        return proceso.getPrtoMap().get(codigo);
     }
 
     /**

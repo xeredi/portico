@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -22,13 +22,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class CodigoReferenciaAction.
  */
-public final class CodigoReferenciaAction extends BaseAction implements ModelDriven<CodigoReferenciaVO> {
+public final class CodigoReferenciaAction extends ItemAction implements ModelDriven<CodigoReferenciaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4021150215007821288L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The cdrf form. */
     private CodigoReferenciaVO model;
@@ -46,11 +43,11 @@ public final class CodigoReferenciaAction extends BaseAction implements ModelDri
      */
     @Action("cdrf-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getTpdtId());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model.getId());
 
             final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
@@ -73,13 +70,13 @@ public final class CodigoReferenciaAction extends BaseAction implements ModelDri
      */
     @Action("cdrf-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getTpdtId());
         Preconditions.checkNotNull(i18nMap);
 
         // Validacion de datos
-        if (accion == ACCION_EDICION.create) {
+        if (getAccion() == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.cdrf_valor, model.getValor());
         } else {
             Preconditions.checkNotNull(model.getId());
@@ -92,7 +89,7 @@ public final class CodigoReferenciaAction extends BaseAction implements ModelDri
         if (!hasErrors()) {
             final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 cdrfBO.insert(model, i18nMap);
 
@@ -102,7 +99,7 @@ public final class CodigoReferenciaAction extends BaseAction implements ModelDri
 
                 break;
             default:
-                throw new Error("Accion " + accion + " no implementada");
+                throw new Error("Accion " + getAccion() + " no implementada");
             }
         }
 
@@ -166,16 +163,6 @@ public final class CodigoReferenciaAction extends BaseAction implements ModelDri
      */
     public void setModel(final CodigoReferenciaVO value) {
         model = value;
-    }
-
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
     }
 
     /**

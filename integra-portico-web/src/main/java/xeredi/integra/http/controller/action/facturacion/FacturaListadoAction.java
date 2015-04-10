@@ -2,30 +2,28 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.http.controller.action.PaginatedGrid;
+import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.facturacion.bo.FacturaBO;
 import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaVO;
 import xeredi.util.pagination.PaginatedList;
 
+import com.opensymphony.xwork2.ModelDriven;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturaListadoAction.
  */
-public final class FacturaListadoAction extends BaseAction implements PaginatedGrid {
+public final class FacturaListadoAction extends PaginableAction implements ModelDriven<FacturaCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -46147994205400361L;
 
     /** The fctr criterio. */
-    private FacturaCriterioVO fctrCriterio;
+    private FacturaCriterioVO model;
 
     /** The fctr list. */
     private PaginatedList<FacturaVO> fctrList;
-
-    /** The page. */
-    private int page = PaginatedList.FIRST_PAGE;
 
     // acciones web
 
@@ -38,12 +36,11 @@ public final class FacturaListadoAction extends BaseAction implements PaginatedG
     public String list() {
         final FacturaBO fctrBO = new FacturaBO();
 
-        if (fctrCriterio == null) {
-            fctrCriterio = new FacturaCriterioVO();
+        if (model == null) {
+            model = new FacturaCriterioVO();
         }
 
-        fctrList = fctrBO.selectList(fctrCriterio, PaginatedList.getOffset(page, ROWS_PER_PAGE_DEFAULT),
-                ROWS_PER_PAGE_DEFAULT);
+        fctrList = fctrBO.selectList(model, getOffset(), getLimit());
 
         return SUCCESS;
     }
@@ -51,12 +48,11 @@ public final class FacturaListadoAction extends BaseAction implements PaginatedG
     // get / set
 
     /**
-     * Gets the fctr criterio.
-     *
-     * @return the fctr criterio
+     * {@inheritDoc}
      */
-    public FacturaCriterioVO getFctrCriterio() {
-        return fctrCriterio;
+    @Override
+    public FacturaCriterioVO getModel() {
+        return model;
     }
 
     /**
@@ -65,8 +61,8 @@ public final class FacturaListadoAction extends BaseAction implements PaginatedG
      * @param value
      *            the new fctr criterio
      */
-    public void setFctrCriterio(final FacturaCriterioVO value) {
-        fctrCriterio = value;
+    public void setModel(final FacturaCriterioVO value) {
+        model = value;
     }
 
     /**
@@ -77,24 +73,4 @@ public final class FacturaListadoAction extends BaseAction implements PaginatedG
     public PaginatedList<FacturaVO> getFctrList() {
         return fctrList;
     }
-
-    /**
-     * Gets the page.
-     *
-     * @return the page
-     */
-    public int getPage() {
-        return page;
-    }
-
-    /**
-     * Sets the page.
-     *
-     * @param value
-     *            the new page
-     */
-    public void setPage(final int value) {
-        page = value;
-    }
-
 }

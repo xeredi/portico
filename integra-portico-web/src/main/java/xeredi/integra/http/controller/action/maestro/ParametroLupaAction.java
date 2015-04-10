@@ -5,10 +5,8 @@ import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.LupaAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.proxy.ConfigurationProxy;
-import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
@@ -17,31 +15,22 @@ import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ParametroLupaAction.
  */
-public final class ParametroLupaAction extends BaseAction {
+public final class ParametroLupaAction extends LupaAction implements ModelDriven<ParametroLupaCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5446558166864475230L;
 
-    /** The Constant ROWS. */
-    private static final int ROWS = ConfigurationProxy.getInt(ConfigurationKey.filter_limit);
+    /** The criterio vo. */
+    private ParametroLupaCriterioVO model;
 
     /** The prmts. */
     private List<ParametroVO> itemList;
-
-    /** The criterio vo. */
-    private ParametroLupaCriterioVO itemLupaCriterio;
-
-    /**
-     * Instantiates a new parametro lupa action.
-     */
-    public ParametroLupaAction() {
-        super();
-    }
 
     // Acciones Web
     /**
@@ -53,36 +42,35 @@ public final class ParametroLupaAction extends BaseAction {
      */
     @Action("prmt-lupa")
     public String lupa() throws ApplicationException {
-        Preconditions.checkNotNull(itemLupaCriterio);
-        Preconditions.checkNotNull(itemLupaCriterio.getEntiId());
-        Preconditions.checkNotNull(itemLupaCriterio.getTextoBusqueda());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
+        Preconditions.checkNotNull(model.getTextoBusqueda());
 
-        if (itemLupaCriterio.getFechaVigencia() == null) {
-            itemLupaCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        if (model.getFechaVigencia() == null) {
+            model.setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(itemLupaCriterio.getEntiId());
-        final TipoParametroVO enti = TipoParametroProxy.select(itemLupaCriterio.getEntiId());
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
+        final TipoParametroVO enti = TipoParametroProxy.select(model.getEntiId());
 
         if (enti.isI18n()) {
-            itemLupaCriterio.setIdioma(getIdioma());
+            model.setIdioma(getIdioma());
         } else if (enti.getTpdtNombre() != null) {
-            itemLupaCriterio.setTpdtNombreId(enti.getTpdtNombre().getId());
+            model.setTpdtNombreId(enti.getTpdtNombre().getId());
         }
 
-        itemList = prmtBO.selectLupaList(itemLupaCriterio, ROWS);
+        itemList = prmtBO.selectLupaList(model, getLimit());
 
         return SUCCESS;
     }
 
     // get / set
     /**
-     * Gets the item lupa criterio.
-     *
-     * @return the item lupa criterio
+     * {@inheritDoc}
      */
-    public ParametroLupaCriterioVO getItemLupaCriterio() {
-        return itemLupaCriterio;
+    @Override
+    public ParametroLupaCriterioVO getModel() {
+        return model;
     }
 
     /**
@@ -91,8 +79,8 @@ public final class ParametroLupaAction extends BaseAction {
      * @param value
      *            the new item lupa criterio
      */
-    public void setItemLupaCriterio(final ParametroLupaCriterioVO value) {
-        itemLupaCriterio = value;
+    public void setModel(final ParametroLupaCriterioVO value) {
+        model = value;
     }
 
     /**

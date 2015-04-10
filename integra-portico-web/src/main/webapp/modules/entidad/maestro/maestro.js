@@ -2,8 +2,6 @@ angular.module("maestro", [])
 
 .config(config)
 
-.factory('sprmService', sprmService)
-
 // ----------------- MENU PRINCIPAL --------------------------
 .controller("MaestroController", MaestroController)
 
@@ -65,29 +63,6 @@ function config($routeProvider) {
     ;
 }
 
-function sprmService($http) {
-    return {
-        search : search
-    };
-
-    function search(subentiId, prmtId, page, fechaVigencia) {
-        return $http.post("maestro/sprm-list.action", {
-            page : page,
-            itemCriterio : {
-                prmt : {
-                    id : prmtId
-                },
-                entiId : subentiId,
-                fechaVigencia : fechaVigencia
-            }
-        }).then(searchComplete);
-
-        function searchComplete(response) {
-            return response.data;
-        }
-    }
-}
-
 function MaestroController($http, $translate, pageTitleService) {
     var vm = this;
 
@@ -118,14 +93,14 @@ function PrmtGridController($location, $routeParams, $http, $modal, pageTitleSer
 
     function search(page) {
         $http.post("maestro/prmt-list.action", {
-            itemCriterio : vm.itemCriterio,
+            model : vm.itemCriterio,
             page : page,
             limit : vm.itemCriterio.limit
         }).success(function(data) {
+            vm.itemCriterio = data.model;
             vm.enti = data.enti;
             vm.page = data.itemList.page;
             vm.itemList = data.itemList;
-            vm.itemCriterio = data.itemCriterio;
 
             $location.search({
                 page : vm.page,
@@ -156,7 +131,7 @@ function PrmtGridController($location, $routeParams, $http, $modal, pageTitleSer
 
     function filter(size) {
         $http.post("maestro/prmt-filter.action", {
-            itemCriterio : vm.itemCriterio
+            model : vm.itemCriterio
         }).success(function(data) {
             vm.labelValuesMap = data.labelValuesMap;
             vm.limits = data.limits;
@@ -187,7 +162,7 @@ function PrmtGridController($location, $routeParams, $http, $modal, pageTitleSer
     pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }
 
-function PrmtDetailController($http, $location, $routeParams, sprmService, pageTitleService) {
+function PrmtDetailController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.pageChanged = pageChanged;
@@ -207,12 +182,7 @@ function PrmtDetailController($http, $location, $routeParams, sprmService, pageT
     function remove() {
         if (confirm("Are you sure?")) {
             $http.post("maestro/prmt-remove.action", {
-                item : {
-                    prvr : {
-                        id : vm.item.prvr.id
-                    },
-                    entiId : $routeParams.entiId
-                }
+                model : vm.item
             }).success(function(data) {
                 window.history.back();
             });
@@ -247,36 +217,40 @@ function PrmtDetailController($http, $location, $routeParams, sprmService, pageT
     vm.fechaVigencia = $routeParams.fechaVigencia ? $routeParams.fechaVigencia : new Date();
 
     $http.post("maestro/prmt-detail.action", {
-        item : {
+        model : {
             id : $routeParams.itemId,
             entiId : $routeParams.entiId
         },
         fechaVigencia : vm.fechaVigencia
-    }).success(
-            function(data) {
-                if (data.enti) {
-                    vm.enti = data.enti;
-                    vm.item = data.item;
-                    vm.i18nMap = data.i18nMap;
+    }).success(function(data) {
+        vm.item = data.model;
+        vm.enti = data.enti;
+        vm.i18nMap = data.i18nMap;
 
-                    if (data.item.prto) {
-                        vm.prtoId = data.item.prto.id;
+        if (data.model.prto) {
+            vm.prtoId = data.item.prto.id;
+        }
+
+        vm.itemHijosMap = {};
+        vm.entiHijasMap = {};
+
+        if (data.enti && vm.enti.entiHijasList) {
+            for (i = 0; i < vm.enti.entiHijasList.length; i++) {
+                $http.post("maestro/sprm-list.action", {
+                    model : {
+                        prmt : {
+                            id : vm.item.id
+                        },
+                        entiId : vm.enti.entiHijasList[i],
+                        fechaVigencia : vm.fechaVigencia
                     }
-
-                    vm.itemHijosMap = {};
-                    vm.entiHijasMap = {};
-
-                    if (vm.enti.entiHijasList) {
-                        for (i = 0; i < vm.enti.entiHijasList.length; i++) {
-                            sprmService.search(vm.enti.entiHijasList[i], vm.item.id, 1,
-                                    $routeParams.fechaVigencia).then(function(data) {
-                                vm.entiHijasMap[data.enti.id] = data.enti;
-                                vm.itemHijosMap[data.enti.id] = data.itemList;
-                            });
-                        }
-                    }
-                }
-            });
+                }).success(function(data) {
+                    vm.entiHijasMap[data.enti.id] = data.enti;
+                    vm.itemHijosMap[data.enti.id] = data.itemList;
+                });
+            }
+        }
+    });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
@@ -290,7 +264,7 @@ function PrmtEditController($http, $location, $routeParams, pageTitleService) {
 
     function save() {
         $http.post("maestro/prmt-save.action", {
-            item : vm.item,
+            model : vm.item,
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(
@@ -298,8 +272,8 @@ function PrmtEditController($http, $location, $routeParams, pageTitleService) {
                     vm.accion == 'edit' ? setTimeout(function() {
                         window.history.back();
                     }, 0) : $location.path(
-                            "/maestro/prmt/detail/" + data.item.entiId + "/" + data.item.id + "/"
-                                    + data.item.prvr.fini).replace();
+                            "/maestro/prmt/detail/" + data.model.entiId + "/" + data.model.id + "/"
+                                    + data.model.prvr.fini).replace();
                 });
     }
 
@@ -310,21 +284,21 @@ function PrmtEditController($http, $location, $routeParams, pageTitleService) {
     vm.fechaVigencia = $routeParams.fechaVigencia ? $routeParams.fechaVigencia : new Date();
 
     $http.post("maestro/prmt-edit.action", {
-        item : {
+        model : {
             id : $routeParams.itemId,
             entiId : $routeParams.entiId
         },
         accion : vm.accion,
         fechaVigencia : vm.fechaVigencia
     }).success(function(data) {
+        vm.item = data.model;
         vm.enti = data.enti;
-        vm.item = data.item;
         vm.i18nMap = data.i18nMap;
         vm.labelValuesMap = data.labelValuesMap;
         vm.prtoList = data.prtoList;
 
-        if (data.item.prto) {
-            vm.prtoId = data.item.prto.id;
+        if (data.model.prto) {
+            vm.prtoId = data.model.prto.id;
         }
     });
 
@@ -338,7 +312,7 @@ function PrmtsLupaController($http, $scope) {
         }
 
         return $http.post("maestro/prmt-lupa.action", {
-            itemLupaCriterio : {
+            model : {
                 entiId : entiId,
                 textoBusqueda : textoBusqueda,
                 fechaVigencia : fechaVigencia,
@@ -358,11 +332,7 @@ function SprmDetailController($http, $routeParams, pageTitleService) {
     function remove() {
         if (confirm("Are you sure?")) {
             $http.post("maestro/sprm-remove.action", {
-                item : {
-                    spvr : {
-                        id : vm.item.spvr.id
-                    }
-                }
+                model : vm.item
             }).success(function(data) {
                 window.history.back();
             });
@@ -370,7 +340,7 @@ function SprmDetailController($http, $routeParams, pageTitleService) {
     }
 
     $http.post("maestro/sprm-detail.action", {
-        item : {
+        model : {
             id : $routeParams.itemId
         },
         fechaVigencia : $routeParams.fechaVigencia
@@ -378,7 +348,7 @@ function SprmDetailController($http, $routeParams, pageTitleService) {
         vm.enti = data.enti;
         vm.fechaVigencia = data.fechaVigencia;
         vm.prtoId = data.prtoId;
-        vm.item = data.item;
+        vm.item = data.model;
     });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
@@ -393,15 +363,15 @@ function SprmEditController($http, $location, $routeParams, pageTitleService) {
 
     function save() {
         $http.post("maestro/sprm-save.action", {
-            item : vm.item,
+            model : vm.item,
             accion : vm.accion
         }).success(
                 function(data) {
                     vm.accion == 'edit' ? setTimeout(function() {
                         window.history.back();
                     }, 0) : $location.path(
-                            "/maestro/sprm/detail/" + data.item.entiId + "/" + data.item.id + "/"
-                                    + data.item.spvr.fini).replace();
+                            "/maestro/sprm/detail/" + data.model.entiId + "/" + data.model.id + "/"
+                                    + data.model.spvr.fini).replace();
                 });
     }
 
@@ -410,7 +380,7 @@ function SprmEditController($http, $location, $routeParams, pageTitleService) {
     }
 
     $http.post("maestro/sprm-edit.action", {
-        item : {
+        model : {
             entiId : $routeParams.entiId,
             prmtId : $routeParams.prmtId,
             id : $routeParams.itemId
@@ -421,7 +391,7 @@ function SprmEditController($http, $location, $routeParams, pageTitleService) {
         vm.enti = data.enti;
         vm.fechaVigencia = data.fechaVigencia;
         vm.prtoId = data.prtoId;
-        vm.item = data.item;
+        vm.item = data.model;
         vm.labelValuesMap = data.labelValuesMap;
     });
 

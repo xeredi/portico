@@ -70,4 +70,13 @@ public abstract class PaginableAction extends BaseAction {
         return (page - PaginatedList.FIRST_PAGE) * limit;
     }
 
+    /**
+     * Gets the limits.
+     *
+     * @return the limits
+     */
+    public final int[] getLimits() {
+        return VALID_ROWS_PER_PAGE;
+    }
+
 }

@@ -11,7 +11,7 @@
             data-template="modules/entidad/estadistica/pepr-filter-content.html" bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
         </button>
-        <a class="btn btn-default" ng-href="#/estadistica/pepr/prepareLoad"><i
+        <a class="btn btn-default" ng-href="#/estadistica/pepr/load"><i
             class="glyphicon glyphicon-upload"></i> <span translate>btn_cargar</span></a> <a
             class="btn btn-default" ng-href="#/estadistica/pepr/create"><i
             class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
@@ -26,7 +26,7 @@
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th class="codigo" nowrap="nowrap" translate>pepr_autp</th>
+                <th class="codigo" nowrap="nowrap" translate>sprt</th>
                 <th translate>pepr_anio</th>
                 <th translate>pepr_mes</th>
                 <th translate>pepr_cdmsGenerado</th>
@@ -37,7 +37,7 @@
             <tr ng-repeat="item in vm.peprList.list track by $index">
                 <td><a ng-href="#/estadistica/pepr/detail/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="item.autp.parametro"></td>
+                <td ng-bind="item.sprt.etiqueta"></td>
                 <td ng-bind="item.anio" class="number"></td>
                 <td ng-bind="item.mes" class="number"></td>
                 <td><i class="glyphicon glyphicon-{{item.cdmsGenerado ? 'ok' : 'remove'}}"></i></td>

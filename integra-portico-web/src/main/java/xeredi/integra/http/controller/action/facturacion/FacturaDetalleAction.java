@@ -2,24 +2,25 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.FacturaBO;
 import xeredi.integra.model.facturacion.vo.FacturaDetalleVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturaDetalleAction.
  */
-public final class FacturaDetalleAction extends BaseAction {
+public final class FacturaDetalleAction extends ItemAction implements ModelDriven<FacturaDetalleVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8458951832194099421L;
 
     /** The fctd. */
-    private FacturaDetalleVO fctd;
+    private FacturaDetalleVO model;
 
     /**
      * Detail.
@@ -28,23 +29,22 @@ public final class FacturaDetalleAction extends BaseAction {
      */
     @Action("fctd-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(fctd);
-        Preconditions.checkNotNull(fctd.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final FacturaBO fctdBO = new FacturaBO();
 
-        fctd = fctdBO.selectFctd(fctd.getId());
+        model = fctdBO.selectFctd(model.getId());
 
         return SUCCESS;
     }
 
     /**
-     * Gets the fctd.
-     *
-     * @return the fctd
+     * {@inheritDoc}
      */
-    public FacturaDetalleVO getFctd() {
-        return fctd;
+    @Override
+    public FacturaDetalleVO getModel() {
+        return model;
     }
 
     /**
@@ -53,8 +53,8 @@ public final class FacturaDetalleAction extends BaseAction {
      * @param value
      *            the new fctd
      */
-    public void setFctd(final FacturaDetalleVO value) {
-        fctd = value;
+    public void setModel(final FacturaDetalleVO value) {
+        model = value;
     }
 
 }

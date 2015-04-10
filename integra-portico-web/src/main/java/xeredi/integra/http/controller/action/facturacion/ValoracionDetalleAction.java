@@ -2,25 +2,26 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionDetalleAction.
  */
-public final class ValoracionDetalleAction extends BaseAction {
+public final class ValoracionDetalleAction extends ItemAction implements ModelDriven<ValoracionDetalleVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8445459876553622926L;
 
     /** The vlrd. */
-    private ValoracionDetalleVO vlrd;
+    private ValoracionDetalleVO model;
 
     /** The vlrl. */
     private ValoracionLineaVO vlrl;
@@ -39,13 +40,13 @@ public final class ValoracionDetalleAction extends BaseAction {
      */
     @Action("vlrd-detail")
     public String detalle() throws ApplicationException {
-        Preconditions.checkNotNull(vlrd);
-        Preconditions.checkNotNull(vlrd.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final ValoracionBO vlrcBO = new ValoracionBO();
 
-        vlrd = vlrcBO.selectVlrd(vlrd.getId());
-        vlrl = vlrcBO.selectVlrl(vlrd.getVlrlId(), getIdioma());
+        model = vlrcBO.selectVlrd(model.getId());
+        vlrl = vlrcBO.selectVlrl(model.getVlrlId(), getIdioma());
 
         if (vlrl.getId() == vlrl.getPadreId()) {
             vlrlPadre = vlrl;
@@ -59,12 +60,11 @@ public final class ValoracionDetalleAction extends BaseAction {
     // get / set
 
     /**
-     * Gets the vlrd.
-     *
-     * @return the vlrd
+     * {@inheritDoc}
      */
-    public ValoracionDetalleVO getVlrd() {
-        return vlrd;
+    @Override
+    public ValoracionDetalleVO getModel() {
+        return model;
     }
 
     /**
@@ -73,8 +73,8 @@ public final class ValoracionDetalleAction extends BaseAction {
      * @param value
      *            the vlrd
      */
-    public void setVlrd(final ValoracionDetalleVO value) {
-        vlrd = value;
+    public void setModel(final ValoracionDetalleVO value) {
+        model = value;
     }
 
     /**

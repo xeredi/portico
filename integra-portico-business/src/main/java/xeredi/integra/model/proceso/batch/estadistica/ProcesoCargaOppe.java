@@ -1,4 +1,4 @@
-package xeredi.integra.proceso.estadistica.cargaoppe;
+package xeredi.integra.model.proceso.batch.estadistica;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

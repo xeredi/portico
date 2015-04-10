@@ -1,21 +1,26 @@
-package xeredi.integra.proceso.servicio.pesca;
+package xeredi.integra.model.proceso.batch.pesca;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import xeredi.integra.model.comun.bo.ArchivoBO;
+import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
+import xeredi.integra.model.comun.vo.PuertoCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
@@ -34,12 +39,23 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ProcesoCargaPesca.class);
 
+    /** The prto map. */
+    private Map<String, PuertoVO> prtoMap;
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void prepararProcesos() {
         final ProcesoBO prbtBO = new ProcesoBO();
+        final PuertoBO prtoBO = new PuertoBO();
+        final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+
+        prtoMap = new HashMap<>();
+
+        for (final PuertoVO prto : prtoBO.selectList(prtoCriterio)) {
+            prtoMap.put(prto.getCodigoCorto(), prto);
+        }
 
         final String folderPath = ConfigurationProxy.getString(ConfigurationKey.pesca_files_entrada_home);
         final File folder = new File(folderPath);
@@ -133,5 +149,14 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
     @Override
     protected ItemTipo getItemTipoSalida() {
         return ItemTipo.srvc;
+    }
+
+    /**
+     * Gets the prto map.
+     *
+     * @return the prto map
+     */
+    public Map<String, PuertoVO> getPrtoMap() {
+        return prtoMap;
     }
 }

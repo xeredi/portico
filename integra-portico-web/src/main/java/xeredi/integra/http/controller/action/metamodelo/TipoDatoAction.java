@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -30,13 +30,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class TipoDatoAction.
  */
-public final class TipoDatoAction extends BaseAction implements ModelDriven<TipoDatoVO> {
+public final class TipoDatoAction extends ItemAction implements ModelDriven<TipoDatoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7405460701196255597L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The tppr. */
     private TipoDatoVO model;
@@ -63,9 +60,9 @@ public final class TipoDatoAction extends BaseAction implements ModelDriven<Tipo
      */
     @Action("tpdt-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model);
             Preconditions.checkNotNull(model.getId());
 
@@ -91,13 +88,13 @@ public final class TipoDatoAction extends BaseAction implements ModelDriven<Tipo
      */
     @Action("tpdt-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
         if (model == null) {
             model = new TipoDatoVO();
         }
 
-        if (accion == ACCION_EDICION.create) {
+        if (getAccion() == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.tpdt_codigo, model.getCodigo());
         } else {
             Preconditions.checkNotNull(model.getId());
@@ -115,7 +112,7 @@ public final class TipoDatoAction extends BaseAction implements ModelDriven<Tipo
         if (!hasErrors()) {
             final TipoDatoBO tpdtBO = new TipoDatoBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 tpdtBO.insert(model, i18nMap);
 
@@ -125,7 +122,7 @@ public final class TipoDatoAction extends BaseAction implements ModelDriven<Tipo
 
                 break;
             default:
-                throw new Error("Accion no soportada: " + accion);
+                throw new Error("Accion no soportada: " + getAccion());
             }
         }
 
@@ -229,16 +226,6 @@ public final class TipoDatoAction extends BaseAction implements ModelDriven<Tipo
      */
     public TipoElemento[] getTpelList() {
         return TipoElemento.values();
-    }
-
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
     }
 
     /**

@@ -4,11 +4,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.comun.ItemListadoAction;
+import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.PuertoCriterioVO;
@@ -22,18 +23,23 @@ import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EstadisticaListadoAction.
  */
-public final class EstadisticaListadoAction extends ItemListadoAction {
+public final class EstadisticaListadoAction extends PaginableAction implements ModelDriven<EstadisticaCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3980612360200744744L;
+
+    /** The estd criterio form. */
+    private EstadisticaCriterioVO model;
 
     /** The enti. */
     private TipoEstadisticaVO enti;
@@ -41,11 +47,11 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
     /** The estds. */
     private PaginatedList<EstadisticaVO> itemList;
 
-    /** The estd criterio form. */
-    private EstadisticaCriterioVO itemCriterio;
-
     /** The subp list. */
     private List<PuertoVO> prtoList;
+
+    /** The label values map. */
+    private Map<Long, List<LabelValueVO>> labelValuesMap;
 
     // Acciones web
     /**
@@ -57,13 +63,13 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      */
     @Action("estd-filter")
     public String filtro() throws ApplicationException {
-        Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getEntiId());
-        Preconditions.checkNotNull(itemCriterio.getPepr());
-        Preconditions.checkNotNull(itemCriterio.getPepr().getId());
-        Preconditions.checkNotNull(itemCriterio.getPepr().getSprtId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
+        Preconditions.checkNotNull(model.getPepr());
+        Preconditions.checkNotNull(model.getPepr().getId());
+        Preconditions.checkNotNull(model.getPepr().getSprtId());
 
-        itemCriterio.setIdioma(getIdioma());
+        model.setIdioma(getIdioma());
 
         loadLabelValuesMap();
 
@@ -79,20 +85,20 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      */
     @Action("estd-list")
     public String listado() throws ApplicationException {
-        Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getEntiId());
-        Preconditions.checkNotNull(itemCriterio.getPepr());
-        Preconditions.checkNotNull(itemCriterio.getPepr().getId());
-        Preconditions.checkNotNull(itemCriterio.getPepr().getSprtId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
+        Preconditions.checkNotNull(model.getPepr());
+        Preconditions.checkNotNull(model.getPepr().getId());
+        Preconditions.checkNotNull(model.getPepr().getSprtId());
 
         final EstadisticaBO estdBO = new EstadisticaBO();
 
-        itemCriterio.setSoloDatosGrid(true);
-        itemCriterio.setIdioma(getIdioma());
+        model.setSoloDatosGrid(true);
+        model.setIdioma(getIdioma());
 
-        itemList = estdBO.selectList(itemCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
+        itemList = estdBO.selectList(model, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 
-        enti = TipoEstadisticaProxy.select(itemCriterio.getEntiId());
+        enti = TipoEstadisticaProxy.select(model.getEntiId());
 
         return SUCCESS;
     }
@@ -106,17 +112,17 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      *             the application exception
      */
     protected final void loadLabelValuesMap() throws ApplicationException {
-        Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getEntiId());
-        Preconditions.checkNotNull(itemCriterio.getPepr());
-        Preconditions.checkNotNull(itemCriterio.getPepr().getId());
-        Preconditions.checkNotNull(itemCriterio.getPepr().getSprtId());
-        Preconditions.checkNotNull(itemCriterio.getIdioma());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
+        Preconditions.checkNotNull(model.getPepr());
+        Preconditions.checkNotNull(model.getPepr().getId());
+        Preconditions.checkNotNull(model.getPepr().getSprtId());
+        Preconditions.checkNotNull(model.getIdioma());
 
         final ParametroBO prmtBO = new DefaultParametroBO();
 
         {
-            final TipoEstadisticaVO enti = TipoEstadisticaProxy.select(itemCriterio.getEntiId());
+            final TipoEstadisticaVO enti = TipoEstadisticaProxy.select(model.getEntiId());
 
             // Carga de los labelValues (Si los hay)
             final Set<Long> tpprIds = new HashSet<>();
@@ -132,8 +138,8 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
 
             if (!tpprIds.isEmpty()) {
                 labelValuesMap = new HashMap<>();
-                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(),
-                        getItemCriterio().getIdioma()));
+                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(), getModel()
+                        .getIdioma()));
             }
         }
 
@@ -152,8 +158,8 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      * {@inheritDoc}
      */
     @Override
-    public final EstadisticaCriterioVO getItemCriterio() {
-        return itemCriterio;
+    public final EstadisticaCriterioVO getModel() {
+        return model;
     }
 
     /**
@@ -162,8 +168,8 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      * @param value
      *            the new item criterio
      */
-    public final void setItemCriterio(final EstadisticaCriterioVO value) {
-        itemCriterio = value;
+    public final void setModel(final EstadisticaCriterioVO value) {
+        model = value;
     }
 
     /**
@@ -191,6 +197,15 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      */
     public TipoEstadisticaVO getEnti() {
         return enti;
+    }
+
+    /**
+     * Gets the label values map.
+     *
+     * @return the label values map
+     */
+    public Map<Long, List<LabelValueVO>> getLabelValuesMap() {
+        return labelValuesMap;
     }
 
 }

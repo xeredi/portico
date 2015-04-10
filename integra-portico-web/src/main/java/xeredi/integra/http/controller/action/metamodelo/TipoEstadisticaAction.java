@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -21,13 +21,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class TipoEstadisticaAction.
  */
-public final class TipoEstadisticaAction extends BaseAction implements ModelDriven<TipoEstadisticaVO> {
+public final class TipoEstadisticaAction extends ItemAction implements ModelDriven<TipoEstadisticaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3174617805403065108L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The tpes form. */
     private TipoEstadisticaVO model;
@@ -45,9 +42,9 @@ public final class TipoEstadisticaAction extends BaseAction implements ModelDriv
      */
     @Action("tpes-edit")
     public String modificar() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model);
             Preconditions.checkNotNull(model.getId());
 
@@ -71,14 +68,14 @@ public final class TipoEstadisticaAction extends BaseAction implements ModelDriv
      */
     @Action("tpes-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
         if (model == null) {
             model = new TipoEstadisticaVO();
         }
 
         // Validaciones
-        if (accion == ACCION_EDICION.create) {
+        if (getAccion() == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.enti_codigo, model.getCodigo());
         } else {
             Preconditions.checkNotNull(model.getId());
@@ -89,7 +86,7 @@ public final class TipoEstadisticaAction extends BaseAction implements ModelDriv
         if (!hasErrors()) {
             final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 model.setCodigo(model.getCodigo().toUpperCase());
                 tpesBO.insert(model, i18nMap);
@@ -100,7 +97,7 @@ public final class TipoEstadisticaAction extends BaseAction implements ModelDriv
 
                 break;
             default:
-                throw new Error("Accion no soportada: " + accion);
+                throw new Error("Accion no soportada: " + getAccion());
             }
         }
 
@@ -147,15 +144,6 @@ public final class TipoEstadisticaAction extends BaseAction implements ModelDriv
     }
 
     // get / set
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
-    }
 
     /**
      * {@inheritDoc}

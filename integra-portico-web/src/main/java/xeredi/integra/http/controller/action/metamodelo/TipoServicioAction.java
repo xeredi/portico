@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -32,13 +32,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class TipoServicioAction.
  */
-public final class TipoServicioAction extends BaseAction implements ModelDriven<TipoServicioVO> {
+public final class TipoServicioAction extends ItemAction implements ModelDriven<TipoServicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5123740111042031938L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The tpsr. */
     private TipoServicioVO model;
@@ -65,9 +62,9 @@ public final class TipoServicioAction extends BaseAction implements ModelDriven<
      */
     @Action("tpsr-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model);
             Preconditions.checkNotNull(model.getId());
 
@@ -75,7 +72,6 @@ public final class TipoServicioAction extends BaseAction implements ModelDriven<
 
             model = tpsrBO.select(model.getId(), getIdioma());
             i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
-            accion = ACCION_EDICION.edit;
         } else {
             model = new TipoServicioVO();
         }
@@ -102,7 +98,7 @@ public final class TipoServicioAction extends BaseAction implements ModelDriven<
      */
     @Action("tpsr-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
         if (model == null) {
             model = new TipoServicioVO();
@@ -110,7 +106,7 @@ public final class TipoServicioAction extends BaseAction implements ModelDriven<
 
         // Validaciones
 
-        if (accion == ACCION_EDICION.create) {
+        if (getAccion() == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.enti_codigo, model.getCodigo());
         } else {
             Preconditions.checkNotNull(model.getId());
@@ -129,7 +125,7 @@ public final class TipoServicioAction extends BaseAction implements ModelDriven<
         if (!hasErrors()) {
             final TipoServicioBO tpsrBO = new TipoServicioBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 model.setCodigo(model.getCodigo().toUpperCase());
                 tpsrBO.insert(model, i18nMap);
@@ -140,7 +136,7 @@ public final class TipoServicioAction extends BaseAction implements ModelDriven<
 
                 break;
             default:
-                throw new Error(accion + " noimplementado");
+                throw new Error(getAccion() + " noimplementado");
             }
         }
 
@@ -226,16 +222,6 @@ public final class TipoServicioAction extends BaseAction implements ModelDriven<
      */
     public List<TipoSubservicioVO> getSubentiList() {
         return subentiList;
-    }
-
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
     }
 
     /**

@@ -103,7 +103,7 @@ public final class ParametroPdfTest {
 
                 final Map<String, I18nVO> i18nMap = new HashMap<>();
 
-                if (tpprVO.getI18n()) {
+                if (tpprVO.isI18n()) {
                     i18nMap.putAll(I18nBO.selectMap(I18nPrefix.prvr, prmtVO.getPrvr().getId()));
                 }
 

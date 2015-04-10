@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.FacturaBO;
@@ -15,21 +15,19 @@ import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
 import xeredi.integra.model.facturacion.vo.FacturaVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturaAction.
  */
-public final class FacturaAction extends BaseAction {
+public final class FacturaAction extends ItemAction implements ModelDriven<FacturaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2376088438196649237L;
 
-    /** The accion. */
-    private ACCION_EDICION accion;
-
     /** The fctr. */
-    private FacturaVO fctr;
+    private FacturaVO model;
 
     /** The aspc. */
     private AspectoVO aspc;
@@ -52,17 +50,17 @@ public final class FacturaAction extends BaseAction {
      */
     @Action("fctr-detail")
     public String detail() throws ApplicationException {
-        Preconditions.checkNotNull(fctr);
-        Preconditions.checkNotNull(fctr.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final FacturaBO fctrBO = new FacturaBO();
         final AspectoBO aspcBO = new AspectoBO();
 
-        fctr = fctrBO.select(fctr.getId());
-        aspc = aspcBO.select(fctr.getAspc().getId(), fctr.getFref(), getIdioma());
-        fctsList = fctrBO.selectFctsList(fctr.getId());
-        fctiList = fctrBO.selectFctiList(fctr.getId());
-        fctgList = fctrBO.selectFctgList(fctr.getId());
+        model = fctrBO.select(model.getId());
+        aspc = aspcBO.select(model.getAspc().getId(), model.getFref(), getIdioma());
+        fctsList = fctrBO.selectFctsList(model.getId());
+        fctiList = fctrBO.selectFctiList(model.getId());
+        fctgList = fctrBO.selectFctgList(model.getId());
 
         return SUCCESS;
     }
@@ -76,13 +74,13 @@ public final class FacturaAction extends BaseAction {
      */
     @Action("fctr-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(fctr);
-        Preconditions.checkNotNull(fctr.getId());
+        Preconditions.checkNotNull(getAccion());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final FacturaBO fctrBO = new FacturaBO();
 
-        fctr = fctrBO.select(fctr.getId());
-        accion = ACCION_EDICION.edit;
+        model = fctrBO.select(model.getId());
 
         return SUCCESS;
     }
@@ -100,12 +98,11 @@ public final class FacturaAction extends BaseAction {
     // get / set
 
     /**
-     * Gets the fctr.
-     *
-     * @return the fctr
+     * {@inheritDoc}
      */
-    public FacturaVO getFctr() {
-        return fctr;
+    @Override
+    public FacturaVO getModel() {
+        return model;
     }
 
     /**
@@ -114,8 +111,8 @@ public final class FacturaAction extends BaseAction {
      * @param value
      *            the new fctr
      */
-    public void setFctr(final FacturaVO value) {
-        fctr = value;
+    public void setModel(final FacturaVO value) {
+        model = value;
     }
 
     /**
@@ -143,25 +140,6 @@ public final class FacturaAction extends BaseAction {
      */
     public List<FacturaCargoVO> getFctgList() {
         return fctgList;
-    }
-
-    /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
-    }
-
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
     }
 
     /**

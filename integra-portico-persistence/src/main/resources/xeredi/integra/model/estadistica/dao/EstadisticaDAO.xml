@@ -19,14 +19,31 @@
 			<result column="pepr_anio" property="anio" />
 			<result column="pepr_mes" property="mes" />
 
-			<association property="autp" javaType="ParametroVO">
+			<association property="sprt" javaType="SuperpuertoVO">
 				<result column="pepr_autp_pk" property="id" />
-				<result column="pepr_autp" property="parametro" />
+				<result column="sprt_codigo" property="codigo" />
 			</association>
 		</association>
 	</resultMap>
 
-	<sql id="SelectPrefixIdioma">
+	<sql id="SelectPrefix">
+    <![CDATA[
+	SELECT
+		estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
+		, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
+		, (
+			SELECT prto_codigo
+			FROM tbl_puerto_prto
+			WHERE
+				prto_pk = estd_subp_pk
+		) AS prto_codigo
+		, (
+			SELECT sprt_codigo
+			FROM tbl_superpuerto_sprt
+			WHERE
+				sprt_pk = pepr_autp_pk
+		) AS sprt_codigo
+        ]]>
 		<if test="idioma != null">
         <![CDATA[
 		, (
@@ -45,152 +62,11 @@
 		) AS p18n_texto
     	]]>
 		</if>
-	</sql>
-
-	<sql id="SelectPrefix" databaseId="postgres">
     <![CDATA[
-	SELECT
-		estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
-		, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
-		, (
-			SELECT prto_codigo
-			FROM tbl_puerto_prto
-			WHERE
-				prto_pk = estd_subp_pk
-		) AS prto_codigo
-		, (
-			SELECT prmt_parametro
-			FROM tbl_parametro_prmt
-			WHERE
-				prmt_pk = pepr_autp_pk
-		) AS pepr_autp
-        ]]>
-		<include refid="SelectPrefixIdioma" />
-    <![CDATA[
-	FROM (
-		SELECT
-			estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
-			, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
-			, NULL AS rownumVar
-		FROM
-			tbl_estadistica_estd
-			INNER JOIN tbl_periodo_proceso_pepr ON
-				pepr_pk = estd_pepr_pk
-    ]]>
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-    <![CDATA[
-		ORDER BY estd_tpes_pk, estd_pk
-    ]]>
-		<if test="offset != null or limit != null">
-			<if test="offset != null">OFFSET ${offset} ROWS</if>
-			<if test="limit != null">FETCH NEXT ${limit} ROWS ONLY</if>
-		</if>
-    <![CDATA[
-	) sql
-    ]]>
-	</sql>
-
-	<sql id="SelectPrefix" databaseId="sqlserver">
-    <![CDATA[
-	SELECT
-		estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
-		, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
-		, (
-			SELECT prto_codigo
-			FROM tbl_puerto_prto
-			WHERE
-				prto_pk = estd_subp_pk
-		) AS prto_codigo
-		, (
-			SELECT prmt_parametro
-			FROM tbl_parametro_prmt
-			WHERE
-				prmt_pk = pepr_autp_pk
-		) AS pepr_autp
-        ]]>
-		<include refid="SelectPrefixIdioma" />
-    <![CDATA[
-	FROM (
-		SELECT
-			estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
-			, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
-			, NULL AS rownumVar
-		FROM
-			tbl_estadistica_estd
-			INNER JOIN tbl_periodo_proceso_pepr ON
-				pepr_pk = estd_pepr_pk
-    ]]>
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-    <![CDATA[
-		ORDER BY estd_tpes_pk, estd_pk
-    ]]>
-		<if test="offset != null or limit != null">
-			<if test="offset != null">OFFSET ${offset} ROWS</if>
-			<if test="limit != null">FETCH NEXT ${limit} ROWS ONLY</if>
-		</if>
-    <![CDATA[
-	) sql
-    ]]>
-	</sql>
-
-	<sql id="SelectPrefix" databaseId="oracle">
-    <![CDATA[
-	SELECT
-		estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
-		, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
-		, (
-			SELECT prto_codigo
-			FROM tbl_puerto_prto
-			WHERE
-				prto_pk = estd_subp_pk
-		) AS prto_codigo
-		, (
-			SELECT prmt_parametro
-			FROM tbl_parametro_prmt
-			WHERE
-				prmt_pk = pepr_autp_pk
-		) AS pepr_autp
-        ]]>
-		<include refid="SelectPrefixIdioma" />
-    <![CDATA[
-	FROM (
-		SELECT *
-		FROM (
-			SELECT
-				estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
-				, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
-				, row_number() over
-				(ORDER BY estd_tpes_pk, estd_pk) rownumVar
-			FROM
-				tbl_estadistica_estd
-				INNER JOIN tbl_periodo_proceso_pepr ON
-					pepr_pk = estd_pepr_pk
-    ]]>
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-    <![CDATA[
-			ORDER BY estd_tpes_pk, estd_pk
-    	) sql
-    ]]>
-		<if test="offset != null or limit != null">
-			<where>
-				<if test="offset != null">AND rownumVar > ${offset}</if>
-				<if test="limit != null">
-			    <![CDATA[
-					AND rownumVar <= (${limit}
-				]]>
-					<if test="offset != null">+ ${offset}</if>
-					)
-				</if>
-			</where>
-		</if>
-    <![CDATA[
-	) sql
+	FROM
+		tbl_estadistica_estd
+		INNER JOIN tbl_periodo_proceso_pepr ON
+			pepr_pk = estd_pepr_pk
     ]]>
 	</sql>
 
@@ -219,8 +95,8 @@
 			<if test="pepr.id != null">
 				AND pepr_pk = #{pepr.id}
 			</if>
-			<if test="pepr.autpId != null">
-				AND pepr_autp_pk = #{pepr.autpId}
+			<if test="pepr.sprtId != null">
+				AND pepr_autp_pk = #{pepr.sprtId}
 			</if>
 	    	<![CDATA[
 		    	)
@@ -273,10 +149,16 @@
 
 	<select id="selectList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
+		<where>
+			<include refid="SelectWhere" />
+		</where>
 	</select>
 
 	<select id="selectObject" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
+		<where>
+			<include refid="SelectWhere" />
+		</where>
 	</select>
 
 	<insert id="insert" parameterType="EstadisticaVO">

@@ -449,8 +449,10 @@ public final class OppeFileImport {
 
                 final String alineacion = "***" + getTokenString(EstadisticaFileKeyword.EMM_Alineacion, line, i);
 
-                estd.addItdt(TipoDato.ALIN.getId(),
-                        getMaestro(EstadisticaFileKeyword.EMM_Alineacion, line, i, Entidad.ALINEACION, alineacion));
+                estd.addItdt(
+                        TipoDato.ALIN.getId(),
+                        getMaestro(EstadisticaFileKeyword.EMM_Alineacion, i, Entidad.ALINEACION, estd.getPrto(),
+                                alineacion));
                 estd.addItdt(TipoDato.MERCANCIA.getId(),
                         getTokenMaestro(EstadisticaFileKeyword.EMM_Mercancia, line, i, Entidad.MERCANCIA));
                 estd.addItdt(TipoDato.TIPO_NAV.getId(),
@@ -468,8 +470,8 @@ public final class OppeFileImport {
 
                 estd.addItdt(
                         TipoDato.INST_ESP.getId(),
-                        getMaestro(EstadisticaFileKeyword.EMM_InstEspecial, line, i, Entidad.INSTALACION_ESPECIAL,
-                                instalacionEsp));
+                        getMaestro(EstadisticaFileKeyword.EMM_InstEspecial, i, Entidad.INSTALACION_ESPECIAL,
+                                estd.getPrto(), instalacionEsp));
                 estd.addItdt(TipoDato.TIPO_TRANSPORTE.getId(),
                         getTokenCR(EstadisticaFileKeyword.EMM_TipoTransporte, line, i, TipoDato.TIPO_TRANSPORTE));
                 estd.addItdt(TipoDato.DECIMAL_01.getId(), getTokenDouble(EstadisticaFileKeyword.EMM_Toneladas, line, i));
@@ -919,6 +921,33 @@ public final class OppeFileImport {
     }
 
     /**
+     * Gets the maestro.
+     *
+     * @param keyword
+     *            the keyword
+     * @param lineNumber
+     *            the line number
+     * @param entidad
+     *            the entidad
+     * @param prto
+     *            the prto
+     * @param codigo
+     *            the codigo
+     * @return the maestro
+     */
+    private ParametroVO getMaestro(final @Nonnull EstadisticaFileKeyword keyword, final int lineNumber,
+            final @Nonnull Entidad entidad, final PuertoVO prto, final String codigo) {
+        final ParametroVO prmt = proceso.findMaestro(entidad, prto, codigo);
+
+        if (prmt == null) {
+            proceso.addError(MensajeCodigo.G_001, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
+                    + ", entidad: " + entidad.name() + ", prto: " + prto.getCodigo() + ", codigo: " + codigo);
+        }
+
+        return prmt;
+    }
+
+    /**
      * Gets the token maestro generic.
      *
      * @param keyword
@@ -941,6 +970,17 @@ public final class OppeFileImport {
         return prmt;
     }
 
+    /**
+     * Gets the prto.
+     *
+     * @param keyword
+     *            the keyword
+     * @param line
+     *            the line
+     * @param lineNumber
+     *            the line number
+     * @return the prto
+     */
     public PuertoVO getPrto(final @Nonnull EstadisticaFileKeyword keyword, final @Nonnull String line,
             final int lineNumber) {
         final String codigo = getTokenString(keyword, line, lineNumber);
@@ -952,6 +992,12 @@ public final class OppeFileImport {
         return prtoMap.get(codigo);
     }
 
+    /**
+     * Sets the prto map.
+     *
+     * @param value
+     *            the value
+     */
     public void setPrtoMap(final Map<String, PuertoVO> value) {
         prtoMap = value;
     }

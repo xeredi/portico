@@ -3,11 +3,12 @@ package xeredi.integra.http.controller.action.servicio;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.comun.ItemListadoAction;
+import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.PuertoCriterioVO;
@@ -22,18 +23,23 @@ import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServicioListadoAction.
  */
-public final class ServicioListadoAction extends ItemListadoAction {
+public final class ServicioListadoAction extends PaginableAction implements ModelDriven<ServicioCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6459367626812047036L;
+
+    /** The srvc criterio form. */
+    private ServicioCriterioVO model;
 
     /** The enti. */
     private TipoServicioVO enti;
@@ -41,11 +47,11 @@ public final class ServicioListadoAction extends ItemListadoAction {
     /** The srvcs. */
     private PaginatedList<ServicioVO> itemList;
 
-    /** The srvc criterio form. */
-    private ServicioCriterioVO itemCriterio;
-
     /** The subps. */
     private List<PuertoVO> prtoList;
+
+    /** The label values map. */
+    private Map<Long, List<LabelValueVO>> labelValuesMap;
 
     // Acciones web
     /**
@@ -57,10 +63,10 @@ public final class ServicioListadoAction extends ItemListadoAction {
      */
     @Action("srvc-filter")
     public String filtro() throws ApplicationException {
-        Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
-        itemCriterio.setIdioma(getIdioma());
+        model.setIdioma(getIdioma());
 
         loadLabelValuesMap();
 
@@ -76,19 +82,19 @@ public final class ServicioListadoAction extends ItemListadoAction {
      */
     @Action("srvc-list")
     public String listado() throws ApplicationException {
-        Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(itemCriterio.getEntiId());
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId());
 
         // Traemos solo los datos 'gridables' de los parametros (Minimiza el
         // trafico con la BD)
-        itemCriterio.setSoloDatosGrid(true);
-        itemCriterio.setIdioma(getIdioma());
+        model.setSoloDatosGrid(true);
+        model.setIdioma(getIdioma());
 
-        itemList = srvcBO.selectList(itemCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
+        itemList = srvcBO.selectList(model, getOffset(), getLimit());
 
-        enti = TipoServicioProxy.select(itemCriterio.getEntiId());
+        enti = TipoServicioProxy.select(model.getEntiId());
 
         return SUCCESS;
     }
@@ -101,13 +107,13 @@ public final class ServicioListadoAction extends ItemListadoAction {
      * @throws ApplicationException
      *             the application exception
      */
-    protected final void loadLabelValuesMap() throws ApplicationException {
-        Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getIdioma());
-        Preconditions.checkNotNull(itemCriterio.getEntiId());
+    private final void loadLabelValuesMap() throws ApplicationException {
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getIdioma());
+        Preconditions.checkNotNull(model.getEntiId());
 
         final ParametroBO prmtBO = new DefaultParametroBO();
-        final TipoServicioVO enti = TipoServicioProxy.select(itemCriterio.getEntiId());
+        final TipoServicioVO enti = TipoServicioProxy.select(model.getEntiId());
         final Set<Long> tpprIds = new HashSet<>();
 
         if (enti.getEntdList() != null) {
@@ -120,8 +126,8 @@ public final class ServicioListadoAction extends ItemListadoAction {
         }
 
         if (!tpprIds.isEmpty()) {
-            labelValuesMap = prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(), getItemCriterio()
-                    .getIdioma());
+            labelValuesMap = prmtBO
+                    .selectLabelValues(tpprIds, Calendar.getInstance().getTime(), getModel().getIdioma());
         }
 
         final PuertoBO prtoBO = new PuertoBO();
@@ -146,8 +152,8 @@ public final class ServicioListadoAction extends ItemListadoAction {
      * {@inheritDoc}
      */
     @Override
-    public ServicioCriterioVO getItemCriterio() {
-        return itemCriterio;
+    public ServicioCriterioVO getModel() {
+        return model;
     }
 
     /**
@@ -156,8 +162,8 @@ public final class ServicioListadoAction extends ItemListadoAction {
      * @param value
      *            the new item criterio
      */
-    public void setItemCriterio(final ServicioCriterioVO value) {
-        itemCriterio = value;
+    public void setModel(final ServicioCriterioVO value) {
+        model = value;
     }
 
     /**
@@ -176,6 +182,15 @@ public final class ServicioListadoAction extends ItemListadoAction {
      */
     public TipoServicioVO getEnti() {
         return enti;
+    }
+
+    /**
+     * Gets the label values map.
+     *
+     * @return the label values map
+     */
+    public Map<Long, List<LabelValueVO>> getLabelValuesMap() {
+        return labelValuesMap;
     }
 
 }

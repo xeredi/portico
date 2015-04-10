@@ -140,11 +140,11 @@ function PeprDetailController($http, $routeParams, pageTitleService) {
     }
 
     $http.post("estadistica/pepr-detail.action", {
-        pepr : {
+        model : {
             id : $routeParams.peprId
         }
     }).success(function(data) {
-        vm.pepr = data.pepr;
+        vm.pepr = data.model;
         vm.tpesList = data.tpesList;
     });
 
@@ -159,7 +159,7 @@ function PeprLoadController($http, $location, pageTitleService) {
 
     function load() {
         $http.post("estadistica/pepr-cargar.action", {
-            pepr : vm.pepr,
+            model : vm.pepr,
             file : vm.file,
             sobreescribir : vm.sobreescribir
         }).success(function(data) {
@@ -233,18 +233,18 @@ function EstdGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.itemCriterio.entiId = $routeParams.entiId;
     vm.itemCriterio.pepr = {};
     vm.itemCriterio.pepr.id = $routeParams.peprId;
-    vm.itemCriterio.pepr.autpId = $routeParams.autpId;
+    vm.itemCriterio.pepr.sprtId = $routeParams.autpId;
 
     function search(page) {
         $http.post("estadistica/estd-list.action", {
-            itemCriterio : vm.itemCriterio,
+            model : vm.itemCriterio,
             page : page,
             limit : vm.itemCriterio.limit
         }).success(function(data) {
             vm.enti = data.enti;
             vm.page = data.itemList.page;
             vm.itemList = data.itemList;
-            vm.itemCriterio = data.itemCriterio;
+            vm.itemCriterio = data.model;
 
             $location.search({
                 page : vm.page,
@@ -275,7 +275,7 @@ function EstdGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     function filter(size) {
         $http.post("estadistica/estd-filter.action", {
-            itemCriterio : vm.itemCriterio
+            model : vm.itemCriterio
         }).success(function(data) {
             vm.labelValuesMap = data.labelValuesMap;
             vm.prtoList = data.prtoList;

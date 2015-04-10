@@ -7,7 +7,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import xeredi.integra.proceso.servicio.pesca.ProcesoCargaPesca;
+import xeredi.integra.model.proceso.batch.pesca.ProcesoCargaPesca;
 
 // TODO: Auto-generated Javadoc
 /**

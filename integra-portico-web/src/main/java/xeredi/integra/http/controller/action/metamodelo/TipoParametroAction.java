@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -29,13 +29,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class TipoParametroAction.
  */
-public final class TipoParametroAction extends BaseAction implements ModelDriven<TipoParametroVO> {
+public final class TipoParametroAction extends ItemAction implements ModelDriven<TipoParametroVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2717067151021279223L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The tppr. */
     private TipoParametroVO model;
@@ -59,9 +56,9 @@ public final class TipoParametroAction extends BaseAction implements ModelDriven
      */
     @Action("tppr-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model);
             Preconditions.checkNotNull(model.getId());
 
@@ -69,7 +66,6 @@ public final class TipoParametroAction extends BaseAction implements ModelDriven
 
             model = tpprBO.select(model.getId(), getIdioma());
             i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
-            accion = ACCION_EDICION.edit;
         } else {
             model = new TipoParametroVO();
         }
@@ -96,14 +92,14 @@ public final class TipoParametroAction extends BaseAction implements ModelDriven
      */
     @Action("tppr-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
         if (model == null) {
             model = new TipoParametroVO();
         }
 
         // Validaciones
-        if (accion == ACCION_EDICION.create) {
+        if (getAccion() == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.enti_codigo, model.getCodigo());
         } else {
             Preconditions.checkNotNull(model.getId());
@@ -121,7 +117,7 @@ public final class TipoParametroAction extends BaseAction implements ModelDriven
         if (!hasErrors()) {
             final TipoParametroBO tpprBO = new TipoParametroBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 model.setCodigo(model.getCodigo().toUpperCase());
                 tpprBO.insert(model, i18nMap);
@@ -132,7 +128,7 @@ public final class TipoParametroAction extends BaseAction implements ModelDriven
 
                 break;
             default:
-                throw new Error("Accion no soportada: " + accion);
+                throw new Error("Accion no soportada: " + getAccion());
             }
         }
 
@@ -187,16 +183,6 @@ public final class TipoParametroAction extends BaseAction implements ModelDriven
     }
 
     // get / set
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
-    }
-
     /**
      * Gets the subenti list.
      *

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -19,13 +19,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class CampoAgregacionAction.
  */
-public final class CampoAgregacionAction extends BaseAction implements ModelDriven<CampoAgregacionVO> {
+public final class CampoAgregacionAction extends ItemAction implements ModelDriven<CampoAgregacionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -155844770147053708L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The model. */
     private CampoAgregacionVO model;
@@ -43,11 +40,11 @@ public final class CampoAgregacionAction extends BaseAction implements ModelDriv
      */
     @Action("cmag-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getTpesId());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model.getEntd());
             Preconditions.checkNotNull(model.getEntd().getId());
 
@@ -68,12 +65,12 @@ public final class CampoAgregacionAction extends BaseAction implements ModelDriv
      */
     @Action("cmag-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getTpesId());
 
         // Validacion de datos
-        if (accion == ACCION_EDICION.create) {
+        if (getAccion() == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.cmag_entd, model.getEntd());
 
             if (!hasErrors()) {
@@ -90,7 +87,7 @@ public final class CampoAgregacionAction extends BaseAction implements ModelDriv
         if (!hasErrors()) {
             final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 cmagBO.insert(model);
 
@@ -100,7 +97,7 @@ public final class CampoAgregacionAction extends BaseAction implements ModelDriv
 
                 break;
             default:
-                throw new Error("Accion " + accion + " no implementada");
+                throw new Error("Accion " + getAccion() + " no implementada");
             }
         }
 
@@ -167,16 +164,6 @@ public final class CampoAgregacionAction extends BaseAction implements ModelDriv
      */
     public void setModel(final CampoAgregacionVO model) {
         this.model = model;
-    }
-
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
     }
 
     /**

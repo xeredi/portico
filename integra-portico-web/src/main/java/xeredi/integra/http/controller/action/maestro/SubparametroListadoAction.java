@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.comun.ItemListadoAction;
+import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
@@ -14,21 +14,22 @@ import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class SubparametroListadoAction.
  */
-public final class SubparametroListadoAction extends ItemListadoAction {
+public final class SubparametroListadoAction extends PaginableAction implements ModelDriven<SubparametroCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8182660007822844841L;
 
+    /** The item criterio. */
+    private SubparametroCriterioVO model;
+
     /** The item list. */
     private PaginatedList<SubparametroVO> itemList;
-
-    /** The item criterio. */
-    private SubparametroCriterioVO itemCriterio;
 
     /** The enti. */
     private TipoSubparametroVO enti;
@@ -42,24 +43,24 @@ public final class SubparametroListadoAction extends ItemListadoAction {
      */
     @Action("sprm-list")
     public String listado() throws ApplicationException {
-        Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getEntiId());
-        Preconditions.checkNotNull(itemCriterio.getPrmt().getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
+        Preconditions.checkNotNull(model.getPrmt().getId());
 
-        if (itemCriterio.getFechaVigencia() == null) {
-            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        if (model.getFechaVigencia() == null) {
+            model.setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        enti = TipoSubparametroProxy.select(itemCriterio.getEntiId());
+        enti = TipoSubparametroProxy.select(model.getEntiId());
 
         final SubparametroBO sprmBO = new SubparametroBO();
 
         // Traemos solo los datos 'gridables' de los parametros (Minimiza el
         // trafico con la BD)
-        itemCriterio.setSoloDatosGrid(true);
-        itemCriterio.setIdioma(getIdioma());
+        model.setSoloDatosGrid(true);
+        model.setIdioma(getIdioma());
 
-        itemList = sprmBO.selectList(itemCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
+        itemList = sprmBO.selectList(model, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 
         return SUCCESS;
     }
@@ -68,8 +69,8 @@ public final class SubparametroListadoAction extends ItemListadoAction {
      * {@inheritDoc}
      */
     @Override
-    public SubparametroCriterioVO getItemCriterio() {
-        return itemCriterio;
+    public SubparametroCriterioVO getModel() {
+        return model;
     }
 
     /**
@@ -78,8 +79,8 @@ public final class SubparametroListadoAction extends ItemListadoAction {
      * @param value
      *            the new item criterio
      */
-    public void setItemCriterio(final SubparametroCriterioVO value) {
-        itemCriterio = value;
+    public void setModel(final SubparametroCriterioVO value) {
+        model = value;
     }
 
     /**

@@ -4,11 +4,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.comun.ItemListadoAction;
+import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.PuertoCriterioVO;
@@ -22,30 +23,35 @@ import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ParametroListadoAction.
  */
-public final class ParametroListadoAction extends ItemListadoAction {
+public final class ParametroListadoAction extends PaginableAction implements ModelDriven<ParametroCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4719886690588825194L;
 
+    /** The criterio vo. */
+    private ParametroCriterioVO model;
+
     /** The prmts. */
     private PaginatedList<ParametroVO> itemList;
-
-    /** The criterio vo. */
-    private ParametroCriterioVO itemCriterio;
 
     /** The enti id. */
     private TipoParametroVO enti;
 
     /** The prto list. */
     private List<PuertoVO> prtoList;
+
+    /** The label values map. */
+    private Map<Long, List<LabelValueVO>> labelValuesMap;
 
     // Acciones web
     /**
@@ -57,16 +63,16 @@ public final class ParametroListadoAction extends ItemListadoAction {
      */
     @Action("prmt-filter")
     public String filter() throws ApplicationException {
-        Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
-        if (itemCriterio.getFechaVigencia() == null) {
-            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        if (model.getFechaVigencia() == null) {
+            model.setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        itemCriterio.setIdioma(getIdioma());
+        model.setIdioma(getIdioma());
 
-        enti = TipoParametroProxy.select(itemCriterio.getEntiId());
+        enti = TipoParametroProxy.select(model.getEntiId());
 
         loadLabelValuesMap();
 
@@ -82,21 +88,21 @@ public final class ParametroListadoAction extends ItemListadoAction {
      */
     @Action("prmt-list")
     public String list() throws ApplicationException {
-        Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
-        if (itemCriterio.getFechaVigencia() == null) {
-            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        if (model.getFechaVigencia() == null) {
+            model.setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        itemCriterio.setSoloDatosGrid(true);
-        itemCriterio.setIdioma(getIdioma());
+        model.setSoloDatosGrid(true);
+        model.setIdioma(getIdioma());
 
-        enti = TipoParametroProxy.select(itemCriterio.getEntiId());
+        enti = TipoParametroProxy.select(model.getEntiId());
 
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(itemCriterio.getEntiId());
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
 
-        itemList = prmtBO.selectList(itemCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
+        itemList = prmtBO.selectList(model, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 
         return SUCCESS;
     }
@@ -107,7 +113,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
      * @throws ApplicationException
      *             the application exception
      */
-    protected final void loadLabelValuesMap() throws ApplicationException {
+    private void loadLabelValuesMap() throws ApplicationException {
         Preconditions.checkNotNull(enti);
 
         if (enti.isPuerto()) {
@@ -137,8 +143,8 @@ public final class ParametroListadoAction extends ItemListadoAction {
         if (!tpprIds.isEmpty()) {
             final ParametroBO prmtBO = new DefaultParametroBO();
 
-            labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
-                    getItemCriterio().getIdioma()));
+            labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getModel().getFechaVigencia(), getModel()
+                    .getIdioma()));
         }
     }
 
@@ -148,8 +154,8 @@ public final class ParametroListadoAction extends ItemListadoAction {
      * {@inheritDoc}
      */
     @Override
-    public final ParametroCriterioVO getItemCriterio() {
-        return itemCriterio;
+    public final ParametroCriterioVO getModel() {
+        return model;
     }
 
     /**
@@ -158,8 +164,8 @@ public final class ParametroListadoAction extends ItemListadoAction {
      * @param value
      *            the new item criterio
      */
-    public final void setItemCriterio(final ParametroCriterioVO value) {
-        itemCriterio = value;
+    public final void setModel(final ParametroCriterioVO value) {
+        model = value;
     }
 
     /**
@@ -197,6 +203,15 @@ public final class ParametroListadoAction extends ItemListadoAction {
      */
     public List<PuertoVO> getPrtoList() {
         return prtoList;
+    }
+
+    /**
+     * Gets the label values map.
+     *
+     * @return the label values map
+     */
+    public Map<Long, List<LabelValueVO>> getLabelValuesMap() {
+        return labelValuesMap;
     }
 
 }

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -29,13 +29,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class TipoSubservicioAction.
  */
-public final class TipoSubservicioAction extends BaseAction implements ModelDriven<TipoSubservicioVO> {
+public final class TipoSubservicioAction extends ItemAction implements ModelDriven<TipoSubservicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1943908334114266376L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The tpss form. */
     private TipoSubservicioVO model;
@@ -62,11 +59,11 @@ public final class TipoSubservicioAction extends BaseAction implements ModelDriv
      */
     @Action("tpss-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getTpsrId());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model.getId());
 
             final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
@@ -97,11 +94,12 @@ public final class TipoSubservicioAction extends BaseAction implements ModelDriv
      */
     @Action("tpss-save")
     public String save() throws ApplicationException {
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getTpsrId());
 
         // Validaciones
-        if (accion == ACCION_EDICION.create) {
+        if (getAccion() == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.enti_codigo, model.getCodigo());
         } else {
             Preconditions.checkNotNull(model.getId());
@@ -120,7 +118,7 @@ public final class TipoSubservicioAction extends BaseAction implements ModelDriv
         if (!hasErrors()) {
             final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 model.setCodigo(model.getCodigo().toUpperCase());
                 tpssBO.insert(model, i18nMap);
@@ -131,7 +129,7 @@ public final class TipoSubservicioAction extends BaseAction implements ModelDriv
 
                 break;
             default:
-                throw new Error("Accion no contemplada: " + accion);
+                throw new Error("Accion no contemplada: " + getAccion());
             }
         }
 
@@ -197,16 +195,6 @@ public final class TipoSubservicioAction extends BaseAction implements ModelDriv
     }
 
     // get / set
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
-    }
-
     /**
      * {@inheritDoc}
      */

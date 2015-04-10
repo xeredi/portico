@@ -54,7 +54,7 @@ function config($routeProvider) {
 		templateUrl : "modules/administracion/conf-detail.html",
 		controller : "ConfDetailController",
 		controllerAs : "vm"
-	}).when("/administracion/conf/edit/:key", {
+	}).when("/administracion/conf/edit/:accion/:key?", {
 		title : 'conf_edit',
 		templateUrl : "modules/administracion/conf-edit.html",
 		controller : "ConfEditController",
@@ -130,11 +130,11 @@ function ConfDetailController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	$http.post("administracion/configuracion/conf-detail.action", {
-		conf : {
+		model : {
 			key : $routeParams.key
 		}
 	}).success(function(data) {
-		vm.conf = data.conf;
+		vm.conf = data.model;
 	});
 
 	pageTitleService.setTitle("conf", "page_detail");
@@ -143,12 +143,13 @@ function ConfDetailController($http, $routeParams, pageTitleService) {
 function ConfEditController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
+    vm.accion = $routeParams.accion;
 	vm.save = save;
 	vm.cancel = cancel;
 
 	function save() {
 		$http.post("administracion/configuracion/conf-save.action", {
-			conf : vm.conf,
+		    model : vm.conf,
 			accion : vm.accion
 		}).success(function(data) {
 			setTimeout(function() {
@@ -162,12 +163,12 @@ function ConfEditController($http, $routeParams, pageTitleService) {
 	}
 
 	$http.post("administracion/configuracion/conf-edit.action", {
-		conf : {
+	    model : {
 			key : $routeParams.key
-		}
+		},
+        accion : vm.accion
 	}).success(function(data) {
-		vm.accion = data.accion;
-		vm.conf = data.conf;
+		vm.conf = data.model;
 	});
 
 	pageTitleService.setTitle("conf", "page_edit");

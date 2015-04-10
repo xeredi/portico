@@ -20,12 +20,15 @@ import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
+import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
@@ -36,356 +39,379 @@ import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ProcesoTemplate.
  */
 public abstract class ProcesoTemplate {
 
-	/** The Constant LOG. */
-	private static final Log LOG = LogFactory.getLog(ProcesoTemplate.class);
+    /** The Constant LOG. */
+    private static final Log LOG = LogFactory.getLog(ProcesoTemplate.class);
 
-	/** The prbt vo. */
-	protected ProcesoVO prbt;
+    /** The prbt vo. */
+    protected ProcesoVO prbt;
 
-	/** The prmn list. */
-	protected List<ProcesoMensajeVO> prmnList;
+    /** The prmn list. */
+    protected List<ProcesoMensajeVO> prmnList;
 
-	/** The prit entrada list. */
-	protected List<ProcesoItemVO> pritEntradaList;
+    /** The prit entrada list. */
+    protected List<ProcesoItemVO> pritEntradaList;
 
-	/** The prit salida list. */
-	protected List<Long> itemSalidaList;
+    /** The prit salida list. */
+    protected List<Long> itemSalidaList;
 
-	/** The arin salida list. */
-	protected File fileSalida;
+    /** The arin salida list. */
+    protected File fileSalida;
 
-	/** The arin entrada list. */
-	protected List<ArchivoInfoVO> arinEntradaList;
+    /** The arin entrada list. */
+    protected List<ArchivoInfoVO> arinEntradaList;
 
-	/** The prpm map. */
-	protected Map<String, ProcesoParametroVO> prpmMap;
+    /** The prpm map. */
+    protected Map<String, ProcesoParametroVO> prpmMap;
 
-	/** The codigo maestro map. */
-	protected final Map<Entidad, Set<String>> codigoMaestroMap = new HashMap<>();
+    /** The codigo maestro map. */
+    protected final Map<Entidad, Set<String>> codigoMaestroMap = new HashMap<>();
 
-	/** The nif set. */
-	protected final Set<String> nifSet = new HashSet<>();
+    /** The nif set. */
+    protected final Set<String> nifSet = new HashSet<>();
 
-	/** The maestro map. */
-	protected final Map<Entidad, Map<String, ParametroVO>> maestroMap = new HashMap<>();
+    /** The maestro map. */
+    protected final Map<Entidad, Map<String, ParametroVO>> maestroMap = new HashMap<>();
 
-	/** The organizaciones map. */
-	protected final Map<String, ParametroVO> organizacionesMap = new HashMap<>();
+    /** The maestro prto map. */
+    protected final Map<Entidad, Map<Long, Map<String, ParametroVO>>> maestroPrtoMap = new HashMap<>();
 
-	/**
-	 * Procesar.
-	 */
-	public final void procesar() {
-		prepararProcesos();
+    /** The organizaciones map. */
+    protected final Map<String, ParametroVO> organizacionesMap = new HashMap<>();
 
-		final ProcesoBO prbtBO = new ProcesoBO();
+    /**
+     * Procesar.
+     */
+    public final void procesar() {
+        prepararProcesos();
 
-		do {
-			prbt = prbtBO.proteger(getProcesoTipo());
+        final ProcesoBO prbtBO = new ProcesoBO();
 
-			if (prbt != null) {
-				if (LOG.isDebugEnabled()) {
-					LOG.debug("Ejecucion del proceso: " + prbt);
-				}
+        do {
+            prbt = prbtBO.proteger(getProcesoTipo());
 
-				try {
-					prmnList = new ArrayList<>();
-					itemSalidaList = new ArrayList<>();
+            if (prbt != null) {
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("Ejecucion del proceso: " + prbt);
+                }
 
-					prpmMap = prbtBO.selectPrpmMap(prbt.getId());
-					arinEntradaList = prbtBO
-							.selectArinEntradaList(prbt.getId());
-					pritEntradaList = prbtBO
-							.selectPritEntradaList(prbt.getId());
+                try {
+                    prmnList = new ArrayList<>();
+                    itemSalidaList = new ArrayList<>();
 
-					ejecutarProceso();
-				} catch (final Throwable ex) {
-					LOG.fatal("Error en el Proceso " + prbt.getId());
-					LOG.fatal(ex, ex);
+                    prpmMap = prbtBO.selectPrpmMap(prbt.getId());
+                    arinEntradaList = prbtBO.selectArinEntradaList(prbt.getId());
+                    pritEntradaList = prbtBO.selectPritEntradaList(prbt.getId());
 
-					addError(MensajeCodigo.G_000, ex.getMessage());
-				}
+                    ejecutarProceso();
+                } catch (final Throwable ex) {
+                    LOG.fatal("Error en el Proceso " + prbt.getId());
+                    LOG.fatal(ex, ex);
 
-				try {
-					prbtBO.finalizar(prbt.getId(), prmnList,
-							getItemTipoSalida(), itemSalidaList, fileSalida);
-				} catch (final InstanceNotFoundException ex) {
-					LOG.fatal("Proceso " + prbt.getId()
-							+ " no encontrado al tratar de finalizarlo. "
-							+ prbt);
-				} catch (final OperacionNoPermitidaException ex) {
-					LOG.fatal("Proceso "
-							+ prbt.getId()
-							+ " en un estado invalido al tratar de finalizarlo. "
-							+ prbt);
-				}
-			}
-		} while (prbt != null);
-	}
+                    addError(MensajeCodigo.G_000, ex.getMessage());
+                }
 
-	/**
-	 * Buscar maestros.
-	 *
-	 * @param fechaVigencia
-	 *            the fecha vigencia
-	 */
-	protected final void buscarMaestros(final @Nonnull Date fechaVigencia) {
-		if (LOG.isInfoEnabled()) {
-			LOG.info("Busqueda de Maestros");
-		}
+                try {
+                    prbtBO.finalizar(prbt.getId(), prmnList, getItemTipoSalida(), itemSalidaList, fileSalida);
+                } catch (final InstanceNotFoundException ex) {
+                    LOG.fatal("Proceso " + prbt.getId() + " no encontrado al tratar de finalizarlo. " + prbt);
+                } catch (final OperacionNoPermitidaException ex) {
+                    LOG.fatal("Proceso " + prbt.getId() + " en un estado invalido al tratar de finalizarlo. " + prbt);
+                }
+            }
+        } while (prbt != null);
+    }
 
-		for (final Entidad entidad : codigoMaestroMap.keySet()) {
-			final ParametroBO prmtBO = ParametroBOFactory.newInstance(entidad
-					.getId());
-			final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+    /**
+     * Buscar maestros.
+     *
+     * @param fechaVigencia
+     *            the fecha vigencia
+     */
+    protected final void buscarMaestros(final @Nonnull Date fechaVigencia) {
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Busqueda de Maestros");
+        }
 
-			prmtCriterioVO.setEntiId(entidad.getId());
-			prmtCriterioVO.setParametros(codigoMaestroMap.get(entidad));
-			prmtCriterioVO.setFechaVigencia(fechaVigencia);
-			prmtCriterioVO.setIdioma(ConfigurationProxy
-					.getString(ConfigurationKey.language_default));
+        for (final Entidad entidad : codigoMaestroMap.keySet()) {
+            final TipoParametroVO tppr = TipoParametroProxy.select(entidad.getId());
+            final ParametroBO prmtBO = ParametroBOFactory.newInstance(entidad.getId());
+            final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
 
-			maestroMap.put(entidad, prmtBO.selectMapByCodigo(prmtCriterioVO));
-		}
-	}
+            prmtCriterio.setEntiId(entidad.getId());
+            prmtCriterio.setParametros(codigoMaestroMap.get(entidad));
+            prmtCriterio.setFechaVigencia(fechaVigencia);
+            prmtCriterio.setIdioma(ConfigurationProxy.getString(ConfigurationKey.language_default));
 
-	/**
-	 * Buscar organizaciones.
-	 *
-	 * @param fechaVigencia
-	 *            the fecha vigencia
-	 */
-	protected final void buscarOrganizaciones(final @Nonnull Date fechaVigencia) {
-		if (!nifSet.isEmpty()) {
-			if (LOG.isInfoEnabled()) {
-				LOG.info("Busqueda de Organizaciones");
-			}
+            maestroMap.put(entidad, new HashMap<String, ParametroVO>());
+            maestroPrtoMap.put(entidad, new HashMap<Long, Map<String, ParametroVO>>());
 
-			final ParametroBO prmtBO = ParametroBOFactory
-					.newInstance(Entidad.ORGANIZACION.getId());
-			final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+            for (final ParametroVO prmt : prmtBO.selectList(prmtCriterio)) {
+                if (tppr.isPuerto()) {
+                    if (!maestroPrtoMap.get(entidad).containsKey(prmt.getPrto().getId())) {
+                        maestroPrtoMap.get(entidad).put(prmt.getPrto().getId(), new HashMap<String, ParametroVO>());
+                    }
 
-			prmtCriterioVO.setItdtMap(new HashMap<Long, ItemDatoCriterioVO>());
-			prmtCriterioVO.setEntiId(Entidad.ORGANIZACION.getId());
-			prmtCriterioVO.setFechaVigencia(fechaVigencia);
+                    maestroPrtoMap.get(entidad).get(prmt.getPrto().getId()).put(prmt.getParametro(), prmt);
+                } else {
+                    maestroMap.get(entidad).put(prmt.getParametro(), prmt);
+                }
+            }
+        }
+    }
 
-			final ItemDatoCriterioVO itdtCriterioVO = new ItemDatoCriterioVO();
+    /**
+     * Buscar organizaciones.
+     *
+     * @param fechaVigencia
+     *            the fecha vigencia
+     */
+    protected final void buscarOrganizaciones(final @Nonnull Date fechaVigencia) {
+        if (!nifSet.isEmpty()) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Busqueda de Organizaciones");
+            }
 
-			itdtCriterioVO.setTpdtId(TipoDato.CADENA_02.getId());
-			itdtCriterioVO.setCadenas(nifSet);
+            final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.ORGANIZACION.getId());
+            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
-			prmtCriterioVO.getItdtMap().put(TipoDato.CADENA_02.getId(),
-					itdtCriterioVO);
+            prmtCriterioVO.setItdtMap(new HashMap<Long, ItemDatoCriterioVO>());
+            prmtCriterioVO.setEntiId(Entidad.ORGANIZACION.getId());
+            prmtCriterioVO.setFechaVigencia(fechaVigencia);
 
-			final List<ParametroVO> prmtList = prmtBO
-					.selectList(prmtCriterioVO);
+            final ItemDatoCriterioVO itdtCriterioVO = new ItemDatoCriterioVO();
 
-			for (final ParametroVO prmtVO : prmtList) {
-				organizacionesMap.put(
-						prmtVO.getItdtMap().get(TipoDato.CADENA_02.getId())
-								.getCadena(), prmtVO);
-			}
-		}
-	}
+            itdtCriterioVO.setTpdtId(TipoDato.CADENA_02.getId());
+            itdtCriterioVO.setCadenas(nifSet);
 
-	/**
-	 * Adds the codigo maestro.
-	 *
-	 * @param entidad
-	 *            the entidad
-	 * @param codigo
-	 *            the codigo
-	 */
-	public final void addCodigoMaestro(final @Nonnull Entidad entidad,
-			final String codigo) {
-		if (!codigoMaestroMap.containsKey(entidad)) {
-			codigoMaestroMap.put(entidad, new HashSet<String>());
-		}
+            prmtCriterioVO.getItdtMap().put(TipoDato.CADENA_02.getId(), itdtCriterioVO);
 
-		if (codigo != null && !codigo.isEmpty()) {
-			codigoMaestroMap.get(entidad).add(codigo);
-		}
-	}
+            final List<ParametroVO> prmtList = prmtBO.selectList(prmtCriterioVO);
 
-	/**
-	 * Find maestro.
-	 *
-	 * @param entidad
-	 *            the entidad
-	 * @param codigo
-	 *            the codigo
-	 * @return the parametro vo
-	 */
-	public final ParametroVO findMaestro(final @Nonnull Entidad entidad,
-			final String codigo) {
-		if (codigo == null || codigo.isEmpty()) {
-			return null;
-		}
+            for (final ParametroVO prmtVO : prmtList) {
+                organizacionesMap.put(prmtVO.getItdtMap().get(TipoDato.CADENA_02.getId()).getCadena(), prmtVO);
+            }
+        }
+    }
 
-		if (maestroMap.containsKey(entidad)) {
-			return maestroMap.get(entidad).get(codigo);
-		}
+    /**
+     * Adds the codigo maestro.
+     *
+     * @param entidad
+     *            the entidad
+     * @param codigo
+     *            the codigo
+     */
+    public final void addCodigoMaestro(final @Nonnull Entidad entidad, final String codigo) {
+        if (!codigoMaestroMap.containsKey(entidad)) {
+            codigoMaestroMap.put(entidad, new HashSet<String>());
+        }
 
-		return null;
-	}
+        if (codigo != null && !codigo.isEmpty()) {
+            codigoMaestroMap.get(entidad).add(codigo);
+        }
+    }
 
-	/**
-	 * Exists maestro.
-	 *
-	 * @param entidad
-	 *            the entidad
-	 * @param codigo
-	 *            the codigo
-	 * @return true, if successful
-	 */
-	public final boolean existsMaestro(final @Nonnull Entidad entidad,
-			final String codigo) {
-		if (codigo == null || codigo.isEmpty()) {
-			return false;
-		}
+    /**
+     * Find maestro.
+     *
+     * @param entidad
+     *            the entidad
+     * @param codigo
+     *            the codigo
+     * @return the parametro vo
+     */
+    public final ParametroVO findMaestro(final @Nonnull Entidad entidad, final String codigo) {
+        if (codigo == null || codigo.isEmpty()) {
+            return null;
+        }
 
-		if (maestroMap.containsKey(entidad)) {
-			return maestroMap.get(entidad).containsKey(codigo);
-		}
+        if (maestroMap.containsKey(entidad)) {
+            return maestroMap.get(entidad).get(codigo);
+        }
 
-		return false;
-	}
+        return null;
+    }
 
-	/**
-	 * Find organizacion.
-	 *
-	 * @param codigo
-	 *            the codigo
-	 * @return the parametro vo
-	 */
-	public final ParametroVO findOrganizacion(final String codigo) {
-		if (codigo == null || codigo.isEmpty()) {
-			return null;
-		}
+    /**
+     * Find maestro.
+     *
+     * @param entidad
+     *            the entidad
+     * @param prto
+     *            the prto
+     * @param codigo
+     *            the codigo
+     * @return the parametro vo
+     */
+    public final ParametroVO findMaestro(final @Nonnull Entidad entidad, final PuertoVO prto, final String codigo) {
+        Preconditions.checkNotNull(entidad);
+        Preconditions.checkNotNull(prto);
 
-		return organizacionesMap.get(codigo);
-	}
+        if (codigo == null || codigo.isEmpty()) {
+            return null;
+        }
 
-	/**
-	 * Adds the nif.
-	 *
-	 * @param nif
-	 *            the nif
-	 */
-	public final void addNif(final String nif) {
-		nifSet.add(nif);
-	}
+        if (maestroPrtoMap.containsKey(entidad) && maestroPrtoMap.get(entidad).containsKey(prto.getId())) {
+            return maestroPrtoMap.get(entidad).get(prto.getId()).get(codigo);
+        }
 
-	/**
-	 * Adds the mensaje.
-	 *
-	 * @param codigo
-	 *            the codigo
-	 * @param nivel
-	 *            the nivel
-	 * @param mensaje
-	 *            the mensaje
-	 */
-	private final void addMensaje(final @Nonnull MensajeCodigo codigo,
-			final @Nonnull MensajeNivel nivel, final String mensaje) {
-		final ProcesoMensajeVO prmnVO = new ProcesoMensajeVO();
+        return null;
+    }
 
-		prmnVO.setCodigo(codigo);
-		prmnVO.setNivel(nivel);
+    /**
+     * Exists maestro.
+     *
+     * @param entidad
+     *            the entidad
+     * @param codigo
+     *            the codigo
+     * @return true, if successful
+     */
+    public final boolean existsMaestro(final @Nonnull Entidad entidad, final String codigo) {
+        if (codigo == null || codigo.isEmpty()) {
+            return false;
+        }
 
-		if (mensaje != null) {
-			prmnVO.setMensaje(mensaje.length() < 250 ? mensaje : mensaje
-					.substring(0, 250));
-		}
+        if (maestroMap.containsKey(entidad)) {
+            return maestroMap.get(entidad).containsKey(codigo);
+        }
 
-		prmnList.add(prmnVO);
-	}
+        return false;
+    }
 
-	/**
-	 * Adds the mensaje.
-	 *
-	 * @param codigo
-	 *            the codigo
-	 * @param mensaje
-	 *            the mensaje
-	 */
-	public final void addError(final @Nonnull MensajeCodigo codigo,
-			final String mensaje) {
-		addMensaje(codigo, MensajeNivel.E, mensaje);
-	}
+    /**
+     * Find organizacion.
+     *
+     * @param codigo
+     *            the codigo
+     * @return the parametro vo
+     */
+    public final ParametroVO findOrganizacion(final String codigo) {
+        if (codigo == null || codigo.isEmpty()) {
+            return null;
+        }
 
-	/**
-	 * Adds the warning.
-	 *
-	 * @param codigo
-	 *            the codigo
-	 * @param mensaje
-	 *            the mensaje
-	 */
-	public final void addWarning(final @Nonnull MensajeCodigo codigo,
-			final String mensaje) {
-		addMensaje(codigo, MensajeNivel.W, mensaje);
-	}
+        return organizacionesMap.get(codigo);
+    }
 
-	/**
-	 * Adds the info.
-	 *
-	 * @param codigo
-	 *            the codigo
-	 * @param mensaje
-	 *            the mensaje
-	 */
-	public final void addInfo(final @Nonnull MensajeCodigo codigo,
-			final String mensaje) {
-		addMensaje(codigo, MensajeNivel.I, mensaje);
-	}
+    /**
+     * Adds the nif.
+     *
+     * @param nif
+     *            the nif
+     */
+    public final void addNif(final String nif) {
+        nifSet.add(nif);
+    }
 
-	/**
-	 * Gets the prbt.
-	 *
-	 * @return the prbt
-	 */
-	public final ProcesoVO getPrbt() {
-		return prbt;
-	}
+    /**
+     * Adds the mensaje.
+     *
+     * @param codigo
+     *            the codigo
+     * @param nivel
+     *            the nivel
+     * @param mensaje
+     *            the mensaje
+     */
+    private final void addMensaje(final @Nonnull MensajeCodigo codigo, final @Nonnull MensajeNivel nivel,
+            final String mensaje) {
+        final ProcesoMensajeVO prmnVO = new ProcesoMensajeVO();
 
-	/**
-	 * Adds the prit salida.
-	 *
-	 * @param itemId
-	 *            the item id
-	 */
-	public final void addPritSalida(final Long itemId) {
-		this.itemSalidaList.add(itemId);
-	}
+        prmnVO.setCodigo(codigo);
+        prmnVO.setNivel(nivel);
 
-	/**
-	 * Preparar procesos.
-	 */
-	protected abstract void prepararProcesos();
+        if (mensaje != null) {
+            prmnVO.setMensaje(mensaje.length() < 250 ? mensaje : mensaje.substring(0, 250));
+        }
 
-	/**
-	 * Ejecutar.
-	 */
-	protected abstract void ejecutarProceso();
+        prmnList.add(prmnVO);
+    }
 
-	/**
-	 * Gets the proceso tipo.
-	 *
-	 * @return the proceso tipo
-	 */
-	protected abstract ProcesoTipo getProcesoTipo();
+    /**
+     * Adds the mensaje.
+     *
+     * @param codigo
+     *            the codigo
+     * @param mensaje
+     *            the mensaje
+     */
+    public final void addError(final @Nonnull MensajeCodigo codigo, final String mensaje) {
+        addMensaje(codigo, MensajeNivel.E, mensaje);
+    }
 
-	/**
-	 * Gets the item tipo salida.
-	 *
-	 * @return the item tipo salida
-	 */
-	protected abstract ItemTipo getItemTipoSalida();
+    /**
+     * Adds the warning.
+     *
+     * @param codigo
+     *            the codigo
+     * @param mensaje
+     *            the mensaje
+     */
+    public final void addWarning(final @Nonnull MensajeCodigo codigo, final String mensaje) {
+        addMensaje(codigo, MensajeNivel.W, mensaje);
+    }
+
+    /**
+     * Adds the info.
+     *
+     * @param codigo
+     *            the codigo
+     * @param mensaje
+     *            the mensaje
+     */
+    public final void addInfo(final @Nonnull MensajeCodigo codigo, final String mensaje) {
+        addMensaje(codigo, MensajeNivel.I, mensaje);
+    }
+
+    /**
+     * Gets the prbt.
+     *
+     * @return the prbt
+     */
+    public final ProcesoVO getPrbt() {
+        return prbt;
+    }
+
+    /**
+     * Adds the prit salida.
+     *
+     * @param itemId
+     *            the item id
+     */
+    public final void addPritSalida(final Long itemId) {
+        itemSalidaList.add(itemId);
+    }
+
+    /**
+     * Preparar procesos.
+     */
+    protected abstract void prepararProcesos();
+
+    /**
+     * Ejecutar.
+     */
+    protected abstract void ejecutarProceso();
+
+    /**
+     * Gets the proceso tipo.
+     *
+     * @return the proceso tipo
+     */
+    protected abstract ProcesoTipo getProcesoTipo();
+
+    /**
+     * Gets the item tipo salida.
+     *
+     * @return the item tipo salida
+     */
+    protected abstract ItemTipo getItemTipoSalida();
 }

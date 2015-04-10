@@ -316,14 +316,14 @@ function SrvcGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     function search(page) {
         $http.post("servicio/srvc-list.action", {
-            itemCriterio : vm.itemCriterio,
+            model : vm.itemCriterio,
             page : page,
             limit : vm.itemCriterio.limit
         }).success(function(data) {
             vm.enti = data.enti;
             vm.page = data.itemList.page;
             vm.itemList = data.itemList;
-            vm.itemCriterio = data.itemCriterio;
+            vm.itemCriterio = data.model;
 
             $location.search({
                 page : vm.page,
@@ -354,7 +354,7 @@ function SrvcGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     function filter(size) {
         $http.post("servicio/srvc-filter.action", {
-            itemCriterio : vm.itemCriterio
+            model : vm.itemCriterio
         }).success(function(data) {
             vm.labelValuesMap = data.labelValuesMap;
             vm.prtoList = data.prtoList;
@@ -383,7 +383,7 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
 
     function findSublist(subentiId, page) {
         $http.post("servicio/ssrv-list.action", {
-            itemCriterio : {
+            model : {
                 entiId : subentiId,
                 srvc : {
                     id : $routeParams.srvcId
@@ -391,9 +391,9 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
             },
             page : page
         }).success(function(data) {
-            vm.entiHijasMap[data.itemCriterio.entiId] = data.enti;
-            vm.itemHijosMap[data.itemCriterio.entiId] = data.itemList;
-            vm.pageMap[data.itemCriterio.entiId] = data.itemList.page;
+            vm.entiHijasMap[data.model.entiId] = data.enti;
+            vm.itemHijosMap[data.model.entiId] = data.itemList;
+            vm.pageMap[data.model.entiId] = data.itemList.page;
 
             $location.search("pageMap", JSON.stringify(vm.pageMap)).replace();
         });
@@ -412,9 +412,7 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
     function remove() {
         if (confirm("Are you sure?")) {
             $http.post("servicio/srvc-remove.action", {
-                item : {
-                    id : vm.item.id
-                }
+                model : vm.item
             }).success(function(data) {
                 window.history.back();
             });
@@ -446,9 +444,7 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
 
         case "mani-bloquear":
             $http.post("servicio/manifiesto/mani-bloquear.action", {
-                item : {
-                    id : vm.item.id
-                }
+                item : vm.item
             }).success(function(data) {
                 vm.item = data.item;
             });
@@ -456,9 +452,7 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
             break;
         case "mani-completar":
             $http.post("servicio/manifiesto/mani-completar.action", {
-                item : {
-                    id : vm.item.id
-                }
+                item : vm.item
             }).success(function(data) {
                 vm.item = data.item;
             });
@@ -466,9 +460,7 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
             break;
         case "mani-iniciar":
             $http.post("servicio/manifiesto/mani-iniciar.action", {
-                item : {
-                    id : vm.item.id
-                }
+                item : vm.item
             }).success(function(data) {
                 vm.item = data.item;
             });
@@ -476,9 +468,7 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
             break;
         case "mani-anular":
             $http.post("servicio/manifiesto/mani-anular.action", {
-                item : {
-                    id : vm.item.id
-                }
+                item : vm.item
             }).success(function(data) {
                 vm.item = data.item;
             });
@@ -502,14 +492,14 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
     }
 
     $http.post("servicio/srvc-detail.action", {
-        item : {
+        model : {
             id : $routeParams.srvcId,
             entiId : $routeParams.entiId
         }
     }).success(function(data) {
         vm.enti = data.enti;
-        vm.item = data.item;
-        vm.prtoId = data.item.prto.id;
+        vm.item = data.model;
+        vm.prtoId = data.model.prto.id;
         vm.fechaVigencia = data.fechaVigencia;
         vm.arinList = data.arinList;
 
@@ -535,13 +525,14 @@ function SrvcEditController($http, $location, $routeParams, pageTitleService) {
 
     function save() {
         $http.post("servicio/srvc-save.action", {
-            item : vm.item,
+            model : vm.item,
             accion : vm.accion
         }).success(
                 function(data) {
                     vm.accion == 'edit' ? setTimeout(function() {
                         window.history.back();
-                    }, 0) : $location.path("/servicio/srvc/detail/" + data.item.entiId + "/" + data.item.id)
+                    }, 0) : $location
+                            .path("/servicio/srvc/detail/" + data.model.entiId + "/" + data.model.id)
                             .replace();
                 });
     }
@@ -551,7 +542,7 @@ function SrvcEditController($http, $location, $routeParams, pageTitleService) {
     }
 
     $http.post("servicio/srvc-edit.action", {
-        item : {
+        model : {
             id : $routeParams.srvcId,
             entiId : $routeParams.entiId
         },
@@ -559,12 +550,12 @@ function SrvcEditController($http, $location, $routeParams, pageTitleService) {
     }).success(function(data) {
         vm.enti = data.enti;
         vm.fechaVigencia = data.fechaVigencia;
-        vm.item = data.item;
+        vm.item = data.model;
         vm.labelValuesMap = data.labelValuesMap;
         vm.prtoList = data.prtoList;
 
-        if (data.item.prto) {
-            vm.prtoId = data.item.prto.id;
+        if (data.model.prto) {
+            vm.prtoId = data.model.prto.id;
         }
     });
 
@@ -578,7 +569,7 @@ function SrvcLupaController($http, $scope) {
         }
 
         return $http.post('servicio/srvc-lupa.action', {
-            itemLupaCriterio : {
+            model : {
                 entiId : entiId,
                 textoBusqueda : textoBusqueda,
                 fechaVigencia : '2014-11-11T00:00:00'
@@ -617,14 +608,14 @@ function SsrvGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     function search(page) {
         $http.post("servicio/ssrv-list.action", {
-            itemCriterio : vm.itemCriterio,
+            model : vm.itemCriterio,
             page : page,
             limit : vm.itemCriterio.limit
         }).success(function(data) {
             vm.page = data.itemList.page;
             vm.enti = data.enti;
             vm.itemList = data.itemList;
-            vm.itemCriterio = data.itemCriterio;
+            vm.itemCriterio = data.model;
 
             $location.search({
                 page : vm.page,
@@ -655,7 +646,7 @@ function SsrvGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     function filter(size) {
         $http.post("servicio/ssrv-filter.action", {
-            itemCriterio : vm.itemCriterio
+            model : vm.itemCriterio
         }).success(function(data) {
             vm.labelValuesMap = data.labelValuesMap;
             vm.limits = data.limits;
@@ -683,15 +674,15 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
 
     function findSublist(subentiId, page) {
         $http.post("servicio/ssrv-list.action", {
-            itemCriterio : {
+            model : {
                 entiId : subentiId,
                 padreId : $routeParams.ssrvId
             },
             page : page
         }).success(function(data) {
-            vm.entiHijasMap[data.itemCriterio.entiId] = data.enti;
-            vm.itemHijosMap[data.itemCriterio.entiId] = data.itemList;
-            vm.pageMap[data.itemCriterio.entiId] = data.itemList.page;
+            vm.entiHijasMap[data.model.entiId] = data.enti;
+            vm.itemHijosMap[data.model.entiId] = data.itemList;
+            vm.pageMap[data.model.entiId] = data.itemList.page;
 
             if (data.enti.id == vm.tabSelected) {
                 vm.entiHijasMap[data.itemCriterio.entiId].active = true;
@@ -714,9 +705,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
     function remove() {
         if (confirm("Are you sure?")) {
             $http.post("servicio/ssrv-remove.action", {
-                item : {
-                    id : $scope.item.id
-                }
+                model : vm.item
             }).success(function(data) {
                 window.history.back();
             });
@@ -731,9 +720,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
 
         case "mabl-bloquear":
             $http.post("servicio/manifiesto/mabl-bloquear.action", {
-                item : {
-                    id : vm.item.id
-                }
+                item : vm.item
             }).success(function(data) {
                 vm.item = data.item;
             });
@@ -741,9 +728,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
             break;
         case "mabl-completar":
             $http.post("servicio/manifiesto/mabl-completar.action", {
-                item : {
-                    id : vm.item.id
-                }
+                item : vm.item
             }).success(function(data) {
                 vm.item = data.item;
             });
@@ -751,9 +736,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
             break;
         case "mabl-iniciar":
             $http.post("servicio/manifiesto/mabl-iniciar.action", {
-                item : {
-                    id : vm.item.id
-                }
+                item : vm.item
             }).success(function(data) {
                 vm.item = data.item;
             });
@@ -761,9 +744,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
             break;
         case "mabl-anular":
             $http.post("servicio/manifiesto/mabl-anular.action", {
-                item : {
-                    id : vm.item.id
-                }
+                item : vm.item
             }).success(function(data) {
                 vm.item = data.item;
             });
@@ -781,9 +762,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
 
         case "equi-bloquear":
             $http.post("servicio/manifiesto/equi-bloquear.action", {
-                item : {
-                    id : vm.item.id
-                }
+                item : vm.item
             }).success(function(data) {
                 vm.item = data.item;
             });
@@ -791,9 +770,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
             break;
         case "equi-iniciar":
             $http.post("servicio/manifiesto/equi-iniciar.action", {
-                item : {
-                    id : vm.item.id
-                }
+                item : vm.item
             }).success(function(data) {
                 vm.item = data.item;
             });
@@ -801,9 +778,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
             break;
         case "equi-anular":
             $http.post("servicio/manifiesto/equi-anular.action", {
-                item : {
-                    id : vm.item.id
-                }
+                item : vm.item
             }).success(function(data) {
                 vm.item = data.item;
             });
@@ -815,9 +790,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
         // ----------- PARTIDA ------------------
         case "part-bloquear":
             $http.post("servicio/manifiesto/part-bloquear.action", {
-                item : {
-                    id : vm.item.id
-                }
+                item : vm.item
             }).success(function(data) {
                 vm.item = data.item;
             });
@@ -825,9 +798,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
             break;
         case "part-iniciar":
             $http.post("servicio/manifiesto/part-iniciar.action", {
-                item : {
-                    id : vm.item.id
-                }
+                item : vm.item
             }).success(function(data) {
                 vm.item = data.item;
             });
@@ -835,9 +806,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
             break;
         case "part-anular":
             $http.post("servicio/manifiesto/part-anular.action", {
-                item : {
-                    id : vm.item.id
-                }
+                item : vm.item
             }).success(function(data) {
                 vm.item = data.item;
             });
@@ -887,14 +856,14 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
     }
 
     $http.post("servicio/ssrv-detail.action", {
-        item : {
+        model : {
             id : $routeParams.ssrvId,
             entiId : $routeParams.entiId
         }
     }).success(function(data) {
         vm.enti = data.enti;
         vm.fechaVigencia = data.fechaVigencia;
-        vm.item = data.item;
+        vm.item = data.model;
         vm.itemPadresMap = data.itemPadresMap;
 
         vm.itemHijosMap = {};
@@ -919,12 +888,12 @@ function SsrvEditController($http, $location, $routeParams, pageTitleService) {
 
     function save() {
         $http.post("servicio/ssrv-save.action", {
-            item : vm.item,
+            model : vm.item,
             accion : vm.accion
         }).success(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $location.path("/servicio/ssrv/detail/" + data.item.id).replace();
+            }, 0) : $location.path("/servicio/ssrv/detail/" + data.model.id).replace();
         });
     }
 
@@ -933,7 +902,7 @@ function SsrvEditController($http, $location, $routeParams, pageTitleService) {
     }
 
     $http.post("servicio/ssrv-edit.action", {
-        item : {
+        model : {
             id : $routeParams.ssrvId,
             entiId : $routeParams.entiId,
             srvc : {
@@ -945,7 +914,7 @@ function SsrvEditController($http, $location, $routeParams, pageTitleService) {
         vm.enti = data.enti;
         vm.superentiList = data.superentiList;
         vm.fechaVigencia = data.fechaVigencia;
-        vm.item = data.item;
+        vm.item = data.model;
         vm.itemPadresMap = data.itemPadresMap;
         vm.labelValuesMap = data.labelValuesMap;
     });
@@ -956,7 +925,7 @@ function SsrvEditController($http, $location, $routeParams, pageTitleService) {
 function SsrvLupaController($http, $scope) {
     $scope.getLabelValues = function(entiId, srvcId, numero) {
         return $http.post("servicio/ssrv-lupa.action", {
-            itemLupaCriterio : {
+            model : {
                 entiId : entiId,
                 srvcId : srvcId,
                 numero : numero,

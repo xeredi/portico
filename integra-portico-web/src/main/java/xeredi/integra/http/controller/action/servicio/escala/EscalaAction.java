@@ -5,7 +5,7 @@ import java.util.Calendar;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
-import xeredi.integra.http.controller.action.comun.ItemAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.servicio.bo.escala.EscalaBO;
@@ -13,18 +13,19 @@ import xeredi.integra.model.servicio.bo.escala.EscalaEdiBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EscalaAction.
  */
-public final class EscalaAction extends ItemAction {
+public final class EscalaAction extends ItemAction implements ModelDriven<ServicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2983663759005027128L;
 
     /** The item. */
-    private ServicioVO item;
+    private ServicioVO model;
 
     /** The notificado. */
     private boolean notificado;
@@ -40,18 +41,18 @@ public final class EscalaAction extends ItemAction {
      */
     @Action(value = "esca-notificar-popup", results = { @Result(name = "success", location = "escala/esca-notificar.jsp") })
     public String notificar() throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final EscalaBO escaBO = new EscalaBO();
 
-        item = escaBO.select(item.getId(), getIdioma());
+        model = escaBO.select(model.getId(), getIdioma());
 
-        notificado = item.getItdtMap().get(TipoDato.CADENA_03.getId()).getCadena() != null
-                && item.getItdtMap().get(TipoDato.FECHA_02.getId()).getFecha() != null;
+        notificado = model.getItdtMap().get(TipoDato.CADENA_03.getId()).getCadena() != null
+                && model.getItdtMap().get(TipoDato.FECHA_02.getId()).getFecha() != null;
 
-        item.getItdtMap().get(TipoDato.CADENA_03.getId()).setCadena(escaBO.obtenerNumeroManifiestoAeat(item.getId()));
-        item.getItdtMap().get(TipoDato.FECHA_02.getId()).setFecha(Calendar.getInstance().getTime());
+        model.getItdtMap().get(TipoDato.CADENA_03.getId()).setCadena(escaBO.obtenerNumeroManifiestoAeat(model.getId()));
+        model.getItdtMap().get(TipoDato.FECHA_02.getId()).setFecha(Calendar.getInstance().getTime());
 
         return SUCCESS;
     }
@@ -62,15 +63,15 @@ public final class EscalaAction extends ItemAction {
      * @return the string
      */
     @Action(value = "esca-notificar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
-            "actionName", "srvc-detalle", "item.id", "%{item.id}" }) })
+            "actionName", "srvc-detalle", "model.id", "%{model.id}" }) })
     public String notificarGuardar() {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final EscalaEdiBO escaEdiBO = new EscalaEdiBO();
 
-        escaEdiBO.notificarPractico(item.getId(), item.getItdtMap().get(TipoDato.CADENA_03.getId()).getCadena(), item
-                .getItdtMap().get(TipoDato.FECHA_02.getId()).getFecha());
+        escaEdiBO.notificarPractico(model.getId(), model.getItdtMap().get(TipoDato.CADENA_03.getId()).getCadena(),
+                model.getItdtMap().get(TipoDato.FECHA_02.getId()).getFecha());
 
         return SUCCESS;
     }
@@ -81,8 +82,8 @@ public final class EscalaAction extends ItemAction {
      * {@inheritDoc}
      */
     @Override
-    public ServicioVO getItem() {
-        return item;
+    public ServicioVO getModel() {
+        return model;
     }
 
     /**
@@ -91,8 +92,8 @@ public final class EscalaAction extends ItemAction {
      * @param value
      *            the new item
      */
-    public final void setItem(final ServicioVO value) {
-        item = value;
+    public final void setModel(final ServicioVO value) {
+        model = value;
     }
 
     /**

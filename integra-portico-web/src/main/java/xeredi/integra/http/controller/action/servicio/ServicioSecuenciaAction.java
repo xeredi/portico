@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -25,13 +25,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class ServicioSecuenciaAction.
  */
-public final class ServicioSecuenciaAction extends BaseAction implements ModelDriven<ServicioSecuenciaVO> {
+public final class ServicioSecuenciaAction extends ItemAction implements ModelDriven<ServicioSecuenciaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2082170095218238933L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The srsc. */
     private ServicioSecuenciaVO model;
@@ -80,9 +77,9 @@ public final class ServicioSecuenciaAction extends BaseAction implements ModelDr
      */
     @Action("srsc-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
-        if (accion == ACCION_EDICION.create) {
+        if (getAccion() == ACCION_EDICION.create) {
             final PuertoBO prtoBO = new PuertoBO();
             final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
@@ -128,13 +125,13 @@ public final class ServicioSecuenciaAction extends BaseAction implements ModelDr
      */
     @Action("srsc-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
         if (model == null) {
             model = new ServicioSecuenciaVO();
         }
 
-        if (accion == ACCION_EDICION.create) {
+        if (getAccion() == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.tpsr, model.getTpsr());
             FieldValidator.validateRequired(this, MessageI18nKey.prto, model.getPrto());
             FieldValidator.validateRequired(this, MessageI18nKey.srsc_anno, model.getAnno());
@@ -157,7 +154,7 @@ public final class ServicioSecuenciaAction extends BaseAction implements ModelDr
         if (!hasErrors()) {
             final ServicioSecuenciaBO srscBO = new ServicioSecuenciaBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 srscBO.insert(model);
 
@@ -167,7 +164,7 @@ public final class ServicioSecuenciaAction extends BaseAction implements ModelDr
 
                 break;
             default:
-                throw new Error("Accion no soportada: " + accion);
+                throw new Error("Accion no soportada: " + getAccion());
             }
         }
 
@@ -215,16 +212,6 @@ public final class ServicioSecuenciaAction extends BaseAction implements ModelDr
      */
     public void setModel(final ServicioSecuenciaVO value) {
         model = value;
-    }
-
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
     }
 
     /**

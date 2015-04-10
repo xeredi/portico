@@ -1,5 +1,7 @@
 package xeredi.integra.model.comun.vo;
 
+import java.util.Set;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class PuertoCriterioVO.
@@ -8,6 +10,9 @@ public final class PuertoCriterioVO extends BaseCriterioVO {
 
     /** The id. */
     private Long id;
+
+    /** The ids. */
+    private Set<Long> ids;
 
     /** The sprt id. */
     private Long sprtId;
@@ -158,6 +163,25 @@ public final class PuertoCriterioVO extends BaseCriterioVO {
      */
     public void setUnlocode(final String value) {
         unlocode = value;
+    }
+
+    /**
+     * Gets the ids.
+     *
+     * @return the ids
+     */
+    public Set<Long> getIds() {
+        return ids;
+    }
+
+    /**
+     * Sets the ids.
+     *
+     * @param value
+     *            the new ids
+     */
+    public void setIds(final Set<Long> value) {
+        ids = value;
     }
 
 }

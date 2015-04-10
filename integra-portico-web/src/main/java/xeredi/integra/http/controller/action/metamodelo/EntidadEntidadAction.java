@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -23,36 +23,16 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class EntidadEntidadAction.
  */
-public final class EntidadEntidadAction extends BaseAction implements ModelDriven<EntidadEntidadVO> {
+public final class EntidadEntidadAction extends ItemAction implements ModelDriven<EntidadEntidadVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7902127201717597996L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The enen. */
     private EntidadEntidadVO model;
 
     /** The tppr list. */
     private List<LabelValueVO> tpssList;
-
-    /**
-     * Alta.
-     *
-     * @return the string
-     */
-    @Action("enen-create")
-    public String create() {
-        Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getEntiPadreId());
-
-        accion = ACCION_EDICION.create;
-
-        loadLabelValues();
-
-        return SUCCESS;
-    }
 
     /**
      * Modificar.
@@ -63,19 +43,22 @@ public final class EntidadEntidadAction extends BaseAction implements ModelDrive
      */
     @Action("enen-edit")
     public String edit() throws ApplicationException {
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getEntiPadreId());
-        Preconditions.checkNotNull(model.getEntiHija());
-        Preconditions.checkNotNull(model.getEntiHija().getId());
 
-        final EntidadEntidadBO enenBO = new EntidadEntidadBO();
-        final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
+        if (getAccion() == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(model.getEntiHija());
+            Preconditions.checkNotNull(model.getEntiHija().getId());
 
-        enenCriterioVO.setEntiPadreId(model.getEntiPadreId());
-        enenCriterioVO.setEntiHijaId(model.getEntiHija().getId());
+            final EntidadEntidadBO enenBO = new EntidadEntidadBO();
+            final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
 
-        model = enenBO.selectObject(enenCriterioVO);
-        accion = ACCION_EDICION.edit;
+            enenCriterioVO.setEntiPadreId(model.getEntiPadreId());
+            enenCriterioVO.setEntiHijaId(model.getEntiHija().getId());
+
+            model = enenBO.selectObject(enenCriterioVO);
+        }
 
         loadLabelValues();
 
@@ -91,11 +74,11 @@ public final class EntidadEntidadAction extends BaseAction implements ModelDrive
      */
     @Action("enen-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getEntiPadreId());
 
-        if (accion == ACCION_EDICION.create) {
+        if (getAccion() == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.enen_entiHija, model.getEntiHija());
         } else {
             Preconditions.checkNotNull(model.getEntiHija());
@@ -107,7 +90,7 @@ public final class EntidadEntidadAction extends BaseAction implements ModelDrive
         if (!hasErrors()) {
             final EntidadEntidadBO enenBO = new EntidadEntidadBO();
 
-            if (accion == ACCION_EDICION.create) {
+            if (getAccion() == ACCION_EDICION.create) {
                 enenBO.insert(model);
             } else {
                 enenBO.update(model);
@@ -179,31 +162,12 @@ public final class EntidadEntidadAction extends BaseAction implements ModelDrive
     // get / set
 
     /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
-    }
-
-    /**
      * Gets the tpss list.
      *
      * @return the tpss list
      */
     public List<LabelValueVO> getTpssList() {
         return tpssList;
-    }
-
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
     }
 
     /**

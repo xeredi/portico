@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.estadistica;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.comun.ItemAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
@@ -11,21 +11,22 @@ import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EstadisticaAction.
  */
-public final class EstadisticaAction extends ItemAction {
+public final class EstadisticaAction extends ItemAction implements ModelDriven<EstadisticaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8514285987958813188L;
 
+    /** The estd. */
+    private EstadisticaVO model;
+
     /** The enti. */
     private TipoEstadisticaVO enti;
-
-    /** The estd. */
-    private EstadisticaVO item;
 
     // Acciones web
     /**
@@ -38,18 +39,18 @@ public final class EstadisticaAction extends ItemAction {
 
     @Action("estd-detail")
     public String detalle() throws InstanceNotFoundException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final EstadisticaBO estdBO = new EstadisticaBO();
         final EstadisticaCriterioVO estdCriterioVO = new EstadisticaCriterioVO();
 
-        estdCriterioVO.setId(item.getId());
+        estdCriterioVO.setId(model.getId());
         estdCriterioVO.setIdioma(getIdioma());
 
-        item = estdBO.selectObject(estdCriterioVO);
-        enti = TipoEstadisticaProxy.select(item.getEntiId());
-        setFechaVigencia(item.getFref());
+        model = estdBO.selectObject(estdCriterioVO);
+        enti = TipoEstadisticaProxy.select(model.getEntiId());
+        setFechaVigencia(model.getFref());
 
         return SUCCESS;
     }
@@ -60,26 +61,27 @@ public final class EstadisticaAction extends ItemAction {
      * {@inheritDoc}
      */
     @Override
-    public final EstadisticaVO getItem() {
-        return item;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getPrtoId() {
-        return item == null || item.getPrto() == null ? null : item.getPrto().getId();
+    public final EstadisticaVO getModel() {
+        return model;
     }
 
     /**
      * Sets the item.
      *
-     * @param item
-     *            the new item
+     * @param value
+     *            the new model
      */
-    public final void setItem(final EstadisticaVO item) {
-        this.item = item;
+    public final void setModel(final EstadisticaVO value) {
+        model = value;
+    }
+
+    /**
+     * Gets the prto id.
+     *
+     * @return the prto id
+     */
+    public Long getPrtoId() {
+        return model == null || model.getPrto() == null ? null : model.getPrto().getId();
     }
 
     /**

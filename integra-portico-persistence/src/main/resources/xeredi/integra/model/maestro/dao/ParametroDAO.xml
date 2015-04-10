@@ -126,6 +126,11 @@
 			<if test="prto.id != null">
 				AND prmt_prto_pk = #{prto.id}
 			</if>
+			<if test="prto.ids != null">
+				AND prmt_prto_pk IN
+				<foreach collection="prto.ids" item="item" open="(" close=")" separator=",">#{item}
+				</foreach>
+			</if>
 		</if>
 
 		<if test="prvrId != null">

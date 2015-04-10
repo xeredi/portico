@@ -8,7 +8,7 @@ import java.util.Map;
 import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -31,13 +31,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class AspectoAction.
  */
-public final class AspectoAction extends BaseAction implements ModelDriven<AspectoVO> {
+public final class AspectoAction extends ItemAction implements ModelDriven<AspectoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4939833753699919759L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The aspc. */
     private AspectoVO model;
@@ -97,9 +94,9 @@ public final class AspectoAction extends BaseAction implements ModelDriven<Aspec
      */
     @Action("aspc-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
 
-        if (accion == ACCION_EDICION.create) {
+        if (getAccion() == ACCION_EDICION.create) {
             model = new AspectoVO();
             model.setAspv(new AspectoVersionVO());
             model.getAspv().setFini(Calendar.getInstance().getTime());
@@ -128,16 +125,16 @@ public final class AspectoAction extends BaseAction implements ModelDriven<Aspec
      */
     @Action("aspc-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getAspv());
 
-        if (ACCION_EDICION.create == accion) {
+        if (ACCION_EDICION.create == getAccion()) {
             FieldValidator.validateRequired(this, MessageI18nKey.aspc_codigo, model.getCodigo());
             FieldValidator.validateRequired(this, MessageI18nKey.aspc_tpsr, model.getTpsr());
         }
 
-        if (ACCION_EDICION.create != accion) {
+        if (ACCION_EDICION.create != getAccion()) {
             Preconditions.checkNotNull(model.getId());
             Preconditions.checkNotNull(model.getAspv().getId());
         }
@@ -202,7 +199,7 @@ public final class AspectoAction extends BaseAction implements ModelDriven<Aspec
 
         final AspectoBO aspcBO = new AspectoBO();
 
-        switch (accion) {
+        switch (getAccion()) {
         case create:
             aspcBO.insert(model, i18nMap);
 
@@ -217,7 +214,7 @@ public final class AspectoAction extends BaseAction implements ModelDriven<Aspec
             break;
 
         default:
-            throw new Error("Accion no valida: " + accion);
+            throw new Error("Accion no valida: " + getAccion());
         }
 
         return SUCCESS;
@@ -241,16 +238,6 @@ public final class AspectoAction extends BaseAction implements ModelDriven<Aspec
      */
     public void setModel(final AspectoVO value) {
         model = value;
-    }
-
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
     }
 
     /**
@@ -288,25 +275,6 @@ public final class AspectoAction extends BaseAction implements ModelDriven<Aspec
      */
     public List<LabelValueVO> getTpsrList() {
         return tpsrList;
-    }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 
 }

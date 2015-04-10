@@ -1,4 +1,4 @@
-package xeredi.integra.proceso.estadistica.agregacionap;
+package xeredi.integra.model.proceso.batch.estadistica;
 
 import java.io.IOException;
 import java.util.Calendar;

@@ -6,7 +6,6 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
-import xeredi.integra.model.metamodelo.vo.TipoEstadisticaCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -21,9 +20,6 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
     /** The mensajes. */
     private List<LabelValueVO> tpess;
 
-    /** The tppr criterio. */
-    private TipoEstadisticaCriterioVO tpesCriterio;
-
     // Acciones web
     /**
      * Listado.
@@ -35,26 +31,6 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
         tpess = TipoEstadisticaProxy.selectLabelValues();
 
         return SUCCESS;
-    }
-
-    // get / set
-    /**
-     * Gets the tpes criterio.
-     *
-     * @return the tpes criterio
-     */
-    public TipoEstadisticaCriterioVO getTpesCriterio() {
-        return tpesCriterio;
-    }
-
-    /**
-     * Sets the tpes criterio.
-     *
-     * @param value
-     *            the new tpes criterio
-     */
-    public void setTpesCriterio(final TipoEstadisticaCriterioVO value) {
-        tpesCriterio = value;
     }
 
     /**

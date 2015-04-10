@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
@@ -14,18 +14,19 @@ import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ProcesoAction.
  */
-public final class ProcesoAction extends BaseAction {
+public final class ProcesoAction extends ItemAction implements ModelDriven<ProcesoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 899256989833948070L;
 
     /** The prbt. */
-    private ProcesoVO prbt;
+    private ProcesoVO model;
 
     /** The prar entrada list. */
     private List<ArchivoInfoVO> arinEntradaList;
@@ -53,17 +54,17 @@ public final class ProcesoAction extends BaseAction {
      */
     @Action("prbt-detail")
     public String detalle() throws ApplicationException {
-        Preconditions.checkNotNull(prbt);
-        Preconditions.checkNotNull(prbt.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final ProcesoBO prbtBO = new ProcesoBO();
 
-        prbt = prbtBO.select(prbt.getId());
-        arinEntradaList = prbtBO.selectArinEntradaList(prbt.getId());
-        arinSalidaList = prbtBO.selectArinSalidaList(prbt.getId());
-        pritEntradaList = prbtBO.selectPritEntradaList(prbt.getId());
-        pritSalidaList = prbtBO.selectPritSalidaList(prbt.getId());
-        prpmMap = prbtBO.selectPrpmMap(prbt.getId());
+        model = prbtBO.select(model.getId());
+        arinEntradaList = prbtBO.selectArinEntradaList(model.getId());
+        arinSalidaList = prbtBO.selectArinSalidaList(model.getId());
+        pritEntradaList = prbtBO.selectPritEntradaList(model.getId());
+        pritSalidaList = prbtBO.selectPritSalidaList(model.getId());
+        prpmMap = prbtBO.selectPrpmMap(model.getId());
 
         return SUCCESS;
     }
@@ -77,12 +78,12 @@ public final class ProcesoAction extends BaseAction {
      */
     @Action("prbt-cancel")
     public String borrar() throws ApplicationException {
-        Preconditions.checkNotNull(prbt);
-        Preconditions.checkNotNull(prbt.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final ProcesoBO prbtBO = new ProcesoBO();
 
-        prbtBO.cancelar(prbt.getId());
+        prbtBO.cancelar(model.getId());
 
         return SUCCESS;
     }
@@ -90,12 +91,11 @@ public final class ProcesoAction extends BaseAction {
     // get / set
 
     /**
-     * Gets the prbt.
-     *
-     * @return the prbt
+     * {@inheritDoc}
      */
-    public ProcesoVO getPrbt() {
-        return prbt;
+    @Override
+    public ProcesoVO getModel() {
+        return model;
     }
 
     /**
@@ -104,8 +104,8 @@ public final class ProcesoAction extends BaseAction {
      * @param value
      *            the new prbt
      */
-    public void setPrbt(final ProcesoVO value) {
-        prbt = value;
+    public void setModel(final ProcesoVO value) {
+        model = value;
     }
 
     /**

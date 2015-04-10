@@ -6,7 +6,6 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
-import xeredi.integra.model.metamodelo.vo.TipoParametroCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -20,9 +19,6 @@ public final class TipoParametroListadoAction extends BaseAction {
 
     /** The mensajes. */
     private List<LabelValueVO> tpprList;
-
-    /** The tppr criterio. */
-    private TipoParametroCriterioVO tpprCriterio;
 
     // Acciones web
     /**
@@ -45,25 +41,6 @@ public final class TipoParametroListadoAction extends BaseAction {
      */
     public final List<LabelValueVO> getTpprList() {
         return tpprList;
-    }
-
-    /**
-     * Gets the tppr criterio.
-     *
-     * @return the tppr criterio
-     */
-    public TipoParametroCriterioVO getTpprCriterio() {
-        return tpprCriterio;
-    }
-
-    /**
-     * Sets the tppr criterio.
-     *
-     * @param value
-     *            the new tppr criterio
-     */
-    public void setTpprCriterio(final TipoParametroCriterioVO value) {
-        tpprCriterio = value;
     }
 
 }

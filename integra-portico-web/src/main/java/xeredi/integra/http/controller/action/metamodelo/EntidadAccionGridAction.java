@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -21,13 +21,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class EntidadAccionGridAction.
  */
-public final class EntidadAccionGridAction extends BaseAction implements ModelDriven<EntidadAccionGridVO> {
+public final class EntidadAccionGridAction extends ItemAction implements ModelDriven<EntidadAccionGridVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5575767026166039789L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The enag. */
     private EntidadAccionGridVO model;
@@ -45,11 +42,11 @@ public final class EntidadAccionGridAction extends BaseAction implements ModelDr
      */
     @Action("enag-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getEntiId());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model.getId());
 
             final EntidadAccionGridBO enagBO = new EntidadAccionGridBO();
@@ -70,11 +67,11 @@ public final class EntidadAccionGridAction extends BaseAction implements ModelDr
      */
     @Action("enag-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getEntiId());
 
-        if (accion == ACCION_EDICION.create) {
+        if (getAccion() == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.enag_path, model.getPath());
         } else {
             Preconditions.checkNotNull(model.getPath());
@@ -86,7 +83,7 @@ public final class EntidadAccionGridAction extends BaseAction implements ModelDr
         if (!hasErrors()) {
             final EntidadAccionGridBO enagBO = new EntidadAccionGridBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 enagBO.insert(model, i18nMap);
 
@@ -96,7 +93,7 @@ public final class EntidadAccionGridAction extends BaseAction implements ModelDr
 
                 break;
             default:
-                throw new Error("Accion " + accion + " no implementada");
+                throw new Error("Accion " + getAccion() + " no implementada");
             }
         }
 
@@ -159,16 +156,6 @@ public final class EntidadAccionGridAction extends BaseAction implements ModelDr
      */
     public void setModel(final EntidadAccionGridVO value) {
         model = value;
-    }
-
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
     }
 
     /**

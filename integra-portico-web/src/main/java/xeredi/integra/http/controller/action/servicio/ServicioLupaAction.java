@@ -5,33 +5,29 @@ import java.util.StringTokenizer;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.proxy.ConfigurationProxy;
-import xeredi.integra.model.comun.vo.ConfigurationKey;
+import xeredi.integra.http.controller.action.LupaAction;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.vo.ServicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServicioLupaAction.
  */
-public final class ServicioLupaAction extends BaseAction {
+public final class ServicioLupaAction extends LupaAction implements ModelDriven<ServicioLupaCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1371351782684147321L;
-
-    /** The Constant ROWS. */
-    private static final int ROWS = ConfigurationProxy.getInt(ConfigurationKey.filter_limit);
 
     /** The srvcs. */
     private List<ServicioVO> itemList;
 
     /** The srvc lupa criterio. */
-    private ServicioLupaCriterioVO itemLupaCriterio;
+    private ServicioLupaCriterioVO model;
 
     /**
      * Instantiates a new servicio lupa action.
@@ -48,25 +44,25 @@ public final class ServicioLupaAction extends BaseAction {
      */
     @Action("srvc-lupa")
     public String lupa() {
-        Preconditions.checkNotNull(itemLupaCriterio);
-        Preconditions.checkNotNull(itemLupaCriterio.getEntiId());
-        Preconditions.checkNotNull(itemLupaCriterio.getTextoBusqueda());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
+        Preconditions.checkNotNull(model.getTextoBusqueda());
 
-        final StringTokenizer tokenizer = new StringTokenizer(itemLupaCriterio.getTextoBusqueda(), "/");
+        final StringTokenizer tokenizer = new StringTokenizer(model.getTextoBusqueda(), "/");
 
-        itemLupaCriterio.setSubpuerto(tokenizer.nextToken().toUpperCase());
+        model.setSubpuerto(tokenizer.nextToken().toUpperCase());
 
         if (tokenizer.hasMoreTokens()) {
-            itemLupaCriterio.setAnno(tokenizer.nextToken() + "%");
+            model.setAnno(tokenizer.nextToken() + "%");
         }
 
         if (tokenizer.hasMoreTokens()) {
-            itemLupaCriterio.setNumero(tokenizer.nextToken() + "%");
+            model.setNumero(tokenizer.nextToken() + "%");
         }
 
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(itemLupaCriterio.getEntiId());
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId());
 
-        itemList = srvcBO.selectLupaList(itemLupaCriterio, ROWS);
+        itemList = srvcBO.selectLupaList(model, getLimit());
 
         return SUCCESS;
     }
@@ -74,12 +70,11 @@ public final class ServicioLupaAction extends BaseAction {
     // get / set
 
     /**
-     * Gets the item lupa criterio.
-     *
-     * @return the item lupa criterio
+     * {@inheritDoc}
      */
-    public ServicioLupaCriterioVO getItemLupaCriterio() {
-        return itemLupaCriterio;
+    @Override
+    public ServicioLupaCriterioVO getModel() {
+        return model;
     }
 
     /**
@@ -88,8 +83,8 @@ public final class ServicioLupaAction extends BaseAction {
      * @param value
      *            the new item lupa criterio
      */
-    public void setItemLupaCriterio(final ServicioLupaCriterioVO value) {
-        itemLupaCriterio = value;
+    public void setModel(final ServicioLupaCriterioVO value) {
+        model = value;
     }
 
     /**

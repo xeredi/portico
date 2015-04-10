@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -21,13 +21,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class EntidadAccionAction.
  */
-public final class EntidadAccionAction extends BaseAction implements ModelDriven<EntidadAccionVO> {
+public final class EntidadAccionAction extends ItemAction implements ModelDriven<EntidadAccionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -8430223895677320578L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The entd form. */
     private EntidadAccionVO model;
@@ -45,11 +42,11 @@ public final class EntidadAccionAction extends BaseAction implements ModelDriven
      */
     @Action("enac-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getEntiId());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model.getId());
 
             final EntidadAccionBO enacBO = new EntidadAccionBO();
@@ -70,11 +67,11 @@ public final class EntidadAccionAction extends BaseAction implements ModelDriven
      */
     @Action("enac-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getEntiId());
 
-        if (accion == ACCION_EDICION.create) {
+        if (getAccion() == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.enac_path, model.getPath());
         } else {
             Preconditions.checkNotNull(model.getPath());
@@ -86,7 +83,7 @@ public final class EntidadAccionAction extends BaseAction implements ModelDriven
         if (!hasErrors()) {
             final EntidadAccionBO enacBO = new EntidadAccionBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 enacBO.insert(model, i18nMap);
 
@@ -96,7 +93,7 @@ public final class EntidadAccionAction extends BaseAction implements ModelDriven
 
                 break;
             default:
-                throw new Error("Accion " + accion + " no implementada");
+                throw new Error("Accion " + getAccion() + " no implementada");
             }
         }
 
@@ -143,16 +140,6 @@ public final class EntidadAccionAction extends BaseAction implements ModelDriven
     }
 
     // get / set
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
-    }
-
     /**
      * {@inheritDoc}
      */

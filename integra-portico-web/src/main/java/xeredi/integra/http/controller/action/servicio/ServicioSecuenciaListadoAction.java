@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.http.controller.action.PaginatedGrid;
+import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.vo.PuertoCriterioVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
@@ -23,8 +22,8 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class ServicioSecuenciaListadoAction.
  */
-public final class ServicioSecuenciaListadoAction extends BaseAction implements PaginatedGrid,
-        ModelDriven<ServicioSecuenciaCriterioVO> {
+public final class ServicioSecuenciaListadoAction extends PaginableAction implements
+ModelDriven<ServicioSecuenciaCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -573213374260081652L;
@@ -40,12 +39,6 @@ public final class ServicioSecuenciaListadoAction extends BaseAction implements 
 
     /** The tpsr list. */
     private List<TipoServicioVO> tpsrList;
-
-    /** The page. */
-    private int page = PaginatedList.FIRST_PAGE;
-
-    /** The limit. */
-    private int limit = ROWS_PER_PAGE_DEFAULT;
 
     /**
      * Filter.
@@ -137,44 +130,6 @@ public final class ServicioSecuenciaListadoAction extends BaseAction implements 
      */
     public List<TipoServicioVO> getTpsrList() {
         return tpsrList;
-    }
-
-    /**
-     * Gets the page.
-     *
-     * @return the page
-     */
-    public int getPage() {
-        return page;
-    }
-
-    /**
-     * Sets the page.
-     *
-     * @param value
-     *            the new page
-     */
-    public void setPage(final int value) {
-        page = value;
-    }
-
-    /**
-     * Gets the limit.
-     *
-     * @return the limit
-     */
-    public int getLimit() {
-        return limit;
-    }
-
-    /**
-     * Sets the limit.
-     *
-     * @param value
-     *            the new limit
-     */
-    public void setLimit(final int value) {
-        limit = value;
     }
 
 }

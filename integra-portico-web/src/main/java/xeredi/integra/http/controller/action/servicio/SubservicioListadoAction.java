@@ -3,11 +3,13 @@ package xeredi.integra.http.controller.action.servicio;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.comun.ItemListadoAction;
+import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
@@ -19,18 +21,23 @@ import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBOFactory;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class SubservicioListadoAction.
  */
-public final class SubservicioListadoAction extends ItemListadoAction {
+public final class SubservicioListadoAction extends PaginableAction implements ModelDriven<SubservicioCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -325205517324020646L;
+
+    /** The srvc criterio form. */
+    private SubservicioCriterioVO model;
 
     /** The enti. */
     private TipoSubservicioVO enti;
@@ -38,8 +45,8 @@ public final class SubservicioListadoAction extends ItemListadoAction {
     /** The srvcs. */
     private PaginatedList<SubservicioVO> itemList;
 
-    /** The srvc criterio form. */
-    private SubservicioCriterioVO itemCriterio;
+    /** The label values map. */
+    private Map<Long, List<LabelValueVO>> labelValuesMap;
 
     // Acciones web
     /**
@@ -51,10 +58,10 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      */
     @Action("ssrv-filter")
     public String filtro() throws ApplicationException {
-        Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
-        itemCriterio.setIdioma(getIdioma());
+        model.setIdioma(getIdioma());
 
         loadLabelValuesMap();
 
@@ -70,19 +77,19 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      */
     @Action("ssrv-list")
     public String listado() throws ApplicationException {
-        Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getEntiId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
 
-        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(itemCriterio.getEntiId());
+        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId());
 
         // Traemos solo los datos 'gridables' de los parametros (Minimiza el
         // trafico con la BD)
-        itemCriterio.setSoloDatosGrid(true);
-        itemCriterio.setIdioma(getIdioma());
+        model.setSoloDatosGrid(true);
+        model.setIdioma(getIdioma());
 
-        itemList = ssrvBO.selectList(itemCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
+        itemList = ssrvBO.selectList(model, getOffset(), getLimit());
 
-        enti = TipoSubservicioProxy.select(itemCriterio.getEntiId());
+        enti = TipoSubservicioProxy.select(model.getEntiId());
 
         return SUCCESS;
     }
@@ -95,15 +102,15 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      * @throws ApplicationException
      *             the application exception
      */
-    protected final void loadLabelValuesMap() throws ApplicationException {
-        Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getEntiId());
-        Preconditions.checkNotNull(itemCriterio.getIdioma());
+    private void loadLabelValuesMap() throws ApplicationException {
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getEntiId());
+        Preconditions.checkNotNull(model.getIdioma());
 
         if (labelValuesMap == null) {
             labelValuesMap = new HashMap<>();
 
-            final TipoSubservicioVO enti = TipoSubservicioProxy.select(itemCriterio.getEntiId());
+            final TipoSubservicioVO enti = TipoSubservicioProxy.select(model.getEntiId());
 
             // Carga de los labelValues (Si los hay)
             final Set<Long> tpprIds = new HashSet<>();
@@ -120,8 +127,8 @@ public final class SubservicioListadoAction extends ItemListadoAction {
             if (!tpprIds.isEmpty()) {
                 final ParametroBO prmtBO = new DefaultParametroBO();
 
-                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(),
-                        getItemCriterio().getIdioma()));
+                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(), getModel()
+                        .getIdioma()));
             }
         }
     }
@@ -130,8 +137,8 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      * {@inheritDoc}
      */
     @Override
-    public SubservicioCriterioVO getItemCriterio() {
-        return itemCriterio;
+    public SubservicioCriterioVO getModel() {
+        return model;
     }
 
     /**
@@ -140,8 +147,8 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      * @param value
      *            the new item criterio
      */
-    public void setItemCriterio(final SubservicioCriterioVO value) {
-        itemCriterio = value;
+    public void setModel(final SubservicioCriterioVO value) {
+        model = value;
     }
 
     /**

@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -27,13 +27,10 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class EntidadTipoDatoAction.
  */
-public final class EntidadTipoDatoAction extends BaseAction implements ModelDriven<EntidadTipoDatoVO> {
+public final class EntidadTipoDatoAction extends ItemAction implements ModelDriven<EntidadTipoDatoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -9005055738040850443L;
-
-    /** The accion. */
-    private ACCION_EDICION accion;
 
     /** The entd form. */
     private EntidadTipoDatoVO model;
@@ -57,11 +54,11 @@ public final class EntidadTipoDatoAction extends BaseAction implements ModelDriv
      */
     @Action("entd-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getEntiId());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model.getTpdt());
             Preconditions.checkNotNull(model.getTpdt().getId());
 
@@ -85,11 +82,11 @@ public final class EntidadTipoDatoAction extends BaseAction implements ModelDriv
      */
     @Action("entd-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getEntiId());
 
-        if (accion == ACCION_EDICION.create) {
+        if (getAccion() == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.entd_tpdt, model.getTpdt());
         } else {
             Preconditions.checkNotNull(model.getTpdt());
@@ -110,7 +107,7 @@ public final class EntidadTipoDatoAction extends BaseAction implements ModelDriv
         if (!hasErrors()) {
             final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 entdBO.insert(model, i18nMap);
 
@@ -120,7 +117,7 @@ public final class EntidadTipoDatoAction extends BaseAction implements ModelDriv
 
                 break;
             default:
-                throw new Error("Accion no contemplada: " + accion);
+                throw new Error("Accion no contemplada: " + getAccion());
             }
         }
 
@@ -221,16 +218,6 @@ public final class EntidadTipoDatoAction extends BaseAction implements ModelDriv
      */
     public List<LabelValueVO> getTpdtList() {
         return tpdtList;
-    }
-
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
     }
 
     /**

@@ -2,27 +2,25 @@ package xeredi.integra.http.controller.action.administracion.configuracion;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.model.comun.bo.ConfigurationBO;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.ConfigurationVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ConfigurationAction.
  */
-public final class ConfigurationAction extends BaseAction {
+public final class ConfigurationAction extends ItemAction implements ModelDriven<ConfigurationVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6648598250229270180L;
 
-    /** The accion. */
-    private ACCION_EDICION accion;
-
     /** The conf. */
-    private ConfigurationVO conf;
+    private ConfigurationVO model;
 
     /**
      * Detail.
@@ -33,11 +31,11 @@ public final class ConfigurationAction extends BaseAction {
      */
     @Action("conf-detail")
     public String detail() throws InstanceNotFoundException {
-        Preconditions.checkNotNull(conf);
+        Preconditions.checkNotNull(model);
 
         final ConfigurationBO confBO = new ConfigurationBO();
 
-        conf = confBO.select(conf.getKey());
+        model = confBO.select(model.getKey());
 
         return SUCCESS;
     }
@@ -51,13 +49,15 @@ public final class ConfigurationAction extends BaseAction {
      */
     @Action("conf-edit")
     public String edit() throws InstanceNotFoundException {
-        Preconditions.checkNotNull(conf);
+        Preconditions.checkNotNull(getAccion());
 
-        accion = ACCION_EDICION.edit;
+        if (getAccion() == ACCION_EDICION.edit) {
+            Preconditions.checkNotNull(model);
 
-        final ConfigurationBO confBO = new ConfigurationBO();
+            final ConfigurationBO confBO = new ConfigurationBO();
 
-        conf = confBO.select(conf.getKey());
+            model = confBO.select(model.getKey());
+        }
 
         return SUCCESS;
     }
@@ -71,31 +71,30 @@ public final class ConfigurationAction extends BaseAction {
      */
     @Action("conf-save")
     public String save() throws InstanceNotFoundException {
-        Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(conf);
-        Preconditions.checkNotNull(conf.getKey());
+        Preconditions.checkNotNull(getAccion());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getKey());
 
         final ConfigurationBO confBO = new ConfigurationBO();
 
-        switch (accion) {
+        switch (getAccion()) {
         case edit:
-            confBO.update(conf);
+            confBO.update(model);
 
             break;
         default:
-            throw new Error("Accion " + accion + " no implementada");
+            throw new Error("Accion " + getAccion() + " no implementada");
         }
 
         return SUCCESS;
     }
 
     /**
-     * Gets the conf.
-     *
-     * @return the conf
+     * {@inheritDoc}
      */
-    public ConfigurationVO getConf() {
-        return conf;
+    @Override
+    public ConfigurationVO getModel() {
+        return model;
     }
 
     /**
@@ -104,27 +103,8 @@ public final class ConfigurationAction extends BaseAction {
      * @param value
      *            the new conf
      */
-    public void setConf(final ConfigurationVO value) {
-        conf = value;
-    }
-
-    /**
-     * Gets the accion.
-     *
-     * @return the accion
-     */
-    public ACCION_EDICION getAccion() {
-        return accion;
-    }
-
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
+    public void setModel(final ConfigurationVO value) {
+        model = value;
     }
 
 }

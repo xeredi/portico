@@ -1,13 +1,12 @@
 package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -33,19 +32,13 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class ReglaAction.
  */
-public final class ReglaAction extends BaseAction implements ModelDriven<ReglaVO> {
+public final class ReglaAction extends ItemAction implements ModelDriven<ReglaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5126050009155945054L;
 
-    /** The accion. */
-    private ACCION_EDICION accion;
-
     /** The rgla. */
     private ReglaVO model;
-
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
 
     /** The rgin list. */
     private List<ReglaIncompatibleVO> rginList;
@@ -94,13 +87,13 @@ public final class ReglaAction extends BaseAction implements ModelDriven<ReglaVO
      */
     @Action("rgla-edit")
     public String edit() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getCrgo());
         Preconditions.checkNotNull(model.getCrgo().getId());
         Preconditions.checkNotNull(getFechaVigencia());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model.getId());
 
             final ReglaBO rglaBO = new ReglaBO();
@@ -161,11 +154,11 @@ public final class ReglaAction extends BaseAction implements ModelDriven<ReglaVO
      */
     @Action("rgla-save")
     public String save() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(getAccion());
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getRglv());
 
-        if (accion == ACCION_EDICION.create) {
+        if (getAccion() == ACCION_EDICION.create) {
             Preconditions.checkNotNull(model.getCrgo().getId());
 
             FieldValidator.validateRequired(this, MessageI18nKey.rgla_codigo, model.getCodigo());
@@ -265,7 +258,7 @@ public final class ReglaAction extends BaseAction implements ModelDriven<ReglaVO
         if (!hasErrors()) {
             final ReglaBO rglaBO = new ReglaBO();
 
-            switch (accion) {
+            switch (getAccion()) {
             case create:
                 rglaBO.insert(model);
 
@@ -275,7 +268,7 @@ public final class ReglaAction extends BaseAction implements ModelDriven<ReglaVO
 
                 break;
             default:
-                throw new Error(accion + " no implementada");
+                throw new Error(getAccion() + " no implementada");
             }
         }
 
@@ -332,16 +325,6 @@ public final class ReglaAction extends BaseAction implements ModelDriven<ReglaVO
     }
 
     /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public void setAccion(final ACCION_EDICION value) {
-        accion = value;
-    }
-
-    /**
      * Gets the enti facturable list.
      *
      * @return the enti facturable list
@@ -357,25 +340,6 @@ public final class ReglaAction extends BaseAction implements ModelDriven<ReglaVO
      */
     public List<ReglaIncompatibleVO> getRginList() {
         return rginList;
-    }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 
 }

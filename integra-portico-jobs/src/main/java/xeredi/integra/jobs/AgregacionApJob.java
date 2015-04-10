@@ -7,7 +7,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import xeredi.integra.proceso.estadistica.agregacionap.ProcesoAgregacionAp;
+import xeredi.integra.model.proceso.batch.estadistica.ProcesoAgregacionAp;
 
 // TODO: Auto-generated Javadoc
 /**

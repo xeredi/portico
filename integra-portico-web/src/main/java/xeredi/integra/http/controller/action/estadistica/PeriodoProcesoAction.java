@@ -1,14 +1,13 @@
 package xeredi.integra.http.controller.action.estadistica;
 
 import java.io.File;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.SuperpuertoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -21,24 +20,25 @@ import xeredi.integra.model.comun.vo.SuperpuertoVO;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
+import xeredi.integra.model.proceso.batch.estadistica.ProcesoCargaOppe;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
-import xeredi.integra.proceso.estadistica.cargaoppe.ProcesoCargaOppe;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PeriodoProcesoAction.
  */
-public final class PeriodoProcesoAction extends BaseAction {
+public final class PeriodoProcesoAction extends ItemAction implements ModelDriven<PeriodoProcesoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 849907867635380383L;
 
     /** The pepr form. */
-    private PeriodoProcesoVO pepr;
+    private PeriodoProcesoVO model;
 
     /** The autp list. */
     private List<SuperpuertoVO> sprtList;
@@ -63,8 +63,6 @@ public final class PeriodoProcesoAction extends BaseAction {
      */
     @Action("pepr-preparar-carga")
     public String prepararCarga() {
-        setFechaVigencia(Calendar.getInstance().getTime());
-
         loadLabelValuesMap();
 
         return SUCCESS;
@@ -79,18 +77,18 @@ public final class PeriodoProcesoAction extends BaseAction {
      */
     @Action("pepr-cargar")
     public String cargar() throws InstanceNotFoundException {
-        if (pepr == null) {
-            pepr = new PeriodoProcesoVO();
+        if (model == null) {
+            model = new PeriodoProcesoVO();
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.sprt, pepr.getSprt());
+        FieldValidator.validateRequired(this, MessageI18nKey.sprt, model.getSprt());
 
         if (!hasErrors()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.sprt, pepr.getSprt().getId());
+            FieldValidator.validateRequired(this, MessageI18nKey.sprt, model.getSprt().getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, pepr.getAnio());
-        FieldValidator.validateRequired(this, MessageI18nKey.pepr_mes, pepr.getMes());
+        FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, model.getAnio());
+        FieldValidator.validateRequired(this, MessageI18nKey.pepr_mes, model.getMes());
         FieldValidator.validateRequired(this, MessageI18nKey.pepr_sobreescribir, getSobreescribir());
 
         if (!hasErrors()) {
@@ -99,12 +97,12 @@ public final class PeriodoProcesoAction extends BaseAction {
 
             final String foldername = ConfigurationProxy
                     .getString(ConfigurationKey.estadistica_files_oppe_entrada_home);
-            final String filepath = foldername + "/" + pepr.getFilename() + ".zip";
+            final String filepath = foldername + "/" + model.getFilename() + ".zip";
             final File file = new File(filepath);
 
-            parametroMap.put(ProcesoCargaOppe.AUTP_PARAM, pepr.getSprt().getId().toString());
-            parametroMap.put(ProcesoCargaOppe.ANIO_PARAM, pepr.getAnio().toString());
-            parametroMap.put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
+            parametroMap.put(ProcesoCargaOppe.AUTP_PARAM, model.getSprt().getId().toString());
+            parametroMap.put(ProcesoCargaOppe.ANIO_PARAM, model.getAnio().toString());
+            parametroMap.put(ProcesoCargaOppe.MES_PARAM, model.getMes().toString());
             parametroMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
 
             prbtBO.crear(ProcesoTipo.EST_CARGA, parametroMap, null, null, file);
@@ -120,8 +118,6 @@ public final class PeriodoProcesoAction extends BaseAction {
      */
     @Action("pepr-preparar-creacion")
     public String prepararCreacion() {
-        setFechaVigencia(Calendar.getInstance().getTime());
-
         loadLabelValuesMap();
 
         return SUCCESS;
@@ -134,27 +130,27 @@ public final class PeriodoProcesoAction extends BaseAction {
      */
     @Action("pepr-creacion")
     public String creacion() {
-        if (pepr == null) {
-            pepr = new PeriodoProcesoVO();
+        if (model == null) {
+            model = new PeriodoProcesoVO();
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.sprt, pepr.getSprt());
+        FieldValidator.validateRequired(this, MessageI18nKey.sprt, model.getSprt());
 
         if (!hasErrors()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.sprt, pepr.getSprt().getId());
+            FieldValidator.validateRequired(this, MessageI18nKey.sprt, model.getSprt().getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, pepr.getAnio());
-        FieldValidator.validateRequired(this, MessageI18nKey.pepr_mes, pepr.getMes());
+        FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, model.getAnio());
+        FieldValidator.validateRequired(this, MessageI18nKey.pepr_mes, model.getMes());
         FieldValidator.validateRequired(this, MessageI18nKey.pepr_sobreescribir, getSobreescribir());
 
         if (!hasErrors()) {
             final ProcesoBO prbtBO = new ProcesoBO();
             final Map<String, String> parametroMap = new HashMap<>();
 
-            parametroMap.put(ProcesoCargaOppe.AUTP_PARAM, pepr.getSprt().getId().toString());
-            parametroMap.put(ProcesoCargaOppe.ANIO_PARAM, pepr.getAnio().toString());
-            parametroMap.put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
+            parametroMap.put(ProcesoCargaOppe.AUTP_PARAM, model.getSprt().getId().toString());
+            parametroMap.put(ProcesoCargaOppe.ANIO_PARAM, model.getAnio().toString());
+            parametroMap.put(ProcesoCargaOppe.MES_PARAM, model.getMes().toString());
             parametroMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
 
             prbtBO.crear(ProcesoTipo.EST_CREACION, parametroMap, null, null, null);
@@ -170,12 +166,12 @@ public final class PeriodoProcesoAction extends BaseAction {
      */
     @Action("pepr-remove")
     public String borrar() {
-        Preconditions.checkNotNull(pepr);
-        Preconditions.checkNotNull(pepr.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
-        peprBO.delete(pepr.getId());
+        peprBO.delete(model.getId());
 
         return SUCCESS;
     }
@@ -189,12 +185,12 @@ public final class PeriodoProcesoAction extends BaseAction {
      */
     @Action("pepr-detail")
     public String detalle() throws ApplicationException {
-        Preconditions.checkNotNull(pepr);
-        Preconditions.checkNotNull(pepr.getId());
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getId());
 
         final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
-        pepr = peprBO.select(pepr.getId());
+        model = peprBO.select(model.getId());
 
         return SUCCESS;
     }
@@ -223,12 +219,11 @@ public final class PeriodoProcesoAction extends BaseAction {
     }
 
     /**
-     * Gets the pepr.
-     *
-     * @return the pepr
+     * {@inheritDoc}
      */
-    public PeriodoProcesoVO getPepr() {
-        return pepr;
+    @Override
+    public PeriodoProcesoVO getModel() {
+        return model;
     }
 
     /**
@@ -237,8 +232,8 @@ public final class PeriodoProcesoAction extends BaseAction {
      * @param value
      *            the new pepr
      */
-    public void setPepr(final PeriodoProcesoVO value) {
-        pepr = value;
+    public void setModel(final PeriodoProcesoVO value) {
+        model = value;
     }
 
     /**
