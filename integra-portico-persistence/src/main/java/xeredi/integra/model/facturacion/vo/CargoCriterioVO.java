@@ -42,6 +42,9 @@ public final class CargoCriterioVO extends BaseCriterioVO {
     /** The aspc id. */
     private Long aspcId;
 
+    /** The vlrc id. */
+    private Long vlrcId;
+
     /**
      * Gets the id.
      *
@@ -249,5 +252,24 @@ public final class CargoCriterioVO extends BaseCriterioVO {
      */
     public void setAspcId(final Long value) {
         aspcId = value;
+    }
+
+    /**
+     * Gets the vlrc id.
+     *
+     * @return the vlrc id
+     */
+    public Long getVlrcId() {
+        return vlrcId;
+    }
+
+    /**
+     * Sets the vlrc id.
+     *
+     * @param value
+     *            the new vlrc id
+     */
+    public void setVlrcId(final Long value) {
+        vlrcId = value;
     }
 }

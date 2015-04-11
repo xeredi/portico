@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -14,6 +13,7 @@ import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.AspectoCargoBO;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoVO;
+import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -32,9 +32,6 @@ public final class AspectoCargoAction extends ItemAction implements ModelDriven<
 
     /** The ascr. */
     private AspectoCargoVO model;
-
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
 
     /** The crgo list. */
     private List<LabelValueVO> crgoList;
@@ -84,7 +81,14 @@ public final class AspectoCargoAction extends ItemAction implements ModelDriven<
             model = ascrBO.select(model.getId(), getFechaVigencia());
         } else {
             final AspectoBO aspcBO = new AspectoBO();
-            final AspectoVO aspc = aspcBO.select(model.getAspcId(), getFechaVigencia(), getIdioma());
+            final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
+
+            aspcCriterio.setId(model.getId());
+            aspcCriterio.setFechaVigencia(getFechaVigencia());
+            aspcCriterio.setIdioma(getIdioma());
+
+            final AspectoVO aspc = aspcBO.selectObject(aspcCriterio);
+
             final CargoBO crgoBO = new CargoBO();
             final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 

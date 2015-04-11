@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +18,7 @@ import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.AspectoCargoBO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoVO;
+import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.AspectoVersionVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
@@ -38,9 +38,6 @@ public final class AspectoAction extends ItemAction implements ModelDriven<Aspec
 
     /** The aspc. */
     private AspectoVO model;
-
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -70,8 +67,13 @@ public final class AspectoAction extends ItemAction implements ModelDriven<Aspec
         }
 
         final AspectoBO aspcBO = new AspectoBO();
+        final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
-        model = aspcBO.select(model.getId(), getFechaVigencia(), getIdioma());
+        aspcCriterio.setId(model.getId());
+        aspcCriterio.setFechaVigencia(getFechaVigencia());
+        aspcCriterio.setIdioma(getIdioma());
+
+        model = aspcBO.selectObject(aspcCriterio);
         i18nMap = I18nBO.selectMap(I18nPrefix.aspv, model.getAspv().getId());
 
         final AspectoCargoBO ascrBO = new AspectoCargoBO();
@@ -108,8 +110,13 @@ public final class AspectoAction extends ItemAction implements ModelDriven<Aspec
             Preconditions.checkNotNull(getFechaVigencia());
 
             final AspectoBO aspcBO = new AspectoBO();
+            final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
-            model = aspcBO.select(model.getId(), getFechaVigencia(), getIdioma());
+            aspcCriterio.setId(model.getId());
+            aspcCriterio.setFechaVigencia(getFechaVigencia());
+            aspcCriterio.setIdioma(getIdioma());
+
+            model = aspcBO.selectObject(aspcCriterio);
             i18nMap = I18nBO.selectMap(I18nPrefix.aspv, model.getAspv().getId());
         }
 

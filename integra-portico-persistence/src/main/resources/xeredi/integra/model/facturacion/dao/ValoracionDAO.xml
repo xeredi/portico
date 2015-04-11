@@ -31,9 +31,9 @@
 			<result property="numero" column="srvc_numero" />
 			<result property="entiId" column="srvc_tpsr_pk" />
 
-			<association property="subp" javaType="ParametroVO">
+			<association property="prto" javaType="PuertoVO">
 				<result property="id" column="srvc_subp_pk" />
-				<result property="parametro" column="srvc_subp_parametro" />
+				<result property="codigo" column="prto_codigo" />
 			</association>
 		</association>
 
@@ -100,10 +100,10 @@
 		    ) AS aspc_codigo
 
 		    , (
-		        SELECT prmt_parametro
-		        FROM tbl_parametro_prmt
-		        WHERE prmt_pk = srvc_subp_pk
-		    ) AS srvc_subp_parametro
+		        SELECT prto_codigo
+		        FROM tbl_puerto_prto
+		        WHERE prto_pk = srvc_subp_pk
+		    ) AS prto_codigo
 
 		    , (
 		        SELECT SUM(vlrd_importe)

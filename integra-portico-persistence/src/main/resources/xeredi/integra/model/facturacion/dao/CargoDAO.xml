@@ -176,6 +176,32 @@
 			<if test="codigoNormalizado != null">
 				AND crgv_codigo_norm LIKE #{codigoNormalizado}
 			</if>
+
+			<if test="vlrcId != null">
+            <![CDATA[
+				AND EXISTS (
+					SELECT 1
+					FROM tbl_valoracion_vlrc
+					WHERE
+						EXISTS (
+							SELECT 1
+							FROM tbl_servicio_srvc
+							WHERE
+								srvc_pk = vlrc_srvc_pk
+								AND srvc_tpsr_pk = crgo_tpsr_pk
+						)
+						AND EXISTS (
+							SELECT 1
+							FROM tbl_aspecto_cargo_ascr
+							WHERE
+								ascr_crgo_pk = crgo_pk
+								AND ascr_aspc_pk = vlrc_aspc_pk
+						)
+						AND vlrc_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, vlrc_fref)
+						AND vlrc_pk = #{vlrcId}
+				)
+            ]]>
+			</if>
 		</where>
 	</sql>
 

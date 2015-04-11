@@ -1,27 +1,103 @@
 <form role="form">
-    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="vlrl.vlrcId" /><input type="hidden"
-        ng-model="vlrl.id" />
-
     <fieldset>
-        <legend ng-bind="'vlrl' | translate"></legend>
+        <legend translate="vlrl"></legend>
 
-        <div class="row-fluid">
-            <div class="col-md-1 form-group">
-                <label translate>vlrl_rgla</label>
-                <p class="form-control-static">
-                    <a ng-href="#/facturacion/rgla/detail/{{vlrl.rgla.id}}/{{vlrl.fref}}" ng-bind="vlrl.rgla.codigo"></a>
-                </p>
+        <div class="row">
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm">
+                <label translate="crgo"></label> <input type="text" ng-if="vm.accion == 'create'"
+                    autocomplete="off" ng-model="vm.crgo" ng-controller="CrgoLupaController"
+                    typeahead="crgo as crgo.etiqueta for crgo in searchVlrc(vm.vlrl.vlrcId, $viewValue)"
+                    typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
+                <p ng-if="vm.accion == 'edit'" class="form-control-static"
+                    ng-bind="vm.vlrl.rgla.crgo.etiqueta"></p>
+            </div>
+
+            <div class="col-md-2 col-lg-1 form-group-sm" ng-if="vm.vlrl.rgla.id || vm.crgo.id">
+                <label translate="rgla"></label> <input type="text" ng-if="vm.accion == 'create'"
+                    autocomplete="off" ng-model="vm.vlrl.rgla" ng-controller="RglaLupaController"
+                    typeahead="rgla as rgla.codigo for rgla in searchVlrc(vm.vlrl.vlrcId, vm.vlrl.rgla.crgo.id, $viewValue)"
+                    typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
+                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.vlrl.rgla.codigo"></p>
+            </div>
+
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrl.rgla.id">
+                <label translate="rgla_tipo"></label>
+                <p class="form-control-static" ng-bind="vm.vlrl.rgla.tipo"></p>
+            </div>
+
+            <div class="col-md-4 col-lg-3 col-xl-2 form-group-sm" ng-if="vm.vlrl.rgla.id">
+                <label translate="enti"></label>
+                <p class="form-control-static" ng-bind="'enti_' + vm.vlrl.rgla.enti.id | translate"></p>
+            </div>
+        </div>
+
+        <div class="row" ng-if="vm.vlrl.rgla.tipo == 'T'">
+            <div class="col-md-6 col-lg-4 col-xl-3 form-group-sm"
+                ng-if="vm.vlrl.rgla.rglv.etiqInfo1 && vm.aspc.aspv.lgrpInfo1">
+                <label ng-bind="vm.vlrl.rgla.rglv.etiqInfo1"></label> <input type="text"
+                    ng-model="vm.vlrl.info1" class="form-control">
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 form-group-sm"
+                ng-if="vm.vlrl.rgla.rglv.etiqInfo2 && vm.aspc.aspv.lgrpInfo2">
+                <label ng-bind="vm.vlrl.rgla.rglv.etiqInfo2"></label> <input type="text"
+                    ng-model="vm.vlrl.info2" class="form-control">
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 form-group-sm"
+                ng-if="vm.vlrl.rgla.rglv.etiqInfo3 && vm.aspc.aspv.lgrpInfo3">
+                <label ng-bind="vm.vlrl.rgla.rglv.etiqInfo3"></label> <input type="text"
+                    ng-model="vm.vlrl.info3" class="form-control">
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 form-group-sm"
+                ng-if="vm.vlrl.rgla.rglv.etiqInfo4 && vm.aspc.aspv.lgrpInfo4">
+                <label ng-bind="vm.vlrl.rgla.rglv.etiqInfo4"></label> <input type="text"
+                    ng-model="vm.vlrl.info4" class="form-control">
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 form-group-sm"
+                ng-if="vm.vlrl.rgla.rglv.etiqInfo5 && vm.aspc.aspv.lgrpInfo5">
+                <label ng-bind="vm.vlrl.rgla.rglv.etiqInfo5"></label> <input type="text"
+                    ng-model="vm.vlrl.info5" class="form-control">
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 form-group-sm"
+                ng-if="vm.vlrl.rgla.rglv.etiqInfo6 && vm.aspc.aspv.lgrpInfo6">
+                <label ng-bind="vm.vlrl.rgla.rglv.etiqInfo6"></label> <input type="text"
+                    ng-model="vm.vlrl.info6" class="form-control">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-4 col-xl-3 form-group-sm" ng-if="vm.vlrl.rgla.rglv.etiqCuant1">
+                <label ng-bind="vm.vlrl.rgla.rglv.etiqCuant1"></label> <input type="text"
+                    ng-model="vm.vlrl.cuant1" class="form-control number">
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 form-group-sm" ng-if="vm.vlrl.rgla.rglv.etiqCuant2">
+                <label ng-bind="vm.vlrl.rgla.rglv.etiqCuant2"></label> <input type="text"
+                    ng-model="vm.vlrl.cuant2" class="form-control number">
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 form-group-sm" ng-if="vm.vlrl.rgla.rglv.etiqCuant3">
+                <label ng-bind="vm.vlrl.rgla.rglv.etiqCuant3"></label> <input type="text"
+                    ng-model="vm.vlrl.cuant3" class="form-control number">
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 form-group-sm" ng-if="vm.vlrl.rgla.rglv.etiqCuant4">
+                <label ng-bind="vm.vlrl.rgla.rglv.etiqCuant4"></label> <input type="text"
+                    ng-model="vm.vlrl.cuant4" class="form-control number">
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 form-group-sm" ng-if="vm.vlrl.rgla.rglv.etiqCuant5">
+                <label ng-bind="vm.vlrl.rgla.rglv.etiqCuant5"></label> <input type="text"
+                    ng-model="vm.vlrl.cuant5" class="form-control number">
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 form-group-sm" ng-if="vm.vlrl.rgla.rglv.etiqCuant6">
+                <label ng-bind="vm.vlrl.rgla.rglv.etiqCuant6"></label> <input type="text"
+                    ng-model="vm.vlrl.cuant6" class="form-control number">
             </div>
         </div>
     </fieldset>
 
     <div class="btn-group">
-        <button data-ng-click="save()" class="btn btn-primary">
+        <button data-ng-click="vm.save()" class="btn btn-primary">
             <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
         </button>
-        <button data-ng-click="cancel()" class="btn btn-default">
+        <button data-ng-click="vm.cancel()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
         </button>
     </div>
 </form>
-

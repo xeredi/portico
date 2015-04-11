@@ -48,9 +48,19 @@ label, .btn, .form-group-sm>.form-control-static, .form-group-sm>.form-control, 
 	font-size: 12px;
 }
 
-legend {
-	margin-top: 15px;
+.btn-toolbar {
+	margin-top: 5px;
 	margin-bottom: 5px;
+}
+
+fieldset {
+	margin-top: 5px;
+	margin-bottom: 15px;
+}
+
+legend {
+	margin-top: 5px;
+	margin-bottom: 10px;
 }
 
 .form-group-sm {

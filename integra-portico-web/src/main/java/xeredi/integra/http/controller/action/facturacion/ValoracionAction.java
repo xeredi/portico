@@ -10,6 +10,7 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
+import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
@@ -69,14 +70,20 @@ public final class ValoracionAction extends ItemAction implements ModelDriven<Va
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getId());
 
-        final AspectoBO aspcBO = new AspectoBO();
         final ValoracionBO vlrcBO = new ValoracionBO();
 
         model = vlrcBO.select(model.getId(), getIdioma());
         vlriList = vlrcBO.selectVlriList(model.getId(), getIdioma());
         vlrgList = vlrcBO.selectVlrgList(model.getId(), getIdioma());
-        aspc = aspcBO.select(model.getAspc().getId(), model.getFref(), getIdioma());
         tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
+
+        final AspectoBO aspcBO = new AspectoBO();
+        final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
+
+        aspcCriterio.setId(model.getAspc().getId());
+        aspcCriterio.setFechaVigencia(model.getFref());
+
+        aspc = aspcBO.selectObject(aspcCriterio);
 
         return SUCCESS;
     }
@@ -117,6 +124,8 @@ public final class ValoracionAction extends ItemAction implements ModelDriven<Va
      * Save.
      *
      * @return the string
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("vlrc-save")
     public String save() throws ApplicationException {
@@ -230,15 +239,6 @@ public final class ValoracionAction extends ItemAction implements ModelDriven<Va
     }
 
     /**
-     * Gets the aspc.
-     *
-     * @return the aspc
-     */
-    public AspectoVO getAspc() {
-        return aspc;
-    }
-
-    /**
      * Gets the pagador enti id.
      *
      * @return the pagador enti id
@@ -254,5 +254,14 @@ public final class ValoracionAction extends ItemAction implements ModelDriven<Va
      */
     public TipoDatoVO getTpdtCodExencion() {
         return tpdtCodExencion;
+    }
+
+    /**
+     * Gets the aspc.
+     *
+     * @return the aspc
+     */
+    public AspectoVO getAspc() {
+        return aspc;
     }
 }

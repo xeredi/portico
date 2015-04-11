@@ -1,7 +1,6 @@
 package xeredi.integra.model.facturacion.bo;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -104,33 +103,21 @@ public class AspectoBO {
     /**
      * Select.
      *
-     * @param id
-     *            the id
-     * @param fechaVigencia
-     *            the fecha vigencia
-     * @param idioma
-     *            the idioma
+     * @param aspcCriterio
+     *            the aspc criterio
      * @return the aspecto vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public AspectoVO select(final Long id, final Date fechaVigencia, final String idioma)
-            throws InstanceNotFoundException {
-        Preconditions.checkNotNull(id);
-        Preconditions.checkNotNull(fechaVigencia);
+    public AspectoVO selectObject(final AspectoCriterioVO aspcCriterio) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(aspcCriterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
-            final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
-
-            aspcCriterioVO.setId(id);
-            aspcCriterioVO.setFechaVigencia(fechaVigencia);
-            aspcCriterioVO.setIdioma(idioma);
-
-            final AspectoVO aspc = aspcDAO.selectObject(aspcCriterioVO);
+            final AspectoVO aspc = aspcDAO.selectObject(aspcCriterio);
 
             if (aspc == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.aspc, id);
+                throw new InstanceNotFoundException(MessageI18nKey.aspc, aspcCriterio);
             }
 
             return aspc;
@@ -228,7 +215,7 @@ public class AspectoBO {
      *             the overlap exception
      */
     public void update(final AspectoVO aspc, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException,
-            OverlapException {
+    OverlapException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getAspv());
         Preconditions.checkNotNull(aspc.getId());

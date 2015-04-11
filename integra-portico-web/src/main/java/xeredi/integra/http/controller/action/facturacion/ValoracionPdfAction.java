@@ -15,7 +15,6 @@ import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.report.ValoracionPdf;
-import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionImpuestoVO;
@@ -75,12 +74,11 @@ public final class ValoracionPdfAction extends BaseAction {
         final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(vlrcId, getIdioma());
         final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(vlrcId, getIdioma());
         final List<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrcId, getIdioma());
-        final AspectoVO aspc = aspcBO.select(vlrc.getAspc().getId(), vlrc.getFref(), getIdioma());
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             final ValoracionPdf vlrcPdf = new ValoracionPdf(getLocale());
 
-            vlrcPdf.imprimir(aspc, vlrc, vlrgList, vlriList, vlrlList, baos);
+            vlrcPdf.imprimir(vlrc, vlrgList, vlriList, vlrlList, baos);
 
             stream = new ByteArrayInputStream(baos.toByteArray());
         } catch (final IOException ex) {

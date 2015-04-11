@@ -20,25 +20,25 @@
 
 <fieldset>
     <div class="row">
-        <div class="col-md-2 col-lg-1 form-group">
+        <div class="col-md-2 col-lg-1 form-group-sm">
             <label translate="vlrc_id"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.id"></p>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 form-group-sm">
             <label translate="srvc_tpsr"></label>
             <p class="form-control-static">
                 <a ng-href="#/metamodelo/tpsr/detail/{{vm.vlrc.srvc.entiId}}"
                     translate="{{'enti_' + vm.vlrc.srvc.entiId}}"></a>
             </p>
         </div>
-        <div class="col-md-2 col-lg-1 form-group">
+        <div class="col-md-2 col-lg-1 form-group-sm">
             <label translate="vlrc_srvc"></label>
             <p class="form-control-static">
                 <a ng-href="#/servicio/srvc/detail/{{vm.vlrc.srvc.entiId}}/{{vm.vlrc.srvc.id}}"
                     ng-bind="vm.vlrc.srvc.etiqueta"></a>
             </p>
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-3 form-group-sm">
             <label translate="vlrc_aspc"></label>
             <p class="form-control-static">
                 <a ng-href="#/facturacion/aspc/detail/{{vm.vlrc.aspc.id}}/{{vm.vlrc.fref}}"
@@ -47,19 +47,19 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-1 form-group">
+        <div class="col-md-1 form-group-sm">
             <label translate="vlrc_importe"></label>
             <p class="form-control-static number">
                 <span ng-bind="vm.vlrc.importe | number:2"></span> &euro;
             </p>
         </div>
-        <div class="col-md-1 form-group">
+        <div class="col-md-1 form-group-sm">
             <label translate="vlrc_impuesto"></label>
             <p class="form-control-static number">
                 <span ng-bind="vm.vlrc.impuesto | number:2"></span> &euro;</i>
             </p>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 form-group-sm">
             <label translate="vlrc_codExencion"></label>
             <p class="form-control-static"
                 ng-bind="'cdrf_' + vm.tpdtCodExencion.id + '_' + vm.vlrc.codExencion | translate"></p>
@@ -67,7 +67,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3 form-group">
+        <div class="col-md-3 form-group-sm">
             <label translate="vlrc_pagador"></label>
             <p class="form-control-static">
                 <a
@@ -75,56 +75,56 @@
                     ng-bind="vm.vlrc.pagador.etiqueta"></a>
             </p>
         </div>
-        <div class="col-md-2 col-lg-1 form-group">
+        <div class="col-md-2 col-lg-1 form-group-sm">
             <label translate="vlrc_sujPasivo"></label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{vm.vlrc.sujPasivo ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 form-group-sm">
             <label translate="vlrc_falta"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.falta | date: ('format_datetime' | translate)"></p>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 form-group-sm">
             <label translate="vlrc_fliq"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.fliq | date: ('format_date' | translate)"></p>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 form-group-sm">
             <label translate="vlrc_fref"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.fref | date: ('format_datetime' | translate)"></p>
         </div>
-        <div class="col-md-2 form-group" ng-if="vm.vlrc.fini">
+        <div class="col-md-2 form-group-sm" ng-if="vm.vlrc.fini">
             <label translate="vlrc_fini"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.fini | date: ('format_datetime' | translate)"></p>
         </div>
-        <div class="col-md-2 form-group" ng-if="vm.vlrc.ffin">
+        <div class="col-md-2 form-group-sm" ng-if="vm.vlrc.ffin">
             <label translate="vlrc_ffin"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.ffin | date: ('format_datetime' | translate)"></p>
         </div>
     </div>
 
     <div class="row">
-        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo1" class="col-md-4 form-group">
+        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo1" class="col-md-4 form-group-sm">
             <label ng-bind="vm.vlrc.aspc.aspv.cetiqInfo1"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.info1"></p>
         </div>
-        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo2" class="col-md-4 form-group">
+        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo2" class="col-md-4 form-group-sm">
             <label ng-bind="vm.vlrc.aspc.aspv.cetiqInfo2"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.info2"></p>
         </div>
-        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo3" class="col-md-4 form-group">
+        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo3" class="col-md-4 form-group-sm">
             <label ng-bind="vm.vlrc.aspc.aspv.cetiqInfo3"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.info3"></p>
         </div>
-        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo4" class="col-md-4 form-group">
+        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo4" class="col-md-4 form-group-sm">
             <label ng-bind="vm.vlrc.aspc.aspv.cetiqInfo4"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.info4"></p>
         </div>
-        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo5" class="col-md-4 form-group">
+        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo5" class="col-md-4 form-group-sm">
             <label ng-bind="vm.vlrc.aspc.aspv.cetiqInfo5"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.info5"></p>
         </div>
-        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo6" class="col-md-4 form-group">
+        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo6" class="col-md-4 form-group-sm">
             <label ng-bind="vm.vlrc.aspc.aspv.cetiqInfo6"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.info6"></p>
         </div>
@@ -228,7 +228,7 @@
 
         <tbody>
             <tr ng-repeat="vlrl in vm.vlrlList.list track by $index">
-                <td><a ng-href="#/facturacion/vlrl/detail/{{vlrl.id}}"><i
+                <td><a ng-href="#/facturacion/vlrl/detail/{{vlrl.vlrcId}}/{{vlrl.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap" translate="{{'enti_' + vlrl.rgla.enti.id}}"></td>
                 <td nowrap="nowrap" ng-bind="vlrl.rgla.crgo.codigo"></td>
@@ -243,17 +243,23 @@
                 <td ng-bind="vlrl.fini | date:'short'"></td>
                 <td ng-bind="vlrl.ffin | date:'short'"></td>
 
-                <td ng-if="vm.aspc.aspv.lgrpInfo1"><span ng-if="vlrl.rgla.tipo == 'T' && vlrl.info1">{{vlrl.rgla.rglv.etiqInfo1}}:
+                <td ng-if="vm.aspc.aspv.lgrpInfo1" nowrap="nowrap"><span
+                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info1">{{vlrl.rgla.rglv.etiqInfo1}}:
                         {{vlrl.info1}}</span></td>
-                <td ng-if="vm.aspc.aspv.lgrpInfo2"><span ng-if="vlrl.rgla.tipo == 'T' && vlrl.info2">{{vlrl.rgla.rglv.etiqInfo2}}:
+                <td ng-if="vm.aspc.aspv.lgrpInfo2" nowrap="nowrap"><span
+                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info2">{{vlrl.rgla.rglv.etiqInfo2}}:
                         {{vlrl.info2}}</span></td>
-                <td ng-if="vm.aspc.aspv.lgrpInfo3"><span ng-if="vlrl.rgla.tipo == 'T' && vlrl.info3">{{vlrl.rgla.rglv.etiqInfo3}}:
+                <td ng-if="vm.aspc.aspv.lgrpInfo3" nowrap="nowrap"><span
+                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info3">{{vlrl.rgla.rglv.etiqInfo3}}:
                         {{vlrl.info3}}</span></td>
-                <td ng-if="vm.aspc.aspv.lgrpInfo4"><span ng-if="vlrl.rgla.tipo == 'T' && vlrl.info4">{{vlrl.rgla.rglv.etiqInfo4}}:
+                <td ng-if="vm.aspc.aspv.lgrpInfo4" nowrap="nowrap"><span
+                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info4">{{vlrl.rgla.rglv.etiqInfo4}}:
                         {{vlrl.info4}}</span></td>
-                <td ng-if="vm.aspc.aspv.lgrpInfo5"><span ng-if="vlrl.rgla.tipo == 'T' && vlrl.info5">{{vlrl.rgla.rglv.etiqInfo5}}:
+                <td ng-if="vm.aspc.aspv.lgrpInfo5" nowrap="nowrap"><span
+                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info5">{{vlrl.rgla.rglv.etiqInfo5}}:
                         {{vlrl.info5}}</span></td>
-                <td ng-if="vm.aspc.aspv.lgrpInfo6"><span ng-if="vlrl.rgla.tipo == 'T' && vlrl.info6">{{vlrl.rgla.rglv.etiqInfo6}}:
+                <td ng-if="vm.aspc.aspv.lgrpInfo6" nowrap="nowrap"><span
+                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info6">{{vlrl.rgla.rglv.etiqInfo6}}:
                         {{vlrl.info6}}</span></td>
 
                 <td><span ng-if="vlrl.cuant1">{{vlrl.rgla.rglv.etiqCuant1}}: {{vlrl.cuant1}}</span></td>

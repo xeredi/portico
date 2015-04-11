@@ -19,13 +19,13 @@
 	<sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        prbt.prbt_pk
-        , prbt.prbt_modulo
-        , prbt.prbt_tipo
-        , prbt.prbt_estado
-        , prbt.prbt_falta
-        , prbt.prbt_finicio
-        , prbt.prbt_ffin
+        prbt_pk
+        , prbt_modulo
+        , prbt_tipo
+        , prbt_estado
+        , prbt_falta
+        , prbt_finicio
+        , prbt_ffin
         , (SELECT COUNT(1) FROM tbl_proceso_mensaje_prmn
             WHERE prmn_prbt_pk = prbt_pk
                 AND prmn_nivel = 'E') AS prbt_errores_cnt
@@ -36,7 +36,7 @@
             WHERE prmn_prbt_pk = prbt_pk
                 AND prmn_nivel = 'I') AS prbt_mensajes_cnt
     FROM
-        tbl_proceso_batch_prbt prbt
+        tbl_proceso_batch_prbt
     ]]>
 	</sql>
 
@@ -45,29 +45,29 @@
     SELECT
         COUNT(1)
     FROM
-        tbl_proceso_batch_prbt prbt
+        tbl_proceso_batch_prbt
     ]]>
 	</sql>
 
 	<sql id="SelectWhere">
 		<where>
 			<if test="modulo != null">
-				AND prbt.prbt_modulo = #{modulo}
+				AND prbt_modulo = #{modulo}
 			</if>
 			<if test="tipo != null">
-				AND prbt.prbt_tipo = #{tipo}
+				AND prbt_tipo = #{tipo}
 			</if>
 			<if test="estado != null">
-				AND prbt.prbt_estado = #{estado}
+				AND prbt_estado = #{estado}
 			</if>
 			<if test="faltaMin != null">
 		    <![CDATA[
-				AND prbt.prbt_falta >= #{faltaMin}
+				AND prbt_falta >= #{faltaMin}
     		]]>
 			</if>
 			<if test="faltaMax != null">
 		    <![CDATA[
-				AND prbt.prbt_falta < #{faltaMax}
+				AND prbt_falta < #{faltaMax}
     		]]>
 			</if>
 		</where>
@@ -83,7 +83,7 @@
 		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
-		ORDER BY prbt.prbt_falta DESC
+		ORDER BY prbt_pk DESC
 	</select>
 
 	<select id="selectObject" parameterType="ProcesoCriterioVO"

@@ -6,9 +6,7 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.FacturaBO;
-import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.FacturaCargoVO;
 import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
@@ -28,9 +26,6 @@ public final class FacturaAction extends ItemAction implements ModelDriven<Factu
 
     /** The fctr. */
     private FacturaVO model;
-
-    /** The aspc. */
-    private AspectoVO aspc;
 
     /** The fcts list. */
     private List<FacturaServicioVO> fctsList;
@@ -54,10 +49,8 @@ public final class FacturaAction extends ItemAction implements ModelDriven<Factu
         Preconditions.checkNotNull(model.getId());
 
         final FacturaBO fctrBO = new FacturaBO();
-        final AspectoBO aspcBO = new AspectoBO();
 
         model = fctrBO.select(model.getId());
-        aspc = aspcBO.select(model.getAspc().getId(), model.getFref(), getIdioma());
         fctsList = fctrBO.selectFctsList(model.getId());
         fctiList = fctrBO.selectFctiList(model.getId());
         fctgList = fctrBO.selectFctgList(model.getId());
@@ -140,14 +133,5 @@ public final class FacturaAction extends ItemAction implements ModelDriven<Factu
      */
     public List<FacturaCargoVO> getFctgList() {
         return fctgList;
-    }
-
-    /**
-     * Gets the aspc.
-     *
-     * @return the aspc
-     */
-    public AspectoVO getAspc() {
-        return aspc;
     }
 }

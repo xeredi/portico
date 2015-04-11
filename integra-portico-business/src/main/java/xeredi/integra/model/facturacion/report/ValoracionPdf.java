@@ -21,7 +21,6 @@ import xeredi.integra.model.comun.report.BasePdf;
 import xeredi.integra.model.comun.report.PdfCell;
 import xeredi.integra.model.comun.report.PdfConstants;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
-import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.ReglaTipo;
 import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionImpuestoVO;
@@ -71,10 +70,9 @@ public final class ValoracionPdf extends BasePdf {
      * @throws InternalErrorException
      *             the internal error exception
      */
-    public void imprimir(final AspectoVO aspc, final ValoracionVO vlrc, final List<ValoracionCargoVO> vlrgList,
+    public void imprimir(final ValoracionVO vlrc, final List<ValoracionCargoVO> vlrgList,
             final List<ValoracionImpuestoVO> vlriList, final List<ValoracionLineaVO> vlrlList, final OutputStream stream)
                     throws InternalErrorException {
-        Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(vlrc);
         Preconditions.checkNotNull(vlrgList);
         Preconditions.checkNotNull(vlriList);
@@ -90,8 +88,7 @@ public final class ValoracionPdf extends BasePdf {
             report.addTitle(DynamicReports.cmp.text(bundle.getString(MessageI18nKey.vlrc.name())).setStyle(
                     PdfConstants.H1_STYLE));
 
-            report.addTitle(DynamicReports.cmp.subreport(getSubreportVlrc(aspc, vlrc)),
-                    DynamicReports.cmp.verticalGap(20));
+            report.addTitle(DynamicReports.cmp.subreport(getSubreportVlrc(vlrc)), DynamicReports.cmp.verticalGap(20));
             report.addTitle(DynamicReports.cmp.subreport(getSubreportPagador(vlrc.getPagador())),
                     DynamicReports.cmp.verticalGap(20));
             report.addTitle(DynamicReports.cmp.subreport(getSubreportVlrgList(vlrgList)),
@@ -110,14 +107,11 @@ public final class ValoracionPdf extends BasePdf {
     /**
      * Adds the subreport vlrc.
      *
-     * @param aspc
-     *            the aspc
      * @param vlrc
      *            the vlrc
      * @return the subreport vlrc
      */
-    private JasperReportBuilder getSubreportVlrc(final AspectoVO aspc, final ValoracionVO vlrc) {
-        Preconditions.checkNotNull(aspc);
+    private JasperReportBuilder getSubreportVlrc(final ValoracionVO vlrc) {
         Preconditions.checkNotNull(vlrc);
 
         final JasperReportBuilder report = DynamicReports.report();
@@ -129,8 +123,8 @@ public final class ValoracionPdf extends BasePdf {
 
             rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_id.name()), String.valueOf(vlrc.getId()), 1,
                     TipoElemento.TX));
-            rowCells.add(new PdfCell(bundle.getString("enti_" + aspc.getTpsr().getId()), vlrc.getSrvc().getEtiqueta(),
-                    3, TipoElemento.TX));
+            rowCells.add(new PdfCell(bundle.getString("enti_" + vlrc.getAspc().getTpsr().getId()), vlrc.getSrvc()
+                    .getEtiqueta(), 3, TipoElemento.TX));
             rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_fliq.name()), formatDate(vlrc.getFliq()), 1,
                     TipoElemento.FH));
 

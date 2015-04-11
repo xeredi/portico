@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.facturacion;
 
-import java.util.Calendar;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -33,41 +32,12 @@ public final class CargoLupaAction extends LupaAction implements ModelDriven<Car
      *
      * @return the string
      */
-    @Action("crgo-lupa-tpsr")
-    public String lupaTpsr() {
+    @Action("crgo-lupa")
+    public String lupa() {
         Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getTpsrId());
         Preconditions.checkNotNull(model.getTextoBusqueda());
 
         model.setIdioma(getIdioma());
-
-        if (model.getFechaVigencia() == null) {
-            model.setFechaVigencia(Calendar.getInstance().getTime());
-        }
-
-        final CargoBO crgoBO = new CargoBO();
-
-        crgoList = crgoBO.selectLupaList(model, getLimit());
-
-        return SUCCESS;
-    }
-
-    /**
-     * Lupa aspc.
-     *
-     * @return the string
-     */
-    @Action("crgo-lupa-aspc")
-    public String lupaAspc() {
-        Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getAspcId());
-        Preconditions.checkNotNull(model.getTextoBusqueda());
-
-        model.setIdioma(getIdioma());
-
-        if (model.getFechaVigencia() == null) {
-            model.setFechaVigencia(Calendar.getInstance().getTime());
-        }
 
         final CargoBO crgoBO = new CargoBO();
 

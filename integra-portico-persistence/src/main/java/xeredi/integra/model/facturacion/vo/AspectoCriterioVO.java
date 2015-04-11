@@ -22,6 +22,9 @@ public final class AspectoCriterioVO extends BaseCriterioVO {
     /** The tpsr id. */
     private Long tpsrId;
 
+    /** The vlrc id. */
+    private Long vlrcId;
+
     /**
      * Gets the id.
      *
@@ -115,6 +118,25 @@ public final class AspectoCriterioVO extends BaseCriterioVO {
      */
     public void setTpsrId(final Long value) {
         tpsrId = value;
+    }
+
+    /**
+     * Gets the vlrc id.
+     *
+     * @return the vlrc id
+     */
+    public Long getVlrcId() {
+        return vlrcId;
+    }
+
+    /**
+     * Sets the vlrc id.
+     *
+     * @param value
+     *            the new vlrc id
+     */
+    public void setVlrcId(final Long value) {
+        vlrcId = value;
     }
 
 }

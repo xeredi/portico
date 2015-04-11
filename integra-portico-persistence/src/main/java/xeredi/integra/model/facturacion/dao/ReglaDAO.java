@@ -42,7 +42,7 @@ public interface ReglaDAO {
      *            the bounds
      * @return the list
      */
-    List<ReglaVO> selectPaginatedList(final @Nonnull ReglaCriterioVO criterioVO, final @Nonnull RowBounds bounds);
+    List<ReglaVO> selectList(final @Nonnull ReglaCriterioVO criterioVO, final @Nonnull RowBounds bounds);
 
     /**
      * Count.

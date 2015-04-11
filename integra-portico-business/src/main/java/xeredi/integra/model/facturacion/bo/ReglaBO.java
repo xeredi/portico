@@ -48,7 +48,7 @@ public class ReglaBO {
             final List<ReglaVO> rglaList = new ArrayList<>();
 
             if (count >= offset) {
-                rglaList.addAll(rglaDAO.selectPaginatedList(rglaCriterioVO, new RowBounds(offset, limit)));
+                rglaList.addAll(rglaDAO.selectList(rglaCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<ReglaVO>(rglaList, offset, limit, count);
@@ -91,6 +91,25 @@ public class ReglaBO {
             }
 
             return list;
+        }
+    }
+
+    /**
+     * Select lupa list.
+     *
+     * @param rglaCriterio
+     *            the rgla criterio
+     * @param limit
+     *            the limit
+     * @return the list
+     */
+    public List<ReglaVO> selectLupaList(final ReglaCriterioVO rglaCriterio, final int limit) {
+        Preconditions.checkNotNull(rglaCriterio);
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
+
+            return rglaDAO.selectList(rglaCriterio, new RowBounds(PaginatedList.MIN_OFFSET, limit));
         }
     }
 

@@ -154,17 +154,11 @@
             		FROM tbl_valoracion_vlrc
             		WHERE
             			EXISTS (
-            				SELECT 1
-            				FROM tbl_aspecto_version_aspv
-            				WHERE aspv_aspc_pk = vlrc_aspc_pk
-            					AND vlrc_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, vlrc_fref)
-            					AND EXISTS (
-            						SELECT 1
-            						FROM tbl_aspecto_cargo_ascr
-            						WHERE
-            							ascr_aspc_pk = aspv_aspc_pk
-            							AND ascr_crgo_pk = rgla_crgo_pk
-            					)
+       						SELECT 1
+       						FROM tbl_aspecto_cargo_ascr
+       						WHERE
+       							ascr_aspc_pk = vlrc_aspc_pk
+       							AND ascr_crgo_pk = rgla_crgo_pk
             			)
             			AND vlrc_fref BETWEEN rglv_fini AND COALESCE(rglv_ffin, vlrc_fref)
             			AND vlrc_pk = #{vlrcId}
@@ -175,12 +169,6 @@
 	</sql>
 
 	<select id="selectList" parameterType="ReglaCriterioVO" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-		ORDER BY rgla_crgo_pk, rgla_enti_pk, rglv_orden
-	</select>
-
-	<select id="selectPaginatedList" parameterType="ReglaCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 		ORDER BY rgla_crgo_pk, rgla_enti_pk, rglv_orden

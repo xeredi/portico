@@ -69,9 +69,6 @@ public class CargoBO {
      */
     public List<CargoVO> selectLupaList(final CargoCriterioVO crgoCriterio, final int limit) {
         Preconditions.checkNotNull(crgoCriterio);
-        Preconditions.checkNotNull(crgoCriterio.getTpsrId());
-        Preconditions.checkNotNull(crgoCriterio.getFechaVigencia());
-        Preconditions.checkNotNull(crgoCriterio.getIdioma());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
