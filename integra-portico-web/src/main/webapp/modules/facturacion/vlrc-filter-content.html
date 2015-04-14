@@ -23,7 +23,7 @@
                             <div class="col-sm-3 col-md-2 form-group-sm" ng-show="vm.vlrcCriterio.tpsrId">
                                 <label translate="srvc"></label> <input type="text" autocomplete="off"
                                     ng-model="vm.vlrcCriterio.srvc" ng-controller="SrvcLupaController"
-                                    typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(vm.vlrcCriterio.tpsrId, $viewValue)"
+                                    typeahead="srvc as srvc.etiqueta for srvc in search(vm.vlrcCriterio.tpsrId, $viewValue)"
                                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                             </div>
                             <div class="col-sm-3 col-md-2 form-group-sm" ng-show="vm.vlrcCriterio.tpsrId">

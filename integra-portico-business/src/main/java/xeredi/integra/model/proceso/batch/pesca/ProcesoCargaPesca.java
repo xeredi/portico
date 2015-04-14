@@ -91,7 +91,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
 
                 final ArchivoBO flsrBO = new ArchivoBO();
 
-                try (final InputStream stream = flsrBO.select(arin.getId())) {
+                try (final InputStream stream = flsrBO.selectStream(arin.getId())) {
                     final List<String> lines = IOUtils.readLines(stream);
                     final PescaFileImport pescaFileImport = new PescaFileImport(this);
 

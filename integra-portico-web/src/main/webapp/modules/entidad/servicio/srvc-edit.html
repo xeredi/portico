@@ -20,27 +20,27 @@
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.numero"></p>
             </div>
 
-            <div ng-if="vm.enti.tpdtEstado" class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
+            <div ng-if="vm.enti.enti.tpdtEstado" class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
                 <label translate>srvc_estado</label> <select ng-if="vm.accion != 'edit'"
                     ng-model="vm.item.estado"
-                    ng-options="cdrf.valor as (('cdrf_' + vm.enti.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.enti.tpdtEstado.cdrfList"
+                    ng-options="cdrf.valor as (('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.enti.enti.tpdtEstado.cdrfList"
                     class="form-control">
                     <option />
                 </select>
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.estado"></p>
             </div>
 
-            <div ng-if="!vm.enti.temporal" class="col-sm-2 col-md-1 form-group-sm">
+            <div ng-if="!vm.enti.enti.temporal" class="col-sm-2 col-md-1 form-group-sm">
                 <label translate>srvc_fref</label><input type="text" class="form-control"
                     ng-model="vm.item.fref" bs-datepicker />
             </div>
 
-            <div ng-if="vm.enti.temporal" class="col-sm-2 col-md-1 form-group-sm">
+            <div ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-1 form-group-sm">
                 <label translate>srvc_fini</label><input type="text" class="form-control"
                     ng-model="vm.item.fini" data-max-date="{{vm.item.ffin}}" bs-datepicker />
             </div>
 
-            <div ng-if="vm.enti.temporal" class="col-sm-2 col-md-1 form-group-sm">
+            <div ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-1 form-group-sm">
                 <label translate>srvc_ffin</label><input type="text" class="form-control"
                     ng-model="vm.item.ffin" data-min-date="{{vm.item.fini}}" bs-datepicker />
             </div>

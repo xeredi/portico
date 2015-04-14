@@ -20,36 +20,6 @@ import xeredi.util.pagination.PaginatedList;
  * The Class PuertoBO.
  */
 public final class PuertoBO {
-
-    /**
-     * Select.
-     *
-     * @param id
-     *            the id
-     * @param idioma
-     *            the idioma
-     * @return the puerto vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public PuertoVO select(final Long id, final String idioma) throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final PuertoDAO prtoDAO = session.getMapper(PuertoDAO.class);
-            final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
-
-            prtoCriterio.setId(id);
-            prtoCriterio.setIdioma(idioma);
-
-            final PuertoVO prto = prtoDAO.selectObject(prtoCriterio);
-
-            if (prto == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.prto, id);
-            }
-
-            return prto;
-        }
-    }
-
     /**
      * Select object.
      *

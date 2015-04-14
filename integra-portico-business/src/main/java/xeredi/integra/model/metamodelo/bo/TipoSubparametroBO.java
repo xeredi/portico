@@ -117,10 +117,6 @@ public final class TipoSubparametroBO {
                 throw new InstanceNotFoundException(MessageI18nKey.tpsp, id);
             }
 
-            final EntidadBO entiBO = new EntidadBO();
-
-            entiBO.fillDependencies(session, entiVO, idioma);
-
             return entiVO;
         }
     }

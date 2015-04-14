@@ -25,10 +25,10 @@ import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
-import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
@@ -141,7 +141,7 @@ public abstract class ProcesoTemplate {
         }
 
         for (final Entidad entidad : codigoMaestroMap.keySet()) {
-            final TipoParametroVO tppr = TipoParametroProxy.select(entidad.getId());
+            final TipoParametroDetailVO tpprDetail = TipoParametroProxy.select(entidad.getId());
             final ParametroBO prmtBO = ParametroBOFactory.newInstance(entidad.getId());
             final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
 
@@ -154,7 +154,7 @@ public abstract class ProcesoTemplate {
             maestroPrtoMap.put(entidad, new HashMap<Long, Map<String, ParametroVO>>());
 
             for (final ParametroVO prmt : prmtBO.selectList(prmtCriterio)) {
-                if (tppr.isPuerto()) {
+                if (tpprDetail.getEnti().isPuerto()) {
                     if (!maestroPrtoMap.get(entidad).containsKey(prmt.getPrto().getId())) {
                         maestroPrtoMap.get(entidad).put(prmt.getPrto().getId(), new HashMap<String, ParametroVO>());
                     }

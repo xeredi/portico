@@ -13,7 +13,7 @@ import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
-import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
@@ -35,7 +35,7 @@ public interface ParametroBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    void insert(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroVO tpprVO,
+    void insert(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroDetailVO tpprDetail,
             final Map<String, I18nVO> i18nMap) throws OverlapException;
 
     /**
@@ -52,7 +52,7 @@ public interface ParametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    void duplicate(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroVO tpprVO,
+    void duplicate(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroDetailVO tpprDetail,
             final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException;
 
     /**
@@ -69,7 +69,7 @@ public interface ParametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    void update(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroVO tpprVO,
+    void update(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroDetailVO tpprDetail,
             final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException;
 
     /**

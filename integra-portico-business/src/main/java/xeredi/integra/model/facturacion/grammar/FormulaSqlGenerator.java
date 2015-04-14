@@ -5,15 +5,15 @@ import java.util.Iterator;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import xeredi.integra.model.facturacion.vo.ReglaVO;
+import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.util.grammar.FormulaBaseVisitor;
 import xeredi.integra.model.util.grammar.FormulaParser.AritmethicExprContext;
 import xeredi.integra.model.util.grammar.FormulaParser.PathContext;
@@ -94,9 +94,9 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
     public String visitPath(final PathContext ctx) {
         String sqlPath = "";
 
-        final EntidadVO entiBase = EntidadProxy.select(reglaVO.getEnti().getId());
+        final AbstractEntidadDetailVO entiDetailBase = EntidadProxy.select(reglaVO.getEnti().getId());
 
-        EntidadVO entiElem = entiBase;
+        AbstractEntidadDetailVO entiDetailElem = entiDetailBase;
 
         boolean isFirst = true;
         boolean isLast = false;
@@ -115,29 +115,30 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
                 String sqlElement = "";
 
                 if (pathElementCtx.service != null) {
-                    if (entiElem.getTipo() != TipoEntidad.S) {
+                    if (entiDetailElem.getEnti().getTipo() != TipoEntidad.S) {
                         throw new Error("Solo se puede llegar al servicio desde un subservicio");
                     }
 
-                    final TipoSubservicioVO tpss = TipoSubservicioProxy.select(entiElem.getId());
+                    final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(entiDetailElem.getEnti()
+                            .getId());
 
-                    entiElem = TipoServicioProxy.select(tpss.getTpsrId());
+                    entiDetailElem = TipoServicioProxy.select(tpssDetail.getEnti().getTpsrId());
 
                     sqlElement += "SELECT srvc_pk FROM tbl_servicio_srvc WHERE srvc_pk = ";
                     sqlElement += isFirst ? "item.ssrv_srvc_pk" : "#{any}";
                 }
 
                 if (pathElementCtx.parent != null) {
-                    if (entiElem.getTipo() != TipoEntidad.S) {
+                    if (entiDetailElem.getEnti().getTipo() != TipoEntidad.S) {
                         throw new Error("Solo se puede llegar al padre desde un subservicio");
                     }
 
                     final Entidad entidad = Entidad.valueOf(pathElementCtx.arg.getText());
 
-                    entiElem = EntidadProxy.select(entidad.getId());
+                    entiDetailElem = EntidadProxy.select(entidad.getId());
 
                     sqlElement += "SELECT ssss_ssrvp_pk FROM tbl_subserv_subserv_ssss WHERE EXISTS (SELECT 1 FROM tbl_subservicio_ssrv WHERE ssrv_pk = ssss_ssrvp_pk AND ssrv_tpss_pk = "
-                            + entiElem.getId() + ") AND ssss_ssrvh_pk = ";
+                            + entiDetailElem.getEnti().getId() + ") AND ssss_ssrvh_pk = ";
                     sqlElement += isFirst ? "item.ssrv_pk" : "(#{any})";
                 }
 
@@ -146,7 +147,7 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
 
                     EntidadTipoDatoVO entd = null;
 
-                    for (final EntidadTipoDatoVO vo : entiElem.getEntdList()) {
+                    for (final EntidadTipoDatoVO vo : entiDetailElem.getEntdList()) {
                         if (vo.getTpdt().getId() == tipoDato.getId()) {
                             entd = vo;
                         }
@@ -158,7 +159,7 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
 
                     String field = "";
 
-                    switch (entiElem.getTipo()) {
+                    switch (entiDetailElem.getEnti().getTipo()) {
                     case P:
                         field = "prdt_";
                         break;
@@ -201,7 +202,7 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
 
                     sqlElement += " SELECT " + field + " FROM ";
 
-                    switch (entiElem.getTipo()) {
+                    switch (entiDetailElem.getEnti().getTipo()) {
                     case P:
                         sqlElement += " tbl_parametro_dato_prdt WHERE prdt_tpdt_pk = "
                                 + entd.getTpdt().getId()
@@ -210,7 +211,7 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
                     case T:
                         sqlElement += " tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = " + entd.getTpdt().getId()
                                 + " AND srdt_srvc_pk = ";
-                        sqlElement += isFirst ? entiBase.getTipo() == TipoEntidad.T ? "item.srvc_pk"
+                        sqlElement += isFirst ? entiDetailBase.getEnti().getTipo() == TipoEntidad.T ? "item.srvc_pk"
                                 : "item.ssrv_srvc_pk" : "(#{any})";
                         break;
                     case S:

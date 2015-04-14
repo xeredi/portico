@@ -16,10 +16,8 @@ import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
-import xeredi.integra.model.metamodelo.dao.CampoAgregacionDAO;
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.dao.TipoEstadisticaDAO;
-import xeredi.integra.model.metamodelo.vo.CampoAgregacionCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
@@ -118,17 +116,6 @@ public final class TipoEstadisticaBO {
             if (entiVO == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.tpes, id);
             }
-
-            final CampoAgregacionDAO cmagDAO = session.getMapper(CampoAgregacionDAO.class);
-            final CampoAgregacionCriterioVO cmagCriterioVO = new CampoAgregacionCriterioVO();
-
-            cmagCriterioVO.setTpesId(entiVO.getId());
-
-            entiVO.setCmagList(cmagDAO.selectList(cmagCriterioVO));
-
-            final EntidadBO entiBO = new EntidadBO();
-
-            entiBO.fillDependencies(session, entiVO, idioma);
 
             return entiVO;
         }

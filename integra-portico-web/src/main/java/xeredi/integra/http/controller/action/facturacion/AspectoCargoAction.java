@@ -12,11 +12,12 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.AspectoCargoBO;
 import xeredi.integra.model.facturacion.bo.CargoBO;
+import xeredi.integra.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoVO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
-import xeredi.util.applicationobjects.LabelValueVO;
+import xeredi.integra.model.facturacion.vo.CargoVO;
 
 import com.google.common.base.Preconditions;
 import com.opensymphony.xwork2.ModelDriven;
@@ -34,7 +35,7 @@ public final class AspectoCargoAction extends ItemAction implements ModelDriven<
     private AspectoCargoVO model;
 
     /** The crgo list. */
-    private List<LabelValueVO> crgoList;
+    private List<CargoVO> crgoList;
 
     /**
      * Detail.
@@ -53,8 +54,12 @@ public final class AspectoCargoAction extends ItemAction implements ModelDriven<
         }
 
         final AspectoCargoBO ascrBO = new AspectoCargoBO();
+        final AspectoCargoCriterioVO ascrCriterio = new AspectoCargoCriterioVO();
 
-        model = ascrBO.select(model.getId(), getFechaVigencia());
+        ascrCriterio.setId(model.getId());
+        ascrCriterio.setFechaVigencia(getFechaVigencia());
+
+        model = ascrBO.selectObject(ascrCriterio);
 
         return SUCCESS;
     }
@@ -77,8 +82,12 @@ public final class AspectoCargoAction extends ItemAction implements ModelDriven<
             Preconditions.checkNotNull(model.getId());
 
             final AspectoCargoBO ascrBO = new AspectoCargoBO();
+            final AspectoCargoCriterioVO ascrCriterio = new AspectoCargoCriterioVO();
 
-            model = ascrBO.select(model.getId(), getFechaVigencia());
+            ascrCriterio.setId(model.getId());
+            ascrCriterio.setFechaVigencia(getFechaVigencia());
+
+            model = ascrBO.selectObject(ascrCriterio);
         } else {
             final AspectoBO aspcBO = new AspectoBO();
             final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
@@ -96,7 +105,7 @@ public final class AspectoCargoAction extends ItemAction implements ModelDriven<
             crgoCriterio.setFechaVigencia(getFechaVigencia());
             crgoCriterio.setIdioma(getIdioma());
 
-            crgoList = crgoBO.selectLabelValueList(crgoCriterio);
+            crgoList = crgoBO.selectList(crgoCriterio);
         }
 
         return SUCCESS;
@@ -195,7 +204,7 @@ public final class AspectoCargoAction extends ItemAction implements ModelDriven<
      *
      * @return the crgo list
      */
-    public List<LabelValueVO> getCrgoList() {
+    public List<CargoVO> getCrgoList() {
         return crgoList;
     }
 }

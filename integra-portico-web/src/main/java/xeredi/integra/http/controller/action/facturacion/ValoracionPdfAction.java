@@ -12,7 +12,6 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.exception.InternalErrorException;
-import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.report.ValoracionPdf;
 import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
@@ -33,17 +32,11 @@ public final class ValoracionPdfAction extends BaseAction {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3945767104537210962L;
 
-    /** The Constant PDF_MIMETYPE. */
-    public static final String PDF_MIMETYPE = "application/pdf";
-
     /** The item report. */
     private Long vlrcId;
 
     /** The stream. */
     private InputStream stream;
-
-    /** The filename. */
-    private String filename;
 
     // Acciones web
 
@@ -55,25 +48,26 @@ public final class ValoracionPdfAction extends BaseAction {
      *             the application exception
      */
     @Action(value = "vlrc-print", results = { @Result(name = "success", type = "stream", params = { "contentType",
-            "${type}", "inputName", "stream", "contentDisposition", "filename=${filename}" }) })
+            "application/pdf", "inputName", "stream", "contentDisposition", "filename=vlrc_${vlrcId}.pdf" }) })
     public String print() throws ApplicationException {
         Preconditions.checkNotNull(vlrcId);
 
         final ValoracionBO vlrcBO = new ValoracionBO();
-        final AspectoBO aspcBO = new AspectoBO();
         final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
-        final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
         vlrcCriterio.setId(vlrcId);
         vlrcCriterio.setIdioma(getIdioma());
 
+        final ValoracionVO vlrc = vlrcBO.selectObject(vlrcCriterio);
+        final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(vlrcCriterio);
+        final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(vlrcCriterio);
+
+        final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
+
         vlrlCriterio.setVlrc(vlrcCriterio);
         vlrlCriterio.setIdioma(getIdioma());
 
-        final ValoracionVO vlrc = vlrcBO.select(vlrcId, getIdioma());
-        final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(vlrcId, getIdioma());
-        final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(vlrcId, getIdioma());
-        final List<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrcId, getIdioma());
+        final List<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrlCriterio);
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             final ValoracionPdf vlrcPdf = new ValoracionPdf(getLocale());
@@ -107,24 +101,6 @@ public final class ValoracionPdfAction extends BaseAction {
      */
     public InputStream getStream() {
         return stream;
-    }
-
-    /**
-     * Gets the type.
-     *
-     * @return the type
-     */
-    public String getType() {
-        return PDF_MIMETYPE;
-    }
-
-    /**
-     * Gets the filename.
-     *
-     * @return the filename
-     */
-    public String getFilename() {
-        return filename;
     }
 
 }

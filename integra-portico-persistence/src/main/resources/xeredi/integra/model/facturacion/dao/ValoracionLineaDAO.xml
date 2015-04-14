@@ -80,7 +80,6 @@
     <![CDATA[
 		SELECT
 		    vlrl_pk, vlrl_padre_pk, vlrl_vlrc_pk, vlrl_rgla_pk, vlrl_impuesto_prmt_pk, vlrl_ssrv_pk, vlrl_fini, vlrl_ffin
-		    , vlrl_cuant1, vlrl_cuant2, vlrl_cuant3, vlrl_cuant4, vlrl_cuant5, vlrl_cuant6
 		    , vlrl_info1, vlrl_info2, vlrl_info3, vlrl_info4, vlrl_info5, vlrl_info6
 
 		    , rgla_codigo, rgla_crgo_pk, rgla_tipo, rgla_enti_pk
@@ -99,6 +98,13 @@
 		    , (SELECT SUM(vlrd_importe_base) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_importe_base
 		    , (SELECT SUM(vlrd_importe) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_importe
 		    , (SELECT COUNT(1) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_vlrd_count
+
+		    , (SELECT SUM(vlrd_cuant1) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_cuant1
+		    , (SELECT SUM(vlrd_cuant2) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_cuant2
+		    , (SELECT SUM(vlrd_cuant3) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_cuant3
+		    , (SELECT SUM(vlrd_cuant4) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_cuant4
+		    , (SELECT SUM(vlrd_cuant5) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_cuant5
+		    , (SELECT SUM(vlrd_cuant6) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_cuant6
     ]]>
 		<if test="idioma != null">
 	    <![CDATA[

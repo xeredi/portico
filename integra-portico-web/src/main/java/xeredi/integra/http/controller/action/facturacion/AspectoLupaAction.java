@@ -47,7 +47,7 @@ public final class AspectoLupaAction extends LupaAction implements ModelDriven<A
 
         final AspectoBO aspcBO = new AspectoBO();
 
-        aspcList = aspcBO.selectLupaList(model, getLimit());
+        aspcList = aspcBO.selectList(model, getLimit());
 
         return SUCCESS;
     }

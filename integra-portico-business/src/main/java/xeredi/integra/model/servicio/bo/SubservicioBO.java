@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -91,7 +91,7 @@ public interface SubservicioBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    void insert(final @Nonnull SubservicioVO ssrvVO, final @Nonnull TipoSubservicioVO tpssVO,
+    void insert(final @Nonnull SubservicioVO ssrvVO, final @Nonnull TipoSubservicioDetailVO tpssDetail,
             final Set<Long> ssrvPadreIds) throws DuplicateInstanceException;
 
     /**

@@ -18,7 +18,7 @@ angular.module("servicio", [])
 
 .controller("SrvcEditController", SrvcEditController)
 
-.controller('SrvcLupaController', SrvcLupaController)
+.controller("SrvcLupaController", SrvcLupaController)
 
 .controller("ManiTotalesController", ManiTotalesController)
 
@@ -29,7 +29,7 @@ angular.module("servicio", [])
 
 .controller("SsrvEditController", SsrvEditController)
 
-.controller('SsrvLupaController', SsrvLupaController)
+.controller("SsrvLupaController", SsrvLupaController)
 
 .controller("MablTotalesController", MablTotalesController)
 
@@ -347,7 +347,7 @@ function SrvcGridController($http, $location, $routeParams, $modal, pageTitleSer
             });
 
             setTimeout(function() {
-                saveAs(file, vm.enti.id + '.xls');
+                saveAs(file, vm.itemCriterio.entiId + '.xls');
             }, 0);
         });
     }
@@ -563,7 +563,7 @@ function SrvcEditController($http, $location, $routeParams, pageTitleService) {
 }
 
 function SrvcLupaController($http, $scope) {
-    $scope.getLabelValues = function(entiId, textoBusqueda) {
+    $scope.search = function(entiId, textoBusqueda) {
         if (textoBusqueda.length <= 0) {
             return null;
         }
@@ -923,13 +923,15 @@ function SsrvEditController($http, $location, $routeParams, pageTitleService) {
 }
 
 function SsrvLupaController($http, $scope) {
-    $scope.getLabelValues = function(entiId, srvcId, numero) {
+    $scope.search = function(entiId, srvcId, numero, fechaVigencia) {
+        alert(srvcId);
+
         return $http.post("servicio/ssrv-lupa.action", {
             model : {
                 entiId : entiId,
                 srvcId : srvcId,
                 numero : numero,
-                fechaVigencia : "11/12/2014"
+                fechaVigencia : fechaVigencia
             }
         }).then(function(res) {
             return res.data.itemList;

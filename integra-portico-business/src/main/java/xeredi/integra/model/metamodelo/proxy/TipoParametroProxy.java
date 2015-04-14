@@ -30,7 +30,7 @@ public final class TipoParametroProxy {
     private static final List<LabelValueVO> LABEL_VALUE_LIST = new ArrayList<>();
 
     /** The Constant TIPO_PARAMETRO_MAP. */
-    private static final Map<Long, TipoParametroVO> TIPO_PARAMETRO_MAP = new HashMap<>();
+    private static final Map<Long, TipoParametroDetailVO> TIPO_PARAMETRO_MAP = new HashMap<>();
 
     static {
         load();
@@ -50,7 +50,7 @@ public final class TipoParametroProxy {
      *
      * @return the map
      */
-    public static Map<Long, TipoParametroVO> selectMap() {
+    public static Map<Long, TipoParametroDetailVO> selectMap() {
         return TIPO_PARAMETRO_MAP;
     }
 
@@ -61,7 +61,7 @@ public final class TipoParametroProxy {
      *            the id
      * @return the tipo parametro vo
      */
-    public static TipoParametroVO select(final @Nonnull Long id) {
+    public static TipoParametroDetailVO select(final @Nonnull Long id) {
         if (!TIPO_PARAMETRO_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tppr, id));
         }
@@ -76,10 +76,13 @@ public final class TipoParametroProxy {
         LOG.info("Carga de tipos de parametro");
 
         final TipoParametroBO tpprBO = new TipoParametroBO();
-        final List<TipoParametroVO> tpprList = tpprBO.selectList(new TipoParametroCriterioVO());
 
-        for (final TipoParametroVO tpprVO : tpprList) {
-            TIPO_PARAMETRO_MAP.put(tpprVO.getId(), tpprVO);
+        for (final TipoParametroVO tppr : tpprBO.selectList(new TipoParametroCriterioVO())) {
+            final TipoParametroDetailVO tpprDetail = new TipoParametroDetailVO();
+
+            tpprDetail.setEnti(tppr);
+
+            TIPO_PARAMETRO_MAP.put(tpprDetail.getEnti().getId(), tpprDetail);
         }
 
         EntidadProxy.loadDependencies(TIPO_PARAMETRO_MAP);

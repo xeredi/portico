@@ -18,11 +18,11 @@ import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoDatoProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.proceso.ProcesoTemplate;
 
@@ -321,7 +321,7 @@ public final class OppeFileImport {
     public void readEAP(final @Nonnull List<String> lines) {
         int i = 0;
 
-        final TipoEstadisticaVO tpesVO = TipoEstadisticaProxy.select(Entidad.ACTIVIDAD_PESQUERA.getId());
+        final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy.select(Entidad.ACTIVIDAD_PESQUERA.getId());
 
         for (final String line : lines) {
             i++;
@@ -329,7 +329,7 @@ public final class OppeFileImport {
             if (!line.isEmpty() && !line.startsWith(SIGMA_TOKEN)) {
                 final EstadisticaVO estd = new EstadisticaVO();
 
-                estd.setEntiId(tpesVO.getId());
+                estd.setEntiId(tpesDetail.getEnti().getId());
                 estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
                 estd.setPrto(getPrto(EstadisticaFileKeyword.Autp, line, i));
 
@@ -353,7 +353,7 @@ public final class OppeFileImport {
     public void readEAV(final @Nonnull List<String> lines) {
         int i = 0;
 
-        final TipoEstadisticaVO tpesVO = TipoEstadisticaProxy.select(Entidad.AVITUALLAMIENTO.getId());
+        final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy.select(Entidad.AVITUALLAMIENTO.getId());
 
         for (final String line : lines) {
             i++;
@@ -361,7 +361,7 @@ public final class OppeFileImport {
             if (!line.isEmpty() && !line.startsWith(SIGMA_TOKEN)) {
                 final EstadisticaVO estd = new EstadisticaVO();
 
-                estd.setEntiId(tpesVO.getId());
+                estd.setEntiId(tpesDetail.getEnti().getId());
                 estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
                 estd.setPrto(getPrto(EstadisticaFileKeyword.Autp, line, i));
 
@@ -388,7 +388,7 @@ public final class OppeFileImport {
     public void readEAE(final @Nonnull List<String> lines) {
         int i = 0;
 
-        final TipoEstadisticaVO tpesVO = TipoEstadisticaProxy.select(Entidad.AGREGACION_ESCALA.getId());
+        final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy.select(Entidad.AGREGACION_ESCALA.getId());
 
         for (final String line : lines) {
             i++;
@@ -396,7 +396,7 @@ public final class OppeFileImport {
             if (!line.isEmpty() && !line.startsWith(SIGMA_TOKEN)) {
                 final EstadisticaVO estd = new EstadisticaVO();
 
-                estd.setEntiId(tpesVO.getId());
+                estd.setEntiId(tpesDetail.getEnti().getId());
                 estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
                 estd.setPrto(getPrto(EstadisticaFileKeyword.Autp, line, i));
 
@@ -428,7 +428,7 @@ public final class OppeFileImport {
     public void readEMM(final @Nonnull List<String> lines) {
         int i = 0;
 
-        final TipoEstadisticaVO tpesVO = TipoEstadisticaProxy.select(Entidad.MOVIMIENTO_MERCANCIA.getId());
+        final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy.select(Entidad.MOVIMIENTO_MERCANCIA.getId());
 
         for (final String line : lines) {
             i++;
@@ -436,7 +436,7 @@ public final class OppeFileImport {
             if (!line.isEmpty() && !line.startsWith(SIGMA_TOKEN)) {
                 final EstadisticaVO estd = new EstadisticaVO();
 
-                estd.setEntiId(tpesVO.getId());
+                estd.setEntiId(tpesDetail.getEnti().getId());
                 estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
                 estd.setPrto(getPrto(EstadisticaFileKeyword.Autp, line, i));
 
@@ -519,7 +519,8 @@ public final class OppeFileImport {
     public void readEME(final @Nonnull List<String> lines, final boolean isSigma) {
         int i = 0;
 
-        final TipoEstadisticaVO tpesVO = TipoEstadisticaProxy.select(Entidad.MOVIMIENTO_MERCANCIA_EEE.getId());
+        final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy
+                .select(Entidad.MOVIMIENTO_MERCANCIA_EEE.getId());
 
         for (final String line : lines) {
             i++;
@@ -527,7 +528,7 @@ public final class OppeFileImport {
             if (!line.isEmpty() && !line.startsWith(SIGMA_TOKEN)) {
                 final EstadisticaVO estd = new EstadisticaVO();
 
-                estd.setEntiId(tpesVO.getId());
+                estd.setEntiId(tpesDetail.getEnti().getId());
                 estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
                 estd.setPrto(getPrto(EstadisticaFileKeyword.Autp, line, i));
 
@@ -593,7 +594,8 @@ public final class OppeFileImport {
     public void readEMT(final @Nonnull List<String> lines) {
         int i = 0;
 
-        final TipoEstadisticaVO tpesVO = TipoEstadisticaProxy.select(Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId());
+        final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy.select(Entidad.MOVIMIENTO_TIPO_BUQUE_EEE
+                .getId());
 
         for (final String line : lines) {
             i++;
@@ -601,7 +603,7 @@ public final class OppeFileImport {
             if (!line.isEmpty() && !line.startsWith(SIGMA_TOKEN)) {
                 final EstadisticaVO estd = new EstadisticaVO();
 
-                estd.setEntiId(tpesVO.getId());
+                estd.setEntiId(tpesDetail.getEnti().getId());
                 estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
                 estd.setPrto(getPrto(EstadisticaFileKeyword.Autp, line, i));
 

@@ -13,7 +13,9 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
 import xeredi.integra.model.facturacion.bo.ReglaIncompatibleBO;
+import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
+import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.integra.model.facturacion.vo.ReglaTipo;
@@ -65,8 +67,12 @@ public final class ReglaAction extends ItemAction implements ModelDriven<ReglaVO
         }
 
         final ReglaBO rglaBO = new ReglaBO();
+        final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
 
-        model = rglaBO.select(model.getId(), getFechaVigencia());
+        rglaCriterio.setId(model.getId());
+        rglaCriterio.setFechaVigencia(getFechaVigencia());
+
+        model = rglaBO.selectObject(rglaCriterio);
 
         final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
         final ReglaIncompatibleCriterioVO rginCriterioVO = new ReglaIncompatibleCriterioVO();
@@ -97,11 +103,21 @@ public final class ReglaAction extends ItemAction implements ModelDriven<ReglaVO
             Preconditions.checkNotNull(model.getId());
 
             final ReglaBO rglaBO = new ReglaBO();
+            final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
 
-            model = rglaBO.select(model.getId(), getFechaVigencia());
+            rglaCriterio.setId(model.getId());
+            rglaCriterio.setFechaVigencia(getFechaVigencia());
+
+            model = rglaBO.selectObject(rglaCriterio);
         } else {
             final CargoBO crgoBO = new CargoBO();
-            final CargoVO crgo = crgoBO.select(model.getCrgo().getId(), getFechaVigencia(), getIdioma());
+            final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
+
+            crgoCriterio.setId(model.getCrgo().getId());
+            crgoCriterio.setFechaVigencia(getFechaVigencia());
+            crgoCriterio.setIdioma(getIdioma());
+
+            final CargoVO crgo = crgoBO.selectObject(crgoCriterio);
             final ReglaVersionVO rglv = new ReglaVersionVO();
 
             rglv.setFini(Calendar.getInstance().getTime());
@@ -125,8 +141,13 @@ public final class ReglaAction extends ItemAction implements ModelDriven<ReglaVO
     private void loadEntiFacturables() throws ApplicationException {
         final TipoServicioBO tpsrBO = new TipoServicioBO();
         final CargoBO crgoBO = new CargoBO();
+        final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
-        final CargoVO crgo = crgoBO.select(model.getCrgo().getId(), getFechaVigencia(), getIdioma());
+        crgoCriterio.setId(model.getCrgo().getId());
+        crgoCriterio.setFechaVigencia(getFechaVigencia());
+        crgoCriterio.setIdioma(getIdioma());
+
+        final CargoVO crgo = crgoBO.selectObject(crgoCriterio);
         final TipoServicioCriterioVO tpsrCriterioVO = new TipoServicioCriterioVO();
 
         tpsrCriterioVO.setId(crgo.getTpsr().getId());

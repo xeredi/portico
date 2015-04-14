@@ -144,28 +144,21 @@ public class ValoracionBO {
     /**
      * Select.
      *
-     * @param id
-     *            the id
-     * @param idioma
-     *            the idioma
+     * @param vlrcCriterio
+     *            the vlrc criterio
      * @return the valoracion vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ValoracionVO select(final Long id, final String idioma) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(id);
+    public ValoracionVO selectObject(final ValoracionCriterioVO vlrcCriterio) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(vlrcCriterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
-            final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
-
-            vlrcCriterio.setId(id);
-            vlrcCriterio.setIdioma(idioma);
-
             final ValoracionVO vlrc = vlrcDAO.selectObject(vlrcCriterio);
 
             if (vlrc == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.vlrc, id);
+                throw new InstanceNotFoundException(MessageI18nKey.vlrc, vlrcCriterio);
             }
 
             return vlrc;
@@ -205,21 +198,15 @@ public class ValoracionBO {
     /**
      * Select vlri list.
      *
-     * @param vlrcId
-     *            the vlrc id
-     * @param idioma
-     *            the idioma
+     * @param vlrcCriterio
+     *            the vlrc criterio
      * @return the list
      */
-    public List<ValoracionImpuestoVO> selectVlriList(final Long vlrcId, final String idioma) {
-        Preconditions.checkNotNull(vlrcId);
+    public List<ValoracionImpuestoVO> selectVlriList(final ValoracionCriterioVO vlrcCriterio) {
+        Preconditions.checkNotNull(vlrcCriterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ValoracionImpuestoDAO vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
-            final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
-
-            vlrcCriterio.setId(vlrcId);
-            vlrcCriterio.setIdioma(idioma);
 
             return vlriDAO.selectList(vlrcCriterio);
         }
@@ -228,21 +215,15 @@ public class ValoracionBO {
     /**
      * Select vlrg list.
      *
-     * @param vlrcId
-     *            the vlrc id
-     * @param idioma
-     *            the idioma
+     * @param vlrcCriterio
+     *            the vlrc criterio
      * @return the list
      */
-    public List<ValoracionCargoVO> selectVlrgList(final Long vlrcId, final String idioma) {
-        Preconditions.checkNotNull(vlrcId);
+    public List<ValoracionCargoVO> selectVlrgList(final ValoracionCriterioVO vlrcCriterio) {
+        Preconditions.checkNotNull(vlrcCriterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ValoracionCargoDAO vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
-            final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
-
-            vlrcCriterio.setId(vlrcId);
-            vlrcCriterio.setIdioma(idioma);
 
             return vlrgDAO.selectList(vlrcCriterio);
         }
@@ -251,28 +232,22 @@ public class ValoracionBO {
     /**
      * Select vlrl.
      *
-     * @param vlrlId
-     *            the vlrl id
-     * @param idioma
-     *            the idioma
+     * @param vlrlCriterio
+     *            the vlrl criterio
      * @return the valoracion linea vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ValoracionLineaVO selectVlrl(final Long vlrlId, final String idioma) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(vlrlId);
+    public ValoracionLineaVO selectVlrlObject(final ValoracionLineaCriterioVO vlrlCriterio)
+            throws InstanceNotFoundException {
+        Preconditions.checkNotNull(vlrlCriterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-            final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
-
-            vlrlCriterio.setId(vlrlId);
-            vlrlCriterio.setIdioma(idioma);
-
             final ValoracionLineaVO vlrl = vlrlDAO.selectObject(vlrlCriterio);
 
             if (vlrl == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.vlrl, vlrlId);
+                throw new InstanceNotFoundException(MessageI18nKey.vlrl, vlrlCriterio);
             }
 
             return vlrl;
@@ -299,23 +274,15 @@ public class ValoracionBO {
     /**
      * Select vlrl list.
      *
-     * @param vlrcId
-     *            the vlrc id
-     * @param idioma
-     *            the idioma
+     * @param vlrlCriterio
+     *            the vlrl criterio
      * @return the list
      */
-    public List<ValoracionLineaVO> selectVlrlList(final Long vlrcId, final String idioma) {
-        Preconditions.checkNotNull(vlrcId);
+    public List<ValoracionLineaVO> selectVlrlList(final ValoracionLineaCriterioVO vlrlCriterio) {
+        Preconditions.checkNotNull(vlrlCriterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-            final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
-            final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
-
-            vlrcCriterio.setId(vlrcId);
-            vlrlCriterio.setVlrc(vlrcCriterio);
-            vlrlCriterio.setIdioma(idioma);
 
             return vlrlDAO.selectList(vlrlCriterio);
         }
@@ -324,34 +291,25 @@ public class ValoracionBO {
     /**
      * Select vlrl list.
      *
-     * @param vlrcId
-     *            the vlrc id
-     * @param idioma
-     *            the idioma
+     * @param vlrlCriterio
+     *            the vlrl criterio
      * @param offset
      *            the offset
      * @param limit
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<ValoracionLineaVO> selectVlrlList(final Long vlrcId, final String idioma, final int offset,
-            final int limit) {
-        Preconditions.checkNotNull(vlrcId);
+    public PaginatedList<ValoracionLineaVO> selectVlrlList(final ValoracionLineaCriterioVO vlrlCriterio,
+            final int offset, final int limit) {
+        Preconditions.checkNotNull(vlrlCriterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-            final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
-            final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
-
-            vlrcCriterio.setId(vlrcId);
-            vlrlCriterio.setVlrc(vlrcCriterio);
-            vlrlCriterio.setIdioma(idioma);
-
             final int count = vlrlDAO.count(vlrlCriterio);
             final List<ValoracionLineaVO> vlrlList = new ArrayList<>();
 
             if (count >= offset) {
-                vlrlList.addAll(vlrlDAO.selectPaginatedList(vlrlCriterio, new RowBounds(offset, limit)));
+                vlrlList.addAll(vlrlDAO.selectList(vlrlCriterio, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<ValoracionLineaVO>(vlrlList, offset, limit, count);

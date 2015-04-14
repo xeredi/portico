@@ -14,8 +14,8 @@ import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.report.EstadisticaXls;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
+import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
-import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 
 import com.google.common.base.Preconditions;
 
@@ -32,7 +32,7 @@ public final class EstadisticaXlsAction extends BaseAction {
     private EstadisticaCriterioVO itemCriterio;
 
     /** The tppr. */
-    private TipoEstadisticaVO enti;
+    private TipoEstadisticaDetailVO enti;
 
     /** The stream. */
     private InputStream stream;
@@ -97,7 +97,7 @@ public final class EstadisticaXlsAction extends BaseAction {
      *
      * @return the enti
      */
-    public final TipoEstadisticaVO getEnti() {
+    public final TipoEstadisticaDetailVO getEnti() {
         return enti;
     }
 

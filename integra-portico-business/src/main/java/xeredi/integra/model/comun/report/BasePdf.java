@@ -226,6 +226,6 @@ public abstract class BasePdf {
      * @return the string
      */
     protected final String formatBoolean(final Long value) {
-        return bundle.getString("format_" + (1 == value));
+        return value == null ? "" : bundle.getString("format_" + (1 == value));
     }
 }

@@ -68,7 +68,7 @@ public interface ValoracionLineaDAO {
      *            the bounds
      * @return the list
      */
-    List<ValoracionLineaVO> selectPaginatedList(final @Nonnull ValoracionLineaCriterioVO vlrlCriterioVO,
+    List<ValoracionLineaVO> selectList(final @Nonnull ValoracionLineaCriterioVO vlrlCriterioVO,
             final @Nonnull RowBounds bounds);
 
     /**

@@ -10,8 +10,6 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.facturacion.vo.ReglaVO;
-import xeredi.integra.model.facturacion.vo.ReglaVersionVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.util.grammar.PathLexer;
@@ -75,12 +73,8 @@ public final class PathTest {
         final PathParser parser = new PathParser(tokens);
         final ParseTree tree = parser.value();
 
-        final ReglaVO reglaVO = new ReglaVO();
-
-        reglaVO.setRglv(new ReglaVersionVO());
-        reglaVO.setEnti(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()));
-
-        final PathSqlGenerator extractor = new PathSqlGenerator(reglaVO.getEnti(), generateLabel);
+        final PathSqlGenerator extractor = new PathSqlGenerator(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()),
+                generateLabel);
 
         LOG.info(extractor.visit(tree));
     }

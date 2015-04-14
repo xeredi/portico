@@ -41,7 +41,7 @@ public final class CargoLupaAction extends LupaAction implements ModelDriven<Car
 
         final CargoBO crgoBO = new CargoBO();
 
-        crgoList = crgoBO.selectLupaList(model, getLimit());
+        crgoList = crgoBO.selectList(model, getLimit());
 
         return SUCCESS;
     }

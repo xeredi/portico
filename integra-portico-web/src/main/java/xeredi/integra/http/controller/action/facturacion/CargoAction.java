@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +15,7 @@ import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
+import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoTipo;
 import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.integra.model.facturacion.vo.CargoVersionVO;
@@ -38,9 +38,6 @@ public final class CargoAction extends ItemAction implements ModelDriven<CargoVO
 
     /** The crgo. */
     private CargoVO model;
-
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -70,8 +67,13 @@ public final class CargoAction extends ItemAction implements ModelDriven<CargoVO
         }
 
         final CargoBO crgoBO = new CargoBO();
+        final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
-        model = crgoBO.select(model.getId(), getFechaVigencia(), getIdioma());
+        crgoCriterio.setId(model.getId());
+        crgoCriterio.setFechaVigencia(getFechaVigencia());
+        crgoCriterio.setIdioma(getIdioma());
+
+        model = crgoBO.selectObject(crgoCriterio);
         i18nMap = I18nBO.selectMap(I18nPrefix.crgv, model.getCrgv().getId());
 
         final ReglaBO rglaBO = new ReglaBO();
@@ -105,8 +107,13 @@ public final class CargoAction extends ItemAction implements ModelDriven<CargoVO
             }
 
             final CargoBO crgoBO = new CargoBO();
+            final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
-            model = crgoBO.select(model.getId(), getFechaVigencia(), getIdioma());
+            crgoCriterio.setId(model.getId());
+            crgoCriterio.setFechaVigencia(getFechaVigencia());
+            crgoCriterio.setIdioma(getIdioma());
+
+            model = crgoBO.selectObject(crgoCriterio);
             i18nMap = I18nBO.selectMap(I18nPrefix.crgv, model.getCrgv().getId());
         } else {
             model = new CargoVO();

@@ -11,8 +11,8 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.exception.InternalErrorException;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBOFactory;
 import xeredi.integra.model.servicio.report.SubservicioXls;
@@ -33,7 +33,7 @@ public final class SubservicioXlsAction extends BaseAction {
     private SubservicioCriterioVO itemCriterio;
 
     /** The enti. */
-    private TipoSubservicioVO enti;
+    private TipoSubservicioDetailVO enti;
 
     /** The stream. */
     private InputStream stream;
@@ -107,7 +107,7 @@ public final class SubservicioXlsAction extends BaseAction {
      *
      * @return the enti
      */
-    public final TipoSubservicioVO getEnti() {
+    public final TipoSubservicioDetailVO getEnti() {
         return enti;
     }
 

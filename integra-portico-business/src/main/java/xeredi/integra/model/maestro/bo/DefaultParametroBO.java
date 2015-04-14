@@ -10,7 +10,7 @@ import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
-import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -23,7 +23,7 @@ public final class DefaultParametroBO extends AbstractParametroBO {
      */
     @Override
     protected void insertPostOperations(final @Nonnull SqlSession session, final @Nonnull ParametroVO prmt,
-            final @Nonnull TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap) {
+            final @Nonnull TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap) {
         // noop
     }
 
@@ -32,8 +32,8 @@ public final class DefaultParametroBO extends AbstractParametroBO {
      */
     @Override
     protected void duplicatePostOperations(final @Nonnull SqlSession session, final @Nonnull ParametroVO prmt,
-            final @Nonnull TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap) throws OverlapException,
-            InstanceNotFoundException {
+            final @Nonnull TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+                    throws OverlapException, InstanceNotFoundException {
         // noop
     }
 
@@ -42,8 +42,8 @@ public final class DefaultParametroBO extends AbstractParametroBO {
      */
     @Override
     protected void updatePostOperations(final @Nonnull SqlSession session, final @Nonnull ParametroVO prmt,
-            final @Nonnull TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap) throws OverlapException,
-            InstanceNotFoundException {
+            final @Nonnull TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+            throws OverlapException, InstanceNotFoundException {
         // noop
     }
 

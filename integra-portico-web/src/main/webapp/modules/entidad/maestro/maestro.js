@@ -124,7 +124,7 @@ function PrmtGridController($location, $routeParams, $http, $modal, pageTitleSer
             });
 
             setTimeout(function() {
-                saveAs(file, vm.enti.id + '.xls');
+                saveAs(file, vm.itemCriterio.entiId + '.xls');
             }, 0);
         });
     }
@@ -191,7 +191,8 @@ function PrmtDetailController($http, $location, $routeParams, pageTitleService) 
 
     function print() {
         $http.post('maestro/prmt-print.action', {
-            item : vm.item
+            model : vm.item,
+            fechaVigencia : vm.fechaVigencia
         }, {
             responseType : 'arraybuffer'
         }).success(function(data) {
@@ -200,7 +201,7 @@ function PrmtDetailController($http, $location, $routeParams, pageTitleService) 
             });
 
             setTimeout(function() {
-                saveAs(file, vm.enti.id + '.pdf');
+                saveAs(file, vm.item.entiId + '_' + vm.item.id + '.pdf');
             }, 0);
         });
     }
@@ -245,8 +246,8 @@ function PrmtDetailController($http, $location, $routeParams, pageTitleService) 
                         fechaVigencia : vm.fechaVigencia
                     }
                 }).success(function(data) {
-                    vm.entiHijasMap[data.enti.id] = data.enti;
-                    vm.itemHijosMap[data.enti.id] = data.itemList;
+                    vm.entiHijasMap[data.enti.enti.id] = data.enti;
+                    vm.itemHijosMap[data.enti.enti.id] = data.itemList;
                 });
             }
         }

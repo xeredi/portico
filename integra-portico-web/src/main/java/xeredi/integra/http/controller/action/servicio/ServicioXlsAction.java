@@ -11,8 +11,8 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.exception.InternalErrorException;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.report.ServicioXls;
@@ -32,9 +32,6 @@ public final class ServicioXlsAction extends BaseAction {
     /** The item criterio. */
     private ServicioCriterioVO itemCriterio;
 
-    /** The enti. */
-    private TipoServicioVO enti;
-
     /** The stream. */
     private InputStream stream;
 
@@ -48,14 +45,14 @@ public final class ServicioXlsAction extends BaseAction {
      *             the application exception
      */
     @Action(value = "srvc-xls-export", results = { @Result(name = "success", type = "stream", params = { "contentType",
-            "application/xls", "inputName", "stream", "contentDisposition", "filename=${enti.codigo}.xls" }) })
+            "application/xls", "inputName", "stream", "contentDisposition", "filename=${itemCriterio.entiId}.xls" }) })
     public String xlsExport() throws ApplicationException {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
         final ServicioBO srvcBO = ServicioBOFactory.newInstance(itemCriterio.getEntiId());
+        final TipoServicioDetailVO enti = TipoServicioProxy.select(itemCriterio.getEntiId());
 
-        enti = TipoServicioProxy.select(itemCriterio.getEntiId());
         itemCriterio.setSoloDatosGrid(false);
         itemCriterio.setIdioma(getIdioma());
 
@@ -73,15 +70,6 @@ public final class ServicioXlsAction extends BaseAction {
     }
 
     // get / set
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public final TipoServicioVO getEnti() {
-        return enti;
-    }
 
     /**
      * Gets the item criterio.

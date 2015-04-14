@@ -32,7 +32,7 @@ public final class TipoEstadisticaProxy {
     private static final List<LabelValueVO> LABEL_VALUE_LIST = new ArrayList<>();
 
     /** The Constant TIPO_ESTADISTICA_MAP. */
-    private static final Map<Long, TipoEstadisticaVO> TIPO_ESTADISTICA_MAP = new HashMap<>();
+    private static final Map<Long, TipoEstadisticaDetailVO> TIPO_ESTADISTICA_MAP = new HashMap<>();
 
     static {
         load();
@@ -52,7 +52,7 @@ public final class TipoEstadisticaProxy {
      *
      * @return the map
      */
-    public static Map<Long, TipoEstadisticaVO> selectMap() {
+    public static Map<Long, TipoEstadisticaDetailVO> selectMap() {
         return TIPO_ESTADISTICA_MAP;
     }
 
@@ -63,14 +63,12 @@ public final class TipoEstadisticaProxy {
      *            the id
      * @return the tipo parametro vo
      */
-    public static TipoEstadisticaVO select(final @Nonnull long id) {
-        final TipoEstadisticaVO tpesVO = TIPO_ESTADISTICA_MAP.get(id);
-
-        if (tpesVO == null) {
+    public static TipoEstadisticaDetailVO select(final @Nonnull long id) {
+        if (!TIPO_ESTADISTICA_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tpes, id));
         }
 
-        return tpesVO;
+        return TIPO_ESTADISTICA_MAP.get(id);
     }
 
     /**
@@ -81,16 +79,24 @@ public final class TipoEstadisticaProxy {
 
         final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-        for (final TipoEstadisticaVO tpesVO : tpesBO.selectList(new TipoEstadisticaCriterioVO())) {
-            tpesVO.setCmagList(new ArrayList<CampoAgregacionVO>());
+        for (final TipoEstadisticaVO tpes : tpesBO.selectList(new TipoEstadisticaCriterioVO())) {
+            final TipoEstadisticaDetailVO tpesDetail = new TipoEstadisticaDetailVO();
 
-            TIPO_ESTADISTICA_MAP.put(tpesVO.getId(), tpesVO);
+            tpesDetail.setEnti(tpes);
+
+            TIPO_ESTADISTICA_MAP.put(tpesDetail.getEnti().getId(), tpesDetail);
         }
 
         final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
 
-        for (final CampoAgregacionVO cmagVO : cmagBO.selectList(new CampoAgregacionCriterioVO())) {
-            TIPO_ESTADISTICA_MAP.get(cmagVO.getTpesId()).getCmagList().add(cmagVO);
+        for (final CampoAgregacionVO cmag : cmagBO.selectList(new CampoAgregacionCriterioVO())) {
+            final TipoEstadisticaDetailVO tpesDetail = TIPO_ESTADISTICA_MAP.get(cmag.getTpesId());
+
+            if (tpesDetail.getCmagList() == null) {
+                tpesDetail.setCmagList(new ArrayList<CampoAgregacionVO>());
+            }
+
+            tpesDetail.getCmagList().add(cmag);
         }
 
         EntidadProxy.loadDependencies(TIPO_ESTADISTICA_MAP);

@@ -29,5 +29,5 @@ public interface ArchivoInfoDAO {
      *            the arin criterio
      * @return the archivo info vo
      */
-    ArchivoInfoVO selectObject(final @Nonnull ArchivoCriterioVO arinCriterio);
+    ArchivoInfoVO select(final @Nonnull Long arinId);
 }

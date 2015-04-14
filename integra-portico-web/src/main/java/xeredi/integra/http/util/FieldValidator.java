@@ -15,8 +15,8 @@ import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -166,12 +166,12 @@ public final class FieldValidator {
      * @param itemVO
      *            the item vo
      */
-    public static void validateItem(final @NotNull BaseAction action, final @NotNull EntidadVO entiVO,
-            final @NotNull ItemVO itemVO) {
-        if (entiVO.getEntdList() != null) {
+    public static void validateItem(final @NotNull BaseAction action,
+            final @NotNull AbstractEntidadDetailVO entiDetail, final @NotNull ItemVO itemVO) {
+        if (entiDetail.getEntdList() != null) {
             final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
 
-            for (final EntidadTipoDatoVO entd : entiVO.getEntdList()) {
+            for (final EntidadTipoDatoVO entd : entiDetail.getEntdList()) {
                 final ItemDatoVO itdtVO = itdtMap == null ? null : itdtMap.get(entd.getTpdt().getId().toString());
                 final String fieldname = action.getText("entd_" + entd.getId());
 
@@ -213,7 +213,7 @@ public final class FieldValidator {
                         break;
                     default:
                         throw new Error("Tipo de dato no soportado: " + entd.getTpdt().getTipoElemento()
-                                + " en la entidad: " + entiVO.getNombre() + " y tipo de dato: "
+                                + " en la entidad: " + entiDetail.getEnti().getNombre() + " y tipo de dato: "
                                 + entd.getTpdt().getNombre());
                     }
                 }

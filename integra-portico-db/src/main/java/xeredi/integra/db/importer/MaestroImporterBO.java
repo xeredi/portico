@@ -47,14 +47,14 @@ import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.ParametroVersionVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroVersionVO;
+import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
-import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.util.exception.DuplicateInstanceException;
 
 // TODO: Auto-generated Javadoc
@@ -151,10 +151,11 @@ public final class MaestroImporterBO {
                 parseXml(maestrosList);
 
                 for (final MaestroNodoVO maestroVO : maestrosList) {
-                    final EntidadVO entiVO = EntidadProxy.select(maestroVO.getEntidad().getId());
-                    final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + entiVO.getId());
+                    final AbstractEntidadDetailVO entiDetail = EntidadProxy.select(maestroVO.getEntidad().getId());
+                    final String entiName = bundle.getString(I18nPrefix.enti.name() + "_"
+                            + entiDetail.getEnti().getId());
 
-                    switch (entiVO.getTipo()) {
+                    switch (entiDetail.getEnti().getTipo()) {
                     case P:
                         if (LOG.isInfoEnabled()) {
                             LOG.info("Importacion del maestro: " + entiName);
@@ -175,8 +176,8 @@ public final class MaestroImporterBO {
                         break;
 
                     default:
-                        throw new Error("Tipo de entidad: " + entiVO.getTipo() + " no valida para la entidad "
-                                + entiName);
+                        throw new Error("Tipo de entidad: " + entiDetail.getEnti().getTipo()
+                                + " no valida para la entidad " + entiName);
                     }
                 }
             } catch (final Throwable ex) {
@@ -209,12 +210,12 @@ public final class MaestroImporterBO {
      */
     private void importTipoParametro(final Connection con, final Entidad entidad, final boolean isTmpImpl,
             final StringBuffer sql) throws SQLException, DuplicateInstanceException, InstanceNotFoundException {
-        final TipoParametroVO tpprVO = TipoParametroProxy.select(entidad.getId());
+        final TipoParametroDetailVO tpprDetail = TipoParametroProxy.select(entidad.getId());
         final ParametroBO prmtBO = ParametroBOFactory.newInstance(entidad.getId());
-        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + tpprVO.getId());
+        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + tpprDetail.getEnti().getId());
 
-        if (!tpprPrmtMap.containsKey(tpprVO.getId())) {
-            tpprPrmtMap.put(tpprVO.getId(), new HashMap<String, Long>());
+        if (!tpprPrmtMap.containsKey(tpprDetail.getEnti().getId())) {
+            tpprPrmtMap.put(tpprDetail.getEnti().getId(), new HashMap<String, Long>());
         }
 
         ResultSet rs = null;
@@ -222,7 +223,7 @@ public final class MaestroImporterBO {
         try (final PreparedStatement stmt = con.prepareStatement(sql.toString());) {
             int i = 1;
 
-            if (tpprVO.isI18n()) {
+            if (tpprDetail.getEnti().isI18n()) {
                 stmt.setString(i++, idioma);
                 stmt.setDate(i++, new java.sql.Date(fechaVigencia.getTime()));
                 stmt.setDate(i++, new java.sql.Date(fechaVigencia.getTime()));
@@ -240,10 +241,10 @@ public final class MaestroImporterBO {
 
                 final ParametroVO prmtVO = new ParametroVO();
 
-                prmtVO.setEntiId(tpprVO.getId());
+                prmtVO.setEntiId(tpprDetail.getEnti().getId());
                 prmtVO.setPrvr(new ParametroVersionVO());
 
-                if (tpprVO.isPuerto()) {
+                if (tpprDetail.getEnti().isPuerto()) {
                     final String codigoPuerto = rs.getString(i++);
 
                     if (!prtoMap.containsKey(codigoPuerto)) {
@@ -258,7 +259,7 @@ public final class MaestroImporterBO {
 
                 prmtVO.setParametro(rs.getString(i++));
 
-                if (tpprVO.isTempExp()) {
+                if (tpprDetail.getEnti().isTempExp()) {
                     prmtVO.getPrvr().setFini(rs.getDate(i++));
                     prmtVO.getPrvr().setFfin(rs.getDate(i++));
                 } else {
@@ -266,10 +267,10 @@ public final class MaestroImporterBO {
                 }
 
                 // Creacion del parametro
-                if (tpprVO.getEntdList() != null) {
+                if (tpprDetail.getEntdList() != null) {
                     prmtVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
-                    for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
+                    for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {
                         final Object value = rs.getObject(i++);
                         final ItemDatoVO itdt = getItdt(value, entd, entiName);
 
@@ -279,7 +280,7 @@ public final class MaestroImporterBO {
 
                 final Map<String, I18nVO> i18nMap = new HashMap<>();
 
-                if (tpprVO.isI18n()) {
+                if (tpprDetail.getEnti().isI18n()) {
                     final I18nVO i18nVO = new I18nVO();
                     final String texto = rs.getString(i++);
 
@@ -298,7 +299,7 @@ public final class MaestroImporterBO {
                 }
 
                 try {
-                    prmtBO.insert(prmtVO, tpprVO, i18nMap);
+                    prmtBO.insert(prmtVO, tpprDetail, i18nMap);
 
                     final String prmtKey = (prmtVO.getPrto() == null ? "" : prmtVO.getPrto().getCodigoCorto())
                             + prmtVO.getParametro();
@@ -334,14 +335,14 @@ public final class MaestroImporterBO {
     private void importSubtipoParametro(final Connection con, final Entidad entidad, final boolean isTmpImpl,
             final StringBuffer sql) throws SQLException, DuplicateInstanceException, InstanceNotFoundException {
         final SubparametroBO sprmBO = new SubparametroBO();
-        final TipoSubparametroVO tpspVO = TipoSubparametroProxy.select(entidad.getId());
-        final TipoParametroVO tpprPadreVO = TipoParametroProxy.select(tpspVO.getTpprId());
-        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + tpspVO.getId());
+        final TipoSubparametroDetailVO tpspDetail = TipoSubparametroProxy.select(entidad.getId());
+        final TipoParametroDetailVO tpprPadreDetail = TipoParametroProxy.select(tpspDetail.getEnti().getTpprId());
+        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + tpspDetail.getEnti().getId());
         final String entiAsociadaName = bundle.getString(I18nPrefix.enti.name() + "_"
-                + tpspVO.getTpprAsociado().getId());
-        final String entiPadreName = bundle.getString(I18nPrefix.enti.name() + "_" + tpprPadreVO.getId());
+                + tpspDetail.getEnti().getTpprAsociado().getId());
+        final String entiPadreName = bundle.getString(I18nPrefix.enti.name() + "_" + tpprPadreDetail.getEnti().getId());
 
-        if (tpspVO.getEntiPadresList() == null || tpspVO.getEntiPadresList().isEmpty()) {
+        if (tpspDetail.getEntiPadresList() == null || tpspDetail.getEntiPadresList().isEmpty()) {
             throw new Error("El tipo de subparametro: " + entiName + " no tiene entidades padre");
         }
 
@@ -350,7 +351,7 @@ public final class MaestroImporterBO {
         try (final PreparedStatement stmt = con.prepareStatement(sql.toString());) {
             int i = 1;
 
-            if (tpspVO.isI18n()) {
+            if (tpspDetail.getEnti().isI18n()) {
                 stmt.setString(i++, idioma);
                 stmt.setDate(i++, new java.sql.Date(fechaVigencia.getTime()));
                 stmt.setDate(i++, new java.sql.Date(fechaVigencia.getTime()));
@@ -369,18 +370,19 @@ public final class MaestroImporterBO {
                 final SubparametroVO sprmVO = new SubparametroVO();
                 final String parametro = rs.getString(i++);
                 final String parametroAsociado = rs.getString(i++);
-                final Long prmtId = tpprPrmtMap.get(tpspVO.getTpprId()).get(parametro);
-                final Long prmtAsociadoId = tpprPrmtMap.get(tpspVO.getTpprAsociado().getId()).get(parametroAsociado);
+                final Long prmtId = tpprPrmtMap.get(tpspDetail.getEnti().getTpprId()).get(parametro);
+                final Long prmtAsociadoId = tpprPrmtMap.get(tpspDetail.getEnti().getTpprAsociado().getId()).get(
+                        parametroAsociado);
                 final ParametroVO prmtAsociadoVO = new ParametroVO();
 
                 prmtAsociadoVO.setId(prmtAsociadoId);
                 sprmVO.setPrmtId(prmtId);
                 sprmVO.setPrmtAsociado(prmtAsociadoVO);
-                sprmVO.setEntiId(tpspVO.getId());
+                sprmVO.setEntiId(tpspDetail.getEnti().getId());
 
                 sprmVO.setSpvr(new SubparametroVersionVO());
 
-                if (tpspVO.isTempExp()) {
+                if (tpspDetail.getEnti().isTempExp()) {
                     sprmVO.getSpvr().setFini(rs.getDate(i++));
                     sprmVO.getSpvr().setFfin(rs.getDate(i++));
                 } else {
@@ -388,10 +390,10 @@ public final class MaestroImporterBO {
                     sprmVO.getSpvr().setFfin(null);
                 }
 
-                if (tpspVO.getEntdList() != null) {
+                if (tpspDetail.getEntdList() != null) {
                     sprmVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
-                    for (final EntidadTipoDatoVO entd : tpspVO.getEntdList()) {
+                    for (final EntidadTipoDatoVO entd : tpspDetail.getEntdList()) {
                         final Object value = rs.getObject(i++);
                         final ItemDatoVO itdt = getItdt(value, entd, entiName);
 
@@ -411,7 +413,7 @@ public final class MaestroImporterBO {
 
                 if (sprmVO.getPrmtId() != null && sprmVO.getPrmtAsociado().getId() != null) {
                     try {
-                        sprmBO.insert(sprmVO, tpspVO);
+                        sprmBO.insert(sprmVO, tpspDetail);
                     } catch (final OverlapException ex) {
                         LOG.info(entiName + " Solapado: " + sprmVO.getEtiqueta());
                     }

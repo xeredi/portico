@@ -54,7 +54,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrc");
 
-                final ValoracionVO vlrc = vlrcBO.select(vlrcId, "es");
+                final ValoracionVO vlrc = vlrcBO.selectObject(vlrcCriterioVO);
 
                 Assert.assertNotNull(vlrc);
 
@@ -74,7 +74,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrl");
 
-                final ValoracionLineaVO vlrl = vlrcBO.selectVlrl(vlrlId, "es");
+                final ValoracionLineaVO vlrl = vlrcBO.selectVlrlObject(vlrlCriterioVO);
 
                 Assert.assertNotNull(vlrl);
 
@@ -84,7 +84,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrlList");
 
-                final List<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrcId, "es");
+                final List<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrlCriterioVO);
 
                 Assert.assertNotNull(vlrlList);
                 Assert.assertTrue(!vlrlList.isEmpty());
@@ -97,7 +97,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrlList Paginated");
 
-                final PaginatedList<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrcId, "es", 0, 20);
+                final PaginatedList<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrlCriterioVO, 0, 20);
 
                 Assert.assertNotNull(vlrlList);
                 Assert.assertNotNull(vlrlList.getList());
@@ -135,7 +135,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlriList");
 
-                final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(vlrcId, "es");
+                final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(vlrcCriterioVO);
 
                 for (final ValoracionImpuestoVO vlri : vlriList) {
                     LOG.info("vlri: " + vlri);
@@ -145,7 +145,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrgList");
 
-                final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(vlrcId, "es");
+                final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(vlrcCriterioVO);
 
                 for (final ValoracionCargoVO vlrg : vlrgList) {
                     LOG.info("vlrg: " + vlrg);

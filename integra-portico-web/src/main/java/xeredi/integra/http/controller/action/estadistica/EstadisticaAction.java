@@ -7,8 +7,8 @@ import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
+import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
-import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 
 import com.google.common.base.Preconditions;
 import com.opensymphony.xwork2.ModelDriven;
@@ -26,7 +26,7 @@ public final class EstadisticaAction extends ItemAction implements ModelDriven<E
     private EstadisticaVO model;
 
     /** The enti. */
-    private TipoEstadisticaVO enti;
+    private TipoEstadisticaDetailVO enti;
 
     // Acciones web
     /**
@@ -89,7 +89,7 @@ public final class EstadisticaAction extends ItemAction implements ModelDriven<E
      *
      * @return the enti
      */
-    public TipoEstadisticaVO getEnti() {
+    public TipoEstadisticaDetailVO getEnti() {
         return enti;
     }
 

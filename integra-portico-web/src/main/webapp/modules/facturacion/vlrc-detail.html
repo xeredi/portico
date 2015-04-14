@@ -217,12 +217,12 @@
                 <th ng-if="vm.aspc.aspv.lgrpInfo5" translate="vlrl_info5"></th>
                 <th ng-if="vm.aspc.aspv.lgrpInfo6" translate="vlrl_info6"></th>
 
-                <th translate="vlrl_cuant1"></th>
-                <th translate="vlrl_cuant2"></th>
-                <th translate="vlrl_cuant3"></th>
-                <th translate="vlrl_cuant4"></th>
-                <th translate="vlrl_cuant5"></th>
-                <th translate="vlrl_cuant6"></th>
+                <th translate="vlrl_cuant1" colspan="2"></th>
+                <th translate="vlrl_cuant2" colspan="2"></th>
+                <th translate="vlrl_cuant3" colspan="2"></th>
+                <th translate="vlrl_cuant4" colspan="2"></th>
+                <th translate="vlrl_cuant5" colspan="2"></th>
+                <th translate="vlrl_cuant6" colspan="2"></th>
             </tr>
         </thead>
 
@@ -262,12 +262,18 @@
                     ng-if="vlrl.rgla.tipo == 'T' && vlrl.info6">{{vlrl.rgla.rglv.etiqInfo6}}:
                         {{vlrl.info6}}</span></td>
 
-                <td><span ng-if="vlrl.cuant1">{{vlrl.rgla.rglv.etiqCuant1}}: {{vlrl.cuant1}}</span></td>
-                <td><span ng-if="vlrl.cuant2">{{vlrl.rgla.rglv.etiqCuant2}}: {{vlrl.cuant2}}</span></td>
-                <td><span ng-if="vlrl.cuant3">{{vlrl.rgla.rglv.etiqCuant3}}: {{vlrl.cuant3}}</span></td>
-                <td><span ng-if="vlrl.cuant4">{{vlrl.rgla.rglv.etiqCuant4}}: {{vlrl.cuant4}}</span></td>
-                <td><span ng-if="vlrl.cuant5">{{vlrl.rgla.rglv.etiqCuant5}}: {{vlrl.cuant5}}</span></td>
-                <td><span ng-if="vlrl.cuant6">{{vlrl.rgla.rglv.etiqCuant6}}: {{vlrl.cuant6}}</span></td>
+                <td><span ng-if="vlrl.cuant1" ng-bind="vlrl.rgla.rglv.etiqCuant1"></span></td>
+                <td><span ng-if="vlrl.cuant1" class="number" ng-bind="vlrl.cuant1 | number:2"></span></td>
+                <td><span ng-if="vlrl.cuant2" ng-bind="vlrl.rgla.rglv.etiqCuant2"></span></td>
+                <td><span ng-if="vlrl.cuant2" class="number" ng-bind="vlrl.cuant2 | number:2"></span></td>
+                <td><span ng-if="vlrl.cuant3" ng-bind="vlrl.rgla.rglv.etiqCuant3"></span></td>
+                <td><span ng-if="vlrl.cuant3" class="number" ng-bind="vlrl.cuant3 | number:2"></span></td>
+                <td><span ng-if="vlrl.cuant4" ng-bind="vlrl.rgla.rglv.etiqCuant4"></span></td>
+                <td><span ng-if="vlrl.cuant4" class="number" ng-bind="vlrl.cuant4 | number:2"></span></td>
+                <td><span ng-if="vlrl.cuant5" ng-bind="vlrl.rgla.rglv.etiqCuant5"></span></td>
+                <td><span ng-if="vlrl.cuant5" class="number" ng-bind="vlrl.cuant5 | number:2"></span></td>
+                <td><span ng-if="vlrl.cuant6" ng-bind="vlrl.rgla.rglv.etiqCuant6"></span></td>
+                <td><span ng-if="vlrl.cuant6" class="number" ng-bind="vlrl.cuant6 | number:2"></span></td>
             </tr>
         </tbody>
     </table>

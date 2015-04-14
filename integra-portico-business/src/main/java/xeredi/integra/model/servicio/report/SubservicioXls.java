@@ -17,8 +17,8 @@ import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.report.BaseXls;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -55,9 +55,10 @@ public final class SubservicioXls extends BaseXls {
      *             Si ocurre algun error grave.
      */
     public void generarSubservicios(final @Nonnull List<SubservicioVO> ssrvList,
-            final @Nonnull TipoSubservicioVO tpssVO, final @Nonnull OutputStream stream) throws InternalErrorException {
+            final @Nonnull TipoSubservicioDetailVO tpssDetail, final @Nonnull OutputStream stream)
+                    throws InternalErrorException {
         try (final HSSFWorkbook workbook = new HSSFWorkbook()) {
-            final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpssVO.getId()));
+            final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpssDetail.getEnti().getId()));
 
             // Cabecera XLS
             int rownum = 0;
@@ -69,16 +70,16 @@ public final class SubservicioXls extends BaseXls {
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_srvc.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_numero.name()));
 
-            if (tpssVO.getTpdtEstado() != null) {
+            if (tpssDetail.getEnti().getTpdtEstado() != null) {
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_estado.name()));
             }
 
-            if (tpssVO.isTemporal()) {
+            if (tpssDetail.getEnti().isTemporal()) {
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_fini.name()));
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_ffin.name()));
             }
 
-            for (final EntidadTipoDatoVO entd : tpssVO.getEntdList()) {
+            for (final EntidadTipoDatoVO entd : tpssDetail.getEntdList()) {
                 setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
             }
 
@@ -88,20 +89,20 @@ public final class SubservicioXls extends BaseXls {
 
                 int j = 0;
 
-                setCellValue(row, j++, bundle.getString("enti_" + tpssVO.getId()));
+                setCellValue(row, j++, bundle.getString("enti_" + tpssDetail.getEnti().getId()));
                 setCellValue(row, j++, ssrvVO.getSrvc().getEtiqueta());
                 setCellValue(row, j++, ssrvVO.getNumero());
 
-                if (tpssVO.getTpdtEstado() != null) {
+                if (tpssDetail.getEnti().getTpdtEstado() != null) {
                     setCellValue(row, j++, ssrvVO.getEstado());
                 }
 
-                if (tpssVO.isTemporal()) {
+                if (tpssDetail.getEnti().isTemporal()) {
                     setCellValue(row, j++, ssrvVO.getFini());
                     setCellValue(row, j++, ssrvVO.getFfin());
                 }
 
-                for (final EntidadTipoDatoVO entd : tpssVO.getEntdList()) {
+                for (final EntidadTipoDatoVO entd : tpssDetail.getEntdList()) {
                     final ItemDatoVO itdt = ssrvVO.getItdtMap().get(entd.getTpdt().getId());
 
                     setCellValue(row, j, entd, itdt);

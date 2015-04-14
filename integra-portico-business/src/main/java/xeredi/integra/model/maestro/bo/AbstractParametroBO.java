@@ -34,10 +34,10 @@ import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
+import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
@@ -53,20 +53,20 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * {@inheritDoc}
      */
     @Override
-    public final void insert(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroVO tpprVO,
+    public final void insert(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroDetailVO tpprDetail,
             final Map<String, I18nVO> i18nMap) throws OverlapException {
         Preconditions.checkNotNull(prmt.getParametro());
         Preconditions.checkNotNull(prmt.getPrvr());
         Preconditions.checkNotNull(prmt.getPrvr().getFini());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            if (tpprVO.isI18n()) {
+            if (tpprDetail.getEnti().isI18n()) {
                 Preconditions.checkNotNull(i18nMap);
             }
 
             // Validar que los datos del parametro son correctos
-            if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
-                for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
+            if (tpprDetail.getEntdList() != null && !tpprDetail.getEntdList().isEmpty()) {
+                for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {
                     if (!prmt.getItdtMap().containsKey(entd.getTpdt().getId())
                             && !prmt.getItdtMap().containsKey(entd.getTpdt().getId().toString())) {
                         final ItemDatoVO itdt = new ItemDatoVO();
@@ -97,7 +97,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
 
             prmtDAO.insertVersion(prmt);
 
-            if (tpprVO.isI18n()) {
+            if (tpprDetail.getEnti().isI18n()) {
                 I18nBO.insertMap(session, I18nPrefix.prvr, prmt.getPrvr().getId(), i18nMap);
             }
 
@@ -108,7 +108,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
                 }
             }
 
-            insertPostOperations(session, prmt, tpprVO, i18nMap);
+            insertPostOperations(session, prmt, tpprDetail, i18nMap);
 
             session.commit();
         }
@@ -127,13 +127,13 @@ public abstract class AbstractParametroBO implements ParametroBO {
      *            the i18n map
      */
     protected abstract void insertPostOperations(final @Nonnull SqlSession session, final @Nonnull ParametroVO prmt,
-            final @Nonnull TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap);
+            final @Nonnull TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap);
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final void duplicate(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroVO tpprVO,
+    public final void duplicate(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroDetailVO tpprDetail,
             final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
         Preconditions.checkNotNull(prmt.getId());
         Preconditions.checkNotNull(prmt.getParametro());
@@ -141,13 +141,13 @@ public abstract class AbstractParametroBO implements ParametroBO {
         Preconditions.checkNotNull(prmt.getPrvr().getFini());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            if (tpprVO.isI18n()) {
+            if (tpprDetail.getEnti().isI18n()) {
                 Preconditions.checkNotNull(i18nMap);
             }
 
             // Validar que los datos del parametro son correctos
-            if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
-                for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
+            if (tpprDetail.getEntdList() != null && !tpprDetail.getEntdList().isEmpty()) {
+                for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {
                     final Long tpdtId = entd.getTpdt().getId();
 
                     if (!prmt.getItdtMap().containsKey(tpdtId.toString())) {
@@ -198,7 +198,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
 
             prmtDAO.insertVersion(prmt);
 
-            if (tpprVO.isI18n()) {
+            if (tpprDetail.getEnti().isI18n()) {
                 I18nBO.duplicateMap(session, I18nPrefix.prvr, prmt.getPrvr().getId(), i18nMap);
             }
 
@@ -213,7 +213,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
             if (!prmtActual.getId().equals(prmt.getId())) {
                 // Duplicado de subparametros
 
-                if (tpprVO.getEntiHijasList() != null && !tpprVO.getEntiHijasList().isEmpty()) {
+                if (tpprDetail.getEntiHijasList() != null && !tpprDetail.getEntiHijasList().isEmpty()) {
                     final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
                     final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
@@ -227,9 +227,9 @@ public abstract class AbstractParametroBO implements ParametroBO {
                     final Set<Long> spvrIds = new HashSet<>();
 
                     for (final SubparametroVO sprmVO : sprmList) {
-                        final TipoSubparametroVO tpspVO = TipoSubparametroProxy.select(sprmVO.getEntiId());
+                        final TipoSubparametroDetailVO tpspDetail = TipoSubparametroProxy.select(sprmVO.getEntiId());
 
-                        if (tpspVO.isCmdDuplicado()) {
+                        if (tpspDetail.getEnti().isCmdDuplicado()) {
                             sprmMap.put(sprmVO.getSpvr().getId(), sprmVO);
                             spvrIds.add(sprmVO.getSpvr().getId());
                         }
@@ -285,7 +285,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
                 }
             }
 
-            duplicatePostOperations(session, prmtActual, tpprVO, i18nMap);
+            duplicatePostOperations(session, prmtActual, tpprDetail, i18nMap);
 
             session.commit();
         }
@@ -308,30 +308,30 @@ public abstract class AbstractParametroBO implements ParametroBO {
      *             the instance not found exception
      */
     protected abstract void duplicatePostOperations(final @Nonnull SqlSession session, final @Nonnull ParametroVO prmt,
-            final @Nonnull TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap) throws OverlapException,
-            InstanceNotFoundException;
+            final @Nonnull TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+                    throws OverlapException, InstanceNotFoundException;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final void update(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroVO tpprVO,
+    public final void update(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroDetailVO tpprDetail,
             final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
         Preconditions.checkNotNull(prmt.getPrvr());
         Preconditions.checkNotNull(prmt.getPrvr().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            if (tpprVO.isI18n()) {
+            if (tpprDetail.getEnti().isI18n()) {
                 Preconditions.checkNotNull(i18nMap);
             }
 
-            if (tpprVO.isTempExp()) {
+            if (tpprDetail.getEnti().isTempExp()) {
                 Preconditions.checkNotNull(prmt.getPrvr().getFini());
             }
 
             // Validar que los datos del parametro son correctos
-            if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
-                for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
+            if (tpprDetail.getEntdList() != null && !tpprDetail.getEntdList().isEmpty()) {
+                for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {
                     if (!prmt.getItdtMap().containsKey(entd.getTpdt().getId().toString())) {
                         throw new Error("No se ha pasado informacion del dato " + entd.getTpdt().getNombre()
                                 + " del parametro: " + prmt);
@@ -352,7 +352,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
                 throw new InstanceNotFoundException(prmt.getEntiId(), prmt);
             }
 
-            if (tpprVO.isI18n()) {
+            if (tpprDetail.getEnti().isI18n()) {
                 I18nBO.updateMap(session, I18nPrefix.prvr, prmt.getPrvr().getId(), i18nMap);
             }
 
@@ -363,7 +363,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
                 }
             }
 
-            updatePostOperations(session, prmt, tpprVO, i18nMap);
+            updatePostOperations(session, prmt, tpprDetail, i18nMap);
 
             session.commit();
         }
@@ -386,8 +386,8 @@ public abstract class AbstractParametroBO implements ParametroBO {
      *             the instance not found exception
      */
     protected abstract void updatePostOperations(final @Nonnull SqlSession session, final @Nonnull ParametroVO prmt,
-            final @Nonnull TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap) throws OverlapException,
-            InstanceNotFoundException;
+            final @Nonnull TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+            throws OverlapException, InstanceNotFoundException;
 
     /**
      * {@inheritDoc}

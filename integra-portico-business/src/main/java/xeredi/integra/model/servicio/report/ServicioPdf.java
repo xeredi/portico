@@ -20,11 +20,11 @@ import xeredi.integra.model.comun.report.PdfCell;
 import xeredi.integra.model.comun.report.PdfConstants;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
-import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
@@ -60,23 +60,23 @@ public final class ServicioPdf extends BasePdf {
      * @throws InternalErrorException
      *             the internal error exception
      */
-    public void imprimir(final @Nonnull ServicioVO srvcVO, final @Nonnull TipoServicioVO tpsrVO,
-            final Map<Long, TipoSubservicioVO> entiHijasMap, final Map<Long, List<SubservicioVO>> itemHijosMap,
+    public void imprimir(final @Nonnull ServicioVO srvcVO, final @Nonnull TipoServicioDetailVO tpsrDetail,
+            final Map<Long, TipoSubservicioDetailVO> entiHijasMap, final Map<Long, List<SubservicioVO>> itemHijosMap,
             final OutputStream stream) throws InternalErrorException {
         try {
             final JasperReportBuilder report = DynamicReports.report();
 
             report.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE);
-            report.addTitle(DynamicReports.cmp.text(tpsrVO.getNombre()).setStyle(PdfConstants.H1_STYLE));
+            report.addTitle(DynamicReports.cmp.text(tpsrDetail.getEnti().getNombre()).setStyle(PdfConstants.H1_STYLE));
 
             final List<List<PdfCell>> listCells = new ArrayList<>();
 
             List<PdfCell> rowCells = new ArrayList<>();
             int accWidth = 0;
 
-            rowCells.add(new PdfCell(tpsrVO.getNombre(), srvcVO.getEtiqueta(), 4, TipoElemento.TX));
+            rowCells.add(new PdfCell(tpsrDetail.getEnti().getNombre(), srvcVO.getEtiqueta(), 4, TipoElemento.TX));
 
-            if (tpsrVO.isTemporal()) {
+            if (tpsrDetail.getEnti().isTemporal()) {
                 rowCells.add(new PdfCell(MessageI18nKey.srvc_fini.name(), formatDate(srvcVO.getFini()), 4,
                         TipoElemento.FE));
                 rowCells.add(new PdfCell(MessageI18nKey.srvc_ffin.name(), formatDate(srvcVO.getFfin()), 4,
@@ -88,11 +88,11 @@ public final class ServicioPdf extends BasePdf {
             report.addTitle(getForm(listCells));
             listCells.clear();
 
-            for (final EntidadGrupoDatoVO engd : tpsrVO.getEngdList()) {
+            for (final EntidadGrupoDatoVO engd : tpsrDetail.getEngdList()) {
                 rowCells = new ArrayList<>();
                 accWidth = 0;
 
-                for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
+                for (final EntidadTipoDatoVO entd : tpsrDetail.getEntdList()) {
                     if (entd.getGrupo() == engd.getNumero()) {
                         final ItemDatoVO itdt = srvcVO.getItdtMap().get(entd.getTpdt().getId());
 

@@ -15,10 +15,10 @@ import xeredi.integra.model.comun.vo.PuertoCriterioVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
-import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
@@ -42,7 +42,7 @@ public final class ServicioListadoAction extends PaginableAction implements Mode
     private ServicioCriterioVO model;
 
     /** The enti. */
-    private TipoServicioVO enti;
+    private TipoServicioDetailVO enti;
 
     /** The srvcs. */
     private PaginatedList<ServicioVO> itemList;
@@ -113,7 +113,8 @@ public final class ServicioListadoAction extends PaginableAction implements Mode
         Preconditions.checkNotNull(model.getEntiId());
 
         final ParametroBO prmtBO = new DefaultParametroBO();
-        final TipoServicioVO enti = TipoServicioProxy.select(model.getEntiId());
+
+        enti = TipoServicioProxy.select(model.getEntiId());
         final Set<Long> tpprIds = new HashSet<>();
 
         if (enti.getEntdList() != null) {
@@ -180,7 +181,7 @@ public final class ServicioListadoAction extends PaginableAction implements Mode
      *
      * @return the enti
      */
-    public TipoServicioVO getEnti() {
+    public TipoServicioDetailVO getEnti() {
         return enti;
     }
 

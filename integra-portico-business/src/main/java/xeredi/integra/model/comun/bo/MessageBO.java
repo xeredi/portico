@@ -58,10 +58,10 @@ public final class MessageBO {
             final Map<MessageI18nKey, String> map = new HashMap<>();
             final MessageI18nCriterioVO criterio = new MessageI18nCriterioVO();
 
-            criterio.setLanguage(locale.getLanguage());
-
             if (locale == null || locale.getLanguage() == null || locale.getLanguage().isEmpty()) {
                 criterio.setLanguage(ConfigurationProxy.getString(ConfigurationKey.language_default));
+            } else {
+                criterio.setLanguage(locale.getLanguage());
             }
 
             for (final MessageI18nVO m18n : m18nDAO.selectList(criterio)) {

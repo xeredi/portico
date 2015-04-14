@@ -29,7 +29,7 @@ public final class TipoSubservicioProxy {
     private static final List<LabelValueVO> LABEL_VALUE_LIST = new ArrayList<>();
 
     /** The Constant TIPO_SUBSERVICIO_MAP. */
-    private static final Map<Long, TipoSubservicioVO> TIPO_SUBSERVICIO_MAP = new HashMap<>();
+    private static final Map<Long, TipoSubservicioDetailVO> TIPO_SUBSERVICIO_MAP = new HashMap<>();
 
     static {
         load();
@@ -49,7 +49,7 @@ public final class TipoSubservicioProxy {
      *
      * @return the map
      */
-    public static Map<Long, TipoSubservicioVO> selectMap() {
+    public static Map<Long, TipoSubservicioDetailVO> selectMap() {
         return TIPO_SUBSERVICIO_MAP;
     }
 
@@ -60,7 +60,7 @@ public final class TipoSubservicioProxy {
      *            the id
      * @return the tipo subservicio vo
      */
-    public static TipoSubservicioVO select(final @Nonnull Long id) {
+    public static TipoSubservicioDetailVO select(final @Nonnull Long id) {
         if (!TIPO_SUBSERVICIO_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tpss, id));
         }
@@ -74,14 +74,17 @@ public final class TipoSubservicioProxy {
     static synchronized void load() {
         LOG.info("Carga de tipos de subservicio");
         final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
-        final List<TipoSubservicioVO> tpssList = tpssBO.selectList(new TipoSubservicioCriterioVO());
 
-        for (final TipoSubservicioVO tpssVO : tpssList) {
-            if (tpssVO.getTpdtEstado() != null) {
-                tpssVO.setTpdtEstado(TipoDatoProxy.select(tpssVO.getTpdtEstado().getId()));
+        for (final TipoSubservicioVO tpss : tpssBO.selectList(new TipoSubservicioCriterioVO())) {
+            if (tpss.getTpdtEstado() != null) {
+                tpss.setTpdtEstado(TipoDatoProxy.select(tpss.getTpdtEstado().getId()));
             }
 
-            TIPO_SUBSERVICIO_MAP.put(tpssVO.getId(), tpssVO);
+            final TipoSubservicioDetailVO tpssDetail = new TipoSubservicioDetailVO();
+
+            tpssDetail.setEnti(tpss);
+
+            TIPO_SUBSERVICIO_MAP.put(tpssDetail.getEnti().getId(), tpssDetail);
         }
 
         EntidadProxy.loadDependencies(TIPO_SUBSERVICIO_MAP);

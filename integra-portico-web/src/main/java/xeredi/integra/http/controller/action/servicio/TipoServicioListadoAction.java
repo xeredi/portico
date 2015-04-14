@@ -9,8 +9,8 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -39,12 +39,12 @@ public final class TipoServicioListadoAction extends BaseAction {
         tpsrList = TipoServicioProxy.selectLabelValues();
         tpssMap = new HashMap<>();
 
-        for (final TipoSubservicioVO vo : TipoSubservicioProxy.selectMap().values()) {
-            if (!tpssMap.containsKey(vo.getTpsrId())) {
-                tpssMap.put(vo.getTpsrId(), new ArrayList<LabelValueVO>());
+        for (final TipoSubservicioDetailVO vo : TipoSubservicioProxy.selectMap().values()) {
+            if (!tpssMap.containsKey(vo.getEnti().getTpsrId())) {
+                tpssMap.put(vo.getEnti().getTpsrId(), new ArrayList<LabelValueVO>());
             }
 
-            tpssMap.get(vo.getTpsrId()).add(new LabelValueVO(vo.getNombre(), vo.getId()));
+            tpssMap.get(vo.getEnti().getTpsrId()).add(new LabelValueVO(vo.getEnti().getNombre(), vo.getEnti().getId()));
         }
 
         return SUCCESS;

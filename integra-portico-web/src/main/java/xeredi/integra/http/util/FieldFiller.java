@@ -7,8 +7,8 @@ import java.text.SimpleDateFormat;
 import javax.annotation.Nonnull;
 
 import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -30,9 +30,9 @@ public final class FieldFiller {
      * @param enti
      *            the enti
      */
-    public static void fillDefaultValues(final @Nonnull ItemVO item, final @Nonnull EntidadVO enti) {
-        if (enti.getEntdList() != null) {
-            for (final EntidadTipoDatoVO entd : enti.getEntdList()) {
+    public static void fillDefaultValues(final @Nonnull ItemVO item, final @Nonnull AbstractEntidadDetailVO entiDetail) {
+        if (entiDetail.getEntdList() != null) {
+            for (final EntidadTipoDatoVO entd : entiDetail.getEntdList()) {
                 if (entd.getValorDefecto() != null) {
                     switch (entd.getTpdt().getTipoElemento()) {
                     case BO:

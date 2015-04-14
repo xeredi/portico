@@ -31,31 +31,33 @@
 <div ng-include="'modules/metamodelo/fragment/engd-grid-content.html'"></div>
 <div ng-include="'modules/metamodelo/fragment/entd-grid-content.html'"></div>
 
-<legend translate="cmagList"></legend>
+<fieldset>
+    <legend translate="cmagList"></legend>
 
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/cmag/edit/create/{{vm.enti.id}}"><i
-            class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" ng-href="#/metamodelo/cmag/edit/create/{{vm.enti.id}}"><i
+                class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+        </div>
     </div>
-</div>
 
-<table ng-if="vm.enti.cmagList" class="table-bordered table-condensed table-hover table-nonfluid">
-    <thead>
-        <tr>
-            <th class="buttonLinks" nowrap="nowrap" />
-            <th translate>cmag_nombre</th>
-            <th translate>cmag_agregar</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="cmag in vm.enti.cmagList track by $index">
-            <td><a ng-href="#/metamodelo/cmag/detail/{{cmag.tpesId}}/{{cmag.entd.id}}"><i
-                    class="glyphicon glyphicon-search"></i></a></td>
-            <td ng-bind="cmag.nombre"></td>
-            <td><i class="glyphicon glyphicon-{{cmag.agregar ? 'ok' : 'remove'}}"></i></td>
-        </tr>
-    </tbody>
-</table>
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th translate>cmag_nombre</th>
+                <th translate>cmag_agregar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="cmag in vm.cmagList track by $index">
+                <td><a ng-href="#/metamodelo/cmag/detail/{{cmag.tpesId}}/{{cmag.entd.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
+                <td ng-bind="cmag.nombre"></td>
+                <td><i class="glyphicon glyphicon-{{cmag.agregar ? 'ok' : 'remove'}}"></i></td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>
 
 <div ng-include="'modules/metamodelo/fragment/enac-grid-content.html'"></div>

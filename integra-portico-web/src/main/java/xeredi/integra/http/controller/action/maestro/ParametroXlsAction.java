@@ -16,8 +16,8 @@ import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.report.ParametroXls;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
-import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 
 import com.google.common.base.Preconditions;
 
@@ -33,9 +33,6 @@ public final class ParametroXlsAction extends BaseAction {
     /** The criterio vo. */
     private ParametroCriterioVO itemCriterio;
 
-    /** The tppr. */
-    private TipoParametroVO enti;
-
     /** The stream. */
     private InputStream stream;
 
@@ -49,14 +46,14 @@ public final class ParametroXlsAction extends BaseAction {
      *             the application exception
      */
     @Action(value = "prmt-xls-export", results = { @Result(name = "success", type = "stream", params = { "contentType",
-            "application/xls", "inputName", "stream", "contentDisposition", "filename=${enti.codigo}.xls" }) })
+            "application/xls", "inputName", "stream", "contentDisposition", "filename=${itemCriterio.entiId}.xls" }) })
     public String xlsExport() throws ApplicationException {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
         final ParametroBO prmtBO = ParametroBOFactory.newInstance(itemCriterio.getEntiId());
+        final TipoParametroDetailVO enti = TipoParametroProxy.select(itemCriterio.getEntiId());
 
-        enti = TipoParametroProxy.select(itemCriterio.getEntiId());
         itemCriterio.setSoloDatosGrid(false);
         itemCriterio.setIdioma(getIdioma());
 
@@ -96,15 +93,6 @@ public final class ParametroXlsAction extends BaseAction {
      */
     public final void setItemCriterio(final ParametroCriterioVO value) {
         itemCriterio = value;
-    }
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public final TipoParametroVO getEnti() {
-        return enti;
     }
 
     /**

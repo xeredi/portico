@@ -1,5 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -11,7 +12,22 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.bo.CampoAgregacionBO;
+import xeredi.integra.model.metamodelo.bo.EntidadAccionBO;
+import xeredi.integra.model.metamodelo.bo.EntidadAccionGridBO;
+import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
+import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
 import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
+import xeredi.integra.model.metamodelo.vo.CampoAgregacionCriterioVO;
+import xeredi.integra.model.metamodelo.vo.CampoAgregacionVO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionGridCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionGridVO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
+import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 
 import com.google.common.base.Preconditions;
@@ -28,6 +44,20 @@ public final class TipoEstadisticaAction extends ItemAction implements ModelDriv
 
     /** The tpes form. */
     private TipoEstadisticaVO model;
+
+    private List<CampoAgregacionVO> cmagList;
+
+    /** The entd list. */
+    private List<EntidadTipoDatoVO> entdList;
+
+    /** The engd list. */
+    private List<EntidadGrupoDatoVO> engdList;
+
+    /** The enac list. */
+    private List<EntidadAccionVO> enacList;
+
+    /** The enag list. */
+    private List<EntidadAccionGridVO> enagList;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -140,6 +170,46 @@ public final class TipoEstadisticaAction extends ItemAction implements ModelDriv
         model = tpesBO.select(model.getId(), getIdioma());
         i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
 
+        final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
+        final CampoAgregacionCriterioVO cmagCriterio = new CampoAgregacionCriterioVO();
+
+        cmagCriterio.setTpesId(model.getId());
+        cmagCriterio.setIdioma(getIdioma());
+
+        cmagList = cmagBO.selectList(cmagCriterio);
+
+        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
+        final EntidadTipoDatoCriterioVO entdCriterio = new EntidadTipoDatoCriterioVO();
+
+        entdCriterio.setEntiId(model.getId());
+        entdCriterio.setIdioma(getIdioma());
+
+        entdList = entdBO.selectList(entdCriterio);
+
+        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+        final EntidadGrupoDatoCriterioVO engdCriterio = new EntidadGrupoDatoCriterioVO();
+
+        engdCriterio.setEntiId(model.getId());
+        engdCriterio.setIdioma(getIdioma());
+
+        engdList = engdBO.selectList(engdCriterio);
+
+        final EntidadAccionBO enacBO = new EntidadAccionBO();
+        final EntidadAccionCriterioVO enacCriterio = new EntidadAccionCriterioVO();
+
+        enacCriterio.setEntiId(model.getId());
+        enacCriterio.setIdioma(getIdioma());
+
+        enacList = enacBO.selectList(enacCriterio);
+
+        final EntidadAccionGridBO enagBO = new EntidadAccionGridBO();
+        final EntidadAccionGridCriterioVO enagCriterio = new EntidadAccionGridCriterioVO();
+
+        enagCriterio.setEntiId(model.getId());
+        enagCriterio.setIdioma(getIdioma());
+
+        enagList = enagBO.selectList(enagCriterio);
+
         return SUCCESS;
     }
 
@@ -180,6 +250,46 @@ public final class TipoEstadisticaAction extends ItemAction implements ModelDriv
      */
     public void setI18nMap(final Map<String, I18nVO> value) {
         i18nMap = value;
+    }
+
+    /**
+     * Gets the entd list.
+     *
+     * @return the entd list
+     */
+    public List<EntidadTipoDatoVO> getEntdList() {
+        return entdList;
+    }
+
+    /**
+     * Gets the engd list.
+     *
+     * @return the engd list
+     */
+    public List<EntidadGrupoDatoVO> getEngdList() {
+        return engdList;
+    }
+
+    /**
+     * Gets the enac list.
+     *
+     * @return the enac list
+     */
+    public List<EntidadAccionVO> getEnacList() {
+        return enacList;
+    }
+
+    /**
+     * Gets the enag list.
+     *
+     * @return the enag list
+     */
+    public List<EntidadAccionGridVO> getEnagList() {
+        return enagList;
+    }
+
+    public List<CampoAgregacionVO> getCmagList() {
+        return cmagList;
     }
 
 }

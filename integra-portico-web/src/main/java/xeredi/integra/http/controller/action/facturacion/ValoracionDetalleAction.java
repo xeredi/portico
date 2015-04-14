@@ -9,6 +9,7 @@ import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
+import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 
 import com.google.common.base.Preconditions;
@@ -130,13 +131,22 @@ public final class ValoracionDetalleAction extends ItemAction implements ModelDr
         Preconditions.checkNotNull(model.getVlrlId());
 
         final ValoracionBO vlrcBO = new ValoracionBO();
+        final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
-        vlrl = vlrcBO.selectVlrl(model.getVlrlId(), getIdioma());
+        vlrlCriterio.setId(model.getVlrlId());
+        vlrlCriterio.setIdioma(getIdioma());
+
+        vlrl = vlrcBO.selectVlrlObject(vlrlCriterio);
 
         if (vlrl.getId() == vlrl.getPadreId()) {
             vlrlPadre = vlrl;
         } else {
-            vlrlPadre = vlrcBO.selectVlrl(vlrl.getPadreId(), getIdioma());
+            final ValoracionLineaCriterioVO vlrlPadreCriterio = new ValoracionLineaCriterioVO();
+
+            vlrlPadreCriterio.setId(vlrl.getPadreId());
+            vlrlPadreCriterio.setIdioma(getIdioma());
+
+            vlrlPadre = vlrcBO.selectVlrlObject(vlrlPadreCriterio);
         }
 
         final AspectoBO aspcBO = new AspectoBO();

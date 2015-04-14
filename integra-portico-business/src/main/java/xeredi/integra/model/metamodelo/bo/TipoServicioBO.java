@@ -118,10 +118,6 @@ public final class TipoServicioBO {
                 throw new InstanceNotFoundException(MessageI18nKey.tpsr, id);
             }
 
-            final EntidadBO entiBO = new EntidadBO();
-
-            entiBO.fillDependencies(session, entiVO, idioma);
-
             return entiVO;
         }
     }

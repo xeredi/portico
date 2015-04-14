@@ -16,6 +16,7 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
+import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -170,8 +171,12 @@ public final class EntidadTipoDatoAction extends ItemAction implements ModelDriv
      */
     private void loadLabelValues() {
         final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+        final EntidadGrupoDatoCriterioVO engdCriterio = new EntidadGrupoDatoCriterioVO();
 
-        engdList.addAll(engdBO.selectLabelValues(model.getEntiId(), getIdioma()));
+        engdCriterio.setEntiId(model.getEntiId());
+        engdCriterio.setIdioma(getIdioma());
+
+        engdList.addAll(engdBO.selectLabelValues(engdCriterio));
 
         final TipoDatoBO tpdtBO = new TipoDatoBO();
         final TipoDatoCriterioVO tpdtCriterioVO = new TipoDatoCriterioVO();

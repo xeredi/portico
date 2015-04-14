@@ -8,7 +8,6 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.ArchivoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ArchivoCriterioVO;
 import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
@@ -50,14 +49,10 @@ public final class PeriodoProcesoExportAction extends BaseAction {
 
         final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
         final ArchivoBO archBO = new ArchivoBO();
-        final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
 
         pepr = peprBO.select(pepr.getId());
-
-        archCriterio.setId(pepr.getArin().getId());
-
-        arin = archBO.selectInfo(archCriterio);
-        stream = archBO.select(pepr.getArin().getId());
+        arin = archBO.select(pepr.getArin().getId());
+        stream = archBO.selectStream(pepr.getArin().getId());
 
         return SUCCESS;
     }

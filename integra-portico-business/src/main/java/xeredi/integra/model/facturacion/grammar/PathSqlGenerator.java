@@ -4,14 +4,14 @@ import java.util.Iterator;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.util.grammar.PathBaseVisitor;
 
 import com.google.common.base.Preconditions;
@@ -26,13 +26,13 @@ public final class PathSqlGenerator extends PathBaseVisitor {
     private final transient StringBuffer sql;
 
     /** The regla. */
-    private final transient EntidadVO entiBase;
+    private final transient AbstractEntidadDetailVO entiDetailBase;
 
     /** The generate label. */
     private final transient boolean generateLabel;
 
     /** The entidad tmp vo. */
-    private EntidadVO entiTmp;
+    private AbstractEntidadDetailVO entiDetailTmp;
 
     /** The first path element. */
     private boolean firstPathElement;
@@ -48,11 +48,11 @@ public final class PathSqlGenerator extends PathBaseVisitor {
      * @param agenerateLabel
      *            the agenerate label
      */
-    public PathSqlGenerator(final EntidadVO aentiBase, final boolean agenerateLabel) {
+    public PathSqlGenerator(final AbstractEntidadDetailVO aentiDetailBase, final boolean agenerateLabel) {
         super();
 
         sql = new StringBuffer();
-        entiBase = aentiBase;
+        entiDetailBase = aentiDetailBase;
         generateLabel = agenerateLabel;
     }
 
@@ -63,7 +63,7 @@ public final class PathSqlGenerator extends PathBaseVisitor {
     public Object visitPath(final xeredi.integra.model.util.grammar.PathParser.PathContext ctx) {
         sql.setLength(0);
 
-        entiTmp = entiBase;
+        entiDetailTmp = entiDetailBase;
         firstPathElement = true;
         lastPathElement = false;
 
@@ -89,48 +89,48 @@ public final class PathSqlGenerator extends PathBaseVisitor {
      */
     @Override
     public Object visitPathElement(final xeredi.integra.model.util.grammar.PathParser.PathElementContext ctx) {
-        Preconditions.checkNotNull(entiTmp);
+        Preconditions.checkNotNull(entiDetailTmp);
 
-        final EntidadVO enti = EntidadProxy.select(entiTmp.getId());
+        final AbstractEntidadDetailVO entiDetail = EntidadProxy.select(entiDetailTmp.getEnti().getId());
         final StringBuilder sqlElement = new StringBuilder();
 
-        System.out.println("enti: " + enti.getCodigo());
+        System.out.println("enti: " + entiDetail.getEnti().getCodigo());
 
         if (ctx.ELEMENT_SERVICE() != null) {
-            if (enti.getTipo() != TipoEntidad.S) {
+            if (entiDetail.getEnti().getTipo() != TipoEntidad.S) {
                 throw new Error("Solo se puede llegar al servicio desde un subservicio");
             }
 
-            final TipoSubservicioVO tpss = TipoSubservicioProxy.select(enti.getId());
+            final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(entiDetail.getEnti().getId());
 
-            entiTmp = EntidadProxy.select(tpss.getTpsrId());
+            entiDetailTmp = EntidadProxy.select(tpssDetail.getEnti().getTpsrId());
 
             sqlElement
-                    .append("SELECT ")
-                    .append(lastPathElement && generateLabel ? "CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero)))"
-                            : "srvc_pk").append(" FROM tbl_servicio_srvc WHERE srvc_pk = ");
+            .append("SELECT ")
+            .append(lastPathElement && generateLabel ? "CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero)))"
+                    : "srvc_pk").append(" FROM tbl_servicio_srvc WHERE srvc_pk = ");
             sqlElement.append(firstPathElement ? "item.ssrv_srvc_pk" : "#{any}");
         }
         if (ctx.ELEMENT_PARENT() != null) {
-            if (enti.getTipo() != TipoEntidad.S) {
+            if (entiDetail.getEnti().getTipo() != TipoEntidad.S) {
                 throw new Error("Solo se puede llegar a la entidad padre desde un subservicio");
             }
 
-            entiTmp = EntidadProxy.select(Entidad.valueOf(ctx.ID().getText()).getId());
+            entiDetailTmp = EntidadProxy.select(Entidad.valueOf(ctx.ID().getText()).getId());
 
             sqlElement
-                    .append("SELECT ssss_ssrvp_pk FROM tbl_subserv_subserv_ssss WHERE EXISTS (SELECT 1 FROM tbl_subservicio_ssrv WHERE ssrv_pk = ssss_ssrvp_pk AND ssrv_tpss_pk = portico.getEntidad('"
-                            + ctx.ID().getText() + "')) AND ssss_ssrvh_pk = ");
+            .append("SELECT ssss_ssrvp_pk FROM tbl_subserv_subserv_ssss WHERE EXISTS (SELECT 1 FROM tbl_subservicio_ssrv WHERE ssrv_pk = ssss_ssrvp_pk AND ssrv_tpss_pk = portico.getEntidad('"
+                    + ctx.ID().getText() + "')) AND ssss_ssrvh_pk = ");
             sqlElement.append(firstPathElement ? "item.ssrv_pk" : "(#{any})");
         }
         if (ctx.ELEMENT_DATA() != null) {
             final TipoDato tipoDato = TipoDato.valueOf(ctx.ID().getText());
 
-            Preconditions.checkNotNull(enti);
+            Preconditions.checkNotNull(entiDetail);
 
             EntidadTipoDatoVO entd = null;
 
-            for (final EntidadTipoDatoVO vo : enti.getEntdList()) {
+            for (final EntidadTipoDatoVO vo : entiDetail.getEntdList()) {
                 if (vo.getTpdt().getId() == tipoDato.getId()) {
                     entd = vo;
                 }
@@ -142,7 +142,7 @@ public final class PathSqlGenerator extends PathBaseVisitor {
 
             Preconditions.checkNotNull(entd);
 
-            switch (entiTmp.getTipo()) {
+            switch (entiDetailTmp.getEnti().getTipo()) {
             case T:
                 sqlElement.append("SELECT ");
 
@@ -168,14 +168,14 @@ public final class PathSqlGenerator extends PathBaseVisitor {
                     break;
                 case PR:
                     sqlElement
-                            .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE((SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = srdt_prmt_pk)"
-                                    : "srdt_prmt_pk");
+                    .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE((SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = srdt_prmt_pk)"
+                            : "srdt_prmt_pk");
 
                     break;
                 case SR:
                     sqlElement
-                            .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero))) FROM tbl_servicio_srvc WHERE srvc_pk = srdt_srvc_dep_pk)"
-                                    : "srdt_srvc_dep_pk");
+                    .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero))) FROM tbl_servicio_srvc WHERE srvc_pk = srdt_srvc_dep_pk)"
+                            : "srdt_srvc_dep_pk");
 
                     break;
                 default:
@@ -184,8 +184,9 @@ public final class PathSqlGenerator extends PathBaseVisitor {
 
                 sqlElement.append(" FROM tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = portico.getTipoDato('"
                         + ctx.ID().getText() + "') AND srdt_srvc_pk = ");
-                sqlElement.append(firstPathElement ? entiBase.getTipo() == TipoEntidad.T ? "item.srvc_pk"
-                        : "item.ssrv_srvc_pk" : "(#{any})");
+                sqlElement
+                        .append(firstPathElement ? entiDetailBase.getEnti().getTipo() == TipoEntidad.T ? "item.srvc_pk"
+                                : "item.ssrv_srvc_pk" : "(#{any})");
 
                 break;
             case S:
@@ -213,8 +214,8 @@ public final class PathSqlGenerator extends PathBaseVisitor {
                     break;
                 case PR:
                     sqlElement
-                            .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE((SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = ssdt_prmt_pk)"
-                                    : "ssdt_prmt_pk");
+                    .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE((SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = ssdt_prmt_pk)"
+                            : "ssdt_prmt_pk");
 
                     break;
                 default:
@@ -251,8 +252,8 @@ public final class PathSqlGenerator extends PathBaseVisitor {
                     break;
                 case PR:
                     sqlElement
-                            .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE((SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = prdt_prmt_pk)"
-                                    : "prdt_prmt_pk");
+                    .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE((SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = prdt_prmt_pk)"
+                            : "prdt_prmt_pk");
 
                     break;
                 default:
@@ -260,16 +261,17 @@ public final class PathSqlGenerator extends PathBaseVisitor {
                 }
 
                 sqlElement
-                        .append(" FROM tbl_parametro_dato_prdt WHERE prdt_tpdt_pk = portico.getTipoDato('"
-                                + ctx.ID().getText()
-                                + "') AND prdt_prvr_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE item.fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, item.fref) AND prvr_prmt_pk = ANY(#{any}) )");
+                .append(" FROM tbl_parametro_dato_prdt WHERE prdt_tpdt_pk = portico.getTipoDato('"
+                        + ctx.ID().getText()
+                        + "') AND prdt_prvr_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE item.fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, item.fref) AND prvr_prmt_pk = ANY(#{any}) )");
 
                 break;
             default:
-                throw new Error("Entidad '" + entiTmp.getTipo() + "' no valida");
+                throw new Error("Entidad '" + entiDetailTmp.getEnti().getTipo() + "' no valida");
             }
 
-            entiTmp = entd.getTpdt().getEnti() == null ? null : EntidadProxy.select(entd.getTpdt().getEnti().getId());
+            entiDetailTmp = entd.getTpdt().getEnti() == null ? null : EntidadProxy.select(entd.getTpdt().getEnti()
+                    .getId());
         }
 
         if (sqlElement.length() > 0) {

@@ -13,10 +13,10 @@ import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBOFactory;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
@@ -40,7 +40,7 @@ public final class SubservicioListadoAction extends PaginableAction implements M
     private SubservicioCriterioVO model;
 
     /** The enti. */
-    private TipoSubservicioVO enti;
+    private TipoSubservicioDetailVO enti;
 
     /** The srvcs. */
     private PaginatedList<SubservicioVO> itemList;
@@ -110,7 +110,7 @@ public final class SubservicioListadoAction extends PaginableAction implements M
         if (labelValuesMap == null) {
             labelValuesMap = new HashMap<>();
 
-            final TipoSubservicioVO enti = TipoSubservicioProxy.select(model.getEntiId());
+            enti = TipoSubservicioProxy.select(model.getEntiId());
 
             // Carga de los labelValues (Si los hay)
             final Set<Long> tpprIds = new HashSet<>();
@@ -165,7 +165,7 @@ public final class SubservicioListadoAction extends PaginableAction implements M
      *
      * @return the enti
      */
-    public TipoSubservicioVO getEnti() {
+    public TipoSubservicioDetailVO getEnti() {
         return enti;
     }
 

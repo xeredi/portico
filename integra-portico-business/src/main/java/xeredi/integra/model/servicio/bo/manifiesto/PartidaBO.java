@@ -11,8 +11,8 @@ import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.AbstractSubservicioBO;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.BlDAO;
@@ -34,7 +34,8 @@ public final class PartidaBO extends AbstractSubservicioBO {
      */
     @Override
     protected void insertPostOperations(final @Nonnull SqlSession session, final @Nonnull SubservicioVO ssrvVO,
-            final @Nonnull TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
+            final @Nonnull TipoSubservicioDetailVO tpssSubservicioDetail, final Set<Long> ssrvPadreIds)
+            throws DuplicateInstanceException {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
 

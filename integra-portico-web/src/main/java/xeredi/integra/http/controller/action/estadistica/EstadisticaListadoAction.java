@@ -19,9 +19,9 @@ import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
@@ -42,7 +42,7 @@ public final class EstadisticaListadoAction extends PaginableAction implements M
     private EstadisticaCriterioVO model;
 
     /** The enti. */
-    private TipoEstadisticaVO enti;
+    private TipoEstadisticaDetailVO enti;
 
     /** The estds. */
     private PaginatedList<EstadisticaVO> itemList;
@@ -122,7 +122,7 @@ public final class EstadisticaListadoAction extends PaginableAction implements M
         final ParametroBO prmtBO = new DefaultParametroBO();
 
         {
-            final TipoEstadisticaVO enti = TipoEstadisticaProxy.select(model.getEntiId());
+            enti = TipoEstadisticaProxy.select(model.getEntiId());
 
             // Carga de los labelValues (Si los hay)
             final Set<Long> tpprIds = new HashSet<>();
@@ -195,7 +195,7 @@ public final class EstadisticaListadoAction extends PaginableAction implements M
      *
      * @return the enti
      */
-    public TipoEstadisticaVO getEnti() {
+    public TipoEstadisticaDetailVO getEnti() {
         return enti;
     }
 

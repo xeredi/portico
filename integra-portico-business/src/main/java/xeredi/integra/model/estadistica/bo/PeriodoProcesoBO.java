@@ -46,12 +46,12 @@ import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
-import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -613,7 +613,7 @@ public class PeriodoProcesoBO {
             final @Nonnull Long tpesId, final @Nonnull List<EstadisticaAgregadoVO> esagList) {
 
         final IgBO igBO = new IgBO();
-        final TipoEstadisticaVO tpesVO = TipoEstadisticaProxy.select(tpesId);
+        final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy.select(tpesId);
         final List<EstadisticaVO> estdList = new ArrayList<>();
 
         for (final EstadisticaAgregadoVO esagVO : esagList) {
@@ -625,8 +625,8 @@ public class PeriodoProcesoBO {
             estdVO.setPepr(peprVO);
             estdVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
-            if (tpesVO.getEntdList() != null) {
-                for (final EntidadTipoDatoVO entd : tpesVO.getEntdList()) {
+            if (tpesDetail.getEntdList() != null) {
+                for (final EntidadTipoDatoVO entd : tpesDetail.getEntdList()) {
                     final Object value = esagVO.getEsdtMap().get(entd.getTpdt().getCodigo());
                     final ItemDatoVO itdtVO = new ItemDatoVO();
 

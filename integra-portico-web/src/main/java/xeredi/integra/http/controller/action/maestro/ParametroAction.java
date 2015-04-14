@@ -23,10 +23,10 @@ import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
-import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
@@ -42,7 +42,7 @@ public final class ParametroAction extends ItemAction implements ModelDriven<Par
     private static final long serialVersionUID = 477492673223023219L;
 
     /** The enti. */
-    private TipoParametroVO enti;
+    private TipoParametroDetailVO enti;
 
     /** The prmt . */
     private ParametroVO model;
@@ -80,7 +80,7 @@ public final class ParametroAction extends ItemAction implements ModelDriven<Par
 
             model = prmtBO.select(model.getId(), getIdioma(), getFechaVigencia());
 
-            if (enti.isI18n()) {
+            if (enti.getEnti().isI18n()) {
                 i18nMap = I18nBO.selectMap(I18nPrefix.prvr, model.getPrvr().getId());
             }
         }
@@ -107,7 +107,7 @@ public final class ParametroAction extends ItemAction implements ModelDriven<Par
 
         // Validacion de Datos
         if (getAccion() != ACCION_EDICION.edit) {
-            if (enti.isPuerto()) {
+            if (enti.getEnti().isPuerto()) {
                 FieldValidator.validateRequired(this, MessageI18nKey.prto, model.getPrto());
 
                 if (!hasErrors()) {
@@ -131,7 +131,7 @@ public final class ParametroAction extends ItemAction implements ModelDriven<Par
             FieldValidator.validatePeriod(this, model.getPrvr().getFini(), model.getPrvr().getFfin());
         }
 
-        if (enti.isI18n()) {
+        if (enti.getEnti().isI18n()) {
             FieldValidator.validateI18n(this, i18nMap);
         }
 
@@ -206,7 +206,7 @@ public final class ParametroAction extends ItemAction implements ModelDriven<Par
         model = prmtBO.select(model.getId(), getIdioma(), getFechaVigencia());
         enti = TipoParametroProxy.select(model.getEntiId());
 
-        if (enti.isI18n()) {
+        if (enti.getEnti().isI18n()) {
             i18nMap = I18nBO.selectMap(I18nPrefix.prvr, model.getPrvr().getId());
         }
 
@@ -222,7 +222,7 @@ public final class ParametroAction extends ItemAction implements ModelDriven<Par
     private void loadLabelValuesMap() throws ApplicationException {
         Preconditions.checkNotNull(enti);
 
-        if (enti.isPuerto()) {
+        if (enti.getEnti().isPuerto()) {
             final PuertoBO prtoBO = new PuertoBO();
             final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
@@ -295,7 +295,7 @@ public final class ParametroAction extends ItemAction implements ModelDriven<Par
      *
      * @return the enti
      */
-    public TipoParametroVO getEnti() {
+    public TipoParametroDetailVO getEnti() {
         return enti;
     }
 

@@ -484,6 +484,10 @@ function TpprDetailController($http, $location, $routeParams, pageTitleService) 
     }).success(function(data) {
         vm.enti = data.model;
         vm.subentiList = data.subentiList;
+        vm.entdList = data.entdList;
+        vm.engdList = data.engdList;
+        vm.enacList = data.enacList;
+        vm.enagList = data.enagList;
         vm.i18nMap = data.i18nMap;
     });
 
@@ -545,12 +549,16 @@ function TpspDetailController($http, $routeParams, pageTitleService) {
     }
 
     $http.post("metamodelo/tpsp-detail.action", {
-        enti : {
+        model : {
             id : $routeParams.entiId
         }
     }).success(function(data) {
         vm.enti = data.model;
         vm.i18nMap = data.i18nMap;
+        vm.entdList = data.entdList;
+        vm.engdList = data.engdList;
+        vm.enacList = data.enacList;
+        vm.enagList = data.enagList;
     });
 
     pageTitleService.setTitle("tpsp", "page_detail");
@@ -655,6 +663,10 @@ function TpsrDetailController($http, $routeParams, pageTitleService) {
         vm.i18nMap = data.i18nMap;
         vm.subentiList = data.subentiList;
         vm.entiHijasList = data.entiHijasList;
+        vm.entdList = data.entdList;
+        vm.engdList = data.engdList;
+        vm.enacList = data.enacList;
+        vm.enagList = data.enagList;
     });
 
     pageTitleService.setTitle("tpsr", "page_detail");
@@ -721,6 +733,10 @@ function TpssDetailController($http, $routeParams, pageTitleService) {
         vm.i18nMap = data.i18nMap;
         vm.entiHijasList = data.entiHijasList;
         vm.entiPadresList = data.entiPadresList;
+        vm.entdList = data.entdList;
+        vm.engdList = data.engdList;
+        vm.enacList = data.enacList;
+        vm.enagList = data.enagList;
     });
 
     pageTitleService.setTitle("tpss", "page_detail");
@@ -822,7 +838,12 @@ function TpesDetailController($http, $routeParams, pageTitleService) {
     }).success(function(data) {
         vm.enti = data.model;
         vm.i18nMap = data.i18nMap;
+        vm.cmagList = data.cmagList;
         vm.subentiList = data.subentiList;
+        vm.entdList = data.entdList;
+        vm.engdList = data.engdList;
+        vm.enacList = data.enacList;
+        vm.enagList = data.enagList;
     });
 
     pageTitleService.setTitle("tpes", "page_detail");

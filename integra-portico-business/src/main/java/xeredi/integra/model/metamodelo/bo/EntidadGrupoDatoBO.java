@@ -141,21 +141,15 @@ public final class EntidadGrupoDatoBO {
     /**
      * Select list.
      *
-     * @param entiId
-     *            the enti id
-     * @param idioma
-     *            the idioma
+     * @param engdCriterio
+     *            the engd criterio
      * @return the list
      */
-    public List<EntidadGrupoDatoVO> selectList(final @Nonnull Long entiId, final String idioma) {
+    public List<EntidadGrupoDatoVO> selectList(final EntidadGrupoDatoCriterioVO engdCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadGrupoDatoDAO engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
-            final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
 
-            engdCriterioVO.setEntiId(entiId);
-            engdCriterioVO.setIdioma(idioma);
-
-            return engdDAO.selectList(engdCriterioVO);
+            return engdDAO.selectList(engdCriterio);
         }
     }
 
@@ -168,10 +162,10 @@ public final class EntidadGrupoDatoBO {
      *            the idioma
      * @return the list
      */
-    public List<LabelValueVO> selectLabelValues(final @Nonnull Long entiId, final String idioma) {
+    public List<LabelValueVO> selectLabelValues(final EntidadGrupoDatoCriterioVO engdCriterio) {
         final List<LabelValueVO> list = new ArrayList<>();
 
-        for (final EntidadGrupoDatoVO engd : selectList(entiId, idioma)) {
+        for (final EntidadGrupoDatoVO engd : selectList(engdCriterio)) {
             list.add(new LabelValueVO(engd.getEtiqueta(), engd.getNumero()));
         }
 

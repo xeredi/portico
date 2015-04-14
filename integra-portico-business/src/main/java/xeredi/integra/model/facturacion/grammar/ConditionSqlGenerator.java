@@ -7,16 +7,16 @@ import java.util.Iterator;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import xeredi.integra.model.facturacion.vo.ReglaVO;
+import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.util.grammar.ConditionBaseVisitor;
 import xeredi.integra.model.util.grammar.ConditionParser.BooleanExprContext;
 import xeredi.integra.model.util.grammar.ConditionParser.PathContext;
@@ -139,9 +139,9 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
     public String visitPath(final PathContext ctx) {
         String sqlPath = "";
 
-        final EntidadVO entiBase = EntidadProxy.select(reglaVO.getEnti().getId());
+        final AbstractEntidadDetailVO entiDetalleBase = EntidadProxy.select(reglaVO.getEnti().getId());
 
-        EntidadVO entiElem = entiBase;
+        AbstractEntidadDetailVO entiDetalleElem = entiDetalleBase;
 
         boolean isFirst = true;
         boolean isLast = false;
@@ -160,29 +160,30 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
                 String sqlElement = "";
 
                 if (pathElementCtx.service != null) {
-                    if (entiElem.getTipo() != TipoEntidad.S) {
+                    if (entiDetalleElem.getEnti().getTipo() != TipoEntidad.S) {
                         throw new Error("Solo se puede llegar al servicio desde un subservicio");
                     }
 
-                    final TipoSubservicioVO tpss = TipoSubservicioProxy.select(entiElem.getId());
+                    final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(entiDetalleElem.getEnti()
+                            .getId());
 
-                    entiElem = TipoServicioProxy.select(tpss.getTpsrId());
+                    entiDetalleElem = TipoServicioProxy.select(tpssDetail.getEnti().getTpsrId());
 
                     sqlElement += "SELECT srvc_pk FROM tbl_servicio_srvc WHERE srvc_pk = ";
                     sqlElement += isFirst ? "item.ssrv_srvc_pk" : "#{any}";
                 }
 
                 if (pathElementCtx.parent != null) {
-                    if (entiElem.getTipo() != TipoEntidad.S) {
+                    if (entiDetalleElem.getEnti().getTipo() != TipoEntidad.S) {
                         throw new Error("Solo se puede llegar al padre desde un subservicio");
                     }
 
                     final Entidad entidad = Entidad.valueOf(pathElementCtx.arg.getText());
 
-                    entiElem = EntidadProxy.select(entidad.getId());
+                    entiDetalleElem = EntidadProxy.select(entidad.getId());
 
                     sqlElement += "SELECT ssss_ssrvp_pk FROM tbl_subserv_subserv_ssss WHERE EXISTS (SELECT 1 FROM tbl_subservicio_ssrv WHERE ssrv_pk = ssss_ssrvp_pk AND ssrv_tpss_pk = "
-                            + entiElem.getId() + ") AND ssss_ssrvh_pk = ";
+                            + entiDetalleElem.getEnti().getId() + ") AND ssss_ssrvh_pk = ";
                     sqlElement += isFirst ? "item.ssrv_pk" : "(#{any})";
                 }
 
@@ -191,7 +192,7 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
 
                     EntidadTipoDatoVO entd = null;
 
-                    for (final EntidadTipoDatoVO vo : entiElem.getEntdList()) {
+                    for (final EntidadTipoDatoVO vo : entiDetalleElem.getEntdList()) {
                         if (vo.getTpdt().getId() == tipoDato.getId()) {
                             entd = vo;
                         }
@@ -203,7 +204,7 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
 
                     String field = "";
 
-                    switch (entiElem.getTipo()) {
+                    switch (entiDetalleElem.getEnti().getTipo()) {
                     case P:
                         field = "prdt_";
                         break;
@@ -245,7 +246,7 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
                         throw new Error("Tipo de dato no soportado");
                     }
 
-                    switch (entiElem.getTipo()) {
+                    switch (entiDetalleElem.getEnti().getTipo()) {
                     case P:
                         sqlElement += " tbl_parametro_dato_prdt WHERE prdt_tpdt_pk = "
                                 + entd.getTpdt().getId()
@@ -253,13 +254,13 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
                         break;
                     case T:
                         sqlElement += " tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = " + entd.getTpdt().getId()
-                                + " AND srdt_srvc_pk = ";
-                        sqlElement += isFirst ? entiBase.getTipo() == TipoEntidad.T ? "item.srvc_pk"
+                        + " AND srdt_srvc_pk = ";
+                        sqlElement += isFirst ? entiDetalleBase.getEnti().getTipo() == TipoEntidad.T ? "item.srvc_pk"
                                 : "item.ssrv_srvc_pk" : "(#{any})";
                         break;
                     case S:
                         sqlElement += " tbl_subservicio_dato_ssdt WHERE ssdt_tpdt_pk = " + entd.getTpdt().getId()
-                                + " AND ssdt_ssrv_pk = ";
+                        + " AND ssdt_ssrv_pk = ";
                         sqlElement += isFirst ? "item.ssrv_pk" : "(#{any})";
 
                         break;

@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.servicio.bo.AbstractSubservicioBO;
 import xeredi.integra.model.servicio.dao.pesca.ManifiestoPescaDAO;
 import xeredi.integra.model.servicio.dao.pesca.PartidaPescaDAO;
@@ -25,7 +25,7 @@ public final class PartidaPescaBO extends AbstractSubservicioBO {
      */
     @Override
     protected void insertPostOperations(final @Nonnull SqlSession session, final @Nonnull SubservicioVO ssrvVO,
-            final TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
+            final TipoSubservicioDetailVO tpssDetail, final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
         final PartidaPescaDAO papeDAO = session.getMapper(PartidaPescaDAO.class);
         final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
 

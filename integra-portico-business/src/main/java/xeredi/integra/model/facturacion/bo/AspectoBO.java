@@ -19,7 +19,6 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.dao.AspectoDAO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -60,24 +59,19 @@ public class AspectoBO {
     }
 
     /**
-     * Select label value list.
+     * Select list.
      *
      * @param aspcCriterioVO
      *            the aspc criterio vo
      * @return the list
      */
-    public List<LabelValueVO> selectLabelValueList(final AspectoCriterioVO aspcCriterioVO) {
+    public List<AspectoVO> selectList(final AspectoCriterioVO aspcCriterioVO) {
         Preconditions.checkNotNull(aspcCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
-            final List<LabelValueVO> list = new ArrayList<>();
 
-            for (final AspectoVO aspc : aspcDAO.selectList(aspcCriterioVO)) {
-                list.add(new LabelValueVO(aspc.getEtiqueta(), aspc.getId()));
-            }
-
-            return list;
+            return aspcDAO.selectList(aspcCriterioVO);
         }
     }
 
@@ -90,7 +84,7 @@ public class AspectoBO {
      *            the limit
      * @return the list
      */
-    public List<AspectoVO> selectLupaList(final AspectoCriterioVO aspcCriterioVO, final int limit) {
+    public List<AspectoVO> selectList(final AspectoCriterioVO aspcCriterioVO, final int limit) {
         Preconditions.checkNotNull(aspcCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

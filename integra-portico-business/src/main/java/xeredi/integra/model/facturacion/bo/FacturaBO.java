@@ -201,7 +201,7 @@ public class FacturaBO {
                 throw new Error("Servicio de Factura no encontrado");
             }
 
-            if (fcts.getFctrId() != fctr.getId()) {
+            if (!fcts.getFctrId().equals(fctr.getId())) {
                 throw new Error("No coinciden los identificadores de factura de la factura y el servicio de la factura");
             }
 

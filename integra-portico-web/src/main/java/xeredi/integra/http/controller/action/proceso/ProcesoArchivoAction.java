@@ -8,7 +8,6 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.model.comun.bo.ArchivoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ArchivoCriterioVO;
 import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.proceso.vo.ProcesoArchivoVO;
 
@@ -45,13 +44,9 @@ public final class ProcesoArchivoAction extends ItemAction implements ModelDrive
             "stream", "contentDisposition", "filename=${arin.nombre}" }) })
     public String download() throws ApplicationException {
         final ArchivoBO archBO = new ArchivoBO();
-        final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
 
-        archCriterio.setId(model.getArchId());
-        archCriterio.setPrbtId(model.getPrbtId());
-
-        arin = archBO.selectInfo(archCriterio);
-        stream = archBO.select(model.getArchId());
+        arin = archBO.select(model.getArchId());
+        stream = archBO.selectStream(model.getArchId());
 
         return SUCCESS;
     }

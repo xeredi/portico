@@ -8,6 +8,7 @@ import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
+import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 
 import com.google.common.base.Preconditions;
@@ -47,8 +48,12 @@ public final class ValoracionLineaAction extends ItemAction implements ModelDriv
         Preconditions.checkNotNull(model.getVlrcId());
 
         final ValoracionBO vlrcBO = new ValoracionBO();
+        final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
-        model = vlrcBO.selectVlrl(model.getId(), getIdioma());
+        vlrlCriterio.setId(model.getId());
+        vlrlCriterio.setIdioma(getIdioma());
+
+        model = vlrcBO.selectVlrlObject(vlrlCriterio);
 
         loadDependencies();
 
@@ -72,8 +77,12 @@ public final class ValoracionLineaAction extends ItemAction implements ModelDriv
             Preconditions.checkNotNull(model.getId());
 
             final ValoracionBO vlrcBO = new ValoracionBO();
+            final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
-            model = vlrcBO.selectVlrl(model.getId(), getIdioma());
+            vlrlCriterio.setId(model.getId());
+            vlrlCriterio.setIdioma(getIdioma());
+
+            model = vlrcBO.selectVlrlObject(vlrlCriterio);
         }
 
         loadDependencies();
@@ -126,8 +135,12 @@ public final class ValoracionLineaAction extends ItemAction implements ModelDriv
                 vlrlPadre = model;
             } else {
                 final ValoracionBO vlrcBO = new ValoracionBO();
+                final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
-                vlrlPadre = vlrcBO.selectVlrl(model.getPadreId(), getIdioma());
+                vlrlCriterio.setId(model.getPadreId());
+                vlrlCriterio.setIdioma(getIdioma());
+
+                vlrlPadre = vlrcBO.selectVlrlObject(vlrlCriterio);
             }
         }
 

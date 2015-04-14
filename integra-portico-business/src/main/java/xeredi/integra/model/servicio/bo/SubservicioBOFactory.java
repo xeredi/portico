@@ -8,8 +8,8 @@ import javax.annotation.Nonnull;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -39,16 +39,16 @@ public final class SubservicioBOFactory {
     private static void load() {
         LOG.info("Inicio de la Factoria de SubservicioBO");
 
-        for (final TipoSubservicioVO enti : TipoSubservicioProxy.selectMap().values()) {
-            if (enti.getClasspath() != null) {
+        for (final TipoSubservicioDetailVO entiDetail : TipoSubservicioProxy.selectMap().values()) {
+            if (entiDetail.getEnti().getClasspath() != null) {
                 try {
-                    final String classname = "xeredi.integra.model.servicio.bo." + enti.getClasspath();
+                    final String classname = "xeredi.integra.model.servicio.bo." + entiDetail.getEnti().getClasspath();
 
                     if (LOG.isDebugEnabled()) {
                         LOG.debug("Carga de la clase " + classname);
                     }
 
-                    MAP.put(enti.getId(), Class.forName(classname));
+                    MAP.put(entiDetail.getEnti().getId(), Class.forName(classname));
                 } catch (final ClassNotFoundException ex) {
                     LOG.fatal(ex, ex);
                 }

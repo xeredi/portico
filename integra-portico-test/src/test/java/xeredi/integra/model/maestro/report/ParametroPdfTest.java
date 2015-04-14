@@ -25,10 +25,10 @@ import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
-import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -68,11 +68,11 @@ public final class ParametroPdfTest {
 
             LOG.info("Busqueda de Parametros");
 
-            final TipoParametroVO tpprVO = TipoParametroProxy.select(tpprId);
-            final Map<Long, TipoSubparametroVO> entiHijasMap = new HashMap<>();
+            final TipoParametroDetailVO tpprDetail = TipoParametroProxy.select(tpprId);
+            final Map<Long, TipoSubparametroDetailVO> entiHijasMap = new HashMap<>();
 
-            if (tpprVO.getEntiHijasList() != null) {
-                for (final Long entiId : tpprVO.getEntiHijasList()) {
+            if (tpprDetail.getEntiHijasList() != null) {
+                for (final Long entiId : tpprDetail.getEntiHijasList()) {
                     entiHijasMap.put(entiId, TipoSubparametroProxy.select(entiId));
                 }
             }
@@ -84,8 +84,8 @@ public final class ParametroPdfTest {
             for (final ParametroVO prmtVO : prmtList) {
                 final Map<Long, List<SubparametroVO>> sprmMap = new HashMap<>();
 
-                if (tpprVO.getEntiHijasList() != null) {
-                    for (final Long entiId : tpprVO.getEntiHijasList()) {
+                if (tpprDetail.getEntiHijasList() != null) {
+                    for (final Long entiId : tpprDetail.getEntiHijasList()) {
                         final SubparametroBO sprmBO = new SubparametroBO();
                         final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
@@ -103,13 +103,13 @@ public final class ParametroPdfTest {
 
                 final Map<String, I18nVO> i18nMap = new HashMap<>();
 
-                if (tpprVO.isI18n()) {
+                if (tpprDetail.getEnti().isI18n()) {
                     i18nMap.putAll(I18nBO.selectMap(I18nPrefix.prvr, prmtVO.getPrvr().getId()));
                 }
 
-                try (final OutputStream stream = new FileOutputStream("/temp/prmt_" + tpprVO.getId() + "_"
-                        + prmtVO.getId() + ".pdf");) {
-                    prmtPdf.imprimir(prmtVO, tpprVO, entiHijasMap, sprmMap, i18nMap, stream);
+                try (final OutputStream stream = new FileOutputStream("/temp/prmt_" + tpprDetail.getEnti().getId()
+                        + "_" + prmtVO.getId() + ".pdf");) {
+                    prmtPdf.imprimir(prmtVO, tpprDetail, entiHijasMap, sprmMap, i18nMap, stream);
                 }
             }
         }

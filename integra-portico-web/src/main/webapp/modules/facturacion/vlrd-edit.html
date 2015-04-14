@@ -1,1 +1,103 @@
-vlrd-edit.html
+<form role="form">
+    <fieldset>
+        <legend translate="vlrd"></legend>
+
+        <div class="row">
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm">
+                <label translate="vlrd_valorBase"></label> <input type="text" ng-model="vm.vlrd.valorBase"
+                    class="form-control number">
+            </div>
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm">
+                <label translate="vlrd_importe"></label> <input type="text" ng-model="vm.vlrd.importe"
+                    class="form-control number">
+            </div>
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrl.rgla.enti.tipo == 'S'">
+                <label ng-bind="'enti_' + vm.vlrl.rgla.enti.id | translate"></label> <input type="text"
+                    autocomplete="off" ng-model="vm.vlrd.ssrv" ng-controller="SsrvLupaController"
+                    typeahead="ssrv as ssrv.numero for ssrv in search(vm.vlrl.rgla.enti.id, vm.vlrd.ssrv.srvc.id, $viewValue, vm.vlrl.fref)"
+                    typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
+            </div>
+            <!--
+            <div class="col-md-2 col-lg-1 form-group-sm" ng-if="vm.vlrl.rgla.id || vm.crgo.id">
+                <label translate="rgla"></label> <input type="text" ng-if="vm.accion == 'create'"
+                    autocomplete="off" ng-model="vm.vlrl.rgla" ng-controller="RglaLupaController"
+                    typeahead="rgla as rgla.codigo for rgla in searchVlrc(vm.vlrl.vlrcId, vm.vlrl.rgla.crgo.id, $viewValue)"
+                    typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
+                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.vlrl.rgla.codigo"></p>
+            </div>
+
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrl.rgla.id">
+                <label translate="rgla_tipo"></label>
+                <p class="form-control-static" ng-bind="vm.vlrl.rgla.tipo"></p>
+            </div>
+
+            <div class="col-md-4 col-lg-3 col-xl-2 form-group-sm" ng-if="vm.vlrl.rgla.id">
+                <label translate="enti"></label>
+                <p class="form-control-static" ng-bind="'enti_' + vm.vlrl.rgla.enti.id | translate"></p>
+            </div>
+ -->
+            <div class="col-md-2 form-group-sm">
+                <label translate="vlrd_fini"></label> <input type="text" class="form-control"
+                    ng-model="vm.vlrd.fini" bs-datepicker />
+            </div>
+            <div class="col-md-2 form-group-sm">
+                <label translate="vlrd_ffin"></label> <input type="text" class="form-control"
+                    ng-model="vm.vlrd.ffin" data-min-date="{{vm.vlrd.fini}}" bs-datepicker />
+            </div>
+        </div>
+
+        <div class="row">
+            <div ng-if="vm.vlrlPadre.rgla.rglv.etiqInfo1" class="col-md-4 form-group-sm">
+                <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqInfo1"></label> <input type="text"
+                    ng-if="vm.vlrl.rgla.tipo == 'T' && !vm.aspc.aspv.lgrpInfo1" ng-model="vm.vlrd.info1"
+                    class="form-control">
+                <p ng-if="vm.vlrl.rgla.tipo != 'T' || vm.aspc.aspv.lgrpInfo1" class="form-control-static"
+                    ng-bind="vm.vlrlPadre.info1"></p>
+            </div>
+            <div ng-if="vm.vlrlPadre.rgla.rglv.etiqInfo2" class="col-md-4 form-group-sm">
+                <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqInfo2"></label> <input type="text"
+                    ng-if="vm.vlrl.rgla.tipo == 'T' && !vm.aspc.aspv.lgrpInfo2" ng-model="vm.vlrd.info2"
+                    class="form-control">
+                <p ng-if="vm.vlrl.rgla.tipo != 'T' || vm.aspc.aspv.lgrpInfo2" class="form-control-static"
+                    ng-bind="vm.vlrlPadre.info2"></p>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant1">
+                <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant1"></label> <input type="text"
+                    class="form-control number" ng-model="vm.vlrd.cuant1">
+            </div>
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant2">
+                <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant2"></label> <input type="text"
+                    class="form-control number" ng-model="vm.vlrd.cuant2">
+            </div>
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant3">
+                <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant3"></label> <input type="text"
+                    class="form-control number" ng-model="vm.vlrd.cuant3">
+            </div>
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant4">
+                <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant4"></label> <input type="text"
+                    class="form-control number" ng-model="vm.vlrd.cuant4">
+            </div>
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant5">
+                <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant5"></label> <input type="text"
+                    class="form-control number" ng-model="vm.vlrd.cuant5">
+            </div>
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant6">
+                <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant6"></label> <input type="text"
+                    class="form-control number" ng-model="vm.vlrd.cuant6">
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="btn-group">
+        <button data-ng-click="vm.save()" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+        </button>
+        <button data-ng-click="vm.cancel()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+        </button>
+    </div>
+</form>

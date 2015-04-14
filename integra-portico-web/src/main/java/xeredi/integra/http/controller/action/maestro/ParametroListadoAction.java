@@ -19,10 +19,10 @@ import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
-import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
@@ -45,7 +45,7 @@ public final class ParametroListadoAction extends PaginableAction implements Mod
     private PaginatedList<ParametroVO> itemList;
 
     /** The enti id. */
-    private TipoParametroVO enti;
+    private TipoParametroDetailVO enti;
 
     /** The prto list. */
     private List<PuertoVO> prtoList;
@@ -116,7 +116,7 @@ public final class ParametroListadoAction extends PaginableAction implements Mod
     private void loadLabelValuesMap() throws ApplicationException {
         Preconditions.checkNotNull(enti);
 
-        if (enti.isPuerto()) {
+        if (enti.getEnti().isPuerto()) {
             final PuertoBO prtoBO = new PuertoBO();
             final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
@@ -182,7 +182,7 @@ public final class ParametroListadoAction extends PaginableAction implements Mod
      *
      * @return the enti
      */
-    public TipoParametroVO getEnti() {
+    public TipoParametroDetailVO getEnti() {
         return enti;
     }
 
@@ -192,7 +192,7 @@ public final class ParametroListadoAction extends PaginableAction implements Mod
      * @param value
      *            the new enti
      */
-    public void setEnti(final TipoParametroVO value) {
+    public void setEnti(final TipoParametroDetailVO value) {
         enti = value;
     }
 

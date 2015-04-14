@@ -16,10 +16,10 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
-import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
@@ -68,11 +68,11 @@ public final class ServicioPdfTest {
 
             LOG.info("Busqueda de Servicios");
 
-            final TipoServicioVO tpsrVO = TipoServicioProxy.select(tpsrId);
-            final Map<Long, TipoSubservicioVO> entiHijasMap = new HashMap<>();
+            final TipoServicioDetailVO tpsrDetail = TipoServicioProxy.select(tpsrId);
+            final Map<Long, TipoSubservicioDetailVO> entiHijasMap = new HashMap<>();
 
-            if (tpsrVO.getEntiHijasList() != null) {
-                for (final Long entiId : tpsrVO.getEntiHijasList()) {
+            if (tpsrDetail.getEntiHijasList() != null) {
+                for (final Long entiId : tpsrDetail.getEntiHijasList()) {
                     entiHijasMap.put(entiId, TipoSubservicioProxy.select(entiId));
                 }
             }
@@ -84,8 +84,8 @@ public final class ServicioPdfTest {
             for (final ServicioVO srvcVO : srvcList) {
                 final Map<Long, List<SubservicioVO>> ssrvMap = new HashMap<>();
 
-                if (tpsrVO.getEntiHijasList() != null) {
-                    for (final Long entiId : tpsrVO.getEntiHijasList()) {
+                if (tpsrDetail.getEntiHijasList() != null) {
+                    for (final Long entiId : tpsrDetail.getEntiHijasList()) {
                         final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(entiId);
                         final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
@@ -101,9 +101,9 @@ public final class ServicioPdfTest {
                     }
                 }
 
-                try (final OutputStream stream = new FileOutputStream("/temp/srvc_" + tpsrVO.getId() + "_"
-                        + srvcVO.getId() + ".pdf");) {
-                    srvcPdf.imprimir(srvcVO, tpsrVO, entiHijasMap, ssrvMap, stream);
+                try (final OutputStream stream = new FileOutputStream("/temp/srvc_" + tpsrDetail.getEnti().getId()
+                        + "_" + srvcVO.getId() + ".pdf");) {
+                    srvcPdf.imprimir(srvcVO, tpsrDetail, entiHijasMap, ssrvMap, stream);
                 }
             }
         }

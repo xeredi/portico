@@ -6,7 +6,7 @@
     </div>
 
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/servicio/srvc/edit/create/{{vm.enti.id}}"><i
+        <a class="btn btn-default" ng-href="#/servicio/srvc/edit/create/{{vm.enti.enti.id}}"><i
             class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a>
 
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
@@ -31,32 +31,32 @@
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
                 <th class="codigo" nowrap="nowrap" translate="srvc"></th>
-                <th ng-if="vm.enti.tpdtEstado" translate="srvc_estado"></th>
+                <th ng-if="vm.enti.enti.tpdtEstado" translate="srvc_estado"></th>
                 <th translate="srvc_falta"></th>
-                <th ng-if="!vm.enti.temporal" translate="srvc_fref"></th>
-                <th ng-if="vm.enti.temporal" translate="srvc_fini"></th>
-                <th ng-if="vm.enti.temporal" translate="srvc_ffin"></th>
-                <th ng-repeat="entd in ::vm.enti.entdList track by $index" ng-if="entd.gridable"
+                <th ng-if="!vm.enti.enti.temporal" translate="srvc_fref"></th>
+                <th ng-if="vm.enti.enti.temporal" translate="srvc_fini"></th>
+                <th ng-if="vm.enti.enti.temporal" translate="srvc_ffin"></th>
+                <th ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.gridable"
                     translate="{{'entd_' + entd.id}}"></th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="item in vm.itemList.list track by $index">
-                <td><a ng-href="#/servicio/srvc/detail/{{vm.enti.id}}/{{item.id}}"><i
+                <td><a ng-href="#/servicio/srvc/detail/{{vm.enti.enti.id}}/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="item.etiqueta" nowrap="nowrap"></td>
-                <td ng-if="::vm.enti.tpdtEstado" nowrap="nowrap" bs-tooltip
-                    data-title="{{'cdrf_' + vm.enti.tpdtEstado.id + '_' + item.estado | translate}}"
+                <td ng-if="vm.enti.enti.tpdtEstado" nowrap="nowrap" bs-tooltip
+                    data-title="{{'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + item.estado | translate}}"
                     ng-bind="item.estado"></td>
                 <td nowrap="nowrap" ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
-                <td nowrap="nowrap" ng-if="!vm.enti.temporal"
+                <td nowrap="nowrap" ng-if="!vm.enti.enti.temporal"
                     ng-bind="item.fref | date: ('format_datetime' | translate)"></td>
-                <td nowrap="nowrap" ng-if="::vm.enti.temporal"
+                <td nowrap="nowrap" ng-if="vm.enti.enti.temporal"
                     ng-bind="item.fini | date: ('format_datetime' | translate)"></td>
-                <td nowrap="nowrap" ng-if="::vm.enti.temporal"
+                <td nowrap="nowrap" ng-if="vm.enti.enti.temporal"
                     ng-bind="item.ffin | date: ('format_datetime' | translate)"></td>
-                <td ng-repeat="entd in ::vm.enti.entdList track by $index" ng-if="::entd.gridable" ng-switch
-                    on="::entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
+                <td ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.gridable" ng-switch
+                    on="entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
                         class="glyphicon glyphicon-{{item.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span>
                     <span ng-switch-when="ND" class="pull-right"
                     ng-bind="item.itdtMap[entd.tpdt.id].cantidadDecimal | number:2"></span> <span

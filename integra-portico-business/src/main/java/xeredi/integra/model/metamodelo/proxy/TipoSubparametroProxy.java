@@ -29,7 +29,7 @@ public final class TipoSubparametroProxy {
     private static final List<LabelValueVO> LABEL_VALUE_LIST = new ArrayList<>();
 
     /** The Constant TIPO_SUBPARAMETRO_MAP. */
-    private static final Map<Long, TipoSubparametroVO> TIPO_SUBPARAMETRO_MAP = new HashMap<>();
+    private static final Map<Long, TipoSubparametroDetailVO> TIPO_SUBPARAMETRO_MAP = new HashMap<>();
 
     static {
         load();
@@ -49,7 +49,7 @@ public final class TipoSubparametroProxy {
      *
      * @return the map
      */
-    public static Map<Long, TipoSubparametroVO> selectMap() {
+    public static Map<Long, TipoSubparametroDetailVO> selectMap() {
         return TIPO_SUBPARAMETRO_MAP;
     }
 
@@ -60,7 +60,7 @@ public final class TipoSubparametroProxy {
      *            the id
      * @return the tipo subparametro vo
      */
-    public static TipoSubparametroVO select(final @Nonnull Long id) {
+    public static TipoSubparametroDetailVO select(final @Nonnull Long id) {
         if (!TIPO_SUBPARAMETRO_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tpsp, id));
         }
@@ -77,14 +77,16 @@ public final class TipoSubparametroProxy {
         final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
         final List<TipoSubparametroVO> tpspList = tpspBO.selectList(new TipoSubparametroCriterioVO());
 
-        for (final TipoSubparametroVO tpspVO : tpspList) {
-            // tpspVO.setTppr(TipoParametroProxy.select(tpspVO.getTppr().getId()));
+        for (final TipoSubparametroVO tpsp : tpspList) {
+            final TipoSubparametroDetailVO tpspDetail = new TipoSubparametroDetailVO();
 
-            if (tpspVO.getTpprAsociado() != null) {
-                tpspVO.setTpprAsociado(TipoParametroProxy.select(tpspVO.getTpprAsociado().getId()));
-            }
+            tpspDetail.setEnti(tpsp);
 
-            TIPO_SUBPARAMETRO_MAP.put(tpspVO.getId(), tpspVO);
+            // if (tpspVO.getTpprAsociado() != null) {
+            // tpspVO.setTpprAsociado(TipoParametroProxy.select(tpspVO.getTpprAsociado().getId()));
+            // }
+
+            TIPO_SUBPARAMETRO_MAP.put(tpspDetail.getEnti().getId(), tpspDetail);
         }
 
         EntidadProxy.loadDependencies(TIPO_SUBPARAMETRO_MAP);

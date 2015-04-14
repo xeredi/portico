@@ -32,6 +32,10 @@
 			<result column="vlrd_ssrv_pk" property="id" />
 			<result column="ssrv_numero" property="numero" />
 			<result column="ssrv_tpss_pk" property="entiId" />
+
+			<association property="srvc" javaType="ServicioVO">
+				<result column="ssrv_srvc_pk" property="id" />
+			</association>
 		</association>
 	</resultMap>
 
@@ -42,7 +46,7 @@
 		    , vlrd_cuant1, vlrd_cuant2, vlrd_cuant3, vlrd_cuant4, vlrd_cuant5, vlrd_cuant6
 		    , vlrd_info1, vlrd_info2, vlrd_info3, vlrd_info4, vlrd_info5, vlrd_info6
 
-		    , ssrv_numero, ssrv_tpss_pk
+		    , ssrv_numero, ssrv_tpss_pk, ssrv_srvc_pk
 		FROM
 		    tbl_valoracion_det_vlrd
 		    LEFT JOIN tbl_subservicio_ssrv ON

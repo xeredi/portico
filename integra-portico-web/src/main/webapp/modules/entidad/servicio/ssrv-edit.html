@@ -2,12 +2,10 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                <label translate>srvc</label>
-                <div ng-if="!vm.item.srvc.id" class="input-group-sm" ng-controller="SrvcLupaController">
-                    <input type="text" autocomplete="off" ng-model="vm.item.srvc"
-                        typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(vm.enti.tpsrId, $viewValue)"
-                        typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
-                </div>
+                <label translate>srvc</label> <input ng-if="!vm.item.srvc.id" type="text" autocomplete="off"
+                    ng-model="vm.item.srvc" ng-controller="SrvcLupaController"
+                    typeahead="srvc as srvc.etiqueta for srvc in search(vm.enti.enti.tpsrId, $viewValue)"
+                    typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                 <p ng-if="vm.item.srvc.id" class="form-control-static" ng-bind="vm.item.srvc.etiqueta"></p>
             </div>
             <div class="col-sm-1 col-md-1 form-group-sm">
@@ -16,28 +14,28 @@
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.numero"></p>
             </div>
 
-            <div ng-if="vm.enti.tpdtEstado" class="col-sm-3 col-md-2 form-group-sm">
+            <div ng-if="vm.enti.enti.tpdtEstado" class="col-sm-3 col-md-2 form-group-sm">
                 <label translate>ssrv_estado</label> <select ng-if="vm.accion != 'edit'"
                     ng-model="vm.item.estado"
-                    ng-options="cdrf.valor as cdrf.valor for cdrf in vm.enti.tpdtEstado.cdrfList"
+                    ng-options="cdrf.valor as (('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.enti.enti.tpdtEstado.cdrfList"
                     class="form-control">
                     <option />
                 </select>
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.estado"></p>
             </div>
 
-            <div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
+            <div ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                 <label translate>ssrv_fini</label><input type="text" class="form-control"
                     ng-model="vm.item.fini" data-max-date="{{vm.item.ffin}}" bs-datepicker />
             </div>
 
-            <div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
+            <div ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                 <label translate>ssrv_ffin</label><input type="text" class="form-control"
                     ng-model="vm.item.ffin" data-min-date="{{vm.item.fini}}" bs-datepicker />
             </div>
 
-            <div ng-repeat="entiId in vm.enti.entiPadresList track by $index" ng-if="entiId != vm.enti.tpsrId"
-                class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+            <div ng-repeat="entiId in vm.enti.entiPadresList track by $index"
+                ng-if="entiId != vm.enti.enti.tpsrId" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                 <label>{{'enti_' + entiId | translate}}</label>
                 <p class="form-control-static">
                     <a ng-href="#/servicio/ssrv/detail/{{entiId}}/{{vm.itemPadresMap[entiId].value}}">{{vm.itemPadresMap[entiId].label}}</a>
@@ -50,7 +48,7 @@
                 <label ng-bind="entiPadre.nombre"></label>
                 <div class="input-group-sm" ng-controller="SsrvLupaController">
                     <input type="text" autocomplete="off" ng-model="vm.itemPadresMap[entiPadre.id]"
-                        typeahead="ssrv as ssrv.etiqueta for ssrv in getLabelValues(entiPadre.id, vm.item.srvc.id, $viewValue)"
+                        typeahead="ssrv as ssrv.etiqueta for ssrv in search(entiPadre.id, vm.item.srvc.id, $viewValue)"
                         typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                 </div>
             </div>

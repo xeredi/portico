@@ -36,7 +36,7 @@ public final class ReglaLupaAction extends LupaAction implements ModelDriven<Reg
 
         final ReglaBO rglaBO = new ReglaBO();
 
-        rglaList = rglaBO.selectLupaList(model, getLimit());
+        rglaList = rglaBO.selectList(model, getLimit());
 
         return SUCCESS;
     }

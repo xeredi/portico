@@ -1,7 +1,6 @@
 package xeredi.integra.model.facturacion.bo;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.ExecutorType;
@@ -15,7 +14,6 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.dao.ReglaDAO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -73,28 +71,6 @@ public class ReglaBO {
     }
 
     /**
-     * Select label value list.
-     *
-     * @param rglaCriterioVO
-     *            the rgla criterio vo
-     * @return the list
-     */
-    public List<LabelValueVO> selectLabelValueList(final ReglaCriterioVO rglaCriterioVO) {
-        Preconditions.checkNotNull(rglaCriterioVO);
-
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
-            final List<LabelValueVO> list = new ArrayList<>();
-
-            for (final ReglaVO reglaVO : rglaDAO.selectList(rglaCriterioVO)) {
-                list.add(new LabelValueVO(reglaVO.getCodigo(), reglaVO.getId()));
-            }
-
-            return list;
-        }
-    }
-
-    /**
      * Select lupa list.
      *
      * @param rglaCriterio
@@ -103,7 +79,7 @@ public class ReglaBO {
      *            the limit
      * @return the list
      */
-    public List<ReglaVO> selectLupaList(final ReglaCriterioVO rglaCriterio, final int limit) {
+    public List<ReglaVO> selectList(final ReglaCriterioVO rglaCriterio, final int limit) {
         Preconditions.checkNotNull(rglaCriterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -207,29 +183,19 @@ public class ReglaBO {
     /**
      * Select.
      *
-     * @param id
-     *            the id
-     * @param fechaVigencia
-     *            the fecha vigencia
+     * @param rglaCriterio
+     *            the rgla criterio
      * @return the regla vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ReglaVO select(final Long id, final Date fechaVigencia) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(id);
-        Preconditions.checkNotNull(fechaVigencia);
-
+    public ReglaVO selectObject(final ReglaCriterioVO rglaCriterio) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
-            final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
-
-            rglaCriterioVO.setId(id);
-            rglaCriterioVO.setFechaVigencia(fechaVigencia);
-
-            final ReglaVO rgla = rglaDAO.selectObject(rglaCriterioVO);
+            final ReglaVO rgla = rglaDAO.selectObject(rglaCriterio);
 
             if (rgla == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.rgla, rglaCriterioVO);
+                throw new InstanceNotFoundException(MessageI18nKey.rgla, rglaCriterio);
             }
 
             return rgla;

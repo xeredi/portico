@@ -9,10 +9,10 @@ import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.escala.AtraqueBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -33,7 +33,7 @@ public final class AtraqueAction extends ItemAction implements ModelDriven<Subse
     private SubservicioVO model;
 
     /** The enti. */
-    private TipoSubservicioVO enti;
+    private TipoSubservicioDetailVO enti;
 
     // Acciones Web
 
@@ -93,9 +93,9 @@ public final class AtraqueAction extends ItemAction implements ModelDriven<Subse
         Preconditions.checkNotNull(model.getId());
         Preconditions.checkNotNull(model.getItdtMap());
 
-        final TipoSubservicioVO tpssVO = TipoSubservicioProxy.select(Entidad.ATRAQUE.getId());
+        enti = TipoSubservicioProxy.select(Entidad.ATRAQUE.getId());
 
-        model.setEntiId(tpssVO.getId());
+        model.setEntiId(enti.getEnti().getId());
 
         if (model.getItdtMap().get(TipoDato.FECHA_01.getId()).getFecha().getTime() < model.getItdtMap()
                 .get(TipoDato.FECHA_02.getId()).getFecha().getTime()) {
@@ -152,9 +152,9 @@ public final class AtraqueAction extends ItemAction implements ModelDriven<Subse
         Preconditions.checkNotNull(model.getId());
         Preconditions.checkNotNull(model.getItdtMap());
 
-        final TipoSubservicioVO tpssVO = TipoSubservicioProxy.select(Entidad.ATRAQUE.getId());
+        enti = TipoSubservicioProxy.select(Entidad.ATRAQUE.getId());
 
-        model.setEntiId(tpssVO.getId());
+        model.setEntiId(enti.getEnti().getId());
 
         if (model.getItdtMap().get(TipoDato.FECHA_01.getId()).getFecha().getTime() < model.getItdtMap()
                 .get(TipoDato.FECHA_02.getId()).getFecha().getTime()) {
@@ -211,9 +211,9 @@ public final class AtraqueAction extends ItemAction implements ModelDriven<Subse
         Preconditions.checkNotNull(model.getId());
         Preconditions.checkNotNull(model.getItdtMap());
 
-        final TipoSubservicioVO tpssVO = TipoSubservicioProxy.select(Entidad.ATRAQUE.getId());
+        enti = TipoSubservicioProxy.select(Entidad.ATRAQUE.getId());
 
-        model.setEntiId(tpssVO.getId());
+        model.setEntiId(enti.getEnti().getId());
 
         if (model.getItdtMap().get(TipoDato.FECHA_01.getId()).getFecha().getTime() < model.getItdtMap()
                 .get(TipoDato.FECHA_02.getId()).getFecha().getTime()) {
@@ -281,9 +281,9 @@ public final class AtraqueAction extends ItemAction implements ModelDriven<Subse
         Preconditions.checkNotNull(model.getId());
         Preconditions.checkNotNull(model.getItdtMap());
 
-        final TipoSubservicioVO tpssVO = TipoSubservicioProxy.select(Entidad.ATRAQUE.getId());
+        enti = TipoSubservicioProxy.select(Entidad.ATRAQUE.getId());
 
-        model.setEntiId(tpssVO.getId());
+        model.setEntiId(enti.getEnti().getId());
 
         final AtraqueBO atraBO = new AtraqueBO();
 
@@ -335,9 +335,9 @@ public final class AtraqueAction extends ItemAction implements ModelDriven<Subse
         Preconditions.checkNotNull(model.getId());
         Preconditions.checkNotNull(model.getItdtMap());
 
-        final TipoSubservicioVO tpssVO = TipoSubservicioProxy.select(Entidad.ATRAQUE.getId());
+        enti = TipoSubservicioProxy.select(Entidad.ATRAQUE.getId());
 
-        model.setEntiId(tpssVO.getId());
+        model.setEntiId(enti.getEnti().getId());
 
         final AtraqueBO atraBO = new AtraqueBO();
 
@@ -436,7 +436,7 @@ public final class AtraqueAction extends ItemAction implements ModelDriven<Subse
      *
      * @return the enti
      */
-    public TipoSubservicioVO getEnti() {
+    public TipoSubservicioDetailVO getEnti() {
         return enti;
     }
 

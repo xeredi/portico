@@ -52,7 +52,7 @@
     </header>
 
     <div id="body-content">
-        <div ng-show="actionErrors">
+        <div ng-cloak ng-if="actionErrors">
             <ul class="alert alert-danger" role="alert">
                 <span translate="errorList"></span>
                 <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>

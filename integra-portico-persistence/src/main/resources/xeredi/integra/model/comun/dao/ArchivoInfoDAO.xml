@@ -51,16 +51,14 @@
 		</where>
 	</sql>
 
-	<select id="selectList" parameterType="ArchivoCriterioVO"
-		resultMap="ResultMap">
+	<select id="selectList" parameterType="ArchivoCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 		ORDER BY arch_falta
 	</select>
 
-	<select id="selectObject" parameterType="ArchivoCriterioVO"
-		resultMap="ResultMap">
+	<select id="select" parameterType="Long" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
+		WHERE arch_pk = #{value}
 	</select>
 </mapper>

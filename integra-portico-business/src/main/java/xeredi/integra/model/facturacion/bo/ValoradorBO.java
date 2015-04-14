@@ -45,8 +45,10 @@ import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaAgregadaVO;
 import xeredi.integra.model.facturacion.vo.ValoracionTemporalVO;
 import xeredi.integra.model.facturacion.vo.ValoradorContextoVO;
+import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
+import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -136,7 +138,7 @@ public class ValoradorBO {
             vldrContexto.setFliquidacion(fechaLiquidacion);
             vldrContexto.setPrbt(proceso.getPrbt());
             vldrContexto.setSrvc(srvc);
-            vldrContexto.setTpsr(TipoServicioProxy.select(vldrContexto.getSrvc().getEntiId()));
+            vldrContexto.setTpsr(TipoServicioProxy.select(vldrContexto.getSrvc().getEntiId()).getEnti());
 
             for (final Long crgoId : crgoIds) {
                 // Obtencion de los cargos, y los cargos dependientes
@@ -533,25 +535,26 @@ public class ValoradorBO {
      *            the rgla
      */
     private void generateSql(final ReglaVO rgla) {
-        rgla.getRglv().setPathImpuestoSql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathImpuesto(), false));
-        rgla.getRglv().setPathPagadorSql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathPagador(), false));
-        rgla.getRglv().setPathEsSujPasivoSql(
-                generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathEsSujPasivo(), false));
-        rgla.getRglv().setPathCodExenSql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCodExen(), false));
+        final AbstractEntidadDetailVO entiDetail = EntidadProxy.select(rgla.getEnti().getId());
 
-        rgla.getRglv().setPathInfo1Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathInfo1(), true));
-        rgla.getRglv().setPathInfo2Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathInfo2(), true));
-        rgla.getRglv().setPathInfo3Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathInfo3(), true));
-        rgla.getRglv().setPathInfo4Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathInfo4(), true));
-        rgla.getRglv().setPathInfo5Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathInfo5(), true));
-        rgla.getRglv().setPathInfo6Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathInfo6(), true));
+        rgla.getRglv().setPathImpuestoSql(generateSqlPath(entiDetail, rgla.getRglv().getPathImpuesto(), false));
+        rgla.getRglv().setPathPagadorSql(generateSqlPath(entiDetail, rgla.getRglv().getPathPagador(), false));
+        rgla.getRglv().setPathEsSujPasivoSql(generateSqlPath(entiDetail, rgla.getRglv().getPathEsSujPasivo(), false));
+        rgla.getRglv().setPathCodExenSql(generateSqlPath(entiDetail, rgla.getRglv().getPathCodExen(), false));
 
-        rgla.getRglv().setPathCuant1Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant1(), false));
-        rgla.getRglv().setPathCuant2Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant2(), false));
-        rgla.getRglv().setPathCuant3Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant3(), false));
-        rgla.getRglv().setPathCuant4Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant4(), false));
-        rgla.getRglv().setPathCuant5Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant5(), false));
-        rgla.getRglv().setPathCuant6Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant6(), false));
+        rgla.getRglv().setPathInfo1Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathInfo1(), true));
+        rgla.getRglv().setPathInfo2Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathInfo2(), true));
+        rgla.getRglv().setPathInfo3Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathInfo3(), true));
+        rgla.getRglv().setPathInfo4Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathInfo4(), true));
+        rgla.getRglv().setPathInfo5Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathInfo5(), true));
+        rgla.getRglv().setPathInfo6Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathInfo6(), true));
+
+        rgla.getRglv().setPathCuant1Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathCuant1(), false));
+        rgla.getRglv().setPathCuant2Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathCuant2(), false));
+        rgla.getRglv().setPathCuant3Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathCuant3(), false));
+        rgla.getRglv().setPathCuant4Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathCuant4(), false));
+        rgla.getRglv().setPathCuant5Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathCuant5(), false));
+        rgla.getRglv().setPathCuant6Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathCuant6(), false));
 
         rgla.getRglv().setCondicionSql(generateSqlCondition(rgla, rgla.getRglv().getCondicion()));
         rgla.getRglv().setFormulaSql(generateSqlFormula(rgla, rgla.getRglv().getFormula()));
@@ -564,12 +567,14 @@ public class ValoradorBO {
      *            the aspc
      */
     private void generateSql(final AspectoVO aspc) {
-        aspc.getAspv().setCpathInfo1Sql(generateSqlPath(aspc.getTpsr(), aspc.getAspv().getCpathInfo1(), true));
-        aspc.getAspv().setCpathInfo2Sql(generateSqlPath(aspc.getTpsr(), aspc.getAspv().getCpathInfo2(), true));
-        aspc.getAspv().setCpathInfo3Sql(generateSqlPath(aspc.getTpsr(), aspc.getAspv().getCpathInfo3(), true));
-        aspc.getAspv().setCpathInfo4Sql(generateSqlPath(aspc.getTpsr(), aspc.getAspv().getCpathInfo4(), true));
-        aspc.getAspv().setCpathInfo5Sql(generateSqlPath(aspc.getTpsr(), aspc.getAspv().getCpathInfo5(), true));
-        aspc.getAspv().setCpathInfo6Sql(generateSqlPath(aspc.getTpsr(), aspc.getAspv().getCpathInfo6(), true));
+        final TipoServicioDetailVO tpsrDetail = TipoServicioProxy.select(aspc.getTpsr().getId());
+
+        aspc.getAspv().setCpathInfo1Sql(generateSqlPath(tpsrDetail, aspc.getAspv().getCpathInfo1(), true));
+        aspc.getAspv().setCpathInfo2Sql(generateSqlPath(tpsrDetail, aspc.getAspv().getCpathInfo2(), true));
+        aspc.getAspv().setCpathInfo3Sql(generateSqlPath(tpsrDetail, aspc.getAspv().getCpathInfo3(), true));
+        aspc.getAspv().setCpathInfo4Sql(generateSqlPath(tpsrDetail, aspc.getAspv().getCpathInfo4(), true));
+        aspc.getAspv().setCpathInfo5Sql(generateSqlPath(tpsrDetail, aspc.getAspv().getCpathInfo5(), true));
+        aspc.getAspv().setCpathInfo6Sql(generateSqlPath(tpsrDetail, aspc.getAspv().getCpathInfo6(), true));
     }
 
     /**
@@ -583,12 +588,13 @@ public class ValoradorBO {
      *            the generate label
      * @return the string
      */
-    private String generateSqlPath(final EntidadVO enti, final String expression, final boolean generateLabel) {
+    private String generateSqlPath(final AbstractEntidadDetailVO entidadDetail, final String expression,
+            final boolean generateLabel) {
         if (expression == null || expression.isEmpty()) {
             return null;
         }
 
-        final PathSqlGenerator pathSqlGenerator = new PathSqlGenerator(enti, generateLabel);
+        final PathSqlGenerator pathSqlGenerator = new PathSqlGenerator(entidadDetail, generateLabel);
 
         final ANTLRInputStream input = new ANTLRInputStream(expression);
         final PathLexer lexer = new PathLexer(input);

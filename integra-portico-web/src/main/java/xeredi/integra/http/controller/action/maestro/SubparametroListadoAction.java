@@ -9,8 +9,8 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
-import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
@@ -32,7 +32,7 @@ public final class SubparametroListadoAction extends PaginableAction implements 
     private PaginatedList<SubparametroVO> itemList;
 
     /** The enti. */
-    private TipoSubparametroVO enti;
+    private TipoSubparametroDetailVO enti;
 
     /**
      * Listado.
@@ -97,7 +97,7 @@ public final class SubparametroListadoAction extends PaginableAction implements 
      *
      * @return the enti
      */
-    public TipoSubparametroVO getEnti() {
+    public TipoSubparametroDetailVO getEnti() {
         return enti;
     }
 

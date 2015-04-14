@@ -17,14 +17,24 @@
             <div class="col-md-2 col-lg-1 form-group-sm" ng-if="vm.tpsrId">
                 <label translate="srvc"></label> <input type="text" ng-if="vm.accion == 'create'"
                     autocomplete="off" ng-model="vm.vlrc.srvc" ng-controller="SrvcLupaController"
-                    typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(vm.tpsrId, $viewValue)"
+                    typeahead="srvc as srvc.etiqueta for srvc in search(vm.tpsrId, $viewValue)"
                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.vlrc.srvc.etiqueta"></p>
+            </div>
+            <div class="col-md-2 col-lg-1 form-group-sm">
+                <label translate="vlrc_fliq"></label> <input type="text" class="form-control"
+                    ng-model="vm.vlrc.fliq" bs-datepicker />
+            </div>
+            <div class="col-md-2 col-lg-1 form-group-sm">
+                <label translate="vlrc_fref"></label> <input ng-if="vm.accion == 'create'" type="text"
+                    class="form-control" ng-model="vm.vlrc.fref" bs-datepicker />
+                <p ng-if="vm.accion == 'edit'" class="form-control-static"
+                    ng-bind="vm.vlrc.fref | date: ('format_date' | translate)"></p>
             </div>
             <div class="col-sm-3 col-md-2 form-group-sm" ng-if="vm.tpsrId">
                 <label translate="aspc"></label> <input type="text" autocomplete="off" ng-model="vm.vlrc.aspc"
                     ng-controller="AspcLupaController" ng-if="vm.accion == 'create'"
-                    typeahead="item as item.etiqueta for item in getLabelValues(vm.tpsrId, $viewValue)"
+                    typeahead="item as item.etiqueta for item in search(vm.tpsrId, $viewValue)"
                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control input">
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.vlrc.aspc.etiqueta"></p>
             </div>
@@ -54,12 +64,10 @@
 
         <div class="row">
             <div class="col-sm-4 col-md-3 col-xl-2 form-group-sm">
-                <label translate="vlrc_pagador"></label>
-                <div class="input-group-sm" ng-controller="PrmtsLupaController">
-                    <input type="text" autocomplete="off" ng-model="vm.vlrc.pagador"
-                        typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.pagadorEntiId, $viewValue)"
-                        typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
-                </div>
+                <label translate="vlrc_pagador"></label> <input type="text" autocomplete="off"
+                    ng-model="vm.vlrc.pagador" ng-controller="PrmtsLupaController"
+                    typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.pagadorEntiId, $viewValue)"
+                    typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
             </div>
             <div class="col-md-2 col-lg-1 form-group-sm">
                 <label translate="vlrc_sujPasivo"></label> <select ng-model="vm.vlrc.sujPasivo"
@@ -71,18 +79,6 @@
             <div class="col-md-2 col-xl-1 form-group-sm">
                 <label translate="vlrc_falta"></label>
                 <p class="form-control-static" ng-bind="vm.vlrc.falta | date: ('format_datetime' | translate)"></p>
-            </div>
-            <div class="col-md-2 col-lg-1 form-group-sm">
-                <label translate="vlrc_fliq"></label> <input ng-if="vm.accion == 'create'" type="text"
-                    class="form-control" ng-model="vm.vlrc.fliq" bs-datepicker />
-                <p ng-if="vm.accion == 'edit'" class="form-control-static"
-                    ng-bind="vm.vlrc.fliq | date: ('format_date' | translate)"></p>
-            </div>
-            <div class="col-md-2 col-lg-1 form-group-sm">
-                <label translate="vlrc_fref"></label> <input ng-if="vm.accion == 'create'" type="text"
-                    class="form-control" ng-model="vm.vlrc.fref" bs-datepicker />
-                <p ng-if="vm.accion == 'edit'" class="form-control-static"
-                    ng-bind="vm.vlrc.fref | date: ('format_date' | translate)"></p>
             </div>
             <div class="col-md-2 col-xl-1 form-group-sm">
                 <label translate="vlrc_fini"></label> <input ng-if="vm.accion == 'create'" type="text"

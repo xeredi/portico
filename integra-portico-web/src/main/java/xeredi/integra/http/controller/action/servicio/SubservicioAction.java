@@ -15,10 +15,10 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
@@ -43,7 +43,7 @@ public final class SubservicioAction extends ItemAction implements ModelDriven<S
     private SubservicioVO model;
 
     /** The enti. */
-    private TipoSubservicioVO enti;
+    private TipoSubservicioDetailVO enti;
 
     /** The item padres map. */
     private Map<Long, LabelValueVO> itemPadresMap;
@@ -74,7 +74,7 @@ public final class SubservicioAction extends ItemAction implements ModelDriven<S
             itemPadresMap = new HashMap<Long, LabelValueVO>();
 
             for (final Long entiId : enti.getEntiPadresList()) {
-                if (!enti.getTpsrId().equals(entiId)) {
+                if (!enti.getEnti().getTpsrId().equals(entiId)) {
                     final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
                     ssrvCriterioVO.setHijoId(model.getId());
@@ -107,7 +107,7 @@ public final class SubservicioAction extends ItemAction implements ModelDriven<S
 
         if (getAccion() == ACCION_EDICION.create) {
             if (model.getSrvc() != null && model.getSrvc().getId() != null) {
-                final ServicioBO srvcBO = ServicioBOFactory.newInstance(enti.getTpsrId());
+                final ServicioBO srvcBO = ServicioBOFactory.newInstance(enti.getEnti().getTpsrId());
 
                 model.setSrvc(srvcBO.select(model.getSrvc().getId(), getIdioma()));
                 model.setFref(model.getSrvc().getFref());
@@ -128,7 +128,7 @@ public final class SubservicioAction extends ItemAction implements ModelDriven<S
                     itemPadresMap = new HashMap<Long, LabelValueVO>();
 
                     for (final Long entiId : enti.getEntiPadresList()) {
-                        if (!enti.getTpsrId().equals(entiId)) {
+                        if (!enti.getEnti().getTpsrId().equals(entiId)) {
                             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
                             ssrvCriterioVO.setHijoId(model.getId());
@@ -172,11 +172,11 @@ public final class SubservicioAction extends ItemAction implements ModelDriven<S
             Preconditions.checkNotNull(model.getNumero());
         }
 
-        if (enti.getTpdtEstado() != null) {
+        if (enti.getEnti().getTpdtEstado() != null) {
             FieldValidator.validateRequired(this, MessageI18nKey.ssrv_estado, model.getEstado());
         }
 
-        if (enti.isTemporal()) {
+        if (enti.getEnti().isTemporal()) {
             FieldValidator.validateRequired(this, MessageI18nKey.ssrv_fini, model.getFini());
             FieldValidator.validateRequired(this, MessageI18nKey.ssrv_ffin, model.getFfin());
         }
@@ -291,7 +291,7 @@ public final class SubservicioAction extends ItemAction implements ModelDriven<S
      *
      * @return the enti
      */
-    public TipoSubservicioVO getEnti() {
+    public TipoSubservicioDetailVO getEnti() {
         return enti;
     }
 

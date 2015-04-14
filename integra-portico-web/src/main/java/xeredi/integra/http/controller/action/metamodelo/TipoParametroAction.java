@@ -12,9 +12,21 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.bo.EntidadAccionBO;
+import xeredi.integra.model.metamodelo.bo.EntidadAccionGridBO;
+import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
+import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.bo.TipoParametroBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametroBO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionGridCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionGridVO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
+import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
@@ -36,6 +48,18 @@ public final class TipoParametroAction extends ItemAction implements ModelDriven
 
     /** The tppr. */
     private TipoParametroVO model;
+
+    /** The entd list. */
+    private List<EntidadTipoDatoVO> entdList;
+
+    /** The engd list. */
+    private List<EntidadGrupoDatoVO> engdList;
+
+    /** The enac list. */
+    private List<EntidadAccionVO> enacList;
+
+    /** The enag list. */
+    private List<EntidadAccionGridVO> enagList;
 
     /** The tpsp list. */
     private List<TipoSubparametroVO> subentiList;
@@ -167,17 +191,49 @@ public final class TipoParametroAction extends ItemAction implements ModelDriven
         Preconditions.checkNotNull(model.getId());
 
         final TipoParametroBO tpprBO = new TipoParametroBO();
-        final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
         model = tpprBO.select(model.getId(), getIdioma());
         i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
 
+        final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
         final TipoSubparametroCriterioVO entiCriterioVO = new TipoSubparametroCriterioVO();
 
         entiCriterioVO.setTpprId(model.getId());
         entiCriterioVO.setIdioma(getIdioma());
 
         subentiList = tpspBO.selectList(entiCriterioVO);
+
+        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
+        final EntidadTipoDatoCriterioVO entdCriterio = new EntidadTipoDatoCriterioVO();
+
+        entdCriterio.setEntiId(model.getId());
+        entdCriterio.setIdioma(getIdioma());
+
+        entdList = entdBO.selectList(entdCriterio);
+
+        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+        final EntidadGrupoDatoCriterioVO engdCriterio = new EntidadGrupoDatoCriterioVO();
+
+        engdCriterio.setEntiId(model.getId());
+        engdCriterio.setIdioma(getIdioma());
+
+        engdList = engdBO.selectList(engdCriterio);
+
+        final EntidadAccionBO enacBO = new EntidadAccionBO();
+        final EntidadAccionCriterioVO enacCriterio = new EntidadAccionCriterioVO();
+
+        enacCriterio.setEntiId(model.getId());
+        enacCriterio.setIdioma(getIdioma());
+
+        enacList = enacBO.selectList(enacCriterio);
+
+        final EntidadAccionGridBO enagBO = new EntidadAccionGridBO();
+        final EntidadAccionGridCriterioVO enagCriterio = new EntidadAccionGridCriterioVO();
+
+        enagCriterio.setEntiId(model.getId());
+        enagCriterio.setIdioma(getIdioma());
+
+        enagList = enagBO.selectList(enagCriterio);
 
         return SUCCESS;
     }
@@ -236,6 +292,42 @@ public final class TipoParametroAction extends ItemAction implements ModelDriven
      */
     public List<LabelValueVO> getTpdtNombreList() {
         return tpdtNombreList;
+    }
+
+    /**
+     * Gets the entd list.
+     *
+     * @return the entd list
+     */
+    public List<EntidadTipoDatoVO> getEntdList() {
+        return entdList;
+    }
+
+    /**
+     * Gets the engd list.
+     *
+     * @return the engd list
+     */
+    public List<EntidadGrupoDatoVO> getEngdList() {
+        return engdList;
+    }
+
+    /**
+     * Gets the enac list.
+     *
+     * @return the enac list
+     */
+    public List<EntidadAccionVO> getEnacList() {
+        return enacList;
+    }
+
+    /**
+     * Gets the enag list.
+     *
+     * @return the enag list
+     */
+    public List<EntidadAccionGridVO> getEnagList() {
+        return enagList;
     }
 
 }

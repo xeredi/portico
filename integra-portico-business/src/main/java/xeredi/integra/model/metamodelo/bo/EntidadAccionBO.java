@@ -1,5 +1,6 @@
 package xeredi.integra.model.metamodelo.bo;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -134,6 +135,21 @@ public final class EntidadAccionBO {
             }
 
             return enacVO;
+        }
+    }
+
+    /**
+     * Select list.
+     *
+     * @param enacCriterio
+     *            the enac criterio
+     * @return the list
+     */
+    public List<EntidadAccionVO> selectList(final @Nonnull EntidadAccionCriterioVO enacCriterio) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final EntidadAccionDAO enacDAO = session.getMapper(EntidadAccionDAO.class);
+
+            return enacDAO.selectList(enacCriterio);
         }
     }
 }

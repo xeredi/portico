@@ -16,8 +16,8 @@ import xeredi.integra.model.comun.report.BaseXls;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
+import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 
 import com.google.common.base.Preconditions;
 
@@ -54,14 +54,14 @@ public final class EstadisticaXls extends BaseXls {
      * @throws InternalErrorException
      *             the internal error exception
      */
-    public void generarEstadisticas(final List<EstadisticaVO> estdList, final TipoEstadisticaVO tpesVO,
+    public void generarEstadisticas(final List<EstadisticaVO> estdList, final TipoEstadisticaDetailVO tpesDetail,
             final OutputStream stream) throws InternalErrorException {
         Preconditions.checkNotNull(estdList);
-        Preconditions.checkNotNull(tpesVO);
+        Preconditions.checkNotNull(tpesDetail);
         Preconditions.checkNotNull(stream);
 
         try (final HSSFWorkbook workbook = new HSSFWorkbook()) {
-            final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpesVO.getId()));
+            final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpesDetail.getEnti().getId()));
 
             // Cabecera XLS
             int rownum = 0;
@@ -73,7 +73,7 @@ public final class EstadisticaXls extends BaseXls {
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.estd_pepr.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prto.name()));
 
-            for (final EntidadTipoDatoVO entd : tpesVO.getEntdList()) {
+            for (final EntidadTipoDatoVO entd : tpesDetail.getEntdList()) {
                 setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
             }
 
@@ -83,11 +83,11 @@ public final class EstadisticaXls extends BaseXls {
 
                 int j = 0;
 
-                setCellValue(row, j++, bundle.getString("enti_" + tpesVO.getId()));
+                setCellValue(row, j++, bundle.getString("enti_" + tpesDetail.getEnti().getId()));
                 setCellValue(row, j++, estdVO.getPepr().getEtiqueta());
                 setCellValue(row, j++, estdVO.getPrto().getEtiqueta());
 
-                for (final EntidadTipoDatoVO entd : tpesVO.getEntdList()) {
+                for (final EntidadTipoDatoVO entd : tpesDetail.getEntdList()) {
                     final ItemDatoVO itdtVO = estdVO.getItdtMap().get(entd.getTpdt().getId());
 
                     setCellValue(row, j, entd, itdtVO);

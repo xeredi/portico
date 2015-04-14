@@ -19,8 +19,8 @@ import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.SubservicioSubservicioDAO;
@@ -140,15 +140,15 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final void insert(final @Nonnull SubservicioVO ssrvVO, final @Nonnull TipoSubservicioVO tpssVO,
+    public final void insert(final @Nonnull SubservicioVO ssrvVO, final @Nonnull TipoSubservicioDetailVO tpssDetail,
             final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
             final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
 
-            if (tpssVO.getEntdList() != null && !tpssVO.getEntdList().isEmpty()) {
-                for (final EntidadTipoDatoVO entd : tpssVO.getEntdList()) {
+            if (tpssDetail.getEntdList() != null && !tpssDetail.getEntdList().isEmpty()) {
+                for (final EntidadTipoDatoVO entd : tpssDetail.getEntdList()) {
                     final Long tpdtId = entd.getTpdt().getId();
 
                     if (!ssrvVO.getItdtMap().containsKey(tpdtId) && !ssrvVO.getItdtMap().containsKey(tpdtId.toString())) {
@@ -183,7 +183,7 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
                 ssssDAO.insert(ssssVO);
             }
 
-            insertPostOperations(session, ssrvVO, tpssVO, ssrvPadreIds);
+            insertPostOperations(session, ssrvVO, tpssDetail, ssrvPadreIds);
 
             session.commit();
         }
@@ -204,8 +204,8 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      *             the duplicate instance exception
      */
     protected abstract void insertPostOperations(final @Nonnull SqlSession session,
-            final @Nonnull SubservicioVO ssrvVO, final @Nonnull TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds)
-                    throws DuplicateInstanceException;
+            final @Nonnull SubservicioVO ssrvVO, final @Nonnull TipoSubservicioDetailVO tpssDetail,
+            final Set<Long> ssrvPadreIds) throws DuplicateInstanceException;
 
     /**
      * {@inheritDoc}

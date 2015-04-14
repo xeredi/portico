@@ -8,8 +8,8 @@ import javax.annotation.Nonnull;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -40,16 +40,16 @@ public final class ServicioBOFactory {
     private static void load() {
         LOG.info("Inicio de la Factoria de ServicioBO");
 
-        for (final TipoServicioVO enti : TipoServicioProxy.selectMap().values()) {
-            if (enti.getClasspath() != null) {
+        for (final TipoServicioDetailVO entiDetail : TipoServicioProxy.selectMap().values()) {
+            if (entiDetail.getEnti().getClasspath() != null) {
                 try {
-                    final String classname = "xeredi.integra.model.servicio.bo." + enti.getClasspath();
+                    final String classname = "xeredi.integra.model.servicio.bo." + entiDetail.getEnti().getClasspath();
 
                     if (LOG.isDebugEnabled()) {
                         LOG.debug("Carga de la clase " + classname);
                     }
 
-                    MAP.put(enti.getId(), Class.forName(classname));
+                    MAP.put(entiDetail.getEnti().getId(), Class.forName(classname));
                 } catch (final ClassNotFoundException ex) {
                     LOG.fatal(ex, ex);
                 }

@@ -4,6 +4,8 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
+import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
+import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.util.pagination.PaginatedList;
 
@@ -37,11 +39,15 @@ public final class ValoracionLineaListadoAction extends PaginableAction {
 
         final ValoracionBO vlrcBO = new ValoracionBO();
 
-        if (hasErrors()) {
-            return INPUT;
-        }
+        final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
-        vlrlList = vlrcBO.selectVlrlList(vlrcId, getIdioma(), getOffset(), getLimit());
+        vlrcCriterio.setId(vlrcId);
+
+        final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
+
+        vlrlCriterio.setVlrc(vlrcCriterio);
+
+        vlrlList = vlrcBO.selectVlrlList(vlrlCriterio, getOffset(), getLimit());
 
         return SUCCESS;
     }

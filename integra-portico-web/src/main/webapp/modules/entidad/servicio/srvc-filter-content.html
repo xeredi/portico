@@ -24,9 +24,9 @@
                                 <label translate>srvc_numero</label> <input type="text"
                                     ng-model="vm.itemCriterio.numero" class="form-control" />
                             </div>
-                            <div ng-if="vm.enti.tpdtEstado" class="col-sm-3 col-md-2 form-group-sm">
+                            <div ng-if="vm.enti.enti.tpdtEstado" class="col-sm-3 col-md-2 form-group-sm">
                                 <label translate>srvc_estado</label> <select ng-model="vm.itemCriterio.estado"
-                                    ng-options="cdrf.valor as (('cdrf_' + vm.enti.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.enti.tpdtEstado.cdrfList"
+                                    ng-options="cdrf.valor as (('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.enti.enti.tpdtEstado.cdrfList"
                                     class="form-control">
                                     <option />
                                 </select>
@@ -40,7 +40,7 @@
                             </div>
                         </div>
 
-                        <div class="row" ng-if="!vm.enti.temporal">
+                        <div class="row" ng-if="!vm.enti.enti.temporal">
                             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
                                 <label translate="srvc_fref"></label> <input type="text" class="form-control"
                                     ng-model="vm.itemCriterio.frefMin" data-container=".modal-body"
@@ -61,7 +61,7 @@
                             </div>
                         </div>
 
-                        <div class="row" ng-if="vm.enti.temporal">
+                        <div class="row" ng-if="vm.enti.enti.temporal">
                             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
                                 <label translate="srvc_fini"></label> <input type="text" class="form-control"
                                     ng-model="vm.itemCriterio.finiMin" data-container=".modal-body"
@@ -82,7 +82,7 @@
                             </div>
                         </div>
 
-                        <div class="row" ng-if="vm.enti.temporal">
+                        <div class="row" ng-if="vm.enti.enti.temporal">
                             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
                                 <label translate="srvc_ffin"></label> <input type="text" class="form-control"
                                     ng-model="vm.itemCriterio.ffinMin" data-container=".modal-body"

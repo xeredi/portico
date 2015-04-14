@@ -21,9 +21,6 @@ import com.google.common.base.Preconditions;
  * The Class ReglaIncompatibleBO.
  */
 public class ReglaIncompatibleBO {
-    /**
-     * {@inheritDoc}
-     */
     public void insert(final ReglaIncompatibleVO rgin) throws OverlapException {
         Preconditions.checkNotNull(rgin);
         Preconditions.checkNotNull(rgin.getRgla1Id());
@@ -123,7 +120,8 @@ public class ReglaIncompatibleBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ReglaIncompatibleVO select(final ReglaIncompatibleCriterioVO rginCriterio) throws InstanceNotFoundException {
+    public ReglaIncompatibleVO selectObject(final ReglaIncompatibleCriterioVO rginCriterio)
+            throws InstanceNotFoundException {
         Preconditions.checkNotNull(rginCriterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {

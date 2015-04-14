@@ -11,8 +11,8 @@ import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
-import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 
 import com.google.common.base.Preconditions;
 import com.opensymphony.xwork2.ModelDriven;
@@ -51,12 +51,12 @@ public final class ParametroLupaAction extends LupaAction implements ModelDriven
         }
 
         final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
-        final TipoParametroVO enti = TipoParametroProxy.select(model.getEntiId());
+        final TipoParametroDetailVO entiDetail = TipoParametroProxy.select(model.getEntiId());
 
-        if (enti.isI18n()) {
+        if (entiDetail.getEnti().isI18n()) {
             model.setIdioma(getIdioma());
-        } else if (enti.getTpdtNombre() != null) {
-            model.setTpdtNombreId(enti.getTpdtNombre().getId());
+        } else if (entiDetail.getEnti().getTpdtNombre() != null) {
+            model.setTpdtNombreId(entiDetail.getEnti().getTpdtNombre().getId());
         }
 
         itemList = prmtBO.selectLupaList(model, getLimit());

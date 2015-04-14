@@ -25,11 +25,11 @@ import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
+import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
-import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 
 import com.google.common.base.Preconditions;
 
@@ -72,14 +72,14 @@ public final class ParametroPdf extends BasePdf {
      * @throws ApplicationException
      *             the ApplicationException
      */
-    public void imprimir(final ParametroVO prmtVO, final TipoParametroVO tpprVO,
-            final Map<Long, TipoSubparametroVO> entiHijasMap, final Map<Long, List<SubparametroVO>> itemHijosMap,
+    public void imprimir(final ParametroVO prmtVO, final TipoParametroDetailVO tpprDetail,
+            final Map<Long, TipoSubparametroDetailVO> entiHijasMap, final Map<Long, List<SubparametroVO>> itemHijosMap,
             final Map<String, I18nVO> i18nMap, final OutputStream stream) throws ApplicationException {
         Preconditions.checkNotNull(prmtVO);
-        Preconditions.checkNotNull(tpprVO);
+        Preconditions.checkNotNull(tpprDetail);
 
         try {
-            final String tpprLabel = bundle.getString("enti_" + tpprVO.getId());
+            final String tpprLabel = bundle.getString("enti_" + tpprDetail.getEnti().getId());
             final String prmtFiniLabel = bundle.getString(MessageI18nKey.prmt_fini.name());
             final String prmtFfinLabel = bundle.getString(MessageI18nKey.prmt_ffin.name());
 
@@ -93,7 +93,7 @@ public final class ParametroPdf extends BasePdf {
             List<PdfCell> rowCells = new ArrayList<>();
             int accWidth = 0;
 
-            if (tpprVO.isPuerto()) {
+            if (tpprDetail.getEnti().isPuerto()) {
                 rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.prto.name()), prmtVO.getPrto().getEtiqueta(),
                         2, TipoElemento.TX));
             }
@@ -105,7 +105,7 @@ public final class ParametroPdf extends BasePdf {
 
             listCells.add(rowCells);
 
-            if (tpprVO.isI18n()) {
+            if (tpprDetail.getEnti().isI18n()) {
                 for (final I18nVO i18nVO : i18nMap.values()) {
                     rowCells = new ArrayList<>();
 
@@ -117,13 +117,13 @@ public final class ParametroPdf extends BasePdf {
             report.addTitle(getForm(listCells));
             listCells.clear();
 
-            if (tpprVO.getEngdList() != null) {
-                for (final EntidadGrupoDatoVO engd : tpprVO.getEngdList()) {
+            if (tpprDetail.getEngdList() != null) {
+                for (final EntidadGrupoDatoVO engd : tpprDetail.getEngdList()) {
                     rowCells = new ArrayList<>();
                     accWidth = 0;
 
-                    if (tpprVO.getEntdList() != null) {
-                        for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
+                    if (tpprDetail.getEntdList() != null) {
+                        for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {
                             if (entd.getGrupo() == engd.getNumero()) {
                                 final ItemDatoVO itdt = prmtVO.getItdtMap().get(entd.getTpdt().getId());
 
@@ -151,8 +151,8 @@ public final class ParametroPdf extends BasePdf {
                 }
             }
 
-            if (tpprVO.getEntiHijasList() != null) {
-                for (final Long entiId : tpprVO.getEntiHijasList()) {
+            if (tpprDetail.getEntiHijasList() != null) {
+                for (final Long entiId : tpprDetail.getEntiHijasList()) {
                     if (!itemHijosMap.get(entiId).isEmpty()) {
                         report.addTitle(DynamicReports.cmp.subreport(getSubreport(entiHijasMap.get(entiId),
                                 itemHijosMap.get(entiId))));
@@ -177,7 +177,8 @@ public final class ParametroPdf extends BasePdf {
      *            the engd id
      * @return the subreport
      */
-    private JasperReportBuilder getSubreport(final TipoParametroVO entiVO, final ParametroVO prmtVO, final Long engdId) {
+    private JasperReportBuilder getSubreport(final TipoParametroDetailVO entiVO, final ParametroVO prmtVO,
+            final Long engdId) {
         return null;
     }
 
@@ -190,12 +191,13 @@ public final class ParametroPdf extends BasePdf {
      *            the item list
      * @return the data source
      */
-    private JasperReportBuilder getSubreport(final TipoSubparametroVO entiVO, final List<SubparametroVO> itemList) {
-        Preconditions.checkNotNull(entiVO);
+    private JasperReportBuilder getSubreport(final TipoSubparametroDetailVO entiDetail,
+            final List<SubparametroVO> itemList) {
+        Preconditions.checkNotNull(entiDetail);
         Preconditions.checkNotNull(itemList);
 
-        final String tpspLabel = bundle.getString("enti_" + entiVO.getId());
-        final String tpprAsociadoLabel = bundle.getString("enti_" + entiVO.getTpprAsociado().getId());
+        final String tpspLabel = bundle.getString("enti_" + entiDetail.getEnti().getId());
+        final String tpprAsociadoLabel = bundle.getString("enti_" + entiDetail.getEnti().getTpprAsociado().getId());
         final String sprmFiniLabel = bundle.getString(MessageI18nKey.sprm_fini.name());
         final String sprmFfinLabel = bundle.getString(MessageI18nKey.sprm_ffin.name());
 
@@ -220,8 +222,8 @@ public final class ParametroPdf extends BasePdf {
         report.addColumn(DynamicReports.col.column(sprmFfinLabel, MessageI18nKey.sprm_ffin.name(),
                 DynamicReports.type.stringType()).setWidth(2));
 
-        if (entiVO.getEntdList() != null) {
-            for (final EntidadTipoDatoVO entd : entiVO.getEntdList()) {
+        if (entiDetail.getEntdList() != null) {
+            for (final EntidadTipoDatoVO entd : entiDetail.getEntdList()) {
                 final String entdLabel = bundle.getString("entd_" + entd.getId());
 
                 columns.add(entdLabel);
@@ -242,8 +244,8 @@ public final class ParametroPdf extends BasePdf {
             objects[i++] = formatDate(itemVO.getSpvr().getFini());
             objects[i++] = formatDate(itemVO.getSpvr().getFfin());
 
-            if (entiVO.getEntdList() != null) {
-                for (final EntidadTipoDatoVO entd : entiVO.getEntdList()) {
+            if (entiDetail.getEntdList() != null) {
+                for (final EntidadTipoDatoVO entd : entiDetail.getEntdList()) {
                     objects[i++] = getItdtValue(entd, itemVO.getItdtMap().get(entd.getTpdt().getId()));
                 }
             }

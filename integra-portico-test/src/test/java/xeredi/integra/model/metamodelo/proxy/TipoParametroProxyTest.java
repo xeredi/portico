@@ -5,7 +5,6 @@ import java.util.Map;
 import org.junit.Test;
 
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -21,10 +20,10 @@ public final class TipoParametroProxyTest {
      */
     @Test
     public static void test() throws InstanceNotFoundException {
-        final Map<Long, TipoParametroVO> tpprMap = TipoParametroProxy.selectMap();
+        final Map<Long, TipoParametroDetailVO> tpprMap = TipoParametroProxy.selectMap();
 
-        for (final TipoParametroVO vo : tpprMap.values()) {
-            TipoParametroProxy.select(vo.getId());
+        for (final TipoParametroDetailVO vo : tpprMap.values()) {
+            TipoParametroProxy.select(vo.getEnti().getId());
         }
     }
 }

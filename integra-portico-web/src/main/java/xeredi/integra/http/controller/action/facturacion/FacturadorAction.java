@@ -19,13 +19,15 @@ import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.FacturaSerieBO;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
+import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.FacturaSerieCriterioVO;
+import xeredi.integra.model.facturacion.vo.FacturaSerieVO;
+import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionVO;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.proceso.facturacion.ProcesoFacturador;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
 
@@ -51,10 +53,10 @@ public final class FacturadorAction extends BaseAction {
     private Long fcsrId;
 
     /** The aspc list. */
-    private List<LabelValueVO> aspcList;
+    private List<AspectoVO> aspcList;
 
     /** The fcsr list. */
-    private List<LabelValueVO> fcsrList;
+    private List<FacturaSerieVO> fcsrList;
 
     // Actiones Web
 
@@ -71,27 +73,31 @@ public final class FacturadorAction extends BaseAction {
         Preconditions.checkNotNull(vlrc.getId());
 
         final ValoracionBO vlrcBO = new ValoracionBO();
-        final AspectoBO aspcBO = new AspectoBO();
-        final FacturaSerieBO fcsrBO = new FacturaSerieBO();
+        final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
-        vlrc = vlrcBO.select(vlrc.getId(), getIdioma());
+        vlrcCriterio.setId(vlrc.getId());
+        vlrcCriterio.setIdioma(getIdioma());
+
+        vlrc = vlrcBO.selectObject(vlrcCriterio);
         ffac = vlrc.getFref();
 
+        final AspectoBO aspcBO = new AspectoBO();
         final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
         aspcCriterio.setFechaVigencia(vlrc.getFref());
         aspcCriterio.setIdioma(getIdioma());
         aspcCriterio.setTpsrId(vlrc.getSrvc().getEntiId());
 
-        aspcList = aspcBO.selectLabelValueList(aspcCriterio);
+        aspcList = aspcBO.selectList(aspcCriterio);
 
+        final FacturaSerieBO fcsrBO = new FacturaSerieBO();
         final FacturaSerieCriterioVO fcsrCriterio = new FacturaSerieCriterioVO();
         final Calendar calendar = Calendar.getInstance();
 
         calendar.setTime(ffac);
         fcsrCriterio.setAnio(calendar.get(Calendar.YEAR));
 
-        fcsrList = fcsrBO.selectLabelValueList(fcsrCriterio);
+        fcsrList = fcsrBO.selectList(fcsrCriterio);
 
         return SUCCESS;
     }
@@ -173,7 +179,7 @@ public final class FacturadorAction extends BaseAction {
      *
      * @return the aspc list
      */
-    public List<LabelValueVO> getAspcList() {
+    public List<AspectoVO> getAspcList() {
         return aspcList;
     }
 
@@ -220,7 +226,7 @@ public final class FacturadorAction extends BaseAction {
      *
      * @return the fcsr list
      */
-    public List<LabelValueVO> getFcsrList() {
+    public List<FacturaSerieVO> getFcsrList() {
         return fcsrList;
     }
 

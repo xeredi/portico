@@ -1,7 +1,6 @@
 package xeredi.integra.model.facturacion.bo;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +18,6 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.dao.CargoDAO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -67,7 +65,7 @@ public class CargoBO {
      *            the limit
      * @return the list
      */
-    public List<CargoVO> selectLupaList(final CargoCriterioVO crgoCriterio, final int limit) {
+    public List<CargoVO> selectList(final CargoCriterioVO crgoCriterio, final int limit) {
         Preconditions.checkNotNull(crgoCriterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -84,18 +82,13 @@ public class CargoBO {
      *            the crgo criterio vo
      * @return the list
      */
-    public List<LabelValueVO> selectLabelValueList(final CargoCriterioVO crgoCriterioVO) {
+    public List<CargoVO> selectList(final CargoCriterioVO crgoCriterioVO) {
         Preconditions.checkNotNull(crgoCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
-            final List<LabelValueVO> list = new ArrayList<>();
 
-            for (final CargoVO crgo : crgoDAO.selectList(crgoCriterioVO)) {
-                list.add(new LabelValueVO(crgo.getEtiqueta(), crgo.getId()));
-            }
-
-            return list;
+            return crgoDAO.selectList(crgoCriterioVO);
         }
     }
 
@@ -112,23 +105,13 @@ public class CargoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public CargoVO select(final Long id, final Date fechaVigencia, final String idioma)
-            throws InstanceNotFoundException {
-        Preconditions.checkNotNull(id);
-        Preconditions.checkNotNull(fechaVigencia);
-
+    public CargoVO selectObject(final CargoCriterioVO crgoCriterio) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
-            final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
-
-            crgoCriterioVO.setId(id);
-            crgoCriterioVO.setFechaVigencia(fechaVigencia);
-            crgoCriterioVO.setIdioma(idioma);
-
-            final CargoVO crgo = crgoDAO.selectObject(crgoCriterioVO);
+            final CargoVO crgo = crgoDAO.selectObject(crgoCriterio);
 
             if (crgo == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.crgo, id);
+                throw new InstanceNotFoundException(MessageI18nKey.crgo, crgoCriterio);
             }
 
             return crgo;

@@ -44,15 +44,15 @@ import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
-import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.DefaultServicioBO;
 import xeredi.integra.model.servicio.bo.DefaultSubservicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
@@ -177,15 +177,15 @@ public final class ServicioImporterBO {
         final ServicioBO srvcBO = new DefaultServicioBO();
         final SubservicioBO ssrvBO = new DefaultSubservicioBO();
 
-        final EntidadVO entiVO = EntidadProxy.select(entidad.getId());
-        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + entiVO.getId());
+        final AbstractEntidadDetailVO entiDetail = EntidadProxy.select(entidad.getId());
+        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + entiDetail.getEnti().getId());
 
         if (LOG.isInfoEnabled()) {
             LOG.info("Importacion de la entidad: " + entiName);
         }
 
         // Obtencion de los maestros asociados a la entidad
-        for (final EntidadTipoDatoVO entd : entiVO.getEntdList()) {
+        for (final EntidadTipoDatoVO entd : entiDetail.getEntdList()) {
             if (entd.getTpdt().getEnti() != null && !tpprPrmtMap.containsKey(entd.getTpdt().getEnti().getId())) {
                 if (LOG.isDebugEnabled()) {
                     final String tpprName = bundle.getString(I18nPrefix.enti.name() + "_"
@@ -224,12 +224,12 @@ public final class ServicioImporterBO {
                 Long servId = null;
                 ServicioVO srvcVO = null;
 
-                switch (entiVO.getTipo()) {
+                switch (entiDetail.getEnti().getTipo()) {
                 case T:
-                    final TipoServicioVO tpsrVO = TipoServicioProxy.select(entiVO.getId());
+                    final TipoServicioDetailVO tpsrDetail = TipoServicioProxy.select(entiDetail.getEnti().getId());
 
                     srvcVO = new ServicioVO();
-                    srvcVO.setEntiId(tpsrVO.getId());
+                    srvcVO.setEntiId(tpsrDetail.getEnti().getId());
 
                     servId = rs.getLong(i++);
                     final Date fechaCreacion = rs.getDate(i++);
@@ -270,7 +270,7 @@ public final class ServicioImporterBO {
                     srvcVO.setFbaja(fechaBaja);
                     srvcVO.setFref(fechaReferencia);
 
-                    if (tpsrVO.isTemporal()) {
+                    if (tpsrDetail.getEnti().isTemporal()) {
                         Date fechaInicio = null;
                         Date fechaFin = null;
 
@@ -290,7 +290,7 @@ public final class ServicioImporterBO {
                         srvcVO.setFfin(fechaFin);
                     }
 
-                    if (tpsrVO.getTpdtEstado() != null) {
+                    if (tpsrDetail.getEnti().getTpdtEstado() != null) {
                         final String estado = rs.getString(i++);
 
                         if (estado == null) {
@@ -300,10 +300,10 @@ public final class ServicioImporterBO {
                         srvcVO.setEstado(estado);
                     }
 
-                    if (tpsrVO.getEntdList() != null) {
+                    if (tpsrDetail.getEntdList() != null) {
                         srvcVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
-                        for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
+                        for (final EntidadTipoDatoVO entd : tpsrDetail.getEntdList()) {
                             final Object value = rs.getObject(i++);
 
                             if (rs.wasNull() && entd.getObligatorio()
@@ -323,21 +323,22 @@ public final class ServicioImporterBO {
 
                     try {
                         srvcBO.insert(srvcVO, null, null, null);
-                        entiMap.get(entiVO.getId()).put(servId, srvcVO.getId());
+                        entiMap.get(entiDetail.getEnti().getId()).put(servId, srvcVO.getId());
                     } catch (final DuplicateInstanceException ex) {
                         LOG.info(ex.getMessage(locale));
                     }
 
                     break;
                 case S:
-                    final TipoSubservicioVO tpssVO = TipoSubservicioProxy.select(entiVO.getId());
+                    final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy
+                            .select(entiDetail.getEnti().getId());
                     final SubservicioVO ssrvVO = new SubservicioVO();
                     srvcVO = new ServicioVO();
                     servId = rs.getLong(i++);
 
-                    srvcVO.setId(entiMap.get(tpssVO.getTpsrId()).get(servId));
+                    srvcVO.setId(entiMap.get(tpssDetail.getEnti().getTpsrId()).get(servId));
                     ssrvVO.setSrvc(srvcVO);
-                    ssrvVO.setEntiId(tpssVO.getId());
+                    ssrvVO.setEntiId(tpssDetail.getEnti().getId());
 
                     final Long subservId = rs.getLong(i++);
 
@@ -349,7 +350,7 @@ public final class ServicioImporterBO {
                         rs.getInt(i++);
                         ssrvVO.setNumero(numeroSubservicio++);
 
-                        if (tpssVO.isTemporal()) {
+                        if (tpssDetail.getEnti().isTemporal()) {
                             Date fechaInicio = null;
                             Date fechaFin = null;
 
@@ -369,7 +370,7 @@ public final class ServicioImporterBO {
                             ssrvVO.setFfin(fechaFin);
                         }
 
-                        if (tpssVO.getTpdtEstado() != null) {
+                        if (tpssDetail.getEnti().getTpdtEstado() != null) {
                             final String estado = rs.getString(i++);
 
                             if (estado == null) {
@@ -383,9 +384,9 @@ public final class ServicioImporterBO {
 
                         boolean hasErrors = false;
 
-                        if (tpssVO.getEntiPadresList() != null) {
-                            for (final Long entdId : tpssVO.getEntiPadresList()) {
-                                if (!entdId.equals(tpssVO.getTpsrId())) {
+                        if (tpssDetail.getEntiPadresList() != null) {
+                            for (final Long entdId : tpssDetail.getEntiPadresList()) {
+                                if (!entdId.equals(tpssDetail.getEnti().getTpsrId())) {
                                     final Long padreIntegraId = rs.getLong(i++);
                                     final Long padrePorticoId = entiMap.get(entdId).get(padreIntegraId);
 
@@ -404,10 +405,10 @@ public final class ServicioImporterBO {
                             }
                         }
 
-                        if (tpssVO.getEntdList() != null) {
+                        if (tpssDetail.getEntdList() != null) {
                             ssrvVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
-                            for (final EntidadTipoDatoVO entd : tpssVO.getEntdList()) {
+                            for (final EntidadTipoDatoVO entd : tpssDetail.getEntdList()) {
                                 final Object value = rs.getObject(i++);
 
                                 if (rs.wasNull() && entd.getObligatorio()
@@ -427,8 +428,8 @@ public final class ServicioImporterBO {
 
                         if (!hasErrors) {
                             try {
-                                ssrvBO.insert(ssrvVO, tpssVO, padreIds);
-                                entiMap.get(entiVO.getId()).put(subservId, ssrvVO.getId());
+                                ssrvBO.insert(ssrvVO, tpssDetail, padreIds);
+                                entiMap.get(entiDetail.getEnti().getId()).put(subservId, ssrvVO.getId());
                             } catch (final DuplicateInstanceException ex) {
                                 LOG.info(ex.getMessage(locale));
                             }
@@ -438,11 +439,11 @@ public final class ServicioImporterBO {
                     break;
 
                 default:
-                    throw new Error("Tipo de entidad no soportado: " + entiVO.getTipo());
+                    throw new Error("Tipo de entidad no soportado: " + entiDetail.getEnti().getTipo());
                 }
             }
 
-            LOG.info("Grabados: " + entiMap.get(entiVO.getId()).size());
+            LOG.info("Grabados: " + entiMap.get(entiDetail.getEnti().getId()).size());
         } finally {
             DbUtils.closeQuietly(rs);
         }

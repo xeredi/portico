@@ -76,7 +76,9 @@
 
 	<sql id="SelectWhere">
 		<where>
-			entd_enti_pk = #{entiId}
+			<if test="entiId != null">
+				AND entd_enti_pk = #{entiId}
+			</if>
 			<if test="tpdtId != null">
 				AND entd_tpdt_pk = #{tpdtId}
 			</if>

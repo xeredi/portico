@@ -8,7 +8,6 @@ import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaSerieVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -70,15 +69,6 @@ public interface FacturaSerieDAO {
     int delete(final Long fcsrId);
 
     /**
-     * Select label value list.
-     *
-     * @param fcsrCriterio
-     *            the fcsr criterio
-     * @return the list
-     */
-    List<LabelValueVO> selectLabelValueList(final FacturaSerieCriterioVO fcsrCriterio);
-
-    /**
      * Count.
      *
      * @param fcsrCriterio
@@ -97,4 +87,13 @@ public interface FacturaSerieDAO {
      * @return the list
      */
     List<FacturaSerieVO> selectList(final FacturaSerieCriterioVO fcsrCriterio, final RowBounds bounds);
+
+    /**
+     * Select list.
+     *
+     * @param fcsrCriterio
+     *            the fcsr criterio
+     * @return the list
+     */
+    List<FacturaSerieVO> selectList(final FacturaSerieCriterioVO fcsrCriterio);
 }

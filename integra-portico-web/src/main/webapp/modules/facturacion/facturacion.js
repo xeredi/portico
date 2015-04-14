@@ -31,6 +31,8 @@ angular.module("facturacion", [])
 
 .controller("VlrdDetailController", VlrdDetailController)
 
+.controller("VlrdEditController", VlrdEditController)
+
 // ----------- SERIE DE FACTURA ------------------
 .controller("FcsrGridController", FcsrGridController)
 
@@ -64,7 +66,7 @@ angular.module("facturacion", [])
 
 .controller("AspcEditController", AspcEditController)
 
-.controller('AspcLupaController', AspcLupaController)
+.controller("AspcLupaController", AspcLupaController)
 
 .controller("AscrDetailController", AscrDetailController)
 
@@ -155,7 +157,7 @@ function config($routeProvider) {
 
     .when("/facturacion/vlrd/edit/:accion/:vlrcId/:vlrlId/:vlrdId?", {
         templateUrl : "modules/facturacion/vlrd-edit.html",
-        controller : "vlrdEditController",
+        controller : "VlrdEditController",
         controllerAs : "vm"
     })
 
@@ -580,7 +582,7 @@ function VlrcDetailController($http, $location, $routeParams, pageTitleService) 
             });
 
             setTimeout(function() {
-                saveAs(file, vm.vlrc.id + '.pdf');
+                saveAs(file, 'vlrc_' + vm.vlrc.id + '.pdf');
             }, 0);
         });
     }
@@ -756,7 +758,7 @@ function VlrdDetailController($http, $location, $routeParams, pageTitleService) 
         vm.aspc = data.aspc;
     });
 
-    pageTitleService.setTitle("vlrl", "page_detail");
+    pageTitleService.setTitle("vlrd", "page_detail");
 }
 
 function VlrdEditController($http, $location, $routeParams, pageTitleService) {
@@ -788,7 +790,7 @@ function VlrdEditController($http, $location, $routeParams, pageTitleService) {
         model : {
             vlrcId : $routeParams.vlrcId,
             vlrlId : $routeParams.vlrlId,
-            id : $routeParams.vlrlId
+            id : $routeParams.vlrdId
         },
         accion : vm.accion
     }).success(function(data) {

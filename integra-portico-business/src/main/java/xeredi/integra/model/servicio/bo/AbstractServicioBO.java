@@ -20,11 +20,11 @@ import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.dao.ServicioArchivoDAO;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.dao.ServicioDatoDAO;
@@ -163,14 +163,14 @@ public abstract class AbstractServicioBO implements ServicioBO {
 
             final Map<Long, Long> ssrvDepsMap = new HashMap<Long, Long>();
 
-            final TipoServicioVO tpsrVO = TipoServicioProxy.select(srvc.getEntiId());
+            final TipoServicioDetailVO tpsrDetail = TipoServicioProxy.select(srvc.getEntiId());
 
-            if (tpsrVO.getEntdList() != null) {
+            if (tpsrDetail.getEntdList() != null) {
                 if (srvc.getItdtMap() == null) {
                     srvc.setItdtMap(new HashMap<Long, ItemDatoVO>());
                 }
 
-                for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
+                for (final EntidadTipoDatoVO entd : tpsrDetail.getEntdList()) {
                     final Long tpdtId = entd.getTpdt().getId();
 
                     if (!srvc.getItdtMap().containsKey(tpdtId) && !srvc.getItdtMap().containsKey(tpdtId.toString())) {
@@ -220,14 +220,14 @@ public abstract class AbstractServicioBO implements ServicioBO {
                     ssrvVO.setSrvc(srvc);
                     ssrvDAO.insert(ssrvVO);
 
-                    final TipoSubservicioVO tpssVO = TipoSubservicioProxy.select(ssrvVO.getEntiId());
+                    final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(ssrvVO.getEntiId());
 
-                    if (tpssVO.getEntdList() != null) {
+                    if (tpssDetail.getEntdList() != null) {
                         if (ssrvVO.getItdtMap() == null) {
                             ssrvVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
                         }
 
-                        for (final EntidadTipoDatoVO entd : tpssVO.getEntdList()) {
+                        for (final EntidadTipoDatoVO entd : tpssDetail.getEntdList()) {
                             final Long tpdtId = entd.getTpdt().getId();
 
                             if (!ssrvVO.getItdtMap().containsKey(tpdtId)

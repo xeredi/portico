@@ -22,10 +22,10 @@ import xeredi.integra.model.comun.vo.PuertoCriterioVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
-import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -47,7 +47,7 @@ public final class ServicioAction extends ItemAction implements ModelDriven<Serv
     private ServicioVO model;
 
     /** The enti. */
-    private TipoServicioVO enti;
+    private TipoServicioDetailVO enti;
 
     /** The arin list. */
     private List<ArchivoInfoVO> arinList;
@@ -83,7 +83,7 @@ public final class ServicioAction extends ItemAction implements ModelDriven<Serv
 
         archCriterio.setSrvcId(model.getId());
 
-        arinList = archBO.selectInfoList(archCriterio);
+        arinList = archBO.selectList(archCriterio);
 
         setFechaVigencia(model.getFref());
 
@@ -137,7 +137,7 @@ public final class ServicioAction extends ItemAction implements ModelDriven<Serv
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getEntiId());
 
-        final TipoServicioVO enti = TipoServicioProxy.select(model.getEntiId());
+        enti = TipoServicioProxy.select(model.getEntiId());
 
         if (getAccion() == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.prto, model.getPrto());
@@ -147,11 +147,11 @@ public final class ServicioAction extends ItemAction implements ModelDriven<Serv
             Preconditions.checkNotNull(model.getId());
         }
 
-        if (enti.getTpdtEstado() != null) {
+        if (enti.getEnti().getTpdtEstado() != null) {
             FieldValidator.validateRequired(this, MessageI18nKey.srvc_estado, model.getEstado());
         }
 
-        if (enti.isTemporal()) {
+        if (enti.getEnti().isTemporal()) {
             FieldValidator.validateRequired(this, MessageI18nKey.srvc_fini, model.getFini());
             FieldValidator.validateRequired(this, MessageI18nKey.srvc_ffin, model.getFfin());
         } else {
@@ -284,7 +284,7 @@ public final class ServicioAction extends ItemAction implements ModelDriven<Serv
      *
      * @return the enti
      */
-    public TipoServicioVO getEnti() {
+    public TipoServicioDetailVO getEnti() {
         return enti;
     }
 

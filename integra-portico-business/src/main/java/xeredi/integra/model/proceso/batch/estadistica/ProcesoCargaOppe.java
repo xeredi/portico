@@ -25,6 +25,7 @@ import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.comun.vo.PuertoCriterioVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
+import xeredi.integra.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.integra.model.comun.vo.SuperpuertoVO;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.io.EstadisticaFileType;
@@ -88,7 +89,11 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
 
         try {
             final SuperpuertoBO sprtBO = new SuperpuertoBO();
-            final SuperpuertoVO sprt = sprtBO.select(sprtId, null);
+            final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
+
+            sprtCriterio.setId(sprtId);
+
+            final SuperpuertoVO sprt = sprtBO.selectObject(sprtCriterio);
 
             final PuertoBO prtoBO = new PuertoBO();
             final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
@@ -120,7 +125,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
 
                 pepr.setArin(arin);
 
-                try (final InputStream stream = flsrBO.select(arin.getId())) {
+                try (final InputStream stream = flsrBO.selectStream(arin.getId())) {
                     final Map<EstadisticaFileType, List<String>> mapFiles = readFile(stream);
 
                     if (prmnList.isEmpty()) {

@@ -10,6 +10,7 @@ import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.PuertoCriterioVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
+import xeredi.integra.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.integra.model.comun.vo.SuperpuertoVO;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
@@ -100,7 +101,11 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
             try {
                 // Comprobar que existe la AP
                 final SuperpuertoBO sprtBO = new SuperpuertoBO();
-                final SuperpuertoVO sprt = sprtBO.select(autpId, null);
+                final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
+
+                sprtCriterio.setId(autpId);
+
+                final SuperpuertoVO sprt = sprtBO.selectObject(sprtCriterio);
 
                 final Calendar calendar = Calendar.getInstance();
 

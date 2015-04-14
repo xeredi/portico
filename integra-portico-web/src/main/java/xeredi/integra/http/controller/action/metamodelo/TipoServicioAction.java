@@ -12,11 +12,23 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.bo.EntidadAccionBO;
+import xeredi.integra.model.metamodelo.bo.EntidadAccionGridBO;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
+import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
+import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.bo.TipoServicioBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionGridCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionGridVO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
@@ -39,6 +51,18 @@ public final class TipoServicioAction extends ItemAction implements ModelDriven<
 
     /** The tpsr. */
     private TipoServicioVO model;
+
+    /** The entd list. */
+    private List<EntidadTipoDatoVO> entdList;
+
+    /** The engd list. */
+    private List<EntidadGrupoDatoVO> engdList;
+
+    /** The enac list. */
+    private List<EntidadAccionVO> enacList;
+
+    /** The enag list. */
+    private List<EntidadAccionGridVO> enagList;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -175,23 +199,56 @@ public final class TipoServicioAction extends ItemAction implements ModelDriven<
         model = tpsrBO.select(model.getId(), getIdioma());
         i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
 
-        TipoSubservicioCriterioVO tpssCriterioVO = null;
+        {
+            TipoSubservicioCriterioVO tpssCriterioVO = null;
 
-        tpssCriterioVO = new TipoSubservicioCriterioVO();
-        tpssCriterioVO.setTpsrId(model.getId());
-        tpssCriterioVO.setIdioma(getIdioma());
+            tpssCriterioVO = new TipoSubservicioCriterioVO();
+            tpssCriterioVO.setTpsrId(model.getId());
+            tpssCriterioVO.setIdioma(getIdioma());
 
-        subentiList = tpssBO.selectList(tpssCriterioVO);
+            subentiList = tpssBO.selectList(tpssCriterioVO);
+        }
 
-        if (model.getEntiHijasList() != null && !model.getEntiHijasList().isEmpty()) {
-            EntidadCriterioVO entiCriterioVO = null;
+        if (subentiList != null && !subentiList.isEmpty()) {
+            final EntidadCriterioVO entiCriterioVO = new EntidadCriterioVO();
 
-            entiCriterioVO = new EntidadCriterioVO();
             entiCriterioVO.setEntiPadreId(model.getId());
             entiCriterioVO.setIdioma(getIdioma());
 
             entiHijasList = entiBO.selectList(entiCriterioVO);
         }
+
+        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
+        final EntidadTipoDatoCriterioVO entdCriterio = new EntidadTipoDatoCriterioVO();
+
+        entdCriterio.setEntiId(model.getId());
+        entdCriterio.setIdioma(getIdioma());
+
+        entdList = entdBO.selectList(entdCriterio);
+
+        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+        final EntidadGrupoDatoCriterioVO engdCriterio = new EntidadGrupoDatoCriterioVO();
+
+        engdCriterio.setEntiId(model.getId());
+        engdCriterio.setIdioma(getIdioma());
+
+        engdList = engdBO.selectList(engdCriterio);
+
+        final EntidadAccionBO enacBO = new EntidadAccionBO();
+        final EntidadAccionCriterioVO enacCriterio = new EntidadAccionCriterioVO();
+
+        enacCriterio.setEntiId(model.getId());
+        enacCriterio.setIdioma(getIdioma());
+
+        enacList = enacBO.selectList(enacCriterio);
+
+        final EntidadAccionGridBO enagBO = new EntidadAccionGridBO();
+        final EntidadAccionGridCriterioVO enagCriterio = new EntidadAccionGridCriterioVO();
+
+        enagCriterio.setEntiId(model.getId());
+        enagCriterio.setIdioma(getIdioma());
+
+        enagList = enagBO.selectList(enagCriterio);
 
         return SUCCESS;
     }
@@ -259,6 +316,22 @@ public final class TipoServicioAction extends ItemAction implements ModelDriven<
      */
     public List<LabelValueVO> getTpdtEstadoList() {
         return tpdtEstadoList;
+    }
+
+    public List<EntidadTipoDatoVO> getEntdList() {
+        return entdList;
+    }
+
+    public List<EntidadGrupoDatoVO> getEngdList() {
+        return engdList;
+    }
+
+    public List<EntidadAccionVO> getEnacList() {
+        return enacList;
+    }
+
+    public List<EntidadAccionGridVO> getEnagList() {
+        return enagList;
     }
 
 }

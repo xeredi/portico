@@ -20,36 +20,6 @@ import xeredi.util.pagination.PaginatedList;
  * The Class SuperpuertoBO.
  */
 public final class SuperpuertoBO {
-
-    /**
-     * Select.
-     *
-     * @param id
-     *            the id
-     * @param idioma
-     *            the idioma
-     * @return the superpuerto vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public SuperpuertoVO select(final Long id, final String idioma) throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final SuperpuertoDAO sprtDAO = session.getMapper(SuperpuertoDAO.class);
-            final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
-
-            sprtCriterio.setId(id);
-            sprtCriterio.setIdioma(idioma);
-
-            final SuperpuertoVO sprt = sprtDAO.selectObject(sprtCriterio);
-
-            if (sprt == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.sprt, id);
-            }
-
-            return sprt;
-        }
-    }
-
     /**
      * Select object.
      *

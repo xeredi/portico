@@ -16,7 +16,6 @@ import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVersionVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
 import com.opensymphony.xwork2.ModelDriven;
@@ -34,7 +33,7 @@ public final class ReglaIncompatibleAction extends ItemAction implements ModelDr
     private ReglaIncompatibleVO model;
 
     /** The rgla2 list. */
-    private List<LabelValueVO> rgla2List = new ArrayList<>();
+    private List<ReglaVO> rgla2List = new ArrayList<>();
 
     // acciones web
 
@@ -49,6 +48,7 @@ public final class ReglaIncompatibleAction extends ItemAction implements ModelDr
     public String detail() throws ApplicationException {
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getId());
+        Preconditions.checkNotNull(getFechaVigencia());
 
         final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
         final ReglaIncompatibleCriterioVO rginCriterio = new ReglaIncompatibleCriterioVO();
@@ -56,7 +56,7 @@ public final class ReglaIncompatibleAction extends ItemAction implements ModelDr
         rginCriterio.setId(model.getId());
         rginCriterio.setFechaVigencia(getFechaVigencia());
 
-        model = rginBO.select(rginCriterio);
+        model = rginBO.selectObject(rginCriterio);
 
         return SUCCESS;
     }
@@ -85,22 +85,26 @@ public final class ReglaIncompatibleAction extends ItemAction implements ModelDr
             rginCriterio.setFechaVigencia(getFechaVigencia());
             rginCriterio.setIdioma(getIdioma());
 
-            model = rginBO.select(rginCriterio);
+            model = rginBO.selectObject(rginCriterio);
         } else {
             model.setRgiv(new ReglaIncompatibleVersionVO());
             model.getRgiv().setFini(getFechaVigencia());
 
             {
                 final ReglaBO rglaBO = new ReglaBO();
-                final ReglaVO rgla = rglaBO.select(model.getRgla1Id(), getFechaVigencia());
+                final ReglaCriterioVO rgla1Criterio = new ReglaCriterioVO();
 
-                final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
+                rgla1Criterio.setId(model.getRgla1Id());
+                rgla1Criterio.setFechaVigencia(getFechaVigencia());
 
-                rglaCriterio.setCrgoId(rgla.getCrgo().getId());
-                rglaCriterio.setFechaVigencia(getFechaVigencia());
-                rglaCriterio.setIdioma(getIdioma());
+                final ReglaVO rgla = rglaBO.selectObject(rgla1Criterio);
 
-                rgla2List = rglaBO.selectLabelValueList(rglaCriterio);
+                final ReglaCriterioVO rgla2Criterio = new ReglaCriterioVO();
+
+                rgla2Criterio.setCrgoId(rgla.getCrgo().getId());
+                rgla2Criterio.setFechaVigencia(getFechaVigencia());
+
+                rgla2List = rglaBO.selectList(rgla2Criterio);
             }
         }
 
@@ -196,7 +200,7 @@ public final class ReglaIncompatibleAction extends ItemAction implements ModelDr
      *
      * @return the rgla2 list
      */
-    public List<LabelValueVO> getRgla2List() {
+    public List<ReglaVO> getRgla2List() {
         return rgla2List;
     }
 }

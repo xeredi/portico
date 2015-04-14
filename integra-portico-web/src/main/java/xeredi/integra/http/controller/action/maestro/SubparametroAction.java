@@ -17,10 +17,10 @@ import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
-import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
@@ -39,7 +39,7 @@ public final class SubparametroAction extends ItemAction implements ModelDriven<
     private SubparametroVO model;
 
     /** The enti. */
-    private TipoSubparametroVO enti;
+    private TipoSubparametroDetailVO enti;
 
     /** The label values map. */
     private Map<Long, List<LabelValueVO>> labelValuesMap;
@@ -94,7 +94,7 @@ public final class SubparametroAction extends ItemAction implements ModelDriven<
 
         // Validacion de Datos
         if (getAccion() != ACCION_EDICION.edit) {
-            FieldValidator.validateRequired(this, getText("enti_" + enti.getTpprAsociado().getId()),
+            FieldValidator.validateRequired(this, getText("enti_" + enti.getEnti().getTpprAsociado().getId()),
                     model.getPrmtAsociado());
         }
 
@@ -245,7 +245,7 @@ public final class SubparametroAction extends ItemAction implements ModelDriven<
      *
      * @return the enti
      */
-    public TipoSubparametroVO getEnti() {
+    public TipoSubparametroDetailVO getEnti() {
         return enti;
     }
 

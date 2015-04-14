@@ -25,8 +25,8 @@ import xeredi.integra.model.maestro.dao.SubparametroDAO;
 import xeredi.integra.model.maestro.dao.SubparametroDatoDAO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -47,9 +47,9 @@ public class SubparametroBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void insert(final SubparametroVO sprm, final TipoSubparametroVO tpspVO) throws OverlapException {
+    public void insert(final SubparametroVO sprm, final TipoSubparametroDetailVO tpspDetail) throws OverlapException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            insert(session, sprm, tpspVO);
+            insert(session, sprm, tpspDetail);
 
             session.commit();
         }
@@ -68,12 +68,12 @@ public class SubparametroBO {
      *             the overlap exception
      */
     protected final void insert(final @Nonnull SqlSession session, final @Nonnull SubparametroVO sprm,
-            final @Nonnull TipoSubparametroVO tpspVO) throws OverlapException {
+            final @Nonnull TipoSubparametroDetailVO tpspDetail) throws OverlapException {
         Preconditions.checkNotNull(sprm.getSpvr());
 
         // Validar que los datos del subparametro son correctos
-        if (tpspVO.getEntdList() != null) {
-            for (final EntidadTipoDatoVO entd : tpspVO.getEntdList()) {
+        if (tpspDetail.getEntdList() != null) {
+            for (final EntidadTipoDatoVO entd : tpspDetail.getEntdList()) {
                 final Long tpdtId = entd.getTpdt().getId();
 
                 if (!sprm.getItdtMap().containsKey(tpdtId) && !sprm.getItdtMap().containsKey(tpdtId.toString())) {
@@ -123,10 +123,10 @@ public class SubparametroBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void duplicate(final @Nonnull SubparametroVO sprm, final @Nonnull TipoSubparametroVO tpsrVO)
+    public void duplicate(final @Nonnull SubparametroVO sprm, final @Nonnull TipoSubparametroDetailVO tpspDetail)
             throws OverlapException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            duplicate(session, sprm, tpsrVO);
+            duplicate(session, sprm, tpspDetail);
 
             session.commit();
         }
@@ -145,7 +145,7 @@ public class SubparametroBO {
      *             the overlap exception
      */
     protected final void duplicate(final @Nonnull SqlSession session, final @Nonnull SubparametroVO sprm,
-            final @Nonnull TipoSubparametroVO tpsrVO) throws OverlapException {
+            final @Nonnull TipoSubparametroDetailVO tpspDetail) throws OverlapException {
         // TODO Implementar
         Preconditions.checkNotNull(sprm.getId());
 
@@ -189,10 +189,10 @@ public class SubparametroBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void update(final @Nonnull SubparametroVO sprm, final @Nonnull TipoSubparametroVO tpspVO)
+    public void update(final @Nonnull SubparametroVO sprm, final @Nonnull TipoSubparametroDetailVO tpspDetail)
             throws InstanceNotFoundException, OverlapException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            update(session, sprm, tpspVO);
+            update(session, sprm, tpspDetail);
 
             session.commit();
         }
@@ -213,7 +213,7 @@ public class SubparametroBO {
      *             the overlap exception
      */
     protected final void update(final @Nonnull SqlSession session, final @Nonnull SubparametroVO sprm,
-            final @Nonnull TipoSubparametroVO tpspVO) throws InstanceNotFoundException, OverlapException {
+            final @Nonnull TipoSubparametroDetailVO tpspDetail) throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(sprm.getSpvr());
         Preconditions.checkNotNull(sprm.getSpvr().getId());
         Preconditions.checkNotNull(sprm.getSpvr().getFini());
@@ -221,8 +221,8 @@ public class SubparametroBO {
         // Validaciones
 
         // Validar que los datos del parametro son correctos
-        if (tpspVO.getEntdList() != null) {
-            for (final EntidadTipoDatoVO entd : tpspVO.getEntdList()) {
+        if (tpspDetail.getEntdList() != null) {
+            for (final EntidadTipoDatoVO entd : tpspDetail.getEntdList()) {
                 final Long tpdtId = entd.getTpdt().getId();
 
                 if (!sprm.getItdtMap().containsKey(tpdtId.toString())) {

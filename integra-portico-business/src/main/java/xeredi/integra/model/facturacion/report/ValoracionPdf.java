@@ -123,7 +123,7 @@ public final class ValoracionPdf extends BasePdf {
 
             rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_id.name()), String.valueOf(vlrc.getId()), 1,
                     TipoElemento.TX));
-            rowCells.add(new PdfCell(bundle.getString("enti_" + vlrc.getAspc().getTpsr().getId()), vlrc.getSrvc()
+            rowCells.add(new PdfCell(bundle.getString("enti_" + vlrc.getSrvc().getEntiId()), vlrc.getSrvc()
                     .getEtiqueta(), 3, TipoElemento.TX));
             rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_fliq.name()), formatDate(vlrc.getFliq()), 1,
                     TipoElemento.FH));

@@ -88,7 +88,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
             final ArchivoBO flsrBO = new ArchivoBO();
 
-            try (final InputStream stream = flsrBO.select(arin.getId())) {
+            try (final InputStream stream = flsrBO.selectStream(arin.getId())) {
                 final ManifiestoFileImport fileImport = new ManifiestoFileImport(this);
                 final List<String> lines = IOUtils.readLines(stream);
                 final int primeraLinea = fileImport.findPrimeraLinea(lines);

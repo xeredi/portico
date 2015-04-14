@@ -30,7 +30,7 @@ public final class ArchivoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public InputStream select(final Long archId) throws InstanceNotFoundException {
+    public InputStream selectStream(final Long archId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
 
@@ -45,22 +45,22 @@ public final class ArchivoBO {
     }
 
     /**
-     * Select info.
+     * Select.
      *
-     * @param archCriterio
-     *            the arch criterio
+     * @param archId
+     *            the arch id
      * @return the archivo info vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ArchivoInfoVO selectInfo(final ArchivoCriterioVO archCriterio) throws InstanceNotFoundException {
+    public ArchivoInfoVO select(final Long archId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
 
-            final ArchivoInfoVO arin = arinDAO.selectObject(archCriterio);
+            final ArchivoInfoVO arin = arinDAO.select(archId);
 
             if (arin == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.arch, archCriterio.getId());
+                throw new InstanceNotFoundException(MessageI18nKey.arch, archId);
             }
 
             return arin;
@@ -74,7 +74,7 @@ public final class ArchivoBO {
      *            the arch criterio
      * @return the list
      */
-    public List<ArchivoInfoVO> selectInfoList(final ArchivoCriterioVO archCriterio) {
+    public List<ArchivoInfoVO> selectList(final ArchivoCriterioVO archCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
 

@@ -1,5 +1,6 @@
 package xeredi.integra.http.controller.action.facturacion;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -71,10 +72,14 @@ public final class ValoracionAction extends ItemAction implements ModelDriven<Va
         Preconditions.checkNotNull(model.getId());
 
         final ValoracionBO vlrcBO = new ValoracionBO();
+        final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
-        model = vlrcBO.select(model.getId(), getIdioma());
-        vlriList = vlrcBO.selectVlriList(model.getId(), getIdioma());
-        vlrgList = vlrcBO.selectVlrgList(model.getId(), getIdioma());
+        vlrcCriterio.setId(model.getId());
+        vlrcCriterio.setIdioma(getIdioma());
+
+        model = vlrcBO.selectObject(vlrcCriterio);
+        vlriList = vlrcBO.selectVlriList(vlrcCriterio);
+        vlrgList = vlrcBO.selectVlrgList(vlrcCriterio);
         tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
 
         final AspectoBO aspcBO = new AspectoBO();
@@ -109,8 +114,13 @@ public final class ValoracionAction extends ItemAction implements ModelDriven<Va
             vlrcCriterio.setId(model.getId());
             vlrcCriterio.setIdioma(getIdioma());
 
-            model = vlrcBO.select(model.getId(), getIdioma());
+            model = vlrcBO.selectObject(vlrcCriterio);
         } else {
+            model = new ValoracionVO();
+
+            model.setFalta(new Date());
+            model.setFliq(new Date());
+
             tpsrList = TipoServicioProxy.selectLabelValues();
         }
 

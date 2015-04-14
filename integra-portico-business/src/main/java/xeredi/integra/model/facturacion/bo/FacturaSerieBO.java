@@ -14,7 +14,6 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.dao.FacturaSerieDAO;
 import xeredi.integra.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaSerieVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -156,13 +155,13 @@ public final class FacturaSerieBO {
      *            the fcsr criterio
      * @return the list
      */
-    public List<LabelValueVO> selectLabelValueList(final FacturaSerieCriterioVO fcsrCriterio) {
+    public List<FacturaSerieVO> selectList(final FacturaSerieCriterioVO fcsrCriterio) {
         Preconditions.checkNotNull(fcsrCriterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final FacturaSerieDAO fcsrDAO = session.getMapper(FacturaSerieDAO.class);
 
-            return fcsrDAO.selectLabelValueList(fcsrCriterio);
+            return fcsrDAO.selectList(fcsrCriterio);
         }
     }
 }
