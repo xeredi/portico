@@ -737,6 +737,7 @@ function VlrlEditController($http, $location, $routeParams, pageTitleService) {
         vm.vlrl = data.model;
         vm.vlrlPadre = data.vlrlPadre;
         vm.aspc = data.aspc;
+        vm.impuestoList = data.impuestoList;
     });
 
     pageTitleService.setTitle("vlrl", "page_" + vm.accion);

@@ -347,7 +347,7 @@ function SrvcGridController($http, $location, $routeParams, $modal, pageTitleSer
             });
 
             setTimeout(function() {
-                saveAs(file, vm.itemCriterio.entiId + '.xls');
+                saveAs(file, 'srvc_' + vm.itemCriterio.entiId + '.xls');
             }, 0);
         });
     }
@@ -639,7 +639,7 @@ function SsrvGridController($http, $location, $routeParams, $modal, pageTitleSer
             });
 
             setTimeout(function() {
-                saveAs(file, vm.enti.id + '.xls');
+                saveAs(file, 'ssrv_' + vm.enti.id + '.xls');
             }, 0);
         });
     }

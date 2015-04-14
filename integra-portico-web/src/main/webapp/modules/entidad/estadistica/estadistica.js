@@ -268,7 +268,7 @@ function EstdGridController($http, $location, $routeParams, $modal, pageTitleSer
             });
 
             setTimeout(function() {
-                saveAs(file, vm.enti.id + '.xls');
+                saveAs(file, 'estd_' + vm.enti.id + '.xls');
             }, 0);
         });
     }

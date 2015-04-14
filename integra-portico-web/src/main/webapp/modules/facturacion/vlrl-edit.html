@@ -3,6 +3,11 @@
         <legend translate="vlrl"></legend>
 
         <div class="row">
+            <div class="col-md-3 col-lg-2 form-group-sm" ng-if="vm.vlrl.rgla.id">
+                <label translate="enti"></label>
+                <p class="form-control-static" ng-bind="'enti_' + vm.vlrl.rgla.enti.id | translate"></p>
+            </div>
+
             <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm">
                 <label translate="crgo"></label> <input type="text" ng-if="vm.accion == 'create'"
                     autocomplete="off" ng-model="vm.crgo" ng-controller="CrgoLupaController"
@@ -25,9 +30,23 @@
                 <p class="form-control-static" ng-bind="vm.vlrl.rgla.tipo"></p>
             </div>
 
-            <div class="col-md-4 col-lg-3 col-xl-2 form-group-sm" ng-if="vm.vlrl.rgla.id">
-                <label translate="enti"></label>
-                <p class="form-control-static" ng-bind="'enti_' + vm.vlrl.rgla.enti.id | translate"></p>
+            <div class="col-md-1 form-group-sm" ng-if="vm.vlrl.rgla.tipo != 'T'">
+                <label translate="vlrl_importeBase"></label>
+                <p class="form-control-static number">{{vm.vlrl.importeBase | number:2}} &euro;</p>
+            </div>
+            <div class="col-md-1 form-group-sm">
+                <label translate="vlrl_importe"></label>
+                <p class="form-control-static number">{{vm.vlrl.importe | number:2}} &euro;</p>
+            </div>
+
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm">
+                <label translate="vlrl_impuesto"></label> <select ng-if="vm.vlrl.rgla.tipo == 'T'"
+                    ng-model="vm.vlrl.impuesto" ng-options="prmt as prmt.etiqueta for prmt in vm.impuestoList"
+                    class="form-control">
+                    <option />
+                </select>
+                <p class="form-control-static number" ng-if="vm.vlrl.rgla.tipo != 'T'"
+                    ng-bind="vm.vlrl.impuesto.etiqueta"></p>
             </div>
         </div>
 
@@ -65,28 +84,28 @@
         </div>
 
         <div class="row">
-            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrl.rgla.rglv.etiqCuant1">
-                <label ng-bind="vm.vlrl.rgla.rglv.etiqCuant1"></label>
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant1">
+                <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant1"></label>
                 <p class="form-control-static number" ng-bind="vm.vlrl.cuant1 | number : 2"></p>
             </div>
-            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrl.rgla.rglv.etiqCuant2">
-                <label ng-bind="vm.vlrl.rgla.rglv.etiqCuant2"></label>
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant2">
+                <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant2"></label>
                 <p class="form-control-static number" ng-bind="vm.vlrl.cuant2 | number : 2"></p>
             </div>
-            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrl.rgla.rglv.etiqCuant3">
-                <label ng-bind="vm.vlrl.rgla.rglv.etiqCuant3"></label>
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant3">
+                <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant3"></label>
                 <p class="form-control-static number" ng-bind="vm.vlrl.cuant3 | number : 2"></p>
             </div>
-            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrl.rgla.rglv.etiqCuant4">
-                <label ng-bind="vm.vlrl.rgla.rglv.etiqCuant4"></label>
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant4">
+                <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant4"></label>
                 <p class="form-control-static number" ng-bind="vm.vlrl.cuant4 | number : 2"></p>
             </div>
-            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrl.rgla.rglv.etiqCuant5">
-                <label ng-bind="vm.vlrl.rgla.rglv.etiqCuant5"></label>
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant5">
+                <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant5"></label>
                 <p class="form-control-static number" ng-bind="vm.vlrl.cuant5 | number : 2"></p>
             </div>
-            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrl.rgla.rglv.etiqCuant6">
-                <label ng-bind="vm.vlrl.rgla.rglv.etiqCuant6"></label>
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant6">
+                <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant6"></label>
                 <p class="form-control-static number" ng-bind="vm.vlrl.cuant6 | number : 2"></p>
             </div>
         </div>

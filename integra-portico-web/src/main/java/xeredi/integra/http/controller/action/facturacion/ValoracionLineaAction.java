@@ -1,5 +1,7 @@
 package xeredi.integra.http.controller.action.facturacion;
 
+import java.util.List;
+
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.ItemAction;
@@ -8,8 +10,15 @@ import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
+import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
+import xeredi.integra.model.facturacion.vo.ValoracionVO;
+import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
+import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
+import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.metamodelo.vo.Entidad;
 
 import com.google.common.base.Preconditions;
 import com.opensymphony.xwork2.ModelDriven;
@@ -31,6 +40,9 @@ public final class ValoracionLineaAction extends ItemAction implements ModelDriv
 
     /** The aspc. */
     private AspectoVO aspc;
+
+    /** The impuesto list. */
+    private List<ParametroVO> impuestoList;
 
     // acciones web
 
@@ -73,23 +85,40 @@ public final class ValoracionLineaAction extends ItemAction implements ModelDriv
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getVlrcId());
 
+        final ValoracionBO vlrcBO = new ValoracionBO();
+
         if (getAccion() == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model.getId());
 
-            final ValoracionBO vlrcBO = new ValoracionBO();
             final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
             vlrlCriterio.setId(model.getId());
             vlrlCriterio.setIdioma(getIdioma());
 
             model = vlrcBO.selectVlrlObject(vlrlCriterio);
+        } else {
+            final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
+
+            vlrcCriterio.setId(model.getVlrcId());
+
+            final ValoracionVO vlrc = vlrcBO.selectObject(vlrcCriterio);
+
+            model.setFref(vlrc.getFref());
         }
 
         loadDependencies();
+        loadLabelValues();
 
         return SUCCESS;
     }
 
+    /**
+     * Save.
+     *
+     * @return the string
+     * @throws ApplicationException
+     *             the application exception
+     */
     @Action("vlrl-save")
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(getAccion());
@@ -153,6 +182,24 @@ public final class ValoracionLineaAction extends ItemAction implements ModelDriv
         aspc = aspcBO.selectObject(aspcCriterio);
     }
 
+    /**
+     * Load label values.
+     */
+    private void loadLabelValues() {
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getFref());
+
+        final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
+
+        prmtCriterio.setEntiId(Entidad.TIPO_IVA.getId());
+        prmtCriterio.setFechaVigencia(model.getFref());
+        prmtCriterio.setIdioma(getIdioma());
+
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(prmtCriterio.getEntiId());
+
+        impuestoList = prmtBO.selectList(prmtCriterio);
+    }
+
     // get / set
 
     /**
@@ -191,6 +238,15 @@ public final class ValoracionLineaAction extends ItemAction implements ModelDriv
      */
     public AspectoVO getAspc() {
         return aspc;
+    }
+
+    /**
+     * Gets the impuesto list.
+     *
+     * @return the impuesto list
+     */
+    public List<ParametroVO> getImpuestoList() {
+        return impuestoList;
     }
 
 }

@@ -124,7 +124,7 @@ function PrmtGridController($location, $routeParams, $http, $modal, pageTitleSer
             });
 
             setTimeout(function() {
-                saveAs(file, vm.itemCriterio.entiId + '.xls');
+                saveAs(file, 'prmt_' + vm.itemCriterio.entiId + '.xls');
             }, 0);
         });
     }
@@ -201,7 +201,7 @@ function PrmtDetailController($http, $location, $routeParams, pageTitleService) 
             });
 
             setTimeout(function() {
-                saveAs(file, vm.item.entiId + '_' + vm.item.id + '.pdf');
+                saveAs(file, 'prmt_' + vm.item.entiId + '_' + vm.item.id + '.pdf');
             }, 0);
         });
     }
