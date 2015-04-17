@@ -3,8 +3,10 @@ package xeredi.integra.model.facturacion.bo;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -238,6 +240,7 @@ public class ValoradorBO {
 
         final List<ValoracionAgregadaVO> vlraList = vlraDAO.selectList(vldrContexto);
         final Set<Long> vlrcIds = new HashSet<Long>();
+        final Map<Long, Long> vlrtIdMap = new HashMap<>();
 
         for (final ValoracionAgregadaVO vlra : vlraList) {
             vlra.getVlrc().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
@@ -258,14 +261,30 @@ public class ValoradorBO {
 
                 if (vlrl.getVlrl().getRgla().getTipo() == ReglaTipo.T) {
                     vlrlPadreId = vlrl.getVlrl().getId();
+                } else {
+                    vlrl.getVlrl().setInfo1(null);
+                    vlrl.getVlrl().setInfo2(null);
+                    vlrl.getVlrl().setInfo3(null);
+                    vlrl.getVlrl().setInfo4(null);
+                    vlrl.getVlrl().setInfo5(null);
+                    vlrl.getVlrl().setInfo6(null);
+
+                    vlrl.getVlrl().setImpuesto(null);
+                    vlrl.getVlrl().setSsrv(null);
                 }
 
                 vlrl.getVlrl().setPadreId(vlrlPadreId);
 
                 for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
+                    final Long vlrtId = vlrd.getId();
+                    final Long vlrtPadreId = vlrd.getPadreId();
+
+                    vlrtIdMap.put(vlrtId, igBO.nextVal(IgBO.SQ_INTEGRA));
+
                     vlrd.setVlrcId(vlra.getVlrc().getId());
                     vlrd.setVlrlId(vlrl.getVlrl().getId());
-                    vlrd.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                    vlrd.setId(vlrtIdMap.get(vlrtId));
+                    vlrd.setPadreId(vlrtIdMap.get(vlrtPadreId));
                 }
             }
         }

@@ -2,6 +2,9 @@ package xeredi.integra.model.seguridad.vo;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import xeredi.integra.model.comun.vo.PuertoVO;
+import xeredi.integra.model.comun.vo.SuperpuertoVO;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class UsuarioVO.
@@ -19,6 +22,12 @@ public final class UsuarioVO {
 
     /** The nombre. */
     private String nombre;
+
+    /** The sprt. */
+    private SuperpuertoVO sprt;
+
+    /** The prto. */
+    private PuertoVO prto;
 
     /**
      * {@inheritDoc}
@@ -102,6 +111,44 @@ public final class UsuarioVO {
      */
     public void setNombre(final String value) {
         nombre = value;
+    }
+
+    /**
+     * Gets the sprt.
+     *
+     * @return the sprt
+     */
+    public SuperpuertoVO getSprt() {
+        return sprt;
+    }
+
+    /**
+     * Sets the sprt.
+     *
+     * @param value
+     *            the new sprt
+     */
+    public void setSprt(final SuperpuertoVO value) {
+        sprt = value;
+    }
+
+    /**
+     * Gets the prto.
+     *
+     * @return the prto
+     */
+    public PuertoVO getPrto() {
+        return prto;
+    }
+
+    /**
+     * Sets the prto.
+     *
+     * @param value
+     *            the new prto
+     */
+    public void setPrto(final PuertoVO value) {
+        prto = value;
     }
 
 }

@@ -394,17 +394,10 @@ CREATE TABLE tbl_valoracion_lin_vlrl (
 	, vlrl_padre_pk NUMBER(19) NOT NULL
 	, vlrl_vlrc_pk NUMBER(19) NOT NULL
 	, vlrl_rgla_pk NUMBER(19) NOT NULL
-	, vlrl_impuesto_prmt_pk NUMBER(19) NOT NULL
+	, vlrl_impuesto_prmt_pk NUMBER(19)
 	, vlrl_ssrv_pk NUMBER(19)
 	, vlrl_fini TIMESTAMP
 	, vlrl_ffin TIMESTAMP
-
-	, vlrl_cuant1 DOUBLE PRECISION
-	, vlrl_cuant2 DOUBLE PRECISION
-	, vlrl_cuant3 DOUBLE PRECISION
-	, vlrl_cuant4 DOUBLE PRECISION
-	, vlrl_cuant5 DOUBLE PRECISION
-	, vlrl_cuant6 DOUBLE PRECISION
 
 	, vlrl_info1 VARCHAR2(100)
 	, vlrl_info2 VARCHAR2(100)
@@ -430,7 +423,6 @@ CREATE TABLE tbl_valoracion_lin_vlrl (
 CREATE OR REPLACE SYNONYM portico.tbl_valoracion_lin_vlrl FOR porticoadm.tbl_valoracion_lin_vlrl\
 
 CREATE INDEX ix_vlrl_vlrc_pk ON tbl_valoracion_lin_vlrl (vlrl_vlrc_pk)\
-CREATE INDEX ix_vlrl_padre_pk ON tbl_valoracion_lin_vlrl (vlrl_padre_pk)\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_lin_vlrl TO portico\
 
@@ -440,6 +432,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_lin_vlrl TO portico\
 CREATE TABLE tbl_valoracion_det_vlrd (
 	vlrd_pk NUMBER(19) NOT NULL
 	, vlrd_vlrc_pk NUMBER(19) NOT NULL
+	, vlrd_padre_pk NUMBER(19) NOT NULL
 	, vlrd_vlrl_pk NUMBER(19) NOT NULL
 	, vlrd_valor_base NUMERIC(10, 4) NOT NULL
 	, vlrd_importe_base NUMERIC(10, 2) NOT NULL
@@ -464,6 +457,8 @@ CREATE TABLE tbl_valoracion_det_vlrd (
 
 	, CONSTRAINT pk_vlrd PRIMARY KEY (vlrd_pk)
 
+	, CONSTRAINT fk_vlrd_padre_pk FOREIGN KEY (vlrd_padre_pk)
+		REFERENCES tbl_valoracion_det_vlrd (vlrd_pk)
 	, CONSTRAINT fk_vlrd_vlrc_pk FOREIGN KEY (vlrd_vlrc_pk)
 		REFERENCES tbl_valoracion_vlrc (vlrc_pk)
 	, CONSTRAINT fk_vlrd_vlrl_pk FOREIGN KEY (vlrd_vlrl_pk)
@@ -476,7 +471,6 @@ CREATE OR REPLACE SYNONYM portico.tbl_valoracion_det_vlrd FOR porticoadm.tbl_val
 
 CREATE INDEX ix_vlrd_vlrc_pk ON tbl_valoracion_det_vlrd (vlrd_vlrc_pk)\
 CREATE INDEX ix_vlrd_vlrl_pk ON tbl_valoracion_det_vlrd (vlrd_vlrl_pk)\
-CREATE INDEX ix_vlrd_ssrv_pk ON tbl_valoracion_det_vlrd (vlrd_ssrv_pk)\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_det_vlrd TO portico\
 

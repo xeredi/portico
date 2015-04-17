@@ -7,6 +7,7 @@
 		<id column="vlrd_pk" />
 
 		<result column="vlrd_pk" property="id" />
+		<result column="vlrd_padre_pk" property="padreId" />
 		<result column="vlrd_vlrc_pk" property="vlrcId" />
 		<result column="vlrd_vlrl_pk" property="vlrlId" />
 		<result column="vlrd_valor_base" property="valorBase" />
@@ -14,6 +15,7 @@
 		<result column="vlrd_importe" property="importe" />
 		<result column="vlrd_fini" property="fini" />
 		<result column="vlrd_ffin" property="ffin" />
+		<result column="vlrd_fref" property="fref" />
 
 		<result column="vlrd_cuant1" property="cuant1" />
 		<result column="vlrd_cuant2" property="cuant2" />
@@ -37,19 +39,79 @@
 				<result column="ssrv_srvc_pk" property="id" />
 			</association>
 		</association>
+
+		<association property="rgla" javaType="ReglaVO">
+			<result column="rgla_pk" property="id" />
+			<result column="rgla_codigo" property="codigo" />
+			<result column="rgla_tipo" property="tipo" />
+
+			<association property="crgo" javaType="CargoVO">
+				<result column="rgla_crgo_pk" property="id" />
+			</association>
+		</association>
 	</resultMap>
 
 	<sql id="SelectPrefix">
     <![CDATA[
 		SELECT
-		    vlrd_pk, vlrd_vlrc_pk, vlrd_vlrl_pk, vlrd_valor_base, vlrd_importe_base, vlrd_importe, vlrd_ssrv_pk, vlrd_fini, vlrd_ffin
+		    vlrd_pk, vlrd_padre_pk, vlrd_vlrc_pk, vlrd_vlrl_pk
+		    , vlrd_valor_base, vlrd_importe_base, vlrd_importe
 		    , vlrd_cuant1, vlrd_cuant2, vlrd_cuant3, vlrd_cuant4, vlrd_cuant5, vlrd_cuant6
-		    , vlrd_info1, vlrd_info2, vlrd_info3, vlrd_info4, vlrd_info5, vlrd_info6
+
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_ssrv_pk
+		        ELSE (SELECT vlrd_ssrv_pk FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_ssrv_pk
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_fini
+		        ELSE (SELECT vlrd_fini FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_fini
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_ffin
+		        ELSE (SELECT vlrd_ffin FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_ffin
+
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_info1
+		        ELSE (SELECT vlrd_info1 FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_info1
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_info2
+		        ELSE (SELECT vlrd_info2 FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_info2
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_info3
+		        ELSE (SELECT vlrd_info3 FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_info3
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_info4
+		        ELSE (SELECT vlrd_info4 FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_info4
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_info5
+		        ELSE (SELECT vlrd_info5 FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_info5
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_info6
+		        ELSE (SELECT vlrd_info6 FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_info6
+
+		    , rgla_pk, rgla_crgo_pk, rgla_codigo, rgla_enti_pk, rgla_tipo
 
 		    , ssrv_numero, ssrv_tpss_pk, ssrv_srvc_pk
+
+		    , (SELECT vlrc_fref FROM tbl_valoracion_vlrc WHERE vlrc_pk = vlrd_vlrc_pk) AS vlrd_fref
 		FROM
-		    tbl_valoracion_det_vlrd
-		    LEFT JOIN tbl_subservicio_ssrv ON
+		    tbl_valoracion_det_vlrd vlrd
+		    INNER JOIN tbl_regla_rgla rgla
+		        ON EXISTS (
+		            SELECT 1
+		            FROM tbl_valoracion_lin_vlrl
+		            WHERE
+		                vlrl_pk = vlrd_vlrl_pk
+		                AND vlrl_rgla_pk = rgla_pk
+		        )
+		    LEFT JOIN tbl_subservicio_ssrv ssrv ON
 		        ssrv_pk = vlrd_ssrv_pk
     ]]>
 	</sql>
@@ -58,6 +120,14 @@
 		<where>
 			<if test="id != null">
 				AND vlrd_pk = #{id}
+			</if>
+			<if test="padreId != null">
+				AND vlrd_padre_pk = #{padreId}
+			</if>
+			<if test="soloHijos">
+		    <![CDATA[
+				AND vlrd_padre_pk <> vlrd_pk
+		    ]]>
 			</if>
 			<if test="vlrl != null">
 				<if test="vlrl.id != null">
@@ -102,13 +172,13 @@
 	<insert id="insert" parameterType="ValoracionDetalleVO">
     <![CDATA[
         INSERT INTO tbl_valoracion_det_vlrd (
-            vlrd_pk, vlrd_vlrl_pk, vlrd_vlrc_pk, vlrd_valor_base, vlrd_importe_base, vlrd_importe
+            vlrd_pk, vlrd_padre_pk, vlrd_vlrl_pk, vlrd_vlrc_pk, vlrd_valor_base, vlrd_importe_base, vlrd_importe
             , vlrd_ssrv_pk, vlrd_fini, vlrd_ffin
             , vlrd_cuant1, vlrd_cuant2, vlrd_cuant3, vlrd_cuant4, vlrd_cuant5, vlrd_cuant6
             , vlrd_info1, vlrd_info2, vlrd_info3, vlrd_info4, vlrd_info5, vlrd_info6
         )
         VALUES (
-            #{id}, #{vlrlId}, #{vlrcId}, #{valorBase}, #{importeBase}, #{importe}
+            #{id}, #{padreId}, #{vlrlId}, #{vlrcId}, #{valorBase}, #{importeBase}, #{importe}
             , #{ssrv.id}, #{fini}, #{ffin}
             , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
             , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}

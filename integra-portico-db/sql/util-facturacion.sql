@@ -282,7 +282,7 @@ WHERE rgla_tipo = 'T'
 ;
 
 
-SELECT *
+SELECT srvc.*
 	, (
 		CASE
 			WHEN
@@ -294,7 +294,7 @@ SELECT *
 		END
 	) AS estado
 FROM
-	tbl_servicio_srvc
+	tbl_servicio_srvc srvc
 	INNER JOIN tbl_tipo_servicio_tpsr ON
 		tpsr_pk = srvc_tpsr_pk
 	INNER JOIN tbl_cargo_crgo ON

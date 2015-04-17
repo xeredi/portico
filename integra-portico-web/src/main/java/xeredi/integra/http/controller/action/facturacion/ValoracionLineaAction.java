@@ -10,6 +10,7 @@ import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
+import xeredi.integra.model.facturacion.vo.ReglaTipo;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
@@ -38,6 +39,9 @@ public final class ValoracionLineaAction extends ItemAction implements ModelDriv
     /** The vlrl padre. */
     private ValoracionLineaVO vlrlPadre;
 
+    /** The vlrl hijos list. */
+    private List<ValoracionLineaVO> vlrlHijosList;
+
     /** The aspc. */
     private AspectoVO aspc;
 
@@ -60,12 +64,26 @@ public final class ValoracionLineaAction extends ItemAction implements ModelDriv
         Preconditions.checkNotNull(model.getVlrcId());
 
         final ValoracionBO vlrcBO = new ValoracionBO();
-        final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
-        vlrlCriterio.setId(model.getId());
-        vlrlCriterio.setIdioma(getIdioma());
+        {
+            final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
-        model = vlrcBO.selectVlrlObject(vlrlCriterio);
+            vlrlCriterio.setId(model.getId());
+            vlrlCriterio.setIdioma(getIdioma());
+
+            model = vlrcBO.selectVlrlObject(vlrlCriterio);
+        }
+
+        // Busqueda de las lineas hija (coef/bonif)
+        if (model.getRgla().getTipo() == ReglaTipo.T) {
+            final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
+
+            vlrlCriterio.setPadreId(model.getId());
+            vlrlCriterio.setSoloHijos(true);
+            vlrlCriterio.setIdioma(getIdioma());
+
+            vlrlHijosList = vlrcBO.selectVlrlList(vlrlCriterio);
+        }
 
         loadDependencies();
 
@@ -247,6 +265,15 @@ public final class ValoracionLineaAction extends ItemAction implements ModelDriv
      */
     public List<ParametroVO> getImpuestoList() {
         return impuestoList;
+    }
+
+    /**
+     * Gets the vlrl hijos list.
+     *
+     * @return the vlrl hijos list
+     */
+    public List<ValoracionLineaVO> getVlrlHijosList() {
+        return vlrlHijosList;
     }
 
 }

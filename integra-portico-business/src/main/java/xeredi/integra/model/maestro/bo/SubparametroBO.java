@@ -321,9 +321,6 @@ public class SubparametroBO {
             final int count = sprmDAO.selectCount(sprmCriterioVO);
 
             if (count > offset) {
-                sprmCriterioVO.setOffset(offset);
-                sprmCriterioVO.setLimit(limit);
-
                 sprmList.addAll(sprmDAO.selectList(sprmCriterioVO, new RowBounds(offset, limit)));
 
                 fillDependencies(session, sprmList, sprmCriterioVO);

@@ -100,14 +100,12 @@ public abstract class AbstractServicioBO implements ServicioBO {
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final int count = srvcDAO.selectCount(srvcCriterioVO);
+            final int count = srvcDAO.count(srvcCriterioVO);
             final List<ServicioVO> srvcList = new ArrayList<>();
 
             if (count > offset) {
-                srvcCriterioVO.setOffset(offset);
-                srvcCriterioVO.setLimit(limit);
+                srvcList.addAll(srvcDAO.selectList(srvcCriterioVO, new RowBounds(offset, limit)));
 
-                srvcList.addAll(srvcDAO.selectList(srvcCriterioVO));
                 fillDependencies(session, srvcList, srvcCriterioVO, true);
             }
 
@@ -121,9 +119,6 @@ public abstract class AbstractServicioBO implements ServicioBO {
     @Override
     public final List<ServicioVO> selectList(final @Nonnull ServicioCriterioVO srvcCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            srvcCriterioVO.setOffset(null);
-            srvcCriterioVO.setLimit(null);
-
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final List<ServicioVO> srvcList = srvcDAO.selectList(srvcCriterioVO);
 

@@ -695,6 +695,7 @@ function VlrlDetailController($http, $location, $routeParams, pageTitleService) 
     }).success(function(data) {
         vm.vlrl = data.model;
         vm.vlrlPadre = data.vlrlPadre;
+        vm.vlrlHijosList = data.vlrlHijosList;
         vm.aspc = data.aspc;
 
         findVlrdList($routeParams.page ? $routeParams.page : 1);
@@ -756,6 +757,7 @@ function VlrdDetailController($http, $location, $routeParams, pageTitleService) 
         vm.vlrd = data.model;
         vm.vlrl = data.vlrl;
         vm.vlrlPadre = data.vlrlPadre;
+        vm.vlrdHijosList = data.vlrdHijosList;
         vm.aspc = data.aspc;
     });
 

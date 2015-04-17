@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.seguridad.dao.AccionDAO">
+	<resultMap type="AccionVO" id="ResultMap">
+		<id column="accn_pk" />
+
+		<result column="accn_pk" property="id" />
+		<result column="accn_codigo" property="codigo" />
+		<result column="accn_nombre" property="nombre" />
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+        accn_pk, accn_codigo, accn_nombre
+    FROM
+        tbl_accion_accn
+    ]]>
+	</sql>
+
+	<sql id="SelectCountPrefix">
+    <![CDATA[
+    SELECT
+        COUNT(1)
+    FROM
+        tbl_accion_accn
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND accn_pk = #{id}
+			</if>
+			<if test="codigo != null">
+				AND accn_codigo = #{codigo}
+			</if>
+			<if test="grpoId != null">
+    		<![CDATA[
+				AND EXISTS (
+					SELECT 1
+					FROM tbl_grupo_accion_grac
+					WHERE
+						grac_accn_pk = accn_pk
+						AND grac_grpo_pk = #{grpoId}
+				)
+		    ]]>
+			</if>
+			<if test="usroId != null">
+    		<![CDATA[
+				AND EXISTS (
+					SELECT 1
+					FROM tbl_grupo_accion_grac
+					WHERE
+						grac_accn_pk = accn_pk
+						AND EXISTS (
+							SELECT 1
+							FROM
+								tbl_usuario_grupo_usgr
+							WHERE
+								usgr_grpo_pk = grac_grpo_pk
+								AND usgr_usro_pk = #{usroId}
+						)
+				)
+		    ]]>
+			</if>
+		</where>
+	</sql>
+
+	<select id="count" parameterType="AccionCriterioVO" resultType="Integer">
+		<include refid="SelectCountPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="selectList" parameterType="AccionCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY accn_nombre
+	</select>
+
+	<select id="selectObject" parameterType="AccionCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="exists" parameterType="AccionVO" resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_accion_accn
+        WHERE accn_codigo = #{codigo}
+        ]]>
+	</select>
+
+	<insert id="insert" parameterType="AccionVO">
+        <![CDATA[
+        INSERT INTO tbl_accion_accn (accn_pk, accn_codigo, accn_nombre)
+        VALUES (#{id}, #{codigo}, #{nombre})
+        ]]>
+	</insert>
+
+	<update id="update" parameterType="AccionVO">
+        <![CDATA[
+        UPDATE tbl_accion_accn SET
+            accn_codigo = #{codigo}
+            , accn_nombre = #{nombre}
+        WHERE
+            accn_pk = #{id}
+        ]]>
+	</update>
+
+	<delete id="delete" parameterType="AccionVO">
+        <![CDATA[
+        DELETE FROM tbl_accion_accn
+        WHERE
+            accn_pk = #{id}
+        ]]>
+	</delete>
+</mapper>

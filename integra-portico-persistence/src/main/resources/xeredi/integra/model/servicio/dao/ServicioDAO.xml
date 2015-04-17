@@ -21,75 +21,15 @@
 		</association>
 	</resultMap>
 
-	<sql id="SelectPrefix" databaseId="postgres">
+	<sql id="SelectPrefix">
     <![CDATA[
 		SELECT srvc_pk, srvc_tpsr_pk, srvc_anno, srvc_numero, srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado, srvc_subp_pk
 			, prto_codigo, prto_codigo_corto
-			, NULL AS rownumVar
 		FROM
 			tbl_servicio_srvc
 			INNER JOIN tbl_puerto_prto ON
 				prto_pk = srvc_subp_pk
     ]]>
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-    <![CDATA[
-		ORDER BY srvc_falta DESC
-    ]]>
-		<if test="offset != null or limit != null">
-			<if test="offset != null">OFFSET ${offset} ROWS</if>
-			<if test="limit != null">FETCH NEXT ${limit} ROWS ONLY</if>
-		</if>
-	</sql>
-
-	<sql id="SelectPrefix" databaseId="sqlserver">
-    <![CDATA[
-		SELECT srvc_pk, srvc_tpsr_pk, srvc_anno, srvc_numero, srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado, srvc_subp_pk
-			, (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk) AS prto_codigo
-			, NULL AS rownumVar
-		FROM tbl_servicio_srvc
-    ]]>
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-    <![CDATA[
-		ORDER BY srvc_falta DESC
-    ]]>
-		<if test="offset != null or limit != null">
-			<if test="offset != null">OFFSET ${offset} ROWS</if>
-			<if test="limit != null">FETCH NEXT ${limit} ROWS ONLY</if>
-		</if>
-	</sql>
-
-	<sql id="SelectPrefix" databaseId="oracle">
-    <![CDATA[
-    	SELECT *
-    	FROM (
-			SELECT srvc_pk, srvc_tpsr_pk, srvc_anno, srvc_numero, srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado, srvc_subp_pk
-				, (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk) AS prto_codigo
-				, row_number() over (order by srvc_falta DESC) rownumVar
-			FROM tbl_servicio_srvc
-    ]]>
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-    <![CDATA[
-			ORDER BY srvc_falta DESC
-		) sql
-    ]]>
-		<if test="offset != null or limit != null">
-			<where>
-				<if test="offset != null">AND rownumVar > ${offset}</if>
-				<if test="limit != null">
-			    <![CDATA[
-					AND rownumVar <= (${limit}
-				]]>
-					<if test="offset != null">+ ${offset}</if>
-					)
-				</if>
-			</where>
-		</if>
 	</sql>
 
 	<sql id="SelectCountPrefix">
@@ -202,7 +142,7 @@
         ]]>
 	</select>
 
-	<select id="selectCount" parameterType="ServicioCriterioVO" resultType="Integer">
+	<select id="count" parameterType="ServicioCriterioVO" resultType="Integer">
 		<include refid="SelectCountPrefix" />
 		<where>
 			<include refid="SelectWhere" />
@@ -211,10 +151,17 @@
 
 	<select id="selectList" parameterType="ServicioCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
+		<where>
+			<include refid="SelectWhere" />
+		</where>
+		ORDER BY srvc_pk DESC
 	</select>
 
 	<select id="selectObject" parameterType="ServicioCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
+		<where>
+			<include refid="SelectWhere" />
+		</where>
 	</select>
 
 	<select id="selectLupaList" parameterType="ServicioLupaCriterioVO" resultMap="ResultMap" fetchSize="10">

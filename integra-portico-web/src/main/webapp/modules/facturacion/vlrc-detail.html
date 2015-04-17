@@ -131,52 +131,54 @@
     </div>
 </fieldset>
 
-<fieldset>
-    <legend translate="vlrgList"></legend>
+<div class="row">
+    <fieldset class="col-md-6 col-lg-5 col-xl-4">
+        <legend translate="vlrgList"></legend>
 
-    <table class="table-bordered table-condensed table-hover">
-        <thead>
-            <tr>
-                <th translate="vlrg_crgo"></th>
-                <th translate="vlrg_importe"></th>
-            </tr>
-        </thead>
+        <table class="table-bordered table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th translate="vlrg_crgo"></th>
+                    <th translate="vlrg_importe"></th>
+                </tr>
+            </thead>
 
-        <tbody>
-            <tr ng-repeat="vlrg in vm.vlrgList track by $index">
-                <td><a ng-href="#/facturacion/crgo/detail/{{vlrg.crgo.id}}/{{vlrg.fref}}"
-                    ng-bind="vlrg.crgo.etiqueta"></a></td>
-                <td nowrap="nowrap" class="number">{{vlrg.importe | number:2}} &euro;</td>
-            </tr>
-        </tbody>
-    </table>
-</fieldset>
+            <tbody>
+                <tr ng-repeat="vlrg in vm.vlrgList track by $index">
+                    <td><a ng-href="#/facturacion/crgo/detail/{{vlrg.crgo.id}}/{{vlrg.fref}}"
+                        ng-bind="vlrg.crgo.etiqueta"></a></td>
+                    <td nowrap="nowrap" class="number">{{vlrg.importe | number:2}} &euro;</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
 
-<fieldset>
-    <legend translate="vlriList"></legend>
+    <fieldset class="col-md-6 col-lg-4 col-xl-3">
+        <legend translate="vlriList"></legend>
 
-    <table class="table-bordered table-condensed table-hover">
-        <thead>
-            <tr>
-                <th translate="vlri_impuesto"></th>
-                <th translate="vlri_porcentaje"></th>
-                <th translate="vlri_importe_base"></th>
-                <th translate="vlri_importe_impuesto"></th>
-            </tr>
-        </thead>
+        <table class="table-bordered table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th translate="vlri_impuesto"></th>
+                    <th translate="vlri_porcentaje"></th>
+                    <th translate="vlri_importe_base"></th>
+                    <th translate="vlri_importe_impuesto"></th>
+                </tr>
+            </thead>
 
-        <tbody>
-            <tr ng-repeat="vlri in vm.vlriList track by $index">
-                <td><a
-                    ng-href="#/maestro/prmt/detail/{{vlri.impuesto.entiId}}/{{vlri.impuesto.id}}/{{vlri.fref}}"
-                    ng-bind="vlri.impuesto.etiqueta"></a></td>
-                <td class="number" ng-bind="vlri.porcentaje | number:2"></td>
-                <td nowrap="nowrap" class="number">{{vlri.importeBase | number:2}} &euro;</td>
-                <td nowrap="nowrap" class="number">{{vlri.importeImpuesto | number:2}} &euro;</td>
-            </tr>
-        </tbody>
-    </table>
-</fieldset>
+            <tbody>
+                <tr ng-repeat="vlri in vm.vlriList track by $index">
+                    <td><a
+                        ng-href="#/maestro/prmt/detail/{{vlri.impuesto.entiId}}/{{vlri.impuesto.id}}/{{vlri.fref}}"
+                        ng-bind="vlri.impuesto.etiqueta"></a></td>
+                    <td class="number" ng-bind="vlri.porcentaje | number:2"></td>
+                    <td nowrap="nowrap" class="number">{{vlri.importeBase | number:2}} &euro;</td>
+                    <td nowrap="nowrap" class="number">{{vlri.importeImpuesto | number:2}} &euro;</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</div>
 </tab> <tab heading="{{'vlrlList' | translate}}" select="vm.tabSelected('vlrlList')">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
@@ -268,11 +270,11 @@
                 <td><span ng-if="vlrl.cuant2" class="number" ng-bind="vlrl.cuant2 | number:2"></span></td>
                 <td nowrap="nowrap"><span ng-if="vlrl.cuant3" ng-bind="vlrl.rgla.rglv.etiqCuant3"></span></td>
                 <td><span ng-if="vlrl.cuant3" class="number" ng-bind="vlrl.cuant3 | number:2"></span></td>
-                <td><span ng-if="vlrl.cuant4" ng-bind="vlrl.rgla.rglv.etiqCuant4"></span></td>
+                <td nowrap="nowrap"><span ng-if="vlrl.cuant4" ng-bind="vlrl.rgla.rglv.etiqCuant4"></span></td>
                 <td><span ng-if="vlrl.cuant4" class="number" ng-bind="vlrl.cuant4 | number:2"></span></td>
-                <td><span ng-if="vlrl.cuant5" ng-bind="vlrl.rgla.rglv.etiqCuant5"></span></td>
+                <td nowrap="nowrap"><span ng-if="vlrl.cuant5" ng-bind="vlrl.rgla.rglv.etiqCuant5"></span></td>
                 <td><span ng-if="vlrl.cuant5" class="number" ng-bind="vlrl.cuant5 | number:2"></span></td>
-                <td><span ng-if="vlrl.cuant6" ng-bind="vlrl.rgla.rglv.etiqCuant6"></span></td>
+                <td nowrap="nowrap"><span ng-if="vlrl.cuant6" ng-bind="vlrl.rgla.rglv.etiqCuant6"></span></td>
                 <td><span ng-if="vlrl.cuant6" class="number" ng-bind="vlrl.cuant6 | number:2"></span></td>
             </tr>
         </tbody>

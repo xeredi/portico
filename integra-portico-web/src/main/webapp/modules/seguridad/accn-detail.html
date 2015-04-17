@@ -1,0 +1,19 @@
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <a class="btn btn-default" ng-href="#/seguridad/accn/edit/edit/{{vm.accn.id}}"><i
+            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
+    </div>
+</div>
+
+<fieldset>
+    <div class="row">
+        <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+            <label translate="accn_codigo"></label>
+            <p class="form-control-static" ng-bind="vm.accn.codigo"></p>
+        </div>
+        <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+            <label translate="accn_nombre"></label>
+            <p class="form-control-static" ng-bind="vm.accn.nombre"></p>
+        </div>
+    </div>
+</fieldset>

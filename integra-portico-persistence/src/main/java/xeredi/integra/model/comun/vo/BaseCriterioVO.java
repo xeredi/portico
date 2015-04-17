@@ -22,12 +22,6 @@ public abstract class BaseCriterioVO {
     /** The texto busqueda. */
     private String textoBusqueda;
 
-    /** The limit. */
-    private Integer limit;
-
-    /** The offset. */
-    private Integer offset;
-
     /** The max limit. */
     private Integer maxLimit;
 
@@ -94,44 +88,6 @@ public abstract class BaseCriterioVO {
      */
     public final void setFechaVigencia(final Date value) {
         fechaVigencia = value;
-    }
-
-    /**
-     * Gets the limit.
-     *
-     * @return the limit
-     */
-    public final Integer getLimit() {
-        return limit;
-    }
-
-    /**
-     * Sets the limit.
-     *
-     * @param value
-     *            the new limit
-     */
-    public final void setLimit(final Integer value) {
-        limit = value;
-    }
-
-    /**
-     * Gets the offset.
-     *
-     * @return the offset
-     */
-    public final Integer getOffset() {
-        return offset;
-    }
-
-    /**
-     * Sets the offset.
-     *
-     * @param value
-     *            the new offset
-     */
-    public final void setOffset(final Integer value) {
-        offset = value;
     }
 
     /**

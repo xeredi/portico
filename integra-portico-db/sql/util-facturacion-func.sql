@@ -1,4 +1,7 @@
-SELECT * FROM tbl_entidad_enti
+
+SELECT
+	enti.*
+FROM tbl_entidad_enti enti
 ORDER BY enti_codigo;
 
 SELECT *
@@ -129,14 +132,14 @@ SELECT portico.escalaUdsGt(1628195, NOW());
 
 -- atraqueNumeroPeriodosFacturables
 
-SELECT *
+SELECT srvc.*
 	, (
 		SELECT COUNT(1)
 		FROM tbl_subservicio_ssrv
 		WHERE ssrv_srvc_pk = srvc_pk
 			AND ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
 	) AS numAtraques
-FROM tbl_servicio_srvc
+FROM tbl_servicio_srvc srvc
 WHERE
 	srvc_tpsr_pk = portico.getEntidad('ESCALA')
 	AND srvc_estado IN ('I', 'F');
@@ -147,7 +150,7 @@ FROM tbl_subservicio_ssrv
 WHERE ssrv_srvc_pk = 1628087
 ;
 
-SELECT *
+SELECT ssrv.*
 	, GREATEST(ssrv_fini, '2013-01-01') AS ssrv_fini_liq
 	, LEAST(ssrv_ffin, '2015-01-01') AS ssrv_ffin_liq
 	, (
@@ -157,7 +160,7 @@ SELECT *
 			AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ESTAN_ATR_3')
 	) AS ssrv_tipo_estancia
 FROM
-	tbl_subservicio_ssrv
+	tbl_subservicio_ssrv ssrv
 WHERE
 	ssrv_srvc_pk = (
 		SELECT ssrv_srvc_pk
@@ -229,7 +232,7 @@ FROM tbl_servicio_srvc
 		AND crgo_es_principal = 1
 WHERE srvc_pk = 1628895;
 
-SELECT *
+SELECT srvc.*
 	, (
 		CASE
 			WHEN NOT EXISTS (
@@ -244,7 +247,7 @@ SELECT *
 			ELSE srvc_fini
 		END
 	) AS fref
-FROM tbl_servicio_srvc
+FROM tbl_servicio_srvc srvc
 WHERE srvc_pk = 1628895;
 
 

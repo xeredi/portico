@@ -1,5 +1,7 @@
 package xeredi.integra.http.controller.action.facturacion;
 
+import java.util.List;
+
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.ItemAction;
@@ -8,6 +10,8 @@ import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
+import xeredi.integra.model.facturacion.vo.ReglaTipo;
+import xeredi.integra.model.facturacion.vo.ValoracionDetalleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
@@ -33,6 +37,9 @@ public final class ValoracionDetalleAction extends ItemAction implements ModelDr
     /** The vlrl padre. */
     private ValoracionLineaVO vlrlPadre;
 
+    /** The vlrd hijos list. */
+    private List<ValoracionDetalleVO> vlrdHijosList;
+
     /** The aspc. */
     private AspectoVO aspc;
 
@@ -55,6 +62,16 @@ public final class ValoracionDetalleAction extends ItemAction implements ModelDr
         final ValoracionBO vlrcBO = new ValoracionBO();
 
         model = vlrcBO.selectVlrd(model.getId());
+
+        // Busqueda de lineas hijas (coef/bonif)
+        if (model.getRgla().getTipo() == ReglaTipo.T) {
+            final ValoracionDetalleCriterioVO vlrdCriterio = new ValoracionDetalleCriterioVO();
+
+            vlrdCriterio.setPadreId(model.getId());
+            vlrdCriterio.setSoloHijos(true);
+
+            vlrdHijosList = vlrcBO.selectVlrdList(vlrdCriterio);
+        }
 
         loadDependencies();
 
@@ -88,6 +105,13 @@ public final class ValoracionDetalleAction extends ItemAction implements ModelDr
         return SUCCESS;
     }
 
+    /**
+     * Save.
+     *
+     * @return the string
+     * @throws ApplicationException
+     *             the application exception
+     */
     @Action("vlrd-save")
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(getAccion());
@@ -203,6 +227,15 @@ public final class ValoracionDetalleAction extends ItemAction implements ModelDr
      */
     public AspectoVO getAspc() {
         return aspc;
+    }
+
+    /**
+     * Gets the vlrd hijos list.
+     *
+     * @return the vlrd hijos list
+     */
+    public List<ValoracionDetalleVO> getVlrdHijosList() {
+        return vlrdHijosList;
     }
 
 }

@@ -13,6 +13,17 @@
 <fieldset>
     <div class="row">
         <div class="col-md-1 form-group-sm">
+            <label translate="rgla"></label>
+            <p class="form-control-static">
+                <a ng-href="#/facturacion/rgla/detail/{{vm.vlrd.rgla.id}}/{{vm.vlrd.fref}}"
+                    ng-bind="vm.vlrd.rgla.codigo"></a>
+            </p>
+        </div>
+        <div class="col-md-1 form-group-sm">
+            <label translate="rgla_tipo"></label>
+            <p class="form-control-static" ng-bind="vm.vlrd.rgla.tipo"></p>
+        </div>
+        <div class="col-md-1 form-group-sm">
             <label translate="vlrd_valorBase"></label>
             <p class="form-control-static number" ng-bind="vm.vlrd.valorBase | number:4"></p>
         </div>
@@ -94,6 +105,64 @@
             <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant6"></label>
             <p class="form-control-static number" ng-bind="vm.vlrd.cuant6 | number:2"></p>
         </div>
+    </div>
+</fieldset>
+
+<fieldset ng-if="vm.vlrd.rgla.tipo == 'T'">
+    <legend>Modificadores</legend>
+
+    <div class="table-responsive">
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th />
+                    <th translate="rgla"></th>
+                    <th translate="rgla_tipo"></th>
+                    <th translate="vlrd_valorBase"></th>
+                    <th translate="vlrd_importeBase"></th>
+                    <th translate="vlrd_importe"></th>
+
+                    <th ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant1"><span
+                        ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant1"></span></th>
+                    <th ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant2"><span
+                        ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant2"></span></th>
+                    <th ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant3"><span
+                        ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant3"></span></th>
+                    <th ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant4"><span
+                        ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant4"></span></th>
+                    <th ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant5"><span
+                        ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant5"></span></th>
+                    <th ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant6"><span
+                        ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant6"></span></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="vlrd in vm.vlrdHijosList track by $index">
+                    <td><a
+                        ng-href="#/facturacion/vlrd/detail/{{vlrd.vlrcId}}/{{vlrd.vlrlId}}/{{vlrd.id}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
+                    <td nowrap="nowrap" ng-bind="vlrd.rgla.codigo"></td>
+                    <td nowrap="nowrap" ng-bind="vlrd.rgla.tipo"></td>
+                    <td class="number" ng-bind="vlrd.valorBase | number:4"></td>
+                    <td nowrap="nowrap" class="number">{{vlrd.importeBase | number:2}} &euro;</td>
+                    <td nowrap="nowrap" class="number">{{vlrd.importe | number:2}} &euro;</td>
+
+                    <td ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant1" class="number"
+                        ng-bind="vlrd.cuant1 | number:2"></td>
+                    <td ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant2" class="number"
+                        ng-bind="vlrd.cuant2 | number:2"></td>
+                    <td ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant3" class="number"
+                        ng-bind="vlrd.cuant3 | number:2"></td>
+                    <td ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant4" class="number"
+                        ng-bind="vlrd.cuant4 | number:2"></td>
+                    <td ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant5" class="number"
+                        ng-bind="vlrd.cuant5 | number:2"></td>
+                    <td ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant6" class="number"
+                        ng-bind="vlrd.cuant6 | number:2"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </fieldset>
 </tab></tabset>

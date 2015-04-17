@@ -79,25 +79,23 @@
 	<sql id="SelectPrefix">
     <![CDATA[
 		SELECT
-		    vlrl_pk, vlrl_padre_pk, vlrl_vlrc_pk, vlrl_rgla_pk, vlrl_impuesto_prmt_pk, vlrl_ssrv_pk, vlrl_fini, vlrl_ffin
-		    , vlrl_info1, vlrl_info2, vlrl_info3, vlrl_info4, vlrl_info5, vlrl_info6
-
-		    , rgla_codigo, rgla_crgo_pk, rgla_tipo, rgla_enti_pk
-
-		    , vlrc_fref AS vlrl_fref
-
-			, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
-			, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
-
-		    , prmt_parametro AS vlrl_impuesto_prmt
-		    , prmt_tppr_pk AS vlrl_impuesto_tppr_pk
-
-		    , (SELECT ssrv_numero FROM tbl_subservicio_ssrv WHERE ssrv_pk = vlrl_ssrv_pk) AS ssrv_numero
-		    , (SELECT crgo_codigo FROM tbl_cargo_crgo WHERE crgo_pk = rgla_crgo_pk) AS crgo_codigo
-		    , (SELECT enti_tipo FROM tbl_entidad_enti WHERE enti_pk = rgla_enti_pk) AS enti_tipo
-		    , (SELECT SUM(vlrd_importe_base) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_importe_base
-		    , (SELECT SUM(vlrd_importe) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_importe
-		    , (SELECT COUNT(1) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_vlrd_count
+		    vlrl_pk, vlrl_padre_pk, vlrl_vlrc_pk, vlrl_rgla_pk
+		    , CASE
+		        WHEN vlrl_pk = vlrl_padre_pk THEN vlrl_impuesto_prmt_pk
+		        ELSE (SELECT vlrl_impuesto_prmt_pk FROM tbl_valoracion_lin_vlrl vlrlPadre WHERE vlrlPadre.vlrl_pk = vlrl.vlrl_padre_pk)
+		    END AS vlrl_impuesto_prmt_pk
+		    , CASE
+		        WHEN vlrl_pk = vlrl_padre_pk THEN vlrl_ssrv_pk
+		        ELSE (SELECT vlrl_ssrv_pk FROM tbl_valoracion_lin_vlrl vlrlPadre WHERE vlrlPadre.vlrl_pk = vlrl.vlrl_padre_pk)
+		    END AS vlrl_ssrv_pk
+		    , CASE
+		        WHEN vlrl_pk = vlrl_padre_pk THEN vlrl_fini
+		        ELSE (SELECT vlrl_fini FROM tbl_valoracion_lin_vlrl vlrlPadre WHERE vlrlPadre.vlrl_pk = vlrl.vlrl_padre_pk)
+		    END AS vlrl_fini
+		    , CASE
+		        WHEN vlrl_pk = vlrl_padre_pk THEN vlrl_ffin
+		        ELSE (SELECT vlrl_ffin FROM tbl_valoracion_lin_vlrl vlrlPadre WHERE vlrlPadre.vlrl_pk = vlrl.vlrl_padre_pk)
+		    END AS vlrl_ffin
 
 		    , (SELECT SUM(vlrd_cuant1) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_cuant1
 		    , (SELECT SUM(vlrd_cuant2) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_cuant2
@@ -105,6 +103,49 @@
 		    , (SELECT SUM(vlrd_cuant4) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_cuant4
 		    , (SELECT SUM(vlrd_cuant5) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_cuant5
 		    , (SELECT SUM(vlrd_cuant6) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_cuant6
+
+		    , CASE
+		        WHEN vlrl_pk = vlrl_padre_pk THEN vlrl_info1
+		        ELSE (SELECT vlrl_info1 FROM tbl_valoracion_lin_vlrl vlrlPadre WHERE vlrlPadre.vlrl_pk = vlrl.vlrl_padre_pk)
+		    END AS vlrl_info1
+		    , CASE
+		        WHEN vlrl_pk = vlrl_padre_pk THEN vlrl_info2
+		        ELSE (SELECT vlrl_info2 FROM tbl_valoracion_lin_vlrl vlrlPadre WHERE vlrlPadre.vlrl_pk = vlrl.vlrl_padre_pk)
+		    END AS vlrl_info2
+		    , CASE
+		        WHEN vlrl_pk = vlrl_padre_pk THEN vlrl_info3
+		        ELSE (SELECT vlrl_info3 FROM tbl_valoracion_lin_vlrl vlrlPadre WHERE vlrlPadre.vlrl_pk = vlrl.vlrl_padre_pk)
+		    END AS vlrl_info3
+		    , CASE
+		        WHEN vlrl_pk = vlrl_padre_pk THEN vlrl_info4
+		        ELSE (SELECT vlrl_info4 FROM tbl_valoracion_lin_vlrl vlrlPadre WHERE vlrlPadre.vlrl_pk = vlrl.vlrl_padre_pk)
+		    END AS vlrl_info4
+		    , CASE
+		        WHEN vlrl_pk = vlrl_padre_pk THEN vlrl_info5
+		        ELSE (SELECT vlrl_info5 FROM tbl_valoracion_lin_vlrl vlrlPadre WHERE vlrlPadre.vlrl_pk = vlrl.vlrl_padre_pk)
+		    END AS vlrl_info5
+		    , CASE
+		        WHEN vlrl_pk = vlrl_padre_pk THEN vlrl_info6
+		        ELSE (SELECT vlrl_info6 FROM tbl_valoracion_lin_vlrl vlrlPadre WHERE vlrlPadre.vlrl_pk = vlrl.vlrl_padre_pk)
+		    END AS vlrl_info6
+
+		    , (SELECT SUM(vlrd_importe_base) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_importe_base
+		    , (SELECT SUM(vlrd_importe) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_importe
+		    , (SELECT COUNT(1) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_vlrd_count
+
+		    , vlrc_fref AS vlrl_fref
+
+		    , rgla_codigo, rgla_crgo_pk, rgla_tipo, rgla_enti_pk
+
+		    , rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
+		    , rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
+
+		    , prmt_parametro AS vlrl_impuesto_prmt
+		    , prmt_tppr_pk AS vlrl_impuesto_tppr_pk
+
+		    , (SELECT ssrv_numero FROM tbl_subservicio_ssrv WHERE ssrv_pk = vlrl_ssrv_pk) AS ssrv_numero
+		    , (SELECT crgo_codigo FROM tbl_cargo_crgo WHERE crgo_pk = rgla_crgo_pk) AS crgo_codigo
+		    , (SELECT enti_tipo FROM tbl_entidad_enti WHERE enti_pk = rgla_enti_pk) AS enti_tipo
     ]]>
 		<if test="idioma != null">
 	    <![CDATA[
@@ -125,16 +166,16 @@
 		</if>
     <![CDATA[
 		FROM
-		    tbl_valoracion_lin_vlrl
+		    tbl_valoracion_lin_vlrl vlrl
 		    INNER JOIN tbl_valoracion_vlrc ON
 		        vlrc_pk = vlrl_vlrc_pk
-		    INNER JOIN tbl_regla_rgla ON
+		    INNER JOIN tbl_regla_rgla rgla ON
 		        rgla_pk = vlrl_rgla_pk
-		    INNER JOIN tbl_parametro_prmt ON
-		        prmt_pk = vlrl_impuesto_prmt_pk
 		    LEFT JOIN tbl_regla_version_rglv ON
 		        rglv_rgla_pk = vlrl_rgla_pk
 		        AND vlrc_fref BETWEEN rglv_fini AND COALESCE(rglv_ffin, vlrc_fref)
+		    LEFT JOIN tbl_parametro_prmt ON
+		        prmt_pk = vlrl_impuesto_prmt_pk
     ]]>
 	</sql>
 
@@ -142,6 +183,14 @@
 		<where>
 			<if test="id != null">
 				AND vlrl_pk = #{id}
+			</if>
+			<if test="padreId != null">
+				AND vlrl_padre_pk = #{padreId}
+			</if>
+			<if test="soloHijos">
+    		<![CDATA[
+				AND vlrl_padre_pk <> vlrl_pk
+		    ]]>
 			</if>
 			<if test="vlrc != null">
 				<if test="vlrc.id != null">
@@ -243,17 +292,36 @@
         INSERT INTO tbl_valoracion_lin_vlrl (
             vlrl_pk, vlrl_padre_pk, vlrl_vlrc_pk, vlrl_rgla_pk
             , vlrl_impuesto_prmt_pk, vlrl_ssrv_pk, vlrl_fini, vlrl_ffin
-            , vlrl_cuant1, vlrl_cuant2, vlrl_cuant3, vlrl_cuant4, vlrl_cuant5, vlrl_cuant6
             , vlrl_info1, vlrl_info2, vlrl_info3, vlrl_info4, vlrl_info5, vlrl_info6
         )
         VALUES (
             #{id}, #{padreId}, #{vlrcId}, #{rgla.id}
             , #{impuesto.id}, #{ssrv.id}, #{fini}, #{ffin}
-            , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
             , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
         )
     ]]>
 	</insert>
+
+	<update id="update" parameterType="ValoracionLineaVO">
+    <![CDATA[
+        UPDATE tbl_valoracion_lin_vlrl SET
+            vlrl_info1 = #{info1}
+            , vlrl_info2 = #{info2}
+            , vlrl_info3 = #{info3}
+            , vlrl_info4 = #{info4}
+            , vlrl_info5 = #{info5}
+            , vlrl_info6 = #{info6}
+    ]]>
+		<if test="rgla.tipo.equals('T')">
+	    <![CDATA[
+            , vlrl_impuesto_prmt_pk = #{impuesto.id}
+            , vlrl_ssrv_pk = #{ssrv.id}
+            , vlrl_fini = #{fini}
+            , vlrl_ffin = #{ffin}
+    	]]>
+		</if>
+		WHERE vlrl_pk = #{id}
+	</update>
 
 	<delete id="delete" parameterType="ValoracionLineaCriterioVO">
 		DELETE FROM tbl_valoracion_lin_vlrl

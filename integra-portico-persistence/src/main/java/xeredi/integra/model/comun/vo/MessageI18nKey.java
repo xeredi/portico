@@ -85,8 +85,45 @@ public enum MessageI18nKey {
     sec_configuracion,
     /** The sec_job. */
     sec_job,
+    /** The sec_usro. */
+    sec_usro,
 
-    sprt, prto,
+    /** The usro. */
+    usro,
+    /** The usro list. */
+    usroList,
+    /** The usro_login. */
+    usro_login,
+    /** The usro_contrasenia. */
+    usro_contrasenia,
+    /** The usro_nombre. */
+    usro_nombre,
+    /** The grpo. */
+    grpo,
+    /** The grpo list. */
+    grpoList,
+    /** The grpo_nombre. */
+    grpo_nombre,
+    /** The accn. */
+    accn,
+    /** The accn_codigo. */
+    accn_codigo,
+    /** The accn_nombre. */
+    accn_nombre,
+    /** The accn list. */
+    accnList,
+    /** The grac. */
+    grac,
+    /** The usgr. */
+    usgr,
+    /** The sprt. */
+    sprt,
+    /** The sprt list. */
+    sprtList,
+    /** The prto. */
+    prto,
+    /** The prto list. */
+    prtoList,
 
     /** The enti. */
     enti,
@@ -352,7 +389,15 @@ public enum MessageI18nKey {
     /** The sprm_fini. */
     sprm_fini,
     /** The sprm_ffin. */
-    sprm_ffin, srsc, srscList, srsc_anno, srsc_ultimo_numero,
+    sprm_ffin,
+    /** The srsc. */
+    srsc,
+    /** The srsc list. */
+    srscList,
+    /** The srsc_anno. */
+    srsc_anno,
+    /** The srsc_ultimo_numero. */
+    srsc_ultimo_numero,
     /** The srvc. */
     srvc,
     /** The srvc list. */

@@ -568,6 +568,23 @@ public class ValoracionBO {
     }
 
     /**
+     * Select vlrd list.
+     *
+     * @param vlrdCriterio
+     *            the vlrd criterio
+     * @return the list
+     */
+    public List<ValoracionDetalleVO> selectVlrdList(final ValoracionDetalleCriterioVO vlrdCriterio) {
+        Preconditions.checkNotNull(vlrdCriterio);
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+
+            return vlrdDAO.selectList(vlrdCriterio);
+        }
+    }
+
+    /**
      * Insert vlrd.
      *
      * @param vlrd

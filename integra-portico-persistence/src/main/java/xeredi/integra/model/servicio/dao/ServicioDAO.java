@@ -58,7 +58,7 @@ public interface ServicioDAO {
      *            the srvc criterio vo
      * @return the int
      */
-    int selectCount(final @Nonnull ServicioCriterioVO srvcCriterioVO);
+    int count(final @Nonnull ServicioCriterioVO srvcCriterioVO);
 
     /**
      * Select list.
@@ -70,6 +70,28 @@ public interface ServicioDAO {
     List<ServicioVO> selectList(final @Nonnull ServicioCriterioVO srvcCriterioVO);
 
     /**
+     * Select list.
+     *
+     * @param srvcCriterioVO
+     *            the srvc criterio vo
+     * @param bounds
+     *            the bounds
+     * @return the list
+     */
+    List<ServicioVO> selectList(final @Nonnull ServicioCriterioVO srvcCriterioVO, final RowBounds bounds);
+
+    /**
+     * Select lupa list.
+     *
+     * @param srvcCriterioVO
+     *            the srvc criterio vo
+     * @param bounds
+     *            the bounds
+     * @return the list
+     */
+    List<ServicioVO> selectLupaList(final @Nonnull ServicioLupaCriterioVO srvcCriterioVO, final RowBounds bounds);
+
+    /**
      * Select object.
      *
      * @param srvcCriterioVO
@@ -77,17 +99,5 @@ public interface ServicioDAO {
      * @return the servicio vo
      */
     ServicioVO selectObject(final @Nonnull ServicioCriterioVO srvcCriterioVO);
-
-    /**
-     * Select lupa list.
-     *
-     * @param srvcLupaCriterioVO
-     *            the srvc lupa criterio vo
-     * @param bounds
-     *            the bounds
-     * @return the list
-     */
-    List<ServicioVO> selectLupaList(final @Nonnull ServicioLupaCriterioVO srvcLupaCriterioVO,
-            @Nonnull final RowBounds bounds);
 
 }

@@ -66,9 +66,6 @@ public class EstadisticaBO {
      */
     public final List<EstadisticaVO> selectList(final @Nonnull EstadisticaCriterioVO estdCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            estdCriterioVO.setOffset(null);
-            estdCriterioVO.setLimit(null);
-
             final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
             final List<EstadisticaVO> estdList = estdDAO.selectList(estdCriterioVO);
 

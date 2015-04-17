@@ -77,27 +77,27 @@
     <div class="row">
         <div ng-if="vm.vlrlPadre.rgla.rglv.etiqInfo1 && vm.aspc.aspv.lgrpInfo1" class="col-md-4 form-group-sm">
             <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqInfo1"></label>
-            <p class="form-control-static" ng-bind="vm.vlrlPadre.info1"></p>
+            <p class="form-control-static" ng-bind="vm.vlrl.info1"></p>
         </div>
         <div ng-if="vm.vlrlPadre.rgla.rglv.etiqInfo2 && vm.aspc.aspv.lgrpInfo2" class="col-md-4 form-group-sm">
             <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqInfo2"></label>
-            <p class="form-control-static" ng-bind="vm.vlrlPadre.info2"></p>
+            <p class="form-control-static" ng-bind="vm.vlrl.info2"></p>
         </div>
         <div ng-if="vm.vlrlPadre.rgla.rglv.etiqInfo3 && vm.aspc.aspv.lgrpInfo3" class="col-md-4 form-group-sm">
             <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqInfo3"></label>
-            <p class="form-control-static" ng-bind="vm.vlrlPadre.info3"></p>
+            <p class="form-control-static" ng-bind="vm.vlrl.info3"></p>
         </div>
         <div ng-if="vm.vlrlPadre.rgla.rglv.etiqInfo4 && vm.aspc.aspv.lgrpInfo4" class="col-md-4 form-group-sm">
             <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqInfo4"></label>
-            <p class="form-control-static" ng-bind="vm.vlrlPadre.info4"></p>
+            <p class="form-control-static" ng-bind="vm.vlrl.info4"></p>
         </div>
         <div ng-if="vm.vlrlPadre.rgla.rglv.etiqInfo5 && vm.aspc.aspv.lgrpInfo5" class="col-md-4 form-group-sm">
             <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqInfo5"></label>
-            <p class="form-control-static" ng-bind="vm.vlrlPadre.info5"></p>
+            <p class="form-control-static" ng-bind="vm.vlrl.info5"></p>
         </div>
         <div ng-if="vm.vlrlPadre.rgla.rglv.etiqInfo6 && vm.aspc.aspv.lgrpInfo6" class="col-md-4 form-group-sm">
             <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqInfo6"></label>
-            <p class="form-control-static" ng-bind="vm.vlrlPadre.info6"></p>
+            <p class="form-control-static" ng-bind="vm.vlrl.info6"></p>
         </div>
     </div>
 
@@ -128,6 +128,63 @@
         </div>
     </div>
 </fieldset>
+
+
+<fieldset ng-if="vm.vlrl.rgla.tipo == 'T'">
+    <legend>Modificadores</legend>
+
+    <div class="table-responsive">
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th />
+                    <th translate="rgla"></th>
+                    <th translate="rgla_tipo"></th>
+                    <th translate="vlrl_importeBase"></th>
+                    <th translate="vlrl_importe"></th>
+
+                    <th ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant1"><span
+                        ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant1"></span></th>
+                    <th ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant2"><span
+                        ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant2"></span></th>
+                    <th ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant3"><span
+                        ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant3"></span></th>
+                    <th ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant4"><span
+                        ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant4"></span></th>
+                    <th ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant5"><span
+                        ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant5"></span></th>
+                    <th ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant6"><span
+                        ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant6"></span></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="vlrl in vm.vlrlHijosList track by $index">
+                    <td><a
+                        ng-href="#/facturacion/vlrl/detail/{{vlrl.vlrcId}}/{{vlrl.id}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
+                    <td nowrap="nowrap" ng-bind="vlrl.rgla.codigo"></td>
+                    <td nowrap="nowrap" ng-bind="vlrl.rgla.tipo"></td>
+                    <td nowrap="nowrap" class="number">{{vlrl.importeBase | number:2}} &euro;</td>
+                    <td nowrap="nowrap" class="number">{{vlrl.importe | number:2}} &euro;</td>
+
+                    <td ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant1" class="number"
+                        ng-bind="vlrl.cuant1 | number:2"></td>
+                    <td ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant2" class="number"
+                        ng-bind="vlrl.cuant2 | number:2"></td>
+                    <td ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant3" class="number"
+                        ng-bind="vlrl.cuant3 | number:2"></td>
+                    <td ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant4" class="number"
+                        ng-bind="vlrl.cuant4 | number:2"></td>
+                    <td ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant5" class="number"
+                        ng-bind="vlrl.cuant5 | number:2"></td>
+                    <td ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant6" class="number"
+                        ng-bind="vlrl.cuant6 | number:2"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>
 </tab> <tab heading="{{'vlrdList' | translate}}">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
@@ -150,6 +207,7 @@
         <thead>
             <tr>
                 <th />
+                <th translate="rgla"></th>
                 <th translate="vlrd_valorBase"></th>
                 <th translate="vlrd_importeBase" ng-if="vm.vlrl.rgla.tipo != 'T'"></th>
                 <th translate="vlrd_importe"></th>
@@ -188,8 +246,9 @@
             <tr ng-repeat="vlrd in vm.vlrdList.list track by $index">
                 <td><a ng-href="#/facturacion/vlrd/detail/{{vlrd.vlrcId}}/{{vlrd.vlrlId}}/{{vlrd.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
+                <td nowrap="nowrap" ng-bind="vlrd.rgla.codigo"></td>
                 <td class="number" ng-bind="vlrd.valorBase | number:4"></td>
-                <td nowrap="nowrap" class="number" ng-if="vm.vlrl.rgla.tipo != 'T'">{{vlrd.importeBase |
+                <td nowrap="nowrap" class="number" ng-if="vlrd.rgla.tipo != 'T'">{{vlrd.importeBase |
                     number:2}} &euro;</td>
                 <td nowrap="nowrap" class="number">{{vlrd.importe | number:2}} &euro;</td>
                 <td ng-bind="vlrd.ssrv.numero"></td>

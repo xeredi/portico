@@ -15,6 +15,9 @@ public final class ValoracionDetalleVO {
     /** The id. */
     private Long id;
 
+    /** The padre id. */
+    private Long padreId;
+
     /** The vlrc id. */
     private Long vlrcId;
 
@@ -35,6 +38,9 @@ public final class ValoracionDetalleVO {
 
     /** The ssrv. */
     private SubservicioVO ssrv;
+
+    /** The rgla. */
+    private ReglaVO rgla;
 
     /** The fini. */
     private Date fini;
@@ -502,6 +508,44 @@ public final class ValoracionDetalleVO {
      */
     public void setFref(final Date value) {
         fref = value;
+    }
+
+    /**
+     * Gets the padre id.
+     *
+     * @return the padre id
+     */
+    public Long getPadreId() {
+        return padreId;
+    }
+
+    /**
+     * Sets the padre id.
+     *
+     * @param value
+     *            the new padre id
+     */
+    public void setPadreId(final Long value) {
+        padreId = value;
+    }
+
+    /**
+     * Gets the rgla.
+     *
+     * @return the rgla
+     */
+    public ReglaVO getRgla() {
+        return rgla;
+    }
+
+    /**
+     * Sets the rgla.
+     *
+     * @param value
+     *            the new rgla
+     */
+    public void setRgla(final ReglaVO value) {
+        rgla = value;
     }
 
 }

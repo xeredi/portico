@@ -124,6 +124,10 @@ public final class EntidadProxy {
                 entiDetail.setEntdList(new ArrayList<EntidadTipoDatoVO>());
             }
 
+            if (entd.getTpdt() != null) {
+                entd.setTpdt(TipoDatoProxy.select(entd.getTpdt().getId()));
+            }
+
             entiDetail.getEntdList().add(entd);
         }
 

@@ -3,7 +3,7 @@ angular.module(
         [ "ngRoute", "mgcrea.ngStrap", "mgcrea.ngStrap.aside", "ui.bootstrap.tpls", "ui.bootstrap.tabs",
                 "ui.bootstrap.pagination", "ui.bootstrap.dropdown", "ui.bootstrap.typeahead",
                 "pascalprecht.translate", "angularSpinner", "i18n", "administracion", "metamodelo",
-                "facturacion", "maestro", "servicio", "estadistica", "proceso" ])
+                "facturacion", "maestro", "servicio", "estadistica", "proceso", "seguridad" ])
 
 .config([ "$routeProvider", function($routeProvider) {
     $routeProvider
