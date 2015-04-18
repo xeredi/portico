@@ -99,15 +99,15 @@ function AccnGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.filter = filter;
 
     vm.accnCriterio = $routeParams.accnCriterio ? angular.fromJson($routeParams.accnCriterio) : {};
+    vm.page = $routeParams.page ? $routeParams.page : 1;
 
-    function search(page) {
-        $http.post("seguridad/accn-list.action", {
+    function search() {
+        $http.post("seguridad/accion-list.action", {
             model : vm.accnCriterio,
-            page : page,
+            page : vm.page,
             limit : vm.limit
         }).success(function(data) {
-            vm.accnList = data.accnList;
-            vm.page = data.accnList.page;
+            vm.accnList = data.resultList;
 
             $location.search({
                 page : vm.page,
@@ -117,7 +117,7 @@ function AccnGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function pageChanged() {
-        search(vm.page);
+        search();
     }
 
     function filter(size) {
@@ -125,14 +125,14 @@ function AccnGridController($http, $location, $routeParams, $modal, pageTitleSer
         });
     }
 
-    search($routeParams.page ? $routeParams.page : 1);
+    search();
     pageTitleService.setTitle("accn", "page_grid");
 }
 
 function AccnDetailController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
-    $http.post("seguridad/accn-detail.action", {
+    $http.post("seguridad/accion-detail.action", {
         model : {
             id : $routeParams.accnId
         }
@@ -185,15 +185,15 @@ function GrpoGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.filter = filter;
 
     vm.grpoCriterio = $routeParams.grpoCriterio ? angular.fromJson($routeParams.grpoCriterio) : {};
+    vm.page = $routeParams.page ? $routeParams.page : 1;
 
-    function search(page) {
+    function search() {
         $http.post("seguridad/grpo-list.action", {
             model : vm.grpoCriterio,
-            page : page,
+            page : vm.page,
             limit : vm.limit
         }).success(function(data) {
             vm.grpoList = data.grpoList;
-            vm.page = data.grpoList.page;
 
             $location.search({
                 page : vm.page,
@@ -203,7 +203,7 @@ function GrpoGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function pageChanged() {
-        search(vm.page);
+        search();
     }
 
     function filter(size) {
@@ -211,7 +211,7 @@ function GrpoGridController($http, $location, $routeParams, $modal, pageTitleSer
         });
     }
 
-    search($routeParams.page ? $routeParams.page : 1);
+    search();
     pageTitleService.setTitle("grpo", "page_grid");
 }
 
@@ -271,15 +271,15 @@ function UsroGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.filter = filter;
 
     vm.usroCriterio = $routeParams.usroCriterio ? angular.fromJson($routeParams.usroCriterio) : {};
+    vm.page = $routeParams.page ? $routeParams.page : 1;
 
-    function search(page) {
+    function search() {
         $http.post("seguridad/usro-list.action", {
             model : vm.usroCriterio,
-            page : page,
+            page : vm.page,
             limit : vm.limit
         }).success(function(data) {
             vm.usroList = data.usroList;
-            vm.page = data.usroList.page;
 
             $location.search({
                 page : vm.page,
@@ -289,7 +289,7 @@ function UsroGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function pageChanged() {
-        search(vm.page);
+        search();
     }
 
     function filter(size) {
@@ -297,7 +297,7 @@ function UsroGridController($http, $location, $routeParams, $modal, pageTitleSer
         });
     }
 
-    search($routeParams.page ? $routeParams.page : 1);
+    search();
     pageTitleService.setTitle("usro", "page_grid");
 }
 

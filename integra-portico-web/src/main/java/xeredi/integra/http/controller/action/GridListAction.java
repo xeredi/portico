@@ -7,23 +7,20 @@ import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class GridAction.
+ * The Class GridListAction.
  *
  * @param <T>
  *            the generic type
  * @param <R>
  *            the generic type
  */
-public abstract class GridAction<T, R> extends BaseAction implements ModelDriven<T> {
+public abstract class GridListAction<T extends Object, R extends Object> extends BaseAction implements ModelDriven<T> {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -6180459932256461050L;
+    private static final long serialVersionUID = -6646875422640202469L;
 
     /** The rows per page default. */
     public static final int ROWS_PER_PAGE_DEFAULT = 20;
-
-    /** The valid rows per page. */
-    public static final int[] VALID_ROWS_PER_PAGE = new int[] { 10, 20, 50, 100, 200, 500 };
 
     /** The model. */
     protected T model;
@@ -38,52 +35,22 @@ public abstract class GridAction<T, R> extends BaseAction implements ModelDriven
     protected int limit = ROWS_PER_PAGE_DEFAULT;
 
     /**
-     * Filter.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
+     * {@inheritDoc}
      */
-    public final String filter() throws ApplicationException {
-        doFilter();
+    @Override
+    public final String execute() throws ApplicationException {
+        doExecute();
 
         return SUCCESS;
     }
 
     /**
-     * List.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public final String list() throws ApplicationException {
-        doList();
-
-        return SUCCESS;
-    }
-
-    /**
-     * Do filter.
+     * Do execute.
      *
      * @throws ApplicationException
      *             the application exception
      */
-    protected void doFilter() throws ApplicationException {
-        throw new Error("No implementado");
-    }
-
-    /**
-     * Do list.
-     *
-     * @throws ApplicationException
-     *             the application exception
-     */
-    protected void doList() throws ApplicationException {
-        throw new Error("No implementado");
-    }
-
-    // get / set
+    public abstract void doExecute() throws ApplicationException;
 
     /**
      * {@inheritDoc}
@@ -119,7 +86,7 @@ public abstract class GridAction<T, R> extends BaseAction implements ModelDriven
      *            the new page
      */
     public final void setPage(final int value) {
-        this.page = value;
+        page = value;
     }
 
     /**
@@ -129,7 +96,7 @@ public abstract class GridAction<T, R> extends BaseAction implements ModelDriven
      *            the new limit
      */
     public final void setLimit(final int value) {
-        this.limit = value;
+        limit = value;
     }
 
     /**
@@ -141,12 +108,4 @@ public abstract class GridAction<T, R> extends BaseAction implements ModelDriven
         return (page - PaginatedList.FIRST_PAGE) * limit;
     }
 
-    /**
-     * Gets the limits.
-     *
-     * @return the limits
-     */
-    public final int[] getLimits() {
-        return VALID_ROWS_PER_PAGE;
-    }
 }

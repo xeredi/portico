@@ -3,16 +3,20 @@
     "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-	<constant name="struts.devMode" value="false" />
-	<constant name="struts.i18n.reload" value="false" />
-	<constant name="struts.configuration.xml.reload" value="false" />
+	<!-- <constant name="struts.devMode" value="false" /> <constant name="struts.i18n.reload" value="false" /> <constant
+		name="struts.configuration.xml.reload" value="false" /> <constant name="struts.convention.package.locators.basePackage"
+		value="xeredi.integra.http.controller.action" /> <constant name="struts.convention.classLoader.excludeParent" value="false"
+		/> -->
+	<constant name="struts.convention.action.alwaysMapExecute" value="false" />
+	<constant name="struts.convention.action.mapAllMatches" value="true" />
+
 
 	<package name="default" extends="json-default">
 		<interceptors>
-			<interceptor name="app"
-				class="xeredi.integra.http.util.interceptor.AppInterceptor" />
+			<interceptor name="app" class="xeredi.integra.http.util.interceptor.AppInterceptor" />
 			<interceptor-stack name="porticoStack">
 				<interceptor-ref name="timer" />
+				<interceptor-ref name="modelDriven" />
 				<interceptor-ref name="json">
 					<param name="excludeNullProperties">true</param>
 					<param name="ignoreHierarchy">false</param>

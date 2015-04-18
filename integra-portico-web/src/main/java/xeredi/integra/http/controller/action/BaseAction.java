@@ -23,7 +23,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * The Class BaseAction.
  */
 @ParentPackage("default")
-@Result(type = "json", params = { "excludeNullProperties", "true", "ignoreHierarchy", "false", "enableGZIP", "false" })
+@Result(type = "json", params = { "excludeNullProperties", "false", "ignoreHierarchy", "false", "enableGZIP", "true" })
 public abstract class BaseAction extends ActionSupport implements SessionAware {
 
     /** The Constant serialVersionUID. */
