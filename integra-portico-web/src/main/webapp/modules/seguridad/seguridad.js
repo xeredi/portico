@@ -20,6 +20,8 @@ angular.module("seguridad", [])
 
 .controller("UsroEditController", UsroEditController)
 
+.controller("UsroAccesoController", UsroAccesoController)
+
 ;
 
 function config($routeProvider) {
@@ -86,6 +88,12 @@ function config($routeProvider) {
         controller : "UsroEditController",
         controllerAs : 'vm',
         reloadOnSearch : false
+    })
+
+    .when("/seguridad/usro/acceso", {
+        templateUrl : "modules/seguridad/usro-acceso.html",
+        controller : "UsroAccesoController",
+        controllerAs : 'vm'
     })
 
     ;
@@ -359,7 +367,11 @@ function UsroGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
-        $http.post("seguridad/usuario-filter.action").success(function(data) {
+        $http.post("seguridad/usuario-filter.action", {
+            model : vm.usroCriterio
+        }).success(function(data) {
+            vm.sprtList = data.sprtList;
+            vm.prtoList = data.prtoList;
         });
     }
 
@@ -436,4 +448,20 @@ function UsroEditController($http, $location, $routeParams, pageTitleService) {
     });
 
     pageTitleService.setTitle("usro", "page_" + vm.accion);
+}
+
+function UsroAccesoController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.acceso = acceso;
+
+    function acceso() {
+        $http.post("seguridad/usuario-acceso.action", {
+            model : vm.usro
+        }).success(function(data) {
+            $location.path("/").replace();
+        });
+    }
+
+    pageTitleService.setTitle("usro", "page_acceso");
 }

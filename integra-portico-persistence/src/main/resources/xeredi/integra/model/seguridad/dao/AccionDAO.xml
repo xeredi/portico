@@ -77,7 +77,7 @@
 	<select id="selectList" parameterType="AccionCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
-		ORDER BY accn_nombre
+		ORDER BY accn_codigo
 	</select>
 
 	<select id="selectObject" parameterType="AccionCriterioVO" resultMap="ResultMap">

@@ -1,0 +1,20 @@
+<form role="form">
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                <label translate="usro_login"></label> <input type="text" ng-model="vm.usro.login"
+                    class="form-control" />
+            </div>
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                <label translate="usro_contrasenia"></label> <input type="password"
+                    ng-model="vm.usro.contrasenia" class="form-control" />
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="btn-group">
+        <button data-ng-click="vm.acceso()" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok"></i> <span translate="btn_acceso"></span>
+        </button>
+    </div>
+</form>

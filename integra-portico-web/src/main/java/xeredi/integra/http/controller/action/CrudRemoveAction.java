@@ -44,7 +44,7 @@ public abstract class CrudRemoveAction<T> extends BaseAction implements ModelDri
      * {@inheritDoc}
      */
     @Override
-    public T getModel() {
+    public final T getModel() {
         return model;
     }
 
@@ -54,7 +54,7 @@ public abstract class CrudRemoveAction<T> extends BaseAction implements ModelDri
      * @param value
      *            the new model
      */
-    public void setModel(final T value) {
+    public final void setModel(final T value) {
         this.model = value;
     }
 

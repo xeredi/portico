@@ -71,7 +71,7 @@ public abstract class CrudSaveAction<T> extends BaseAction implements ModelDrive
      * {@inheritDoc}
      */
     @Override
-    public T getModel() {
+    public final T getModel() {
         return model;
     }
 
@@ -81,7 +81,7 @@ public abstract class CrudSaveAction<T> extends BaseAction implements ModelDrive
      * @param value
      *            the new model
      */
-    public void setModel(final T value) {
+    public final void setModel(final T value) {
         this.model = value;
     }
 

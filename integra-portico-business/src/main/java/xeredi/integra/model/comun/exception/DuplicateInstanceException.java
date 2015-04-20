@@ -28,7 +28,6 @@ public final class DuplicateInstanceException extends ModelException {
      */
     public DuplicateInstanceException(final MessageI18nKey aclassName, final Object aobjId) {
         super("Instancia Duplicada", aclassName, aobjId);
-
     }
 
     /**

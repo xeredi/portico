@@ -63,6 +63,12 @@
 			<if test="login != null">
 				AND usro_login = #{login}
 			</if>
+			<if test="sprtId != null">
+				AND usro_sprt_pk = #{sprtId}
+			</if>
+			<if test="prtoId != null">
+				AND usro_prto_pk = #{prtoId}
+			</if>
 		</where>
 	</sql>
 

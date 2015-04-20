@@ -44,8 +44,15 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
         duplicate;
     }
 
+    /** The idioma. */
+    protected final String idioma = ConfigurationProxy.getString(ConfigurationKey.language_default);
+
+    /** The available languages. */
+    protected final String[] availableLanguages = ConfigurationProxy
+            .getStringArray(ConfigurationKey.language_available);
+
     /** The session. */
-    private Map<String, Object> session;
+    protected Map<String, Object> session;
 
     /** The bundle. */
     private final ResourceBundle bundle = PorticoResourceBundle.getBundle(getLocale());
@@ -65,7 +72,7 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
      * @return the idioma
      */
     public final String getIdioma() {
-        return ConfigurationProxy.getString(ConfigurationKey.language_default);
+        return idioma;
     }
 
     /**
@@ -84,7 +91,7 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
      * @return the available languages
      */
     public final String[] getAvailableLanguages() {
-        return ConfigurationProxy.getStringArray(ConfigurationKey.language_available);
+        return availableLanguages;
     }
 
     /**

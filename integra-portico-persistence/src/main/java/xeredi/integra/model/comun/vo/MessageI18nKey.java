@@ -1089,6 +1089,8 @@ public enum MessageI18nKey {
      * cancelar un proceso batch en curso...
      */
     E00013,
+    /** Error de contraseña incorrecta. */
+    E00014,
 
     /** The cdms_numero. */
     cdms_numero,

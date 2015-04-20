@@ -40,7 +40,7 @@ public abstract class GridListAction<T extends BaseCriterioVO, R> extends BaseAc
      */
     @Override
     public final String execute() throws ApplicationException {
-        model.setIdioma(getIdioma());
+        model.setIdioma(idioma);
 
         doList();
 

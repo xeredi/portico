@@ -3,6 +3,7 @@ package xeredi.integra.http.controller.action;
 import java.util.List;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 import com.google.common.base.Preconditions;
 import com.opensymphony.xwork2.ModelDriven;
@@ -16,16 +17,16 @@ import com.opensymphony.xwork2.ModelDriven;
  * @param <R>
  *            the generic type
  */
-public abstract class TypeaheadAction<T, R> extends BaseAction implements ModelDriven<T> {
+public abstract class TypeaheadAction<T extends BaseCriterioVO, R> extends BaseAction implements ModelDriven<T> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2890042689865301209L;
 
     /** The model. */
-    private T model;
+    protected T model;
 
     /** The result list. */
-    private List<R> resultList;
+    protected List<R> resultList;
 
     /**
      * {@inheritDoc}
@@ -33,6 +34,8 @@ public abstract class TypeaheadAction<T, R> extends BaseAction implements ModelD
     @Override
     public String execute() throws ApplicationException {
         Preconditions.checkNotNull(model);
+
+        model.setIdioma(getIdioma());
 
         doExecute();
 
