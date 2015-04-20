@@ -60,7 +60,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="cdrf in vm.cdrfList track by $index">
+            <tr ng-repeat="cdrf in vm.tpdt.cdrfList track by $index">
                 <td><a ng-href="#/metamodelo/cdrf/detail/{{cdrf.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="cdrf.valor"></td>

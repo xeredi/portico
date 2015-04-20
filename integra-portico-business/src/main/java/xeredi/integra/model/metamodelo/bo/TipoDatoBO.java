@@ -67,18 +67,19 @@ public final class TipoDatoBO {
             // Si el tipo de dato es un codigo de referencia, se buscan los
             // valores posibles
             if (tpdtVO.getTipoElemento() == TipoElemento.CR) {
-                final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();
+                final CodigoReferenciaCriterioVO cdrfCriterio = new CodigoReferenciaCriterioVO();
 
-                cdrfCriterioVO.setTpdtIds(new HashSet<>(Arrays.asList(new Long[] { tpdtVO.getId() })));
+                cdrfCriterio.setIdioma(idioma);
+                cdrfCriterio.setTpdtIds(new HashSet<>(Arrays.asList(new Long[] { tpdtVO.getId() })));
 
-                final List<CodigoReferenciaVO> cdrfList = cdrfDAO.selectList(cdrfCriterioVO);
+                tpdtVO.setCdrfList(cdrfDAO.selectList(cdrfCriterio));
+
                 final Set<String> cdrfCodeSet = new HashSet<>();
 
-                for (final CodigoReferenciaVO cdrfVO : cdrfList) {
+                for (final CodigoReferenciaVO cdrfVO : tpdtVO.getCdrfList()) {
                     cdrfCodeSet.add(cdrfVO.getValor());
                 }
 
-                tpdtVO.setCdrfList(cdrfList);
                 tpdtVO.setCdrfCodeSet(cdrfCodeSet);
             }
 

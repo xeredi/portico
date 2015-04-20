@@ -83,6 +83,15 @@ public abstract class GridListAction<T extends BaseCriterioVO, R> extends BaseAc
     }
 
     /**
+     * Gets the page.
+     *
+     * @return the page
+     */
+    public final int getPage() {
+        return page;
+    }
+
+    /**
      * Sets the page.
      *
      * @param value

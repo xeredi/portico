@@ -258,16 +258,14 @@ function TpdtGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.pageChanged = pageChanged;
     vm.filter = filter;
 
-    vm.tpdtCriterio = $routeParams.tpdtCriterio ? angular.fromJson($routeParams.tpdtCriterio) : {};
-
     function search(page) {
-        $http.post("metamodelo/tpdt-list.action", {
+        $http.post("metamodelo/tipo-dato-list.action", {
             model : vm.tpdtCriterio,
             page : page,
             limit : vm.limit
         }).success(function(data) {
-            vm.tpdtList = data.tpdtList;
-            vm.page = data.tpdtList.page;
+            vm.tpdtList = data.resultList;
+            vm.page = data.resultList.page;
 
             $location.search({
                 page : vm.page,
@@ -281,13 +279,17 @@ function TpdtGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
-        $http.post("metamodelo/tpdt-filter.action").success(function(data) {
+        $http.post("metamodelo/tipo-dato-filter.action", {
+            model : vm.tpdtCriterio
+        }).success(function(data) {
             vm.tphtList = data.tphtList;
             vm.tpelList = data.tpelList;
         });
     }
 
-    search($routeParams.page ? $routeParams.page : 1);
+    vm.tpdtCriterio = $routeParams.tpdtCriterio ? angular.fromJson($routeParams.tpdtCriterio) : {};
+
+    search($routeParams.page);
     pageTitleService.setTitle("tpdt", "page_grid");
 }
 
@@ -298,7 +300,7 @@ function TpdtDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("metamodelo/tpdt-remove.action", {
+            $http.post("metamodelo/tipo-dato-remove.action", {
                 model : vm.tpdt
             }).success(function(data) {
                 window.history.back();
@@ -306,14 +308,13 @@ function TpdtDetailController($http, $routeParams, pageTitleService) {
         }
     }
 
-    $http.post("metamodelo/tpdt-detail.action", {
+    $http.post("metamodelo/tipo-dato-detail.action", {
         model : {
             id : $routeParams.tpdtId
         }
     }).success(function(data) {
         vm.tpdt = data.model;
         vm.i18nMap = data.i18nMap;
-        vm.cdrfList = data.cdrfList;
     });
 
     pageTitleService.setTitle("tpdt", "page_detail");
@@ -327,7 +328,7 @@ function TpdtEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("metamodelo/tpdt-save.action", {
+        $http.post("metamodelo/tipo-dato-save.action", {
             model : vm.tpdt,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -342,7 +343,7 @@ function TpdtEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("metamodelo/tpdt-edit.action", {
+    $http.post("metamodelo/tipo-dato-edit.action", {
         model : {
             id : $routeParams.tpdtId
         },

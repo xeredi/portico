@@ -20,17 +20,15 @@
                     <option />
                 </select>
             </div>
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" ng-show="vm.tpdt.tipoElemento == 'PR'">
+            <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm" ng-show="vm.tpdt.tipoElemento == 'PR'">
                 <label translate>tpdt_enti</label> <select ng-model="vm.tpdt.enti.id"
-                    ng-options="labelValue.value as labelValue.label for labelValue in vm.entiTpprList"
-                    class="form-control">
+                    ng-options="tppr.id as tppr.nombre for tppr in vm.entiTpprList" class="form-control">
                     <option />
                 </select>
             </div>
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" ng-show="vm.tpdt.tipoElemento == 'SR'">
+            <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm" ng-show="vm.tpdt.tipoElemento == 'SR'">
                 <label translate>tpdt_enti</label> <select ng-model="vm.entd.tpdt.id"
-                    ng-options="labelValue.value as labelValue.label for labelValue in vm.entiTpsrList"
-                    class="form-control">
+                    ng-options="tpsr.id as tpsr.nombre for tpsr in vm.entiTpsrList" class="form-control">
                     <option />
                 </select>
             </div>
