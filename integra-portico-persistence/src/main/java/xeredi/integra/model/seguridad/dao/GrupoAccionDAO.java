@@ -1,5 +1,6 @@
 package xeredi.integra.model.seguridad.dao;
 
+import xeredi.integra.model.seguridad.vo.GrupoAccionCriterioVO;
 import xeredi.integra.model.seguridad.vo.GrupoAccionVO;
 
 // TODO: Auto-generated Javadoc
@@ -28,9 +29,9 @@ public interface GrupoAccionDAO {
     /**
      * Delete.
      *
-     * @param grac
-     *            the grac
+     * @param gracCriterio
+     *            the grac criterio
      * @return the int
      */
-    int delete(final GrupoAccionVO grac);
+    int deleteList(final GrupoAccionCriterioVO gracCriterio);
 }

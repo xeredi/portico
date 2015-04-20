@@ -132,12 +132,25 @@ function AccnGridController($http, $location, $routeParams, $modal, pageTitleSer
 function AccnDetailController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
+    vm.remove = remove;
+
+    function remove() {
+        if (confirm("Are you sure?")) {
+            $http.post("seguridad/accion-remove.action", {
+                model : vm.accn
+            }).success(function(data) {
+                window.history.back();
+            });
+        }
+    }
+
     $http.post("seguridad/accion-detail.action", {
         model : {
             id : $routeParams.accnId
         }
     }).success(function(data) {
         vm.accn = data.model;
+        vm.grpoList = data.grpoList;
     });
 
     pageTitleService.setTitle("accn", "page_detail");
@@ -149,6 +162,7 @@ function AccnEditController($http, $location, $routeParams, pageTitleService) {
     vm.accion = $routeParams.accion;
     vm.save = save;
     vm.cancel = cancel;
+    vm.updateGroups = updateGroups;
 
     function save() {
         $http.post("seguridad/accion-save.action", {
@@ -165,6 +179,24 @@ function AccnEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
+    function updateGroups($event, groupId) {
+        var checkbox = $event.target;
+
+        if (!vm.accn) {
+            vm.accn = {};
+        }
+
+        if (!vm.accn.grpoIds) {
+            vm.accn.grpoIds = [];
+        }
+
+        if (checkbox.checked) {
+            vm.accn.grpoIds.push(groupId);
+        } else {
+            vm.accn.grpoIds.splice(vm.accn.grpoIds.indexOf(groupId), 1);
+        }
+    }
+
     $http.post("seguridad/accion-edit.action", {
         model : {
             id : $routeParams.accnId
@@ -172,6 +204,7 @@ function AccnEditController($http, $location, $routeParams, pageTitleService) {
         accion : vm.accion
     }).success(function(data) {
         vm.accn = data.model;
+        vm.grpoList = data.grpoList;
     });
 
     pageTitleService.setTitleEnti("accn", "page_" + vm.accion);
@@ -188,12 +221,12 @@ function GrpoGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.page = $routeParams.page ? $routeParams.page : 1;
 
     function search() {
-        $http.post("seguridad/grpo-list.action", {
+        $http.post("seguridad/grupo-list.action", {
             model : vm.grpoCriterio,
             page : vm.page,
             limit : vm.limit
         }).success(function(data) {
-            vm.grpoList = data.grpoList;
+            vm.grpoList = data.resultList;
 
             $location.search({
                 page : vm.page,
@@ -218,7 +251,19 @@ function GrpoGridController($http, $location, $routeParams, $modal, pageTitleSer
 function GrpoDetailController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
-    $http.post("seguridad/grpo-detail.action", {
+    vm.remove = remove;
+
+    function remove() {
+        if (confirm("Are you sure?")) {
+            $http.post("seguridad/grupo-remove.action", {
+                model : vm.grpo
+            }).success(function(data) {
+                window.history.back();
+            });
+        }
+    }
+
+    $http.post("seguridad/grupo-detail.action", {
         model : {
             id : $routeParams.grpoId
         }
@@ -237,7 +282,7 @@ function GrpoEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("seguridad/grpo-save.action", {
+        $http.post("seguridad/grupo-save.action", {
             model : vm.grpo,
             accion : vm.accion
         }).success(function(data) {
@@ -251,7 +296,7 @@ function GrpoEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("seguridad/grpo-edit.action", {
+    $http.post("seguridad/grupo-edit.action", {
         model : {
             id : $routeParams.grpoId
         },

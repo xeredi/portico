@@ -32,6 +32,10 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
 
         doEdit();
 
+        if (!hasErrors()) {
+            doLoadDependencies();
+        }
+
         return SUCCESS;
     }
 
@@ -42,6 +46,14 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
      *             the application exception
      */
     public abstract void doEdit() throws ApplicationException;
+
+    /**
+     * Do load dependencies.
+     *
+     * @throws ApplicationException
+     *             the application exception
+     */
+    public abstract void doLoadDependencies() throws ApplicationException;
 
     /**
      * Sets the accion.

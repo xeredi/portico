@@ -1,5 +1,7 @@
 package xeredi.integra.model.seguridad.vo;
 
+import java.util.Set;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.PuertoVO;
@@ -28,6 +30,9 @@ public final class UsuarioVO {
 
     /** The prto. */
     private PuertoVO prto;
+
+    /** The grpo ids. */
+    private Set<Long> grpoIds;
 
     /**
      * {@inheritDoc}
@@ -149,6 +154,25 @@ public final class UsuarioVO {
      */
     public void setPrto(final PuertoVO value) {
         prto = value;
+    }
+
+    /**
+     * Gets the grpo ids.
+     *
+     * @return the grpo ids
+     */
+    public Set<Long> getGrpoIds() {
+        return grpoIds;
+    }
+
+    /**
+     * Sets the grpo ids.
+     *
+     * @param value
+     *            the new grpo ids
+     */
+    public void setGrpoIds(final Set<Long> value) {
+        grpoIds = value;
     }
 
 }

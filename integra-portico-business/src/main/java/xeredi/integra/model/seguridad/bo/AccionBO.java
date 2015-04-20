@@ -1,7 +1,9 @@
 package xeredi.integra.model.seguridad.bo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
@@ -12,8 +14,14 @@ import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.seguridad.dao.AccionDAO;
+import xeredi.integra.model.seguridad.dao.GrupoAccionDAO;
+import xeredi.integra.model.seguridad.dao.GrupoDAO;
 import xeredi.integra.model.seguridad.vo.AccionCriterioVO;
 import xeredi.integra.model.seguridad.vo.AccionVO;
+import xeredi.integra.model.seguridad.vo.GrupoAccionCriterioVO;
+import xeredi.integra.model.seguridad.vo.GrupoAccionVO;
+import xeredi.integra.model.seguridad.vo.GrupoCriterioVO;
+import xeredi.integra.model.seguridad.vo.GrupoVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -43,6 +51,16 @@ public final class AccionBO {
             accn.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             accnDAO.insert(accn);
 
+            if (accn.getGrpoIds() != null) {
+                final GrupoAccionDAO gracDAO = session.getMapper(GrupoAccionDAO.class);
+
+                for (final Long grpoId : accn.getGrpoIds()) {
+                    final GrupoAccionVO grac = new GrupoAccionVO(grpoId, accn.getId());
+
+                    gracDAO.insert(grac);
+                }
+            }
+
             session.commit();
         }
     }
@@ -63,6 +81,21 @@ public final class AccionBO {
                 throw new InstanceNotFoundException(MessageI18nKey.accn, accn);
             }
 
+            final GrupoAccionDAO gracDAO = session.getMapper(GrupoAccionDAO.class);
+            final GrupoAccionCriterioVO gracCriterio = new GrupoAccionCriterioVO();
+
+            gracCriterio.setAccnId(accn.getId());
+
+            gracDAO.deleteList(gracCriterio);
+
+            if (accn.getGrpoIds() != null) {
+                for (final Long grpoId : accn.getGrpoIds()) {
+                    final GrupoAccionVO grac = new GrupoAccionVO(grpoId, accn.getId());
+
+                    gracDAO.insert(grac);
+                }
+            }
+
             session.commit();
         }
     }
@@ -77,6 +110,13 @@ public final class AccionBO {
      */
     public void delete(final AccionVO accn) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final GrupoAccionDAO gracDAO = session.getMapper(GrupoAccionDAO.class);
+            final GrupoAccionCriterioVO gracCriterio = new GrupoAccionCriterioVO();
+
+            gracCriterio.setAccnId(accn.getId());
+
+            gracDAO.deleteList(gracCriterio);
+
             final AccionDAO accnDAO = session.getMapper(AccionDAO.class);
 
             if (accnDAO.delete(accn) == 0) {
@@ -144,6 +184,18 @@ public final class AccionBO {
             if (accn == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.accn, accnCriterio);
             }
+
+            final Set<Long> grpoIds = new HashSet<>();
+            final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
+            final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
+
+            grpoCriterio.setAccnId(accn.getId());
+
+            for (final GrupoVO grpo : grpoDAO.selectList(grpoCriterio)) {
+                grpoIds.add(grpo.getId());
+            }
+
+            accn.setGrpoIds(grpoIds);
 
             return accn;
         }

@@ -1,5 +1,7 @@
 package xeredi.integra.model.seguridad.vo;
 
+import java.util.Set;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 // TODO: Auto-generated Javadoc
@@ -13,6 +15,9 @@ public final class GrupoVO {
 
     /** The nombre. */
     private String nombre;
+
+    /** The accn ids. */
+    private Set<Long> accnIds;
 
     /**
      * {@inheritDoc}
@@ -58,6 +63,25 @@ public final class GrupoVO {
      */
     public void setNombre(final String value) {
         nombre = value;
+    }
+
+    /**
+     * Gets the accn ids.
+     *
+     * @return the accn ids
+     */
+    public Set<Long> getAccnIds() {
+        return accnIds;
+    }
+
+    /**
+     * Sets the accn ids.
+     *
+     * @param value
+     *            the new accn ids
+     */
+    public void setAccnIds(final Set<Long> value) {
+        accnIds = value;
     }
 
 }

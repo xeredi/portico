@@ -41,6 +41,7 @@ import org.apache.struts2.json.rpc.RPCError;
 import org.apache.struts2.json.rpc.RPCErrorCode;
 import org.apache.struts2.json.rpc.RPCResponse;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -106,6 +107,7 @@ public class JSONInterceptor extends AbstractInterceptor {
 
             final ObjectMapper mapper = new ObjectMapper();
 
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             mapper.readerForUpdating(rootObject).readValue(request.getReader());
         } else if (contentType != null && contentType.equalsIgnoreCase("application/json-rpc")) {
             Object result;

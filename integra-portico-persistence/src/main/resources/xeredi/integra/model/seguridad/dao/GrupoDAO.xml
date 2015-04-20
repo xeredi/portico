@@ -44,6 +44,17 @@
 				)
 		    ]]>
 			</if>
+			<if test="accnId != null">
+    		<![CDATA[
+				AND EXISTS (
+					SELECT 1
+					FROM tbl_grupo_accion_grac
+					WHERE
+						grac_grpo_pk = grpo_pk
+						AND grac_accn_pk = #{accnId}
+				)
+		    ]]>
+			</if>
 		</where>
 	</sql>
 

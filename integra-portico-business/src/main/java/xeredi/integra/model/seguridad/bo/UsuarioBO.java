@@ -1,7 +1,9 @@
 package xeredi.integra.model.seguridad.bo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
@@ -12,22 +14,26 @@ import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.seguridad.dao.AccionDAO;
+import xeredi.integra.model.seguridad.dao.GrupoDAO;
 import xeredi.integra.model.seguridad.dao.UsuarioDAO;
 import xeredi.integra.model.seguridad.dao.UsuarioGrupoDAO;
 import xeredi.integra.model.seguridad.vo.AccionCriterioVO;
+import xeredi.integra.model.seguridad.vo.GrupoCriterioVO;
 import xeredi.integra.model.seguridad.vo.GrupoVO;
 import xeredi.integra.model.seguridad.vo.UsuarioCriterioVO;
+import xeredi.integra.model.seguridad.vo.UsuarioGrupoCriterioVO;
 import xeredi.integra.model.seguridad.vo.UsuarioGrupoVO;
 import xeredi.integra.model.seguridad.vo.UsuarioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class UsuarioBO.
  */
 public final class UsuarioBO {
-
     /**
      * Insert.
      *
@@ -37,6 +43,8 @@ public final class UsuarioBO {
      *             the duplicate instance exception
      */
     public void insert(final UsuarioVO usro) throws DuplicateInstanceException {
+        Preconditions.checkNotNull(usro);
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
             final IgBO igBO = new IgBO();
@@ -47,6 +55,16 @@ public final class UsuarioBO {
 
             usro.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             usroDAO.insert(usro);
+
+            if (usro.getGrpoIds() != null) {
+                final UsuarioGrupoDAO usgrDAO = session.getMapper(UsuarioGrupoDAO.class);
+
+                for (final Long grpoId : usro.getGrpoIds()) {
+                    final UsuarioGrupoVO usgr = new UsuarioGrupoVO(usro.getId(), grpoId);
+
+                    usgrDAO.insert(usgr);
+                }
+            }
 
             session.commit();
         }
@@ -61,11 +79,29 @@ public final class UsuarioBO {
      *             the instance not found exception
      */
     public void update(final UsuarioVO usro) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(usro);
+        Preconditions.checkNotNull(usro.getId());
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
 
             if (usroDAO.update(usro) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.usro, usro);
+            }
+
+            final UsuarioGrupoDAO usgrDAO = session.getMapper(UsuarioGrupoDAO.class);
+            final UsuarioGrupoCriterioVO usgrCriterio = new UsuarioGrupoCriterioVO();
+
+            usgrCriterio.setUsroId(usro.getId());
+
+            usgrDAO.deleteList(usgrCriterio);
+
+            if (usro.getGrpoIds() != null) {
+                for (final Long grpoId : usro.getGrpoIds()) {
+                    final UsuarioGrupoVO usgr = new UsuarioGrupoVO(usro.getId(), grpoId);
+
+                    usgrDAO.insert(usgr);
+                }
             }
 
             session.commit();
@@ -81,7 +117,17 @@ public final class UsuarioBO {
      *             the instance not found exception
      */
     public void delete(final UsuarioVO usro) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(usro);
+        Preconditions.checkNotNull(usro.getId());
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final UsuarioGrupoDAO usgrDAO = session.getMapper(UsuarioGrupoDAO.class);
+            final UsuarioGrupoCriterioVO usgrCriterio = new UsuarioGrupoCriterioVO();
+
+            usgrCriterio.setUsroId(usro.getId());
+
+            usgrDAO.deleteList(usgrCriterio);
+
             final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
 
             if (usroDAO.delete(usro) == 0) {
@@ -150,55 +196,19 @@ public final class UsuarioBO {
                 throw new InstanceNotFoundException(MessageI18nKey.usro, usroCriterio);
             }
 
+            final Set<Long> grpoIds = new HashSet<Long>();
+            final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
+            final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
+
+            grpoCriterio.setUsroId(usro.getId());
+
+            for (final GrupoVO grpo : grpoDAO.selectList(grpoCriterio)) {
+                grpoIds.add(grpo.getId());
+            }
+
+            usro.setGrpoIds(grpoIds);
+
             return usro;
-        }
-    }
-
-    /**
-     * Adds the grupo.
-     *
-     * @param usro
-     *            the usro
-     * @param grpo
-     *            the grpo
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
-     */
-    public void addGrupo(final UsuarioVO usro, final GrupoVO grpo) throws DuplicateInstanceException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final UsuarioGrupoDAO usgrDAO = session.getMapper(UsuarioGrupoDAO.class);
-            final UsuarioGrupoVO usgr = new UsuarioGrupoVO(usro.getId(), grpo.getId());
-
-            if (usgrDAO.exists(usgr)) {
-                throw new DuplicateInstanceException(MessageI18nKey.usgr, usgr);
-            }
-
-            usgrDAO.insert(usgr);
-
-            session.commit();
-        }
-    }
-
-    /**
-     * Removes the grupo.
-     *
-     * @param usro
-     *            the usro
-     * @param grpo
-     *            the grpo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public void removeGrupo(final UsuarioVO usro, final GrupoVO grpo) throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final UsuarioGrupoDAO usgrDAO = session.getMapper(UsuarioGrupoDAO.class);
-            final UsuarioGrupoVO usgr = new UsuarioGrupoVO(usro.getId(), grpo.getId());
-
-            if (usgrDAO.delete(usgr) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.usgr, usgr);
-            }
-
-            session.commit();
         }
     }
 
@@ -212,6 +222,10 @@ public final class UsuarioBO {
      * @return true, if successful
      */
     public boolean tienePermiso(final UsuarioVO usro, final String accnPath) {
+        Preconditions.checkNotNull(usro);
+        Preconditions.checkNotNull(usro.getId());
+        Preconditions.checkNotNull(accnPath);
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AccionDAO accnDAO = session.getMapper(AccionDAO.class);
             final AccionCriterioVO accnCriterio = new AccionCriterioVO();

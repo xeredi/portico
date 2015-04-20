@@ -14,6 +14,9 @@ public final class GrupoCriterioVO extends BaseCriterioVO {
     /** The usro id. */
     private Long usroId;
 
+    /** The accn id. */
+    private Long accnId;
+
     /**
      * Gets the id.
      *
@@ -50,6 +53,25 @@ public final class GrupoCriterioVO extends BaseCriterioVO {
      */
     public void setUsroId(final Long value) {
         usroId = value;
+    }
+
+    /**
+     * Gets the accn id.
+     *
+     * @return the accn id
+     */
+    public Long getAccnId() {
+        return accnId;
+    }
+
+    /**
+     * Sets the accn id.
+     *
+     * @param value
+     *            the new accn id
+     */
+    public void setAccnId(final Long value) {
+        accnId = value;
     }
 
 }

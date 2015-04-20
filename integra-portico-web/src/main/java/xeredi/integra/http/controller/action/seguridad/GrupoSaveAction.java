@@ -4,34 +4,34 @@ import xeredi.integra.http.controller.action.CrudSaveAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
-import xeredi.integra.model.seguridad.bo.AccionBO;
-import xeredi.integra.model.seguridad.vo.AccionVO;
+import xeredi.integra.model.seguridad.bo.GrupoBO;
+import xeredi.integra.model.seguridad.vo.GrupoVO;
 
 import com.google.common.base.Preconditions;
 
+// TODO: Auto-generated Javadoc
 /**
- * The Class AccionSaveAction.
+ * The Class GrupoSaveAction.
  */
-public final class AccionSaveAction extends CrudSaveAction<AccionVO> {
+public final class GrupoSaveAction extends CrudSaveAction<GrupoVO> {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 6960100948960687513L;
+    private static final long serialVersionUID = 260195700227671081L;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void doSave() throws ApplicationException {
-        final AccionBO accnBO = new AccionBO();
+        final GrupoBO grpoBO = new GrupoBO();
 
         switch (accion) {
         case create:
-            accnBO.insert(model);
+            grpoBO.insert(model);
             break;
         case edit:
-            accnBO.update(model);
+            grpoBO.update(model);
             break;
-
         default:
             throw new Error("Accion no valida: " + accion);
         }
@@ -46,7 +46,7 @@ public final class AccionSaveAction extends CrudSaveAction<AccionVO> {
             Preconditions.checkNotNull(model.getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.accn_codigo, model.getCodigo());
-        FieldValidator.validateRequired(this, MessageI18nKey.accn_nombre, model.getNombre());
+        FieldValidator.validateRequired(this, MessageI18nKey.grpo_nombre, model.getNombre());
     }
+
 }

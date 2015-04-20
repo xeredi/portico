@@ -193,6 +193,35 @@ INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'sec_c
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'sec_job')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'sec_job', 'Procesos Batch')\
 
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'usro')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'usro', 'Usuario')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'usroList')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'usroList', 'Usuarios')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'usro_login')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'usro_login', 'Login')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'usro_contrasenia')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'usro_contrasenia', 'Contraseña')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'usro_nombre')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'usro_nombre', 'Nombre')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'grpo')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'grpo', 'Grupo')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'grpoList')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'grpoList', 'Grupos')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'grpo_nombre')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'grpo_nombre', 'Nombre')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'accn')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'accn', 'Acción')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'accnList')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'accnList', 'Acciones')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'accn_codigo')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'accn_codigo', 'Código')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'accn_nombre')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'accn_nombre', 'Nombre')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'grac')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'grac', 'Acción de Grupo')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'usgr')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'usgr', 'Grupo de Usuarios')\
+
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'sprt')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'sprt', 'A. Portuaria')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'prto')\

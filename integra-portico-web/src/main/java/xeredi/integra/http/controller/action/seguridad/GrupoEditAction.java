@@ -15,15 +15,15 @@ import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class AccionEditAction.
+ * The Class GrupoEditAction.
  */
-public final class AccionEditAction extends CrudEditAction<AccionVO> {
+public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 3956096847895499243L;
+    private static final long serialVersionUID = 5574343207861340756L;
 
-    /** The grpo ids. */
-    private List<GrupoVO> grpoList;
+    /** The accn list. */
+    private List<AccionVO> accnList;
 
     /**
      * {@inheritDoc}
@@ -31,16 +31,16 @@ public final class AccionEditAction extends CrudEditAction<AccionVO> {
     @Override
     public void doEdit() throws ApplicationException {
         if (accion == ACCION_EDICION.create) {
-            model = new AccionVO();
+            model = new GrupoVO();
         } else {
             Preconditions.checkNotNull(model.getId());
 
-            final AccionBO accnBO = new AccionBO();
-            final AccionCriterioVO accnCriterio = new AccionCriterioVO();
+            final GrupoBO grpoBO = new GrupoBO();
+            final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
 
-            accnCriterio.setId(model.getId());
+            grpoCriterio.setId(model.getId());
 
-            model = accnBO.selectObject(accnCriterio);
+            model = grpoBO.selectObject(grpoCriterio);
         }
     }
 
@@ -49,18 +49,19 @@ public final class AccionEditAction extends CrudEditAction<AccionVO> {
      */
     @Override
     public void doLoadDependencies() throws ApplicationException {
-        final GrupoBO grpoBO = new GrupoBO();
-        final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
+        final AccionBO accnBO = new AccionBO();
+        final AccionCriterioVO accnCriterio = new AccionCriterioVO();
 
-        grpoList = grpoBO.selectList(grpoCriterio);
+        accnList = accnBO.selectList(accnCriterio);
     }
 
     /**
-     * Gets the grpo list.
+     * Gets the accn list.
      *
-     * @return the grpo list
+     * @return the accn list
      */
-    public List<GrupoVO> getGrpoList() {
-        return grpoList;
+    public List<AccionVO> getAccnList() {
+        return accnList;
     }
+
 }

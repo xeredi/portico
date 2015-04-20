@@ -1,5 +1,6 @@
 package xeredi.integra.model.seguridad.dao;
 
+import xeredi.integra.model.seguridad.vo.UsuarioGrupoCriterioVO;
 import xeredi.integra.model.seguridad.vo.UsuarioGrupoVO;
 
 // TODO: Auto-generated Javadoc
@@ -32,5 +33,5 @@ public interface UsuarioGrupoDAO {
      *            the usgr
      * @return the int
      */
-    int delete(final UsuarioGrupoVO usgr);
+    int deleteList(final UsuarioGrupoCriterioVO usgrCriterio);
 }
