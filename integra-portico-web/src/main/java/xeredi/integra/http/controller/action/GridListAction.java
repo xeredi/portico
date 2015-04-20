@@ -1,6 +1,7 @@
 package xeredi.integra.http.controller.action;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 import xeredi.util.pagination.PaginatedList;
 
 import com.opensymphony.xwork2.ModelDriven;
@@ -14,7 +15,7 @@ import com.opensymphony.xwork2.ModelDriven;
  * @param <R>
  *            the generic type
  */
-public abstract class GridListAction<T extends Object, R extends Object> extends BaseAction implements ModelDriven<T> {
+public abstract class GridListAction<T extends BaseCriterioVO, R> extends BaseAction implements ModelDriven<T> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6646875422640202469L;
@@ -39,6 +40,8 @@ public abstract class GridListAction<T extends Object, R extends Object> extends
      */
     @Override
     public final String execute() throws ApplicationException {
+        model.setIdioma(getIdioma());
+
         doList();
 
         return SUCCESS;

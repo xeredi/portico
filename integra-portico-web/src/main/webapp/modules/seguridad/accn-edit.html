@@ -17,7 +17,7 @@
 
         <div class="row">
             <div class="checkbox" ng-repeat="grpo in vm.grpoList track by $index">
-                <label> <input type="checkbox" ng-click="vm.updateGroups($event, grpo.id)"
+                <label> <input type="checkbox" ng-click="vm.updateGrupos($event, grpo.id)"
                     ng-checked="vm.accn.grpoIds.indexOf(grpo.id) >= 0"> <span ng-bind="grpo.nombre"></span>
                 </label>
             </div>

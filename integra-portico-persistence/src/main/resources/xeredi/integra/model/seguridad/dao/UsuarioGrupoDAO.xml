@@ -26,7 +26,7 @@
 
 	<insert id="insert" parameterType="UsuarioGrupoVO">
         <![CDATA[
-        INSERT INTO tbl_usuario_grupo_usro (usgr_usro_pk, usro_grpo_pk)
+        INSERT INTO tbl_usuario_grupo_usgr (usgr_usro_pk, usgr_grpo_pk)
         VALUES (#{usroId}, #{grpoId})
         ]]>
 	</insert>
