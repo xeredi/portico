@@ -21,7 +21,7 @@ public final class AccionDetailAction extends CrudDetailAction<AccionVO> {
      * {@inheritDoc}
      */
     @Override
-    public void doExecute() throws ApplicationException {
+    public void doDetail() throws ApplicationException {
         Preconditions.checkNotNull(model.getId());
 
         final AccionBO accnBO = new AccionBO();

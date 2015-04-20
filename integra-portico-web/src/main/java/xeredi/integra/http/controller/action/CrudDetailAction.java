@@ -27,7 +27,7 @@ public abstract class CrudDetailAction<T> extends BaseAction implements ModelDri
     public final String execute() throws ApplicationException {
         Preconditions.checkNotNull(model);
 
-        doExecute();
+        doDetail();
 
         return SUCCESS;
     }
@@ -38,7 +38,7 @@ public abstract class CrudDetailAction<T> extends BaseAction implements ModelDri
      * @throws ApplicationException
      *             the application exception
      */
-    public abstract void doExecute() throws ApplicationException;
+    public abstract void doDetail() throws ApplicationException;
 
     /**
      * {@inheritDoc}

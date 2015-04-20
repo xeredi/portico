@@ -13,6 +13,7 @@ import com.opensymphony.xwork2.ModelDriven;
  *            the generic type
  */
 public abstract class CrudEditAction<T> extends BaseAction implements ModelDriven<T> {
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7147721554331909672L;
 
@@ -29,7 +30,7 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
     public final String execute() throws ApplicationException {
         Preconditions.checkNotNull(accion);
 
-        doExecute();
+        doEdit();
 
         return SUCCESS;
     }
@@ -40,7 +41,7 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
      * @throws ApplicationException
      *             the application exception
      */
-    public abstract void doExecute() throws ApplicationException;
+    public abstract void doEdit() throws ApplicationException;
 
     /**
      * Sets the accion.

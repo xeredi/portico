@@ -19,7 +19,7 @@ public final class AccionListAction extends GridListAction<AccionCriterioVO, Acc
      * {@inheritDoc}
      */
     @Override
-    public void doExecute() throws ApplicationException {
+    public void doList() throws ApplicationException {
         if (model == null) {
             model = new AccionCriterioVO();
         }

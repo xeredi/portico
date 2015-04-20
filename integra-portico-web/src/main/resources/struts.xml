@@ -20,7 +20,7 @@
 				<interceptor-ref name="json">
 					<param name="excludeNullProperties">true</param>
 					<param name="ignoreHierarchy">false</param>
-					<param name="enableGZIP">false</param>
+					<param name="enableGZIP">true</param>
 				</interceptor-ref>
 				<interceptor-ref name="app" />
 			</interceptor-stack>

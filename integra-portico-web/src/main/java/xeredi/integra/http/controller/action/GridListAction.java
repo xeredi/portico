@@ -39,7 +39,7 @@ public abstract class GridListAction<T extends Object, R extends Object> extends
      */
     @Override
     public final String execute() throws ApplicationException {
-        doExecute();
+        doList();
 
         return SUCCESS;
     }
@@ -50,7 +50,7 @@ public abstract class GridListAction<T extends Object, R extends Object> extends
      * @throws ApplicationException
      *             the application exception
      */
-    public abstract void doExecute() throws ApplicationException;
+    public abstract void doList() throws ApplicationException;
 
     /**
      * {@inheritDoc}

@@ -151,7 +151,7 @@ function AccnEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("seguridad/accn-save.action", {
+        $http.post("seguridad/accion-save.action", {
             model : vm.accn,
             accion : vm.accion
         }).success(function(data) {
@@ -165,7 +165,7 @@ function AccnEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("seguridad/accn-edit.action", {
+    $http.post("seguridad/accion-edit.action", {
         model : {
             id : $routeParams.accnId
         },
