@@ -368,7 +368,7 @@ function CdrfDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("metamodelo/cdrf-remove.action", {
+            $http.post("metamodelo/codigo-referencia-remove.action", {
                 model : vm.cdrf
             }).success(function(data) {
                 window.history.back();
@@ -376,7 +376,7 @@ function CdrfDetailController($http, $location, $routeParams, pageTitleService) 
         }
     }
 
-    $http.post("metamodelo/cdrf-detail.action", {
+    $http.post("metamodelo/codigo-referencia-detail.action", {
         model : {
             id : $routeParams.cdrfId
         }
@@ -396,7 +396,7 @@ function CdrfEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("metamodelo/cdrf-save.action", {
+        $http.post("metamodelo/codigo-referencia-save.action", {
             model : vm.cdrf,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -411,7 +411,7 @@ function CdrfEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("metamodelo/cdrf-edit.action", {
+    $http.post("metamodelo/codigo-referencia-edit.action", {
         model : {
             tpdtId : $routeParams.tpdtId,
             id : $routeParams.cdrfId
