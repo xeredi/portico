@@ -1,5 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import xeredi.integra.http.controller.action.CrudEditAction;
@@ -31,13 +32,16 @@ public abstract class EntidadEditAction<T extends EntidadVO> extends CrudEditAct
      */
     @Override
     public final void doEdit() throws ApplicationException {
-        if (accion != ACCION_EDICION.create) {
+        if (accion == ACCION_EDICION.create) {
+            i18nMap = new HashMap<String, I18nVO>();
+        } else {
             Preconditions.checkNotNull(model.getId());
+
+            i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
         }
 
         doSpecificEdit();
 
-        i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
     }
 
     /**

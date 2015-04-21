@@ -435,13 +435,13 @@ function TpprGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.entiCriterio = $routeParams.entiCriterio ? angular.fromJson($routeParams.entiCriterio) : {};
 
     function search(page) {
-        $http.post("metamodelo/tppr-list.action", {
+        $http.post("metamodelo/tipo-parametro-list.action", {
             model : vm.entiCriterio,
             page : page,
             limit : vm.limit
         }).success(function(data) {
-            vm.entiList = data.entiList;
-            vm.page = data.entiList.page;
+            vm.entiList = data.resultList;
+            vm.page = data.resultList.page;
 
             $location.search({
                 page : vm.page,
@@ -614,13 +614,13 @@ function TpsrGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.entiCriterio = $routeParams.entiCriterio ? angular.fromJson($routeParams.entiCriterio) : {};
 
     function search(page) {
-        $http.post("metamodelo/tpsr-list.action", {
+        $http.post("metamodelo/tipo-servicio-list.action", {
             model : vm.entiCriterio,
             page : page,
             limit : vm.limit
         }).success(function(data) {
-            vm.entiList = data.entiList;
-            vm.page = data.entiList.page;
+            vm.entiList = data.resultList;
+            vm.page = data.resultList.page;
 
             $location.search({
                 page : vm.page,
@@ -791,13 +791,13 @@ function TpesGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.entiCriterio = $routeParams.entiCriterio ? angular.fromJson($routeParams.entiCriterio) : {};
 
     function search(page) {
-        $http.post("metamodelo/tpes-list.action", {
+        $http.post("metamodelo/tipo-estadistica-list.action", {
             model : vm.entiCriterio,
             page : page,
             limit : vm.limit
         }).success(function(data) {
-            vm.entiList = data.entiList;
-            vm.page = data.entiList.page;
+            vm.entiList = data.resultList;
+            vm.page = data.resultList.page;
 
             $location.search({
                 page : vm.page,
