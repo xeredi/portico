@@ -468,7 +468,7 @@ function TpprDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("metamodelo/tppr-remove.action", {
+            $http.post("metamodelo/tipo-parametro-remove.action", {
                 model : {
                     id : vm.enti.id
                 }
@@ -503,7 +503,7 @@ function TpprEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("metamodelo/tppr-save.action", {
+        $http.post("metamodelo/tipo-parametro-save.action", {
             model : vm.enti,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -518,7 +518,7 @@ function TpprEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("metamodelo/tppr-edit.action", {
+    $http.post("metamodelo/tipo-parametro-edit.action", {
         model : {
             id : $routeParams.entiId
         },
@@ -539,7 +539,7 @@ function TpspDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("metamodelo/tpsp-remove.action", {
+            $http.post("metamodelo/tipo-subparametro-remove.action", {
                 model : {
                     id : vm.enti.id
                 }
@@ -573,7 +573,7 @@ function TpspEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("metamodelo/tpsp-save.action", {
+        $http.post("metamodelo/tipo-subparametro-save.action", {
             model : vm.enti,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -588,7 +588,7 @@ function TpspEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("metamodelo/tpsp-edit.action", {
+    $http.post("metamodelo/tipo-subparametro-edit.action", {
         model : {
             tpprId : $routeParams.tpprId,
             id : $routeParams.entiId
@@ -647,7 +647,7 @@ function TpsrDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("metamodelo/tpsr-remove.action", {
+            $http.post("metamodelo/tipo-servicio-remove.action", {
                 model : vm.enti
             }).success(function(data) {
                 window.history.back();
@@ -681,7 +681,7 @@ function TpsrEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("metamodelo/tpsr-save.action", {
+        $http.post("metamodelo/tipo-servicio-save.action", {
             model : vm.enti,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -696,7 +696,7 @@ function TpsrEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("metamodelo/tpsr-edit.action", {
+    $http.post("metamodelo/tipo-servicio-edit.action", {
         model : {
             id : $routeParams.entiId
         },
@@ -717,7 +717,7 @@ function TpssDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("metamodelo/tpss-remove.action", {
+            $http.post("metamodelo/tipo-subservicio-remove.action", {
                 model : vm.enti
             }).success(function(data) {
                 window.history.back();
@@ -751,7 +751,7 @@ function TpssEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("metamodelo/tpss-save.action", {
+        $http.post("metamodelo/tipo-subservicio-save.action", {
             model : vm.enti,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -766,7 +766,7 @@ function TpssEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("metamodelo/tpss-edit.action", {
+    $http.post("metamodelo/tipo-subservicio-edit.action", {
         model : {
             id : $routeParams.entiId,
             tpsrId : $routeParams.tpsrId
@@ -824,7 +824,7 @@ function TpesDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("metamodelo/tpes-remove.action", {
+            $http.post("metamodelo/tipo-estadistica-remove.action", {
                 model : vm.enti
             }).success(function(data) {
                 window.history.back();
@@ -858,7 +858,7 @@ function TpesEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("metamodelo/tpes-save.action", {
+        $http.post("metamodelo/tipo-estadistica-save.action", {
             model : vm.enti,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -873,7 +873,7 @@ function TpesEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("metamodelo/tpes-edit.action", {
+    $http.post("metamodelo/tipo-estadistica-edit.action", {
         model : {
             id : $routeParams.entiId
         },

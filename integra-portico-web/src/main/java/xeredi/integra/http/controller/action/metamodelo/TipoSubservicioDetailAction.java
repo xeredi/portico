@@ -21,6 +21,9 @@ public final class TipoSubservicioDetailAction extends EntidadDetailAction<TipoS
     /** The enti hijas list. */
     private List<EntidadVO> entiHijasList;
 
+    /** The enti padres list. */
+    private List<EntidadVO> entiPadresList;
+
     /**
      * {@inheritDoc}
      */
@@ -31,12 +34,24 @@ public final class TipoSubservicioDetailAction extends EntidadDetailAction<TipoS
         model = tpssBO.select(model.getId(), getIdioma());
 
         final EntidadBO entiBO = new EntidadBO();
-        final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
 
-        entiCriterio.setEntiPadreId(model.getId());
-        entiCriterio.setIdioma(getIdioma());
+        {
+            final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
 
-        entiHijasList = entiBO.selectList(entiCriterio);
+            entiCriterio.setEntiPadreId(model.getId());
+            entiCriterio.setIdioma(idioma);
+
+            entiHijasList = entiBO.selectList(entiCriterio);
+        }
+
+        {
+            final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
+
+            entiCriterio.setEntiHijaId(model.getId());
+            entiCriterio.setIdioma(idioma);
+
+            entiPadresList = entiBO.selectList(entiCriterio);
+        }
     }
 
     /**
@@ -46,6 +61,15 @@ public final class TipoSubservicioDetailAction extends EntidadDetailAction<TipoS
      */
     public List<EntidadVO> getEntiHijasList() {
         return entiHijasList;
+    }
+
+    /**
+     * Gets the enti padres list.
+     *
+     * @return the enti padres list
+     */
+    public List<EntidadVO> getEntiPadresList() {
+        return entiPadresList;
     }
 
 }

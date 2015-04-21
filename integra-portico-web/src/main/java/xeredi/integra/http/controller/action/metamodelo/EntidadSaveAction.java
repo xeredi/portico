@@ -1,0 +1,71 @@
+package xeredi.integra.http.controller.action.metamodelo;
+
+import java.util.Map;
+
+import xeredi.integra.http.controller.action.CrudSaveAction;
+import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.I18nVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.vo.EntidadVO;
+
+import com.google.common.base.Preconditions;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EntidadSaveAction.
+ *
+ * @param <T>
+ *            the generic type
+ */
+public abstract class EntidadSaveAction<T extends EntidadVO> extends CrudSaveAction<T> {
+
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = 6795337588003242186L;
+
+    /** The i18n map. */
+    protected Map<String, I18nVO> i18nMap;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void doValidate() throws ApplicationException {
+        if (accion == ACCION_EDICION.create) {
+            FieldValidator.validateRequired(this, MessageI18nKey.enti_codigo, model.getCodigo());
+        } else {
+            Preconditions.checkNotNull(model.getId());
+        }
+
+        FieldValidator.validateI18n(this, i18nMap);
+
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdAlta, model.isCmdAlta());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdBaja, model.isCmdBaja());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdEdicion, model.isCmdEdicion());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdDuplicado, model.isCmdDuplicado());
+
+        doSpecificValidate();
+
+        if (!hasErrors()) {
+            model.setCodigo(model.getCodigo().toUpperCase());
+        }
+    }
+
+    /**
+     * Do specific validate.
+     *
+     * @throws ApplicationException
+     *             the application exception
+     */
+    public abstract void doSpecificValidate() throws ApplicationException;
+
+    /**
+     * Sets the i18n map.
+     *
+     * @param value
+     *            the value
+     */
+    public final void setI18nMap(final Map<String, I18nVO> value) {
+        this.i18nMap = value;
+    }
+}
