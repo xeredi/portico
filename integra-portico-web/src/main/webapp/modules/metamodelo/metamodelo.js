@@ -478,7 +478,7 @@ function TpprDetailController($http, $location, $routeParams, pageTitleService) 
         }
     }
 
-    $http.post("metamodelo/tppr-detail.action", {
+    $http.post("metamodelo/tipo-parametro-detail.action", {
         model : {
             id : $routeParams.entiId
         }
@@ -549,7 +549,7 @@ function TpspDetailController($http, $routeParams, pageTitleService) {
         }
     }
 
-    $http.post("metamodelo/tpsp-detail.action", {
+    $http.post("metamodelo/tipo-subparametro-detail.action", {
         model : {
             id : $routeParams.entiId
         }
@@ -655,7 +655,7 @@ function TpsrDetailController($http, $routeParams, pageTitleService) {
         }
     }
 
-    $http.post("metamodelo/tpsr-detail.action", {
+    $http.post("metamodelo/tipo-servicio-detail.action", {
         model : {
             id : $routeParams.entiId
         }
@@ -725,7 +725,7 @@ function TpssDetailController($http, $routeParams, pageTitleService) {
         }
     }
 
-    $http.post("metamodelo/tpss-detail.action", {
+    $http.post("metamodelo/tipo-subservicio-detail.action", {
         model : {
             id : $routeParams.entiId
         }
@@ -832,7 +832,7 @@ function TpesDetailController($http, $routeParams, pageTitleService) {
         }
     }
 
-    $http.post("metamodelo/tpes-detail.action", {
+    $http.post("metamodelo/tipo-estadistica-detail.action", {
         model : {
             id : $routeParams.entiId
         }
