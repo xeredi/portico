@@ -15,7 +15,7 @@ import com.opensymphony.xwork2.ModelDriven;
  * @param <R>
  *            the generic type
  */
-public abstract class GridListAction<T extends BaseCriterioVO, R> extends BaseAction implements ModelDriven<T> {
+public abstract class GridListAction<C extends BaseCriterioVO, R> extends BaseAction implements ModelDriven<C> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6646875422640202469L;
@@ -24,7 +24,7 @@ public abstract class GridListAction<T extends BaseCriterioVO, R> extends BaseAc
     public static final int ROWS_PER_PAGE_DEFAULT = 20;
 
     /** The model. */
-    protected T model;
+    protected C model;
 
     /** The result list. */
     protected PaginatedList<R> resultList;
@@ -59,7 +59,7 @@ public abstract class GridListAction<T extends BaseCriterioVO, R> extends BaseAc
      * {@inheritDoc}
      */
     @Override
-    public final T getModel() {
+    public final C getModel() {
         return model;
     }
 
@@ -69,7 +69,7 @@ public abstract class GridListAction<T extends BaseCriterioVO, R> extends BaseAc
      * @param value
      *            the new model
      */
-    public final void setModel(final T value) {
+    public final void setModel(final C value) {
         this.model = value;
     }
 

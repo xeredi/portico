@@ -114,8 +114,8 @@ function PrmtGridController($location, $routeParams, $http, $modal, pageTitleSer
     }
 
     function xlsExport() {
-        $http.post('maestro/prmt-xls-export.action', {
-            itemCriterio : vm.itemCriterio
+        $http.post('maestro/parametro-xls-export.action', {
+            criterio : vm.itemCriterio
         }, {
             responseType : 'arraybuffer'
         }).success(function(data) {
@@ -190,8 +190,8 @@ function PrmtDetailController($http, $location, $routeParams, pageTitleService) 
     }
 
     function print() {
-        $http.post('maestro/prmt-print.action', {
-            model : vm.item,
+        $http.post('maestro/parametro-pdf-export.action', {
+            item : vm.item,
             fechaVigencia : vm.fechaVigencia
         }, {
             responseType : 'arraybuffer'
@@ -217,7 +217,7 @@ function PrmtDetailController($http, $location, $routeParams, pageTitleService) 
 
     vm.fechaVigencia = $routeParams.fechaVigencia ? $routeParams.fechaVigencia : new Date();
 
-    $http.post("maestro/prmt-detail.action", {
+    $http.post("maestro/parametro-detail.action", {
         model : {
             id : $routeParams.itemId,
             entiId : $routeParams.entiId
@@ -284,7 +284,7 @@ function PrmtEditController($http, $location, $routeParams, pageTitleService) {
 
     vm.fechaVigencia = $routeParams.fechaVigencia ? $routeParams.fechaVigencia : new Date();
 
-    $http.post("maestro/prmt-edit.action", {
+    $http.post("maestro/parametro-edit.action", {
         model : {
             id : $routeParams.itemId,
             entiId : $routeParams.entiId
@@ -312,7 +312,9 @@ function PrmtsLupaController($http, $scope) {
             return null;
         }
 
-        return $http.post("maestro/prmt-lupa.action", {
+        textoBusqueda += "%";
+
+        return $http.post("maestro/parametro-typeahead.action", {
             model : {
                 entiId : entiId,
                 textoBusqueda : textoBusqueda,
@@ -320,7 +322,7 @@ function PrmtsLupaController($http, $scope) {
                 prtoId : prtoId
             }
         }).then(function(res) {
-            return res.data.itemList;
+            return res.data.resultList;
         });
     };
 }

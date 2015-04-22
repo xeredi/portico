@@ -101,7 +101,7 @@ public final class ParametroXls extends BaseXls {
                 int j = 0;
 
                 if (tpprDetail.getEnti().isPuerto()) {
-                    setCellValue(rowhead, i++, prmtVO.getPrto().getEtiqueta());
+                    setCellValue(row, j++, prmtVO.getPrto().getEtiqueta());
                 }
 
                 setCellValue(row, j++, prmtVO.getParametro());

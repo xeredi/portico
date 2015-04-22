@@ -1,5 +1,6 @@
 package xeredi.integra.model.facturacion.vo;
 
+import java.util.Date;
 import java.util.Set;
 
 import xeredi.integra.model.comun.vo.BaseCriterioVO;
@@ -9,6 +10,10 @@ import xeredi.integra.model.comun.vo.BaseCriterioVO;
  * The Class CargoCriterioVO.
  */
 public final class CargoCriterioVO extends BaseCriterioVO {
+
+    /** The fecha vigencia. */
+    private Date fechaVigencia;
+
     /** The id. */
     private Long id;
 
@@ -271,5 +276,24 @@ public final class CargoCriterioVO extends BaseCriterioVO {
      */
     public void setVlrcId(final Long value) {
         vlrcId = value;
+    }
+
+    /**
+     * Gets the fecha vigencia.
+     *
+     * @return the fecha vigencia
+     */
+    public Date getFechaVigencia() {
+        return fechaVigencia;
+    }
+
+    /**
+     * Sets the fecha vigencia.
+     *
+     * @param value
+     *            the new fecha vigencia
+     */
+    public void setFechaVigencia(final Date value) {
+        fechaVigencia = value;
     }
 }

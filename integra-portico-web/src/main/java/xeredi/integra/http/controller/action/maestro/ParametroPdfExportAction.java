@@ -3,20 +3,17 @@ package xeredi.integra.http.controller.action.maestro;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
-
-import xeredi.integra.http.controller.action.ItemAction;
+import xeredi.integra.http.controller.action.item.ItemPdfExportAction;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
@@ -31,60 +28,49 @@ import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 
 import com.google.common.base.Preconditions;
-import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ParametroPdfAction.
+ * The Class ParametroPdfExportAction.
  */
-public final class ParametroPdfAction extends ItemAction implements ModelDriven<ParametroVO> {
+public final class ParametroPdfExportAction extends ItemPdfExportAction<ParametroVO> {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -7734329938605849510L;
+    private static final long serialVersionUID = 8831808221487676723L;
 
-    /** The item report. */
-    private ParametroVO model;
-
-    /** The stream. */
-    private InputStream stream;
+    /** The fecha vigencia. */
+    protected Date fechaVigencia;
 
     /**
-     * Imprimir.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             Si ocurre algun error de aplicacion
+     * {@inheritDoc}
      */
-    @Action(value = "prmt-print", results = { @Result(name = "success", type = "stream", params = { "contentType",
-            "application/pdf", "inputName", "stream", "contentDisposition", "filename=${model.entiId}_${model.id}.pdf" }) })
-    public String imprimir() throws ApplicationException {
-        Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getId());
-        Preconditions.checkNotNull(model.getEntiId());
+    @Override
+    public final void doSpecificPdfExport() throws ApplicationException, IOException {
+        Preconditions.checkNotNull(fechaVigencia);
 
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(item.getEntiId());
         final Map<Long, TipoSubparametroDetailVO> entiHijasMap = new HashMap<>();
 
-        model = prmtBO.select(model.getId(), getIdioma(), getFechaVigencia());
+        item = prmtBO.select(item.getId(), idioma, fechaVigencia);
 
-        final TipoParametroDetailVO entiDetail = TipoParametroProxy.select(model.getEntiId());
+        final TipoParametroDetailVO entiDetail = TipoParametroProxy.select(item.getEntiId());
         final Map<Long, List<SubparametroVO>> itemHijosMap = new HashMap<>();
 
         if (entiDetail.getEntiHijasList() != null) {
             final SubparametroBO sprmBO = new SubparametroBO();
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
-            prmtCriterioVO.setId(model.getId());
-            prmtCriterioVO.setFechaVigencia(getFechaVigencia());
-            prmtCriterioVO.setIdioma(getIdioma());
+            prmtCriterioVO.setId(item.getId());
+            prmtCriterioVO.setFechaVigencia(fechaVigencia);
+            prmtCriterioVO.setIdioma(idioma);
 
             for (final Long entiId : entiDetail.getEntiHijasList()) {
                 final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
                 sprmCriterioVO.setPrmt(prmtCriterioVO);
                 sprmCriterioVO.setEntiId(entiId);
-                sprmCriterioVO.setFechaVigencia(getFechaVigencia());
-                sprmCriterioVO.setIdioma(getIdioma());
+                sprmCriterioVO.setFechaVigencia(fechaVigencia);
+                sprmCriterioVO.setIdioma(idioma);
 
                 entiHijasMap.put(entiId, TipoSubparametroProxy.select(entiId));
                 itemHijosMap.put(entiId, sprmBO.selectList(sprmCriterioVO));
@@ -94,46 +80,33 @@ public final class ParametroPdfAction extends ItemAction implements ModelDriven<
         final Map<String, I18nVO> i18nMap = new HashMap<>();
 
         if (entiDetail.getEnti().isI18n()) {
-            i18nMap.putAll(I18nBO.selectMap(I18nPrefix.prvr, model.getPrvr().getId()));
+            i18nMap.putAll(I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId()));
         }
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             final ParametroPdf prmtPdf = new ParametroPdf(getLocale());
 
-            prmtPdf.imprimir(model, entiDetail, entiHijasMap, itemHijosMap, i18nMap, baos);
+            prmtPdf.imprimir(item, entiDetail, entiHijasMap, itemHijosMap, i18nMap, baos);
 
             stream = new ByteArrayInputStream(baos.toByteArray());
-        } catch (final IOException ex) {
-            throw new InternalErrorException(ex);
         }
-
-        return SUCCESS;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ParametroVO getModel() {
-        return model;
+    public final String getFilename() {
+        return MessageI18nKey.prmt.name() + '_' + item.getEntiId() + '_' + item.getId();
     }
 
     /**
-     * Sets the item.
+     * Sets the fecha vigencia.
      *
      * @param value
-     *            the new item
+     *            the new fecha vigencia
      */
-    public void setModel(final ParametroVO value) {
-        model = value;
-    }
-
-    /**
-     * Gets the stream.
-     *
-     * @return the stream
-     */
-    public InputStream getStream() {
-        return stream;
+    public final void setFechaVigencia(final Date value) {
+        fechaVigencia = value;
     }
 }

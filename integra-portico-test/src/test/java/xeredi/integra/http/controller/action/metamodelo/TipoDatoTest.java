@@ -22,12 +22,12 @@ public final class TipoDatoTest extends StrutsTestCase {
             request.clearAttributes();
             request.addParameter("tpdtCriterio.codigo", "A%");
 
-            final ActionProxy proxy = getActionProxy("/metamodelo/tpdt-list.action");
-            final TipoDatoListadoAction action = (TipoDatoListadoAction) proxy.getAction();
+            final ActionProxy proxy = getActionProxy("/metamodelo/tipo-dato-list.action");
+            final TipoDatoListAction action = (TipoDatoListAction) proxy.getAction();
 
             assertEquals(Action.SUCCESS, proxy.execute(), Action.SUCCESS);
             assertTrue("No Errors", action.getActionErrors().isEmpty());
-            assertFalse("Data", action.getTpdtList().getList().isEmpty());
+            assertFalse("Data", action.getResultList().getList().isEmpty());
             assertEquals("First Page", action.getPage(), 1);
         }
 
@@ -35,19 +35,19 @@ public final class TipoDatoTest extends StrutsTestCase {
             request.clearAttributes();
             request.addParameter("page", "20");
 
-            final ActionProxy proxy = getActionProxy("/metamodelo/tpdt-list.action");
-            final TipoDatoListadoAction action = (TipoDatoListadoAction) proxy.getAction();
+            final ActionProxy proxy = getActionProxy("/metamodelo/tipo-dato-list.action");
+            final TipoDatoListAction action = (TipoDatoListAction) proxy.getAction();
 
             assertEquals(Action.SUCCESS, proxy.execute(), Action.SUCCESS);
             assertTrue("No Errors", action.getActionErrors().isEmpty());
-            assertTrue("No Data", action.getTpdtList().getList().isEmpty());
+            assertTrue("No Data", action.getResultList().getList().isEmpty());
         }
 
         {
             request.clearAttributes();
 
-            final ActionProxy proxy = getActionProxy("/metamodelo/tpdt-create.action");
-            final TipoDatoAction action = (TipoDatoAction) proxy.getAction();
+            final ActionProxy proxy = getActionProxy("/metamodelo/tipo-dato-edit.action");
+            final TipoDatoEditAction action = (TipoDatoEditAction) proxy.getAction();
 
             assertEquals(Action.SUCCESS, proxy.execute(), Action.SUCCESS);
             assertTrue("No Errors", action.getActionErrors().isEmpty());

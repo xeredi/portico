@@ -220,7 +220,7 @@
 		</where>
 	</select>
 
-	<select id="selectLupaList" parameterType="ParametroLupaCriterioVO" resultMap="ResultMap" fetchSize="10">
+	<select id="selectLupaList" parameterType="ParametroTypeaheadCriterioVO" resultMap="ResultMap" fetchSize="10">
         <![CDATA[
         SELECT
             prmt_pk

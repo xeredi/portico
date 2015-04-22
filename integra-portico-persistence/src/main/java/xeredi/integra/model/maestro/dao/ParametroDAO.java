@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
-import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
+import xeredi.integra.model.maestro.vo.ParametroTypeaheadCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 
 // TODO: Auto-generated Javadoc
@@ -140,13 +140,13 @@ public interface ParametroDAO {
     /**
      * Select lupa list.
      *
-     * @param prmtLupaCriterioVO
-     *            the prmt lupa criterio vo
+     * @param criterio
+     *            the criterio
      * @param bounds
      *            the bounds
      * @return the list
      */
-    List<ParametroVO> selectLupaList(final @Nonnull ParametroLupaCriterioVO prmtLupaCriterioVO,
+    List<ParametroVO> selectLupaList(final @Nonnull ParametroTypeaheadCriterioVO criterio,
             final @Nonnull RowBounds bounds);
 
 }

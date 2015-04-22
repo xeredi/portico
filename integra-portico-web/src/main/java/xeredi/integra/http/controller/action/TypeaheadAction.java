@@ -3,7 +3,7 @@ package xeredi.integra.http.controller.action;
 import java.util.List;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.BaseCriterioVO;
+import xeredi.integra.model.comun.vo.TypeaheadCriterioVO;
 
 import com.google.common.base.Preconditions;
 import com.opensymphony.xwork2.ModelDriven;
@@ -12,32 +12,35 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class TypeaheadAction.
  *
- * @param <T>
+ * @param <C>
  *            the generic type
  * @param <R>
  *            the generic type
  */
-public abstract class TypeaheadAction<T extends BaseCriterioVO, R> extends BaseAction implements ModelDriven<T> {
+public abstract class TypeaheadAction<C extends TypeaheadCriterioVO, R> extends BaseAction implements ModelDriven<C> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2890042689865301209L;
 
     /** The model. */
-    protected T model;
+    protected C model;
 
     /** The result list. */
     protected List<R> resultList;
+
+    /** The limit. */
+    protected int limit = 5;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String execute() throws ApplicationException {
+    public final String execute() throws ApplicationException {
         Preconditions.checkNotNull(model);
 
         model.setIdioma(getIdioma());
 
-        doExecute();
+        doTypeahead();
 
         return SUCCESS;
     }
@@ -48,13 +51,13 @@ public abstract class TypeaheadAction<T extends BaseCriterioVO, R> extends BaseA
      * @throws ApplicationException
      *             the application exception
      */
-    public abstract void doExecute() throws ApplicationException;
+    public abstract void doTypeahead() throws ApplicationException;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final T getModel() {
+    public final C getModel() {
         return model;
     }
 
@@ -64,7 +67,7 @@ public abstract class TypeaheadAction<T extends BaseCriterioVO, R> extends BaseA
      * @param value
      *            the new model
      */
-    public final void setModel(final T value) {
+    public final void setModel(final C value) {
         this.model = value;
     }
 
@@ -75,6 +78,16 @@ public abstract class TypeaheadAction<T extends BaseCriterioVO, R> extends BaseA
      */
     public final List<R> getResultList() {
         return resultList;
+    }
+
+    /**
+     * Sets the limit.
+     *
+     * @param limit
+     *            the new limit
+     */
+    public final void setLimit(final int limit) {
+        this.limit = limit;
     }
 
 }

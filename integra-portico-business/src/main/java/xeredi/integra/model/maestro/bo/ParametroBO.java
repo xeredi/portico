@@ -11,7 +11,7 @@ import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
-import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
+import xeredi.integra.model.maestro.vo.ParametroTypeaheadCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -28,8 +28,8 @@ public interface ParametroBO {
      *
      * @param prmt
      *            the prmt
-     * @param tpprVO
-     *            the tppr vo
+     * @param tpprDetail
+     *            the tppr detail
      * @param i18nMap
      *            the i18n map
      * @throws OverlapException
@@ -43,8 +43,8 @@ public interface ParametroBO {
      *
      * @param prmt
      *            the prmt
-     * @param tpprVO
-     *            the tppr vo
+     * @param tpprDetail
+     *            the tppr detail
      * @param i18nMap
      *            the i18n map
      * @throws OverlapException
@@ -60,8 +60,8 @@ public interface ParametroBO {
      *
      * @param prmt
      *            the prmt
-     * @param tpprVO
-     *            the tppr vo
+     * @param tpprDetail
+     *            the tppr detail
      * @param i18nMap
      *            the i18n map
      * @throws OverlapException
@@ -194,12 +194,12 @@ public interface ParametroBO {
     /**
      * Select lupa list.
      *
-     * @param prmtLupaCriterioVO
-     *            the prmt lupa criterio vo
+     * @param criterio
+     *            the criterio
      * @param limit
      *            the limit
      * @return the list
      */
-    List<ParametroVO> selectLupaList(final @Nonnull ParametroLupaCriterioVO prmtLupaCriterioVO, final int limit);
+    List<ParametroVO> selectLupaList(final @Nonnull ParametroTypeaheadCriterioVO criterio, final int limit);
 
 }

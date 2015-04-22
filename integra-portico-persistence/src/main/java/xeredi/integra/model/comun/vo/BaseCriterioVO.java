@@ -1,7 +1,5 @@
 package xeredi.integra.model.comun.vo;
 
-import java.util.Date;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 // TODO: Auto-generated Javadoc
@@ -15,12 +13,6 @@ public abstract class BaseCriterioVO {
 
     /** The idioma defecto. */
     private String idiomaDefecto;
-
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
-
-    /** The texto busqueda. */
-    private String textoBusqueda;
 
     /** The max limit. */
     private Integer maxLimit;
@@ -72,25 +64,6 @@ public abstract class BaseCriterioVO {
     }
 
     /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public final Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public final void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
-    }
-
-    /**
      * Gets the max limit.
      *
      * @return the max limit
@@ -107,26 +80,5 @@ public abstract class BaseCriterioVO {
      */
     public final void setMaxLimit(final Integer value) {
         maxLimit = value;
-    }
-
-    /**
-     * Gets the texto busqueda.
-     *
-     * @return the texto busqueda
-     */
-    public final String getTextoBusqueda() {
-        return textoBusqueda;
-    }
-
-    /**
-     * Sets the texto busqueda.
-     *
-     * @param value
-     *            the new texto busqueda
-     */
-    public final void setTextoBusqueda(final String value) {
-        if (value != null) {
-            textoBusqueda = value.trim().toUpperCase() + "%";
-        }
     }
 }
