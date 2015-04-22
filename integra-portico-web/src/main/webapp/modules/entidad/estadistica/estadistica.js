@@ -66,13 +66,13 @@ function PeprGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.peprCriterio = $routeParams.peprCriterio ? angular.fromJson($routeParams.peprCriterio) : {};
 
     function search(page) {
-        $http.post("estadistica/pepr-list.action", {
-            peprCriterio : vm.peprCriterio,
+        $http.post("estadistica/periodo-proceso-list.action", {
+            model : vm.peprCriterio,
             page : page,
             limit : vm.peprCriterio.limit
         }).success(function(data) {
-            vm.page = data.peprList.page;
-            vm.peprList = data.peprList;
+            vm.peprList = data.resultList;
+            vm.page = data.resultList.page;
 
             $location.search({
                 page : vm.page,
@@ -86,8 +86,10 @@ function PeprGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
-        $http.post("estadistica/pepr-filter.action").success(function(data) {
-            vm.autpList = data.autpList;
+        $http.post("estadistica/periodo-proceso-filter.action", {
+            model : vm.peprCriterio
+        }).success(function(data) {
+            vm.sprtList = data.sprtList;
             vm.limits = data.limits;
         });
     }

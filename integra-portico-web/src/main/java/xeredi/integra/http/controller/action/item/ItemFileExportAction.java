@@ -36,8 +36,8 @@ public abstract class ItemFileExportAction<I extends ItemVO> extends CrudFileExp
     /**
      * Do specific pdf export.
      *
-     * @throws ApplicationException
-     *             the application exception
+     * @throws ApplicationExceptionhttp
+     *             ://marketplace.eclipse.org/content/clay-mark-ii the application exception
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
