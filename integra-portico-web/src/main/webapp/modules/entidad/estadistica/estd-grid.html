@@ -36,7 +36,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="item in vm.itemList.list track by $index">
-                <td><a ng-href="#/estadistica/estd/detail/{{vm.enti.id}}/{{item.id}}"><i
+                <td><a ng-href="#/estadistica/estd/detail/{{vm.enti.enti.id}}/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap" ng-bind="item.pepr.etiqueta"></td>
                 <td nowrap="nowrap" ng-bind="item.prto.etiqueta"></td>

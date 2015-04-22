@@ -206,14 +206,14 @@ function EstdGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.itemCriterio.pepr.sprtId = $routeParams.autpId;
 
     function search(page) {
-        $http.post("estadistica/estd-list.action", {
+        $http.post("estadistica/estadistica-list.action", {
             model : vm.itemCriterio,
             page : page,
             limit : vm.itemCriterio.limit
         }).success(function(data) {
             vm.enti = data.enti;
-            vm.page = data.itemList.page;
-            vm.itemList = data.itemList;
+            vm.page = data.resultList.page;
+            vm.itemList = data.resultList;
             vm.itemCriterio = data.model;
 
             $location.search({
@@ -244,7 +244,7 @@ function EstdGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
-        $http.post("estadistica/estd-filter.action", {
+        $http.post("estadistica/estadistica-filter.action", {
             model : vm.itemCriterio
         }).success(function(data) {
             vm.labelValuesMap = data.labelValuesMap;
@@ -262,14 +262,15 @@ function EstdGridController($http, $location, $routeParams, $modal, pageTitleSer
 function EstdDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
-    $http.post("estadistica/estd-detail.action", {
+    $http.post("estadistica/estadistica-detail.action", {
         model : {
-            id : $routeParams.itemId
+            id : $routeParams.itemId,
+            entiId : $routeParams.entiId
         }
     }).success(function(data) {
         vm.item = data.model;
         vm.enti = data.enti;
-        vm.fechaVigencia = data.fechaVigencia;
+        vm.fechaVigencia = data.model.fref;
     });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
