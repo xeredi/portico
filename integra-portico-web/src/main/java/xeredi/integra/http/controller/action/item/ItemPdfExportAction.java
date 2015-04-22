@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.item;
 
 import java.io.IOException;
 
-import xeredi.integra.http.controller.action.PdfExportAction;
+import xeredi.integra.http.controller.action.CrudPdfExportAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ItemVO;
 
@@ -17,7 +17,7 @@ import com.google.common.base.Preconditions;
  * @param <E>
  *            the element type
  */
-public abstract class ItemPdfExportAction<I extends ItemVO> extends PdfExportAction {
+public abstract class ItemPdfExportAction<I extends ItemVO> extends CrudPdfExportAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5721322101881550614L;

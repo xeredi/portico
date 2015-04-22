@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.item;
 
 import java.io.IOException;
 
-import xeredi.integra.http.controller.action.XlsExportAction;
+import xeredi.integra.http.controller.action.GridXlsExportAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
 
@@ -17,7 +17,7 @@ import com.google.common.base.Preconditions;
  * @param <E>
  *            the element type
  */
-public abstract class ItemXlsExportAction<C extends ItemCriterioVO> extends XlsExportAction<C> {
+public abstract class ItemXlsExportAction<C extends ItemCriterioVO> extends GridXlsExportAction<C> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1760701788741847611L;

@@ -8,15 +8,24 @@ import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.exception.InternalErrorException;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class PdfExportAction.
+ * The Class XlsExportAction.
+ *
+ * @param <C>
+ *            the generic type
  */
-public abstract class PdfExportAction extends BaseAction {
+public abstract class GridXlsExportAction<C extends BaseCriterioVO> extends BaseAction {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -8506495302704421492L;
+    private static final long serialVersionUID = 2203318775060986047L;
+
+    /** The criterio. */
+    protected C criterio;
 
     /** The stream. */
     protected InputStream stream;
@@ -25,11 +34,15 @@ public abstract class PdfExportAction extends BaseAction {
      * {@inheritDoc}
      */
     @Override
-    @Action(results = { @Result(name = "success", type = "stream", params = { "contentType", "application/pdf",
-            "inputName", "stream", "contentDisposition", "filename=${filename}.pdf" }) })
+    @Action(results = { @Result(name = "success", type = "stream", params = { "contentType", "application/xls",
+            "inputName", "stream", "contentDisposition", "filename=${filename}.xls" }) })
     public final String execute() throws ApplicationException {
+        Preconditions.checkNotNull(criterio);
+
+        criterio.setIdioma(getIdioma());
+
         try {
-            doPdfExport();
+            doXlsExport();
         } catch (final IOException ex) {
             throw new InternalErrorException(ex);
         }
@@ -43,7 +56,7 @@ public abstract class PdfExportAction extends BaseAction {
      * @throws ApplicationException
      *             the application exception
      */
-    public abstract void doPdfExport() throws ApplicationException, IOException;
+    public abstract void doXlsExport() throws ApplicationException, IOException;
 
     /**
      * Gets the filename.
@@ -51,6 +64,16 @@ public abstract class PdfExportAction extends BaseAction {
      * @return the filename
      */
     public abstract String getFilename();
+
+    /**
+     * Sets the criterio.
+     *
+     * @param value
+     *            the new criterio
+     */
+    public final void setCriterio(final C value) {
+        this.criterio = value;
+    }
 
     /**
      * Gets the stream.
