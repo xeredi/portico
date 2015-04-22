@@ -21,4 +21,12 @@ public final class TipoEstadisticaFilterAction extends GridFilterAction<TipoEsta
         // noop
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void doLoadDependencies() throws ApplicationException {
+        // noop
+    }
+
 }

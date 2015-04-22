@@ -2,24 +2,23 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-4 col-md-2 col-md-2 form-group-sm">
-                <label ng-bind="'enti_' + vm.enti.tpprAsociado.id | translate"></label> <input
+                <label ng-bind="'enti_' + vm.enti.enti.tpprAsociado.id | translate"></label> <input
                     ng-if="vm.accion != 'edit'" ng-controller="PrmtsLupaController" type="text"
                     autocomplete="off" ng-model="vm.item.prmtAsociado"
-                    typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.tpprAsociado.id, $viewValue, null, vm.fechaVigencia)"
+                    typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.enti.tpprAsociado.id, $viewValue, null, vm.fechaVigencia)"
                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                 <p ng-if="vm.accion == 'edit'" class="form-control-static"
                     ng-bind="vm.item.prmtAsociado.etiqueta"></p>
             </div>
 
             <div class="col-sm-2 col-md-2 col-md-1 form-group-sm">
-                <label translate>prmt_fini</label> <input type="text" class="form-control"
+                <label translate="sprm_fini"></label> <input type="text" class="form-control"
                     ng-model="vm.item.spvr.fini" data-max-date="{{vm.item.spvr.ffin}}" bs-datepicker />
             </div>
 
             <div class="col-sm-2 col-md-2 col-md-1 form-group-sm">
-                <label translate>prmt_ffin</label> <label translate>prmt_fini</label> <input type="text"
-                    class="form-control" ng-model="vm.item.spvr.ffin" data-min-date="{{vm.item.spvr.fini}}"
-                    bs-datepicker />
+                <label translate="sprm_ffin"></label> <input type="text" class="form-control"
+                    ng-model="vm.item.spvr.ffin" data-min-date="{{vm.item.spvr.fini}}" bs-datepicker />
             </div>
         </div>
 

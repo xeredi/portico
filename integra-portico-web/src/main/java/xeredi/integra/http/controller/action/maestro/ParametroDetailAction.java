@@ -39,9 +39,9 @@ public final class ParametroDetailAction extends ItemDetailAction<ParametroVO, T
             fechaVigencia = Calendar.getInstance().getTime();
         }
 
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
+        final ParametroBO itemBO = ParametroBOFactory.newInstance(model.getEntiId());
 
-        model = prmtBO.select(model.getId(), idioma, fechaVigencia);
+        model = itemBO.select(model.getId(), idioma, fechaVigencia);
         enti = TipoParametroProxy.select(model.getEntiId());
 
         if (enti.getEnti().isI18n()) {

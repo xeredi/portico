@@ -76,7 +76,7 @@ public class SubparametroBO {
             for (final EntidadTipoDatoVO entd : tpspDetail.getEntdList()) {
                 final Long tpdtId = entd.getTpdt().getId();
 
-                if (!sprm.getItdtMap().containsKey(tpdtId) && !sprm.getItdtMap().containsKey(tpdtId.toString())) {
+                if (!sprm.getItdtMap().containsKey(tpdtId)) {
                     final ItemDatoVO itdt = new ItemDatoVO();
 
                     itdt.setTpdtId(tpdtId);
@@ -225,7 +225,7 @@ public class SubparametroBO {
             for (final EntidadTipoDatoVO entd : tpspDetail.getEntdList()) {
                 final Long tpdtId = entd.getTpdt().getId();
 
-                if (!sprm.getItdtMap().containsKey(tpdtId.toString())) {
+                if (!sprm.getItdtMap().containsKey(tpdtId)) {
                     final ItemDatoVO itdt = new ItemDatoVO();
 
                     itdt.setTpdtId(tpdtId);

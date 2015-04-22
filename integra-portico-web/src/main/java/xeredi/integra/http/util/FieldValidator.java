@@ -172,7 +172,7 @@ public final class FieldValidator {
             final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
 
             for (final EntidadTipoDatoVO entd : entiDetail.getEntdList()) {
-                final ItemDatoVO itdtVO = itdtMap == null ? null : itdtMap.get(entd.getTpdt().getId().toString());
+                final ItemDatoVO itdtVO = itdtMap == null ? null : itdtMap.get(entd.getTpdt().getId());
                 final String fieldname = action.getText("entd_" + entd.getId());
 
                 validateRequired(action, fieldname, itdtVO, entd.getObligatorio());

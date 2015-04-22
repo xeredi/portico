@@ -3,6 +3,8 @@ package xeredi.integra.http.controller.action;
 import java.util.List;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.TypeaheadCriterioVO;
 
 import com.google.common.base.Preconditions;
@@ -22,6 +24,9 @@ public abstract class TypeaheadAction<C extends TypeaheadCriterioVO, R> extends 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2890042689865301209L;
 
+    /** The Constant ROWS. */
+    private static final int ROWS = ConfigurationProxy.getInt(ConfigurationKey.filter_limit);
+
     /** The model. */
     protected C model;
 
@@ -29,7 +34,7 @@ public abstract class TypeaheadAction<C extends TypeaheadCriterioVO, R> extends 
     protected List<R> resultList;
 
     /** The limit. */
-    protected int limit = 5;
+    protected int limit = ROWS;
 
     /**
      * {@inheritDoc}

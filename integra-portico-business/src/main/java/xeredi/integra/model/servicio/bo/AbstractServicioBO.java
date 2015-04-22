@@ -168,7 +168,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
                 for (final EntidadTipoDatoVO entd : tpsrDetail.getEntdList()) {
                     final Long tpdtId = entd.getTpdt().getId();
 
-                    if (!srvc.getItdtMap().containsKey(tpdtId) && !srvc.getItdtMap().containsKey(tpdtId.toString())) {
+                    if (!srvc.getItdtMap().containsKey(tpdtId)) {
                         final ItemDatoVO itdt = new ItemDatoVO();
 
                         itdt.setTpdtId(tpdtId);

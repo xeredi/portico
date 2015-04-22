@@ -19,6 +19,8 @@ import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ParametroEditAction.
@@ -42,10 +44,11 @@ public final class ParametroEditAction extends ItemEditAction<ParametroVO, TipoP
      */
     @Override
     public void doSpecificEdit() throws ApplicationException {
+        Preconditions.checkNotNull(fechaVigencia);
+
         enti = TipoParametroProxy.select(model.getEntiId());
 
         if (accion == ACCION_EDICION.create) {
-            model = new ParametroVO();
             i18nMap = new HashMap<String, I18nVO>();
         } else {
             final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());

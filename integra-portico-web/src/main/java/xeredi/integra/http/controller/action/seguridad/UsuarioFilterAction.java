@@ -32,6 +32,14 @@ public final class UsuarioFilterAction extends GridFilterAction<UsuarioCriterioV
      */
     @Override
     public void doPrepareFilter() throws ApplicationException {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void doLoadDependencies() throws ApplicationException {
         final SuperpuertoBO sprtBO = new SuperpuertoBO();
         final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
 

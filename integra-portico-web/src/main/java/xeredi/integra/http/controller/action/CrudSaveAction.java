@@ -3,15 +3,15 @@ package xeredi.integra.http.controller.action;
 import xeredi.integra.model.comun.exception.ApplicationException;
 
 import com.google.common.base.Preconditions;
-import com.opensymphony.xwork2.ModelDriven;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CrudSaveAction.
  *
  * @param <T>
  *            the generic type
  */
-public abstract class CrudSaveAction<T> extends BaseAction implements ModelDriven<T> {
+public abstract class CrudSaveAction<T> extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6571569363320765658L;
@@ -68,10 +68,11 @@ public abstract class CrudSaveAction<T> extends BaseAction implements ModelDrive
     }
 
     /**
-     * {@inheritDoc}
+     * Gets the model.
+     *
+     * @return the model
      */
-    @Override
-    public final T getModel() {
+    public T getModel() {
         return model;
     }
 

@@ -67,8 +67,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
             // Validar que los datos del parametro son correctos
             if (tpprDetail.getEntdList() != null && !tpprDetail.getEntdList().isEmpty()) {
                 for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {
-                    if (!prmt.getItdtMap().containsKey(entd.getTpdt().getId())
-                            && !prmt.getItdtMap().containsKey(entd.getTpdt().getId().toString())) {
+                    if (!prmt.getItdtMap().containsKey(entd.getTpdt().getId())) {
                         final ItemDatoVO itdt = new ItemDatoVO();
 
                         itdt.setTpdtId(entd.getTpdt().getId());
@@ -150,7 +149,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
                 for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {
                     final Long tpdtId = entd.getTpdt().getId();
 
-                    if (!prmt.getItdtMap().containsKey(tpdtId.toString())) {
+                    if (!prmt.getItdtMap().containsKey(tpdtId)) {
                         final ItemDatoVO itdt = new ItemDatoVO();
 
                         itdt.setTpdtId(tpdtId);
@@ -309,7 +308,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
      */
     protected abstract void duplicatePostOperations(final @Nonnull SqlSession session, final @Nonnull ParametroVO prmt,
             final @Nonnull TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
-                    throws OverlapException, InstanceNotFoundException;
+            throws OverlapException, InstanceNotFoundException;
 
     /**
      * {@inheritDoc}
@@ -332,7 +331,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
             // Validar que los datos del parametro son correctos
             if (tpprDetail.getEntdList() != null && !tpprDetail.getEntdList().isEmpty()) {
                 for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {
-                    if (!prmt.getItdtMap().containsKey(entd.getTpdt().getId().toString())) {
+                    if (!prmt.getItdtMap().containsKey(entd.getTpdt().getId())) {
                         throw new Error("No se ha pasado informacion del dato " + entd.getTpdt().getNombre()
                                 + " del parametro: " + prmt);
                     }

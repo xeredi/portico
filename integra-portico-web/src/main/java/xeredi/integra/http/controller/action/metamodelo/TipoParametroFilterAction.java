@@ -20,4 +20,12 @@ public final class TipoParametroFilterAction extends GridFilterAction<TipoParame
     public void doPrepareFilter() throws ApplicationException {
         // noop
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void doLoadDependencies() throws ApplicationException {
+        // noop
+    }
 }

@@ -2,8 +2,8 @@
 <form role="form">
     <fieldset>
         <div class="row">
-            <div ng-if="vm.enti.puerto" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate>prto</label> <select ng-if="vm.accion != 'edit'" ng-model="vm.item.prto.id"
+            <div ng-if="vm.enti.enti.puerto" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+                <label translate="prto"></label> <select ng-if="vm.accion != 'edit'" ng-model="vm.item.prto.id"
                     ng-change="vm.prtoId = vm.item.prto.id"
                     ng-options="prto.id as prto.etiqueta for prto in vm.prtoList" class="form-control">
                     <option />
@@ -11,31 +11,31 @@
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.prto.etiqueta"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate>prmt_parametro</label> <input ng-if="vm.accion != 'edit'" type="text"
+                <label translate="prmt_parametro"></label> <input ng-if="vm.accion != 'edit'" type="text"
                     ng-model="vm.item.parametro" class="form-control" />
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.parametro"></p>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
-                <label translate>prmt_fini</label> <input type="text" class="form-control"
+                <label translate="prmt_fini"></label> <input type="text" class="form-control"
                     ng-model="vm.item.prvr.fini" data-max-date="{{vm.item.prvr.ffin}}" bs-datepicker />
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
-                <label translate>prmt_ffin</label> <input type="text" class="form-control"
+                <label translate="prmt_ffin"></label> <input type="text" class="form-control"
                     ng-model="vm.item.prvr.ffin" data-min-date="{{vm.item.prvr.fini}}" bs-datepicker />
             </div>
         </div>
 
-        <div ng-if="vm.enti.i18n" class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
+        <div ng-if="vm.enti.enti.i18n" class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
 
         <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
     </fieldset>
 
     <div class="btn-group">
         <button data-ng-click="vm.save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+            <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
         </button>
         <button data-ng-click="vm.cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
         </button>
     </div>
 </form>

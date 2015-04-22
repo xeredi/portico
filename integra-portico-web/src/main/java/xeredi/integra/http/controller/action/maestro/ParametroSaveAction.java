@@ -59,20 +59,20 @@ public final class ParametroSaveAction extends ItemSaveAction<ParametroVO> {
      */
     @Override
     public void doSave() throws ApplicationException {
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
+        final ParametroBO itemBO = ParametroBOFactory.newInstance(model.getEntiId());
         final TipoParametroDetailVO enti = TipoParametroProxy.select(model.getEntiId());
 
         switch (accion) {
         case create:
-            prmtBO.insert(model, enti, i18nMap);
+            itemBO.insert(model, enti, i18nMap);
 
             break;
         case edit:
-            prmtBO.update(model, enti, i18nMap);
+            itemBO.update(model, enti, i18nMap);
 
             break;
         case duplicate:
-            prmtBO.duplicate(model, enti, i18nMap);
+            itemBO.duplicate(model, enti, i18nMap);
 
             break;
         default:

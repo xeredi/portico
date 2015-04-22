@@ -1,5 +1,7 @@
 package xeredi.integra.http.controller.action.maestro;
 
+import java.util.Calendar;
+
 import xeredi.integra.http.controller.action.item.ItemListAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.maestro.bo.ParametroBO;
@@ -23,10 +25,14 @@ public final class ParametroListAction extends ItemListAction<ParametroCriterioV
      */
     @Override
     public void doSpecificList() throws ApplicationException {
+        if (model.getFechaVigencia() == null) {
+            model.setFechaVigencia(Calendar.getInstance().getTime());
+        }
+
         enti = TipoParametroProxy.select(model.getEntiId());
 
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
+        final ParametroBO itemBO = ParametroBOFactory.newInstance(model.getEntiId());
 
-        resultList = prmtBO.selectList(model, getOffset(), limit);
+        resultList = itemBO.selectList(model, getOffset(), limit);
     }
 }

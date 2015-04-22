@@ -92,15 +92,15 @@ function PrmtGridController($location, $routeParams, $http, $modal, pageTitleSer
     vm.itemCriterio.entiId = $routeParams.entiId;
 
     function search(page) {
-        $http.post("maestro/prmt-list.action", {
+        $http.post("maestro/parametro-list.action", {
             model : vm.itemCriterio,
             page : page,
             limit : vm.itemCriterio.limit
         }).success(function(data) {
             vm.itemCriterio = data.model;
             vm.enti = data.enti;
-            vm.page = data.itemList.page;
-            vm.itemList = data.itemList;
+            vm.page = data.resultList.page;
+            vm.itemList = data.resultList;
 
             $location.search({
                 page : vm.page,
@@ -130,7 +130,7 @@ function PrmtGridController($location, $routeParams, $http, $modal, pageTitleSer
     }
 
     function filter(size) {
-        $http.post("maestro/prmt-filter.action", {
+        $http.post("maestro/parametro-filter.action", {
             model : vm.itemCriterio
         }).success(function(data) {
             vm.labelValuesMap = data.labelValuesMap;
@@ -181,7 +181,7 @@ function PrmtDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("maestro/prmt-remove.action", {
+            $http.post("maestro/parametro-remove.action", {
                 model : vm.item
             }).success(function(data) {
                 window.history.back();
@@ -237,7 +237,7 @@ function PrmtDetailController($http, $location, $routeParams, pageTitleService) 
 
         if (data.enti && vm.enti.entiHijasList) {
             for (i = 0; i < vm.enti.entiHijasList.length; i++) {
-                $http.post("maestro/sprm-list.action", {
+                $http.post("maestro/subparametro-list.action", {
                     model : {
                         prmt : {
                             id : vm.item.id
@@ -247,7 +247,7 @@ function PrmtDetailController($http, $location, $routeParams, pageTitleService) 
                     }
                 }).success(function(data) {
                     vm.entiHijasMap[data.enti.enti.id] = data.enti;
-                    vm.itemHijosMap[data.enti.enti.id] = data.itemList;
+                    vm.itemHijosMap[data.enti.enti.id] = data.resultList;
                 });
             }
         }
@@ -264,7 +264,7 @@ function PrmtEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("maestro/prmt-save.action", {
+        $http.post("maestro/parametro-save.action", {
             model : vm.item,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -334,7 +334,7 @@ function SprmDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("maestro/sprm-remove.action", {
+            $http.post("maestro/subparametro-remove.action", {
                 model : vm.item
             }).success(function(data) {
                 window.history.back();
@@ -342,9 +342,10 @@ function SprmDetailController($http, $routeParams, pageTitleService) {
         }
     }
 
-    $http.post("maestro/sprm-detail.action", {
+    $http.post("maestro/subparametro-detail.action", {
         model : {
-            id : $routeParams.itemId
+            id : $routeParams.itemId,
+            entiId : $routeParams.entiId
         },
         fechaVigencia : $routeParams.fechaVigencia
     }).success(function(data) {
@@ -365,7 +366,7 @@ function SprmEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("maestro/sprm-save.action", {
+        $http.post("maestro/subparametro-save.action", {
             model : vm.item,
             accion : vm.accion
         }).success(
@@ -382,7 +383,7 @@ function SprmEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("maestro/sprm-edit.action", {
+    $http.post("maestro/subparametro-edit.action", {
         model : {
             entiId : $routeParams.entiId,
             prmtId : $routeParams.prmtId,

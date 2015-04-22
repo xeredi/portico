@@ -30,6 +30,14 @@ public final class TipoDatoFilterAction extends GridFilterAction<TipoDatoCriteri
      */
     @Override
     public void doPrepareFilter() throws ApplicationException {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void doLoadDependencies() throws ApplicationException {
         tphtList = TipoHtml.values();
         tpelList = TipoElemento.values();
     }

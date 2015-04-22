@@ -1,12 +1,12 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default"
-            ng-href="#/maestro/sprm/edit/edit/{{vm.enti.id}}/{{vm.item.prmtId}}/{{vm.fechaVigencia}}/{{vm.item.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a> <a class="btn btn-default"
-            ng-href="#/maestro/sprm/edit/duplicate/{{vm.enti.id}}/{{vm.item.prmtId}}/{{vm.fechaVigencia}}/{{vm.item.id}}"><i
-            class="glyphicon glyphicon-tags"></i> <span translate>btn_duplicar</span></a>
+            ng-href="#/maestro/sprm/edit/edit/{{vm.enti.enti.id}}/{{vm.item.prmtId}}/{{vm.fechaVigencia}}/{{vm.item.id}}"><i
+            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a> <a class="btn btn-default"
+            ng-href="#/maestro/sprm/edit/duplicate/{{vm.enti.enti.id}}/{{vm.item.prmtId}}/{{vm.fechaVigencia}}/{{vm.item.id}}"><i
+            class="glyphicon glyphicon-tags"></i> <span translate="btn_duplicar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
         </button>
     </div>
 </div>
@@ -14,19 +14,19 @@
 <fieldset>
     <div class="row">
         <div class="col-sm-4 col-md-2 col-md-2 form-group-sm">
-            <label ng-bind="'enti_' + vm.enti.tpprAsociado.id | translate"></label>
+            <label ng-bind="'enti_' + vm.enti.enti.tpprAsociado.id | translate"></label>
             <p class="form-control-static">
                 <a
-                    ng-href="#/maestro/prmt/detail/{{vm.enti.tpprAsociado.id}}/{{vm.item.prmtAsociado.id}}/{{vm.fechaVigencia}}"
+                    ng-href="#/maestro/prmt/detail/{{vm.enti.enti.tpprAsociado.id}}/{{vm.item.prmtAsociado.id}}/{{vm.fechaVigencia}}"
                     ng-bind="vm.item.prmtAsociado.etiqueta"></a>
             </p>
         </div>
         <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
-            <label translate>sprm_fini</label>
+            <label translate="sprm_fini"></label>
             <p class="form-control-static" ng-bind="vm.item.spvr.fini | date: ('format_date' | translate)"></p>
         </div>
         <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
-            <label translate>sprm_ffin</label>
+            <label translate="sprm_ffin"></label>
             <p class="form-control-static" ng-bind="vm.item.spvr.ffin | date: ('format_date' | translate)"></p>
         </div>
     </div>

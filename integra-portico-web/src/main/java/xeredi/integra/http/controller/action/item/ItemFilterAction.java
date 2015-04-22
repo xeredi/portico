@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import xeredi.integra.http.controller.action.CrudEditAction;
+import xeredi.integra.http.controller.action.GridFilterAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.comun.vo.ItemCriterioVO;
 import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
@@ -21,17 +21,18 @@ import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ItemEditAction.
+ * The Class ItemFilterAction.
  *
- * @param <I>
+ * @param <C>
  *            the generic type
  * @param <E>
  *            the element type
  */
-public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidadDetailVO> extends CrudEditAction<I> {
+public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends AbstractEntidadDetailVO> extends
+        GridFilterAction<C> {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -4070230048819938799L;
+    private static final long serialVersionUID = 8917073535249583222L;
 
     /** The enti. */
     protected E enti;
@@ -43,18 +44,10 @@ public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidad
      * {@inheritDoc}
      */
     @Override
-    public final void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model);
+    public final void doPrepareFilter() throws ApplicationException {
         Preconditions.checkNotNull(model.getEntiId());
 
-        if (accion != ACCION_EDICION.create) {
-            Preconditions.checkNotNull(model.getId());
-        }
-
-        doSpecificEdit();
-
-        // TODO Auto-generated method stub
-
+        doSpecificPrepareFilter();
     }
 
     /**
@@ -64,14 +57,14 @@ public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidad
     public final void doLoadDependencies() throws ApplicationException {
         Preconditions.checkNotNull(enti);
 
-        labelValuesMap = new HashMap<Long, List<LabelValueVO>>();
-
         if (enti.getEntdList() != null) {
+            labelValuesMap = new HashMap<Long, List<LabelValueVO>>();
+
             final Set<Long> tpprIds = new HashSet<>();
 
             for (final EntidadTipoDatoVO entdVO : enti.getEntdList()) {
-                if (entdVO.getTpdt().getTpht() != TipoHtml.F && entdVO.getTpdt().getEnti() != null
-                        && entdVO.getTpdt().getEnti().getId() != null) {
+                if (entdVO.getFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
+                        && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
                     tpprIds.add(entdVO.getTpdt().getEnti().getId());
                 }
             }
@@ -83,24 +76,24 @@ public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidad
             }
         }
 
-        doLoadSpecificDependencies();
+        doSpecificLoadDependencies();
     }
 
     /**
-     * Do specific edit.
+     * Do specific prepare filter.
      *
      * @throws ApplicationException
      *             the application exception
      */
-    public abstract void doSpecificEdit() throws ApplicationException;
+    public abstract void doSpecificPrepareFilter() throws ApplicationException;
 
     /**
-     * Do load specific dependencies.
+     * Do load dependencies.
      *
      * @throws ApplicationException
      *             the application exception
      */
-    public abstract void doLoadSpecificDependencies() throws ApplicationException;
+    public abstract void doSpecificLoadDependencies() throws ApplicationException;
 
     /**
      * Gets the fecha vigencia.
@@ -110,20 +103,20 @@ public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidad
     public abstract Date getFechaVigencia();
 
     /**
-     * Gets the label values map.
-     *
-     * @return the label values map
-     */
-    public final Map<Long, List<LabelValueVO>> getLabelValuesMap() {
-        return labelValuesMap;
-    }
-
-    /**
      * Gets the enti.
      *
      * @return the enti
      */
     public final E getEnti() {
         return enti;
+    }
+
+    /**
+     * Gets the label values map.
+     *
+     * @return the label values map
+     */
+    public final Map<Long, List<LabelValueVO>> getLabelValuesMap() {
+        return labelValuesMap;
     }
 }
