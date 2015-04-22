@@ -106,8 +106,8 @@ function PeprDetailController($http, $routeParams, pageTitleService) {
     vm.oppeExport = oppeExport;
 
     function oppeExport() {
-        $http.post('estadistica/pepr-export.action', {
-            pepr : vm.pepr
+        $http.post('estadistica/periodo-proceso-zip-export.action', {
+            model : vm.pepr
         }, {
             responseType : 'arraybuffer'
         }).success(function(data) {
@@ -228,8 +228,8 @@ function EstdGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function xlsExport() {
-        $http.post('estadistica/estd-xls-export.action', {
-            itemCriterio : vm.itemCriterio
+        $http.post('estadistica/estadistica-xls-export.action', {
+            criterio : vm.itemCriterio
         }, {
             responseType : 'arraybuffer'
         }).success(function(data) {
@@ -238,7 +238,7 @@ function EstdGridController($http, $location, $routeParams, $modal, pageTitleSer
             });
 
             setTimeout(function() {
-                saveAs(file, 'estd_' + vm.enti.id + '.xls');
+                saveAs(file, 'estd_' + vm.itemCriterio.entiId + '.xls');
             }, 0);
         });
     }
