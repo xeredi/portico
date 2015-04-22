@@ -191,7 +191,7 @@ function PrmtDetailController($http, $location, $routeParams, pageTitleService) 
 
     function print() {
         $http.post('maestro/parametro-pdf-export.action', {
-            item : vm.item,
+            model : vm.item,
             fechaVigencia : vm.fechaVigencia
         }, {
             responseType : 'arraybuffer'

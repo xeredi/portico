@@ -6,9 +6,7 @@ angular.module("estadistica", [])
 
 .controller("PeprDetailController", PeprDetailController)
 
-.controller("PeprLoadController", PeprLoadController)
-
-.controller("PeprCreateController", PeprCreateController)
+.controller("PeprEditController", PeprEditController)
 
 .controller("CdmsDetailController", CdmsDetailController)
 
@@ -32,15 +30,9 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    .when("/estadistica/pepr/load", {
-        templateUrl : "modules/entidad/estadistica/pepr-load.html",
-        controller : "PeprLoadController",
-        controllerAs : "vm"
-    })
-
-    .when("/estadistica/pepr/create", {
-        templateUrl : "modules/entidad/estadistica/pepr-create.html",
-        controller : "PeprCreateController",
+    .when("/estadistica/pepr/edit/:accion", {
+        templateUrl : "modules/entidad/estadistica/pepr-edit.html",
+        controller : "PeprEditController",
         controllerAs : "vm"
     })
 
@@ -129,17 +121,15 @@ function PeprDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("estadistica/pepr-remove.action", {
-                pepr : {
-                    id : vm.pepr.id
-                }
+            $http.post("estadistica/periodo-proceso-remove.action", {
+                model : vm.pepr
             }).success(function(data) {
                 window.history.back();
             });
         }
     }
 
-    $http.post("estadistica/pepr-detail.action", {
+    $http.post("estadistica/periodo-proceso-detail.action", {
         model : {
             id : $routeParams.peprId
         }
@@ -151,59 +141,37 @@ function PeprDetailController($http, $routeParams, pageTitleService) {
     pageTitleService.setTitle("pepr", "page_detail");
 }
 
-function PeprLoadController($http, $location, pageTitleService) {
+function PeprEditController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
-    vm.load = load;
+    vm.save = save;
     vm.cancel = cancel;
 
-    function load() {
-        $http.post("estadistica/pepr-cargar.action", {
+    function save() {
+        $http.post("estadistica/periodo-proceso-save.action", {
             model : vm.pepr,
             file : vm.file,
-            sobreescribir : vm.sobreescribir
+            sobreescribir : vm.sobreescribir,
+            accion : vm.accion
         }).success(function(data) {
             $location.path("/proceso/prbt/grid").replace();
         });
-
     }
 
     function cancel() {
         window.history.back();
     }
 
-    $http.post("estadistica/pepr-preparar-carga.action").success(function(data) {
+    vm.accion = $routeParams.accion;
+
+    $http.post("estadistica/periodo-proceso-edit.action", {
+        accion : vm.accion
+    }).success(function(data) {
+        vm.pepr = data.model;
         vm.sprtList = data.sprtList;
     });
 
-    pageTitleService.setTitle("pepr", "page_pepr_load");
-}
-
-function PeprCreateController($http, $location, pageTitleService) {
-    var vm = this;
-
-    vm.create = create;
-    vm.cancel = cancel;
-
-    function create() {
-        $http.post("estadistica/pepr-creacion.action", {
-            pepr : vm.pepr,
-            sobreescribir : vm.sobreescribir
-        }).success(function(data) {
-            $location.path("/proceso/prbt/grid").replace();
-        });
-
-    }
-
-    function cancel() {
-        window.history.back();
-    }
-
-    $http.post("estadistica/pepr-preparar-creacion.action").success(function(data) {
-        vm.sprtList = data.sprtList;
-    });
-
-    pageTitleService.setTitle("pepr", "page_pepr_create");
+    pageTitleService.setTitle("pepr", "page_" + vm.accion);
 }
 
 function CdmsDetailController($http, $routeParams, pageTitleService) {

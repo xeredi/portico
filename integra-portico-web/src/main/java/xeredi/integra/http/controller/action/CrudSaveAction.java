@@ -85,5 +85,4 @@ public abstract class CrudSaveAction<T> extends BaseAction {
     public final void setModel(final T value) {
         this.model = value;
     }
-
 }

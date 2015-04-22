@@ -41,7 +41,9 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
         /** The modificar. */
         edit,
         /** The duplicar. */
-        duplicate;
+        duplicate,
+        /** The load. */
+        load;
     }
 
     /** The idioma. */

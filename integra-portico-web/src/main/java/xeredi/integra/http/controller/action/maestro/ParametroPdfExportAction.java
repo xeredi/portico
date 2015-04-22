@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import xeredi.integra.http.controller.action.item.ItemPdfExportAction;
+import xeredi.integra.http.controller.action.item.ItemFileExportAction;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
@@ -33,7 +33,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ParametroPdfExportAction.
  */
-public final class ParametroPdfExportAction extends ItemPdfExportAction<ParametroVO> {
+public final class ParametroPdfExportAction extends ItemFileExportAction<ParametroVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8831808221487676723L;
@@ -45,22 +45,22 @@ public final class ParametroPdfExportAction extends ItemPdfExportAction<Parametr
      * {@inheritDoc}
      */
     @Override
-    public final void doSpecificPdfExport() throws ApplicationException, IOException {
+    public final void doSpecificFileExport() throws ApplicationException, IOException {
         Preconditions.checkNotNull(fechaVigencia);
 
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(item.getEntiId());
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
         final Map<Long, TipoSubparametroDetailVO> entiHijasMap = new HashMap<>();
 
-        item = prmtBO.select(item.getId(), idioma, fechaVigencia);
+        model = prmtBO.select(model.getId(), idioma, fechaVigencia);
 
-        final TipoParametroDetailVO entiDetail = TipoParametroProxy.select(item.getEntiId());
+        final TipoParametroDetailVO entiDetail = TipoParametroProxy.select(model.getEntiId());
         final Map<Long, List<SubparametroVO>> itemHijosMap = new HashMap<>();
 
         if (entiDetail.getEntiHijasList() != null) {
             final SubparametroBO sprmBO = new SubparametroBO();
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
-            prmtCriterioVO.setId(item.getId());
+            prmtCriterioVO.setId(model.getId());
             prmtCriterioVO.setFechaVigencia(fechaVigencia);
             prmtCriterioVO.setIdioma(idioma);
 
@@ -80,13 +80,13 @@ public final class ParametroPdfExportAction extends ItemPdfExportAction<Parametr
         final Map<String, I18nVO> i18nMap = new HashMap<>();
 
         if (entiDetail.getEnti().isI18n()) {
-            i18nMap.putAll(I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId()));
+            i18nMap.putAll(I18nBO.selectMap(I18nPrefix.prvr, model.getPrvr().getId()));
         }
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             final ParametroPdf prmtPdf = new ParametroPdf(getLocale());
 
-            prmtPdf.imprimir(item, entiDetail, entiHijasMap, itemHijosMap, i18nMap, baos);
+            prmtPdf.imprimir(model, entiDetail, entiHijasMap, itemHijosMap, i18nMap, baos);
 
             stream = new ByteArrayInputStream(baos.toByteArray());
         }
@@ -97,7 +97,15 @@ public final class ParametroPdfExportAction extends ItemPdfExportAction<Parametr
      */
     @Override
     public final String getFilename() {
-        return MessageI18nKey.prmt.name() + '_' + item.getEntiId() + '_' + item.getId();
+        return MessageI18nKey.prmt.name() + '_' + model.getEntiId() + '_' + model.getId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ContentType getContentType() {
+        return ContentType.pdf;
     }
 
     /**
