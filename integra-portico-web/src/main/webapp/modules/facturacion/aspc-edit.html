@@ -18,15 +18,15 @@
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label translate>aspc_fini</label><input type="text" class="form-control"
-                    ng-model="vm.aspc.aspv.fini" data-max-date="{{vm.aspc.aspv.ffin}}" bs-datepicker />
+                    ng-model="vm.aspc.version.fini" data-max-date="{{vm.aspc.version.ffin}}" bs-datepicker />
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label translate>aspc_ffin</label><input type="text" class="form-control"
-                    ng-model="vm.aspc.aspv.ffin" data-min-date="{{vm.aspc.aspv.fini}}" bs-datepicker />
+                    ng-model="vm.aspc.version.ffin" data-min-date="{{vm.aspc.version.fini}}" bs-datepicker />
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>aspc_prioridad</label> <input type="text" ng-model="vm.aspc.aspv.prioridad"
-                    class="form-control number" />
+                <label translate>aspc_prioridad</label> <input type="text"
+                    ng-model="vm.aspc.version.prioridad" class="form-control number" />
             </div>
         </div>
 
@@ -48,9 +48,9 @@
         <tbody>
             <tr>
                 <td>info1</td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo1" class="form-control" /></td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo1" class="form-control" /></td>
-                <td><select ng-model="vm.aspc.aspv.cgrpInfo1"
+                <td><input type="text" ng-model="vm.aspc.version.cetiqInfo1" class="form-control" /></td>
+                <td><input type="text" ng-model="vm.aspc.version.cpathInfo1" class="form-control" /></td>
+                <td><select ng-model="vm.aspc.version.cgrpInfo1"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                         <option />
@@ -58,9 +58,9 @@
             </tr>
             <tr>
                 <td>info2</td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo2" class="form-control" /></td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo2" class="form-control" /></td>
-                <td><select ng-model="vm.aspc.aspv.cgrpInfo2"
+                <td><input type="text" ng-model="vm.aspc.version.cetiqInfo2" class="form-control" /></td>
+                <td><input type="text" ng-model="vm.aspc.version.cpathInfo2" class="form-control" /></td>
+                <td><select ng-model="vm.aspc.version.cgrpInfo2"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                         <option />
@@ -68,9 +68,9 @@
             </tr>
             <tr>
                 <td>info3</td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo3" class="form-control" /></td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo3" class="form-control" /></td>
-                <td><select ng-model="vm.aspc.aspv.cgrpInfo3"
+                <td><input type="text" ng-model="vm.aspc.version.cetiqInfo3" class="form-control" /></td>
+                <td><input type="text" ng-model="vm.aspc.version.cpathInfo3" class="form-control" /></td>
+                <td><select ng-model="vm.aspc.version.cgrpInfo3"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                         <option />
@@ -78,9 +78,9 @@
             </tr>
             <tr>
                 <td>info4</td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo4" class="form-control" /></td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo4" class="form-control" /></td>
-                <td><select ng-model="vm.aspc.aspv.cgrpInfo4"
+                <td><input type="text" ng-model="vm.aspc.version.cetiqInfo4" class="form-control" /></td>
+                <td><input type="text" ng-model="vm.aspc.version.cpathInfo4" class="form-control" /></td>
+                <td><select ng-model="vm.aspc.version.cgrpInfo4"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                         <option />
@@ -88,9 +88,9 @@
             </tr>
             <tr>
                 <td>info5</td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo5" class="form-control" /></td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo5" class="form-control" /></td>
-                <td><select ng-model="vm.aspc.aspv.cgrpInfo5"
+                <td><input type="text" ng-model="vm.aspc.version.cetiqInfo5" class="form-control" /></td>
+                <td><input type="text" ng-model="vm.aspc.version.cpathInfo5" class="form-control" /></td>
+                <td><select ng-model="vm.aspc.version.cgrpInfo5"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                         <option />
@@ -98,9 +98,9 @@
             </tr>
             <tr>
                 <td>info6</td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cetiqInfo6" class="form-control" /></td>
-                <td><input type="text" ng-model="vm.aspc.aspv.cpathInfo6" class="form-control" /></td>
-                <td><select ng-model="vm.aspc.aspv.cgrpInfo6"
+                <td><input type="text" ng-model="vm.aspc.version.cetiqInfo6" class="form-control" /></td>
+                <td><input type="text" ng-model="vm.aspc.version.cpathInfo6" class="form-control" /></td>
+                <td><select ng-model="vm.aspc.version.cgrpInfo6"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                         <option />
@@ -124,7 +124,7 @@
                 <tbody>
                     <tr>
                         <td>cuant1</td>
-                        <td><select ng-model="vm.aspc.aspv.lsumCuant1"
+                        <td><select ng-model="vm.aspc.version.lsumCuant1"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
                             class="form-control">
                                 <option />
@@ -132,7 +132,7 @@
                     </tr>
                     <tr>
                         <td>cuant2</td>
-                        <td><select ng-model="vm.aspc.aspv.lsumCuant2"
+                        <td><select ng-model="vm.aspc.version.lsumCuant2"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
                             class="form-control">
                                 <option />
@@ -140,7 +140,7 @@
                     </tr>
                     <tr>
                         <td>cuant3</td>
-                        <td><select ng-model="vm.aspc.aspv.lsumCuant3"
+                        <td><select ng-model="vm.aspc.version.lsumCuant3"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
                             class="form-control">
                                 <option />
@@ -148,7 +148,7 @@
                     </tr>
                     <tr>
                         <td>cuant4</td>
-                        <td><select ng-model="vm.aspc.aspv.lsumCuant4"
+                        <td><select ng-model="vm.aspc.version.lsumCuant4"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
                             class="form-control">
                                 <option />
@@ -156,7 +156,7 @@
                     </tr>
                     <tr>
                         <td>cuant5</td>
-                        <td><select ng-model="vm.aspc.aspv.lsumCuant5"
+                        <td><select ng-model="vm.aspc.version.lsumCuant5"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
                             class="form-control">
                                 <option />
@@ -164,7 +164,7 @@
                     </tr>
                     <tr>
                         <td>cuant6</td>
-                        <td><select ng-model="vm.aspc.aspv.lsumCuant6"
+                        <td><select ng-model="vm.aspc.version.lsumCuant6"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
                             class="form-control">
                                 <option />
@@ -188,7 +188,7 @@
                 <tbody>
                     <tr>
                         <td>info1</td>
-                        <td><select ng-model="vm.aspc.aspv.lgrpInfo1"
+                        <td><select ng-model="vm.aspc.version.lgrpInfo1"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
                             class="form-control">
                                 <option />
@@ -196,7 +196,7 @@
                     </tr>
                     <tr>
                         <td>info2</td>
-                        <td><select ng-model="vm.aspc.aspv.lgrpInfo2"
+                        <td><select ng-model="vm.aspc.version.lgrpInfo2"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
                             class="form-control">
                                 <option />
@@ -204,7 +204,7 @@
                     </tr>
                     <tr>
                         <td>info3</td>
-                        <td><select ng-model="vm.aspc.aspv.lgrpInfo3"
+                        <td><select ng-model="vm.aspc.version.lgrpInfo3"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
                             class="form-control">
                                 <option />
@@ -212,7 +212,7 @@
                     </tr>
                     <tr>
                         <td>info4</td>
-                        <td><select ng-model="vm.aspc.aspv.lgrpInfo4"
+                        <td><select ng-model="vm.aspc.version.lgrpInfo4"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
                             class="form-control">
                                 <option />
@@ -220,7 +220,7 @@
                     </tr>
                     <tr>
                         <td>info5</td>
-                        <td><select ng-model="vm.aspc.aspv.lgrpInfo5"
+                        <td><select ng-model="vm.aspc.version.lgrpInfo5"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
                             class="form-control">
                                 <option />
@@ -228,7 +228,7 @@
                     </tr>
                     <tr>
                         <td>info6</td>
-                        <td><select ng-model="vm.aspc.aspv.lgrpInfo6"
+                        <td><select ng-model="vm.aspc.version.lgrpInfo6"
                             ng-options="item as ('format_' + item | translate) for item in [true , false]"
                             class="form-control">
                                 <option />

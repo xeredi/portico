@@ -43,7 +43,7 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
     public void doEdit() throws ApplicationException {
         if (accion == ACCION_EDICION.create) {
             model = new AspectoVO();
-            model.setAspv(new AspectoVersionVO());
+            model.setVersion(new AspectoVersionVO());
         } else {
             Preconditions.checkNotNull(model.getId());
             Preconditions.checkNotNull(fechaVigencia);
@@ -53,10 +53,10 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
 
             aspcCriterio.setId(model.getId());
             aspcCriterio.setFechaVigencia(fechaVigencia);
-            aspcCriterio.setIdioma(getIdioma());
+            aspcCriterio.setIdioma(idioma);
 
             model = aspcBO.selectObject(aspcCriterio);
-            i18nMap = I18nBO.selectMap(I18nPrefix.aspv, model.getAspv().getId());
+            i18nMap = I18nBO.selectMap(I18nPrefix.aspv, model.getVersion().getId());
         }
     }
 

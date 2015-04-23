@@ -588,12 +588,12 @@ public class ValoradorBO {
     private void generateSql(final AspectoVO aspc) {
         final TipoServicioDetailVO tpsrDetail = TipoServicioProxy.select(aspc.getTpsr().getId());
 
-        aspc.getAspv().setCpathInfo1Sql(generateSqlPath(tpsrDetail, aspc.getAspv().getCpathInfo1(), true));
-        aspc.getAspv().setCpathInfo2Sql(generateSqlPath(tpsrDetail, aspc.getAspv().getCpathInfo2(), true));
-        aspc.getAspv().setCpathInfo3Sql(generateSqlPath(tpsrDetail, aspc.getAspv().getCpathInfo3(), true));
-        aspc.getAspv().setCpathInfo4Sql(generateSqlPath(tpsrDetail, aspc.getAspv().getCpathInfo4(), true));
-        aspc.getAspv().setCpathInfo5Sql(generateSqlPath(tpsrDetail, aspc.getAspv().getCpathInfo5(), true));
-        aspc.getAspv().setCpathInfo6Sql(generateSqlPath(tpsrDetail, aspc.getAspv().getCpathInfo6(), true));
+        aspc.getVersion().setCpathInfo1Sql(generateSqlPath(tpsrDetail, aspc.getVersion().getCpathInfo1(), true));
+        aspc.getVersion().setCpathInfo2Sql(generateSqlPath(tpsrDetail, aspc.getVersion().getCpathInfo2(), true));
+        aspc.getVersion().setCpathInfo3Sql(generateSqlPath(tpsrDetail, aspc.getVersion().getCpathInfo3(), true));
+        aspc.getVersion().setCpathInfo4Sql(generateSqlPath(tpsrDetail, aspc.getVersion().getCpathInfo4(), true));
+        aspc.getVersion().setCpathInfo5Sql(generateSqlPath(tpsrDetail, aspc.getVersion().getCpathInfo5(), true));
+        aspc.getVersion().setCpathInfo6Sql(generateSqlPath(tpsrDetail, aspc.getVersion().getCpathInfo6(), true));
     }
 
     /**

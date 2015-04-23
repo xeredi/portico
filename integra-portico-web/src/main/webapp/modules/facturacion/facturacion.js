@@ -1329,7 +1329,7 @@ function AspcEditController($http, $location, $routeParams, pageTitleService) {
                     vm.accion == 'edit' ? setTimeout(function() {
                         window.history.back();
                     }, 0) : $location.path(
-                            "/facturacion/aspc/detail/" + data.model.id + "/" + data.model.aspv.fini)
+                            "/facturacion/aspc/detail/" + data.model.id + "/" + data.model.version.fini)
                             .replace();
                 });
     }

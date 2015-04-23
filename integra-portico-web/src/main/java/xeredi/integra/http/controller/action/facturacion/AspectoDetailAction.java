@@ -52,7 +52,7 @@ public final class AspectoDetailAction extends CrudDetailAction<AspectoVO> {
         aspcCriterio.setFechaVigencia(fechaVigencia);
 
         model = aspcBO.selectObject(aspcCriterio);
-        i18nMap = I18nBO.selectMap(I18nPrefix.aspv, model.getAspv().getId());
+        i18nMap = I18nBO.selectMap(I18nPrefix.aspv, model.getVersion().getId());
 
         final AspectoCargoBO ascrBO = new AspectoCargoBO();
         final AspectoCargoCriterioVO ascrCriterioVO = new AspectoCargoCriterioVO();

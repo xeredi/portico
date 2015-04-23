@@ -2,14 +2,14 @@ package xeredi.integra.model.facturacion.vo;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import xeredi.integra.model.comun.vo.Versionable;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoVO.
  */
-public final class AspectoVO {
-
+public final class AspectoVO implements Versionable<AspectoVersionVO> {
     /** The id. */
     private Long id;
 
@@ -20,7 +20,7 @@ public final class AspectoVO {
     private TipoServicioVO tpsr;
 
     /** The aspv. */
-    private AspectoVersionVO aspv;
+    private AspectoVersionVO version;
 
     /**
      * {@inheritDoc}
@@ -44,8 +44,8 @@ public final class AspectoVO {
 
         buffer.append(codigo);
 
-        if (aspv != null && aspv.getDescripcion() != null) {
-            buffer.append(" - ").append(aspv.getDescripcion());
+        if (version != null && version.getDescripcion() != null) {
+            buffer.append(" - ").append(version.getDescripcion());
         }
 
         return buffer.toString();
@@ -109,22 +109,18 @@ public final class AspectoVO {
     }
 
     /**
-     * Gets the aspv.
-     *
-     * @return the aspv
+     * {@inheritDoc}
      */
-    public AspectoVersionVO getAspv() {
-        return aspv;
+    @Override
+    public AspectoVersionVO getVersion() {
+        return version;
     }
 
     /**
-     * Sets the aspv.
-     *
-     * @param value
-     *            the aspv
+     * {@inheritDoc}
      */
-    public void setAspv(final AspectoVersionVO value) {
-        aspv = value;
+    @Override
+    public void setVersion(final AspectoVersionVO value) {
+        version = value;
     }
-
 }

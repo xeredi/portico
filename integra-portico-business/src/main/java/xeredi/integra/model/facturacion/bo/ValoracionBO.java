@@ -393,7 +393,7 @@ public class ValoracionBO {
             // ssrvCriterioVO.setFechaVigencia(vlrc.getFref());
 
             if (rgla.getEnti().getTipo() == TipoEntidad.S) {
-                if (aspc.getAspv().isAgrupaDetalles()) {
+                if (aspc.getVersion().isAgrupaDetalles()) {
                     Preconditions.checkNotNull(vlrd.getSsrv());
                     Preconditions.checkNotNull(vlrd.getSsrv().getId());
 

@@ -21,8 +21,8 @@ public final class AspectoRemoveAction extends CrudRemoveAction<AspectoVO> {
      */
     @Override
     public void doRemove() throws ApplicationException {
-        Preconditions.checkNotNull(model.getAspv());
-        Preconditions.checkNotNull(model.getAspv().getId());
+        Preconditions.checkNotNull(model.getVersion());
+        Preconditions.checkNotNull(model.getVersion().getId());
 
         final AspectoBO aspcBO = new AspectoBO();
 

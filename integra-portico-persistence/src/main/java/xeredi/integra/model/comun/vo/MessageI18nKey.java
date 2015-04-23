@@ -88,6 +88,8 @@ public enum MessageI18nKey {
     /** The sec_usro. */
     sec_usro,
 
+    version_fini, version_ffin,
+
     /** The usro. */
     usro,
     /** The usro list. */

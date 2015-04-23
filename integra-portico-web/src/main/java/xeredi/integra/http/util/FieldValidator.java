@@ -9,14 +9,18 @@ import org.antlr.v4.runtime.misc.NotNull;
 import org.apache.commons.validator.GenericValidator;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.BaseAction.ACCION_EDICION;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.comun.vo.Versionable;
 import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -132,6 +136,29 @@ public final class FieldValidator {
     }
 
     /**
+     * Validate version.
+     *
+     * @param action
+     *            the action
+     * @param accion
+     *            the accion
+     * @param version
+     *            the version
+     */
+    public static void validateVersion(final @NotNull BaseAction action, final ACCION_EDICION accion,
+            final Versionable<?> versionable) {
+        Preconditions.checkNotNull(versionable);
+        Preconditions.checkNotNull(versionable.getVersion());
+
+        if (accion != ACCION_EDICION.create) {
+            Preconditions.checkNotNull(versionable.getVersion().getId());
+        }
+
+        validateRequired(action, MessageI18nKey.version_fini, versionable.getVersion().getFini());
+        validatePeriod(action, versionable.getVersion().getFini(), versionable.getVersion().getFfin());
+    }
+
+    /**
      * Validate i18n.
      *
      * @param action
@@ -161,8 +188,8 @@ public final class FieldValidator {
      *
      * @param action
      *            the action
-     * @param entiVO
-     *            the enti vo
+     * @param entiDetail
+     *            the enti detail
      * @param itemVO
      *            the item vo
      */

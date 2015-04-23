@@ -73,28 +73,28 @@
     </div>
 
     <div class="row">
-        <div ng-if="vm.aspc.aspv.cetiqInfo1" class="col-md-4 form-group">
-            <label ng-bind="vm.aspc.aspv.cetiqInfo1"></label>
+        <div ng-if="vm.aspc.version.cetiqInfo1" class="col-md-4 form-group">
+            <label ng-bind="vm.aspc.version.cetiqInfo1"></label>
             <p class="form-control-static" ng-bind="vm.fctr.info1"></p>
         </div>
-        <div ng-if="vm.aspc.aspv.cetiqInfo2" class="col-md-4 form-group">
-            <label ng-bind="vm.aspc.aspv.cetiqInfo2"></label>
+        <div ng-if="vm.aspc.version.cetiqInfo2" class="col-md-4 form-group">
+            <label ng-bind="vm.aspc.version.cetiqInfo2"></label>
             <p class="form-control-static" ng-bind="vm.fctr.info2"></p>
         </div>
-        <div ng-if="vm.aspc.aspv.cetiqInfo3" class="col-md-4 form-group">
-            <label ng-bind="vm.aspc.aspv.cetiqInfo3"></label>
+        <div ng-if="vm.aspc.version.cetiqInfo3" class="col-md-4 form-group">
+            <label ng-bind="vm.aspc.version.cetiqInfo3"></label>
             <p class="form-control-static" ng-bind="vm.fctr.info3"></p>
         </div>
-        <div ng-if="vm.aspc.aspv.cetiqInfo4" class="col-md-4 form-group">
-            <label ng-bind="vm.aspc.aspv.cetiqInfo3"></label>
+        <div ng-if="vm.aspc.version.cetiqInfo4" class="col-md-4 form-group">
+            <label ng-bind="vm.aspc.version.cetiqInfo3"></label>
             <p class="form-control-static" ng-bind="vm.fctr.info4"></p>
         </div>
-        <div ng-if="vm.aspc.aspv.cetiqInfo5" class="col-md-4 form-group">
-            <label ng-bind="vm.aspc.aspv.cetiqInfo5"></label>
+        <div ng-if="vm.aspc.version.cetiqInfo5" class="col-md-4 form-group">
+            <label ng-bind="vm.aspc.version.cetiqInfo5"></label>
             <p class="form-control-static" ng-bind="vm.fctr.info5"></p>
         </div>
-        <div ng-if="vm.aspc.aspv.cetiqInfo6" class="col-md-4 form-group">
-            <label ng-bind="vm.aspc.aspv.cetiqInfo6"></label>
+        <div ng-if="vm.aspc.version.cetiqInfo6" class="col-md-4 form-group">
+            <label ng-bind="vm.aspc.version.cetiqInfo6"></label>
             <p class="form-control-static" ng-bind="vm.fctr.info6"></p>
         </div>
     </div>
@@ -208,12 +208,12 @@
                 <th translate="fctl_fini"></th>
                 <th translate="fctl_ffin"></th>
 
-                <th ng-if="vm.aspc.aspv.lgrpInfo1" translate="fctl_info1"></th>
-                <th ng-if="vm.aspc.aspv.lgrpInfo2" translate="fctl_info2"></th>
-                <th ng-if="vm.aspc.aspv.lgrpInfo3" translate="fctl_info3"></th>
-                <th ng-if="vm.aspc.aspv.lgrpInfo4" translate="fctl_info4"></th>
-                <th ng-if="vm.aspc.aspv.lgrpInfo5" translate="fctl_info5"></th>
-                <th ng-if="vm.aspc.aspv.lgrpInfo6" translate="fctl_info6"></th>
+                <th ng-if="vm.aspc.version.lgrpInfo1" translate="fctl_info1"></th>
+                <th ng-if="vm.aspc.version.lgrpInfo2" translate="fctl_info2"></th>
+                <th ng-if="vm.aspc.version.lgrpInfo3" translate="fctl_info3"></th>
+                <th ng-if="vm.aspc.version.lgrpInfo4" translate="fctl_info4"></th>
+                <th ng-if="vm.aspc.version.lgrpInfo5" translate="fctl_info5"></th>
+                <th ng-if="vm.aspc.version.lgrpInfo6" translate="fctl_info6"></th>
 
                 <th translate="fctl_cuant1"></th>
                 <th translate="fctl_cuant2"></th>
@@ -239,22 +239,22 @@
                 <td ng-bind="fctl.fini | date:'short'"></td>
                 <td ng-bind="fctl.ffin | date:'short'"></td>
 
-                <td nowrap="nowrap" ng-if="vm.aspc.aspv.lgrpInfo1"><span
+                <td nowrap="nowrap" ng-if="vm.aspc.version.lgrpInfo1"><span
                     ng-if="fctl.rgla.tipo == 'T' && fctl.info1">{{fctl.rgla.rglv.etiqInfo1}}:
                         {{fctl.info1}}</span></td>
-                <td nowrap="nowrap" ng-if="vm.aspc.aspv.lgrpInfo2"><span
+                <td nowrap="nowrap" ng-if="vm.aspc.version.lgrpInfo2"><span
                     ng-if="fctl.rgla.tipo == 'T' && fctl.info2">{{fctl.rgla.rglv.etiqInfo2}}:
                         {{fctl.info2}}</span></td>
-                <td nowrap="nowrap" ng-if="vm.aspc.aspv.lgrpInfo3"><span
+                <td nowrap="nowrap" ng-if="vm.aspc.version.lgrpInfo3"><span
                     ng-if="fctl.rgla.tipo == 'T' && fctl.info3">{{fctl.rgla.rglv.etiqInfo3}}:
                         {{fctl.info3}}</span></td>
-                <td nowrap="nowrap" ng-if="vm.aspc.aspv.lgrpInfo4"><span
+                <td nowrap="nowrap" ng-if="vm.aspc.version.lgrpInfo4"><span
                     ng-if="fctl.rgla.tipo == 'T' && fctl.info4">{{fctl.rgla.rglv.etiqInfo4}}:
                         {{fctl.info4}}</span></td>
-                <td nowrap="nowrap" ng-if="vm.aspc.aspv.lgrpInfo5"><span
+                <td nowrap="nowrap" ng-if="vm.aspc.version.lgrpInfo5"><span
                     ng-if="fctl.rgla.tipo == 'T' && fctl.info5">{{fctl.rgla.rglv.etiqInfo5}}:
                         {{fctl.info5}}</span></td>
-                <td nowrap="nowrap" ng-if="vm.aspc.aspv.lgrpInfo6"><span
+                <td nowrap="nowrap" ng-if="vm.aspc.version.lgrpInfo6"><span
                     ng-if="fctl.rgla.tipo == 'T' && fctl.info6">{{fctl.rgla.rglv.etiqInfo6}}:
                         {{fctl.info6}}</span></td>
 

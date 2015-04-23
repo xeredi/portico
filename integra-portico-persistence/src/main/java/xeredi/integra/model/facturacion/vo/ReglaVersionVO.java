@@ -1,24 +1,12 @@
 package xeredi.integra.model.facturacion.vo;
 
-import java.util.Date;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.VersionVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReglaVersionVO.
  */
-public final class ReglaVersionVO {
-
-    /** The id. */
-    private Long id;
-
-    /** The finicio. */
-    private Date fini;
-
-    /** The ffin. */
-    private Date ffin;
-
+public final class ReglaVersionVO extends VersionVO {
     /** The orden. */
     private Integer orden;
 
@@ -168,71 +156,6 @@ public final class ReglaVersionVO {
 
     /** The path cuant6 sql. */
     private String pathCuant6Sql;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the id.
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Sets the id.
-     *
-     * @param value
-     *            the id
-     */
-    public void setId(final Long value) {
-        id = value;
-    }
-
-    /**
-     * Gets the finicio.
-     *
-     * @return the finicio
-     */
-    public Date getFini() {
-        return fini;
-    }
-
-    /**
-     * Sets the finicio.
-     *
-     * @param value
-     *            the finicio
-     */
-    public void setFini(final Date value) {
-        fini = value;
-    }
-
-    /**
-     * Gets the ffin.
-     *
-     * @return the ffin
-     */
-    public Date getFfin() {
-        return ffin;
-    }
-
-    /**
-     * Sets the ffin.
-     *
-     * @param value
-     *            the ffin
-     */
-    public void setFfin(final Date value) {
-        ffin = value;
-    }
 
     /**
      * Gets the condicion.
@@ -1183,5 +1106,4 @@ public final class ReglaVersionVO {
     public void setImporteBase(final Double value) {
         importeBase = value;
     }
-
 }

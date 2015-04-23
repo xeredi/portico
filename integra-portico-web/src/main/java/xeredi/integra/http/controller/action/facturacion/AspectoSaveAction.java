@@ -57,69 +57,64 @@ public final class AspectoSaveAction extends CrudSaveAction<AspectoVO> {
      */
     @Override
     public void doValidate() throws ApplicationException {
-        Preconditions.checkNotNull(model.getAspv());
-
         if (ACCION_EDICION.create == accion) {
             FieldValidator.validateRequired(this, MessageI18nKey.aspc_tpsr, model.getTpsr());
             FieldValidator.validateRequired(this, MessageI18nKey.aspc_codigo, model.getCodigo());
         } else {
             Preconditions.checkNotNull(model.getId());
-            Preconditions.checkNotNull(model.getAspv());
-            Preconditions.checkNotNull(model.getAspv().getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.aspc_fini, model.getAspv().getFini());
-        FieldValidator.validatePeriod(this, model.getAspv().getFini(), model.getAspv().getFfin());
-        FieldValidator.validateRequired(this, MessageI18nKey.aspc_prioridad, model.getAspv().getPrioridad());
+        FieldValidator.validateVersion(this, accion, model);
+        FieldValidator.validateRequired(this, MessageI18nKey.aspc_prioridad, model.getVersion().getPrioridad());
 
         FieldValidator.validateI18n(this, i18nMap);
 
-        if (!GenericValidator.isBlankOrNull(model.getAspv().getCetiqInfo1())
-                || !GenericValidator.isBlankOrNull(model.getAspv().getCpathInfo1())
-                || model.getAspv().getCgrpInfo1() != null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo1, model.getAspv().getCetiqInfo1());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo1, model.getAspv().getCpathInfo1());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo1, model.getAspv().getCgrpInfo1());
+        if (!GenericValidator.isBlankOrNull(model.getVersion().getCetiqInfo1())
+                || !GenericValidator.isBlankOrNull(model.getVersion().getCpathInfo1())
+                || model.getVersion().getCgrpInfo1() != null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo1, model.getVersion().getCetiqInfo1());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo1, model.getVersion().getCpathInfo1());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo1, model.getVersion().getCgrpInfo1());
         }
 
-        if (!GenericValidator.isBlankOrNull(model.getAspv().getCetiqInfo2())
-                || !GenericValidator.isBlankOrNull(model.getAspv().getCpathInfo2())
-                || model.getAspv().getCgrpInfo2() != null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo2, model.getAspv().getCetiqInfo2());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo2, model.getAspv().getCpathInfo2());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo2, model.getAspv().getCgrpInfo2());
+        if (!GenericValidator.isBlankOrNull(model.getVersion().getCetiqInfo2())
+                || !GenericValidator.isBlankOrNull(model.getVersion().getCpathInfo2())
+                || model.getVersion().getCgrpInfo2() != null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo2, model.getVersion().getCetiqInfo2());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo2, model.getVersion().getCpathInfo2());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo2, model.getVersion().getCgrpInfo2());
         }
 
-        if (!GenericValidator.isBlankOrNull(model.getAspv().getCetiqInfo3())
-                || !GenericValidator.isBlankOrNull(model.getAspv().getCpathInfo3())
-                || model.getAspv().getCgrpInfo3() != null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo3, model.getAspv().getCetiqInfo3());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo3, model.getAspv().getCpathInfo3());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo3, model.getAspv().getCgrpInfo3());
+        if (!GenericValidator.isBlankOrNull(model.getVersion().getCetiqInfo3())
+                || !GenericValidator.isBlankOrNull(model.getVersion().getCpathInfo3())
+                || model.getVersion().getCgrpInfo3() != null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo3, model.getVersion().getCetiqInfo3());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo3, model.getVersion().getCpathInfo3());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo3, model.getVersion().getCgrpInfo3());
         }
 
-        if (!GenericValidator.isBlankOrNull(model.getAspv().getCetiqInfo4())
-                || !GenericValidator.isBlankOrNull(model.getAspv().getCpathInfo4())
-                || model.getAspv().getCgrpInfo4() != null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo4, model.getAspv().getCetiqInfo4());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo4, model.getAspv().getCpathInfo4());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo4, model.getAspv().getCgrpInfo4());
+        if (!GenericValidator.isBlankOrNull(model.getVersion().getCetiqInfo4())
+                || !GenericValidator.isBlankOrNull(model.getVersion().getCpathInfo4())
+                || model.getVersion().getCgrpInfo4() != null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo4, model.getVersion().getCetiqInfo4());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo4, model.getVersion().getCpathInfo4());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo4, model.getVersion().getCgrpInfo4());
         }
 
-        if (!GenericValidator.isBlankOrNull(model.getAspv().getCetiqInfo5())
-                || !GenericValidator.isBlankOrNull(model.getAspv().getCpathInfo5())
-                || model.getAspv().getCgrpInfo5() != null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo5, model.getAspv().getCetiqInfo5());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo5, model.getAspv().getCpathInfo5());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo5, model.getAspv().getCgrpInfo5());
+        if (!GenericValidator.isBlankOrNull(model.getVersion().getCetiqInfo5())
+                || !GenericValidator.isBlankOrNull(model.getVersion().getCpathInfo5())
+                || model.getVersion().getCgrpInfo5() != null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo5, model.getVersion().getCetiqInfo5());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo5, model.getVersion().getCpathInfo5());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo5, model.getVersion().getCgrpInfo5());
         }
 
-        if (!GenericValidator.isBlankOrNull(model.getAspv().getCetiqInfo6())
-                || !GenericValidator.isBlankOrNull(model.getAspv().getCpathInfo6())
-                || model.getAspv().getCgrpInfo6() != null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo6, model.getAspv().getCetiqInfo6());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo6, model.getAspv().getCpathInfo6());
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo6, model.getAspv().getCgrpInfo6());
+        if (!GenericValidator.isBlankOrNull(model.getVersion().getCetiqInfo6())
+                || !GenericValidator.isBlankOrNull(model.getVersion().getCpathInfo6())
+                || model.getVersion().getCgrpInfo6() != null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo6, model.getVersion().getCetiqInfo6());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo6, model.getVersion().getCpathInfo6());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo6, model.getVersion().getCgrpInfo6());
         }
     }
 

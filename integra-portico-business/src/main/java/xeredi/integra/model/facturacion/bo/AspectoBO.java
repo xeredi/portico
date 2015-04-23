@@ -133,8 +133,8 @@ public final class AspectoBO {
      */
     public void insert(final AspectoVO aspc, final Map<String, I18nVO> i18nMap) throws OverlapException {
         Preconditions.checkNotNull(aspc);
-        Preconditions.checkNotNull(aspc.getAspv());
-        Preconditions.checkNotNull(aspc.getAspv().getFini());
+        Preconditions.checkNotNull(aspc.getVersion());
+        Preconditions.checkNotNull(aspc.getVersion().getFini());
         Preconditions.checkNotNull(aspc.getTpsr());
         Preconditions.checkNotNull(aspc.getTpsr().getId());
 
@@ -154,11 +154,11 @@ public final class AspectoBO {
                 aspcDAO.insert(aspc);
             }
 
-            aspc.getAspv().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            aspc.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             aspcDAO.insertVersion(aspc);
 
-            I18nBO.insertMap(session, I18nPrefix.aspv, aspc.getAspv().getId(), i18nMap);
+            I18nBO.insertMap(session, I18nPrefix.aspv, aspc.getVersion().getId(), i18nMap);
 
             session.commit();
         }
@@ -176,7 +176,7 @@ public final class AspectoBO {
      */
     public void duplicate(final AspectoVO aspc, final Map<String, I18nVO> i18nMap) throws DuplicateInstanceException {
         Preconditions.checkNotNull(aspc);
-        Preconditions.checkNotNull(aspc.getAspv());
+        Preconditions.checkNotNull(aspc.getVersion());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
@@ -188,12 +188,12 @@ public final class AspectoBO {
             final IgBO igBO = new IgBO();
 
             aspc.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            aspc.getAspv().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            aspc.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             aspcDAO.insert(aspc);
             aspcDAO.insertVersion(aspc);
 
-            I18nBO.insertMap(session, I18nPrefix.aspv, aspc.getAspv().getId(), i18nMap);
+            I18nBO.insertMap(session, I18nPrefix.aspv, aspc.getVersion().getId(), i18nMap);
 
             session.commit();
         }
@@ -212,11 +212,11 @@ public final class AspectoBO {
      *             the overlap exception
      */
     public void update(final AspectoVO aspc, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException,
-            OverlapException {
+    OverlapException {
         Preconditions.checkNotNull(aspc);
-        Preconditions.checkNotNull(aspc.getAspv());
+        Preconditions.checkNotNull(aspc.getVersion());
         Preconditions.checkNotNull(aspc.getId());
-        Preconditions.checkNotNull(aspc.getAspv().getId());
+        Preconditions.checkNotNull(aspc.getVersion().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
@@ -231,7 +231,7 @@ public final class AspectoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.aspc, aspc);
             }
 
-            I18nBO.updateMap(session, I18nPrefix.aspv, aspc.getAspv().getId(), i18nMap);
+            I18nBO.updateMap(session, I18nPrefix.aspv, aspc.getVersion().getId(), i18nMap);
 
             session.commit();
         }
@@ -246,13 +246,13 @@ public final class AspectoBO {
      *             the instance not found exception
      */
     public void delete(final @Nonnull AspectoVO aspc) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(aspc.getAspv());
-        Preconditions.checkNotNull(aspc.getAspv().getId());
+        Preconditions.checkNotNull(aspc.getVersion());
+        Preconditions.checkNotNull(aspc.getVersion().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
 
-            I18nBO.deleteMap(session, I18nPrefix.aspv, aspc.getAspv().getId());
+            I18nBO.deleteMap(session, I18nPrefix.aspv, aspc.getVersion().getId());
 
             if (aspcDAO.deleteVersion(aspc) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.aspc, aspc);

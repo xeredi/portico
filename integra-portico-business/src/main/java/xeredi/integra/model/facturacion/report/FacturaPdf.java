@@ -212,23 +212,23 @@ public final class FacturaPdf extends BasePdf {
     private ComponentBuilder<?, ?> createInfoCabeceraComponent(final FacturaVO fctr) {
         final HorizontalListBuilder content = DynamicReports.cmp.horizontalList();
 
-        if (fctr.getAspc().getAspv().getCetiqInfo1() != null) {
-            content.add(createEtiquetaValorComponent(fctr.getAspc().getAspv().getCetiqInfo1(), fctr.getInfo1()));
+        if (fctr.getAspc().getVersion().getCetiqInfo1() != null) {
+            content.add(createEtiquetaValorComponent(fctr.getAspc().getVersion().getCetiqInfo1(), fctr.getInfo1()));
         }
-        if (fctr.getAspc().getAspv().getCetiqInfo2() != null) {
-            content.add(createEtiquetaValorComponent(fctr.getAspc().getAspv().getCetiqInfo2(), fctr.getInfo2()));
+        if (fctr.getAspc().getVersion().getCetiqInfo2() != null) {
+            content.add(createEtiquetaValorComponent(fctr.getAspc().getVersion().getCetiqInfo2(), fctr.getInfo2()));
         }
-        if (fctr.getAspc().getAspv().getCetiqInfo3() != null) {
-            content.add(createEtiquetaValorComponent(fctr.getAspc().getAspv().getCetiqInfo3(), fctr.getInfo3()));
+        if (fctr.getAspc().getVersion().getCetiqInfo3() != null) {
+            content.add(createEtiquetaValorComponent(fctr.getAspc().getVersion().getCetiqInfo3(), fctr.getInfo3()));
         }
-        if (fctr.getAspc().getAspv().getCetiqInfo4() != null) {
-            content.add(createEtiquetaValorComponent(fctr.getAspc().getAspv().getCetiqInfo4(), fctr.getInfo4()));
+        if (fctr.getAspc().getVersion().getCetiqInfo4() != null) {
+            content.add(createEtiquetaValorComponent(fctr.getAspc().getVersion().getCetiqInfo4(), fctr.getInfo4()));
         }
-        if (fctr.getAspc().getAspv().getCetiqInfo5() != null) {
-            content.add(createEtiquetaValorComponent(fctr.getAspc().getAspv().getCetiqInfo5(), fctr.getInfo5()));
+        if (fctr.getAspc().getVersion().getCetiqInfo5() != null) {
+            content.add(createEtiquetaValorComponent(fctr.getAspc().getVersion().getCetiqInfo5(), fctr.getInfo5()));
         }
-        if (fctr.getAspc().getAspv().getCetiqInfo6() != null) {
-            content.add(createEtiquetaValorComponent(fctr.getAspc().getAspv().getCetiqInfo6(), fctr.getInfo6()));
+        if (fctr.getAspc().getVersion().getCetiqInfo6() != null) {
+            content.add(createEtiquetaValorComponent(fctr.getAspc().getVersion().getCetiqInfo6(), fctr.getInfo6()));
         }
 
         return content;

@@ -1,24 +1,12 @@
 package xeredi.integra.model.facturacion.vo;
 
-import java.util.Date;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.VersionVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoVersionVO.
  */
-public final class AspectoVersionVO {
-
-    /** The id. */
-    private Long id;
-
-    /** The fini. */
-    private Date fini;
-
-    /** The ffin. */
-    private Date ffin;
-
+public final class AspectoVersionVO extends VersionVO {
     /** The descripcion. */
     private String descripcion;
 
@@ -134,14 +122,6 @@ public final class AspectoVersionVO {
     private Boolean lgrpInfo6;
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
      * Checks if is agrupa cabeceras.
      *
      * @return true, if checks if is agrupa cabeceras
@@ -161,63 +141,6 @@ public final class AspectoVersionVO {
                 || Boolean.TRUE == lgrpInfo4 || Boolean.TRUE == lgrpInfo5 || Boolean.TRUE == lgrpInfo6
                 || Boolean.TRUE == lsumCuant1 || Boolean.TRUE == lsumCuant2 || Boolean.TRUE == lsumCuant3
                 || Boolean.TRUE == lsumCuant4 || Boolean.TRUE == lsumCuant5 || Boolean.TRUE == lsumCuant6;
-    }
-
-    /**
-     * Gets the id.
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Sets the id.
-     *
-     * @param value
-     *            the id
-     */
-    public void setId(final Long value) {
-        id = value;
-    }
-
-    /**
-     * Gets the fini.
-     *
-     * @return the fini
-     */
-    public Date getFini() {
-        return fini;
-    }
-
-    /**
-     * Sets the fini.
-     *
-     * @param value
-     *            the fini
-     */
-    public void setFini(final Date value) {
-        fini = value;
-    }
-
-    /**
-     * Gets the ffin.
-     *
-     * @return the ffin
-     */
-    public Date getFfin() {
-        return ffin;
-    }
-
-    /**
-     * Sets the ffin.
-     *
-     * @param value
-     *            the ffin
-     */
-    public void setFfin(final Date value) {
-        ffin = value;
     }
 
     /**

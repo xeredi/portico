@@ -131,7 +131,7 @@ public class FacturadorBO {
                     throw new Error("Aspecto de agrupacion de facturas no encontrado: " + aspcId);
                 }
 
-                if (!aspc.getAspv().isAgrupaCabeceras()) {
+                if (!aspc.getVersion().isAgrupaCabeceras()) {
                     throw new Error("No es un aspecto de agrupacion: " + aspc);
                 }
 

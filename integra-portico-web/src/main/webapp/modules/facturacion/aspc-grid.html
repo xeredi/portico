@@ -36,11 +36,11 @@
                 <td><a ng-href="#/facturacion/aspc/detail/{{aspc.id}}/{{vm.aspcCriterio.fechaVigencia}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="aspc.codigo"></td>
-                <td ng-bind="aspc.aspv.descripcion"></td>
+                <td ng-bind="aspc.version.descripcion"></td>
                 <td ng-bind="'enti_' + aspc.tpsr.id | translate"></td>
-                <td ng-bind="aspc.aspv.fini | date: ('format_date' | translate)"></td>
-                <td ng-bind="aspc.aspv.ffin | date: ('format_date' | translate)"></td>
-                <td class="number" ng-bind="aspc.aspv.prioridad"></td>
+                <td ng-bind="aspc.version.fini | date: ('format_date' | translate)"></td>
+                <td ng-bind="aspc.version.ffin | date: ('format_date' | translate)"></td>
+                <td class="number" ng-bind="aspc.version.prioridad"></td>
             </tr>
         </tbody>
     </table>
