@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
+import xeredi.integra.model.facturacion.vo.AspectoTypeaheadCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.FacturadorContextoVO;
 
@@ -28,13 +29,24 @@ public interface AspectoDAO {
     /**
      * Select list.
      *
-     * @param criterioVO
-     *            the criterio vo
+     * @param criterio
+     *            the criterio
      * @param bounds
      *            the bounds
      * @return the list
      */
-    List<AspectoVO> selectList(final @Nonnull AspectoCriterioVO criterioVO, final @Nonnull RowBounds bounds);
+    List<AspectoVO> selectList(final @Nonnull AspectoCriterioVO criterio, final @Nonnull RowBounds bounds);
+
+    /**
+     * Select list.
+     *
+     * @param criterio
+     *            the criterio
+     * @param bounds
+     *            the bounds
+     * @return the list
+     */
+    List<AspectoVO> selectList(final @Nonnull AspectoTypeaheadCriterioVO criterio, final @Nonnull RowBounds bounds);
 
     /**
      * Count.
@@ -114,4 +126,13 @@ public interface AspectoDAO {
      * @return the int
      */
     int updateVersion(final @Nonnull AspectoVO aspc);
+
+    /**
+     * Delete version.
+     *
+     * @param aspc
+     *            the aspc
+     * @return the int
+     */
+    int deleteVersion(final @Nonnull AspectoVO aspc);
 }

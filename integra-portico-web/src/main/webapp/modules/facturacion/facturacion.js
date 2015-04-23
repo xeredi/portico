@@ -1249,14 +1249,14 @@ function AspcGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.page = $routeParams.page ? $routeParams.page : 1;
 
     function search(page) {
-        $http.post("facturacion/aspc-list.action", {
+        $http.post("facturacion/aspecto-list.action", {
             model : vm.aspcCriterio,
             page : page,
             limit : vm.limit
         }).success(function(data) {
             vm.aspcCriterio = data.model;
-            vm.aspcList = data.aspcList;
-            vm.page = data.aspcList.page;
+            vm.aspcList = data.resultList;
+            vm.page = data.resultList.page;
 
             $location.search({
                 page : vm.page,
@@ -1270,7 +1270,9 @@ function AspcGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
-        $http.post("facturacion/aspc-filter.action").success(function(data) {
+        $http.post("facturacion/aspecto-filter.action", {
+            model : vm.aspcCriterio
+        }).success(function(data) {
             vm.tpsrList = data.tpsrList;
         });
     }
@@ -1286,7 +1288,7 @@ function AspcDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("facturacion/aspc-remove.action", {
+            $http.post("facturacion/aspecto-remove.action", {
                 model : vm.aspc
             }).success(function(data) {
                 window.history.back();
@@ -1294,14 +1296,15 @@ function AspcDetailController($http, $location, $routeParams, pageTitleService) 
         }
     }
 
-    $http.post("facturacion/aspc-detail.action", {
+    vm.fechaVigencia = $routeParams.fechaVigencia;
+
+    $http.post("facturacion/aspecto-detail.action", {
         model : {
             id : $routeParams.aspcId
         },
-        fechaVigencia : $routeParams.fechaVigencia
+        fechaVigencia : vm.fechaVigencia
     }).success(function(data) {
         vm.aspc = data.model;
-        vm.fechaVigencia = data.fechaVigencia;
         vm.i18nMap = data.i18nMap;
         vm.ascrList = data.ascrList;
     });
@@ -1317,7 +1320,7 @@ function AspcEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("facturacion/aspc-save.action", {
+        $http.post("facturacion/aspecto-save.action", {
             model : vm.aspc,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -1335,7 +1338,7 @@ function AspcEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("facturacion/aspc-edit.action", {
+    $http.post("facturacion/aspecto-edit.action", {
         model : {
             id : $routeParams.aspcId
         },
@@ -1356,7 +1359,7 @@ function AspcLupaController($http, $scope) {
             return null;
         }
 
-        return $http.post("facturacion/aspc-lupa.action", {
+        return $http.post("facturacion/aspecto-typeahead.action", {
             model : {
                 tpsrId : entiId,
                 textoBusqueda : textoBusqueda,

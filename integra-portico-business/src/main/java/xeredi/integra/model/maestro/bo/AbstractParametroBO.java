@@ -345,9 +345,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
                 throw new OverlapException(MessageI18nKey.prmt, prmt);
             }
 
-            final int updated = prmtDAO.updateVersion(prmt);
-
-            if (updated == 0) {
+            if (prmtDAO.updateVersion(prmt) == 0) {
                 throw new InstanceNotFoundException(prmt.getEntiId(), prmt);
             }
 
@@ -404,9 +402,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
 
             I18nBO.deleteMap(session, I18nPrefix.prvr, prmt.getPrvr().getId());
 
-            final int updated = prmtDAO.deleteVersion(prmt);
-
-            if (updated == 0) {
+            if (prmtDAO.deleteVersion(prmt) == 0) {
                 throw new InstanceNotFoundException(prmt.getEntiId(), prmt);
             }
 

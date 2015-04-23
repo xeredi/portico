@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -18,6 +20,7 @@ import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.dao.AspectoDAO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
+import xeredi.integra.model.facturacion.vo.AspectoTypeaheadCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
@@ -28,7 +31,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class AspectoBO.
  */
-public class AspectoBO {
+public final class AspectoBO {
     /**
      * Select list.
      *
@@ -78,19 +81,19 @@ public class AspectoBO {
     /**
      * Select label value list.
      *
-     * @param aspcCriterioVO
-     *            the aspc criterio vo
+     * @param criterio
+     *            the criterio
      * @param limit
      *            the limit
      * @return the list
      */
-    public List<AspectoVO> selectList(final AspectoCriterioVO aspcCriterioVO, final int limit) {
-        Preconditions.checkNotNull(aspcCriterioVO);
+    public List<AspectoVO> selectList(final AspectoTypeaheadCriterioVO criterio, final int limit) {
+        Preconditions.checkNotNull(criterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
 
-            return aspcDAO.selectList(aspcCriterioVO, new RowBounds(PaginatedList.MIN_OFFSET, limit));
+            return aspcDAO.selectList(criterio, new RowBounds(PaginatedList.MIN_OFFSET, limit));
         }
     }
 
@@ -209,7 +212,7 @@ public class AspectoBO {
      *             the overlap exception
      */
     public void update(final AspectoVO aspc, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException,
-    OverlapException {
+            OverlapException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getAspv());
         Preconditions.checkNotNull(aspc.getId());
@@ -229,6 +232,31 @@ public class AspectoBO {
             }
 
             I18nBO.updateMap(session, I18nPrefix.aspv, aspc.getAspv().getId(), i18nMap);
+
+            session.commit();
+        }
+    }
+
+    /**
+     * Delete.
+     *
+     * @param aspc
+     *            the aspc
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public void delete(final @Nonnull AspectoVO aspc) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(aspc.getAspv());
+        Preconditions.checkNotNull(aspc.getAspv().getId());
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
+
+            I18nBO.deleteMap(session, I18nPrefix.aspv, aspc.getAspv().getId());
+
+            if (aspcDAO.deleteVersion(aspc) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.aspc, aspc);
+            }
 
             session.commit();
         }
