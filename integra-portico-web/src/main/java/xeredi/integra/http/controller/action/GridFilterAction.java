@@ -18,6 +18,9 @@ public abstract class GridFilterAction<C extends BaseCriterioVO> extends BaseAct
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -777906795137481254L;
 
+    /** The valid rows per page. */
+    public static final int[] VALID_ROWS_PER_PAGE = new int[] { 10, 20, 50, 100, 200, 500 };
+
     /** The model. */
     protected C model;
 
@@ -68,6 +71,15 @@ public abstract class GridFilterAction<C extends BaseCriterioVO> extends BaseAct
      */
     public final void setModel(final C value) {
         this.model = value;
+    }
+
+    /**
+     * Gets the limits.
+     *
+     * @return the limits
+     */
+    public final int[] getLimits() {
+        return VALID_ROWS_PER_PAGE;
     }
 
 }
