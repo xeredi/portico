@@ -817,13 +817,13 @@ function FcsrGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.page = $routeParams.page ? $routeParams.page : 1;
 
     function search(page) {
-        $http.post("facturacion/fcsr-list.action", {
+        $http.post("facturacion/factura-serie-list.action", {
             model : vm.fcsrCriterio,
             page : page,
             limit : vm.limit
         }).success(function(data) {
-            vm.fcsrList = data.fcsrList;
-            vm.page = data.fcsrList.page;
+            vm.fcsrList = data.resultList;
+            vm.page = data.resultList.page;
 
             $location.search({
                 page : vm.page,
@@ -850,7 +850,7 @@ function FcsrDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("facturacion/fcsr-remove.action", {
+            $http.post("facturacion/factura-serie-remove.action", {
                 model : vm.fcsr
             }).success(function(data) {
                 window.history.back();
@@ -858,7 +858,7 @@ function FcsrDetailController($http, $routeParams, pageTitleService) {
         }
     }
 
-    $http.post("facturacion/fcsr-detail.action", {
+    $http.post("facturacion/factura-serie-detail.action", {
         model : {
             id : $routeParams.fcsrId
         }
@@ -877,7 +877,7 @@ function FcsrEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("facturacion/fcsr-save.action", {
+        $http.post("facturacion/factura-serie-save.action", {
             model : vm.fcsr,
             accion : vm.accion
         }).success(function(data) {
@@ -891,7 +891,7 @@ function FcsrEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("facturacion/fcsr-edit.action", {
+    $http.post("facturacion/factura-serie-edit.action", {
         model : {
             id : $routeParams.fcsrId
         },

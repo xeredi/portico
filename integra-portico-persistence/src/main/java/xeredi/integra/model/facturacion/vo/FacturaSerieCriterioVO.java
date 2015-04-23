@@ -1,23 +1,15 @@
 package xeredi.integra.model.facturacion.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturaSerieCriterioVO.
  */
-public final class FacturaSerieCriterioVO {
+public final class FacturaSerieCriterioVO extends BaseCriterioVO {
 
     /** The anio. */
     private Integer anio;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the anio.
