@@ -138,7 +138,7 @@
     <![CDATA[
         DELETE FROM tbl_subparametro_dato_spdt
         WHERE
-            spdt_spvr_pk = #{spvr.id}
+            spdt_spvr_pk = #{version.id}
     ]]>
     </delete>
 </mapper>

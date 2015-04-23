@@ -33,15 +33,15 @@ public final class SubparametroSaveAction extends ItemSaveAction<SubparametroVO>
 
         if (accion != ACCION_EDICION.create) {
             Preconditions.checkNotNull(model.getId());
-            Preconditions.checkNotNull(model.getSpvr());
-            Preconditions.checkNotNull(model.getSpvr().getId());
+            Preconditions.checkNotNull(model.getVersion());
+            Preconditions.checkNotNull(model.getVersion().getId());
         }
 
-        if (model.getSpvr() == null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.sprm_fini, model.getSpvr());
+        if (model.getVersion() == null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.sprm_fini, model.getVersion());
         } else {
-            FieldValidator.validateRequired(this, MessageI18nKey.sprm_fini, model.getSpvr().getFini());
-            FieldValidator.validatePeriod(this, model.getSpvr().getFini(), model.getSpvr().getFfin());
+            FieldValidator.validateRequired(this, MessageI18nKey.sprm_fini, model.getVersion().getFini());
+            FieldValidator.validatePeriod(this, model.getVersion().getFini(), model.getVersion().getFfin());
         }
 
         FieldValidator.validateItem(this, enti, model);

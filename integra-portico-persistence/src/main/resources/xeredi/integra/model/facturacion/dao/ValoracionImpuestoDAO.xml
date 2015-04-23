@@ -19,7 +19,7 @@
 			<result column="vlrl_impuesto_tppr_pk" property="entiId" />
 			<result column="vlrl_impuesto_descripcion" property="texto" />
 
-			<association property="prvr" javaType="ParametroVersionVO">
+			<association property="version" javaType="ParametroVersionVO">
 				<result column="prvr_pk" property="id" />
 			</association>
 		</association>

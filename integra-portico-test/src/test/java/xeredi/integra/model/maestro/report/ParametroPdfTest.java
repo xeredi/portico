@@ -104,7 +104,7 @@ public final class ParametroPdfTest {
                 final Map<String, I18nVO> i18nMap = new HashMap<>();
 
                 if (tpprDetail.getEnti().isI18n()) {
-                    i18nMap.putAll(I18nBO.selectMap(I18nPrefix.prvr, prmtVO.getPrvr().getId()));
+                    i18nMap.putAll(I18nBO.selectMap(I18nPrefix.prvr, prmtVO.getVersion().getId()));
                 }
 
                 try (final OutputStream stream = new FileOutputStream("/temp/prmt_" + tpprDetail.getEnti().getId()

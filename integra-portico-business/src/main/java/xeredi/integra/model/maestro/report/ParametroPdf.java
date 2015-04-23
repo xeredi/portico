@@ -100,8 +100,8 @@ public final class ParametroPdf extends BasePdf {
 
             rowCells.add(new PdfCell(tpprLabel, prmtVO.getEtiqueta(), 6, TipoElemento.TX));
 
-            rowCells.add(new PdfCell(prmtFiniLabel, formatDate(prmtVO.getPrvr().getFini()), 2, TipoElemento.FE));
-            rowCells.add(new PdfCell(prmtFfinLabel, formatDate(prmtVO.getPrvr().getFfin()), 2, TipoElemento.FE));
+            rowCells.add(new PdfCell(prmtFiniLabel, formatDate(prmtVO.getVersion().getFini()), 2, TipoElemento.FE));
+            rowCells.add(new PdfCell(prmtFfinLabel, formatDate(prmtVO.getVersion().getFfin()), 2, TipoElemento.FE));
 
             listCells.add(rowCells);
 
@@ -241,8 +241,8 @@ public final class ParametroPdf extends BasePdf {
 
             objects[i++] = itemVO.getPrmtAsociado().getEtiqueta();
 
-            objects[i++] = formatDate(itemVO.getSpvr().getFini());
-            objects[i++] = formatDate(itemVO.getSpvr().getFfin());
+            objects[i++] = formatDate(itemVO.getVersion().getFini());
+            objects[i++] = formatDate(itemVO.getVersion().getFfin());
 
             if (entiDetail.getEntdList() != null) {
                 for (final EntidadTipoDatoVO entd : entiDetail.getEntdList()) {

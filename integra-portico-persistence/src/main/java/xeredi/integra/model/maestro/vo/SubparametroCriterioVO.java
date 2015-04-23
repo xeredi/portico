@@ -15,10 +15,10 @@ public final class SubparametroCriterioVO extends ItemCriterioVO {
     private Date fechaVigencia;
 
     /** The spvr id. */
-    private Long spvrId;
+    private Long versionId;
 
     /** The spvr ids. */
-    private Set<Long> spvrIds;
+    private Set<Long> versionIds;
 
     /** The tpsp. */
     private TipoSubparametroCriterioVO tpsp;
@@ -91,8 +91,8 @@ public final class SubparametroCriterioVO extends ItemCriterioVO {
      *
      * @return the spvr ids
      */
-    public final Set<Long> getSpvrIds() {
-        return spvrIds;
+    public final Set<Long> getVersionIds() {
+        return versionIds;
     }
 
     /**
@@ -101,8 +101,8 @@ public final class SubparametroCriterioVO extends ItemCriterioVO {
      * @param value
      *            the new spvr ids
      */
-    public final void setSpvrIds(final Set<Long> value) {
-        spvrIds = value;
+    public final void setVersionIds(final Set<Long> value) {
+        versionIds = value;
     }
 
     /**
@@ -110,8 +110,8 @@ public final class SubparametroCriterioVO extends ItemCriterioVO {
      *
      * @return the spvr id
      */
-    public Long getSpvrId() {
-        return spvrId;
+    public Long getVersionId() {
+        return versionId;
     }
 
     /**
@@ -120,8 +120,8 @@ public final class SubparametroCriterioVO extends ItemCriterioVO {
      * @param value
      *            the new spvr id
      */
-    public void setSpvrId(final Long value) {
-        spvrId = value;
+    public void setVersionId(final Long value) {
+        versionId = value;
     }
 
     /**

@@ -274,7 +274,7 @@ function PrmtEditController($http, $location, $routeParams, pageTitleService) {
                         window.history.back();
                     }, 0) : $location.path(
                             "/maestro/prmt/detail/" + data.model.entiId + "/" + data.model.id + "/"
-                                    + data.model.prvr.fini).replace();
+                                    + data.model.version.fini).replace();
                 });
     }
 
@@ -375,7 +375,7 @@ function SprmEditController($http, $location, $routeParams, pageTitleService) {
                         window.history.back();
                     }, 0) : $location.path(
                             "/maestro/sprm/detail/" + data.model.entiId + "/" + data.model.id + "/"
-                                    + data.model.spvr.fini).replace();
+                                    + data.model.version.fini).replace();
                 });
     }
 

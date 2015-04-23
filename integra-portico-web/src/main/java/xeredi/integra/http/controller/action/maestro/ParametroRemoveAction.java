@@ -22,8 +22,8 @@ public final class ParametroRemoveAction extends ItemRemoveAction<ParametroVO> {
      */
     @Override
     public void doSpecificRemove() throws ApplicationException {
-        Preconditions.checkNotNull(model.getPrvr());
-        Preconditions.checkNotNull(model.getPrvr().getFini());
+        Preconditions.checkNotNull(model.getVersion());
+        Preconditions.checkNotNull(model.getVersion().getFini());
 
         final ParametroBO itemBO = ParametroBOFactory.newInstance(model.getEntiId());
 

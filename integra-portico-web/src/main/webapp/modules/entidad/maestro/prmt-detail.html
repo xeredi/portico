@@ -34,12 +34,12 @@
 
         <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
             <label translate="prmt_fini"></label>
-            <p class="form-control-static" ng-bind="vm.item.prvr.fini | date: ('format_date' | translate)"></p>
+            <p class="form-control-static" ng-bind="vm.item.version.fini | date: ('format_date' | translate)"></p>
         </div>
 
         <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
             <label translate="prmt_ffin"></label>
-            <p class="form-control-static" ng-bind="vm.item.prvr.ffin | date: ('format_date' | translate)"></p>
+            <p class="form-control-static" ng-bind="vm.item.version.ffin | date: ('format_date' | translate)"></p>
         </div>
     </div>
 
@@ -93,8 +93,8 @@
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td ng-bind="itemHijo.prmtAsociado.etiqueta" nowrap="nowrap"></td>
 
-                    <td ng-bind="itemHijo.spvr.fini | date: ('format_date' | translate)" nowrap="nowrap"></td>
-                    <td ng-bind="itemHijo.spvr.ffin | date: ('format_date' | translate)" nowrap="nowrap"></td>
+                    <td ng-bind="itemHijo.version.fini | date: ('format_date' | translate)" nowrap="nowrap"></td>
+                    <td ng-bind="itemHijo.version.ffin | date: ('format_date' | translate)" nowrap="nowrap"></td>
 
                     <td ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index"
                         ng-if="entd.gridable" ng-switch on="entd.tpdt.tipoElemento" nowrap="nowrap"><span

@@ -3,12 +3,13 @@ package xeredi.integra.model.maestro.vo;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.comun.vo.Versionable;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class SubparametroVO.
  */
-public final class SubparametroVO extends ItemVO {
+public final class SubparametroVO extends ItemVO implements Versionable<SubparametroVersionVO> {
 
     /** The prmt id. */
     private Long prmtId;
@@ -17,7 +18,7 @@ public final class SubparametroVO extends ItemVO {
     private ParametroVO prmtAsociado;
 
     /** The spvr. */
-    private SubparametroVersionVO spvr;
+    private SubparametroVersionVO version;
 
     /**
      * {@inheritDoc}
@@ -74,22 +75,19 @@ public final class SubparametroVO extends ItemVO {
     }
 
     /**
-     * Gets the spvr.
-     *
-     * @return the spvr
+     * {@inheritDoc}
      */
-    public SubparametroVersionVO getSpvr() {
-        return spvr;
+    @Override
+    public SubparametroVersionVO getVersion() {
+        return version;
     }
 
     /**
-     * Sets the spvr.
-     *
-     * @param value
-     *            the new spvr
+     * {@inheritDoc}
      */
-    public void setSpvr(final SubparametroVersionVO value) {
-        spvr = value;
+    @Override
+    public void setVersion(final SubparametroVersionVO value) {
+        version = value;
     }
 
 }

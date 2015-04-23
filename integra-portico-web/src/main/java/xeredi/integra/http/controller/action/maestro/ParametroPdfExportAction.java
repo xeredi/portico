@@ -80,7 +80,7 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
         final Map<String, I18nVO> i18nMap = new HashMap<>();
 
         if (entiDetail.getEnti().isI18n()) {
-            i18nMap.putAll(I18nBO.selectMap(I18nPrefix.prvr, model.getPrvr().getId()));
+            i18nMap.putAll(I18nBO.selectMap(I18nPrefix.prvr, model.getVersion().getId()));
         }
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {

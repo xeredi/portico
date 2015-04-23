@@ -61,7 +61,7 @@ public final class ParametroXls extends BaseXls {
      */
     public void generarMaestros(final @Nonnull List<ParametroVO> prmtList,
             final @Nonnull TipoParametroDetailVO tpprDetail, final @Nonnull OutputStream stream)
-                    throws InternalErrorException {
+            throws InternalErrorException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("XLS Generation start");
         }
@@ -110,8 +110,8 @@ public final class ParametroXls extends BaseXls {
                     setCellValue(row, j++, prmtVO.getTexto());
                 }
 
-                setCellValue(row, j++, prmtVO.getPrvr().getFini());
-                setCellValue(row, j++, prmtVO.getPrvr().getFfin());
+                setCellValue(row, j++, prmtVO.getVersion().getFini());
+                setCellValue(row, j++, prmtVO.getVersion().getFfin());
 
                 if (tpprDetail.getEntdList() != null) {
                     for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {

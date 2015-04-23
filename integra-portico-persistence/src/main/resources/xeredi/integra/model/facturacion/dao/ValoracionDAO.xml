@@ -41,7 +41,7 @@
 			<result property="id" column="vlrc_aspc_pk" />
 			<result property="codigo" column="aspc_codigo" />
 
-			<association property="aspv" javaType="AspectoVersionVO">
+			<association property="version" javaType="AspectoVersionVO">
 				<result property="descripcion" column="aspc_descripcion" />
 
 				<result property="cetiqInfo1" column="aspv_cetiq_info1" />

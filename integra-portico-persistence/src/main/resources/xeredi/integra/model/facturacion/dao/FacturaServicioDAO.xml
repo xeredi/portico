@@ -24,9 +24,9 @@
 			<result column="srvc_anno" property="anno" />
 			<result column="srvc_numero" property="numero" />
 
-			<association property="subp" javaType="ParametroVO">
+			<association property="prto" javaType="PuertoVO">
 				<result column="srvc_subp_pk" property="id" />
-				<result column="srvc_subp" property="parametro" />
+				<result column="srvc_subp" property="codigo" />
 			</association>
 		</association>
 	</resultMap>

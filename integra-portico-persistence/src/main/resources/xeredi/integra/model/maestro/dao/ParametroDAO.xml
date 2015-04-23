@@ -19,7 +19,7 @@
 			<result column="prto_nombre" property="nombre" />
 		</association>
 
-		<association property="prvr" javaType="ParametroVersionVO">
+		<association property="version" javaType="ParametroVersionVO">
 			<result column="prvr_pk" property="id" />
 			<result column="prvr_fini" property="fini" />
 			<result column="prvr_ffin" property="ffin" />
@@ -133,13 +133,13 @@
 			</if>
 		</if>
 
-		<if test="prvrId != null">
-			AND prvr_pk = #{prvrId}
+		<if test="versionId != null">
+			AND prvr_pk = #{versionId}
 		</if>
 
-		<if test="prvrIds != null and !prvrIds.empty">
+		<if test="versionIds != null and !versionIds.empty">
 			AND prvr_pk IN
-			<foreach collection="prvrIds" item="item" open="(" close=")" separator=",">#{item}
+			<foreach collection="versionIds" item="item" open="(" close=")" separator=",">#{item}
 			</foreach>
 		</if>
 
@@ -303,14 +303,14 @@
         WHERE
             prmt_pk = #{id}
             AND (
-                #{prvr.fini} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{prvr.fini})
-                OR COALESCE(#{prvr.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
-                    BETWEEN prvr_fini AND COALESCE(prvr_ffin, COALESCE(#{prvr.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
+                #{version.fini} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{version.fini})
+                OR COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
+                    BETWEEN prvr_fini AND COALESCE(prvr_ffin, COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
             )
     ]]>
-		<if test="prvr.id != null">
+		<if test="version.id != null">
         <![CDATA[
-            AND prvr_pk <> #{prvr.id}
+            AND prvr_pk <> #{version.id}
         ]]>
 		</if>
 	</select>
@@ -325,23 +325,23 @@
 	<insert id="insertVersion" parameterType="ParametroVO">
     <![CDATA[
         INSERT INTO tbl_parametro_version_prvr(prvr_pk, prvr_prmt_pk, prvr_fini, prvr_ffin)
-        VALUES (#{prvr.id}, #{id}, #{prvr.fini}, #{prvr.ffin})
+        VALUES (#{version.id}, #{id}, #{version.fini}, #{version.ffin})
     ]]>
 	</insert>
 
 	<update id="updateVersion" parameterType="ParametroVO">
     <![CDATA[
         UPDATE tbl_parametro_version_prvr SET
-            prvr_fini = #{prvr.fini}
-            , prvr_ffin = #{prvr.ffin}
-        WHERE prvr_pk = #{prvr.id}
+            prvr_fini = #{version.fini}
+            , prvr_ffin = #{version.ffin}
+        WHERE prvr_pk = #{version.id}
     ]]>
 	</update>
 
 	<delete id="deleteVersion" parameterType="ParametroVO">
     <![CDATA[
         DELETE FROM tbl_parametro_version_prvr
-        WHERE prvr_pk = #{prvr.id}
+        WHERE prvr_pk = #{version.id}
     ]]>
 	</delete>
 </mapper>

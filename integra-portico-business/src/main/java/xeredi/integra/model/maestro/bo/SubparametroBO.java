@@ -69,7 +69,7 @@ public class SubparametroBO {
      */
     protected final void insert(final @Nonnull SqlSession session, final @Nonnull SubparametroVO sprm,
             final @Nonnull TipoSubparametroDetailVO tpspDetail) throws OverlapException {
-        Preconditions.checkNotNull(sprm.getSpvr());
+        Preconditions.checkNotNull(sprm.getVersion());
 
         // Validar que los datos del subparametro son correctos
         if (tpspDetail.getEntdList() != null) {
@@ -97,7 +97,7 @@ public class SubparametroBO {
             sprmDAO.insert(sprm);
         }
 
-        sprm.getSpvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+        sprm.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
         if (sprmDAO.existsOverlap(sprm)) {
             throw new OverlapException(sprm.getEntiId(), sprm);
@@ -107,7 +107,7 @@ public class SubparametroBO {
 
         if (sprm.getItdtMap() != null) {
             for (final ItemDatoVO itdtVO : sprm.getItdtMap().values()) {
-                itdtVO.setItemId(sprm.getSpvr().getId());
+                itdtVO.setItemId(sprm.getVersion().getId());
                 spdtDAO.insert(itdtVO);
             }
         }
@@ -161,7 +161,7 @@ public class SubparametroBO {
             sprmDAO.insert(sprm);
         }
 
-        sprm.getSpvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+        sprm.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
         if (sprmDAO.existsOverlap(sprm)) {
             throw new OverlapException(sprm.getEntiId(), sprm);
@@ -171,7 +171,7 @@ public class SubparametroBO {
 
         if (sprm.getItdtMap() != null) {
             for (final ItemDatoVO itdtVO : sprm.getItdtMap().values()) {
-                itdtVO.setItemId(sprm.getSpvr().getId());
+                itdtVO.setItemId(sprm.getVersion().getId());
                 spdtDAO.insert(itdtVO);
             }
         }
@@ -214,9 +214,9 @@ public class SubparametroBO {
      */
     protected final void update(final @Nonnull SqlSession session, final @Nonnull SubparametroVO sprm,
             final @Nonnull TipoSubparametroDetailVO tpspDetail) throws InstanceNotFoundException, OverlapException {
-        Preconditions.checkNotNull(sprm.getSpvr());
-        Preconditions.checkNotNull(sprm.getSpvr().getId());
-        Preconditions.checkNotNull(sprm.getSpvr().getFini());
+        Preconditions.checkNotNull(sprm.getVersion());
+        Preconditions.checkNotNull(sprm.getVersion().getId());
+        Preconditions.checkNotNull(sprm.getVersion().getFini());
 
         // Validaciones
 
@@ -253,7 +253,7 @@ public class SubparametroBO {
 
         if (sprm.getItdtMap() != null) {
             for (final ItemDatoVO itdtVO : sprm.getItdtMap().values()) {
-                itdtVO.setItemId(sprm.getSpvr().getId());
+                itdtVO.setItemId(sprm.getVersion().getId());
                 spdtDAO.update(itdtVO);
             }
         }
@@ -287,8 +287,8 @@ public class SubparametroBO {
      */
     protected final void delete(final @Nonnull SqlSession session, final @Nonnull SubparametroVO sprm)
             throws InstanceNotFoundException {
-        Preconditions.checkNotNull(sprm.getSpvr());
-        Preconditions.checkNotNull(sprm.getSpvr().getId());
+        Preconditions.checkNotNull(sprm.getVersion());
+        Preconditions.checkNotNull(sprm.getVersion().getId());
 
         final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
         final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
@@ -403,10 +403,10 @@ public class SubparametroBO {
             final Set<Long> spvrIds = new HashSet<>();
 
             for (final SubparametroVO sprmVO : sprmList) {
-                spvrIds.add(sprmVO.getSpvr().getId());
+                spvrIds.add(sprmVO.getVersion().getId());
             }
 
-            sprmCriterioVO.setSpvrIds(spvrIds);
+            sprmCriterioVO.setVersionIds(spvrIds);
 
             final Map<Long, Map<Long, ItemDatoVO>> map = new HashMap<>();
 
@@ -422,10 +422,10 @@ public class SubparametroBO {
             }
 
             for (final SubparametroVO sprmVO : sprmList) {
-                sprmVO.setItdtMap(map.get(sprmVO.getSpvr().getId()));
+                sprmVO.setItdtMap(map.get(sprmVO.getVersion().getId()));
             }
 
-            sprmCriterioVO.setSpvrIds(null);
+            sprmCriterioVO.setVersionIds(null);
         }
     }
 }

@@ -28,21 +28,21 @@ import com.google.common.base.Preconditions;
 public final class I18nBO {
 
     /**
-     * Select i18n map.
+     * Select map.
      *
      * @param prefix
      *            the prefix
-     * @param prvrId
-     *            the prvr id
+     * @param externalId
+     *            the external id
      * @return the map
      */
-    public final static Map<String, I18nVO> selectMap(final @Nonnull I18nPrefix prefix, final @Nonnull Long prvrId) {
+    public final static Map<String, I18nVO> selectMap(final @Nonnull I18nPrefix prefix, final @Nonnull Long externalId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
             final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
 
             i18nCriterioVO.setPrefix(prefix);
-            i18nCriterioVO.setExternalId(prvrId);
+            i18nCriterioVO.setExternalId(externalId);
 
             final Map<String, I18nVO> i18nMap = new HashMap<>();
 

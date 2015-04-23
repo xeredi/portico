@@ -56,8 +56,8 @@ public abstract class AbstractParametroBO implements ParametroBO {
     public final void insert(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroDetailVO tpprDetail,
             final Map<String, I18nVO> i18nMap) throws OverlapException {
         Preconditions.checkNotNull(prmt.getParametro());
-        Preconditions.checkNotNull(prmt.getPrvr());
-        Preconditions.checkNotNull(prmt.getPrvr().getFini());
+        Preconditions.checkNotNull(prmt.getVersion());
+        Preconditions.checkNotNull(prmt.getVersion().getFini());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             if (tpprDetail.getEnti().isI18n()) {
@@ -88,7 +88,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
                 prmtDAO.insert(prmt);
             }
 
-            prmt.getPrvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            prmt.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             if (prmtDAO.existsOverlap(prmt)) {
                 throw new OverlapException(MessageI18nKey.prmt, prmt);
@@ -97,12 +97,12 @@ public abstract class AbstractParametroBO implements ParametroBO {
             prmtDAO.insertVersion(prmt);
 
             if (tpprDetail.getEnti().isI18n()) {
-                I18nBO.insertMap(session, I18nPrefix.prvr, prmt.getPrvr().getId(), i18nMap);
+                I18nBO.insertMap(session, I18nPrefix.prvr, prmt.getVersion().getId(), i18nMap);
             }
 
             if (prmt.getItdtMap() != null) {
                 for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
-                    itdtVO.setItemId(prmt.getPrvr().getId());
+                    itdtVO.setItemId(prmt.getVersion().getId());
                     prdtDAO.insert(itdtVO);
                 }
             }
@@ -136,8 +136,8 @@ public abstract class AbstractParametroBO implements ParametroBO {
             final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
         Preconditions.checkNotNull(prmt.getId());
         Preconditions.checkNotNull(prmt.getParametro());
-        Preconditions.checkNotNull(prmt.getPrvr());
-        Preconditions.checkNotNull(prmt.getPrvr().getFini());
+        Preconditions.checkNotNull(prmt.getVersion());
+        Preconditions.checkNotNull(prmt.getVersion().getFini());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             if (tpprDetail.getEnti().isI18n()) {
@@ -172,7 +172,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
             // Busqueda del parametro a duplicar
             final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
 
-            prmtCriterio.setPrvrId(prmt.getPrvr().getId());
+            prmtCriterio.setVersionId(prmt.getVersion().getId());
 
             final ParametroVO prmtActual = prmtDAO.selectObject(prmtCriterio);
 
@@ -189,7 +189,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
                 prmtDAO.insert(prmt);
             }
 
-            prmt.getPrvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            prmt.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             if (prmtDAO.existsOverlap(prmt)) {
                 throw new OverlapException(MessageI18nKey.prmt, prmt);
@@ -198,12 +198,12 @@ public abstract class AbstractParametroBO implements ParametroBO {
             prmtDAO.insertVersion(prmt);
 
             if (tpprDetail.getEnti().isI18n()) {
-                I18nBO.duplicateMap(session, I18nPrefix.prvr, prmt.getPrvr().getId(), i18nMap);
+                I18nBO.duplicateMap(session, I18nPrefix.prvr, prmt.getVersion().getId(), i18nMap);
             }
 
             if (prmt.getItdtMap() != null) {
                 for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
-                    itdtVO.setItemId(prmt.getPrvr().getId());
+                    itdtVO.setItemId(prmt.getVersion().getId());
 
                     prdtDAO.insert(itdtVO);
                 }
@@ -218,8 +218,8 @@ public abstract class AbstractParametroBO implements ParametroBO {
 
                     prmtCriterioVO.setId(prmtActual.getId());
                     sprmCriterioVO.setPrmt(prmtCriterioVO);
-                    sprmCriterioVO.setFechaVigencia(prmtActual.getPrvr().getFfin() == null ? Calendar.getInstance()
-                            .getTime() : prmtActual.getPrvr().getFfin());
+                    sprmCriterioVO.setFechaVigencia(prmtActual.getVersion().getFfin() == null ? Calendar.getInstance()
+                            .getTime() : prmtActual.getVersion().getFfin());
 
                     final List<SubparametroVO> sprmList = sprmDAO.selectList(sprmCriterioVO);
                     final Map<Long, SubparametroVO> sprmMap = new HashMap<>();
@@ -229,13 +229,13 @@ public abstract class AbstractParametroBO implements ParametroBO {
                         final TipoSubparametroDetailVO tpspDetail = TipoSubparametroProxy.select(sprmVO.getEntiId());
 
                         if (tpspDetail.getEnti().isCmdDuplicado()) {
-                            sprmMap.put(sprmVO.getSpvr().getId(), sprmVO);
-                            spvrIds.add(sprmVO.getSpvr().getId());
+                            sprmMap.put(sprmVO.getVersion().getId(), sprmVO);
+                            spvrIds.add(sprmVO.getVersion().getId());
                         }
                     }
 
                     if (!spvrIds.isEmpty()) {
-                        sprmCriterioVO.setSpvrIds(spvrIds);
+                        sprmCriterioVO.setVersionIds(spvrIds);
 
                         final List<ItemDatoVO> spdtList = spdtDAO.selectList(sprmCriterioVO);
 
@@ -254,13 +254,13 @@ public abstract class AbstractParametroBO implements ParametroBO {
                         for (final SubparametroVO sprmVO : sprmMap.values()) {
                             sprmVO.setPrmtId(prmt.getId());
                             sprmVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-                            sprmVO.getSpvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-                            sprmVO.getSpvr().setFini(prmt.getPrvr().getFini());
-                            sprmVO.getSpvr().setFfin(prmt.getPrvr().getFfin());
+                            sprmVO.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                            sprmVO.getVersion().setFini(prmt.getVersion().getFini());
+                            sprmVO.getVersion().setFfin(prmt.getVersion().getFfin());
 
                             if (sprmVO.getItdtMap() != null) {
                                 for (final ItemDatoVO itdtVO : sprmVO.getItdtMap().values()) {
-                                    itdtVO.setItemId(sprmVO.getSpvr().getId());
+                                    itdtVO.setItemId(sprmVO.getVersion().getId());
                                 }
                             }
                         }
@@ -316,8 +316,8 @@ public abstract class AbstractParametroBO implements ParametroBO {
     @Override
     public final void update(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroDetailVO tpprDetail,
             final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
-        Preconditions.checkNotNull(prmt.getPrvr());
-        Preconditions.checkNotNull(prmt.getPrvr().getId());
+        Preconditions.checkNotNull(prmt.getVersion());
+        Preconditions.checkNotNull(prmt.getVersion().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             if (tpprDetail.getEnti().isI18n()) {
@@ -325,7 +325,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
             }
 
             if (tpprDetail.getEnti().isTempExp()) {
-                Preconditions.checkNotNull(prmt.getPrvr().getFini());
+                Preconditions.checkNotNull(prmt.getVersion().getFini());
             }
 
             // Validar que los datos del parametro son correctos
@@ -350,12 +350,12 @@ public abstract class AbstractParametroBO implements ParametroBO {
             }
 
             if (tpprDetail.getEnti().isI18n()) {
-                I18nBO.updateMap(session, I18nPrefix.prvr, prmt.getPrvr().getId(), i18nMap);
+                I18nBO.updateMap(session, I18nPrefix.prvr, prmt.getVersion().getId(), i18nMap);
             }
 
             if (prmt.getItdtMap() != null) {
                 for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
-                    itdtVO.setItemId(prmt.getPrvr().getId());
+                    itdtVO.setItemId(prmt.getVersion().getId());
                     prdtDAO.update(itdtVO);
                 }
             }
@@ -391,8 +391,8 @@ public abstract class AbstractParametroBO implements ParametroBO {
      */
     @Override
     public final void delete(final @Nonnull ParametroVO prmt) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(prmt.getPrvr());
-        Preconditions.checkNotNull(prmt.getPrvr().getId());
+        Preconditions.checkNotNull(prmt.getVersion());
+        Preconditions.checkNotNull(prmt.getVersion().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
@@ -400,7 +400,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
 
             prdtDAO.deleteVersion(prmt);
 
-            I18nBO.deleteMap(session, I18nPrefix.prvr, prmt.getPrvr().getId());
+            I18nBO.deleteMap(session, I18nPrefix.prvr, prmt.getVersion().getId());
 
             if (prmtDAO.deleteVersion(prmt) == 0) {
                 throw new InstanceNotFoundException(prmt.getEntiId(), prmt);
@@ -658,10 +658,10 @@ public abstract class AbstractParametroBO implements ParametroBO {
                 final Set<Long> prvrIds = new HashSet<>();
 
                 for (final ParametroVO prmtVO : prmtList) {
-                    prvrIds.add(prmtVO.getPrvr().getId());
+                    prvrIds.add(prmtVO.getVersion().getId());
                 }
 
-                prmtCriterioVO.setPrvrIds(prvrIds);
+                prmtCriterioVO.setVersionIds(prvrIds);
             }
 
             final Map<Long, Map<Long, ItemDatoVO>> map = new HashMap<>();
@@ -678,11 +678,11 @@ public abstract class AbstractParametroBO implements ParametroBO {
             }
 
             for (final ParametroVO prmtVO : prmtList) {
-                prmtVO.setItdtMap(map.get(prmtVO.getPrvr().getId()));
+                prmtVO.setItdtMap(map.get(prmtVO.getVersion().getId()));
             }
 
             if (useIds) {
-                prmtCriterioVO.setPrvrIds(null);
+                prmtCriterioVO.setVersionIds(null);
             }
         }
     }

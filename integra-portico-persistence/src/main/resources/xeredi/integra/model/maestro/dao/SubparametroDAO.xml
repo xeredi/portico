@@ -18,7 +18,7 @@
             <result column="prmt_texto" property="texto" />
         </association>
 
-        <association property="spvr" javaType="SubparametroVersionVO">
+        <association property="version" javaType="SubparametroVersionVO">
             <result column="spvr_pk" property="id" />
             <result column="spvr_fini" property="fini" />
             <result column="spvr_ffin" property="ffin" />
@@ -85,12 +85,12 @@
         <if test="id != null">
             AND sprm_pk = #{id}
         </if>
-        <if test="spvrId != null">
-            AND spvr_pk = #{spvrId}
+        <if test="versionId != null">
+            AND spvr_pk = #{versionId}
         </if>
-        <if test="spvrIds != null and !spvrIds.empty">
+        <if test="versionIds != null and !versionIds.empty">
             AND spvr_pk IN
-            <foreach collection="spvrIds" item="item" open="(" close=")" separator=",">#{item}</foreach>
+            <foreach collection="versionIds" item="item" open="(" close=")" separator=",">#{item}</foreach>
         </if>
         <if test="entiId != null">
             AND sprm_tpsp_pk = #{entiId}
@@ -159,14 +159,14 @@
         WHERE
             sprm_pk = #{id}
             AND (
-                #{spvr.fini} BETWEEN spvr_fini AND COALESCE(spvr_ffin, #{spvr.fini})
-                OR COALESCE(#{spvr.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
-                    BETWEEN spvr_fini AND COALESCE(spvr_ffin, COALESCE(#{spvr.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
+                #{version.fini} BETWEEN spvr_fini AND COALESCE(spvr_ffin, #{version.fini})
+                OR COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
+                    BETWEEN spvr_fini AND COALESCE(spvr_ffin, COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
             )
     ]]>
-        <if test="spvr.id != null">
+        <if test="version.id != null">
         <![CDATA[
-            AND spvr_pk <> #{spvr.id}
+            AND spvr_pk <> #{version.id}
         ]]>
         </if>
     </select>
@@ -191,23 +191,23 @@
     <insert id="insertVersion" parameterType="SubparametroVO">
     <![CDATA[
         INSERT INTO tbl_subparametro_version_spvr (spvr_pk, spvr_sprm_pk, spvr_fini, spvr_ffin)
-        VALUES (#{spvr.id}, #{id}, #{spvr.fini}, #{spvr.ffin, jdbcType=TIMESTAMP})
+        VALUES (#{version.id}, #{id}, #{version.fini}, #{version.ffin, jdbcType=TIMESTAMP})
     ]]>
     </insert>
 
     <update id="updateVersion" parameterType="SubparametroVO">
     <![CDATA[
         UPDATE tbl_subparametro_version_spvr SET
-            spvr_fini = #{spvr.fini}
-            , spvr_ffin = #{spvr.ffin, jdbcType=TIMESTAMP}
-        WHERE spvr_pk = #{spvr.id}
+            spvr_fini = #{version.fini}
+            , spvr_ffin = #{version.ffin, jdbcType=TIMESTAMP}
+        WHERE spvr_pk = #{version.id}
     ]]>
     </update>
 
     <delete id="deleteVersion" parameterType="SubparametroVO">
     <![CDATA[
         DELETE FROM tbl_subparametro_version_spvr
-        WHERE spvr_pk = #{spvr.id}
+        WHERE spvr_pk = #{version.id}
     ]]>
     </delete>
 </mapper>

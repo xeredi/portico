@@ -16,10 +16,10 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
     private Date fechaVigencia;
 
     /** The prvr id. */
-    private Long prvrId;
+    private Long versionId;
 
     /** The prvr ids. */
-    private Set<Long> prvrIds;
+    private Set<Long> versionIds;
 
     /** The parametro. */
     private String parametro;
@@ -35,8 +35,8 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
      *
      * @return the prvr ids
      */
-    public Set<Long> getPrvrIds() {
-        return prvrIds;
+    public Set<Long> getVersionIds() {
+        return versionIds;
     }
 
     /**
@@ -45,8 +45,8 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
      * @param value
      *            the new prvr ids
      */
-    public void setPrvrIds(final Set<Long> value) {
-        prvrIds = value;
+    public void setVersionIds(final Set<Long> value) {
+        versionIds = value;
     }
 
     /**
@@ -94,8 +94,8 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
      *
      * @return the prvr id
      */
-    public Long getPrvrId() {
-        return prvrId;
+    public Long getVersionId() {
+        return versionId;
     }
 
     /**
@@ -104,8 +104,8 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
      * @param value
      *            the new prvr id
      */
-    public void setPrvrId(final Long value) {
-        prvrId = value;
+    public void setVersionId(final Long value) {
+        versionId = value;
     }
 
     /**

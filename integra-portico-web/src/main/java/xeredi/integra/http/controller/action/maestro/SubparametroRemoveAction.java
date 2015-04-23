@@ -21,8 +21,8 @@ public final class SubparametroRemoveAction extends ItemRemoveAction<Subparametr
      */
     @Override
     public void doSpecificRemove() throws ApplicationException {
-        Preconditions.checkNotNull(model.getSpvr());
-        Preconditions.checkNotNull(model.getSpvr().getId());
+        Preconditions.checkNotNull(model.getVersion());
+        Preconditions.checkNotNull(model.getVersion().getId());
 
         final SubparametroBO itemBO = new SubparametroBO();
 

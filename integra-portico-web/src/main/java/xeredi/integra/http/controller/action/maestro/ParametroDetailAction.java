@@ -45,7 +45,7 @@ public final class ParametroDetailAction extends ItemDetailAction<ParametroVO, T
         enti = TipoParametroProxy.select(model.getEntiId());
 
         if (enti.getEnti().isI18n()) {
-            i18nMap = I18nBO.selectMap(I18nPrefix.prvr, model.getPrvr().getId());
+            i18nMap = I18nBO.selectMap(I18nPrefix.prvr, model.getVersion().getId());
         }
     }
 

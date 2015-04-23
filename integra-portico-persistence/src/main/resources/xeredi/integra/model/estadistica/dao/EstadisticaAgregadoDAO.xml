@@ -96,9 +96,9 @@
 		<id column="ZONA_PESCA" />
 		<id column="ORGA" />
 
-		<association property="subp" javaType="ParametroVO">
+		<association property="prto" javaType="PuertoVO">
 			<result column="estd_subp_pk" property="id" />
-			<result column="estd_subp" property="parametro" />
+			<result column="estd_subp" property="codigo" />
 		</association>
 
 		<association property="esdtMap" javaType="java.util.Map">
@@ -397,9 +397,9 @@
 		<id column="estd_subp_pk" />
 		<id column="TIPO_SUM" />
 
-		<association property="subp" javaType="ParametroVO">
+		<association property="prto" javaType="PuertoVO">
 			<result column="estd_subp_pk" property="id" />
-			<result column="estd_subp" property="parametro" />
+			<result column="estd_subp" property="codigo" />
 		</association>
 
 		<association property="esdtMap" javaType="java.util.Map">
@@ -638,9 +638,9 @@
 		<id column="ORGA" />
 		<id column="BOOLEANO_01" />
 
-		<association property="subp" javaType="ParametroVO">
+		<association property="prto" javaType="PuertoVO">
 			<result column="estd_subp_pk" property="id" />
-			<result column="estd_subp" property="parametro" />
+			<result column="estd_subp" property="codigo" />
 		</association>
 
 		<association property="esdtMap" javaType="java.util.Map">
@@ -857,9 +857,9 @@
 		<id column="ORGA" />
 		<id column="TIPO_BUQUE_GT" />
 
-		<association property="subp" javaType="ParametroVO">
+		<association property="prto" javaType="PuertoVO">
 			<result column="estd_subp_pk" property="id" />
-			<result column="estd_subp" property="parametro" />
+			<result column="estd_subp" property="codigo" />
 		</association>
 
 		<association property="esdtMap" javaType="java.util.Map">
@@ -1246,9 +1246,9 @@
 		<id column="TIPO_BUQUE_EEE" />
 		<id column="TIPO_BUQUE_GT_EEE" />
 
-		<association property="subp" javaType="ParametroVO">
+		<association property="prto" javaType="PuertoVO">
 			<result column="estd_subp_pk" property="id" />
-			<result column="estd_subp" property="parametro" />
+			<result column="estd_subp" property="codigo" />
 		</association>
 
 		<association property="esdtMap" javaType="java.util.Map">
@@ -1562,9 +1562,9 @@
 		<id column="SERV_TRAF" />
 		<id column="ALIN" />
 
-		<association property="subp" javaType="ParametroVO">
+		<association property="prto" javaType="PuertoVO">
 			<result column="estd_subp_pk" property="id" />
-			<result column="estd_subp" property="parametro" />
+			<result column="estd_subp" property="codigo" />
 		</association>
 
 		<association property="esdtMap" javaType="java.util.Map">
@@ -1886,9 +1886,9 @@
 		<id column="TERMINAL" />
 		<id column="CADENA_01" />
 
-		<association property="subp" javaType="ParametroVO">
+		<association property="prto" javaType="PuertoVO">
 			<result column="estd_subp_pk" property="id" />
-			<result column="estd_subp" property="parametro" />
+			<result column="estd_subp" property="codigo" />
 		</association>
 
 		<association property="esdtMap" javaType="java.util.Map">
@@ -2393,9 +2393,9 @@
 		<id column="DIREC_MERC" />
 		<id column="BOOLEANO_01" />
 
-		<association property="subp" javaType="ParametroVO">
+		<association property="prto" javaType="PuertoVO">
 			<result column="estd_subp_pk" property="id" />
-			<result column="estd_subp" property="parametro" />
+			<result column="estd_subp" property="codigo" />
 		</association>
 
 		<association property="esdtMap" javaType="java.util.Map">

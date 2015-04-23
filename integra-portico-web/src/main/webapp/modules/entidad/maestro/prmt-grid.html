@@ -53,8 +53,8 @@
                 <td ng-if="vm.enti.enti.puerto" class="codigo" nowrap="nowrap" ng-bind="item.prto.etiqueta"></td>
                 <td nowrap="nowrap" ng-bind="item.parametro"></td>
                 <td nowrap="nowrap" ng-if="vm.enti.enti.i18n" ng-bind="item.texto"></td>
-                <td nowrap="nowrap" ng-bind="item.prvr.fini | date: ('format_date' | translate)"></td>
-                <td nowrap="nowrap" ng-bind="item.prvr.ffin | date: ('format_date' | translate)"></td>
+                <td nowrap="nowrap" ng-bind="item.version.fini | date: ('format_date' | translate)"></td>
+                <td nowrap="nowrap" ng-bind="item.version.ffin | date: ('format_date' | translate)"></td>
                 <td ng-repeat="entd in vm.enti.entdList track by $index" nowrap="nowrap" ng-if="entd.gridable"
                     ng-switch on="entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
                         class="glyphicon glyphicon-{{item.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span>

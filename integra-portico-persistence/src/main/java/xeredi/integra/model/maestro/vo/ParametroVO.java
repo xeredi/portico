@@ -5,12 +5,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
+import xeredi.integra.model.comun.vo.Versionable;
 
 // TODO: Auto-generated Javadoc
 /**
  * Datos de un parametro.
  */
-public final class ParametroVO extends ItemVO {
+public final class ParametroVO extends ItemVO implements Versionable<ParametroVersionVO> {
 
     /** Descripcion del parametro. */
     private String parametro;
@@ -19,7 +20,7 @@ public final class ParametroVO extends ItemVO {
     private PuertoVO prto;
 
     /** The prvr. */
-    private ParametroVersionVO prvr;
+    private ParametroVersionVO version;
 
     /** The texto. */
     private String texto;
@@ -61,9 +62,9 @@ public final class ParametroVO extends ItemVO {
         final StringBuffer buffer = getEtiquetaStringBuffer();
 
         return buffer.length() == 0 ? null : buffer.toString()/*
-         * StringEscapeUtils.escapeHtml4(buffer.toString(
-         * ))
-         */;
+                                                               * StringEscapeUtils.escapeHtml4(buffer.toString(
+                                                               * ))
+                                                               */;
     }
 
     /**
@@ -118,22 +119,19 @@ public final class ParametroVO extends ItemVO {
     }
 
     /**
-     * Gets the prvr.
-     *
-     * @return the prvr
+     * {@inheritDoc}
      */
-    public ParametroVersionVO getPrvr() {
-        return prvr;
+    @Override
+    public ParametroVersionVO getVersion() {
+        return version;
     }
 
     /**
-     * Sets the prvr.
-     *
-     * @param value
-     *            the new prvr
+     * {@inheritDoc}
      */
-    public void setPrvr(final ParametroVersionVO value) {
-        prvr = value;
+    @Override
+    public void setVersion(final ParametroVersionVO value) {
+        version = value;
     }
 
     /**
@@ -154,5 +152,4 @@ public final class ParametroVO extends ItemVO {
     public void setPrto(final PuertoVO value) {
         prto = value;
     }
-
 }

@@ -242,7 +242,7 @@ public final class MaestroImporterBO {
                 final ParametroVO prmtVO = new ParametroVO();
 
                 prmtVO.setEntiId(tpprDetail.getEnti().getId());
-                prmtVO.setPrvr(new ParametroVersionVO());
+                prmtVO.setVersion(new ParametroVersionVO());
 
                 if (tpprDetail.getEnti().isPuerto()) {
                     final String codigoPuerto = rs.getString(i++);
@@ -260,10 +260,10 @@ public final class MaestroImporterBO {
                 prmtVO.setParametro(rs.getString(i++));
 
                 if (tpprDetail.getEnti().isTempExp()) {
-                    prmtVO.getPrvr().setFini(rs.getDate(i++));
-                    prmtVO.getPrvr().setFfin(rs.getDate(i++));
+                    prmtVO.getVersion().setFini(rs.getDate(i++));
+                    prmtVO.getVersion().setFfin(rs.getDate(i++));
                 } else {
-                    prmtVO.getPrvr().setFini(fechaInicioReferencia);
+                    prmtVO.getVersion().setFini(fechaInicioReferencia);
                 }
 
                 // Creacion del parametro
@@ -380,14 +380,14 @@ public final class MaestroImporterBO {
                 sprmVO.setPrmtAsociado(prmtAsociadoVO);
                 sprmVO.setEntiId(tpspDetail.getEnti().getId());
 
-                sprmVO.setSpvr(new SubparametroVersionVO());
+                sprmVO.setVersion(new SubparametroVersionVO());
 
                 if (tpspDetail.getEnti().isTempExp()) {
-                    sprmVO.getSpvr().setFini(rs.getDate(i++));
-                    sprmVO.getSpvr().setFfin(rs.getDate(i++));
+                    sprmVO.getVersion().setFini(rs.getDate(i++));
+                    sprmVO.getVersion().setFfin(rs.getDate(i++));
                 } else {
-                    sprmVO.getSpvr().setFini(fechaInicioReferencia);
-                    sprmVO.getSpvr().setFfin(null);
+                    sprmVO.getVersion().setFini(fechaInicioReferencia);
+                    sprmVO.getVersion().setFfin(null);
                 }
 
                 if (tpspDetail.getEntdList() != null) {
