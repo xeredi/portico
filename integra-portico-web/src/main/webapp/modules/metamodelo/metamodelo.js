@@ -246,7 +246,7 @@ function config($routeProvider) {
 
     .when("/metamodelo/enen/edit/:accion/:entipId", {
         templateUrl : "modules/metamodelo/enen-edit.html",
-        controller : "EnenCreateController",
+        controller : "EnenEditController",
         controllerAs : 'vm'
     });
 }
@@ -1229,11 +1229,11 @@ function EnenEditController($http, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("metamodelo/enen-save.action", {
+        $http.post("metamodelo/entidad-entidad-save.action", {
             model : vm.enen,
             accion : vm.accion
         }).success(function(data) {
-            $location.path("/metamodelo/enac/detail/" + data.model.id).replace();
+            $location.path("/metamodelo/enen/detail/" + data.model.id).replace();
         });
     }
 
@@ -1241,7 +1241,7 @@ function EnenEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("metamodelo/enen-create.action", {
+    $http.post("metamodelo/entidad-entidad-edit.action", {
         model : {
             entiPadreId : $routeParams.entipId
         },
@@ -1251,5 +1251,5 @@ function EnenEditController($http, $routeParams, pageTitleService) {
         vm.entiList = data.tpssList;
     });
 
-    pageTitleService.setTitle("enen", "page_create");
+    pageTitleService.setTitle("enen", "page_" + vm.accion);
 }
