@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.maestro;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,9 +31,6 @@ public final class ParametroEditAction extends ItemEditAction<ParametroVO, TipoP
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
-
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
 
     /** The prto list. */
     private List<PuertoVO> prtoList;
@@ -75,26 +71,6 @@ public final class ParametroEditAction extends ItemEditAction<ParametroVO, TipoP
 
             prtoList = prtoBO.selectList(prtoCriterio);
         }
-    }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    @Override
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 
     /**

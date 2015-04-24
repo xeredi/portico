@@ -15,7 +15,7 @@
 			<result column="rgla_crgo_pk" property="id" />
 			<result column="crgo_codigo" property="codigo" />
 
-			<association property="crgv" javaType="CargoVersionVO">
+			<association property="version" javaType="CargoVersionVO">
 				<result column="crgv_descripcion" property="descripcion" />
 			</association>
 		</association>

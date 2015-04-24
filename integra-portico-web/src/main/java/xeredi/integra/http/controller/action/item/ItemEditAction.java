@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.item;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -101,13 +100,6 @@ public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidad
      *             the application exception
      */
     public abstract void doLoadSpecificDependencies() throws ApplicationException;
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public abstract Date getFechaVigencia();
 
     /**
      * Gets the label values map.

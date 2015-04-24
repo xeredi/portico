@@ -1,5 +1,7 @@
 package xeredi.integra.http.controller.action;
 
+import java.util.Date;
+
 import xeredi.integra.model.comun.exception.ApplicationException;
 
 import com.google.common.base.Preconditions;
@@ -23,12 +25,19 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
     /** The model. */
     protected T model;
 
+    /** The fecha vigencia. */
+    protected Date fechaVigencia;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public final String execute() throws ApplicationException {
         Preconditions.checkNotNull(accion);
+
+        if (accion == ACCION_EDICION.edit || accion == ACCION_EDICION.duplicate) {
+            Preconditions.checkNotNull(fechaVigencia);
+        }
 
         doEdit();
 
@@ -83,4 +92,22 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
         this.model = value;
     }
 
+    /**
+     * Gets the fecha vigencia.
+     *
+     * @return the fecha vigencia
+     */
+    public final Date getFechaVigencia() {
+        return fechaVigencia;
+    }
+
+    /**
+     * Sets the fecha vigencia.
+     *
+     * @param value
+     *            the new fecha vigencia
+     */
+    public final void setFechaVigencia(final Date value) {
+        this.fechaVigencia = value;
+    }
 }

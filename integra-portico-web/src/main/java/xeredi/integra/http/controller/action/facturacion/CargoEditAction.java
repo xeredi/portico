@@ -8,10 +8,11 @@ import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
-import xeredi.integra.model.facturacion.bo.AspectoBO;
-import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
-import xeredi.integra.model.facturacion.vo.AspectoVO;
-import xeredi.integra.model.facturacion.vo.AspectoVersionVO;
+import xeredi.integra.model.facturacion.bo.CargoBO;
+import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
+import xeredi.integra.model.facturacion.vo.CargoTipo;
+import xeredi.integra.model.facturacion.vo.CargoVO;
+import xeredi.integra.model.facturacion.vo.CargoVersionVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -19,18 +20,21 @@ import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class AspectoEditAction.
+ * The Class CargoEditAction.
  */
-public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
+public final class CargoEditAction extends CrudEditAction<CargoVO> {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 6065040172880726006L;
+    private static final long serialVersionUID = -7135315858700353650L;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
 
-    /** The enti list. */
+    /** The tpsr list. */
     private List<LabelValueVO> tpsrList;
+
+    /** The tipos. */
+    private CargoTipo[] tipos;
 
     /**
      * {@inheritDoc}
@@ -38,20 +42,20 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
     @Override
     public void doEdit() throws ApplicationException {
         if (accion == ACCION_EDICION.create) {
-            model = new AspectoVO();
-            model.setVersion(new AspectoVersionVO());
+            model = new CargoVO();
+            model.setVersion(new CargoVersionVO());
         } else {
             Preconditions.checkNotNull(model.getId());
 
-            final AspectoBO aspcBO = new AspectoBO();
-            final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
+            final CargoBO crgoBO = new CargoBO();
+            final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
-            aspcCriterio.setId(model.getId());
-            aspcCriterio.setFechaVigencia(fechaVigencia);
-            aspcCriterio.setIdioma(idioma);
+            crgoCriterio.setId(model.getId());
+            crgoCriterio.setFechaVigencia(fechaVigencia);
+            crgoCriterio.setIdioma(idioma);
 
-            model = aspcBO.selectObject(aspcCriterio);
-            i18nMap = I18nBO.selectMap(I18nPrefix.aspv, model.getVersion().getId());
+            model = crgoBO.selectObject(crgoCriterio);
+            i18nMap = I18nBO.selectMap(I18nPrefix.crgv, model.getVersion().getId());
         }
     }
 
@@ -61,6 +65,16 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
     @Override
     public void doLoadDependencies() throws ApplicationException {
         tpsrList = TipoServicioProxy.selectLabelValues();
+        tipos = CargoTipo.values();
+    }
+
+    /**
+     * Gets the i18n map.
+     *
+     * @return the i18n map
+     */
+    public Map<String, I18nVO> getI18nMap() {
+        return i18nMap;
     }
 
     /**
@@ -73,11 +87,11 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
     }
 
     /**
-     * Gets the i18n map.
+     * Gets the tipos.
      *
-     * @return the i18n map
+     * @return the tipos
      */
-    public Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
+    public CargoTipo[] getTipos() {
+        return tipos;
     }
 }

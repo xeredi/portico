@@ -130,8 +130,8 @@ public class CargoBO {
      */
     public void insert(final CargoVO crgo, final Map<String, I18nVO> i18nMap) throws OverlapException {
         Preconditions.checkNotNull(crgo);
-        Preconditions.checkNotNull(crgo.getCrgv());
-        Preconditions.checkNotNull(crgo.getCrgv().getFini());
+        Preconditions.checkNotNull(crgo.getVersion());
+        Preconditions.checkNotNull(crgo.getVersion().getFini());
         Preconditions.checkNotNull(crgo.getTpsr());
         Preconditions.checkNotNull(crgo.getTpsr().getId());
 
@@ -151,11 +151,11 @@ public class CargoBO {
                 crgoDAO.insert(crgo);
             }
 
-            crgo.getCrgv().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            crgo.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             crgoDAO.insertVersion(crgo);
 
-            I18nBO.insertMap(session, I18nPrefix.crgv, crgo.getCrgv().getId(), i18nMap);
+            I18nBO.insertMap(session, I18nPrefix.crgv, crgo.getVersion().getId(), i18nMap);
 
             session.commit();
         }
@@ -176,8 +176,8 @@ public class CargoBO {
     public void update(final CargoVO crgo, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException,
             OverlapException {
         Preconditions.checkNotNull(crgo);
-        Preconditions.checkNotNull(crgo.getCrgv());
-        Preconditions.checkNotNull(crgo.getCrgv().getId());
+        Preconditions.checkNotNull(crgo.getVersion());
+        Preconditions.checkNotNull(crgo.getVersion().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
@@ -192,7 +192,7 @@ public class CargoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.crgo, crgo);
             }
 
-            I18nBO.updateMap(session, I18nPrefix.crgv, crgo.getCrgv().getId(), i18nMap);
+            I18nBO.updateMap(session, I18nPrefix.crgv, crgo.getVersion().getId(), i18nMap);
 
             session.commit();
         }
@@ -206,18 +206,19 @@ public class CargoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final Long crgvId) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(crgvId);
+    public void delete(final CargoVO crgo) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(crgo);
+        Preconditions.checkNotNull(crgo.getVersion());
+        Preconditions.checkNotNull(crgo.getVersion().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
-            final int updated = crgoDAO.deleteVersion(crgvId);
 
-            if (updated == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.crgo, crgvId);
+            if (crgoDAO.deleteVersion(crgo) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.crgo, crgo);
             }
 
-            I18nBO.deleteMap(session, I18nPrefix.crgv, crgvId);
+            I18nBO.deleteMap(session, I18nPrefix.crgv, crgo.getVersion().getId());
 
             session.commit();
         }

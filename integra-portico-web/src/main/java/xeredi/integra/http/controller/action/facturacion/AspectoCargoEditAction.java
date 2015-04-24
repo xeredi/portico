@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.facturacion;
 
-import java.util.Date;
 import java.util.List;
 
 import xeredi.integra.http.controller.action.CrudEditAction;
@@ -28,9 +27,6 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
 
     /** The crgo list. */
     private List<CargoVO> crgoList;
-
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
 
     /**
      * {@inheritDoc}
@@ -77,16 +73,6 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
         crgoCriterio.setIdioma(getIdioma());
 
         crgoList = crgoBO.selectList(crgoCriterio);
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 
     /**

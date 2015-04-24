@@ -1,6 +1,7 @@
 package xeredi.integra.http.controller.action;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.Versionable;
 
 import com.google.common.base.Preconditions;
 
@@ -29,6 +30,14 @@ public abstract class CrudSaveAction<T> extends BaseAction {
     public final String execute() throws ApplicationException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(model);
+
+        if (model instanceof Versionable<?>) {
+            Preconditions.checkNotNull(((Versionable<?>) model).getVersion());
+
+            if (accion != ACCION_EDICION.create) {
+                Preconditions.checkNotNull(((Versionable<?>) model).getVersion().getId());
+            }
+        }
 
         doValidate();
 

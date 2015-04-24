@@ -18,24 +18,24 @@
             </div>
             <div class="col-sm-2 col-md-2 form-group-sm">
                 <label translate>crgo_codigoNormalizado</label> <input type="text"
-                    ng-model="vm.crgo.crgv.codigoNormalizado" class="form-control" />
+                    ng-model="vm.crgo.version.codigoNormalizado" class="form-control" />
             </div>
             <div class="col-sm-2 col-md-1 form-group-sm">
-                <label translate>crgo_tipo</label> <select ng-model="vm.crgo.crgv.tipo"
+                <label translate>crgo_tipo</label> <select ng-model="vm.crgo.version.tipo"
                     ng-options="cdrf as ('CargoTipo_' + cdrf | translate) for cdrf in vm.tipos"
                     class="form-control">
                     <option />
                 </select>
             </div>
             <div class="col-sm-1 col-md-1 form-group-sm">
-                <label translate>crgo_principal</label> <select ng-model="vm.crgo.crgv.principal"
+                <label translate>crgo_principal</label> <select ng-model="vm.crgo.version.principal"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                     <option />
                 </select>
             </div>
             <div class="col-sm-1 col-md-1 form-group-sm">
-                <label translate>crgo_temporal</label> <select ng-model="vm.crgo.crgv.temporal"
+                <label translate>crgo_temporal</label> <select ng-model="vm.crgo.version.temporal"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                     <option />
@@ -46,11 +46,11 @@
         <div class="row">
             <div class="col-sm-2 col-md-1 form-group-sm">
                 <label translate>crgo_fini</label><input type="text" class="form-control"
-                    ng-model="vm.crgo.crgv.fini" data-max-date="{{vm.crgo.crgv.ffin}}" bs-datepicker />
+                    ng-model="vm.crgo.version.fini" data-max-date="{{vm.crgo.version.ffin}}" bs-datepicker />
             </div>
             <div class="col-sm-2 col-md-1 form-group-sm">
                 <label translate>crgo_ffin</label><input type="text" class="form-control"
-                    ng-model="vm.crgo.crgv.ffin" data-min-date="{{vm.crgo.crgv.fini}}" bs-datepicker />
+                    ng-model="vm.crgo.version.ffin" data-min-date="{{vm.crgo.version.fini}}" bs-datepicker />
             </div>
         </div>
 

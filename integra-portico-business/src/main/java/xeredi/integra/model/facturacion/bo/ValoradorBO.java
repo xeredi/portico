@@ -385,7 +385,7 @@ public class ValoradorBO {
                     vlrt.setFreferencia(vldrContexto.getFref());
                     vlrt.setFliquidacion(vldrContexto.getFliquidacion());
 
-                    if (vldrContexto.getCrgo().getCrgv().getTemporal()) {
+                    if (vldrContexto.getCrgo().getVersion().getTemporal()) {
                         vlrt.setFinicio(vldrContexto.getFini());
                         vlrt.setFfin(vldrContexto.getFfin());
                     }
@@ -447,7 +447,7 @@ public class ValoradorBO {
                     vlrt.setFreferencia(vldrContexto.getFref());
                     vlrt.setFliquidacion(vldrContexto.getFliquidacion());
 
-                    if (vldrContexto.getCrgo().getCrgv().getTemporal()) {
+                    if (vldrContexto.getCrgo().getVersion().getTemporal()) {
                         vlrt.setFinicio(vldrContexto.getFini());
                         vlrt.setFfin(vldrContexto.getFfin());
                     }
@@ -515,7 +515,7 @@ public class ValoradorBO {
                     vlrt.setFreferencia(vldrContexto.getFref());
                     vlrt.setFliquidacion(vldrContexto.getFliquidacion());
 
-                    if (vldrContexto.getCrgo().getCrgv().getTemporal()) {
+                    if (vldrContexto.getCrgo().getVersion().getTemporal()) {
                         vlrt.setFinicio(vldrContexto.getFini());
                         vlrt.setFfin(vldrContexto.getFfin());
                     }

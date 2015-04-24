@@ -2,13 +2,14 @@ package xeredi.integra.model.facturacion.vo;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import xeredi.integra.model.comun.vo.Versionable;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CargoVO.
  */
-public final class CargoVO {
+public final class CargoVO implements Versionable<CargoVersionVO> {
 
     /** The ig. */
     private Long id;
@@ -20,7 +21,7 @@ public final class CargoVO {
     private TipoServicioVO tpsr;
 
     /** The crgv. */
-    private CargoVersionVO crgv;
+    private CargoVersionVO version;
 
     /**
      * {@inheritDoc}
@@ -44,8 +45,8 @@ public final class CargoVO {
 
         buffer.append(codigo);
 
-        if (crgv != null && crgv.getDescripcion() != null) {
-            buffer.append(" - ").append(crgv.getDescripcion());
+        if (version != null && version.getDescripcion() != null) {
+            buffer.append(" - ").append(version.getDescripcion());
         }
 
         return buffer.toString();
@@ -109,22 +110,18 @@ public final class CargoVO {
     }
 
     /**
-     * Gets the crgv.
-     *
-     * @return the crgv
+     * {@inheritDoc}
      */
-    public CargoVersionVO getCrgv() {
-        return crgv;
+    @Override
+    public CargoVersionVO getVersion() {
+        return version;
     }
 
     /**
-     * Sets the crgv.
-     *
-     * @param value
-     *            the crgv
+     * {@inheritDoc}
      */
-    public void setCrgv(final CargoVersionVO value) {
-        crgv = value;
+    @Override
+    public void setVersion(final CargoVersionVO value) {
+        version = value;
     }
-
 }

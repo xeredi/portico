@@ -38,7 +38,6 @@ public final class AspectoDetailAction extends CrudDetailAction<AspectoVO> {
     @Override
     public void doDetail() throws ApplicationException {
         Preconditions.checkNotNull(model.getId());
-        Preconditions.checkNotNull(fechaVigencia);
 
         final AspectoBO aspcBO = new AspectoBO();
         final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();

@@ -1,7 +1,5 @@
 package xeredi.integra.http.controller.action.maestro;
 
-import java.util.Date;
-
 import xeredi.integra.http.controller.action.item.ItemEditAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
@@ -19,9 +17,6 @@ public final class SubparametroEditAction extends ItemEditAction<SubparametroVO,
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6767667432126657718L;
-
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
 
     /**
      * {@inheritDoc}
@@ -46,23 +41,5 @@ public final class SubparametroEditAction extends ItemEditAction<SubparametroVO,
     @Override
     public void doLoadSpecificDependencies() throws ApplicationException {
         // noop
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 }

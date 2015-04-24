@@ -10,7 +10,7 @@
 		<result column="crgo_pk" property="id" />
 		<result column="crgo_codigo" property="codigo" />
 
-		<association property="crgv" javaType="CargoVersionVO">
+		<association property="version" javaType="CargoVersionVO">
 			<result column="crgv_pk" property="id" />
 			<result column="crgv_fini" property="fini" />
 			<result column="crgv_ffin" property="ffin" />
@@ -231,14 +231,14 @@
         WHERE
             crgo_pk = #{id}
             AND (
-        		#{crgv.fini} BETWEEN crgv_fini AND COALESCE(crgv_ffin, #{crgv.fini})
-        		OR COALESCE(#{crgv.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
-                    BETWEEN crgv_fini AND COALESCE(crgv_ffin, COALESCE(#{crgv.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
+        		#{version.fini} BETWEEN crgv_fini AND COALESCE(crgv_ffin, #{version.fini})
+        		OR COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
+                    BETWEEN crgv_fini AND COALESCE(crgv_ffin, COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
             )
     ]]>
-		<if test="crgv.id != null">
+		<if test="version.id != null">
         <![CDATA[
-            AND crgv_pk <> #{crgv.id}
+            AND crgv_pk <> #{version.id}
         ]]>
 		</if>
 	</select>
@@ -280,31 +280,31 @@
 	<insert id="insertVersion" parameterType="CargoVO">
     <![CDATA[
         INSERT INTO tbl_cargo_version_crgv (crgv_pk, crgv_crgo_pk, crgv_fini, crgv_ffin, crgv_codigo_norm, crgv_es_principal, crgv_es_temporal, crgv_tipo)
-        VALUES (#{crgv.id}, #{id}, #{crgv.fini}, #{crgv.ffin}, #{crgv.codigoNormalizado}
-            , #{crgv.principal, jdbcType=INTEGER, javaType=Boolean}
-            , #{crgv.temporal, jdbcType=INTEGER, javaType=Boolean}
-            , #{crgv.tipo})
+        VALUES (#{version.id}, #{id}, #{version.fini}, #{version.ffin}, #{version.codigoNormalizado}
+            , #{version.principal, jdbcType=INTEGER, javaType=Boolean}
+            , #{version.temporal, jdbcType=INTEGER, javaType=Boolean}
+            , #{version.tipo})
     ]]>
 	</insert>
 
 	<update id="updateVersion" parameterType="CargoVO">
     <![CDATA[
         UPDATE tbl_cargo_version_crgv SET
-            crgv_fini = #{crgv.fini}
-            , crgv_ffin = #{crgv.ffin}
-            , crgv_codigo_norm = #{crgv.codigoNormalizado}
-            , crgv_es_principal = #{crgv.principal, jdbcType=INTEGER, javaType=Boolean}
-            , crgv_es_temporal = #{crgv.temporal, jdbcType=INTEGER, javaType=Boolean}
-            , crgv_tipo = #{crgv.tipo}
+            crgv_fini = #{version.fini}
+            , crgv_ffin = #{version.ffin}
+            , crgv_codigo_norm = #{version.codigoNormalizado}
+            , crgv_es_principal = #{version.principal, jdbcType=INTEGER, javaType=Boolean}
+            , crgv_es_temporal = #{version.temporal, jdbcType=INTEGER, javaType=Boolean}
+            , crgv_tipo = #{version.tipo}
         WHERE
-            crgv_pk = #{crgv.id}
+            crgv_pk = #{version.id}
     ]]>
 	</update>
 
-	<insert id="deleteVersion" parameterType="Long">
+	<insert id="deleteVersion" parameterType="CargoVO">
     <![CDATA[
         DELETE FROM tbl_cargo_version_crgv
-        WHERE crgv_pk = #{value}
+        WHERE crgv_pk = #{crgo.version.id}
     ]]>
 	</insert>
 </mapper>

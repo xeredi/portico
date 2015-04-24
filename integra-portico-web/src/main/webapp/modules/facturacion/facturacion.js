@@ -914,13 +914,13 @@ function CrgoGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.page = $routeParams.page ? $routeParams.page : 1;
 
     function search(page) {
-        $http.post("facturacion/crgo-list.action", {
+        $http.post("facturacion/cargo-list.action", {
             model : vm.crgoCriterio,
             page : page,
             limit : vm.limit
         }).success(function(data) {
-            vm.crgoList = data.crgoList;
-            vm.page = data.crgoList.page;
+            vm.crgoList = data.resultList;
+            vm.page = data.resultList.page;
 
             $location.search({
                 page : vm.page,
@@ -934,7 +934,9 @@ function CrgoGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
-        $http.post("facturacion/crgo-filter.action").success(function(data) {
+        $http.post("facturacion/cargo-filter.action", {
+            model : vm.crgoCriterio
+        }).success(function(data) {
             vm.tpsrList = data.tpsrList;
         });
     }
@@ -950,7 +952,7 @@ function CrgoDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("facturacion/crgo-remove.action", {
+            $http.post("facturacion/cargo-remove.action", {
                 model : vm.crgo
             }).success(function(data) {
                 window.history.back();
@@ -958,7 +960,7 @@ function CrgoDetailController($http, $routeParams, pageTitleService) {
         }
     }
 
-    $http.post("facturacion/crgo-detail.action", {
+    $http.post("facturacion/cargo-detail.action", {
         model : {
             id : $routeParams.crgoId
         },
@@ -981,7 +983,7 @@ function CrgoEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("facturacion/crgo-save.action", {
+        $http.post("facturacion/cargo-save.action", {
             model : vm.crgo,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -990,7 +992,7 @@ function CrgoEditController($http, $location, $routeParams, pageTitleService) {
                     vm.accion == 'edit' ? setTimeout(function() {
                         window.history.back();
                     }, 0) : $location.path(
-                            "/facturacion/crgo/detail/" + data.model.id + "/" + data.model.crgv.fini)
+                            "/facturacion/crgo/detail/" + data.model.id + "/" + data.model.version.fini)
                             .replace();
                 });
     }
@@ -999,7 +1001,7 @@ function CrgoEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("facturacion/crgo-edit.action", {
+    $http.post("facturacion/cargo-edit.action", {
         model : {
             id : $routeParams.crgoId
         },
