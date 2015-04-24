@@ -2,11 +2,13 @@ package xeredi.integra.model.facturacion.vo;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import xeredi.integra.model.comun.vo.Versionable;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoCargoVO.
  */
-public final class AspectoCargoVO {
+public final class AspectoCargoVO implements Versionable<AspectoCargoVersionVO> {
 
     /** The id. */
     private Long id;
@@ -18,7 +20,7 @@ public final class AspectoCargoVO {
     private CargoVO crgo;
 
     /** The ascv. */
-    private AspectoCargoVersionVO ascv;
+    private AspectoCargoVersionVO version;
 
     /**
      * {@inheritDoc}
@@ -86,22 +88,18 @@ public final class AspectoCargoVO {
     }
 
     /**
-     * Gets the ascv.
-     *
-     * @return the ascv
+     * {@inheritDoc}
      */
-    public AspectoCargoVersionVO getAscv() {
-        return ascv;
+    @Override
+    public AspectoCargoVersionVO getVersion() {
+        return version;
     }
 
     /**
-     * Sets the ascv.
-     *
-     * @param value
-     *            the new ascv
+     * {@inheritDoc}
      */
-    public void setAscv(final AspectoCargoVersionVO value) {
-        ascv = value;
+    @Override
+    public void setVersion(final AspectoCargoVersionVO value) {
+        version = value;
     }
-
 }

@@ -70,8 +70,8 @@ public final class AspectoCargoBO {
      */
     public void insert(final AspectoCargoVO vo) throws OverlapException {
         Preconditions.checkNotNull(vo);
-        Preconditions.checkNotNull(vo.getAscv());
-        Preconditions.checkNotNull(vo.getAscv().getFini());
+        Preconditions.checkNotNull(vo.getVersion());
+        Preconditions.checkNotNull(vo.getVersion().getFini());
         Preconditions.checkNotNull(vo.getAspcId());
         Preconditions.checkNotNull(vo.getCrgo());
         Preconditions.checkNotNull(vo.getCrgo().getId());
@@ -93,7 +93,7 @@ public final class AspectoCargoBO {
                 ascrDAO.insert(vo);
             }
 
-            vo.getAscv().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            vo.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             ascrDAO.insertVersion(vo);
 
@@ -114,9 +114,9 @@ public final class AspectoCargoBO {
     public void update(final AspectoCargoVO vo) throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(vo);
         Preconditions.checkNotNull(vo.getId());
-        Preconditions.checkNotNull(vo.getAscv());
-        Preconditions.checkNotNull(vo.getAscv().getId());
-        Preconditions.checkNotNull(vo.getAscv().getFini());
+        Preconditions.checkNotNull(vo.getVersion());
+        Preconditions.checkNotNull(vo.getVersion().getId());
+        Preconditions.checkNotNull(vo.getVersion().getFini());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoCargoDAO ascrDAO = session.getMapper(AspectoCargoDAO.class);

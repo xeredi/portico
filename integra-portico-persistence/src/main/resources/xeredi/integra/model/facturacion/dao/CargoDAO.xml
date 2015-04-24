@@ -169,10 +169,6 @@
 				AND crgo_codigo LIKE #{codigo}
 			</if>
 
-			<if test="textoBusqueda != null">
-				AND crgo_codigo LIKE #{textoBusqueda}
-			</if>
-
 			<if test="codigoNormalizado != null">
 				AND crgv_codigo_norm LIKE #{codigoNormalizado}
 			</if>

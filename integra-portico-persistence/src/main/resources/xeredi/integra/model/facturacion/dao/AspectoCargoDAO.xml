@@ -19,7 +19,7 @@
 			</association>
 		</association>
 
-		<association property="ascv" javaType="AspectoCargoVersionVO">
+		<association property="version" javaType="AspectoCargoVersionVO">
 			<result column="ascv_pk" property="id" />
 			<result column="ascv_fini" property="fini" />
 			<result column="ascv_ffin" property="ffin" />
@@ -90,14 +90,14 @@
         WHERE
             ascr_pk = #{id}
             AND (
-                #{ascv.fini} BETWEEN ascv_fini AND COALESCE(ascv_ffin, #{ascv.fini})
-                OR COALESCE(#{ascv.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
-                    BETWEEN ascv_fini AND COALESCE(ascv_ffin, COALESCE(#{ascv.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
+                #{version.fini} BETWEEN ascv_fini AND COALESCE(ascv_ffin, #{version.fini})
+                OR COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
+                    BETWEEN ascv_fini AND COALESCE(ascv_ffin, COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
             )
     ]]>
-		<if test="ascv.id != null">
+		<if test="version.id != null">
         <![CDATA[
-            AND ascv_pk <> #{ascv.id}
+            AND ascv_pk <> #{version.id}
         ]]>
 		</if>
 	</select>
@@ -123,7 +123,7 @@
         INSERT INTO tbl_aspecto_cargo_version_ascv (
             ascv_pk, ascv_ascr_pk, ascv_fini, ascv_ffin
         ) VALUES (
-            #{ascv.id}, #{id}, #{ascv.fini}, #{ascv.ffin}
+            #{version.id}, #{id}, #{version.fini}, #{version.ffin}
         )
     ]]>
 	</insert>
@@ -131,8 +131,8 @@
 	<update id="updateVersion" parameterType="AspectoCargoVO">
     <![CDATA[
         UPDATE tbl_aspecto_cargo_version_ascv SET
-            ascv_fini = #{ascv.fini}, ascv_ffin = #{ascv.ffin}
-        WHERE ascv_pk = #{ascv.id}
+            ascv_fini = #{version.fini}, ascv_ffin = #{version.ffin}
+        WHERE ascv_pk = #{version.id}
     ]]>
 	</update>
 

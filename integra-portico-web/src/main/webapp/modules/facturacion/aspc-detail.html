@@ -219,8 +219,8 @@
                 <td><a ng-href="#/facturacion/ascr/detail/{{ascr.id}}/{{vm.fechaVigencia}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="ascr.crgo.etiqueta"></td>
-                <td ng-bind="ascr.ascv.fini | date: ('format_date' | translate)"></td>
-                <td ng-bind="ascr.ascv.ffin | date: ('format_date' | translate)"></td>
+                <td ng-bind="ascr.version.fini | date: ('format_date' | translate)"></td>
+                <td ng-bind="ascr.version.ffin | date: ('format_date' | translate)"></td>
             </tr>
         </tbody>
     </table>

@@ -1378,7 +1378,7 @@ function AscrDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("facturacion/ascr-remove.action", {
+            $http.post("facturacion/aspecto-cargo-remove.action", {
                 model : vm.ascr
             }).success(function(data) {
                 window.history.back();
@@ -1386,7 +1386,7 @@ function AscrDetailController($http, $routeParams, pageTitleService) {
         }
     }
 
-    $http.post("facturacion/ascr-detail.action", {
+    $http.post("facturacion/aspecto-cargo-detail.action", {
         model : {
             id : $routeParams.ascrId
         },
@@ -1407,7 +1407,7 @@ function AscrEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("facturacion/ascr-save.action", {
+        $http.post("facturacion/aspecto-cargo-save.action", {
             model : vm.ascr,
             accion : vm.accion
         }).success(
@@ -1415,7 +1415,7 @@ function AscrEditController($http, $location, $routeParams, pageTitleService) {
                     vm.accion == 'edit' ? setTimeout(function() {
                         window.history.back();
                     }, 0) : $location.path(
-                            "/facturacion/ascr/detail/" + data.model.id + "/" + data.model.ascv.fini)
+                            "/facturacion/ascr/detail/" + data.model.id + "/" + data.model.version.fini)
                             .replace();
                 });
     }
@@ -1424,7 +1424,7 @@ function AscrEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("facturacion/ascr-edit.action", {
+    $http.post("facturacion/aspecto-cargo-edit.action", {
         model : {
             aspcId : $routeParams.aspcId,
             id : $routeParams.ascrId
