@@ -27,8 +27,8 @@ public final class FieldFiller {
      *
      * @param item
      *            the item
-     * @param enti
-     *            the enti
+     * @param entiDetail
+     *            the enti detail
      */
     public static void fillDefaultValues(final @Nonnull ItemVO item, final @Nonnull AbstractEntidadDetailVO entiDetail) {
         if (entiDetail.getEntdList() != null) {

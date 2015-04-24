@@ -1036,7 +1036,7 @@ function EngdDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("metamodelo/engd-remove.action", {
+            $http.post("metamodelo/entidad-grupo-dato-remove.action", {
                 model : vm.engd
             }).success(function(data) {
                 window.history.back();
@@ -1044,7 +1044,7 @@ function EngdDetailController($http, $location, $routeParams, pageTitleService) 
         }
     }
 
-    $http.post("metamodelo/engd-detail.action", {
+    $http.post("metamodelo/entidad-grupo-dato-detail.action", {
         model : {
             id : $routeParams.engdId
         }
@@ -1064,7 +1064,7 @@ function EngdEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("metamodelo/engd-save.action", {
+        $http.post("metamodelo/entidad-grupo-dato-save.action", {
             model : vm.engd,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -1079,7 +1079,7 @@ function EngdEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("metamodelo/engd-edit.action", {
+    $http.post("metamodelo/entidad-grupo-dato-edit.action", {
         model : {
             entiId : $routeParams.entiId,
             id : $routeParams.engdId

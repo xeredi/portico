@@ -14,8 +14,6 @@ import com.google.common.base.Preconditions;
  *
  * @param <C>
  *            the generic type
- * @param <E>
- *            the element type
  */
 public abstract class ItemXlsExportAction<C extends ItemCriterioVO> extends GridXlsExportAction<C> {
 

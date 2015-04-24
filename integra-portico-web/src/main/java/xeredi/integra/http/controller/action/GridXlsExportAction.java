@@ -55,6 +55,8 @@ public abstract class GridXlsExportAction<C extends BaseCriterioVO> extends Base
      *
      * @throws ApplicationException
      *             the application exception
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     public abstract void doXlsExport() throws ApplicationException, IOException;
 

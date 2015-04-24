@@ -93,7 +93,7 @@ public final class EntidadListadoAction extends BaseAction implements ModelDrive
     /**
      * Sets the model.
      *
-     * @param model
+     * @param value
      *            the new model
      */
     public void setModel(final EntidadCriterioVO value) {

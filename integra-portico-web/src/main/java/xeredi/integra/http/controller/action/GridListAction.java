@@ -10,7 +10,7 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * The Class GridListAction.
  *
- * @param <T>
+ * @param <C>
  *            the generic type
  * @param <R>
  *            the generic type

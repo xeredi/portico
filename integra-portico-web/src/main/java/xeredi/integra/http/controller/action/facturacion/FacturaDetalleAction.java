@@ -26,6 +26,8 @@ public final class FacturaDetalleAction extends ItemAction implements ModelDrive
      * Detail.
      *
      * @return the string
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("fctd-detail")
     public String detail() throws ApplicationException {

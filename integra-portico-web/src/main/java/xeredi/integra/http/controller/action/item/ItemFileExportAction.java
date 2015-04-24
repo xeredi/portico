@@ -14,8 +14,6 @@ import com.google.common.base.Preconditions;
  *
  * @param <I>
  *            the generic type
- * @param <E>
- *            the element type
  */
 public abstract class ItemFileExportAction<I extends ItemVO> extends CrudFileExportAction<I> {
 
@@ -36,8 +34,8 @@ public abstract class ItemFileExportAction<I extends ItemVO> extends CrudFileExp
     /**
      * Do specific pdf export.
      *
-     * @throws ApplicationExceptionhttp
-     *             ://marketplace.eclipse.org/content/clay-mark-ii the application exception
+     * @throws ApplicationException
+     *             the application exception
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */

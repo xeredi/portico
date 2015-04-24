@@ -151,7 +151,7 @@ public final class EntidadAccionGridAction extends ItemAction implements ModelDr
     /**
      * Sets the model.
      *
-     * @param model
+     * @param value
      *            the new model
      */
     public void setModel(final EntidadAccionGridVO value) {

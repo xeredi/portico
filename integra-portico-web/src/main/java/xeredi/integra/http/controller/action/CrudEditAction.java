@@ -3,6 +3,7 @@ package xeredi.integra.http.controller.action;
 import java.util.Date;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.Versionable;
 
 import com.google.common.base.Preconditions;
 import com.opensymphony.xwork2.ModelDriven;
@@ -35,8 +36,10 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
     public final String execute() throws ApplicationException {
         Preconditions.checkNotNull(accion);
 
-        if (accion == ACCION_EDICION.edit || accion == ACCION_EDICION.duplicate) {
-            Preconditions.checkNotNull(fechaVigencia);
+        if (model instanceof Versionable<?>) {
+            if (accion == ACCION_EDICION.edit || accion == ACCION_EDICION.duplicate) {
+                Preconditions.checkNotNull(fechaVigencia);
+            }
         }
 
         doEdit();

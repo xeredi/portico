@@ -53,30 +53,76 @@ import com.opensymphony.xwork2.util.WildcardUtil;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
+// TODO: Auto-generated Javadoc
 /**
- * Populates an action from a JSON string
+ * Populates an action from a JSON string.
  */
 public class JSONInterceptor extends AbstractInterceptor {
+
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4950170304212158803L;
+
+    /** The Constant LOG. */
     private static final Logger LOG = LoggerFactory.getLogger(JSONInterceptor.class);
+
+    /** The enable smd. */
     private final boolean enableSMD = false;
+
+    /** The enable gzip. */
     private final boolean enableGZIP = false;
+
+    /** The wrap with comments. */
     private boolean wrapWithComments;
+
+    /** The prefix. */
     private boolean prefix;
+
+    /** The default encoding. */
     private String defaultEncoding = "ISO-8859-1";
+
+    /** The ignore hierarchy. */
     private final boolean ignoreHierarchy = true;
+
+    /** The root. */
     private String root;
+
+    /** The exclude properties. */
     private List<Pattern> excludeProperties;
+
+    /** The include properties. */
     private List<Pattern> includeProperties;
+
+    /** The ignore smd method interfaces. */
     private final boolean ignoreSMDMethodInterfaces = true;
+
+    /** The populator. */
     private final JSONPopulator populator = new JSONPopulator();
+
+    /** The data cleaner. */
     private final JSONCleaner dataCleaner = null;
+
+    /** The debug. */
     private final boolean debug = false;
+
+    /** The no cache. */
     private final boolean noCache = false;
+
+    /** The exclude null properties. */
     private boolean excludeNullProperties;
+
+    /** The callback parameter. */
     private String callbackParameter;
+
+    /** The content type. */
     private String contentType;
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.opensymphony.xwork2.interceptor.AbstractInterceptor#intercept(com.opensymphony.xwork2.ActionInvocation
+     * )
+     */
     @Override
     @SuppressWarnings("unchecked")
     public String intercept(final ActionInvocation invocation) throws Exception {
@@ -169,10 +215,33 @@ public class JSONInterceptor extends AbstractInterceptor {
         return invocation.invoke();
     }
 
+    /**
+     * Invoke.
+     *
+     * @param object
+     *            the object
+     * @param data
+     *            the data
+     * @return the RPC response
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     * @throws IllegalAccessException
+     *             the illegal access exception
+     * @throws InvocationTargetException
+     *             the invocation target exception
+     * @throws JSONException
+     *             the JSON exception
+     * @throws InstantiationException
+     *             the instantiation exception
+     * @throws NoSuchMethodException
+     *             the no such method exception
+     * @throws IntrospectionException
+     *             the introspection exception
+     */
     @SuppressWarnings("unchecked")
     public RPCResponse invoke(final Object object, final Map data) throws IllegalArgumentException,
-    IllegalAccessException, InvocationTargetException, JSONException, InstantiationException,
-    NoSuchMethodException, IntrospectionException {
+            IllegalAccessException, InvocationTargetException, JSONException, InstantiationException,
+            NoSuchMethodException, IntrospectionException {
 
         final RPCResponse response = new RPCResponse();
 
@@ -248,6 +317,17 @@ public class JSONInterceptor extends AbstractInterceptor {
         return response;
     }
 
+    /**
+     * Gets the method.
+     *
+     * @param clazz
+     *            the clazz
+     * @param name
+     *            the name
+     * @param parameterCount
+     *            the parameter count
+     * @return the method
+     */
     @SuppressWarnings("unchecked")
     private Method getMethod(final Class clazz, final String name, final int parameterCount) {
         final Method[] smdMethods = JSONUtil.listSMDMethods(clazz, ignoreSMDMethodInterfaces);
@@ -261,8 +341,14 @@ public class JSONInterceptor extends AbstractInterceptor {
     }
 
     /**
-     * Look for a method in clazz carrying the SMDMethod annotation with matching name and parametersCount
+     * Look for a method in clazz carrying the SMDMethod annotation with matching name and parametersCount.
      *
+     * @param method
+     *            the method
+     * @param name
+     *            the name
+     * @param parameterCount
+     *            the parameter count
      * @return true if matches name and parameterCount
      */
     private boolean checkSMDMethodSignature(final Method method, final String name, final int parameterCount) {
@@ -280,6 +366,15 @@ public class JSONInterceptor extends AbstractInterceptor {
         return false;
     }
 
+    /**
+     * Adds the callback if applicable.
+     *
+     * @param request
+     *            the request
+     * @param json
+     *            the json
+     * @return the string
+     */
     protected String addCallbackIfApplicable(final HttpServletRequest request, String json) {
         if (callbackParameter != null && callbackParameter.length() > 0) {
             final String callbackName = request.getParameter(callbackParameter);
@@ -290,17 +385,31 @@ public class JSONInterceptor extends AbstractInterceptor {
         return json;
     }
 
+    /**
+     * Checks if is enable smd.
+     *
+     * @return true, if is enable smd
+     */
     public boolean isEnableSMD() {
         return enableSMD;
     }
 
+    /**
+     * Sets the enable smd.
+     *
+     * @param enableSMD
+     *            the new enable smd
+     */
     public void setEnableSMD(boolean enableSMD) {
         enableSMD = enableSMD;
     }
 
     /**
      * Ignore annotations on methods in interfaces You may need to set to this true if your action is a
-     * proxy/enhanced as annotations are not inherited
+     * proxy/enhanced as annotations are not inherited.
+     *
+     * @param ignoreSMDMethodInterfaces
+     *            the new ignore smd method interfaces
      */
     public void setIgnoreSMDMethodInterfaces(boolean ignoreSMDMethodInterfaces) {
         ignoreSMDMethodInterfaces = ignoreSMDMethodInterfaces;
@@ -310,11 +419,18 @@ public class JSONInterceptor extends AbstractInterceptor {
      * Wrap generated JSON with comments. Only used if SMD is enabled.
      *
      * @param wrapWithComments
+     *            the new wrap with comments
      */
     public void setWrapWithComments(boolean wrapWithComments) {
         wrapWithComments = wrapWithComments;
     }
 
+    /**
+     * Sets the default encoding.
+     *
+     * @param val
+     *            the new default encoding
+     */
     @Inject(StrutsConstants.STRUTS_I18N_ENCODING)
     public void setDefaultEncoding(final String val) {
         defaultEncoding = val;
@@ -324,13 +440,14 @@ public class JSONInterceptor extends AbstractInterceptor {
      * Ignore properties defined on base classes of the root object.
      *
      * @param ignoreHierarchy
+     *            the new ignore hierarchy
      */
     public void setIgnoreHierarchy(boolean ignoreHierarchy) {
         ignoreHierarchy = ignoreHierarchy;
     }
 
     /**
-     * Sets the root object to be deserialized, defaults to the Action
+     * Sets the root object to be deserialized, defaults to the Action.
      *
      * @param root
      *            OGNL expression of root object to be serialized
@@ -340,7 +457,7 @@ public class JSONInterceptor extends AbstractInterceptor {
     }
 
     /**
-     * Sets the JSONPopulator to be used
+     * Sets the JSONPopulator to be used.
      *
      * @param populator
      *            JSONPopulator
@@ -350,7 +467,7 @@ public class JSONInterceptor extends AbstractInterceptor {
     }
 
     /**
-     * Sets the JSONCleaner to be used
+     * Sets the JSONCleaner to be used.
      *
      * @param dataCleaner
      *            JSONCleaner
@@ -360,6 +477,8 @@ public class JSONInterceptor extends AbstractInterceptor {
     }
 
     /**
+     * Gets the debug.
+     *
      * @return true if debugging is turned on
      */
     public boolean getDebug() {
@@ -368,7 +487,7 @@ public class JSONInterceptor extends AbstractInterceptor {
     }
 
     /**
-     * Turns debugging on or off
+     * Turns debugging on or off.
      *
      * @param debug
      *            true or false
@@ -377,6 +496,12 @@ public class JSONInterceptor extends AbstractInterceptor {
         debug = debug;
     }
 
+    /**
+     * Sets the dev mode.
+     *
+     * @param mode
+     *            the new dev mode
+     */
     @Inject(StrutsConstants.STRUTS_DEVMODE)
     public void setDevMode(final String mode) {
         setDebug("true".equalsIgnoreCase(mode));
@@ -448,6 +573,8 @@ public class JSONInterceptor extends AbstractInterceptor {
     /**
      * Returns the appropriate set of includes, based on debug setting. Derived classes can override if there
      * are additional, custom debug-only parameters.
+     *
+     * @return the include properties
      */
     protected List getIncludeProperties() {
         if (includeProperties != null && getDebug()) {
@@ -460,6 +587,11 @@ public class JSONInterceptor extends AbstractInterceptor {
         }
     }
 
+    /**
+     * Checks if is enable gzip.
+     *
+     * @return true, if is enable gzip
+     */
     public boolean isEnableGZIP() {
         return enableGZIP;
     }
@@ -474,49 +606,79 @@ public class JSONInterceptor extends AbstractInterceptor {
         enableGZIP = enableGZIP;
     }
 
+    /**
+     * Checks if is no cache.
+     *
+     * @return true, if is no cache
+     */
     public boolean isNoCache() {
         return noCache;
     }
 
     /**
-     * Add headers to response to prevent the browser from caching the response
+     * Add headers to response to prevent the browser from caching the response.
      *
      * @param noCache
+     *            the new no cache
      */
     public void setNoCache(boolean noCache) {
         noCache = noCache;
     }
 
+    /**
+     * Checks if is exclude null properties.
+     *
+     * @return true, if is exclude null properties
+     */
     public boolean isExcludeNullProperties() {
         return excludeNullProperties;
     }
 
     /**
-     * Do not serialize properties with a null value
+     * Do not serialize properties with a null value.
      *
      * @param excludeNullProperties
+     *            the new exclude null properties
      */
     public void setExcludeNullProperties(boolean excludeNullProperties) {
         excludeNullProperties = excludeNullProperties;
     }
 
+    /**
+     * Sets the callback parameter.
+     *
+     * @param callbackParameter
+     *            the new callback parameter
+     */
     public void setCallbackParameter(String callbackParameter) {
         callbackParameter = callbackParameter;
     }
 
+    /**
+     * Gets the callback parameter.
+     *
+     * @return the callback parameter
+     */
     public String getCallbackParameter() {
         return callbackParameter;
     }
 
     /**
-     * Add "{} && " to generated JSON
+     * Add <code>{} &amp;&amp;</code> to generated JSON.
      *
      * @param prefix
+     *            the new prefix
      */
     public void setPrefix(boolean prefix) {
         prefix = prefix;
     }
 
+    /**
+     * Sets the content type.
+     *
+     * @param contentType
+     *            the new content type
+     */
     public void setContentType(String contentType) {
         contentType = contentType;
     }
