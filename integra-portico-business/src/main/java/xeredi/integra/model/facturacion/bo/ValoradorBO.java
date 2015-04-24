@@ -556,27 +556,28 @@ public class ValoradorBO {
     private void generateSql(final ReglaVO rgla) {
         final AbstractEntidadDetailVO entiDetail = EntidadProxy.select(rgla.getEnti().getId());
 
-        rgla.getRglv().setPathImpuestoSql(generateSqlPath(entiDetail, rgla.getRglv().getPathImpuesto(), false));
-        rgla.getRglv().setPathPagadorSql(generateSqlPath(entiDetail, rgla.getRglv().getPathPagador(), false));
-        rgla.getRglv().setPathEsSujPasivoSql(generateSqlPath(entiDetail, rgla.getRglv().getPathEsSujPasivo(), false));
-        rgla.getRglv().setPathCodExenSql(generateSqlPath(entiDetail, rgla.getRglv().getPathCodExen(), false));
+        rgla.getVersion().setPathImpuestoSql(generateSqlPath(entiDetail, rgla.getVersion().getPathImpuesto(), false));
+        rgla.getVersion().setPathPagadorSql(generateSqlPath(entiDetail, rgla.getVersion().getPathPagador(), false));
+        rgla.getVersion().setPathEsSujPasivoSql(
+                generateSqlPath(entiDetail, rgla.getVersion().getPathEsSujPasivo(), false));
+        rgla.getVersion().setPathCodExenSql(generateSqlPath(entiDetail, rgla.getVersion().getPathCodExen(), false));
 
-        rgla.getRglv().setPathInfo1Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathInfo1(), true));
-        rgla.getRglv().setPathInfo2Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathInfo2(), true));
-        rgla.getRglv().setPathInfo3Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathInfo3(), true));
-        rgla.getRglv().setPathInfo4Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathInfo4(), true));
-        rgla.getRglv().setPathInfo5Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathInfo5(), true));
-        rgla.getRglv().setPathInfo6Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathInfo6(), true));
+        rgla.getVersion().setPathInfo1Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathInfo1(), true));
+        rgla.getVersion().setPathInfo2Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathInfo2(), true));
+        rgla.getVersion().setPathInfo3Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathInfo3(), true));
+        rgla.getVersion().setPathInfo4Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathInfo4(), true));
+        rgla.getVersion().setPathInfo5Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathInfo5(), true));
+        rgla.getVersion().setPathInfo6Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathInfo6(), true));
 
-        rgla.getRglv().setPathCuant1Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathCuant1(), false));
-        rgla.getRglv().setPathCuant2Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathCuant2(), false));
-        rgla.getRglv().setPathCuant3Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathCuant3(), false));
-        rgla.getRglv().setPathCuant4Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathCuant4(), false));
-        rgla.getRglv().setPathCuant5Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathCuant5(), false));
-        rgla.getRglv().setPathCuant6Sql(generateSqlPath(entiDetail, rgla.getRglv().getPathCuant6(), false));
+        rgla.getVersion().setPathCuant1Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathCuant1(), false));
+        rgla.getVersion().setPathCuant2Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathCuant2(), false));
+        rgla.getVersion().setPathCuant3Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathCuant3(), false));
+        rgla.getVersion().setPathCuant4Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathCuant4(), false));
+        rgla.getVersion().setPathCuant5Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathCuant5(), false));
+        rgla.getVersion().setPathCuant6Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathCuant6(), false));
 
-        rgla.getRglv().setCondicionSql(generateSqlCondition(rgla, rgla.getRglv().getCondicion()));
-        rgla.getRglv().setFormulaSql(generateSqlFormula(rgla, rgla.getRglv().getFormula()));
+        rgla.getVersion().setCondicionSql(generateSqlCondition(rgla, rgla.getVersion().getCondicion()));
+        rgla.getVersion().setFormulaSql(generateSqlFormula(rgla, rgla.getVersion().getFormula()));
     }
 
     /**

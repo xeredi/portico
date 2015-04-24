@@ -65,7 +65,7 @@ public final class FormulaTest {
         final ValoradorContextoVO contextoVO = new ValoradorContextoVO();
         final ReglaVO reglaVO = new ReglaVO();
 
-        reglaVO.setRglv(new ReglaVersionVO());
+        reglaVO.setVersion(new ReglaVersionVO());
         reglaVO.setEnti(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()).getEnti());
         contextoVO.setRgla(reglaVO);
         contextoVO.setFref(Calendar.getInstance().getTime());

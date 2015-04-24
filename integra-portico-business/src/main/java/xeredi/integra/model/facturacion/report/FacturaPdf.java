@@ -249,7 +249,7 @@ public final class FacturaPdf extends BasePdf {
 
         linea.add(DynamicReports.cmp.horizontalFlowList(
                 createEtiquetaValorComponent("Concepto", fctl.getRgla().getCodigo()),
-                createEtiquetaValorComponent("Cuota", formatDouble(fctl.getRgla().getRglv().getImporteBase())),
+                createEtiquetaValorComponent("Cuota", formatDouble(fctl.getRgla().getVersion().getImporteBase())),
                 createEtiquetaValorComponent("IVA", fctl.getImpuesto().getEtiqueta()),
                 createEtiquetaValorComponent("Importe", formatCurrency(fctl.getImporte()))));
 
@@ -258,22 +258,22 @@ public final class FacturaPdf extends BasePdf {
         infos.add(DynamicReports.cmp.gap(10, 1));
 
         if (fctl.getInfo1() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqInfo1(), fctl.getInfo1()));
+            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqInfo1(), fctl.getInfo1()));
         }
         if (fctl.getInfo2() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqInfo2(), fctl.getInfo2()));
+            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqInfo2(), fctl.getInfo2()));
         }
         if (fctl.getInfo3() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqInfo3(), fctl.getInfo3()));
+            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqInfo3(), fctl.getInfo3()));
         }
         if (fctl.getInfo4() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqInfo4(), fctl.getInfo4()));
+            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqInfo4(), fctl.getInfo4()));
         }
         if (fctl.getInfo5() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqInfo5(), fctl.getInfo5()));
+            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqInfo5(), fctl.getInfo5()));
         }
         if (fctl.getInfo6() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqInfo6(), fctl.getInfo6()));
+            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqInfo6(), fctl.getInfo6()));
         }
 
         linea.add(infos);
@@ -283,27 +283,27 @@ public final class FacturaPdf extends BasePdf {
         cuants.add(DynamicReports.cmp.gap(10, 1));
 
         if (fctl.getCuant1() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqCuant1(),
+            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqCuant1(),
                     formatDouble(fctl.getCuant1())));
         }
         if (fctl.getCuant2() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqCuant2(),
+            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqCuant2(),
                     formatDouble(fctl.getCuant2())));
         }
         if (fctl.getCuant3() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqCuant3(),
+            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqCuant3(),
                     formatDouble(fctl.getCuant3())));
         }
         if (fctl.getCuant4() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqCuant4(),
+            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqCuant4(),
                     formatDouble(fctl.getCuant4())));
         }
         if (fctl.getCuant5() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqCuant5(),
+            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqCuant5(),
                     formatDouble(fctl.getCuant5())));
         }
         if (fctl.getCuant6() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getRglv().getEtiqCuant6(),
+            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqCuant6(),
                     formatDouble(fctl.getCuant6())));
         }
 

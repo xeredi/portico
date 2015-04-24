@@ -99,7 +99,7 @@ public class ReglaBO {
      */
     public void insert(final ReglaVO rgla) throws OverlapException {
         Preconditions.checkNotNull(rgla);
-        Preconditions.checkNotNull(rgla.getRglv());
+        Preconditions.checkNotNull(rgla.getVersion());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
@@ -117,7 +117,7 @@ public class ReglaBO {
                 rglaDAO.insert(rgla);
             }
 
-            rgla.getRglv().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            rgla.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             rglaDAO.insertVersion(rgla);
 
@@ -137,8 +137,8 @@ public class ReglaBO {
      */
     public void update(final ReglaVO rgla) throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(rgla);
-        Preconditions.checkNotNull(rgla.getRglv());
-        Preconditions.checkNotNull(rgla.getRglv().getId());
+        Preconditions.checkNotNull(rgla.getVersion());
+        Preconditions.checkNotNull(rgla.getVersion().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);

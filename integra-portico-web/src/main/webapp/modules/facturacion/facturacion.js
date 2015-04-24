@@ -1073,7 +1073,7 @@ function RglaDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("facturacion/rgla-remove.action", {
+            $http.post("facturacion/regla-remove.action", {
                 model : vm.rgla
             }).success(function(data) {
                 window.history.back();
@@ -1081,7 +1081,7 @@ function RglaDetailController($http, $routeParams, pageTitleService) {
         }
     }
 
-    $http.post("facturacion/rgla-detail.action", {
+    $http.post("facturacion/regla-detail.action", {
         model : {
             id : $routeParams.rglaId
         },
@@ -1103,7 +1103,7 @@ function RglaEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("facturacion/rgla-save.action", {
+        $http.post("facturacion/regla-save.action", {
             model : vm.rgla,
             accion : vm.accion
         }).success(
@@ -1111,7 +1111,7 @@ function RglaEditController($http, $location, $routeParams, pageTitleService) {
                     vm.accion == 'edit' ? setTimeout(function() {
                         window.history.back();
                     }, 0) : $location.path(
-                            "/facturacion/rgla/detail/" + data.model.id + "/" + data.model.rglv.fini)
+                            "/facturacion/rgla/detail/" + data.model.id + "/" + data.model.version.fini)
                             .replace();
                 });
     }
@@ -1120,7 +1120,7 @@ function RglaEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("facturacion/rgla-edit.action", {
+    $http.post("facturacion/regla-edit.action", {
         model : {
             crgo : {
                 id : $routeParams.crgoId

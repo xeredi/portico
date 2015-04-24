@@ -2,13 +2,14 @@ package xeredi.integra.model.facturacion.vo;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import xeredi.integra.model.comun.vo.Versionable;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReglaVO.
  */
-public final class ReglaVO {
+public final class ReglaVO implements Versionable<ReglaVersionVO> {
 
     /** The id. */
     private Long id;
@@ -26,7 +27,7 @@ public final class ReglaVO {
     private CargoVO crgo;
 
     /** The rglv. */
-    private ReglaVersionVO rglv;
+    private ReglaVersionVO version;
 
     /**
      * {@inheritDoc}
@@ -94,22 +95,19 @@ public final class ReglaVO {
     }
 
     /**
-     * Gets the rglv.
-     *
-     * @return the rglv
+     * {@inheritDoc}
      */
-    public ReglaVersionVO getRglv() {
-        return rglv;
+    @Override
+    public ReglaVersionVO getVersion() {
+        return version;
     }
 
     /**
-     * Sets the rglv.
-     *
-     * @param value
-     *            the rglv
+     * {@inheritDoc}
      */
-    public void setRglv(final ReglaVersionVO value) {
-        rglv = value;
+    @Override
+    public void setVersion(final ReglaVersionVO value) {
+        version = value;
     }
 
     /**

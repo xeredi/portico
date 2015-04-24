@@ -14,7 +14,7 @@
 			<result column="enti_tipo" property="tipo" />
 		</association>
 
-		<association property="rglv" javaType="ReglaVersionVO">
+		<association property="version" javaType="ReglaVersionVO">
 			<result column="rglv_pk" property="id" />
 			<result column="rglv_fini" property="fini" />
 			<result column="rglv_ffin" property="ffin" />
@@ -209,14 +209,14 @@
         WHERE
             rgla_pk = #{id}
             AND (
-                #{rglv.fini} BETWEEN rglv_fini AND COALESCE(rglv_ffin, #{rglv.fini})
-                OR COALESCE(#{rglv.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
-                    BETWEEN rglv_fini AND COALESCE(rglv_ffin, COALESCE(#{rglv.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
+                #{version.fini} BETWEEN rglv_fini AND COALESCE(rglv_ffin, #{version.fini})
+                OR COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
+                    BETWEEN rglv_fini AND COALESCE(rglv_ffin, COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
             )
     ]]>
-		<if test="rglv.id != null">
+		<if test="version.id != null">
         <![CDATA[
-            AND rglv_pk <> #{rglv.id}
+            AND rglv_pk <> #{version.id}
         ]]>
 		</if>
 	</select>
@@ -247,12 +247,12 @@
             , rglv_path_cuant1, rglv_path_cuant2, rglv_path_cuant3, rglv_path_cuant4, rglv_path_cuant5, rglv_path_cuant6
             , rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
         ) VALUES (
-            #{rglv.id}, #{id}, #{rglv.fini}, #{rglv.ffin}, #{rglv.orden}, #{rglv.importeBase}, #{rglv.condicion}, #{rglv.formula}
-            , #{rglv.pathImpuesto}, #{rglv.pathPagador}, #{rglv.pathEsSujPasivo}, #{rglv.pathCodExen}
-            , #{rglv.pathInfo1}, #{rglv.pathInfo2}, #{rglv.pathInfo3}, #{rglv.pathInfo4}, #{rglv.pathInfo5}, #{rglv.pathInfo6}
-            , #{rglv.etiqInfo1}, #{rglv.etiqInfo2}, #{rglv.etiqInfo3}, #{rglv.etiqInfo4}, #{rglv.etiqInfo5}, #{rglv.etiqInfo6}
-            , #{rglv.pathCuant1}, #{rglv.pathCuant2}, #{rglv.pathCuant3}, #{rglv.pathCuant4}, #{rglv.pathCuant5}, #{rglv.pathCuant6}
-            , #{rglv.etiqCuant1}, #{rglv.etiqCuant2}, #{rglv.etiqCuant3}, #{rglv.etiqCuant4}, #{rglv.etiqCuant5}, #{rglv.etiqCuant6}
+            #{version.id}, #{id}, #{version.fini}, #{version.ffin}, #{version.orden}, #{version.importeBase}, #{version.condicion}, #{version.formula}
+            , #{version.pathImpuesto}, #{version.pathPagador}, #{version.pathEsSujPasivo}, #{version.pathCodExen}
+            , #{version.pathInfo1}, #{version.pathInfo2}, #{version.pathInfo3}, #{version.pathInfo4}, #{version.pathInfo5}, #{version.pathInfo6}
+            , #{version.etiqInfo1}, #{version.etiqInfo2}, #{version.etiqInfo3}, #{version.etiqInfo4}, #{version.etiqInfo5}, #{version.etiqInfo6}
+            , #{version.pathCuant1}, #{version.pathCuant2}, #{version.pathCuant3}, #{version.pathCuant4}, #{version.pathCuant5}, #{version.pathCuant6}
+            , #{version.etiqCuant1}, #{version.etiqCuant2}, #{version.etiqCuant3}, #{version.etiqCuant4}, #{version.etiqCuant5}, #{version.etiqCuant6}
         )
     ]]>
 	</insert>
@@ -260,46 +260,46 @@
 	<update id="updateVersion" parameterType="ReglaVO">
     <![CDATA[
         UPDATE tbl_regla_version_rglv SET
-            rglv_fini = #{rglv.fini}
-            , rglv_ffin = #{rglv.ffin}
-            , rglv_orden = #{rglv.orden}
-            , rglv_importe_base = #{rglv.importeBase}
-            , rglv_condicion = #{rglv.condicion}
-            , rglv_formula   = #{rglv.formula}
-            , rglv_path_impuesto = #{rglv.pathImpuesto}
-            , rglv_path_pagador = #{rglv.pathPagador}
-            , rglv_path_es_suj_pasivo = #{rglv.pathEsSujPasivo}
-            , rglv_path_cod_exen = #{rglv.pathCodExen}
+            rglv_fini = #{version.fini}
+            , rglv_ffin = #{version.ffin}
+            , rglv_orden = #{version.orden}
+            , rglv_importe_base = #{version.importeBase}
+            , rglv_condicion = #{version.condicion}
+            , rglv_formula   = #{version.formula}
+            , rglv_path_impuesto = #{version.pathImpuesto}
+            , rglv_path_pagador = #{version.pathPagador}
+            , rglv_path_es_suj_pasivo = #{version.pathEsSujPasivo}
+            , rglv_path_cod_exen = #{version.pathCodExen}
 
-            , rglv_path_info1 = #{rglv.pathInfo1}
-            , rglv_path_info2 = #{rglv.pathInfo2}
-            , rglv_path_info3 = #{rglv.pathInfo3}
-            , rglv_path_info4 = #{rglv.pathInfo4}
-            , rglv_path_info5 = #{rglv.pathInfo5}
-            , rglv_path_info6 = #{rglv.pathInfo6}
+            , rglv_path_info1 = #{version.pathInfo1}
+            , rglv_path_info2 = #{version.pathInfo2}
+            , rglv_path_info3 = #{version.pathInfo3}
+            , rglv_path_info4 = #{version.pathInfo4}
+            , rglv_path_info5 = #{version.pathInfo5}
+            , rglv_path_info6 = #{version.pathInfo6}
 
-            , rglv_etiq_info1 = #{rglv.etiqInfo1}
-            , rglv_etiq_info2 = #{rglv.etiqInfo2}
-            , rglv_etiq_info3 = #{rglv.etiqInfo3}
-            , rglv_etiq_info4 = #{rglv.etiqInfo4}
-            , rglv_etiq_info5 = #{rglv.etiqInfo5}
-            , rglv_etiq_info6 = #{rglv.etiqInfo6}
+            , rglv_etiq_info1 = #{version.etiqInfo1}
+            , rglv_etiq_info2 = #{version.etiqInfo2}
+            , rglv_etiq_info3 = #{version.etiqInfo3}
+            , rglv_etiq_info4 = #{version.etiqInfo4}
+            , rglv_etiq_info5 = #{version.etiqInfo5}
+            , rglv_etiq_info6 = #{version.etiqInfo6}
 
-            , rglv_path_cuant1 = #{rglv.pathCuant1}
-            , rglv_path_cuant2 = #{rglv.pathCuant2}
-            , rglv_path_cuant3 = #{rglv.pathCuant3}
-            , rglv_path_cuant4 = #{rglv.pathCuant4}
-            , rglv_path_cuant5 = #{rglv.pathCuant5}
-            , rglv_path_cuant6 = #{rglv.pathCuant6}
+            , rglv_path_cuant1 = #{version.pathCuant1}
+            , rglv_path_cuant2 = #{version.pathCuant2}
+            , rglv_path_cuant3 = #{version.pathCuant3}
+            , rglv_path_cuant4 = #{version.pathCuant4}
+            , rglv_path_cuant5 = #{version.pathCuant5}
+            , rglv_path_cuant6 = #{version.pathCuant6}
 
-            , rglv_etiq_cuant1 = #{rglv.etiqCuant1}
-            , rglv_etiq_cuant2 = #{rglv.etiqCuant2}
-            , rglv_etiq_cuant3 = #{rglv.etiqCuant3}
-            , rglv_etiq_cuant4 = #{rglv.etiqCuant4}
-            , rglv_etiq_cuant5 = #{rglv.etiqCuant5}
-            , rglv_etiq_cuant6 = #{rglv.etiqCuant6}
+            , rglv_etiq_cuant1 = #{version.etiqCuant1}
+            , rglv_etiq_cuant2 = #{version.etiqCuant2}
+            , rglv_etiq_cuant3 = #{version.etiqCuant3}
+            , rglv_etiq_cuant4 = #{version.etiqCuant4}
+            , rglv_etiq_cuant5 = #{version.etiqCuant5}
+            , rglv_etiq_cuant6 = #{version.etiqCuant6}
         WHERE
-            rglv_pk = #{rglv.id}
+            rglv_pk = #{version.id}
     ]]>
 	</update>
 

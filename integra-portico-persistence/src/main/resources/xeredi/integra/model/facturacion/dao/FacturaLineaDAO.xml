@@ -39,7 +39,7 @@
 				<result column="rgla_enti_pk" property="id" />
 			</association>
 
-			<association property="rglv" javaType="ReglaVersionVO">
+			<association property="version" javaType="ReglaVersionVO">
 				<result column="rglv_etiq_info1" property="etiqInfo1" />
 				<result column="rglv_etiq_info2" property="etiqInfo2" />
 				<result column="rglv_etiq_info3" property="etiqInfo3" />
