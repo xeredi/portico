@@ -116,14 +116,10 @@ public abstract class AbstractParametroBO implements ParametroBO {
     /**
      * Insert.
      *
-     * @param session
-     *            the session
-     * @param prmt
-     *            the prmt
-     * @param tpprVO
-     *            the tppr vo
-     * @param i18nMap
-     *            the i18n map
+     * @param session            the session
+     * @param prmt            the prmt
+     * @param tpprDetail the tppr detail
+     * @param i18nMap            the i18n map
      */
     protected abstract void insertPostOperations(final @Nonnull SqlSession session, final @Nonnull ParametroVO prmt,
             final @Nonnull TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap);
@@ -293,18 +289,12 @@ public abstract class AbstractParametroBO implements ParametroBO {
     /**
      * Duplicate.
      *
-     * @param session
-     *            the session
-     * @param prmt
-     *            the prmt
-     * @param tpprVO
-     *            the tppr vo
-     * @param i18nMap
-     *            the i18n map
-     * @throws OverlapException
-     *             the overlap exception
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @param session            the session
+     * @param prmt            the prmt
+     * @param tpprDetail the tppr detail
+     * @param i18nMap            the i18n map
+     * @throws OverlapException             the overlap exception
+     * @throws InstanceNotFoundException             the instance not found exception
      */
     protected abstract void duplicatePostOperations(final @Nonnull SqlSession session, final @Nonnull ParametroVO prmt,
             final @Nonnull TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
@@ -369,18 +359,12 @@ public abstract class AbstractParametroBO implements ParametroBO {
     /**
      * Update.
      *
-     * @param session
-     *            the session
-     * @param prmt
-     *            the prmt
-     * @param tpprVO
-     *            the tppr vo
-     * @param i18nMap
-     *            the i18n map
-     * @throws OverlapException
-     *             the overlap exception
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @param session            the session
+     * @param prmt            the prmt
+     * @param tpprDetail the tppr detail
+     * @param i18nMap            the i18n map
+     * @throws OverlapException             the overlap exception
+     * @throws InstanceNotFoundException             the instance not found exception
      */
     protected abstract void updatePostOperations(final @Nonnull SqlSession session, final @Nonnull ParametroVO prmt,
             final @Nonnull TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)

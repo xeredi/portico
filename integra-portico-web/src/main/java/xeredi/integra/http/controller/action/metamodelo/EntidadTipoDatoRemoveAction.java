@@ -2,19 +2,19 @@ package xeredi.integra.http.controller.action.metamodelo;
 
 import xeredi.integra.http.controller.action.CrudRemoveAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
-import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
+import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 
 import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
- * Borrado de un Código de Referencia.
+ * The Class EntidadTipoDatoRemoveAction.
  */
-public final class CodigoReferenciaRemoveAction extends CrudRemoveAction<CodigoReferenciaVO> {
+public final class EntidadTipoDatoRemoveAction extends CrudRemoveAction<EntidadTipoDatoVO> {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 7405842967831298726L;
+    private static final long serialVersionUID = -7790171477752471387L;
 
     /**
      * {@inheritDoc}
@@ -23,8 +23,8 @@ public final class CodigoReferenciaRemoveAction extends CrudRemoveAction<CodigoR
     public void doRemove() throws ApplicationException {
         Preconditions.checkNotNull(model.getId());
 
-        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
+        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-        cdrfBO.delete(model);
+        entdBO.delete(model);
     }
 }

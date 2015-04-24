@@ -25,8 +25,8 @@ public interface ArchivoInfoDAO {
     /**
      * Select object.
      *
-     * @param arinCriterio
-     *            the arin criterio
+     * @param arinId
+     *            the arin id
      * @return the archivo info vo
      */
     ArchivoInfoVO select(final @Nonnull Long arinId);

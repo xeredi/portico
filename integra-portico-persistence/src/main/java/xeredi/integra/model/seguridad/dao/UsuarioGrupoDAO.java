@@ -29,8 +29,8 @@ public interface UsuarioGrupoDAO {
     /**
      * Delete.
      *
-     * @param usgr
-     *            the usgr
+     * @param usgrCriterio
+     *            the usgr criterio
      * @return the int
      */
     int deleteList(final UsuarioGrupoCriterioVO usgrCriterio);

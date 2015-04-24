@@ -43,10 +43,8 @@ public final class PathSqlGenerator extends PathBaseVisitor {
     /**
      * The Constructor.
      *
-     * @param aentiBase
-     *            the aenti base
-     * @param agenerateLabel
-     *            the agenerate label
+     * @param aentiDetailBase the aenti detail base
+     * @param agenerateLabel            the agenerate label
      */
     public PathSqlGenerator(final AbstractEntidadDetailVO aentiDetailBase, final boolean agenerateLabel) {
         super();

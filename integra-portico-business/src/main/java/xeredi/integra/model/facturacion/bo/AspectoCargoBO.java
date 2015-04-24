@@ -136,10 +136,8 @@ public final class AspectoCargoBO {
     /**
      * Delete.
      *
-     * @param ascvId
-     *            the ascv id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @param ascr the ascr
+     * @throws InstanceNotFoundException             the instance not found exception
      */
     public void delete(final AspectoCargoVO ascr) throws InstanceNotFoundException {
         Preconditions.checkNotNull(ascr);

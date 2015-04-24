@@ -57,20 +57,13 @@ public final class ParametroPdf extends BasePdf {
     /**
      * Imprimir.
      *
-     * @param prmtVO
-     *            the prmt vo
-     * @param tpprVO
-     *            the tppr vo
-     * @param entiHijasMap
-     *            the enti hijas map
-     * @param itemHijosMap
-     *            the item hijos map
-     * @param i18nMap
-     *            the i18n map
-     * @param stream
-     *            the stream
-     * @throws ApplicationException
-     *             the ApplicationException
+     * @param prmtVO            the prmt vo
+     * @param tpprDetail the tppr detail
+     * @param entiHijasMap            the enti hijas map
+     * @param itemHijosMap            the item hijos map
+     * @param i18nMap            the i18n map
+     * @param stream            the stream
+     * @throws ApplicationException             the ApplicationException
      */
     public void imprimir(final ParametroVO prmtVO, final TipoParametroDetailVO tpprDetail,
             final Map<Long, TipoSubparametroDetailVO> entiHijasMap, final Map<Long, List<SubparametroVO>> itemHijosMap,
@@ -185,10 +178,8 @@ public final class ParametroPdf extends BasePdf {
     /**
      * Gets the data source.
      *
-     * @param entiVO
-     *            the enti vo
-     * @param itemList
-     *            the item list
+     * @param entiDetail the enti detail
+     * @param itemList            the item list
      * @return the data source
      */
     private JasperReportBuilder getSubreport(final TipoSubparametroDetailVO entiDetail,

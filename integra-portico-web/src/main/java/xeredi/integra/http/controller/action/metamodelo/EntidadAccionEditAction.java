@@ -3,20 +3,23 @@ package xeredi.integra.http.controller.action.metamodelo;
 import java.util.Map;
 
 import xeredi.integra.http.controller.action.CrudEditAction;
+import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
-import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
-import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
+import xeredi.integra.model.metamodelo.bo.EntidadAccionBO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
 
 import com.google.common.base.Preconditions;
 
+// TODO: Auto-generated Javadoc
 /**
- * Edición de un Código de Referencia.
+ * Edición de una Acción Específica de Entidad.
  */
-public final class CodigoReferenciaEditAction extends CrudEditAction<CodigoReferenciaVO> {
+public final class EntidadAccionEditAction extends CrudEditAction<EntidadAccionVO> {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -2714107460618528962L;
+    private static final long serialVersionUID = -9052582463315074870L;
 
     /** The cdri map. */
     private Map<String, I18nVO> i18nMap;
@@ -26,14 +29,15 @@ public final class CodigoReferenciaEditAction extends CrudEditAction<CodigoRefer
      */
     @Override
     public void doEdit() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
-            model = new CodigoReferenciaVO();
-        } else {
+        Preconditions.checkNotNull(model.getEntiId());
+
+        if (accion == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model.getId());
 
-            final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
+            final EntidadAccionBO enacBO = new EntidadAccionBO();
 
-            model = cdrfBO.select(model.getId(), idioma);
+            model = enacBO.select(model.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enac, model.getId());
         }
     }
 

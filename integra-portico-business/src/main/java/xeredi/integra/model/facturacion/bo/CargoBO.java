@@ -95,15 +95,9 @@ public class CargoBO {
     /**
      * Select.
      *
-     * @param id
-     *            the id
-     * @param fechaVigencia
-     *            the fecha vigencia
-     * @param idioma
-     *            the idioma
+     * @param crgoCriterio the crgo criterio
      * @return the cargo vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws InstanceNotFoundException             the instance not found exception
      */
     public CargoVO selectObject(final CargoCriterioVO crgoCriterio) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
@@ -201,10 +195,8 @@ public class CargoBO {
     /**
      * Delete.
      *
-     * @param crgvId
-     *            the crgvId
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @param crgo the crgo
+     * @throws InstanceNotFoundException             the instance not found exception
      */
     public void delete(final CargoVO crgo) throws InstanceNotFoundException {
         Preconditions.checkNotNull(crgo);

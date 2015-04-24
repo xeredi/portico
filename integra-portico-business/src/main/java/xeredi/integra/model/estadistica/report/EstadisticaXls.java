@@ -45,14 +45,10 @@ public final class EstadisticaXls extends BaseXls {
     /**
      * Generar estadisticas.
      *
-     * @param estdList
-     *            the estd list
-     * @param tpesVO
-     *            the tpes vo
-     * @param stream
-     *            the stream
-     * @throws InternalErrorException
-     *             the internal error exception
+     * @param estdList            the estd list
+     * @param tpesDetail the tpes detail
+     * @param stream            the stream
+     * @throws InternalErrorException             the internal error exception
      */
     public void generarEstadisticas(final List<EstadisticaVO> estdList, final TipoEstadisticaDetailVO tpesDetail,
             final OutputStream stream) throws InternalErrorException {

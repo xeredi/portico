@@ -156,10 +156,7 @@ public final class EntidadGrupoDatoBO {
     /**
      * Select label values.
      *
-     * @param entiId
-     *            the enti id
-     * @param idioma
-     *            the idioma
+     * @param engdCriterio the engd criterio
      * @return the list
      */
     public List<LabelValueVO> selectLabelValues(final EntidadGrupoDatoCriterioVO engdCriterio) {

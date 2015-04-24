@@ -45,14 +45,10 @@ public final class SubservicioXls extends BaseXls {
     /**
      * Generar subservicios.
      *
-     * @param ssrvList
-     *            the ssrv list
-     * @param tpssVO
-     *            the tpss vo
-     * @param stream
-     *            the stream
-     * @throws InternalErrorException
-     *             Si ocurre algun error grave.
+     * @param ssrvList            the ssrv list
+     * @param tpssDetail the tpss detail
+     * @param stream            the stream
+     * @throws InternalErrorException             Si ocurre algun error grave.
      */
     public void generarSubservicios(final @Nonnull List<SubservicioVO> ssrvList,
             final @Nonnull TipoSubservicioDetailVO tpssDetail, final @Nonnull OutputStream stream)

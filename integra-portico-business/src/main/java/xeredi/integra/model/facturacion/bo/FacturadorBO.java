@@ -72,16 +72,10 @@ public class FacturadorBO {
     /**
      * Facturar valoraciones.
      *
-     * @param vlrcIds
-     *            the vlrc ids
-     * @param aspcId
-     *            the aspc id
-     * @param fcsrId
-     *            the fcsr id
-     * @param fechaFacturacion
-     *            the fecha facturacion
-     * @param prbtId
-     *            the prbt id
+     * @param vlrcIds            the vlrc ids
+     * @param aspcId            the aspc id
+     * @param fcsrId            the fcsr id
+     * @param fechaFacturacion            the fecha facturacion
      */
     public void facturarValoraciones(final Set<Long> vlrcIds, final Long aspcId, final Long fcsrId,
             final Date fechaFacturacion) {

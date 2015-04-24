@@ -7,21 +7,21 @@ import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
-import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
-import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
+import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 
 import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
- * Visualización de un Código de Referencia.
+ * The Class EntidadTipoDatoDetailAction.
  */
-public final class CodigoReferenciaDetailAction extends CrudDetailAction<CodigoReferenciaVO> {
+public final class EntidadTipoDatoDetailAction extends CrudDetailAction<EntidadTipoDatoVO> {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 2272224842467117453L;
+    private static final long serialVersionUID = 6085148921599533885L;
 
-    /** The cdri map. */
+    /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -29,12 +29,14 @@ public final class CodigoReferenciaDetailAction extends CrudDetailAction<CodigoR
      */
     @Override
     public void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
+        Preconditions.checkNotNull(model.getEntiId());
+        Preconditions.checkNotNull(model.getTpdt());
+        Preconditions.checkNotNull(model.getTpdt().getId());
 
-        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
+        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-        model = cdrfBO.select(model.getId(), idioma);
-        i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, model.getId());
+        model = entdBO.select(model.getEntiId(), model.getTpdt().getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.entd, model.getId());
     }
 
     /**

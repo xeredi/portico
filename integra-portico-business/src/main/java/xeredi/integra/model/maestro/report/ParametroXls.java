@@ -50,14 +50,10 @@ public final class ParametroXls extends BaseXls {
     /**
      * Generar maestros.
      *
-     * @param prmtList
-     *            the prmt list
-     * @param tpprVO
-     *            the tppr vo
-     * @param stream
-     *            the stream
-     * @throws InternalErrorException
-     *             Si ocurre algun error grave.
+     * @param prmtList            the prmt list
+     * @param tpprDetail the tppr detail
+     * @param stream            the stream
+     * @throws InternalErrorException             Si ocurre algun error grave.
      */
     public void generarMaestros(final @Nonnull List<ParametroVO> prmtList,
             final @Nonnull TipoParametroDetailVO tpprDetail, final @Nonnull OutputStream stream)

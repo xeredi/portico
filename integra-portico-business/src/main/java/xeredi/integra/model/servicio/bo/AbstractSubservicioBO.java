@@ -186,16 +186,11 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
     /**
      * Insert post operations.
      *
-     * @param session
-     *            the session
-     * @param ssrvVO
-     *            the ssrv vo
-     * @param tpssVO
-     *            the tpss vo
-     * @param ssrvPadreIds
-     *            the ssrv padre ids
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
+     * @param session            the session
+     * @param ssrvVO            the ssrv vo
+     * @param tpssDetail the tpss detail
+     * @param ssrvPadreIds            the ssrv padre ids
+     * @throws DuplicateInstanceException             the duplicate instance exception
      */
     protected abstract void insertPostOperations(final @Nonnull SqlSession session,
             final @Nonnull SubservicioVO ssrvVO, final @Nonnull TipoSubservicioDetailVO tpssDetail,

@@ -55,20 +55,12 @@ public final class ValoracionPdf extends BasePdf {
     /**
      * Imprimir.
      *
-     * @param aspc
-     *            the aspc
-     * @param vlrc
-     *            the vlrc
-     * @param vlrgList
-     *            the vlrg list
-     * @param vlriList
-     *            the vlri list
-     * @param vlrlList
-     *            the vlrl list
-     * @param stream
-     *            the stream
-     * @throws InternalErrorException
-     *             the internal error exception
+     * @param vlrc            the vlrc
+     * @param vlrgList            the vlrg list
+     * @param vlriList            the vlri list
+     * @param vlrlList            the vlrl list
+     * @param stream            the stream
+     * @throws InternalErrorException             the internal error exception
      */
     public void imprimir(final ValoracionVO vlrc, final List<ValoracionCargoVO> vlrgList,
             final List<ValoracionImpuestoVO> vlriList, final List<ValoracionLineaVO> vlrlList, final OutputStream stream)

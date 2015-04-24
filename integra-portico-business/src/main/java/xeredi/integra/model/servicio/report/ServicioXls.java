@@ -45,14 +45,10 @@ public final class ServicioXls extends BaseXls {
     /**
      * Generar servicios.
      *
-     * @param srvcList
-     *            the srvc list
-     * @param tpsrVO
-     *            the tpsr vo
-     * @param stream
-     *            the stream
-     * @throws InternalErrorException
-     *             Si ocurre algun error grave.
+     * @param srvcList            the srvc list
+     * @param tpsrDetail the tpsr detail
+     * @param stream            the stream
+     * @throws InternalErrorException             Si ocurre algun error grave.
      */
     public void generarServicios(final @Nonnull List<ServicioVO> srvcList,
             final @Nonnull TipoServicioDetailVO tpsrDetail, final @Nonnull OutputStream stream)

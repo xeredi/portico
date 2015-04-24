@@ -47,18 +47,12 @@ public final class ServicioPdf extends BasePdf {
     /**
      * Imprimir.
      *
-     * @param srvcVO
-     *            the srvc vo
-     * @param tpsrVO
-     *            the tpsr vo
-     * @param entiHijasMap
-     *            the enti hijas map
-     * @param itemHijosMap
-     *            the item hijos map
-     * @param stream
-     *            the stream
-     * @throws InternalErrorException
-     *             the internal error exception
+     * @param srvcVO            the srvc vo
+     * @param tpsrDetail the tpsr detail
+     * @param entiHijasMap            the enti hijas map
+     * @param itemHijosMap            the item hijos map
+     * @param stream            the stream
+     * @throws InternalErrorException             the internal error exception
      */
     public void imprimir(final @Nonnull ServicioVO srvcVO, final @Nonnull TipoServicioDetailVO tpsrDetail,
             final Map<Long, TipoSubservicioDetailVO> entiHijasMap, final Map<Long, List<SubservicioVO>> itemHijosMap,

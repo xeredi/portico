@@ -82,14 +82,10 @@ public interface SubservicioBO {
     /**
      * Insert.
      *
-     * @param ssrvVO
-     *            the ssrv vo
-     * @param tpssVO
-     *            the tpss vo
-     * @param ssrvPadreIds
-     *            the ssrv padre ids
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
+     * @param ssrvVO            the ssrv vo
+     * @param tpssDetail the tpss detail
+     * @param ssrvPadreIds            the ssrv padre ids
+     * @throws DuplicateInstanceException             the duplicate instance exception
      */
     void insert(final @Nonnull SubservicioVO ssrvVO, final @Nonnull TipoSubservicioDetailVO tpssDetail,
             final Set<Long> ssrvPadreIds) throws DuplicateInstanceException;

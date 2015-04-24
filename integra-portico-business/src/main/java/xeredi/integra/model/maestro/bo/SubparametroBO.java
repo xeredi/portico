@@ -37,15 +37,13 @@ import com.google.common.base.Preconditions;
  * The Class SubparametroBO.
  */
 public class SubparametroBO {
+    
     /**
      * Insert.
      *
-     * @param sprm
-     *            the sprm
-     * @param tpspVO
-     *            the tpsp vo
-     * @throws OverlapException
-     *             the overlap exception
+     * @param sprm            the sprm
+     * @param tpspDetail the tpsp detail
+     * @throws OverlapException             the overlap exception
      */
     public void insert(final SubparametroVO sprm, final TipoSubparametroDetailVO tpspDetail) throws OverlapException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
@@ -58,14 +56,10 @@ public class SubparametroBO {
     /**
      * Insert.
      *
-     * @param session
-     *            the session
-     * @param sprm
-     *            the sprm
-     * @param tpspVO
-     *            the tpsp vo
-     * @throws OverlapException
-     *             the overlap exception
+     * @param session            the session
+     * @param sprm            the sprm
+     * @param tpspDetail the tpsp detail
+     * @throws OverlapException             the overlap exception
      */
     protected final void insert(final @Nonnull SqlSession session, final @Nonnull SubparametroVO sprm,
             final @Nonnull TipoSubparametroDetailVO tpspDetail) throws OverlapException {
@@ -116,12 +110,9 @@ public class SubparametroBO {
     /**
      * Duplicate.
      *
-     * @param sprm
-     *            the sprm
-     * @param tpsrVO
-     *            the tpsr vo
-     * @throws OverlapException
-     *             the overlap exception
+     * @param sprm            the sprm
+     * @param tpspDetail the tpsp detail
+     * @throws OverlapException             the overlap exception
      */
     public void duplicate(final @Nonnull SubparametroVO sprm, final @Nonnull TipoSubparametroDetailVO tpspDetail)
             throws OverlapException {
@@ -135,14 +126,10 @@ public class SubparametroBO {
     /**
      * Duplicate.
      *
-     * @param session
-     *            the session
-     * @param sprm
-     *            the sprm
-     * @param tpsrVO
-     *            the tpsr vo
-     * @throws OverlapException
-     *             the overlap exception
+     * @param session            the session
+     * @param sprm            the sprm
+     * @param tpspDetail the tpsp detail
+     * @throws OverlapException             the overlap exception
      */
     protected final void duplicate(final @Nonnull SqlSession session, final @Nonnull SubparametroVO sprm,
             final @Nonnull TipoSubparametroDetailVO tpspDetail) throws OverlapException {
@@ -180,14 +167,10 @@ public class SubparametroBO {
     /**
      * Update.
      *
-     * @param sprm
-     *            the sprm
-     * @param tpspVO
-     *            the tpsp vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OverlapException
-     *             the overlap exception
+     * @param sprm            the sprm
+     * @param tpspDetail the tpsp detail
+     * @throws InstanceNotFoundException             the instance not found exception
+     * @throws OverlapException             the overlap exception
      */
     public void update(final @Nonnull SubparametroVO sprm, final @Nonnull TipoSubparametroDetailVO tpspDetail)
             throws InstanceNotFoundException, OverlapException {
@@ -201,16 +184,11 @@ public class SubparametroBO {
     /**
      * Update.
      *
-     * @param session
-     *            the session
-     * @param sprm
-     *            the sprm
-     * @param tpspVO
-     *            the tpsp vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OverlapException
-     *             the overlap exception
+     * @param session            the session
+     * @param sprm            the sprm
+     * @param tpspDetail the tpsp detail
+     * @throws InstanceNotFoundException             the instance not found exception
+     * @throws OverlapException             the overlap exception
      */
     protected final void update(final @Nonnull SqlSession session, final @Nonnull SubparametroVO sprm,
             final @Nonnull TipoSubparametroDetailVO tpspDetail) throws InstanceNotFoundException, OverlapException {

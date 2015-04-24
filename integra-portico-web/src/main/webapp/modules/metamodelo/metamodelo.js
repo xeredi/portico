@@ -962,7 +962,7 @@ function EntdDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("metamodelo/entd-remove.action", {
+            $http.post("metamodelo/entidad-tipo-dato-remove.action", {
                 model : vm.entd
             }).success(function(data) {
                 window.history.back();
@@ -970,7 +970,7 @@ function EntdDetailController($http, $routeParams, pageTitleService) {
         }
     }
 
-    $http.post("metamodelo/entd-detail.action", {
+    $http.post("metamodelo/entidad-tipo-dato-detail.action", {
         model : {
             entiId : $routeParams.entiId,
             tpdt : {
@@ -993,7 +993,7 @@ function EntdEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("metamodelo/entd-save.action", {
+        $http.post("metamodelo/entidad-tipo-dato-save.action", {
             model : vm.entd,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -1011,7 +1011,7 @@ function EntdEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("metamodelo/entd-edit.action", {
+    $http.post("metamodelo/entidad-tipo-dato-edit.action", {
         model : {
             entiId : $routeParams.entiId,
             tpdt : {
@@ -1100,7 +1100,7 @@ function EnacDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("metamodelo/enac-remove.action", {
+            $http.post("metamodelo/entidad-accion-remove.action", {
                 model : vm.enac
             }).success(function(data) {
                 window.history.back();
@@ -1108,7 +1108,7 @@ function EnacDetailController($http, $location, $routeParams, pageTitleService) 
         }
     }
 
-    $http.post("metamodelo/enac-detail.action", {
+    $http.post("metamodelo/entidad-accion-detail.action", {
         model : {
             id : $routeParams.id
         }
@@ -1128,7 +1128,7 @@ function EnacEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("metamodelo/enac-save.action", {
+        $http.post("metamodelo/entidad-accion-save.action", {
             model : vm.enac,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -1143,7 +1143,7 @@ function EnacEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("metamodelo/enac-edit.action", {
+    $http.post("metamodelo/entidad-accion-edit.action", {
         model : {
             entiId : $routeParams.entiId,
             id : $routeParams.id

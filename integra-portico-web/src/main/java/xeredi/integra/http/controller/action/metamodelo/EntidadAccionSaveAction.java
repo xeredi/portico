@@ -7,18 +7,19 @@ import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
-import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
-import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
+import xeredi.integra.model.metamodelo.bo.EntidadAccionBO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
 
 import com.google.common.base.Preconditions;
 
+// TODO: Auto-generated Javadoc
 /**
- * Grabación de un Código de Referencia.
+ * Grabación de una Acción Específica de Entidad.
  */
-public final class CodigoReferenciaSaveAction extends CrudSaveAction<CodigoReferenciaVO> {
+public final class EntidadAccionSaveAction extends CrudSaveAction<EntidadAccionVO> {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 8704360630485075850L;
+    private static final long serialVersionUID = -5020791075508829152L;
 
     /** The cdri map. */
     private Map<String, I18nVO> i18nMap;
@@ -28,15 +29,15 @@ public final class CodigoReferenciaSaveAction extends CrudSaveAction<CodigoRefer
      */
     @Override
     public void doSave() throws ApplicationException {
-        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
+        final EntidadAccionBO enacBO = new EntidadAccionBO();
 
         switch (accion) {
         case create:
-            cdrfBO.insert(model, i18nMap);
+            enacBO.insert(model, i18nMap);
 
             break;
         case edit:
-            cdrfBO.update(model, i18nMap);
+            enacBO.update(model, i18nMap);
 
             break;
         default:
@@ -49,17 +50,15 @@ public final class CodigoReferenciaSaveAction extends CrudSaveAction<CodigoRefer
      */
     @Override
     public void doValidate() throws ApplicationException {
-        Preconditions.checkNotNull(model.getTpdtId());
-        Preconditions.checkNotNull(i18nMap);
+        Preconditions.checkNotNull(model.getEntiId());
 
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.cdrf_valor, model.getValor());
+            FieldValidator.validateRequired(this, MessageI18nKey.enac_path, model.getPath());
         } else {
-            Preconditions.checkNotNull(model.getId());
-            Preconditions.checkNotNull(model.getValor());
+            Preconditions.checkNotNull(model.getPath());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.cdrf_orden, model.getOrden());
+        FieldValidator.validateRequired(this, MessageI18nKey.enac_orden, model.getOrden());
         FieldValidator.validateI18n(this, i18nMap);
     }
 
