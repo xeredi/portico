@@ -141,14 +141,16 @@ public final class AspectoCargoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final Long ascvId) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(ascvId);
+    public void delete(final AspectoCargoVO ascr) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(ascr);
+        Preconditions.checkNotNull(ascr.getVersion());
+        Preconditions.checkNotNull(ascr.getVersion().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoCargoDAO ascrDAO = session.getMapper(AspectoCargoDAO.class);
 
-            if (ascrDAO.deleteVersion(ascvId) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.ascr, ascvId);
+            if (ascrDAO.deleteVersion(ascr) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.ascr, ascr);
             }
 
             session.commit();

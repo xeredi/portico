@@ -1,7 +1,5 @@
 package xeredi.integra.http.controller.action.facturacion;
 
-import java.util.Date;
-
 import xeredi.integra.http.controller.action.CrudDetailAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.AspectoCargoBO;
@@ -19,9 +17,6 @@ public final class AspectoCargoDetailAction extends CrudDetailAction<AspectoCarg
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3728076328413890092L;
 
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
-
     /**
      * {@inheritDoc}
      */
@@ -37,15 +32,5 @@ public final class AspectoCargoDetailAction extends CrudDetailAction<AspectoCarg
         ascrCriterio.setIdioma(idioma);
 
         model = ascrBO.selectObject(ascrCriterio);
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 }

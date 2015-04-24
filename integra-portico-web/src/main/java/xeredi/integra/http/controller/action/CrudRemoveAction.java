@@ -1,6 +1,7 @@
 package xeredi.integra.http.controller.action;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.Versionable;
 
 import com.google.common.base.Preconditions;
 
@@ -25,6 +26,11 @@ public abstract class CrudRemoveAction<T> extends BaseAction {
     @Override
     public final String execute() throws ApplicationException {
         Preconditions.checkNotNull(model);
+
+        if (model instanceof Versionable<?>) {
+            Preconditions.checkNotNull(((Versionable<?>) model).getVersion());
+            Preconditions.checkNotNull(((Versionable<?>) model).getVersion().getId());
+        }
 
         doRemove();
 

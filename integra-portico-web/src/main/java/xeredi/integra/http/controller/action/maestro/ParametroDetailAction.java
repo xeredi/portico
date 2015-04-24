@@ -1,7 +1,5 @@
 package xeredi.integra.http.controller.action.maestro;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 
 import xeredi.integra.http.controller.action.item.ItemDetailAction;
@@ -27,18 +25,11 @@ public final class ParametroDetailAction extends ItemDetailAction<ParametroVO, T
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
 
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
-
     /**
      * {@inheritDoc}
      */
     @Override
     public void doSpecificDetail() throws ApplicationException {
-        if (fechaVigencia == null) {
-            fechaVigencia = Calendar.getInstance().getTime();
-        }
-
         final ParametroBO itemBO = ParametroBOFactory.newInstance(model.getEntiId());
 
         model = itemBO.select(model.getId(), idioma, fechaVigencia);
@@ -47,25 +38,6 @@ public final class ParametroDetailAction extends ItemDetailAction<ParametroVO, T
         if (enti.getEnti().isI18n()) {
             i18nMap = I18nBO.selectMap(I18nPrefix.prvr, model.getVersion().getId());
         }
-    }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 
     /**

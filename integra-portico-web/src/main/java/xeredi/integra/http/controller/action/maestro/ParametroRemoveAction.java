@@ -6,8 +6,6 @@ import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ParametroRemoveAction.
@@ -22,9 +20,6 @@ public final class ParametroRemoveAction extends ItemRemoveAction<ParametroVO> {
      */
     @Override
     public void doSpecificRemove() throws ApplicationException {
-        Preconditions.checkNotNull(model.getVersion());
-        Preconditions.checkNotNull(model.getVersion().getFini());
-
         final ParametroBO itemBO = ParametroBOFactory.newInstance(model.getEntiId());
 
         itemBO.delete(model);

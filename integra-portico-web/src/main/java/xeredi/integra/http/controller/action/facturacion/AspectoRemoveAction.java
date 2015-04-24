@@ -5,8 +5,6 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoRemoveAction.
@@ -21,9 +19,6 @@ public final class AspectoRemoveAction extends CrudRemoveAction<AspectoVO> {
      */
     @Override
     public void doRemove() throws ApplicationException {
-        Preconditions.checkNotNull(model.getVersion());
-        Preconditions.checkNotNull(model.getVersion().getId());
-
         final AspectoBO aspcBO = new AspectoBO();
 
         aspcBO.delete(model);

@@ -5,8 +5,6 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * Accion web de borrado de un Submaestro.
@@ -21,9 +19,6 @@ public final class SubparametroRemoveAction extends ItemRemoveAction<Subparametr
      */
     @Override
     public void doSpecificRemove() throws ApplicationException {
-        Preconditions.checkNotNull(model.getVersion());
-        Preconditions.checkNotNull(model.getVersion().getId());
-
         final SubparametroBO itemBO = new SubparametroBO();
 
         itemBO.delete(model);

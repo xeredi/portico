@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.facturacion;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,9 +25,6 @@ public final class AspectoDetailAction extends CrudDetailAction<AspectoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1363256002707100032L;
-
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -61,16 +57,6 @@ public final class AspectoDetailAction extends CrudDetailAction<AspectoVO> {
         ascrCriterioVO.setFechaVigencia(fechaVigencia);
 
         ascrList = ascrBO.selectList(ascrCriterioVO);
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 
     /**
