@@ -3,6 +3,8 @@ package xeredi.integra.model.comun.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -29,7 +31,7 @@ public final class PuertoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public PuertoVO selectObject(final PuertoCriterioVO prtoCriterio) throws InstanceNotFoundException {
+    public PuertoVO selectObject(final @NonNull PuertoCriterioVO prtoCriterio) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PuertoDAO prtoDAO = session.getMapper(PuertoDAO.class);
             final PuertoVO prto = prtoDAO.selectObject(prtoCriterio);
@@ -49,7 +51,7 @@ public final class PuertoBO {
      *            the criterio
      * @return the list
      */
-    public List<PuertoVO> selectList(final PuertoCriterioVO criterio) {
+    public List<PuertoVO> selectList(final @NonNull PuertoCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PuertoDAO prtoDAO = session.getMapper(PuertoDAO.class);
 
@@ -68,7 +70,8 @@ public final class PuertoBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<PuertoVO> selectList(final PuertoCriterioVO criterio, final int offset, final int limit) {
+    public PaginatedList<PuertoVO> selectList(final @NonNull PuertoCriterioVO criterio, final int offset,
+            final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PuertoDAO prtoDAO = session.getMapper(PuertoDAO.class);
             final int count = prtoDAO.count(criterio);

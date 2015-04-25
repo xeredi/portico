@@ -64,11 +64,11 @@ public final class BlBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void deletePostOperations(final SqlSession session, final Long srvcId, final Long ssrvId)
+    protected void deletePostOperations(final SqlSession session, final SubservicioVO ssrv)
             throws InstanceNotFoundException {
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
 
-        maniDAO.updateRecalcularEstado(srvcId);
+        maniDAO.updateRecalcularEstado(ssrv.getSrvc().getId());
     }
 
     /**

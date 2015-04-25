@@ -229,7 +229,7 @@ function PrmtDetailController($http, $location, $routeParams, pageTitleService) 
         vm.i18nMap = data.i18nMap;
 
         if (data.model.prto) {
-            vm.prtoId = data.item.prto.id;
+            vm.prtoId = data.model.prto.id;
         }
 
         vm.itemHijosMap = {};

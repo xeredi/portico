@@ -30,10 +30,11 @@ public final class ParametroDetailAction extends ItemDetailAction<ParametroVO, T
      */
     @Override
     public void doSpecificDetail() throws ApplicationException {
+        enti = TipoParametroProxy.select(model.getEntiId());
+
         final ParametroBO itemBO = ParametroBOFactory.newInstance(model.getEntiId());
 
         model = itemBO.select(model.getId(), idioma, fechaVigencia);
-        enti = TipoParametroProxy.select(model.getEntiId());
 
         if (enti.getEnti().isI18n()) {
             i18nMap = I18nBO.selectMap(I18nPrefix.prvr, model.getVersion().getId());

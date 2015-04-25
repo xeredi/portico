@@ -3,6 +3,8 @@ package xeredi.integra.model.comun.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -29,7 +31,8 @@ public final class SuperpuertoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public SuperpuertoVO selectObject(final SuperpuertoCriterioVO sprtCriterio) throws InstanceNotFoundException {
+    public SuperpuertoVO selectObject(final @NonNull SuperpuertoCriterioVO sprtCriterio)
+            throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SuperpuertoDAO sprtDAO = session.getMapper(SuperpuertoDAO.class);
             final SuperpuertoVO sprt = sprtDAO.selectObject(sprtCriterio);
@@ -49,7 +52,7 @@ public final class SuperpuertoBO {
      *            the criterio
      * @return the list
      */
-    public List<SuperpuertoVO> selectList(final SuperpuertoCriterioVO criterio) {
+    public List<SuperpuertoVO> selectList(final @NonNull SuperpuertoCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SuperpuertoDAO sprtDAO = session.getMapper(SuperpuertoDAO.class);
 
@@ -68,7 +71,7 @@ public final class SuperpuertoBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<SuperpuertoVO> selectList(final SuperpuertoCriterioVO criterio, final int offset,
+    public PaginatedList<SuperpuertoVO> selectList(final @NonNull SuperpuertoCriterioVO criterio, final int offset,
             final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SuperpuertoDAO sprtDAO = session.getMapper(SuperpuertoDAO.class);

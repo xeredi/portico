@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -41,8 +43,8 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final PaginatedList<SubservicioVO> selectList(final SubservicioCriterioVO ssrvCriterioVO, final int offset,
-            final int limit) {
+    public final PaginatedList<SubservicioVO> selectList(final @NonNull SubservicioCriterioVO ssrvCriterioVO,
+            final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final int count = ssrvDAO.selectCount(ssrvCriterioVO);
@@ -61,7 +63,7 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final List<SubservicioVO> selectList(final SubservicioCriterioVO ssrvCriterioVO) {
+    public final List<SubservicioVO> selectList(final @NonNull SubservicioCriterioVO ssrvCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final List<SubservicioVO> ssrvList = ssrvDAO.selectList(ssrvCriterioVO);
@@ -76,7 +78,7 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    public LabelValueVO selectLabelValueObject(final SubservicioCriterioVO ssrvCriterioVO)
+    public LabelValueVO selectLabelValueObject(final @NonNull SubservicioCriterioVO ssrvCriterioVO)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
@@ -94,7 +96,7 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final SubservicioVO select(final Long ssrvId, final String idioma) throws InstanceNotFoundException {
+    public final SubservicioVO select(final @NonNull Long ssrvId, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
@@ -118,7 +120,8 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final List<SubservicioVO> selectLupaList(final SubservicioLupaCriterioVO ssrvLupaCriterioVO, final int limit) {
+    public final List<SubservicioVO> selectLupaList(final @NonNull SubservicioLupaCriterioVO ssrvLupaCriterioVO,
+            final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
 
@@ -130,14 +133,14 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final void insert(final SubservicioVO ssrvVO, final TipoSubservicioDetailVO tpssDetail,
+    public final void insert(final @NonNull SubservicioVO ssrvVO, final @NonNull TipoSubservicioDetailVO tpssDetail,
             final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
             final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
 
-            if (tpssDetail.getEntdList() != null && !tpssDetail.getEntdList().isEmpty()) {
+            if (tpssDetail.getEntdList() != null) {
                 for (final EntidadTipoDatoVO entd : tpssDetail.getEntdList()) {
                     final Long tpdtId = entd.getTpdt().getId();
 
@@ -200,7 +203,7 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final void duplicate(final SubservicioVO ssrvVO) {
+    public final void duplicate(final @NonNull SubservicioVO ssrvVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
@@ -254,13 +257,15 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final void update(final SubservicioVO ssrvVO) throws InstanceNotFoundException {
+    public final void update(final @NonNull SubservicioVO ssrvVO) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
 
-            for (final ItemDatoVO itdtVO : ssrvVO.getItdtMap().values()) {
-                itdtVO.setItemId(ssrvVO.getId());
-                ssdtDAO.update(itdtVO);
+            if (ssrvVO.getItdtMap() != null) {
+                for (final ItemDatoVO itdtVO : ssrvVO.getItdtMap().values()) {
+                    itdtVO.setItemId(ssrvVO.getId());
+                    ssdtDAO.update(itdtVO);
+                }
             }
 
             updatePostOperations(session, ssrvVO);
@@ -286,9 +291,9 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final void delete(final Long srvcId, final Long ssrvId) throws InstanceNotFoundException {
+    public final void delete(final SubservicioVO ssrv) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            deletePostOperations(session, srvcId, ssrvId);
+            deletePostOperations(session, ssrv);
 
             session.commit();
         }
@@ -301,14 +306,12 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      *
      * @param session
      *            the session
-     * @param srvcId
-     *            the srvc id
-     * @param ssrvId
-     *            the ssrv id
+     * @param ssrv
+     *            the ssrv
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    protected abstract void deletePostOperations(final SqlSession session, final Long srvcId, final Long ssrvId)
+    protected abstract void deletePostOperations(final SqlSession session, final SubservicioVO ssrv)
             throws InstanceNotFoundException;
 
     /**

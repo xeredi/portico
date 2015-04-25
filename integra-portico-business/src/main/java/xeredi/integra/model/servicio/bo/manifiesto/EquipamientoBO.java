@@ -99,7 +99,7 @@ public final class EquipamientoBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void deletePostOperations(final SqlSession session, final Long srvcId, final Long ssrvId)
+    protected void deletePostOperations(final SqlSession session, final SubservicioVO ssrv)
             throws InstanceNotFoundException {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -107,15 +107,15 @@ public final class EquipamientoBO extends AbstractSubservicioBO {
         final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
         final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
 
-        srvcCriterioVO.setId(srvcId);
+        srvcCriterioVO.setId(ssrv.getSrvc().getId());
 
         ssrvCriterioVO.setSrvc(srvcCriterioVO);
         ssrvCriterioVO.setEntiId(Entidad.BL.getId());
-        ssrvCriterioVO.setHijoId(ssrvId);
+        ssrvCriterioVO.setHijoId(ssrv.getId());
 
         blDAO.updateRecalcularEstado(ssrvCriterioVO);
 
-        maniDAO.updateRecalcularEstado(srvcId);
+        maniDAO.updateRecalcularEstado(ssrv.getSrvc().getId());
     }
 
     /**

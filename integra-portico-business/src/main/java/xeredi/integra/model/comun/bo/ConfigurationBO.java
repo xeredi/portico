@@ -2,6 +2,8 @@ package xeredi.integra.model.comun.bo;
 
 import java.util.List;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -40,10 +42,9 @@ public final class ConfigurationBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final ConfigurationVO select(final ConfigurationKey key) throws InstanceNotFoundException {
+    public final ConfigurationVO select(final @NonNull ConfigurationKey key) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
-
             final ConfigurationVO conf = confDAO.select(key);
 
             if (conf == null) {
@@ -59,23 +60,18 @@ public final class ConfigurationBO {
      *
      * @param vo
      *            the vo
-     * @return the int
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final int update(final ConfigurationVO vo) throws InstanceNotFoundException {
+    public final void update(final @NonNull ConfigurationVO vo) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
 
-            final int updated = confDAO.update(vo);
-
-            if (updated == 0) {
+            if (confDAO.update(vo) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.conf, vo.getKey());
             }
 
             session.commit();
-
-            return updated;
         }
     }
 

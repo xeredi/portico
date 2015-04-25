@@ -1,5 +1,7 @@
 package xeredi.integra.model.comun.proxy;
 
+import lombok.NonNull;
+
 import org.apache.commons.configuration.CombinedConfiguration;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.logging.Log;
@@ -18,6 +20,7 @@ public final class ConfigurationProxy {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ConfigurationProxy.class);
 
+    /** The Constant CONFIGURATION_FILENAME. */
     public static final String CONFIGURATION_FILENAME = "Configuration_env.properties";
 
     /** The configuration. */
@@ -67,7 +70,7 @@ public final class ConfigurationProxy {
      *            the key
      * @return the string
      */
-    public static String getString(final ConfigurationKey key) {
+    public static String getString(final @NonNull ConfigurationKey key) {
         return configuration.getString(key.name());
     }
 
@@ -78,7 +81,7 @@ public final class ConfigurationProxy {
      *            the key
      * @return the string array
      */
-    public static String[] getStringArray(final ConfigurationKey key) {
+    public static String[] getStringArray(final @NonNull ConfigurationKey key) {
         return configuration.getStringArray(key.name());
     }
 
@@ -89,7 +92,7 @@ public final class ConfigurationProxy {
      *            the key
      * @return the int
      */
-    public static int getInt(final ConfigurationKey key) {
+    public static int getInt(final @NonNull ConfigurationKey key) {
         return configuration.getInt(key.name());
     }
 

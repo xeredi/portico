@@ -28,10 +28,10 @@ public final class ParametroXlsExportAction extends ItemXlsExportAction<Parametr
      */
     @Override
     public void doSpecificXlsExport() throws ApplicationException, IOException {
-        final ParametroBO itemBO = ParametroBOFactory.newInstance(criterio.getEntiId());
         final TipoParametroDetailVO enti = TipoParametroProxy.select(criterio.getEntiId());
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
+            final ParametroBO itemBO = ParametroBOFactory.newInstance(criterio.getEntiId());
             final ParametroXls excelUtil = new ParametroXls(getLocale());
 
             excelUtil.generarMaestros(itemBO.selectList(criterio), enti, baos);

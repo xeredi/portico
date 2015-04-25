@@ -3,6 +3,8 @@ package xeredi.integra.model.comun.bo;
 import java.io.InputStream;
 import java.util.List;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -30,7 +32,7 @@ public final class ArchivoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public InputStream selectStream(final Long archId) throws InstanceNotFoundException {
+    public InputStream selectStream(final @NonNull Long archId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
 
@@ -53,7 +55,7 @@ public final class ArchivoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ArchivoInfoVO select(final Long archId) throws InstanceNotFoundException {
+    public ArchivoInfoVO select(final @NonNull Long archId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
 
@@ -74,7 +76,7 @@ public final class ArchivoBO {
      *            the arch criterio
      * @return the list
      */
-    public List<ArchivoInfoVO> selectList(final ArchivoCriterioVO archCriterio) {
+    public List<ArchivoInfoVO> selectList(final @NonNull ArchivoCriterioVO archCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
 

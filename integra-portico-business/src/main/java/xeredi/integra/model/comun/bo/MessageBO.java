@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -79,7 +81,7 @@ public final class MessageBO {
      *            the key
      * @return the map
      */
-    public Map<String, MessageI18nVO> selectKeyMap(final MessageI18nKey key) {
+    public Map<String, MessageI18nVO> selectKeyMap(final @NonNull MessageI18nKey key) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
             final Map<String, MessageI18nVO> map = new HashMap<>();
@@ -103,7 +105,7 @@ public final class MessageBO {
      * @param map
      *            the map
      */
-    public void updateKeyMap(final MessageI18nKey key, final Map<String, MessageI18nVO> map) {
+    public void updateKeyMap(final @NonNull MessageI18nKey key, final @NonNull Map<String, MessageI18nVO> map) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
             final MessageI18nCriterioVO criterio = new MessageI18nCriterioVO();

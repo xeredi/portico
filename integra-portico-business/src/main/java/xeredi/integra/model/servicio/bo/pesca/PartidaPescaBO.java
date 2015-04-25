@@ -66,11 +66,11 @@ public final class PartidaPescaBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void deletePostOperations(final SqlSession session, final Long srvcId, final Long ssrvId)
+    protected void deletePostOperations(final SqlSession session, final SubservicioVO ssrv)
             throws InstanceNotFoundException {
         final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
 
-        mapeDAO.updateRecalcularImporte(srvcId);
-        mapeDAO.updateRecalcularPeso(srvcId);
+        mapeDAO.updateRecalcularImporte(ssrv.getSrvc().getId());
+        mapeDAO.updateRecalcularPeso(ssrv.getSrvc().getId());
     }
 }

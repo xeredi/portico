@@ -315,14 +315,14 @@ function SrvcGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.itemCriterio.entiId = $routeParams.entiId;
 
     function search(page) {
-        $http.post("servicio/srvc-list.action", {
+        $http.post("servicio/servicio-list.action", {
             model : vm.itemCriterio,
             page : page,
             limit : vm.itemCriterio.limit
         }).success(function(data) {
             vm.enti = data.enti;
-            vm.page = data.itemList.page;
-            vm.itemList = data.itemList;
+            vm.page = data.resultList.page;
+            vm.itemList = data.resultList;
             vm.itemCriterio = data.model;
 
             $location.search({
@@ -337,8 +337,8 @@ function SrvcGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function xlsExport() {
-        $http.post('servicio/srvc-xls-export.action', {
-            itemCriterio : vm.itemCriterio
+        $http.post('servicio/servicio-xls-export.action', {
+            criterio : vm.itemCriterio
         }, {
             responseType : 'arraybuffer'
         }).success(function(data) {
@@ -353,7 +353,7 @@ function SrvcGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
-        $http.post("servicio/srvc-filter.action", {
+        $http.post("servicio/servicio-filter.action", {
             model : vm.itemCriterio
         }).success(function(data) {
             vm.labelValuesMap = data.labelValuesMap;
@@ -491,7 +491,7 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
         vm.tabActive[$routeParams.tab] = true;
     }
 
-    $http.post("servicio/srvc-detail.action", {
+    $http.post("servicio/servicio-detail.action", {
         model : {
             id : $routeParams.srvcId,
             entiId : $routeParams.entiId
