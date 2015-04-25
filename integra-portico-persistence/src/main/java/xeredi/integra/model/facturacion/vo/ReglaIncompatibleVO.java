@@ -2,11 +2,13 @@ package xeredi.integra.model.facturacion.vo;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import xeredi.integra.model.comun.vo.Versionable;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReglaIncompatibleVO.
  */
-public final class ReglaIncompatibleVO {
+public final class ReglaIncompatibleVO implements Versionable<ReglaIncompatibleVersionVO> {
 
     /** The id. */
     private Long id;
@@ -18,7 +20,7 @@ public final class ReglaIncompatibleVO {
     private ReglaVO rgla2;
 
     /** The rgiv. */
-    private ReglaIncompatibleVersionVO rgiv;
+    private ReglaIncompatibleVersionVO version;
 
     /**
      * {@inheritDoc}
@@ -86,22 +88,19 @@ public final class ReglaIncompatibleVO {
     }
 
     /**
-     * Gets the rgiv.
-     *
-     * @return the rgiv
+     * {@inheritDoc}
      */
-    public ReglaIncompatibleVersionVO getRgiv() {
-        return rgiv;
+    @Override
+    public ReglaIncompatibleVersionVO getVersion() {
+        return version;
     }
 
     /**
-     * Sets the rgiv.
-     *
-     * @param value
-     *            the new rgiv
+     * {@inheritDoc}
      */
-    public void setRgiv(final ReglaIncompatibleVersionVO value) {
-        rgiv = value;
+    @Override
+    public void setVersion(final ReglaIncompatibleVersionVO value) {
+        version = value;
     }
 
 }

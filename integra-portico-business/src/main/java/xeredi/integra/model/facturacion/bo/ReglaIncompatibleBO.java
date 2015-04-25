@@ -26,8 +26,8 @@ public class ReglaIncompatibleBO {
         Preconditions.checkNotNull(rgin.getRgla1Id());
         Preconditions.checkNotNull(rgin.getRgla2());
         Preconditions.checkNotNull(rgin.getRgla2().getId());
-        Preconditions.checkNotNull(rgin.getRgiv());
-        Preconditions.checkNotNull(rgin.getRgiv().getFini());
+        Preconditions.checkNotNull(rgin.getVersion());
+        Preconditions.checkNotNull(rgin.getVersion().getFini());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaIncompatibleDAO rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
@@ -45,7 +45,7 @@ public class ReglaIncompatibleBO {
                 rginDAO.insert(rgin);
             }
 
-            rgin.getRgiv().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            rgin.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             rginDAO.insertVersion(rgin);
 
@@ -65,9 +65,9 @@ public class ReglaIncompatibleBO {
      */
     public void update(final ReglaIncompatibleVO rgin) throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(rgin);
-        Preconditions.checkNotNull(rgin.getRgiv());
-        Preconditions.checkNotNull(rgin.getRgiv().getId());
-        Preconditions.checkNotNull(rgin.getRgiv().getFini());
+        Preconditions.checkNotNull(rgin.getVersion());
+        Preconditions.checkNotNull(rgin.getVersion().getId());
+        Preconditions.checkNotNull(rgin.getVersion().getFini());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaIncompatibleDAO rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
@@ -96,8 +96,8 @@ public class ReglaIncompatibleBO {
      */
     public void delete(final ReglaIncompatibleVO rgin) throws InstanceNotFoundException {
         Preconditions.checkNotNull(rgin);
-        Preconditions.checkNotNull(rgin.getRgiv());
-        Preconditions.checkNotNull(rgin.getRgiv().getId());
+        Preconditions.checkNotNull(rgin.getVersion());
+        Preconditions.checkNotNull(rgin.getVersion().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaIncompatibleDAO rginDAO = session.getMapper(ReglaIncompatibleDAO.class);

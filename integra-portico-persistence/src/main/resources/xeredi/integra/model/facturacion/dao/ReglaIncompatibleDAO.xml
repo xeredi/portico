@@ -24,7 +24,7 @@
 			</association>
 		</association>
 
-		<association property="rgiv" javaType="ReglaIncompatibleVersionVO">
+		<association property="version" javaType="ReglaIncompatibleVersionVO">
 			<result column="rgiv_pk" property="id" />
 			<result column="rgiv_fini" property="fini" />
 			<result column="rgiv_ffin" property="ffin" />
@@ -98,14 +98,14 @@
         WHERE
             rgin_pk = #{id}
             AND (
-                #{rgiv.fini} BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, #{rgiv.fini})
-                OR COALESCE(#{rgiv.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
-                    BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, COALESCE(#{rgiv.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
+                #{version.fini} BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, #{version.fini})
+                OR COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
+                    BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
             )
     ]]>
-		<if test="rgiv.id != null">
+		<if test="version.id != null">
         <![CDATA[
-            AND rgiv_pk <> #{rgiv.id}
+            AND rgiv_pk <> #{version.id}
         ]]>
 		</if>
 	</select>
@@ -129,23 +129,23 @@
 	<insert id="insertVersion" parameterType="ReglaIncompatibleVO">
     <![CDATA[
         INSERT INTO tbl_regla_inc_version_rgiv (rgiv_pk, rgiv_rgin_pk, rgiv_fini, rgiv_ffin)
-        VALUES (#{rgiv.id}, #{id}, #{rgiv.fini}, #{rgiv.ffin})
+        VALUES (#{version.id}, #{id}, #{version.fini}, #{version.ffin})
     ]]>
 	</insert>
 
 	<insert id="updateVersion" parameterType="ReglaIncompatibleVO">
     <![CDATA[
         UPDATE tbl_regla_inc_version_rgiv SET
-            rgiv_fini = #{rgiv.fini}
-            , rgiv_ffin = #{rgiv.ffin}
-        WHERE rgiv_pk = #{rgiv.id}
+            rgiv_fini = #{version.fini}
+            , rgiv_ffin = #{version.ffin}
+        WHERE rgiv_pk = #{version.id}
     ]]>
 	</insert>
 
 	<insert id="deleteVersion" parameterType="ReglaIncompatibleVO">
     <![CDATA[
         DELETE FROM tbl_regla_inc_version_rgiv
-        WHERE rgiv_pk = #{rgiv.id}
+        WHERE rgiv_pk = #{version.id}
     ]]>
 	</insert>
 </mapper>

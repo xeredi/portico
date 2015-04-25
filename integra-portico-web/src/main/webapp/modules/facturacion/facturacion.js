@@ -1179,7 +1179,7 @@ function RginDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("facturacion/rgin-remove.action", {
+            $http.post("facturacion/regla-incompatible-remove.action", {
                 model : vm.rgin
             }).success(function(data) {
                 window.history.back();
@@ -1187,7 +1187,7 @@ function RginDetailController($http, $routeParams, pageTitleService) {
         }
     }
 
-    $http.post("facturacion/rgin-detail.action", {
+    $http.post("facturacion/regla-incompatible-detail.action", {
         model : {
             id : $routeParams.rginId
         },
@@ -1208,7 +1208,7 @@ function RginEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("facturacion/rgin-save.action", {
+        $http.post("facturacion/regla-incompatible-save.action", {
             model : vm.rgin,
             accion : vm.accion
         }).success(
@@ -1216,7 +1216,7 @@ function RginEditController($http, $location, $routeParams, pageTitleService) {
                     vm.accion == 'edit' ? setTimeout(function() {
                         window.history.back();
                     }, 0) : $location.path(
-                            "/facturacion/rgin/detail/" + data.model.id + "/" + data.model.rgiv.fini)
+                            "/facturacion/rgin/detail/" + data.model.id + "/" + data.model.version.fini)
                             .replace();
                 });
     }
@@ -1225,7 +1225,7 @@ function RginEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("facturacion/rgin-edit.action", {
+    $http.post("facturacion/regla-incompatible-edit.action", {
         model : {
             rgla1Id : $routeParams.rgla1Id,
             id : $routeParams.rginId
