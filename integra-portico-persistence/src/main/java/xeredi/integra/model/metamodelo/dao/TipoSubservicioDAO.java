@@ -2,8 +2,6 @@ package xeredi.integra.model.metamodelo.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioCriterioVO;
@@ -21,7 +19,7 @@ public interface TipoSubservicioDAO {
      * @param tpssVO
      *            the tpss vo
      */
-    void insert(final @Nonnull TipoSubservicioVO tpssVO);
+    void insert(final TipoSubservicioVO tpssVO);
 
     /**
      * Update.
@@ -30,7 +28,7 @@ public interface TipoSubservicioDAO {
      *            the tpss vo
      * @return the int
      */
-    int update(final @Nonnull TipoSubservicioVO tpssVO);
+    int update(final TipoSubservicioVO tpssVO);
 
     /**
      * Delete.
@@ -39,7 +37,7 @@ public interface TipoSubservicioDAO {
      *            the tpss id
      * @return the int
      */
-    int delete(final @Nonnull Long tpssId);
+    int delete(final Long tpssId);
 
     /**
      * Count.
@@ -48,7 +46,7 @@ public interface TipoSubservicioDAO {
      *            the tpss criterio vo
      * @return the int
      */
-    int count(final @Nonnull TipoSubservicioCriterioVO tpssCriterioVO);
+    int count(final TipoSubservicioCriterioVO tpssCriterioVO);
 
     /**
      * Select list.
@@ -57,7 +55,7 @@ public interface TipoSubservicioDAO {
      *            the tpss criterio vo
      * @return the list
      */
-    List<TipoSubservicioVO> selectList(final @Nonnull TipoSubservicioCriterioVO tpssCriterioVO);
+    List<TipoSubservicioVO> selectList(final TipoSubservicioCriterioVO tpssCriterioVO);
 
     /**
      * Select list.
@@ -68,8 +66,7 @@ public interface TipoSubservicioDAO {
      *            the bounds
      * @return the list
      */
-    List<TipoSubservicioVO> selectPaginatedList(final @Nonnull TipoSubservicioCriterioVO tpssCriterioVO,
-            final @Nonnull RowBounds bounds);
+    List<TipoSubservicioVO> selectPaginatedList(final TipoSubservicioCriterioVO tpssCriterioVO, final RowBounds bounds);
 
     /**
      * Select.
@@ -78,5 +75,5 @@ public interface TipoSubservicioDAO {
      *            the enti criterio vo
      * @return the tipo subservicio vo
      */
-    TipoSubservicioVO selectObject(final @Nonnull TipoSubservicioCriterioVO entiCriterioVO);
+    TipoSubservicioVO selectObject(final TipoSubservicioCriterioVO entiCriterioVO);
 }

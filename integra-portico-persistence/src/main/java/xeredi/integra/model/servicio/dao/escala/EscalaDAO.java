@@ -1,6 +1,5 @@
 package xeredi.integra.model.servicio.dao.escala;
 
-import javax.annotation.Nonnull;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -15,7 +14,7 @@ public interface EscalaDAO {
      *            the srvc id
      * @return the string
      */
-    String selectNumeroManifiestoAeat(final @Nonnull Long srvcId);
+    String selectNumeroManifiestoAeat(final Long srvcId);
 
     /**
      * Modificacion del estado de una escala a partir del estado de sus atraques.
@@ -24,7 +23,7 @@ public interface EscalaDAO {
      *            Identificador del servicio de escala.
      * @return Numero de filas modificadas.
      */
-    int updateEstado(final @Nonnull Long srvcId);
+    int updateEstado(final Long srvcId);
 
     /**
      * Modificacion del codigo de exencion de una escala a partir del codigo de exencion de sus atraques.
@@ -33,7 +32,7 @@ public interface EscalaDAO {
      *            Identificador del servicio de escala.
      * @return Numero de filas modificadas.
      */
-    int updateExencion(final @Nonnull Long srvcId);
+    int updateExencion(final Long srvcId);
 
     /**
      * Modificacion del tipo de estancia de una escala a partir del tipo de estancia de sus atraques.
@@ -42,7 +41,7 @@ public interface EscalaDAO {
      *            Identificador del servicio de escala.
      * @return Numero de filas modificadas.
      */
-    int updateEstancia(final @Nonnull Long srvcId);
+    int updateEstancia(final Long srvcId);
 
     /**
      * Modificacion del tipo de navegacion de entrada de una escala a partir del puerto anterior.
@@ -51,7 +50,7 @@ public interface EscalaDAO {
      *            Identificador del servicio de escala.
      * @return Numero de filas modificadas.
      */
-    int updateNavegacionEntrada(final @Nonnull Long srvcId);
+    int updateNavegacionEntrada(final Long srvcId);
 
     /**
      * Modificacion del tipo de navegacion de salida de una escala a partir del puerto siguiente.
@@ -60,7 +59,7 @@ public interface EscalaDAO {
      *            Identificador del servicio de escala.
      * @return Numero de filas modificadas.
      */
-    int updateNavegacionSalida(final @Nonnull Long srvcId);
+    int updateNavegacionSalida(final Long srvcId);
 
     /**
      * Modificacion del tipo de IVA de una escala a partir de datos de la escala.
@@ -69,7 +68,7 @@ public interface EscalaDAO {
      *            Identificador del servicio de escala.
      * @return Numero de filas modificadas.
      */
-    int updateTipoIva(final @Nonnull Long srvcId);
+    int updateTipoIva(final Long srvcId);
 
     /**
      * Modificacion de las fechas de inicio/fin de una escala a partir las fechas de inicio/fin de sus
@@ -79,5 +78,5 @@ public interface EscalaDAO {
      *            Identificador del servicio de escala.
      * @return Numero de filas modificadas.
      */
-    int updateFechaInicioFin(final @Nonnull Long srvcId);
+    int updateFechaInicioFin(final Long srvcId);
 }

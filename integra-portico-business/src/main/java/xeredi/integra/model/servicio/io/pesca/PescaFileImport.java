@@ -8,8 +8,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -58,7 +56,7 @@ public final class PescaFileImport {
      * @param aproceso
      *            the aproceso
      */
-    public PescaFileImport(final @Nonnull ProcesoCargaPesca aproceso) {
+    public PescaFileImport(final ProcesoCargaPesca aproceso) {
         super();
 
         proceso = aproceso;

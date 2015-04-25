@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -63,7 +61,7 @@ public final class TipoEstadisticaProxy {
      *            the id
      * @return the tipo parametro vo
      */
-    public static TipoEstadisticaDetailVO select(final @Nonnull long id) {
+    public static TipoEstadisticaDetailVO select(final long id) {
         if (!TIPO_ESTADISTICA_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tpes, id));
         }

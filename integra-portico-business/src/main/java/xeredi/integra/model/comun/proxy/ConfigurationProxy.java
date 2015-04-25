@@ -1,7 +1,5 @@
 package xeredi.integra.model.comun.proxy;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.configuration.CombinedConfiguration;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.logging.Log;
@@ -69,7 +67,7 @@ public final class ConfigurationProxy {
      *            the key
      * @return the string
      */
-    public static String getString(final @Nonnull ConfigurationKey key) {
+    public static String getString(final ConfigurationKey key) {
         return configuration.getString(key.name());
     }
 
@@ -80,7 +78,7 @@ public final class ConfigurationProxy {
      *            the key
      * @return the string array
      */
-    public static String[] getStringArray(final @Nonnull ConfigurationKey key) {
+    public static String[] getStringArray(final ConfigurationKey key) {
         return configuration.getStringArray(key.name());
     }
 
@@ -91,7 +89,7 @@ public final class ConfigurationProxy {
      *            the key
      * @return the int
      */
-    public static int getInt(final @Nonnull ConfigurationKey key) {
+    public static int getInt(final ConfigurationKey key) {
         return configuration.getInt(key.name());
     }
 

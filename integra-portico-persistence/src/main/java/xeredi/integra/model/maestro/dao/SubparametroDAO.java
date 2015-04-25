@@ -2,8 +2,6 @@ package xeredi.integra.model.maestro.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
@@ -22,7 +20,7 @@ public interface SubparametroDAO {
      *            the sprm vo
      * @return true, if successful
      */
-    boolean exists(final @Nonnull SubparametroVO sprmVO);
+    boolean exists(final SubparametroVO sprmVO);
 
     /**
      * Intersects.
@@ -31,7 +29,7 @@ public interface SubparametroDAO {
      *            the sprm vo
      * @return true, if successful
      */
-    boolean existsOverlap(final @Nonnull SubparametroVO sprmVO);
+    boolean existsOverlap(final SubparametroVO sprmVO);
 
     /**
      * Select id.
@@ -40,7 +38,7 @@ public interface SubparametroDAO {
      *            the sprm vo
      * @return the long
      */
-    Long selectId(final @Nonnull SubparametroVO sprmVO);
+    Long selectId(final SubparametroVO sprmVO);
 
     /**
      * Insert.
@@ -48,7 +46,7 @@ public interface SubparametroDAO {
      * @param sprmVO
      *            the sprm vo
      */
-    void insert(final @Nonnull SubparametroVO sprmVO);
+    void insert(final SubparametroVO sprmVO);
 
     /**
      * Insert version.
@@ -56,7 +54,7 @@ public interface SubparametroDAO {
      * @param sprmVO
      *            the sprm vo
      */
-    void insertVersion(final @Nonnull SubparametroVO sprmVO);
+    void insertVersion(final SubparametroVO sprmVO);
 
     /**
      * Update version.
@@ -65,7 +63,7 @@ public interface SubparametroDAO {
      *            the sprm vo
      * @return the int
      */
-    int updateVersion(final @Nonnull SubparametroVO sprmVO);
+    int updateVersion(final SubparametroVO sprmVO);
 
     /**
      * Delete version.
@@ -74,7 +72,7 @@ public interface SubparametroDAO {
      *            the sprm vo
      * @return the int
      */
-    int deleteVersion(final @Nonnull SubparametroVO sprmVO);
+    int deleteVersion(final SubparametroVO sprmVO);
 
     /**
      * Count.
@@ -83,7 +81,7 @@ public interface SubparametroDAO {
      *            the sprm criterio vo
      * @return the int
      */
-    int selectCount(final @Nonnull SubparametroCriterioVO sprmCriterioVO);
+    int selectCount(final SubparametroCriterioVO sprmCriterioVO);
 
     /**
      * Select list.
@@ -92,7 +90,7 @@ public interface SubparametroDAO {
      *            the sprm criterio vo
      * @return the list
      */
-    List<SubparametroVO> selectList(final @Nonnull SubparametroCriterioVO sprmCriterioVO);
+    List<SubparametroVO> selectList(final SubparametroCriterioVO sprmCriterioVO);
 
     /**
      * Select list.
@@ -103,7 +101,7 @@ public interface SubparametroDAO {
      *            the bounds
      * @return the list
      */
-    List<SubparametroVO> selectList(final @Nonnull SubparametroCriterioVO sprmCriterioVO, final RowBounds bounds);
+    List<SubparametroVO> selectList(final SubparametroCriterioVO sprmCriterioVO, final RowBounds bounds);
 
     /**
      * Select object.
@@ -112,5 +110,5 @@ public interface SubparametroDAO {
      *            the sprm criterio vo
      * @return the subparametro vo
      */
-    SubparametroVO selectObject(final @Nonnull SubparametroCriterioVO sprmCriterioVO);
+    SubparametroVO selectObject(final SubparametroCriterioVO sprmCriterioVO);
 }

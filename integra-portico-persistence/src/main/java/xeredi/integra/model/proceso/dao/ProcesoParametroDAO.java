@@ -2,8 +2,6 @@ package xeredi.integra.model.proceso.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
 
 // TODO: Auto-generated Javadoc
@@ -18,7 +16,7 @@ public interface ProcesoParametroDAO {
      * @param prpmVO
      *            the prpm vo
      */
-    void insert(final @Nonnull ProcesoParametroVO prpmVO);
+    void insert(final ProcesoParametroVO prpmVO);
 
     /**
      * Delete.
@@ -27,7 +25,7 @@ public interface ProcesoParametroDAO {
      *            the prbt id
      * @return the int
      */
-    int delete(final @Nonnull Long prbtId);
+    int delete(final Long prbtId);
 
     /**
      * Select list.
@@ -36,6 +34,6 @@ public interface ProcesoParametroDAO {
      *            the prbt id
      * @return the list
      */
-    List<ProcesoParametroVO> selectList(final @Nonnull Long prbtId);
+    List<ProcesoParametroVO> selectList(final Long prbtId);
 
 }

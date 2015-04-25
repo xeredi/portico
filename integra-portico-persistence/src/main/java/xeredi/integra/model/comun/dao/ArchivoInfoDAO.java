@@ -2,8 +2,6 @@ package xeredi.integra.model.comun.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.comun.vo.ArchivoCriterioVO;
 import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 
@@ -20,7 +18,7 @@ public interface ArchivoInfoDAO {
      *            the arin criterio
      * @return the list
      */
-    List<ArchivoInfoVO> selectList(final @Nonnull ArchivoCriterioVO arinCriterio);
+    List<ArchivoInfoVO> selectList(final ArchivoCriterioVO arinCriterio);
 
     /**
      * Select object.
@@ -29,5 +27,5 @@ public interface ArchivoInfoDAO {
      *            the arin id
      * @return the archivo info vo
      */
-    ArchivoInfoVO select(final @Nonnull Long arinId);
+    ArchivoInfoVO select(final Long arinId);
 }

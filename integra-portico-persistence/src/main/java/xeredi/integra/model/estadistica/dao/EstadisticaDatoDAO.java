@@ -2,8 +2,6 @@ package xeredi.integra.model.estadistica.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 
@@ -19,7 +17,7 @@ public interface EstadisticaDatoDAO {
      * @param itdtVO
      *            the itdt vo
      */
-    void insert(final @Nonnull ItemDatoVO itdtVO);
+    void insert(final ItemDatoVO itdtVO);
 
     /**
      * Select list.
@@ -28,7 +26,7 @@ public interface EstadisticaDatoDAO {
      *            the estd criterio vo
      * @return the list
      */
-    List<ItemDatoVO> selectList(final @Nonnull EstadisticaCriterioVO estdCriterioVO);
+    List<ItemDatoVO> selectList(final EstadisticaCriterioVO estdCriterioVO);
 
     /**
      * Delete.
@@ -37,5 +35,5 @@ public interface EstadisticaDatoDAO {
      *            the prpr id
      * @return the int
      */
-    int delete(final @Nonnull Long prprId);
+    int delete(final Long prprId);
 }

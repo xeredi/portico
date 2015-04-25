@@ -1,6 +1,5 @@
 package xeredi.integra.model.servicio.dao.pesca;
 
-import javax.annotation.Nonnull;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -15,7 +14,7 @@ public interface PartidaPescaDAO {
      *            the ssrv id
      * @return the int
      */
-    public int updateRecalcularImporte(final @Nonnull Long ssrvId);
+    public int updateRecalcularImporte(final Long ssrvId);
 
     /**
      * Update recalcular precio.
@@ -24,5 +23,5 @@ public interface PartidaPescaDAO {
      *            the ssrv id
      * @return the int
      */
-    public int updateRecalcularPrecio(final @Nonnull Long ssrvId);
+    public int updateRecalcularPrecio(final Long ssrvId);
 }

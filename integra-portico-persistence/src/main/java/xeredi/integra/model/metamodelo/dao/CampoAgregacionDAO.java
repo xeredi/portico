@@ -2,8 +2,6 @@ package xeredi.integra.model.metamodelo.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.metamodelo.vo.CampoAgregacionCriterioVO;
 import xeredi.integra.model.metamodelo.vo.CampoAgregacionVO;
 
@@ -20,7 +18,7 @@ public interface CampoAgregacionDAO {
      *            the vo
      * @return true, if successful
      */
-    boolean exists(final @Nonnull CampoAgregacionVO vo);
+    boolean exists(final CampoAgregacionVO vo);
 
     /**
      * Insert.
@@ -28,7 +26,7 @@ public interface CampoAgregacionDAO {
      * @param vo
      *            the vo
      */
-    void insert(final @Nonnull CampoAgregacionVO vo);
+    void insert(final CampoAgregacionVO vo);
 
     /**
      * Update.
@@ -37,7 +35,7 @@ public interface CampoAgregacionDAO {
      *            the vo
      * @return the int
      */
-    int update(final @Nonnull CampoAgregacionVO vo);
+    int update(final CampoAgregacionVO vo);
 
     /**
      * Delete.
@@ -46,7 +44,7 @@ public interface CampoAgregacionDAO {
      *            the vo
      * @return the int
      */
-    int delete(final @Nonnull CampoAgregacionVO vo);
+    int delete(final CampoAgregacionVO vo);
 
     /**
      * Select list.
@@ -55,7 +53,7 @@ public interface CampoAgregacionDAO {
      *            the criterio vo
      * @return the list
      */
-    List<CampoAgregacionVO> selectList(final @Nonnull CampoAgregacionCriterioVO criterioVO);
+    List<CampoAgregacionVO> selectList(final CampoAgregacionCriterioVO criterioVO);
 
     /**
      * Select all.
@@ -71,5 +69,5 @@ public interface CampoAgregacionDAO {
      *            the criterio vo
      * @return the campo agregacion vo
      */
-    CampoAgregacionVO selectObject(final @Nonnull CampoAgregacionCriterioVO criterioVO);
+    CampoAgregacionVO selectObject(final CampoAgregacionCriterioVO criterioVO);
 }

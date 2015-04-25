@@ -21,6 +21,15 @@ public final class SubparametroVO extends ItemVO implements Versionable<Subparam
     private SubparametroVersionVO version;
 
     /**
+     * Instantiates a new subparametro vo.
+     */
+    public SubparametroVO() {
+        super();
+
+        version = new SubparametroVersionVO();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

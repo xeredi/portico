@@ -3,8 +3,6 @@ package xeredi.integra.model.metamodelo.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -26,7 +24,7 @@ public final class EntidadBO {
      *            the enti criterio vo
      * @return the list
      */
-    public List<EntidadVO> selectList(final @Nonnull EntidadCriterioVO entiCriterio) {
+    public List<EntidadVO> selectList(final EntidadCriterioVO entiCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
@@ -41,7 +39,7 @@ public final class EntidadBO {
      *            the enti criterio vo
      * @return the list
      */
-    public List<LabelValueVO> selectLabelValues(final @Nonnull EntidadCriterioVO entiCriterio) {
+    public List<LabelValueVO> selectLabelValues(final EntidadCriterioVO entiCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();

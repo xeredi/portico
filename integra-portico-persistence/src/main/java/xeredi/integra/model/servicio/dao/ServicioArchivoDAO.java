@@ -2,8 +2,6 @@ package xeredi.integra.model.servicio.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.proceso.vo.ProcesoArchivoVO;
 import xeredi.integra.model.servicio.vo.ServicioArchivoVO;
 
@@ -19,7 +17,7 @@ public interface ServicioArchivoDAO {
      * @param srar
      *            the srar
      */
-    void insert(final @Nonnull ServicioArchivoVO srar);
+    void insert(final ServicioArchivoVO srar);
 
     /**
      * Delete.
@@ -28,7 +26,7 @@ public interface ServicioArchivoDAO {
      *            the srvc id
      * @return the int
      */
-    int deleteList(final @Nonnull Long srvcId);
+    int deleteList(final Long srvcId);
 
     /**
      * Select list.
@@ -37,6 +35,6 @@ public interface ServicioArchivoDAO {
      *            the srvc id
      * @return the list
      */
-    List<ProcesoArchivoVO> selectList(final @Nonnull Long srvcId);
+    List<ProcesoArchivoVO> selectList(final Long srvcId);
 
 }

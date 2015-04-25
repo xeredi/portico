@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -51,8 +49,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final ServicioVO select(final @Nonnull Long srvcId, final @Nonnull String idioma)
-            throws InstanceNotFoundException {
+    public final ServicioVO select(final Long srvcId, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
@@ -76,8 +73,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final ServicioVO selectObject(final @Nonnull ServicioCriterioVO srvcCriterioVO)
-            throws InstanceNotFoundException {
+    public final ServicioVO selectObject(final ServicioCriterioVO srvcCriterioVO) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final ServicioVO srvcVO = srvcDAO.selectObject(srvcCriterioVO);
@@ -96,8 +92,8 @@ public abstract class AbstractServicioBO implements ServicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final PaginatedList<ServicioVO> selectList(final @Nonnull ServicioCriterioVO srvcCriterioVO,
-            final int offset, final int limit) {
+    public final PaginatedList<ServicioVO> selectList(final ServicioCriterioVO srvcCriterioVO, final int offset,
+            final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final int count = srvcDAO.count(srvcCriterioVO);
@@ -117,7 +113,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final List<ServicioVO> selectList(final @Nonnull ServicioCriterioVO srvcCriterioVO) {
+    public final List<ServicioVO> selectList(final ServicioCriterioVO srvcCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final List<ServicioVO> srvcList = srvcDAO.selectList(srvcCriterioVO);
@@ -132,8 +128,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final List<ServicioVO> selectLupaList(final @Nonnull ServicioLupaCriterioVO srvcLupaCriterioVO,
-            final int limit) {
+    public final List<ServicioVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
 
@@ -145,7 +140,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final void insert(final @Nonnull ServicioVO srvc, final List<SubservicioVO> ssrvList,
+    public final void insert(final ServicioVO srvc, final List<SubservicioVO> ssrvList,
             final List<SubservicioSubservicioVO> ssssList, final Long archId) throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
@@ -279,14 +274,14 @@ public abstract class AbstractServicioBO implements ServicioBO {
      * @param ssssList
      *            the ssss list
      */
-    protected abstract void insertPostOperations(final @Nonnull SqlSession session, final @Nonnull ServicioVO srvcVO,
+    protected abstract void insertPostOperations(final SqlSession session, final ServicioVO srvcVO,
             final List<SubservicioVO> ssrvList, final List<SubservicioSubservicioVO> ssssList);
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final void update(final @Nonnull ServicioVO srvcVO) throws ModelException {
+    public final void update(final ServicioVO srvcVO) throws ModelException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
 
@@ -313,14 +308,14 @@ public abstract class AbstractServicioBO implements ServicioBO {
      * @throws ModelException
      *             the model exception
      */
-    protected abstract void updatePostOperations(final @Nonnull SqlSession session, final @Nonnull ServicioVO srvcVO)
+    protected abstract void updatePostOperations(final SqlSession session, final ServicioVO srvcVO)
             throws ModelException;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final void duplicate(final @Nonnull ServicioVO srvcVO) throws ModelException {
+    public final void duplicate(final ServicioVO srvcVO) throws ModelException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
@@ -410,14 +405,14 @@ public abstract class AbstractServicioBO implements ServicioBO {
      * @throws ModelException
      *             the model exception
      */
-    protected abstract void duplicatePostOperations(final @Nonnull SqlSession session, final @Nonnull ServicioVO srvcVO)
+    protected abstract void duplicatePostOperations(final SqlSession session, final ServicioVO srvcVO)
             throws ModelException;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final void delete(final @Nonnull Long srvcId) throws ModelException {
+    public final void delete(final Long srvcId) throws ModelException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
@@ -460,8 +455,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
      * @throws ModelException
      *             the model exception
      */
-    protected abstract void deletePostOperations(final @Nonnull SqlSession session, final @Nonnull Long srvcId)
-            throws ModelException;
+    protected abstract void deletePostOperations(final SqlSession session, final Long srvcId) throws ModelException;
 
     /**
      * Fill dependencies.
@@ -475,8 +469,8 @@ public abstract class AbstractServicioBO implements ServicioBO {
      * @param useIds
      *            the use ids
      */
-    private final void fillDependencies(final @Nonnull SqlSession session, final @Nonnull List<ServicioVO> srvcList,
-            final @Nonnull ServicioCriterioVO srvcCriterioVO, final boolean useIds) {
+    private final void fillDependencies(final SqlSession session, final List<ServicioVO> srvcList,
+            final ServicioCriterioVO srvcCriterioVO, final boolean useIds) {
         final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
 
         if (!srvcList.isEmpty()) {

@@ -3,8 +3,6 @@ package xeredi.integra.model.metamodelo.dao;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.annotations.MapKey;
 
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
@@ -29,7 +27,7 @@ public interface EntidadDAO {
      *            the enti vo
      * @return true, if successful
      */
-    boolean exists(final @Nonnull EntidadVO entiVO);
+    boolean exists(final EntidadVO entiVO);
 
     /**
      * Insert.
@@ -37,7 +35,7 @@ public interface EntidadDAO {
      * @param entiVO
      *            the enti vo
      */
-    void insert(final @Nonnull EntidadVO entiVO);
+    void insert(final EntidadVO entiVO);
 
     /**
      * Update.
@@ -46,7 +44,7 @@ public interface EntidadDAO {
      *            the enti vo
      * @return the int
      */
-    int update(final @Nonnull EntidadVO entiVO);
+    int update(final EntidadVO entiVO);
 
     /**
      * Delete.
@@ -55,7 +53,7 @@ public interface EntidadDAO {
      *            the enti id
      * @return the int
      */
-    int delete(final @Nonnull Long entiId);
+    int delete(final Long entiId);
 
     /**
      * Select.
@@ -64,7 +62,7 @@ public interface EntidadDAO {
      *            the enti criterio vo
      * @return the entidad vo
      */
-    EntidadVO selectObject(final @Nonnull EntidadCriterioVO entiCriterioVO);
+    EntidadVO selectObject(final EntidadCriterioVO entiCriterioVO);
 
     /**
      * Select.
@@ -73,7 +71,7 @@ public interface EntidadDAO {
      *            the id
      * @return the entidad vo
      */
-    EntidadVO select(final @Nonnull Long id);
+    EntidadVO select(final Long id);
 
     /**
      * Select list.
@@ -82,7 +80,7 @@ public interface EntidadDAO {
      *            the enti criterio vo
      * @return the list
      */
-    List<EntidadVO> selectList(final @Nonnull EntidadCriterioVO entiCriterioVO);
+    List<EntidadVO> selectList(final EntidadCriterioVO entiCriterioVO);
 
     /**
      * Select map.
@@ -92,5 +90,5 @@ public interface EntidadDAO {
      * @return the map
      */
     @MapKey(value = "id")
-    Map<Long, EntidadVO> selectMap(final @Nonnull EntidadCriterioVO entiCriterioVO);
+    Map<Long, EntidadVO> selectMap(final EntidadCriterioVO entiCriterioVO);
 }

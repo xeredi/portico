@@ -1,7 +1,5 @@
 package xeredi.integra.model.facturacion.dao;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.facturacion.vo.ServicioCargoCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -16,7 +14,7 @@ public interface ServicioCargoDAO {
      * @param criterioVO
      *            the criterio vo
      */
-    void insertMarcarValorado(final @Nonnull ServicioCargoCriterioVO criterioVO);
+    void insertMarcarValorado(final ServicioCargoCriterioVO criterioVO);
 
     /**
      * Delete valoracion.
@@ -25,5 +23,5 @@ public interface ServicioCargoDAO {
      *            the criterio vo
      * @return the int
      */
-    int deleteValoracion(final @Nonnull ServicioCargoCriterioVO criterioVO);
+    int deleteValoracion(final ServicioCargoCriterioVO criterioVO);
 }

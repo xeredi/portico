@@ -1,6 +1,5 @@
 package xeredi.integra.model.servicio.dao.manifiesto;
 
-import javax.annotation.Nonnull;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -15,7 +14,7 @@ public interface ManifiestoServicioDAO {
      *            the srvc id
      * @return the int
      */
-    int updateBloquear(final @Nonnull Long srvcId);
+    int updateBloquear(final Long srvcId);
 
     /**
      * Update completar.
@@ -24,7 +23,7 @@ public interface ManifiestoServicioDAO {
      *            the srvc id
      * @return the int
      */
-    int updateCompletar(final @Nonnull Long srvcId);
+    int updateCompletar(final Long srvcId);
 
     /**
      * Update iniciar.
@@ -33,7 +32,7 @@ public interface ManifiestoServicioDAO {
      *            the srvc id
      * @return the int
      */
-    int updateIniciar(final @Nonnull Long srvcId);
+    int updateIniciar(final Long srvcId);
 
     /**
      * Update anular.
@@ -42,7 +41,7 @@ public interface ManifiestoServicioDAO {
      *            the srvc id
      * @return the int
      */
-    int updateAnular(final @Nonnull Long srvcId);
+    int updateAnular(final Long srvcId);
 
     /**
      * Update recalcular estado.
@@ -51,5 +50,5 @@ public interface ManifiestoServicioDAO {
      *            the srvc id
      * @return the int
      */
-    int updateRecalcularEstado(final @Nonnull Long srvcId);
+    int updateRecalcularEstado(final Long srvcId);
 }

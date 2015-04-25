@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -61,7 +59,7 @@ public final class TipoParametroProxy {
      *            the id
      * @return the tipo parametro vo
      */
-    public static TipoParametroDetailVO select(final @Nonnull Long id) {
+    public static TipoParametroDetailVO select(final Long id) {
         if (!TIPO_PARAMETRO_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tppr, id));
         }

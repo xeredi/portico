@@ -23,6 +23,15 @@ public final class ReglaIncompatibleVO implements Versionable<ReglaIncompatibleV
     private ReglaIncompatibleVersionVO version;
 
     /**
+     * Instantiates a new regla incompatible vo.
+     */
+    public ReglaIncompatibleVO() {
+        super();
+
+        version = new ReglaIncompatibleVersionVO();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -71,7 +69,7 @@ public final class ManifiestoFileImport {
      * @param aproceso
      *            the aproceso
      */
-    public ManifiestoFileImport(final @Nonnull ProcesoTemplate aproceso) {
+    public ManifiestoFileImport(final ProcesoTemplate aproceso) {
         super();
 
         proceso = aproceso;
@@ -84,7 +82,7 @@ public final class ManifiestoFileImport {
      *            the lines
      * @return the primera linea
      */
-    public int findPrimeraLinea(final @Nonnull List<String> lines) {
+    public int findPrimeraLinea(final List<String> lines) {
         int primeraLinea = 0;
 
         do {
@@ -120,7 +118,7 @@ public final class ManifiestoFileImport {
      * @param primeraLinea
      *            the primera linea
      */
-    public void validarSegmentos(final @Nonnull List<String> lines, final int primeraLinea) {
+    public void validarSegmentos(final List<String> lines, final int primeraLinea) {
         // Validacion de Segmentos
         for (int i = primeraLinea; i < lines.size(); i++) {
             final ManifiestoSegmento segmento = getTokenSegmento(ManifiestoKeyword.Segmento, lines.get(i), i);
@@ -150,7 +148,7 @@ public final class ManifiestoFileImport {
      * @param primeraLinea
      *            the primera linea
      */
-    public void readMaestros(final @Nonnull List<String> lines, final int primeraLinea) {
+    public void readMaestros(final List<String> lines, final int primeraLinea) {
         escalaVO = new ServicioVO();
 
         // Lectura de Codigos de Maestros
@@ -246,14 +244,14 @@ public final class ManifiestoFileImport {
                 proceso.addCodigoMaestro(
                         Entidad.MERCANCIAS_PELIGROSAS,
                         getTokenString(ManifiestoKeyword.DGS_NumeroONU, line, i)
-                        + getTokenString(ManifiestoKeyword.DGS_Clase, line, i));
+                                + getTokenString(ManifiestoKeyword.DGS_Clase, line, i));
 
                 break;
             case EQD:
                 proceso.addCodigoMaestro(
                         Entidad.TIPO_EQUIPAMIENTO,
                         getTokenString(ManifiestoKeyword.EQD_CodigoTipoEquipamiento, line, i)
-                        + getTokenString(ManifiestoKeyword.EQD_TamanioEquipamiento, line, i));
+                                + getTokenString(ManifiestoKeyword.EQD_TamanioEquipamiento, line, i));
 
                 break;
             case SEL:
@@ -273,7 +271,7 @@ public final class ManifiestoFileImport {
      * @param primeraLinea
      *            the primera linea
      */
-    public void readFile(final @Nonnull List<String> lines, final int primeraLinea) {
+    public void readFile(final List<String> lines, final int primeraLinea) {
         // Generacion de datos del manifiesto
         SubservicioVO blActualVO = null;
         SubservicioVO partActualVO = null;
@@ -316,10 +314,10 @@ public final class ManifiestoFileImport {
                 manifiestoVO.addItdt(TipoDato.CADENA_01.getId(),
                         getTokenString(ManifiestoKeyword.IFC_NumeroEDI, line, i));
                 manifiestoVO
-                .addItdt(
-                        TipoDato.REC_ADU.getId(),
-                        getTokenMaestro(ManifiestoKeyword.IFC_CodigoRecintoAduanero, line, i,
-                                Entidad.RECINTO_ADUANERO));
+                        .addItdt(
+                                TipoDato.REC_ADU.getId(),
+                                getTokenMaestro(ManifiestoKeyword.IFC_CodigoRecintoAduanero, line, i,
+                                        Entidad.RECINTO_ADUANERO));
 
                 final String tipoManifiestoEDI = getTokenString(ManifiestoKeyword.IFC_TipoManifiesto, line, i);
                 final String tipoManifiesto = getTipoManifiesto(tipoManifiestoEDI);
@@ -436,17 +434,17 @@ public final class ManifiestoFileImport {
                         Entidad.ALINEACION);
 
                 blActualVO
-                .addItdt(TipoDato.ALIN.getId(),
-                        alineacionBlVO == null ? manifiestoVO.getItdt(TipoDato.ALIN.getId()).getPrmt()
-                                : alineacionBlVO);
+                        .addItdt(TipoDato.ALIN.getId(),
+                                alineacionBlVO == null ? manifiestoVO.getItdt(TipoDato.ALIN.getId()).getPrmt()
+                                        : alineacionBlVO);
 
                 final ParametroVO terminalBlVO = getTokenMaestro(ManifiestoKeyword.CNI_CodigoTerminal, line, i,
                         Entidad.TERMINAL);
 
                 blActualVO
-                .addItdt(TipoDato.TERMINAL.getId(),
-                        terminalBlVO == null ? manifiestoVO.getItdt(TipoDato.TERMINAL.getId()).getPrmt()
-                                : terminalBlVO);
+                        .addItdt(TipoDato.TERMINAL.getId(),
+                                terminalBlVO == null ? manifiestoVO.getItdt(TipoDato.TERMINAL.getId()).getPrmt()
+                                        : terminalBlVO);
 
                 final ParametroVO acuerdoBlVO = getTokenMaestro(ManifiestoKeyword.CNI_CodigoAcuerdo, line, i,
                         Entidad.ACUERDO);
@@ -592,10 +590,10 @@ public final class ManifiestoFileImport {
                 }
 
                 padoActualVO
-                .addItdt(
-                        TipoDato.TIPO_DOC_AEAT.getId(),
-                        getTokenMaestro(ManifiestoKeyword.DOC_CodigoTipoDocumento, line, i,
-                                Entidad.TIPO_DOCUMENTO_AEAT));
+                        .addItdt(
+                                TipoDato.TIPO_DOC_AEAT.getId(),
+                                getTokenMaestro(ManifiestoKeyword.DOC_CodigoTipoDocumento, line, i,
+                                        Entidad.TIPO_DOCUMENTO_AEAT));
                 padoActualVO.addItdt(TipoDato.FECHA_01.getId(),
                         getTokenDate(ManifiestoKeyword.DOC_FechaEmision, line, i, "ddMMyy"));
                 padoActualVO.addItdt(TipoDato.CADENA_01.getId(),
@@ -723,7 +721,7 @@ public final class ManifiestoFileImport {
      *            the tipo bl edi
      * @return the tipo bl
      */
-    private String getTipoBl(final @Nonnull String tipoBlEDI) {
+    private String getTipoBl(final String tipoBlEDI) {
         switch (tipoBlEDI) {
         case "ZZ1":
             return "M";
@@ -743,7 +741,7 @@ public final class ManifiestoFileImport {
      *            the tipo manifiesto edi
      * @return the tipo manifiesto
      */
-    private String getTipoManifiesto(final @Nonnull String tipoManifiestoEDI) {
+    private String getTipoManifiesto(final String tipoManifiestoEDI) {
         switch (tipoManifiestoEDI) {
         case "1":
             return "CA";

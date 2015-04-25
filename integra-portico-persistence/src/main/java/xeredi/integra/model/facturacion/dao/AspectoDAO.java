@@ -2,8 +2,6 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
@@ -24,7 +22,7 @@ public interface AspectoDAO {
      *            the criterio vo
      * @return the list
      */
-    List<AspectoVO> selectList(final @Nonnull AspectoCriterioVO criterioVO);
+    List<AspectoVO> selectList(final AspectoCriterioVO criterioVO);
 
     /**
      * Select list.
@@ -35,7 +33,7 @@ public interface AspectoDAO {
      *            the bounds
      * @return the list
      */
-    List<AspectoVO> selectList(final @Nonnull AspectoCriterioVO criterio, final @Nonnull RowBounds bounds);
+    List<AspectoVO> selectList(final AspectoCriterioVO criterio, final RowBounds bounds);
 
     /**
      * Select list.
@@ -46,7 +44,7 @@ public interface AspectoDAO {
      *            the bounds
      * @return the list
      */
-    List<AspectoVO> selectList(final @Nonnull AspectoTypeaheadCriterioVO criterio, final @Nonnull RowBounds bounds);
+    List<AspectoVO> selectList(final AspectoTypeaheadCriterioVO criterio, final RowBounds bounds);
 
     /**
      * Count.
@@ -55,7 +53,7 @@ public interface AspectoDAO {
      *            the criterio vo
      * @return the int
      */
-    int count(final @Nonnull AspectoCriterioVO criterioVO);
+    int count(final AspectoCriterioVO criterioVO);
 
     /**
      * Select object.
@@ -64,7 +62,7 @@ public interface AspectoDAO {
      *            the criterio vo
      * @return the aspecto vo
      */
-    AspectoVO selectObject(final @Nonnull AspectoCriterioVO criterioVO);
+    AspectoVO selectObject(final AspectoCriterioVO criterioVO);
 
     /**
      * Checks if is inaplicable.
@@ -73,7 +71,7 @@ public interface AspectoDAO {
      *            the contexto vo
      * @return true, if checks if is inaplicable
      */
-    boolean isInaplicable(final @Nonnull FacturadorContextoVO contextoVO);
+    boolean isInaplicable(final FacturadorContextoVO contextoVO);
 
     /**
      * Exists.
@@ -82,7 +80,7 @@ public interface AspectoDAO {
      *            the aspc
      * @return true, if successful
      */
-    boolean exists(final @Nonnull AspectoVO aspc);
+    boolean exists(final AspectoVO aspc);
 
     /**
      * Exists overlap.
@@ -91,7 +89,7 @@ public interface AspectoDAO {
      *            the aspc
      * @return true, if successful
      */
-    boolean existsOverlap(final @Nonnull AspectoVO aspc);
+    boolean existsOverlap(final AspectoVO aspc);
 
     /**
      * Select id.
@@ -100,7 +98,7 @@ public interface AspectoDAO {
      *            the aspc
      * @return the long
      */
-    Long selectId(final @Nonnull AspectoVO aspc);
+    Long selectId(final AspectoVO aspc);
 
     /**
      * Insert.
@@ -108,7 +106,7 @@ public interface AspectoDAO {
      * @param aspc
      *            the aspc
      */
-    void insert(final @Nonnull AspectoVO aspc);
+    void insert(final AspectoVO aspc);
 
     /**
      * Insert version.
@@ -116,7 +114,7 @@ public interface AspectoDAO {
      * @param aspc
      *            the aspc
      */
-    void insertVersion(final @Nonnull AspectoVO aspc);
+    void insertVersion(final AspectoVO aspc);
 
     /**
      * Update version.
@@ -125,7 +123,7 @@ public interface AspectoDAO {
      *            the aspc
      * @return the int
      */
-    int updateVersion(final @Nonnull AspectoVO aspc);
+    int updateVersion(final AspectoVO aspc);
 
     /**
      * Delete version.
@@ -134,5 +132,5 @@ public interface AspectoDAO {
      *            the aspc
      * @return the int
      */
-    int deleteVersion(final @Nonnull AspectoVO aspc);
+    int deleteVersion(final AspectoVO aspc);
 }

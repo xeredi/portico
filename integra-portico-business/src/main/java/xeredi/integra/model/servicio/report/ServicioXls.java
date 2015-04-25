@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.annotation.Nonnull;
-
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -45,14 +43,17 @@ public final class ServicioXls extends BaseXls {
     /**
      * Generar servicios.
      *
-     * @param srvcList            the srvc list
-     * @param tpsrDetail the tpsr detail
-     * @param stream            the stream
-     * @throws InternalErrorException             Si ocurre algun error grave.
+     * @param srvcList
+     *            the srvc list
+     * @param tpsrDetail
+     *            the tpsr detail
+     * @param stream
+     *            the stream
+     * @throws InternalErrorException
+     *             Si ocurre algun error grave.
      */
-    public void generarServicios(final @Nonnull List<ServicioVO> srvcList,
-            final @Nonnull TipoServicioDetailVO tpsrDetail, final @Nonnull OutputStream stream)
-                    throws InternalErrorException {
+    public void generarServicios(final List<ServicioVO> srvcList, final TipoServicioDetailVO tpsrDetail,
+            final OutputStream stream) throws InternalErrorException {
         try (final HSSFWorkbook workbook = new HSSFWorkbook()) {
             final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpsrDetail.getEnti().getId()));
 

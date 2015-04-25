@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -49,7 +47,7 @@ public final class TipoDatoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public TipoDatoVO select(final @Nonnull Long id, final @Nonnull String idioma) throws InstanceNotFoundException {
+    public TipoDatoVO select(final Long id, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
             final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
@@ -97,8 +95,7 @@ public final class TipoDatoBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final @Nonnull TipoDatoVO tpdtVO, final @Nonnull Map<String, I18nVO> i18nMap)
-            throws DuplicateInstanceException {
+    public void insert(final TipoDatoVO tpdtVO, final Map<String, I18nVO> i18nMap) throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
 
@@ -125,8 +122,7 @@ public final class TipoDatoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @Nonnull TipoDatoVO tpdtVO, final @Nonnull Map<String, I18nVO> i18nMap)
-            throws InstanceNotFoundException {
+    public void update(final TipoDatoVO tpdtVO, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpdtVO.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -150,7 +146,7 @@ public final class TipoDatoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @Nonnull TipoDatoVO tpdtVO) throws InstanceNotFoundException {
+    public void delete(final TipoDatoVO tpdtVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpdtVO.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -176,7 +172,7 @@ public final class TipoDatoBO {
      *            the tpdt criterio vo
      * @return the list
      */
-    public List<TipoDatoVO> selectList(final @Nonnull TipoDatoCriterioVO tpdtCriterioVO) {
+    public List<TipoDatoVO> selectList(final TipoDatoCriterioVO tpdtCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
 
@@ -195,7 +191,7 @@ public final class TipoDatoBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<TipoDatoVO> selectList(final @Nonnull TipoDatoCriterioVO tpdtCriterioVO, final int offset,
+    public PaginatedList<TipoDatoVO> selectList(final TipoDatoCriterioVO tpdtCriterioVO, final int offset,
             final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
@@ -217,7 +213,7 @@ public final class TipoDatoBO {
      *            the tpdt criterio vo
      * @return the list
      */
-    public List<LabelValueVO> selectLabelValues(final @Nonnull TipoDatoCriterioVO tpdtCriterioVO) {
+    public List<LabelValueVO> selectLabelValues(final TipoDatoCriterioVO tpdtCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();
@@ -237,7 +233,7 @@ public final class TipoDatoBO {
      *            the tpdt criterio vo
      * @return the map
      */
-    public Map<Long, TipoDatoVO> selectMap(final @Nonnull TipoDatoCriterioVO tpdtCriterioVO) {
+    public Map<Long, TipoDatoVO> selectMap(final TipoDatoCriterioVO tpdtCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
             final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);

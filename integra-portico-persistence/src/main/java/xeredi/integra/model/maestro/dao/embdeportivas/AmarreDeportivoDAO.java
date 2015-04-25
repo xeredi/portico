@@ -1,7 +1,5 @@
 package xeredi.integra.model.maestro.dao.embdeportivas;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -17,5 +15,5 @@ public interface AmarreDeportivoDAO {
      *            the prmt criterio vo
      * @return the int
      */
-    int updateRecalcularEstado(final @Nonnull ParametroCriterioVO prmtCriterioVO);
+    int updateRecalcularEstado(final ParametroCriterioVO prmtCriterioVO);
 }

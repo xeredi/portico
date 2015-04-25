@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.annotation.Nonnull;
-
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -36,7 +34,7 @@ public final class SubservicioXls extends BaseXls {
      * @param locale
      *            the locale
      */
-    public SubservicioXls(final @Nonnull Locale locale) {
+    public SubservicioXls(final Locale locale) {
         super(locale);
 
         bundle = PorticoResourceBundle.getBundle(locale);
@@ -45,14 +43,17 @@ public final class SubservicioXls extends BaseXls {
     /**
      * Generar subservicios.
      *
-     * @param ssrvList            the ssrv list
-     * @param tpssDetail the tpss detail
-     * @param stream            the stream
-     * @throws InternalErrorException             Si ocurre algun error grave.
+     * @param ssrvList
+     *            the ssrv list
+     * @param tpssDetail
+     *            the tpss detail
+     * @param stream
+     *            the stream
+     * @throws InternalErrorException
+     *             Si ocurre algun error grave.
      */
-    public void generarSubservicios(final @Nonnull List<SubservicioVO> ssrvList,
-            final @Nonnull TipoSubservicioDetailVO tpssDetail, final @Nonnull OutputStream stream)
-                    throws InternalErrorException {
+    public void generarSubservicios(final List<SubservicioVO> ssrvList, final TipoSubservicioDetailVO tpssDetail,
+            final OutputStream stream) throws InternalErrorException {
         try (final HSSFWorkbook workbook = new HSSFWorkbook()) {
             final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpssDetail.getEnti().getId()));
 

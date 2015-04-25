@@ -2,8 +2,6 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
 
@@ -19,5 +17,5 @@ public interface FacturaImpuestoDAO {
      *            the fctr criterio vo
      * @return the list
      */
-    List<FacturaImpuestoVO> selectList(final @Nonnull FacturaCriterioVO fctrCriterioVO);
+    List<FacturaImpuestoVO> selectList(final FacturaCriterioVO fctrCriterioVO);
 }

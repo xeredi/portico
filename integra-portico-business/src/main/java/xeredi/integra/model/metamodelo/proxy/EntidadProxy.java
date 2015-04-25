@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -76,7 +74,7 @@ public final class EntidadProxy {
      *            the id
      * @return the entidad vo
      */
-    public static AbstractEntidadDetailVO select(final @Nonnull Long id) {
+    public static AbstractEntidadDetailVO select(final Long id) {
         if (!ENTIDAD_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.enti, id));
         }
@@ -181,7 +179,7 @@ public final class EntidadProxy {
      * @param entiMap
      *            the enti map
      */
-    static void loadDependencies(final @Nonnull Map<Long, ? extends AbstractEntidadDetailVO> entiMap) {
+    static void loadDependencies(final Map<Long, ? extends AbstractEntidadDetailVO> entiMap) {
         for (final AbstractEntidadDetailVO entidadDetail : entiMap.values()) {
             if (ENTIDAD_MAP.containsKey(entidadDetail.getEnti().getId())) {
                 entidadDetail.setEntdList(ENTIDAD_MAP.get(entidadDetail.getEnti().getId()).getEntdList());

@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -65,7 +63,7 @@ public class ProcesoBO {
      *            the file entrada
      * @return the proceso vo
      */
-    public final ProcesoVO crear(final @Nonnull ProcesoTipo tipo, final Map<String, String> parametroMap,
+    public final ProcesoVO crear(final ProcesoTipo tipo, final Map<String, String> parametroMap,
             final ItemTipo itemEntradaTipo, final List<Long> itemEntradaList, final File fileEntrada) {
         // Lectura del Archivo (si lo hay)
         byte[] buffer = null;
@@ -152,7 +150,7 @@ public class ProcesoBO {
      *            the tipo
      * @return the proceso vo
      */
-    public ProcesoVO proteger(final @Nonnull ProcesoTipo tipo) {
+    public ProcesoVO proteger(final ProcesoTipo tipo) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
 
@@ -197,9 +195,9 @@ public class ProcesoBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public final void finalizar(final @Nonnull Long prbtId, final List<ProcesoMensajeVO> prmnList,
+    public final void finalizar(final Long prbtId, final List<ProcesoMensajeVO> prmnList,
             final ItemTipo itemSalidaTipo, final List<Long> itemSalidaList, final File fileSalida)
-                    throws InstanceNotFoundException, OperacionNoPermitidaException {
+            throws InstanceNotFoundException, OperacionNoPermitidaException {
         // Lectura del Archivo (si lo hay)
         byte[] buffer = null;
 
@@ -286,8 +284,7 @@ public class ProcesoBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public final void cancelar(final @Nonnull Long prbtId) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+    public final void cancelar(final Long prbtId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
@@ -326,7 +323,7 @@ public class ProcesoBO {
      *            the limit
      * @return the paginated list
      */
-    public final PaginatedList<ProcesoVO> selectList(final @Nonnull ProcesoCriterioVO prbtCriterioVO, final int offset,
+    public final PaginatedList<ProcesoVO> selectList(final ProcesoCriterioVO prbtCriterioVO, final int offset,
             final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
@@ -348,7 +345,7 @@ public class ProcesoBO {
      *            the prbt criterio vo
      * @return the list
      */
-    public final List<ProcesoVO> selectList(final @Nonnull ProcesoCriterioVO prbtCriterioVO) {
+    public final List<ProcesoVO> selectList(final ProcesoCriterioVO prbtCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
 
@@ -365,7 +362,7 @@ public class ProcesoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final ProcesoVO select(final @Nonnull Long prbtId) throws InstanceNotFoundException {
+    public final ProcesoVO select(final Long prbtId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
 
@@ -390,7 +387,7 @@ public class ProcesoBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<ProcesoMensajeVO> selectPrmnList(final @Nonnull Long prbtId, final int offset, final int limit) {
+    public PaginatedList<ProcesoMensajeVO> selectPrmnList(final Long prbtId, final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoMensajeDAO prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
             final List<ProcesoMensajeVO> prmnList = new ArrayList<>();
@@ -411,7 +408,7 @@ public class ProcesoBO {
      *            the prbt id
      * @return the map
      */
-    public Map<String, ProcesoParametroVO> selectPrpmMap(final @Nonnull Long prbtId) {
+    public Map<String, ProcesoParametroVO> selectPrpmMap(final Long prbtId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoParametroDAO prpmDAO = session.getMapper(ProcesoParametroDAO.class);
             final List<ProcesoParametroVO> prpmList = prpmDAO.selectList(prbtId);
@@ -432,7 +429,7 @@ public class ProcesoBO {
      *            the prbt id
      * @return the list
      */
-    public List<ArchivoInfoVO> selectArinEntradaList(final @Nonnull Long prbtId) {
+    public List<ArchivoInfoVO> selectArinEntradaList(final Long prbtId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
             final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
@@ -451,7 +448,7 @@ public class ProcesoBO {
      *            the prbt id
      * @return the list
      */
-    public List<ArchivoInfoVO> selectArinSalidaList(final @Nonnull Long prbtId) {
+    public List<ArchivoInfoVO> selectArinSalidaList(final Long prbtId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
             final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
@@ -470,7 +467,7 @@ public class ProcesoBO {
      *            the prbt id
      * @return the list
      */
-    public List<ProcesoItemVO> selectPritEntradaList(final @Nonnull Long prbtId) {
+    public List<ProcesoItemVO> selectPritEntradaList(final Long prbtId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
             final ProcesoItemCriterioVO pritCriterio = new ProcesoItemCriterioVO();
@@ -489,7 +486,7 @@ public class ProcesoBO {
      *            the prbt id
      * @return the list
      */
-    public List<ProcesoItemVO> selectPritSalidaList(final @Nonnull Long prbtId) {
+    public List<ProcesoItemVO> selectPritSalidaList(final Long prbtId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
             final ProcesoItemCriterioVO pritCriterio = new ProcesoItemCriterioVO();

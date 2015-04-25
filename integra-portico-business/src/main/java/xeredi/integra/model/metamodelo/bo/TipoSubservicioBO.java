@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -39,7 +37,7 @@ public final class TipoSubservicioBO {
      *            the criterio vo
      * @return the list
      */
-    public List<LabelValueVO> selectLabelValues(final @Nonnull TipoSubservicioCriterioVO criterioVO) {
+    public List<LabelValueVO> selectLabelValues(final TipoSubservicioCriterioVO criterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoSubservicioDAO tpssDAO = session.getMapper(TipoSubservicioDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();
@@ -59,7 +57,7 @@ public final class TipoSubservicioBO {
      *            the tpss criterio vo
      * @return the list
      */
-    public List<TipoSubservicioVO> selectList(final @Nonnull TipoSubservicioCriterioVO tpssCriterioVO) {
+    public List<TipoSubservicioVO> selectList(final TipoSubservicioCriterioVO tpssCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoSubservicioDAO tpssDAO = session.getMapper(TipoSubservicioDAO.class);
 
@@ -78,7 +76,7 @@ public final class TipoSubservicioBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<TipoSubservicioVO> selectList(final @Nonnull TipoSubservicioCriterioVO tpssCriterioVO,
+    public PaginatedList<TipoSubservicioVO> selectList(final TipoSubservicioCriterioVO tpssCriterioVO,
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoSubservicioDAO tpssDAO = session.getMapper(TipoSubservicioDAO.class);
@@ -104,8 +102,7 @@ public final class TipoSubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public TipoSubservicioVO select(final @Nonnull Long id, final @Nonnull String idioma)
-            throws InstanceNotFoundException {
+    public TipoSubservicioVO select(final Long id, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoSubservicioDAO tpssDAO = session.getMapper(TipoSubservicioDAO.class);
             final TipoSubservicioCriterioVO entiCriterioVO = new TipoSubservicioCriterioVO();
@@ -133,7 +130,7 @@ public final class TipoSubservicioBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final @Nonnull TipoSubservicioVO tpssVO, final @Nonnull Map<String, I18nVO> i18nMap)
+    public void insert(final TipoSubservicioVO tpssVO, final Map<String, I18nVO> i18nMap)
             throws DuplicateInstanceException {
         Preconditions.checkNotNull(tpssVO.getTpsrId());
 
@@ -168,7 +165,7 @@ public final class TipoSubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @Nonnull TipoSubservicioVO tpssVO, final @Nonnull Map<String, I18nVO> i18nMap)
+    public void update(final TipoSubservicioVO tpssVO, final Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpssVO.getId());
 
@@ -195,7 +192,7 @@ public final class TipoSubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @Nonnull Long tpssId) throws InstanceNotFoundException {
+    public void delete(final Long tpssId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoSubservicioDAO tpssDAO = session.getMapper(TipoSubservicioDAO.class);
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);

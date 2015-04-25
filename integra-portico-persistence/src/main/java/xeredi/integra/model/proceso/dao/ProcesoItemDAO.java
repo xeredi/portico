@@ -2,8 +2,6 @@ package xeredi.integra.model.proceso.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.proceso.vo.ProcesoItemCriterioVO;
 import xeredi.integra.model.proceso.vo.ProcesoItemVO;
 
@@ -19,7 +17,7 @@ public interface ProcesoItemDAO {
      * @param pritVO
      *            the prit vo
      */
-    void insert(final @Nonnull ProcesoItemVO pritVO);
+    void insert(final ProcesoItemVO pritVO);
 
     /**
      * Delete.
@@ -28,7 +26,7 @@ public interface ProcesoItemDAO {
      *            the prbt id
      * @return the int
      */
-    int delete(final @Nonnull Long prbtId);
+    int delete(final Long prbtId);
 
     /**
      * Select list.
@@ -37,6 +35,6 @@ public interface ProcesoItemDAO {
      *            the prit criterio
      * @return the list
      */
-    List<ProcesoItemVO> selectList(final @Nonnull ProcesoItemCriterioVO pritCriterio);
+    List<ProcesoItemVO> selectList(final ProcesoItemCriterioVO pritCriterio);
 
 }

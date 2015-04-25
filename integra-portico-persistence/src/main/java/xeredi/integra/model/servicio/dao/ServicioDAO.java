@@ -2,8 +2,6 @@ package xeredi.integra.model.servicio.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
@@ -23,7 +21,7 @@ public interface ServicioDAO {
      *            the srvc vo
      * @return true, if successful
      */
-    boolean exists(final @Nonnull ServicioVO srvcVO);
+    boolean exists(final ServicioVO srvcVO);
 
     /**
      * Insert.
@@ -31,7 +29,7 @@ public interface ServicioDAO {
      * @param srvcVO
      *            the srvc vo
      */
-    void insert(final @Nonnull ServicioVO srvcVO);
+    void insert(final ServicioVO srvcVO);
 
     /**
      * Delete.
@@ -40,7 +38,7 @@ public interface ServicioDAO {
      *            the srvc id
      * @return the int
      */
-    int delete(final @Nonnull Long srvcId);
+    int delete(final Long srvcId);
 
     /**
      * Update pepr desasociar.
@@ -49,7 +47,7 @@ public interface ServicioDAO {
      *            the pepr id
      * @return the int
      */
-    int updatePeprDesasociar(final @Nonnull Long peprId);
+    int updatePeprDesasociar(final Long peprId);
 
     /**
      * Select count.
@@ -58,7 +56,7 @@ public interface ServicioDAO {
      *            the srvc criterio vo
      * @return the int
      */
-    int count(final @Nonnull ServicioCriterioVO srvcCriterioVO);
+    int count(final ServicioCriterioVO srvcCriterioVO);
 
     /**
      * Select list.
@@ -67,7 +65,7 @@ public interface ServicioDAO {
      *            the srvc criterio vo
      * @return the list
      */
-    List<ServicioVO> selectList(final @Nonnull ServicioCriterioVO srvcCriterioVO);
+    List<ServicioVO> selectList(final ServicioCriterioVO srvcCriterioVO);
 
     /**
      * Select list.
@@ -78,7 +76,7 @@ public interface ServicioDAO {
      *            the bounds
      * @return the list
      */
-    List<ServicioVO> selectList(final @Nonnull ServicioCriterioVO srvcCriterioVO, final RowBounds bounds);
+    List<ServicioVO> selectList(final ServicioCriterioVO srvcCriterioVO, final RowBounds bounds);
 
     /**
      * Select lupa list.
@@ -89,7 +87,7 @@ public interface ServicioDAO {
      *            the bounds
      * @return the list
      */
-    List<ServicioVO> selectLupaList(final @Nonnull ServicioLupaCriterioVO srvcCriterioVO, final RowBounds bounds);
+    List<ServicioVO> selectLupaList(final ServicioLupaCriterioVO srvcCriterioVO, final RowBounds bounds);
 
     /**
      * Select object.
@@ -98,6 +96,6 @@ public interface ServicioDAO {
      *            the srvc criterio vo
      * @return the servicio vo
      */
-    ServicioVO selectObject(final @Nonnull ServicioCriterioVO srvcCriterioVO);
+    ServicioVO selectObject(final ServicioCriterioVO srvcCriterioVO);
 
 }

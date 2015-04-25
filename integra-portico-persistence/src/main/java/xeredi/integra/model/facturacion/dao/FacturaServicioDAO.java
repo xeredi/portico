@@ -2,8 +2,6 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
 
@@ -19,7 +17,7 @@ public interface FacturaServicioDAO {
      * @param fcts
      *            the fcts
      */
-    void insert(final @Nonnull FacturaServicioVO fcts);
+    void insert(final FacturaServicioVO fcts);
 
     /**
      * Select.
@@ -28,7 +26,7 @@ public interface FacturaServicioDAO {
      *            the fcts id
      * @return the factura servicio vo
      */
-    FacturaServicioVO select(final @Nonnull Long fctsId);
+    FacturaServicioVO select(final Long fctsId);
 
     /**
      * Select list.
@@ -37,5 +35,5 @@ public interface FacturaServicioDAO {
      *            the fctr criterio vo
      * @return the list
      */
-    List<FacturaServicioVO> selectList(final @Nonnull FacturaCriterioVO fctrCriterioVO);
+    List<FacturaServicioVO> selectList(final FacturaCriterioVO fctrCriterioVO);
 }

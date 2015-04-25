@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -135,7 +133,7 @@ public abstract class ProcesoTemplate {
      * @param fechaVigencia
      *            the fecha vigencia
      */
-    protected final void buscarMaestros(final @Nonnull Date fechaVigencia) {
+    protected final void buscarMaestros(final Date fechaVigencia) {
         if (LOG.isInfoEnabled()) {
             LOG.info("Busqueda de Maestros");
         }
@@ -173,7 +171,7 @@ public abstract class ProcesoTemplate {
      * @param fechaVigencia
      *            the fecha vigencia
      */
-    protected final void buscarOrganizaciones(final @Nonnull Date fechaVigencia) {
+    protected final void buscarOrganizaciones(final Date fechaVigencia) {
         if (!nifSet.isEmpty()) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Busqueda de Organizaciones");
@@ -209,7 +207,7 @@ public abstract class ProcesoTemplate {
      * @param codigo
      *            the codigo
      */
-    public final void addCodigoMaestro(final @Nonnull Entidad entidad, final String codigo) {
+    public final void addCodigoMaestro(final Entidad entidad, final String codigo) {
         if (!codigoMaestroMap.containsKey(entidad)) {
             codigoMaestroMap.put(entidad, new HashSet<String>());
         }
@@ -228,7 +226,7 @@ public abstract class ProcesoTemplate {
      *            the codigo
      * @return the parametro vo
      */
-    public final ParametroVO findMaestro(final @Nonnull Entidad entidad, final String codigo) {
+    public final ParametroVO findMaestro(final Entidad entidad, final String codigo) {
         if (codigo == null || codigo.isEmpty()) {
             return null;
         }
@@ -251,7 +249,7 @@ public abstract class ProcesoTemplate {
      *            the codigo
      * @return the parametro vo
      */
-    public final ParametroVO findMaestro(final @Nonnull Entidad entidad, final PuertoVO prto, final String codigo) {
+    public final ParametroVO findMaestro(final Entidad entidad, final PuertoVO prto, final String codigo) {
         Preconditions.checkNotNull(entidad);
         Preconditions.checkNotNull(prto);
 
@@ -275,7 +273,7 @@ public abstract class ProcesoTemplate {
      *            the codigo
      * @return true, if successful
      */
-    public final boolean existsMaestro(final @Nonnull Entidad entidad, final String codigo) {
+    public final boolean existsMaestro(final Entidad entidad, final String codigo) {
         if (codigo == null || codigo.isEmpty()) {
             return false;
         }
@@ -322,8 +320,7 @@ public abstract class ProcesoTemplate {
      * @param mensaje
      *            the mensaje
      */
-    private final void addMensaje(final @Nonnull MensajeCodigo codigo, final @Nonnull MensajeNivel nivel,
-            final String mensaje) {
+    private final void addMensaje(final MensajeCodigo codigo, final MensajeNivel nivel, final String mensaje) {
         final ProcesoMensajeVO prmnVO = new ProcesoMensajeVO();
 
         prmnVO.setCodigo(codigo);
@@ -344,7 +341,7 @@ public abstract class ProcesoTemplate {
      * @param mensaje
      *            the mensaje
      */
-    public final void addError(final @Nonnull MensajeCodigo codigo, final String mensaje) {
+    public final void addError(final MensajeCodigo codigo, final String mensaje) {
         addMensaje(codigo, MensajeNivel.E, mensaje);
     }
 
@@ -356,7 +353,7 @@ public abstract class ProcesoTemplate {
      * @param mensaje
      *            the mensaje
      */
-    public final void addWarning(final @Nonnull MensajeCodigo codigo, final String mensaje) {
+    public final void addWarning(final MensajeCodigo codigo, final String mensaje) {
         addMensaje(codigo, MensajeNivel.W, mensaje);
     }
 
@@ -368,7 +365,7 @@ public abstract class ProcesoTemplate {
      * @param mensaje
      *            the mensaje
      */
-    public final void addInfo(final @Nonnull MensajeCodigo codigo, final String mensaje) {
+    public final void addInfo(final MensajeCodigo codigo, final String mensaje) {
         addMensaje(codigo, MensajeNivel.I, mensaje);
     }
 

@@ -2,8 +2,6 @@ package xeredi.integra.model.metamodelo.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaCriterioVO;
@@ -22,7 +20,7 @@ public interface TipoEstadisticaDAO {
      *            the tpes criterio vo
      * @return the list
      */
-    List<TipoEstadisticaVO> selectList(final @Nonnull TipoEstadisticaCriterioVO tpesCriterioVO);
+    List<TipoEstadisticaVO> selectList(final TipoEstadisticaCriterioVO tpesCriterioVO);
 
     /**
      * Select list.
@@ -33,8 +31,7 @@ public interface TipoEstadisticaDAO {
      *            the bounds
      * @return the list
      */
-    List<TipoEstadisticaVO> selectPaginatedList(final @Nonnull TipoEstadisticaCriterioVO tpesCriterioVO,
-            final RowBounds bounds);
+    List<TipoEstadisticaVO> selectPaginatedList(final TipoEstadisticaCriterioVO tpesCriterioVO, final RowBounds bounds);
 
     /**
      * Select.
@@ -43,7 +40,7 @@ public interface TipoEstadisticaDAO {
      *            the enti criterio vo
      * @return the tipo estadistica vo
      */
-    TipoEstadisticaVO selectObject(final @Nonnull TipoEstadisticaCriterioVO entiCriterioVO);
+    TipoEstadisticaVO selectObject(final TipoEstadisticaCriterioVO entiCriterioVO);
 
     /**
      * Count.
@@ -52,7 +49,7 @@ public interface TipoEstadisticaDAO {
      *            the tpes criterio vo
      * @return the int
      */
-    int count(final @Nonnull TipoEstadisticaCriterioVO tpesCriterioVO);
+    int count(final TipoEstadisticaCriterioVO tpesCriterioVO);
 
     /**
      * Insert.
@@ -60,7 +57,7 @@ public interface TipoEstadisticaDAO {
      * @param tpesVO
      *            the tpes vo
      */
-    void insert(final @Nonnull TipoEstadisticaVO tpesVO);
+    void insert(final TipoEstadisticaVO tpesVO);
 
     /**
      * Delete.
@@ -69,6 +66,6 @@ public interface TipoEstadisticaDAO {
      *            the tpes id
      * @return the int
      */
-    int delete(final @Nonnull Long tpesId);
+    int delete(final Long tpesId);
 
 }

@@ -2,8 +2,6 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleCriterioVO;
@@ -21,7 +19,7 @@ public interface ValoracionDetalleDAO {
      * @param vlrdVO
      *            the vlrd vo
      */
-    void insert(final @Nonnull ValoracionDetalleVO vlrdVO);
+    void insert(final ValoracionDetalleVO vlrdVO);
 
     /**
      * Update.
@@ -30,7 +28,7 @@ public interface ValoracionDetalleDAO {
      *            the vlrd vo
      * @return the int
      */
-    int update(final @Nonnull ValoracionDetalleVO vlrdVO);
+    int update(final ValoracionDetalleVO vlrdVO);
 
     /**
      * Delete.
@@ -48,7 +46,7 @@ public interface ValoracionDetalleDAO {
      *            the vlrd criterio vo
      * @return the int
      */
-    int deleteList(final @Nonnull ValoracionDetalleCriterioVO vlrdCriterioVO);
+    int deleteList(final ValoracionDetalleCriterioVO vlrdCriterioVO);
 
     /**
      * Select.
@@ -57,7 +55,7 @@ public interface ValoracionDetalleDAO {
      *            the id
      * @return the valoracion detalle vo
      */
-    ValoracionDetalleVO select(final @Nonnull Long id);
+    ValoracionDetalleVO select(final Long id);
 
     /**
      * Count.
@@ -66,7 +64,7 @@ public interface ValoracionDetalleDAO {
      *            the vlrd criterio vo
      * @return the int
      */
-    int count(final @Nonnull ValoracionDetalleCriterioVO vlrdCriterioVO);
+    int count(final ValoracionDetalleCriterioVO vlrdCriterioVO);
 
     /**
      * Select list.
@@ -77,8 +75,7 @@ public interface ValoracionDetalleDAO {
      *            the bounds
      * @return the list
      */
-    List<ValoracionDetalleVO> selectList(final @Nonnull ValoracionDetalleCriterioVO vlrdCriterio,
-            final @Nonnull RowBounds bounds);
+    List<ValoracionDetalleVO> selectList(final ValoracionDetalleCriterioVO vlrdCriterio, final RowBounds bounds);
 
     /**
      * Select list.
@@ -87,5 +84,5 @@ public interface ValoracionDetalleDAO {
      *            the vlrd criterio
      * @return the list
      */
-    List<ValoracionDetalleVO> selectList(final @Nonnull ValoracionDetalleCriterioVO vlrdCriterio);
+    List<ValoracionDetalleVO> selectList(final ValoracionDetalleCriterioVO vlrdCriterio);
 }

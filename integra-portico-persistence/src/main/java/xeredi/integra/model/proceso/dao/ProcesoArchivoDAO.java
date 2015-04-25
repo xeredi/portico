@@ -2,8 +2,6 @@ package xeredi.integra.model.proceso.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.proceso.vo.ProcesoArchivoVO;
 
 // TODO: Auto-generated Javadoc
@@ -18,7 +16,7 @@ public interface ProcesoArchivoDAO {
      * @param prarVO
      *            the prar vo
      */
-    void insert(final @Nonnull ProcesoArchivoVO prarVO);
+    void insert(final ProcesoArchivoVO prarVO);
 
     /**
      * Delete.
@@ -27,7 +25,7 @@ public interface ProcesoArchivoDAO {
      *            the prbt id
      * @return the int
      */
-    int deleteList(final @Nonnull Long prbtId);
+    int deleteList(final Long prbtId);
 
     /**
      * Select list.
@@ -36,5 +34,5 @@ public interface ProcesoArchivoDAO {
      *            the prbt id
      * @return the list
      */
-    List<ProcesoArchivoVO> selectList(final @Nonnull Long prbtId);
+    List<ProcesoArchivoVO> selectList(final Long prbtId);
 }

@@ -1,7 +1,5 @@
 package xeredi.integra.model.servicio.dao.manifiesto;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -17,7 +15,7 @@ public interface ManifiestoSubservicioDAO {
      *            the ssrv criterio vo
      * @return the int
      */
-    int updateBloquear(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
+    int updateBloquear(final SubservicioCriterioVO ssrvCriterioVO);
 
     /**
      * Update completar.
@@ -26,7 +24,7 @@ public interface ManifiestoSubservicioDAO {
      *            the ssrv criterio vo
      * @return the int
      */
-    int updateCompletar(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
+    int updateCompletar(final SubservicioCriterioVO ssrvCriterioVO);
 
     /**
      * Update iniciar.
@@ -35,7 +33,7 @@ public interface ManifiestoSubservicioDAO {
      *            the ssrv criterio vo
      * @return the int
      */
-    int updateIniciar(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
+    int updateIniciar(final SubservicioCriterioVO ssrvCriterioVO);
 
     /**
      * Update anular.
@@ -44,6 +42,6 @@ public interface ManifiestoSubservicioDAO {
      *            the ssrv criterio vo
      * @return the int
      */
-    int updateAnular(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
+    int updateAnular(final SubservicioCriterioVO ssrvCriterioVO);
 
 }

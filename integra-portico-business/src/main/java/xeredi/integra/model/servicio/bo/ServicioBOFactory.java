@@ -3,8 +3,6 @@ package xeredi.integra.model.servicio.bo;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -66,7 +64,7 @@ public final class ServicioBOFactory {
      *            the enti id
      * @return the servicio bo
      */
-    public static ServicioBO newInstance(final @Nonnull Long entiId) {
+    public static ServicioBO newInstance(final Long entiId) {
         if (MAP.containsKey(entiId)) {
             try {
                 return (ServicioBO) MAP.get(entiId).newInstance();

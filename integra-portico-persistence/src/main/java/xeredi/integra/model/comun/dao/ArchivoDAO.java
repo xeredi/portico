@@ -1,7 +1,5 @@
 package xeredi.integra.model.comun.dao;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.comun.vo.ArchivoVO;
 
 // TODO: Auto-generated Javadoc
@@ -16,7 +14,7 @@ public interface ArchivoDAO {
      * @param vo
      *            the vo
      */
-    void insert(final @Nonnull ArchivoVO vo);
+    void insert(final ArchivoVO vo);
 
     /**
      * Select.
@@ -25,5 +23,5 @@ public interface ArchivoDAO {
      *            the id
      * @return the archivo vo
      */
-    ArchivoVO select(final @Nonnull Long id);
+    ArchivoVO select(final Long id);
 }

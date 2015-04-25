@@ -3,8 +3,6 @@ package xeredi.integra.model.metamodelo.dao;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.session.RowBounds;
 
@@ -30,7 +28,7 @@ public interface TipoDatoDAO {
      * @param tpdtVO
      *            the tpdt vo
      */
-    void insert(final @Nonnull TipoDatoVO tpdtVO);
+    void insert(final TipoDatoVO tpdtVO);
 
     /**
      * Update.
@@ -39,7 +37,7 @@ public interface TipoDatoDAO {
      *            the tpdt vo
      * @return the int
      */
-    int update(final @Nonnull TipoDatoVO tpdtVO);
+    int update(final TipoDatoVO tpdtVO);
 
     /**
      * Delete.
@@ -48,7 +46,7 @@ public interface TipoDatoDAO {
      *            the id
      * @return the int
      */
-    int delete(final @Nonnull Long id);
+    int delete(final Long id);
 
     /**
      * Exists.
@@ -57,7 +55,7 @@ public interface TipoDatoDAO {
      *            the tpdt vo
      * @return true, if successful
      */
-    boolean exists(final @Nonnull TipoDatoVO tpdtVO);
+    boolean exists(final TipoDatoVO tpdtVO);
 
     /**
      * Select object.
@@ -66,7 +64,7 @@ public interface TipoDatoDAO {
      *            the tpdt criterio vo
      * @return the tipo dato vo
      */
-    TipoDatoVO selectObject(final @Nonnull TipoDatoCriterioVO tpdtCriterioVO);
+    TipoDatoVO selectObject(final TipoDatoCriterioVO tpdtCriterioVO);
 
     /**
      * Count.
@@ -75,7 +73,7 @@ public interface TipoDatoDAO {
      *            the tpdt criterio vo
      * @return the int
      */
-    int count(final @Nonnull TipoDatoCriterioVO tpdtCriterioVO);
+    int count(final TipoDatoCriterioVO tpdtCriterioVO);
 
     /**
      * Select list.
@@ -86,8 +84,7 @@ public interface TipoDatoDAO {
      *            the bounds
      * @return the list
      */
-    List<TipoDatoVO> selectPaginatedList(final @Nonnull TipoDatoCriterioVO tpdtCriterioVO,
-            final @Nonnull RowBounds bounds);
+    List<TipoDatoVO> selectPaginatedList(final TipoDatoCriterioVO tpdtCriterioVO, final RowBounds bounds);
 
     /**
      * Select list.
@@ -96,7 +93,7 @@ public interface TipoDatoDAO {
      *            the tpdt criterio vo
      * @return the list
      */
-    List<TipoDatoVO> selectList(final @Nonnull TipoDatoCriterioVO tpdtCriterioVO);
+    List<TipoDatoVO> selectList(final TipoDatoCriterioVO tpdtCriterioVO);
 
     /**
      * Select map.
@@ -106,5 +103,5 @@ public interface TipoDatoDAO {
      * @return the map
      */
     @MapKey("id")
-    Map<Long, TipoDatoVO> selectMap(final @Nonnull TipoDatoCriterioVO tpdtCriterioVO);
+    Map<Long, TipoDatoVO> selectMap(final TipoDatoCriterioVO tpdtCriterioVO);
 }

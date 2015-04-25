@@ -1,6 +1,5 @@
 package xeredi.integra.model.servicio.dao.manifiesto;
 
-import javax.annotation.Nonnull;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -15,7 +14,7 @@ public interface EquipamientoDAO {
      *            the part id
      * @return the int
      */
-    int updateBloquearFromPartida(final @Nonnull Long partId);
+    int updateBloquearFromPartida(final Long partId);
 
     /**
      * Update iniciar from partida.
@@ -24,5 +23,5 @@ public interface EquipamientoDAO {
      *            the part id
      * @return the int
      */
-    int updateIniciarFromPartida(final @Nonnull Long partId);
+    int updateIniciarFromPartida(final Long partId);
 }

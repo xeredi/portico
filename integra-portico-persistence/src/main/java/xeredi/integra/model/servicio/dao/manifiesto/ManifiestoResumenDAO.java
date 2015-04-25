@@ -1,7 +1,5 @@
 package xeredi.integra.model.servicio.dao.manifiesto;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesCriterioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
 
@@ -18,5 +16,5 @@ public interface ManifiestoResumenDAO {
      *            the criterio vo
      * @return the manifiesto total vo
      */
-    ResumenTotalesVO selectObject(final @Nonnull ResumenTotalesCriterioVO criterioVO);
+    ResumenTotalesVO selectObject(final ResumenTotalesCriterioVO criterioVO);
 }

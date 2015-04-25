@@ -2,8 +2,6 @@ package xeredi.integra.model.estadistica.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
@@ -21,7 +19,7 @@ public interface EstadisticaDAO {
      * @param estdVO
      *            the estd vo
      */
-    void insert(final @Nonnull EstadisticaVO estdVO);
+    void insert(final EstadisticaVO estdVO);
 
     /**
      * Count.
@@ -30,7 +28,7 @@ public interface EstadisticaDAO {
      *            the estd criterio vo
      * @return the int
      */
-    int selectCount(final @Nonnull EstadisticaCriterioVO estdCriterioVO);
+    int selectCount(final EstadisticaCriterioVO estdCriterioVO);
 
     /**
      * Select list.
@@ -39,7 +37,7 @@ public interface EstadisticaDAO {
      *            the estd criterio vo
      * @return the list
      */
-    List<EstadisticaVO> selectList(final @Nonnull EstadisticaCriterioVO estdCriterioVO);
+    List<EstadisticaVO> selectList(final EstadisticaCriterioVO estdCriterioVO);
 
     /**
      * Select list.
@@ -50,7 +48,7 @@ public interface EstadisticaDAO {
      *            the bounds
      * @return the list
      */
-    List<EstadisticaVO> selectList(final @Nonnull EstadisticaCriterioVO estdCriterioVO, final RowBounds bounds);
+    List<EstadisticaVO> selectList(final EstadisticaCriterioVO estdCriterioVO, final RowBounds bounds);
 
     /**
      * Select object.
@@ -59,7 +57,7 @@ public interface EstadisticaDAO {
      *            the estd criterio vo
      * @return the estadistica vo
      */
-    EstadisticaVO selectObject(final @Nonnull EstadisticaCriterioVO estdCriterioVO);
+    EstadisticaVO selectObject(final EstadisticaCriterioVO estdCriterioVO);
 
     /**
      * Delete.
@@ -68,5 +66,5 @@ public interface EstadisticaDAO {
      *            the prpr id
      * @return the int
      */
-    int delete(final @Nonnull Long prprId);
+    int delete(final Long prprId);
 }

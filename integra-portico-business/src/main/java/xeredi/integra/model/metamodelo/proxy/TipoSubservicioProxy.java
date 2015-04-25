@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -60,7 +58,7 @@ public final class TipoSubservicioProxy {
      *            the id
      * @return the tipo subservicio vo
      */
-    public static TipoSubservicioDetailVO select(final @Nonnull Long id) {
+    public static TipoSubservicioDetailVO select(final Long id) {
         if (!TIPO_SUBSERVICIO_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tpss, id));
         }

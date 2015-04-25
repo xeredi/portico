@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.I18nVO;
@@ -35,8 +33,8 @@ public interface ParametroBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    void insert(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroDetailVO tpprDetail,
-            final Map<String, I18nVO> i18nMap) throws OverlapException;
+    void insert(final ParametroVO prmt, final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+            throws OverlapException;
 
     /**
      * Duplicate.
@@ -52,8 +50,8 @@ public interface ParametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    void duplicate(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroDetailVO tpprDetail,
-            final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException;
+    void duplicate(final ParametroVO prmt, final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+            throws OverlapException, InstanceNotFoundException;
 
     /**
      * Update.
@@ -69,8 +67,8 @@ public interface ParametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    void update(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroDetailVO tpprDetail,
-            final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException;
+    void update(final ParametroVO prmt, final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+            throws OverlapException, InstanceNotFoundException;
 
     /**
      * Delete.
@@ -80,7 +78,7 @@ public interface ParametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    void delete(final @Nonnull ParametroVO prmt) throws InstanceNotFoundException;
+    void delete(final ParametroVO prmt) throws InstanceNotFoundException;
 
     /**
      * Select list.
@@ -89,7 +87,7 @@ public interface ParametroBO {
      *            the prmt criterio vo
      * @return the list
      */
-    List<ParametroVO> selectList(final @Nonnull ParametroCriterioVO prmtCriterioVO);
+    List<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO);
 
     /**
      * Select list.
@@ -102,8 +100,7 @@ public interface ParametroBO {
      *            the limit
      * @return the paginated list
      */
-    PaginatedList<ParametroVO> selectList(final @Nonnull ParametroCriterioVO prmtCriterioVO, final int offset,
-            final int limit);
+    PaginatedList<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO, final int offset, final int limit);
 
     /**
      * Select map.
@@ -112,7 +109,7 @@ public interface ParametroBO {
      *            the prmt criterio vo
      * @return the map
      */
-    Map<Long, ParametroVO> selectMap(final @Nonnull ParametroCriterioVO prmtCriterioVO);
+    Map<Long, ParametroVO> selectMap(final ParametroCriterioVO prmtCriterioVO);
 
     /**
      * Select map by codigo.
@@ -121,7 +118,7 @@ public interface ParametroBO {
      *            the prmt criterio vo
      * @return the map
      */
-    Map<String, ParametroVO> selectMapByCodigo(final @Nonnull ParametroCriterioVO prmtCriterioVO);
+    Map<String, ParametroVO> selectMapByCodigo(final ParametroCriterioVO prmtCriterioVO);
 
     /**
      * Select map codigo id.
@@ -130,7 +127,7 @@ public interface ParametroBO {
      *            the prmt criterio vo
      * @return the map
      */
-    Map<String, Long> selectMapCodigoId(final @Nonnull ParametroCriterioVO prmtCriterioVO);
+    Map<String, Long> selectMapCodigoId(final ParametroCriterioVO prmtCriterioVO);
 
     /**
      * Select map id codigo.
@@ -139,7 +136,7 @@ public interface ParametroBO {
      *            the prmt criterio vo
      * @return the map
      */
-    Map<Long, String> selectMapIdCodigo(final @Nonnull ParametroCriterioVO prmtCriterioVO);
+    Map<Long, String> selectMapIdCodigo(final ParametroCriterioVO prmtCriterioVO);
 
     /**
      * Select label values.
@@ -152,7 +149,7 @@ public interface ParametroBO {
      *            the idioma
      * @return the map
      */
-    Map<Long, List<LabelValueVO>> selectLabelValues(final @Nonnull Set<Long> tpprIds, final Date fechaReferencia,
+    Map<Long, List<LabelValueVO>> selectLabelValues(final Set<Long> tpprIds, final Date fechaReferencia,
             final String idioma);
 
     /**
@@ -162,7 +159,7 @@ public interface ParametroBO {
      *            the criterio vo
      * @return the list
      */
-    List<LabelValueVO> selectLabelValues(final @Nonnull ParametroCriterioVO criterioVO);
+    List<LabelValueVO> selectLabelValues(final ParametroCriterioVO criterioVO);
 
     /**
      * Select object.
@@ -173,7 +170,7 @@ public interface ParametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    ParametroVO selectObject(final @Nonnull ParametroCriterioVO prmtCriterioVO) throws InstanceNotFoundException;
+    ParametroVO selectObject(final ParametroCriterioVO prmtCriterioVO) throws InstanceNotFoundException;
 
     /**
      * Select.
@@ -188,7 +185,7 @@ public interface ParametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    ParametroVO select(final @Nonnull Long prmtId, final String idioma, final Date fechaVigencia)
+    ParametroVO select(final Long prmtId, final String idioma, final Date fechaVigencia)
             throws InstanceNotFoundException;
 
     /**
@@ -200,6 +197,6 @@ public interface ParametroBO {
      *            the limit
      * @return the list
      */
-    List<ParametroVO> selectLupaList(final @Nonnull ParametroTypeaheadCriterioVO criterio, final int limit);
+    List<ParametroVO> selectLupaList(final ParametroTypeaheadCriterioVO criterio, final int limit);
 
 }

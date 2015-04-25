@@ -2,8 +2,6 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.facturacion.vo.FacturaLineaCriterioVO;
@@ -21,7 +19,7 @@ public interface FacturaLineaDAO {
      * @param fctl
      *            the fctl
      */
-    void insert(final @Nonnull FacturaLineaVO fctl);
+    void insert(final FacturaLineaVO fctl);
 
     /**
      * Count.
@@ -30,7 +28,7 @@ public interface FacturaLineaDAO {
      *            the fctl criterio vo
      * @return the int
      */
-    int count(final @Nonnull FacturaLineaCriterioVO fctlCriterioVO);
+    int count(final FacturaLineaCriterioVO fctlCriterioVO);
 
     /**
      * Select list.
@@ -41,8 +39,7 @@ public interface FacturaLineaDAO {
      *            the bounds
      * @return the list
      */
-    List<FacturaLineaVO> selectPaginatedList(final @Nonnull FacturaLineaCriterioVO fctlCriterioVO,
-            final @Nonnull RowBounds bounds);
+    List<FacturaLineaVO> selectPaginatedList(final FacturaLineaCriterioVO fctlCriterioVO, final RowBounds bounds);
 
     /**
      * Select list.
@@ -51,7 +48,7 @@ public interface FacturaLineaDAO {
      *            the fctl criterio vo
      * @return the list
      */
-    List<FacturaLineaVO> selectList(final @Nonnull FacturaLineaCriterioVO fctlCriterioVO);
+    List<FacturaLineaVO> selectList(final FacturaLineaCriterioVO fctlCriterioVO);
 
     /**
      * Select.
@@ -60,5 +57,5 @@ public interface FacturaLineaDAO {
      *            the fctl id
      * @return the factura linea vo
      */
-    FacturaLineaVO select(final @Nonnull Long fctlId);
+    FacturaLineaVO select(final Long fctlId);
 }

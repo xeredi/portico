@@ -2,8 +2,6 @@ package xeredi.integra.model.estadistica.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
@@ -22,7 +20,7 @@ public interface PeriodoProcesoDAO {
      *            the pepr vo
      * @return true, if successful
      */
-    boolean exists(final @Nonnull PeriodoProcesoVO peprVO);
+    boolean exists(final PeriodoProcesoVO peprVO);
 
     /**
      * Insert.
@@ -30,7 +28,7 @@ public interface PeriodoProcesoDAO {
      * @param peprVO
      *            the pepr vo
      */
-    void insert(final @Nonnull PeriodoProcesoVO peprVO);
+    void insert(final PeriodoProcesoVO peprVO);
 
     /**
      * Delete.
@@ -39,7 +37,7 @@ public interface PeriodoProcesoDAO {
      *            the pepr id
      * @return the int
      */
-    int delete(final @Nonnull Long peprId);
+    int delete(final Long peprId);
 
     /**
      * Select.
@@ -48,7 +46,7 @@ public interface PeriodoProcesoDAO {
      *            the pepr id
      * @return the periodo proceso vo
      */
-    PeriodoProcesoVO select(final @Nonnull Long peprId);
+    PeriodoProcesoVO select(final Long peprId);
 
     /**
      * Select object.
@@ -57,7 +55,7 @@ public interface PeriodoProcesoDAO {
      *            the pepr criterio vo
      * @return the periodo proceso vo
      */
-    PeriodoProcesoVO selectObject(final @Nonnull PeriodoProcesoCriterioVO peprCriterioVO);
+    PeriodoProcesoVO selectObject(final PeriodoProcesoCriterioVO peprCriterioVO);
 
     /**
      * Count.
@@ -66,7 +64,7 @@ public interface PeriodoProcesoDAO {
      *            the pepr criterio vo
      * @return the int
      */
-    int selectCount(final @Nonnull PeriodoProcesoCriterioVO peprCriterioVO);
+    int selectCount(final PeriodoProcesoCriterioVO peprCriterioVO);
 
     /**
      * Select list.
@@ -75,7 +73,7 @@ public interface PeriodoProcesoDAO {
      *            the pepr criterio vo
      * @return the list
      */
-    List<PeriodoProcesoVO> selectList(final @Nonnull PeriodoProcesoCriterioVO peprCriterioVO);
+    List<PeriodoProcesoVO> selectList(final PeriodoProcesoCriterioVO peprCriterioVO);
 
     /**
      * Select list.
@@ -86,6 +84,5 @@ public interface PeriodoProcesoDAO {
      *            the bounds
      * @return the list
      */
-    List<PeriodoProcesoVO> selectPaginatedList(final @Nonnull PeriodoProcesoCriterioVO peprCriterioVO,
-            final @Nonnull RowBounds bounds);
+    List<PeriodoProcesoVO> selectPaginatedList(final PeriodoProcesoCriterioVO peprCriterioVO, final RowBounds bounds);
 }

@@ -30,6 +30,15 @@ public final class ReglaVO implements Versionable<ReglaVersionVO> {
     private ReglaVersionVO version;
 
     /**
+     * Instantiates a new regla vo.
+     */
+    public ReglaVO() {
+        super();
+
+        version = new ReglaVersionVO();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

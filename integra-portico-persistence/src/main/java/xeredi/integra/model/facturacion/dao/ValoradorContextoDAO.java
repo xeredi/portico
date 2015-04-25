@@ -2,8 +2,6 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.Date;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.facturacion.vo.ValoradorContextoVO;
 
 // TODO: Auto-generated Javadoc
@@ -19,7 +17,7 @@ public interface ValoradorContextoDAO {
      *            the contexto vo
      * @return the date
      */
-    Date selectFref(final @Nonnull ValoradorContextoVO contextoVO);
+    Date selectFref(final ValoradorContextoVO contextoVO);
 
     /**
      * Select fini.
@@ -28,7 +26,7 @@ public interface ValoradorContextoDAO {
      *            the contexto vo
      * @return the date
      */
-    Date selectFini(final @Nonnull ValoradorContextoVO contextoVO);
+    Date selectFini(final ValoradorContextoVO contextoVO);
 
     /**
      * Select ffin.
@@ -37,5 +35,5 @@ public interface ValoradorContextoDAO {
      *            the contexto vo
      * @return the date
      */
-    Date selectFfin(final @Nonnull ValoradorContextoVO contextoVO);
+    Date selectFfin(final ValoradorContextoVO contextoVO);
 }

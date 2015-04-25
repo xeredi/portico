@@ -24,6 +24,15 @@ public final class CargoVO implements Versionable<CargoVersionVO> {
     private CargoVersionVO version;
 
     /**
+     * Instantiates a new cargo vo.
+     */
+    public CargoVO() {
+        super();
+
+        version = new CargoVersionVO();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

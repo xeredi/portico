@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.io.IOUtils;
@@ -210,7 +208,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private Map<EstadisticaFileType, List<String>> readFile(final @Nonnull InputStream stream) throws IOException {
+    private Map<EstadisticaFileType, List<String>> readFile(final InputStream stream) throws IOException {
         final Map<EstadisticaFileType, List<String>> fileMap = new HashMap<EstadisticaFileType, List<String>>();
 
         try (final ZipArchiveInputStream zis = new ZipArchiveInputStream(stream)) {

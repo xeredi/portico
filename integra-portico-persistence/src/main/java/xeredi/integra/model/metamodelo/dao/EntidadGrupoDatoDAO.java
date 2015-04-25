@@ -2,8 +2,6 @@ package xeredi.integra.model.metamodelo.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 
@@ -19,7 +17,7 @@ public interface EntidadGrupoDatoDAO {
      * @param engdVO
      *            the engd vo
      */
-    void insert(final @Nonnull EntidadGrupoDatoVO engdVO);
+    void insert(final EntidadGrupoDatoVO engdVO);
 
     /**
      * Update.
@@ -28,7 +26,7 @@ public interface EntidadGrupoDatoDAO {
      *            the engd vo
      * @return the int
      */
-    int update(final @Nonnull EntidadGrupoDatoVO engdVO);
+    int update(final EntidadGrupoDatoVO engdVO);
 
     /**
      * Delete.
@@ -37,7 +35,7 @@ public interface EntidadGrupoDatoDAO {
      *            the engd criterio vo
      * @return the int
      */
-    int delete(final @Nonnull EntidadGrupoDatoCriterioVO engdCriterioVO);
+    int delete(final EntidadGrupoDatoCriterioVO engdCriterioVO);
 
     /**
      * Delete list.
@@ -46,7 +44,7 @@ public interface EntidadGrupoDatoDAO {
      *            the enti id
      * @return the int
      */
-    int deleteList(final @Nonnull Long entiId);
+    int deleteList(final Long entiId);
 
     /**
      * Select criterio.
@@ -55,7 +53,7 @@ public interface EntidadGrupoDatoDAO {
      *            the engd criterio vo
      * @return the entidad grupo dato vo
      */
-    EntidadGrupoDatoVO selectObject(final @Nonnull EntidadGrupoDatoCriterioVO engdCriterioVO);
+    EntidadGrupoDatoVO selectObject(final EntidadGrupoDatoCriterioVO engdCriterioVO);
 
     /**
      * Select list.
@@ -64,7 +62,7 @@ public interface EntidadGrupoDatoDAO {
      *            the engd criterio vo
      * @return the list
      */
-    List<EntidadGrupoDatoVO> selectList(final @Nonnull EntidadGrupoDatoCriterioVO engdCriterioVO);
+    List<EntidadGrupoDatoVO> selectList(final EntidadGrupoDatoCriterioVO engdCriterioVO);
 
     /**
      * Select all.

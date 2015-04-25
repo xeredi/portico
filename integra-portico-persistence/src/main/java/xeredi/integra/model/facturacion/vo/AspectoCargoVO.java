@@ -23,6 +23,15 @@ public final class AspectoCargoVO implements Versionable<AspectoCargoVersionVO> 
     private AspectoCargoVersionVO version;
 
     /**
+     * Instantiates a new aspecto cargo vo.
+     */
+    public AspectoCargoVO() {
+        super();
+
+        version = new AspectoCargoVersionVO();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

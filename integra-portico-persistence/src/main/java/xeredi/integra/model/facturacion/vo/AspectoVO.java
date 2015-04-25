@@ -23,6 +23,15 @@ public final class AspectoVO implements Versionable<AspectoVersionVO> {
     private AspectoVersionVO version;
 
     /**
+     * Instantiates a new aspecto vo.
+     */
+    public AspectoVO() {
+        super();
+
+        version = new AspectoVersionVO();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

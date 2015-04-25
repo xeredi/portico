@@ -2,8 +2,6 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.facturacion.vo.FacturaSerieCriterioVO;
@@ -22,7 +20,7 @@ public interface FacturaSerieDAO {
      *            the id
      * @return the factura serie vo
      */
-    FacturaSerieVO select(final @Nonnull Long id);
+    FacturaSerieVO select(final Long id);
 
     /**
      * Update incrementar.
@@ -31,7 +29,7 @@ public interface FacturaSerieDAO {
      *            the id
      * @return the int
      */
-    int updateIncrementar(final @Nonnull Long id);
+    int updateIncrementar(final Long id);
 
     /**
      * Exists.

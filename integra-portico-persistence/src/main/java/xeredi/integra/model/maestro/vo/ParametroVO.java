@@ -26,6 +26,15 @@ public final class ParametroVO extends ItemVO implements Versionable<ParametroVe
     private String texto;
 
     /**
+     * Instantiates a new parametro vo.
+     */
+    public ParametroVO() {
+        super();
+
+        version = new ParametroVersionVO();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -62,9 +71,9 @@ public final class ParametroVO extends ItemVO implements Versionable<ParametroVe
         final StringBuffer buffer = getEtiquetaStringBuffer();
 
         return buffer.length() == 0 ? null : buffer.toString()/*
-                                                               * StringEscapeUtils.escapeHtml4(buffer.toString(
-                                                               * ))
-                                                               */;
+         * StringEscapeUtils.escapeHtml4(buffer.toString(
+         * ))
+         */;
     }
 
     /**

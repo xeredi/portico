@@ -2,8 +2,6 @@ package xeredi.integra.model.servicio.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 
@@ -19,7 +17,7 @@ public interface SubservicioSubservicioDAO {
      * @param ssssVO
      *            the ssss vo
      */
-    void insert(final @Nonnull SubservicioSubservicioVO ssssVO);
+    void insert(final SubservicioSubservicioVO ssssVO);
 
     /**
      * Delete.
@@ -28,7 +26,7 @@ public interface SubservicioSubservicioDAO {
      *            the ssrv criterio vo
      * @return the int
      */
-    int delete(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
+    int delete(final SubservicioCriterioVO ssrvCriterioVO);
 
     /**
      * Select list.
@@ -37,5 +35,5 @@ public interface SubservicioSubservicioDAO {
      *            the ssrv criterio vo
      * @return the list
      */
-    List<SubservicioSubservicioVO> selectList(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
+    List<SubservicioSubservicioVO> selectList(final SubservicioCriterioVO ssrvCriterioVO);
 }

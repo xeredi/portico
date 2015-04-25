@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -53,7 +51,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * {@inheritDoc}
      */
     @Override
-    public final void insert(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroDetailVO tpprDetail,
+    public final void insert(final ParametroVO prmt, final TipoParametroDetailVO tpprDetail,
             final Map<String, I18nVO> i18nMap) throws OverlapException {
         Preconditions.checkNotNull(prmt.getParametro());
         Preconditions.checkNotNull(prmt.getVersion());
@@ -116,19 +114,23 @@ public abstract class AbstractParametroBO implements ParametroBO {
     /**
      * Insert.
      *
-     * @param session            the session
-     * @param prmt            the prmt
-     * @param tpprDetail the tppr detail
-     * @param i18nMap            the i18n map
+     * @param session
+     *            the session
+     * @param prmt
+     *            the prmt
+     * @param tpprDetail
+     *            the tppr detail
+     * @param i18nMap
+     *            the i18n map
      */
-    protected abstract void insertPostOperations(final @Nonnull SqlSession session, final @Nonnull ParametroVO prmt,
-            final @Nonnull TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap);
+    protected abstract void insertPostOperations(final SqlSession session, final ParametroVO prmt,
+            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap);
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final void duplicate(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroDetailVO tpprDetail,
+    public final void duplicate(final ParametroVO prmt, final TipoParametroDetailVO tpprDetail,
             final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
         Preconditions.checkNotNull(prmt.getId());
         Preconditions.checkNotNull(prmt.getParametro());
@@ -289,22 +291,28 @@ public abstract class AbstractParametroBO implements ParametroBO {
     /**
      * Duplicate.
      *
-     * @param session            the session
-     * @param prmt            the prmt
-     * @param tpprDetail the tppr detail
-     * @param i18nMap            the i18n map
-     * @throws OverlapException             the overlap exception
-     * @throws InstanceNotFoundException             the instance not found exception
+     * @param session
+     *            the session
+     * @param prmt
+     *            the prmt
+     * @param tpprDetail
+     *            the tppr detail
+     * @param i18nMap
+     *            the i18n map
+     * @throws OverlapException
+     *             the overlap exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    protected abstract void duplicatePostOperations(final @Nonnull SqlSession session, final @Nonnull ParametroVO prmt,
-            final @Nonnull TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
-            throws OverlapException, InstanceNotFoundException;
+    protected abstract void duplicatePostOperations(final SqlSession session, final ParametroVO prmt,
+            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap) throws OverlapException,
+            InstanceNotFoundException;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final void update(final @Nonnull ParametroVO prmt, final @Nonnull TipoParametroDetailVO tpprDetail,
+    public final void update(final ParametroVO prmt, final TipoParametroDetailVO tpprDetail,
             final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
         Preconditions.checkNotNull(prmt.getVersion());
         Preconditions.checkNotNull(prmt.getVersion().getId());
@@ -359,22 +367,28 @@ public abstract class AbstractParametroBO implements ParametroBO {
     /**
      * Update.
      *
-     * @param session            the session
-     * @param prmt            the prmt
-     * @param tpprDetail the tppr detail
-     * @param i18nMap            the i18n map
-     * @throws OverlapException             the overlap exception
-     * @throws InstanceNotFoundException             the instance not found exception
+     * @param session
+     *            the session
+     * @param prmt
+     *            the prmt
+     * @param tpprDetail
+     *            the tppr detail
+     * @param i18nMap
+     *            the i18n map
+     * @throws OverlapException
+     *             the overlap exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    protected abstract void updatePostOperations(final @Nonnull SqlSession session, final @Nonnull ParametroVO prmt,
-            final @Nonnull TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
-            throws OverlapException, InstanceNotFoundException;
+    protected abstract void updatePostOperations(final SqlSession session, final ParametroVO prmt,
+            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap) throws OverlapException,
+            InstanceNotFoundException;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final void delete(final @Nonnull ParametroVO prmt) throws InstanceNotFoundException {
+    public final void delete(final ParametroVO prmt) throws InstanceNotFoundException {
         Preconditions.checkNotNull(prmt.getVersion());
         Preconditions.checkNotNull(prmt.getVersion().getId());
 
@@ -406,14 +420,14 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    protected abstract void deletePostOperations(final @Nonnull SqlSession session, final @Nonnull ParametroVO prmt)
+    protected abstract void deletePostOperations(final SqlSession session, final ParametroVO prmt)
             throws InstanceNotFoundException;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final List<ParametroVO> selectList(final @Nonnull ParametroCriterioVO prmtCriterioVO) {
+    public final List<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
@@ -428,8 +442,8 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * {@inheritDoc}
      */
     @Override
-    public final PaginatedList<ParametroVO> selectList(final @Nonnull ParametroCriterioVO prmtCriterioVO,
-            final int offset, final int limit) {
+    public final PaginatedList<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO, final int offset,
+            final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final List<ParametroVO> prmtList = new ArrayList<>();
@@ -449,7 +463,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * {@inheritDoc}
      */
     @Override
-    public final Map<Long, ParametroVO> selectMap(final @Nonnull ParametroCriterioVO prmtCriterioVO) {
+    public final Map<Long, ParametroVO> selectMap(final ParametroCriterioVO prmtCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final Map<Long, ParametroVO> prmtMap = prmtDAO.selectMap(prmtCriterioVO);
@@ -464,7 +478,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * {@inheritDoc}
      */
     @Override
-    public final Map<String, ParametroVO> selectMapByCodigo(final @Nonnull ParametroCriterioVO prmtCriterioVO) {
+    public final Map<String, ParametroVO> selectMapByCodigo(final ParametroCriterioVO prmtCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final Map<String, ParametroVO> prmtMap = prmtDAO.selectMapByCodigo(prmtCriterioVO);
@@ -479,7 +493,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * {@inheritDoc}
      */
     @Override
-    public final Map<String, Long> selectMapCodigoId(final @Nonnull ParametroCriterioVO prmtCriterioVO) {
+    public final Map<String, Long> selectMapCodigoId(final ParametroCriterioVO prmtCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final Map<String, Long> map = new HashMap<>();
@@ -504,7 +518,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * {@inheritDoc}
      */
     @Override
-    public final Map<Long, String> selectMapIdCodigo(final @Nonnull ParametroCriterioVO prmtCriterioVO) {
+    public final Map<Long, String> selectMapIdCodigo(final ParametroCriterioVO prmtCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final Map<Long, String> map = new HashMap<>();
@@ -521,8 +535,8 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * {@inheritDoc}
      */
     @Override
-    public final Map<Long, List<LabelValueVO>> selectLabelValues(final @Nonnull Set<Long> tpprIds,
-            final @Nonnull Date fechaReferencia, final @Nonnull String idioma) {
+    public final Map<Long, List<LabelValueVO>> selectLabelValues(final Set<Long> tpprIds, final Date fechaReferencia,
+            final String idioma) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
@@ -549,7 +563,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * {@inheritDoc}
      */
     @Override
-    public final List<LabelValueVO> selectLabelValues(final @Nonnull ParametroCriterioVO criterioVO) {
+    public final List<LabelValueVO> selectLabelValues(final ParametroCriterioVO criterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();
@@ -566,8 +580,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * {@inheritDoc}
      */
     @Override
-    public final ParametroVO selectObject(final @Nonnull ParametroCriterioVO prmtCriterioVO)
-            throws InstanceNotFoundException {
+    public final ParametroVO selectObject(final ParametroCriterioVO prmtCriterioVO) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
@@ -586,7 +599,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * {@inheritDoc}
      */
     @Override
-    public final ParametroVO select(final @Nonnull Long prmtId, final String idioma, final Date fechaVigencia)
+    public final ParametroVO select(final Long prmtId, final String idioma, final Date fechaVigencia)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
@@ -612,7 +625,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * {@inheritDoc}
      */
     @Override
-    public final List<ParametroVO> selectLupaList(final @Nonnull ParametroTypeaheadCriterioVO criterio, final int limit) {
+    public final List<ParametroVO> selectLupaList(final ParametroTypeaheadCriterioVO criterio, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
 
@@ -633,8 +646,8 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * @param useIds
      *            the use ids
      */
-    private void fillDependencies(final @Nonnull SqlSession session, final @Nonnull Collection<ParametroVO> prmtList,
-            final @Nonnull ParametroCriterioVO prmtCriterioVO, final boolean useIds) {
+    private void fillDependencies(final SqlSession session, final Collection<ParametroVO> prmtList,
+            final ParametroCriterioVO prmtCriterioVO, final boolean useIds) {
         final ParametroDatoDAO prdtDAO = session.getMapper(ParametroDatoDAO.class);
 
         if (!prmtList.isEmpty()) {

@@ -2,8 +2,6 @@ package xeredi.integra.model.metamodelo.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
 
@@ -20,7 +18,7 @@ public interface CodigoReferenciaDAO {
      *            the cdrf criterio vo
      * @return the list
      */
-    List<CodigoReferenciaVO> selectList(final @Nonnull CodigoReferenciaCriterioVO cdrfCriterioVO);
+    List<CodigoReferenciaVO> selectList(final CodigoReferenciaCriterioVO cdrfCriterioVO);
 
     /**
      * Select object.
@@ -29,7 +27,7 @@ public interface CodigoReferenciaDAO {
      *            the cdrf criterio vo
      * @return the codigo referencia vo
      */
-    CodigoReferenciaVO selectObject(final @Nonnull CodigoReferenciaCriterioVO cdrfCriterioVO);
+    CodigoReferenciaVO selectObject(final CodigoReferenciaCriterioVO cdrfCriterioVO);
 
     /**
      * Exists.
@@ -38,7 +36,7 @@ public interface CodigoReferenciaDAO {
      *            the cdrf vo
      * @return true, if successful
      */
-    boolean exists(final @Nonnull CodigoReferenciaVO cdrfVO);
+    boolean exists(final CodigoReferenciaVO cdrfVO);
 
     /**
      * Insert.
@@ -46,7 +44,7 @@ public interface CodigoReferenciaDAO {
      * @param cdrfVO
      *            the cdrf vo
      */
-    void insert(final @Nonnull CodigoReferenciaVO cdrfVO);
+    void insert(final CodigoReferenciaVO cdrfVO);
 
     /**
      * Update.
@@ -55,7 +53,7 @@ public interface CodigoReferenciaDAO {
      *            the cdrf vo
      * @return the int
      */
-    int update(final @Nonnull CodigoReferenciaVO cdrfVO);
+    int update(final CodigoReferenciaVO cdrfVO);
 
     /**
      * Delete.
@@ -64,7 +62,7 @@ public interface CodigoReferenciaDAO {
      *            the cdrf id
      * @return the int
      */
-    int delete(final @Nonnull Long cdrfId);
+    int delete(final Long cdrfId);
 
     /**
      * Delete list.
@@ -73,5 +71,5 @@ public interface CodigoReferenciaDAO {
      *            the tpdt id
      * @return the int
      */
-    int deleteList(final @Nonnull Long tpdtId);
+    int deleteList(final Long tpdtId);
 }

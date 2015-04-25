@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -60,7 +58,7 @@ public final class TipoDatoProxy {
      *            the id
      * @return the tipo dato vo
      */
-    public static TipoDatoVO select(final @Nonnull Long id) {
+    public static TipoDatoVO select(final Long id) {
         if (!TIPO_DATO_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tpdt, id));
         }

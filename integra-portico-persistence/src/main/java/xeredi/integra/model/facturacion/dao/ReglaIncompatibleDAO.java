@@ -2,8 +2,6 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 
@@ -20,7 +18,7 @@ public interface ReglaIncompatibleDAO {
      *            the rgin criterio vo
      * @return the list
      */
-    List<ReglaIncompatibleVO> selectList(final @Nonnull ReglaIncompatibleCriterioVO rginCriterioVO);
+    List<ReglaIncompatibleVO> selectList(final ReglaIncompatibleCriterioVO rginCriterioVO);
 
     /**
      * Select object.
@@ -29,7 +27,7 @@ public interface ReglaIncompatibleDAO {
      *            the rgin criterio vo
      * @return the regla incompatible vo
      */
-    ReglaIncompatibleVO selectObject(final @Nonnull ReglaIncompatibleCriterioVO rginCriterioVO);
+    ReglaIncompatibleVO selectObject(final ReglaIncompatibleCriterioVO rginCriterioVO);
 
     /**
      * Exists.
@@ -38,7 +36,7 @@ public interface ReglaIncompatibleDAO {
      *            the rgin
      * @return true, if successful
      */
-    boolean exists(final @Nonnull ReglaIncompatibleVO rgin);
+    boolean exists(final ReglaIncompatibleVO rgin);
 
     /**
      * Exists overlap.
@@ -47,7 +45,7 @@ public interface ReglaIncompatibleDAO {
      *            the rgin
      * @return true, if successful
      */
-    boolean existsOverlap(final @Nonnull ReglaIncompatibleVO rgin);
+    boolean existsOverlap(final ReglaIncompatibleVO rgin);
 
     /**
      * Select id.
@@ -56,7 +54,7 @@ public interface ReglaIncompatibleDAO {
      *            the rgin
      * @return the long
      */
-    Long selectId(final @Nonnull ReglaIncompatibleVO rgin);
+    Long selectId(final ReglaIncompatibleVO rgin);
 
     /**
      * Insert.
@@ -64,7 +62,7 @@ public interface ReglaIncompatibleDAO {
      * @param rgin
      *            the rgin
      */
-    void insert(final @Nonnull ReglaIncompatibleVO rgin);
+    void insert(final ReglaIncompatibleVO rgin);
 
     /**
      * Insert version.
@@ -72,7 +70,7 @@ public interface ReglaIncompatibleDAO {
      * @param rgin
      *            the rgin
      */
-    void insertVersion(final @Nonnull ReglaIncompatibleVO rgin);
+    void insertVersion(final ReglaIncompatibleVO rgin);
 
     /**
      * Update version.
@@ -81,7 +79,7 @@ public interface ReglaIncompatibleDAO {
      *            the rgin
      * @return the int
      */
-    int updateVersion(final @Nonnull ReglaIncompatibleVO rgin);
+    int updateVersion(final ReglaIncompatibleVO rgin);
 
     /**
      * Delete version.
@@ -90,5 +88,5 @@ public interface ReglaIncompatibleDAO {
      *            the rgin
      * @return the int
      */
-    int deleteVersion(final @Nonnull ReglaIncompatibleVO rgin);
+    int deleteVersion(final ReglaIncompatibleVO rgin);
 }

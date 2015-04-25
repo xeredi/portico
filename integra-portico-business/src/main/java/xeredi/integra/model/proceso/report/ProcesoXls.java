@@ -5,8 +5,6 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -42,7 +40,7 @@ public final class ProcesoXls extends BaseXls {
      * @throws InternalErrorException
      *             the internal error exception
      */
-    public void generarProcesos(final @Nonnull List<ProcesoVO> prbtList, final @Nonnull OutputStream stream)
+    public void generarProcesos(final List<ProcesoVO> prbtList, final OutputStream stream)
             throws InternalErrorException {
         try (final HSSFWorkbook workbook = new HSSFWorkbook()) {
             final HSSFSheet sheet = workbook.createSheet("prbtList");

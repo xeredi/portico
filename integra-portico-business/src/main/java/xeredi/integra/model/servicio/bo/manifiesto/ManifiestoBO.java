@@ -2,8 +2,6 @@ package xeredi.integra.model.servicio.bo.manifiesto;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -37,7 +35,7 @@ public final class ManifiestoBO extends AbstractServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void insertPostOperations(final @Nonnull SqlSession session, final @Nonnull ServicioVO srvcVO,
+    protected void insertPostOperations(final SqlSession session, final ServicioVO srvcVO,
             final List<SubservicioVO> ssrvList, final List<SubservicioSubservicioVO> ssssList) {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
 
@@ -57,8 +55,7 @@ public final class ManifiestoBO extends AbstractServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void updatePostOperations(final @Nonnull SqlSession session, final @Nonnull ServicioVO srvcVO)
-            throws ModelException {
+    protected void updatePostOperations(final SqlSession session, final ServicioVO srvcVO) throws ModelException {
         // noop
     }
 
@@ -66,8 +63,7 @@ public final class ManifiestoBO extends AbstractServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void duplicatePostOperations(final @Nonnull SqlSession session, final @Nonnull ServicioVO srvcVO)
-            throws ModelException {
+    protected void duplicatePostOperations(final SqlSession session, final ServicioVO srvcVO) throws ModelException {
         // noop
     }
 
@@ -75,8 +71,7 @@ public final class ManifiestoBO extends AbstractServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void deletePostOperations(final @Nonnull SqlSession session, final @Nonnull Long srvcId)
-            throws ModelException {
+    protected void deletePostOperations(final SqlSession session, final Long srvcId) throws ModelException {
         // noop
     }
 
@@ -90,7 +85,7 @@ public final class ManifiestoBO extends AbstractServicioBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public void bloquear(final @Nonnull Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public void bloquear(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -134,7 +129,7 @@ public final class ManifiestoBO extends AbstractServicioBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public void completar(final @Nonnull Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public void completar(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -178,7 +173,7 @@ public final class ManifiestoBO extends AbstractServicioBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public void iniciar(final @Nonnull Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public void iniciar(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -221,7 +216,7 @@ public final class ManifiestoBO extends AbstractServicioBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public void anular(final @Nonnull Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public void anular(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -263,7 +258,7 @@ public final class ManifiestoBO extends AbstractServicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ResumenTotalesVO selectResumen(final @Nonnull Long maniId) throws InstanceNotFoundException {
+    public ResumenTotalesVO selectResumen(final Long maniId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ManifiestoResumenDAO resumenDAO = session.getMapper(ManifiestoResumenDAO.class);
             final ResumenTotalesCriterioVO totalCriterioVO = new ResumenTotalesCriterioVO();

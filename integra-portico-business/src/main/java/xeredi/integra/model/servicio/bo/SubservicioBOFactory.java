@@ -3,8 +3,6 @@ package xeredi.integra.model.servicio.bo;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -20,7 +18,7 @@ public final class SubservicioBOFactory {
     private static final Log LOG = LogFactory.getLog(SubservicioBOFactory.class);
 
     /** The Constant MAP. */
-    private static final Map<Long, Class> MAP = new HashMap();
+    private static final Map<Long, Class<?>> MAP = new HashMap<Long, Class<?>>();
 
     /**
      * Instantiates a new subservicio bo factory.
@@ -65,7 +63,7 @@ public final class SubservicioBOFactory {
      *            the enti id
      * @return the subservicio bo
      */
-    public static SubservicioBO newInstance(final @Nonnull Long entiId) {
+    public static SubservicioBO newInstance(final Long entiId) {
         if (MAP.containsKey(entiId)) {
             try {
                 return (SubservicioBO) MAP.get(entiId).newInstance();

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -57,7 +55,7 @@ public final class TipoSubparametroBO {
      *            the tpsp criterio vo
      * @return the list
      */
-    public List<TipoSubparametroVO> selectList(final @Nonnull TipoSubparametroCriterioVO tpspCriterioVO) {
+    public List<TipoSubparametroVO> selectList(final TipoSubparametroCriterioVO tpspCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
 
@@ -76,7 +74,7 @@ public final class TipoSubparametroBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<TipoSubparametroVO> selectList(final @Nonnull TipoSubparametroCriterioVO tpspCriterioVO,
+    public PaginatedList<TipoSubparametroVO> selectList(final TipoSubparametroCriterioVO tpspCriterioVO,
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
@@ -102,8 +100,7 @@ public final class TipoSubparametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public TipoSubparametroVO select(final @Nonnull Long id, final @Nonnull String idioma)
-            throws InstanceNotFoundException {
+    public TipoSubparametroVO select(final Long id, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
             final TipoSubparametroCriterioVO entiCriterioVO = new TipoSubparametroCriterioVO();
@@ -131,7 +128,7 @@ public final class TipoSubparametroBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final @Nonnull TipoSubparametroVO tpspVO, final @Nonnull Map<String, I18nVO> i18nMap)
+    public void insert(final TipoSubparametroVO tpspVO, final Map<String, I18nVO> i18nMap)
             throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
@@ -162,7 +159,7 @@ public final class TipoSubparametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @Nonnull TipoSubparametroVO tpspVO, final @Nonnull Map<String, I18nVO> i18nMap)
+    public void update(final TipoSubparametroVO tpspVO, final Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpspVO.getId());
 
@@ -189,7 +186,7 @@ public final class TipoSubparametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @Nonnull Long tpspId) throws InstanceNotFoundException {
+    public void delete(final Long tpspId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);

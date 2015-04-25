@@ -2,8 +2,6 @@ package xeredi.integra.model.servicio.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.servicio.vo.ServicioSecuenciaCriterioVO;
@@ -22,7 +20,7 @@ public interface ServicioSecuenciaDAO {
      * @param srsc
      *            the srsc
      */
-    void insert(final @Nonnull ServicioSecuenciaVO srsc);
+    void insert(final ServicioSecuenciaVO srsc);
 
     /**
      * Update.
@@ -31,7 +29,7 @@ public interface ServicioSecuenciaDAO {
      *            the srsc
      * @return the int
      */
-    int update(final @Nonnull ServicioSecuenciaVO srsc);
+    int update(final ServicioSecuenciaVO srsc);
 
     /**
      * Delete.
@@ -40,7 +38,7 @@ public interface ServicioSecuenciaDAO {
      *            the srsc
      * @return the int
      */
-    int delete(final @Nonnull ServicioSecuenciaVO srsc);
+    int delete(final ServicioSecuenciaVO srsc);
 
     /**
      * Incrementar secuencia.
@@ -49,7 +47,7 @@ public interface ServicioSecuenciaDAO {
      *            the srvc
      * @return the int
      */
-    int incrementarSecuencia(final @Nonnull ServicioVO srvc);
+    int incrementarSecuencia(final ServicioVO srvc);
 
     /**
      * Obtener secuencia.
@@ -58,7 +56,7 @@ public interface ServicioSecuenciaDAO {
      *            the srvc
      * @return the integer
      */
-    Integer obtenerSecuencia(final @Nonnull ServicioVO srvc);
+    Integer obtenerSecuencia(final ServicioVO srvc);
 
     /**
      * Count.

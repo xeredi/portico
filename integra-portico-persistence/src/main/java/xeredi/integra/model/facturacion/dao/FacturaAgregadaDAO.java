@@ -2,8 +2,6 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.facturacion.vo.FacturaAgregadaVO;
 import xeredi.integra.model.facturacion.vo.FacturadorContextoVO;
 
@@ -20,5 +18,5 @@ public interface FacturaAgregadaDAO {
      *            the contexto vo
      * @return the list
      */
-    List<FacturaAgregadaVO> selectList(final @Nonnull FacturadorContextoVO contextoVO);
+    List<FacturaAgregadaVO> selectList(final FacturadorContextoVO contextoVO);
 }

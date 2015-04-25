@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -212,7 +210,7 @@ public final class AspectoBO {
      *             the overlap exception
      */
     public void update(final AspectoVO aspc, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException,
-    OverlapException {
+            OverlapException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getVersion());
         Preconditions.checkNotNull(aspc.getId());
@@ -245,7 +243,7 @@ public final class AspectoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @Nonnull AspectoVO aspc) throws InstanceNotFoundException {
+    public void delete(final AspectoVO aspc) throws InstanceNotFoundException {
         Preconditions.checkNotNull(aspc.getVersion());
         Preconditions.checkNotNull(aspc.getVersion().getId());
 

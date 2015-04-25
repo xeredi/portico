@@ -2,8 +2,6 @@ package xeredi.integra.model.estadistica.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoVO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
@@ -21,7 +19,7 @@ public interface EstadisticaAgregadoDAO {
      *            the prmt criterio vo
      * @return the list
      */
-    List<Long> selectSubpIds(final @Nonnull ParametroCriterioVO prmtCriterioVO);
+    List<Long> selectSubpIds(final ParametroCriterioVO prmtCriterioVO);
 
     /**
      * Update srvc actividad pesquera.
@@ -30,7 +28,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the int
      */
-    int updateSrvcActividadPesquera(final @Nonnull EstadisticaAgregadoCriterioVO esagCriterioVO);
+    int updateSrvcActividadPesquera(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Select actividad pesquera.
@@ -39,7 +37,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectActividadPesquera(final @Nonnull EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<EstadisticaAgregadoVO> selectActividadPesquera(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Update srvc avituallamiento.
@@ -48,7 +46,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the int
      */
-    int updateSrvcAvituallamiento(final @Nonnull EstadisticaAgregadoCriterioVO esagCriterioVO);
+    int updateSrvcAvituallamiento(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Select avituallamiento.
@@ -57,7 +55,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectAvituallamiento(final @Nonnull EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<EstadisticaAgregadoVO> selectAvituallamiento(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Update srvc agregacion superficie.
@@ -66,7 +64,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the int
      */
-    int updateSrvcAgregacionSuperficie(final @Nonnull EstadisticaAgregadoCriterioVO esagCriterioVO);
+    int updateSrvcAgregacionSuperficie(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Select agregacion superficie.
@@ -75,7 +73,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectAgregacionSuperficie(final @Nonnull EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<EstadisticaAgregadoVO> selectAgregacionSuperficie(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Update srvc agregacion escala.
@@ -84,7 +82,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the int
      */
-    int updateSrvcAgregacionEscala(final @Nonnull EstadisticaAgregadoCriterioVO esagCriterioVO);
+    int updateSrvcAgregacionEscala(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Select agregacion escala.
@@ -93,7 +91,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectAgregacionEscala(final @Nonnull EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<EstadisticaAgregadoVO> selectAgregacionEscala(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Update srvc movimiento tipo buque eee.
@@ -102,7 +100,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the int
      */
-    int updateSrvcMovimientoTipoBuqueEEE(final @Nonnull EstadisticaAgregadoCriterioVO esagCriterioVO);
+    int updateSrvcMovimientoTipoBuqueEEE(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Select movimiento tipo buque eee.
@@ -111,7 +109,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectMovimientoTipoBuqueEEE(final @Nonnull EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<EstadisticaAgregadoVO> selectMovimientoTipoBuqueEEE(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Update srvc buque fondeado atracado.
@@ -120,7 +118,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the int
      */
-    int updateSrvcBuqueFondeadoAtracado(final @Nonnull EstadisticaAgregadoCriterioVO esagCriterioVO);
+    int updateSrvcBuqueFondeadoAtracado(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Select buque fondeado atracado.
@@ -129,7 +127,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectBuqueFondeadoAtracado(final @Nonnull EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<EstadisticaAgregadoVO> selectBuqueFondeadoAtracado(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Update srvc movimiento mercancia.
@@ -138,7 +136,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the int
      */
-    int updateSrvcMovimientoMercancia(final @Nonnull EstadisticaAgregadoCriterioVO esagCriterioVO);
+    int updateSrvcMovimientoMercancia(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Select movimiento mercancia.
@@ -147,7 +145,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectMovimientoMercancia(final @Nonnull EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<EstadisticaAgregadoVO> selectMovimientoMercancia(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Select movimiento mercancia eee.
@@ -156,5 +154,5 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectMovimientoMercanciaEEE(final @Nonnull EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<EstadisticaAgregadoVO> selectMovimientoMercanciaEEE(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 }

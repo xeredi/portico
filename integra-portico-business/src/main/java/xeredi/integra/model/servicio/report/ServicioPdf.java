@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.component.Components;
@@ -40,21 +38,27 @@ public final class ServicioPdf extends BasePdf {
      * @param alocale
      *            the alocale
      */
-    public ServicioPdf(final @Nonnull Locale alocale) {
+    public ServicioPdf(final Locale alocale) {
         super(alocale);
     }
 
     /**
      * Imprimir.
      *
-     * @param srvcVO            the srvc vo
-     * @param tpsrDetail the tpsr detail
-     * @param entiHijasMap            the enti hijas map
-     * @param itemHijosMap            the item hijos map
-     * @param stream            the stream
-     * @throws InternalErrorException             the internal error exception
+     * @param srvcVO
+     *            the srvc vo
+     * @param tpsrDetail
+     *            the tpsr detail
+     * @param entiHijasMap
+     *            the enti hijas map
+     * @param itemHijosMap
+     *            the item hijos map
+     * @param stream
+     *            the stream
+     * @throws InternalErrorException
+     *             the internal error exception
      */
-    public void imprimir(final @Nonnull ServicioVO srvcVO, final @Nonnull TipoServicioDetailVO tpsrDetail,
+    public void imprimir(final ServicioVO srvcVO, final TipoServicioDetailVO tpsrDetail,
             final Map<Long, TipoSubservicioDetailVO> entiHijasMap, final Map<Long, List<SubservicioVO>> itemHijosMap,
             final OutputStream stream) throws InternalErrorException {
         try {

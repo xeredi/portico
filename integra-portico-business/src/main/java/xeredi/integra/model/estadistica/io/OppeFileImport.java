@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -56,7 +54,7 @@ public final class OppeFileImport {
      * @param aproceso
      *            the aproceso
      */
-    public OppeFileImport(final @Nonnull ProcesoTemplate aproceso) {
+    public OppeFileImport(final ProcesoTemplate aproceso) {
         super();
         proceso = aproceso;
     }
@@ -77,7 +75,7 @@ public final class OppeFileImport {
      *            the lines
      * @return true, if successful
      */
-    public boolean verifyIsSigma(final @Nonnull List<String> lines) {
+    public boolean verifyIsSigma(final List<String> lines) {
         for (final String line : lines) {
             if (line.startsWith(SIGMA_TOKEN)) {
                 return true;
@@ -93,7 +91,7 @@ public final class OppeFileImport {
      * @param lines
      *            the lines
      */
-    public void readMaestrosEPP(final @Nonnull List<String> lines) {
+    public void readMaestrosEPP(final List<String> lines) {
         int i = 0;
 
         for (final String line : lines) {
@@ -115,7 +113,7 @@ public final class OppeFileImport {
      * @param lines
      *            the lines
      */
-    public void readMaestrosEAP(final @Nonnull List<String> lines) {
+    public void readMaestrosEAP(final List<String> lines) {
         int i = 0;
 
         for (final String line : lines) {
@@ -134,7 +132,7 @@ public final class OppeFileImport {
      * @param lines
      *            the lines
      */
-    public void readMaestrosEAV(final @Nonnull List<String> lines) {
+    public void readMaestrosEAV(final List<String> lines) {
         int i = 0;
 
         for (final String line : lines) {
@@ -154,7 +152,7 @@ public final class OppeFileImport {
      * @param lines
      *            the lines
      */
-    public void readMaestrosEAE(final @Nonnull List<String> lines) {
+    public void readMaestrosEAE(final List<String> lines) {
         int i = 0;
 
         for (final String line : lines) {
@@ -187,7 +185,7 @@ public final class OppeFileImport {
      * @param lines
      *            the lines
      */
-    public void readMaestrosEMM(final @Nonnull List<String> lines) {
+    public void readMaestrosEMM(final List<String> lines) {
         int i = 0;
 
         for (final String line : lines) {
@@ -241,7 +239,7 @@ public final class OppeFileImport {
      * @param isSigma
      *            the is sigma
      */
-    public void readMaestrosEME(final @Nonnull List<String> lines, final boolean isSigma) {
+    public void readMaestrosEME(final List<String> lines, final boolean isSigma) {
         int i = 0;
 
         for (final String line : lines) {
@@ -273,7 +271,7 @@ public final class OppeFileImport {
      * @param lines
      *            the lines
      */
-    public void readMaestrosEMT(final @Nonnull List<String> lines) {
+    public void readMaestrosEMT(final List<String> lines) {
         int i = 0;
 
         for (final String line : lines) {
@@ -296,7 +294,7 @@ public final class OppeFileImport {
      * @param lines
      *            the lines
      */
-    public void readEPP(final @Nonnull List<String> lines) {
+    public void readEPP(final List<String> lines) {
         int i = 0;
 
         for (final String line : lines) {
@@ -318,7 +316,7 @@ public final class OppeFileImport {
      * @param lines
      *            the lines
      */
-    public void readEAP(final @Nonnull List<String> lines) {
+    public void readEAP(final List<String> lines) {
         int i = 0;
 
         final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy.select(Entidad.ACTIVIDAD_PESQUERA.getId());
@@ -350,7 +348,7 @@ public final class OppeFileImport {
      * @param lines
      *            the lines
      */
-    public void readEAV(final @Nonnull List<String> lines) {
+    public void readEAV(final List<String> lines) {
         int i = 0;
 
         final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy.select(Entidad.AVITUALLAMIENTO.getId());
@@ -385,7 +383,7 @@ public final class OppeFileImport {
      * @param lines
      *            the lines
      */
-    public void readEAE(final @Nonnull List<String> lines) {
+    public void readEAE(final List<String> lines) {
         int i = 0;
 
         final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy.select(Entidad.AGREGACION_ESCALA.getId());
@@ -425,7 +423,7 @@ public final class OppeFileImport {
      * @param lines
      *            the lines
      */
-    public void readEMM(final @Nonnull List<String> lines) {
+    public void readEMM(final List<String> lines) {
         int i = 0;
 
         final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy.select(Entidad.MOVIMIENTO_MERCANCIA.getId());
@@ -516,7 +514,7 @@ public final class OppeFileImport {
      * @param isSigma
      *            the is sigma
      */
-    public void readEME(final @Nonnull List<String> lines, final boolean isSigma) {
+    public void readEME(final List<String> lines, final boolean isSigma) {
         int i = 0;
 
         final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy
@@ -591,7 +589,7 @@ public final class OppeFileImport {
      * @param lines
      *            the lines
      */
-    public void readEMT(final @Nonnull List<String> lines) {
+    public void readEMT(final List<String> lines) {
         int i = 0;
 
         final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy.select(Entidad.MOVIMIENTO_TIPO_BUQUE_EEE
@@ -646,8 +644,7 @@ public final class OppeFileImport {
      *            the line number
      * @return the token string
      */
-    private String getTokenString(final @Nonnull EstadisticaFileKeyword keyword, final @Nonnull String line,
-            final int lineNumber) {
+    private String getTokenString(final EstadisticaFileKeyword keyword, final String line, final int lineNumber) {
         if (line.length() >= keyword.getOffset() + keyword.getLength()) {
             final String token = line.substring(keyword.getOffset(), keyword.getOffset() + keyword.getLength()).trim();
 
@@ -680,8 +677,7 @@ public final class OppeFileImport {
      *            the line number
      * @return the token long
      */
-    private Long getTokenLong(final @Nonnull EstadisticaFileKeyword keyword, final @Nonnull String line,
-            final int lineNumber) {
+    private Long getTokenLong(final EstadisticaFileKeyword keyword, final String line, final int lineNumber) {
         final String codigo = getTokenString(keyword, line, lineNumber);
 
         if (codigo == null || codigo.isEmpty()) {
@@ -709,8 +705,7 @@ public final class OppeFileImport {
      *            the line number
      * @return the token double
      */
-    private Double getTokenDouble(final @Nonnull EstadisticaFileKeyword keyword, final @Nonnull String line,
-            final int lineNumber) {
+    private Double getTokenDouble(final EstadisticaFileKeyword keyword, final String line, final int lineNumber) {
         final String codigo = getTokenString(keyword, line, lineNumber);
 
         if (codigo == null || codigo.isEmpty()) {
@@ -740,8 +735,8 @@ public final class OppeFileImport {
      *            the tipo dato
      * @return the token cr
      */
-    private String getTokenCR(final @Nonnull EstadisticaFileKeyword keyword, final @Nonnull String line,
-            final int lineNumber, final @Nonnull TipoDato tipoDato) {
+    private String getTokenCR(final EstadisticaFileKeyword keyword, final String line, final int lineNumber,
+            final TipoDato tipoDato) {
         final String codigo = getTokenString(keyword, line, lineNumber);
 
         if (codigo == null || codigo.isEmpty()) {
@@ -765,7 +760,7 @@ public final class OppeFileImport {
      *            the tipo suministro
      * @return the tipo suministro normalizado
      */
-    private String getTipoSuministroNormalizado(final @Nonnull String tipoSuministro) {
+    private String getTipoSuministroNormalizado(final String tipoSuministro) {
         if (tipoSuministro.startsWith("1")) {
             return "10";
         } else if (tipoSuministro.startsWith("3")) {
@@ -822,8 +817,7 @@ public final class OppeFileImport {
      *            the line number
      * @return the token integer
      */
-    private Integer getTokenInteger(final @Nonnull EstadisticaFileKeyword keyword, final @Nonnull String line,
-            final int lineNumber) {
+    private Integer getTokenInteger(final EstadisticaFileKeyword keyword, final String line, final int lineNumber) {
         final String codigo = getTokenString(keyword, line, lineNumber);
 
         if (codigo == null || codigo.isEmpty()) {
@@ -853,8 +847,8 @@ public final class OppeFileImport {
      *            the date format
      * @return the token date
      */
-    private Date getTokenDate(final @Nonnull EstadisticaFileKeyword keyword, final @Nonnull String line,
-            final int lineNumber, final @Nonnull String dateFormat) {
+    private Date getTokenDate(final EstadisticaFileKeyword keyword, final String line, final int lineNumber,
+            final String dateFormat) {
         final String codigo = getTokenString(keyword, line, lineNumber);
 
         if (codigo == null || codigo.isEmpty()) {
@@ -884,8 +878,8 @@ public final class OppeFileImport {
      *            the entidad
      * @return the token maestro
      */
-    private ParametroVO getTokenMaestro(final @Nonnull EstadisticaFileKeyword keyword, final @Nonnull String line,
-            final int lineNumber, final @Nonnull Entidad entidad) {
+    private ParametroVO getTokenMaestro(final EstadisticaFileKeyword keyword, final String line, final int lineNumber,
+            final Entidad entidad) {
         final String codigo = getTokenString(keyword, line, lineNumber);
 
         return getMaestro(keyword, line, lineNumber, entidad, codigo);
@@ -906,8 +900,8 @@ public final class OppeFileImport {
      *            the codigo
      * @return the maestro
      */
-    private ParametroVO getMaestro(final @Nonnull EstadisticaFileKeyword keyword, final @Nonnull String line,
-            final int lineNumber, final @Nonnull Entidad entidad, final String codigo) {
+    private ParametroVO getMaestro(final EstadisticaFileKeyword keyword, final String line, final int lineNumber,
+            final Entidad entidad, final String codigo) {
         if (codigo == null || codigo.isEmpty()) {
             return null;
         }
@@ -937,8 +931,8 @@ public final class OppeFileImport {
      *            the codigo
      * @return the maestro
      */
-    private ParametroVO getMaestro(final @Nonnull EstadisticaFileKeyword keyword, final int lineNumber,
-            final @Nonnull Entidad entidad, final PuertoVO prto, final String codigo) {
+    private ParametroVO getMaestro(final EstadisticaFileKeyword keyword, final int lineNumber, final Entidad entidad,
+            final PuertoVO prto, final String codigo) {
         final ParametroVO prmt = proceso.findMaestro(entidad, prto, codigo);
 
         if (prmt == null) {
@@ -960,8 +954,8 @@ public final class OppeFileImport {
      *            the entidad
      * @return the token maestro generic
      */
-    private ParametroVO getTokenMaestroGeneric(final @Nonnull EstadisticaFileKeyword keyword, final int lineNumber,
-            final @Nonnull Entidad entidad) {
+    private ParametroVO getTokenMaestroGeneric(final EstadisticaFileKeyword keyword, final int lineNumber,
+            final Entidad entidad) {
         final ParametroVO prmt = proceso.findMaestro(entidad, keyword.getGenericValue());
 
         if (prmt == null) {
@@ -983,8 +977,7 @@ public final class OppeFileImport {
      *            the line number
      * @return the prto
      */
-    public PuertoVO getPrto(final @Nonnull EstadisticaFileKeyword keyword, final @Nonnull String line,
-            final int lineNumber) {
+    public PuertoVO getPrto(final EstadisticaFileKeyword keyword, final String line, final int lineNumber) {
         final String codigo = getTokenString(keyword, line, lineNumber);
 
         if (codigo == null || !prtoMap.containsKey(getTokenString(keyword, line, lineNumber))) {

@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.annotation.Nonnull;
-
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
@@ -53,7 +51,7 @@ public abstract class BasePdf {
      * @param alocale
      *            the alocale
      */
-    public BasePdf(final @Nonnull Locale alocale) {
+    public BasePdf(final Locale alocale) {
         super();
 
         locale = alocale;
@@ -69,7 +67,7 @@ public abstract class BasePdf {
      *            the itdt vo
      * @return the itdt value
      */
-    public final String getItdtValue(final @Nonnull EntidadTipoDatoVO entdVO, final @Nonnull ItemDatoVO itdtVO) {
+    public final String getItdtValue(final EntidadTipoDatoVO entdVO, final ItemDatoVO itdtVO) {
         Preconditions.checkNotNull(entdVO.getTpdt());
         Preconditions.checkNotNull(entdVO.getTpdt().getTipoElemento());
 
@@ -111,7 +109,7 @@ public abstract class BasePdf {
      *            the list cells
      * @return the form
      */
-    public final HorizontalListBuilder getForm(final @Nonnull List<List<PdfCell>> listCells) {
+    public final HorizontalListBuilder getForm(final List<List<PdfCell>> listCells) {
         final HorizontalListBuilder list = DynamicReports.cmp.horizontalList();
 
         for (final List<PdfCell> row : listCells) {
@@ -138,7 +136,7 @@ public abstract class BasePdf {
      *            the pdf cell
      * @return the label
      */
-    public final TextFieldBuilder<String> getFieldLabel(final @Nonnull PdfCell pdfCell) {
+    public final TextFieldBuilder<String> getFieldLabel(final PdfCell pdfCell) {
         final TextFieldBuilder<String> label = DynamicReports.cmp.text(pdfCell.getLabel())
                 .setFixedWidth(pdfCell.getWidth()).setStyle(PdfConstants.LABEL_STYLE);
 
@@ -152,7 +150,7 @@ public abstract class BasePdf {
      *            the pdf cell
      * @return the data
      */
-    public final TextFieldBuilder<String> getFieldValue(final @Nonnull PdfCell pdfCell) {
+    public final TextFieldBuilder<String> getFieldValue(final PdfCell pdfCell) {
         final TextFieldBuilder<String> data = DynamicReports.cmp.text(pdfCell.getValue())
                 .setFixedWidth(pdfCell.getWidth()).setStyle(PdfConstants.VALUE_STYLE);
 

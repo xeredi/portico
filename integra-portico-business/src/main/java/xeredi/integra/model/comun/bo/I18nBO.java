@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -36,7 +34,7 @@ public final class I18nBO {
      *            the external id
      * @return the map
      */
-    public final static Map<String, I18nVO> selectMap(final @Nonnull I18nPrefix prefix, final @Nonnull Long externalId) {
+    public final static Map<String, I18nVO> selectMap(final I18nPrefix prefix, final Long externalId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
             final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
@@ -63,7 +61,7 @@ public final class I18nBO {
      *            the language
      * @return the list
      */
-    public final static List<I18nVO> selectList(final @Nonnull I18nPrefix prefix, final @Nonnull String language) {
+    public final static List<I18nVO> selectList(final I18nPrefix prefix, final String language) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
             final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
@@ -84,8 +82,7 @@ public final class I18nBO {
      *            the language
      * @return the list
      */
-    public final List<LabelValueVO> selectLabelValueList(final @Nonnull Set<I18nPrefix> prefixSet,
-            final @Nonnull String language) {
+    public final List<LabelValueVO> selectLabelValueList(final Set<I18nPrefix> prefixSet, final String language) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
             final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
@@ -109,8 +106,8 @@ public final class I18nBO {
      * @param i18nMap
      *            the i18n map
      */
-    public final static void insertMap(final @Nonnull SqlSession session, final @Nonnull I18nPrefix prefix,
-            final @Nonnull Long externalId, final @Nonnull Map<String, I18nVO> i18nMap) {
+    public final static void insertMap(final SqlSession session, final I18nPrefix prefix, final Long externalId,
+            final Map<String, I18nVO> i18nMap) {
         Preconditions.checkNotNull(i18nMap.get(ConfigurationProxy.getString(ConfigurationKey.language_default)));
 
         final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
@@ -137,8 +134,8 @@ public final class I18nBO {
      * @param i18nMap
      *            the i18n map
      */
-    public final static void duplicateMap(final @Nonnull SqlSession session, final @Nonnull I18nPrefix prefix,
-            final @Nonnull Long externalId, final @Nonnull Map<String, I18nVO> i18nMap) {
+    public final static void duplicateMap(final SqlSession session, final I18nPrefix prefix, final Long externalId,
+            final Map<String, I18nVO> i18nMap) {
         Preconditions.checkNotNull(i18nMap.get(ConfigurationProxy.getString(ConfigurationKey.language_default)));
 
         final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
@@ -165,8 +162,8 @@ public final class I18nBO {
      * @param i18nMap
      *            the i18n map
      */
-    public final static void updateMap(final @Nonnull SqlSession session, final @Nonnull I18nPrefix prefix,
-            final @Nonnull Long externalId, final @Nonnull Map<String, I18nVO> i18nMap) {
+    public final static void updateMap(final SqlSession session, final I18nPrefix prefix, final Long externalId,
+            final Map<String, I18nVO> i18nMap) {
         Preconditions.checkNotNull(i18nMap.get(ConfigurationProxy.getString(ConfigurationKey.language_default)));
 
         final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
@@ -198,8 +195,7 @@ public final class I18nBO {
      *            the external id
      * @return the int
      */
-    public final static int deleteMap(final @Nonnull SqlSession session, final @Nonnull I18nPrefix prefix,
-            final @Nonnull Long externalId) {
+    public final static int deleteMap(final SqlSession session, final I18nPrefix prefix, final Long externalId) {
         final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
         final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
 

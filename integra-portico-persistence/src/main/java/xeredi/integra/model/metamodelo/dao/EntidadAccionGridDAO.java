@@ -2,8 +2,6 @@ package xeredi.integra.model.metamodelo.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import xeredi.integra.model.metamodelo.vo.EntidadAccionGridCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionGridVO;
 
@@ -19,7 +17,7 @@ public interface EntidadAccionGridDAO {
      *            the enag
      * @return true, if successful
      */
-    boolean exists(final @Nonnull EntidadAccionGridVO enag);
+    boolean exists(final EntidadAccionGridVO enag);
 
     /**
      * Insert.
@@ -27,7 +25,7 @@ public interface EntidadAccionGridDAO {
      * @param enag
      *            the enag
      */
-    void insert(final @Nonnull EntidadAccionGridVO enag);
+    void insert(final EntidadAccionGridVO enag);
 
     /**
      * Update.
@@ -36,7 +34,7 @@ public interface EntidadAccionGridDAO {
      *            the enag
      * @return the int
      */
-    int update(final @Nonnull EntidadAccionGridVO enag);
+    int update(final EntidadAccionGridVO enag);
 
     /**
      * Delete.
@@ -45,7 +43,7 @@ public interface EntidadAccionGridDAO {
      *            the enag id
      * @return the int
      */
-    int delete(final @Nonnull Long enagId);
+    int delete(final Long enagId);
 
     /**
      * Select object.
@@ -54,7 +52,7 @@ public interface EntidadAccionGridDAO {
      *            the enag criterio
      * @return the entidad accion vo
      */
-    EntidadAccionGridVO selectObject(final @Nonnull EntidadAccionGridCriterioVO enagCriterio);
+    EntidadAccionGridVO selectObject(final EntidadAccionGridCriterioVO enagCriterio);
 
     /**
      * Select list.
@@ -63,7 +61,7 @@ public interface EntidadAccionGridDAO {
      *            the enag criterio
      * @return the list
      */
-    List<EntidadAccionGridVO> selectList(final @Nonnull EntidadAccionGridCriterioVO enagCriterio);
+    List<EntidadAccionGridVO> selectList(final EntidadAccionGridCriterioVO enagCriterio);
 
     /**
      * Select all.

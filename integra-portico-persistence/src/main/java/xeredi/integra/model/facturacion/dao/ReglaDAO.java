@@ -2,8 +2,6 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
@@ -22,7 +20,7 @@ public interface ReglaDAO {
      *            the criterio vo
      * @return the regla vo
      */
-    ReglaVO selectObject(final @Nonnull ReglaCriterioVO criterioVO);
+    ReglaVO selectObject(final ReglaCriterioVO criterioVO);
 
     /**
      * Select list.
@@ -31,7 +29,7 @@ public interface ReglaDAO {
      *            the criterio vo
      * @return the list
      */
-    List<ReglaVO> selectList(final @Nonnull ReglaCriterioVO criterioVO);
+    List<ReglaVO> selectList(final ReglaCriterioVO criterioVO);
 
     /**
      * Select list.
@@ -42,7 +40,7 @@ public interface ReglaDAO {
      *            the bounds
      * @return the list
      */
-    List<ReglaVO> selectList(final @Nonnull ReglaCriterioVO criterioVO, final @Nonnull RowBounds bounds);
+    List<ReglaVO> selectList(final ReglaCriterioVO criterioVO, final RowBounds bounds);
 
     /**
      * Count.
@@ -51,7 +49,7 @@ public interface ReglaDAO {
      *            the rgla criterio vo
      * @return the int
      */
-    int count(final @Nonnull ReglaCriterioVO rglaCriterioVO);
+    int count(final ReglaCriterioVO rglaCriterioVO);
 
     /**
      * Exists.
@@ -60,7 +58,7 @@ public interface ReglaDAO {
      *            the rgla
      * @return true, if successful
      */
-    boolean exists(final @Nonnull ReglaVO rgla);
+    boolean exists(final ReglaVO rgla);
 
     /**
      * Exists overlap.
@@ -69,7 +67,7 @@ public interface ReglaDAO {
      *            the rgla
      * @return true, if successful
      */
-    boolean existsOverlap(final @Nonnull ReglaVO rgla);
+    boolean existsOverlap(final ReglaVO rgla);
 
     /**
      * Select id.
@@ -78,7 +76,7 @@ public interface ReglaDAO {
      *            the rgla
      * @return the long
      */
-    Long selectId(final @Nonnull ReglaVO rgla);
+    Long selectId(final ReglaVO rgla);
 
     /**
      * Insert.
@@ -86,7 +84,7 @@ public interface ReglaDAO {
      * @param rgla
      *            the rgla
      */
-    void insert(final @Nonnull ReglaVO rgla);
+    void insert(final ReglaVO rgla);
 
     /**
      * Insert version.
@@ -94,7 +92,7 @@ public interface ReglaDAO {
      * @param rgla
      *            the rgla
      */
-    void insertVersion(final @Nonnull ReglaVO rgla);
+    void insertVersion(final ReglaVO rgla);
 
     /**
      * Update version.
@@ -103,7 +101,7 @@ public interface ReglaDAO {
      *            the rgla
      * @return the int
      */
-    int updateVersion(final @Nonnull ReglaVO rgla);
+    int updateVersion(final ReglaVO rgla);
 
     /**
      * Delete version.
@@ -112,5 +110,5 @@ public interface ReglaDAO {
      *            the rglv id
      * @return the int
      */
-    int deleteVersion(final @Nonnull Long rglvId);
+    int deleteVersion(final Long rglvId);
 }
