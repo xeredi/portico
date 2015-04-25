@@ -411,7 +411,7 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("servicio/srvc-remove.action", {
+            $http.post("servicio/servicio-remove.action", {
                 model : vm.item
             }).success(function(data) {
                 window.history.back();
@@ -506,10 +506,12 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
         vm.entiHijasMap = {};
         vm.itemHijosMap = {};
 
-        for (i = 0; i < vm.enti.entiHijasList.length; i++) {
-            var subentiId = vm.enti.entiHijasList[i];
+        if (vm.enti.entiHijasList) {
+            for (i = 0; i < vm.enti.entiHijasList.length; i++) {
+                var subentiId = vm.enti.entiHijasList[i];
 
-            findSublist(subentiId, pageMap[subentiId] ? pageMap[subentiId] : 1);
+                findSublist(subentiId, pageMap[subentiId] ? pageMap[subentiId] : 1);
+            }
         }
     });
 
@@ -524,7 +526,7 @@ function SrvcEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("servicio/srvc-save.action", {
+        $http.post("servicio/servicio-save.action", {
             model : vm.item,
             accion : vm.accion
         }).success(
@@ -541,7 +543,7 @@ function SrvcEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("servicio/srvc-edit.action", {
+    $http.post("servicio/servicio-edit.action", {
         model : {
             id : $routeParams.srvcId,
             entiId : $routeParams.entiId
