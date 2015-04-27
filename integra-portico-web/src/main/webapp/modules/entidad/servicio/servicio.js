@@ -674,7 +674,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
     vm.pageMap = {};
 
     function findSublist(subentiId, page) {
-        $http.post("servicio/ssrv-list.action", {
+        $http.post("servicio/subservicio-list.action", {
             model : {
                 entiId : subentiId,
                 padreId : $routeParams.ssrvId
@@ -682,8 +682,8 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
             page : page
         }).success(function(data) {
             vm.entiHijasMap[data.model.entiId] = data.enti;
-            vm.itemHijosMap[data.model.entiId] = data.itemList;
-            vm.pageMap[data.model.entiId] = data.itemList.page;
+            vm.itemHijosMap[data.model.entiId] = data.resultList;
+            vm.pageMap[data.model.entiId] = data.resultList.page;
 
             if (data.enti.id == vm.tabSelected) {
                 vm.entiHijasMap[data.itemCriterio.entiId].active = true;
@@ -856,7 +856,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
         vm.tabActive[$routeParams.tab] = true;
     }
 
-    $http.post("servicio/ssrv-detail.action", {
+    $http.post("servicio/subservicio-detail.action", {
         model : {
             id : $routeParams.ssrvId,
             entiId : $routeParams.entiId

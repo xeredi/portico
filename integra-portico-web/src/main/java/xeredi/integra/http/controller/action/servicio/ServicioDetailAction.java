@@ -35,6 +35,7 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
         final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId());
 
         model = srvcBO.select(model.getId(), getIdioma());
+        fechaVigencia = model.getFref();
 
         final ArchivoBO archBO = new ArchivoBO();
         final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
