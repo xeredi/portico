@@ -630,8 +630,8 @@ function SsrvGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function xlsExport() {
-        $http.post('servicio/ssrv-xls-export.action', {
-            itemCriterio : vm.itemCriterio
+        $http.post('servicio/subservicio-xls-export.action', {
+            criterio : vm.itemCriterio
         }, {
             responseType : 'arraybuffer'
         }).success(function(data) {
@@ -640,7 +640,7 @@ function SsrvGridController($http, $location, $routeParams, $modal, pageTitleSer
             });
 
             setTimeout(function() {
-                saveAs(file, 'ssrv_' + vm.enti.id + '.xls');
+                saveAs(file, 'ssrv_' + vm.itemCriterio.entiId + '.xls');
             }, 0);
         });
     }

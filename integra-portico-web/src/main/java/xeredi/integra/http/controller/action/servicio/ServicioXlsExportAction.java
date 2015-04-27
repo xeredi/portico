@@ -31,10 +31,10 @@ public final class ServicioXlsExportAction extends ItemXlsExportAction<ServicioC
         final TipoServicioDetailVO enti = TipoServicioProxy.select(criterio.getEntiId());
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            final ServicioBO srvcBO = ServicioBOFactory.newInstance(criterio.getEntiId());
+            final ServicioBO itemBO = ServicioBOFactory.newInstance(criterio.getEntiId());
             final ServicioXls excelUtil = new ServicioXls(getLocale());
 
-            excelUtil.generarServicios(srvcBO.selectList(criterio), enti, baos);
+            excelUtil.generarServicios(itemBO.selectList(criterio), enti, baos);
 
             stream = new ByteArrayInputStream(baos.toByteArray());
         }
