@@ -382,7 +382,7 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
     vm.pageMap = {};
 
     function findSublist(subentiId, page) {
-        $http.post("servicio/ssrv-list.action", {
+        $http.post("servicio/subservicio-list.action", {
             model : {
                 entiId : subentiId,
                 srvc : {
@@ -392,8 +392,8 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
             page : page
         }).success(function(data) {
             vm.entiHijasMap[data.model.entiId] = data.enti;
-            vm.itemHijosMap[data.model.entiId] = data.itemList;
-            vm.pageMap[data.model.entiId] = data.itemList.page;
+            vm.itemHijosMap[data.model.entiId] = data.resultList;
+            vm.pageMap[data.model.entiId] = data.resultList.page;
 
             $location.search("pageMap", JSON.stringify(vm.pageMap)).replace();
         });
@@ -420,10 +420,9 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
     }
 
     function download(archId, archNombre) {
-        $http.post('servicio/srar-download.action', {
-            srar : {
-                srvcId : vm.item.id,
-                archId : archId
+        $http.post('servicio/servicio-archivo-download.action', {
+            model : {
+                id : archId
             }
         }, {
             responseType : 'arraybuffer'
@@ -609,14 +608,14 @@ function SsrvGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.itemCriterio.entiId = $routeParams.entiId;
 
     function search(page) {
-        $http.post("servicio/ssrv-list.action", {
+        $http.post("servicio/subservicio-list.action", {
             model : vm.itemCriterio,
             page : page,
             limit : vm.itemCriterio.limit
         }).success(function(data) {
-            vm.page = data.itemList.page;
+            vm.page = data.resultList.page;
             vm.enti = data.enti;
-            vm.itemList = data.itemList;
+            vm.itemList = data.resultList;
             vm.itemCriterio = data.model;
 
             $location.search({
@@ -647,7 +646,7 @@ function SsrvGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
-        $http.post("servicio/ssrv-filter.action", {
+        $http.post("servicio/subservicio-filter.action", {
             model : vm.itemCriterio
         }).success(function(data) {
             vm.labelValuesMap = data.labelValuesMap;

@@ -59,6 +59,15 @@ public abstract class CrudFileExportAction<M> extends BaseAction {
         public String getMimeType() {
             return mimeType;
         }
+
+        /**
+         * Gets the file extension.
+         *
+         * @return the file extension
+         */
+        public String getFileExtension() {
+            return fileExtension;
+        }
     };
 
     /** The model. */

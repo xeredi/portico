@@ -42,7 +42,6 @@ import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
@@ -284,28 +283,6 @@ public class PeriodoProcesoBO {
             }
 
             session.commit();
-        }
-    }
-
-    /**
-     * Select subp ids.
-     *
-     * @param autpId
-     *            the autp id
-     * @param fref
-     *            the fref
-     * @return the list
-     */
-    public List<Long> selectSubpIds(final Long autpId, final Date fref) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final EstadisticaAgregadoDAO esagDAO = session.getMapper(EstadisticaAgregadoDAO.class);
-
-            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
-
-            prmtCriterioVO.setId(autpId);
-            prmtCriterioVO.setFechaVigencia(fref);
-
-            return esagDAO.selectSubpIds(prmtCriterioVO);
         }
     }
 
