@@ -130,7 +130,7 @@
         ]]>
 	</update>
 
-	<delete id="delete" parameterType="Long">
+	<delete id="delete" parameterType="TipoSubservicioVO">
         <![CDATA[
         DELETE FROM tbl_tipo_subservicio_tpss
         WHERE

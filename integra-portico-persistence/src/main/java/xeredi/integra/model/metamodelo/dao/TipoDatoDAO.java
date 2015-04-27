@@ -25,83 +25,83 @@ public interface TipoDatoDAO {
     /**
      * Insert.
      *
-     * @param tpdtVO
-     *            the tpdt vo
+     * @param tpdt
+     *            the tpdt
      */
-    void insert(final TipoDatoVO tpdtVO);
+    void insert(final TipoDatoVO tpdt);
 
     /**
      * Update.
      *
-     * @param tpdtVO
-     *            the tpdt vo
+     * @param tpdt
+     *            the tpdt
      * @return the int
      */
-    int update(final TipoDatoVO tpdtVO);
+    int update(final TipoDatoVO tpdt);
 
     /**
      * Delete.
      *
-     * @param id
-     *            the id
+     * @param tpdt
+     *            the tpdt
      * @return the int
      */
-    int delete(final Long id);
+    int delete(final TipoDatoVO tpdt);
 
     /**
      * Exists.
      *
-     * @param tpdtVO
-     *            the tpdt vo
+     * @param tpdt
+     *            the tpdt
      * @return true, if successful
      */
-    boolean exists(final TipoDatoVO tpdtVO);
+    boolean exists(final TipoDatoVO tpdt);
 
     /**
      * Select object.
      *
-     * @param tpdtCriterioVO
-     *            the tpdt criterio vo
+     * @param tpdtCriterio
+     *            the tpdt criterio
      * @return the tipo dato vo
      */
-    TipoDatoVO selectObject(final TipoDatoCriterioVO tpdtCriterioVO);
+    TipoDatoVO selectObject(final TipoDatoCriterioVO tpdtCriterio);
 
     /**
      * Count.
      *
-     * @param tpdtCriterioVO
-     *            the tpdt criterio vo
+     * @param tpdtCriterio
+     *            the tpdt criterio
      * @return the int
      */
-    int count(final TipoDatoCriterioVO tpdtCriterioVO);
+    int count(final TipoDatoCriterioVO tpdtCriterio);
 
     /**
      * Select list.
      *
-     * @param tpdtCriterioVO
-     *            the tpdt criterio vo
+     * @param tpdtCriterio
+     *            the tpdt criterio
      * @param bounds
      *            the bounds
      * @return the list
      */
-    List<TipoDatoVO> selectPaginatedList(final TipoDatoCriterioVO tpdtCriterioVO, final RowBounds bounds);
+    List<TipoDatoVO> selectPaginatedList(final TipoDatoCriterioVO tpdtCriterio, final RowBounds bounds);
 
     /**
      * Select list.
      *
-     * @param tpdtCriterioVO
-     *            the tpdt criterio vo
+     * @param tpdtCriterio
+     *            the tpdt criterio
      * @return the list
      */
-    List<TipoDatoVO> selectList(final TipoDatoCriterioVO tpdtCriterioVO);
+    List<TipoDatoVO> selectList(final TipoDatoCriterioVO tpdtCriterio);
 
     /**
      * Select map.
      *
-     * @param tpdtCriterioVO
-     *            the tpdt criterio vo
+     * @param tpdtCriterio
+     *            the tpdt criterio
      * @return the map
      */
     @MapKey("id")
-    Map<Long, TipoDatoVO> selectMap(final TipoDatoCriterioVO tpdtCriterioVO);
+    Map<Long, TipoDatoVO> selectMap(final TipoDatoCriterioVO tpdtCriterio);
 }

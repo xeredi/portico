@@ -114,7 +114,7 @@ public final class EntidadAccionGridAction extends ItemAction implements ModelDr
 
         final EntidadAccionGridBO enagBO = new EntidadAccionGridBO();
 
-        enagBO.delete(model.getId());
+        enagBO.delete(model);
 
         return SUCCESS;
     }

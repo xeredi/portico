@@ -78,20 +78,13 @@
 		</where>
 	</sql>
 
-	<select id="selectCount" parameterType="PeriodoProcesoCriterioVO"
+	<select id="count" parameterType="PeriodoProcesoCriterioVO"
 		resultType="Integer">
 		<include refid="SelectCountPrefix" />
 		<include refid="SelectWhere" />
 	</select>
 
 	<select id="selectList" parameterType="PeriodoProcesoCriterioVO"
-		resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-		ORDER BY pepr_autp_pk, pepr_anio DESC, pepr_mes DESC
-	</select>
-
-	<select id="selectPaginatedList" parameterType="PeriodoProcesoCriterioVO"
 		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
@@ -126,10 +119,10 @@
         ]]>
 	</insert>
 
-	<delete id="delete" parameterType="Long">
+	<delete id="delete" parameterType="PeriodoProcesoVO">
         <![CDATA[
         DELETE FROM tbl_periodo_proceso_pepr
-        WHERE pepr_pk = #{value}
+        WHERE pepr_pk = #{id}
         ]]>
 	</delete>
 </mapper>

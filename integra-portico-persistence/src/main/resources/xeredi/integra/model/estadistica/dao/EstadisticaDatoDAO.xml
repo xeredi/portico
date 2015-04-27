@@ -17,8 +17,7 @@
 		</association>
 	</resultMap>
 
-	<select id="selectList" parameterType="EstadisticaCriterioVO"
-		resultMap="ResultMap">
+	<select id="selectList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
     <![CDATA[
 		SELECT
 			esdt_estd_pk, esdt_tpdt_pk, esdt_nentero, esdt_ndecimal, esdt_prmt_pk, esdt_cadena
@@ -72,8 +71,7 @@
 					WHERE estd_pk = esdt_estd_pk
     ]]>
 		<if test="id == null and ids == null">
-			<include
-				refid="xeredi.integra.model.estadistica.dao.EstadisticaDAO.SelectWhere" />
+			<include refid="xeredi.integra.model.estadistica.dao.EstadisticaDAO.SelectWhere" />
 		</if>
 
 		<if test="id != null">
@@ -82,8 +80,7 @@
 
 		<if test="ids != null">
 			AND estd_pk IN
-			<foreach collection="ids" item="item" open="(" close=")"
-				separator=",">#{item}</foreach>
+			<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}</foreach>
 		</if>
 
 		<if test="soloDatosGrid">
@@ -119,16 +116,10 @@
         ]]>
 	</insert>
 
-	<delete id="delete" parameterType="Long">
-        <![CDATA[
-        DELETE FROM tbl_estadistica_dato_esdt
-        WHERE
-            EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
-                WHERE estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = #{value}
-            )
-        ]]>
+	<delete id="deleteList" parameterType="EstadisticaCriterioVO">
+		DELETE FROM tbl_estadistica_dato_esdt
+		<where>
+			<include refid="xeredi.integra.model.estadistica.dao.EstadisticaDAO.SelectWhere" />
+		</where>
 	</delete>
 </mapper>

@@ -96,7 +96,7 @@ public final class CodigoReferenciaBO {
 
             I18nBO.deleteMap(session, I18nPrefix.cdrf, cdrfVO.getId());
 
-            final int deleted = cdrfDAO.delete(cdrfVO.getId());
+            final int deleted = cdrfDAO.delete(cdrfVO);
 
             if (deleted == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.cdrf, cdrfVO);

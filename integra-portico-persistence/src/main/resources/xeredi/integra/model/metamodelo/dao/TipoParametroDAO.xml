@@ -112,10 +112,10 @@
         ]]>
 	</update>
 
-	<delete id="delete" parameterType="Long">
+	<delete id="delete" parameterType="TipoParametroVO">
         <![CDATA[
         DELETE FROM tbl_tipo_parametro_tppr
-        WHERE tppr_pk = #{value}
+        WHERE tppr_pk = #{id}
         ]]>
 	</delete>
 </mapper>

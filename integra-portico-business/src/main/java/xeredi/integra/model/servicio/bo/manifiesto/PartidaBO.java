@@ -33,7 +33,7 @@ public final class PartidaBO extends AbstractSubservicioBO {
     @Override
     protected void insertPostOperations(final SqlSession session, final SubservicioVO ssrvVO,
             final TipoSubservicioDetailVO tpssSubservicioDetail, final Set<Long> ssrvPadreIds)
-            throws DuplicateInstanceException {
+                    throws DuplicateInstanceException {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
 
@@ -274,7 +274,7 @@ public final class PartidaBO extends AbstractSubservicioBO {
             paeqCriterioVO.setEntiId(Entidad.PARTIDA_EQUIPAMIENTO.getId());
             paeqCriterioVO.setPadreId(ssrvId);
 
-            ssrvDAO.delete(paeqCriterioVO);
+            ssrvDAO.deleteList(paeqCriterioVO);
 
             // Recalcular estado del BL
             final SubservicioCriterioVO blCriterioVO = new SubservicioCriterioVO();

@@ -16,65 +16,65 @@ public interface TipoParametroDAO {
     /**
      * Select all.
      *
-     * @param tpprCriterioVO
-     *            the tppr criterio vo
+     * @param tpprCriterio
+     *            the tppr criterio
      * @return the list
      */
-    List<TipoParametroVO> selectList(final TipoParametroCriterioVO tpprCriterioVO);
+    List<TipoParametroVO> selectList(final TipoParametroCriterioVO tpprCriterio);
 
     /**
      * Select all.
      *
-     * @param tpprCriterioVO
-     *            the tppr criterio vo
+     * @param tpprCriterio
+     *            the tppr criterio
      * @param bounds
      *            the bounds
      * @return the list
      */
-    List<TipoParametroVO> selectPaginatedList(final TipoParametroCriterioVO tpprCriterioVO, final RowBounds bounds);
+    List<TipoParametroVO> selectPaginatedList(final TipoParametroCriterioVO tpprCriterio, final RowBounds bounds);
 
     /**
      * Select.
      *
-     * @param entiCriterioVO
-     *            the enti criterio vo
+     * @param entiCriterio
+     *            the enti criterio
      * @return the tipo parametro vo
      */
-    TipoParametroVO selectObject(final TipoParametroCriterioVO entiCriterioVO);
+    TipoParametroVO selectObject(final TipoParametroCriterioVO entiCriterio);
 
     /**
      * Count.
      *
-     * @param tpprCriterioVO
-     *            the tppr criterio vo
+     * @param tpprCriterio
+     *            the tppr criterio
      * @return the int
      */
-    int count(final TipoParametroCriterioVO tpprCriterioVO);
+    int count(final TipoParametroCriterioVO tpprCriterio);
 
     /**
      * Insert.
      *
-     * @param tpprVO
-     *            the tppr vo
+     * @param tppr
+     *            the tppr
      */
-    void insert(final TipoParametroVO tpprVO);
+    void insert(final TipoParametroVO tppr);
 
     /**
      * Update.
      *
-     * @param tpprVO
-     *            the tppr vo
+     * @param tppr
+     *            the tppr
      * @return the int
      */
-    int update(final TipoParametroVO tpprVO);
+    int update(final TipoParametroVO tppr);
 
     /**
      * Delete.
      *
-     * @param tpprId
-     *            the tppr id
+     * @param tppr
+     *            the tppr
      * @return the int
      */
-    int delete(final Long tpprId);
+    int delete(final TipoParametroVO tppr);
 
 }

@@ -3,6 +3,8 @@ package xeredi.integra.model.metamodelo.bo;
 import java.util.List;
 import java.util.Map;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -36,7 +38,7 @@ public final class EntidadAccionBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final EntidadAccionVO enacVO, final Map<String, I18nVO> i18nMap)
+    public void insert(final @NonNull EntidadAccionVO enacVO, final @NonNull Map<String, I18nVO> i18nMap)
             throws DuplicateInstanceException {
         Preconditions.checkNotNull(enacVO.getEntiId());
         Preconditions.checkNotNull(enacVO.getPath());
@@ -67,7 +69,7 @@ public final class EntidadAccionBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final EntidadAccionVO enacVO, final Map<String, I18nVO> i18nMap)
+    public void update(final @NonNull EntidadAccionVO enacVO, final @NonNull Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(enacVO.getEntiId());
         Preconditions.checkNotNull(enacVO.getPath());
@@ -94,12 +96,14 @@ public final class EntidadAccionBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final Long id) throws InstanceNotFoundException {
+    public void delete(final @NonNull EntidadAccionVO enac) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(enac.getId());
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadAccionDAO enacDAO = session.getMapper(EntidadAccionDAO.class);
 
-            if (enacDAO.delete(id) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.enac, id);
+            if (enacDAO.delete(enac) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.enac, enac);
             }
 
             session.commit();
@@ -117,7 +121,7 @@ public final class EntidadAccionBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public EntidadAccionVO select(final Long id, final String idioma) throws InstanceNotFoundException {
+    public EntidadAccionVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadAccionDAO enacDAO = session.getMapper(EntidadAccionDAO.class);
             final EntidadAccionCriterioVO enacCriterioVO = new EntidadAccionCriterioVO();
@@ -142,7 +146,7 @@ public final class EntidadAccionBO {
      *            the enac criterio
      * @return the list
      */
-    public List<EntidadAccionVO> selectList(final EntidadAccionCriterioVO enacCriterio) {
+    public List<EntidadAccionVO> selectList(final @NonNull EntidadAccionCriterioVO enacCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadAccionDAO enacDAO = session.getMapper(EntidadAccionDAO.class);
 

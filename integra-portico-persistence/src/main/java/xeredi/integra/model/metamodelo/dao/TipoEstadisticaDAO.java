@@ -16,56 +16,56 @@ public interface TipoEstadisticaDAO {
     /**
      * Select list.
      *
-     * @param tpesCriterioVO
-     *            the tpes criterio vo
+     * @param tpesCriterio
+     *            the tpes criterio
      * @return the list
      */
-    List<TipoEstadisticaVO> selectList(final TipoEstadisticaCriterioVO tpesCriterioVO);
+    List<TipoEstadisticaVO> selectList(final TipoEstadisticaCriterioVO tpesCriterio);
 
     /**
      * Select list.
      *
-     * @param tpesCriterioVO
-     *            the tpes criterio vo
+     * @param tpesCriterio
+     *            the tpes criterio
      * @param bounds
      *            the bounds
      * @return the list
      */
-    List<TipoEstadisticaVO> selectPaginatedList(final TipoEstadisticaCriterioVO tpesCriterioVO, final RowBounds bounds);
+    List<TipoEstadisticaVO> selectPaginatedList(final TipoEstadisticaCriterioVO tpesCriterio, final RowBounds bounds);
 
     /**
      * Select.
      *
-     * @param entiCriterioVO
-     *            the enti criterio vo
+     * @param entiCriterio
+     *            the enti criterio
      * @return the tipo estadistica vo
      */
-    TipoEstadisticaVO selectObject(final TipoEstadisticaCriterioVO entiCriterioVO);
+    TipoEstadisticaVO selectObject(final TipoEstadisticaCriterioVO entiCriterio);
 
     /**
      * Count.
      *
-     * @param tpesCriterioVO
-     *            the tpes criterio vo
+     * @param tpesCriterio
+     *            the tpes criterio
      * @return the int
      */
-    int count(final TipoEstadisticaCriterioVO tpesCriterioVO);
+    int count(final TipoEstadisticaCriterioVO tpesCriterio);
 
     /**
      * Insert.
      *
-     * @param tpesVO
-     *            the tpes vo
+     * @param tpes
+     *            the tpes
      */
-    void insert(final TipoEstadisticaVO tpesVO);
+    void insert(final TipoEstadisticaVO tpes);
 
     /**
      * Delete.
      *
-     * @param tpesId
-     *            the tpes id
+     * @param tpes
+     *            the tpes
      * @return the int
      */
-    int delete(final Long tpesId);
+    int delete(final TipoEstadisticaVO tpes);
 
 }

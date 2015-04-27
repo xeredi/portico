@@ -39,6 +39,7 @@ import xeredi.integra.model.estadistica.vo.CuadroMesConcepto;
 import xeredi.integra.model.estadistica.vo.CuadroMesParametroVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoVO;
+import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
@@ -132,11 +133,11 @@ public class PeriodoProcesoBO {
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
-            final int count = peprDAO.selectCount(peprCriterioVO);
+            final int count = peprDAO.count(peprCriterioVO);
             final List<PeriodoProcesoVO> peprList = new ArrayList<>();
 
             if (count > offset) {
-                peprList.addAll(peprDAO.selectPaginatedList(peprCriterioVO, new RowBounds(offset, limit)));
+                peprList.addAll(peprDAO.selectList(peprCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<>(peprList, offset, limit, count);
@@ -193,11 +194,16 @@ public class PeriodoProcesoBO {
         final PeriodoProcesoVO peprActualVO = peprDAO.selectObject(peprCriterioVO);
 
         if (peprActualVO != null) {
+            final EstadisticaCriterioVO estdCriterio = new EstadisticaCriterioVO();
+
+            estdCriterio.setPepr(new PeriodoProcesoCriterioVO());
+            estdCriterio.getPepr().setId(peprActualVO.getId());
+
             srvcDAO.updatePeprDesasociar(peprActualVO.getId());
-            esdtDAO.delete(peprActualVO.getId());
-            estdDAO.delete(peprActualVO.getId());
-            cdmsDAO.delete(peprActualVO.getId());
-            peprDAO.delete(peprActualVO.getId());
+            esdtDAO.deleteList(estdCriterio);
+            estdDAO.deleteList(estdCriterio);
+            cdmsDAO.deleteList(estdCriterio.getPepr());
+            peprDAO.delete(peprActualVO);
         }
     }
 

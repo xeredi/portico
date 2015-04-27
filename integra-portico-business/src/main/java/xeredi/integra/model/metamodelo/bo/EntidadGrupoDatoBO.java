@@ -90,18 +90,15 @@ public final class EntidadGrupoDatoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final Long id) throws InstanceNotFoundException {
+    public void delete(final EntidadGrupoDatoVO engd) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadGrupoDatoDAO engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
-            final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
 
-            engdCriterioVO.setId(id);
-
-            if (engdDAO.delete(engdCriterioVO) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.engd, id);
+            if (engdDAO.delete(engd) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.engd, engd);
             }
 
-            I18nBO.deleteMap(session, I18nPrefix.engd, id);
+            I18nBO.deleteMap(session, I18nPrefix.engd, engd.getId());
 
             session.commit();
         }

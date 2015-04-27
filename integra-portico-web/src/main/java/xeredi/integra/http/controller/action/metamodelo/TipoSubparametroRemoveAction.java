@@ -25,7 +25,7 @@ public final class TipoSubparametroRemoveAction extends CrudRemoveAction<TipoSub
 
         final TipoSubparametroBO entiBO = new TipoSubparametroBO();
 
-        entiBO.delete(model.getId());
+        entiBO.delete(model);
     }
 
 }

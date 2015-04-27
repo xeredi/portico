@@ -25,7 +25,7 @@ public final class TipoEstadisticaRemoveAction extends CrudRemoveAction<TipoEsta
 
         final TipoEstadisticaBO entiBO = new TipoEstadisticaBO();
 
-        entiBO.delete(model.getId());
+        entiBO.delete(model);
     }
 
 }

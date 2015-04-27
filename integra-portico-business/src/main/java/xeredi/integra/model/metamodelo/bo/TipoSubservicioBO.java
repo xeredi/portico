@@ -192,17 +192,17 @@ public final class TipoSubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final Long tpssId) throws InstanceNotFoundException {
+    public void delete(final TipoSubservicioVO tpss) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoSubservicioDAO tpssDAO = session.getMapper(TipoSubservicioDAO.class);
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
-            if (tpssDAO.delete(tpssId) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.tpss, tpssId);
+            if (tpssDAO.delete(tpss) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.tpss, tpss);
             }
 
-            entiDAO.delete(tpssId);
-            I18nBO.deleteMap(session, I18nPrefix.enti, tpssId);
+            entiDAO.delete(tpss);
+            I18nBO.deleteMap(session, I18nPrefix.enti, tpss.getId());
 
             session.commit();
         }

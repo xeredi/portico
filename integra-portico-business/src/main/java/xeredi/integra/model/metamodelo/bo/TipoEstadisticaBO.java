@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -186,18 +188,20 @@ public final class TipoEstadisticaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final Long tpesId) throws InstanceNotFoundException {
+    public void delete(final @NonNull TipoEstadisticaVO tpes) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(tpes.getId());
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoEstadisticaDAO tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
-            if (tpesDAO.delete(tpesId) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.tpes, tpesId);
+            if (tpesDAO.delete(tpes) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.tpes, tpes);
             }
 
-            I18nBO.deleteMap(session, I18nPrefix.enti, tpesId);
+            I18nBO.deleteMap(session, I18nPrefix.enti, tpes.getId());
 
-            entiDAO.delete(tpesId);
+            entiDAO.delete(tpes);
 
             session.commit();
         }

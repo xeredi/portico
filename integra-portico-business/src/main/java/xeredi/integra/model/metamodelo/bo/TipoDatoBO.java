@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -146,19 +148,23 @@ public final class TipoDatoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final TipoDatoVO tpdtVO) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(tpdtVO.getId());
+    public void delete(final @NonNull TipoDatoVO tpdt) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(tpdt.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
             final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
-            I18nBO.deleteMap(session, I18nPrefix.tpdt, tpdtVO.getId());
+            I18nBO.deleteMap(session, I18nPrefix.tpdt, tpdt.getId());
 
-            cdrfDAO.deleteList(tpdtVO.getId());
+            final CodigoReferenciaCriterioVO cdrfCriterio = new CodigoReferenciaCriterioVO();
 
-            if (tpdtDAO.delete(tpdtVO.getId()) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.tpdt, tpdtVO.getId());
+            cdrfCriterio.setTpdtId(tpdt.getId());
+
+            cdrfDAO.deleteList(cdrfCriterio);
+
+            if (tpdtDAO.delete(tpdt) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.tpdt, tpdt);
             }
 
             session.commit();

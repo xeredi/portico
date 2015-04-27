@@ -276,7 +276,7 @@ public final class EquipamientoBO extends AbstractSubservicioBO {
             paeqCriterioVO.setEntiId(Entidad.PARTIDA_EQUIPAMIENTO.getId());
             paeqCriterioVO.setPadreId(ssrvId);
 
-            ssrvDAO.delete(paeqCriterioVO);
+            ssrvDAO.deleteList(paeqCriterioVO);
 
             // Recalcular estado del BL
             final SubservicioCriterioVO blCriterioVO = new SubservicioCriterioVO();

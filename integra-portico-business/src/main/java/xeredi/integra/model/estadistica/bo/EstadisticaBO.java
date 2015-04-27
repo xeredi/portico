@@ -42,7 +42,7 @@ public class EstadisticaBO {
             final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
-            final int count = estdDAO.selectCount(estdCriterioVO);
+            final int count = estdDAO.count(estdCriterioVO);
             final List<EstadisticaVO> estdList = new ArrayList<>();
 
             if (count > offset) {

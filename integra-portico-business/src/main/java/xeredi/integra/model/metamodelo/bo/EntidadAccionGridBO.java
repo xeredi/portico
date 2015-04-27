@@ -3,6 +3,8 @@ package xeredi.integra.model.metamodelo.bo;
 import java.util.List;
 import java.util.Map;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -89,17 +91,19 @@ public final class EntidadAccionGridBO {
     /**
      * Delete.
      *
-     * @param id
-     *            the id
+     * @param enag
+     *            the enag
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final Long id) throws InstanceNotFoundException {
+    public void delete(final @NonNull EntidadAccionGridVO enag) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(enag.getId());
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadAccionGridDAO enagDAO = session.getMapper(EntidadAccionGridDAO.class);
 
-            if (enagDAO.delete(id) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.enag, id);
+            if (enagDAO.delete(enag) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.enag, enag);
             }
 
             session.commit();

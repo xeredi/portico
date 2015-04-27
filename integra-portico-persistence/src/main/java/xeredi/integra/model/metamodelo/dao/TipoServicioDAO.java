@@ -16,65 +16,65 @@ public interface TipoServicioDAO {
     /**
      * Select list.
      *
-     * @param tpsrCriterioVO
-     *            the tpsr criterio vo
+     * @param tpsrCriterio
+     *            the tpsr criterio
      * @return the list
      */
-    List<TipoServicioVO> selectList(final TipoServicioCriterioVO tpsrCriterioVO);
+    List<TipoServicioVO> selectList(final TipoServicioCriterioVO tpsrCriterio);
 
     /**
      * Select list.
      *
-     * @param tpsrCriterioVO
-     *            the tpsr criterio vo
+     * @param tpsrCriterio
+     *            the tpsr criterio
      * @param bounds
      *            the bounds
      * @return the list
      */
-    List<TipoServicioVO> selectPaginatedList(final TipoServicioCriterioVO tpsrCriterioVO, final RowBounds bounds);
+    List<TipoServicioVO> selectPaginatedList(final TipoServicioCriterioVO tpsrCriterio, final RowBounds bounds);
 
     /**
      * Select.
      *
-     * @param entiCriterioVO
-     *            the enti criterio vo
+     * @param entiCriterio
+     *            the enti criterio
      * @return the tipo servicio vo
      */
-    TipoServicioVO selectObject(final TipoServicioCriterioVO entiCriterioVO);
+    TipoServicioVO selectObject(final TipoServicioCriterioVO entiCriterio);
 
     /**
      * Count.
      *
-     * @param tpsrCriterioVO
-     *            the tpsr criterio vo
+     * @param tpsrCriterio
+     *            the tpsr criterio
      * @return the int
      */
-    int count(final TipoServicioCriterioVO tpsrCriterioVO);
+    int count(final TipoServicioCriterioVO tpsrCriterio);
 
     /**
      * Insert.
      *
-     * @param tpsrVO
-     *            the tpsr vo
+     * @param tpsr
+     *            the tpsr
      */
-    void insert(final TipoServicioVO tpsrVO);
+    void insert(final TipoServicioVO tpsr);
 
     /**
      * Update.
      *
-     * @param tpsrVO
-     *            the tpsr vo
+     * @param tpsr
+     *            the tpsr
      * @return the int
      */
-    int update(final TipoServicioVO tpsrVO);
+    int update(final TipoServicioVO tpsr);
 
     /**
      * Delete.
      *
-     * @param tpsrId
-     *            the tpsr id
+     * @param tpsr
+     *            the tpsr
      * @return the int
      */
-    int delete(final Long tpsrId);
+    int delete(final TipoServicioVO tpsr);
 
 }

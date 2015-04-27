@@ -37,7 +37,7 @@ public interface PeriodoProcesoDAO {
      *            the pepr id
      * @return the int
      */
-    int delete(final Long peprId);
+    int delete(final PeriodoProcesoVO pepr);
 
     /**
      * Select.
@@ -64,7 +64,7 @@ public interface PeriodoProcesoDAO {
      *            the pepr criterio vo
      * @return the int
      */
-    int selectCount(final PeriodoProcesoCriterioVO peprCriterioVO);
+    int count(final PeriodoProcesoCriterioVO peprCriterioVO);
 
     /**
      * Select list.
@@ -84,5 +84,5 @@ public interface PeriodoProcesoDAO {
      *            the bounds
      * @return the list
      */
-    List<PeriodoProcesoVO> selectPaginatedList(final PeriodoProcesoCriterioVO peprCriterioVO, final RowBounds bounds);
+    List<PeriodoProcesoVO> selectList(final PeriodoProcesoCriterioVO peprCriterioVO, final RowBounds bounds);
 }

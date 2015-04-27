@@ -162,10 +162,10 @@
     ]]>
 	</update>
 
-	<delete id="delete" parameterType="Long">
+	<delete id="delete" parameterType="EntidadVO">
     <![CDATA[
         DELETE FROM tbl_entidad_enti
-        WHERE enti_pk = #{value}
+        WHERE enti_pk = #{id}
     ]]>
 	</delete>
 </mapper>

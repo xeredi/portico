@@ -14,55 +14,55 @@ public interface EntidadAccionDAO {
     /**
      * Exists.
      *
-     * @param enacVO
-     *            the enac vo
+     * @param enac
+     *            the enac
      * @return true, if successful
      */
-    boolean exists(final EntidadAccionVO enacVO);
+    boolean exists(final EntidadAccionVO enac);
 
     /**
      * Insert.
      *
-     * @param enacVO
-     *            the enac vo
+     * @param enac
+     *            the enac
      */
-    void insert(final EntidadAccionVO enacVO);
+    void insert(final EntidadAccionVO enac);
 
     /**
      * Update.
      *
-     * @param enacVO
-     *            the enac vo
+     * @param enac
+     *            the enac
      * @return the int
      */
-    int update(final EntidadAccionVO enacVO);
+    int update(final EntidadAccionVO enac);
 
     /**
      * Delete.
      *
-     * @param enacId
-     *            the enac id
+     * @param enac
+     *            the enac
      * @return the int
      */
-    int delete(final Long enacId);
+    int delete(final EntidadAccionVO enac);
 
     /**
      * Select.
      *
-     * @param enacCriterioVO
-     *            the enac criterio vo
+     * @param enacCriterio
+     *            the enac criterio
      * @return the entidad accion vo
      */
-    EntidadAccionVO selectObject(final EntidadAccionCriterioVO enacCriterioVO);
+    EntidadAccionVO selectObject(final EntidadAccionCriterioVO enacCriterio);
 
     /**
      * Select list.
      *
-     * @param enacCriterioVO
-     *            the enac criterio vo
+     * @param enacCriterio
+     *            the enac criterio
      * @return the list
      */
-    List<EntidadAccionVO> selectList(final EntidadAccionCriterioVO enacCriterioVO);
+    List<EntidadAccionVO> selectList(final EntidadAccionCriterioVO enacCriterio);
 
     /**
      * Select all.

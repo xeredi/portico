@@ -4,23 +4,12 @@ import java.util.List;
 
 import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoVO;
-import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Interface EstadisticaAgregadoDAO.
  */
 public interface EstadisticaAgregadoDAO {
-
-    /**
-     * Select subp ids.
-     *
-     * @param prmtCriterioVO
-     *            the prmt criterio vo
-     * @return the list
-     */
-    List<Long> selectSubpIds(final ParametroCriterioVO prmtCriterioVO);
-
     /**
      * Update srvc actividad pesquera.
      *

@@ -25,6 +25,6 @@ public final class EntidadAccionRemoveAction extends CrudRemoveAction<EntidadAcc
 
         final EntidadAccionBO enacBO = new EntidadAccionBO();
 
-        enacBO.delete(model.getId());
+        enacBO.delete(model);
     }
 }

@@ -14,21 +14,13 @@ import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 public interface EstadisticaDAO {
 
     /**
-     * Insert.
-     *
-     * @param estdVO
-     *            the estd vo
-     */
-    void insert(final EstadisticaVO estdVO);
-
-    /**
      * Count.
      *
      * @param estdCriterioVO
      *            the estd criterio vo
      * @return the int
      */
-    int selectCount(final EstadisticaCriterioVO estdCriterioVO);
+    int count(final EstadisticaCriterioVO estdCriterioVO);
 
     /**
      * Select list.
@@ -60,11 +52,19 @@ public interface EstadisticaDAO {
     EstadisticaVO selectObject(final EstadisticaCriterioVO estdCriterioVO);
 
     /**
+     * Insert.
+     *
+     * @param estdVO
+     *            the estd vo
+     */
+    void insert(final EstadisticaVO estdVO);
+
+    /**
      * Delete.
      *
-     * @param prprId
-     *            the prpr id
+     * @param estdCriterio
+     *            the estd criterio
      * @return the int
      */
-    int delete(final Long prprId);
+    int deleteList(final EstadisticaCriterioVO estdCriterio);
 }

@@ -14,55 +14,55 @@ public interface EntidadGrupoDatoDAO {
     /**
      * Insert.
      *
-     * @param engdVO
-     *            the engd vo
+     * @param engd
+     *            the engd
      */
-    void insert(final EntidadGrupoDatoVO engdVO);
+    void insert(final EntidadGrupoDatoVO engd);
 
     /**
      * Update.
      *
-     * @param engdVO
-     *            the engd vo
+     * @param engd
+     *            the engd
      * @return the int
      */
-    int update(final EntidadGrupoDatoVO engdVO);
+    int update(final EntidadGrupoDatoVO engd);
 
     /**
      * Delete.
      *
-     * @param engdCriterioVO
-     *            the engd criterio vo
+     * @param engd
+     *            the engd
      * @return the int
      */
-    int delete(final EntidadGrupoDatoCriterioVO engdCriterioVO);
+    int delete(final EntidadGrupoDatoVO engd);
 
     /**
      * Delete list.
      *
-     * @param entiId
-     *            the enti id
+     * @param engdCriterio
+     *            the engd criterio
      * @return the int
      */
-    int deleteList(final Long entiId);
+    int deleteList(final EntidadGrupoDatoCriterioVO engdCriterio);
 
     /**
      * Select criterio.
      *
-     * @param engdCriterioVO
-     *            the engd criterio vo
+     * @param engdCriterio
+     *            the engd criterio
      * @return the entidad grupo dato vo
      */
-    EntidadGrupoDatoVO selectObject(final EntidadGrupoDatoCriterioVO engdCriterioVO);
+    EntidadGrupoDatoVO selectObject(final EntidadGrupoDatoCriterioVO engdCriterio);
 
     /**
      * Select list.
      *
-     * @param engdCriterioVO
-     *            the engd criterio vo
+     * @param engdCriterio
+     *            the engd criterio
      * @return the list
      */
-    List<EntidadGrupoDatoVO> selectList(final EntidadGrupoDatoCriterioVO engdCriterioVO);
+    List<EntidadGrupoDatoVO> selectList(final EntidadGrupoDatoCriterioVO engdCriterio);
 
     /**
      * Select all.

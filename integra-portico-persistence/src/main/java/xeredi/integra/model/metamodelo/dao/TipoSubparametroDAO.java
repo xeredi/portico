@@ -16,65 +16,65 @@ public interface TipoSubparametroDAO {
     /**
      * Insert.
      *
-     * @param tpspVO
-     *            the tpsp vo
+     * @param tpsp
+     *            the tpsp
      */
-    void insert(final TipoSubparametroVO tpspVO);
+    void insert(final TipoSubparametroVO tpsp);
 
     /**
      * Update.
      *
-     * @param tpspVO
-     *            the tpsp vo
+     * @param tpsp
+     *            the tpsp
      * @return the int
      */
-    int update(final TipoSubparametroVO tpspVO);
+    int update(final TipoSubparametroVO tpsp);
 
     /**
      * Delete.
      *
-     * @param tpspId
-     *            the tpsp id
+     * @param tpsp
+     *            the tpsp
      * @return the int
      */
-    int delete(final Long tpspId);
+    int delete(final TipoSubparametroVO tpsp);
 
     /**
      * Count.
      *
-     * @param tpspCriterioVO
-     *            the tpsp criterio vo
+     * @param tpspCriterio
+     *            the tpsp criterio
      * @return the int
      */
-    int count(final TipoSubparametroCriterioVO tpspCriterioVO);
+    int count(final TipoSubparametroCriterioVO tpspCriterio);
 
     /**
      * Select list.
      *
-     * @param tpspCriterioVO
-     *            the tpsp criterio vo
+     * @param tpspCriterio
+     *            the tpsp criterio
      * @return the list
      */
-    List<TipoSubparametroVO> selectList(final TipoSubparametroCriterioVO tpspCriterioVO);
+    List<TipoSubparametroVO> selectList(final TipoSubparametroCriterioVO tpspCriterio);
 
     /**
      * Select list.
      *
-     * @param tpspCriterioVO
-     *            the tpsp criterio vo
+     * @param tpspCriterio
+     *            the tpsp criterio
      * @param bounds
      *            the bounds
      * @return the list
      */
-    List<TipoSubparametroVO> selectPaginatedList(final TipoSubparametroCriterioVO tpspCriterioVO, final RowBounds bounds);
+    List<TipoSubparametroVO> selectPaginatedList(final TipoSubparametroCriterioVO tpspCriterio, final RowBounds bounds);
 
     /**
      * Select.
      *
-     * @param entiCriterioVO
-     *            the enti criterio vo
+     * @param entiCriterio
+     *            the enti criterio
      * @return the tipo subparametro vo
      */
-    TipoSubparametroVO selectObject(final TipoSubparametroCriterioVO entiCriterioVO);
+    TipoSubparametroVO selectObject(final TipoSubparametroCriterioVO entiCriterio);
 
 }

@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.estadistica.dao.CuadroMesDAO;
 import xeredi.integra.model.estadistica.vo.CuadroMesVO;
+import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
@@ -28,8 +29,11 @@ public class CuadroMesBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CuadroMesDAO cdmsDAO = session.getMapper(CuadroMesDAO.class);
             final Map<String, List<CuadroMesVO>> cdmsMap = new HashMap<>();
+            final PeriodoProcesoCriterioVO peprCriterio = new PeriodoProcesoCriterioVO();
 
-            for (final CuadroMesVO cdmsVO : cdmsDAO.selectList(peprId)) {
+            peprCriterio.setId(peprId);
+
+            for (final CuadroMesVO cdmsVO : cdmsDAO.selectList(peprCriterio)) {
                 final String cocuKey = cdmsVO.getCocu().getParametro();
 
                 if (!cdmsMap.containsKey(cocuKey)) {

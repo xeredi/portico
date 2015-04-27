@@ -5,6 +5,7 @@ import java.util.List;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionGridCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionGridVO;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface EntidadAccionGridDAO.
  */
@@ -39,11 +40,11 @@ public interface EntidadAccionGridDAO {
     /**
      * Delete.
      *
-     * @param enagId
-     *            the enag id
+     * @param enag
+     *            the enag
      * @return the int
      */
-    int delete(final Long enagId);
+    int delete(final EntidadAccionGridVO enag);
 
     /**
      * Select object.

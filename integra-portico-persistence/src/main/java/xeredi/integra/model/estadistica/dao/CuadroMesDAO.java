@@ -4,6 +4,7 @@ import java.util.List;
 
 import xeredi.integra.model.estadistica.vo.CuadroMesParametroVO;
 import xeredi.integra.model.estadistica.vo.CuadroMesVO;
+import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -23,20 +24,20 @@ public interface CuadroMesDAO {
     /**
      * Delete.
      *
-     * @param peprId
-     *            the pepr id
+     * @param peprCriterio
+     *            the pepr criterio
      * @return the int
      */
-    int delete(final Long peprId);
+    int deleteList(final PeriodoProcesoCriterioVO peprCriterio);
 
     /**
      * Select list.
      *
-     * @param peprId
-     *            the pepr id
+     * @param peprCriterio
+     *            the pepr criterio
      * @return the list
      */
-    public List<CuadroMesVO> selectList(final Long peprId);
+    public List<CuadroMesVO> selectList(final PeriodoProcesoCriterioVO peprCriterio);
 
     /**
      * Insert_ c m_ pescaf.

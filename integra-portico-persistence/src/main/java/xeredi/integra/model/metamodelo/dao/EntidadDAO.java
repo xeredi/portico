@@ -40,29 +40,29 @@ public interface EntidadDAO {
     /**
      * Update.
      *
-     * @param entiVO
-     *            the enti vo
+     * @param enti
+     *            the enti
      * @return the int
      */
-    int update(final EntidadVO entiVO);
+    int update(final EntidadVO enti);
 
     /**
      * Delete.
      *
-     * @param entiId
-     *            the enti id
+     * @param enti
+     *            the enti
      * @return the int
      */
-    int delete(final Long entiId);
+    int delete(final EntidadVO enti);
 
     /**
      * Select.
      *
-     * @param entiCriterioVO
-     *            the enti criterio vo
+     * @param entiCriterio
+     *            the enti criterio
      * @return the entidad vo
      */
-    EntidadVO selectObject(final EntidadCriterioVO entiCriterioVO);
+    EntidadVO selectObject(final EntidadCriterioVO entiCriterio);
 
     /**
      * Select.
@@ -76,19 +76,19 @@ public interface EntidadDAO {
     /**
      * Select list.
      *
-     * @param entiCriterioVO
-     *            the enti criterio vo
+     * @param entiCriterio
+     *            the enti criterio
      * @return the list
      */
-    List<EntidadVO> selectList(final EntidadCriterioVO entiCriterioVO);
+    List<EntidadVO> selectList(final EntidadCriterioVO entiCriterio);
 
     /**
      * Select map.
      *
-     * @param entiCriterioVO
-     *            the enti criterio vo
+     * @param entiCriterio
+     *            the enti criterio
      * @return the map
      */
     @MapKey(value = "id")
-    Map<Long, EntidadVO> selectMap(final EntidadCriterioVO entiCriterioVO);
+    Map<Long, EntidadVO> selectMap(final EntidadCriterioVO entiCriterio);
 }

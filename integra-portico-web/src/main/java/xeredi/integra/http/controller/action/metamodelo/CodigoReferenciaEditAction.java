@@ -3,7 +3,9 @@ package xeredi.integra.http.controller.action.metamodelo;
 import java.util.Map;
 
 import xeredi.integra.http.controller.action.CrudEditAction;
+import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
@@ -34,6 +36,7 @@ public final class CodigoReferenciaEditAction extends CrudEditAction<CodigoRefer
             final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
             model = cdrfBO.select(model.getId(), idioma);
+            i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, model.getId());
         }
     }
 

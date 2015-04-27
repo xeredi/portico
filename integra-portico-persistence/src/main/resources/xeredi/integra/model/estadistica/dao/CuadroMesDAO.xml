@@ -3,30 +3,30 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.estadistica.dao.CuadroMesDAO">
-    <resultMap type="CuadroMesVO" id="ResultMap">
-        <id column="cdms_pk" property="id" />
-        <result column="cdms_pepr_pk" property="peprId" />
-        <result column="cdms_cantidad" property="cantidad" />
+	<resultMap type="CuadroMesVO" id="ResultMap">
+		<id column="cdms_pk" property="id" />
+		<result column="cdms_pepr_pk" property="peprId" />
+		<result column="cdms_cantidad" property="cantidad" />
 
-        <association property="cocu" javaType="ParametroVO">
-            <result column="cdms_cocu_pk" property="id" />
-            <result column="cdms_cocu" property="parametro" />
-        </association>
-        <association property="opet" javaType="ParametroVO">
-            <result column="cdms_opet_pk" property="id" />
-            <result column="cdms_opet" property="parametro" />
-        </association>
-        <association property="navt" javaType="ParametroVO">
-            <result column="cdms_navt_pk" property="id" />
-            <result column="cdms_navt" property="parametro" />
-        </association>
-        <association property="pais" javaType="ParametroVO">
-            <result column="cdms_pais_pk" property="id" />
-            <result column="cdms_pais" property="parametro" />
-        </association>
-    </resultMap>
+		<association property="cocu" javaType="ParametroVO">
+			<result column="cdms_cocu_pk" property="id" />
+			<result column="cdms_cocu" property="parametro" />
+		</association>
+		<association property="opet" javaType="ParametroVO">
+			<result column="cdms_opet_pk" property="id" />
+			<result column="cdms_opet" property="parametro" />
+		</association>
+		<association property="navt" javaType="ParametroVO">
+			<result column="cdms_navt_pk" property="id" />
+			<result column="cdms_navt" property="parametro" />
+		</association>
+		<association property="pais" javaType="ParametroVO">
+			<result column="cdms_pais_pk" property="id" />
+			<result column="cdms_pais" property="parametro" />
+		</association>
+	</resultMap>
 
-    <sql id="SelectPrefix">
+	<sql id="SelectPrefix">
     <![CDATA[
     SELECT
         cdms.cdms_pk
@@ -46,32 +46,32 @@
             WHERE prmt_pk = cdms.cdms_pais_pk) AS cdms_pais
     FROM tbl_cuadro_mes_cdms cdms
     ]]>
-    </sql>
+	</sql>
 
-    <select id="exists" parameterType="Long" resultType="boolean">
+	<select id="exists" parameterType="Long" resultType="boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM tbl_cuadro_mes_cdms
         WHERE cdms_pepr_pk = #{value}
     ]]>
-    </select>
+	</select>
 
-    <select id="selectList" parameterType="Long" resultMap="ResultMap">
-        <include refid="SelectPrefix"/>
+	<select id="selectList" parameterType="PeriodoProcesoCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
         <![CDATA[
-        WHERE cdms_pepr_pk = #{value}
+        WHERE cdms_pepr_pk = #{id}
         ORDER BY cdms_pk
         ]]>
-    </select>
+	</select>
 
-    <delete id="delete" parameterType="Long">
+	<delete id="deleteList" parameterType="PeriodoProcesoCriterioVO">
     <![CDATA[
         DELETE FROM tbl_cuadro_mes_cdms
-        WHERE cdms_pepr_pk = #{value}
+        WHERE cdms_pepr_pk = #{id}
     ]]>
-    </delete>
+	</delete>
 
-    <sql id="InsertPrefix">
+	<sql id="InsertPrefix">
     <![CDATA[
         INSERT INTO tbl_cuadro_mes_cdms(
             cdms_pk, cdms_pepr_pk, cdms_cocu_pk, cdms_opet_pk, cdms_navt_pk, cdms_pais_pk, cdms_cantidad
@@ -85,17 +85,17 @@
             , (SELECT prmt_pk FROM tbl_parametro_prmt WHERE prmt_tppr_pk = portico.getEntidad('PAIS') AND prmt_parametro = #{pais})
             , (
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="InsertSuffix">
+	<sql id="InsertSuffix">
     <![CDATA[
             )
         )
     ]]>
-    </sql>
-    <!-- PESCA -->
-    <insert id="insert_CM_PESCAF" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	</sql>
+	<!-- PESCA -->
+	<insert id="insert_CM_PESCAF" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
             SELECT COALESCE(SUM(esdt_nentero), 0) / 1000 AS value
             FROM tbl_estadistica_dato_esdt
@@ -110,12 +110,12 @@
                         AND estd_tpes_pk = portico.getEntidad('ACTIVIDAD_PESQUERA')
                 )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 
-    <!-- AVITUALLAMIENTO -->
-    <insert id="insert_CM_AVPPET" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<!-- AVITUALLAMIENTO -->
+	<insert id="insert_CM_AVPPET" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_nentero), 0) AS value
         FROM tbl_estadistica_dato_esdt
@@ -146,11 +146,11 @@
                     )
             )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 
-    <insert id="insert_CM_AVOTRO" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<insert id="insert_CM_AVOTRO" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_nentero), 0) AS value
         FROM tbl_estadistica_dato_esdt
@@ -184,12 +184,12 @@
                     )
             )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 
-    <!-- AGREGACION ESCALAS -->
-    <insert id="insert_CM_BUQUNI_BUQGT_ES" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<!-- AGREGACION ESCALAS -->
+	<insert id="insert_CM_BUQUNI_BUQGT_ES" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_nentero), 0) AS value
         FROM tbl_estadistica_dato_esdt
@@ -236,11 +236,11 @@
                     )
             )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 
-    <insert id="insert_CM_BUQUNI_BUQGT_ZZ" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<insert id="insert_CM_BUQUNI_BUQGT_ZZ" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_nentero), 0) AS value
         FROM tbl_estadistica_dato_esdt
@@ -287,11 +287,11 @@
                     )
             )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 
-    <insert id="insert_CM_CRUBUQ" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<insert id="insert_CM_CRUBUQ" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_nentero), 0) AS value
         FROM tbl_estadistica_dato_esdt
@@ -322,11 +322,11 @@
                     )
             )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 
-    <insert id="insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<insert id="insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_ndecimal), 0) AS value
         FROM tbl_estadistica_dato_esdt
@@ -353,7 +353,7 @@
                             )
                     )
         ]]>
-        <if test="navtParam != null">
+		<if test="navtParam != null">
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -369,7 +369,7 @@
                             )
                     )
         ]]>
-        </if>
+		</if>
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -386,11 +386,11 @@
                     )
             )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 
-    <insert id="insert_CM_GSIESP_GSNIES" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<insert id="insert_CM_GSIESP_GSNIES" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_ndecimal), 0) AS value
         FROM tbl_estadistica_dato_esdt
@@ -417,7 +417,7 @@
                             )
                     )
         ]]>
-        <if test="navtParam != null">
+		<if test="navtParam != null">
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -433,7 +433,7 @@
                             )
                     )
         ]]>
-        </if>
+		</if>
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -479,11 +479,11 @@
                     )
             )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 
-    <insert id="insert_CM_MG_PASAJE_VET2" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<insert id="insert_CM_MG_PASAJE_VET2" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(COALESCE(esdt_ndecimal, esdt_nentero)), 0) AS value
         FROM tbl_estadistica_dato_esdt
@@ -510,7 +510,7 @@
                             )
                     )
         ]]>
-        <if test="navtParam != null">
+		<if test="navtParam != null">
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -526,7 +526,7 @@
                             )
                     )
         ]]>
-        </if>
+		</if>
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -560,11 +560,11 @@
                     )
             )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 
-    <insert id="insert_CM_PASCRU" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<insert id="insert_CM_PASCRU" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_nentero), 0) AS value
         FROM tbl_estadistica_dato_esdt
@@ -591,7 +591,7 @@
                             )
                     )
         ]]>
-        <if test="navtParam != null">
+		<if test="navtParam != null">
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -607,7 +607,7 @@
                             )
                     )
         ]]>
-        </if>
+		</if>
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -654,11 +654,11 @@
                     )
             )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 
-    <insert id="insert_CM_CNUMCA" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<insert id="insert_CM_CNUMCA" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_nentero), 0) AS value
         FROM tbl_estadistica_dato_esdt
@@ -685,7 +685,7 @@
                             )
                     )
         ]]>
-        <if test="navtParam != null">
+		<if test="navtParam != null">
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -701,7 +701,7 @@
                             )
                     )
         ]]>
-        </if>
+		</if>
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -734,11 +734,11 @@
                     )
             )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 
-    <insert id="insert_CM_CTONCA" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<insert id="insert_CM_CTONCA" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_ndecimal), 0) AS value
         FROM tbl_estadistica_dato_esdt
@@ -765,7 +765,7 @@
                             )
                     )
         ]]>
-        <if test="navtParam != null">
+		<if test="navtParam != null">
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -781,7 +781,7 @@
                             )
                     )
         ]]>
-        </if>
+		</if>
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -814,17 +814,13 @@
                     )
             )
         ]]>
-        <include refid="InsertSuffix" />
-<!--
-                                    AND prmt_parametro IN (
-                                        '86091', '86092', '86093', '86094', '86095'
-                                        , '86096', '86097', '8609T', '8609A'
-                                    )
- -->
-    </insert>
+		<include refid="InsertSuffix" />
+		<!-- AND prmt_parametro IN ( '86091', '86092', '86093', '86094', '86095' , '86096', '86097', '8609T', '8609A'
+			) -->
+	</insert>
 
-    <insert id="insert_CM_CNUMVA_CTONVA_CTEUS" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<insert id="insert_CM_CNUMVA_CTONVA_CTEUS" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(COALESCE(esdt_nentero, esdt_ndecimal)), 0) AS value
         FROM tbl_estadistica_dato_esdt
@@ -851,7 +847,7 @@
                             )
                     )
         ]]>
-        <if test="navtParam != null">
+		<if test="navtParam != null">
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -867,7 +863,7 @@
                             )
                     )
         ]]>
-        </if>
+		</if>
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -900,11 +896,11 @@
                     )
             )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 
-    <insert id="insert_CM_RRTEUS_RRTONC" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<insert id="insert_CM_RRTEUS_RRTONC" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_ndecimal), 0) AS value
         FROM tbl_estadistica_dato_esdt
@@ -931,7 +927,7 @@
                             )
                     )
         ]]>
-        <if test="navtParam != null">
+		<if test="navtParam != null">
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -947,7 +943,7 @@
                             )
                     )
         ]]>
-        </if>
+		</if>
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -975,11 +971,11 @@
                     )
             )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 
-    <insert id="insert_CM_RRTONO" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<insert id="insert_CM_RRTONO" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_ndecimal), 0) AS value
         FROM tbl_estadistica_dato_esdt
@@ -1006,7 +1002,7 @@
                             )
                     )
         ]]>
-        <if test="navtParam != null">
+		<if test="navtParam != null">
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -1022,7 +1018,7 @@
                             )
                     )
         ]]>
-        </if>
+		</if>
         <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -1063,11 +1059,11 @@
                     )
             )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 
-    <insert id="insert_CM_TRALOC" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<insert id="insert_CM_TRALOC" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_ndecimal), 0) AS value
         FROM tbl_estadistica_dato_esdt
@@ -1108,12 +1104,12 @@
                     )
             )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 
-    <!-- CONSULTAS RESUMEN DE CUADRO MES -->
-    <insert id="insert_CM_MCONV" parameterType="CuadroMesParametroVO">
-        <include refid="InsertPrefix" />
+	<!-- CONSULTAS RESUMEN DE CUADRO MES -->
+	<insert id="insert_CM_MCONV" parameterType="CuadroMesParametroVO">
+		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(cdms_cantidad, 0)
         	- (
@@ -1153,6 +1149,6 @@
                     AND prmt_parametro = 'ZZ'
             )
         ]]>
-        <include refid="InsertSuffix" />
-    </insert>
+		<include refid="InsertSuffix" />
+	</insert>
 </mapper>

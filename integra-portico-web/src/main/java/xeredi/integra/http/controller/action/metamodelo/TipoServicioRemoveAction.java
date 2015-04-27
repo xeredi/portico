@@ -25,6 +25,6 @@ public final class TipoServicioRemoveAction extends CrudRemoveAction<TipoServici
 
         final TipoServicioBO entiBO = new TipoServicioBO();
 
-        entiBO.delete(model.getId());
+        entiBO.delete(model);
     }
 }

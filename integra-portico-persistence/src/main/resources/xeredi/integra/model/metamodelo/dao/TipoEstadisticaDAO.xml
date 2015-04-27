@@ -82,4 +82,11 @@
         VALUES (#{id})
         ]]>
 	</insert>
+
+	<delete id="delete" parameterType="TipoEstadisticaVO">
+        <![CDATA[
+        DELETE FROM tbl_tipo_estadistica_tpes
+        WHERE tpes_pk = #{id}
+        ]]>
+	</delete>
 </mapper>

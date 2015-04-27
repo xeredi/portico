@@ -140,7 +140,7 @@
 		</if>
 	</sql>
 
-	<select id="selectCount" parameterType="EstadisticaCriterioVO" resultType="Integer">
+	<select id="count" parameterType="EstadisticaCriterioVO" resultType="Integer">
 		<include refid="SelectCountPrefix" />
 		<where>
 			<include refid="SelectWhere" />
@@ -168,10 +168,10 @@
         ]]>
 	</insert>
 
-	<delete id="delete" parameterType="Long">
-        <![CDATA[
-        DELETE FROM tbl_estadistica_estd
-        WHERE estd_pepr_pk = #{value}
-        ]]>
+	<delete id="deleteList" parameterType="EstadisticaCriterioVO">
+		DELETE FROM tbl_estadistica_estd
+		<where>
+			<include refid="SelectWhere" />
+		</where>
 	</delete>
 </mapper>

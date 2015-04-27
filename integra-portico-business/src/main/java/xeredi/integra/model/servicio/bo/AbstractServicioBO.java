@@ -433,7 +433,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
 
             ssssDAO.delete(ssrvCriterioVO);
             ssdtDAO.delete(ssrvCriterioVO);
-            ssrvDAO.delete(ssrvCriterioVO);
+            ssrvDAO.deleteList(ssrvCriterioVO);
             srdtDAO.delete(srvcCriterioVO);
             srarDAO.deleteList(srvcId);
 

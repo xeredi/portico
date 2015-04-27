@@ -122,10 +122,10 @@
     ]]>
 	</insert>
 
-	<insert id="delete" parameterType="Long">
+	<insert id="delete" parameterType="TipoSubparametroVO">
     <![CDATA[
         DELETE FROM tbl_tipo_subparametro_tpsp
-        WHERE tpsp_pk = #{value}
+        WHERE tpsp_pk = #{id}
     ]]>
 	</insert>
 </mapper>

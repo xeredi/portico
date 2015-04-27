@@ -25,6 +25,6 @@ public final class EntidadGrupoDatoRemoveAction extends CrudRemoveAction<Entidad
 
         final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
-        engdBO.delete(model.getId());
+        engdBO.delete(model);
     }
 }
