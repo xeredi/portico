@@ -258,12 +258,6 @@
 		ORDER BY crgo_tpsr_pk, crgo_codigo
 	</select>
 
-	<select id="selectPaginatedList" parameterType="CargoCriterioVO" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-		ORDER BY crgo_tpsr_pk, crgo_codigo
-	</select>
-
 	<select id="selectObject" parameterType="CargoCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />

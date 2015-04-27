@@ -126,23 +126,23 @@
             item.*
     ]]>
 
-		<if test="aspc.aspv.cpathInfo1Sql != null">
-			, (${aspc.aspv.cpathInfo1Sql}) AS vlrc_info1
+		<if test="aspc.version.cpathInfo1Sql != null">
+			, (${aspc.version.cpathInfo1Sql}) AS vlrc_info1
 		</if>
-		<if test="aspc.aspv.cpathInfo2Sql != null">
-			, (${aspc.aspv.cpathInfo2Sql}) AS vlrc_info2
+		<if test="aspc.version.cpathInfo2Sql != null">
+			, (${aspc.version.cpathInfo2Sql}) AS vlrc_info2
 		</if>
-		<if test="aspc.aspv.cpathInfo3Sql != null">
-			, (${aspc.aspv.cpathInfo3Sql}) AS vlrc_info3
+		<if test="aspc.version.cpathInfo3Sql != null">
+			, (${aspc.version.cpathInfo3Sql}) AS vlrc_info3
 		</if>
-		<if test="aspc.aspv.cpathInfo4Sql != null">
-			, (${aspc.aspv.cpathInfo4Sql}) AS vlrc_info4
+		<if test="aspc.version.cpathInfo4Sql != null">
+			, (${aspc.version.cpathInfo4Sql}) AS vlrc_info4
 		</if>
-		<if test="aspc.aspv.cpathInfo5Sql != null">
-			, (${aspc.aspv.cpathInfo5Sql}) AS vlrc_info5
+		<if test="aspc.version.cpathInfo5Sql != null">
+			, (${aspc.version.cpathInfo5Sql}) AS vlrc_info5
 		</if>
-		<if test="aspc.aspv.cpathInfo6Sql != null">
-			, (${aspc.aspv.cpathInfo6Sql}) AS vlrc_info6
+		<if test="aspc.version.cpathInfo6Sql != null">
+			, (${aspc.version.cpathInfo6Sql}) AS vlrc_info6
 		</if>
 
     <![CDATA[
@@ -168,44 +168,44 @@
                 , vlrt_srvc_pk AS srvc_pk
     ]]>
 
-		<if test="aspc.aspv.lgrpInfo1">
+		<if test="aspc.version.lgrpInfo1">
 			, vlrt_info1 AS vlrl_info1
 		</if>
-		<if test="!aspc.aspv.lgrpInfo1">
+		<if test="!aspc.version.lgrpInfo1">
 			, vlrt_info1 AS vlrd_info1
 		</if>
-		<if test="aspc.aspv.lgrpInfo2">
+		<if test="aspc.version.lgrpInfo2">
 			, vlrt_info2 AS vlrl_info2
 		</if>
-		<if test="!aspc.aspv.lgrpInfo2">
+		<if test="!aspc.version.lgrpInfo2">
 			, vlrt_info2 AS vlrd_info2
 		</if>
-		<if test="aspc.aspv.lgrpInfo3">
+		<if test="aspc.version.lgrpInfo3">
 			, vlrt_info3 AS vlrl_info3
 		</if>
-		<if test="!aspc.aspv.lgrpInfo3">
+		<if test="!aspc.version.lgrpInfo3">
 			, vlrt_info3 AS vlrd_info3
 		</if>
-		<if test="aspc.aspv.lgrpInfo4">
+		<if test="aspc.version.lgrpInfo4">
 			, vlrt_info4 AS vlrl_info4
 		</if>
-		<if test="!aspc.aspv.lgrpInfo4">
+		<if test="!aspc.version.lgrpInfo4">
 			, vlrt_info4 AS vlrd_info4
 		</if>
-		<if test="aspc.aspv.lgrpInfo5">
+		<if test="aspc.version.lgrpInfo5">
 			, vlrt_info5 AS vlrl_info5
 		</if>
-		<if test="!aspc.aspv.lgrpInfo5">
+		<if test="!aspc.version.lgrpInfo5">
 			, vlrt_info5 AS vlrd_info5
 		</if>
-		<if test="aspc.aspv.lgrpInfo6">
+		<if test="aspc.version.lgrpInfo6">
 			, vlrt_info6 AS vlrl_info6
 		</if>
-		<if test="!aspc.aspv.lgrpInfo6">
+		<if test="!aspc.version.lgrpInfo6">
 			, vlrt_info6 AS vlrd_info6
 		</if>
 
-		<if test="aspc.aspv.agrupaDetalles">
+		<if test="aspc.version.agrupaDetalles">
         <![CDATA[
                 , vlrt_ssrv_pk AS vlrd_ssrv_pk
                 , vlrt_fini AS vlrd_fini
@@ -213,7 +213,7 @@
         ]]>
 		</if>
 
-		<if test="!aspc.aspv.agrupaDetalles">
+		<if test="!aspc.version.agrupaDetalles">
         <![CDATA[
                 , vlrt_ssrv_pk AS vlrl_ssrv_pk
                 , vlrt_fini AS vlrl_fini
@@ -269,7 +269,7 @@
                 , ssrv_tpss_pk
     ]]>
 
-		<if test="!aspc.aspv.agrupaDetalles">
+		<if test="!aspc.version.agrupaDetalles">
 			, ssrv_numero
 		</if>
 

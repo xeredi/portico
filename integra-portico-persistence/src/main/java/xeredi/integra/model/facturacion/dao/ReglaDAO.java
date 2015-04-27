@@ -16,40 +16,40 @@ public interface ReglaDAO {
     /**
      * Select object.
      *
-     * @param criterioVO
-     *            the criterio vo
+     * @param rglaCriterio
+     *            the rgla criterio
      * @return the regla vo
      */
-    ReglaVO selectObject(final ReglaCriterioVO criterioVO);
+    ReglaVO selectObject(final ReglaCriterioVO rglaCriterio);
 
     /**
      * Select list.
      *
-     * @param criterioVO
-     *            the criterio vo
+     * @param rglaCriterio
+     *            the rgla criterio
      * @return the list
      */
-    List<ReglaVO> selectList(final ReglaCriterioVO criterioVO);
+    List<ReglaVO> selectList(final ReglaCriterioVO rglaCriterio);
 
     /**
      * Select list.
      *
-     * @param criterioVO
-     *            the criterio vo
+     * @param rglaCriterio
+     *            the rgla criterio
      * @param bounds
      *            the bounds
      * @return the list
      */
-    List<ReglaVO> selectList(final ReglaCriterioVO criterioVO, final RowBounds bounds);
+    List<ReglaVO> selectList(final ReglaCriterioVO rglaCriterio, final RowBounds bounds);
 
     /**
      * Count.
      *
-     * @param rglaCriterioVO
-     *            the rgla criterio vo
+     * @param rglaCriterio
+     *            the rgla criterio
      * @return the int
      */
-    int count(final ReglaCriterioVO rglaCriterioVO);
+    int count(final ReglaCriterioVO rglaCriterio);
 
     /**
      * Exists.
@@ -106,9 +106,9 @@ public interface ReglaDAO {
     /**
      * Delete version.
      *
-     * @param rglvId
-     *            the rglv id
+     * @param rgla
+     *            the rgla
      * @return the int
      */
-    int deleteVersion(final Long rglvId);
+    int deleteVersion(final ReglaVO rgla);
 }

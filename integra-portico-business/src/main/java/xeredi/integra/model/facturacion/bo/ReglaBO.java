@@ -3,6 +3,8 @@ package xeredi.integra.model.facturacion.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -165,15 +167,16 @@ public class ReglaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final Long rglvId) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(rglvId);
+    public void delete(final @NonNull ReglaVO rgla) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(rgla.getVersion());
+        Preconditions.checkNotNull(rgla.getVersion().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
-            final int updated = rglaDAO.deleteVersion(rglvId);
+            final int updated = rglaDAO.deleteVersion(rgla);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.rgla, rglvId);
+                throw new InstanceNotFoundException(MessageI18nKey.rgla, rgla);
             }
 
             session.commit();
