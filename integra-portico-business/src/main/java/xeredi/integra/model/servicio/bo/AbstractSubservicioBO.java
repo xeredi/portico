@@ -32,6 +32,7 @@ import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 
 // TODO: Auto-generated Javadoc
@@ -291,14 +292,89 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final void delete(final SubservicioVO ssrv) throws InstanceNotFoundException {
+    public final void delete(final @NonNull SubservicioVO ssrv) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(ssrv.getId());
+        Preconditions.checkNotNull(ssrv.getEntiId());
+        Preconditions.checkNotNull(ssrv.getSrvc());
+        Preconditions.checkNotNull(ssrv.getSrvc().getId());
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            // Busqueda de los padres del subservicio a borrar
+            {
+                final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+                final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
+
+                ssrvCriterio.setHijoId(ssrv.getId());
+
+                final List<SubservicioVO> ssrvPadres = ssrvDAO.selectList(ssrvCriterio);
+            }
+
+            final Set<Long> ssrvIds = new HashSet<Long>();
+
+            ssrvIds.add(ssrv.getId());
+
+            // Busqueda de los hijos del Subservicio a borrar
+            {
+                final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+                final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
+
+                ssrvCriterio.setPadreIds(ssrvIds);
+
+                boolean process = true;
+
+                while (process) {
+                    final List<SubservicioVO> ssrvHijos = ssrvDAO.selectList(ssrvCriterio);
+
+                    if (ssrvHijos.isEmpty()) {
+                        process = false;
+                    }
+
+                    final Set<Long> ssrvStepIds = new HashSet<Long>();
+
+                    for (final SubservicioVO ssrvHijo : ssrvHijos) {
+                        ssrvStepIds.add(ssrvHijo.getId());
+                    }
+
+                    ssrvIds.addAll(ssrvStepIds);
+                    ssrvCriterio.setPadreIds(ssrvStepIds);
+                }
+            }
+
+            Preconditions.checkArgument(!ssrvIds.isEmpty());
+
+            {
+
+                final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+                final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
+
+                ssrvCriterio.setIds(ssrvIds);
+
+                ssdtDAO.delete(ssrvCriterio);
+            }
+
+            {
+                final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+                final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
+
+                ssrvCriterio.setPadreIds(ssrvIds);
+
+                ssssDAO.delete(ssrvCriterio);
+            }
+
+            {
+                final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+                final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
+
+                ssrvCriterio.setIds(ssrvIds);
+
+                ssrvDAO.deleteList(ssrvCriterio);
+            }
+
+            // FIXME Habria que pasar a deletePostOperations los padres del subservicio eliminado
             deletePostOperations(session, ssrv);
 
             session.commit();
         }
-
-        throw new Error("No implementado");
     }
 
     /**

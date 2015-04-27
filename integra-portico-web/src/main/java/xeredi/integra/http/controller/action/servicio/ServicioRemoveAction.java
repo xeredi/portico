@@ -20,8 +20,8 @@ public final class ServicioRemoveAction extends ItemRemoveAction<ServicioVO> {
      */
     @Override
     public void doSpecificRemove() throws ApplicationException {
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId());
+        final ServicioBO itemBO = ServicioBOFactory.newInstance(model.getEntiId());
 
-        srvcBO.delete(model.getId());
+        itemBO.delete(model.getId());
     }
 }

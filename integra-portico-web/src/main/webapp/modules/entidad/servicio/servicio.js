@@ -705,7 +705,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("servicio/ssrv-remove.action", {
+            $http.post("servicio/subservicio-remove.action", {
                 model : vm.item
             }).success(function(data) {
                 window.history.back();
@@ -888,7 +888,7 @@ function SsrvEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("servicio/ssrv-save.action", {
+        $http.post("servicio/subservicio-save.action", {
             model : vm.item,
             accion : vm.accion
         }).success(function(data) {
@@ -902,7 +902,7 @@ function SsrvEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("servicio/ssrv-edit.action", {
+    $http.post("servicio/subservicio-edit.action", {
         model : {
             id : $routeParams.ssrvId,
             entiId : $routeParams.entiId,

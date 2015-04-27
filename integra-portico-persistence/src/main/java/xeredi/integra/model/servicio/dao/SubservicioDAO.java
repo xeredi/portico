@@ -43,11 +43,20 @@ public interface SubservicioDAO {
     /**
      * Delete.
      *
-     * @param ssrvCriterioVO
-     *            the ssrv criterio vo
+     * @param ssrvCriterio
+     *            the ssrv criterio
      * @return the int
      */
-    int delete(final SubservicioCriterioVO ssrvCriterioVO);
+    int deleteList(final SubservicioCriterioVO ssrvCriterio);
+
+    /**
+     * Delete.
+     *
+     * @param ssrv
+     *            the ssrv
+     * @return the int
+     */
+    int delete(final SubservicioVO ssrv);
 
     /**
      * Exists.

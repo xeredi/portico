@@ -51,9 +51,6 @@ public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidad
         }
 
         doSpecificEdit();
-
-        // TODO Auto-generated method stub
-
     }
 
     /**

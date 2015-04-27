@@ -53,27 +53,41 @@
 			<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
 			</foreach>
 		</if>
-		<if test="padreId != null">
+		<if test="padreId != null or (padreIds != null and !padreIds.empty)">
         <![CDATA[
             AND EXISTS (
                 SELECT 1
                 FROM tbl_subserv_subserv_ssss
                 WHERE
                 	ssss_ssrvh_pk = ssrv_pk
-                	AND ssss_ssrvp_pk = #{padreId}
-            )
         ]]>
+			<if test="padreId != null">
+				AND ssss_ssrvp_pk = #{padreId}
+			</if>
+			<if test="padreIds != null and !padreIds.empty">
+				AND ssss_ssrvp_pk IN
+				<foreach collection="padreIds" item="item" open="(" close=")" separator=",">#{item}
+				</foreach>
+			</if>
+			)
 		</if>
-		<if test="hijoId != null">
+		<if test="hijoId != null or (hijoIds != null and !hijoIds.empty)">
         <![CDATA[
             AND EXISTS (
                 SELECT 1
                 FROM tbl_subserv_subserv_ssss
                 WHERE
                 	ssss_ssrvp_pk = ssrv_pk
-                	AND ssss_ssrvh_pk = #{hijoId}
-            )
         ]]>
+			<if test="hijoId != null">
+				AND ssss_ssrvh_pk = #{hijoId}
+			</if>
+			<if test="hijoIds != null and !hijoIds.empty">
+				AND ssss_ssrvh_pk IN
+				<foreach collection="hijoIds" item="item" open="(" close=")" separator=",">#{item}
+				</foreach>
+			</if>
+			)
 		</if>
 		<if test="srvc != null">
 			<if test="srvc.id != null">
