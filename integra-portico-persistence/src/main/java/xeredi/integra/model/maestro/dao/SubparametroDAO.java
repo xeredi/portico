@@ -95,13 +95,13 @@ public interface SubparametroDAO {
     /**
      * Select list.
      *
-     * @param sprmCriterioVO
-     *            the sprm criterio vo
+     * @param criterio
+     *            the criterio
      * @param bounds
      *            the bounds
      * @return the list
      */
-    List<SubparametroVO> selectList(final SubparametroCriterioVO sprmCriterioVO, final RowBounds bounds);
+    List<SubparametroVO> selectList(final SubparametroCriterioVO criterio, final RowBounds bounds);
 
     /**
      * Select object.

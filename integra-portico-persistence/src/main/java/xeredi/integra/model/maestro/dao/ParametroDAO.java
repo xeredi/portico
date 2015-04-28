@@ -9,6 +9,7 @@ import org.apache.ibatis.session.RowBounds;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroTypeaheadCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.maestro.vo.SubparametroTypeaheadCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -146,4 +147,14 @@ public interface ParametroDAO {
      */
     List<ParametroVO> selectLupaList(final ParametroTypeaheadCriterioVO criterio, final RowBounds bounds);
 
+    /**
+     * Select typeahead sprm list.
+     *
+     * @param criterio
+     *            the criterio
+     * @param bounds
+     *            the bounds
+     * @return the list
+     */
+    List<ParametroVO> selectTypeaheadSprmList(final SubparametroTypeaheadCriterioVO criterio, final RowBounds bounds);
 }

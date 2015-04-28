@@ -12,12 +12,14 @@ angular.module("maestro", [])
 
 .controller("PrmtEditController", PrmtEditController)
 
-.controller('PrmtsLupaController', PrmtsLupaController)
+.controller('PrmtLupaController', PrmtLupaController)
 
 // ----------- SUBPARAMETROS ------------------
 .controller("SprmDetailController", SprmDetailController)
 
 .controller("SprmEditController", SprmEditController)
+
+;
 
 function config($routeProvider) {
     $routeProvider
@@ -306,7 +308,7 @@ function PrmtEditController($http, $location, $routeParams, pageTitleService) {
     pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);
 }
 
-function PrmtsLupaController($http, $scope) {
+function PrmtLupaController($http, $scope) {
     $scope.getLabelValues = function(entiId, textoBusqueda, prtoId, fechaVigencia) {
         if (textoBusqueda.length <= 0) {
             return null;
@@ -317,6 +319,25 @@ function PrmtsLupaController($http, $scope) {
         return $http.post("maestro/parametro-typeahead.action", {
             model : {
                 entiId : entiId,
+                textoBusqueda : textoBusqueda,
+                fechaVigencia : fechaVigencia,
+                prtoId : prtoId
+            }
+        }).then(function(res) {
+            return res.data.resultList;
+        });
+    };
+
+    $scope.getLabelValuesSprm = function(entiId, textoBusqueda, fechaVigencia, prtoId) {
+        if (textoBusqueda.length <= 0) {
+            return null;
+        }
+
+        textoBusqueda += "%";
+
+        return $http.post("maestro/parametro-typeahead-sprm.action", {
+            model : {
+                tpspId : entiId,
                 textoBusqueda : textoBusqueda,
                 fechaVigencia : fechaVigencia,
                 prtoId : prtoId

@@ -31,6 +31,7 @@ import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroTypeaheadCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
+import xeredi.integra.model.maestro.vo.SubparametroTypeaheadCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
@@ -630,6 +631,18 @@ public abstract class AbstractParametroBO implements ParametroBO {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
 
             return prmtDAO.selectLupaList(criterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ParametroVO> selectTypeaheadSprmList(final SubparametroTypeaheadCriterioVO criterio, final int limit) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
+
+            return prmtDAO.selectTypeaheadSprmList(criterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         }
     }
 

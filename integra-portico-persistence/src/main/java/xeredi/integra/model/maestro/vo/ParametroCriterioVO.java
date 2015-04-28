@@ -1,6 +1,7 @@
 package xeredi.integra.model.maestro.vo;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Set;
 
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
@@ -29,6 +30,9 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
 
     /** The prto. */
     private PuertoCriterioVO prto;
+
+    /** The sprm map. */
+    private Map<Long, SubparametroVO> sprmMap;
 
     /**
      * Gets the prvr ids.
@@ -144,5 +148,24 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
      */
     public void setFechaVigencia(final Date value) {
         fechaVigencia = value;
+    }
+
+    /**
+     * Gets the sprm map.
+     *
+     * @return the sprm map
+     */
+    public Map<Long, SubparametroVO> getSprmMap() {
+        return sprmMap;
+    }
+
+    /**
+     * Sets the sprm map.
+     *
+     * @param value
+     *            the value
+     */
+    public void setSprmMap(final Map<Long, SubparametroVO> value) {
+        sprmMap = value;
     }
 }

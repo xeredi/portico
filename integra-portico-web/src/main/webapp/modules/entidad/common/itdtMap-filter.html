@@ -33,7 +33,7 @@
             ng-options="labelValue.value as labelValue.label for labelValue in ::vm.labelValuesMap[entd.tpdt.enti.id]"
             class="form-control">
             <option />
-        </select> <input ng-switch-when="PR" ng-if="entd.tpdt.tpht == 'F'" ng-controller="PrmtsLupaController"
+        </select> <input ng-switch-when="PR" ng-if="entd.tpdt.tpht == 'F'" ng-controller="PrmtLupaController"
             type="text" autocomplete="off" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].prmt"
             typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(entd.tpdt.enti.id, $viewValue, fechaVigencia)"
             typeahead-editable="false" typeahead-wait-ms="250" class="form-control"> <input

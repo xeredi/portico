@@ -42,6 +42,7 @@ public abstract class TypeaheadAction<C extends TypeaheadCriterioVO, R> extends 
     @Override
     public final String execute() throws ApplicationException {
         Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getTextoBusqueda());
 
         model.setIdioma(getIdioma());
 

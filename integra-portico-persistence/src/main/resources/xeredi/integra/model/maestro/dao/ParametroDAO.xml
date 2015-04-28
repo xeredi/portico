@@ -147,6 +147,21 @@
 			AND #{fechaVigencia} BETWEEN prvr_fini AND coalesce(prvr_ffin, #{fechaVigencia})
 		</if>
 
+		<if test="sprmMap != null">
+			<foreach collection="sprmMap" index="key" item="sprm">
+			<![CDATA[
+			    AND EXISTS (
+			        SELECT 1
+			        FROM tbl_subparametro_sprm
+			        WHERE
+			            sprm_prmt_pk = prmt_pk
+			            AND sprm_tpsp_pk = #{key}
+			            AND sprm_prmt_dep_pk = #{sprm.prmtAsociado.id}
+			    )
+			]]>
+			</foreach>
+		</if>
+
 		<if test="itdtMap != null and !itdtMap.empty">
 			<foreach collection="itdtMap" index="key" item="itdt">
 				<!-- FIXME ojo, faltan las fechas -->
@@ -220,7 +235,30 @@
 		</where>
 	</select>
 
-	<select id="selectLupaList" parameterType="ParametroTypeaheadCriterioVO" resultMap="ResultMap" fetchSize="10">
+	<select id="selectTypeaheadSprmList" parameterType="SubparametroTypeaheadCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+        <![CDATA[
+		WHERE
+		    EXISTS (
+		        SELECT 1
+		        FROM tbl_subparametro_sprm
+		        WHERE
+		            sprm_prmt_dep_pk = prmt_pk
+		            AND sprm_tpsp_pk = #{tpspId}
+		    )
+		    AND prmt_tppr_pk = (
+		        SELECT tpsp_tppr_dep_pk
+		        FROM
+		            tbl_tipo_subparametro_tpsp
+		        WHERE
+		            tpsp_pk = #{tpspId}
+		    )
+		    AND prmt_parametro LIKE #{textoBusqueda}
+		ORDER BY prmt_tppr_pk, prmt_parametro
+        ]]>
+	</select>
+
+	<select id="selectLupaList" parameterType="ParametroTypeaheadCriterioVO" resultMap="ResultMap">
         <![CDATA[
         SELECT
             prmt_pk

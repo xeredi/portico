@@ -11,6 +11,7 @@ import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroTypeaheadCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.maestro.vo.SubparametroTypeaheadCriterioVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
@@ -198,5 +199,16 @@ public interface ParametroBO {
      * @return the list
      */
     List<ParametroVO> selectLupaList(final ParametroTypeaheadCriterioVO criterio, final int limit);
+
+    /**
+     * Select typeahead sprm list.
+     *
+     * @param criterio
+     *            the criterio
+     * @param limit
+     *            the limit
+     * @return the list
+     */
+    List<ParametroVO> selectTypeaheadSprmList(final SubparametroTypeaheadCriterioVO criterio, final int limit);
 
 }

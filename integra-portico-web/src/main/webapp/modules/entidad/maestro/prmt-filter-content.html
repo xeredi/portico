@@ -35,6 +35,17 @@
                         </div>
 
                         <div ng-include="'modules/entidad/common/itdtMap-filter.html'"></div>
+
+                        <div class="row">
+                            <div ng-repeat="entiHijaId in vm.enti.entiHijasList track by $index"
+                                class="col-sm-6 col-md-4 col-lg-3 form-group-sm">
+                                <label>{{'enti_' + entiHijaId | translate}}</label><input
+                                    ng-controller="PrmtLupaController" type="text" autocomplete="off"
+                                    ng-model="vm.itemCriterio.sprmMap[entiHijaId].prmtAsociado"
+                                    typeahead="prmt as prmt.etiqueta for prmt in getLabelValuesSprm(entiHijaId, $viewValue, vm.itemCriterio.fechaVigencia)"
+                                    typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
+                            </div>
+                        </div>
                     </fieldset>
                 </form>
             </div>
