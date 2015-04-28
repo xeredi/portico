@@ -11,7 +11,7 @@ public final class ReglaVersionVO extends VersionVO {
     private Integer orden;
 
     /** The importe base. */
-    private Double importeBase;
+    private Double valorBase;
 
     /** The condicion. */
     private String condicion;
@@ -1093,8 +1093,8 @@ public final class ReglaVersionVO extends VersionVO {
      *
      * @return the importe base
      */
-    public Double getImporteBase() {
-        return importeBase;
+    public Double getValorBase() {
+        return valorBase;
     }
 
     /**
@@ -1103,7 +1103,7 @@ public final class ReglaVersionVO extends VersionVO {
      * @param value
      *            the new importe base
      */
-    public void setImporteBase(final Double value) {
-        importeBase = value;
+    public void setValorBase(final Double value) {
+        valorBase = value;
     }
 }

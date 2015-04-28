@@ -61,7 +61,7 @@ INSERT INTO portico.tbl_regla_rgla (rgla_pk, rgla_crgo_pk, rgla_enti_pk, rgla_ti
 	63400, 60005, 21003, 'T', 'TR-10-0000')\
 
 INSERT INTO portico.tbl_regla_version_rglv (
-	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_valor_base, rglv_condicion, rglv_formula
 	, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
 	, rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
 	, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
@@ -76,14 +76,14 @@ INSERT INTO portico.tbl_regla_version_rglv (
 	, NULL, NULL, NULL, NULL, NULL, NULL
 )\
 INSERT INTO portico.tbl_regla_version_rglv (
-	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_valor_base, rglv_condicion, rglv_formula
 	, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
 	, rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
 	, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
 	, rglv_path_cuant1, rglv_path_cuant2, rglv_path_cuant3, rglv_path_cuant4, rglv_path_cuant5, rglv_path_cuant6
 	, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
 ) VALUES (
-	64001, 63002, TO_DATE('2013-01-01', 'yyyy-mm-dd'), NULL, 11, NULL, '1 = 1', '0.5'
+	64001, 63002, TO_DATE('2013-01-01', 'yyyy-mm-dd'), NULL, 11, 0.5, '1 = 1', '0.5'
 	, NULL, NULL, NULL, NULL
 	, NULL, NULL, NULL, NULL, NULL, NULL
 	, NULL, NULL, NULL, NULL, NULL, NULL
@@ -91,14 +91,14 @@ INSERT INTO portico.tbl_regla_version_rglv (
 	, NULL, NULL, NULL, NULL, NULL, NULL
 )\
 INSERT INTO portico.tbl_regla_version_rglv (
-	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_valor_base, rglv_condicion, rglv_formula
 	, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
 	, rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
 	, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
 	, rglv_path_cuant1, rglv_path_cuant2, rglv_path_cuant3, rglv_path_cuant4, rglv_path_cuant5, rglv_path_cuant6
 	, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
 ) VALUES (
-	64002, 63003, TO_DATE('2013-01-01', 'yyyy-mm-dd'), NULL, 12, NULL, '1 = 1', '1.5'
+	64002, 63003, TO_DATE('2013-01-01', 'yyyy-mm-dd'), NULL, 12, 1.5, '1 = 1', '1.5'
 	, NULL, NULL, NULL, NULL
 	, NULL, NULL, NULL, NULL, NULL, NULL
 	, NULL, NULL, NULL, NULL, NULL, NULL
@@ -106,14 +106,14 @@ INSERT INTO portico.tbl_regla_version_rglv (
 	, NULL, NULL, NULL, NULL, NULL, NULL
 )\
 INSERT INTO portico.tbl_regla_version_rglv (
-	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_valor_base, rglv_condicion, rglv_formula
 	, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
 	, rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
 	, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
 	, rglv_path_cuant1, rglv_path_cuant2, rglv_path_cuant3, rglv_path_cuant4, rglv_path_cuant5, rglv_path_cuant6
 	, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
 ) VALUES (
-	64003, 63004, TO_DATE('2013-01-01', 'yyyy-mm-dd'), NULL, 13, NULL, '1 = 1', '1.2'
+	64003, 63004, TO_DATE('2013-01-01', 'yyyy-mm-dd'), NULL, 13, 1.2, '1 = 1', '1.2'
 	, NULL, NULL, NULL, NULL
 	, NULL, NULL, NULL, NULL, NULL, NULL
 	, NULL, NULL, NULL, NULL, NULL, NULL
@@ -121,14 +121,14 @@ INSERT INTO portico.tbl_regla_version_rglv (
 	, NULL, NULL, NULL, NULL, NULL, NULL
 )\
 INSERT INTO portico.tbl_regla_version_rglv (
-	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_valor_base, rglv_condicion, rglv_formula
 	, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
 	, rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
 	, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
 	, rglv_path_cuant1, rglv_path_cuant2, rglv_path_cuant3, rglv_path_cuant4, rglv_path_cuant5, rglv_path_cuant6
 	, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
 ) VALUES (
-	64004, 63005, TO_DATE('2013-01-01', 'yyyy-mm-dd'), NULL, 14, NULL, '1 = 1', '0.8'
+	64004, 63005, TO_DATE('2013-01-01', 'yyyy-mm-dd'), NULL, 14, 0.8, '1 = 1', '0.8'
 	, NULL, NULL, NULL, NULL
 	, NULL, NULL, NULL, NULL, NULL, NULL
 	, NULL, NULL, NULL, NULL, NULL, NULL
@@ -136,7 +136,7 @@ INSERT INTO portico.tbl_regla_version_rglv (
 	, NULL, NULL, NULL, NULL, NULL, NULL
 )\
 INSERT INTO portico.tbl_regla_version_rglv (
-	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_valor_base, rglv_condicion, rglv_formula
 	, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
 	, rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
 	, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
@@ -151,14 +151,14 @@ INSERT INTO portico.tbl_regla_version_rglv (
 	, NULL, NULL, NULL, NULL, NULL, NULL
 )\
 INSERT INTO portico.tbl_regla_version_rglv (
-	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_valor_base, rglv_condicion, rglv_formula
 	, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
 	, rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
 	, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
 	, rglv_path_cuant1, rglv_path_cuant2, rglv_path_cuant3, rglv_path_cuant4, rglv_path_cuant5, rglv_path_cuant6
 	, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
 ) VALUES (
-	64202, 63202, TO_DATE('2013-01-01', 'yyyy-mm-dd'), NULL, 1, NULL, '1 = 1', '1'
+	64202, 63202, TO_DATE('2013-01-01', 'yyyy-mm-dd'), NULL, 1, 1, '1 = 1', '1'
 	, NULL, NULL, NULL, NULL
 	, NULL, NULL, NULL, NULL, NULL, NULL
 	, NULL, NULL, NULL, NULL, NULL, NULL
@@ -166,7 +166,7 @@ INSERT INTO portico.tbl_regla_version_rglv (
 	, NULL, NULL, NULL, NULL, NULL, NULL
 )\
 INSERT INTO portico.tbl_regla_version_rglv (
-	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_valor_base, rglv_condicion, rglv_formula
 	, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
 	, rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
 	, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
@@ -181,14 +181,14 @@ INSERT INTO portico.tbl_regla_version_rglv (
 	, NULL, NULL, NULL, NULL, NULL, NULL
 )\
 INSERT INTO portico.tbl_regla_version_rglv (
-	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_valor_base, rglv_condicion, rglv_formula
 	, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
 	, rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
 	, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
 	, rglv_path_cuant1, rglv_path_cuant2, rglv_path_cuant3, rglv_path_cuant4, rglv_path_cuant5, rglv_path_cuant6
 	, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
 ) VALUES (
-	64320, 63320, TO_DATE('2013-01-01', 'yyyy-mm-dd'), NULL, 1, NULL, '1 = 1', '1'
+	64320, 63320, TO_DATE('2013-01-01', 'yyyy-mm-dd'), NULL, 1, 1, '1 = 1', '1'
 	, NULL, NULL, NULL, NULL
 	, NULL, NULL, NULL, NULL, NULL, NULL
 	, NULL, NULL, NULL, NULL, NULL, NULL
@@ -196,7 +196,7 @@ INSERT INTO portico.tbl_regla_version_rglv (
 	, NULL, NULL, NULL, NULL, NULL, NULL
 )\
 INSERT INTO portico.tbl_regla_version_rglv (
-	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+	rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_valor_base, rglv_condicion, rglv_formula
 	, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
 	, rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
 	, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6

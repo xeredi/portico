@@ -24,22 +24,26 @@
             </p>
         </div>
         <div class="col-md-1 form-group-sm">
-            <label translate="rgla_crgo"></label>
+            <label translate="crgo"></label>
             <p class="form-control-static">
                 <a ng-href="#/facturacion/crgo/detail/{{vm.vlrl.rgla.crgo.id}}/{{vm.vlrl.fref}}"
                     ng-bind="vm.vlrl.rgla.crgo.codigo"></a>
             </p>
         </div>
         <div class="col-md-1 form-group-sm">
-            <label translate="vlrl_rgla"></label>
+            <label translate="rgla"></label>
             <p class="form-control-static">
                 <a ng-href="#/facturacion/rgla/detail/{{vm.vlrl.rgla.id}}/{{vm.vlrl.fref}}"
                     ng-bind="vm.vlrl.rgla.codigo"></a>
             </p>
         </div>
         <div class="col-md-1 form-group-sm">
-            <label translate="vlrl_rgla_tipo"></label>
+            <label translate="rgla_tipo"></label>
             <p class="form-control-static" ng-bind="vm.vlrl.rgla.tipo"></p>
+        </div>
+        <div class="col-md-1 form-group-sm">
+            <label translate="rgla_valorBase"></label>
+            <p class="form-control-static number" ng-bind="vm.vlrl.rgla.version.valorBase | number:4"></p>
         </div>
         <div class="col-md-1 form-group-sm" ng-if="vm.vlrl.rgla.tipo != 'T'">
             <label translate="vlrl_importeBase"></label>
@@ -53,8 +57,8 @@
             <label translate="vlrl_impuesto"></label>
             <p class="form-control-static">
                 <a
-                    ng-href="#/maestro/prmt/detail/{{vm.vlrl.impuesto.entiId}}/{{vm.vlrl.impuesto.id}}/{{vm.vlrl.fref}}"
-                    ng-bind="vm.vlrl.impuesto.etiqueta"></a>
+                    ng-href="#/maestro/prmt/detail/{{vm.vlrlPadre.impuesto.entiId}}/{{vm.vlrlPadre.impuesto.id}}/{{vm.vlrl.fref}}"
+                    ng-bind="vm.vlrlPadre.impuesto.etiqueta"></a>
             </p>
         </div>
         <div ng-if="vm.vlrl.ssrv.id" class="col-md-1 form-group-sm">
@@ -271,12 +275,18 @@
                     ng-bind="vlrd.info5"></td>
                 <td ng-if="vm.vlrlPadre.rgla.version.etiqInfo6 && !vm.aspc.version.lgrpInfo6"
                     ng-bind="vlrd.info6"></td>
-                <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant1" class="number" ng-bind="vlrd.cuant1 | number:2"></td>
-                <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant2" class="number" ng-bind="vlrd.cuant2 | number:2"></td>
-                <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant3" class="number" ng-bind="vlrd.cuant3 | number:2"></td>
-                <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant4" class="number" ng-bind="vlrd.cuant4 | number:2"></td>
-                <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant5" class="number" ng-bind="vlrd.cuant5 | number:2"></td>
-                <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant6" class="number" ng-bind="vlrd.cuant6 | number:2"></td>
+                <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant1" class="number"
+                    ng-bind="vlrd.cuant1 | number:2"></td>
+                <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant2" class="number"
+                    ng-bind="vlrd.cuant2 | number:2"></td>
+                <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant3" class="number"
+                    ng-bind="vlrd.cuant3 | number:2"></td>
+                <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant4" class="number"
+                    ng-bind="vlrd.cuant4 | number:2"></td>
+                <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant5" class="number"
+                    ng-bind="vlrd.cuant5 | number:2"></td>
+                <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant6" class="number"
+                    ng-bind="vlrd.cuant6 | number:2"></td>
             </tr>
         </tbody>
     </table>

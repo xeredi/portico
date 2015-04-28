@@ -120,7 +120,7 @@ CREATE TABLE tbl_regla_version_rglv (
 	, rglv_fini TIMESTAMP NOT NULL
 	, rglv_ffin TIMESTAMP
 	, rglv_orden INT NOT NULL
-	, rglv_importe_base NUMERIC(10, 4)
+	, rglv_valor_base NUMERIC(10, 4) NOT NULL
 	, rglv_condicion VARCHAR2(2000) NOT NULL
 	, rglv_formula VARCHAR2(2000) NOT NULL
 

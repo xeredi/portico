@@ -5,6 +5,8 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReglaRemoveAction.
@@ -19,8 +21,10 @@ public final class ReglaRemoveAction extends CrudRemoveAction<ReglaVO> {
      */
     @Override
     public void doRemove() throws ApplicationException {
+        Preconditions.checkNotNull(model.getId());
+
         final ReglaBO rglaBO = new ReglaBO();
 
-        rglaBO.delete(model.getVersion().getId());
+        rglaBO.delete(model);
     }
 }

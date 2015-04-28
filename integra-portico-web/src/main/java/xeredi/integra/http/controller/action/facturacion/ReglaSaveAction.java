@@ -62,9 +62,9 @@ public final class ReglaSaveAction extends CrudSaveAction<ReglaVO> {
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_orden, model.getVersion().getOrden());
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_condicion, model.getVersion().getCondicion());
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_formula, model.getVersion().getFormula());
+        FieldValidator.validateRequired(this, MessageI18nKey.rgla_valorBase, model.getVersion().getValorBase());
 
         if (ReglaTipo.T == model.getTipo()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.rgla_importeBase, model.getVersion().getImporteBase());
             FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathImpuesto, model.getVersion()
                     .getPathImpuesto());
             FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathPagador, model.getVersion().getPathPagador());

@@ -203,8 +203,9 @@
                 <th />
                 <th translate="rgla_enti"></th>
                 <th translate="rgla_crgo"></th>
-                <th translate="vlrl_rgla"></th>
-                <th translate="vlrl_rgla_tipo"></th>
+                <th translate="rgla"></th>
+                <th translate="rgla_tipo"></th>
+                <th translate="rgla_valorBase"></th>
                 <th translate="vlrl_importeBase"></th>
                 <th translate="vlrl_importe"></th>
                 <th translate="vlrl_vlrdCount"></th>
@@ -237,6 +238,7 @@
                 <td nowrap="nowrap" ng-bind="vlrl.rgla.codigo"></td>
                 <td ng-bind="vlrl.rgla.tipo" bs-tooltip
                     data-title="{{'ReglaTipo_' + vlrl.rgla.tipo | translate}}"></td>
+                <td nowrap="nowrap" ng-bind="vlrl.rgla.version.valorBase | number:4" class="number"></td>
                 <td nowrap="nowrap" class="number"><span ng-if="vlrl.rgla.tipo != 'T'">{{vlrl.importeBase
                         | number:2}} &euro;</span></td>
                 <td nowrap="nowrap" class="number">{{vlrl.importe | number:2}} &euro;</td>

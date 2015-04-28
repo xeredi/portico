@@ -249,7 +249,7 @@ public final class FacturaPdf extends BasePdf {
 
         linea.add(DynamicReports.cmp.horizontalFlowList(
                 createEtiquetaValorComponent("Concepto", fctl.getRgla().getCodigo()),
-                createEtiquetaValorComponent("Cuota", formatDouble(fctl.getRgla().getVersion().getImporteBase())),
+                createEtiquetaValorComponent("Cuota", formatDouble(fctl.getRgla().getVersion().getValorBase())),
                 createEtiquetaValorComponent("IVA", fctl.getImpuesto().getEtiqueta()),
                 createEtiquetaValorComponent("Importe", formatCurrency(fctl.getImporte()))));
 

@@ -1,13 +1,15 @@
 <form role="form">
     <fieldset>
-        <legend translate="vlrd"></legend>
-
         <div class="row">
-            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm">
+            <div class="col-md-2 col-lg-1 form-group-sm">
                 <label translate="vlrd_valorBase"></label> <input type="text" ng-model="vm.vlrd.valorBase"
                     class="form-control number">
             </div>
-            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm">
+            <div class="col-md-2 col-lg-1 form-group-sm" ng-if="vm.vlrl.rgla.tipo != 'T'">
+                <label translate="vlrd_importeBase"></label> <input type="text" ng-model="vm.vlrd.importeBase"
+                    class="form-control number">
+            </div>
+            <div class="col-md-2 col-lg-1 form-group-sm">
                 <label translate="vlrd_importe"></label> <input type="text" ng-model="vm.vlrd.importe"
                     class="form-control number">
             </div>

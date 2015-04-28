@@ -36,6 +36,17 @@
             <p class="form-control-static number">{{vm.vlrd.importe | number:2}} &euro;</p>
         </div>
         <div class="col-md-2 form-group-sm">
+            <label translate="vlrd_impuesto"></label>
+            <p class="form-control-static">
+                <a
+                    ng-href="#/maestro/prmt/detail/{{vm.vlrlPadre.impuesto.entiId}}/{{vm.vlrlPadre.impuesto.id}}/{{vm.vlrd.fref}}"
+                    ng-bind="vm.vlrlPadre.impuesto.etiqueta"></a>
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 form-group-sm">
             <label translate="vlrd_ssrv"></label>
             <p class="form-control-static">
                 <a ng-if="vm.vlrd.ssrv.id"

@@ -47,6 +47,8 @@
 			</association>
 
 			<association property="version" javaType="ReglaVersionVO">
+				<result column="rglv_valor_base" property="valorBase" />
+
 				<result column="rglv_etiq_info1" property="etiqInfo1" />
 				<result column="rglv_etiq_info2" property="etiqInfo2" />
 				<result column="rglv_etiq_info3" property="etiqInfo3" />
@@ -137,6 +139,7 @@
 
 		    , rgla_codigo, rgla_crgo_pk, rgla_tipo, rgla_enti_pk
 
+			, rglv_valor_base
 		    , rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
 		    , rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
 

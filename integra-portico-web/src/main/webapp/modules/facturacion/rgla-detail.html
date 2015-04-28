@@ -47,9 +47,9 @@
             <label translate>rgla_orden</label>
             <p class="form-control-static number" ng-bind="vm.rgla.version.orden"></p>
         </div>
-        <div ng-if="vm.rgla.tipo == 'T'" class="col-md-1 form-group-sm">
-            <label translate>rgla_importeBase</label>
-            <p class="form-control-static number" ng-bind="vm.rgla.version.importeBase | number:4"></p>
+        <div class="col-md-1 form-group-sm">
+            <label translate>rgla_valorBase</label>
+            <p class="form-control-static number" ng-bind="vm.rgla.version.valorBase | number:4"></p>
         </div>
     </div>
 
@@ -173,7 +173,8 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/facturacion/rgin/edit/create/{{vm.rgla.id}}/{{vm.fechaVigencia}}"><i
+            <a class="btn btn-default"
+                ng-href="#/facturacion/rgin/edit/create/{{vm.rgla.id}}/{{vm.fechaVigencia}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>

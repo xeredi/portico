@@ -54,7 +54,7 @@
         , rgla_crgo_pk AS vlrt_crgo_pk
         , rgla_pk AS vlrt_rgla_pk
         , NULL AS vlrt_padre_pk
-        , (SELECT rglv_importe_base FROM tbl_regla_version_rglv WHERE rglv_pk = #{rgla.version.id}) AS vlrt_valor_base
+        , (SELECT rglv_valor_base FROM tbl_regla_version_rglv WHERE rglv_pk = #{rgla.version.id}) AS vlrt_valor_base
         , 0 AS vlrt_importe_base
         , (${rgla.version.formulaSql}) AS vlrt_importe
         , importe_inc AS vlrt_importe_inc
@@ -272,7 +272,7 @@
         , rgla_pk AS vlrt_rgla_pk
         , NULL AS vlrt_padre_pk
         , ssrv_numero AS vlrt_orden
-        , (SELECT rglv_importe_base FROM tbl_regla_version_rglv WHERE rglv_pk = #{rgla.version.id}) AS vlrt_valor_base
+        , (SELECT rglv_valor_base FROM tbl_regla_version_rglv WHERE rglv_pk = #{rgla.version.id}) AS vlrt_valor_base
         , 0 AS vlrt_importe_base
         , (${rgla.version.formulaSql}) AS vlrt_importe
         , importe_inc AS vlrt_importe_inc

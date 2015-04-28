@@ -696,7 +696,7 @@ public enum MessageI18nKey {
     /** The rgla_formula. */
     rgla_formula,
     /** The rgla_importe base. */
-    rgla_importeBase,
+    rgla_valorBase,
     /** The rgla_path impuesto. */
     rgla_pathImpuesto,
     /** The rgla_path pagador. */
