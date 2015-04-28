@@ -68,11 +68,11 @@
                     ng-bind="vm.vlrl.ssrv.numero"></a>
             </p>
         </div>
-        <div ng-if="vm.vlrl.fini" class="col-md-1 form-group-sm">
+        <div ng-if="vm.vlrl.ssrv.id && vm.vlrl.rgla.crgo.version.temporal" class="col-md-1 form-group-sm">
             <label translate="vlrl_fini"></label>
             <p class="form-control-static" ng-bind="vm.vlrl.fini | date: ('format_datetime' | translate)"></p>
         </div>
-        <div ng-if="vm.vlrl.ffin" class="col-md-1 form-group-sm">
+        <div ng-if="vm.vlrl.ssrv.id && vm.vlrl.rgla.crgo.version.temporal" class="col-md-1 form-group-sm">
             <label translate="vlrl_ffin"></label>
             <p class="form-control-static" ng-bind="vm.vlrl.ffin | date: ('format_datetime' | translate)"></p>
         </div>
@@ -150,6 +150,7 @@
                     <th />
                     <th translate="rgla"></th>
                     <th translate="rgla_tipo"></th>
+                    <th translate="rgla_valorBase"></th>
                     <th translate="vlrl_importeBase"></th>
                     <th translate="vlrl_importe"></th>
 
@@ -174,6 +175,7 @@
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td nowrap="nowrap" ng-bind="vlrl.rgla.codigo"></td>
                     <td nowrap="nowrap" ng-bind="vlrl.rgla.tipo"></td>
+                    <td nowrap="nowrap" ng-bind="vlrl.rgla.version.valorBase | number:4" class="number"></td>
                     <td nowrap="nowrap" class="number">{{vlrl.importeBase | number:2}} &euro;</td>
                     <td nowrap="nowrap" class="number">{{vlrl.importe | number:2}} &euro;</td>
 
@@ -221,8 +223,8 @@
                 <th translate="vlrd_importeBase" ng-if="vm.vlrl.rgla.tipo != 'T'"></th>
                 <th translate="vlrd_importe"></th>
                 <th translate="vlrd_ssrv"></th>
-                <th translate="vlrd_fini"></th>
-                <th translate="vlrd_ffin"></th>
+                <th translate="vlrd_fini" ng-if="vlrl.rgla.crgo.version.temporal"></th>
+                <th translate="vlrd_ffin" ng-if="vlrl.rgla.crgo.version.temporal"></th>
                 <th ng-if="vm.vlrlPadre.rgla.version.etiqInfo1 && !vm.aspc.version.lgrpInfo1"><span
                     ng-bind="vm.vlrlPadre.rgla.version.etiqInfo1"></span></th>
                 <th ng-if="vm.vlrlPadre.rgla.version.etiqInfo2 && !vm.aspc.version.lgrpInfo2"><span
@@ -261,8 +263,8 @@
                     number:2}} &euro;</td>
                 <td nowrap="nowrap" class="number">{{vlrd.importe | number:2}} &euro;</td>
                 <td ng-bind="vlrd.ssrv.numero"></td>
-                <td ng-bind="vlrd.fini | date:'short'"></td>
-                <td ng-bind="vlrd.ffin | date:'short'"></td>
+                <td ng-bind="vlrd.fini | date:'short'" ng-if="vlrl.rgla.crgo.version.temporal"></td>
+                <td ng-bind="vlrd.ffin | date:'short'" ng-if="vlrl.rgla.crgo.version.temporal"></td>
                 <td ng-if="vm.vlrlPadre.rgla.version.etiqInfo1 && !vm.aspc.version.lgrpInfo1"
                     ng-bind="vlrd.info1"></td>
                 <td ng-if="vm.vlrlPadre.rgla.version.etiqInfo2 && !vm.aspc.version.lgrpInfo2"

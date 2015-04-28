@@ -67,6 +67,10 @@
 			<association property="crgo" javaType="CargoVO">
 				<result column="rgla_crgo_pk" property="id" />
 				<result column="crgo_codigo" property="codigo" />
+
+				<association property="version" javaType="CargoVersionVO">
+					<result column="crgv_es_temporal" property="temporal" />
+				</association>
 			</association>
 		</association>
 
@@ -149,6 +153,10 @@
 		    , (SELECT ssrv_numero FROM tbl_subservicio_ssrv WHERE ssrv_pk = vlrl_ssrv_pk) AS ssrv_numero
 		    , (SELECT crgo_codigo FROM tbl_cargo_crgo WHERE crgo_pk = rgla_crgo_pk) AS crgo_codigo
 		    , (SELECT enti_tipo FROM tbl_entidad_enti WHERE enti_pk = rgla_enti_pk) AS enti_tipo
+
+		    , (SELECT crgv_es_temporal FROM tbl_cargo_version_crgv
+		    	WHERE crgv_crgo_pk = rgla_crgo_pk
+		    		AND vlrc_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, vlrc_fref)) AS crgv_es_temporal
     ]]>
 		<if test="idioma != null">
 	    <![CDATA[

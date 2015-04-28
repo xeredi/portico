@@ -210,6 +210,7 @@
                 <th translate="vlrl_importe"></th>
                 <th translate="vlrl_vlrdCount"></th>
                 <th translate="vlrl_impuesto"></th>
+                <th translate="ssrv"></th>
                 <th translate="vlrl_fini"></th>
                 <th translate="vlrl_ffin"></th>
 
@@ -244,6 +245,7 @@
                 <td nowrap="nowrap" class="number">{{vlrl.importe | number:2}} &euro;</td>
                 <td class="number" ng-bind="vlrl.vlrdCount"></td>
                 <td ng-bind="vlrl.impuesto.parametro" bs-tooltip data-title="{{vlrl.impuesto.etiqueta}}"></td>
+                <td ng-bind="vlrl.ssrv.numero"></td>
                 <td ng-bind="vlrl.fini | date:'short'"></td>
                 <td ng-bind="vlrl.ffin | date:'short'"></td>
 

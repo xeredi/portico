@@ -38,11 +38,11 @@
                 <p class="form-control-static" ng-bind="'enti_' + vm.vlrl.rgla.enti.id | translate"></p>
             </div>
  -->
-            <div class="col-md-2 form-group-sm">
+            <div class="col-md-2 form-group-sm" ng-if="vlrl.rgla.crgo.version.temporal">
                 <label translate="vlrd_fini"></label> <input type="text" class="form-control"
                     ng-model="vm.vlrd.fini" bs-datepicker />
             </div>
-            <div class="col-md-2 form-group-sm">
+            <div class="col-md-2 form-group-sm" ng-if="vlrl.rgla.crgo.version.temporal">
                 <label translate="vlrd_ffin"></label> <input type="text" class="form-control"
                     ng-model="vm.vlrd.ffin" data-min-date="{{vm.vlrd.fini}}" bs-datepicker />
             </div>

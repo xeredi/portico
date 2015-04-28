@@ -1,7 +1,5 @@
 <form role="form">
     <fieldset>
-        <legend translate="vlrl"></legend>
-
         <div class="row">
             <div class="col-md-3 col-lg-2 form-group-sm" ng-if="vm.vlrl.rgla.id">
                 <label translate="enti"></label>
@@ -30,6 +28,11 @@
                 <p class="form-control-static" ng-bind="vm.vlrl.rgla.tipo"></p>
             </div>
 
+            <div class="col-md-2 col-lg-1 form-group-sm">
+                <label translate="rgla_valorBase"></label>
+                <p class="form-control-static number" ng-bind="vm.vlrl.rgla.version.valorBase | number:4"></p>
+            </div>
+
             <div class="col-md-1 form-group-sm" ng-if="vm.vlrl.rgla.tipo != 'T'">
                 <label translate="vlrl_importeBase"></label>
                 <p class="form-control-static number">{{vm.vlrl.importeBase | number:2}} &euro;</p>
@@ -41,12 +44,12 @@
 
             <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm">
                 <label translate="vlrl_impuesto"></label> <select ng-if="vm.vlrl.rgla.tipo == 'T'"
-                    ng-model="vm.vlrl.impuesto" ng-options="prmt as prmt.etiqueta for prmt in vm.impuestoList"
-                    class="form-control">
+                    ng-model="vm.vlrl.impuesto.id"
+                    ng-options="prmt.id as prmt.etiqueta for prmt in vm.impuestoList" class="form-control">
                     <option />
                 </select>
-                <p class="form-control-static number" ng-if="vm.vlrl.rgla.tipo != 'T'"
-                    ng-bind="vm.vlrl.impuesto.etiqueta"></p>
+                <p class="form-control-static" ng-if="vm.vlrl.rgla.tipo != 'T'"
+                    ng-bind="vm.vlrlPadre.impuesto.etiqueta"></p>
             </div>
         </div>
 

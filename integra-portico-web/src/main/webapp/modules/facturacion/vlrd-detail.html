@@ -47,18 +47,18 @@
 
     <div class="row">
         <div class="col-md-2 form-group-sm">
-            <label translate="vlrd_ssrv"></label>
+            <label ng-bind="'enti_' + vm.vlrl.rgla.enti.id | translate"></label>
             <p class="form-control-static">
                 <a ng-if="vm.vlrd.ssrv.id"
                     ng-href="#/servicio/ssrv/detail/{{vm.vlrd.ssrv.entiId}}/{{vm.vlrd.ssrv.id}}"
                     ng-bind="vm.vlrd.ssrv.numero"></a>
             </p>
         </div>
-        <div class="col-md-2 form-group-sm">
+        <div class="col-md-2 form-group-sm" ng-if="vlrl.rgla.crgo.version.temporal">
             <label translate="vlrd_fini"></label>
             <p class="form-control-static" ng-bind="vlrd.fini | date: ('format_datetime' | translate)"></p>
         </div>
-        <div class="col-md-2 form-group-sm">
+        <div class="col-md-2 form-group-sm" ng-if="vlrl.rgla.crgo.version.temporal">
             <label translate="vlrd_ffin"></label>
             <p class="form-control-static" ng-bind="vlrd.ffin | date: ('format_datetime' | translate)"></p>
         </div>
