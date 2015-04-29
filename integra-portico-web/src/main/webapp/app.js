@@ -89,17 +89,15 @@ angular.module(
                             return $q.reject(response);
 
                             break;
-                        case "success":
-                            if (response.data.actionErrors && response.data.actionErrors.length > 0) {
-                                $rootScope.actionErrors = response.data.actionErrors;
-
-                                return $q.reject(response.data.actionErrors);
-                            }
-                            break;
-
                         default:
                             break;
                         }
+                    }
+
+                    if (response.data.actionErrors && response.data.actionErrors.length > 0) {
+                        $rootScope.actionErrors = response.data.actionErrors;
+
+                        return $q.reject(response.data.actionErrors);
                     }
                 }
 

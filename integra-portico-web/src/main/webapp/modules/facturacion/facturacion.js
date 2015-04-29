@@ -568,7 +568,7 @@ function VlrcDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("facturacion/vlrc-remove.action", {
+            $http.post("facturacion/valoracion-remove.action", {
                 model : vm.vlrc
             }).success(function(data) {
                 window.history.back();
@@ -592,7 +592,7 @@ function VlrcDetailController($http, $location, $routeParams, pageTitleService) 
         });
     }
 
-    $http.post("facturacion/vlrc-detail.action", {
+    $http.post("facturacion/valoracion-detail.action", {
         model : {
             id : $routeParams.vlrcId
         }
@@ -617,7 +617,7 @@ function VlrcEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("facturacion/vlrc-save.action", {
+        $http.post("facturacion/valoracion-save.action", {
             model : vm.vlrc,
             accion : vm.accion
         }).success(function(data) {
@@ -631,7 +631,7 @@ function VlrcEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("facturacion/vlrc-edit.action", {
+    $http.post("facturacion/valoracion-edit.action", {
         model : {
             id : $routeParams.vlrcId
         },
