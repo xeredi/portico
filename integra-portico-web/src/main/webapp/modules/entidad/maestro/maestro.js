@@ -68,8 +68,8 @@ function config($routeProvider) {
 function MaestroController($http, $translate, pageTitleService) {
     var vm = this;
 
-    $http.post('maestro/tppr-list.action').success(function(data) {
-        vm.tpprList = data.tpprList.map(function(tppr) {
+    $http.post('maestro/index.action').success(function(data) {
+        vm.tpprList = data.resultList.map(function(tppr) {
             $translate('enti_' + tppr.value).then(function(translation) {
                 tppr.label = translation.toUpperCase();
             });

@@ -184,8 +184,8 @@ function M18nGridController($http, pageTitleService) {
         });
     }
 
-    $http.post("administracion/messagei18n/m18n-grid.action").success(function(data) {
-        vm.keyList = data.keyList;
+    $http.post("administracion/messagei18n/message-i18n-list.action").success(function(data) {
+        vm.keyList = data.resultList;
         vm.keyMap = data.keyMap;
         vm.availableLanguages = data.availableLanguages;
     });

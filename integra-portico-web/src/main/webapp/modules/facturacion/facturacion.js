@@ -255,7 +255,10 @@ function config($routeProvider) {
     });
 }
 
-function FacturacionController(pageTitleService) {
+function FacturacionController($http, pageTitleService) {
+    $http.post("facturacion/index.action").success(function(data) {
+    });
+
     pageTitleService.setTitle("sec_facturacion", "page_home");
 }
 
@@ -492,13 +495,13 @@ function VlrcGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function search(page) {
-        $http.post("facturacion/vlrc-list.action", {
+        $http.post("facturacion/valoracion-list.action", {
             model : vm.vlrcCriterio,
             page : page,
             limit : vm.limit
         }).success(function(data) {
-            vm.page = data.vlrcList.page;
-            vm.vlrcList = data.vlrcList;
+            vm.page = data.resultList.page;
+            vm.vlrcList = data.resultList;
             vm.vlrcCriterio = data.model;
             vm.tpdtCodExencion = data.tpdtCodExencion;
 
@@ -514,7 +517,9 @@ function VlrcGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
-        $http.post("facturacion/vlrc-filter.action").success(function(data) {
+        $http.post("facturacion/valoracion-filter.action", {
+            model : vm.vlrcCriterio
+        }).success(function(data) {
             vm.tpsrList = data.tpsrList;
         });
     }
