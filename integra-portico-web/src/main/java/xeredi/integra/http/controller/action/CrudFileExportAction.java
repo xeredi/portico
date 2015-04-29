@@ -3,7 +3,6 @@ package xeredi.integra.http.controller.action;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -16,6 +15,8 @@ import xeredi.integra.model.comun.exception.InternalErrorException;
  * @param <M>
  *            the generic type
  */
+@Result(name = "success", type = "stream", params = { "contentType", "${contentType.mimeType}", "inputName", "stream",
+        "contentDisposition", "filename=${filename}.${contentType.fileExtension}" })
 public abstract class CrudFileExportAction<M> extends BaseAction {
 
     /** The Constant serialVersionUID. */
@@ -79,17 +80,13 @@ public abstract class CrudFileExportAction<M> extends BaseAction {
     /**
      * {@inheritDoc}
      */
-    @Action(results = { @Result(name = "success", type = "stream", params = { "contentType", "${contentType.mimeType}",
-            "inputName", "stream", "contentDisposition", "filename=${filename}.${contentType.fileExtension}" }) })
     @Override
-    public final String execute() throws ApplicationException {
+    public final void doExecute() throws ApplicationException {
         try {
             doExport();
         } catch (final IOException ex) {
             throw new InternalErrorException(ex);
         }
-
-        return SUCCESS;
     }
 
     /**

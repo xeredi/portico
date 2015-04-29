@@ -64,7 +64,7 @@ angular.module(
     $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
     $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
 
-    $httpProvider.interceptors.push(function($q, $rootScope, usSpinnerService) {
+    $httpProvider.interceptors.push(function($q, $rootScope, $location, usSpinnerService) {
         return {
             'request' : function(request) {
                 activeRequests++;
@@ -81,10 +81,26 @@ angular.module(
 
                 $rootScope.actionErrors = null;
 
-                if (response.data && response.data.actionErrors && response.data.actionErrors.length > 0) {
-                    $rootScope.actionErrors = response.data.actionErrors;
+                if (response.data) {
+                    if (response.data.responseCode) {
+                        switch (response.data.responseCode) {
+                        case "login":
+                            $location.path("/seguridad/usro/acceso");
+                            return $q.reject(response);
 
-                    return $q.reject(response.data.actionErrors);
+                            break;
+                        case "success":
+                            if (response.data.actionErrors && response.data.actionErrors.length > 0) {
+                                $rootScope.actionErrors = response.data.actionErrors;
+
+                                return $q.reject(response.data.actionErrors);
+                            }
+                            break;
+
+                        default:
+                            break;
+                        }
+                    }
                 }
 
                 return response;

@@ -28,15 +28,13 @@ public abstract class GridFilterAction<C extends BaseCriterioVO> extends BaseAct
      * {@inheritDoc}
      */
     @Override
-    public final String execute() throws ApplicationException {
+    public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(model);
 
         model.setIdioma(idioma);
 
         doPrepareFilter();
         doLoadDependencies();
-
-        return SUCCESS;
     }
 
     /**

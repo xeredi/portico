@@ -24,7 +24,7 @@ public abstract class CrudRemoveAction<T> extends BaseAction {
      * {@inheritDoc}
      */
     @Override
-    public final String execute() throws ApplicationException {
+    public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(model);
 
         if (model instanceof Versionable<?>) {
@@ -33,8 +33,6 @@ public abstract class CrudRemoveAction<T> extends BaseAction {
         }
 
         doRemove();
-
-        return SUCCESS;
     }
 
     /**

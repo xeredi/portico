@@ -3,7 +3,6 @@ package xeredi.integra.http.controller.action;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -19,6 +18,8 @@ import com.google.common.base.Preconditions;
  * @param <C>
  *            the generic type
  */
+@Result(name = "success", type = "stream", params = { "contentType", "application/xls", "inputName", "stream",
+        "contentDisposition", "filename=${filename}.xls" })
 public abstract class GridXlsExportAction<C extends BaseCriterioVO> extends BaseAction {
 
     /** The Constant serialVersionUID. */
@@ -34,9 +35,7 @@ public abstract class GridXlsExportAction<C extends BaseCriterioVO> extends Base
      * {@inheritDoc}
      */
     @Override
-    @Action(results = { @Result(name = "success", type = "stream", params = { "contentType", "application/xls",
-            "inputName", "stream", "contentDisposition", "filename=${filename}.xls" }) })
-    public final String execute() throws ApplicationException {
+    public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(criterio);
 
         criterio.setIdioma(getIdioma());
@@ -46,8 +45,6 @@ public abstract class GridXlsExportAction<C extends BaseCriterioVO> extends Base
         } catch (final IOException ex) {
             throw new InternalErrorException(ex);
         }
-
-        return SUCCESS;
     }
 
     /**

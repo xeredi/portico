@@ -30,7 +30,7 @@ public abstract class CrudDetailAction<T> extends BaseAction implements ModelDri
      * {@inheritDoc}
      */
     @Override
-    public final String execute() throws ApplicationException {
+    public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(model);
 
         if (model instanceof Versionable<?>) {
@@ -38,8 +38,6 @@ public abstract class CrudDetailAction<T> extends BaseAction implements ModelDri
         }
 
         doDetail();
-
-        return SUCCESS;
     }
 
     /**

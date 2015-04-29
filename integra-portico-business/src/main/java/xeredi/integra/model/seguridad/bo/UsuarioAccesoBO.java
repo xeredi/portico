@@ -38,7 +38,7 @@ public final class UsuarioAccesoBO {
      *             the contrasenia incorrecta exception
      */
     public ResultadoLoginVO acceso(final String login, final String contrasenia) throws InstanceNotFoundException,
-            ContraseniaIncorrectaException {
+    ContraseniaIncorrectaException {
         Preconditions.checkNotNull(login);
         Preconditions.checkNotNull(contrasenia);
 
@@ -51,7 +51,7 @@ public final class UsuarioAccesoBO {
             final UsuarioVO usro = usroDAO.selectObject(usroCriterio);
 
             if (usro == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.usro_login, login);
+                throw new InstanceNotFoundException(MessageI18nKey.usro, login);
             }
 
             if (!contrasenia.equals(usro.getContrasenia())) {

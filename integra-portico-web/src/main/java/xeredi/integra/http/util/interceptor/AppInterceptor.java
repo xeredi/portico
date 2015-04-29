@@ -2,8 +2,11 @@ package xeredi.integra.http.util.interceptor;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.seguridad.UsuarioAccesoAction;
+import xeredi.integra.http.controller.session.SessionManager;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 
@@ -33,7 +36,20 @@ public final class AppInterceptor extends AbstractInterceptor {
         String result = Action.SUCCESS;
 
         try {
-            result = invocation.invoke();
+            if (action instanceof UsuarioAccesoAction) {
+                result = invocation.invoke();
+            } else {
+                if (SessionManager.isAuthenticated(action)) {
+                    final String requestURI = ServletActionContext.getRequest().getRequestURI().replace("/web", "")
+                            .replace(".action", "");
+
+                    LOG.info("RequestURI: " + requestURI);
+
+                    result = invocation.invoke();
+                } else {
+                    result = Action.LOGIN;
+                }
+            }
         } catch (final ApplicationException ex) {
             action.addActionError(ex.getMessage(action.getLocale()));
 
@@ -46,7 +62,9 @@ public final class AppInterceptor extends AbstractInterceptor {
             LOG.fatal(ex, ex);
         }
 
-        return result;
+        action.setResponseCode(result);
+
+        return Action.SUCCESS;
     }
 
 }

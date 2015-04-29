@@ -39,12 +39,10 @@ public abstract class GridListAction<C extends BaseCriterioVO, R> extends BaseAc
      * {@inheritDoc}
      */
     @Override
-    public final String execute() throws ApplicationException {
+    public final void doExecute() throws ApplicationException {
         model.setIdioma(idioma);
 
         doList();
-
-        return SUCCESS;
     }
 
     /**

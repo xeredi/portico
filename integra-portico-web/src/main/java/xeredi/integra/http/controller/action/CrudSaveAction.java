@@ -27,7 +27,7 @@ public abstract class CrudSaveAction<T> extends BaseAction {
      * {@inheritDoc}
      */
     @Override
-    public final String execute() throws ApplicationException {
+    public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(model);
 
@@ -41,13 +41,9 @@ public abstract class CrudSaveAction<T> extends BaseAction {
 
         doValidate();
 
-        if (hasErrors()) {
-            return SUCCESS;
+        if (!hasErrors()) {
+            doSave();
         }
-
-        doSave();
-
-        return SUCCESS;
     }
 
     /**

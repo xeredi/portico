@@ -33,7 +33,7 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
      * {@inheritDoc}
      */
     @Override
-    public final String execute() throws ApplicationException {
+    public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(accion);
 
         if (model instanceof Versionable<?>) {
@@ -47,8 +47,6 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
         if (!hasErrors()) {
             doLoadDependencies();
         }
-
-        return SUCCESS;
     }
 
     /**

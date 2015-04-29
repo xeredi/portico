@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action;
 
 import java.text.MessageFormat;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -9,8 +8,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.interceptor.SessionAware;
 
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
@@ -24,7 +23,7 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 @ParentPackage("default")
 @Result(type = "json", params = { "excludeNullProperties", "true", "ignoreHierarchy", "false", "enableGZIP", "true" })
-public abstract class BaseAction extends ActionSupport implements SessionAware {
+public abstract class BaseAction extends ActionSupport {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 473290129182463314L;
@@ -53,11 +52,11 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
     protected final String[] availableLanguages = ConfigurationProxy
             .getStringArray(ConfigurationKey.language_available);
 
-    /** The session. */
-    protected Map<String, Object> session;
-
     /** The bundle. */
     private final ResourceBundle bundle = PorticoResourceBundle.getBundle(getLocale());
+
+    /** The response code. */
+    private String responseCode;
 
     /**
      * {@inheritDoc}
@@ -66,6 +65,24 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
     public final String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final String execute() throws ApplicationException {
+        doExecute();
+
+        return SUCCESS;
+    }
+
+    /**
+     * Do execute.
+     *
+     * @throws ApplicationException
+     *             the application exception
+     */
+    public abstract void doExecute() throws ApplicationException;
 
     // get / set
     /**
@@ -94,23 +111,6 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
      */
     public final String[] getAvailableLanguages() {
         return availableLanguages;
-    }
-
-    /**
-     * Gets the session.
-     *
-     * @return the session
-     */
-    public final Map<String, Object> getSession() {
-        return session;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void setSession(final Map<String, Object> value) {
-        session = value;
     }
 
     /**
@@ -154,4 +154,22 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
         return bundle.getString(key);
     }
 
+    /**
+     * Gets the response code.
+     *
+     * @return the response code
+     */
+    public String getResponseCode() {
+        return responseCode;
+    }
+
+    /**
+     * Sets the response code.
+     *
+     * @param value
+     *            the new response code
+     */
+    public void setResponseCode(final String value) {
+        responseCode = value;
+    }
 }

@@ -40,15 +40,13 @@ public abstract class TypeaheadAction<C extends TypeaheadCriterioVO, R> extends 
      * {@inheritDoc}
      */
     @Override
-    public final String execute() throws ApplicationException {
+    public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getTextoBusqueda());
 
         model.setIdioma(getIdioma());
 
         doTypeahead();
-
-        return SUCCESS;
     }
 
     /**

@@ -1182,6 +1182,8 @@ INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (1, 'E0001
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00012', 'E00012 - {0} solo admite los valores {1}')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (1, 'E00013')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00013', 'E00013 - Operación no Permitida: {0}')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (1, 'E00014')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00014', 'E00014 - Contraseña Incorrecta')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'cdms_numero')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'cdms_numero', 'Nº')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'cdms_tm')\

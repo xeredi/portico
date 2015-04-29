@@ -1,11 +1,10 @@
 package xeredi.integra.http.controller.action.seguridad;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.session.SessionManager;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
-import xeredi.integra.model.seguridad.bo.ResultadoLoginVO;
-import xeredi.integra.model.seguridad.bo.UsuarioAccesoBO;
 import xeredi.integra.model.seguridad.vo.UsuarioVO;
 
 import com.opensymphony.xwork2.ModelDriven;
@@ -26,7 +25,7 @@ public final class UsuarioAccesoAction extends BaseAction implements ModelDriven
      * {@inheritDoc}
      */
     @Override
-    public String execute() throws ApplicationException {
+    public void doExecute() throws ApplicationException {
         if (model == null) {
             model = new UsuarioVO();
         }
@@ -35,13 +34,8 @@ public final class UsuarioAccesoAction extends BaseAction implements ModelDriven
         FieldValidator.validateRequired(this, MessageI18nKey.usro_contrasenia, model.getContrasenia());
 
         if (!hasErrors()) {
-            final UsuarioAccesoBO usacBO = new UsuarioAccesoBO();
-            final ResultadoLoginVO resultadoLogin = usacBO.acceso(model.getLogin(), model.getContrasenia());
-
-            session.put("resultadoLogin", resultadoLogin);
+            SessionManager.login(model.getLogin(), model.getContrasenia());
         }
-
-        return SUCCESS;
     }
 
     /**
@@ -61,5 +55,4 @@ public final class UsuarioAccesoAction extends BaseAction implements ModelDriven
     public void setModel(final UsuarioVO value) {
         model = value;
     }
-
 }
