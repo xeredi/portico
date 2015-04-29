@@ -159,7 +159,7 @@ public abstract class BaseAction extends ActionSupport {
      *
      * @return the response code
      */
-    public String getResponseCode() {
+    public final String getResponseCode() {
         return responseCode;
     }
 
@@ -169,7 +169,7 @@ public abstract class BaseAction extends ActionSupport {
      * @param value
      *            the new response code
      */
-    public void setResponseCode(final String value) {
+    public final void setResponseCode(final String value) {
         responseCode = value;
     }
 }

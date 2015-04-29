@@ -119,8 +119,8 @@ function ConfGridController($http, pageTitleService) {
         });
     }
 
-    $http.post("administracion/configuracion/conf-grid.action").success(function(data) {
-        vm.confList = data.confList;
+    $http.post("administracion/configuracion/configuration-list.action").success(function(data) {
+        vm.confList = data.resultList;
     });
 
     pageTitleService.setTitle("conf", "page_grid");
@@ -129,7 +129,7 @@ function ConfGridController($http, pageTitleService) {
 function ConfDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
-    $http.post("administracion/configuracion/conf-detail.action", {
+    $http.post("administracion/configuracion/configuration-detail.action", {
         model : {
             key : $routeParams.key
         }
@@ -148,7 +148,7 @@ function ConfEditController($http, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("administracion/configuracion/conf-save.action", {
+        $http.post("administracion/configuracion/configuration-save.action", {
             model : vm.conf,
             accion : vm.accion
         }).success(function(data) {
@@ -162,7 +162,7 @@ function ConfEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("administracion/configuracion/conf-edit.action", {
+    $http.post("administracion/configuracion/configuration-edit.action", {
         model : {
             key : $routeParams.key
         },

@@ -295,8 +295,8 @@ function SrscEditController($http, $location, $routeParams, pageTitleService) {
 function ServicioController($http, pageTitleService) {
     var vm = this;
 
-    $http.post("servicio/tpsr-list.action").success(function(data) {
-        vm.tpsrList = data.tpsrList;
+    $http.post("servicio/index.action").success(function(data) {
+        vm.tpsrList = data.resultList;
         vm.tpssMap = data.tpssMap;
     });
 
