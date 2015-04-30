@@ -33,17 +33,18 @@ function PrbtGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.search = search;
     vm.pageChanged = pageChanged;
     vm.filter = filter;
+    vm.xlsExport = xlsExport;
 
     vm.prbtCriterio = $routeParams.prbtCriterio ? angular.fromJson($routeParams.prbtCriterio) : {};
 
     function search(page) {
-        $http.post("proceso/prbt-list.action", {
+        $http.post("proceso/proceso-list.action", {
             model : vm.prbtCriterio,
             page : page,
             limit : vm.limit
         }).success(function(data) {
-            vm.prbtList = data.prbtList;
-            vm.page = data.prbtList.page;
+            vm.prbtList = data.resultList;
+            vm.page = data.resultList.page;
 
             $location.search({
                 page : vm.page,
@@ -57,10 +58,28 @@ function PrbtGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
-        $http.post("proceso/prbt-filter.action").success(function(data) {
+        $http.post("proceso/proceso-filter.action", {
+            model : vm.prbtCriterio
+        }).success(function(data) {
             vm.procesoTipos = data.procesoTipos;
             vm.procesoModulos = data.procesoModulos;
             vm.procesoEstados = data.procesoEstados;
+        });
+    }
+
+    function xlsExport() {
+        $http.post('proceso/proceso-xls-export.action', {
+            criterio : vm.prbtCriterio
+        }, {
+            responseType : 'arraybuffer'
+        }).success(function(data) {
+            var file = new Blob([ data ], {
+                type : 'application/xls'
+            });
+
+            setTimeout(function() {
+                saveAs(file, 'prbt.xls');
+            }, 0);
         });
     }
 
@@ -76,7 +95,7 @@ function PrbtDetailController($http, $location, $routeParams, pageTitleService) 
     vm.pageChanged = pageChanged;
 
     function cancel() {
-        $http.post("proceso/prbt-cancel.action", {
+        $http.post("proceso/proceso-cancelar.action", {
             model : vm.prbt
         }).success(function(data) {
             window.history.back();
@@ -118,7 +137,7 @@ function PrbtDetailController($http, $location, $routeParams, pageTitleService) 
         });
     }
 
-    $http.post("proceso/prbt-detail.action", {
+    $http.post("proceso/proceso-detail.action", {
         model : {
             id : $routeParams.prbtId
         }

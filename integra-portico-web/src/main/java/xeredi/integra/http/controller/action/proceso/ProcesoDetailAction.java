@@ -3,9 +3,7 @@ package xeredi.integra.http.controller.action.proceso;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.struts2.convention.annotation.Action;
-
-import xeredi.integra.http.controller.action.ItemAction;
+import xeredi.integra.http.controller.action.comun.CrudDetailAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
@@ -14,19 +12,15 @@ import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 
 import com.google.common.base.Preconditions;
-import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ProcesoAction.
+ * The Class ProcesoDetailAction.
  */
-public final class ProcesoAction extends ItemAction implements ModelDriven<ProcesoVO> {
+public final class ProcesoDetailAction extends CrudDetailAction<ProcesoVO> {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 899256989833948070L;
-
-    /** The prbt. */
-    private ProcesoVO model;
+    private static final long serialVersionUID = -2068504814675826214L;
 
     /** The prar entrada list. */
     private List<ArchivoInfoVO> arinEntradaList;
@@ -43,18 +37,11 @@ public final class ProcesoAction extends ItemAction implements ModelDriven<Proce
     /** The prpm map. */
     private Map<String, ProcesoParametroVO> prpmMap;
 
-    // Acciones web
-
     /**
-     * Detalle.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
+     * {@inheritDoc}
      */
-    @Action("prbt-detail")
-    public String detalle() throws ApplicationException {
-        Preconditions.checkNotNull(model);
+    @Override
+    public void doDetail() throws ApplicationException {
         Preconditions.checkNotNull(model.getId());
 
         final ProcesoBO prbtBO = new ProcesoBO();
@@ -65,47 +52,6 @@ public final class ProcesoAction extends ItemAction implements ModelDriven<Proce
         pritEntradaList = prbtBO.selectPritEntradaList(model.getId());
         pritSalidaList = prbtBO.selectPritSalidaList(model.getId());
         prpmMap = prbtBO.selectPrpmMap(model.getId());
-
-        return SUCCESS;
-    }
-
-    /**
-     * Borrar.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action("prbt-cancel")
-    public String borrar() throws ApplicationException {
-        Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getId());
-
-        final ProcesoBO prbtBO = new ProcesoBO();
-
-        prbtBO.cancelar(model.getId());
-
-        return SUCCESS;
-    }
-
-    // get / set
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ProcesoVO getModel() {
-        return model;
-    }
-
-    /**
-     * Sets the prbt.
-     *
-     * @param value
-     *            the new prbt
-     */
-    public void setModel(final ProcesoVO value) {
-        model = value;
     }
 
     /**
@@ -152,5 +98,4 @@ public final class ProcesoAction extends ItemAction implements ModelDriven<Proce
     public Map<String, ProcesoParametroVO> getPrpmMap() {
         return prpmMap;
     }
-
 }

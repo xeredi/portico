@@ -29,5 +29,4 @@ public final class SubservicioRemoveAction extends ItemRemoveAction<SubservicioV
 
         itemBO.delete(model);
     }
-
 }
