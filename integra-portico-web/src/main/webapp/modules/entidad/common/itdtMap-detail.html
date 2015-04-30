@@ -5,7 +5,7 @@
     <div ng-repeat="entd in ::vm.enti.entdList track by $index" ng-if="entd.grupo == engd.numero" ng-switch
         on="entd.tpdt.tipoElemento"
         class="col-sm-{{::entd.spanSm}} col-md-{{::entd.span}} col-lg-{{::entd.spanLg}} col-xl-{{::entd.spanXl}} form-group-sm">
-        <label translate="{{'entd_' + entd.id}}"></label>
+        <label ng-bind="'entd_' + entd.id | translate"></label>
         <p ng-switch-when="BO" class="form-control-static">
             <i class="glyphicon glyphicon-{{vm.item.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i>
         </p>
@@ -34,54 +34,3 @@
         </p>
     </div>
 </div>
-
-
-<!--
-<div class="panel-group" bs-collapse data-allowMultiple="true">
-	<div class="panel panel-default" ng-repeat="engd in vm.enti.engdList track by $index">
-		<div class="panel-heading">
-			<h4 class="panel-title">
-				<a bs-collapse-toggle ng-bind="'engd_' + engd.id | translate"></a>
-			</h4>
-		</div>
-		<div class="panel-collapse" bs-collapse-target>
-			<div class="panel-body">
-				<fieldset>
-					<div class="row">
-						<div ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.grupo == engd.numero" ng-switch
-							on="entd.tpdt.tipoElemento"
-							class="col-sm-{{entd.spanSm}} col-md-{{entd.span}} col-lg-{{entd.spanLg}} form-group">
-							<label>{{'entd_' + entd.id | translate}}</label>
-							<p ng-switch-when="BO" class="form-control-static">
-								<i class="glyphicon glyphicon-{{vm.item.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i>
-							</p>
-							<p class="form-control-static number" ng-switch-when="ND"
-								ng-bind="vm.item.itdtMap[entd.tpdt.id].cantidadDecimal | number:2"></p>
-							<p class="form-control-static number" ng-switch-when="NE"
-								ng-bind="vm.item.itdtMap[entd.tpdt.id].cantidadEntera | number:0"></p>
-							<p class="form-control-static" ng-switch-when="FE"
-								ng-bind="vm.item.itdtMap[entd.tpdt.id].fecha | date: ('format_date' | translate)"></p>
-							<p class="form-control-static" ng-switch-when="FH"
-								ng-bind="vm.item.itdtMap[entd.tpdt.id].fecha | date: ('format_datetime' | translate)"></p>
-							<p class="form-control-static" ng-switch-when="CR">
-								<span ng-if="vm.item.itdtMap[entd.tpdt.id].cadena"
-									ng-bind="'cdrf_' + entd.tpdt.id + '_' + vm.item.itdtMap[entd.tpdt.id].cadena | translate"></span>
-							</p>
-							<p class="form-control-static" ng-switch-when="TX" ng-bind="vm.item.itdtMap[entd.tpdt.id].cadena"></p>
-							<p class="form-control-static" ng-switch-when="PR">
-								<a
-									ng-href="#/maestro/prmt/detail/{{entd.tpdt.enti.id}}/{{vm.item.itdtMap[entd.tpdt.id].prmt.id}}/{{vm.fechaVigencia}}"
-									ng-bind="vm.item.itdtMap[entd.tpdt.id].prmt.etiqueta"></a>
-							</p>
-							<p class="form-control-static" ng-switch-when="SR">
-								<a ng-href="#/servicio/srvc/detail/{{entd.tpdt.enti.id}}/{{vm.item.itdtMap[entd.tpdt.id].srvc.id}}"
-									ng-bind="vm.item.itdtMap[entd.tpdt.id].srvc.etiqueta"></a>
-							</p>
-						</div>
-					</div>
- 				</fieldset>
-			</div>
-		</div>
-	</div>
-</div>
- -->

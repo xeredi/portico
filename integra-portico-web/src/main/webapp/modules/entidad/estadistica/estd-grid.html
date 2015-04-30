@@ -30,8 +30,8 @@
                 <th class="buttonLinks" nowrap="nowrap" />
                 <th class="codigo" nowrap="nowrap" translate>estd_pepr</th>
                 <th class="codigo" nowrap="nowrap" translate>prto</th>
-                <th ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.gridable" nowrap="nowrap">{{'entd_'
-                    + entd.id | translate}}</th>
+                <th ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.gridable" nowrap="nowrap"
+                    ng-bind="'entd_' + entd.id | translate"></th>
             </tr>
         </thead>
         <tbody>

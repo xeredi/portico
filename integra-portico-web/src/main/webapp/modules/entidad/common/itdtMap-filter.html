@@ -2,7 +2,7 @@
     <div ng-repeat="entd in ::vm.enti.entdList track by $index" ng-if="entd.filtrable" ng-switch
         on="entd.tpdt.tipoElemento"
         class="col-sm-{{::entd.spanSm}} col-md-{{::entd.span}} col-lg-{{::entd.spanLg}} col-xl-{{entd.spanXl}} form-group-sm">
-        <label translate="{{'entd_' + entd.id}}"></label> <select ng-switch-when="BO"
+        <label ng-bind="'entd_' + entd.id | translate"></label> <select ng-switch-when="BO"
             ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].cantidadEntera"
             ng-options="item as ('format_' + item | translate) for item in [1 , 0]" class="form-control">
             <option />

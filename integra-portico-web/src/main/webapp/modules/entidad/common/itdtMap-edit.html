@@ -5,7 +5,7 @@
         <div ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.grupo == engd.numero" ng-switch
             on="entd.tpdt.tipoElemento"
             class="col-sm-{{entd.spanSm}} col-md-{{entd.span}} col-lg-{{entd.spanLg}} col-xl-{{entd.spanXl}} form-group-sm">
-            <label>{{'entd_' + entd.id | translate}}</label> <select ng-switch-when="BO"
+            <label ng-bind="'entd_' + entd.id | translate"></label> <select ng-switch-when="BO"
                 ng-model="vm.item.itdtMap[entd.tpdt.id].cantidadEntera"
                 ng-options="item as ('format_' + item | translate) for item in [1 , 0]"
                 ng-required="entd.obligatorio" class="form-control">

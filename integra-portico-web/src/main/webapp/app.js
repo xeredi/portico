@@ -9,8 +9,9 @@ angular.module(
     $routeProvider
 
     .when("/", {
-        title : 'home',
-        templateUrl : "modules/home.html"
+        templateUrl : "modules/home.html",
+        controller : "HomeController",
+        controllerAs : "vm"
     });
 } ])
 
@@ -121,7 +122,18 @@ angular.module(
     $rootScope.available_languages = [ "es", "ca", "en" ];
 } ])
 
-.factory('pageTitleService', pageTitleService);
+.factory('pageTitleService', pageTitleService)
+
+.controller("HomeController", HomeController)
+
+;
+
+function HomeController($http, pageTitleService) {
+    $http.post("index.action").success(function(data) {
+    });
+
+    pageTitleService.setTitle("page_home", "page_home");
+}
 
 function pageTitleService($rootScope, $translate) {
     return {

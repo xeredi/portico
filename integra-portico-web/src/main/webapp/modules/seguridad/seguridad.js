@@ -22,6 +22,8 @@ angular.module("seguridad", [])
 
 .controller("UsroAccesoController", UsroAccesoController)
 
+.controller("UsroSalirController", UsroSalirController)
+
 ;
 
 function config($routeProvider) {
@@ -93,6 +95,11 @@ function config($routeProvider) {
     .when("/seguridad/usro/acceso", {
         templateUrl : "modules/seguridad/usro-acceso.html",
         controller : "UsroAccesoController",
+        controllerAs : 'vm'
+    })
+
+    .when("/seguridad/usro/salir", {
+        controller : "UsroSalirController",
         controllerAs : 'vm'
     })
 
@@ -450,7 +457,7 @@ function UsroEditController($http, $location, $routeParams, pageTitleService) {
     pageTitleService.setTitle("usro", "page_" + vm.accion);
 }
 
-function UsroAccesoController($http, $location, $routeParams, pageTitleService) {
+function UsroAccesoController($http, $location, pageTitleService) {
     var vm = this;
 
     vm.acceso = acceso;
@@ -464,4 +471,10 @@ function UsroAccesoController($http, $location, $routeParams, pageTitleService) 
     }
 
     pageTitleService.setTitle("usro", "page_acceso");
+}
+
+function UsroSalirController($http, $location) {
+    $http.post("seguridad/usuario-salir.action").success(function(data) {
+        $location.path("/").replace();
+    });
 }
