@@ -1164,7 +1164,7 @@ function EnagDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("metamodelo/enag-remove.action", {
+            $http.post("metamodelo/entidad-accion-grid-remove.action", {
                 model : vm.enag
             }).success(function(data) {
                 window.history.back();
@@ -1172,7 +1172,7 @@ function EnagDetailController($http, $location, $routeParams, pageTitleService) 
         }
     }
 
-    $http.post("metamodelo/enag-detail.action", {
+    $http.post("metamodelo/entidad-accion-grid-detail.action", {
         model : {
             id : $routeParams.id
         }
@@ -1192,7 +1192,7 @@ function EnagEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("metamodelo/enag-save.action", {
+        $http.post("metamodelo/entidad-accion-grid-save.action", {
             model : vm.enag,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -1207,7 +1207,7 @@ function EnagEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("metamodelo/enag-edit.action", {
+    $http.post("metamodelo/entidad-accion-grid-edit.action", {
         model : {
             entiId : $routeParams.entiId,
             id : $routeParams.id
