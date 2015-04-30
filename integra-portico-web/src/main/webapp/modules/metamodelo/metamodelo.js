@@ -893,7 +893,7 @@ function CmagDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("metamodelo/cmag-remove.action", {
+            $http.post("metamodelo/campo-agregacion-remove.action", {
                 model : vm.cmag
             }).success(function(data) {
                 window.history.back();
@@ -901,7 +901,7 @@ function CmagDetailController($http, $location, $routeParams, pageTitleService) 
         }
     }
 
-    $http.post("metamodelo/cmag-detail.action", {
+    $http.post("metamodelo/campo-agregacion-detail.action", {
         model : {
             tpesId : $routeParams.tpesId,
             entd : {
@@ -923,7 +923,7 @@ function CmagEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("metamodelo/cmag-save.action", {
+        $http.post("metamodelo/campo-agregacion-save.action", {
             model : vm.cmag,
             accion : vm.accion
         }).success(
@@ -940,7 +940,7 @@ function CmagEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("metamodelo/cmag-edit.action", {
+    $http.post("metamodelo/campo-agregacion-edit.action", {
         model : {
             tpesId : $routeParams.tpesId,
             entd : {
