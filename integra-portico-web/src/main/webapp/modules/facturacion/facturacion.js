@@ -581,8 +581,8 @@ function VlrcDetailController($http, $location, $routeParams, pageTitleService) 
     }
 
     function print() {
-        $http.post('facturacion/vlrc-print.action', {
-            vlrcId : vm.vlrc.id
+        $http.post('facturacion/valoracion-pdf-export.action', {
+            model : vm.vlrc
         }, {
             responseType : 'arraybuffer'
         }).success(function(data) {

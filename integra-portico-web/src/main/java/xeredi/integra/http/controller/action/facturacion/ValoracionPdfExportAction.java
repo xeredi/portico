@@ -3,15 +3,11 @@ package xeredi.integra.http.controller.action.facturacion;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
-
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.CrudFileExportAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.exception.InternalErrorException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.report.ValoracionPdf;
 import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
@@ -25,40 +21,28 @@ import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ValoracionPdfAction.
+ * The Class ValoracionPdfExportAction.
  */
-public final class ValoracionPdfAction extends BaseAction {
+public final class ValoracionPdfExportAction extends CrudFileExportAction<ValoracionVO> {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -3945767104537210962L;
-
-    /** The item report. */
-    private Long vlrcId;
-
-    /** The stream. */
-    private InputStream stream;
-
-    // Acciones web
+    private static final long serialVersionUID = 5178479812829740439L;
 
     /**
-     * Prints the.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
+     * {@inheritDoc}
      */
-    @Action(value = "vlrc-print", results = { @Result(name = "success", type = "stream", params = { "contentType",
-            "application/pdf", "inputName", "stream", "contentDisposition", "filename=vlrc_${vlrcId}.pdf" }) })
-    public String print() throws ApplicationException {
-        Preconditions.checkNotNull(vlrcId);
+    @Override
+    public void doExport() throws ApplicationException, IOException {
+        Preconditions.checkNotNull(model.getId());
 
         final ValoracionBO vlrcBO = new ValoracionBO();
         final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
-        vlrcCriterio.setId(vlrcId);
-        vlrcCriterio.setIdioma(getIdioma());
+        vlrcCriterio.setId(model.getId());
+        vlrcCriterio.setIdioma(idioma);
 
-        final ValoracionVO vlrc = vlrcBO.selectObject(vlrcCriterio);
+        model = vlrcBO.selectObject(vlrcCriterio);
+
         final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(vlrcCriterio);
         final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(vlrcCriterio);
 
@@ -72,35 +56,25 @@ public final class ValoracionPdfAction extends BaseAction {
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             final ValoracionPdf vlrcPdf = new ValoracionPdf(getLocale());
 
-            vlrcPdf.imprimir(vlrc, vlrgList, vlriList, vlrlList, baos);
+            vlrcPdf.imprimir(model, vlrgList, vlriList, vlrlList, baos);
 
             stream = new ByteArrayInputStream(baos.toByteArray());
-        } catch (final IOException ex) {
-            throw new InternalErrorException(ex);
         }
-
-        return SUCCESS;
-    }
-
-    // get / set
-
-    /**
-     * Sets the vlrc id.
-     *
-     * @param value
-     *            the new vlrc id
-     */
-    public void setVlrcId(final Long value) {
-        vlrcId = value;
     }
 
     /**
-     * Gets the stream.
-     *
-     * @return the stream
+     * {@inheritDoc}
      */
-    public InputStream getStream() {
-        return stream;
+    @Override
+    public String getFilename() {
+        return MessageI18nKey.vlrc.name() + '_' + model.getId();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CrudFileExportAction.ContentType getContentType() {
+        return ContentType.pdf;
+    }
 }
