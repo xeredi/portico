@@ -1,12 +1,17 @@
 package xeredi.integra.model.servicio.vo;
 
 import xeredi.integra.model.comun.vo.BaseCriterioVO;
+import xeredi.integra.model.comun.vo.ItemTypeahead;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServicioLupaCriterioVO.
  */
-public final class ServicioLupaCriterioVO extends BaseCriterioVO {
+public final class ServicioLupaCriterioVO extends BaseCriterioVO implements ItemTypeahead {
+
+    /** The texto busqueda. */
+    private String textoBusqueda;
+
     /** The enti id. */
     private Long entiId;
 
@@ -24,6 +29,7 @@ public final class ServicioLupaCriterioVO extends BaseCriterioVO {
      *
      * @return the enti id
      */
+    @Override
     public Long getEntiId() {
         return entiId;
     }
@@ -34,6 +40,7 @@ public final class ServicioLupaCriterioVO extends BaseCriterioVO {
      * @param value
      *            the new enti id
      */
+    @Override
     public void setEntiId(final Long value) {
         entiId = value;
     }
@@ -95,4 +102,19 @@ public final class ServicioLupaCriterioVO extends BaseCriterioVO {
         numero = value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTextoBusqueda() {
+        return textoBusqueda;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setTextoBusqueda(final String value) {
+        textoBusqueda = value;
+    }
 }

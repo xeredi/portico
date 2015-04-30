@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.item;
 
 import xeredi.integra.http.controller.action.TypeaheadAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ItemTypeaheadCriterioVO;
+import xeredi.integra.model.comun.vo.ItemTypeahead;
 import xeredi.integra.model.comun.vo.ItemVO;
 
 import com.google.common.base.Preconditions;
@@ -16,8 +16,7 @@ import com.google.common.base.Preconditions;
  * @param <R>
  *            the generic type
  */
-public abstract class ItemTypeaheadAction<C extends ItemTypeaheadCriterioVO, R extends ItemVO> extends
-        TypeaheadAction<C, R> {
+public abstract class ItemTypeaheadAction<C extends ItemTypeahead, R extends ItemVO> extends TypeaheadAction<C, R> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 93542834789426243L;

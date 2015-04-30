@@ -18,7 +18,7 @@ public final class ParametroBOFactory {
     private static final Log LOG = LogFactory.getLog(ParametroBOFactory.class);
 
     /** The Constant MAP. */
-    private static final Map<Long, Class> MAP = new HashMap();
+    private static final Map<Long, Class<?>> MAP = new HashMap<Long, Class<?>>();
 
     /**
      * Instantiates a new parametro bo factory.

@@ -28,10 +28,8 @@ import xeredi.integra.model.maestro.dao.ParametroDatoDAO;
 import xeredi.integra.model.maestro.dao.SubparametroDAO;
 import xeredi.integra.model.maestro.dao.SubparametroDatoDAO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
-import xeredi.integra.model.maestro.vo.ParametroTypeaheadCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
-import xeredi.integra.model.maestro.vo.SubparametroTypeaheadCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
@@ -626,11 +624,11 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * {@inheritDoc}
      */
     @Override
-    public final List<ParametroVO> selectLupaList(final ParametroTypeaheadCriterioVO criterio, final int limit) {
+    public final List<ParametroVO> selectLupaList(final ParametroCriterioVO criterio, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
 
-            return prmtDAO.selectLupaList(criterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
+            return prmtDAO.selectList(criterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         }
     }
 
@@ -638,11 +636,11 @@ public abstract class AbstractParametroBO implements ParametroBO {
      * {@inheritDoc}
      */
     @Override
-    public List<ParametroVO> selectTypeaheadSprmList(final SubparametroTypeaheadCriterioVO criterio, final int limit) {
+    public List<ParametroVO> selectTypeaheadSprmList(final SubparametroCriterioVO criterio, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
 
-            return prmtDAO.selectTypeaheadSprmList(criterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
+            return prmtDAO.selectSprmList(criterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         }
     }
 

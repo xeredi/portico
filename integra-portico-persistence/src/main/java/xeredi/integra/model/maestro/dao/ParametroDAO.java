@@ -7,9 +7,8 @@ import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
-import xeredi.integra.model.maestro.vo.ParametroTypeaheadCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
-import xeredi.integra.model.maestro.vo.SubparametroTypeaheadCriterioVO;
+import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -137,17 +136,6 @@ public interface ParametroDAO {
     int count(final ParametroCriterioVO prmtCriterioVO);
 
     /**
-     * Select lupa list.
-     *
-     * @param criterio
-     *            the criterio
-     * @param bounds
-     *            the bounds
-     * @return the list
-     */
-    List<ParametroVO> selectLupaList(final ParametroTypeaheadCriterioVO criterio, final RowBounds bounds);
-
-    /**
      * Select typeahead sprm list.
      *
      * @param criterio
@@ -156,5 +144,5 @@ public interface ParametroDAO {
      *            the bounds
      * @return the list
      */
-    List<ParametroVO> selectTypeaheadSprmList(final SubparametroTypeaheadCriterioVO criterio, final RowBounds bounds);
+    List<ParametroVO> selectSprmList(final SubparametroCriterioVO criterio, final RowBounds bounds);
 }

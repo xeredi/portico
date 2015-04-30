@@ -4,12 +4,16 @@ import java.util.Date;
 import java.util.Set;
 
 import xeredi.integra.model.comun.vo.BaseCriterioVO;
+import xeredi.integra.model.comun.vo.Typeahead;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CargoCriterioVO.
  */
-public final class CargoCriterioVO extends BaseCriterioVO {
+public final class CargoCriterioVO extends BaseCriterioVO implements Typeahead {
+
+    /** The texto busqueda. */
+    private String textoBusqueda;
 
     /** The fecha vigencia. */
     private Date fechaVigencia;
@@ -295,5 +299,21 @@ public final class CargoCriterioVO extends BaseCriterioVO {
      */
     public void setFechaVigencia(final Date value) {
         fechaVigencia = value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTextoBusqueda() {
+        return textoBusqueda;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setTextoBusqueda(final String value) {
+        textoBusqueda = value;
     }
 }

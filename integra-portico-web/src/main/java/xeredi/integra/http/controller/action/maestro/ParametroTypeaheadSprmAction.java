@@ -5,7 +5,7 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroVO;
-import xeredi.integra.model.maestro.vo.SubparametroTypeaheadCriterioVO;
+import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 
@@ -15,7 +15,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ParametroTypeaheadSprmAction.
  */
-public final class ParametroTypeaheadSprmAction extends TypeaheadAction<SubparametroTypeaheadCriterioVO, ParametroVO> {
+public final class ParametroTypeaheadSprmAction extends TypeaheadAction<SubparametroCriterioVO, ParametroVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1585915543925314731L;
@@ -25,9 +25,10 @@ public final class ParametroTypeaheadSprmAction extends TypeaheadAction<Subparam
      */
     @Override
     public void doTypeahead() throws ApplicationException {
-        Preconditions.checkNotNull(model.getTpspId());
+        Preconditions.checkNotNull(model.getTpsp());
+        Preconditions.checkNotNull(model.getTpsp().getId());
 
-        final TipoSubparametroDetailVO enti = TipoSubparametroProxy.select(model.getTpspId());
+        final TipoSubparametroDetailVO enti = TipoSubparametroProxy.select(model.getTpsp().getId());
         final ParametroBO prmtBO = ParametroBOFactory.newInstance(enti.getEnti().getTpprAsociado().getId());
 
         resultList = prmtBO.selectTypeaheadSprmList(model, limit);

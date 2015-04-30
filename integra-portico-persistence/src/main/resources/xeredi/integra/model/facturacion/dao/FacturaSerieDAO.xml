@@ -42,16 +42,6 @@
         ORDER BY fcsr_anio DESC, fcsr_serie
     </select>
 
-    <select id="selectLabelValueList" parameterType="FacturaSerieCriterioVO" resultType="LabelValueVO">
-    <![CDATA[
-    	SELECT
-    		fcsr_pk AS value
-    		, CONCAT(CONCAT(fcsr_serie, ' - '), fcsr_anio) AS label
-    	FROM tbl_factura_serie_fcsr
-    ]]>
-        <include refid="SelectWhere" />
-    </select>
-
     <select id="exists" parameterType="FacturaSerieVO" resultType="Boolean">
     <![CDATA[
     	SELECT COUNT(1)

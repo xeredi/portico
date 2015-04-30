@@ -6,7 +6,7 @@ import xeredi.integra.http.controller.action.item.ItemTypeaheadAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
-import xeredi.integra.model.maestro.vo.ParametroTypeaheadCriterioVO;
+import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
@@ -17,7 +17,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ParametroTypeaheadAction.
  */
-public final class ParametroTypeaheadAction extends ItemTypeaheadAction<ParametroTypeaheadCriterioVO, ParametroVO> {
+public final class ParametroTypeaheadAction extends ItemTypeaheadAction<ParametroCriterioVO, ParametroVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7639038275412903995L;
@@ -31,7 +31,8 @@ public final class ParametroTypeaheadAction extends ItemTypeaheadAction<Parametr
         final TipoParametroDetailVO entiDetail = TipoParametroProxy.select(model.getEntiId());
 
         if (entiDetail.getEnti().isPuerto()) {
-            Preconditions.checkNotNull(model.getPrtoId());
+            Preconditions.checkNotNull(model.getPrto());
+            Preconditions.checkNotNull(model.getPrto().getId());
         }
 
         if (model.getFechaVigencia() == null) {
@@ -39,8 +40,6 @@ public final class ParametroTypeaheadAction extends ItemTypeaheadAction<Parametr
         }
 
         model.setIdioma(entiDetail.getEnti().isI18n() ? idioma : null);
-        model.setTpdtNombreId(entiDetail.getEnti().getTpdtNombre() == null ? null : entiDetail.getEnti()
-                .getTpdtNombre().getId());
 
         resultList = prmtBO.selectLupaList(model, limit);
     }

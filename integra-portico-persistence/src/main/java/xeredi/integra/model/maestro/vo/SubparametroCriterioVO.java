@@ -4,13 +4,18 @@ import java.util.Date;
 import java.util.Set;
 
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
+import xeredi.integra.model.comun.vo.Typeahead;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class SubparametroCriterioVO.
  */
-public final class SubparametroCriterioVO extends ItemCriterioVO {
+public final class SubparametroCriterioVO extends ItemCriterioVO implements Typeahead {
+
+    /** The texto busqueda. */
+    private String textoBusqueda;
+
     /** The fecha vigencia. */
     private Date fechaVigencia;
 
@@ -143,4 +148,19 @@ public final class SubparametroCriterioVO extends ItemCriterioVO {
         fechaVigencia = value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTextoBusqueda() {
+        return textoBusqueda;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setTextoBusqueda(final String value) {
+        textoBusqueda = value;
+    }
 }

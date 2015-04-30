@@ -3,7 +3,7 @@ package xeredi.integra.http.controller.action.facturacion;
 import xeredi.integra.http.controller.action.TypeaheadAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
-import xeredi.integra.model.facturacion.vo.AspectoTypeaheadCriterioVO;
+import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 
 import com.google.common.base.Preconditions;
@@ -12,7 +12,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class AspectoTypeaheadAction.
  */
-public final class AspectoTypeaheadAction extends TypeaheadAction<AspectoTypeaheadCriterioVO, AspectoVO> {
+public final class AspectoTypeaheadAction extends TypeaheadAction<AspectoCriterioVO, AspectoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6939730418443092158L;

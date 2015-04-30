@@ -18,7 +18,6 @@ import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.dao.AspectoDAO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
-import xeredi.integra.model.facturacion.vo.AspectoTypeaheadCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
@@ -85,7 +84,7 @@ public final class AspectoBO {
      *            the limit
      * @return the list
      */
-    public List<AspectoVO> selectList(final AspectoTypeaheadCriterioVO criterio, final int limit) {
+    public List<AspectoVO> selectList(final AspectoCriterioVO criterio, final int limit) {
         Preconditions.checkNotNull(criterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -210,7 +209,7 @@ public final class AspectoBO {
      *             the overlap exception
      */
     public void update(final AspectoVO aspc, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException,
-            OverlapException {
+    OverlapException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getVersion());
         Preconditions.checkNotNull(aspc.getId());

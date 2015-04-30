@@ -5,7 +5,7 @@ import java.util.List;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
-import xeredi.integra.model.comun.vo.TypeaheadCriterioVO;
+import xeredi.integra.model.comun.vo.Typeahead;
 
 import com.google.common.base.Preconditions;
 import com.opensymphony.xwork2.ModelDriven;
@@ -19,7 +19,7 @@ import com.opensymphony.xwork2.ModelDriven;
  * @param <R>
  *            the generic type
  */
-public abstract class TypeaheadAction<C extends TypeaheadCriterioVO, R> extends BaseAction implements ModelDriven<C> {
+public abstract class TypeaheadAction<C extends Typeahead, R> extends BaseAction implements ModelDriven<C> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2890042689865301209L;

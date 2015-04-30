@@ -5,13 +5,17 @@ import java.util.Map;
 import java.util.Set;
 
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
+import xeredi.integra.model.comun.vo.ItemTypeahead;
 import xeredi.integra.model.comun.vo.PuertoCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ParametroCriterioVO.
  */
-public final class ParametroCriterioVO extends ItemCriterioVO {
+public final class ParametroCriterioVO extends ItemCriterioVO implements ItemTypeahead {
+
+    /** The texto busqueda. */
+    private String textoBusqueda;
 
     /** The fecha vigencia. */
     private Date fechaVigencia;
@@ -167,5 +171,21 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
      */
     public void setSprmMap(final Map<Long, SubparametroVO> value) {
         sprmMap = value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTextoBusqueda() {
+        return textoBusqueda;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setTextoBusqueda(final String value) {
+        textoBusqueda = value;
     }
 }

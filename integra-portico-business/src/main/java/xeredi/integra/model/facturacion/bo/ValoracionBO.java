@@ -466,41 +466,34 @@ public class ValoracionBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void deleteVlrl(final Long vlrlId) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(vlrlId);
+    public void deleteVlrl(final ValoracionLineaVO vlrl) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(vlrl);
+        Preconditions.checkNotNull(vlrl.getId());
+        Preconditions.checkNotNull(vlrl.getVlrcId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
 
-            if (vlrlDAO.existsDependencia(vlrlId)) {
-                throw new Error("No se puede borrar la linea '" + vlrlId + "' porque tiene lineas dependientes");
+            if (vlrlDAO.existsDependencia(vlrl.getId())) {
+                throw new Error("No se puede borrar la linea '" + vlrl.getId() + "' porque tiene lineas dependientes");
             }
 
+            final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
             final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
+            final ValoracionDetalleCriterioVO vlrdCriterio = new ValoracionDetalleCriterioVO();
 
-            vlrlCriterio.setId(vlrlId);
+            vlrcCriterio.setId(vlrl.getVlrcId());
 
-            final ValoracionLineaVO vlrl = vlrlDAO.selectObject(vlrlCriterio);
+            vlrlCriterio.setId(vlrl.getId());
+            vlrlCriterio.setVlrc(vlrcCriterio);
 
-            if (vlrl != null) {
-                final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
-                final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
-                final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();
+            vlrdCriterio.setVlrl(vlrlCriterio);
 
-                vlrcCriterioVO.setId(vlrl.getVlrcId());
+            vlrdDAO.deleteList(vlrdCriterio);
 
-                vlrlCriterioVO.setId(vlrlId);
-                vlrlCriterioVO.setVlrc(vlrcCriterioVO);
-
-                vlrdCriterioVO.setVlrl(vlrlCriterioVO);
-
-                vlrdDAO.deleteList(vlrdCriterioVO);
-                final int updated = vlrlDAO.delete(vlrlCriterioVO);
-
-                if (updated == 0) {
-                    throw new InstanceNotFoundException(MessageI18nKey.vlrl, vlrlId);
-                }
+            if (vlrlDAO.delete(vlrlCriterio) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.vlrl, vlrl.getId());
             }
 
             session.commit();

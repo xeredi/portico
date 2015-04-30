@@ -545,12 +545,16 @@ function VlrcDetailController($http, $location, $routeParams, pageTitleService) 
     vm.path = $location.path();
 
     function findVlrlList(page) {
-        $http.post("facturacion/vlrl-list.action", {
-            vlrcId : $routeParams.vlrcId,
+        $http.post("facturacion/valoracion-linea-list.action", {
+            model : {
+                vlrc : {
+                    id : $routeParams.vlrcId
+                }
+            },
             page : page
         }).success(function(data) {
-            vm.vlrlList = data.vlrlList;
-            vm.page = data.vlrlList.page;
+            vm.vlrlList = data.resultList;
+            vm.page = data.resultList.page;
 
             $location.search("page", vm.page).replace();
         });
@@ -684,7 +688,7 @@ function VlrlDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("facturacion/vlrl-remove.action", {
+            $http.post("facturacion/valoracion-linea-remove.action", {
                 model : vm.vlrl
             }).success(function(data) {
                 window.history.back();
@@ -692,7 +696,7 @@ function VlrlDetailController($http, $location, $routeParams, pageTitleService) 
         }
     }
 
-    $http.post("facturacion/vlrl-detail.action", {
+    $http.post("facturacion/valoracion-linea-detail.action", {
         model : {
             id : $routeParams.vlrlId,
             vlrcId : $routeParams.vlrcId
@@ -717,7 +721,7 @@ function VlrlEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("facturacion/vlrl-save.action", {
+        $http.post("facturacion/valoracion-linea-save.action", {
             model : vm.vlrl,
             accion : vm.accion
         }).success(
@@ -733,7 +737,7 @@ function VlrlEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("facturacion/vlrl-edit.action", {
+    $http.post("facturacion/valoracion-linea-edit.action", {
         model : {
             vlrcId : $routeParams.vlrcId,
             id : $routeParams.vlrlId
@@ -1028,14 +1032,14 @@ function CrgoLupaController($http, $scope) {
             return null;
         }
 
-        return $http.post("facturacion/crgo-lupa.action", {
+        return $http.post("facturacion/cargo-typeahead.action", {
             model : {
                 tpsrId : entiId,
                 textoBusqueda : textoBusqueda,
                 fechaVigencia : fechaVigencia
             }
         }).then(function(res) {
-            return res.data.crgoList;
+            return res.data.resultList;
         });
     };
 
@@ -1044,14 +1048,14 @@ function CrgoLupaController($http, $scope) {
             return null;
         }
 
-        return $http.post("facturacion/crgo-lupa.action", {
+        return $http.post("facturacion/cargo-typeahead.action", {
             model : {
                 aspcId : aspcId,
                 textoBusqueda : textoBusqueda,
                 fechaVigencia : fechaVigencia
             }
         }).then(function(res) {
-            return res.data.crgoList;
+            return res.data.resultList;
         });
     };
 
@@ -1060,13 +1064,13 @@ function CrgoLupaController($http, $scope) {
             return null;
         }
 
-        return $http.post("facturacion/crgo-lupa.action", {
+        return $http.post("facturacion/cargo-typeahead.action", {
             model : {
                 vlrcId : vlrcId,
                 textoBusqueda : textoBusqueda
             }
         }).then(function(res) {
-            return res.data.crgoList;
+            return res.data.resultList;
         });
     };
 }
@@ -1149,14 +1153,14 @@ function RglaLupaController($http, $scope) {
             return null;
         }
 
-        return $http.post("facturacion/rgla-lupa.action", {
+        return $http.post("facturacion/regla-typeahead.action", {
             model : {
                 crgoId : crgoId,
                 textoBusqueda : textoBusqueda,
                 fechaVigencia : fechaVigencia
             }
         }).then(function(res) {
-            return res.data.rglaList;
+            return res.data.resultList;
         });
     };
 
@@ -1165,14 +1169,14 @@ function RglaLupaController($http, $scope) {
             return null;
         }
 
-        return $http.post("facturacion/rgla-lupa.action", {
+        return $http.post("facturacion/regla-typeahead.action", {
             model : {
                 vlrcId : vlrcId,
                 crgoId : crgoId,
                 textoBusqueda : textoBusqueda
             }
         }).then(function(res) {
-            return res.data.rglaList;
+            return res.data.resultList;
         });
     };
 }

@@ -112,8 +112,12 @@
 			</foreach>
 		</if>
 
-		<if test="parametro != null and !parametro.empty">
+		<if test="parametro != null">
 			AND prmt_parametro LIKE #{parametro}
+		</if>
+
+		<if test="textoBusqueda != null">
+			AND prmt_parametro LIKE #{textoBusqueda}
 		</if>
 
 		<if test="parametros != null and !parametros.empty">
@@ -122,15 +126,29 @@
 			</foreach>
 		</if>
 
-		<if test="prto != null">
+		<if test="prto != null and (prto.id != null or prto.ids != null)">
+    	<![CDATA[
+		    AND EXISTS (
+            	SELECT 1
+            	FROM tbl_entidad_enti
+            	WHERE
+            		enti_pk = prmt_tppr_pk
+            		AND (
+            			enti_puerto = 0
+            			OR
+    	]]>
 			<if test="prto.id != null">
-				AND prmt_prto_pk = #{prto.id}
+				prmt_prto_pk = #{prto.id}
 			</if>
 			<if test="prto.ids != null">
-				AND prmt_prto_pk IN
+				prmt_prto_pk IN
 				<foreach collection="prto.ids" item="item" open="(" close=")" separator=",">#{item}
 				</foreach>
 			</if>
+    	<![CDATA[
+            		)
+            )
+    	]]>
 		</if>
 
 		<if test="versionId != null">
@@ -246,7 +264,7 @@
 		</where>
 	</select>
 
-	<select id="selectTypeaheadSprmList" parameterType="SubparametroTypeaheadCriterioVO" resultMap="ResultMap">
+	<select id="selectSprmList" parameterType="SubparametroCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
         <![CDATA[
 		WHERE
@@ -266,28 +284,6 @@
 		    )
 		    AND prmt_parametro LIKE #{textoBusqueda}
 		ORDER BY prmt_tppr_pk, prmt_parametro
-        ]]>
-	</select>
-
-	<select id="selectLupaList" parameterType="ParametroTypeaheadCriterioVO" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-        <![CDATA[
-        WHERE
-            prmt_tppr_pk = #{entiId}
-            AND (
-                prmt_parametro LIKE #{textoBusqueda}
-            )
-            AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
-            AND EXISTS (
-            	SELECT 1
-            	FROM tbl_entidad_enti
-            	WHERE
-            		enti_pk = #{entiId}
-            		AND (
-            			enti_puerto = 0
-            			OR prmt_prto_pk = #{prtoId}
-            		)
-            )
         ]]>
 	</select>
 
