@@ -182,12 +182,12 @@ function SrscGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.srscCriterio = $routeParams.srscCriterio ? angular.fromJson($routeParams.srscCriterio) : {};
 
     function search(page) {
-        $http.post("servicio/srsc-list.action", {
+        $http.post("servicio/servicio-secuencia-list.action", {
             model : vm.srscCriterio,
             page : page
         }).success(function(data) {
-            vm.page = data.srscList.page;
-            vm.srscList = data.srscList;
+            vm.page = data.resultList.page;
+            vm.srscList = data.resultList;
 
             $location.search({
                 page : vm.page,
@@ -201,7 +201,7 @@ function SrscGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
-        $http.post("servicio/srsc-filter.action", {
+        $http.post("servicio/servicio-secuencia-filter.action", {
             model : vm.srscCriterio
         }).success(function(data) {
             vm.tpsrList = data.tpsrList;
@@ -222,7 +222,7 @@ function SrscDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.post("servicio/srsc-remove.action", {
+            $http.post("servicio/servicio-secuencia-remove.action", {
                 model : vm.srsc
             }).success(function(data) {
                 window.history.back();
@@ -230,7 +230,7 @@ function SrscDetailController($http, $location, $routeParams, pageTitleService) 
         }
     }
 
-    $http.post("servicio/srsc-detail.action", {
+    $http.post("servicio/servicio-secuencia-detail.action", {
         model : {
             prto : {
                 id : $routeParams.prtoId
@@ -255,7 +255,7 @@ function SrscEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("servicio/srsc-save.action", {
+        $http.post("servicio/servicio-secuencia-save.action", {
             model : vm.srsc,
             accion : vm.accion
         }).success(
@@ -272,7 +272,7 @@ function SrscEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("servicio/srsc-edit.action", {
+    $http.post("servicio/servicio-secuencia-edit.action", {
         model : {
             prto : {
                 id : $routeParams.prtoId
