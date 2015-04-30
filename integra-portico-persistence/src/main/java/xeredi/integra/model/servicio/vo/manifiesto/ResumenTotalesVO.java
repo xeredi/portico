@@ -7,7 +7,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * The Class ManifiestoTotalVO.
  */
 public final class ResumenTotalesVO {
-
     /** The num bls mercancia. */
     private Integer numBlsMercancia;
 
@@ -60,7 +59,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Gets the num bls mercancia.
-     * 
+     *
      * @return the num bls mercancia
      */
     public Integer getNumBlsMercancia() {
@@ -69,7 +68,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Sets the num bls mercancia.
-     * 
+     *
      * @param value
      *            the new num bls mercancia
      */
@@ -79,7 +78,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Gets the num partidas mercancia.
-     * 
+     *
      * @return the num partidas mercancia
      */
     public Integer getNumPartidasMercancia() {
@@ -88,7 +87,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Sets the num partidas mercancia.
-     * 
+     *
      * @param value
      *            the new num partidas mercancia
      */
@@ -98,7 +97,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Gets the peso partidas mercancia.
-     * 
+     *
      * @return the peso partidas mercancia
      */
     public Integer getPesoPartidasMercancia() {
@@ -107,7 +106,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Sets the peso partidas mercancia.
-     * 
+     *
      * @param value
      *            the new peso partidas mercancia
      */
@@ -117,7 +116,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Gets the num contenedores20 llenos.
-     * 
+     *
      * @return the num contenedores20 llenos
      */
     public Integer getNumContenedores20Llenos() {
@@ -126,7 +125,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Sets the num contenedores20 llenos.
-     * 
+     *
      * @param value
      *            the new num contenedores20 llenos
      */
@@ -136,7 +135,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Gets the num contenedores20 vacios.
-     * 
+     *
      * @return the num contenedores20 vacios
      */
     public Integer getNumContenedores20Vacios() {
@@ -145,7 +144,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Sets the num contenedores20 vacios.
-     * 
+     *
      * @param value
      *            the new num contenedores20 vacios
      */
@@ -155,7 +154,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Gets the num contenedores40 llenos.
-     * 
+     *
      * @return the num contenedores40 llenos
      */
     public Integer getNumContenedores40Llenos() {
@@ -164,7 +163,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Sets the num contenedores40 llenos.
-     * 
+     *
      * @param value
      *            the new num contenedores40 llenos
      */
@@ -174,7 +173,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Gets the num contenedores40 vacios.
-     * 
+     *
      * @return the num contenedores40 vacios
      */
     public Integer getNumContenedores40Vacios() {
@@ -183,7 +182,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Sets the num contenedores40 vacios.
-     * 
+     *
      * @param value
      *            the new num contenedores40 vacios
      */
@@ -193,7 +192,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Gets the num equipamientos llenos.
-     * 
+     *
      * @return the num equipamientos llenos
      */
     public Integer getNumEquipamientosLlenos() {
@@ -202,7 +201,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Sets the num equipamientos llenos.
-     * 
+     *
      * @param value
      *            the new num equipamientos llenos
      */
@@ -212,7 +211,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Gets the num equipamientos vacios.
-     * 
+     *
      * @return the num equipamientos vacios
      */
     public Integer getNumEquipamientosVacios() {
@@ -221,7 +220,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Sets the num equipamientos vacios.
-     * 
+     *
      * @param value
      *            the new num equipamientos vacios
      */
@@ -231,7 +230,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Gets the num bls pasajeros.
-     * 
+     *
      * @return the num bls pasajeros
      */
     public Integer getNumBlsPasajeros() {
@@ -240,7 +239,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Sets the num bls pasajeros.
-     * 
+     *
      * @param value
      *            the new num bls pasajeros
      */
@@ -250,7 +249,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Gets the num partidas pasajeros.
-     * 
+     *
      * @return the num partidas pasajeros
      */
     public Integer getNumPartidasPasajeros() {
@@ -259,7 +258,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Sets the num partidas pasajeros.
-     * 
+     *
      * @param value
      *            the new num partidas pasajeros
      */
@@ -269,7 +268,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Gets the num pasajeros.
-     * 
+     *
      * @return the num pasajeros
      */
     public Integer getNumPasajeros() {
@@ -278,7 +277,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Sets the num pasajeros.
-     * 
+     *
      * @param value
      *            the new num pasajeros
      */
@@ -288,7 +287,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Gets the num cruceristas.
-     * 
+     *
      * @return the num cruceristas
      */
     public Integer getNumCruceristas() {
@@ -297,7 +296,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Sets the num cruceristas.
-     * 
+     *
      * @param value
      *            the new num cruceristas
      */
@@ -307,7 +306,7 @@ public final class ResumenTotalesVO {
 
     /**
      * Gets the num vehiculos.
-     * 
+     *
      * @return the num vehiculos
      */
     public Integer getNumVehiculos() {
@@ -316,12 +315,11 @@ public final class ResumenTotalesVO {
 
     /**
      * Sets the num vehiculos.
-     * 
+     *
      * @param value
      *            the new num vehiculos
      */
     public void setNumVehiculos(final Integer value) {
         numVehiculos = value;
     }
-
 }

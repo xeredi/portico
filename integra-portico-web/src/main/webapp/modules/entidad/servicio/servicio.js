@@ -584,12 +584,12 @@ function SrvcLupaController($http, $scope) {
 function ManiTotalesController($http, $routeParams, pageTitleService) {
     var vm = this;
 
-    $http.post("servicio/manifiesto/mani-totales.action", {
-        item : {
+    $http.post("servicio/manifiesto/manifiesto-total-detail.action", {
+        model : {
             id : $routeParams.srvcId
         }
     }).success(function(data) {
-        vm.item = data.item;
+        vm.item = data.model;
         vm.resumen = data.resumen;
     });
 
