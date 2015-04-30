@@ -4,7 +4,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.jobs.PorticoScheduler;
 import xeredi.integra.jobs.SchedulerInfoVO;
 

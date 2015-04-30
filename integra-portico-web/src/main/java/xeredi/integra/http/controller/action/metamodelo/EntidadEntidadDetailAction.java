@@ -1,6 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
-import xeredi.integra.http.controller.action.CrudDetailAction;
+import xeredi.integra.http.controller.action.comun.CrudDetailAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.metamodelo.bo.EntidadEntidadBO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadCriterioVO;

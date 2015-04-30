@@ -1,6 +1,6 @@
 package xeredi.integra.http.controller.action.seguridad;
 
-import xeredi.integra.http.controller.action.CrudSaveAction;
+import xeredi.integra.http.controller.action.comun.CrudSaveAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;

@@ -1,24 +1,21 @@
-package xeredi.integra.http.controller.action;
-
-import java.util.Date;
+package xeredi.integra.http.controller.action.comun;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.Versionable;
 
 import com.google.common.base.Preconditions;
-import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class CrudEditAction.
+ * The Class CrudSaveAction.
  *
  * @param <T>
  *            the generic type
  */
-public abstract class CrudEditAction<T> extends BaseAction implements ModelDriven<T> {
+public abstract class CrudSaveAction<T> extends BaseAction {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 7147721554331909672L;
+    private static final long serialVersionUID = 6571569363320765658L;
 
     /** The accion. */
     protected ACCION_EDICION accion;
@@ -26,26 +23,26 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
     /** The model. */
     protected T model;
 
-    /** The fecha vigencia. */
-    protected Date fechaVigencia;
-
     /**
      * {@inheritDoc}
      */
     @Override
     public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(model);
 
         if (model instanceof Versionable<?>) {
-            if (accion == ACCION_EDICION.edit || accion == ACCION_EDICION.duplicate) {
-                Preconditions.checkNotNull(fechaVigencia);
+            Preconditions.checkNotNull(((Versionable<?>) model).getVersion());
+
+            if (accion != ACCION_EDICION.create) {
+                Preconditions.checkNotNull(((Versionable<?>) model).getVersion().getId());
             }
         }
 
-        doEdit();
+        doValidate();
 
         if (!hasErrors()) {
-            doLoadDependencies();
+            doSave();
         }
     }
 
@@ -55,15 +52,15 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
      * @throws ApplicationException
      *             the application exception
      */
-    public abstract void doEdit() throws ApplicationException;
+    public abstract void doSave() throws ApplicationException;
 
     /**
-     * Do load dependencies.
+     * Do validate.
      *
      * @throws ApplicationException
      *             the application exception
      */
-    public abstract void doLoadDependencies() throws ApplicationException;
+    public abstract void doValidate() throws ApplicationException;
 
     /**
      * Sets the accion.
@@ -76,10 +73,11 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
     }
 
     /**
-     * {@inheritDoc}
+     * Gets the model.
+     *
+     * @return the model
      */
-    @Override
-    public final T getModel() {
+    public T getModel() {
         return model;
     }
 
@@ -91,24 +89,5 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
      */
     public final void setModel(final T value) {
         this.model = value;
-    }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public final Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public final void setFechaVigencia(final Date value) {
-        this.fechaVigencia = value;
     }
 }

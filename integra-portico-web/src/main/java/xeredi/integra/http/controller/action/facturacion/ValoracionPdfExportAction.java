@@ -5,7 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import xeredi.integra.http.controller.action.CrudFileExportAction;
+import xeredi.integra.http.controller.action.comun.CrudFileExportAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;

@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.servicio.manifiesto;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.servicio.bo.manifiesto.ManifiestoBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;

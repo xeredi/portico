@@ -2,6 +2,8 @@ package xeredi.integra.http.controller.action;
 
 import java.util.Date;
 
+import xeredi.integra.http.controller.action.comun.BaseAction;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ItemAction.

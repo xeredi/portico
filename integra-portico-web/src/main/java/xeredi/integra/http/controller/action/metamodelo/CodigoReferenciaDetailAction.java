@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.metamodelo;
 
 import java.util.Map;
 
-import xeredi.integra.http.controller.action.CrudDetailAction;
+import xeredi.integra.http.controller.action.comun.CrudDetailAction;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nPrefix;

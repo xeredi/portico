@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.estadistica;
 
 import java.io.IOException;
 
-import xeredi.integra.http.controller.action.CrudFileExportAction;
+import xeredi.integra.http.controller.action.comun.CrudFileExportAction;
 import xeredi.integra.model.comun.bo.ArchivoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import xeredi.integra.http.controller.action.CrudEditAction;
+import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.maestro.bo.DefaultParametroBO;

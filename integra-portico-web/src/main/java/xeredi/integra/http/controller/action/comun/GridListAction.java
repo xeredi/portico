@@ -1,4 +1,4 @@
-package xeredi.integra.http.controller.action;
+package xeredi.integra.http.controller.action.comun;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.BaseCriterioVO;

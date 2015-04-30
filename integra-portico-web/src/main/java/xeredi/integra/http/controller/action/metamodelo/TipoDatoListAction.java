@@ -1,6 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
-import xeredi.integra.http.controller.action.GridListAction;
+import xeredi.integra.http.controller.action.comun.GridListAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;

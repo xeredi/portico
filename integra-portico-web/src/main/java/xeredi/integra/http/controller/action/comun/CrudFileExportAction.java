@@ -1,4 +1,4 @@
-package xeredi.integra.http.controller.action;
+package xeredi.integra.http.controller.action.comun;
 
 import java.io.IOException;
 import java.io.InputStream;

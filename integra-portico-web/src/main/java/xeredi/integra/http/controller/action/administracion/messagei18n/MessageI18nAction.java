@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.comun.bo.MessageBO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.comun.vo.MessageI18nVO;

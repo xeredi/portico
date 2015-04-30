@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.seguridad;
 
 import java.util.List;
 
-import xeredi.integra.http.controller.action.CrudEditAction;
+import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.bo.SuperpuertoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;

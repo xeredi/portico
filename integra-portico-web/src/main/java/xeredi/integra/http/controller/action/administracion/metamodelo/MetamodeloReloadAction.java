@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.administracion.metamodelo;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.metamodelo.proxy.MetamodeloProxy;
 
 // TODO: Auto-generated Javadoc

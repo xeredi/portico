@@ -1,6 +1,6 @@
 package xeredi.integra.http.controller.action.administracion;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 
 // TODO: Auto-generated Javadoc

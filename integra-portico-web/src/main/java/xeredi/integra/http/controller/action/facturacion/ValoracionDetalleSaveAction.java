@@ -1,6 +1,6 @@
 package xeredi.integra.http.controller.action.facturacion;
 
-import xeredi.integra.http.controller.action.CrudSaveAction;
+import xeredi.integra.http.controller.action.comun.CrudSaveAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;

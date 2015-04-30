@@ -1,6 +1,6 @@
 package xeredi.integra.http.controller.action.seguridad;
 
-import xeredi.integra.http.controller.action.CrudRemoveAction;
+import xeredi.integra.http.controller.action.comun.CrudRemoveAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.seguridad.bo.UsuarioBO;
 import xeredi.integra.model.seguridad.vo.UsuarioVO;

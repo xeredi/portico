@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import xeredi.integra.http.controller.action.CrudEditAction;
+import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nPrefix;

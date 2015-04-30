@@ -8,8 +8,8 @@ import java.util.Set;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.apache.commons.validator.GenericValidator;
 
-import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.http.controller.action.BaseAction.ACCION_EDICION;
+import xeredi.integra.http.controller.action.comun.BaseAction;
+import xeredi.integra.http.controller.action.comun.BaseAction.ACCION_EDICION;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nVO;

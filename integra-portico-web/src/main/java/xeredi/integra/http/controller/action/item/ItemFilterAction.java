@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import xeredi.integra.http.controller.action.GridFilterAction;
+import xeredi.integra.http.controller.action.comun.GridFilterAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
 import xeredi.integra.model.maestro.bo.DefaultParametroBO;

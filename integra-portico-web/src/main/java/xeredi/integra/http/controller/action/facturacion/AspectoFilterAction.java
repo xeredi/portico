@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.List;
 
-import xeredi.integra.http.controller.action.GridFilterAction;
+import xeredi.integra.http.controller.action.comun.GridFilterAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;

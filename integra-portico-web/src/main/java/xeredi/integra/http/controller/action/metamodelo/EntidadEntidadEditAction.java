@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.metamodelo;
 
 import java.util.List;
 
-import xeredi.integra.http.controller.action.CrudEditAction;
+import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.metamodelo.bo.EntidadEntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;

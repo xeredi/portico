@@ -1,6 +1,6 @@
 package xeredi.integra.http.controller.action.administracion.configuracion;
 
-import xeredi.integra.http.controller.action.CrudDetailAction;
+import xeredi.integra.http.controller.action.comun.CrudDetailAction;
 import xeredi.integra.model.comun.bo.ConfigurationBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ConfigurationVO;

@@ -1,6 +1,6 @@
 package xeredi.integra.http.controller.action.facturacion;
 
-import xeredi.integra.http.controller.action.GridListAction;
+import xeredi.integra.http.controller.action.comun.GridListAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;

@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.item;
 
 import java.io.IOException;
 
-import xeredi.integra.http.controller.action.GridXlsExportAction;
+import xeredi.integra.http.controller.action.comun.GridXlsExportAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
 

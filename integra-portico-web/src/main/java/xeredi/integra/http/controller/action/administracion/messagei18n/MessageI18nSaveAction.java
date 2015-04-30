@@ -1,6 +1,6 @@
 package xeredi.integra.http.controller.action.administracion.messagei18n;
 
-import xeredi.integra.http.controller.action.CrudSaveAction;
+import xeredi.integra.http.controller.action.comun.CrudSaveAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nVO;
 

@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.estadistica;
 
 import java.util.List;
 
-import xeredi.integra.http.controller.action.CrudDetailAction;
+import xeredi.integra.http.controller.action.comun.CrudDetailAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;

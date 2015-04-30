@@ -1,6 +1,6 @@
 package xeredi.integra.http.controller.action.maestro;
 
-import xeredi.integra.http.controller.action.TypeaheadAction;
+import xeredi.integra.http.controller.action.comun.TypeaheadAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;

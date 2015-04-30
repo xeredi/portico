@@ -3,7 +3,7 @@ package xeredi.integra.http.controller.action.facturacion;
 import java.util.Calendar;
 import java.util.List;
 
-import xeredi.integra.http.controller.action.CrudEditAction;
+import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.bo.ReglaBO;

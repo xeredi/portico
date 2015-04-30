@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import xeredi.integra.http.controller.action.CrudSaveAction;
+import xeredi.integra.http.controller.action.comun.CrudSaveAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;

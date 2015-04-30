@@ -3,7 +3,7 @@
  */
 package xeredi.integra.http.controller.action.metamodelo;
 
-import xeredi.integra.http.controller.action.GridFilterAction;
+import xeredi.integra.http.controller.action.comun.GridFilterAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;

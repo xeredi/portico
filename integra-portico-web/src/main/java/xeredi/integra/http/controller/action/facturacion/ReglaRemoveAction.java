@@ -1,6 +1,6 @@
 package xeredi.integra.http.controller.action.facturacion;
 
-import xeredi.integra.http.controller.action.CrudRemoveAction;
+import xeredi.integra.http.controller.action.comun.CrudRemoveAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;

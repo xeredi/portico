@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.List;
 
-import xeredi.integra.http.controller.action.CrudDetailAction;
+import xeredi.integra.http.controller.action.comun.CrudDetailAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
 import xeredi.integra.model.facturacion.bo.ReglaIncompatibleBO;

@@ -1,6 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
-import xeredi.integra.http.controller.action.CrudRemoveAction;
+import xeredi.integra.http.controller.action.comun.CrudRemoveAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;

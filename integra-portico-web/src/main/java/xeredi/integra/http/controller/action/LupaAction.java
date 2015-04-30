@@ -1,5 +1,6 @@
 package xeredi.integra.http.controller.action;
 
+import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 

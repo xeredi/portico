@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.http.controller.action.seguridad.UsuarioAccesoAction;
 import xeredi.integra.http.controller.session.SessionManager;
 import xeredi.integra.model.comun.exception.ApplicationException;

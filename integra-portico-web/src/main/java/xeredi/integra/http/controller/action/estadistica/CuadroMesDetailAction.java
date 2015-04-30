@@ -3,7 +3,7 @@ package xeredi.integra.http.controller.action.estadistica;
 import java.util.List;
 import java.util.Map;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.estadistica.bo.CuadroMesBO;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;

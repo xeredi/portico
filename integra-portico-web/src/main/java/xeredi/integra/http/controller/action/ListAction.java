@@ -2,6 +2,7 @@ package xeredi.integra.http.controller.action;
 
 import java.util.List;
 
+import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 
 // TODO: Auto-generated Javadoc

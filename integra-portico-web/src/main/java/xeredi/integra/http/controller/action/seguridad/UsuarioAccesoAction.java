@@ -1,6 +1,6 @@
 package xeredi.integra.http.controller.action.seguridad;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.http.controller.session.SessionManager;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;

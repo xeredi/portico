@@ -8,7 +8,7 @@ import java.io.InputStream;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.proceso.bo.ProcesoBO;

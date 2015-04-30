@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.commons.validator.GenericValidator;
 
-import xeredi.integra.http.controller.action.CrudSaveAction;
+import xeredi.integra.http.controller.action.comun.CrudSaveAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nVO;

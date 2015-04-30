@@ -1,5 +1,6 @@
 package xeredi.integra.http.controller.action;
 
+import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc

@@ -11,7 +11,7 @@ import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.integra.model.proceso.bo.ProcesoBO;

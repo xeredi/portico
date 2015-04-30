@@ -1,6 +1,6 @@
 package xeredi.integra.http.controller.action.estadistica;
 
-import xeredi.integra.http.controller.action.CrudRemoveAction;
+import xeredi.integra.http.controller.action.comun.CrudRemoveAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
