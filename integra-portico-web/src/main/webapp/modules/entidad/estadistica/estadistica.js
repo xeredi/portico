@@ -179,7 +179,7 @@ function PeprEditController($http, $location, $routeParams, pageTitleService) {
 function CdmsDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
-    $http.post("estadistica/cdms-detail.action", {
+    $http.post("estadistica/cuadro-mes-detail.action", {
         pepr : {
             id : $routeParams.peprId
         }

@@ -3,10 +3,8 @@ package xeredi.integra.http.controller.action.estadistica;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.struts2.convention.annotation.Action;
-
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.estadistica.bo.CuadroMesBO;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.CuadroMesVO;
@@ -18,7 +16,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class CuadroMesAction.
  */
-public final class CuadroMesAction extends BaseAction {
+public final class CuadroMesDetailAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6080323896171314975L;
@@ -31,14 +29,10 @@ public final class CuadroMesAction extends BaseAction {
 
     // acciones web
     /**
-     * Detalle.
-     *
-     * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * {@inheritDoc}
      */
-    @Action("cdms-detail")
-    public String detalle() throws InstanceNotFoundException {
+    @Override
+    public void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(pepr);
         Preconditions.checkNotNull(pepr.getId());
 
@@ -47,8 +41,6 @@ public final class CuadroMesAction extends BaseAction {
 
         pepr = peprBO.select(pepr.getId());
         cdmsMap = cdmsBO.selectMap(pepr.getId());
-
-        return SUCCESS;
     }
 
     // get / set
@@ -80,5 +72,4 @@ public final class CuadroMesAction extends BaseAction {
     public void setPepr(final PeriodoProcesoVO value) {
         pepr = value;
     }
-
 }
