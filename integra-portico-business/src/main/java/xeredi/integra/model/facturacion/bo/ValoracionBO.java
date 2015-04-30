@@ -461,8 +461,8 @@ public class ValoracionBO {
     /**
      * Delete vlrl.
      *
-     * @param vlrlId
-     *            the vlrl id
+     * @param vlrl
+     *            the vlrl
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
@@ -527,8 +527,8 @@ public class ValoracionBO {
     /**
      * Select vlrd list.
      *
-     * @param vlrlId
-     *            the vlrl id
+     * @param vlrdCriterio
+     *            the vlrd criterio
      * @param idioma
      *            the idioma
      * @param offset
@@ -537,17 +537,14 @@ public class ValoracionBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<ValoracionDetalleVO> selectVlrdList(final Long vlrlId, final String idioma, final int offset,
-            final int limit) {
-        Preconditions.checkNotNull(vlrlId);
+    public PaginatedList<ValoracionDetalleVO> selectVlrdList(final ValoracionDetalleCriterioVO vlrdCriterio,
+            final String idioma, final int offset, final int limit) {
+        Preconditions.checkNotNull(vlrdCriterio);
+        Preconditions.checkNotNull(vlrdCriterio.getVlrl());
+        Preconditions.checkNotNull(vlrdCriterio.getVlrl().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-            final ValoracionDetalleCriterioVO vlrdCriterio = new ValoracionDetalleCriterioVO();
-            final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
-
-            vlrlCriterio.setId(vlrlId);
-            vlrdCriterio.setVlrl(vlrlCriterio);
 
             final int count = vlrdDAO.count(vlrdCriterio);
             final List<ValoracionDetalleVO> vlrdList = new ArrayList<>();

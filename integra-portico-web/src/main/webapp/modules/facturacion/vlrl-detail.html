@@ -222,7 +222,7 @@
                 <th translate="vlrd_valorBase"></th>
                 <th translate="vlrd_importeBase" ng-if="vm.vlrl.rgla.tipo != 'T'"></th>
                 <th translate="vlrd_importe"></th>
-                <th translate="vlrd_ssrv"></th>
+                <th ng-bind="'enti_' + vm.vlrlPadre.rgla.enti.id | translate"></th>
                 <th translate="vlrd_fini" ng-if="vlrl.rgla.crgo.version.temporal"></th>
                 <th translate="vlrd_ffin" ng-if="vlrl.rgla.crgo.version.temporal"></th>
                 <th ng-if="vm.vlrlPadre.rgla.version.etiqInfo1 && !vm.aspc.version.lgrpInfo1"><span

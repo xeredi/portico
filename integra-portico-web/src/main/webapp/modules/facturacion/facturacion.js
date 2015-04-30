@@ -665,12 +665,16 @@ function VlrlDetailController($http, $location, $routeParams, pageTitleService) 
     vm.path = $location.path();
 
     function findVlrdList(page) {
-        $http.post("facturacion/vlrd-list.action", {
-            vlrlId : $routeParams.vlrlId,
+        $http.post("facturacion/valoracion-detalle-list.action", {
+            model : {
+                vlrl : {
+                    id : $routeParams.vlrlId
+                }
+            },
             page : page
         }).success(function(data) {
-            vm.vlrdList = data.vlrdList;
-            vm.page = data.vlrdList.page;
+            vm.vlrdList = data.resultList;
+            vm.page = data.resultList.page;
 
             $location.search("page", vm.page).replace();
         });
