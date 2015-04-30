@@ -641,22 +641,21 @@ public class ValoracionBO {
     /**
      * Delete vlrd.
      *
-     * @param vlrdId
-     *            the vlrd id
+     * @param vlrd
+     *            the vlrd
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void deleteVlrd(final Long vlrdId) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(vlrdId);
+    public void deleteVlrd(final ValoracionDetalleVO vlrd) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(vlrd);
+        Preconditions.checkNotNull(vlrd.getId());
+        Preconditions.checkNotNull(vlrd.getVlrlId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
 
-            final ValoracionDetalleVO vlrd = vlrdDAO.select(vlrdId);
-            final int updated = vlrdDAO.delete(vlrdId);
-
-            if (updated == 0) {
+            if (vlrdDAO.delete(vlrd.getId()) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.vlrd, vlrd.getId());
             }
 
@@ -666,9 +665,7 @@ public class ValoracionBO {
             vlrlCriterioVO.setId(vlrd.getVlrlId());
             vlrdCriterioVO.setVlrl(vlrlCriterioVO);
 
-            final int count = vlrdDAO.count(vlrdCriterioVO);
-
-            if (count == 0) {
+            if (vlrdDAO.count(vlrdCriterioVO) == 0) {
                 vlrlDAO.delete(vlrlCriterioVO);
             }
 

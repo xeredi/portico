@@ -760,7 +760,7 @@ function VlrlEditController($http, $location, $routeParams, pageTitleService) {
 function VlrdDetailController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
-    $http.post("facturacion/vlrd-detail.action", {
+    $http.post("facturacion/valoracion-detalle-detail.action", {
         model : {
             id : $routeParams.vlrdId,
             vlrlId : $routeParams.vlrlId,
@@ -785,7 +785,7 @@ function VlrdEditController($http, $location, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        $http.post("facturacion/Vlrd-save.action", {
+        $http.post("facturacion/valoracion-detalle-save.action", {
             model : vm.vlrd,
             accion : vm.accion
         }).success(
@@ -802,7 +802,7 @@ function VlrdEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.post("facturacion/vlrd-edit.action", {
+    $http.post("facturacion/valoracion-detalle-edit.action", {
         model : {
             vlrcId : $routeParams.vlrcId,
             vlrlId : $routeParams.vlrlId,
