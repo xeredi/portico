@@ -18,31 +18,26 @@
         , prmn_codigo
         , prmn_mensaje
     FROM
-        tbl_proceso_mensaje_prmn prmn
+        tbl_proceso_mensaje_prmn
     ]]>
 	</sql>
 
 	<sql id="SelectWhere">
 		<where>
-			prmn_prbt_pk = #{value}
+			<if test="prbtId != null">AND prmn_prbt_pk = #{prbtId}</if>
 		</where>
 	</sql>
 
-	<select id="selectList" parameterType="Long" resultMap="ResultMap">
+	<select id="selectList" parameterType="ProcesoMensajeCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 	</select>
 
-	<select id="selectPaginatedList" parameterType="Long" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-	</select>
-
-	<select id="count" parameterType="Long" resultType="Integer">
+	<select id="count" parameterType="ProcesoMensajeCriterioVO" resultType="Integer">
         <![CDATA[
         SELECT COUNT(1)
         FROM
-            tbl_proceso_mensaje_prmn prmn
+            tbl_proceso_mensaje_prmn
         ]]>
 		<include refid="SelectWhere" />
 	</select>
@@ -54,11 +49,8 @@
         ]]>
 	</insert>
 
-	<delete id="delete" parameterType="Long">
-        <![CDATA[
+	<delete id="deleteList" parameterType="ProcesoMensajeCriterioVO">
         DELETE FROM tbl_proceso_mensaje_prmn
-        WHERE
-            prmn_prbt_pk = #{value}
-        ]]>
+		<include refid="SelectWhere" />
 	</delete>
 </mapper>

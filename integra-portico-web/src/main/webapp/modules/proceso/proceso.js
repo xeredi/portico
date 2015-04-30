@@ -103,8 +103,8 @@ function PrbtDetailController($http, $location, $routeParams, pageTitleService) 
     }
 
     function download(archId, archNombre) {
-        $http.post('proceso/prar-download.action', {
-            prar : {
+        $http.post('proceso/proceso-archivo-zip-export.action', {
+            model : {
                 prbtId : vm.prbt.id,
                 archId : archId
             }
@@ -124,12 +124,14 @@ function PrbtDetailController($http, $location, $routeParams, pageTitleService) 
     }
 
     function search(page) {
-        $http.post("proceso/prmn-list.action", {
-            prbtId : $routeParams.prbtId,
+        $http.post("proceso/proceso-mensaje-list.action", {
+            model : {
+                prbtId : $routeParams.prbtId
+            },
             page : page
         }).success(function(data) {
-            vm.prmnList = data.prmnList;
-            vm.page = data.prmnList.page;
+            vm.prmnList = data.resultList;
+            vm.page = data.resultList.page;
 
             $location.search({
                 page : vm.page

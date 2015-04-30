@@ -34,6 +34,7 @@ import xeredi.integra.model.proceso.vo.ProcesoCriterioVO;
 import xeredi.integra.model.proceso.vo.ProcesoEstado;
 import xeredi.integra.model.proceso.vo.ProcesoItemCriterioVO;
 import xeredi.integra.model.proceso.vo.ProcesoItemVO;
+import xeredi.integra.model.proceso.vo.ProcesoMensajeCriterioVO;
 import xeredi.integra.model.proceso.vo.ProcesoMensajeVO;
 import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
@@ -41,6 +42,8 @@ import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.integra.model.util.GzipUtil;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -285,6 +288,8 @@ public class ProcesoBO {
      *             the operacion no permitida exception
      */
     public final void cancelar(final Long prbtId) throws InstanceNotFoundException, OperacionNoPermitidaException {
+        Preconditions.checkNotNull(prbtId);
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
@@ -302,9 +307,13 @@ public class ProcesoBO {
                 throw new OperacionNoPermitidaException(MessageI18nKey.prbt, MessageI18nKey.prbt_cancelar, prbtVO);
             }
 
+            final ProcesoMensajeCriterioVO prmnCriterio = new ProcesoMensajeCriterioVO();
+
+            prmnCriterio.setPrbtId(prbtId);
+
+            prmnDAO.deleteList(prmnCriterio);
             prarDAO.deleteList(prbtId);
             pritDAO.delete(prbtId);
-            prmnDAO.delete(prbtId);
             prpmDAO.delete(prbtId);
             prbtDAO.delete(prbtId);
 
@@ -387,14 +396,17 @@ public class ProcesoBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<ProcesoMensajeVO> selectPrmnList(final Long prbtId, final int offset, final int limit) {
+    public PaginatedList<ProcesoMensajeVO> selectPrmnList(final ProcesoMensajeCriterioVO criterio, final int offset,
+            final int limit) {
+        Preconditions.checkNotNull(criterio);
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoMensajeDAO prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
             final List<ProcesoMensajeVO> prmnList = new ArrayList<>();
-            final int count = prmnDAO.count(prbtId);
+            final int count = prmnDAO.count(criterio);
 
             if (count >= offset) {
-                prmnList.addAll(prmnDAO.selectPaginatedList(prbtId, new RowBounds(offset, limit)));
+                prmnList.addAll(prmnDAO.selectList(criterio, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<ProcesoMensajeVO>(prmnList, offset, limit, count);
