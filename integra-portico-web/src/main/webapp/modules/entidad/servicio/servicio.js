@@ -943,15 +943,15 @@ function SsrvLupaController($http, $scope) {
 function MablTotalesController($http, $routeParams, pageTitleService) {
     var vm = this;
 
-    $http.post("servicio/manifiesto/mabl-totales.action", {
-        item : {
+    $http.post("servicio/manifiesto/bl-total-detail.action", {
+        model : {
             id : $routeParams.ssrvId,
             srvc : {
                 id : $routeParams.srvcId
             }
         }
     }).success(function(data) {
-        vm.item = data.item;
+        vm.item = data.model;
         vm.resumen = data.resumen;
     });
 
