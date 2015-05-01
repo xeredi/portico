@@ -11,7 +11,7 @@ import com.google.common.base.Preconditions;
  * @param <M>
  *            the generic type
  */
-public abstract class CrudChangeStateAction<M> extends BaseAction {
+public abstract class CrudChangeStateSaveAction<M> extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6926634950708317639L;
@@ -26,7 +26,11 @@ public abstract class CrudChangeStateAction<M> extends BaseAction {
     public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(model);
 
-        doChangeState();
+        doValidate();
+
+        if (!hasErrors()) {
+            doChangeState();
+        }
     }
 
     /**
@@ -36,6 +40,14 @@ public abstract class CrudChangeStateAction<M> extends BaseAction {
      *             the application exception
      */
     public abstract void doChangeState() throws ApplicationException;
+
+    /**
+     * Do validate.
+     *
+     * @throws ApplicationException
+     *             the application exception
+     */
+    public abstract void doValidate() throws ApplicationException;
 
     /**
      * Sets the model.

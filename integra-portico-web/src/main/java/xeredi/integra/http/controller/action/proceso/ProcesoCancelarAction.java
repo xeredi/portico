@@ -1,6 +1,6 @@
 package xeredi.integra.http.controller.action.proceso;
 
-import xeredi.integra.http.controller.action.comun.CrudChangeStateAction;
+import xeredi.integra.http.controller.action.comun.CrudChangeStateSaveAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
@@ -11,7 +11,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ProcesoCancelarAction.
  */
-public final class ProcesoCancelarAction extends CrudChangeStateAction<ProcesoVO> {
+public final class ProcesoCancelarAction extends CrudChangeStateSaveAction<ProcesoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3995570668859920070L;

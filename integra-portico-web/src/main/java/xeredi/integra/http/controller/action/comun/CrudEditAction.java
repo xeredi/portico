@@ -36,8 +36,10 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
     public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(accion);
 
-        if (model instanceof Versionable<?>) {
-            if (accion == ACCION_EDICION.edit || accion == ACCION_EDICION.duplicate) {
+        if (accion == ACCION_EDICION.edit || accion == ACCION_EDICION.duplicate) {
+            Preconditions.checkNotNull(model);
+
+            if (model instanceof Versionable<?>) {
                 Preconditions.checkNotNull(fechaVigencia);
             }
         }
