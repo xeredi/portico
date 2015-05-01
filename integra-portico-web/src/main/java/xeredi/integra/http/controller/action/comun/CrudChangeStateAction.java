@@ -13,11 +13,11 @@ import com.google.common.base.Preconditions;
  */
 public abstract class CrudChangeStateAction<M> extends BaseAction {
 
-    /** The model. */
-    protected M model;
-
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6926634950708317639L;
+
+    /** The model. */
+    protected M model;
 
     /**
      * {@inheritDoc}
@@ -46,5 +46,4 @@ public abstract class CrudChangeStateAction<M> extends BaseAction {
     public final void setModel(final M value) {
         this.model = value;
     }
-
 }

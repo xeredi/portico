@@ -88,9 +88,9 @@
                     <th class="buttonLinks" />
 
                     <th translate>ssrv_numero</th>
-                    <th ng-if="vm.entiHijasMap[entiHijaId].tpdtEstado" translate>ssrv_estado</th>
-                    <th ng-if="vm.entiHijasMap[entiHijaId].temporal" class="date" translate>ssrv_fini</th>
-                    <th ng-if="vm.entiHijasMap[entiHijaId].temporal" class="date" translate>ssrv_ffin</th>
+                    <th ng-if="vm.entiHijasMap[entiHijaId].enti.tpdtEstado" translate>ssrv_estado</th>
+                    <th ng-if="vm.entiHijasMap[entiHijaId].enti.temporal" class="date" translate>ssrv_fini</th>
+                    <th ng-if="vm.entiHijasMap[entiHijaId].enti.temporal" class="date" translate>ssrv_ffin</th>
 
                     <th ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index"
                         ng-if="entd.gridable">{{'entd_' + entd.id | translate}}</th>
@@ -103,12 +103,12 @@
                             class="glyphicon glyphicon-search"></i></a></td>
 
                     <td ng-bind="itemHijo.numero" class="number"></td>
-                    <td ng-if="vm.entiHijasMap[entiHijaId].tpdtEstado" nowrap="nowrap" bs-tooltip
+                    <td ng-if="vm.entiHijasMap[entiHijaId].enti.tpdtEstado" nowrap="nowrap" bs-tooltip
                         data-title="{{'cdrf_' + vm.entiHijasMap[entiHijaId].tpdtEstado.id + '_' + itemHijo.estado | translate}}"
                         ng-bind="itemHijo.estado"></td>
-                    <td ng-if="vm.entiHijasMap[entiHijaId].temporal"
+                    <td ng-if="vm.entiHijasMap[entiHijaId].enti.temporal"
                         ng-bind="itemHijo.fini | date: ('format_date' | translate)"></td>
-                    <td ng-if="vm.entiHijasMap[entiHijaId].temporal"
+                    <td ng-if="vm.entiHijasMap[entiHijaId].enti.temporal"
                         ng-bind="itemHijo.ffin | date: ('format_date' | translate)"></td>
 
                     <td ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index"

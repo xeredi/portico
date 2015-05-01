@@ -381,6 +381,32 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
 
     vm.pageMap = {};
 
+    function loadData(srvcId, entiId) {
+        $http.post("servicio/servicio-detail.action", {
+            model : {
+                id : srvcId,
+                entiId : entiId
+            }
+        }).success(function(data) {
+            vm.enti = data.enti;
+            vm.item = data.model;
+            vm.prtoId = data.model.prto.id;
+            vm.fechaVigencia = data.fechaVigencia;
+            vm.arinList = data.arinList;
+
+            vm.entiHijasMap = {};
+            vm.itemHijosMap = {};
+
+            if (vm.enti.entiHijasList) {
+                for (i = 0; i < vm.enti.entiHijasList.length; i++) {
+                    var subentiId = vm.enti.entiHijasList[i];
+
+                    findSublist(subentiId, pageMap[subentiId] ? pageMap[subentiId] : 1);
+                }
+            }
+        });
+    }
+
     function findSublist(subentiId, page) {
         $http.post("servicio/subservicio-list.action", {
             model : {
@@ -441,35 +467,14 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
         // ----------- MANIFIESTO ------------------
         // ----------- MANIFIESTO ------------------
 
-        case "mani-bloquear":
-            $http.post("servicio/manifiesto/mani-bloquear.action", {
-                item : vm.item
+        case "manifiesto-bloquear":
+        case "manifiesto-completar":
+        case "manifiesto-iniciar":
+        case "manifiesto-anular":
+            $http.post("servicio/manifiesto/" + accName + ".action", {
+                model : vm.item
             }).success(function(data) {
-                vm.item = data.item;
-            });
-
-            break;
-        case "mani-completar":
-            $http.post("servicio/manifiesto/mani-completar.action", {
-                item : vm.item
-            }).success(function(data) {
-                vm.item = data.item;
-            });
-
-            break;
-        case "mani-iniciar":
-            $http.post("servicio/manifiesto/mani-iniciar.action", {
-                item : vm.item
-            }).success(function(data) {
-                vm.item = data.item;
-            });
-
-            break;
-        case "mani-anular":
-            $http.post("servicio/manifiesto/mani-anular.action", {
-                item : vm.item
-            }).success(function(data) {
-                vm.item = data.item;
+                loadData(vm.item.id, vm.item.entiId);
             });
 
             break;
@@ -490,30 +495,7 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
         vm.tabActive[$routeParams.tab] = true;
     }
 
-    $http.post("servicio/servicio-detail.action", {
-        model : {
-            id : $routeParams.srvcId,
-            entiId : $routeParams.entiId
-        }
-    }).success(function(data) {
-        vm.enti = data.enti;
-        vm.item = data.model;
-        vm.prtoId = data.model.prto.id;
-        vm.fechaVigencia = data.fechaVigencia;
-        vm.arinList = data.arinList;
-
-        vm.entiHijasMap = {};
-        vm.itemHijosMap = {};
-
-        if (vm.enti.entiHijasList) {
-            for (i = 0; i < vm.enti.entiHijasList.length; i++) {
-                var subentiId = vm.enti.entiHijasList[i];
-
-                findSublist(subentiId, pageMap[subentiId] ? pageMap[subentiId] : 1);
-            }
-        }
-    });
-
+    loadData($routeParams.srvcId, $routeParams.entiId);
     pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
@@ -673,6 +655,29 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
 
     vm.pageMap = {};
 
+    function loadData(ssrvId, entiId) {
+        $http.post("servicio/subservicio-detail.action", {
+            model : {
+                id : ssrvId,
+                entiId : entiId
+            }
+        }).success(function(data) {
+            vm.enti = data.enti;
+            vm.fechaVigencia = data.fechaVigencia;
+            vm.item = data.model;
+            vm.itemPadresMap = data.itemPadresMap;
+
+            vm.itemHijosMap = {};
+            vm.entiHijasMap = {};
+
+            if (data.enti.entiHijasList) {
+                for (i = 0; i < data.enti.entiHijasList.length; i++) {
+                    findSublist(data.enti.entiHijasList[i], 1);
+                }
+            }
+        });
+    }
+
     function findSublist(subentiId, page) {
         $http.post("servicio/subservicio-list.action", {
             model : {
@@ -715,102 +720,26 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
 
     function ssrvAction(accName) {
         switch (accName) {
-        // ----------- BL ------------------
-        // ----------- BL ------------------
-        // ----------- BL ------------------
-
-        case "mabl-bloquear":
-            $http.post("servicio/manifiesto/mabl-bloquear.action", {
-                item : vm.item
+        case "bl-bloquear":
+        case "bl-completar":
+        case "bl-iniciar":
+        case "bl-anular":
+        case "equipamiento-bloquear":
+        case "equipamiento-iniciar":
+        case "equipamiento-anular":
+        case "partida-bloquear":
+        case "partida-iniciar":
+        case "partida-anular":
+            $http.post("servicio/manifiesto/" + accName + ".action", {
+                model : vm.item
             }).success(function(data) {
-                vm.item = data.item;
-            });
-
-            break;
-        case "mabl-completar":
-            $http.post("servicio/manifiesto/mabl-completar.action", {
-                item : vm.item
-            }).success(function(data) {
-                vm.item = data.item;
-            });
-
-            break;
-        case "mabl-iniciar":
-            $http.post("servicio/manifiesto/mabl-iniciar.action", {
-                item : vm.item
-            }).success(function(data) {
-                vm.item = data.item;
-            });
-
-            break;
-        case "mabl-anular":
-            $http.post("servicio/manifiesto/mabl-anular.action", {
-                item : vm.item
-            }).success(function(data) {
-                vm.item = data.item;
+                loadData(vm.item.id, vm.item.entiId);
             });
 
             break;
         case "mabl-totales":
             $location.path("/servicio/ssrv/mablTotales/" + vm.item.entiId + "/" + vm.item.srvc.id + "/"
                     + vm.item.id);
-
-            break;
-
-        // ----------- EQUIPAMIENTO ------------------
-        // ----------- EQUIPAMIENTO ------------------
-        // ----------- EQUIPAMIENTO ------------------
-
-        case "equi-bloquear":
-            $http.post("servicio/manifiesto/equi-bloquear.action", {
-                item : vm.item
-            }).success(function(data) {
-                vm.item = data.item;
-            });
-
-            break;
-        case "equi-iniciar":
-            $http.post("servicio/manifiesto/equi-iniciar.action", {
-                item : vm.item
-            }).success(function(data) {
-                vm.item = data.item;
-            });
-
-            break;
-        case "equi-anular":
-            $http.post("servicio/manifiesto/equi-anular.action", {
-                item : vm.item
-            }).success(function(data) {
-                vm.item = data.item;
-            });
-
-            break;
-
-        // ----------- PARTIDA ------------------
-        // ----------- PARTIDA ------------------
-        // ----------- PARTIDA ------------------
-        case "part-bloquear":
-            $http.post("servicio/manifiesto/part-bloquear.action", {
-                item : vm.item
-            }).success(function(data) {
-                vm.item = data.item;
-            });
-
-            break;
-        case "part-iniciar":
-            $http.post("servicio/manifiesto/part-iniciar.action", {
-                item : vm.item
-            }).success(function(data) {
-                vm.item = data.item;
-            });
-
-            break;
-        case "part-anular":
-            $http.post("servicio/manifiesto/part-anular.action", {
-                item : vm.item
-            }).success(function(data) {
-                vm.item = data.item;
-            });
 
             break;
 
@@ -856,27 +785,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
         vm.tabActive[$routeParams.tab] = true;
     }
 
-    $http.post("servicio/subservicio-detail.action", {
-        model : {
-            id : $routeParams.ssrvId,
-            entiId : $routeParams.entiId
-        }
-    }).success(function(data) {
-        vm.enti = data.enti;
-        vm.fechaVigencia = data.fechaVigencia;
-        vm.item = data.model;
-        vm.itemPadresMap = data.itemPadresMap;
-
-        vm.itemHijosMap = {};
-        vm.entiHijasMap = {};
-
-        if (data.enti.entiHijasList) {
-            for (i = 0; i < data.enti.entiHijasList.length; i++) {
-                findSublist(data.enti.entiHijasList[i], 1);
-            }
-        }
-    });
-
+    loadData($routeParams.ssrvId, $routeParams.entiId);
     pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
