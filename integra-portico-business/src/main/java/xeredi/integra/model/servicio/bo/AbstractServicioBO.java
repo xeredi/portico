@@ -24,7 +24,6 @@ import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
-import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.servicio.dao.ServicioArchivoDAO;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.dao.ServicioDatoDAO;
@@ -164,9 +163,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
                     srvc.setItdtMap(new HashMap<Long, ItemDatoVO>());
                 }
 
-                for (final EntidadTipoDatoVO entd : tpsrDetail.getEntdList()) {
-                    final Long tpdtId = entd.getTpdt().getId();
-
+                for (final Long tpdtId : tpsrDetail.getEntdList()) {
                     if (!srvc.getItdtMap().containsKey(tpdtId)) {
                         final ItemDatoVO itdt = new ItemDatoVO();
 
@@ -221,9 +218,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
                             ssrvVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
                         }
 
-                        for (final EntidadTipoDatoVO entd : tpssDetail.getEntdList()) {
-                            final Long tpdtId = entd.getTpdt().getId();
-
+                        for (final Long tpdtId : tpsrDetail.getEntdList()) {
                             if (!ssrvVO.getItdtMap().containsKey(tpdtId)) {
                                 final ItemDatoVO itdt = new ItemDatoVO();
 

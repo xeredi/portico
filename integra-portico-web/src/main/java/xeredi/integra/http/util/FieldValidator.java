@@ -198,7 +198,8 @@ public final class FieldValidator {
         if (entiDetail.getEntdList() != null) {
             final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
 
-            for (final EntidadTipoDatoVO entd : entiDetail.getEntdList()) {
+            for (final Long tpdtId : entiDetail.getEntdList()) {
+                final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
                 final ItemDatoVO itdtVO = itdtMap == null ? null : itdtMap.get(entd.getTpdt().getId());
                 final String fieldname = action.getText("entd_" + entd.getId());
 

@@ -192,7 +192,9 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
 
                     EntidadTipoDatoVO entd = null;
 
-                    for (final EntidadTipoDatoVO vo : entiDetalleElem.getEntdList()) {
+                    for (final Long tpdtId : entiDetalleElem.getEntdList()) {
+                        final EntidadTipoDatoVO vo = entiDetalleElem.getEntdMap().get(tpdtId);
+
                         if (vo.getTpdt().getId() == tipoDato.getId()) {
                             entd = vo;
                         }
@@ -254,13 +256,13 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
                         break;
                     case T:
                         sqlElement += " tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = " + entd.getTpdt().getId()
-                        + " AND srdt_srvc_pk = ";
+                                + " AND srdt_srvc_pk = ";
                         sqlElement += isFirst ? entiDetalleBase.getEnti().getTipo() == TipoEntidad.T ? "item.srvc_pk"
                                 : "item.ssrv_srvc_pk" : "(#{any})";
                         break;
                     case S:
                         sqlElement += " tbl_subservicio_dato_ssdt WHERE ssdt_tpdt_pk = " + entd.getTpdt().getId()
-                        + " AND ssdt_ssrv_pk = ";
+                                + " AND ssdt_ssrv_pk = ";
                         sqlElement += isFirst ? "item.ssrv_pk" : "(#{any})";
 
                         break;

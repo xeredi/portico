@@ -147,7 +147,9 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
 
                     EntidadTipoDatoVO entd = null;
 
-                    for (final EntidadTipoDatoVO vo : entiDetailElem.getEntdList()) {
+                    for (final Long tpdtId : entiDetailElem.getEntdList()) {
+                        final EntidadTipoDatoVO vo = entiDetailElem.getEntdMap().get(tpdtId);
+
                         if (vo.getTpdt().getId() == tipoDato.getId()) {
                             entd = vo;
                         }
@@ -210,13 +212,13 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
                         break;
                     case T:
                         sqlElement += " tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = " + entd.getTpdt().getId()
-                                + " AND srdt_srvc_pk = ";
+                        + " AND srdt_srvc_pk = ";
                         sqlElement += isFirst ? entiDetailBase.getEnti().getTipo() == TipoEntidad.T ? "item.srvc_pk"
                                 : "item.ssrv_srvc_pk" : "(#{any})";
                         break;
                     case S:
                         sqlElement += " tbl_subservicio_dato_ssdt WHERE ssdt_tpdt_pk = " + entd.getTpdt().getId()
-                                + " AND ssdt_ssrv_pk = ";
+                        + " AND ssdt_ssrv_pk = ";
                         sqlElement += isFirst ? "item.ssrv_pk" : "(#{any})";
 
                         break;

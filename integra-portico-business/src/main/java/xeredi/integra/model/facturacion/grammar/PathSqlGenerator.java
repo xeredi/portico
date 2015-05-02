@@ -43,8 +43,10 @@ public final class PathSqlGenerator extends PathBaseVisitor {
     /**
      * The Constructor.
      *
-     * @param aentiDetailBase the aenti detail base
-     * @param agenerateLabel            the agenerate label
+     * @param aentiDetailBase
+     *            the aenti detail base
+     * @param agenerateLabel
+     *            the agenerate label
      */
     public PathSqlGenerator(final AbstractEntidadDetailVO aentiDetailBase, final boolean agenerateLabel) {
         super();
@@ -128,7 +130,9 @@ public final class PathSqlGenerator extends PathBaseVisitor {
 
             EntidadTipoDatoVO entd = null;
 
-            for (final EntidadTipoDatoVO vo : entiDetail.getEntdList()) {
+            for (final Long tpdtId : entiDetail.getEntdList()) {
+                final EntidadTipoDatoVO vo = entiDetail.getEntdMap().get(tpdtId);
+
                 if (vo.getTpdt().getId() == tipoDato.getId()) {
                     entd = vo;
                 }

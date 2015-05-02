@@ -521,11 +521,10 @@ public final class DocbookMetamodelo {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private void writeEntiInfo(final AbstractEntidadDetailVO entidadDetail, final PrintWriter writer)
-            throws IOException {
-        if (entidadDetail.getEngdList() != null) {
+    private void writeEntiInfo(final AbstractEntidadDetailVO entiDetail, final PrintWriter writer) throws IOException {
+        if (entiDetail.getEngdList() != null) {
             writer.println("<section><title>Grupos de Datos Asociados</title>");
-            writer.println("<informaltable><title>Grupos de Datos Asociados de " + entidadDetail.getEnti().getNombre()
+            writer.println("<informaltable><title>Grupos de Datos Asociados de " + entiDetail.getEnti().getNombre()
                     + "</title><tgroup cols='2'>");
             writer.println("<colspec colnum='1' colname='col1' colwidth='2*' />");
             writer.println("<colspec colnum='2' colname='col2' colwidth='8*' />");
@@ -534,7 +533,7 @@ public final class DocbookMetamodelo {
             writer.println("<entry>Etiqueta</entry>");
             writer.println("</row></thead><tbody>");
 
-            for (final EntidadGrupoDatoVO engd : entidadDetail.getEngdList()) {
+            for (final EntidadGrupoDatoVO engd : entiDetail.getEngdList()) {
                 writer.println("<row>");
                 writer.println("<entry>" + engd.getNumero() + "</entry>");
                 writer.println("<entry>" + engd.getEtiqueta() + "</entry>");
@@ -545,10 +544,10 @@ public final class DocbookMetamodelo {
             writer.println("</section>");
         }
 
-        if (entidadDetail.getEntdList() != null) {
+        if (entiDetail.getEntdList() != null) {
             writer.println("<section><title>Datos Asociados</title>");
 
-            writer.println("<informaltable><title>Datos Asociados de " + entidadDetail.getEnti().getNombre()
+            writer.println("<informaltable><title>Datos Asociados de " + entiDetail.getEnti().getNombre()
                     + "</title><tgroup cols='13'>");
             writer.println("<colspec colnum='1' colname='col1' colwidth='5*' />");
             writer.println("<colspec colnum='2' colname='col2' colwidth='8*' />");
@@ -579,7 +578,8 @@ public final class DocbookMetamodelo {
             writer.println("<entry>V. Defecto</entry>");
             writer.println("</row></thead><tbody>");
 
-            for (final EntidadTipoDatoVO entd : entidadDetail.getEntdList()) {
+            for (final Long tpdtId : entiDetail.getEntdList()) {
+                final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
                 final AbstractEntidadDetailVO entdEntiDetail = entd.getTpdt().getEnti() == null ? null : EntidadProxy
                         .select(entd.getTpdt().getEnti().getId());
 
@@ -605,10 +605,10 @@ public final class DocbookMetamodelo {
             writer.println("</section>");
         }
 
-        if (entidadDetail.getEntiHijasList() != null) {
+        if (entiDetail.getEntiHijasList() != null) {
             writer.println("<section><title>Entidades hijas</title>");
 
-            writer.println("<informaltable><title>Entidades Hijas de " + entidadDetail.getEnti().getNombre()
+            writer.println("<informaltable><title>Entidades Hijas de " + entiDetail.getEnti().getNombre()
                     + "</title><tgroup cols='2'>");
             writer.println("<colspec colnum='1' colname='col1' colwidth='8*' />");
             writer.println("<colspec colnum='2' colname='col2' colwidth='6*' />");
@@ -617,7 +617,7 @@ public final class DocbookMetamodelo {
             writer.println("<entry>Nombre</entry>");
             writer.println("</row></thead><tbody>");
 
-            for (final Long entiHijaId : entidadDetail.getEntiHijasList()) {
+            for (final Long entiHijaId : entiDetail.getEntiHijasList()) {
                 final AbstractEntidadDetailVO entiHijaDetail = EntidadProxy.select(entiHijaId);
 
                 writer.println("<row>");
@@ -630,10 +630,10 @@ public final class DocbookMetamodelo {
             writer.println("</section>");
         }
 
-        if (entidadDetail.getEnacList() != null) {
+        if (entiDetail.getEnacList() != null) {
             writer.println("<section><title>Acciones Especificas de la Entidad</title>");
 
-            writer.println("<informaltable><title>Acciones Especificas de la de " + entidadDetail.getEnti().getNombre()
+            writer.println("<informaltable><title>Acciones Especificas de la de " + entiDetail.getEnti().getNombre()
                     + "</title><tgroup cols='3'>");
             writer.println("<colspec colnum='1' colname='col1' colwidth='2*' />");
             writer.println("<colspec colnum='2' colname='col2' colwidth='4*' />");
@@ -644,7 +644,7 @@ public final class DocbookMetamodelo {
             writer.println("<entry>Etiqueta</entry>");
             writer.println("</row></thead><tbody>");
 
-            for (final EntidadAccionVO enac : entidadDetail.getEnacList()) {
+            for (final EntidadAccionVO enac : entiDetail.getEnacList()) {
                 writer.println("<row>");
                 writer.println("<entry>" + enac.getOrden() + "</entry>");
                 writer.println("<entry>" + enac.getPath() + "</entry>");

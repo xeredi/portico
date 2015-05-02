@@ -118,8 +118,9 @@
                     <th ng-if="vm.entiHijasMap[entiHijaId].enti.temporal" class="date" translate="ssrv_fini"></th>
                     <th ng-if="vm.entiHijasMap[entiHijaId].enti.temporal" class="date" translate="ssrv_ffin"></th>
 
-                    <th ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index"
-                        ng-if="entd.gridable" translate="{{'entd_' + entd.id}}"></th>
+                    <th ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdList track by $index"
+                        ng-if="vm.entiHijasMap[entiHijaId].entdMap[tpdtId].gridable"
+                        translate="{{'entd_' + vm.entiHijasMap[entiHijaId].entdMap[tpdtId].id}}"></th>
                 </tr>
             </thead>
 
@@ -137,24 +138,23 @@
                     <td ng-if="vm.entiHijasMap[entiHijaId].enti.temporal"
                         ng-bind="itemHijo.ffin | date: ('format_datetime' | translate)"></td>
 
-                    <td ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index"
-                        ng-if="entd.gridable" ng-switch on="entd.tpdt.tipoElemento" nowrap="nowrap"><span
+                    <td ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdList track by $index"
+                        ng-if="vm.entiHijasMap[entiHijaId].entdMap[tpdtId].gridable" ng-switch
+                        on="vm.entiHijasMap[entiHijaId].entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span
                         ng-switch-when="BO"
-                        class="glyphicon glyphicon-{{itemHijo.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></span>
+                        class="glyphicon glyphicon-{{itemHijo.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></span>
                         <span ng-switch-when="ND"
-                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].cantidadDecimal | number:2" class="number"></span>
-                        <span ng-switch-when="NE"
-                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].cantidadEntera | number:0" class="number"></span>
-                        <span ng-switch-when="CR" bs-tooltip
-                        data-title="{{('cdrf_' + entd.tpdt.id + '_' + itemHijo.itdtMap[entd.tpdt.id].cadena | translate)}}"
-                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].cadena"></span> <span ng-switch-when="TX"
-                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].cadena"></span> <span ng-switch-when="PR"
-                        bs-tooltip data-title="{{itemHijo.itdtMap[entd.tpdt.id].prmt.etiqueta}}"
-                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].prmt.parametro"></span> <span
-                        ng-switch-when="FE"
-                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].fecha | date: ('format_date' | translate)"></span>
-                        <span ng-switch-when="FH"
-                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].fecha | date: ('format_datetime' | translate)"></span></td>
+                        ng-bind="itemHijo.itdtMap[tpdtId].cantidadDecimal | number:2" class="number"></span> <span
+                        ng-switch-when="NE" ng-bind="itemHijo.itdtMap[tpdtId].cantidadEntera | number:0"
+                        class="number"></span> <span ng-switch-when="CR" bs-tooltip
+                        data-title="{{('cdrf_' + tpdtId + '_' + itemHijo.itdtMap[tpdtId].cadena | translate)}}"
+                        ng-bind="itemHijo.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="TX"
+                        ng-bind="itemHijo.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="PR" bs-tooltip
+                        data-title="{{itemHijo.itdtMap[tpdtId].prmt.etiqueta}}"
+                        ng-bind="itemHijo.itdtMap[tpdtId].prmt.parametro"></span> <span ng-switch-when="FE"
+                        ng-bind="itemHijo.itdtMap[tpdtId].fecha | date: ('format_date' | translate)"></span> <span
+                        ng-switch-when="FH"
+                        ng-bind="itemHijo.itdtMap[tpdtId].fecha | date: ('format_datetime' | translate)"></span></td>
                 </tr>
             </tbody>
         </table>

@@ -270,7 +270,9 @@ public final class MaestroImporterBO {
                 if (tpprDetail.getEntdList() != null) {
                     prmtVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
-                    for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {
+                    for (final Long tpdtId : tpprDetail.getEntdList()) {
+                        final EntidadTipoDatoVO entd = tpprDetail.getEntdMap().get(tpdtId);
+
                         final Object value = rs.getObject(i++);
                         final ItemDatoVO itdt = getItdt(value, entd, entiName);
 
@@ -393,7 +395,8 @@ public final class MaestroImporterBO {
                 if (tpspDetail.getEntdList() != null) {
                     sprmVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
-                    for (final EntidadTipoDatoVO entd : tpspDetail.getEntdList()) {
+                    for (final Long tpdtId : tpspDetail.getEntdList()) {
+                        final EntidadTipoDatoVO entd = tpspDetail.getEntdMap().get(tpdtId);
                         final Object value = rs.getObject(i++);
                         final ItemDatoVO itdt = getItdt(value, entd, entiName);
 

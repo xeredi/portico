@@ -45,10 +45,14 @@ public final class EstadisticaXls extends BaseXls {
     /**
      * Generar estadisticas.
      *
-     * @param estdList            the estd list
-     * @param tpesDetail the tpes detail
-     * @param stream            the stream
-     * @throws InternalErrorException             the internal error exception
+     * @param estdList
+     *            the estd list
+     * @param tpesDetail
+     *            the tpes detail
+     * @param stream
+     *            the stream
+     * @throws InternalErrorException
+     *             the internal error exception
      */
     public void generarEstadisticas(final List<EstadisticaVO> estdList, final TipoEstadisticaDetailVO tpesDetail,
             final OutputStream stream) throws InternalErrorException {
@@ -69,7 +73,9 @@ public final class EstadisticaXls extends BaseXls {
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.estd_pepr.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prto.name()));
 
-            for (final EntidadTipoDatoVO entd : tpesDetail.getEntdList()) {
+            for (final Long tpdtId : tpesDetail.getEntdList()) {
+                final EntidadTipoDatoVO entd = tpesDetail.getEntdMap().get(tpdtId);
+
                 setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
             }
 
@@ -83,7 +89,8 @@ public final class EstadisticaXls extends BaseXls {
                 setCellValue(row, j++, estdVO.getPepr().getEtiqueta());
                 setCellValue(row, j++, estdVO.getPrto().getEtiqueta());
 
-                for (final EntidadTipoDatoVO entd : tpesDetail.getEntdList()) {
+                for (final Long tpdtId : tpesDetail.getEntdList()) {
+                    final EntidadTipoDatoVO entd = tpesDetail.getEntdMap().get(tpdtId);
                     final ItemDatoVO itdtVO = estdVO.getItdtMap().get(entd.getTpdt().getId());
 
                     setCellValue(row, j, entd, itdtVO);

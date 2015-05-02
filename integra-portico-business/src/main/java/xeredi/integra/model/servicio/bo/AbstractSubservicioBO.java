@@ -20,7 +20,6 @@ import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
-import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.SubservicioSubservicioDAO;
@@ -142,9 +141,7 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
             final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
 
             if (tpssDetail.getEntdList() != null) {
-                for (final EntidadTipoDatoVO entd : tpssDetail.getEntdList()) {
-                    final Long tpdtId = entd.getTpdt().getId();
-
+                for (final Long tpdtId : tpssDetail.getEntdList()) {
                     if (!ssrvVO.getItdtMap().containsKey(tpdtId)) {
                         final ItemDatoVO itdt = new ItemDatoVO();
 

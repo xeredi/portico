@@ -73,6 +73,11 @@ legend {
 	background-color: orange;
 }
 
+.form-control {
+	background-color: lightgray;
+	color: black;
+}
+
 .form-group-sm>.form-control-static {
 	background-color: #4e5d6c;
 	padding-top: 8px;

@@ -606,7 +606,8 @@ public class PeriodoProcesoBO {
             estdVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
             if (tpesDetail.getEntdList() != null) {
-                for (final EntidadTipoDatoVO entd : tpesDetail.getEntdList()) {
+                for (final Long tpdtId : tpesDetail.getEntdList()) {
+                    final EntidadTipoDatoVO entd = tpesDetail.getEntdMap().get(tpdtId);
                     final Object value = esagVO.getEsdtMap().get(entd.getTpdt().getCodigo());
                     final ItemDatoVO itdtVO = new ItemDatoVO();
 

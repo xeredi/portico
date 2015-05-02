@@ -30,7 +30,9 @@ public final class FieldFiller {
      */
     public static void fillDefaultValues(final ItemVO item, final AbstractEntidadDetailVO entiDetail) {
         if (entiDetail.getEntdList() != null) {
-            for (final EntidadTipoDatoVO entd : entiDetail.getEntdList()) {
+            for (final Long tpdtId : entiDetail.getEntdList()) {
+                final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
+
                 if (entd.getValorDefecto() != null) {
                     switch (entd.getTpdt().getTipoElemento()) {
                     case BO:

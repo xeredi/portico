@@ -81,8 +81,9 @@
                     <th class="date" translate="sprm_fini"></th>
                     <th class="date" translate="sprm_ffin"></th>
 
-                    <th ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index"
-                        ng-if="entd.gridable" ng-bind="'entd_' + entd.id | translate"></th>
+                    <th ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdList track by $index"
+                        ng-if="vm.entiHijasMap[entiHijaId].entdMap[tpdtId].gridable"
+                        ng-bind="'entd_' + vm.entiHijasMap[entiHijaId].entdMap[tpdtId].id | translate"></th>
                 </tr>
             </thead>
 
@@ -96,24 +97,23 @@
                     <td ng-bind="itemHijo.version.fini | date: ('format_date' | translate)" nowrap="nowrap"></td>
                     <td ng-bind="itemHijo.version.ffin | date: ('format_date' | translate)" nowrap="nowrap"></td>
 
-                    <td ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index"
-                        ng-if="entd.gridable" ng-switch on="entd.tpdt.tipoElemento" nowrap="nowrap"><span
+                    <td ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdList track by $index"
+                        ng-if="vm.entiHijasMap[entiHijaId].entdMap[tpdtId].gridable" ng-switch
+                        on="vm.entiHijasMap[entiHijaId].entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span
                         ng-switch-when="BO"><i
-                            class="glyphicon glyphicon-{{itemHijo.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span>
+                            class="glyphicon glyphicon-{{itemHijo.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></span>
                         <span ng-switch-when="ND" class="pull-right"
-                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].cantidadDecimal | number:2"></span> <span
+                        ng-bind="itemHijo.itdtMap[tpdtId].cantidadDecimal | number:2"></span> <span
                         ng-switch-when="NE" class="pull-right"
-                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].cantidadEntera | number:0"></span> <span
+                        ng-bind="itemHijo.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span
                         ng-switch-when="CR"
-                        ng-bind="'cdrf_' + entd.tpdt.id + '_' + item.itdtMap[entd.tpdt.id].cadena | translate"></span>
-                        <span ng-switch-when="TX" ng-bind="itemHijo.itdtMap[entd.tpdt.id].cadena"></span> <span
-                        ng-switch-when="PR" bs-tooltip
-                        data-title="{{itemHijo.itdtMap[entd.tpdt.id].prmt.etiqueta}}"
-                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].prmt.parametro"></span> <span
-                        ng-switch-when="FE"
-                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].fecha | date: ('format_date' | translate)"></span>
-                        <span ng-switch-when="FH"
-                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].fecha | date: ('format_datetime' | translate)"></span></td>
+                        ng-bind="'cdrf_' + tpdtId + '_' + item.itdtMap[tpdtId].cadena | translate"></span> <span
+                        ng-switch-when="TX" ng-bind="itemHijo.itdtMap[tpdtId].cadena"></span> <span
+                        ng-switch-when="PR" bs-tooltip data-title="{{itemHijo.itdtMap[tpdtId].prmt.etiqueta}}"
+                        ng-bind="itemHijo.itdtMap[tpdtId].prmt.parametro"></span> <span ng-switch-when="FE"
+                        ng-bind="itemHijo.itdtMap[tpdtId].fecha | date: ('format_date' | translate)"></span> <span
+                        ng-switch-when="FH"
+                        ng-bind="itemHijo.itdtMap[tpdtId].fecha | date: ('format_datetime' | translate)"></span></td>
                 </tr>
             </tbody>
         </table>

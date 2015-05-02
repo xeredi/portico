@@ -39,8 +39,6 @@ public final class ParametroTypeaheadAction extends ItemTypeaheadAction<Parametr
             model.setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        model.setIdioma(entiDetail.getEnti().isI18n() ? idioma : null);
-
         resultList = prmtBO.selectLupaList(model, limit);
     }
 }

@@ -1,6 +1,7 @@
 package xeredi.integra.model.metamodelo.proxy;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -24,7 +25,10 @@ public abstract class AbstractEntidadDetailVO {
      * {@link List} de Ids de tipos de dato asociados a una entidad, ordenados por grupo de dato, fila y orden
      * dentro de la fila.
      */
-    private List<EntidadTipoDatoVO> entdList;
+    private List<Long> entdList;
+
+    /** The entd map. */
+    private Map<Long, EntidadTipoDatoVO> entdMap;
 
     /** {@link List} de identificadores de entidades padre de la entidad. */
     private List<Long> entiPadresList;
@@ -46,6 +50,11 @@ public abstract class AbstractEntidadDetailVO {
         return ToStringBuilder.reflectionToString(this);
     }
 
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
     public abstract EntidadVO getEnti();
 
     /**
@@ -65,25 +74,6 @@ public abstract class AbstractEntidadDetailVO {
      */
     public final void setEngdList(final List<EntidadGrupoDatoVO> value) {
         engdList = value;
-    }
-
-    /**
-     * Gets the entd list.
-     *
-     * @return the entd list
-     */
-    public final List<EntidadTipoDatoVO> getEntdList() {
-        return entdList;
-    }
-
-    /**
-     * Sets the entd list.
-     *
-     * @param value
-     *            the new entd list
-     */
-    public final void setEntdList(final List<EntidadTipoDatoVO> value) {
-        entdList = value;
     }
 
     /**
@@ -162,4 +152,41 @@ public abstract class AbstractEntidadDetailVO {
         enagList = value;
     }
 
+    /**
+     * Gets the entd list.
+     *
+     * @return the entd list
+     */
+    public List<Long> getEntdList() {
+        return entdList;
+    }
+
+    /**
+     * Sets the entd list.
+     *
+     * @param value
+     *            the new entd list
+     */
+    public void setEntdList(final List<Long> value) {
+        entdList = value;
+    }
+
+    /**
+     * Gets the entd map.
+     *
+     * @return the entd map
+     */
+    public Map<Long, EntidadTipoDatoVO> getEntdMap() {
+        return entdMap;
+    }
+
+    /**
+     * Sets the entd map.
+     *
+     * @param value
+     *            the value
+     */
+    public void setEntdMap(final Map<Long, EntidadTipoDatoVO> value) {
+        entdMap = value;
+    }
 }

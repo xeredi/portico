@@ -119,14 +119,16 @@ public final class EntidadProxy {
             final AbstractEntidadDetailVO entiDetail = ENTIDAD_MAP.get(entd.getEntiId());
 
             if (entiDetail.getEntdList() == null) {
-                entiDetail.setEntdList(new ArrayList<EntidadTipoDatoVO>());
+                entiDetail.setEntdList(new ArrayList<Long>());
+                entiDetail.setEntdMap(new HashMap<Long, EntidadTipoDatoVO>());
             }
 
             if (entd.getTpdt() != null) {
                 entd.setTpdt(TipoDatoProxy.select(entd.getTpdt().getId()));
             }
 
-            entiDetail.getEntdList().add(entd);
+            entiDetail.getEntdList().add(entd.getTpdt().getId());
+            entiDetail.getEntdMap().put(entd.getTpdt().getId(), entd);
         }
 
         final EntidadEntidadBO enenBO = new EntidadEntidadBO();
@@ -183,6 +185,7 @@ public final class EntidadProxy {
         for (final AbstractEntidadDetailVO entidadDetail : entiMap.values()) {
             if (ENTIDAD_MAP.containsKey(entidadDetail.getEnti().getId())) {
                 entidadDetail.setEntdList(ENTIDAD_MAP.get(entidadDetail.getEnti().getId()).getEntdList());
+                entidadDetail.setEntdMap(ENTIDAD_MAP.get(entidadDetail.getEnti().getId()).getEntdMap());
                 entidadDetail.setEntiHijasList(ENTIDAD_MAP.get(entidadDetail.getEnti().getId()).getEntiHijasList());
                 entidadDetail.setEntiPadresList(ENTIDAD_MAP.get(entidadDetail.getEnti().getId()).getEntiPadresList());
                 entidadDetail.setEnacList(ENTIDAD_MAP.get(entidadDetail.getEnti().getId()).getEnacList());

@@ -57,13 +57,20 @@ public final class ParametroPdf extends BasePdf {
     /**
      * Imprimir.
      *
-     * @param prmtVO            the prmt vo
-     * @param tpprDetail the tppr detail
-     * @param entiHijasMap            the enti hijas map
-     * @param itemHijosMap            the item hijos map
-     * @param i18nMap            the i18n map
-     * @param stream            the stream
-     * @throws ApplicationException             the ApplicationException
+     * @param prmtVO
+     *            the prmt vo
+     * @param tpprDetail
+     *            the tppr detail
+     * @param entiHijasMap
+     *            the enti hijas map
+     * @param itemHijosMap
+     *            the item hijos map
+     * @param i18nMap
+     *            the i18n map
+     * @param stream
+     *            the stream
+     * @throws ApplicationException
+     *             the ApplicationException
      */
     public void imprimir(final ParametroVO prmtVO, final TipoParametroDetailVO tpprDetail,
             final Map<Long, TipoSubparametroDetailVO> entiHijasMap, final Map<Long, List<SubparametroVO>> itemHijosMap,
@@ -116,7 +123,9 @@ public final class ParametroPdf extends BasePdf {
                     accWidth = 0;
 
                     if (tpprDetail.getEntdList() != null) {
-                        for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {
+                        for (final Long tpdtId : tpprDetail.getEntdList()) {
+                            final EntidadTipoDatoVO entd = tpprDetail.getEntdMap().get(tpdtId);
+
                             if (entd.getGrupo() == engd.getNumero()) {
                                 final ItemDatoVO itdt = prmtVO.getItdtMap().get(entd.getTpdt().getId());
 
@@ -178,8 +187,10 @@ public final class ParametroPdf extends BasePdf {
     /**
      * Gets the data source.
      *
-     * @param entiDetail the enti detail
-     * @param itemList            the item list
+     * @param entiDetail
+     *            the enti detail
+     * @param itemList
+     *            the item list
      * @return the data source
      */
     private JasperReportBuilder getSubreport(final TipoSubparametroDetailVO entiDetail,
@@ -214,7 +225,8 @@ public final class ParametroPdf extends BasePdf {
                 DynamicReports.type.stringType()).setWidth(2));
 
         if (entiDetail.getEntdList() != null) {
-            for (final EntidadTipoDatoVO entd : entiDetail.getEntdList()) {
+            for (final Long tpdtId : entiDetail.getEntdList()) {
+                final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
                 final String entdLabel = bundle.getString("entd_" + entd.getId());
 
                 columns.add(entdLabel);
@@ -236,7 +248,9 @@ public final class ParametroPdf extends BasePdf {
             objects[i++] = formatDate(itemVO.getVersion().getFfin());
 
             if (entiDetail.getEntdList() != null) {
-                for (final EntidadTipoDatoVO entd : entiDetail.getEntdList()) {
+                for (final Long tpdtId : entiDetail.getEntdList()) {
+                    final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
+
                     objects[i++] = getItdtValue(entd, itemVO.getItdtMap().get(entd.getTpdt().getId()));
                 }
             }

@@ -185,7 +185,9 @@ public final class ServicioImporterBO {
         }
 
         // Obtencion de los maestros asociados a la entidad
-        for (final EntidadTipoDatoVO entd : entiDetail.getEntdList()) {
+        for (final Long tpdtId : entiDetail.getEntdList()) {
+            final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
+
             if (entd.getTpdt().getEnti() != null && !tpprPrmtMap.containsKey(entd.getTpdt().getEnti().getId())) {
                 if (LOG.isDebugEnabled()) {
                     final String tpprName = bundle.getString(I18nPrefix.enti.name() + "_"
@@ -303,7 +305,9 @@ public final class ServicioImporterBO {
                     if (tpsrDetail.getEntdList() != null) {
                         srvcVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
-                        for (final EntidadTipoDatoVO entd : tpsrDetail.getEntdList()) {
+                        for (final Long tpdtId : tpsrDetail.getEntdList()) {
+                            final EntidadTipoDatoVO entd = tpsrDetail.getEntdMap().get(tpdtId);
+
                             final Object value = rs.getObject(i++);
 
                             if (rs.wasNull() && entd.getObligatorio()
@@ -408,7 +412,8 @@ public final class ServicioImporterBO {
                         if (tpssDetail.getEntdList() != null) {
                             ssrvVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
-                            for (final EntidadTipoDatoVO entd : tpssDetail.getEntdList()) {
+                            for (final Long tpdtId : tpssDetail.getEntdList()) {
+                                final EntidadTipoDatoVO entd = tpssDetail.getEntdMap().get(tpdtId);
                                 final Object value = rs.getObject(i++);
 
                                 if (rs.wasNull() && entd.getObligatorio()

@@ -24,7 +24,6 @@ import xeredi.integra.model.maestro.dao.SubparametroDatoDAO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
-import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -72,9 +71,7 @@ public class SubparametroBO {
 
         // Validar que los datos del subparametro son correctos
         if (tpspDetail.getEntdList() != null) {
-            for (final EntidadTipoDatoVO entd : tpspDetail.getEntdList()) {
-                final Long tpdtId = entd.getTpdt().getId();
-
+            for (final Long tpdtId : tpspDetail.getEntdList()) {
                 if (!sprm.getItdtMap().containsKey(tpdtId)) {
                     final ItemDatoVO itdt = new ItemDatoVO();
 
@@ -220,9 +217,7 @@ public class SubparametroBO {
 
         // Validar que los datos del parametro son correctos
         if (tpspDetail.getEntdList() != null) {
-            for (final EntidadTipoDatoVO entd : tpspDetail.getEntdList()) {
-                final Long tpdtId = entd.getTpdt().getId();
-
+            for (final Long tpdtId : tpspDetail.getEntdList()) {
                 if (!sprm.getItdtMap().containsKey(tpdtId)) {
                     final ItemDatoVO itdt = new ItemDatoVO();
 

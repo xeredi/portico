@@ -63,7 +63,9 @@ public abstract class AbstractParametroBO implements ParametroBO {
 
             // Validar que los datos del parametro son correctos
             if (tpprDetail.getEntdList() != null && !tpprDetail.getEntdList().isEmpty()) {
-                for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {
+                for (final Long tpdtId : tpprDetail.getEntdList()) {
+                    final EntidadTipoDatoVO entd = tpprDetail.getEntdMap().get(tpdtId);
+
                     if (!prmt.getItdtMap().containsKey(entd.getTpdt().getId())) {
                         final ItemDatoVO itdt = new ItemDatoVO();
 
@@ -143,9 +145,7 @@ public abstract class AbstractParametroBO implements ParametroBO {
 
             // Validar que los datos del parametro son correctos
             if (tpprDetail.getEntdList() != null && !tpprDetail.getEntdList().isEmpty()) {
-                for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {
-                    final Long tpdtId = entd.getTpdt().getId();
-
+                for (final Long tpdtId : tpprDetail.getEntdList()) {
                     if (!prmt.getItdtMap().containsKey(tpdtId)) {
                         final ItemDatoVO itdt = new ItemDatoVO();
 
@@ -327,7 +327,9 @@ public abstract class AbstractParametroBO implements ParametroBO {
 
             // Validar que los datos del parametro son correctos
             if (tpprDetail.getEntdList() != null && !tpprDetail.getEntdList().isEmpty()) {
-                for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {
+                for (final Long tpdtId : tpprDetail.getEntdList()) {
+                    final EntidadTipoDatoVO entd = tpprDetail.getEntdMap().get(tpdtId);
+
                     if (!prmt.getItdtMap().containsKey(entd.getTpdt().getId())) {
                         throw new Error("No se ha pasado informacion del dato " + entd.getTpdt().getNombre()
                                 + " del parametro: " + prmt);

@@ -65,10 +65,12 @@ public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidad
         if (enti.getEntdList() != null) {
             final Set<Long> tpprIds = new HashSet<>();
 
-            for (final EntidadTipoDatoVO entdVO : enti.getEntdList()) {
-                if (entdVO.getTpdt().getTpht() != TipoHtml.F && entdVO.getTpdt().getEnti() != null
-                        && entdVO.getTpdt().getEnti().getId() != null) {
-                    tpprIds.add(entdVO.getTpdt().getEnti().getId());
+            for (final Long tpdtId : enti.getEntdList()) {
+                final EntidadTipoDatoVO entd = enti.getEntdMap().get(tpdtId);
+
+                if (entd.getTpdt().getTpht() != TipoHtml.F && entd.getTpdt().getEnti() != null
+                        && entd.getTpdt().getEnti().getId() != null) {
+                    tpprIds.add(entd.getTpdt().getEnti().getId());
                 }
             }
 

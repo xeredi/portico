@@ -90,7 +90,9 @@ public final class ServicioPdf extends BasePdf {
                 rowCells = new ArrayList<>();
                 accWidth = 0;
 
-                for (final EntidadTipoDatoVO entd : tpsrDetail.getEntdList()) {
+                for (final Long tpdtId : tpsrDetail.getEntdList()) {
+                    final EntidadTipoDatoVO entd = tpsrDetail.getEntdMap().get(tpdtId);
+
                     if (entd.getGrupo() == engd.getNumero()) {
                         final ItemDatoVO itdt = srvcVO.getItdtMap().get(entd.getTpdt().getId());
 

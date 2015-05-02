@@ -86,7 +86,9 @@ public final class ParametroXls extends BaseXls {
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prmt_ffin.name()));
 
             if (tpprDetail.getEntdList() != null) {
-                for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {
+                for (final Long tpdtId : tpprDetail.getEntdList()) {
+                    final EntidadTipoDatoVO entd = tpprDetail.getEntdMap().get(tpdtId);
+
                     setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
                 }
             }
@@ -111,7 +113,8 @@ public final class ParametroXls extends BaseXls {
                 setCellValue(row, j++, prmtVO.getVersion().getFfin());
 
                 if (tpprDetail.getEntdList() != null) {
-                    for (final EntidadTipoDatoVO entd : tpprDetail.getEntdList()) {
+                    for (final Long tpdtId : tpprDetail.getEntdList()) {
+                        final EntidadTipoDatoVO entd = tpprDetail.getEntdMap().get(tpdtId);
                         final ItemDatoVO itdt = prmtVO.getItdtMap().get(entd.getTpdt().getId());
 
                         setCellValue(row, j, entd, itdt);

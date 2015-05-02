@@ -76,7 +76,9 @@ public final class SubservicioXls extends BaseXls {
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_ffin.name()));
             }
 
-            for (final EntidadTipoDatoVO entd : tpssDetail.getEntdList()) {
+            for (final Long tpdtId : tpssDetail.getEntdList()) {
+                final EntidadTipoDatoVO entd = tpssDetail.getEntdMap().get(tpdtId);
+
                 setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
             }
 
@@ -99,7 +101,8 @@ public final class SubservicioXls extends BaseXls {
                     setCellValue(row, j++, ssrvVO.getFfin());
                 }
 
-                for (final EntidadTipoDatoVO entd : tpssDetail.getEntdList()) {
+                for (final Long tpdtId : tpssDetail.getEntdList()) {
+                    final EntidadTipoDatoVO entd = tpssDetail.getEntdMap().get(tpdtId);
                     final ItemDatoVO itdt = ssrvVO.getItdtMap().get(entd.getTpdt().getId());
 
                     setCellValue(row, j, entd, itdt);
