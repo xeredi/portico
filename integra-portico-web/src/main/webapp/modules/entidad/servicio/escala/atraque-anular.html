@@ -2,14 +2,14 @@
     <fieldset>
         <div class="row">
             <div class="col-md-8">
-                <div ng-include="'modules/entidad/servicio/escala/atra-srvcInfo-content.html'"></div>
+                <div ng-include="'modules/entidad/servicio/escala/fragment/atraque-srvcInfo-content.html'"></div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <div ng-include="'modules/entidad/servicio/escala/atra-solicitud-content.html'"
+                <div ng-include="'modules/entidad/servicio/escala/fragment/atraque-solicitud-content.html'"
                     ng-if="vm.item.estado == 'S'"></div>
-                <div ng-include="'modules/entidad/servicio/escala/atra-autorizacion-content.html'"
+                <div ng-include="'modules/entidad/servicio/escala/fragment/atraque-autorizacion-content.html'"
                     ng-if="vm.item.estado == 'C'"></div>
             </div>
             <div class="col-md-6">
@@ -19,12 +19,8 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">{{vm.enti.entdMap[41100].etiqueta}}</label>
                             <div class="col-md-9">
-                                <div class="input-group" ng-controller="datepickerController">
-                                    <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                                        datepicker-options="dateOptions" is-open="opened"
-                                        ng-model="vm.item.itdtMap[41100].fecha" /> <span class="input-group-addon"
-                                        ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
-                                </div>
+                                <input type="text" class="form-control" ng-model="vm.item.fini"
+                                    data-max-date="{{vm.item.itdtMap[41100].fecha}}" bs-datepicker />
                             </div>
                         </div>
                     </fieldset>

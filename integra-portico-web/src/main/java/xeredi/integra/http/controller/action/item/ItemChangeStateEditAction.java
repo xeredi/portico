@@ -46,7 +46,6 @@ CrudChangeStateEditAction<M> {
     @Override
     public final void doEdit() throws ApplicationException {
         Preconditions.checkNotNull(model.getId());
-        Preconditions.checkNotNull(model.getEntiId());
 
         doSpecificEdit();
     }
@@ -89,19 +88,21 @@ CrudChangeStateEditAction<M> {
     public abstract void doSpecificEdit() throws ApplicationException;
 
     /**
-     * Do load specific dependencies.
-     *
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public abstract void doLoadSpecificDependencies() throws ApplicationException;
-
-    /**
      * Gets the fecha vigencia.
      *
      * @return the fecha vigencia
      */
     public abstract Date getFechaVigencia();
+
+    /**
+     * Do load specific dependencies.
+     *
+     * @throws ApplicationException
+     *             the application exception
+     */
+    public void doLoadSpecificDependencies() throws ApplicationException {
+        // noop
+    }
 
     /**
      * Gets the enti.

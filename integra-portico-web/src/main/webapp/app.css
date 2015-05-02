@@ -38,8 +38,8 @@ body, .tooltip {
 	font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif;
 }
 
-label, .btn, .form-group-sm>.form-control-static, .form-group-sm>.form-control, .form-control, .tooltip,
-	.pagination>li>a, .alert li, .checkbox label {
+label, .btn, .form-group-sm>.form-control-static, .form-group-sm>div>.form-control-static, .form-group-sm>.form-control,
+	.form-control, .tooltip, .pagination>li>a, .alert li, .checkbox label {
 	font-size: 11px;
 }
 
