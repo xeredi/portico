@@ -18,6 +18,7 @@
 			<result column="srvc_numero" property="numero" />
 
 			<association property="prto" javaType="PuertoVO">
+				<result column="srvc_subp_pk" property="id" />
 				<result column="prto_codigo" property="codigo" />
 			</association>
 		</association>
@@ -26,7 +27,8 @@
 	<sql id="SelectPrefix">
     <![CDATA[
 		SELECT
-			ssrv_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado, srvc_fref , srvc_pk, srvc_anno, srvc_numero
+			ssrv_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado
+			, srvc_fref , srvc_pk, srvc_anno, srvc_numero, srvc_subp_pk
 			, (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk) AS prto_codigo
 		FROM
 			tbl_subservicio_ssrv ssrv

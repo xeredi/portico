@@ -321,7 +321,9 @@ function PrmtLupaController($http, $scope) {
                 entiId : entiId,
                 textoBusqueda : textoBusqueda,
                 fechaVigencia : fechaVigencia,
-                prtoId : prtoId
+                prto : {
+                    id : prtoId
+                }
             }
         }).then(function(res) {
             return res.data.resultList;

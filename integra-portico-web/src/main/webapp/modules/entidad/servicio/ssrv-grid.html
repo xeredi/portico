@@ -47,8 +47,8 @@
                 <td ng-if="vm.enti.enti.tpdtEstado" nowrap="nowrap" bs-tooltip
                     data-title="{{'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + item.estado | translate}}"
                     ng-bind="item.estado"></td>
-                <td ng-if="vm.enti.enti.temporal" ng-bind="item.fini | date: ('format_date' | translate)"></td>
-                <td ng-if="vm.enti.enti.temporal" ng-bind="item.ffin | date: ('format_date' | translate)"></td>
+                <td ng-if="vm.enti.enti.temporal" ng-bind="item.fini | date: ('format_datetime' | translate)"></td>
+                <td ng-if="vm.enti.enti.temporal" ng-bind="item.ffin | date: ('format_datetime' | translate)"></td>
                 <td ng-repeat="tpdtId in vm.enti.entdList track by $index"
                     ng-if="vm.enti.entdMap[tpdtId].gridable" ng-switch
                     on="vm.enti.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span

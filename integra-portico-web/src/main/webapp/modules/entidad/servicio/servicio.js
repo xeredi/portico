@@ -18,6 +18,8 @@ angular.module("servicio", [])
 
 .controller("SrvcEditController", SrvcEditController)
 
+.controller("SrvcTramiteEditController", SrvcTramiteEditController)
+
 .controller("SrvcLupaController", SrvcLupaController)
 
 .controller("ManiTotalesController", ManiTotalesController)
@@ -28,6 +30,8 @@ angular.module("servicio", [])
 .controller("SsrvDetailController", SsrvDetailController)
 
 .controller("SsrvEditController", SsrvEditController)
+
+.controller("SsrvTramiteEditController", SsrvTramiteEditController)
 
 .controller("SsrvLupaController", SsrvLupaController)
 
@@ -95,6 +99,12 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
+    .when("/servicio/srvc/tramite-edit/:entiId/:srvcId/:trmtId", {
+        templateUrl : "modules/entidad/servicio/srvc-tramite-edit.html",
+        controller : "SrvcTramiteEditController",
+        controllerAs : "vm"
+    })
+
     .when("/servicio/srvc/maniTotales/:entiId/:srvcId", {
         templateUrl : "modules/entidad/servicio/manifiesto/mani-totales.html",
         controller : "ManiTotalesController",
@@ -118,6 +128,12 @@ function config($routeProvider) {
     .when("/servicio/ssrv/edit/:accion/:entiId/:srvcId?/:ssrvId?", {
         templateUrl : "modules/entidad/servicio/ssrv-edit.html",
         controller : "SsrvEditController",
+        controllerAs : "vm"
+    })
+
+    .when("/servicio/ssrv/tramite-edit/:entiId/:srvcId/:ssrvId/:trmtId", {
+        templateUrl : "modules/entidad/servicio/ssrv-tramite-edit.html",
+        controller : "SsrvTramiteEditController",
         controllerAs : "vm"
     })
 
@@ -545,6 +561,48 @@ function SrvcEditController($http, $location, $routeParams, pageTitleService) {
     pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);
 }
 
+function SrvcTramiteEditController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("servicio/servicio-tramite-save.action", {
+            item : vm.item,
+            trmtId : vm.trmt.id
+        }).success(
+                function(data) {
+                    vm.accion == 'edit' ? setTimeout(function() {
+                        window.history.back();
+                    }, 0) : $location
+                            .path("/servicio/srvc/detail/" + data.model.entiId + "/" + data.model.id)
+                            .replace();
+                });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    $http.post("servicio/servicio-tramite-edit.action", {
+        item : {
+            id : $routeParams.srvcId,
+            entiId : $routeParams.entiId
+        },
+        trmtId : $routeParams.trmtId
+    }).success(function(data) {
+        vm.enti = data.enti;
+        vm.item = data.item;
+        vm.item = data.item;
+        vm.prtoId = data.prtoId;
+        vm.fechaVigencia = data.fechaVigencia;
+        vm.labelValuesMap = data.labelValuesMap;
+    });
+
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_trmt_edit");
+}
+
 function SrvcLupaController($http, $scope) {
     $scope.search = function(entiId, textoBusqueda) {
         if (textoBusqueda.length <= 0) {
@@ -832,6 +890,48 @@ function SsrvEditController($http, $location, $routeParams, pageTitleService) {
     pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);
 }
 
+function SsrvTramiteEditController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("servicio/subservicio-tramite-save.action", {
+            item : vm.item,
+            trmtId : vm.trmt.id
+        }).success(
+                function(data) {
+                    vm.accion == 'edit' ? setTimeout(function() {
+                        window.history.back();
+                    }, 0) : $location.path(
+                            "/servicio/ssrv/detail/" + data.model.entiId + "/" + data.model.srvc.id + "/"
+                                    + data.model.id).replace();
+                });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    $http.post("servicio/subservicio-tramite-edit.action", {
+        item : {
+            id : $routeParams.ssrvId,
+            entiId : $routeParams.entiId
+        },
+        trmtId : $routeParams.trmtId
+    }).success(function(data) {
+        vm.enti = data.enti;
+        vm.item = data.item;
+        vm.trmt = data.trmt;
+        vm.prtoId = data.prtoId;
+        vm.fechaVigencia = data.fechaVigencia;
+        vm.labelValuesMap = data.labelValuesMap;
+    });
+
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_trmt_edit");
+}
+
 function SsrvLupaController($http, $scope) {
     $scope.search = function(entiId, srvcId, numero, fechaVigencia) {
         alert(srvcId);
@@ -880,6 +980,7 @@ function AtraqueDenegarController($http, $routeParams, pageTitleService) {
     }).success(function(data) {
         vm.item = data.model;
         vm.enti = data.enti;
+        vm.entdBuque = data.entdBuque;
 
         pageTitleService.setTitleEnti(vm.enti.id, "page_atraDenegar");
     });
@@ -898,6 +999,7 @@ function AtraqueAutorizarController($http, $location, $routeParams, pageTitleSer
     }).success(function(data) {
         vm.item = data.model;
         vm.enti = data.enti;
+        vm.entdBuque = data.entdBuque;
 
         pageTitleService.setTitleEnti(vm.enti.id, "page_atraAutorizar");
     });
@@ -927,6 +1029,7 @@ function AtraqueAnularController($http, $routeParams, pageTitleService) {
     }).success(function(data) {
         vm.item = data.model;
         vm.enti = data.enti;
+        vm.entdBuque = data.entdBuque;
 
         pageTitleService.setTitleEnti(vm.enti.id, "page_atraAnular");
     });
@@ -945,6 +1048,7 @@ function AtraqueIniciarController($http, $routeParams, pageTitleService) {
     }).success(function(data) {
         vm.item = data.model;
         vm.enti = data.enti;
+        vm.entdBuque = data.entdBuque;
 
         pageTitleService.setTitleEnti(vm.enti.id, "page_atraIniciar");
     });
@@ -963,6 +1067,7 @@ function AtraqueFinalizarController($http, $routeParams, pageTitleService) {
     }).success(function(data) {
         vm.item = data.model;
         vm.enti = data.enti;
+        vm.entdBuque = data.entdBuque;
 
         pageTitleService.setTitleEnti(vm.enti.id, "page_atraFinalizar");
     });
@@ -981,6 +1086,7 @@ function AtraqueCambiarMuelleController($scope, $http, $location, $routeParams, 
     }).success(function(data) {
         vm.item = data.model;
         vm.enti = data.enti;
+        vm.entdBuque = data.entdBuque;
 
         pageTitleService.setTitleEnti(vm.enti.id, "page_atraCambiarMuelle");
     });
@@ -999,6 +1105,7 @@ function AtraqueAutorizarFprevioController($scope, $http, $location, $routeParam
     }).success(function(data) {
         vm.item = data.model;
         vm.enti = data.enti;
+        vm.entdBuque = data.entdBuque;
 
         pageTitleService.setTitleEnti(vm.enti.id, "page_atraAutorizarFPrevio");
     });

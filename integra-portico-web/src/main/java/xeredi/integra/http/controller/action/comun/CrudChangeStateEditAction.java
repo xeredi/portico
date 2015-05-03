@@ -26,12 +26,21 @@ public abstract class CrudChangeStateEditAction<M> extends BaseAction {
     public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(model);
 
-        doEdit();
+        doValidate();
 
         if (!hasErrors()) {
+            doEdit();
             doLoadDependencies();
         }
     }
+
+    /**
+     * Do validate.
+     *
+     * @throws ApplicationException
+     *             the application exception
+     */
+    public abstract void doValidate() throws ApplicationException;
 
     /**
      * Do edit.

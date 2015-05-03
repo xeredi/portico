@@ -16,6 +16,7 @@ import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.EntidadEntidadBO;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
+import xeredi.integra.model.metamodelo.bo.TramiteBO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionGridCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionGridVO;
@@ -28,6 +29,8 @@ import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
+import xeredi.integra.model.metamodelo.vo.TramiteCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TramiteVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -172,6 +175,20 @@ public final class EntidadProxy {
             enag.setEntiId(null);
         }
 
+        final TramiteBO trmtBO = new TramiteBO();
+        final TramiteCriterioVO trmtCriterio = new TramiteCriterioVO();
+
+        for (final TramiteVO trmt : trmtBO.selectList(trmtCriterio)) {
+            final AbstractEntidadDetailVO entiDetail = ENTIDAD_MAP.get(trmt.getEntiId());
+
+            if (entiDetail.getTrmtList() == null) {
+                entiDetail.setTrmtList(new ArrayList<TramiteVO>());
+            }
+
+            entiDetail.getTrmtList().add(trmt);
+            trmt.setEntiId(null);
+        }
+
         LOG.info("Carga de entidades OK");
     }
 
@@ -182,15 +199,16 @@ public final class EntidadProxy {
      *            the enti map
      */
     static void loadDependencies(final Map<Long, ? extends AbstractEntidadDetailVO> entiMap) {
-        for (final AbstractEntidadDetailVO entidadDetail : entiMap.values()) {
-            if (ENTIDAD_MAP.containsKey(entidadDetail.getEnti().getId())) {
-                entidadDetail.setEntdList(ENTIDAD_MAP.get(entidadDetail.getEnti().getId()).getEntdList());
-                entidadDetail.setEntdMap(ENTIDAD_MAP.get(entidadDetail.getEnti().getId()).getEntdMap());
-                entidadDetail.setEntiHijasList(ENTIDAD_MAP.get(entidadDetail.getEnti().getId()).getEntiHijasList());
-                entidadDetail.setEntiPadresList(ENTIDAD_MAP.get(entidadDetail.getEnti().getId()).getEntiPadresList());
-                entidadDetail.setEnacList(ENTIDAD_MAP.get(entidadDetail.getEnti().getId()).getEnacList());
-                entidadDetail.setEnagList(ENTIDAD_MAP.get(entidadDetail.getEnti().getId()).getEnagList());
-                entidadDetail.setEngdList(ENTIDAD_MAP.get(entidadDetail.getEnti().getId()).getEngdList());
+        for (final AbstractEntidadDetailVO entiDetail : entiMap.values()) {
+            if (ENTIDAD_MAP.containsKey(entiDetail.getEnti().getId())) {
+                entiDetail.setEntdList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntdList());
+                entiDetail.setEntdMap(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntdMap());
+                entiDetail.setEntiHijasList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntiHijasList());
+                entiDetail.setEntiPadresList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntiPadresList());
+                entiDetail.setEnacList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEnacList());
+                entiDetail.setEnagList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEnagList());
+                entiDetail.setEngdList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEngdList());
+                entiDetail.setTrmtList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getTrmtList());
             }
         }
     }

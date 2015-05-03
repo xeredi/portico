@@ -15,6 +15,11 @@
         <button ng-repeat="enac in vm.enti.enacList track by $index" ng-click="vm.ssrvAction(enac.path)"
             class="btn btn-default">{{'enac_' + enac.id | translate}}</button>
     </div>
+    <div class="btn-group" ng-if="vm.enti.enti.tpdtEstado">
+        <a ng-repeat="trmt in vm.enti.trmtList track by $index" ng-if="vm.item.estado == trmt.estadoOrig"
+            ng-href="#/servicio/ssrv/tramite-edit/{{vm.enti.enti.id}}/{{vm.item.srvc.id}}/{{vm.item.id}}/{{trmt.id}}"
+            class="btn btn-default" translate="{{'trmt_' + trmt.id}}"></a>
+    </div>
 </div>
 
 <fieldset>

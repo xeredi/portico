@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.metamodelo.dao.TramiteTipoDatoDAO">
+	<resultMap type="TramiteTipoDatoVO" id="ResultMap">
+		<id column="trtd_trmt_pk" />
+		<id column="tpdt_pk" />
+
+		<result column="trtd_trmt_pk" property="trmtId" />
+		<result column="trtd_obligatorio" property="obligatorio" />
+
+		<association property="entd" javaType="EntidadTipoDatoVO">
+			<result column="entd_pk" property="id" />
+			<result column="entd_enti_pk" property="entiId" />
+			<result column="entd_grupo" property="grupo" />
+			<result column="entd_fila" property="fila" />
+			<result column="entd_orden" property="orden" />
+			<result column="entd_span" property="span" />
+			<result column="entd_valor_defecto" property="valorDefecto" />
+			<result column="entd_etiqueta" property="etiqueta" />
+
+			<association property="tpdt" javaType="TipoDatoVO">
+				<result column="tpdt_pk" property="id" />
+				<result column="tpdt_tipo_elemento" property="tipoElemento" />
+				<result column="tpdt_tipo_html" property="tpht" />
+
+				<association property="enti" javaType="EntidadVO">
+					<result column="enti_pk" property="id" />
+					<result column="enti_tipo" property="tipo" />
+					<result column="enti_puerto" property="puerto" />
+				</association>
+			</association>
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+		SELECT
+		    trtd_trmt_pk, trtd_obligatorio
+
+		    , entd_pk, entd_enti_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_valor_defecto
+
+		    , tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento
+
+		    , enti_pk, enti_tipo, enti_puerto
+    ]]>
+		<if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'entd'
+                    AND i18n_ext_pk = entd_pk
+                    AND i18n_lang = #{idioma}
+            ) AS entd_etiqueta
+        ]]>
+		</if>
+    <![CDATA[
+		FROM
+		    tbl_tramite_tipo_dato_trtd
+		    INNER JOIN tbl_tipo_dato_tpdt ON
+		        tpdt_pk = trtd_tpdt_pk
+		    LEFT JOIN tbl_entidad_enti ON
+		        enti_pk = tpdt_enti_pk
+		    INNER JOIN tbl_tramite_trmt ON
+		        trmt_pk = trtd_trmt_pk
+		    INNER JOIN tbl_entidad_tipo_dato_entd ON
+		        entd_enti_pk = trmt_enti_pk
+		        AND entd_tpdt_pk = trtd_tpdt_pk
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="trmtId != null">
+				AND trtd_trmt_pk = #{trmtId}
+			</if>
+			<if test="tpdtId != null">
+				AND trtd_tpdt_pk = #{tpdtId}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectList" parameterType="TramiteTipoDatoCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+        <![CDATA[
+        ORDER BY trtd_trmt_pk, trtd_tpdt_pk, entd_enti_pk, entd_grupo, entd_fila, entd_orden
+        ]]>
+	</select>
+
+	<select id="selectObject" resultMap="ResultMap" parameterType="TramiteTipoDatoCriterioVO">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="exists" parameterType="TramiteTipoDatoVO" resultType="boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM
+            tbl_tramite_tipo_dato_trtd
+        WHERE
+            trtd_trmt_pk = #{trmtId}
+        	AND trtd_tpdt_pk = #{entd.tpdt.id}
+    ]]>
+	</select>
+
+	<insert id="insert" parameterType="TramiteTipoDatoVO">
+    <![CDATA[
+        INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio)
+        VALUES (#{trmtId}, #{entd.tpdt.id}, #{obligatorio})
+    ]]>
+	</insert>
+
+	<update id="update" parameterType="TramiteTipoDatoVO">
+    <![CDATA[
+        UPDATE tbl_tramite_tipo_dato_trtd SET
+        	trtd_obligatorio = #{obligatorio}
+        WHERE
+            trtd_trmt_pk = #{trmtId}
+        	AND trtd_tpdt_pk = #{entd.tpdt.id}
+    ]]>
+	</update>
+
+	<delete id="delete" parameterType="TramiteTipoDatoVO">
+    <![CDATA[
+        DELETE FROM tbl_tramite_tipo_dato_trtd
+        WHERE trtd_trmt_pk = #{trmtId}
+        	AND trtd_tpdt_pk = #{entd.tpdt.id}
+    ]]>
+	</delete>
+</mapper>

@@ -6,11 +6,14 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoServicioBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;
+import xeredi.integra.model.metamodelo.bo.TramiteBO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
+import xeredi.integra.model.metamodelo.vo.TramiteCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TramiteVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,6 +29,9 @@ public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServ
 
     /** The enti hijas list. */
     private List<EntidadVO> entiHijasList;
+
+    /** The trmt list. */
+    private List<TramiteVO> trmtList;
 
     /**
      * {@inheritDoc}
@@ -49,10 +55,18 @@ public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServ
             final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
 
             entiCriterio.setEntiPadreId(model.getId());
-            entiCriterio.setIdioma(getIdioma());
+            entiCriterio.setIdioma(idioma);
 
             entiHijasList = entiBO.selectList(entiCriterio);
         }
+
+        final TramiteBO trmtBO = new TramiteBO();
+        final TramiteCriterioVO trmtCriterio = new TramiteCriterioVO();
+
+        trmtCriterio.setEntiId(model.getId());
+        trmtCriterio.setIdioma(idioma);
+
+        trmtList = trmtBO.selectList(trmtCriterio);
     }
 
     /**
@@ -71,5 +85,14 @@ public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServ
      */
     public List<EntidadVO> getEntiHijasList() {
         return entiHijasList;
+    }
+
+    /**
+     * Gets the trmt list.
+     *
+     * @return the trmt list
+     */
+    public List<TramiteVO> getTrmtList() {
+        return trmtList;
     }
 }

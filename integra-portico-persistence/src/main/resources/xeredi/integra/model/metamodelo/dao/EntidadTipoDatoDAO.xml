@@ -19,7 +19,7 @@
 		<result column="entd_etiqueta" property="etiqueta" />
 
 		<association property="tpdt" javaType="TipoDatoVO">
-			<id column="tpdt_pk" property="id" />
+			<result column="tpdt_pk" property="id" />
 			<result column="tpdt_tipo_elemento" property="tipoElemento" />
 			<result column="tpdt_tipo_html" property="tpht" />
 			<result column="tpdt_nombre" property="nombre" />

@@ -88,7 +88,9 @@ public enum MessageI18nKey {
     /** The sec_usro. */
     sec_usro,
 
-    version_fini, version_ffin,
+    /** The version_fini. */
+    version_fini, /** The version_ffin. */
+    version_ffin,
 
     /** The usro. */
     usro,
@@ -357,6 +359,23 @@ public enum MessageI18nKey {
     cmag_agregar,
     /** The cmag_nombre. */
     cmag_nombre,
+
+    /** The trmt. */
+    trmt,
+    /** The trmt list. */
+    trmtList,
+    /** The trmt_estado_orig. */
+    trmt_estado_orig,
+    /** The trmt_estado_dest. */
+    trmt_estado_dest,
+    /** The trmt_etiqueta. */
+    trmt_etiqueta,
+    /** The trtd. */
+    trtd,
+    /** The trtd list. */
+    trtdList,
+    /** The trtd_obligatorio. */
+    trtd_obligatorio,
 
     /** The page_home. */
     page_home,

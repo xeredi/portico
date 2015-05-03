@@ -10,6 +10,7 @@ import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
+import xeredi.integra.model.metamodelo.vo.TramiteVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -41,6 +42,9 @@ public abstract class AbstractEntidadDetailVO {
 
     /** {@link List} de acciones web que se pueden realizar sobre el grid de la entidad. */
     private List<EntidadAccionGridVO> enagList;
+
+    /** The trmt list. */
+    private List<TramiteVO> trmtList;
 
     /**
      * {@inheritDoc}
@@ -188,5 +192,24 @@ public abstract class AbstractEntidadDetailVO {
      */
     public void setEntdMap(final Map<Long, EntidadTipoDatoVO> value) {
         entdMap = value;
+    }
+
+    /**
+     * Gets the trmt list.
+     *
+     * @return the trmt list
+     */
+    public List<TramiteVO> getTrmtList() {
+        return trmtList;
+    }
+
+    /**
+     * Sets the trmt list.
+     *
+     * @param value
+     *            the new trmt list
+     */
+    public void setTrmtList(final List<TramiteVO> value) {
+        trmtList = value;
     }
 }

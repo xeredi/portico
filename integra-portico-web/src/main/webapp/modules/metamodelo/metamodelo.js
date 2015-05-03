@@ -56,6 +56,9 @@ angular.module("metamodelo", [])
 
 .controller("EntdEditController", EntdEditController)
 
+// ------------------- TRAMITE --------------------
+.controller("TrmtDetailController", TrmtDetailController)
+
 // ------------------- ACCION DE ENTIDAD --------------------
 .controller("EnacDetailController", EnacDetailController)
 
@@ -217,6 +220,12 @@ function config($routeProvider) {
     .when("/metamodelo/engd/edit/:accion/:entiId/:engdId?", {
         templateUrl : "modules/metamodelo/engd-edit.html",
         controller : "EngdEditController",
+        controllerAs : 'vm'
+    })
+
+    .when("/metamodelo/trmt/detail/:entiId/:id", {
+        templateUrl : "modules/metamodelo/trmt-detail.html",
+        controller : "TrmtDetailController",
         controllerAs : 'vm'
     })
 
@@ -666,6 +675,7 @@ function TpsrDetailController($http, $routeParams, pageTitleService) {
         vm.entiHijasList = data.entiHijasList;
         vm.entdList = data.entdList;
         vm.engdList = data.engdList;
+        vm.trmtList = data.trmtList;
         vm.enacList = data.enacList;
         vm.enagList = data.enagList;
     });
@@ -736,6 +746,7 @@ function TpssDetailController($http, $routeParams, pageTitleService) {
         vm.entiPadresList = data.entiPadresList;
         vm.entdList = data.entdList;
         vm.engdList = data.engdList;
+        vm.trmtList = data.trmtList;
         vm.enacList = data.enacList;
         vm.enagList = data.enagList;
     });
@@ -1091,6 +1102,33 @@ function EngdEditController($http, $location, $routeParams, pageTitleService) {
     });
 
     pageTitleService.setTitle("engd", "page_" + vm.accion);
+}
+
+function TrmtDetailController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.remove = remove;
+
+    function remove() {
+        if (confirm("Are you sure?")) {
+            $http.post("metamodelo/tramite-remove.action", {
+                model : vm.trmt
+            }).success(function(data) {
+                window.history.back();
+            });
+        }
+    }
+
+    $http.post("metamodelo/tramite-detail.action", {
+        model : {
+            id : $routeParams.id
+        }
+    }).success(function(data) {
+        vm.trmt = data.model;
+        vm.trtdList = data.trtdList;
+    });
+
+    pageTitleService.setTitle("trmt", "page_detail");
 }
 
 function EnacDetailController($http, $location, $routeParams, pageTitleService) {

@@ -9,7 +9,7 @@
             <p class="form-control-static" ng-bind="vm.item.numero"></p>
         </div>
         <div class="col-md-5 form-group-sm">
-            <label translate="entd_45010"></label>
+            <label ng-bind="'entd_' + vm.entdBuque.id | translate"></label>
             <p class="form-control-static" ng-bind="vm.item.srvc.itdtMap[45010].prmt.etiqueta"></p>
         </div>
     </div>

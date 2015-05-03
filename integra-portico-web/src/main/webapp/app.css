@@ -39,8 +39,16 @@ body, .tooltip {
 }
 
 label, .btn, .form-group-sm>.form-control-static, .form-group-sm>div>.form-control-static, .form-group-sm>.form-control,
-	.form-control, .tooltip, .pagination>li>a, .alert li, .checkbox label {
+	.form-group-sm .form-control, .tooltip, .pagination>li>a, .alert li, .checkbox label {
 	font-size: 11px;
+}
+
+.form-control-static {
+	background-color: #4E5D6C;
+}
+
+.control-label:after {
+	content: " :";
 }
 
 .nav-pills>li, .modal-title, legend, .bg-primary, .nav-tabs, .list-group-item, .alert ul {
