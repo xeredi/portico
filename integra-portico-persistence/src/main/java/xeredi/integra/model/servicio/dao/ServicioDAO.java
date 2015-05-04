@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioLupaCriterioVO;
+import xeredi.integra.model.servicio.vo.ServicioTramiteVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -48,6 +49,15 @@ public interface ServicioDAO {
      * @return the int
      */
     int updatePeprDesasociar(final Long peprId);
+
+    /**
+     * Update estado.
+     *
+     * @param srtr
+     *            the srtr
+     * @return the int
+     */
+    int updateEstado(final ServicioTramiteVO srtr);
 
     /**
      * Select count.

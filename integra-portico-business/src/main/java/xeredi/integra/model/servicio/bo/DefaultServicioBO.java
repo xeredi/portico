@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.ModelException;
+import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -44,6 +45,15 @@ public final class DefaultServicioBO extends AbstractServicioBO {
      */
     @Override
     protected void deletePostOperations(final SqlSession session, final Long srvcId) throws ModelException {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void statechangePostOperations(final SqlSession session, final ServicioVO srvc,
+            final TramiteDetailVO trmtDetail) throws ModelException {
         // noop
     }
 

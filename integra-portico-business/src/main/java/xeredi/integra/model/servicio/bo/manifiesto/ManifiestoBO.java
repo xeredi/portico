@@ -2,19 +2,18 @@ package xeredi.integra.model.servicio.bo.manifiesto;
 
 import java.util.List;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
-import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
-import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.servicio.bo.AbstractServicioBO;
-import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.BlDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoResumenDAO;
-import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoServicioDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoSubservicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -24,6 +23,8 @@ import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesCriterioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
 import xeredi.util.mybatis.SqlMapperLocator;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -76,176 +77,41 @@ public final class ManifiestoBO extends AbstractServicioBO {
     }
 
     /**
-     * Bloquear.
-     *
-     * @param srvcId
-     *            the srvc id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * {@inheritDoc}
      */
-    public void bloquear(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
-            final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
+    @Override
+    protected void statechangePostOperations(final @NonNull SqlSession session, final @NonNull ServicioVO srvc,
+            final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
+        Preconditions.checkNotNull(srvc.getId());
+        Preconditions.checkNotNull(trmtDetail.getTrmt());
+        Preconditions.checkNotNull(trmtDetail.getTrmt().getEstadoDest());
 
-            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+        final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
+        final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
+        final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
 
-            srvcCriterioVO.setId(srvcId);
+        srvcCriterio.setId(srvc.getId());
+        ssrvCriterio.setSrvc(srvcCriterio);
 
-            final ServicioVO srvcVO = srvcDAO.selectObject(srvcCriterioVO);
+        switch (trmtDetail.getTrmt().getEstadoDest()) {
+        case "B":
+            maniSsrvDAO.updateBloquear(ssrvCriterio);
 
-            if (srvcVO == null) {
-                throw new InstanceNotFoundException(Entidad.MANIFIESTO.getId(), srvcId);
-            }
+            break;
+        case "C":
+            maniSsrvDAO.updateCompletar(ssrvCriterio);
 
-            final int updatedRows = maniDAO.updateBloquear(srvcId);
+            break;
+        case "I":
+            maniSsrvDAO.updateIniciar(ssrvCriterio);
 
-            if (updatedRows == 0) {
-                throw new OperacionNoPermitidaException(Entidad.MANIFIESTO.getId(), MessageI18nKey.mani_bloquear,
-                        srvcId);
-            }
+            break;
+        case "A":
+            maniSsrvDAO.updateAnular(ssrvCriterio);
 
-            // Bloqueo de los Subservicios del Manifiesto (Bls, Partidas y
-            // Equipamientos)
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-
-            ssrvCriterioVO.setSrvc(srvcCriterioVO);
-            maniSsrvDAO.updateBloquear(ssrvCriterioVO);
-
-            session.commit();
-        }
-    }
-
-    /**
-     * Completar.
-     *
-     * @param srvcId
-     *            the srvc id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
-     */
-    public void completar(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
-            final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
-
-            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
-
-            srvcCriterioVO.setId(srvcId);
-
-            final ServicioVO srvcVO = srvcDAO.selectObject(srvcCriterioVO);
-
-            if (srvcVO == null) {
-                throw new InstanceNotFoundException(Entidad.MANIFIESTO.getId(), srvcId);
-            }
-
-            final int updatedRows = maniDAO.updateCompletar(srvcId);
-
-            if (updatedRows == 0) {
-                throw new OperacionNoPermitidaException(Entidad.MANIFIESTO.getId(), MessageI18nKey.mani_completar,
-                        srvcId);
-            }
-
-            // Completado de los Subservicios del Manifiesto (Bls, Partidas y
-            // Equipamientos)
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-
-            ssrvCriterioVO.setSrvc(srvcCriterioVO);
-            maniSsrvDAO.updateCompletar(ssrvCriterioVO);
-
-            session.commit();
-        }
-    }
-
-    /**
-     * Iniciar.
-     *
-     * @param srvcId
-     *            the srvc id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
-     */
-    public void iniciar(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
-            final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
-
-            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
-
-            srvcCriterioVO.setId(srvcId);
-
-            final ServicioVO srvcVO = srvcDAO.selectObject(srvcCriterioVO);
-
-            if (srvcVO == null) {
-                throw new InstanceNotFoundException(Entidad.MANIFIESTO.getId(), srvcId);
-            }
-
-            final int updatedRows = maniDAO.updateIniciar(srvcId);
-
-            if (updatedRows == 0) {
-                throw new OperacionNoPermitidaException(Entidad.MANIFIESTO.getId(), MessageI18nKey.mani_iniciar, srvcId);
-            }
-
-            // Inicio de los Subservicios del Manifiesto (Bls, Partidas y
-            // Equipamientos)
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-
-            ssrvCriterioVO.setSrvc(srvcCriterioVO);
-            maniSsrvDAO.updateIniciar(ssrvCriterioVO);
-
-            session.commit();
-        }
-    }
-
-    /**
-     * Anular.
-     *
-     * @param srvcId
-     *            the srvc id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
-     */
-    public void anular(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
-            final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
-
-            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
-
-            srvcCriterioVO.setId(srvcId);
-
-            final ServicioVO srvcVO = srvcDAO.selectObject(srvcCriterioVO);
-
-            if (srvcVO == null) {
-                throw new InstanceNotFoundException(Entidad.MANIFIESTO.getId(), srvcId);
-            }
-
-            final int updatedRows = maniDAO.updateAnular(srvcId);
-
-            if (updatedRows == 0) {
-                throw new OperacionNoPermitidaException(Entidad.MANIFIESTO.getId(), MessageI18nKey.mani_anular, srvcId);
-            }
-
-            // Anulacion de los Subservicios del Manifiesto (Bls, Partidas y
-            // Equipamientos)
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-
-            ssrvCriterioVO.setSrvc(srvcCriterioVO);
-            maniSsrvDAO.updateAnular(ssrvCriterioVO);
-
-            session.commit();
+            break;
+        default:
+            throw new Error("Estado desconocido de manifiesto: " + trmtDetail.getTrmt().getEstadoDest());
         }
     }
 

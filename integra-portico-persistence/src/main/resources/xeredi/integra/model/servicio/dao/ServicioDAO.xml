@@ -208,4 +208,26 @@
 			WHERE srvc_pepr_pk = #{value}
         ]]>
 	</update>
+
+	<update id="updateEstado" parameterType="ServicioTramiteVO">
+        <![CDATA[
+		UPDATE tbl_servicio_srvc SET
+		    srvc_estado = (
+		        SELECT trmt_estado_dest
+		        FROM tbl_tramite_trmt
+		        WHERE
+		            trmt_pk = #{trmt.id}
+		    )
+		WHERE
+		    EXISTS (
+		        SELECT 1
+		        FROM tbl_tramite_trmt
+		        WHERE
+		            trmt_enti_pk = srvc_tpsr_pk
+		            AND trmt_estado_orig = srvc_estado
+		            AND trmt_pk = #{trmt.id}
+		    )
+		    AND srvc_pk = #{srvcId}
+        ]]>
+	</update>
 </mapper>

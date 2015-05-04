@@ -2,6 +2,7 @@ package xeredi.integra.model.servicio.bo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -24,16 +25,20 @@ import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
+import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
+import xeredi.integra.model.metamodelo.proxy.TramiteProxy;
 import xeredi.integra.model.servicio.dao.ServicioArchivoDAO;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.dao.ServicioDatoDAO;
 import xeredi.integra.model.servicio.dao.ServicioSecuenciaDAO;
+import xeredi.integra.model.servicio.dao.ServicioTramiteDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.SubservicioSubservicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioArchivoVO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioLupaCriterioVO;
+import xeredi.integra.model.servicio.vo.ServicioTramiteVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
@@ -455,6 +460,61 @@ public abstract class AbstractServicioBO implements ServicioBO {
      *             the model exception
      */
     protected abstract void deletePostOperations(final SqlSession session, final Long srvcId) throws ModelException;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void statechange(final ServicioVO srvc, final Long trmtId) throws ModelException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            final IgBO igBO = new IgBO();
+
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+            final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
+            final ServicioTramiteDAO srtrDAO = session.getMapper(ServicioTramiteDAO.class);
+
+            final TramiteDetailVO trmtDetail = TramiteProxy.select(trmtId);
+
+            final ServicioTramiteVO srtr = new ServicioTramiteVO();
+
+            srtr.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            srtr.setSrvcId(srvc.getId());
+            srtr.setTrmt(trmtDetail.getTrmt());
+            srtr.setFecha(Calendar.getInstance().getTime());
+
+            if (srvcDAO.updateEstado(srtr) == 0) {
+                throw new InstanceNotFoundException(srvc.getEntiId(), srvc.getId());
+            }
+
+            srtrDAO.insert(srtr);
+
+            for (final Long tpdtId : trmtDetail.getTpdtList()) {
+                final ItemDatoVO itdt = srvc.getItdtMap().get(tpdtId);
+
+                itdt.setItemId(srvc.getId());
+                srdtDAO.update(itdt);
+            }
+
+            statechangePostOperations(session, srvc, trmtDetail);
+
+            session.commit();
+        }
+    }
+
+    /**
+     * Statechange post operations.
+     *
+     * @param session
+     *            the session
+     * @param srvc
+     *            the srvc
+     * @param trmtId
+     *            the trmt id
+     * @throws ModelException
+     *             the model exception
+     */
+    protected abstract void statechangePostOperations(final SqlSession session, final ServicioVO srvc,
+            final TramiteDetailVO trmtDetail) throws ModelException;
 
     /**
      * Fill dependencies.

@@ -7,6 +7,8 @@ import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteProxy;
+import xeredi.integra.model.servicio.bo.ServicioBO;
+import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -34,8 +36,8 @@ public final class ServicioTramiteSaveAction extends ItemStatechangeSaveAction<S
      */
     @Override
     public void doStatechangeSave() throws ApplicationException {
-        // TODO Auto-generated method stub
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(item.getEntiId());
 
+        srvcBO.statechange(item, trmtId);
     }
-
 }
