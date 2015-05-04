@@ -5,6 +5,7 @@ import java.util.Set;
 
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
@@ -21,36 +22,35 @@ public interface SubservicioBO {
     /**
      * Select list.
      *
-     * @param ssrvCriterioVO
-     *            the ssrv criterio vo
+     * @param ssrvCriterio
+     *            the ssrv criterio
      * @param offset
      *            the offset
      * @param limit
      *            the limit
      * @return the paginated list
      */
-    PaginatedList<SubservicioVO> selectList(final SubservicioCriterioVO ssrvCriterioVO, final int offset,
-            final int limit);
+    PaginatedList<SubservicioVO> selectList(final SubservicioCriterioVO ssrvCriterio, final int offset, final int limit);
 
     /**
      * Select list.
      *
-     * @param ssrvCriterioVO
-     *            the ssrv criterio vo
+     * @param ssrvCriterio
+     *            the ssrv criterio
      * @return the list
      */
-    List<SubservicioVO> selectList(final SubservicioCriterioVO ssrvCriterioVO);
+    List<SubservicioVO> selectList(final SubservicioCriterioVO ssrvCriterio);
 
     /**
      * Select label value object.
      *
-     * @param ssrvCriterioVO
-     *            the ssrv criterio vo
+     * @param ssrvCriterio
+     *            the ssrv criterio
      * @return the label value vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    LabelValueVO selectLabelValueObject(final SubservicioCriterioVO ssrvCriterioVO) throws InstanceNotFoundException;
+    LabelValueVO selectLabelValueObject(final SubservicioCriterioVO ssrvCriterio) throws InstanceNotFoundException;
 
     /**
      * Select.
@@ -68,19 +68,19 @@ public interface SubservicioBO {
     /**
      * Select lupa list.
      *
-     * @param ssrvLupaCriterioVO
-     *            the ssrv lupa criterio vo
+     * @param ssrvLupaCriterio
+     *            the ssrv lupa criterio
      * @param limit
      *            the limit
      * @return the list
      */
-    List<SubservicioVO> selectLupaList(final SubservicioLupaCriterioVO ssrvLupaCriterioVO, final int limit);
+    List<SubservicioVO> selectLupaList(final SubservicioLupaCriterioVO ssrvLupaCriterio, final int limit);
 
     /**
      * Insert.
      *
-     * @param ssrvVO
-     *            the ssrv vo
+     * @param ssrv
+     *            the ssrv
      * @param tpssDetail
      *            the tpss detail
      * @param ssrvPadreIds
@@ -88,26 +88,26 @@ public interface SubservicioBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    void insert(final SubservicioVO ssrvVO, final TipoSubservicioDetailVO tpssDetail, final Set<Long> ssrvPadreIds)
+    void insert(final SubservicioVO ssrv, final TipoSubservicioDetailVO tpssDetail, final Set<Long> ssrvPadreIds)
             throws DuplicateInstanceException;
 
     /**
      * Duplicate.
      *
-     * @param ssrvVO
-     *            the ssrv vo
+     * @param ssrv
+     *            the ssrv
      */
-    void duplicate(final SubservicioVO ssrvVO);
+    void duplicate(final SubservicioVO ssrv);
 
     /**
      * Update.
      *
-     * @param ssrvVO
-     *            the ssrv vo
+     * @param ssrv
+     *            the ssrv
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    void update(final SubservicioVO ssrvVO) throws InstanceNotFoundException;
+    void update(final SubservicioVO ssrv) throws InstanceNotFoundException;
 
     /**
      * Delete.
@@ -119,4 +119,15 @@ public interface SubservicioBO {
      */
     void delete(final SubservicioVO ssrv) throws InstanceNotFoundException;
 
+    /**
+     * Statechange.
+     *
+     * @param ssrv
+     *            the ssrv
+     * @param trmtId
+     *            the trmt id
+     * @throws ModelException
+     *             the model exception
+     */
+    void statechange(final SubservicioVO ssrv, final Long trmtId) throws ModelException;
 }

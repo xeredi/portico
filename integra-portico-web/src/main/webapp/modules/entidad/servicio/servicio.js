@@ -133,48 +133,6 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    .when("/servicio/ssrv/atraque-denegar/:srvcId/:ssrvId", {
-        templateUrl : "modules/entidad/servicio/escala/atraque-denegar.html",
-        controller : "AtraqueDenegarController",
-        controllerAs : "vm"
-    })
-
-    .when("/servicio/ssrv/atraque-autorizar/:srvcId/:ssrvId", {
-        templateUrl : "modules/entidad/servicio/escala/atraque-autorizar.html",
-        controller : "AtraqueAutorizarController",
-        controllerAs : "vm"
-    })
-
-    .when("/servicio/ssrv/atraque-anular/:srvcId/:ssrvId", {
-        templateUrl : "modules/entidad/servicio/escala/atraque-anular.html",
-        controller : "AtraqueAnularController",
-        controllerAs : "vm"
-    })
-
-    .when("/servicio/ssrv/atraque-iniciar/:srvcId/:ssrvId", {
-        templateUrl : "modules/entidad/servicio/escala/atraque-iniciar.html",
-        controller : "AtraIniciarController",
-        controllerAs : "vm"
-    })
-
-    .when("/servicio/ssrv/atraque-finalizar/:srvcId/:ssrvId", {
-        templateUrl : "modules/entidad/servicio/escala/atraque-finalizar.html",
-        controller : "AtraqueFinalizarController",
-        controllerAs : "vm"
-    })
-
-    .when("/servicio/ssrv/atraque-cambiar-muelle/:srvcId/:ssrvId", {
-        templateUrl : "modules/entidad/servicio/escala/atraque-cambiar-muelle.html",
-        controller : "AtraqueCambiarMuelleController",
-        controllerAs : "vm"
-    })
-
-    .when("/servicio/ssrv/atraque-autorizar-fprevio/:srvcId/:ssrvId", {
-        templateUrl : "modules/entidad/servicio/escala/atraque-autorizar-fprevio.html",
-        controller : "AtraqueAutorizarFprevioController",
-        controllerAs : "vm"
-    })
-
     ;
 }
 
@@ -469,21 +427,6 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
 
     function srvcAction(accName) {
         switch (accName) {
-        // ----------- MANIFIESTO ------------------
-        // ----------- MANIFIESTO ------------------
-        // ----------- MANIFIESTO ------------------
-
-        case "manifiesto-bloquear":
-        case "manifiesto-completar":
-        case "manifiesto-iniciar":
-        case "manifiesto-anular":
-            $http.post("servicio/manifiesto/" + accName + ".action", {
-                model : vm.item
-            }).success(function(data) {
-                loadData(vm.item.id, vm.item.entiId);
-            });
-
-            break;
         case "mani-totales":
             $location.path("/servicio/srvc/maniTotales/" + vm.item.entiId + "/" + vm.item.id);
 

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.servicio.dao.SubservicioTramiteDAO">
+	<resultMap type="SubservicioTramiteVO" id="ResultMap">
+		<id column="sstr_pk" />
+
+		<result column="sstr_pk" property="id" />
+		<result column="sstr_ssrv_pk" property="ssrvId" />
+		<result column="sstr_falta" property="fecha" />
+
+		<association property="trmt" javaType="TramiteVO">
+			<result column="sstr_trmt_pk" property="id" />
+			<result column="trmt_estado_orig" property="estadoOrig" />
+			<result column="trmt_estado_dest" property="estadoDest" />
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+		SELECT
+			sstr_pk, sstr_ssrv_pk, sstr_falta, sstr_trmt_pk
+
+			, trmt_estado_orig, trmt_estado_dest
+		FROM
+			tbl_subservicio_tramite_sstr
+			INNER JOIN tbl_tramite_trmt ON
+				trmt_pk = sstr_trmt_pk
+	]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND sstr_pk = #{id}
+			</if>
+			<if test="ssrvId != null">
+				AND sstr_ssrv_pk = #{ssrvId}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectList" parameterType="SubservicioTramiteCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY sstr_ssrv_pk, sstr_falta
+	</select>
+
+	<select id="selectObject" parameterType="SubservicioTramiteCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<insert id="insert" parameterType="SubservicioTramiteVO">
+        <![CDATA[
+        INSERT INTO tbl_subservicio_tramite_sstr (sstr_pk, sstr_ssrv_pk, sstr_trmt_pk, sstr_falta)
+        VALUES (#{id}, #{ssrvId}, #{trmt.id}, #{fecha})
+        ]]>
+	</insert>
+
+	<delete id="deleteList" parameterType="SubservicioTramiteCriterioVO">
+		DELETE FROM tbl_subservicio_tramite_sstr
+		<include refid="SelectWhere" />
+	</delete>
+</mapper>

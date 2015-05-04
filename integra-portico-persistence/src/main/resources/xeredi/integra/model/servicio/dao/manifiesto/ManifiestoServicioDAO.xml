@@ -11,7 +11,7 @@
 					SELECT ssrv_estado
 		            FROM tbl_subservicio_ssrv
 					WHERE
-		                ssrv_srvc_pk = #{id}
+		                ssrv_srvc_pk = #{value}
 		                AND ssrv_tpss_pk = portico.getEntidad('BL')
 				)
 				SELECT
@@ -44,11 +44,13 @@
 
 					    ELSE 'X'
 					END
-                FROM sql
+                FROM tbl_servicio_srvc
+		        WHERE
+		        	srvc_pk = #{value}
             )
         WHERE
             srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
-            AND srvc_pk = #{id}
+            AND srvc_pk = #{value}
         ]]>
 	</update>
 </mapper>

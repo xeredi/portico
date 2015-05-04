@@ -175,12 +175,35 @@
         ]]>
 	</insert>
 
-	<update id="updateEstado" parameterType="SubservicioVO">
+	<update id="update" parameterType="SubservicioVO">
         <![CDATA[
         UPDATE tbl_subservicio_ssrv SET
-            ssrv_estado = #{estado}
-        WHERE
-            ssrv_pk = #{id}
+        	ssrv_fini = #{fini}
+        	, ssrv_ffin = #{ffin}
+        WHERE ssrv_pk = #{id}
+            ssrv_numero, , ssrv_ffin, ssrv_estado
+        ]]>
+	</update>
+
+	<update id="updateEstado" parameterType="SubservicioTramiteVO">
+        <![CDATA[
+		UPDATE tbl_subservicio_ssrv SET
+		    ssrv_estado = (
+		        SELECT trmt_estado_dest
+		        FROM tbl_tramite_trmt
+		        WHERE
+		            trmt_pk = #{trmt.id}
+		    )
+		WHERE
+		    EXISTS (
+		        SELECT 1
+		        FROM tbl_tramite_trmt
+		        WHERE
+		            trmt_enti_pk = ssrv_tpss_pk
+		            AND trmt_estado_orig = ssrv_estado
+		            AND trmt_pk = #{trmt.id}
+		    )
+		    AND ssrv_pk = #{ssrvId}
         ]]>
 	</update>
 

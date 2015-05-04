@@ -52,7 +52,7 @@
 		<include refid="SelectWhere" />
 	</select>
 
-	<insert id="insert" parameterType="ServicioSecuenciaVO">
+	<insert id="insert" parameterType="ServicioTramiteVO">
         <![CDATA[
         INSERT INTO tbl_servicio_tramite_srtr (srtr_pk, srtr_srvc_pk, srtr_trmt_pk, srtr_falta)
         VALUES (#{id}, #{srvcId}, #{trmt.id}, #{fecha})

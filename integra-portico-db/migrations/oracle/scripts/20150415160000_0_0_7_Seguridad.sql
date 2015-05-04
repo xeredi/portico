@@ -102,6 +102,25 @@ CREATE OR REPLACE SYNONYM portico.tbl_servicio_tramite_srtr FOR tbl_servicio_tra
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_tramite_srtr TO portico\
 
 
+CREATE TABLE tbl_subservicio_tramite_sstr (
+	sstr_pk NUMBER(19) NOT NULL
+	, sstr_ssrv_pk NUMBER(19) NOT NULL
+	, sstr_trmt_pk NUMBER(19) NOT NULL
+	, sstr_falta TIMESTAMP NOT NULL
+
+	, CONSTRAINT pk_sstr PRIMARY KEY (sstr_pk)
+
+	, CONSTRAINT fk_sstr_ssrv_pk FOREIGN KEY (sstr_ssrv_pk)
+		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
+	, CONSTRAINT fk_sstr_trmt_pk FOREIGN KEY (sstr_trmt_pk)
+		REFERENCES tbl_tramite_trmt (trmt_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_subservicio_tramite_sstr FOR tbl_subservicio_tramite_sstr\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_subservicio_tramite_sstr TO portico\
+
+
 -- Manifiesto
 INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46000, 21002, 'S', 'B')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46000, 'es', 'Bloquear')\
@@ -229,6 +248,7 @@ INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_esta
 
 DELETE FROM tbl_i18n_i18n WHERE i18n_pref = 'trmt'\
 
+DROP TABLE tbl_subservicio_tramite_sstr\
 DROP TABLE tbl_servicio_tramite_srtr\
 DROP TABLE tbl_tramite_tipo_dato_trtd\
 DROP TABLE tbl_tramite_trmt\

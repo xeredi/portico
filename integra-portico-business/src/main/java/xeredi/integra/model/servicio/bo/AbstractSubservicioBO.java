@@ -2,6 +2,7 @@ package xeredi.integra.model.servicio.bo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -17,15 +18,20 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
+import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
+import xeredi.integra.model.metamodelo.proxy.TramiteProxy;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.SubservicioSubservicioDAO;
+import xeredi.integra.model.servicio.dao.SubservicioTramiteDAO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
+import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -78,7 +84,7 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    public LabelValueVO selectLabelValueObject(final @NonNull SubservicioCriterioVO ssrvCriterioVO)
+    public final LabelValueVO selectLabelValueObject(final @NonNull SubservicioCriterioVO ssrvCriterioVO)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
@@ -388,6 +394,71 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
             throws InstanceNotFoundException;
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void statechange(final @NonNull SubservicioVO ssrv, final @NonNull Long trmtId) throws ModelException {
+        Preconditions.checkNotNull(ssrv.getId());
+        Preconditions.checkNotNull(ssrv.getEntiId());
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            final IgBO igBO = new IgBO();
+
+            // Modificacion del subservicio
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+
+            if (ssrvDAO.update(ssrv) == 0) {
+                throw new InstanceNotFoundException(ssrv.getEntiId(), ssrv.getId());
+            }
+
+            // Alta del tramite
+            final SubservicioTramiteDAO sstrDAO = session.getMapper(SubservicioTramiteDAO.class);
+            final TramiteDetailVO trmtDetail = TramiteProxy.select(trmtId);
+            final SubservicioTramiteVO sstr = new SubservicioTramiteVO();
+
+            sstr.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            sstr.setSsrvId(ssrv.getId());
+            sstr.setTrmt(trmtDetail.getTrmt());
+            sstr.setFecha(Calendar.getInstance().getTime());
+
+            if (ssrvDAO.updateEstado(sstr) == 0) {
+                throw new InstanceNotFoundException(ssrv.getEntiId(), ssrv.getId());
+            }
+
+            sstrDAO.insert(sstr);
+
+            // Modificacion de los datos del subservicio introducidos en el tramite (si los hay)
+            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+
+            for (final Long tpdtId : trmtDetail.getTpdtList()) {
+                final ItemDatoVO itdt = ssrv.getItdtMap().get(tpdtId);
+
+                itdt.setItemId(ssrv.getId());
+                ssdtDAO.update(itdt);
+            }
+
+            statechangePostOperations(session, ssrv, trmtDetail);
+
+            session.commit();
+        }
+    }
+
+    /**
+     * Statechange post operations.
+     *
+     * @param session
+     *            the session
+     * @param ssrv
+     *            the ssrv
+     * @param trmtDetail
+     *            the trmt detail
+     * @throws ModelException
+     *             the model exception
+     */
+    protected abstract void statechangePostOperations(final SqlSession session, final SubservicioVO ssrv,
+            final TramiteDetailVO trmtDetail) throws ModelException;
+
+    /**
      * Fill dependencies.
      *
      * @param session
@@ -399,8 +470,8 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      * @param useIds
      *            the use ids
      */
-    private final void fillDependencies(final SqlSession session, final List<SubservicioVO> ssrvList,
-            final SubservicioCriterioVO ssrvCriterioVO, final boolean useIds) {
+    private final void fillDependencies(final @NonNull SqlSession session, final @NonNull List<SubservicioVO> ssrvList,
+            final @NonNull SubservicioCriterioVO ssrvCriterioVO, final boolean useIds) {
         final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
 
         // Datos asociados

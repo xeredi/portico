@@ -44,8 +44,7 @@ public final class SubservicioTramiteSaveAction extends ItemStatechangeSaveActio
     public void doStatechangeSave() throws ApplicationException {
         final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(item.getEntiId());
 
-        // TODO Auto-generated method stub
-
+        ssrvBO.statechange(item, trmtId);
     }
 
 }

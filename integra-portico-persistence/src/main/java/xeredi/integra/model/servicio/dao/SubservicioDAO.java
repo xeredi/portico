@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
+import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -34,11 +35,11 @@ public interface SubservicioDAO {
     /**
      * Update estado.
      *
-     * @param ssrvVO
-     *            the ssrv vo
+     * @param sstr
+     *            the sstr
      * @return the int
      */
-    int updateEstado(final SubservicioVO ssrvVO);
+    int updateEstado(final SubservicioTramiteVO sstr);
 
     /**
      * Delete.

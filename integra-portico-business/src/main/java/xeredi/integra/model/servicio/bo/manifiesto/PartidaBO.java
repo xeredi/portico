@@ -2,25 +2,26 @@ package xeredi.integra.model.servicio.bo.manifiesto;
 
 import java.util.Set;
 
-import org.apache.ibatis.session.ExecutorType;
+import lombok.NonNull;
+
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
-import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
+import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.servicio.bo.AbstractSubservicioBO;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.BlDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.EquipamientoDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoServicioDAO;
-import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoSubservicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -31,9 +32,9 @@ public final class PartidaBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void insertPostOperations(final SqlSession session, final SubservicioVO ssrvVO,
-            final TipoSubservicioDetailVO tpssSubservicioDetail, final Set<Long> ssrvPadreIds)
-                    throws DuplicateInstanceException {
+    protected void insertPostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrvVO,
+            final @NonNull TipoSubservicioDetailVO tpssSubservicioDetail, final Set<Long> ssrvPadreIds)
+            throws DuplicateInstanceException {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
 
@@ -55,7 +56,7 @@ public final class PartidaBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void duplicatePostOperations(final SqlSession session, final SubservicioVO ssrvVO) {
+    protected void duplicatePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrvVO) {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
 
@@ -77,7 +78,7 @@ public final class PartidaBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void updatePostOperations(final SqlSession session, final SubservicioVO ssrvVO)
+    protected void updatePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrvVO)
             throws InstanceNotFoundException {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -100,7 +101,7 @@ public final class PartidaBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void deletePostOperations(final SqlSession session, final SubservicioVO ssrv)
+    protected void deletePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv)
             throws InstanceNotFoundException {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -120,178 +121,61 @@ public final class PartidaBO extends AbstractSubservicioBO {
     }
 
     /**
-     * Bloquear.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * {@inheritDoc}
      */
-    public void bloquear(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final ManifiestoServicioDAO maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
-            final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
-            final EquipamientoDAO equiDAO = session.getMapper(EquipamientoDAO.class);
-            final BlDAO blDAO = session.getMapper(BlDAO.class);
+    @Override
+    protected void statechangePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv,
+            final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
+        Preconditions.checkNotNull(ssrv.getId());
+        Preconditions.checkNotNull(ssrv.getSrvc());
+        Preconditions.checkNotNull(ssrv.getSrvc().getId());
+        Preconditions.checkNotNull(trmtDetail.getTrmt());
+        Preconditions.checkNotNull(trmtDetail.getTrmt().getEstadoDest());
 
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+        // Propagaciones a hermanos
+        final EquipamientoDAO equiDAO = session.getMapper(EquipamientoDAO.class);
+        final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
 
-            ssrvCriterioVO.setId(ssrvId);
-            ssrvCriterioVO.setEntiId(Entidad.PARTIDA.getId());
+        switch (trmtDetail.getTrmt().getEstadoDest()) {
+        case "B":
+            // Bloqueo de los hermanos
+            equiDAO.updateBloquearFromPartida(ssrv.getId());
 
-            final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
+            break;
+        case "R":
+            // Inicio de los hermanos
+            equiDAO.updateIniciarFromPartida(ssrv.getId());
 
-            if (ssrvVO == null) {
-                throw new InstanceNotFoundException(Entidad.PARTIDA.getId(), ssrvId);
-            }
-
-            // Bloqueo de la partida
-            final int updatedRows = maniSsrvDAO.updateBloquear(ssrvCriterioVO);
-
-            if (updatedRows == 0) {
-                throw new OperacionNoPermitidaException(Entidad.PARTIDA.getId(), MessageI18nKey.part_bloquear, ssrvId);
-            }
-
-            // Bloqueo de los equipamientos asociados a la partida
-            equiDAO.updateBloquearFromPartida(ssrvId);
-
-            // Recalcular estado del BL
-            final SubservicioCriterioVO blCriterioVO = new SubservicioCriterioVO();
-            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
-
-            srvcCriterioVO.setId(ssrvVO.getSrvc().getId());
-            blCriterioVO.setSrvc(srvcCriterioVO);
-            blCriterioVO.setEntiId(Entidad.BL.getId());
-            blCriterioVO.setHijoId(ssrvId);
-
-            blDAO.updateRecalcularEstado(blCriterioVO);
-
-            // RecalcularEstado del manifiesto
-            maniSrvcDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
-
-            session.commit();
-        }
-    }
-
-    /**
-     * Iniciar.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
-     */
-    public void iniciar(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final ManifiestoServicioDAO maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
-            final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
-            final EquipamientoDAO equiDAO = session.getMapper(EquipamientoDAO.class);
-            final BlDAO blDAO = session.getMapper(BlDAO.class);
-
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-
-            ssrvCriterioVO.setId(ssrvId);
-            ssrvCriterioVO.setEntiId(Entidad.PARTIDA.getId());
-
-            final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
-
-            if (ssrvVO == null) {
-                throw new InstanceNotFoundException(Entidad.PARTIDA.getId(), ssrvId);
-            }
-
-            // Inicio de la partida
-            final int updatedRows = maniSsrvDAO.updateIniciar(ssrvCriterioVO);
-
-            if (updatedRows == 0) {
-                throw new OperacionNoPermitidaException(Entidad.PARTIDA.getId(), MessageI18nKey.part_iniciar, ssrvId);
-            }
-
-            // Inicio de los equipamientos asociados a la partida
-            equiDAO.updateIniciarFromPartida(ssrvId);
-
-            // Recalcular estado del BL
-            final SubservicioCriterioVO blCriterioVO = new SubservicioCriterioVO();
-            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
-
-            srvcCriterioVO.setId(ssrvVO.getSrvc().getId());
-            blCriterioVO.setSrvc(srvcCriterioVO);
-            blCriterioVO.setEntiId(Entidad.BL.getId());
-            blCriterioVO.setHijoId(ssrvId);
-
-            blDAO.updateRecalcularEstado(blCriterioVO);
-
-            // RecalcularEstado del manifiesto
-            maniSrvcDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
-
-            session.commit();
-        }
-    }
-
-    /**
-     * Anular.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
-     */
-    public void anular(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final ManifiestoServicioDAO maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
-            final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
-            final BlDAO blDAO = session.getMapper(BlDAO.class);
-
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-
-            ssrvCriterioVO.setId(ssrvId);
-            ssrvCriterioVO.setEntiId(Entidad.PARTIDA.getId());
-
-            final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
-
-            if (ssrvVO == null) {
-                throw new InstanceNotFoundException(Entidad.PARTIDA.getId(), ssrvId);
-            }
-
-            // Anulacion de la partida
-            final int updatedRows = maniSsrvDAO.updateAnular(ssrvCriterioVO);
-
-            if (updatedRows == 0) {
-                throw new OperacionNoPermitidaException(Entidad.PARTIDA.getId(), MessageI18nKey.part_anular, ssrvId);
-            }
-
-            // Borrado de las partida-equipamiento asociadas
+            break;
+        case "A":
+            // Borrado de los Partida-Equipamiento asociados
             final SubservicioCriterioVO paeqCriterioVO = new SubservicioCriterioVO();
 
             paeqCriterioVO.setEntiId(Entidad.PARTIDA_EQUIPAMIENTO.getId());
-            paeqCriterioVO.setPadreId(ssrvId);
+            paeqCriterioVO.setPadreId(ssrv.getId());
 
             ssrvDAO.deleteList(paeqCriterioVO);
 
-            // Recalcular estado del BL
-            final SubservicioCriterioVO blCriterioVO = new SubservicioCriterioVO();
-            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
-
-            srvcCriterioVO.setId(ssrvVO.getSrvc().getId());
-            blCriterioVO.setSrvc(srvcCriterioVO);
-            blCriterioVO.setEntiId(Entidad.BL.getId());
-            blCriterioVO.setHijoId(ssrvId);
-
-            blDAO.updateRecalcularEstado(blCriterioVO);
-
-            // RecalcularEstado del manifiesto
-            maniSrvcDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
-
-            session.commit();
+            break;
+        default:
+            throw new Error("Estado desconocido de la partida: " + trmtDetail.getTrmt().getEstadoDest());
         }
-    }
 
+        // Recalcular Estado del BL
+        final BlDAO blDAO = session.getMapper(BlDAO.class);
+        final SubservicioCriterioVO blCriterio = new SubservicioCriterioVO();
+        final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
+
+        srvcCriterio.setId(ssrv.getSrvc().getId());
+        blCriterio.setSrvc(srvcCriterio);
+        blCriterio.setEntiId(Entidad.BL.getId());
+        blCriterio.setHijoId(ssrv.getId());
+
+        blDAO.updateRecalcularEstado(blCriterio);
+
+        // Recalcular Estado del Servicio
+        final ManifiestoServicioDAO maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
+
+        maniSrvcDAO.updateRecalcularEstado(ssrv.getSrvc().getId());
+    }
 }
