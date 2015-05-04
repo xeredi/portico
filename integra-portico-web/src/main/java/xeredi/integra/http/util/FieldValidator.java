@@ -18,7 +18,10 @@ import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.comun.vo.Versionable;
 import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
+import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TramiteTipoDatoVO;
 
 import com.google.common.base.Preconditions;
 
@@ -59,6 +62,42 @@ public final class FieldValidator {
      */
     public static void validateRequired(final @NotNull BaseAction action, final MessageI18nKey fieldName,
             final Object fieldValue, final boolean required) {
+        if (required) {
+            validateRequired(action, fieldName, fieldValue);
+        }
+    }
+
+    /**
+     * Validate required.
+     *
+     * @param action
+     *            the action
+     * @param fieldName
+     *            the field name
+     * @param fieldValue
+     *            the field value
+     */
+    public static void validateRequired(final @NotNull BaseAction action, final @NotNull String fieldName,
+            final ItemVO fieldValue) {
+        if (fieldValue == null || fieldValue.getId() == null) {
+            action.addActionError(MessageI18nKey.E00001, fieldName);
+        }
+    }
+
+    /**
+     * Validate required.
+     *
+     * @param action
+     *            the action
+     * @param fieldName
+     *            the field name
+     * @param fieldValue
+     *            the field value
+     * @param required
+     *            the required
+     */
+    public static void validateRequired(final @NotNull BaseAction action, final @NotNull String fieldName,
+            final ItemVO fieldValue, final boolean required) {
         if (required) {
             validateRequired(action, fieldName, fieldValue);
         }
@@ -243,6 +282,75 @@ public final class FieldValidator {
                         throw new Error("Tipo de dato no soportado: " + entd.getTpdt().getTipoElemento()
                                 + " en la entidad: " + entiDetail.getEnti().getNombre() + " y tipo de dato: "
                                 + entd.getTpdt().getNombre());
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Validate trmt.
+     *
+     * @param action
+     *            the action
+     * @param entiDetail
+     *            the enti detail
+     * @param trmtDetail
+     *            the trmt detail
+     * @param itemVO
+     *            the item vo
+     */
+    public static void validateTrmt(final @NotNull BaseAction action,
+            final @NotNull AbstractEntidadDetailVO entiDetail, final @NotNull TramiteDetailVO trmtDetail,
+            final @NotNull ItemVO itemVO) {
+        if (trmtDetail.getTpdtList() != null) {
+            final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
+
+            for (final Long tpdtId : trmtDetail.getTpdtList()) {
+                final TramiteTipoDatoVO trtd = trmtDetail.getTrtdMap().get(tpdtId);
+                final ItemDatoVO itdtVO = itdtMap == null ? null : itdtMap.get(tpdtId);
+                final String fieldname = action.getText("entd_" + trtd.getEntd().getId());
+                final TipoDatoVO tpdt = entiDetail.getEntdMap().get(tpdtId).getTpdt();
+
+                validateRequired(action, fieldname, itdtVO, trtd.isObligatorio());
+
+                if (itdtVO != null) {
+                    itdtVO.setTpdtId(tpdtId);
+                    switch (tpdt.getTipoElemento()) {
+                    case BO:
+                    case NE:
+                        validateRequired(action, fieldname, itdtVO.getCantidadEntera(), trtd.isObligatorio());
+
+                        break;
+                    case ND:
+                        validateRequired(action, fieldname, itdtVO.getCantidadDecimal(), trtd.isObligatorio());
+
+                        break;
+                    case PR:
+                        validateRequired(action, fieldname, itdtVO.getPrmt(), trtd.isObligatorio());
+
+                        break;
+                    case SR:
+                        validateRequired(action, fieldname, itdtVO.getSrvc(), trtd.isObligatorio());
+
+                        break;
+                    case CR:
+                        validateRequired(action, fieldname, itdtVO.getCadena(), trtd.isObligatorio());
+                        validateCR(action, fieldname, itdtVO.getCadena(), tpdt.getCdrfCodeSet());
+
+                        break;
+                    case TX:
+                        validateRequired(action, fieldname, itdtVO.getCadena(), trtd.isObligatorio());
+
+                        break;
+                    case FE:
+                    case FH:
+                        validateRequired(action, fieldname, itdtVO.getFecha(), trtd.isObligatorio());
+
+                        break;
+                    default:
+                        throw new Error("Tipo de dato no soportado: " + tpdt.getTipoElemento() + " en el tramite: "
+                                + trmtDetail.getTrmt().getId() + " y tipo de dato: " + tpdt.getNombre());
                     }
                 }
             }

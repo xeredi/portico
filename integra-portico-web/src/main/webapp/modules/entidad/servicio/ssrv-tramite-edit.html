@@ -11,23 +11,44 @@
             </div>
             <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
                 <label translate="trmt_estado_orig"></label>
-                <p class="form-control-static" ng-bind="vm.trmt.trmt.estadoOrig"></p>
+                <p class="form-control-static"
+                    ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + vm.trmt.trmt.estadoOrig | translate"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
                 <label translate="trmt_estado_dest"></label>
-                <p class="form-control-static" ng-bind="vm.trmt.trmt.estadoDest"></p>
+                <p class="form-control-static"
+                    ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + vm.trmt.trmt.estadoDest | translate"></p>
             </div>
         </div>
+
+        <div class="row" ng-if="vm.enti.enti.temporal">
+            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
+                <label translate="ssrv_fini"></label> <input type="text" class="form-control"
+                    ng-model="vm.item.fini" bs-datepicker />
+            </div>
+            <div class="col-sm-2 col-md-1 form-group-sm">
+                <label>Hora</label> <input type="text" class="form-control" ng-model="vm.item.fini"
+                    bs-timepicker />
+            </div>
+            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
+                <label translate="ssrv_ffin"></label> <input type="text" class="form-control"
+                    ng-model="vm.item.ffin" bs-datepicker />
+            </div>
+            <div class="col-sm-2 col-md-1 form-group-sm">
+                <label>Hora</label> <input type="text" class="form-control" ng-model="vm.item.ffin"
+                    bs-timepicker />
+            </div>
+        </div>
+
+        <div ng-include="'modules/entidad/servicio/fragment/item-tramite-edit-content.html'"></div>
+
+        <div class="btn-group">
+            <button data-ng-click="vm.save()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
+            </button>
+            <button data-ng-click="vm.cancel()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
+            </button>
+        </div>
     </fieldset>
-
-    <div ng-include="'modules/entidad/servicio/fragment/item-tramite-edit-content.html'"></div>
-
-    <div class="btn-group">
-        <button data-ng-click="vm.save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
-        </button>
-        <button data-ng-click="vm.cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
-        </button>
-    </div>
 </form>

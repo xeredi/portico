@@ -37,16 +37,6 @@ angular.module("servicio", [])
 
 .controller("MablTotalesController", MablTotalesController)
 
-.controller("AtraqueAutorizarController", AtraqueAutorizarController)
-
-.controller("AtraqueAnularController", AtraqueAnularController)
-
-.controller("AtraqueIniciarController", AtraqueIniciarController)
-
-.controller("AtraqueFinalizarController", AtraqueFinalizarController)
-
-.controller("AtraqueDenegarController", AtraqueDenegarController)
-
 ;
 
 function config($routeProvider) {
@@ -570,15 +560,12 @@ function SrvcTramiteEditController($http, $location, $routeParams, pageTitleServ
     function save() {
         $http.post("servicio/servicio-tramite-save.action", {
             item : vm.item,
-            trmtId : vm.trmt.id
-        }).success(
-                function(data) {
-                    vm.accion == 'edit' ? setTimeout(function() {
-                        window.history.back();
-                    }, 0) : $location
-                            .path("/servicio/srvc/detail/" + data.model.entiId + "/" + data.model.id)
-                            .replace();
-                });
+            trmtId : vm.trmt.trmt.id
+        }).success(function(data) {
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
+        });
     }
 
     function cancel() {
@@ -594,7 +581,7 @@ function SrvcTramiteEditController($http, $location, $routeParams, pageTitleServ
     }).success(function(data) {
         vm.enti = data.enti;
         vm.item = data.item;
-        vm.item = data.item;
+        vm.trmt = data.trmt;
         vm.prtoId = data.prtoId;
         vm.fechaVigencia = data.fechaVigencia;
         vm.labelValuesMap = data.labelValuesMap;
@@ -801,35 +788,6 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
 
             break;
 
-        case "atra-denegar":
-            $location.path("/servicio/ssrv/atraque-denegar/" + vm.item.srvc.id + "/" + vm.item.id);
-
-            break;
-        case "atra-autorizar":
-            $location.path("/servicio/ssrv/atraque-autorizar/" + vm.item.srvc.id + "/" + vm.item.id);
-
-            break;
-        case "atra-anular":
-            $location.path("/servicio/ssrv/atraque-anular/" + vm.item.srvc.id + "/" + vm.item.id);
-
-            break;
-        case "atra-iniciar":
-            $location.path("/servicio/ssrv/atraque-iniciar/" + vm.item.srvc.id + "/" + vm.item.id);
-
-            break;
-        case "atra-finalizar":
-            $location.path("/servicio/ssrv/atraque-finalizar/" + vm.item.srvc.id + "/" + vm.item.id);
-
-            break;
-        case "atra-cambiar-muelle":
-            $location.path("/servicio/ssrv/atraque-cambiar-muelle/" + vm.item.srvc.id + "/" + vm.item.id);
-
-            break;
-        case "atra-autorizar-fprevio":
-            $location.path("/servicio/ssrv/atraque-autorizar-fprevio/" + vm.item.srvc.id + "/" + vm.item.id);
-
-            break;
-
         default:
             alert(accName);
 
@@ -899,15 +857,12 @@ function SsrvTramiteEditController($http, $location, $routeParams, pageTitleServ
     function save() {
         $http.post("servicio/subservicio-tramite-save.action", {
             item : vm.item,
-            trmtId : vm.trmt.id
-        }).success(
-                function(data) {
-                    vm.accion == 'edit' ? setTimeout(function() {
-                        window.history.back();
-                    }, 0) : $location.path(
-                            "/servicio/ssrv/detail/" + data.model.entiId + "/" + data.model.srvc.id + "/"
-                                    + data.model.id).replace();
-                });
+            trmtId : vm.trmt.trmt.id
+        }).success(function(data) {
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
+        });
     }
 
     function cancel() {
@@ -965,148 +920,4 @@ function MablTotalesController($http, $routeParams, pageTitleService) {
     });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_verificarTotales");
-}
-
-function AtraqueDenegarController($http, $routeParams, pageTitleService) {
-    var vm = this;
-
-    $http.post("servicio/escala/atraque-denegar-edit.action", {
-        model : {
-            id : $routeParams.ssrvId,
-            srvc : {
-                id : $routeParams.srvcId
-            }
-        }
-    }).success(function(data) {
-        vm.item = data.model;
-        vm.enti = data.enti;
-        vm.entdBuque = data.entdBuque;
-
-        pageTitleService.setTitleEnti(vm.enti.id, "page_atraDenegar");
-    });
-}
-
-function AtraqueAutorizarController($http, $location, $routeParams, pageTitleService) {
-    var vm = this;
-
-    $http.post("servicio/escala/atraque-autorizar-edit.action", {
-        model : {
-            id : $routeParams.ssrvId,
-            srvc : {
-                id : $routeParams.srvcId
-            }
-        }
-    }).success(function(data) {
-        vm.item = data.model;
-        vm.enti = data.enti;
-        vm.entdBuque = data.entdBuque;
-
-        pageTitleService.setTitleEnti(vm.enti.id, "page_atraAutorizar");
-    });
-}
-
-function AtraqueAnularController($http, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.save = save;
-    vm.cancel = cancel;
-
-    function save() {
-        alert('save');
-    }
-
-    function cancel() {
-        window.history.back();
-    }
-
-    $http.post("servicio/escala/atraque-anular-edit.action", {
-        model : {
-            id : $routeParams.ssrvId,
-            srvc : {
-                id : $routeParams.srvcId
-            }
-        }
-    }).success(function(data) {
-        vm.item = data.model;
-        vm.enti = data.enti;
-        vm.entdBuque = data.entdBuque;
-
-        pageTitleService.setTitleEnti(vm.enti.id, "page_atraAnular");
-    });
-}
-
-function AtraqueIniciarController($http, $routeParams, pageTitleService) {
-    var vm = this;
-
-    $http.post("servicio/escala/atraque-iniciar-edit.action", {
-        model : {
-            id : $routeParams.ssrvId,
-            srvc : {
-                id : $routeParams.srvcId
-            }
-        }
-    }).success(function(data) {
-        vm.item = data.model;
-        vm.enti = data.enti;
-        vm.entdBuque = data.entdBuque;
-
-        pageTitleService.setTitleEnti(vm.enti.id, "page_atraIniciar");
-    });
-}
-
-function AtraqueFinalizarController($http, $routeParams, pageTitleService) {
-    var vm = this;
-
-    $http.post("servicio/escala/atraque-finalizar-edit.action", {
-        model : {
-            id : $routeParams.ssrvId,
-            srvc : {
-                id : $routeParams.srvcId
-            }
-        }
-    }).success(function(data) {
-        vm.item = data.model;
-        vm.enti = data.enti;
-        vm.entdBuque = data.entdBuque;
-
-        pageTitleService.setTitleEnti(vm.enti.id, "page_atraFinalizar");
-    });
-}
-
-function AtraqueCambiarMuelleController($scope, $http, $location, $routeParams, pageTitleService) {
-    var vm = this;
-
-    $http.post("servicio/escala/atraque-cambiar-muelle-edit.action", {
-        model : {
-            id : $routeParams.ssrvId,
-            srvc : {
-                id : $routeParams.srvcId
-            }
-        }
-    }).success(function(data) {
-        vm.item = data.model;
-        vm.enti = data.enti;
-        vm.entdBuque = data.entdBuque;
-
-        pageTitleService.setTitleEnti(vm.enti.id, "page_atraCambiarMuelle");
-    });
-}
-
-function AtraqueAutorizarFprevioController($scope, $http, $location, $routeParams, pageTitleService) {
-    var vm = this;
-
-    $http.post("servicio/escala/atraque-autorizar-fprevio-edit.action", {
-        model : {
-            id : $routeParams.ssrvId,
-            srvc : {
-                id : $routeParams.srvcId
-            }
-        }
-    }).success(function(data) {
-        vm.item = data.model;
-        vm.enti = data.enti;
-        vm.entdBuque = data.entdBuque;
-
-        pageTitleService.setTitleEnti(vm.enti.id, "page_atraAutorizarFPrevio");
-    });
 }

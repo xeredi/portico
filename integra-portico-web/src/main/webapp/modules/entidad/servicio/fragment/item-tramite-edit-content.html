@@ -21,23 +21,23 @@
             <option />
         </select> <input ng-switch-when="TX" ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text"
             ng-model="vm.item.itdtMap[tpdtId].cadena" class="form-control" />
-        <textarea ng-switch-when="TX" ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'TA'" rows="4"
+        <textarea ng-switch-when="TX" ng-if="vm.trmt.trtdMap[tpdtId].entd.tpdt.tpht == 'TA'" rows="4"
             ng-model="vm.item.itdtMap[tpdtId].cadena" class="form-control"
             ng-bind="vm.item.itdtMap[tpdtId].cadena"></textarea>
-        <select ng-switch-when="PR" ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'S'"
+        <select ng-switch-when="PR" ng-if="vm.trmt.trtdMap[tpdtId].entd.tpdt.tpht == 'S'"
             ng-model="vm.item.itdtMap[tpdtId].prmt.id"
-            ng-options="labelValue.value as labelValue.label for labelValue in vm.labelValuesMap[vm.enti.entdMap[tpdtId].tpdt.enti.id]"
+            ng-options="labelValue.value as labelValue.label for labelValue in vm.labelValuesMap[vm.trmt.trtdMap[tpdtId].entd.tpdt.enti.id]"
             class="form-control">
             <option />
-        </select> <input ng-switch-when="PR" ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'F'"
-            ng-disabled="vm.enti.entdMap[tpdtId].tpdt.enti.puerto && vm.prtoId == null" class="form-control"
-            ng-controller="PrmtLupaController" type="text" autocomplete="off"
+        </select> <input ng-switch-when="PR" ng-if="vm.trmt.trtdMap[tpdtId].entd.tpdt.tpht == 'F'"
+            ng-disabled="vm.trmt.trtdMap[tpdtId].entd.tpdt.enti.puerto && vm.prtoId == null"
+            class="form-control" ng-controller="PrmtLupaController" type="text" autocomplete="off"
             ng-model="vm.item.itdtMap[tpdtId].prmt"
-            typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue, vm.prtoId, vm.fechaVigencia)"
+            typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.trmt.trtdMap[tpdtId].entd.tpdt.enti.id, $viewValue, vm.prtoId, vm.fechaVigencia)"
             typeahead-editable="false" typeahead-wait-ms="250" class="form-control"> <input
             ng-switch-when="SR" class="form-control" ng-controller="SrvcLupaController" type="text"
             autocomplete="off" ng-model="vm.item.itdtMap[tpdtId].srvc"
-            typeahead="srvc as srvc.etiqueta for srvc in search(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
+            typeahead="srvc as srvc.etiqueta for srvc in search(vm.trmt.trtdMap[tpdtId].entd.tpdt.enti.id, $viewValue)"
             typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
     </div>
 </div>
