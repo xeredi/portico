@@ -105,12 +105,18 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_tramite_srtr TO portico\
 CREATE TABLE tbl_servicio_trmt_dato_srtd (
 	srtd_srtr_pk NUMBER(19) NOT NULL
 	, srtd_tpdt_pk NUMBER(19) NOT NULL
-	, srtd_nentero NUMBER(19)
-	, srtd_ndecimal NUMBER(19)
-	, srtd_fecha TIMESTAMP
-	, srtd_prmt_pk NUMBER(19)
-	, srtd_srvc_pk NUMBER(19)
-	, srtd_cadena VARCHAR2(350)
+	, srtd_o_nentero NUMBER(19)
+	, srtd_o_ndecimal NUMBER(19)
+	, srtd_o_fecha TIMESTAMP
+	, srtd_o_prmt_pk NUMBER(19)
+	, srtd_o_srvc_pk NUMBER(19)
+	, srtd_o_cadena VARCHAR2(350)
+	, srtd_d_nentero NUMBER(19)
+	, srtd_d_ndecimal NUMBER(19)
+	, srtd_d_fecha TIMESTAMP
+	, srtd_d_prmt_pk NUMBER(19)
+	, srtd_d_srvc_pk NUMBER(19)
+	, srtd_d_cadena VARCHAR2(350)
 
 	, CONSTRAINT pk_srtd PRIMARY KEY (srtd_srtr_pk, srtd_tpdt_pk)
 
@@ -118,9 +124,13 @@ CREATE TABLE tbl_servicio_trmt_dato_srtd (
 		REFERENCES tbl_servicio_tramite_srtr (srtr_pk)
 	, CONSTRAINT fk_srtd_tpdt_pk FOREIGN KEY (srtd_tpdt_pk)
 		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
-	, CONSTRAINT fk_srtd_prmt_pk FOREIGN KEY (srtd_prmt_pk)
+	, CONSTRAINT fk_srtd_o_prmt_pk FOREIGN KEY (srtd_o_prmt_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
-	, CONSTRAINT fk_srtd_srvc_pk FOREIGN KEY (srtd_srvc_pk)
+	, CONSTRAINT fk_srtd_d_prmt_pk FOREIGN KEY (srtd_d_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_srtd_o_srvc_pk FOREIGN KEY (srtd_o_srvc_pk)
+		REFERENCES tbl_servicio_srvc (srvc_pk)
+	, CONSTRAINT fk_srtd_d_srvc_pk FOREIGN KEY (srtd_d_srvc_pk)
 		REFERENCES tbl_servicio_srvc (srvc_pk)
 )\
 
@@ -151,12 +161,18 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_subservicio_tramite_sstr TO portico\
 CREATE TABLE tbl_subservicio_trmt_dato_sstd (
 	sstd_sstr_pk NUMBER(19) NOT NULL
 	, sstd_tpdt_pk NUMBER(19) NOT NULL
-	, sstd_nentero NUMBER(19)
-	, sstd_ndecimal NUMBER(19)
-	, sstd_fecha TIMESTAMP
-	, sstd_prmt_pk NUMBER(19)
-	, sstd_srvc_pk NUMBER(19)
-	, sstd_cadena VARCHAR2(350)
+	, sstd_o_nentero NUMBER(19)
+	, sstd_o_ndecimal NUMBER(19)
+	, sstd_o_fecha TIMESTAMP
+	, sstd_o_prmt_pk NUMBER(19)
+	, sstd_o_srvc_pk NUMBER(19)
+	, sstd_o_cadena VARCHAR2(350)
+	, sstd_d_nentero NUMBER(19)
+	, sstd_d_ndecimal NUMBER(19)
+	, sstd_d_fecha TIMESTAMP
+	, sstd_d_prmt_pk NUMBER(19)
+	, sstd_d_srvc_pk NUMBER(19)
+	, sstd_d_cadena VARCHAR2(350)
 
 	, CONSTRAINT pk_sstd PRIMARY KEY (sstd_sstr_pk, sstd_tpdt_pk)
 
@@ -164,9 +180,13 @@ CREATE TABLE tbl_subservicio_trmt_dato_sstd (
 		REFERENCES tbl_subservicio_tramite_sstr (sstr_pk)
 	, CONSTRAINT fk_sstd_tpdt_pk FOREIGN KEY (sstd_tpdt_pk)
 		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
-	, CONSTRAINT fk_sstd_prmt_pk FOREIGN KEY (sstd_prmt_pk)
+	, CONSTRAINT fk_sstd_o_prmt_pk FOREIGN KEY (sstd_o_prmt_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
-	, CONSTRAINT fk_sstd_srvc_pk FOREIGN KEY (sstd_srvc_pk)
+	, CONSTRAINT fk_sstd_d_prmt_pk FOREIGN KEY (sstd_d_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_sstd_o_srvc_pk FOREIGN KEY (sstd_o_srvc_pk)
+		REFERENCES tbl_servicio_srvc (srvc_pk)
+	, CONSTRAINT fk_sstd_d_srvc_pk FOREIGN KEY (sstd_d_srvc_pk)
 		REFERENCES tbl_servicio_srvc (srvc_pk)
 )\
 

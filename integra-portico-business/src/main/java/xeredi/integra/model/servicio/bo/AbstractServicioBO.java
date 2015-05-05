@@ -20,6 +20,7 @@ import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.ItemTramiteDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
@@ -32,6 +33,7 @@ import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.dao.ServicioDatoDAO;
 import xeredi.integra.model.servicio.dao.ServicioSecuenciaDAO;
 import xeredi.integra.model.servicio.dao.ServicioTramiteDAO;
+import xeredi.integra.model.servicio.dao.ServicioTramiteDatoDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.SubservicioSubservicioDAO;
@@ -469,10 +471,6 @@ public abstract class AbstractServicioBO implements ServicioBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final IgBO igBO = new IgBO();
 
-            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
-            final ServicioTramiteDAO srtrDAO = session.getMapper(ServicioTramiteDAO.class);
-
             final TramiteDetailVO trmtDetail = TramiteProxy.select(trmtId);
 
             final ServicioTramiteVO srtr = new ServicioTramiteVO();
@@ -482,17 +480,37 @@ public abstract class AbstractServicioBO implements ServicioBO {
             srtr.setTrmt(trmtDetail.getTrmt());
             srtr.setFecha(Calendar.getInstance().getTime());
 
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+
             if (srvcDAO.updateEstado(srtr) == 0) {
                 throw new InstanceNotFoundException(srvc.getEntiId(), srvc.getId());
             }
 
+            final ServicioTramiteDAO srtrDAO = session.getMapper(ServicioTramiteDAO.class);
+
             srtrDAO.insert(srtr);
+
+            final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
+            final ServicioTramiteDatoDAO srtdDAO = session.getMapper(ServicioTramiteDatoDAO.class);
+
+            // FIXME Recuperar los datos actuales del servicio
 
             for (final Long tpdtId : trmtDetail.getTpdtList()) {
                 final ItemDatoVO itdt = srvc.getItdtMap().get(tpdtId);
+                final ItemTramiteDatoVO itemTrdt = new ItemTramiteDatoVO();
+
+                itemTrdt.setIttrId(srtr.getId());
+                itemTrdt.setTpdtId(itdt.getTpdtId());
+                itemTrdt.setDnentero(itdt.getCantidadEntera());
+                itemTrdt.setDndecimal(itdt.getCantidadDecimal());
+                itemTrdt.setDcadena(itdt.getCadena());
+                itemTrdt.setDprmt(itdt.getPrmt());
+                itemTrdt.setDsrvc(itdt.getSrvc());
 
                 itdt.setItemId(srvc.getId());
+
                 srdtDAO.update(itdt);
+                srtdDAO.insert(itemTrdt);
             }
 
             statechangePostOperations(session, srvc, trmtDetail);
@@ -504,10 +522,14 @@ public abstract class AbstractServicioBO implements ServicioBO {
     /**
      * Statechange post operations.
      *
-     * @param session            the session
-     * @param srvc            the srvc
-     * @param trmtDetail the trmt detail
-     * @throws ModelException             the model exception
+     * @param session
+     *            the session
+     * @param srvc
+     *            the srvc
+     * @param trmtDetail
+     *            the trmt detail
+     * @throws ModelException
+     *             the model exception
      */
     protected abstract void statechangePostOperations(final SqlSession session, final ServicioVO srvc,
             final TramiteDetailVO trmtDetail) throws ModelException;

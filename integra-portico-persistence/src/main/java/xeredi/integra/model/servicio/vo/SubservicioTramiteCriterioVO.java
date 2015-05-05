@@ -1,37 +1,15 @@
 package xeredi.integra.model.servicio.vo;
 
-import xeredi.integra.model.comun.vo.BaseCriterioVO;
+import xeredi.integra.model.comun.vo.ItemTramiteCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class SubservicioTramiteCriterioVO.
  */
-public final class SubservicioTramiteCriterioVO extends BaseCriterioVO {
-
-    /** The id. */
-    private Long id;
+public final class SubservicioTramiteCriterioVO extends ItemTramiteCriterioVO {
 
     /** The ssrv id. */
     private Long ssrvId;
-
-    /**
-     * Gets the id.
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Sets the id.
-     *
-     * @param value
-     *            the new id
-     */
-    public void setId(final Long value) {
-        id = value;
-    }
 
     /**
      * Gets the ssrv id.

@@ -20,6 +20,7 @@ import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.ItemTramiteDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
@@ -28,6 +29,7 @@ import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.SubservicioSubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioTramiteDAO;
+import xeredi.integra.model.servicio.dao.SubservicioTramiteDatoDAO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
@@ -412,7 +414,6 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
             }
 
             // Alta del tramite
-            final SubservicioTramiteDAO sstrDAO = session.getMapper(SubservicioTramiteDAO.class);
             final TramiteDetailVO trmtDetail = TramiteProxy.select(trmtId);
             final SubservicioTramiteVO sstr = new SubservicioTramiteVO();
 
@@ -425,16 +426,31 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
                 throw new InstanceNotFoundException(ssrv.getEntiId(), ssrv.getId());
             }
 
+            final SubservicioTramiteDAO sstrDAO = session.getMapper(SubservicioTramiteDAO.class);
+
             sstrDAO.insert(sstr);
 
             // Modificacion de los datos del subservicio introducidos en el tramite (si los hay)
             final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+            final SubservicioTramiteDatoDAO sstdDAO = session.getMapper(SubservicioTramiteDatoDAO.class);
 
+            // FIXME Recuperar los datos actuales del subservicio
             for (final Long tpdtId : trmtDetail.getTpdtList()) {
                 final ItemDatoVO itdt = ssrv.getItdtMap().get(tpdtId);
+                final ItemTramiteDatoVO itemTrdt = new ItemTramiteDatoVO();
+
+                itemTrdt.setIttrId(sstr.getId());
+                itemTrdt.setTpdtId(itdt.getTpdtId());
+                itemTrdt.setDnentero(itdt.getCantidadEntera());
+                itemTrdt.setDndecimal(itdt.getCantidadDecimal());
+                itemTrdt.setDcadena(itdt.getCadena());
+                itemTrdt.setDprmt(itdt.getPrmt());
+                itemTrdt.setDsrvc(itdt.getSrvc());
 
                 itdt.setItemId(ssrv.getId());
+
                 ssdtDAO.update(itdt);
+                sstdDAO.insert(itemTrdt);
             }
 
             statechangePostOperations(session, ssrv, trmtDetail);

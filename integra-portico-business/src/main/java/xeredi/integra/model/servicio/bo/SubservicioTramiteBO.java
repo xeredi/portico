@@ -8,8 +8,10 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.ItemTramiteDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.servicio.dao.SubservicioTramiteDAO;
+import xeredi.integra.model.servicio.dao.SubservicioTramiteDatoDAO;
 import xeredi.integra.model.servicio.vo.SubservicioTramiteCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -43,6 +45,12 @@ public final class SubservicioTramiteBO {
 
             if (sstr == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.sstr, id);
+            }
+
+            final SubservicioTramiteDatoDAO sstdDAO = session.getMapper(SubservicioTramiteDatoDAO.class);
+
+            for (final ItemTramiteDatoVO itdt : sstdDAO.selectList(sstrCriterio)) {
+                sstr.getItdtMap().put(itdt.getTpdtId(), itdt);
             }
 
             return sstr;
