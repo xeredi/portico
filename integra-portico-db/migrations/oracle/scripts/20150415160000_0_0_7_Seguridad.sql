@@ -215,8 +215,10 @@ INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_esta
 
 INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46150, 22011, 'S', 'D')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46150, 'es', 'Denegar')\
+	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46150, 41080, 0)\
 INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46151, 22011, 'C', 'D')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46151, 'es', 'Denegar')\
+	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46151, 41080, 0)\
 
 INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46160, 22011, 'S', 'A')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46160, 'es', 'Anular')\

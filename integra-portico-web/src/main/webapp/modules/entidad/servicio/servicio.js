@@ -708,23 +708,6 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
 
     function ssrvAction(accName) {
         switch (accName) {
-        case "bl-bloquear":
-        case "bl-completar":
-        case "bl-iniciar":
-        case "bl-anular":
-        case "equipamiento-bloquear":
-        case "equipamiento-iniciar":
-        case "equipamiento-anular":
-        case "partida-bloquear":
-        case "partida-iniciar":
-        case "partida-anular":
-            $http.post("servicio/manifiesto/" + accName + ".action", {
-                model : vm.item
-            }).success(function(data) {
-                loadData(vm.item.id, vm.item.entiId);
-            });
-
-            break;
         case "mabl-totales":
             $location.path("/servicio/ssrv/mablTotales/" + vm.item.entiId + "/" + vm.item.srvc.id + "/"
                     + vm.item.id);

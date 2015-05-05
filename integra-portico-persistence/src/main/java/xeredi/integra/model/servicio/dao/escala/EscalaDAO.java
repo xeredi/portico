@@ -1,6 +1,5 @@
 package xeredi.integra.model.servicio.dao.escala;
 
-
 // TODO: Auto-generated Javadoc
 /**
  * The Interface EscalaDAO.
@@ -23,7 +22,7 @@ public interface EscalaDAO {
      *            Identificador del servicio de escala.
      * @return Numero de filas modificadas.
      */
-    int updateEstado(final Long srvcId);
+    int updateRecalcularEstado(final Long srvcId);
 
     /**
      * Modificacion del codigo de exencion de una escala a partir del codigo de exencion de sus atraques.
@@ -78,5 +77,5 @@ public interface EscalaDAO {
      *            Identificador del servicio de escala.
      * @return Numero de filas modificadas.
      */
-    int updateFechaInicioFin(final Long srvcId);
+    int updateRecalcularFechas(final Long srvcId);
 }

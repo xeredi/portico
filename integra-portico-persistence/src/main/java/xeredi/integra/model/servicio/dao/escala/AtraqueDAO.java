@@ -1,66 +1,10 @@
 package xeredi.integra.model.servicio.dao.escala;
 
-
 // TODO: Auto-generated Javadoc
 /**
  * The Interface AtraqueDAO.
  */
 public interface AtraqueDAO {
-
-    /**
-     * Checks if is autorizable.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @return true, if is autorizable
-     */
-    boolean isAutorizable(final Long ssrvId);
-
-    /**
-     * Update autorizar.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @return the int
-     */
-    int updateAutorizar(final Long ssrvId);
-
-    /**
-     * Checks if is denegable.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @return true, if is denegable
-     */
-    boolean isDenegable(final Long ssrvId);
-
-    /**
-     * Update denegar.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @return the int
-     */
-    int updateDenegar(final Long ssrvId);
-
-    /**
-     * Checks if is anulable.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @return true, if is anulable
-     */
-    boolean isAnulable(final Long ssrvId);
-
-    /**
-     * Update anular.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @return the int
-     */
-    int updateAnular(final Long ssrvId);
-
     /**
      * Checks if is iniciable.
      *

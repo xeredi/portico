@@ -38,7 +38,7 @@
     ]]>
     </select>
 
-    <update id="updateEstado" parameterType="Long">
+    <update id="updateRecalcularEstado" parameterType="Long">
     <![CDATA[
 		UPDATE tbl_servicio_srvc SET
 			srvc_estado = (
@@ -47,7 +47,7 @@
 					FROM tbl_subservicio_ssrv
 					WHERE
                         ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
-						AND ssrv_srvc_pk = srvc_pk
+						AND ssrv_srvc_pk = #{value}
 				)
 				SELECT
 					CASE
@@ -83,6 +83,9 @@
 
 						ELSE 'A'
 					END
+				FROM tbl_servicio_srvc
+				WHERE
+					srvc_pk = #{value}
 			)
 		WHERE
 			srvc_pk = #{value}
@@ -459,7 +462,7 @@
     ]]>
     </update>
 
-    <update id="updateFechaInicioFin" parameterType="Long">
+    <update id="updateRecalcularFechas" parameterType="Long">
     <![CDATA[
 		UPDATE tbl_servicio_srvc SET
 			srvc_fini =

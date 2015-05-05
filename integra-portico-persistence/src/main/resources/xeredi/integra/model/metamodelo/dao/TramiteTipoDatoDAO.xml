@@ -85,7 +85,7 @@
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
         <![CDATA[
-        ORDER BY trtd_trmt_pk, trtd_tpdt_pk, entd_enti_pk, entd_grupo, entd_fila, entd_orden
+        ORDER BY trtd_trmt_pk, entd_enti_pk, entd_grupo, entd_fila, entd_orden
         ]]>
 	</select>
 

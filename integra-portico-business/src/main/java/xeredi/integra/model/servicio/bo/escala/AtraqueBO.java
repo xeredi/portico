@@ -3,15 +3,19 @@ package xeredi.integra.model.servicio.bo.escala;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
+import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.servicio.bo.AbstractSubservicioBO;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
@@ -21,6 +25,8 @@ import xeredi.integra.model.servicio.dao.escala.EscalaDAO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -63,204 +69,32 @@ public final class AtraqueBO extends AbstractSubservicioBO {
     }
 
     /**
-     * Checks if is autorizable.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @return true, if is autorizable
+     * {@inheritDoc}
      */
-    public boolean isAutorizable(final Long ssrvId) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession();) {
-            final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
+    @Override
+    protected void statechangePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv,
+            final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
+        Preconditions.checkNotNull(ssrv.getId());
+        Preconditions.checkNotNull(ssrv.getSrvc());
+        Preconditions.checkNotNull(ssrv.getSrvc().getId());
+        Preconditions.checkNotNull(trmtDetail.getTrmt());
+        Preconditions.checkNotNull(trmtDetail.getTrmt().getId());
+        Preconditions.checkNotNull(trmtDetail.getTrmt().getEstadoOrig());
+        Preconditions.checkNotNull(trmtDetail.getTrmt().getEstadoDest());
 
-            return atraDAO.isAutorizable(ssrvId);
+        final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);
+
+        if ("I".equals(trmtDetail.getTrmt().getEstadoOrig()) && !"F".equals(trmtDetail.getTrmt().getEstadoDest())) {
+            // FIXME Decrementar contadores escala
         }
-    }
 
-    /**
-     * Autorizar.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @param itdtMap
-     *            the itdt map
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
-     */
-    public void autorizar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
-            final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
-            final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);
-            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
-
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-
-            ssrvCriterioVO.setId(ssrvId);
-            ssrvCriterioVO.setEntiId(Entidad.ATRAQUE.getId());
-
-            final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
-
-            if (ssrvVO == null) {
-                throw new InstanceNotFoundException(Entidad.ATRAQUE.getId(), ssrvId);
-            }
-
-            if (atraDAO.updateAutorizar(ssrvVO.getId()) == 0) {
-                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_autorizar,
-                        ssrvVO.getId());
-            }
-
-            for (final Long tpdtId : itdtMap.keySet()) {
-                final ItemDatoVO itdtVO = ssrvVO.getItdtMap().get(tpdtId);
-
-                itdtVO.setItemId(ssrvVO.getId());
-                itdtVO.setTpdtId(tpdtId);
-
-                ssdtDAO.update(itdtVO);
-            }
-
-            escaDAO.updateEstado(ssrvVO.getSrvc().getId());
-            escaDAO.updateFechaInicioFin(ssrvVO.getSrvc().getId());
-
-            session.commit();
+        if ("F".equals(trmtDetail.getTrmt().getEstadoDest())) {
+            // FIXME Incrementar contadores escala
         }
-    }
 
-    /**
-     * Checks if is denegable.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @return true, if is denegable
-     */
-    public boolean isDenegable(final Long ssrvId) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession();) {
-            final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
-
-            return atraDAO.isDenegable(ssrvId);
-        }
-    }
-
-    /**
-     * Denegar.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @param itdtMap
-     *            the itdt map
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
-     */
-    public void denegar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
-            final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
-            final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);
-            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
-
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-
-            ssrvCriterioVO.setId(ssrvId);
-            ssrvCriterioVO.setEntiId(Entidad.ATRAQUE.getId());
-
-            final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
-
-            if (ssrvVO == null) {
-                throw new InstanceNotFoundException(Entidad.ATRAQUE.getId(), ssrvId);
-            }
-
-            if (atraDAO.updateDenegar(ssrvVO.getId()) == 0) {
-                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_denegar,
-                        ssrvVO.getId());
-            }
-
-            for (final Long tpdtId : itdtMap.keySet()) {
-                final ItemDatoVO itdtVO = ssrvVO.getItdtMap().get(tpdtId);
-
-                itdtVO.setItemId(ssrvVO.getId());
-                itdtVO.setTpdtId(tpdtId);
-
-                ssdtDAO.update(itdtVO);
-            }
-
-            escaDAO.updateEstado(ssrvVO.getSrvc().getId());
-            escaDAO.updateFechaInicioFin(ssrvVO.getSrvc().getId());
-
-            session.commit();
-        }
-    }
-
-    /**
-     * Checks if is anulable.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @return true, if is anulable
-     */
-    public boolean isAnulable(final Long ssrvId) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession();) {
-            final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
-
-            return atraDAO.isAnulable(ssrvId);
-        }
-    }
-
-    /**
-     * Anular.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @param itdtMap
-     *            the itdt map
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
-     */
-    public void anular(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
-            final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
-            final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);
-            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
-
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-
-            ssrvCriterioVO.setId(ssrvId);
-            ssrvCriterioVO.setEntiId(Entidad.ATRAQUE.getId());
-
-            final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
-
-            if (ssrvVO == null) {
-                throw new InstanceNotFoundException(Entidad.ATRAQUE.getId(), ssrvId);
-            }
-
-            if (atraDAO.updateAnular(ssrvVO.getId()) == 0) {
-                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_anular,
-                        ssrvVO.getId());
-            }
-
-            for (final Long tpdtId : itdtMap.keySet()) {
-                final ItemDatoVO itdtVO = ssrvVO.getItdtMap().get(tpdtId);
-
-                itdtVO.setItemId(ssrvVO.getId());
-                itdtVO.setTpdtId(tpdtId);
-
-                ssdtDAO.update(itdtVO);
-            }
-
-            escaDAO.updateEstado(ssrvVO.getSrvc().getId());
-            escaDAO.updateFechaInicioFin(ssrvVO.getSrvc().getId());
-
-            session.commit();
-        }
+        // FIXME Recalcular estancia escala
+        escaDAO.updateRecalcularEstado(ssrv.getSrvc().getId());
+        escaDAO.updateRecalcularFechas(ssrv.getSrvc().getId());
     }
 
     /**
@@ -291,7 +125,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *             the operacion no permitida exception
      */
     public void iniciar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+            OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
             final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);
@@ -323,8 +157,8 @@ public final class AtraqueBO extends AbstractSubservicioBO {
                 ssdtDAO.update(itdtVO);
             }
 
-            escaDAO.updateEstado(ssrvVO.getSrvc().getId());
-            escaDAO.updateFechaInicioFin(ssrvVO.getSrvc().getId());
+            escaDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
+            escaDAO.updateRecalcularFechas(ssrvVO.getSrvc().getId());
 
             // FIXME Falta actualizar contadores escala, etc
 
@@ -360,7 +194,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *             the operacion no permitida exception
      */
     public void finalizar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+            OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
             final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);
@@ -392,8 +226,8 @@ public final class AtraqueBO extends AbstractSubservicioBO {
                 ssdtDAO.update(itdtVO);
             }
 
-            escaDAO.updateEstado(ssrvVO.getSrvc().getId());
-            escaDAO.updateFechaInicioFin(ssrvVO.getSrvc().getId());
+            escaDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
+            escaDAO.updateRecalcularFechas(ssrvVO.getSrvc().getId());
 
             // FIXME Falta
 

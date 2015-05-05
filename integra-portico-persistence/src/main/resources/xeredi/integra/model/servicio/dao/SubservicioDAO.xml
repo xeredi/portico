@@ -181,7 +181,6 @@
         	ssrv_fini = #{fini}
         	, ssrv_ffin = #{ffin}
         WHERE ssrv_pk = #{id}
-            ssrv_numero, , ssrv_ffin, ssrv_estado
         ]]>
 	</update>
 

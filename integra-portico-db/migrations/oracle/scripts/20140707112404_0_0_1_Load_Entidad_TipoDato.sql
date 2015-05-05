@@ -1611,15 +1611,7 @@ INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_tem
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (21002, 'T', 1, 1, 1, 1, 'MANIFIESTO')\
 INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 21002, 'Manifiesto de Mercancía')\
 INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable, tpsr_tpdt_estado_pk) VALUES (21002, 0, 1, 1, portico.getTipoDato('ESTADO_MAN_MERC'))\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27000, 21002, 1, 'manifiesto-bloquear')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27000, 'Bloquear')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27001, 21002, 2, 'manifiesto-completar')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27001, 'Completar')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27002, 21002, 3, 'manifiesto-iniciar')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27002, 'Iniciar')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27003, 21002, 4, 'manifiesto-anular')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27003, 'Anular')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27004, 21002, 5, 'mani-totales')\
+	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27004, 21002, 1, 'mani-totales')\
 		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27004, 'Verif. Totales')\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (22002, 'S', 1, 1, 1, 1, 'MANIFIESTO_CONSIGNATARIO')\
 INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 22002, 'Consignatario de Manifiesto')\
@@ -1630,36 +1622,16 @@ INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text)
 INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22003, 21002, 0, 0, 1, portico.getTipoDato('ESTADO_BL'))\
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21002, 22003, 2)\
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (22002, 22003, 1)\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27050, 22003, 1, 'bl-bloquear')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27050, 'Bloquear')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27051, 22003, 2, 'bl-completar')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27051, 'Completar')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27052, 22003, 3, 'bl-iniciar')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27052, 'Iniciar')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27053, 22003, 4, 'bl-anular')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27053, 'Anular')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27054, 22003, 5, 'mabl-totales')\
+	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27054, 22003, 1, 'mabl-totales')\
 		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27054, 'Verif. Totales')\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (22004, 'S', 1, 1, 1, 1, 'PARTIDA')\
 INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 22004, 'Partida')\
 INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22004, 21002, 0, 1, 1, portico.getTipoDato('ESTADO_PART'))\
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (22003, 22004, 1)\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27100, 22004, 1, 'partida-bloquear')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27100, 'Bloquear')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27101, 22004, 2, 'partida-iniciar')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27101, 'Iniciar')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27102, 22004, 3, 'partida-anular')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27102, 'Anular')\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (22005, 'S', 1, 1, 1, 1, 'EQUIPAMIENTO')\
 INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 22005, 'Equipamiento')\
 INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22005, 21002, 0, 1, 1, portico.getTipoDato('ESTADO_EQUI'))\
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (22003, 22005, 2)\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27150, 22005, 1, 'equipamiento-bloquear')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27150, 'Bloquear')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27151, 22005, 2, 'equipamiento-iniciar')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27151, 'Iniciar')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27152, 22005, 3, 'equipamiento-anular')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27152, 'Anular')\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (22006, 'S', 1, 1, 1, 1, 'PARTIDA_EQUIPAMIENTO')\
 INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 22006, 'Partida-Equipamiento')\
 INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22006, 21002, 0, 0, 1, NULL)\
@@ -1693,22 +1665,10 @@ INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd
 INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 22011, 'Atraque')\
 INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22011, 21003, 1, 1, 1, 43235)\
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21003, 22011, 1)\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27200, 22011, 1, 'atra-autorizar')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27200, 'Autorizar')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27201, 22011, 2, 'atra-denegar')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27201, 'Denegar')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27202, 22011, 3, 'atra-anular')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27202, 'Anular')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27203, 22011, 4, 'atra-iniciar')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27203, 'Iniciar')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27204, 22011, 5, 'atra-finalizar')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27204, 'Finalizar')\
 	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27205, 22011, 6, 'atra-cambiar-muelle')\
 		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27205, 'C. Muelle')\
 	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27206, 22011, 7, 'atra-autorizar-fprevio')\
 		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27206, 'Aut. F. Previo')\
-	INSERT INTO portico.tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27207, 22011, 8, 'atra-deshacer-estado')\
-		INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27207, 'Des. Estado')\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (22015, 'S', 0, 0, 0, 0, 'ESCALA_CONTADOR')\
 INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 22015, 'Contador de Escala')\
 INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22015, 21003, 0, 0, 1, NULL)\
