@@ -2,7 +2,6 @@ package xeredi.integra.model.servicio.dao;
 
 import java.util.List;
 
-import xeredi.integra.model.servicio.vo.ServicioTramiteVO;
 import xeredi.integra.model.servicio.vo.SubservicioTramiteCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 
@@ -35,7 +34,7 @@ public interface SubservicioTramiteDAO {
      *            the criterio
      * @return the list
      */
-    List<ServicioTramiteVO> selectList(final SubservicioTramiteCriterioVO criterio);
+    List<SubservicioTramiteVO> selectList(final SubservicioTramiteCriterioVO criterio);
 
     /**
      * Delete list.

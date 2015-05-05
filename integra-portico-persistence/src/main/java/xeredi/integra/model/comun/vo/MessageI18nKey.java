@@ -444,7 +444,7 @@ public enum MessageI18nKey {
     /** The ssrv. */
     ssrv,
     /** The srtr. */
-    srtr, srtrList,
+    srtr, srtrList, sstr, sstrList,
     /** The ssrv_tpss. */
     ssrv_tpss,
     /** The ssrv_srvc. */

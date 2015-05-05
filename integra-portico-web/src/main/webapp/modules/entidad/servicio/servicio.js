@@ -655,6 +655,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
             vm.fechaVigencia = data.fechaVigencia;
             vm.item = data.model;
             vm.itemPadresMap = data.itemPadresMap;
+            vm.sstrList = data.sstrList;
 
             vm.itemHijosMap = {};
             vm.entiHijasMap = {};

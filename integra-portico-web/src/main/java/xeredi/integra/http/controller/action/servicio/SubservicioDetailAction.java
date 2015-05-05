@@ -1,6 +1,7 @@
 package xeredi.integra.http.controller.action.servicio;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import xeredi.integra.http.controller.action.item.ItemDetailAction;
@@ -9,7 +10,10 @@ import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBOFactory;
+import xeredi.integra.model.servicio.bo.SubservicioTramiteBO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
+import xeredi.integra.model.servicio.vo.SubservicioTramiteCriterioVO;
+import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -26,6 +30,9 @@ public final class SubservicioDetailAction extends ItemDetailAction<SubservicioV
 
     /** The item padres map. */
     private Map<Long, LabelValueVO> itemPadresMap;
+
+    /** The sstr list. */
+    private List<SubservicioTramiteVO> sstrList;
 
     /**
      * {@inheritDoc}
@@ -55,6 +62,15 @@ public final class SubservicioDetailAction extends ItemDetailAction<SubservicioV
                 }
             }
         }
+
+        if (enti.getEnti().getTpdtEstado() != null) {
+            final SubservicioTramiteBO sstrBO = new SubservicioTramiteBO();
+            final SubservicioTramiteCriterioVO sstrCriterio = new SubservicioTramiteCriterioVO();
+
+            sstrCriterio.setSsrvId(model.getId());
+
+            sstrList = sstrBO.selectList(sstrCriterio);
+        }
     }
 
     /**
@@ -66,4 +82,12 @@ public final class SubservicioDetailAction extends ItemDetailAction<SubservicioV
         return itemPadresMap;
     }
 
+    /**
+     * Gets the sstr list.
+     *
+     * @return the sstr list
+     */
+    public List<SubservicioTramiteVO> getSstrList() {
+        return sstrList;
+    }
 }

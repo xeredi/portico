@@ -64,6 +64,31 @@
     <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
 </fieldset>
 
+</tab> <tab heading="{{'trmtList' | translate}}" active="vm.tabActive[-2]" select="vm.tabSelected(-2)"
+    ng-if="vm.sstrList.length">
+<div class="table-responsive">
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th />
+                <th translate="sstr_fecha"></th>
+                <th translate="trmt_estado_orig"></th>
+                <th translate="trmt_estado_dest"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="sstr in vm.sstrList track by $index">
+                <td><a ng-click="vm.download(arin.id, arin.nombre)"> <span
+                        class="glyphicon glyphicon-save"></span>
+                </a></td>
+                <td ng-bind="sstr.fecha | date: ('format_datetime' | translate)"></td>
+                <td ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + sstr.trmt.estadoOrig | translate"></td>
+                <td ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + sstr.trmt.estadoDest | translate"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 </tab> <tab ng-repeat="entiHijaId in vm.enti.entiHijasList track by $index"
     heading="{{'enti_' + entiHijaId | translate}}" active="vm.tabActive[entiHijaId]"
     select="vm.tabSelected(entiHijaId)">

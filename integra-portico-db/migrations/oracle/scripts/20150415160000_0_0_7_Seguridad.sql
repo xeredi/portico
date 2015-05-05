@@ -102,6 +102,33 @@ CREATE OR REPLACE SYNONYM portico.tbl_servicio_tramite_srtr FOR tbl_servicio_tra
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_tramite_srtr TO portico\
 
 
+CREATE TABLE tbl_servicio_trmt_dato_srtd (
+	srtd_srtr_pk NUMBER(19) NOT NULL
+	, srtd_tpdt_pk NUMBER(19) NOT NULL
+	, srtd_nentero NUMBER(19)
+	, srtd_ndecimal NUMBER(19)
+	, srtd_fecha TIMESTAMP
+	, srtd_prmt_pk NUMBER(19)
+	, srtd_srvc_pk NUMBER(19)
+	, srtd_cadena VARCHAR2(350)
+
+	, CONSTRAINT pk_srtd PRIMARY KEY (srtd_srtr_pk, srtd_tpdt_pk)
+
+	, CONSTRAINT fk_srtd_srtr_pk FOREIGN KEY (srtd_srtr_pk)
+		REFERENCES tbl_servicio_tramite_srtr (srtr_pk)
+	, CONSTRAINT fk_srtd_tpdt_pk FOREIGN KEY (srtd_tpdt_pk)
+		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
+	, CONSTRAINT fk_srtd_prmt_pk FOREIGN KEY (srtd_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_srtd_srvc_pk FOREIGN KEY (srtd_srvc_pk)
+		REFERENCES tbl_servicio_srvc (srvc_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_servicio_trmt_dato_srtd FOR tbl_servicio_trmt_dato_srtd\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_trmt_dato_srtd TO portico\
+
+
 CREATE TABLE tbl_subservicio_tramite_sstr (
 	sstr_pk NUMBER(19) NOT NULL
 	, sstr_ssrv_pk NUMBER(19) NOT NULL
@@ -119,6 +146,33 @@ CREATE TABLE tbl_subservicio_tramite_sstr (
 CREATE OR REPLACE SYNONYM portico.tbl_subservicio_tramite_sstr FOR tbl_subservicio_tramite_sstr\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_subservicio_tramite_sstr TO portico\
+
+
+CREATE TABLE tbl_subservicio_trmt_dato_sstd (
+	sstd_sstr_pk NUMBER(19) NOT NULL
+	, sstd_tpdt_pk NUMBER(19) NOT NULL
+	, sstd_nentero NUMBER(19)
+	, sstd_ndecimal NUMBER(19)
+	, sstd_fecha TIMESTAMP
+	, sstd_prmt_pk NUMBER(19)
+	, sstd_srvc_pk NUMBER(19)
+	, sstd_cadena VARCHAR2(350)
+
+	, CONSTRAINT pk_sstd PRIMARY KEY (sstd_sstr_pk, sstd_tpdt_pk)
+
+	, CONSTRAINT fk_sstd_sstr_pk FOREIGN KEY (sstd_sstr_pk)
+		REFERENCES tbl_subservicio_tramite_sstr (sstr_pk)
+	, CONSTRAINT fk_sstd_tpdt_pk FOREIGN KEY (sstd_tpdt_pk)
+		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
+	, CONSTRAINT fk_sstd_prmt_pk FOREIGN KEY (sstd_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_sstd_srvc_pk FOREIGN KEY (sstd_srvc_pk)
+		REFERENCES tbl_servicio_srvc (srvc_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_subservicio_trmt_dato_sstd FOR tbl_subservicio_trmt_dato_sstd\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_subservicio_trmt_dato_sstd TO portico\
 
 
 -- Manifiesto
@@ -259,7 +313,9 @@ INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_esta
 
 DELETE FROM tbl_i18n_i18n WHERE i18n_pref = 'trmt'\
 
+DROP TABLE tbl_subservicio_trmt_dato_sstd\
 DROP TABLE tbl_subservicio_tramite_sstr\
+DROP TABLE tbl_servicio_trmt_dato_srtd\
 DROP TABLE tbl_servicio_tramite_srtr\
 DROP TABLE tbl_tramite_tipo_dato_trtd\
 DROP TABLE tbl_tramite_trmt\
