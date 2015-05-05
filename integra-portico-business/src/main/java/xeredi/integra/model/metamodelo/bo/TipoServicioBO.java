@@ -182,10 +182,8 @@ public final class TipoServicioBO {
     /**
      * Delete.
      *
-     * @param tpsrId
-     *            the tpsr id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @param tpsr the tpsr
+     * @throws InstanceNotFoundException             the instance not found exception
      */
     public void delete(final TipoServicioVO tpsr) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

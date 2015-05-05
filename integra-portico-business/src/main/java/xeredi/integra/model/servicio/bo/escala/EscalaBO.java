@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.ModelException;
+import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.servicio.bo.AbstractServicioBO;
 import xeredi.integra.model.servicio.dao.escala.EscalaDAO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -29,13 +30,13 @@ public final class EscalaBO extends AbstractServicioBO {
 
         final EscalaDAO esclDAO = session.getMapper(EscalaDAO.class);
 
-        esclDAO.updateEstado(srvcVO.getId());
+        esclDAO.updateRecalcularEstado(srvcVO.getId());
         esclDAO.updateEstancia(srvcVO.getId());
         esclDAO.updateExencion(srvcVO.getId());
         esclDAO.updateNavegacionEntrada(srvcVO.getId());
         esclDAO.updateNavegacionSalida(srvcVO.getId());
         esclDAO.updateTipoIva(srvcVO.getId());
-        esclDAO.updateFechaInicioFin(srvcVO.getId());
+        esclDAO.updateRecalcularFechas(srvcVO.getId());
     }
 
     /**
@@ -59,6 +60,15 @@ public final class EscalaBO extends AbstractServicioBO {
      */
     @Override
     protected void deletePostOperations(final SqlSession session, final Long srvcId) throws ModelException {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void statechangePostOperations(final SqlSession session, final ServicioVO srvc,
+            final TramiteDetailVO trmtDetail) throws ModelException {
         // noop
     }
 

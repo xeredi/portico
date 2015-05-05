@@ -91,10 +91,8 @@ public final class EntidadAccionBO {
     /**
      * Delete.
      *
-     * @param id
-     *            the id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @param enac the enac
+     * @throws InstanceNotFoundException             the instance not found exception
      */
     public void delete(final @NonNull EntidadAccionVO enac) throws InstanceNotFoundException {
         Preconditions.checkNotNull(enac.getId());

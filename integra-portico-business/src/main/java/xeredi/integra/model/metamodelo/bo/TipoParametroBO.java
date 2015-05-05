@@ -186,10 +186,8 @@ public final class TipoParametroBO {
     /**
      * Delete.
      *
-     * @param tpprId
-     *            the tppr id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @param tppr the tppr
+     * @throws InstanceNotFoundException             the instance not found exception
      */
     public void delete(final @NonNull TipoParametroVO tppr) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tppr.getId());

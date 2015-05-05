@@ -183,10 +183,8 @@ public final class TipoSubparametroBO {
     /**
      * Delete.
      *
-     * @param tpspId
-     *            the tpsp id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @param tpsp the tpsp
+     * @throws InstanceNotFoundException             the instance not found exception
      */
     public void delete(final @NonNull TipoSubparametroVO tpsp) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpsp.getId());

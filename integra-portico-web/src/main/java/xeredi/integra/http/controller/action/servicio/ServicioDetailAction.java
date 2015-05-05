@@ -11,6 +11,9 @@ import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
+import xeredi.integra.model.servicio.bo.ServicioTramiteBO;
+import xeredi.integra.model.servicio.vo.ServicioTramiteCriterioVO;
+import xeredi.integra.model.servicio.vo.ServicioTramiteVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -24,6 +27,9 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
 
     /** The arin list. */
     private List<ArchivoInfoVO> arinList;
+
+    /** The srtr list. */
+    private List<ServicioTramiteVO> srtrList;
 
     /**
      * {@inheritDoc}
@@ -43,6 +49,16 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
         archCriterio.setSrvcId(model.getId());
 
         arinList = archBO.selectList(archCriterio);
+
+        if (enti.getEnti().getTpdtEstado() != null) {
+            final ServicioTramiteBO srtrBO = new ServicioTramiteBO();
+            final ServicioTramiteCriterioVO srtrCriterio = new ServicioTramiteCriterioVO();
+
+            srtrCriterio.setSrvcId(model.getId());
+            srtrCriterio.setIdioma(idioma);
+
+            srtrList = srtrBO.selectList(srtrCriterio);
+        }
     }
 
     /**
@@ -52,5 +68,14 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
      */
     public List<ArchivoInfoVO> getArinList() {
         return arinList;
+    }
+
+    /**
+     * Gets the srtr list.
+     *
+     * @return the srtr list
+     */
+    public List<ServicioTramiteVO> getSrtrList() {
+        return srtrList;
     }
 }

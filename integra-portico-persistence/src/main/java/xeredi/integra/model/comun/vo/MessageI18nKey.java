@@ -441,8 +441,10 @@ public enum MessageI18nKey {
     srvc_fref,
     /** The srvc_estado. */
     srvc_estado,
-    /** The ssrv_tpss. */
+    /** The ssrv. */
     ssrv,
+    /** The srtr. */
+    srtr, srtrList,
     /** The ssrv_tpss. */
     ssrv_tpss,
     /** The ssrv_srvc. */

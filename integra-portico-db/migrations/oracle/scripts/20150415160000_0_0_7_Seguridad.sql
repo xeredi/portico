@@ -227,9 +227,18 @@ INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_esta
 
 INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46170, 22011, 'C', 'I')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46170, 'es', 'Iniciar')\
+	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 41040, 1)\
+	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 41041, 1)\
+	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 45180, 1)\
+	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 45380, 1)\
+	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 43120, 1)\
+	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 41042, 1)\
+	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 41043, 1)\
+	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 45000, 1)\
 
 INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46180, 22011, 'I', 'F')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46180, 'es', 'Finalizar')\
+	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46180, 41100, 1)\
 
 INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46190, 22011, 'C', 'S')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46190, 'es', 'Des. Estado')\

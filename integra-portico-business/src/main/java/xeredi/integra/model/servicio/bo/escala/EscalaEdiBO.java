@@ -142,13 +142,13 @@ public final class EscalaEdiBO {
             }
 
             // Operaciones especificas de escala
-            esclDAO.updateEstado(esclVO.getId());
+            esclDAO.updateRecalcularEstado(esclVO.getId());
             esclDAO.updateEstancia(esclVO.getId());
             esclDAO.updateExencion(esclVO.getId());
             esclDAO.updateNavegacionEntrada(esclVO.getId());
             esclDAO.updateNavegacionSalida(esclVO.getId());
             esclDAO.updateTipoIva(esclVO.getId());
-            esclDAO.updateFechaInicioFin(esclVO.getId());
+            esclDAO.updateRecalcularFechas(esclVO.getId());
 
             session.commit();
         }

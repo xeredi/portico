@@ -357,6 +357,7 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
             vm.prtoId = data.model.prto.id;
             vm.fechaVigencia = data.fechaVigencia;
             vm.arinList = data.arinList;
+            vm.srtrList = data.srtrList;
 
             vm.entiHijasMap = {};
             vm.itemHijosMap = {};

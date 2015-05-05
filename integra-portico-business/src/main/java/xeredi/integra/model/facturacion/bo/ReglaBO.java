@@ -162,10 +162,8 @@ public class ReglaBO {
     /**
      * Delete.
      *
-     * @param rglvId
-     *            the rglv id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @param rgla the rgla
+     * @throws InstanceNotFoundException             the instance not found exception
      */
     public void delete(final @NonNull ReglaVO rgla) throws InstanceNotFoundException {
         Preconditions.checkNotNull(rgla.getVersion());

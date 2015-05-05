@@ -85,10 +85,8 @@ public final class EntidadGrupoDatoBO {
     /**
      * Delete.
      *
-     * @param id
-     *            the id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @param engd the engd
+     * @throws InstanceNotFoundException             the instance not found exception
      */
     public void delete(final EntidadGrupoDatoVO engd) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

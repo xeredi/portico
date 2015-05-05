@@ -388,12 +388,9 @@ public class ProcesoBO {
     /**
      * Select prmn list.
      *
-     * @param prbtId
-     *            the prbt id
-     * @param offset
-     *            the offset
-     * @param limit
-     *            the limit
+     * @param criterio the criterio
+     * @param offset            the offset
+     * @param limit            the limit
      * @return the paginated list
      */
     public PaginatedList<ProcesoMensajeVO> selectPrmnList(final ProcesoMensajeCriterioVO criterio, final int offset,

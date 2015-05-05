@@ -33,8 +33,8 @@ public interface PeriodoProcesoDAO {
     /**
      * Delete.
      *
-     * @param peprId
-     *            the pepr id
+     * @param pepr
+     *            the pepr
      * @return the int
      */
     int delete(final PeriodoProcesoVO pepr);

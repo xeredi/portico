@@ -504,14 +504,10 @@ public abstract class AbstractServicioBO implements ServicioBO {
     /**
      * Statechange post operations.
      *
-     * @param session
-     *            the session
-     * @param srvc
-     *            the srvc
-     * @param trmtId
-     *            the trmt id
-     * @throws ModelException
-     *             the model exception
+     * @param session            the session
+     * @param srvc            the srvc
+     * @param trmtDetail the trmt detail
+     * @throws ModelException             the model exception
      */
     protected abstract void statechangePostOperations(final SqlSession session, final ServicioVO srvc,
             final TramiteDetailVO trmtDetail) throws ModelException;

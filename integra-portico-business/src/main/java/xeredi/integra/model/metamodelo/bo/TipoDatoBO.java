@@ -143,10 +143,8 @@ public final class TipoDatoBO {
     /**
      * Delete.
      *
-     * @param tpdtVO
-     *            the tpdt vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @param tpdt the tpdt
+     * @throws InstanceNotFoundException             the instance not found exception
      */
     public void delete(final @NonNull TipoDatoVO tpdt) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpdt.getId());

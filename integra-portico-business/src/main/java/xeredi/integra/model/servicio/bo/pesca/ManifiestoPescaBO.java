@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.ModelException;
+import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.servicio.bo.AbstractServicioBO;
 import xeredi.integra.model.servicio.dao.pesca.ManifiestoPescaDAO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -55,4 +56,12 @@ public final class ManifiestoPescaBO extends AbstractServicioBO {
         // noop
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void statechangePostOperations(final SqlSession session, final ServicioVO srvc,
+            final TramiteDetailVO trmtDetail) throws ModelException {
+        // noop
+    }
 }

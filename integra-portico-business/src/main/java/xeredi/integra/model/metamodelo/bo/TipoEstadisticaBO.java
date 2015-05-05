@@ -183,10 +183,8 @@ public final class TipoEstadisticaBO {
     /**
      * Delete.
      *
-     * @param tpesId
-     *            the tpes id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @param tpes the tpes
+     * @throws InstanceNotFoundException             the instance not found exception
      */
     public void delete(final @NonNull TipoEstadisticaVO tpes) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpes.getId());
