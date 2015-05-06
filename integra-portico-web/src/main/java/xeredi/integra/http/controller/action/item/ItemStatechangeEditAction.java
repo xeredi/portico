@@ -8,6 +8,7 @@ import java.util.Set;
 
 import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.ItemTramiteVO;
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
@@ -24,12 +25,15 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ItemStatechangeEditAction.
  *
+ * @param <IT>
+ *            the generic type
  * @param <I>
  *            the generic type
  * @param <E>
  *            the element type
  */
-public abstract class ItemStatechangeEditAction<I extends ItemVO, E extends AbstractEntidadDetailVO> extends BaseAction {
+public abstract class ItemStatechangeEditAction<IT extends ItemTramiteVO, I extends ItemVO, E extends AbstractEntidadDetailVO>
+extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3803526996899147874L;
@@ -42,6 +46,9 @@ public abstract class ItemStatechangeEditAction<I extends ItemVO, E extends Abst
 
     /** The item. */
     protected I item;
+
+    /** The ittr. */
+    protected IT ittr;
 
     /** The enti. */
     protected E enti;
@@ -179,5 +186,14 @@ public abstract class ItemStatechangeEditAction<I extends ItemVO, E extends Abst
      */
     public final HashMap<Long, List<LabelValueVO>> getLabelValuesMap() {
         return labelValuesMap;
+    }
+
+    /**
+     * Gets the ittr.
+     *
+     * @return the ittr
+     */
+    public final IT getIttr() {
+        return ittr;
     }
 }

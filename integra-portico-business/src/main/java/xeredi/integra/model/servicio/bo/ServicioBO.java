@@ -2,11 +2,13 @@ package xeredi.integra.model.servicio.bo;
 
 import java.util.List;
 
+import lombok.NonNull;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioLupaCriterioVO;
+import xeredi.integra.model.servicio.vo.ServicioTramiteVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -125,12 +127,10 @@ public interface ServicioBO {
     /**
      * Statechange.
      *
-     * @param srvc
-     *            the srvc
-     * @param trmtId
-     *            the trmt id
+     * @param srtr
+     *            the srtr
      * @throws ModelException
      *             the model exception
      */
-    void statechange(final ServicioVO srvc, final Long trmtId) throws ModelException;
+    void statechange(final @NonNull ServicioTramiteVO srtr) throws ModelException;
 }

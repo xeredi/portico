@@ -14,6 +14,8 @@ import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.ItemTramiteDatoVO;
+import xeredi.integra.model.comun.vo.ItemTramiteVO;
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.comun.vo.Versionable;
@@ -302,50 +304,50 @@ public final class FieldValidator {
      */
     public static void validateTrmt(final @NotNull BaseAction action,
             final @NotNull AbstractEntidadDetailVO entiDetail, final @NotNull TramiteDetailVO trmtDetail,
-            final @NotNull ItemVO itemVO) {
+            final @NotNull ItemTramiteVO ittr) {
         if (trmtDetail.getTpdtList() != null) {
-            final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
+            final Map<Long, ItemTramiteDatoVO> itrdMap = ittr.getItdtMap();
 
             for (final Long tpdtId : trmtDetail.getTpdtList()) {
                 final TramiteTipoDatoVO trtd = trmtDetail.getTrtdMap().get(tpdtId);
-                final ItemDatoVO itdtVO = itdtMap == null ? null : itdtMap.get(tpdtId);
+                final ItemTramiteDatoVO itrd = itrdMap == null ? null : itrdMap.get(tpdtId);
                 final String fieldname = action.getText("entd_" + trtd.getEntd().getId());
                 final TipoDatoVO tpdt = entiDetail.getEntdMap().get(tpdtId).getTpdt();
 
-                validateRequired(action, fieldname, itdtVO, trtd.isObligatorio());
+                validateRequired(action, fieldname, itrd, trtd.isObligatorio());
 
-                if (itdtVO != null) {
-                    itdtVO.setTpdtId(tpdtId);
+                if (itrd != null) {
+                    itrd.setTpdtId(tpdtId);
                     switch (tpdt.getTipoElemento()) {
                     case BO:
                     case NE:
-                        validateRequired(action, fieldname, itdtVO.getCantidadEntera(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, itrd.getDnentero(), trtd.isObligatorio());
 
                         break;
                     case ND:
-                        validateRequired(action, fieldname, itdtVO.getCantidadDecimal(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, itrd.getDndecimal(), trtd.isObligatorio());
 
                         break;
                     case PR:
-                        validateRequired(action, fieldname, itdtVO.getPrmt(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, itrd.getDprmt(), trtd.isObligatorio());
 
                         break;
                     case SR:
-                        validateRequired(action, fieldname, itdtVO.getSrvc(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, itrd.getDsrvc(), trtd.isObligatorio());
 
                         break;
                     case CR:
-                        validateRequired(action, fieldname, itdtVO.getCadena(), trtd.isObligatorio());
-                        validateCR(action, fieldname, itdtVO.getCadena(), tpdt.getCdrfCodeSet());
+                        validateRequired(action, fieldname, itrd.getDcadena(), trtd.isObligatorio());
+                        validateCR(action, fieldname, itrd.getDcadena(), tpdt.getCdrfCodeSet());
 
                         break;
                     case TX:
-                        validateRequired(action, fieldname, itdtVO.getCadena(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, itrd.getDcadena(), trtd.isObligatorio());
 
                         break;
                     case FE:
                     case FH:
-                        validateRequired(action, fieldname, itdtVO.getFecha(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, itrd.getDfecha(), trtd.isObligatorio());
 
                         break;
                     default:

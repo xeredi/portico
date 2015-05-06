@@ -23,6 +23,7 @@ import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.escala.AtraqueDAO;
 import xeredi.integra.model.servicio.dao.escala.EscalaDAO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
+import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
@@ -73,7 +74,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      */
     @Override
     protected void statechangePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv,
-            final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
+            final @NonNull SubservicioTramiteVO sstr, final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
         Preconditions.checkNotNull(ssrv.getId());
         Preconditions.checkNotNull(ssrv.getSrvc());
         Preconditions.checkNotNull(ssrv.getSrvc().getId());

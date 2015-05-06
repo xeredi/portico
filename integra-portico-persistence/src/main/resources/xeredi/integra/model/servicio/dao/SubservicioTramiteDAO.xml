@@ -9,6 +9,10 @@
 		<result column="sstr_pk" property="id" />
 		<result column="sstr_ssrv_pk" property="ssrvId" />
 		<result column="sstr_falta" property="fecha" />
+		<result column="sstr_o_ssrv_fini" property="ossrvFini" />
+		<result column="sstr_o_ssrv_ffin" property="ossrvFfin" />
+		<result column="sstr_d_ssrv_fini" property="dssrvFini" />
+		<result column="sstr_d_ssrv_ffin" property="dssrvFfin" />
 
 		<association property="trmt" javaType="TramiteVO">
 			<result column="sstr_trmt_pk" property="id" />
@@ -20,7 +24,8 @@
 	<sql id="SelectPrefix">
     <![CDATA[
 		SELECT
-			sstr_pk, sstr_ssrv_pk, sstr_falta, sstr_trmt_pk
+			sstr_pk, sstr_ssrv_pk, sstr_falta
+			, sstr_o_ssrv_fini, sstr_o_ssrv_ffin, sstr_d_ssrv_fini, sstr_d_ssrv_ffin, sstr_trmt_pk
 
 			, trmt_estado_orig, trmt_estado_dest
 		FROM
@@ -54,8 +59,10 @@
 
 	<insert id="insert" parameterType="SubservicioTramiteVO">
         <![CDATA[
-        INSERT INTO tbl_subservicio_tramite_sstr (sstr_pk, sstr_ssrv_pk, sstr_trmt_pk, sstr_falta)
-        VALUES (#{id}, #{ssrvId}, #{trmt.id}, #{fecha})
+        INSERT INTO tbl_subservicio_tramite_sstr (sstr_pk, sstr_ssrv_pk, sstr_trmt_pk, sstr_falta
+        	, sstr_o_ssrv_fini, sstr_o_ssrv_ffin, sstr_d_ssrv_fini, sstr_d_ssrv_ffin)
+        VALUES (#{id}, #{ssrvId}, #{trmt.id}, #{fecha}
+        	, #{ossrvFini}, #{ossrvFfin}, #{dssrvFini}, #{dssrvFfin})
         ]]>
 	</insert>
 

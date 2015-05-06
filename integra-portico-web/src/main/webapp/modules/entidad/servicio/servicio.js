@@ -503,8 +503,7 @@ function SrvcTramiteEditController($http, $location, $routeParams, pageTitleServ
 
     function save() {
         $http.post("servicio/servicio-tramite-save.action", {
-            item : vm.item,
-            trmtId : vm.trmt.trmt.id
+            ittr : vm.ittr
         }).success(function(data) {
             setTimeout(function() {
                 window.history.back();
@@ -526,6 +525,7 @@ function SrvcTramiteEditController($http, $location, $routeParams, pageTitleServ
         vm.enti = data.enti;
         vm.item = data.item;
         vm.trmt = data.trmt;
+        vm.ittr = data.ittr;
         vm.prtoId = data.prtoId;
         vm.fechaVigencia = data.fechaVigencia;
         vm.labelValuesMap = data.labelValuesMap;
@@ -784,8 +784,7 @@ function SsrvTramiteEditController($http, $location, $routeParams, pageTitleServ
 
     function save() {
         $http.post("servicio/subservicio-tramite-save.action", {
-            item : vm.item,
-            trmtId : vm.trmt.trmt.id
+            ittr : vm.ittr
         }).success(function(data) {
             setTimeout(function() {
                 window.history.back();
@@ -807,6 +806,7 @@ function SsrvTramiteEditController($http, $location, $routeParams, pageTitleServ
         vm.enti = data.enti;
         vm.item = data.item;
         vm.trmt = data.trmt;
+        vm.ittr = data.ittr;
         vm.prtoId = data.prtoId;
         vm.fechaVigencia = data.fechaVigencia;
         vm.labelValuesMap = data.labelValuesMap;

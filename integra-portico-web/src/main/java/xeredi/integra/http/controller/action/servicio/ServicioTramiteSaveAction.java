@@ -9,13 +9,13 @@ import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteProxy;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
-import xeredi.integra.model.servicio.vo.ServicioVO;
+import xeredi.integra.model.servicio.vo.ServicioTramiteVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServicioTramiteSaveAction.
  */
-public final class ServicioTramiteSaveAction extends ItemStatechangeSaveAction<ServicioVO> {
+public final class ServicioTramiteSaveAction extends ItemStatechangeSaveAction<ServicioTramiteVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 895782322404815962L;
@@ -25,10 +25,10 @@ public final class ServicioTramiteSaveAction extends ItemStatechangeSaveAction<S
      */
     @Override
     public void doValidate() throws ApplicationException {
-        final TramiteDetailVO trmtDetail = TramiteProxy.select(trmtId);
-        final TipoServicioDetailVO tpsrDetail = TipoServicioProxy.select(item.getEntiId());
+        final TramiteDetailVO trmtDetail = TramiteProxy.select(ittr.getTrmt().getId());
+        final TipoServicioDetailVO tpsrDetail = TipoServicioProxy.select(ittr.getTrmt().getEntiId());
 
-        FieldValidator.validateTrmt(this, tpsrDetail, trmtDetail, item);
+        FieldValidator.validateTrmt(this, tpsrDetail, trmtDetail, ittr);
     }
 
     /**
@@ -36,8 +36,8 @@ public final class ServicioTramiteSaveAction extends ItemStatechangeSaveAction<S
      */
     @Override
     public void doStatechangeSave() throws ApplicationException {
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(item.getEntiId());
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(ittr.getTrmt().getEntiId());
 
-        srvcBO.statechange(item, trmtId);
+        srvcBO.statechange(ittr);
     }
 }

@@ -40,15 +40,44 @@
             </div>
         </div>
 
-        <div ng-include="'modules/entidad/servicio/fragment/item-tramite-edit-content.html'"></div>
 
-        <div class="btn-group">
-            <button data-ng-click="vm.save()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
-            </button>
-            <button data-ng-click="vm.cancel()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
-            </button>
+        <div class="row" ng-if="vm.enti.enti.temporal">
+            <label translate="ssrv_fini" class="col-sm-4 col-md-3 col-lg-2 col-xl-1 control-label"></label>
+            <p class="col-sm-4 col-lg-3 form-control-static"
+                ng-bind="vm.ittr.ossrvFini | date: ('format_datetime' | translate)"></p>
+            <div class="col-sm-4 col-lg-3">
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-model="vm.ittr.dssrvFini" bs-datepicker />
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" ng-model="vm.ittr.dssrvFini" bs-timepicker />
+                </div>
+            </div>
         </div>
+
+        <div class="row" ng-if="vm.enti.enti.temporal">
+            <label translate="ssrv_ffin" class="col-sm-4 col-md-3 col-lg-2 col-xl-1 control-label"></label>
+            <p class="col-sm-4 col-lg-3 form-control-static"
+                ng-bind="vm.ittr.ossrvFfin | date: ('format_datetime' | translate)"></p>
+            <div class="col-sm-4 col-lg-3">
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-model="vm.ittr.dssrvFfin" bs-datepicker />
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" ng-model="vm.ittr.dssrvFfin" bs-timepicker />
+                </div>
+            </div>
+        </div>
+
+        <div ng-include="'modules/entidad/servicio/fragment/item-tramite-edit-content.html'"></div>
     </fieldset>
+
+    <div class="btn-group">
+        <button data-ng-click="vm.save()" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
+        </button>
+        <button data-ng-click="vm.cancel()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
+        </button>
+    </div>
 </form>

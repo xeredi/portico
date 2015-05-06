@@ -9,6 +9,7 @@ import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
+import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
@@ -122,12 +123,10 @@ public interface SubservicioBO {
     /**
      * Statechange.
      *
-     * @param ssrv
-     *            the ssrv
-     * @param trmtId
-     *            the trmt id
+     * @param sstr
+     *            the sstr
      * @throws ModelException
      *             the model exception
      */
-    void statechange(final SubservicioVO ssrv, final Long trmtId) throws ModelException;
+    void statechange(final SubservicioTramiteVO sstr) throws ModelException;
 }

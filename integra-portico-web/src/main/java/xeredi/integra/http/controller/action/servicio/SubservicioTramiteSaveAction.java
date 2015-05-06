@@ -10,13 +10,13 @@ import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteProxy;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBOFactory;
-import xeredi.integra.model.servicio.vo.SubservicioVO;
+import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class SubservicioTramiteSaveAction.
  */
-public final class SubservicioTramiteSaveAction extends ItemStatechangeSaveAction<SubservicioVO> {
+public final class SubservicioTramiteSaveAction extends ItemStatechangeSaveAction<SubservicioTramiteVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2510112295462616661L;
@@ -26,15 +26,15 @@ public final class SubservicioTramiteSaveAction extends ItemStatechangeSaveActio
      */
     @Override
     public void doValidate() throws ApplicationException {
-        final TramiteDetailVO trmtDetail = TramiteProxy.select(trmtId);
-        final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(item.getEntiId());
+        final TramiteDetailVO trmtDetail = TramiteProxy.select(ittr.getTrmt().getId());
+        final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(ittr.getTrmt().getEntiId());
 
         if (tpssDetail.getEnti().isTemporal()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.ssrv_fini, item.getFini());
-            FieldValidator.validatePeriod(this, item.getFini(), item.getFfin());
+            FieldValidator.validateRequired(this, MessageI18nKey.ssrv_fini, ittr.getDssrvFini());
+            FieldValidator.validatePeriod(this, ittr.getDssrvFini(), ittr.getDssrvFfin());
         }
 
-        FieldValidator.validateTrmt(this, tpssDetail, trmtDetail, item);
+        FieldValidator.validateTrmt(this, tpssDetail, trmtDetail, ittr);
     }
 
     /**
@@ -42,9 +42,9 @@ public final class SubservicioTramiteSaveAction extends ItemStatechangeSaveActio
      */
     @Override
     public void doStatechangeSave() throws ApplicationException {
-        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(item.getEntiId());
+        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(ittr.getTrmt().getEntiId());
 
-        ssrvBO.statechange(item, trmtId);
+        ssrvBO.statechange(ittr);
     }
 
 }
