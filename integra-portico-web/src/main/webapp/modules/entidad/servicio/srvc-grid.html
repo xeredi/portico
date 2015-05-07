@@ -33,9 +33,9 @@
                 <th class="codigo" nowrap="nowrap" translate="srvc"></th>
                 <th ng-if="vm.enti.enti.tpdtEstado" translate="srvc_estado"></th>
                 <th translate="srvc_falta"></th>
-                <th ng-if="!vm.enti.enti.temporal" translate="srvc_fref"></th>
-                <th ng-if="vm.enti.enti.temporal" translate="srvc_fini"></th>
-                <th ng-if="vm.enti.enti.temporal" translate="srvc_ffin"></th>
+                <th ng-if="!vm.enti.enti.temporal" translate="fref"></th>
+                <th ng-if="vm.enti.enti.temporal" translate="fini"></th>
+                <th ng-if="vm.enti.enti.temporal" translate="ffin"></th>
                 <th ng-repeat="tpdtId in vm.enti.entdList track by $index"
                     ng-if="vm.enti.entdMap[tpdtId].gridable"
                     translate="{{'entd_' + vm.enti.entdMap[tpdtId].id}}"></th>

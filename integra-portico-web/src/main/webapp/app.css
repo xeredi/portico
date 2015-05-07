@@ -7,7 +7,7 @@ body, .tooltip {
 	font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif;
 }
 
-body, label, table, legend, select, .btn, .form-control-static, .form-control, .form-group-sm .form-control,
+body, label, table, legend, .tooltip, .btn, .form-control-static, .form-control, .form-group-sm .form-control,
 	.form-group-sm>.form-control-static {
 	font-size: 11px;
 }
@@ -72,6 +72,10 @@ fieldset {
 
 td span {
 	display: block;
+}
+
+.modal.custom, .modal-dialog {
+	width: 95%;
 }
 
 /*

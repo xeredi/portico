@@ -10,9 +10,8 @@
                     <fieldset>
                         <div class="row">
                             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                                <label translate="ssrv_srvc"></label> <input
-                                    ng-controller="SrvcLupaController" type="text" autocomplete="off"
-                                    ng-model="vm.itemCriterio.srvc"
+                                <label translate="srvc"></label> <input ng-controller="SrvcLupaController"
+                                    type="text" autocomplete="off" ng-model="vm.itemCriterio.srvc"
                                     typeahead="srvc as srvc.etiqueta for srvc in search(vm.enti.tpsrId, $viewValue)"
                                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                             </div>

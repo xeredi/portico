@@ -25,7 +25,7 @@
 <fieldset>
     <div class="row">
         <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-            <label translate="ssrv_srvc"></label>
+            <label translate="srvc"></label>
             <p class="form-control-static">
                 <a ng-href="#/servicio/srvc/detail/{{vm.enti.enti.tpsrId}}/{{vm.item.srvc.id}}"
                     ng-bind="vm.item.srvc.etiqueta"></a>
@@ -43,12 +43,12 @@
         </div>
 
         <div ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
-            <label translate>ssrv_fini</label>
+            <label translate>fini</label>
             <p class="form-control-static" ng-bind="vm.item.fini | date: ('format_datetime' | translate)"></p>
         </div>
 
         <div ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
-            <label translate>ssrv_ffin</label>
+            <label translate>ffin</label>
             <p class="form-control-static" ng-bind="vm.item.ffin | date: ('format_datetime' | translate)"></p>
         </div>
 

@@ -29,11 +29,11 @@
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th class="codigo" nowrap="nowrap" translate="ssrv_srvc"></th>
+                <th class="codigo" nowrap="nowrap" translate="srvc"></th>
                 <th class="codigo" nowrap="nowrap" translate="ssrv_numero"></th>
                 <th ng-if="vm.enti.enti.tpdtEstado" translate>ssrv_estado</th>
-                <th ng-if="vm.enti.enti.temporal" translate>ssrv_fini</th>
-                <th ng-if="vm.enti.enti.temporal" translate>ssrv_ffin</th>
+                <th ng-if="vm.enti.enti.temporal" translate>fini</th>
+                <th ng-if="vm.enti.enti.temporal" translate>ffin</th>
                 <th ng-repeat="tpdtId in vm.enti.entdList" ng-if="vm.enti.entdMap[tpdtId].gridable"
                     ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></th>
             </tr>

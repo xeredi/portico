@@ -48,17 +48,17 @@
         </div>
 
         <div ng-if="!vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
-            <label translate="srvc_fref"></label>
+            <label translate="fref"></label>
             <p class="form-control-static" ng-bind="vm.item.fref | date: ('format_datetime' | translate)"></p>
         </div>
 
         <div ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
-            <label translate="srvc_fini"></label>
+            <label translate="fini"></label>
             <p class="form-control-static" ng-bind="vm.item.fini | date: ('format_datetime' | translate)"></p>
         </div>
 
         <div ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
-            <label translate="srvc_ffin"></label>
+            <label translate="ffin"></label>
             <p class="form-control-static" ng-bind="vm.item.ffin | date: ('format_datetime' | translate)"></p>
         </div>
     </div>
