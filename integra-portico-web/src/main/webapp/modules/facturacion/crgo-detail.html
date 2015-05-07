@@ -12,7 +12,7 @@
 <fieldset>
     <div class="row">
         <div class="col-sm-3 col-md-2 form-group-sm">
-            <label translate>crgo_tpsr</label>
+            <label translate>tpsr</label>
             <p class="form-control-static">
                 <a ng-href="#/metamodelo/tpsr/detail/{{vm.crgo.tpsr.id}}"
                     ng-bind="'enti_' + vm.crgo.tpsr.id | translate"></a>
@@ -46,11 +46,11 @@
 
     <div class="row">
         <div class="col-sm-2 col-md-1 form-group-sm">
-            <label translate>crgo_fini</label>
+            <label translate>fini</label>
             <p class="form-control-static" ng-bind="vm.crgo.version.fini | date: ('format_date' | translate)"></p>
         </div>
         <div class="col-sm-2 col-md-1 form-group-sm">
-            <label translate>crgo_ffin</label>
+            <label translate>ffin</label>
             <p class="form-control-static" ng-bind="vm.crgo.version.ffin | date: ('format_date' | translate)"></p>
         </div>
     </div>
@@ -74,9 +74,9 @@
                 <th />
                 <th translate>rgla_codigo</th>
                 <th translate>rgla_tipo</th>
-                <th translate>rgla_enti</th>
-                <th translate>rgla_fini</th>
-                <th translate>rgla_ffin</th>
+                <th translate>enti</th>
+                <th translate>fini</th>
+                <th translate>ffin</th>
                 <th translate>rgla_orden</th>
                 <th translate>rgla_valorBase</th>
                 <th translate>rgla_formula</th>

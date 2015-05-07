@@ -193,6 +193,13 @@ INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'sec_c
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'sec_job')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'sec_job', 'Procesos Batch')\
 
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fini')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fini', 'F. Inicio')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'ffin')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ffin', 'F. Fin')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fref')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fref', 'F. Referencia')\
+
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'usro')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'usro', 'Usuario')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'usroList')\

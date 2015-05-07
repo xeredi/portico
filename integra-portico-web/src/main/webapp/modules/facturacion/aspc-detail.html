@@ -13,7 +13,7 @@
 <fieldset>
     <div class="row">
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-            <label translate>aspc_tpsr</label>
+            <label translate>tpsr</label>
             <p class="form-control-static">
                 <a ng-href="#/metamodelo/tpsr/detail/{{vm.aspc.tpsr.id}}"
                     ng-bind="'enti_' + vm.aspc.tpsr.id | translate"></a>
@@ -24,11 +24,11 @@
             <p class="form-control-static" ng-bind="vm.aspc.codigo"></p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate>aspc_fini</label>
+            <label translate>fini</label>
             <p class="form-control-static" ng-bind="vm.aspc.version.fini | date: ('format_date' | translate)"></p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate>aspc_ffin</label>
+            <label translate>ffin</label>
             <p class="form-control-static" ng-bind="vm.aspc.version.ffin | date: ('format_date' | translate)"></p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
@@ -40,188 +40,191 @@
     <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
 </fieldset>
 
-<legend translate="aspc_cList"></legend>
+<fieldset>
+    <legend translate="aspc_cList"></legend>
 
-<div class="table-responsive">
-    <table class="table-bordered table-condensed table-hover table-nonfluid">
-        <thead>
-            <tr>
-                <th />
-                <th translate>aspc_cetiqInfo</th>
-                <th translate>aspc_cpathInfo</th>
-                <th translate>aspc_cgrpInfo</th>
-            </tr>
-        </thead>
+    <div class="table-responsive">
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th />
+                    <th translate>aspc_cetiqInfo</th>
+                    <th translate>aspc_cpathInfo</th>
+                    <th translate>aspc_cgrpInfo</th>
+                </tr>
+            </thead>
 
-        <tbody>
-            <tr ng-if="vm.aspc.version.cetiqInfo1">
-                <td>info1</td>
-                <td ng-bind="vm.aspc.version.cetiqInfo1"></td>
-                <td ng-bind="vm.aspc.version.cpathInfo1"></td>
-                <td><i class="glyphicon glyphicon-{{vm.aspc.version.cgrpInfo1 ? 'ok' : 'remove'}}"></i></td>
-            </tr>
-            <tr ng-if="vm.aspc.version.cetiqInfo2">
-                <td>info2</td>
-                <td ng-bind="vm.aspc.version.cetiqInfo2"></td>
-                <td ng-bind="vm.aspc.version.cpathInfo2"></td>
-                <td><i class="glyphicon glyphicon-{{vm.aspc.version.cgrpInfo2 ? 'ok' : 'remove'}}"></i></td>
-            </tr>
-            <tr ng-if="vm.aspc.version.cetiqInfo3">
-                <td>info3</td>
-                <td ng-bind="vm.aspc.version.cetiqInfo3"></td>
-                <td ng-bind="vm.aspc.version.cpathInfo3"></td>
-                <td><i class="glyphicon glyphicon-{{vm.aspc.version.cgrpInfo3 ? 'ok' : 'remove'}}"></i></td>
-            </tr>
-            <tr ng-if="vm.aspc.version.cetiqInfo4">
-                <td>info4</td>
-                <td ng-bind="vm.aspc.version.cetiqInfo4"></td>
-                <td ng-bind="vm.aspc.version.cpathInfo4"></td>
-                <td><i class="glyphicon glyphicon-{{vm.aspc.version.cgrpInfo4 ? 'ok' : 'remove'}}"></i></td>
-            </tr>
-            <tr ng-if="vm.aspc.version.cetiqInfo5">
-                <td>info5</td>
-                <td ng-bind="vm.aspc.version.cetiqInfo5"></td>
-                <td ng-bind="vm.aspc.version.cpathInfo5"></td>
-                <td><i class="glyphicon glyphicon-{{vm.aspc.version.cgrpInfo5 ? 'ok' : 'remove'}}"></i></td>
-            </tr>
-            <tr ng-if="vm.aspc.version.cetiqInfo6">
-                <td>info6</td>
-                <td ng-bind="vm.aspc.version.cetiqInfo6"></td>
-                <td ng-bind="vm.aspc.version.cpathInfo6"></td>
-                <td><i class="glyphicon glyphicon-{{vm.aspc.version.cgrpInfo6 ? 'ok' : 'remove'}}"></i></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+            <tbody>
+                <tr ng-if="vm.aspc.version.cetiqInfo1">
+                    <td>info1</td>
+                    <td ng-bind="vm.aspc.version.cetiqInfo1"></td>
+                    <td ng-bind="vm.aspc.version.cpathInfo1"></td>
+                    <td><i class="glyphicon glyphicon-{{vm.aspc.version.cgrpInfo1 ? 'ok' : 'remove'}}"></i></td>
+                </tr>
+                <tr ng-if="vm.aspc.version.cetiqInfo2">
+                    <td>info2</td>
+                    <td ng-bind="vm.aspc.version.cetiqInfo2"></td>
+                    <td ng-bind="vm.aspc.version.cpathInfo2"></td>
+                    <td><i class="glyphicon glyphicon-{{vm.aspc.version.cgrpInfo2 ? 'ok' : 'remove'}}"></i></td>
+                </tr>
+                <tr ng-if="vm.aspc.version.cetiqInfo3">
+                    <td>info3</td>
+                    <td ng-bind="vm.aspc.version.cetiqInfo3"></td>
+                    <td ng-bind="vm.aspc.version.cpathInfo3"></td>
+                    <td><i class="glyphicon glyphicon-{{vm.aspc.version.cgrpInfo3 ? 'ok' : 'remove'}}"></i></td>
+                </tr>
+                <tr ng-if="vm.aspc.version.cetiqInfo4">
+                    <td>info4</td>
+                    <td ng-bind="vm.aspc.version.cetiqInfo4"></td>
+                    <td ng-bind="vm.aspc.version.cpathInfo4"></td>
+                    <td><i class="glyphicon glyphicon-{{vm.aspc.version.cgrpInfo4 ? 'ok' : 'remove'}}"></i></td>
+                </tr>
+                <tr ng-if="vm.aspc.version.cetiqInfo5">
+                    <td>info5</td>
+                    <td ng-bind="vm.aspc.version.cetiqInfo5"></td>
+                    <td ng-bind="vm.aspc.version.cpathInfo5"></td>
+                    <td><i class="glyphicon glyphicon-{{vm.aspc.version.cgrpInfo5 ? 'ok' : 'remove'}}"></i></td>
+                </tr>
+                <tr ng-if="vm.aspc.version.cetiqInfo6">
+                    <td>info6</td>
+                    <td ng-bind="vm.aspc.version.cetiqInfo6"></td>
+                    <td ng-bind="vm.aspc.version.cpathInfo6"></td>
+                    <td><i class="glyphicon glyphicon-{{vm.aspc.version.cgrpInfo6 ? 'ok' : 'remove'}}"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>
 
 <fieldset>
-    <div class="row">
-        <div class="col-sm-6 col-md-4 col-lg-3 form-group-sm">
-            <legend translate="aspc_lcList"></legend>
+    <div class="col-sm-6 col-md-4 col-lg-3">
+        <legend translate="aspc_lcList"></legend>
 
-            <div class="table-responsive">
-                <table class="table-bordered table-condensed table-hover table-nonfluid">
-                    <thead>
-                        <tr>
-                            <th />
-                            <th translate>aspc_lsumCuant</th>
-                        </tr>
-                    </thead>
+        <div class="table-responsive">
+            <table class="table-bordered table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th />
+                        <th translate>aspc_lsumCuant</th>
+                    </tr>
+                </thead>
 
-                    <tbody>
-                        <tr>
-                            <td>cuant1</td>
-                            <td><i
-                                class="glyphicon glyphicon-{{vm.aspc.version.lsumCuant1 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>cuant2</td>
-                            <td><i
-                                class="glyphicon glyphicon-{{vm.aspc.version.lsumCuant2 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>cuant3</td>
-                            <td><i
-                                class="glyphicon glyphicon-{{vm.aspc.version.lsumCuant3 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>cuant4</td>
-                            <td><i
-                                class="glyphicon glyphicon-{{vm.aspc.version.lsumCuant4 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>cuant5</td>
-                            <td><i
-                                class="glyphicon glyphicon-{{vm.aspc.version.lsumCuant5 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>cuant6</td>
-                            <td><i
-                                class="glyphicon glyphicon-{{vm.aspc.version.lsumCuant6 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                <tbody>
+                    <tr>
+                        <td>cuant1</td>
+                        <td><i
+                            class="glyphicon glyphicon-{{vm.aspc.version.lsumCuant1 ? 'ok' : 'remove'}}"></i></td>
+                    </tr>
+                    <tr>
+                        <td>cuant2</td>
+                        <td><i
+                            class="glyphicon glyphicon-{{vm.aspc.version.lsumCuant2 ? 'ok' : 'remove'}}"></i></td>
+                    </tr>
+                    <tr>
+                        <td>cuant3</td>
+                        <td><i
+                            class="glyphicon glyphicon-{{vm.aspc.version.lsumCuant3 ? 'ok' : 'remove'}}"></i></td>
+                    </tr>
+                    <tr>
+                        <td>cuant4</td>
+                        <td><i
+                            class="glyphicon glyphicon-{{vm.aspc.version.lsumCuant4 ? 'ok' : 'remove'}}"></i></td>
+                    </tr>
+                    <tr>
+                        <td>cuant5</td>
+                        <td><i
+                            class="glyphicon glyphicon-{{vm.aspc.version.lsumCuant5 ? 'ok' : 'remove'}}"></i></td>
+                    </tr>
+                    <tr>
+                        <td>cuant6</td>
+                        <td><i
+                            class="glyphicon glyphicon-{{vm.aspc.version.lsumCuant6 ? 'ok' : 'remove'}}"></i></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+    </div>
 
-        <div class="col-sm-6 col-md-4 col-lg-3 form-group-sm">
-            <legend translate="aspc_liList"></legend>
+    <div class="col-sm-6 col-md-4 col-lg-3">
+        <legend translate="aspc_liList"></legend>
 
-            <div class="table-responsive">
-                <table class="table-bordered table-condensed table-hover table-nonfluid">
-                    <thead>
-                        <tr>
-                            <th />
-                            <th translate>aspc_lgrpInfo</th>
-                        </tr>
-                    </thead>
+        <div class="table-responsive">
+            <table class="table-bordered table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th />
+                        <th translate>aspc_lgrpInfo</th>
+                    </tr>
+                </thead>
 
-                    <tbody>
-                        <tr>
-                            <td>info1</td>
-                            <td><i
-                                class="glyphicon glyphicon-{{vm.aspc.version.lgrpInfo1 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>info2</td>
-                            <td><i
-                                class="glyphicon glyphicon-{{vm.aspc.version.lgrpInfo2 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>info3</td>
-                            <td><i
-                                class="glyphicon glyphicon-{{vm.aspc.version.lgrpInfo3 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>info4</td>
-                            <td><i
-                                class="glyphicon glyphicon-{{vm.aspc.version.lgrpInfo4 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>info5</td>
-                            <td><i
-                                class="glyphicon glyphicon-{{vm.aspc.version.lgrpInfo5 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>info6</td>
-                            <td><i
-                                class="glyphicon glyphicon-{{vm.aspc.version.lgrpInfo6 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                <tbody>
+                    <tr>
+                        <td>info1</td>
+                        <td><i
+                            class="glyphicon glyphicon-{{vm.aspc.version.lgrpInfo1 ? 'ok' : 'remove'}}"></i></td>
+                    </tr>
+                    <tr>
+                        <td>info2</td>
+                        <td><i
+                            class="glyphicon glyphicon-{{vm.aspc.version.lgrpInfo2 ? 'ok' : 'remove'}}"></i></td>
+                    </tr>
+                    <tr>
+                        <td>info3</td>
+                        <td><i
+                            class="glyphicon glyphicon-{{vm.aspc.version.lgrpInfo3 ? 'ok' : 'remove'}}"></i></td>
+                    </tr>
+                    <tr>
+                        <td>info4</td>
+                        <td><i
+                            class="glyphicon glyphicon-{{vm.aspc.version.lgrpInfo4 ? 'ok' : 'remove'}}"></i></td>
+                    </tr>
+                    <tr>
+                        <td>info5</td>
+                        <td><i
+                            class="glyphicon glyphicon-{{vm.aspc.version.lgrpInfo5 ? 'ok' : 'remove'}}"></i></td>
+                    </tr>
+                    <tr>
+                        <td>info6</td>
+                        <td><i
+                            class="glyphicon glyphicon-{{vm.aspc.version.lgrpInfo6 ? 'ok' : 'remove'}}"></i></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </fieldset>
 
-<legend translate="aspc_ascrList"></legend>
+<fieldset>
+    <legend translate="ascrList"></legend>
 
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/facturacion/ascr/edit/create/{{vm.aspc.id}}/{{vm.fechaVigencia}}"><i
-            class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default"
+                ng-href="#/facturacion/ascr/edit/create/{{vm.aspc.id}}/{{vm.fechaVigencia}}"><i
+                class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+        </div>
     </div>
-</div>
 
-<div class="table-responsive">
-    <table class="table-bordered table-condensed table-hover table-nonfluid">
-        <thead>
-            <tr>
-                <th />
-                <th translate>ascr_crgo</th>
-                <th translate>ascr_fini</th>
-                <th translate>ascr_ffin</th>
-            </tr>
-        </thead>
+    <div class="table-responsive">
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th />
+                    <th translate>crgo</th>
+                    <th translate>fini</th>
+                    <th translate>ffin</th>
+                </tr>
+            </thead>
 
-        <tbody>
-            <tr ng-repeat="ascr in vm.ascrList track by $index">
-                <td><a ng-href="#/facturacion/ascr/detail/{{ascr.id}}/{{vm.fechaVigencia}}"><i
-                        class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="ascr.crgo.etiqueta"></td>
-                <td ng-bind="ascr.version.fini | date: ('format_date' | translate)"></td>
-                <td ng-bind="ascr.version.ffin | date: ('format_date' | translate)"></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+            <tbody>
+                <tr ng-repeat="ascr in vm.ascrList track by $index">
+                    <td><a ng-href="#/facturacion/ascr/detail/{{ascr.id}}/{{vm.fechaVigencia}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
+                    <td ng-bind="ascr.crgo.etiqueta"></td>
+                    <td ng-bind="ascr.version.fini | date: ('format_date' | translate)"></td>
+                    <td ng-bind="ascr.version.ffin | date: ('format_date' | translate)"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>

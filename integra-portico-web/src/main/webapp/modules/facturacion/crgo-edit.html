@@ -2,7 +2,7 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-3 col-md-2 form-group-sm">
-                <label translate>crgo_tpsr</label> <select ng-if="vm.accion == 'create'"
+                <label translate>tpsr</label> <select ng-if="vm.accion == 'create'"
                     ng-model="vm.crgo.tpsr.id"
                     ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in vm.tpsrList"
                     class="form-control">
@@ -45,11 +45,11 @@
 
         <div class="row">
             <div class="col-sm-2 col-md-1 form-group-sm">
-                <label translate>crgo_fini</label><input type="text" class="form-control"
+                <label translate>fini</label><input type="text" class="form-control"
                     ng-model="vm.crgo.version.fini" data-max-date="{{vm.crgo.version.ffin}}" bs-datepicker />
             </div>
             <div class="col-sm-2 col-md-1 form-group-sm">
-                <label translate>crgo_ffin</label><input type="text" class="form-control"
+                <label translate>ffin</label><input type="text" class="form-control"
                     ng-model="vm.crgo.version.ffin" data-min-date="{{vm.crgo.version.fini}}" bs-datepicker />
             </div>
         </div>

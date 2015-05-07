@@ -12,7 +12,7 @@
 <fieldset>
     <div class="row">
         <div class="col-md-2 form-group-sm">
-            <label translate>rgla_crgo</label>
+            <label translate>crgo</label>
             <p class="form-control-static">
                 <a ng-href="#/facturacion/crgo/detail/{{vm.rgla.crgo.id}}/{{vm.fechaVigencia}}"
                     ng-bind="vm.rgla.crgo.etiqueta"></a>
@@ -27,7 +27,7 @@
             <p class="form-control-static" ng-bind="'ReglaTipo_' + vm.rgla.tipo | translate"></p>
         </div>
         <div class="col-md-2 form-group-sm">
-            <label translate>rgla_enti</label>
+            <label translate>enti</label>
             <p class="form-control-static">
                 <a ng-if="vm.rgla.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{vm.rgla.enti.id}}"
                     ng-bind="'enti_' + vm.rgla.enti.id | translate"></a> <a ng-if="vm.rgla.enti.tipo == 'S'"
@@ -36,11 +36,11 @@
             </p>
         </div>
         <div class="col-md-1 form-group-sm">
-            <label translate>rgla_fini</label>
+            <label translate>fini</label>
             <p class="form-control-static" ng-bind="vm.rgla.version.fini | date: ('format_date' | translate)"></p>
         </div>
         <div class="col-md-1 form-group-sm">
-            <label translate>rgla_ffin</label>
+            <label translate>ffin</label>
             <p class="form-control-static" ng-bind="vm.rgla.version.ffin | date: ('format_date' | translate)"></p>
         </div>
         <div class="col-md-1 form-group-sm">
@@ -186,9 +186,9 @@
                     <th />
                     <th translate>rgla_codigo</th>
                     <th translate>rgla_tipo</th>
-                    <th translate>rgla_enti</th>
-                    <th translate>rgin_fini</th>
-                    <th translate>rgin_ffin</th>
+                    <th translate>enti</th>
+                    <th translate>fini</th>
+                    <th translate>ffin</th>
                 </tr>
             </thead>
             <tbody>

@@ -2,7 +2,7 @@
     <fieldset>
         <div class="row">
             <div class="col-md-2 form-group-sm">
-                <label translate>rgla_crgo</label>
+                <label translate>crgo</label>
                 <p class="form-control-static" ng-bind="vm.rgla.crgo.etiqueta"></p>
             </div>
             <div class="col-md-1 form-group-sm">
@@ -21,7 +21,7 @@
                     ng-bind="'ReglaTipo_' + vm.rgla.tipo | translate"></p>
             </div>
             <div class="col-md-2 form-group-sm">
-                <label translate>rgla_enti</label> <select ng-if="vm.accion == 'create'"
+                <label translate>enti</label> <select ng-if="vm.accion == 'create'"
                     ng-model="vm.rgla.enti.id"
                     ng-options="item.value as item.label for item in vm.entiFacturableList"
                     class="form-control">
@@ -36,11 +36,11 @@
                 </p>
             </div>
             <div class="col-md-1 form-group-sm">
-                <label translate>rgla_fini</label><input type="text" class="form-control"
+                <label translate>fini</label><input type="text" class="form-control"
                     ng-model="vm.rgla.version.fini" data-max-date="{{vm.rgla.version.ffin}}" bs-datepicker />
             </div>
             <div class="col-md-1 form-group-sm">
-                <label translate>rgla_ffin</label><input type="text" class="form-control"
+                <label translate>ffin</label><input type="text" class="form-control"
                     ng-model="vm.rgla.version.ffin" data-min-date="{{vm.rgla.version.fini}}" bs-datepicker />
             </div>
             <div class="col-md-1 form-group-sm">

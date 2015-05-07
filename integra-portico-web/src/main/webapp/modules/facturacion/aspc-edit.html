@@ -2,8 +2,7 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate>aspc_tpsr</label> <select ng-if="vm.accion == 'create'"
-                    ng-model="vm.aspc.tpsr.id"
+                <label translate>tpsr</label> <select ng-if="vm.accion == 'create'" ng-model="vm.aspc.tpsr.id"
                     ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in vm.tpsrList"
                     class="form-control">
                     <option />
@@ -17,11 +16,11 @@
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.aspc.codigo"></p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>aspc_fini</label><input type="text" class="form-control"
+                <label translate>fini</label><input type="text" class="form-control"
                     ng-model="vm.aspc.version.fini" data-max-date="{{vm.aspc.version.ffin}}" bs-datepicker />
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>aspc_ffin</label><input type="text" class="form-control"
+                <label translate>ffin</label><input type="text" class="form-control"
                     ng-model="vm.aspc.version.ffin" data-min-date="{{vm.aspc.version.fini}}" bs-datepicker />
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
@@ -33,83 +32,87 @@
         <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
     </fieldset>
 
-    <legend ng-bind="'Elementos de Cabecera'"></legend>
+    <fieldset>
+        <div class="col-sm-12 form-group-sm">
+            <legend ng-bind="'Elementos de Cabecera'"></legend>
 
-    <table class="table-condensed table-nonfluid">
-        <thead>
-            <tr>
-                <th class="col-sm-1" />
-                <th class="col-sm-4 col-md-3 col-lg-2" translate>aspc_cetiqInfo</th>
-                <th class="col-sm-6 col-md-7 col-lg-8" translate>aspc_cpathInfo</th>
-                <th class="col-sm-1" translate>aspc_cgrpInfo</th>
-            </tr>
-        </thead>
+            <table class="table-condensed table-nonfluid">
+                <thead>
+                    <tr>
+                        <th class="col-sm-1" />
+                        <th class="col-sm-4 col-md-3 col-lg-2" translate>aspc_cetiqInfo</th>
+                        <th class="col-sm-6 col-md-7 col-lg-8" translate>aspc_cpathInfo</th>
+                        <th class="col-sm-1" translate>aspc_cgrpInfo</th>
+                    </tr>
+                </thead>
 
-        <tbody>
-            <tr>
-                <td>info1</td>
-                <td><input type="text" ng-model="vm.aspc.version.cetiqInfo1" class="form-control" /></td>
-                <td><input type="text" ng-model="vm.aspc.version.cpathInfo1" class="form-control" /></td>
-                <td><select ng-model="vm.aspc.version.cgrpInfo1"
-                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control">
-                        <option />
-                </select></td>
-            </tr>
-            <tr>
-                <td>info2</td>
-                <td><input type="text" ng-model="vm.aspc.version.cetiqInfo2" class="form-control" /></td>
-                <td><input type="text" ng-model="vm.aspc.version.cpathInfo2" class="form-control" /></td>
-                <td><select ng-model="vm.aspc.version.cgrpInfo2"
-                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control">
-                        <option />
-                </select></td>
-            </tr>
-            <tr>
-                <td>info3</td>
-                <td><input type="text" ng-model="vm.aspc.version.cetiqInfo3" class="form-control" /></td>
-                <td><input type="text" ng-model="vm.aspc.version.cpathInfo3" class="form-control" /></td>
-                <td><select ng-model="vm.aspc.version.cgrpInfo3"
-                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control">
-                        <option />
-                </select></td>
-            </tr>
-            <tr>
-                <td>info4</td>
-                <td><input type="text" ng-model="vm.aspc.version.cetiqInfo4" class="form-control" /></td>
-                <td><input type="text" ng-model="vm.aspc.version.cpathInfo4" class="form-control" /></td>
-                <td><select ng-model="vm.aspc.version.cgrpInfo4"
-                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control">
-                        <option />
-                </select></td>
-            </tr>
-            <tr>
-                <td>info5</td>
-                <td><input type="text" ng-model="vm.aspc.version.cetiqInfo5" class="form-control" /></td>
-                <td><input type="text" ng-model="vm.aspc.version.cpathInfo5" class="form-control" /></td>
-                <td><select ng-model="vm.aspc.version.cgrpInfo5"
-                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control">
-                        <option />
-                </select></td>
-            </tr>
-            <tr>
-                <td>info6</td>
-                <td><input type="text" ng-model="vm.aspc.version.cetiqInfo6" class="form-control" /></td>
-                <td><input type="text" ng-model="vm.aspc.version.cpathInfo6" class="form-control" /></td>
-                <td><select ng-model="vm.aspc.version.cgrpInfo6"
-                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                    class="form-control">
-                        <option />
-                </select></td>
-            </tr>
-        </tbody>
-    </table>
+                <tbody>
+                    <tr>
+                        <td>info1</td>
+                        <td><input type="text" ng-model="vm.aspc.version.cetiqInfo1" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.aspc.version.cpathInfo1" class="form-control" /></td>
+                        <td><select ng-model="vm.aspc.version.cgrpInfo1"
+                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                            class="form-control">
+                                <option />
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>info2</td>
+                        <td><input type="text" ng-model="vm.aspc.version.cetiqInfo2" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.aspc.version.cpathInfo2" class="form-control" /></td>
+                        <td><select ng-model="vm.aspc.version.cgrpInfo2"
+                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                            class="form-control">
+                                <option />
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>info3</td>
+                        <td><input type="text" ng-model="vm.aspc.version.cetiqInfo3" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.aspc.version.cpathInfo3" class="form-control" /></td>
+                        <td><select ng-model="vm.aspc.version.cgrpInfo3"
+                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                            class="form-control">
+                                <option />
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>info4</td>
+                        <td><input type="text" ng-model="vm.aspc.version.cetiqInfo4" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.aspc.version.cpathInfo4" class="form-control" /></td>
+                        <td><select ng-model="vm.aspc.version.cgrpInfo4"
+                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                            class="form-control">
+                                <option />
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>info5</td>
+                        <td><input type="text" ng-model="vm.aspc.version.cetiqInfo5" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.aspc.version.cpathInfo5" class="form-control" /></td>
+                        <td><select ng-model="vm.aspc.version.cgrpInfo5"
+                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                            class="form-control">
+                                <option />
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>info6</td>
+                        <td><input type="text" ng-model="vm.aspc.version.cetiqInfo6" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.aspc.version.cpathInfo6" class="form-control" /></td>
+                        <td><select ng-model="vm.aspc.version.cgrpInfo6"
+                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                            class="form-control">
+                                <option />
+                        </select></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
 
-    <div class="row">
+    <fieldset>
         <div class="col-sm-6 col-md-4 col-lg-3 form-group-sm">
             <legend ng-bind="'Elementos Cuantitativos de Linea'"></legend>
 
@@ -237,7 +240,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </fieldset>
 
     <div class="btn-group">
         <button data-ng-click="vm.save()" class="btn btn-primary">
