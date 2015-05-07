@@ -72,6 +72,7 @@
             <tr>
                 <th />
                 <th translate="sstr_fecha"></th>
+                <th translate="trmt"></th>
                 <th translate="trmt_estado_orig"></th>
                 <th translate="trmt_estado_dest"></th>
             </tr>
@@ -83,6 +84,7 @@
                         class="glyphicon glyphicon-search"></span>
                 </a></td>
                 <td ng-bind="sstr.fecha | date: ('format_datetime' | translate)"></td>
+                <td ng-bind="'trmt_' + sstr.trmt.id | translate"></td>
                 <td ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + sstr.trmt.estadoOrig | translate"></td>
                 <td ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + sstr.trmt.estadoDest | translate"></td>
             </tr>

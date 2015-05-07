@@ -49,6 +49,8 @@ public final class SubservicioTramiteBO {
 
             final SubservicioTramiteDatoDAO sstdDAO = session.getMapper(SubservicioTramiteDatoDAO.class);
 
+            sstrCriterio.setFechaVigencia(sstr.getFref());
+
             for (final ItemTramiteDatoVO itdt : sstdDAO.selectList(sstrCriterio)) {
                 sstr.getItdtMap().put(itdt.getTpdtId(), itdt);
             }

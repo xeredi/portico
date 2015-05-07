@@ -1,9 +1,48 @@
-<br />
-ssrv-tramite-detail.html
+<fieldset ng-cloack>
+    <div class="row">
+        <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
+            <label ng-bind="'enti_' + vm.trmt.trmt.entiId | translate"></label>
+            <p class="form-control-static" ng-bind="vm.item.etiqueta"></p>
+        </div>
+        <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
+            <label translate="trmt"></label>
+            <p class="form-control-static" ng-bind="'trmt_' + vm.trmt.trmt.id | translate"></p>
+        </div>
+        <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
+            <label translate="trmt_fecha"></label>
+            <p class="form-control-static" ng-bind="vm.ittr.fecha | date: ('format_datetime' | translate)"></p>
+        </div>
+    </div>
 
-<br />
-{{vm.ittr}}
-<br />
-{{vm.trmt}}
-<br />
-{{vm.enti}}
+    <table class="table-condensed table-hover">
+        <thead>
+            <tr>
+                <td class="col-sm-4 col-md-3 col-lg-2 col-xl-1"></td>
+                <td class="col-sm-4 col-md-4 col-xl-3"></td>
+                <td class="col-sm-4 col-md-4 col-xl-3"></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th><span translate="ssrv_estado"></span></th>
+                <td><span
+                    ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + vm.trmt.trmt.estadoOrig | translate"></span></td>
+                <td><span
+                    ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + vm.trmt.trmt.estadoDest | translate"></td>
+            </tr>
+            <tr ng-if="vm.enti.enti.temporal">
+                <th><span translate="fini"></span></th>
+                <td><span ng-bind="vm.ittr.ossrvFini | date: ('format_datetime' | translate)"></span></td>
+                <td><span ng-bind="vm.ittr.dssrvFini | date: ('format_datetime' | translate)"></span></td>
+            </tr>
+            <tr ng-if="vm.enti.enti.temporal">
+                <th><span translate="ffin"></span></th>
+                <td><span ng-bind="vm.ittr.ossrvFfin | date: ('format_datetime' | translate)"></span></td>
+                <td><span ng-bind="vm.ittr.dssrvFfin | date: ('format_datetime' | translate)"></span></td>
+            </tr>
+        </tbody>
+
+        <tbody ng-include="'modules/entidad/servicio/fragment/item-tramite-detail-content.html'">
+        </tbody>
+    </table>
+</fieldset>

@@ -9,6 +9,7 @@
 		<result column="srtr_pk" property="id" />
 		<result column="srtr_srvc_pk" property="srvcId" />
 		<result column="srtr_falta" property="fecha" />
+		<result column="srvc_fref" property="fref" />
 
 		<association property="trmt" javaType="TramiteVO">
 			<result column="srtr_trmt_pk" property="id" />
@@ -24,10 +25,14 @@
 			srtr_pk, srtr_srvc_pk, srtr_falta, srtr_trmt_pk
 
 			, trmt_estado_orig, trmt_estado_dest, trmt_enti_pk
+
+			, srvc_fref
 		FROM
 			tbl_servicio_tramite_srtr
 			INNER JOIN tbl_tramite_trmt ON
 				trmt_pk = srtr_trmt_pk
+			INNER JOIN tbl_servicio_srvc ON
+				srvc_pk = srtr_srvc_pk
 	]]>
 	</sql>
 

@@ -49,6 +49,8 @@ public final class ServicioTramiteBO {
 
             final ServicioTramiteDatoDAO srtdDAO = session.getMapper(ServicioTramiteDatoDAO.class);
 
+            srtrCriterio.setFechaVigencia(srtr.getFref());
+
             for (final ItemTramiteDatoVO itdt : srtdDAO.selectList(srtrCriterio)) {
                 srtr.getItdtMap().put(itdt.getTpdtId(), itdt);
             }

@@ -9,6 +9,7 @@
 		<result column="sstr_pk" property="id" />
 		<result column="sstr_ssrv_pk" property="ssrvId" />
 		<result column="sstr_falta" property="fecha" />
+		<result column="srvc_fref" property="fref" />
 		<result column="sstr_o_ssrv_fini" property="ossrvFini" />
 		<result column="sstr_o_ssrv_ffin" property="ossrvFfin" />
 		<result column="sstr_d_ssrv_fini" property="dssrvFini" />
@@ -29,10 +30,16 @@
 			, sstr_o_ssrv_fini, sstr_o_ssrv_ffin, sstr_d_ssrv_fini, sstr_d_ssrv_ffin, sstr_trmt_pk
 
 			, trmt_estado_orig, trmt_estado_dest, trmt_enti_pk
+
+			, srvc_fref
 		FROM
 			tbl_subservicio_tramite_sstr
 			INNER JOIN tbl_tramite_trmt ON
 				trmt_pk = sstr_trmt_pk
+			INNER JOIN tbl_subservicio_ssrv ON
+				ssrv_pk = sstr_ssrv_pk
+			INNER JOIN tbl_servicio_srvc ON
+				srvc_pk = ssrv_srvc_pk
 	]]>
 	</sql>
 

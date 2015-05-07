@@ -23,6 +23,9 @@ public abstract class ItemTramiteVO {
     /** The fecha. */
     private Date fecha;
 
+    /** The fref. */
+    private Date fref;
+
     /** The itdt map. */
     private final Map<Long, ItemTramiteDatoVO> itdtMap;
 
@@ -88,6 +91,25 @@ public abstract class ItemTramiteVO {
      */
     public final Date getFecha() {
         return fecha;
+    }
+
+    /**
+     * Gets the fref.
+     *
+     * @return the fref
+     */
+    public final Date getFref() {
+        return fref;
+    }
+
+    /**
+     * Sets the fref.
+     *
+     * @param value
+     *            the new fref
+     */
+    public final void setFref(final Date value) {
+        fref = value;
     }
 
     /**
