@@ -53,7 +53,7 @@ public final class EntidadTipoDatoSaveAction extends CrudSaveAction<EntidadTipoD
         Preconditions.checkNotNull(model.getEntiId());
 
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.entd_tpdt, model.getTpdt());
+            FieldValidator.validateRequired(this, MessageI18nKey.tpdt, model.getTpdt());
         } else {
             Preconditions.checkNotNull(model.getTpdt());
             Preconditions.checkNotNull(model.getTpdt().getId());

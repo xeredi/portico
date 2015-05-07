@@ -55,8 +55,8 @@ public final class ProcesoXls extends BaseXls {
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_tipo.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_estado.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_falta.name()));
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_fini.name()));
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_ffin.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.fini.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ffin.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_duracion.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_erroresCnt.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_alertasCnt.name()));

@@ -63,20 +63,20 @@ public final class ServicioXls extends BaseXls {
             final HSSFRow rowhead = sheet.createRow(rownum++);
             int i = 0;
 
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_tpsr.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.tpsr.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prto.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_anno.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_numero.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_falta.name()));
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_fref.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.fref.name()));
 
             if (tpsrDetail.getEnti().getTpdtEstado() != null) {
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_estado.name()));
             }
 
             if (tpsrDetail.getEnti().isTemporal()) {
-                setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_fini.name()));
-                setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_ffin.name()));
+                setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.fini.name()));
+                setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ffin.name()));
             }
 
             for (final Long tpdtId : tpsrDetail.getEntdList()) {

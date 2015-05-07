@@ -63,8 +63,8 @@ public final class SubservicioXls extends BaseXls {
             final HSSFRow rowhead = sheet.createRow(rownum++);
             int i = 0;
 
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_tpss.name()));
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_srvc.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.tpss.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_numero.name()));
 
             if (tpssDetail.getEnti().getTpdtEstado() != null) {
@@ -72,8 +72,8 @@ public final class SubservicioXls extends BaseXls {
             }
 
             if (tpssDetail.getEnti().isTemporal()) {
-                setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_fini.name()));
-                setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_ffin.name()));
+                setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.fini.name()));
+                setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ffin.name()));
             }
 
             for (final Long tpdtId : tpssDetail.getEntdList()) {

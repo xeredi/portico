@@ -23,7 +23,7 @@
             <p class="form-control-static">{{'ElementoTipo_' + vm.tpdt.tipoElemento | translate}}</p>
         </div>
         <div ng-if="vm.tpdt.enti.id" class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-            <label translate>tpdt_enti</label>
+            <label translate>enti</label>
             <p class="form-control-static">
                 <a ng-if="vm.tpdt.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{vm.tpdt.enti.id}}"
                     ng-bind="vm.tpdt.enti.nombre"></a><a ng-if="vm.tpdt.enti.tipo == 'S'"

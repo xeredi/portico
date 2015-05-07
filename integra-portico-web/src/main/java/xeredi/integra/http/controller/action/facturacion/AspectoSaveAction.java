@@ -58,7 +58,7 @@ public final class AspectoSaveAction extends CrudSaveAction<AspectoVO> {
     @Override
     public void doValidate() throws ApplicationException {
         if (ACCION_EDICION.create == accion) {
-            FieldValidator.validateRequired(this, MessageI18nKey.aspc_tpsr, model.getTpsr());
+            FieldValidator.validateRequired(this, MessageI18nKey.tpsr, model.getTpsr());
             FieldValidator.validateRequired(this, MessageI18nKey.aspc_codigo, model.getCodigo());
         } else {
             Preconditions.checkNotNull(model.getId());

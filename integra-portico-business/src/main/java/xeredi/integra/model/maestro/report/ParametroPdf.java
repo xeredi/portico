@@ -80,8 +80,8 @@ public final class ParametroPdf extends BasePdf {
 
         try {
             final String tpprLabel = bundle.getString("enti_" + tpprDetail.getEnti().getId());
-            final String prmtFiniLabel = bundle.getString(MessageI18nKey.prmt_fini.name());
-            final String prmtFfinLabel = bundle.getString(MessageI18nKey.prmt_ffin.name());
+            final String prmtFiniLabel = bundle.getString(MessageI18nKey.fini.name());
+            final String prmtFfinLabel = bundle.getString(MessageI18nKey.ffin.name());
 
             final JasperReportBuilder report = DynamicReports.report();
 
@@ -200,8 +200,8 @@ public final class ParametroPdf extends BasePdf {
 
         final String tpspLabel = bundle.getString("enti_" + entiDetail.getEnti().getId());
         final String tpprAsociadoLabel = bundle.getString("enti_" + entiDetail.getEnti().getTpprAsociado().getId());
-        final String sprmFiniLabel = bundle.getString(MessageI18nKey.sprm_fini.name());
-        final String sprmFfinLabel = bundle.getString(MessageI18nKey.sprm_ffin.name());
+        final String sprmFiniLabel = bundle.getString(MessageI18nKey.fini.name());
+        final String sprmFfinLabel = bundle.getString(MessageI18nKey.ffin.name());
 
         final JasperReportBuilder report = DynamicReports.report();
         final List<String> columns = new ArrayList<>();
@@ -216,12 +216,12 @@ public final class ParametroPdf extends BasePdf {
         report.addColumn(DynamicReports.col.column(tpprAsociadoLabel, tpprAsociadoLabel,
                 DynamicReports.type.stringType()).setWidth(4));
 
-        columns.add(MessageI18nKey.sprm_fini.name());
-        columns.add(MessageI18nKey.sprm_ffin.name());
+        columns.add(MessageI18nKey.fini.name());
+        columns.add(MessageI18nKey.ffin.name());
 
-        report.addColumn(DynamicReports.col.column(sprmFiniLabel, MessageI18nKey.sprm_fini.name(),
+        report.addColumn(DynamicReports.col.column(sprmFiniLabel, MessageI18nKey.fini.name(),
                 DynamicReports.type.stringType()).setWidth(2));
-        report.addColumn(DynamicReports.col.column(sprmFfinLabel, MessageI18nKey.sprm_ffin.name(),
+        report.addColumn(DynamicReports.col.column(sprmFfinLabel, MessageI18nKey.ffin.name(),
                 DynamicReports.type.stringType()).setWidth(2));
 
         if (entiDetail.getEntdList() != null) {

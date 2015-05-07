@@ -30,7 +30,7 @@ public final class SubservicioTramiteSaveAction extends ItemStatechangeSaveActio
         final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(ittr.getTrmt().getEntiId());
 
         if (tpssDetail.getEnti().isTemporal()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.ssrv_fini, ittr.getDssrvFini());
+            FieldValidator.validateRequired(this, MessageI18nKey.fini, ittr.getDssrvFini());
             FieldValidator.validatePeriod(this, ittr.getDssrvFini(), ittr.getDssrvFfin());
         }
 

@@ -89,8 +89,18 @@ public enum MessageI18nKey {
     sec_usro,
 
     /** The version_fini. */
-    version_fini, /** The version_ffin. */
+    version_fini,
+    /** The version_ffin. */
     version_ffin,
+
+    // Campos comunes - Fechas
+
+    /** fini. */
+    fini,
+    /** ffin. */
+    ffin,
+    /** The fref. */
+    fref,
 
     /** The usro. */
     usro,
@@ -149,28 +159,14 @@ public enum MessageI18nKey {
     enti_cmdDuplicado,
     /** The enti_max grid. */
     enti_maxGrid,
-    /** The enti_engd list. */
-    enti_engdList,
-    /** The enti_entd list. */
-    enti_entdList,
-    /** The enti_entd grid list. */
-    enti_entdGridList,
     /** The enti_enti padres list. */
     enti_entiPadresList,
     /** The enti_enti hijas list. */
     enti_entiHijasList,
-    /** The enti_enac list. */
-    enti_enacList,
-    /** The enti_enag list. */
-    enti_enagList,
     /** The enti_i18n. */
     enti_i18n,
     /** The enti_temp exp. */
     enti_tempExp,
-    /** The enti_tpdt. */
-    enti_tpdt,
-    /** The enti_tppr. */
-    enti_tppr,
     /** The enti_tppr asociado. */
     enti_tpprAsociado,
     /** The enti_temporal. */
@@ -183,8 +179,6 @@ public enum MessageI18nKey {
     enti_tpdtEstado,
     /** The enti_tpdt nombre. */
     enti_tpdtNombre,
-    /** The enti_tpsr. */
-    enti_tpsr,
     /** The enti_classpath. */
     enti_classpath,
     /** The tppr. */
@@ -211,8 +205,6 @@ public enum MessageI18nKey {
     enac,
     /** The enac list. */
     enacList,
-    /** The enac_enti. */
-    enac_enti,
     /** The enac_path. */
     enac_path,
     /** The enac_etiqueta. */
@@ -223,8 +215,6 @@ public enum MessageI18nKey {
     enag,
     /** The enag list. */
     enagList,
-    /** The enag_enti. */
-    enag_enti,
     /** The enag_path. */
     enag_path,
     /** The enag_etiqueta. */
@@ -245,8 +235,6 @@ public enum MessageI18nKey {
     engd,
     /** The engd list. */
     engdList,
-    /** The engd_enti. */
-    engd_enti,
     /** The engd_numero. */
     engd_numero,
     /** The engd_etiqueta. */
@@ -255,10 +243,6 @@ public enum MessageI18nKey {
     entd,
     /** The entd list. */
     entdList,
-    /** The entd_enti. */
-    entd_enti,
-    /** The entd_tpdt. */
-    entd_tpdt,
     /** The entd_grupo. */
     entd_grupo,
     /** The entd_fila. */
@@ -299,12 +283,8 @@ public enum MessageI18nKey {
     tpdt_nombre,
     /** The tpdt_tpht. */
     tpdt_tpht,
-    /** The tpdt_enti. */
-    tpdt_enti,
     /** The tpdt_tpel. */
     tpdt_tpel,
-    /** The tpdt_cdrf list. */
-    tpdt_cdrfList,
     /** The Html tipo_ t. */
     HtmlTipo_T,
     /** The Html tipo_ s. */
@@ -341,8 +321,6 @@ public enum MessageI18nKey {
     cdrf,
     /** The cdrf list. */
     cdrfList,
-    /** The cdrf_tpdt. */
-    cdrf_tpdt,
     /** The cdrf_valor. */
     cdrf_valor,
     /** The cdrf_orden. */
@@ -353,8 +331,6 @@ public enum MessageI18nKey {
     cmag,
     /** The cmag list. */
     cmagList,
-    /** The cmag_entd. */
-    cmag_entd,
     /** The cmag_agregar. */
     cmag_agregar,
     /** The cmag_nombre. */
@@ -399,18 +375,8 @@ public enum MessageI18nKey {
     prmtList,
     /** The prmt_parametro. */
     prmt_parametro,
-    /** The prmt_fini. */
-    prmt_fini,
-    /** The prmt_ffin. */
-    prmt_ffin,
-    /** The prmt_fvigencia. */
-    prmt_fvigencia,
     /** The sprm. */
     sprm,
-    /** The sprm_fini. */
-    sprm_fini,
-    /** The sprm_ffin. */
-    sprm_ffin,
     /** The srsc. */
     srsc,
     /** The srsc list. */
@@ -423,46 +389,32 @@ public enum MessageI18nKey {
     srvc,
     /** The srvc list. */
     srvcList,
-    /** The srvc_tpsr. */
-    srvc_tpsr,
-    /** The srvc_subp. */
-    srvc_subp,
     /** The srvc_anno. */
     srvc_anno,
     /** The srvc_numero. */
     srvc_numero,
-    /** The srvc_fini. */
-    srvc_fini,
-    /** The srvc_ffin. */
-    srvc_ffin,
     /** The srvc_falta. */
     srvc_falta,
-    /** The srvc_fref. */
-    srvc_fref,
     /** The srvc_estado. */
     srvc_estado,
     /** The ssrv. */
     ssrv,
     /** The srtr. */
-    srtr, srtrList, sstr, sstrList,
-    /** The ssrv_tpss. */
-    ssrv_tpss,
-    /** The ssrv_srvc. */
-    ssrv_srvc,
+    srtr,
+    /** The srtr list. */
+    srtrList,
+    /** The sstr. */
+    sstr,
+    /** The sstr list. */
+    sstrList,
     /** The ssrv_estado. */
     ssrv_estado,
     /** The ssrv_numero. */
     ssrv_numero,
-    /** The ssrv_fini. */
-    ssrv_fini,
-    /** The ssrv_ffin. */
-    ssrv_ffin,
     /** The pepr. */
     pepr,
     /** The pepr list. */
     peprList,
-    /** The pepr_autp. */
-    pepr_autp,
     /** The pepr_anio. */
     pepr_anio,
     /** The pepr_mes. */
@@ -481,12 +433,6 @@ public enum MessageI18nKey {
     estd,
     /** The estd list. */
     estdList,
-    /** The estd_tpes. */
-    estd_tpes,
-    /** The estd_pepr. */
-    estd_pepr,
-    /** The estd_subp. */
-    estd_subp,
     /** The prbt. */
     prbt,
     /** The prbt list. */
@@ -499,10 +445,6 @@ public enum MessageI18nKey {
     prbt_estado,
     /** The prbt_falta. */
     prbt_falta,
-    /** The prbt_fini. */
-    prbt_fini,
-    /** The prbt_ffin. */
-    prbt_ffin,
     /** The prbt_duracion. */
     prbt_duracion,
     /** The prbt_errores cnt. */
@@ -582,12 +524,6 @@ public enum MessageI18nKey {
     aspc_codigo,
     /** The aspc_descripcion. */
     aspc_descripcion,
-    /** The aspc_tpsr. */
-    aspc_tpsr,
-    /** The aspc_fini. */
-    aspc_fini,
-    /** The aspc_ffin. */
-    aspc_ffin,
     /** The aspc_prioridad. */
     aspc_prioridad,
     /** The aspc_cetiq info. */
@@ -664,12 +600,6 @@ public enum MessageI18nKey {
     aspc_fechaVigencia,
     /** The ascr. */
     ascr,
-    /** The ascr_crgo. */
-    ascr_crgo,
-    /** The ascr_fini. */
-    ascr_fini,
-    /** The ascr_ffin. */
-    ascr_ffin,
     /** The crgo. */
     crgo,
     /** The crgo list. */
@@ -678,16 +608,10 @@ public enum MessageI18nKey {
     crgo_codigo,
     /** The crgo_descripcion. */
     crgo_descripcion,
-    /** The crgo_fini. */
-    crgo_fini,
-    /** The crgo_ffin. */
-    crgo_ffin,
     /** The crgo_codigo normalizado. */
     crgo_codigoNormalizado,
     /** The crgo_tipo. */
     crgo_tipo,
-    /** The crgo_tpsr. */
-    crgo_tpsr,
     /** The crgo_principal. */
     crgo_principal,
     /** The crgo_temporal. */
@@ -700,16 +624,8 @@ public enum MessageI18nKey {
     rglaList,
     /** The rgla_codigo. */
     rgla_codigo,
-    /** The rgla_crgo. */
-    rgla_crgo,
     /** The rgla_tipo. */
     rgla_tipo,
-    /** The rgla_enti. */
-    rgla_enti,
-    /** The rgla_fini. */
-    rgla_fini,
-    /** The rgla_ffin. */
-    rgla_ffin,
     /** The rgla_orden. */
     rgla_orden,
     /** The rgla_condicion. */
@@ -786,10 +702,6 @@ public enum MessageI18nKey {
     rgin,
     /** The rgin list. */
     rginList,
-    /** The rgin_fini. */
-    rgin_fini,
-    /** The rgin_ffin. */
-    rgin_ffin,
     /** The rgin_rgla2. */
     rgin_rgla2,
     /** The vlrc. */
@@ -798,10 +710,6 @@ public enum MessageI18nKey {
     vlrcList,
     /** The vlrc_id. */
     vlrc_id,
-    /** The vlrc_srvc. */
-    vlrc_srvc,
-    /** The vlrc_aspc. */
-    vlrc_aspc,
     /** The vlrc_pagador. */
     vlrc_pagador,
     /** The vlrc_importe. */
@@ -812,20 +720,12 @@ public enum MessageI18nKey {
     vlrc_fliq,
     /** The vlrc_falta. */
     vlrc_falta,
-    /** The vlrc_fini. */
-    vlrc_fini,
-    /** The vlrc_ffin. */
-    vlrc_ffin,
-    /** The vlrc_fref. */
-    vlrc_fref,
     /** The vlrc_suj pasivo. */
     vlrc_sujPasivo,
     /** The vlrc_cod exencion. */
     vlrc_codExencion,
     /** The vlrg list. */
     vlrgList,
-    /** The vlrg_crgo. */
-    vlrg_crgo,
     /** The vlrg_importe. */
     vlrg_importe,
     /** The vlri list. */
@@ -842,20 +742,12 @@ public enum MessageI18nKey {
     vlrl,
     /** The vlrl list. */
     vlrlList,
-    /** The vlrl_rgla. */
-    vlrl_rgla,
-    /** The vlrl_rgla_tipo. */
-    vlrl_rgla_tipo,
     /** The vlrl_importe base. */
     vlrl_importeBase,
     /** The vlrl_importe. */
     vlrl_importe,
     /** The vlrl_impuesto. */
     vlrl_impuesto,
-    /** The vlrl_fini. */
-    vlrl_fini,
-    /** The vlrl_ffin. */
-    vlrl_ffin,
     /** The vlrl_vlrd count. */
     vlrl_vlrdCount,
     /** The vlrl_info1. */
@@ -892,12 +784,6 @@ public enum MessageI18nKey {
     vlrd_importeBase,
     /** The vlrd_importe. */
     vlrd_importe,
-    /** The vlrd_ssrv. */
-    vlrd_ssrv,
-    /** The vlrd_fini. */
-    vlrd_fini,
-    /** The vlrd_ffin. */
-    vlrd_ffin,
     /** The vlrd_info1. */
     vlrd_info1,
     /** The vlrd_info2. */
@@ -946,16 +832,10 @@ public enum MessageI18nKey {
     fctrList,
     /** The fctr_ffac. */
     fctr_ffac,
-    /** The fctr_aspc. */
-    fctr_aspc,
     /** The fctr_estado. */
     fctr_estado,
     /** The fctr_suj pasivo. */
     fctr_sujPasivo,
-    /** The fctr_fref. */
-    fctr_fref,
-    /** The fctr_tpsr. */
-    fctr_tpsr,
     /** The fctr_info1. */
     fctr_info1,
     /** The fctr_info2. */
@@ -976,26 +856,12 @@ public enum MessageI18nKey {
     fctr_pagador,
     /** The fctr_falta. */
     fctr_falta,
-    /** The fctr_fini. */
-    fctr_fini,
-    /** The fctr_ffin. */
-    fctr_ffin,
     /** The fcts list. */
     fctsList,
-    /** The fcts_srvc. */
-    fcts_srvc,
-    /** The fcts_fref. */
-    fcts_fref,
-    /** The fcts_fini. */
-    fcts_fini,
-    /** The fcts_ffin. */
-    fcts_ffin,
     /** The fcts_cod exencion. */
     fcts_codExencion,
     /** The fctg list. */
     fctgList,
-    /** The fctg_crgo. */
-    fctg_crgo,
     /** The fctg_importe. */
     fctg_importe,
     /** The fcti list. */
@@ -1012,10 +878,6 @@ public enum MessageI18nKey {
     fctl,
     /** The fctl list. */
     fctlList,
-    /** The fctl_rgla. */
-    fctl_rgla,
-    /** The fctl_rgla_tipo. */
-    fctl_rgla_tipo,
     /** The fctl_importe base. */
     fctl_importeBase,
     /** The fctl_importe. */
@@ -1024,10 +886,6 @@ public enum MessageI18nKey {
     fctl_fctdCount,
     /** The fctl_impuesto. */
     fctl_impuesto,
-    /** The fctl_fini. */
-    fctl_fini,
-    /** The fctl_ffin. */
-    fctl_ffin,
     /** The fctl_info1. */
     fctl_info1,
     /** The fctl_info2. */
@@ -1233,52 +1091,14 @@ public enum MessageI18nKey {
     /** The Configuration value type_ string list. */
     ConfigurationValueType_StringList,
 
-    /** The atra_denegar. */
-    atra_denegar,
-    /** The atra_autorizar. */
-    atra_autorizar,
-    /** The atra_anular. */
-    atra_anular,
-    /** The atra_iniciar. */
-    atra_iniciar,
-    /** The atra_finalizar. */
-    atra_finalizar,
     /** The atra_cambiar muelle. */
     atra_cambiarMuelle,
     /** The atra_autorizar f previo. */
     atra_autorizarFPrevio,
-    /** The mani_completar. */
-    mani_completar,
-    /** The mani_bloquear. */
-    mani_bloquear,
-    /** The mani_iniciar. */
-    mani_iniciar,
-    /** The mani_anular. */
-    mani_anular,
     /** The mani_resumen. */
     mani_resumen,
-    /** The mabl_completar. */
-    mabl_completar,
-    /** The mabl_bloquear. */
-    mabl_bloquear,
-    /** The mabl_iniciar. */
-    mabl_iniciar,
-    /** The mabl_finalizar. */
-    mabl_anular,
     /** The mabl_resumen. */
     mabl_resumen,
-    /** The equi_bloquear. */
-    equi_bloquear,
-    /** The equi_iniciar. */
-    equi_iniciar,
-    /** The equi_anular. */
-    equi_anular,
-    /** The part_bloquear. */
-    part_bloquear,
-    /** The part_iniciar. */
-    part_iniciar,
-    /** The part_anular. */
-    part_anular,
     /** The prbt_cancelar. */
     prbt_cancelar,
     /** The prbt_finalizar. */

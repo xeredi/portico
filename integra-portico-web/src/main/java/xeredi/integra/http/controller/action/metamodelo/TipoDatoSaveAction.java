@@ -60,7 +60,7 @@ public final class TipoDatoSaveAction extends CrudSaveAction<TipoDatoVO> {
         FieldValidator.validateRequired(this, MessageI18nKey.tpdt_tpel, model.getTipoElemento());
 
         if (FieldValidator.isInList(model.getTipoElemento(), TipoElemento.PR, TipoElemento.SR)) {
-            FieldValidator.validateRequired(this, MessageI18nKey.tpdt_enti, model.getEnti());
+            FieldValidator.validateRequired(this, MessageI18nKey.enti, model.getEnti());
         }
 
         FieldValidator.validateI18n(this, i18nMap);

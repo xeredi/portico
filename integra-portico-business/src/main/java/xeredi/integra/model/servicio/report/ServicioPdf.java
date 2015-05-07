@@ -75,10 +75,8 @@ public final class ServicioPdf extends BasePdf {
             rowCells.add(new PdfCell(tpsrDetail.getEnti().getNombre(), srvcVO.getEtiqueta(), 4, TipoElemento.TX));
 
             if (tpsrDetail.getEnti().isTemporal()) {
-                rowCells.add(new PdfCell(MessageI18nKey.srvc_fini.name(), formatDate(srvcVO.getFini()), 4,
-                        TipoElemento.FE));
-                rowCells.add(new PdfCell(MessageI18nKey.srvc_ffin.name(), formatDate(srvcVO.getFfin()), 4,
-                        TipoElemento.FE));
+                rowCells.add(new PdfCell(MessageI18nKey.fini.name(), formatDate(srvcVO.getFini()), 4, TipoElemento.FE));
+                rowCells.add(new PdfCell(MessageI18nKey.ffin.name(), formatDate(srvcVO.getFfin()), 4, TipoElemento.FE));
             }
 
             listCells.add(rowCells);

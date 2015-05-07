@@ -56,6 +56,6 @@ public final class ReglaIncompatibleSaveAction extends CrudSaveAction<ReglaIncom
             Preconditions.checkNotNull(model.getRgla2().getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.rgin_fini, model.getVersion().getFini());
+        FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
     }
 }

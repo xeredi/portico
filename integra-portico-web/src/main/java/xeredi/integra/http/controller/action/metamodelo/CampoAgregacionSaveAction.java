@@ -47,10 +47,10 @@ public final class CampoAgregacionSaveAction extends CrudSaveAction<CampoAgregac
         Preconditions.checkNotNull(model.getTpesId());
 
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.cmag_entd, model.getEntd());
+            FieldValidator.validateRequired(this, MessageI18nKey.entd, model.getEntd());
 
             if (!hasErrors()) {
-                FieldValidator.validateRequired(this, MessageI18nKey.cmag_entd, model.getEntd().getId());
+                FieldValidator.validateRequired(this, MessageI18nKey.entd, model.getEntd().getId());
             }
         } else {
             Preconditions.checkNotNull(model.getEntd());

@@ -39,10 +39,10 @@ public final class ServicioSaveAction extends ItemSaveAction<ServicioVO> {
         }
 
         if (enti.getEnti().isTemporal()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.srvc_fini, model.getFini());
-            FieldValidator.validateRequired(this, MessageI18nKey.srvc_ffin, model.getFfin());
+            FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getFini());
+            FieldValidator.validateRequired(this, MessageI18nKey.ffin, model.getFfin());
         } else {
-            FieldValidator.validateRequired(this, MessageI18nKey.srvc_fref, model.getFref());
+            FieldValidator.validateRequired(this, MessageI18nKey.fref, model.getFref());
         }
 
         FieldValidator.validateItem(this, enti, model);

@@ -52,7 +52,7 @@ public final class CargoSaveAction extends CrudSaveAction<CargoVO> {
     public void doValidate() throws ApplicationException {
         if (ACCION_EDICION.create == accion) {
             FieldValidator.validateRequired(this, MessageI18nKey.crgo_codigo, model.getCodigo());
-            FieldValidator.validateRequired(this, MessageI18nKey.crgo_tpsr, model.getTpsr());
+            FieldValidator.validateRequired(this, MessageI18nKey.tpsr, model.getTpsr());
         } else {
             Preconditions.checkNotNull(model.getId());
         }
@@ -62,7 +62,7 @@ public final class CargoSaveAction extends CrudSaveAction<CargoVO> {
         FieldValidator.validateRequired(this, MessageI18nKey.crgo_tipo, model.getVersion().getTipo());
         FieldValidator.validateRequired(this, MessageI18nKey.crgo_temporal, model.getVersion().getTemporal());
         FieldValidator.validateRequired(this, MessageI18nKey.crgo_principal, model.getVersion().getPrincipal());
-        FieldValidator.validateRequired(this, MessageI18nKey.crgo_fini, model.getVersion().getFini());
+        FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
     }
 
     /**

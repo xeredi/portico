@@ -47,17 +47,17 @@ public final class AspectoCargoSaveAction extends CrudSaveAction<AspectoCargoVO>
         if (accion == ACCION_EDICION.create) {
             Preconditions.checkNotNull(model.getAspcId());
 
-            FieldValidator.validateRequired(this, MessageI18nKey.ascr_crgo, model.getCrgo());
+            FieldValidator.validateRequired(this, MessageI18nKey.crgo, model.getCrgo());
         } else {
             Preconditions.checkNotNull(model.getId());
             Preconditions.checkNotNull(model.getVersion());
             Preconditions.checkNotNull(model.getVersion().getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.ascr_fini, model.getVersion());
+        FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion());
 
         if (!hasErrors()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.ascr_fini, model.getVersion().getFini());
+            FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
         }
     }
 

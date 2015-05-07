@@ -69,8 +69,8 @@ public final class EstadisticaXls extends BaseXls {
             final HSSFRow rowhead = sheet.createRow(rownum++);
             int i = 0;
 
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.estd_tpes.name()));
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.estd_pepr.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.tpes.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.pepr.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prto.name()));
 
             for (final Long tpdtId : tpesDetail.getEntdList()) {

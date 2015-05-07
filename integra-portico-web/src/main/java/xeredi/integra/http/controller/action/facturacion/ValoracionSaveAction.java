@@ -46,10 +46,10 @@ public final class ValoracionSaveAction extends CrudSaveAction<ValoracionVO> {
     public void doValidate() throws ApplicationException {
         switch (accion) {
         case create:
-            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_srvc, model.getSrvc());
-            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_aspc, model.getAspc());
+            FieldValidator.validateRequired(this, MessageI18nKey.srvc, model.getSrvc());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc, model.getAspc());
             FieldValidator.validateRequired(this, MessageI18nKey.vlrc_fliq, model.getFliq());
-            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_fref, model.getFref());
+            FieldValidator.validateRequired(this, MessageI18nKey.fref, model.getFref());
 
             break;
         case edit:

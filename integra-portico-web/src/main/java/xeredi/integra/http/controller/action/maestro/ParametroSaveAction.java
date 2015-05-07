@@ -41,10 +41,10 @@ public final class ParametroSaveAction extends ItemSaveAction<ParametroVO> {
         }
 
         FieldValidator.validateRequired(this, MessageI18nKey.prmt_parametro, model.getParametro());
-        FieldValidator.validateRequired(this, MessageI18nKey.prmt_fini, model.getVersion());
+        FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion());
 
         if (!hasErrors()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.prmt_fini, model.getVersion().getFini());
+            FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
         }
 
         if (enti.getEnti().isI18n()) {

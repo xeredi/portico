@@ -29,7 +29,7 @@ public final class SubservicioSaveAction extends ItemSaveAction<SubservicioVO> {
         final TipoSubservicioDetailVO enti = TipoSubservicioProxy.select(model.getEntiId());
 
         if (accion == ACCION_EDICION.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.ssrv_srvc, model.getSrvc());
+            FieldValidator.validateRequired(this, MessageI18nKey.srvc, model.getSrvc());
             FieldValidator.validateRequired(this, MessageI18nKey.ssrv_numero, model.getNumero());
         } else {
             Preconditions.checkNotNull(model.getId());
@@ -43,8 +43,8 @@ public final class SubservicioSaveAction extends ItemSaveAction<SubservicioVO> {
         }
 
         if (enti.getEnti().isTemporal()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.ssrv_fini, model.getFini());
-            FieldValidator.validateRequired(this, MessageI18nKey.ssrv_ffin, model.getFfin());
+            FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getFini());
+            FieldValidator.validateRequired(this, MessageI18nKey.ffin, model.getFfin());
         }
 
         FieldValidator.validateItem(this, enti, model);

@@ -38,9 +38,9 @@ public final class SubparametroSaveAction extends ItemSaveAction<SubparametroVO>
         }
 
         if (model.getVersion() == null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.sprm_fini, model.getVersion());
+            FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion());
         } else {
-            FieldValidator.validateRequired(this, MessageI18nKey.sprm_fini, model.getVersion().getFini());
+            FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
             FieldValidator.validatePeriod(this, model.getVersion().getFini(), model.getVersion().getFfin());
         }
 

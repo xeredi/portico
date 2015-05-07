@@ -70,7 +70,7 @@ public final class ValoracionPdf extends BasePdf {
      */
     public void imprimir(final ValoracionVO vlrc, final List<ValoracionCargoVO> vlrgList,
             final List<ValoracionImpuestoVO> vlriList, final List<ValoracionLineaVO> vlrlList, final OutputStream stream)
-                    throws InternalErrorException {
+            throws InternalErrorException {
         Preconditions.checkNotNull(vlrc);
         Preconditions.checkNotNull(vlrgList);
         Preconditions.checkNotNull(vlriList);
@@ -189,7 +189,7 @@ public final class ValoracionPdf extends BasePdf {
         final JasperReportBuilder report = DynamicReports.report();
 
         final TextColumnBuilder<String> cargoCol = DynamicReports.col.column(
-                bundle.getString(MessageI18nKey.vlrg_crgo.name()), MessageI18nKey.vlrg_crgo.name(),
+                bundle.getString(MessageI18nKey.crgo.name()), MessageI18nKey.crgo.name(),
                 DynamicReports.type.stringType()).setWidth(10);
         final TextColumnBuilder<BigDecimal> importeCol = DynamicReports.col.column(
                 bundle.getString(MessageI18nKey.vlrg_importe.name()), MessageI18nKey.vlrg_importe.name(),
@@ -201,8 +201,7 @@ public final class ValoracionPdf extends BasePdf {
         report.setColumnTitleStyle(PdfConstants.TH_STYLE);
         report.setColumnStyle(PdfConstants.TD_STYLE);
 
-        final DRDataSource dataSource = new DRDataSource(MessageI18nKey.vlrg_crgo.name(),
-                MessageI18nKey.vlrg_importe.name());
+        final DRDataSource dataSource = new DRDataSource(MessageI18nKey.crgo.name(), MessageI18nKey.vlrg_importe.name());
 
         for (final ValoracionCargoVO vlrg : vlrgList) {
             dataSource.add(vlrg.getCrgo().getEtiqueta(), new BigDecimal(vlrg.getImporte()));
@@ -286,17 +285,18 @@ public final class ValoracionPdf extends BasePdf {
                 .headerWithSubtotal();
 
         final TextColumnBuilder<String> rglaCol = DynamicReports.col.column(
-                bundle.getString(MessageI18nKey.vlrl_rgla.name()), MessageI18nKey.vlrl_rgla.name(),
+                bundle.getString(MessageI18nKey.rgla.name()), MessageI18nKey.rgla.name(),
                 DynamicReports.type.stringType()).setWidth(2);
 
-        final TextColumnBuilder<Double> cuant1Col = DynamicReports.col.column(
-                vlrlPrecio.getRgla().getVersion().getEtiqCuant1() == null ? bundle.getString(MessageI18nKey.vlrl_rgla
-                        .name()) : vlrlPrecio.getRgla().getVersion().getEtiqCuant1(),
-                MessageI18nKey.vlrl_cuant1.name(), DynamicReports.type.doubleType()).setWidth(1);
+        final TextColumnBuilder<Double> cuant1Col = DynamicReports.col
+                .column(vlrlPrecio.getRgla().getVersion().getEtiqCuant1() == null ? bundle.getString(MessageI18nKey.rgla
+                        .name())
+                        : vlrlPrecio.getRgla().getVersion().getEtiqCuant1(), MessageI18nKey.vlrl_cuant1.name(),
+                        DynamicReports.type.doubleType()).setWidth(1);
         final TextColumnBuilder<Double> cuant2Col = DynamicReports.col.column(
                 vlrlPrecio.getRgla().getVersion().getEtiqCuant2() == null ? "" : vlrlPrecio.getRgla().getVersion()
                         .getEtiqCuant2(), MessageI18nKey.vlrl_cuant2.name(), DynamicReports.type.doubleType())
-                        .setWidth(1);
+                .setWidth(1);
         final TextColumnBuilder<Double> cuant3Col = DynamicReports.col.column(
                 bundle.getString(MessageI18nKey.vlrl_cuant3.name()), MessageI18nKey.vlrl_cuant3.name(),
                 DynamicReports.type.doubleType()).setWidth(1);
@@ -327,7 +327,7 @@ public final class ValoracionPdf extends BasePdf {
         report.setColumnTitleStyle(PdfConstants.TH_STYLE);
         report.setColumnStyle(PdfConstants.TD_STYLE);
 
-        final DRDataSource dataSource = new DRDataSource("vlrlPadreId", MessageI18nKey.vlrl_rgla.name(),
+        final DRDataSource dataSource = new DRDataSource("vlrlPadreId", MessageI18nKey.rgla.name(),
                 MessageI18nKey.vlrl_cuant1.name(), MessageI18nKey.vlrl_cuant2.name(),
                 MessageI18nKey.vlrl_cuant3.name(), MessageI18nKey.vlrl_cuant4.name(),
                 MessageI18nKey.vlrl_cuant5.name(), MessageI18nKey.vlrl_cuant6.name(),
@@ -337,7 +337,7 @@ public final class ValoracionPdf extends BasePdf {
             dataSource.add(vlrl.getPadreId().toString(), vlrl.getRgla().getTipo().name() + " - "
                     + vlrl.getRgla().getCodigo(), vlrl.getCuant1(), vlrl.getCuant2(), vlrl.getCuant3(), vlrl
                     .getCuant4(), vlrl.getCuant5(), vlrl.getCuant6(), vlrl.getRgla().getTipo() == ReglaTipo.T ? null
-                            : new BigDecimal(vlrl.getImporteBase()), new BigDecimal(vlrl.getImporte()));
+                    : new BigDecimal(vlrl.getImporteBase()), new BigDecimal(vlrl.getImporte()));
         }
 
         report.setDataSource(dataSource);

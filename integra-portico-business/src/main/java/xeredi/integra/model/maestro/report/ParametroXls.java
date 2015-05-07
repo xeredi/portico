@@ -82,8 +82,8 @@ public final class ParametroXls extends BaseXls {
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.i18n_text.name()));
             }
 
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prmt_fini.name()));
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prmt_ffin.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.fini.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ffin.name()));
 
             if (tpprDetail.getEntdList() != null) {
                 for (final Long tpdtId : tpprDetail.getEntdList()) {
