@@ -20,56 +20,37 @@
                     ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + vm.trmt.trmt.estadoDest | translate"></p>
             </div>
         </div>
+    </fieldset>
 
-        <div class="row" ng-if="vm.enti.enti.temporal">
-            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                <label translate="ssrv_fini"></label> <input type="text" class="form-control"
-                    ng-model="vm.item.fini" bs-datepicker />
-            </div>
-            <div class="col-sm-2 col-md-1 form-group-sm">
-                <label>Hora</label> <input type="text" class="form-control" ng-model="vm.item.fini"
-                    bs-timepicker />
-            </div>
-            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                <label translate="ssrv_ffin"></label> <input type="text" class="form-control"
-                    ng-model="vm.item.ffin" bs-datepicker />
-            </div>
-            <div class="col-sm-2 col-md-1 form-group-sm">
-                <label>Hora</label> <input type="text" class="form-control" ng-model="vm.item.ffin"
-                    bs-timepicker />
-            </div>
-        </div>
+    <fieldset>
+        <table class="table-condensed table-hover">
+            <thead>
+                <tr>
+                    <td class="col-sm-4 col-md-3 col-lg-2 col-xl-1"></td>
+                    <td class="col-sm-4 col-md-4 col-xl-3"></td>
+                    <td class="col-sm-4 col-md-4 col-xl-3"></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-if="vm.enti.enti.temporal">
+                    <th><span translate="fini"></span></th>
+                    <td><span ng-bind="vm.ittr.ossrvFini | date: ('format_datetime' | translate)"></span></td>
+                    <td class="form-group-sm"><input type="text" class="form-control"
+                        ng-model="vm.ittr.dssrvFini" bs-datepicker /><input type="text" class="form-control"
+                        ng-model="vm.ittr.dssrvFini" bs-timepicker /></td>
+                </tr>
+                <tr ng-if="vm.enti.enti.temporal">
+                    <th><span translate="ffin"></span></th>
+                    <td><span ng-bind="vm.ittr.ossrvFfin | date: ('format_datetime' | translate)"></span></td>
+                    <td class="form-group-sm"><input type="text" class="col-sm-8 form-control"
+                        ng-model="vm.ittr.dssrvFfin" bs-datepicker /><input type="text"
+                        class="col-sm-4 form-control" ng-model="vm.ittr.dssrvFfin" bs-timepicker /></td>
+                </tr>
+            </tbody>
 
-
-        <div class="row" ng-if="vm.enti.enti.temporal">
-            <label translate="ssrv_fini" class="col-sm-4 col-md-3 col-lg-2 col-xl-1 control-label"></label>
-            <p class="col-sm-4 col-lg-3 form-control-static"
-                ng-bind="vm.ittr.ossrvFini | date: ('format_datetime' | translate)"></p>
-            <div class="col-sm-4 col-lg-3">
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" ng-model="vm.ittr.dssrvFini" bs-datepicker />
-                </div>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" ng-model="vm.ittr.dssrvFini" bs-timepicker />
-                </div>
-            </div>
-        </div>
-
-        <div class="row" ng-if="vm.enti.enti.temporal">
-            <label translate="ssrv_ffin" class="col-sm-4 col-md-3 col-lg-2 col-xl-1 control-label"></label>
-            <p class="col-sm-4 col-lg-3 form-control-static"
-                ng-bind="vm.ittr.ossrvFfin | date: ('format_datetime' | translate)"></p>
-            <div class="col-sm-4 col-lg-3">
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" ng-model="vm.ittr.dssrvFfin" bs-datepicker />
-                </div>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" ng-model="vm.ittr.dssrvFfin" bs-timepicker />
-                </div>
-            </div>
-        </div>
-
-        <div ng-include="'modules/entidad/servicio/fragment/item-tramite-edit-content.html'"></div>
+            <tbody ng-include="'modules/entidad/servicio/fragment/item-tramite-edit-content.html'">
+            </tbody>
+        </table>
     </fieldset>
 
     <div class="btn-group">
