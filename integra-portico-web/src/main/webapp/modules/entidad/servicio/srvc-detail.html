@@ -105,8 +105,8 @@
 
         <tbody>
             <tr ng-repeat="srtr in vm.srtrList track by $index">
-                <td><a ng-click="vm.download(arin.id, arin.nombre)"> <span
-                        class="glyphicon glyphicon-save"></span>
+                <td><a ng-href="#/servicio/srvc/tramite-detail/{{srtr.id}}"> <span
+                        class="glyphicon glyphicon-search"></span>
                 </a></td>
                 <td ng-bind="srtr.fecha | date: ('format_datetime' | translate)"></td>
                 <td ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + srtr.trmt.estadoOrig | translate"></td>

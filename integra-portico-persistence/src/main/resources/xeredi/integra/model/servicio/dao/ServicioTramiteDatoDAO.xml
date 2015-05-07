@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.servicio.dao.ServicioTramiteDatoDAO">
+	<resultMap type="ItemTramiteDatoVO" id="ResultMap">
+		<id column="srtd_srtr_pk" />
+		<id column="srtd_tpdt_pk" />
+
+		<result column="srtd_srtr_pk" property="ittrId" />
+		<result column="srtd_tpdt_pk" property="tpdtId" />
+
+		<result column="srtd_o_nentero" property="onentero" />
+		<result column="srtd_o_ndecimal" property="ondecimal" />
+		<result column="srtd_o_cadena" property="ocadena" />
+		<result column="srtd_o_fecha" property="ofecha" />
+
+		<result column="srtd_d_nentero" property="dnentero" />
+		<result column="srtd_d_ndecimal" property="dndecimal" />
+		<result column="srtd_d_cadena" property="dcadena" />
+		<result column="srtd_d_fecha" property="dfecha" />
+
+		<association property="oprmt" javaType="ParametroVO">
+			<result column="srtd_o_prmt_pk" property="id" />
+		</association>
+
+		<association property="dprmt" javaType="ParametroVO">
+			<result column="srtd_d_prmt_pk" property="id" />
+		</association>
+
+		<association property="osrvc" javaType="ServicioVO">
+			<result column="srtd_o_srvc_pk" property="id" />
+		</association>
+
+		<association property="dsrvc" javaType="ServicioVO">
+			<result column="srtd_d_srvc_pk" property="id" />
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+		SELECT
+			srtd_srtr_pk, srtd_tpdt_pk
+			, srtd_o_nentero, srtd_o_ndecimal, srtd_o_cadena, srtd_o_fecha, srtd_o_prmt_pk, srtd_o_srvc_pk
+			, srtd_d_nentero, srtd_d_ndecimal, srtd_d_cadena, srtd_d_fecha, srtd_d_prmt_pk, srtd_d_srvc_pk
+		FROM
+			tbl_servicio_trmt_dato_srtd
+	]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND srtd_srtr_pk = #{id}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectList" parameterType="ServicioTramiteCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<insert id="insert" parameterType="ItemTramiteDatoVO">
+        <![CDATA[
+        INSERT INTO tbl_servicio_trmt_dato_srtd (
+        	srtd_srtr_pk, srtd_tpdt_pk
+			, srtd_o_nentero, srtd_o_ndecimal, srtd_o_cadena, srtd_o_fecha, srtd_o_prmt_pk, srtd_o_srvc_pk
+			, srtd_d_nentero, srtd_d_ndecimal, srtd_d_cadena, srtd_d_fecha, srtd_d_prmt_pk, srtd_d_srvc_pk)
+        VALUES (
+        	#{ittrId}, #{tpdtId}
+        	, #{onentero}, #{ondecimal}, #{ocadena}, #{ofecha}, #{oprmt.id}, #{osrvc.id}
+        	, #{dnentero}, #{dndecimal}, #{dcadena}, #{dfecha}, #{dprmt.id}, #{dsrvc.id}
+        )
+        ]]>
+	</insert>
+</mapper>

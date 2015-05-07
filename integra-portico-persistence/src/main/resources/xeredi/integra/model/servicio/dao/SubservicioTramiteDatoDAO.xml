@@ -4,8 +4,8 @@
 
 <mapper namespace="xeredi.integra.model.servicio.dao.SubservicioTramiteDatoDAO">
 	<resultMap type="ItemTramiteDatoVO" id="ResultMap">
-		<id column="ittrId" />
-		<id column="tpdtId" />
+		<id column="sstd_sstr_pk" />
+		<id column="sstd_tpdt_pk" />
 
 		<result column="sstd_sstr_pk" property="ittrId" />
 		<result column="sstd_tpdt_pk" property="tpdtId" />
