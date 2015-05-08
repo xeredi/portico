@@ -3,6 +3,10 @@
 	padding-left: 2px;
 }
 
+.navbar {
+	padding-right: 15px;
+}
+
 body, .tooltip {
 	font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif;
 }
@@ -78,8 +82,20 @@ td span {
 	width: 95%;
 }
 
+#map_canvas {
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+	position: relative;
+}
+
 .angular-google-map-container {
-	height: 600px;
+	position: absolute;
+	top: 40px;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	color: black;
 }
 
 /*
@@ -90,10 +106,6 @@ td span {
 
 .row {
 	margin: 0px;
-}
-
-.navbar {
-	padding-right: 22px;
 }
 
 .nav-pills, .btn-toolbar {

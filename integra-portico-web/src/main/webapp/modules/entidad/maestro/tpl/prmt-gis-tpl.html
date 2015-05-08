@@ -1,0 +1,22 @@
+<table class="table">
+    <tbody>
+        <tr>
+            <th>{{'enti_' + parameter.item.entiId | translate}}
+            </td>
+            <td>{{parameter.item.etiqueta}}</td>
+        </tr>
+        <tr ng-if="parameter.enti.enti.puerto">
+            <th>{{'prto' | translate}}
+            </td>
+            <td>{{parameter.item.prto.etiqueta}}</td>
+        </tr>
+        <tr ng-repeat="tpdtId in parameter.enti.entdList" ng-if="parameter.enti.entdMap[tpdtId].gridable"
+            ng-switch on="parameter.enti.entdMap[tpdtId].tpdt.tipoElemento">
+            <th>{{'entd_' + parameter.enti.entdMap[tpdtId].id | translate}}</th>
+            <td ng-switch-when="BO"><i
+                class="glyphicon glyphicon-{{parameter.item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></td>
+            <td ng-switch-when="ND">{{parameter.item.itdtMap[tpdtId].cantidadDecimal | number:2}}</td>
+            <td ng-switch-when="NE">{{parameter.item.itdtMap[tpdtId].cantidadEntera}}</td>
+        </tr>
+    </tbody>
+</table>

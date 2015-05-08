@@ -362,9 +362,23 @@ function PrmtLupaController($http, $scope) {
 function PrmtGisDetailController($http, $location, $routeParams, pageTitleService, uiGmapGoogleMapApi) {
     var vm = this;
 
-    vm.path = $location.path();
+    vm.onClick = onClick;
+    vm.closeClick = closeClick;
 
+    vm.path = $location.path();
     vm.fechaVigencia = $routeParams.fechaVigencia ? $routeParams.fechaVigencia : new Date();
+
+    function onClick() {
+        vm.windowOptions.visible = !vm.windowOptions.visible;
+        vm.marker.options.icon = "http://maps.google.com/mapfiles/ms/icons/"
+                + (vm.windowOptions.visible ? "green" : "red") + "-dot.png";
+    }
+
+    function closeClick() {
+        vm.windowOptions.visible = false;
+        vm.marker.options.icon = "http://maps.google.com/mapfiles/ms/icons/"
+                + (vm.windowOptions.visible ? "green" : "red") + "-dot.png";
+    }
 
     $http.post("maestro/parametro-detail.action", {
         model : {
@@ -380,24 +394,37 @@ function PrmtGisDetailController($http, $location, $routeParams, pageTitleServic
         if (data.model.prto) {
             vm.prtoId = data.model.prto.id;
         }
-    });
 
-    uiGmapGoogleMapApi.then(function(maps) {
-        vm.map = {
-            center : {
-                latitude : 42.3948753540211,
-                longitude : -8.695362210273743
-            },
-            zoom : 17
-        };
+        uiGmapGoogleMapApi.then(function(maps) {
+            vm.map = {
+                center : {
+                    latitude : 42.3948753540211,
+                    longitude : -8.695362210273743
+                },
+                zoom : 17,
+                options : {
+                    scaleControl : true,
+                    streetViewControl : false,
+                    scrollwheel : false
+                }
+            };
 
-        vm.marker = {
+            vm.marker = {
+                id : 0,
                 coords : {
                     latitude : 42.3948753540211,
                     longitude : -8.695362210273743
                 },
-                id : 0
+                options : {
+                    title : data.model.etiqueta,
+                    icon : "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+                }
             };
+
+            vm.windowOptions = {
+                visible : false
+            };
+        });
     });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_gis_detail");
