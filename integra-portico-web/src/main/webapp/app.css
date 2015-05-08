@@ -78,6 +78,10 @@ td span {
 	width: 95%;
 }
 
+.angular-google-map-container {
+	height: 600px;
+}
+
 /*
 
 .container-fluid, .modal-body {

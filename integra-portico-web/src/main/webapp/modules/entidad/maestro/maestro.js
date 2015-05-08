@@ -14,6 +14,8 @@ angular.module("maestro", [])
 
 .controller('PrmtLupaController', PrmtLupaController)
 
+.controller("PrmtGisDetailController", PrmtGisDetailController)
+
 // ----------- SUBPARAMETROS ------------------
 .controller("SprmDetailController", SprmDetailController)
 
@@ -48,6 +50,13 @@ function config($routeProvider) {
         templateUrl : "modules/entidad/maestro/prmt-edit.html",
         controller : "PrmtEditController",
         controllerAs : 'vm'
+    })
+
+    .when("/maestro/prmt/gis/detail/:entiId/:itemId/:fechaVigencia?", {
+        templateUrl : "modules/entidad/maestro/prmt-gis-detail.html",
+        controller : "PrmtGisDetailController",
+        controllerAs : 'vm',
+        reloadOnSearch : false
     })
 
     .when("/maestro/sprm/detail/:entiId/:itemId/:fechaVigencia?", {
@@ -348,6 +357,50 @@ function PrmtLupaController($http, $scope) {
             return res.data.resultList;
         });
     };
+}
+
+function PrmtGisDetailController($http, $location, $routeParams, pageTitleService, uiGmapGoogleMapApi) {
+    var vm = this;
+
+    vm.path = $location.path();
+
+    vm.fechaVigencia = $routeParams.fechaVigencia ? $routeParams.fechaVigencia : new Date();
+
+    $http.post("maestro/parametro-detail.action", {
+        model : {
+            id : $routeParams.itemId,
+            entiId : $routeParams.entiId
+        },
+        fechaVigencia : vm.fechaVigencia
+    }).success(function(data) {
+        vm.item = data.model;
+        vm.enti = data.enti;
+        vm.i18nMap = data.i18nMap;
+
+        if (data.model.prto) {
+            vm.prtoId = data.model.prto.id;
+        }
+    });
+
+    uiGmapGoogleMapApi.then(function(maps) {
+        vm.map = {
+            center : {
+                latitude : 42.3948753540211,
+                longitude : -8.695362210273743
+            },
+            zoom : 17
+        };
+
+        vm.marker = {
+                coords : {
+                    latitude : 42.3948753540211,
+                    longitude : -8.695362210273743
+                },
+                id : 0
+            };
+    });
+
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_gis_detail");
 }
 
 function SprmDetailController($http, $routeParams, pageTitleService) {

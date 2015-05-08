@@ -2,8 +2,8 @@ angular.module(
         "integraApp",
         [ "ngRoute", "mgcrea.ngStrap", "mgcrea.ngStrap.aside", "ui.bootstrap.tpls", "ui.bootstrap.tabs",
                 "ui.bootstrap.pagination", "ui.bootstrap.dropdown", "ui.bootstrap.typeahead",
-                "pascalprecht.translate", "angularSpinner", "i18n", "administracion", "metamodelo",
-                "facturacion", "maestro", "servicio", "estadistica", "proceso", "seguridad" ])
+                "pascalprecht.translate", "angularSpinner", "uiGmapgoogle-maps", "i18n", "administracion",
+                "metamodelo", "facturacion", "maestro", "servicio", "estadistica", "proceso", "seguridad" ])
 
 .config([ "$routeProvider", function($routeProvider) {
     $routeProvider
@@ -14,6 +14,14 @@ angular.module(
         controllerAs : "vm"
     });
 } ])
+
+.config(function(uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        key : 'AIzaSyBkTsBBx0pgO-i66oeAKasc9fswUDfFH-M',
+        v : '3.17',
+        libraries : 'weather,geometry,visualization'
+    });
+})
 
 .config(function($datepickerProvider) {
     angular.extend($datepickerProvider.defaults, {

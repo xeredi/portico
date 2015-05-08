@@ -39,8 +39,8 @@
                 <th ng-if="vm.enti.enti.puerto" class="codigo" nowrap="nowrap" translate="prto"></th>
                 <th class="codigo" nowrap="nowrap" translate="prmt_parametro"></th>
                 <th ng-if="vm.enti.enti.i18n" translate="i18n_text"></th>
-                <th translate="prmt_fini"></th>
-                <th translate="prmt_ffin"></th>
+                <th translate="fini"></th>
+                <th translate="ffin"></th>
                 <th ng-repeat="tpdtId in vm.enti.entdList" ng-if="vm.enti.entdMap[tpdtId].gridable"
                     translate="{{'entd_' + vm.enti.entdMap[tpdtId].id}}"></th>
             </tr>
