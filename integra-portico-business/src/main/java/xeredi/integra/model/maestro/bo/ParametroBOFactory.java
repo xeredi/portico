@@ -3,6 +3,8 @@ package xeredi.integra.model.maestro.bo;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.NonNull;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -63,7 +65,7 @@ public final class ParametroBOFactory {
      *            the enti id
      * @return the parametro bo
      */
-    public static ParametroBO newInstance(final Long entiId) {
+    public static ParametroBO newInstance(final @NonNull Long entiId) {
         if (MAP.containsKey(entiId)) {
             try {
                 return (ParametroBO) MAP.get(entiId).newInstance();
@@ -77,4 +79,12 @@ public final class ParametroBOFactory {
         return new DefaultParametroBO();
     }
 
+    /**
+     * New default instance.
+     *
+     * @return the parametro bo
+     */
+    public static ParametroBO newDefaultInstance() {
+        return new DefaultParametroBO();
+    }
 }
