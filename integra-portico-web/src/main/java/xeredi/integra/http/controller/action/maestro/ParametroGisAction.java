@@ -59,6 +59,7 @@ public final class ParametroGisAction extends ItemGisAction<ParametroCriterioVO,
             marker.setId(item.getId());
             marker.getCoords().setLatitude(item.getVersion().getLat());
             marker.getCoords().setLongitude(item.getVersion().getLon());
+            marker.getOptions().setTitle(item.getEtiqueta());
 
             map.getMarkerList().add(marker);
 

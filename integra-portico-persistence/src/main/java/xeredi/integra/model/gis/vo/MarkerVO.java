@@ -14,6 +14,9 @@ public final class MarkerVO {
     /** The coords. */
     private final MarkerCoordsVO coords;
 
+    /** The options. */
+    private final MarkerOptionsVO options;
+
     /**
      * Instantiates a new marker vo.
      */
@@ -21,6 +24,7 @@ public final class MarkerVO {
         super();
 
         coords = new MarkerCoordsVO();
+        options = new MarkerOptionsVO();
     }
 
     /**
@@ -57,5 +61,14 @@ public final class MarkerVO {
      */
     public final void setId(final Long value) {
         id = value;
+    }
+
+    /**
+     * Gets the options.
+     *
+     * @return the options
+     */
+    public final MarkerOptionsVO getOptions() {
+        return options;
     }
 }
