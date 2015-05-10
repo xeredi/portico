@@ -455,6 +455,7 @@ function PrmtGisController($http, $location, $routeParams, pageTitleService, uiG
     }).success(function(data) {
         vm.itemList = data.itemList;
         vm.entiMap = data.entiMap;
+        vm.map = data.map;
 
         uiGmapGoogleMapApi.then(function(maps) {
         });

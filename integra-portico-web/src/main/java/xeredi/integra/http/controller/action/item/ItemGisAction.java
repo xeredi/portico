@@ -7,6 +7,7 @@ import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
 import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.gis.vo.MapVO;
 import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
 
 import com.google.common.base.Preconditions;
@@ -23,7 +24,7 @@ import com.google.common.base.Preconditions;
  *            the generic type
  */
 public abstract class ItemGisAction<C extends ItemCriterioVO, E extends AbstractEntidadDetailVO, I extends ItemVO>
-        extends BaseAction {
+extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5802281348269531835L;
@@ -36,6 +37,9 @@ public abstract class ItemGisAction<C extends ItemCriterioVO, E extends Abstract
 
     /** The enti map. */
     protected Map<Long, E> entiMap;
+
+    /** The mapinfo. */
+    protected MapVO map;
 
     /**
      * {@inheritDoc}
@@ -81,5 +85,14 @@ public abstract class ItemGisAction<C extends ItemCriterioVO, E extends Abstract
      */
     public final Map<Long, E> getEntiMap() {
         return entiMap;
+    }
+
+    /**
+     * Gets the mapinfo.
+     *
+     * @return the mapinfo
+     */
+    public final MapVO getMap() {
+        return map;
     }
 }
