@@ -48,23 +48,23 @@ public final class ParametroXls extends BaseXls {
     /**
      * Generar maestros.
      *
-     * @param prmtList
-     *            the prmt list
-     * @param tpprDetail
-     *            the tppr detail
+     * @param itemList
+     *            the item list
+     * @param entiDetail
+     *            the enti detail
      * @param stream
      *            the stream
      * @throws InternalErrorException
      *             Si ocurre algun error grave.
      */
-    public void generarMaestros(final List<ParametroVO> prmtList, final TipoParametroDetailVO tpprDetail,
+    public void generarMaestros(final List<ParametroVO> itemList, final TipoParametroDetailVO entiDetail,
             final OutputStream stream) throws InternalErrorException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("XLS Generation start");
         }
 
         try (final HSSFWorkbook workbook = new HSSFWorkbook()) {
-            final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpprDetail.getEnti().getId()));
+            final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + entiDetail.getEnti().getId()));
 
             // Cabecera XLS
             int rownum = 0;
@@ -72,50 +72,60 @@ public final class ParametroXls extends BaseXls {
             final HSSFRow rowhead = sheet.createRow(rownum++);
             int i = 0;
 
-            if (tpprDetail.getEnti().isPuerto()) {
+            if (entiDetail.getEnti().isPuerto()) {
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prto.name()));
             }
 
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prmt_parametro.name()));
 
-            if (tpprDetail.getEnti().isI18n()) {
+            if (entiDetail.getEnti().isI18n()) {
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.i18n_text.name()));
             }
 
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.fini.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ffin.name()));
 
-            if (tpprDetail.getEntdList() != null) {
-                for (final Long tpdtId : tpprDetail.getEntdList()) {
-                    final EntidadTipoDatoVO entd = tpprDetail.getEntdMap().get(tpdtId);
+            if (entiDetail.getEnti().isGis()) {
+                setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prmt_lat.name()));
+                setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prmt_lon.name()));
+            }
+
+            if (entiDetail.getEntdList() != null) {
+                for (final Long tpdtId : entiDetail.getEntdList()) {
+                    final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
 
                     setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
                 }
             }
 
             // Filas XLS
-            for (final ParametroVO prmtVO : prmtList) {
+            for (final ParametroVO item : itemList) {
                 final HSSFRow row = sheet.createRow(rownum++);
 
                 int j = 0;
 
-                if (tpprDetail.getEnti().isPuerto()) {
-                    setCellValue(row, j++, prmtVO.getPrto().getEtiqueta());
+                if (entiDetail.getEnti().isPuerto()) {
+                    setCellValue(row, j++, item.getPrto().getEtiqueta());
                 }
 
-                setCellValue(row, j++, prmtVO.getParametro());
+                setCellValue(row, j++, item.getParametro());
 
-                if (tpprDetail.getEnti().isI18n()) {
-                    setCellValue(row, j++, prmtVO.getTexto());
+                if (entiDetail.getEnti().isI18n()) {
+                    setCellValue(row, j++, item.getTexto());
                 }
 
-                setCellValue(row, j++, prmtVO.getVersion().getFini());
-                setCellValue(row, j++, prmtVO.getVersion().getFfin());
+                setCellValue(row, j++, item.getVersion().getFini());
+                setCellValue(row, j++, item.getVersion().getFfin());
 
-                if (tpprDetail.getEntdList() != null) {
-                    for (final Long tpdtId : tpprDetail.getEntdList()) {
-                        final EntidadTipoDatoVO entd = tpprDetail.getEntdMap().get(tpdtId);
-                        final ItemDatoVO itdt = prmtVO.getItdtMap().get(entd.getTpdt().getId());
+                if (entiDetail.getEnti().isGis()) {
+                    setCellValue(rowhead, i++, item.getVersion().getLat());
+                    setCellValue(rowhead, i++, item.getVersion().getLon());
+                }
+
+                if (entiDetail.getEntdList() != null) {
+                    for (final Long tpdtId : entiDetail.getEntdList()) {
+                        final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
+                        final ItemDatoVO itdt = item.getItdtMap().get(entd.getTpdt().getId());
 
                         setCellValue(row, j, entd, itdt);
 

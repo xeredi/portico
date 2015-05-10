@@ -23,6 +23,8 @@
 			<result column="prvr_pk" property="id" />
 			<result column="prvr_fini" property="fini" />
 			<result column="prvr_ffin" property="ffin" />
+			<result column="prvr_lat" property="lat" />
+			<result column="prvr_lon" property="lon" />
 		</association>
 	</resultMap>
 
@@ -33,7 +35,7 @@
 
 		    , prto_codigo, prto_codigo_corto
 
-		    , prvr_pk, prvr_fini, prvr_ffin
+		    , prvr_pk, prvr_fini, prvr_ffin, prvr_lat, prvr_lon
     ]]>
 		<if test="idioma != null">
         <![CDATA[
@@ -342,8 +344,8 @@
 
 	<insert id="insertVersion" parameterType="ParametroVO">
     <![CDATA[
-        INSERT INTO tbl_parametro_version_prvr(prvr_pk, prvr_prmt_pk, prvr_fini, prvr_ffin)
-        VALUES (#{version.id}, #{id}, #{version.fini}, #{version.ffin})
+        INSERT INTO tbl_parametro_version_prvr(prvr_pk, prvr_prmt_pk, prvr_fini, prvr_ffin, prvr_lat, prvr_lon)
+        VALUES (#{version.id}, #{id}, #{version.fini}, #{version.ffin}, #{version.lat}, #{version.lon})
     ]]>
 	</insert>
 
@@ -352,6 +354,8 @@
         UPDATE tbl_parametro_version_prvr SET
             prvr_fini = #{version.fini}
             , prvr_ffin = #{version.ffin}
+            , prvr_lat = #{version.lat}
+            , prvr_lon = #{version.lon}
         WHERE prvr_pk = #{version.id}
     ]]>
 	</update>

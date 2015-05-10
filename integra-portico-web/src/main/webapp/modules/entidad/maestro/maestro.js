@@ -14,6 +14,8 @@ angular.module("maestro", [])
 
 .controller('PrmtLupaController', PrmtLupaController)
 
+.controller("PrmtGisController", PrmtGisController)
+
 .controller("PrmtGisDetailController", PrmtGisDetailController)
 
 // ----------- SUBPARAMETROS ------------------
@@ -59,6 +61,12 @@ function config($routeProvider) {
         reloadOnSearch : false
     })
 
+    .when("/maestro/prmt/gis", {
+        templateUrl : "modules/entidad/maestro/prmt-gis.html",
+        controller : "PrmtGisController",
+        controllerAs : 'vm'
+    })
+
     .when("/maestro/sprm/detail/:entiId/:itemId/:fechaVigencia?", {
         templateUrl : "modules/entidad/maestro/sprm-detail.html",
         controller : "SprmDetailController",
@@ -97,6 +105,7 @@ function PrmtGridController($location, $routeParams, $http, $modal, pageTitleSer
     vm.pageChanged = pageChanged;
     vm.filter = filter;
     vm.xlsExport = xlsExport;
+    vm.gis = gis;
     vm.prmtAction = prmtAction;
 
     vm.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
@@ -147,6 +156,12 @@ function PrmtGridController($location, $routeParams, $http, $modal, pageTitleSer
             vm.labelValuesMap = data.labelValuesMap;
             vm.limits = data.limits;
             vm.prtoList = data.prtoList;
+        });
+    }
+
+    function gis() {
+        $location.path("/maestro/prmt/gis").search({
+            itemCriterio : JSON.stringify(vm.itemCriterio)
         });
     }
 
@@ -428,6 +443,24 @@ function PrmtGisDetailController($http, $location, $routeParams, pageTitleServic
     });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_gis_detail");
+}
+
+function PrmtGisController($http, $location, $routeParams, pageTitleService, uiGmapGoogleMapApi) {
+    var vm = this;
+
+    vm.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
+
+    $http.post("maestro/parametro-gis.action", {
+        criterio : vm.itemCriterio
+    }).success(function(data) {
+        vm.itemList = data.itemList;
+        vm.entiMap = data.entiMap;
+
+        uiGmapGoogleMapApi.then(function(maps) {
+        });
+    });
+
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_gis");
 }
 
 function SprmDetailController($http, $routeParams, pageTitleService) {

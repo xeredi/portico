@@ -375,6 +375,10 @@ public enum MessageI18nKey {
     prmtList,
     /** The prmt_parametro. */
     prmt_parametro,
+    /** The prmt_lat. */
+    prmt_lat,
+    /** The prmt_lon. */
+    prmt_lon,
     /** The sprm. */
     sprm,
     /** The srsc. */

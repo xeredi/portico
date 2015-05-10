@@ -5,6 +5,9 @@
 ALTER TABLE tbl_entidad_enti ADD enti_gis INT DEFAULT 0 NOT NULL\
 ALTER TABLE tbl_entidad_enti ADD enti_puerto INT DEFAULT 0 NOT NULL\
 
+ALTER TABLE tbl_parametro_version_prvr ADD prvr_lat DOUBLE PRECISION\
+ALTER TABLE tbl_parametro_version_prvr ADD prvr_lon DOUBLE PRECISION\
+
 CREATE TABLE tbl_superpuerto_sprt (
 	sprt_pk NUMBER(19) NOT NULL
 	, sprt_codigo VARCHAR2(10) NOT NULL
@@ -314,6 +317,9 @@ DROP TABLE tbl_superpuerto_sprt\
 
 DELETE FROM tbl_i18n_i18n WHERE i18n_pref = 'prto'\
 DELETE FROM tbl_i18n_i18n WHERE i18n_pref = 'sprt'\
+
+ALTER TABLE tbl_parametro_version_prvr DROP COLUMN prvr_lat\
+ALTER TABLE tbl_parametro_version_prvr DROP COLUMN prvr_lon\
 
 ALTER TABLE tbl_entidad_enti DROP COLUMN enti_gis\
 ALTER TABLE tbl_entidad_enti DROP COLUMN enti_puerto\

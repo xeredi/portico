@@ -3,8 +3,8 @@
     <fieldset>
         <div class="row">
             <div ng-if="vm.enti.enti.puerto" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate="prto"></label> <select ng-if="vm.accion != 'edit'" ng-model="vm.item.prto.id"
-                    ng-change="vm.prtoId = vm.item.prto.id"
+                <label translate="prto"></label> <select ng-if="vm.accion != 'edit'"
+                    ng-model="vm.item.prto.id" ng-change="vm.prtoId = vm.item.prto.id"
                     ng-options="prto.id as prto.etiqueta for prto in vm.prtoList" class="form-control">
                     <option />
                 </select>
@@ -22,6 +22,14 @@
             <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                 <label translate="ffin"></label> <input type="text" class="form-control"
                     ng-model="vm.item.version.ffin" data-min-date="{{vm.item.version.fini}}" bs-datepicker />
+            </div>
+            <div ng-if="vm.enti.enti.gis" class="col-sm-2 col-lg-1 form-group-sm">
+                <label translate="prmt_lat"></label> <input type="text" class="form-control number"
+                    ng-model="vm.item.version.lat" />
+            </div>
+            <div ng-if="vm.enti.enti.gis" class="col-sm-2 col-lg-1 form-group-sm">
+                <label translate="prmt_lon"></label> <input type="text" class="form-control number"
+                    ng-model="vm.item.version.lon" />
             </div>
         </div>
 

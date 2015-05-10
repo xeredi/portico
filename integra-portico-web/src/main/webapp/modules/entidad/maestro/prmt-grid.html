@@ -20,11 +20,13 @@
         <button data-ng-click="vm.xlsExport()" class="btn btn-default">
             <i class="glyphicon glyphicon-download-alt"></i> <span translate="btn_exportar"></span>
         </button>
+        <a class="btn btn-default" ng-if="vm.enti.enti.gis" data-ng-click="vm.gis()"><i
+            class="glyphicon glyphicon-globe"></i> <span translate="btn_gis"></span></a>
     </div>
 
     <div class="btn-group">
         <button ng-repeat="enag in vm.enti.enagList track by $index" ng-click="vm.prmtAction(enag.path)"
-            class="btn btn-default" translate="{{'enag_' + enag.id}}"></button>
+            class="btn btn-default" ng-bind="'enag_' + enag.id | translate"></button>
     </div>
 </div>
 
@@ -41,8 +43,11 @@
                 <th ng-if="vm.enti.enti.i18n" translate="i18n_text"></th>
                 <th translate="fini"></th>
                 <th translate="ffin"></th>
+                <th ng-if="vm.enti.enti.gis" translate="prmt_lat"></th>
+                <th ng-if="vm.enti.enti.gis" translate="prmt_lon"></th>
+
                 <th ng-repeat="tpdtId in vm.enti.entdList" ng-if="vm.enti.entdMap[tpdtId].gridable"
-                    translate="{{'entd_' + vm.enti.entdMap[tpdtId].id}}"></th>
+                    ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></th>
             </tr>
         </thead>
         <tbody>
@@ -55,6 +60,11 @@
                 <td nowrap="nowrap" ng-if="vm.enti.enti.i18n" ng-bind="item.texto"></td>
                 <td nowrap="nowrap" ng-bind="item.version.fini | date: ('format_date' | translate)"></td>
                 <td nowrap="nowrap" ng-bind="item.version.ffin | date: ('format_date' | translate)"></td>
+                <td nowrap="nowrap" class="number" ng-if="vm.enti.enti.gis"
+                    ng-bind="item.version.lat | number:8"></td>
+                <td nowrap="nowrap" class="number" ng-if="vm.enti.enti.gis"
+                    ng-bind="item.version.lon | number:8"></td>
+
                 <td ng-repeat="tpdtId in vm.enti.entdList track by $index" nowrap="nowrap"
                     ng-if="vm.enti.entdMap[tpdtId].gridable" ng-switch
                     on="vm.enti.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span

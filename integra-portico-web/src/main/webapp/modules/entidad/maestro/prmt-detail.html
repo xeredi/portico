@@ -39,10 +39,18 @@
             <label translate="fini"></label>
             <p class="form-control-static" ng-bind="vm.item.version.fini | date: ('format_date' | translate)"></p>
         </div>
-
         <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
             <label translate="ffin"></label>
             <p class="form-control-static" ng-bind="vm.item.version.ffin | date: ('format_date' | translate)"></p>
+        </div>
+
+        <div ng-if="vm.enti.enti.gis" class="col-sm-2 col-lg-1 form-group-sm">
+            <label translate="prmt_lat"></label>
+            <p class="form-control-static number" ng-bind="vm.item.version.lat | number: 8"></p>
+        </div>
+        <div ng-if="vm.enti.enti.gis" class="col-sm-2 col-lg-1 form-group-sm">
+            <label translate="prmt_lon"></label>
+            <p class="form-control-static number" ng-bind="vm.item.version.lon | number: 8"></p>
         </div>
     </div>
 

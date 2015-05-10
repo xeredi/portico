@@ -36,7 +36,7 @@ a {
 
 .form-group, .form-group-sm {
 	margin-bottom: 5px;
-	padding-left: 4px;
+	padding-left: 3px;
 	padding-right: 3px;
 }
 
@@ -51,6 +51,16 @@ a {
 .form-control {
 	background-color: lightgray;
 	color: black;
+}
+
+.form-group-sm .form-control, .form-group-sm .form-control-static {
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.form-group-sm .form-control-static {
+	padding-top: 8px;
+	min-height: 31px;
 }
 
 fieldset {
