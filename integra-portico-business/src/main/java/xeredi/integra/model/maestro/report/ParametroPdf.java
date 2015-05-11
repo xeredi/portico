@@ -102,8 +102,8 @@ public final class ParametroPdf extends BasePdf {
 
             rowCells.add(new PdfCell(tpprLabel, item.getEtiqueta(), 6, TipoElemento.TX));
 
-            rowCells.add(new PdfCell(prmtFiniLabel, formatDate(item.getVersion().getFini()), 2, TipoElemento.FE));
-            rowCells.add(new PdfCell(prmtFfinLabel, formatDate(item.getVersion().getFfin()), 2, TipoElemento.FE));
+            rowCells.add(new PdfCell(prmtFiniLabel, formatDate(item.getVersion().getFini()), 1, TipoElemento.FE));
+            rowCells.add(new PdfCell(prmtFfinLabel, formatDate(item.getVersion().getFfin()), 1, TipoElemento.FE));
 
             if (entiDetail.getEnti().isGis()) {
                 rowCells.add(new PdfCell(prmtLatLabel, formatDouble(item.getVersion().getLat()), 1, TipoElemento.ND));

@@ -10,6 +10,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
@@ -71,7 +72,17 @@ public abstract class BaseAction extends ActionSupport {
      */
     @Override
     public final String execute() throws ApplicationException {
-        doExecute();
+        try {
+            doExecute();
+        } catch (final ApplicationException ex) {
+            LOG.error(ex, ex);
+
+            throw ex;
+        } catch (final Throwable ex) {
+            LOG.fatal(ex, ex);
+
+            throw new InternalErrorException(ex);
+        }
 
         return SUCCESS;
     }

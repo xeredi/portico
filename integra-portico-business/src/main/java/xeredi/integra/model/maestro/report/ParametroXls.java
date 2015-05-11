@@ -118,8 +118,8 @@ public final class ParametroXls extends BaseXls {
                 setCellValue(row, j++, item.getVersion().getFfin());
 
                 if (entiDetail.getEnti().isGis()) {
-                    setCellValue(rowhead, i++, item.getVersion().getLat());
-                    setCellValue(rowhead, i++, item.getVersion().getLon());
+                    setCellValue(row, j++, item.getVersion().getLat());
+                    setCellValue(row, j++, item.getVersion().getLon());
                 }
 
                 if (entiDetail.getEntdList() != null) {
