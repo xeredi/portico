@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 /**
  * The Class MarkerCoordsVO.
  */
-public final class MarkerCoordsVO {
+public final class CoordsVO {
 
     /** The latitude. */
     private double latitude;

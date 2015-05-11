@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.item;
 
-import java.util.List;
 import java.util.Map;
 
 import xeredi.integra.http.controller.action.comun.BaseAction;
@@ -33,7 +32,7 @@ extends BaseAction {
     protected C criterio;
 
     /** The item list. */
-    protected List<I> itemList;
+    protected Map<Long, I> itemMap;
 
     /** The enti map. */
     protected Map<Long, E> entiMap;
@@ -60,12 +59,12 @@ extends BaseAction {
     protected abstract void doList() throws ApplicationException;
 
     /**
-     * Gets the item list.
+     * Gets the item map.
      *
-     * @return the item list
+     * @return the item map
      */
-    public final List<I> getItemList() {
-        return itemList;
+    public final Map<Long, I> getItemMap() {
+        return itemMap;
     }
 
     /**

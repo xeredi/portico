@@ -12,7 +12,7 @@ public final class MarkerVO {
     private Long id;
 
     /** The coords. */
-    private final MarkerCoordsVO coords;
+    private final CoordsVO coords;
 
     /** The options. */
     private final MarkerOptionsVO options;
@@ -23,7 +23,7 @@ public final class MarkerVO {
     public MarkerVO() {
         super();
 
-        coords = new MarkerCoordsVO();
+        coords = new CoordsVO();
         options = new MarkerOptionsVO();
     }
 
@@ -40,7 +40,7 @@ public final class MarkerVO {
      *
      * @return the coords
      */
-    public final MarkerCoordsVO getCoords() {
+    public final CoordsVO getCoords() {
         return coords;
     }
 

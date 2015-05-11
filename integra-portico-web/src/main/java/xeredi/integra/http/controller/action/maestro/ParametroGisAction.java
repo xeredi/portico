@@ -1,6 +1,7 @@
 package xeredi.integra.http.controller.action.maestro;
 
 import java.util.HashMap;
+import java.util.List;
 
 import xeredi.integra.http.controller.action.item.ItemGisAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -29,7 +30,7 @@ public final class ParametroGisAction extends ItemGisAction<ParametroCriterioVO,
     protected void doList() throws ApplicationException {
         final ParametroBO prmtBO = ParametroBOFactory.newDefaultInstance();
 
-        itemList = prmtBO.selectList(criterio);
+        final List<ParametroVO> itemList = prmtBO.selectList(criterio);
         entiMap = new HashMap<Long, TipoParametroDetailVO>();
 
         double minLat = 0;
@@ -38,8 +39,12 @@ public final class ParametroGisAction extends ItemGisAction<ParametroCriterioVO,
         double maxLon = 0;
 
         map = new MapVO();
+        itemMap = new HashMap<Long, ParametroVO>();
 
         map.setZoom(17);
+        map.getOptions().setScaleControl(true);
+        map.getOptions().setScrollwheel(false);
+        map.getOptions().setStreetViewControl(false);
 
         for (final ParametroVO item : itemList) {
             if (entiMap.isEmpty()) {
@@ -62,6 +67,7 @@ public final class ParametroGisAction extends ItemGisAction<ParametroCriterioVO,
             marker.getOptions().setTitle(item.getEtiqueta());
 
             map.getMarkerList().add(marker);
+            itemMap.put(item.getId(), item);
 
             if (item.getVersion().getLat() < minLat) {
                 if (entiMap.containsKey(item.getEntiId())) {
@@ -72,5 +78,10 @@ public final class ParametroGisAction extends ItemGisAction<ParametroCriterioVO,
 
         map.getCenter().setLatitude((minLat + maxLat) / 2);
         map.getCenter().setLongitude((minLon + maxLon) / 2);
+
+        map.getBounds().getNortheast().setLatitude(maxLat * (maxLat > 0 ? 1.01 : 0.99));
+        map.getBounds().getNortheast().setLongitude(maxLon * (maxLon > 0 ? 1.01 : 0.99));
+        map.getBounds().getSouthwest().setLatitude(minLat * (minLat > 0 ? 0.99 : 1.01));
+        map.getBounds().getNortheast().setLongitude(minLon * (minLon > 0 ? 0.99 : 1.01));
     }
 }

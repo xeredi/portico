@@ -12,7 +12,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public final class MapVO {
 
     /** The center. */
-    private final MapCenterVO center;
+    private final CoordsVO center;
 
     /** The zoom. */
     private int zoom;
@@ -20,14 +20,22 @@ public final class MapVO {
     /** The marker list. */
     private final List<MarkerVO> markerList;
 
+    /** The options. */
+    private final MapOptionsVO options;
+
+    /** The bounds. */
+    private final MapBoundsVO bounds;
+
     /**
      * Instantiates a new map vo.
      */
     public MapVO() {
         super();
 
-        center = new MapCenterVO();
+        center = new CoordsVO();
         markerList = new ArrayList<MarkerVO>();
+        options = new MapOptionsVO();
+        bounds = new MapBoundsVO();
     }
 
     /**
@@ -52,7 +60,7 @@ public final class MapVO {
      *
      * @return the center
      */
-    public final MapCenterVO getCenter() {
+    public final CoordsVO getCenter() {
         return center;
     }
 
@@ -73,5 +81,23 @@ public final class MapVO {
      */
     public final void setZoom(final int value) {
         zoom = value;
+    }
+
+    /**
+     * Gets the options.
+     *
+     * @return the options
+     */
+    public final MapOptionsVO getOptions() {
+        return options;
+    }
+
+    /**
+     * Gets the bounds.
+     *
+     * @return the bounds
+     */
+    public final MapBoundsVO getBounds() {
+        return bounds;
     }
 }

@@ -453,7 +453,7 @@ function PrmtGisController($http, $location, $routeParams, pageTitleService, uiG
     $http.post("maestro/parametro-gis.action", {
         criterio : vm.itemCriterio
     }).success(function(data) {
-        vm.itemList = data.itemList;
+        vm.itemMap = data.itemMap;
         vm.entiMap = data.entiMap;
         vm.map = data.map;
 
