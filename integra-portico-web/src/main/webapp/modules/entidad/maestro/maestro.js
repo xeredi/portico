@@ -16,8 +16,6 @@ angular.module("maestro", [])
 
 .controller("PrmtGisController", PrmtGisController)
 
-.controller("PrmtGisDetailController", PrmtGisDetailController)
-
 // ----------- SUBPARAMETROS ------------------
 .controller("SprmDetailController", SprmDetailController)
 
@@ -52,13 +50,6 @@ function config($routeProvider) {
         templateUrl : "modules/entidad/maestro/prmt-edit.html",
         controller : "PrmtEditController",
         controllerAs : 'vm'
-    })
-
-    .when("/maestro/prmt/gis/detail/:entiId/:itemId/:fechaVigencia?", {
-        templateUrl : "modules/entidad/maestro/prmt-gis-detail.html",
-        controller : "PrmtGisDetailController",
-        controllerAs : 'vm',
-        reloadOnSearch : false
     })
 
     .when("/maestro/prmt/gis", {
@@ -191,10 +182,21 @@ function PrmtGridController($location, $routeParams, $http, $modal, pageTitleSer
 function PrmtDetailController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
+    vm.gis = gis;
     vm.pageChanged = pageChanged;
     vm.tabSelected = tabSelected;
     vm.remove = remove;
     vm.print = print;
+
+    function gis() {
+        $location.path("/maestro/prmt/gis").search({
+            itemCriterio : {
+                id : $routeParams.itemId,
+                entiId : $routeParams.entiId,
+                fechaVigencia : $routeParams.fechaVigencia
+            }
+        });
+    }
 
     function pageChanged(subentiId) {
     }
@@ -374,79 +376,26 @@ function PrmtLupaController($http, $scope) {
     };
 }
 
-function PrmtGisDetailController($http, $location, $routeParams, pageTitleService, uiGmapGoogleMapApi) {
-    var vm = this;
-
-    vm.onClick = onClick;
-    vm.closeClick = closeClick;
-
-    vm.path = $location.path();
-    vm.fechaVigencia = $routeParams.fechaVigencia ? $routeParams.fechaVigencia : new Date();
-
-    function onClick() {
-        vm.windowOptions.visible = !vm.windowOptions.visible;
-        vm.marker.options.icon = "http://maps.google.com/mapfiles/ms/icons/"
-                + (vm.windowOptions.visible ? "green" : "red") + "-dot.png";
-    }
-
-    function closeClick() {
-        vm.windowOptions.visible = false;
-        vm.marker.options.icon = "http://maps.google.com/mapfiles/ms/icons/"
-                + (vm.windowOptions.visible ? "green" : "red") + "-dot.png";
-    }
-
-    $http.post("maestro/parametro-detail.action", {
-        model : {
-            id : $routeParams.itemId,
-            entiId : $routeParams.entiId
-        },
-        fechaVigencia : vm.fechaVigencia
-    }).success(function(data) {
-        vm.item = data.model;
-        vm.enti = data.enti;
-        vm.i18nMap = data.i18nMap;
-
-        if (data.model.prto) {
-            vm.prtoId = data.model.prto.id;
-        }
-
-        uiGmapGoogleMapApi.then(function(maps) {
-            vm.map = {
-                center : {
-                    latitude : 42.3948753540211,
-                    longitude : -8.695362210273743
-                },
-                zoom : 17,
-                options : {
-                    scaleControl : true,
-                    streetViewControl : false,
-                    scrollwheel : false
-                }
-            };
-
-            vm.marker = {
-                id : 0,
-                coords : {
-                    latitude : 42.3948753540211,
-                    longitude : -8.695362210273743
-                },
-                options : {
-                    title : data.model.etiqueta,
-                    icon : "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
-                }
-            };
-
-            vm.windowOptions = {
-                visible : false
-            };
-        });
-    });
-
-    pageTitleService.setTitleEnti($routeParams.entiId, "page_gis_detail");
-}
-
 function PrmtGisController($http, $location, $routeParams, pageTitleService, uiGmapGoogleMapApi) {
     var vm = this;
+
+    vm.closeClick = closeClick;
+    vm.onClick = onClick;
+
+    function onClick(marker) {
+        vm.map.markerList.map(function(marker) {
+            marker.windowOptions.visible = false;
+            marker.options.icon = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+        });
+
+        marker.windowOptions.visible = true;
+        marker.options.icon = "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
+    }
+
+    function closeClick(marker) {
+        marker.windowOptions.visible = false;
+        marker.options.icon = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+    }
 
     vm.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
 
@@ -459,6 +408,8 @@ function PrmtGisController($http, $location, $routeParams, pageTitleService, uiG
 
         uiGmapGoogleMapApi.then(function(maps) {
         });
+
+        $location.search("itemCriterio", JSON.stringify(vm.itemCriterio)).replace();
     });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_gis");

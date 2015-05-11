@@ -17,6 +17,9 @@ public final class MarkerVO {
     /** The options. */
     private final MarkerOptionsVO options;
 
+    /** The window options. */
+    private final WindowOptionsVO windowOptions;
+
     /**
      * Instantiates a new marker vo.
      */
@@ -25,6 +28,7 @@ public final class MarkerVO {
 
         coords = new CoordsVO();
         options = new MarkerOptionsVO();
+        windowOptions = new WindowOptionsVO();
     }
 
     /**
@@ -70,5 +74,14 @@ public final class MarkerVO {
      */
     public final MarkerOptionsVO getOptions() {
         return options;
+    }
+
+    /**
+     * Gets the window options.
+     *
+     * @return the window options
+     */
+    public final WindowOptionsVO getWindowOptions() {
+        return windowOptions;
     }
 }

@@ -1,9 +1,10 @@
-<table class="table">
+<table class="table infowindow">
     <tbody>
         <tr>
             <th>{{'enti_' + parameter.item.entiId | translate}}
             </td>
-            <td>{{parameter.item.etiqueta}}</td>
+            <td><a style="color: black"
+                ng-href="#/maestro/prmt/detail/{{parameter.item.entiId}}/{{parameter.item.id}}/{{parameter.fechaVigencia}}">{{parameter.item.etiqueta}}</a></td>
         </tr>
         <tr ng-if="parameter.enti.enti.puerto">
             <th>{{'prto' | translate}}

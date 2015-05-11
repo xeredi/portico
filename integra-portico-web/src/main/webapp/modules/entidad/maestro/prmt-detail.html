@@ -17,9 +17,9 @@
         <button data-ng-click="vm.print()" class="btn btn-default">
             <i class="glyphicon glyphicon-print"></i> <span translate="btn_imprimir"></span>
         </button>
-        <a class="btn btn-default" ng-if="vm.enti.enti.gis"
-            ng-href="#/maestro/prmt/gis/detail/{{vm.enti.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
-            class="glyphicon glyphicon-globe"></i> <span translate="btn_gis"></span></a>
+        <button data-ng-click="vm.gis()" class="btn btn-default">
+            <i class="glyphicon glyphicon-globe"></i> <span translate="btn_gis"></span>
+        </button>
     </div>
 </div>
 

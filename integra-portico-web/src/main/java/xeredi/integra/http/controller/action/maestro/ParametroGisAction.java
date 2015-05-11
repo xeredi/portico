@@ -43,7 +43,7 @@ public final class ParametroGisAction extends ItemGisAction<ParametroCriterioVO,
 
         map.setZoom(17);
         map.getOptions().setScaleControl(true);
-        map.getOptions().setScrollwheel(false);
+        map.getOptions().setScrollwheel(true);
         map.getOptions().setStreetViewControl(false);
 
         for (final ParametroVO item : itemList) {
@@ -68,20 +68,37 @@ public final class ParametroGisAction extends ItemGisAction<ParametroCriterioVO,
 
             map.getMarkerList().add(marker);
             itemMap.put(item.getId(), item);
-
-            if (item.getVersion().getLat() < minLat) {
-                if (entiMap.containsKey(item.getEntiId())) {
-                    entiMap.put(item.getEntiId(), TipoParametroProxy.select(item.getEntiId()));
-                }
-            }
+            entiMap.put(item.getEntiId(), TipoParametroProxy.select(item.getEntiId()));
         }
 
         map.getCenter().setLatitude((minLat + maxLat) / 2);
         map.getCenter().setLongitude((minLon + maxLon) / 2);
 
-        map.getBounds().getNortheast().setLatitude(maxLat * (maxLat > 0 ? 1.01 : 0.99));
-        map.getBounds().getNortheast().setLongitude(maxLon * (maxLon > 0 ? 1.01 : 0.99));
-        map.getBounds().getSouthwest().setLatitude(minLat * (minLat > 0 ? 0.99 : 1.01));
-        map.getBounds().getNortheast().setLongitude(minLon * (minLon > 0 ? 0.99 : 1.01));
+        map.getBounds().getNortheast().setLatitude(maxLat * (maxLat > 0 ? 1.001 : 0.999));
+        map.getBounds().getNortheast().setLongitude(maxLon * (maxLon > 0 ? 1.001 : 0.999));
+        map.getBounds().getSouthwest().setLatitude(minLat * (minLat > 0 ? 0.999 : 1.001));
+        map.getBounds().getNortheast().setLongitude(minLon * (minLon > 0 ? 0.999 : 1.001));
+
+        double angle = maxLon - minLon;
+
+        if (angle < 0) {
+            angle = -angle;
+        }
+
+        if (angle < 1) {
+            map.setZoom(12);
+        }
+        if (angle < 0.1) {
+            map.setZoom(16);
+        }
+        if (angle < 0.01) {
+            map.setZoom(17);
+        }
+        if (angle < 0.001) {
+            map.setZoom(18);
+        }
+
+        map.getOptions().setMinZoom(map.getZoom() - 3);
+        map.getOptions().setMaxZoom(map.getZoom() + 3);
     }
 }

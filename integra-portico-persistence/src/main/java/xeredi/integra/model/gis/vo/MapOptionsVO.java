@@ -17,6 +17,12 @@ public final class MapOptionsVO {
     /** The scrollwheel. */
     private Boolean scrollwheel;
 
+    /** The min zoom. */
+    private int minZoom;
+
+    /** The max zoom. */
+    private int maxZoom;
+
     /**
      * {@inheritDoc}
      */
@@ -80,5 +86,43 @@ public final class MapOptionsVO {
      */
     public final void setScrollwheel(final Boolean value) {
         scrollwheel = value;
+    }
+
+    /**
+     * Gets the min zoom.
+     *
+     * @return the min zoom
+     */
+    public final int getMinZoom() {
+        return minZoom;
+    }
+
+    /**
+     * Sets the min zoom.
+     *
+     * @param value
+     *            the new min zoom
+     */
+    public final void setMinZoom(final int value) {
+        minZoom = value;
+    }
+
+    /**
+     * Gets the max zoom.
+     *
+     * @return the max zoom
+     */
+    public final int getMaxZoom() {
+        return maxZoom;
+    }
+
+    /**
+     * Sets the max zoom.
+     *
+     * @param value
+     *            the new max zoom
+     */
+    public final void setMaxZoom(final int value) {
+        maxZoom = value;
     }
 }

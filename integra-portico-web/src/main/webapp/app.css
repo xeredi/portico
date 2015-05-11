@@ -92,13 +92,6 @@ td span {
 	width: 95%;
 }
 
-#map_canvas {
-	height: 100%;
-	width: 100%;
-	margin: 0px;
-	position: relative;
-}
-
 .angular-google-map-container {
 	position: absolute;
 	top: 40px;
