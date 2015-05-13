@@ -25,21 +25,21 @@
             <p class="form-control-static" ng-bind="vm.vlrc.id"></p>
         </div>
         <div class="col-md-2 form-group-sm">
-            <label translate="srvc_tpsr"></label>
+            <label translate="tpsr"></label>
             <p class="form-control-static">
                 <a ng-href="#/metamodelo/tpsr/detail/{{vm.vlrc.srvc.entiId}}"
                     translate="{{'enti_' + vm.vlrc.srvc.entiId}}"></a>
             </p>
         </div>
         <div class="col-md-2 col-lg-1 form-group-sm">
-            <label translate="vlrc_srvc"></label>
+            <label translate="srvc"></label>
             <p class="form-control-static">
                 <a ng-href="#/servicio/srvc/detail/{{vm.vlrc.srvc.entiId}}/{{vm.vlrc.srvc.id}}"
                     ng-bind="vm.vlrc.srvc.etiqueta"></a>
             </p>
         </div>
         <div class="col-md-3 form-group-sm">
-            <label translate="vlrc_aspc"></label>
+            <label translate="aspc"></label>
             <p class="form-control-static">
                 <a ng-href="#/facturacion/aspc/detail/{{vm.vlrc.aspc.id}}/{{vm.vlrc.fref}}"
                     ng-bind="vm.vlrc.aspc.etiqueta"></a>
@@ -90,15 +90,15 @@
             <p class="form-control-static" ng-bind="vm.vlrc.fliq | date: ('format_date' | translate)"></p>
         </div>
         <div class="col-md-2 form-group-sm">
-            <label translate="vlrc_fref"></label>
+            <label translate="fref"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.fref | date: ('format_datetime' | translate)"></p>
         </div>
         <div class="col-md-2 form-group-sm" ng-if="vm.vlrc.fini">
-            <label translate="vlrc_fini"></label>
+            <label translate="fini"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.fini | date: ('format_datetime' | translate)"></p>
         </div>
         <div class="col-md-2 form-group-sm" ng-if="vm.vlrc.ffin">
-            <label translate="vlrc_ffin"></label>
+            <label translate="ffin"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.ffin | date: ('format_datetime' | translate)"></p>
         </div>
     </div>
@@ -138,7 +138,7 @@
         <table class="table-bordered table-condensed table-hover">
             <thead>
                 <tr>
-                    <th translate="vlrg_crgo"></th>
+                    <th translate="crgo"></th>
                     <th translate="vlrg_importe"></th>
                 </tr>
             </thead>
@@ -201,8 +201,8 @@
         <thead>
             <tr>
                 <th />
-                <th translate="rgla_enti"></th>
-                <th translate="rgla_crgo"></th>
+                <th translate="enti"></th>
+                <th translate="crgo"></th>
                 <th translate="rgla"></th>
                 <th translate="rgla_tipo"></th>
                 <th translate="rgla_valorBase"></th>
@@ -211,8 +211,8 @@
                 <th translate="vlrl_vlrdCount"></th>
                 <th translate="vlrl_impuesto"></th>
                 <th translate="ssrv"></th>
-                <th translate="vlrl_fini"></th>
-                <th translate="vlrl_ffin"></th>
+                <th translate="fini"></th>
+                <th translate="ffin"></th>
 
                 <th ng-if="vm.aspc.version.lgrpInfo1" translate="vlrl_info1"></th>
                 <th ng-if="vm.aspc.version.lgrpInfo2" translate="vlrl_info2"></th>
