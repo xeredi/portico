@@ -18,6 +18,15 @@
                 class="glyphicon glyphicon-{{parameter.item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></td>
             <td ng-switch-when="ND">{{parameter.item.itdtMap[tpdtId].cantidadDecimal | number:2}}</td>
             <td ng-switch-when="NE">{{parameter.item.itdtMap[tpdtId].cantidadEntera}}</td>
+            <td ng-switch-when="FE">{{parameter.item.itdtMap[tpdtId].fecha | date: ('format_date' |
+                translate)}}</td>
+            <td ng-switch-when="FH">{{parameter.item.itdtMap[tpdtId].fecha | date: ('format_datetime' |
+                translate)}}</td>
+            <td ng-switch-when="PR">{{parameter.item.itdtMap[tpdtId].prmt.etiqueta}}</td>
+            <td ng-switch-when="SR">{{parameter.item.itdtMap[tpdtId].srvc.etiqueta}}</td>
+            <td ng-switch-when="CR" ng-if="parameter.item.itdtMap[tpdtId].cadena"
+                ng-bind="'cdrf_' + tpdtId + '_' + parameter.item.itdtMap[tpdtId].cadena | translate"></td>
+            <td ng-switch-when="TX">{{parameter.item.itdtMap[tpdtId].cadena}}</td>
         </tr>
     </tbody>
 </table>

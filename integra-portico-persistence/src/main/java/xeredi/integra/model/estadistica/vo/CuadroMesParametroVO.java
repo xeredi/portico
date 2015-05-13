@@ -2,6 +2,7 @@ package xeredi.integra.model.estadistica.vo;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 
 // TODO: Auto-generated Javadoc
@@ -10,17 +11,20 @@ import xeredi.integra.model.metamodelo.vo.TipoDato;
  */
 public final class CuadroMesParametroVO {
 
-    /** The cdms id. */
-    private final Long cdmsId;
-
     /** The pepr id. */
     private final Long peprId;
 
-    /** The tipo dato. */
-    private final TipoDato tipoDato;
+    /** The enti. */
+    private final Entidad enti;
 
     /** The cocu. */
     private final CuadroMesConcepto cocu;
+
+    /** The orden. */
+    private final int orden;
+
+    /** The tipo dato. */
+    private final TipoDato tipoDato;
 
     /** The opet. */
     private final String opet;
@@ -42,15 +46,17 @@ public final class CuadroMesParametroVO {
 
     /**
      * Instantiates a new cuadro mes parametro vo.
-     * 
-     * @param acdmsId
-     *            the acdms id
+     *
      * @param apeprId
      *            the apepr id
-     * @param atipoDato
-     *            the atipo dato
+     * @param aenti
+     *            the aenti
      * @param acocu
      *            the acocu
+     * @param aorden
+     *            the aorden
+     * @param atipoDato
+     *            the atipo dato
      * @param aopet
      *            the aopet
      * @param anavt
@@ -64,14 +70,15 @@ public final class CuadroMesParametroVO {
      * @param acampoAdicionalParam
      *            the acampo adicional param
      */
-    public CuadroMesParametroVO(final Long acdmsId, final Long apeprId, final TipoDato atipoDato,
-            final CuadroMesConcepto acocu, final String aopet, final String anavt, final String apais, final String aopetParam,
-            final String anavtParam, final String acampoAdicionalParam) {
+    public CuadroMesParametroVO(final Long apeprId, final Entidad aenti, final CuadroMesConcepto acocu,
+            final int aorden, final TipoDato atipoDato, final String aopet, final String anavt, final String apais,
+            final String aopetParam, final String anavtParam, final String acampoAdicionalParam) {
         super();
-        cdmsId = acdmsId;
         peprId = apeprId;
-        tipoDato = atipoDato;
+        enti = aenti;
         cocu = acocu;
+        orden = aorden;
+        tipoDato = atipoDato;
         opet = aopet;
         navt = anavt;
         pais = apais;
@@ -89,17 +96,8 @@ public final class CuadroMesParametroVO {
     }
 
     /**
-     * Gets the cdms id.
-     * 
-     * @return the cdms id
-     */
-    public Long getCdmsId() {
-        return cdmsId;
-    }
-
-    /**
      * Gets the pepr id.
-     * 
+     *
      * @return the pepr id
      */
     public Long getPeprId() {
@@ -176,5 +174,23 @@ public final class CuadroMesParametroVO {
      */
     public String getCampoAdicionalParam() {
         return campoAdicionalParam;
+    }
+
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
+    public final Entidad getEnti() {
+        return enti;
+    }
+
+    /**
+     * Gets the orden.
+     *
+     * @return the orden
+     */
+    public final int getOrden() {
+        return orden;
     }
 }

@@ -2,6 +2,7 @@ package xeredi.integra.model.estadistica.vo;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 
 // TODO: Auto-generated Javadoc
@@ -15,6 +16,9 @@ public final class CuadroMesVO {
 
     /** The pepr id. */
     private Long peprId;
+
+    /** The prto. */
+    private PuertoVO prto;
 
     /** The cocu. */
     private ParametroVO cocu;
@@ -41,7 +45,7 @@ public final class CuadroMesVO {
 
     /**
      * Gets the pepr id.
-     * 
+     *
      * @return the pepr id
      */
     public Long getPeprId() {
@@ -50,7 +54,7 @@ public final class CuadroMesVO {
 
     /**
      * Sets the pepr id.
-     * 
+     *
      * @param value
      *            the new pepr id
      */
@@ -60,7 +64,7 @@ public final class CuadroMesVO {
 
     /**
      * Gets the cocu.
-     * 
+     *
      * @return the cocu
      */
     public ParametroVO getCocu() {
@@ -69,7 +73,7 @@ public final class CuadroMesVO {
 
     /**
      * Sets the cocu.
-     * 
+     *
      * @param value
      *            the new cocu
      */
@@ -79,7 +83,7 @@ public final class CuadroMesVO {
 
     /**
      * Gets the opet.
-     * 
+     *
      * @return the opet
      */
     public ParametroVO getOpet() {
@@ -88,7 +92,7 @@ public final class CuadroMesVO {
 
     /**
      * Sets the opet.
-     * 
+     *
      * @param value
      *            the new opet
      */
@@ -98,7 +102,7 @@ public final class CuadroMesVO {
 
     /**
      * Gets the navt.
-     * 
+     *
      * @return the navt
      */
     public ParametroVO getNavt() {
@@ -107,7 +111,7 @@ public final class CuadroMesVO {
 
     /**
      * Sets the navt.
-     * 
+     *
      * @param value
      *            the new navt
      */
@@ -117,7 +121,7 @@ public final class CuadroMesVO {
 
     /**
      * Gets the pais.
-     * 
+     *
      * @return the pais
      */
     public ParametroVO getPais() {
@@ -126,7 +130,7 @@ public final class CuadroMesVO {
 
     /**
      * Sets the pais.
-     * 
+     *
      * @param value
      *            the new pais
      */
@@ -136,7 +140,7 @@ public final class CuadroMesVO {
 
     /**
      * Gets the cantidad.
-     * 
+     *
      * @return the cantidad
      */
     public Double getCantidad() {
@@ -145,7 +149,7 @@ public final class CuadroMesVO {
 
     /**
      * Sets the cantidad.
-     * 
+     *
      * @param value
      *            the new cantidad
      */
@@ -155,7 +159,7 @@ public final class CuadroMesVO {
 
     /**
      * Gets the id.
-     * 
+     *
      * @return the id
      */
     public Long getId() {
@@ -164,12 +168,31 @@ public final class CuadroMesVO {
 
     /**
      * Sets the id.
-     * 
+     *
      * @param value
      *            the new id
      */
     public void setId(final Long value) {
         id = value;
+    }
+
+    /**
+     * Gets the prto.
+     *
+     * @return the prto
+     */
+    public final PuertoVO getPrto() {
+        return prto;
+    }
+
+    /**
+     * Sets the prto.
+     *
+     * @param value
+     *            the new prto
+     */
+    public final void setPrto(final PuertoVO value) {
+        prto = value;
     }
 
 }

@@ -19,7 +19,7 @@ angular.module(
     uiGmapGoogleMapApiProvider.configure({
         key : 'AIzaSyBkTsBBx0pgO-i66oeAKasc9fswUDfFH-M',
         v : '3.17',
-        libraries : 'weather,geometry,visualization'
+        //libraries : 'weather,geometry,visualization'
     });
 })
 

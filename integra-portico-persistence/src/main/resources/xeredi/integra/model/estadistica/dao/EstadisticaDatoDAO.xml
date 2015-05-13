@@ -117,9 +117,16 @@
 	</insert>
 
 	<delete id="deleteList" parameterType="EstadisticaCriterioVO">
+        <![CDATA[
 		DELETE FROM tbl_estadistica_dato_esdt
+		WHERE
+			esdt_estd_pk = ANY (
+				SELECT estd_pk
+				FROM tbl_estadistica_estd
+        ]]>
 		<where>
 			<include refid="xeredi.integra.model.estadistica.dao.EstadisticaDAO.SelectWhere" />
 		</where>
+			)
 	</delete>
 </mapper>

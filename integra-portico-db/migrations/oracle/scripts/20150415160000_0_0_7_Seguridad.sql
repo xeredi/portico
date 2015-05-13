@@ -331,9 +331,26 @@ INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_esta
 
 
 
+-- Hacer que cuadro mensual apunte a puerto
+ALTER TABLE tbl_cuadro_mes_cdms DROP COLUMN cdms_pk\
+ALTER TABLE tbl_cuadro_mes_cdms ADD cdms_prto_pk NUMBER(19) DEFAULT 37000 NOT NULL\
+ALTER TABLE tbl_cuadro_mes_cdms ADD cdms_orden INT DEFAULT 0 NOT NULL\
+ALTER TABLE tbl_cuadro_mes_cdms ADD CONSTRAINT fk_cdms_prto_pk FOREIGN KEY (cdms_prto_pk)
+	REFERENCES tbl_puerto_prto (prto_pk)\
+
+-- Indice en tbl_estadistica_estd
+DROP INDEX ix_estd_pepr_pk\
+CREATE INDEX ix_estd_pepr_pk ON tbl_estadistica_estd (estd_tpes_pk, estd_pepr_pk, estd_subp_pk)\
+
+
 
 -- //@UNDO
 -- SQL to undo the change goes here.
+
+-- Hacer que cuadro mensual apunte a puerto
+ALTER TABLE tbl_cuadro_mes_cdms DROP COLUMN cdms_orden\
+ALTER TABLE tbl_cuadro_mes_cdms DROP COLUMN cdms_prto_pk\
+ALTER TABLE tbl_cuadro_mes_cdms ADD cdms_pk NUMBER(19) NULL\
 
 DELETE FROM tbl_i18n_i18n WHERE i18n_pref = 'trmt'\
 

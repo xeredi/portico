@@ -14,6 +14,9 @@ public final class PeriodoProcesoCriterioVO extends BaseCriterioVO {
     /** The autp id. */
     private Long sprtId;
 
+    /** The prto id. */
+    private Long prtoId;
+
     /** The anio. */
     private Integer anio;
 
@@ -118,4 +121,22 @@ public final class PeriodoProcesoCriterioVO extends BaseCriterioVO {
         trimestre = value;
     }
 
+    /**
+     * Gets the prto id.
+     *
+     * @return the prto id
+     */
+    public final Long getPrtoId() {
+        return prtoId;
+    }
+
+    /**
+     * Sets the prto id.
+     *
+     * @param value
+     *            the new prto id
+     */
+    public final void setPrtoId(final Long value) {
+        prtoId = value;
+    }
 }

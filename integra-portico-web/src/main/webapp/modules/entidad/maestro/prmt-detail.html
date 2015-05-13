@@ -17,7 +17,7 @@
         <button data-ng-click="vm.print()" class="btn btn-default">
             <i class="glyphicon glyphicon-print"></i> <span translate="btn_imprimir"></span>
         </button>
-        <button data-ng-click="vm.gis()" class="btn btn-default">
+        <button ng-if="vm.enti.enti.gis" data-ng-click="vm.gis()" class="btn btn-default">
             <i class="glyphicon glyphicon-globe"></i> <span translate="btn_gis"></span>
         </button>
     </div>
