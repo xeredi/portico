@@ -12,6 +12,7 @@ import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.servicio.bo.AbstractSubservicioBO;
 import xeredi.integra.model.servicio.dao.pesca.ManifiestoPescaDAO;
 import xeredi.integra.model.servicio.dao.pesca.PartidaPescaDAO;
+import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -81,7 +82,8 @@ public final class PartidaPescaBO extends AbstractSubservicioBO {
      */
     @Override
     protected void statechangePostOperations(final SqlSession session, final SubservicioVO ssrv,
-            final TramiteDetailVO trmtDetail) throws ModelException {
+            final SubservicioTramiteVO sstr, final TramiteDetailVO trmtDetail) throws ModelException {
         // noop
     }
+
 }

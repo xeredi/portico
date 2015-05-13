@@ -3,7 +3,6 @@ package xeredi.integra.http.controller.action.servicio.escala;
 import java.util.Calendar;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -34,126 +33,6 @@ public final class AtraqueAction extends ItemAction implements ModelDriven<Subse
 
     /** The enti. */
     private TipoSubservicioDetailVO enti;
-
-    // Acciones Web
-    /**
-     * Iniciar.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action(value = "atra-iniciar")
-    public String iniciar() throws ApplicationException {
-        Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getId());
-
-        enti = TipoSubservicioProxy.select(model.getEntiId());
-
-        final EscalaBO srvcBO = new EscalaBO();
-        final AtraqueBO atraBO = new AtraqueBO();
-
-        model = atraBO.select(model.getId(), getIdioma());
-
-        if (!atraBO.isIniciable(model.getId())) {
-            throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_iniciar, model.getId());
-        }
-
-        // Copiar los datos de autorizacion a real
-        model.getItdtMap().put(TipoDato.DECIMAL_13.getId(), model.getItdtMap().get(TipoDato.DECIMAL_07.getId()));
-        model.getItdtMap().put(TipoDato.DECIMAL_14.getId(), model.getItdtMap().get(TipoDato.DECIMAL_08.getId()));
-        model.getItdtMap().put(TipoDato.ALIN_3.getId(), model.getItdtMap().get(TipoDato.ALIN_2.getId()));
-        model.getItdtMap()
-        .put(TipoDato.TIPO_ATR_EDI_3.getId(), model.getItdtMap().get(TipoDato.TIPO_ATR_EDI_2.getId()));
-        model.getItdtMap().put(TipoDato.TIPO_ESTAN_ATR_3.getId(),
-                model.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR_2.getId()));
-        model.getItdtMap().put(TipoDato.DECIMAL_15.getId(), model.getItdtMap().get(TipoDato.DECIMAL_09.getId()));
-        model.getItdtMap().put(TipoDato.TIPO_ACT_3.getId(), model.getItdtMap().get(TipoDato.TIPO_ACT_2.getId()));
-        model.getItdtMap().put(TipoDato.TEXTO_03.getId(), model.getItdtMap().get(TipoDato.TEXTO_02.getId()));
-
-        model.setSrvc(srvcBO.select(model.getSrvc().getId(), getIdioma()));
-
-        return SUCCESS;
-    }
-
-    /**
-     * Anular iniciar.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action(value = "atra-iniciar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
-            "actionName", "ssrv-detalle", "model.id", "%{model.id}" }) })
-    public String iniciarGuardar() throws ApplicationException {
-        Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getId());
-        Preconditions.checkNotNull(model.getItdtMap());
-
-        enti = TipoSubservicioProxy.select(Entidad.ATRAQUE.getId());
-
-        model.setEntiId(enti.getEnti().getId());
-
-        final AtraqueBO atraBO = new AtraqueBO();
-
-        atraBO.iniciar(model.getId(), model.getItdtMap());
-
-        return SUCCESS;
-    }
-
-    /**
-     * Finalizar.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action(value = "atra-finalizar")
-    public String finalizar() throws ApplicationException {
-        Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getId());
-
-        enti = TipoSubservicioProxy.select(model.getEntiId());
-
-        final EscalaBO srvcBO = new EscalaBO();
-        final AtraqueBO atraBO = new AtraqueBO();
-
-        model = atraBO.select(model.getId(), getIdioma());
-
-        if (!atraBO.isFinalizable(model.getId())) {
-            throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_finalizar,
-                    model.getId());
-        }
-
-        model.setSrvc(srvcBO.select(model.getSrvc().getId(), getIdioma()));
-
-        return SUCCESS;
-    }
-
-    /**
-     * Finalizar guardar.
-     *
-     * @return the string
-     * @throws ApplicationException
-     *             the application exception
-     */
-    @Action(value = "atra-finalizar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
-            "actionName", "ssrv-detalle", "model.id", "%{model.id}" }) })
-    public String finalizarGuardar() throws ApplicationException {
-        Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getId());
-        Preconditions.checkNotNull(model.getItdtMap());
-
-        enti = TipoSubservicioProxy.select(Entidad.ATRAQUE.getId());
-
-        model.setEntiId(enti.getEnti().getId());
-
-        final AtraqueBO atraBO = new AtraqueBO();
-
-        atraBO.finalizar(model.getId(), model.getItdtMap());
-
-        return SUCCESS;
-    }
 
     /**
      * Autorizar fprevio.

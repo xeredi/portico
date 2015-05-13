@@ -24,24 +24,6 @@ public interface AtraqueDAO {
     int updateIniciar(final Long ssrvId);
 
     /**
-     * Checks if is finalizable.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @return true, if is finalizable
-     */
-    boolean isFinalizable(final Long ssrvId);
-
-    /**
-     * Update finalizar.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @return the int
-     */
-    int updateFinalizar(final Long ssrvId);
-
-    /**
      * Checks if is cambio muelle.
      *
      * @param ssrvId

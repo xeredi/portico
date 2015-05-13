@@ -8,6 +8,7 @@ import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.servicio.bo.AbstractServicioBO;
 import xeredi.integra.model.servicio.dao.pesca.ManifiestoPescaDAO;
+import xeredi.integra.model.servicio.vo.ServicioTramiteVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -61,7 +62,7 @@ public final class ManifiestoPescaBO extends AbstractServicioBO {
      */
     @Override
     protected void statechangePostOperations(final SqlSession session, final ServicioVO srvc,
-            final TramiteDetailVO trmtDetail) throws ModelException {
+            final ServicioTramiteVO srtr, final TramiteDetailVO trmtDetail) throws ModelException {
         // noop
     }
 }

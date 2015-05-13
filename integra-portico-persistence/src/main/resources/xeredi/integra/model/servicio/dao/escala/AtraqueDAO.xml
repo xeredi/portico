@@ -47,28 +47,6 @@
     ]]>
     </update>
 
-    <select id="isFinalizable" parameterType="Long" resultType="Boolean">
-    <![CDATA[
-        SELECT COUNT(1)
-        FROM tbl_subservicio_ssrv ssrv
-        WHERE
-            ssrv.ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
-            AND ssrv.ssrv_estado IN ('I')
-            AND ssrv.ssrv_pk = #{value}
-    ]]>
-    </select>
-
-    <update id="updateFinalizar" parameterType="Long">
-    <![CDATA[
-        UPDATE tbl_subservicio_ssrv SET
-            ssrv_estado = 'F'
-        WHERE
-            ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
-            AND ssrv_estado IN ('I')
-            AND ssrv_pk = #{value}
-    ]]>
-    </update>
-
     <select id="isCambioMuelle" parameterType="Long" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)

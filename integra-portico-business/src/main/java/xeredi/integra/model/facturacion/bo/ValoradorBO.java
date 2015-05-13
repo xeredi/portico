@@ -600,8 +600,8 @@ public class ValoradorBO {
     /**
      * Generate sql path.
      *
-     * @param enti
-     *            the enti
+     * @param entidadDetail
+     *            the entidad detail
      * @param expression
      *            the expression
      * @param generateLabel
