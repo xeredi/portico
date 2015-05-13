@@ -1,17 +1,33 @@
+/* IE */
+ul {
+	list-style: none;
+	list-style-type: none;
+}
+
+/* Layout */
 #body-content {
 	margin-top: 50px;
-	padding-left: 2px;
+}
+
+.container-fluid {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.container-fluid, fieldset, .row {
+	margin-left: 0px;
+	margin-right: 0px;
 }
 
 .navbar {
 	padding-right: 15px;
 }
 
-body, .tooltip, .angular-google-map-container {
+body, .tooltip, .dropdown-menu, .angular-google-map-container {
 	font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif;
 }
 
-body, label, table, legend, .tooltip, .btn, .form-control-static, .form-control, .form-group-sm .form-control,
+body, label, table, legend, .tooltip, .dropdown-menu, .btn, .form-control-static, .form-control, .form-group-sm .form-control,
 	.form-group-sm>.form-control-static {
 	font-size: 11px;
 }
