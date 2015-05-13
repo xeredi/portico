@@ -606,7 +606,6 @@ function TpspEditController($http, $location, $routeParams, pageTitleService) {
     }).success(function(data) {
         vm.enti = data.model;
         vm.i18nMap = data.i18nMap;
-        vm.accion = data.accion;
         vm.entiList = data.tpprList;
     });
 
