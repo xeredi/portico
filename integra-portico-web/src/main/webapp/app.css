@@ -1,7 +1,8 @@
 /* IE */
-ul {
+ul, li {
 	list-style: none;
 	list-style-type: none;
+	list-style-image: none;
 }
 
 /* Layout */
@@ -27,8 +28,8 @@ body, .tooltip, .dropdown-menu, .angular-google-map-container {
 	font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif;
 }
 
-body, label, table, legend, .tooltip, .dropdown-menu, .btn, .form-control-static, .form-control, .form-group-sm .form-control,
-	.form-group-sm>.form-control-static {
+body, label, table, legend, .tooltip, .dropdown-menu, .btn, .form-control-static, .form-control,
+	.form-group-sm .form-control, .form-group-sm>.form-control-static {
 	font-size: 11px;
 }
 

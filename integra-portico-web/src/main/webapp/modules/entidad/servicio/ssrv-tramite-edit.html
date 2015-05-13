@@ -35,16 +35,26 @@
                 <tr ng-if="vm.enti.enti.temporal">
                     <th><span translate="fini"></span></th>
                     <td><span ng-bind="vm.ittr.ossrvFini | date: ('format_datetime' | translate)"></span></td>
-                    <td class="form-group-sm"><input type="text" class="form-control"
-                        ng-model="vm.ittr.dssrvFini" bs-datepicker /><input type="text" class="form-control"
-                        ng-model="vm.ittr.dssrvFini" bs-timepicker /></td>
+                    <td class="form-group-sm">
+                        <div class="col-sm-8 col-md-6 col-lg-4 form-group">
+                            <input type="text" class="form-control" ng-model="vm.ittr.dssrvFini" bs-datepicker />
+                        </div>
+                        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                            <input type="text" class="form-control" ng-model="vm.ittr.dssrvFini" bs-timepicker />
+                        </div>
+                    </td>
                 </tr>
                 <tr ng-if="vm.enti.enti.temporal">
                     <th><span translate="ffin"></span></th>
                     <td><span ng-bind="vm.ittr.ossrvFfin | date: ('format_datetime' | translate)"></span></td>
-                    <td class="form-group-sm"><input type="text" class="col-sm-8 form-control"
-                        ng-model="vm.ittr.dssrvFfin" bs-datepicker /><input type="text"
-                        class="col-sm-4 form-control" ng-model="vm.ittr.dssrvFfin" bs-timepicker /></td>
+                    <td class="form-group-sm">
+                        <div class="col-sm-8 col-md-6 col-lg-4 form-group">
+                            <input type="text" class="form-control" ng-model="vm.ittr.dssrvFfin" bs-datepicker />
+                        </div>
+                        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                            <input type="text" class="form-control" ng-model="vm.ittr.dssrvFfin" bs-timepicker />
+                        </div>
+                    </td>
                 </tr>
             </tbody>
 

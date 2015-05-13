@@ -38,7 +38,7 @@
                 <th ng-if="vm.enti.enti.temporal" translate="ffin"></th>
                 <th ng-repeat="tpdtId in vm.enti.entdList track by $index"
                     ng-if="vm.enti.entdMap[tpdtId].gridable"
-                    translate="{{'entd_' + vm.enti.entdMap[tpdtId].id}}"></th>
+                    ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></th>
             </tr>
         </thead>
         <tbody>

@@ -10,14 +10,14 @@
                     <fieldset>
                         <div class="row">
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                                <label translate>prto</label> <select ng-model="vm.itemCriterio.prto.id"
+                                <label translate="prto"></label> <select ng-model="vm.itemCriterio.prto.id"
                                     ng-options="prto.id as prto.etiqueta for prto in vm.prtoList"
                                     class="form-control">
                                     <option />
                                 </select>
                             </div>
                             <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm pull-right">
-                                <label translate>filtro_limit</label> <select ng-model="vm.itemCriterio.limit"
+                                <label translate="filtro_limit"></label> <select ng-model="vm.itemCriterio.limit"
                                     ng-options="limitValue for limitValue in vm.limits" class="form-control">
                                     <option />
                                 </select>
@@ -30,10 +30,10 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-ng-click="vm.search(1);$hide()">
-                    <i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
+                    <i class="glyphicon glyphicon-search"></i><span translate="btn_buscar"></span>
                 </button>
                 <button class="btn btn-default" data-ng-click="$hide()">
-                    <i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
+                    <i class="glyphicon glyphicon-remove"></i><span translate="btn_cancelar"></span>
                 </button>
             </div>
         </div>
