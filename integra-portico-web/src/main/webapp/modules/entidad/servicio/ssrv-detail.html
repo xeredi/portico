@@ -137,7 +137,7 @@
 
                     <td ng-bind="itemHijo.numero" class="number"></td>
                     <td ng-if="vm.entiHijasMap[entiHijaId].enti.tpdtEstado" nowrap="nowrap" bs-tooltip
-                        data-title="{{'cdrf_' + vm.entiHijasMap[entiHijaId].tpdtEstado.id + '_' + itemHijo.estado | translate}}"
+                        data-title="{{'cdrf_' + vm.entiHijasMap[entiHijaId].enti.tpdtEstado.id + '_' + itemHijo.estado | translate}}"
                         ng-bind="itemHijo.estado"></td>
                     <td ng-if="vm.entiHijasMap[entiHijaId].enti.temporal"
                         ng-bind="itemHijo.fini | date: ('format_date' | translate)"></td>

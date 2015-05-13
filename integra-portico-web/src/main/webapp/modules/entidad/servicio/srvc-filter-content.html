@@ -10,29 +10,31 @@
                     <fieldset>
                         <div class="row">
                             <div class="col-sm-3 col-md-2 form-group-sm">
-                                <label translate>prto</label> <select ng-model="vm.itemCriterio.prto.id"
+                                <label translate="prto"></label> <select ng-model="vm.itemCriterio.prto.id"
                                     ng-options="prto.id as prto.etiqueta for prto in vm.prtoList"
                                     class="form-control">
                                     <option />
                                 </select>
                             </div>
                             <div class="col-sm-1 col-md-1 form-group-sm">
-                                <label translate>srvc_anno</label> <input type="text"
+                                <label translate="srvc_anno"></label> <input type="text"
                                     ng-model="vm.itemCriterio.anno" class="form-control" />
                             </div>
                             <div class="col-sm-1 col-md-1 form-group-sm">
-                                <label translate>srvc_numero</label> <input type="text"
+                                <label translate="srvc_numero"></label> <input type="text"
                                     ng-model="vm.itemCriterio.numero" class="form-control" />
                             </div>
                             <div ng-if="vm.enti.enti.tpdtEstado" class="col-sm-3 col-md-2 form-group-sm">
-                                <label translate>srvc_estado</label> <select ng-model="vm.itemCriterio.estado"
+                                <label translate="srvc_estado"></label> <select
+                                    ng-model="vm.itemCriterio.estado"
                                     ng-options="cdrf.valor as (('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.enti.enti.tpdtEstado.cdrfList"
                                     class="form-control">
                                     <option />
                                 </select>
                             </div>
                             <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm pull-right">
-                                <label translate>filtro_limit</label> <select ng-model="vm.itemCriterio.limit"
+                                <label translate="filtro_limit"></label> <select
+                                    ng-model="vm.itemCriterio.limit"
                                     ng-options="limitValue for limitValue in vm.limits"
                                     class="form-control number">
                                     <option />
@@ -41,65 +43,95 @@
                         </div>
 
                         <div class="row" ng-if="!vm.enti.enti.temporal">
-                            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                                <label translate="fref"></label> <input type="text" class="form-control"
-                                    ng-model="vm.itemCriterio.frefMin" data-container=".modal-body"
-                                    bs-datepicker />
+                            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                                <label translate="fref"></label>
+                                <div>
+                                    <div class="col-sm-8 form-group">
+                                        <input type="text" class="form-control"
+                                            ng-model="vm.itemCriterio.frefMin" data-container=".modal-body"
+                                            bs-datepicker />
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <input type="text" class="form-control"
+                                            ng-model="vm.itemCriterio.frefMin" bs-timepicker />
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-sm-2 col-md-1 form-group-sm">
-                                <label>Hora</label> <input type="text" class="form-control"
-                                    ng-model="vm.itemCriterio.frefMin" bs-timepicker />
-                            </div>
-                            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                                <label translate="fref"></label> <input type="text" class="form-control"
-                                    ng-model="vm.itemCriterio.frefMax" data-container=".modal-body"
-                                    bs-datepicker />
-                            </div>
-                            <div class="col-sm-2 col-md-1 form-group-sm">
-                                <label>Hora</label> <input type="text" class="form-control"
-                                    ng-model="vm.itemCriterio.frefMax" bs-timepicker />
-                            </div>
-                        </div>
-
-                        <div class="row" ng-if="vm.enti.enti.temporal">
-                            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                                <label translate="fini"></label> <input type="text" class="form-control"
-                                    ng-model="vm.itemCriterio.finiMin" data-container=".modal-body"
-                                    bs-datepicker />
-                            </div>
-                            <div class="col-sm-2 col-md-1 form-group-sm">
-                                <label>Hora</label> <input type="text" class="form-control"
-                                    ng-model="vm.itemCriterio.finiMin" bs-timepicker />
-                            </div>
-                            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                                <label translate="fini"></label> <input type="text" class="form-control"
-                                    ng-model="vm.itemCriterio.finiMax" data-container=".modal-body"
-                                    bs-datepicker />
-                            </div>
-                            <div class="col-sm-2 col-md-1 form-group-sm">
-                                <label>Hora</label> <input type="text" class="form-control"
-                                    ng-model="vm.itemCriterio.finiMax" bs-timepicker />
+                            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                                <label translate="fref"></label>
+                                <div>
+                                    <div class="col-sm-8 form-group">
+                                        <input type="text" class="form-control"
+                                            ng-model="vm.itemCriterio.frefMax" data-container=".modal-body"
+                                            bs-datepicker />
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <input type="text" class="form-control"
+                                            ng-model="vm.itemCriterio.frefMax" bs-timepicker />
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="row" ng-if="vm.enti.enti.temporal">
-                            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                                <label translate="ffin"></label> <input type="text" class="form-control"
-                                    ng-model="vm.itemCriterio.ffinMin" data-container=".modal-body"
-                                    bs-datepicker />
+                            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                                <label translate="fini"></label>
+                                <div>
+                                    <div class="col-sm-8 form-group">
+                                        <input type="text" class="form-control"
+                                            ng-model="vm.itemCriterio.finiMin" data-container=".modal-body"
+                                            bs-datepicker />
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <input type="text" class="form-control"
+                                            ng-model="vm.itemCriterio.finiMin" bs-timepicker />
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-sm-2 col-md-1 form-group-sm">
-                                <label>Hora</label> <input type="text" class="form-control"
-                                    ng-model="vm.itemCriterio.ffinMin" bs-timepicker />
+                            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                                <label translate="fini"></label>
+                                <div>
+                                    <div class="col-sm-8 form-group">
+                                        <input type="text" class="form-control"
+                                            ng-model="vm.itemCriterio.finiMax" data-container=".modal-body"
+                                            bs-datepicker />
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <input type="text" class="form-control"
+                                            ng-model="vm.itemCriterio.finiMax" bs-timepicker />
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                                <label translate="ffin"></label> <input type="text" class="form-control"
-                                    ng-model="vm.itemCriterio.ffinMax" data-container=".modal-body"
-                                    bs-datepicker />
+                        </div>
+
+                        <div class="row" ng-if="vm.enti.enti.temporal">
+                            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                                <label translate="ffin"></label>
+                                <div>
+                                    <div class="col-sm-8 form-group">
+                                        <input type="text" class="form-control"
+                                            ng-model="vm.itemCriterio.ffinMin" data-container=".modal-body"
+                                            bs-datepicker />
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <input type="text" class="form-control"
+                                            ng-model="vm.itemCriterio.ffinMin" bs-timepicker />
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-sm-2 col-md-1 form-group-sm">
-                                <label>Hora</label> <input type="text" class="form-control"
-                                    ng-model="vm.itemCriterio.ffinMax" bs-timepicker />
+                            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                                <label translate="ffin"></label>
+                                <div>
+                                    <div class="col-sm-8 form-group">
+                                        <input type="text" class="form-control"
+                                            ng-model="vm.itemCriterio.ffinMax" data-container=".modal-body"
+                                            bs-datepicker />
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <input type="text" class="form-control"
+                                            ng-model="vm.itemCriterio.ffinMax" bs-timepicker />
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
