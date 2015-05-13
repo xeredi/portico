@@ -16,8 +16,14 @@
                 class="form-control number" /> <input ng-switch-when="FE" type="text" class="form-control"
                 ng-model="vm.item.itdtMap[tpdtId].fecha" bs-datepicker />
             <div ng-switch-when="FH">
-                <input type="text" class="form-control" ng-model="vm.item.itdtMap[tpdtId].fecha" bs-datepicker /><input
-                    type="text" class="form-control" ng-model="vm.item.itdtMap[tpdtId].fecha" bs-timepicker />
+                <div class="col-sm-8 form-group">
+                    <input type="text" class="form-control" ng-model="vm.item.itdtMap[tpdtId].fecha"
+                        bs-datepicker />
+                </div>
+                <div class="col-sm-4 form-group">
+                    <input type="text" class="form-control" ng-model="vm.item.itdtMap[tpdtId].fecha"
+                        bs-timepicker />
+                </div>
             </div>
             <select ng-switch-when="CR" ng-model="vm.item.itdtMap[tpdtId].cadena"
                 ng-options="cdrf.valor as ('cdrf_' + tpdtId + '_' + cdrf.valor | translate) for cdrf in vm.enti.entdMap[tpdtId].tpdt.cdrfList"
