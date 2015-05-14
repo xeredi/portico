@@ -121,7 +121,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrdList Paginated");
 
-                final PaginatedList<ValoracionDetalleVO> vlrdList = vlrcBO.selectVlrdList(vlrlId, "es", 0, 20);
+                final PaginatedList<ValoracionDetalleVO> vlrdList = vlrcBO.selectVlrdList(vlrdCriterioVO, "es", 0, 20);
 
                 Assert.assertNotNull(vlrdList);
                 Assert.assertNotNull(vlrdList.getList());
