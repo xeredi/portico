@@ -29,7 +29,7 @@ public enum MessageI18nKey {
     /** The format_1. */
     format_1,
     /** The format_0. */
-    format_0,
+    format_0, btn_acceso,
     /** The btn_buscar. */
     btn_buscar,
     /** The btn_volver. */
@@ -134,10 +134,24 @@ public enum MessageI18nKey {
     sprt,
     /** The sprt list. */
     sprtList,
+    /** The sprt_codigo. */
+    sprt_codigo,
+    /** The sprt_nombre. */
+    sprt_nombre,
     /** The prto. */
     prto,
     /** The prto list. */
     prtoList,
+    /** The prto_codigo. */
+    prto_codigo, prto_nombre,
+    /** The prto_codigo corto. */
+    prto_codigoCorto,
+    /** The prto_codigo edi. */
+    prto_codigoEdi,
+    /** The prto_rec aduanero. */
+    prto_recAduanero,
+    /** The prto_unlocode. */
+    prto_unlocode,
 
     /** The enti. */
     enti,
@@ -353,6 +367,7 @@ public enum MessageI18nKey {
     /** The trtd_obligatorio. */
     trtd_obligatorio,
 
+    page_acceso,
     /** The page_home. */
     page_home,
     /** The page_item_grid. */

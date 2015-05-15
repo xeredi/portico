@@ -50,4 +50,30 @@ public interface SuperpuertoDAO {
      * @return the int
      */
     int count(final SuperpuertoCriterioVO criterio);
+
+    /**
+     * Exists.
+     *
+     * @param sprt
+     *            the sprt
+     * @return true, if successful
+     */
+    boolean exists(final SuperpuertoVO sprt);
+
+    /**
+     * Insert.
+     *
+     * @param sprt
+     *            the sprt
+     */
+    void insert(final SuperpuertoVO sprt);
+
+    /**
+     * Delete.
+     *
+     * @param sprt
+     *            the sprt
+     * @return the int
+     */
+    int delete(final SuperpuertoVO sprt);
 }

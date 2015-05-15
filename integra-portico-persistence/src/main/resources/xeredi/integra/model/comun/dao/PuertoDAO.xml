@@ -17,6 +17,8 @@
 
 		<association property="sprt" javaType="SuperPuertoVO">
 			<result column="prto_sprt_pk" property="id" />
+			<result column="sprt_codigo" property="codigo" />
+			<result column="sprt_nombre" property="nombre" />
 		</association>
 	</resultMap>
 
@@ -24,8 +26,10 @@
     <![CDATA[
 	    SELECT
 	        prto_pk, prto_codigo, prto_codigo_corto, prto_codigo_edi, prto_rec_aduanero, prto_sprt_pk, prto_unlocode
+
+	        , (SELECT sprt_codigo FROM tbl_superpuerto_sprt WHERE sprt_pk = prto_sprt_pk) AS sprt_codigo
     ]]>
-    	<if test="idioma != null">
+		<if test="idioma != null">
 	    <![CDATA[
 	    	, (
 	    		SELECT i18n_text
@@ -35,9 +39,17 @@
 	    			AND i18n_lang = #{idioma}
 	    			AND i18n_pref = 'prto'
 	    	) AS prto_nombre
+	    	, (
+	    		SELECT i18n_text
+	    		FROM tbl_i18n_i18n
+	    		WHERE
+	    			i18n_ext_pk = prto_sprt_pk
+	    			AND i18n_lang = #{idioma}
+	    			AND i18n_pref = 'sprt'
+	    	) AS sprt_nombre
 	    ]]>
-    	</if>
-	    FROM tbl_puerto_prto
+		</if>
+		FROM tbl_puerto_prto
 	</sql>
 
 	<sql id="SelectWhere">
@@ -79,10 +91,48 @@
 
 	<select id="count" parameterType="PuertoCriterioVO" resultType="Integer">
     <![CDATA[
-	    SELECT
-	        COUNT(1)
+	    SELECT COUNT(1)
 	    FROM tbl_puerto_prto
     ]]>
 		<include refid="SelectWhere" />
 	</select>
+
+	<select id="exists" parameterType="PuertoVO" resultType="Boolean">
+    <![CDATA[
+	    SELECT COUNT(1)
+	    FROM tbl_puerto_prto
+	    WHERE prto_codigo = #{codigo}
+	    	OR (
+	    		prto_codigo_corto = #{codigoCorto}
+	    		AND prto_sprt_pk = #{sprt.id}
+	    	)
+    ]]>
+	</select>
+
+	<insert id="insert" parameterType="PuertoVO">
+    <![CDATA[
+	    INSERT INTO tbl_puerto_prto (
+	    	prto_pk, prto_codigo, prto_codigo_corto, prto_codigo_edi, prto_rec_aduanero, prto_sprt_pk, prto_unlocode)
+	    VALUES (#{id}, #{codigo}, #{codigoCorto}, #{codigoEdi}, #{recAduanero}, #{sprt.id}, #{unlocode})
+    ]]>
+	</insert>
+
+	<update id="update" parameterType="PuertoVO">
+    <![CDATA[
+	    UPDATE tbl_puerto_prto SET
+			prto_codigo_corto = #{codigoCorto}
+			, prto_codigo_edi = #{codigoEdi}
+			, prto_rec_aduanero = #{recAduanero}
+			, prto_sprt_pk = #{sprt.id}
+			, prto_unlocode = #{unlocode}
+	    WHERE prto_pk = #{id}
+    ]]>
+	</update>
+
+	<delete id="delete" parameterType="PuertoVO">
+    <![CDATA[
+	    DELETE FROM tbl_puerto_prto
+	    WHERE prto_pk = #{id}
+    ]]>
+	</delete>
 </mapper>

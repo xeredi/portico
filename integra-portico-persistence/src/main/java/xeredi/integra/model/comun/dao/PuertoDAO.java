@@ -49,4 +49,39 @@ public interface PuertoDAO {
      * @return the int
      */
     int count(final PuertoCriterioVO criterio);
+
+    /**
+     * Exists.
+     *
+     * @param prto
+     *            the prto
+     * @return true, if successful
+     */
+    boolean exists(final PuertoVO prto);
+
+    /**
+     * Insert.
+     *
+     * @param prto
+     *            the prto
+     */
+    void insert(final PuertoVO prto);
+
+    /**
+     * Update.
+     *
+     * @param prto
+     *            the prto
+     * @return the int
+     */
+    int update(final PuertoVO prto);
+
+    /**
+     * Delete.
+     *
+     * @param prto
+     *            the prto
+     * @return the int
+     */
+    int delete(final PuertoVO prto);
 }

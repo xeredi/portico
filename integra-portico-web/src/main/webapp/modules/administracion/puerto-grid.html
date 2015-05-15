@@ -1,0 +1,47 @@
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <pagination total-items="vm.prtoList.count" items-per-page="vm.prtoList.limit" ng-model="vm.page"
+            ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+            next-text="&rsaquo;&rsaquo;"></pagination>
+    </div>
+
+    <div class="btn-group">
+        <button class="btn btn-default" data-ng-click="vm.filter('lg')"
+            data-template="modules/administracion/puerto-filter-content.html" bs-modal="modal">
+            <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
+        </button>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <span class="label label-default" translate="grid_count"
+        translate-value-count="{{vm.prtoList.count | number:0}}"></span>
+
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th nowrap="nowrap" translate="prto_codigo"></th>
+                <th nowrap="nowrap" translate="prto_nombre"></th>
+                <th nowrap="nowrap" translate="prto_codigoCorto"></th>
+                <th nowrap="nowrap" translate="prto_codigoEdi"></th>
+                <th nowrap="nowrap" translate="prto_recAduanero"></th>
+                <th nowrap="nowrap" translate="prto_unlocode"></th>
+                <th nowrap="nowrap" translate="sprt"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in vm.prtoList.list track by $index">
+                <td><a ng-href="#/administracion/puerto/detail/{{item.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
+                <td ng-bind="item.codigo"></td>
+                <td ng-bind="item.nombre"></td>
+                <td ng-bind="item.codigoCorto"></td>
+                <td ng-bind="item.codigoEdi"></td>
+                <td ng-bind="item.recAduanero"></td>
+                <td ng-bind="item.unlocode"></td>
+                <td ng-bind="item.sprt.etiqueta"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,40 @@
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <a class="btn btn-default" ng-href="#/administracion/puerto/edit/edit/{{vm.prto.id}}"><i
+            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
+        <button data-ng-click="vm.remove()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+        </button>
+    </div>
+</div>
+
+<fieldset>
+    <div class="row">
+        <div class="col-sm-2 col-lg-1 form-group-sm">
+            <label translate="prto_codigo"></label>
+            <p class="form-control-static" ng-bind="vm.prto.codigo"></p>
+        </div>
+        <div class="col-sm-2 col-lg-1 form-group-sm">
+            <label translate="prto_codigoCorto"></label>
+            <p class="form-control-static" ng-bind="vm.prto.codigoCorto"></p>
+        </div>
+        <div class="col-sm-2 col-lg-1 form-group-sm">
+            <label translate="prto_codigoEdi"></label>
+            <p class="form-control-static" ng-bind="vm.prto.codigoEdi"></p>
+        </div>
+        <div class="col-sm-2 col-lg-1 form-group-sm">
+            <label translate="prto_recAduanero"></label>
+            <p class="form-control-static" ng-bind="vm.prto.recAduanero"></p>
+        </div>
+        <div class="col-sm-2 col-lg-1 form-group-sm">
+            <label translate="prto_unlocode"></label>
+            <p class="form-control-static" ng-bind="vm.prto.unlocode"></p>
+        </div>
+        <div class="col-sm-2 form-group-sm">
+            <label translate="sprt"></label>
+            <p class="form-control-static" ng-bind="vm.prto.sprt.etiqueta"></p>
+        </div>
+    </div>
+
+    <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+</fieldset>

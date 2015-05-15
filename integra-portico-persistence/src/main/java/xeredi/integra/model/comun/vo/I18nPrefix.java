@@ -6,6 +6,10 @@ package xeredi.integra.model.comun.vo;
  */
 public enum I18nPrefix {
 
+    /** The prto. */
+    prto,
+    /** The sprt. */
+    sprt,
     /** The enti. */
     enti,
     /** The engd. */

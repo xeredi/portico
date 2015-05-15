@@ -62,4 +62,26 @@
     ]]>
 		<include refid="SelectWhere" />
 	</select>
+
+	<select id="exists" parameterType="SuperpuertoVO" resultType="Boolean">
+    <![CDATA[
+	    SELECT COUNT(1)
+	    FROM tbl_superpuerto_sprt
+	    WHERE sprt_codigo = #{codigo}
+    ]]>
+	</select>
+
+	<insert id="insert" parameterType="SuperpuertoVO">
+    <![CDATA[
+	    INSERT INTO tbl_superpuerto_sprt (sprt_pk, sprt_codigo)
+	    VALUES (#{id}, #{codigo})
+    ]]>
+	</insert>
+
+	<delete id="delete" parameterType="SuperpuertoVO">
+    <![CDATA[
+	    DELETE FROM tbl_superpuerto_sprt
+	    WHERE sprt_pk = #{id}
+    ]]>
+	</delete>
 </mapper>

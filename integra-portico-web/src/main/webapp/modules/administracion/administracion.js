@@ -25,6 +25,19 @@ angular.module("administracion", [])
 // ----------------- SCHEDULER --------------------------
 .controller("SchrDetailController", SchrDetailController)
 
+// ----------------- PUERTOS --------------------------
+.controller("SuperpuertoGridController", SuperpuertoGridController)
+
+.controller("SuperpuertoDetailController", SuperpuertoDetailController)
+
+.controller("SuperpuertoEditController", SuperpuertoEditController)
+
+.controller("PuertoGridController", PuertoGridController)
+
+.controller("PuertoDetailController", PuertoDetailController)
+
+.controller("PuertoEditController", PuertoEditController)
+
 ;
 
 function config($routeProvider) {
@@ -66,12 +79,16 @@ function config($routeProvider) {
         templateUrl : "modules/administracion/m18n-grid.html",
         controller : "M18nGridController",
         controllerAs : "vm"
-    }).when("/administracion/m18n/detail/:key", {
+    })
+
+    .when("/administracion/m18n/detail/:key", {
         title : 'm18n',
         templateUrl : "modules/administracion/m18n-detail.html",
         controller : "M18nDetailController",
         controllerAs : "vm"
-    }).when("/administracion/m18n/edit/:key", {
+    })
+
+    .when("/administracion/m18n/edit/:key", {
         title : 'm18n',
         templateUrl : "modules/administracion/m18n-edit.html",
         controller : "M18nEditController",
@@ -85,8 +102,49 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    ;
+    .when("/administracion/superpuerto-grid", {
+        title : 'prtoList',
+        templateUrl : "modules/administracion/superpuerto-grid.html",
+        controller : "SuperpuertoGridController",
+        controllerAs : "vm"
+    })
 
+    .when("/administracion/superpuerto-detail/:sprtId", {
+        title : 'prto',
+        templateUrl : "modules/administracion/superpuerto-detail.html",
+        controller : "SuperpuertoDetailController",
+        controllerAs : "vm"
+    })
+
+    .when("/administracion/superpuerto-edit/:accion/:sprtId?", {
+        title : 'prto',
+        templateUrl : "modules/administracion/superpuerto-edit.html",
+        controller : "SuperpuertoEditController",
+        controllerAs : "vm"
+    })
+
+    .when("/administracion/puerto-grid", {
+        title : 'prtoList',
+        templateUrl : "modules/administracion/puerto-grid.html",
+        controller : "PuertoGridController",
+        controllerAs : "vm"
+    })
+
+    .when("/administracion/puerto-detail/:prtoId", {
+        title : 'prto',
+        templateUrl : "modules/administracion/puerto-detail.html",
+        controller : "PuertoDetailController",
+        controllerAs : "vm"
+    })
+
+    .when("/administracion/puerto-edit/:accion/:prtoId?", {
+        title : 'prto',
+        templateUrl : "modules/administracion/puerto-edit.html",
+        controller : "PuertoEditController",
+        controllerAs : "vm"
+    })
+
+    ;
 }
 
 function AdministracionController($http, pageTitleService) {
@@ -278,4 +336,148 @@ function SchrDetailController($http, $routeParams, pageTitleService) {
     });
 
     pageTitleService.setTitle("schr", "page_detail");
+}
+
+function SuperpuertoGridController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.sprtCriterio = $routeParams.sprtCriterio ? angular.fromJson($routeParams.sprtCriterio) : {};
+
+    $http.post("administracion/puerto/superpuerto-list.action", {
+        model : vm.sprtCriterio
+    }).success(function(data) {
+        vm.sprtList = data.resultList;
+        vm.page = data.resultList.page;
+
+        $location.search({
+            page : vm.page,
+            sprtCriterio : JSON.stringify(vm.sprtCriterio)
+        }).replace();
+    });
+
+    pageTitleService.setTitle("sprt", "page_grid");
+}
+
+function SuperpuertoDetailController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    $http.post("administracion/puerto/superpuerto-detail.action", {
+        model : {
+            id : $routeParams.sprtId
+        }
+    }).success(function(data) {
+        vm.sprt = data.model;
+        vm.i18nMap = data.i18nMap;
+    });
+
+    pageTitleService.setTitle("sprt", "page_detail");
+}
+
+function SuperpuertoEditController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("administracion/puerto/superpuerto-save.action", {
+            accion : $routeParams.accion,
+            model : vm.sprt
+        }).success(function(data) {
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.accion = $routeParams.accion;
+
+    $http.post("administracion/puerto/superpuerto-edit.action", {
+        accion : $routeParams.accion,
+        model : {
+            id : $routeParams.sprtId
+        }
+    }).success(function(data) {
+        vm.sprt = data.model;
+        vm.i18nMap = data.i18nMap;
+    });
+
+    pageTitleService.setTitle("sprt", "page_edit");
+}
+
+function PuertoGridController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.prtoCriterio = $routeParams.prtoCriterio ? angular.fromJson($routeParams.prtoCriterio) : {};
+
+    $http.post("administracion/puerto/puerto-list.action", {
+        model : vm.prtoCriterio
+    }).success(function(data) {
+        vm.prtoList = data.resultList;
+        vm.page = data.resultList.page;
+
+        $location.search({
+            page : vm.page,
+            prtoCriterio : JSON.stringify(vm.prtoCriterio)
+        }).replace();
+    });
+
+    pageTitleService.setTitle("prto", "page_grid");
+}
+
+function PuertoDetailController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    $http.post("administracion/puerto/puerto-detail.action", {
+        model : {
+            id : $routeParams.prtoId
+        }
+    }).success(function(data) {
+        vm.prto = data.model;
+        vm.i18nMap = data.i18nMap;
+    });
+
+    pageTitleService.setTitle("prto", "page_detail");
+}
+
+function PuertoEditController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("administracion/puerto/puerto-save.action", {
+            accion : $routeParams.accion,
+            model : vm.prto
+        }).success(function(data) {
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.accion = $routeParams.accion;
+
+    $http.post("administracion/puerto/puerto-edit.action", {
+        accion : $routeParams.accion,
+        model : {
+            id : $routeParams.prtoId
+        }
+    }).success(function(data) {
+        vm.prto = data.model;
+        vm.i18nMap = data.i18nMap;
+
+        vm.sprtList = data.sprtList;
+    });
+
+    pageTitleService.setTitle("prto", "page_edit");
 }
