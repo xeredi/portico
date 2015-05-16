@@ -127,6 +127,8 @@ public final class SuperpuertoBO {
             sprtDAO.insert(sprt);
 
             I18nBO.insertMap(session, I18nPrefix.sprt, sprt.getId(), i18nMap);
+
+            session.commit();
         }
     }
 
@@ -153,6 +155,8 @@ public final class SuperpuertoBO {
             }
 
             I18nBO.updateMap(session, I18nPrefix.sprt, sprt.getId(), i18nMap);
+
+            session.commit();
         }
     }
 
@@ -175,6 +179,8 @@ public final class SuperpuertoBO {
             }
 
             I18nBO.deleteMap(session, I18nPrefix.sprt, sprt.getId());
+
+            session.commit();
         }
     }
 

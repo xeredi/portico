@@ -44,101 +44,92 @@ function config($routeProvider) {
     $routeProvider
 
     .when("/administracion", {
-        title : 'sec_administracion',
         templateUrl : "modules/administracion/administracion.html",
         controller : "AdministracionController",
         controllerAs : "vm"
     })
 
     .when("/administracion/metamodelo/reload", {
-        title : 'metamodelo_reload',
         templateUrl : "modules/administracion/metamodelo-reload.html",
         controller : "MetamodeloReloadController",
         controllerAs : "vm"
     })
 
     .when("/administracion/conf/grid", {
-        title : 'conf_grid',
         templateUrl : "modules/administracion/conf-grid.html",
         controller : "ConfGridController",
         controllerAs : "vm"
-    }).when("/administracion/conf/detail/:key", {
-        title : 'conf_detail',
+    })
+
+    .when("/administracion/conf/detail/:key", {
         templateUrl : "modules/administracion/conf-detail.html",
         controller : "ConfDetailController",
         controllerAs : "vm"
-    }).when("/administracion/conf/edit/:accion/:key?", {
-        title : 'conf_edit',
+    })
+
+    .when("/administracion/conf/edit/:accion/:key?", {
         templateUrl : "modules/administracion/conf-edit.html",
         controller : "ConfEditController",
         controllerAs : "vm"
     })
 
     .when("/administracion/m18n/grid", {
-        title : 'm18nList',
         templateUrl : "modules/administracion/m18n-grid.html",
         controller : "M18nGridController",
         controllerAs : "vm"
     })
 
     .when("/administracion/m18n/detail/:key", {
-        title : 'm18n',
         templateUrl : "modules/administracion/m18n-detail.html",
         controller : "M18nDetailController",
         controllerAs : "vm"
     })
 
     .when("/administracion/m18n/edit/:key", {
-        title : 'm18n',
         templateUrl : "modules/administracion/m18n-edit.html",
         controller : "M18nEditController",
         controllerAs : "vm"
     })
 
     .when("/administracion/schr/detail", {
-        title : 'm18n',
         templateUrl : "modules/administracion/schr-detail.html",
         controller : "SchrDetailController",
         controllerAs : "vm"
     })
 
     .when("/administracion/superpuerto-grid", {
-        title : 'prtoList',
         templateUrl : "modules/administracion/superpuerto-grid.html",
         controller : "SuperpuertoGridController",
-        controllerAs : "vm"
+        controllerAs : "vm",
+        reloadOnSearch : false
     })
 
     .when("/administracion/superpuerto-detail/:sprtId", {
-        title : 'prto',
         templateUrl : "modules/administracion/superpuerto-detail.html",
         controller : "SuperpuertoDetailController",
         controllerAs : "vm"
     })
 
     .when("/administracion/superpuerto-edit/:accion/:sprtId?", {
-        title : 'prto',
         templateUrl : "modules/administracion/superpuerto-edit.html",
         controller : "SuperpuertoEditController",
         controllerAs : "vm"
     })
 
     .when("/administracion/puerto-grid", {
-        title : 'prtoList',
         templateUrl : "modules/administracion/puerto-grid.html",
         controller : "PuertoGridController",
-        controllerAs : "vm"
+        controllerAs : "vm",
+        reloadOnSearch : false
     })
 
     .when("/administracion/puerto-detail/:prtoId", {
-        title : 'prto',
         templateUrl : "modules/administracion/puerto-detail.html",
         controller : "PuertoDetailController",
         controllerAs : "vm"
     })
 
     .when("/administracion/puerto-edit/:accion/:prtoId?", {
-        title : 'prto',
         templateUrl : "modules/administracion/puerto-edit.html",
         controller : "PuertoEditController",
         controllerAs : "vm"
@@ -338,7 +329,7 @@ function SchrDetailController($http, $routeParams, pageTitleService) {
     pageTitleService.setTitle("schr", "page_detail");
 }
 
-function SuperpuertoGridController($http, $routeParams, pageTitleService) {
+function SuperpuertoGridController($http, $routeParams, $location, pageTitleService) {
     var vm = this;
 
     vm.sprtCriterio = $routeParams.sprtCriterio ? angular.fromJson($routeParams.sprtCriterio) : {};
@@ -361,6 +352,16 @@ function SuperpuertoGridController($http, $routeParams, pageTitleService) {
 function SuperpuertoDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
+    vm.remove = remove;
+
+    function remove() {
+        $http.post("administracion/puerto/superpuerto-remove.action", {
+            model : vm.sprt
+        }).success(function(data) {
+            window.history.back();
+        });
+    }
+
     $http.post("administracion/puerto/superpuerto-detail.action", {
         model : {
             id : $routeParams.sprtId
@@ -381,8 +382,9 @@ function SuperpuertoEditController($http, $routeParams, pageTitleService) {
 
     function save() {
         $http.post("administracion/puerto/superpuerto-save.action", {
-            accion : $routeParams.accion,
-            model : vm.sprt
+            accion : vm.accion,
+            model : vm.sprt,
+            i18nMap : vm.i18nMap
         }).success(function(data) {
             setTimeout(function() {
                 window.history.back();

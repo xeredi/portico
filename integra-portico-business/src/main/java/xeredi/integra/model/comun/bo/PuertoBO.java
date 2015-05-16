@@ -194,7 +194,7 @@ public final class PuertoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delette(final @NonNull PuertoVO prto) throws InstanceNotFoundException {
+    public void delete(final @NonNull PuertoVO prto) throws InstanceNotFoundException {
         Preconditions.checkNotNull(prto.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

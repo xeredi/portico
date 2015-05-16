@@ -19,7 +19,7 @@ CREATE TABLE tbl_superpuerto_sprt (
 
 CREATE OR REPLACE SYNONYM portico.tbl_superpuerto_sprt FOR tbl_superpuerto_sprt\
 
-GRANT SELECT ON tbl_superpuerto_sprt TO portico\
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_superpuerto_sprt TO portico\
 
 INSERT INTO tbl_superpuerto_sprt (sprt_pk, sprt_codigo) VALUES (36100, '0')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('sprt', 36100, 'es', 'Autp Genérica')\
@@ -52,7 +52,7 @@ CREATE TABLE tbl_puerto_prto (
 
 CREATE OR REPLACE SYNONYM portico.tbl_puerto_prto FOR tbl_puerto_prto\
 
-GRANT SELECT ON tbl_puerto_prto TO portico\
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_puerto_prto TO portico\
 
 INSERT INTO tbl_puerto_prto (prto_pk, prto_sprt_pk, prto_codigo, prto_codigo_corto, prto_codigo_edi, prto_rec_aduanero, prto_unlocode)
 VALUES (37100, 36100, '0', '0', NULL, NULL, 'ES***')\
