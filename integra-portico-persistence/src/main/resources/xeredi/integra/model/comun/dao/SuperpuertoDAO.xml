@@ -37,7 +37,7 @@
 			<if test="id != null">
 				AND sprt_pk = #{id}
 			</if>
-			<if test="codigo != null">
+			<if test="codigo != null and !codigo.empty">
 				AND sprt_codigo = #{codigo}
 			</if>
 		</where>

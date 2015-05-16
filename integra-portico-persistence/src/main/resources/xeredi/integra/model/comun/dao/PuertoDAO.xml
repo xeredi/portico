@@ -60,19 +60,19 @@
 			<if test="sprtId != null">
 				AND prto_sprt_pk = #{sprtId}
 			</if>
-			<if test="codigo != null">
+			<if test="codigo != null and !codigo.empty">
 				AND prto_codigo = #{codigo}
 			</if>
-			<if test="codigoCorto != null">
+			<if test="codigoCorto != null and !codigoCorto.empty">
 				AND prto_codigo_corto = #{codigoCorto}
 			</if>
-			<if test="codigoEdi != null">
+			<if test="codigoEdi != null and !codigoEdi.empty">
 				AND prto_codigo_edi = #{codigoEdi}
 			</if>
-			<if test="recAduanero != null">
+			<if test="recAduanero != null and !recAduanero.empty">
 				AND prto_rec_aduanero = #{recAduanero}
 			</if>
-			<if test="unlocode != null">
+			<if test="unlocode != null and !unlocode.empty">
 				AND prto_unlocode = #{unlocode}
 			</if>
 		</where>

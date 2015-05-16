@@ -332,19 +332,26 @@ function SchrDetailController($http, $routeParams, pageTitleService) {
 function SuperpuertoGridController($http, $routeParams, $location, pageTitleService) {
     var vm = this;
 
+    vm.search = search;
+
+    function search(page) {
+        $http.post("administracion/puerto/superpuerto-list.action", {
+            model : vm.sprtCriterio,
+            page : page
+        }).success(function(data) {
+            vm.sprtList = data.resultList;
+            vm.page = data.resultList.page;
+
+            $location.search({
+                page : vm.page,
+                sprtCriterio : JSON.stringify(vm.sprtCriterio)
+            }).replace();
+        });
+    }
+
     vm.sprtCriterio = $routeParams.sprtCriterio ? angular.fromJson($routeParams.sprtCriterio) : {};
 
-    $http.post("administracion/puerto/superpuerto-list.action", {
-        model : vm.sprtCriterio
-    }).success(function(data) {
-        vm.sprtList = data.resultList;
-        vm.page = data.resultList.page;
-
-        $location.search({
-            page : vm.page,
-            sprtCriterio : JSON.stringify(vm.sprtCriterio)
-        }).replace();
-    });
+    search(1);
 
     pageTitleService.setTitle("sprt", "page_grid");
 }
@@ -414,19 +421,26 @@ function SuperpuertoEditController($http, $routeParams, pageTitleService) {
 function PuertoGridController($http, $routeParams, pageTitleService) {
     var vm = this;
 
+    vm.search = search;
+
+    function search(page) {
+        $http.post("administracion/puerto/puerto-list.action", {
+            model : vm.prtoCriterio,
+            page : page
+        }).success(function(data) {
+            vm.prtoList = data.resultList;
+            vm.page = data.resultList.page;
+
+            $location.search({
+                page : vm.page,
+                prtoCriterio : JSON.stringify(vm.prtoCriterio)
+            }).replace();
+        });
+    }
+
     vm.prtoCriterio = $routeParams.prtoCriterio ? angular.fromJson($routeParams.prtoCriterio) : {};
 
-    $http.post("administracion/puerto/puerto-list.action", {
-        model : vm.prtoCriterio
-    }).success(function(data) {
-        vm.prtoList = data.resultList;
-        vm.page = data.resultList.page;
-
-        $location.search({
-            page : vm.page,
-            prtoCriterio : JSON.stringify(vm.prtoCriterio)
-        }).replace();
-    });
+    search(1);
 
     pageTitleService.setTitle("prto", "page_grid");
 }
@@ -455,7 +469,8 @@ function PuertoEditController($http, $routeParams, pageTitleService) {
     function save() {
         $http.post("administracion/puerto/puerto-save.action", {
             accion : $routeParams.accion,
-            model : vm.prto
+            model : vm.prto,
+            i18nMap : vm.i18nMap
         }).success(function(data) {
             setTimeout(function() {
                 window.history.back();
