@@ -75,6 +75,9 @@
 			<if test="unlocode != null and !unlocode.empty">
 				AND prto_unlocode = #{unlocode}
 			</if>
+			<if test="sprtId != null">
+				AND prto_sprt_pk = #{sprtId}
+			</if>
 		</where>
 	</sql>
 

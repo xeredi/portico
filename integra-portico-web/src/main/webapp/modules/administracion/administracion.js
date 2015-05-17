@@ -333,6 +333,8 @@ function SuperpuertoGridController($http, $routeParams, $location, pageTitleServ
     var vm = this;
 
     vm.search = search;
+    vm.pageChanged = pageChanged;
+    vm.filter = filter;
 
     function search(page) {
         $http.post("administracion/puerto/superpuerto-list.action", {
@@ -346,6 +348,17 @@ function SuperpuertoGridController($http, $routeParams, $location, pageTitleServ
                 page : vm.page,
                 sprtCriterio : JSON.stringify(vm.sprtCriterio)
             }).replace();
+        });
+    }
+
+    function pageChanged() {
+        search(vm.page);
+    }
+
+    function filter(size) {
+        $http.post("administracion/puerto/superpuerto-filter.action", {
+            model : vm.sprtCriterio
+        }).success(function(data) {
         });
     }
 
@@ -418,10 +431,12 @@ function SuperpuertoEditController($http, $routeParams, pageTitleService) {
     pageTitleService.setTitle("sprt", "page_edit");
 }
 
-function PuertoGridController($http, $routeParams, pageTitleService) {
+function PuertoGridController($http, $routeParams, $location, pageTitleService) {
     var vm = this;
 
     vm.search = search;
+    vm.pageChanged = pageChanged;
+    vm.filter = filter;
 
     function search(page) {
         $http.post("administracion/puerto/puerto-list.action", {
@@ -435,6 +450,18 @@ function PuertoGridController($http, $routeParams, pageTitleService) {
                 page : vm.page,
                 prtoCriterio : JSON.stringify(vm.prtoCriterio)
             }).replace();
+        });
+    }
+
+    function pageChanged() {
+        search(vm.page);
+    }
+
+    function filter(size) {
+        $http.post("administracion/puerto/puerto-filter.action", {
+            model : vm.prtoCriterio
+        }).success(function(data) {
+            vm.sprtList = data.sprtList;
         });
     }
 
