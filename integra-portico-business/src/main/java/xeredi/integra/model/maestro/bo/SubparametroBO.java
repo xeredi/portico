@@ -310,7 +310,7 @@ public class SubparametroBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
             final List<SubparametroVO> sprmList = new ArrayList<>();
-            final int count = sprmDAO.selectCount(sprmCriterioVO);
+            final int count = sprmDAO.count(sprmCriterioVO);
 
             if (count > offset) {
                 sprmList.addAll(sprmDAO.selectList(sprmCriterioVO, new RowBounds(offset, limit)));

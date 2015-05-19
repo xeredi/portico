@@ -3,8 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.metamodelo.dao.TipoServicioDAO">
-	<resultMap type="TipoServicioVO" id="ResultMap"
-		extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
+	<resultMap type="TipoServicioVO" id="ResultMap" extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
 		<result column="tpsr_es_temporal" property="temporal" />
 		<result column="tpsr_es_facturable" property="facturable" />
 		<result column="tpsr_es_exencionable" property="exencionable" />
@@ -56,8 +55,7 @@
 			</if>
 			<if test="ids != null">
 				AND enti_pk IN
-				<foreach collection="ids" item="item" open="(" close=")"
-					separator=", ">#{item}</foreach>
+				<foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}</foreach>
 			</if>
 			<if test="nombre != null and !nombre.empty">
 				AND enti_nombre LIKE #{nombre}
@@ -72,15 +70,7 @@
 		</where>
 	</sql>
 
-	<select id="selectList" parameterType="TipoServicioCriterioVO"
-		resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-		ORDER BY enti_codigo, enti_pk
-	</select>
-
-	<select id="selectPaginatedList" parameterType="TipoServicioCriterioVO"
-		resultMap="ResultMap">
+	<select id="selectList" parameterType="TipoServicioCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 		ORDER BY enti_codigo, enti_pk

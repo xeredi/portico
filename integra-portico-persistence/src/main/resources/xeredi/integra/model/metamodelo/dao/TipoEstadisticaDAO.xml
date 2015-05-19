@@ -54,12 +54,6 @@
 		ORDER BY enti_codigo, enti_pk
 	</select>
 
-	<select id="selectPaginatedList" parameterType="TipoEstadisticaCriterioVO" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-		ORDER BY enti_codigo, enti_pk
-	</select>
-
 	<select id="count" resultType="int">
         <![CDATA[
         SELECT COUNT(1)

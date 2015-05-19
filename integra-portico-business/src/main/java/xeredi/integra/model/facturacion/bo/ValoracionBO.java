@@ -134,8 +134,8 @@ public class ValoracionBO {
             srcrDAO.deleteValoracion(srcrCriterioVO);
 
             vlrdDAO.deleteList(vlrdCriterioVO);
-            vlrlDAO.delete(vlrlCriterioVO);
-            vlrcDAO.delete(vlrcCriterioVO);
+            vlrlDAO.deleteList(vlrlCriterioVO);
+            vlrcDAO.deleteList(vlrcCriterioVO);
 
             session.commit();
         }
@@ -188,7 +188,7 @@ public class ValoracionBO {
             final List<ValoracionVO> vlrcList = new ArrayList<>();
 
             if (count >= offset) {
-                vlrcList.addAll(vlrcDAO.selectPaginatedList(vlrcCriterioVO, new RowBounds(offset, limit)));
+                vlrcList.addAll(vlrcDAO.selectList(vlrcCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<ValoracionVO>(vlrcList, offset, limit, count);
@@ -492,7 +492,7 @@ public class ValoracionBO {
 
             vlrdDAO.deleteList(vlrdCriterio);
 
-            if (vlrlDAO.delete(vlrlCriterio) == 0) {
+            if (vlrlDAO.deleteList(vlrlCriterio) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.vlrl, vlrl.getId());
             }
 
@@ -655,7 +655,7 @@ public class ValoracionBO {
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
 
-            if (vlrdDAO.delete(vlrd.getId()) == 0) {
+            if (vlrdDAO.delete(vlrd) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.vlrd, vlrd.getId());
             }
 
@@ -666,7 +666,7 @@ public class ValoracionBO {
             vlrdCriterioVO.setVlrl(vlrlCriterioVO);
 
             if (vlrdDAO.count(vlrdCriterioVO) == 0) {
-                vlrlDAO.delete(vlrlCriterioVO);
+                vlrlDAO.deleteList(vlrlCriterioVO);
             }
 
             session.commit();

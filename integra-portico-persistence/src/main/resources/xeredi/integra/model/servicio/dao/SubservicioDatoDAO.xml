@@ -135,7 +135,7 @@
         ]]>
 	</insert>
 
-	<insert id="update" parameterType="ItemDatoVO">
+	<update id="update" parameterType="ItemDatoVO">
         <![CDATA[
         UPDATE tbl_subservicio_dato_ssdt SET
             ssdt_nentero = #{cantidadEntera}
@@ -147,5 +147,5 @@
             ssdt_ssrv_pk = #{itemId}
             AND ssdt_tpdt_pk = #{tpdtId}
         ]]>
-	</insert>
+	</update>
 </mapper>

@@ -191,10 +191,10 @@
 		<include refid="SelectWhere" />
 	</delete>
 
-	<delete id="delete" parameterType="Long">
+	<delete id="delete" parameterType="ValoracionDetalleVO">
     <![CDATA[
 		DELETE FROM tbl_valoracion_det_vlrd
-		WHERE vlrd_pk = #{value}
+		WHERE vlrd_pk = #{id}
     ]]>
 	</delete>
 </mapper>

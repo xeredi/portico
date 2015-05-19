@@ -328,7 +328,7 @@
 		WHERE vlrl_pk = #{id}
 	</update>
 
-	<delete id="delete" parameterType="ValoracionLineaCriterioVO">
+	<delete id="deleteList" parameterType="ValoracionLineaCriterioVO">
 		DELETE FROM tbl_valoracion_lin_vlrl
 		<include refid="SelectWhere" />
 	</delete>

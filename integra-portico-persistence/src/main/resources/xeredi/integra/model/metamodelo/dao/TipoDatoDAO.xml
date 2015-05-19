@@ -97,12 +97,6 @@
 		ORDER BY tpdt.tpdt_codigo
 	</select>
 
-	<select id="selectPaginatedList" parameterType="TipoDatoCriterioVO" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-		ORDER BY tpdt.tpdt_codigo
-	</select>
-
 	<select id="selectMap" parameterType="TipoDatoCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />

@@ -1,9 +1,7 @@
 package xeredi.integra.model.maestro.dao;
 
-import java.util.List;
-
-import org.apache.ibatis.session.RowBounds;
-
+import xeredi.integra.model.comun.dao.CrudDAO;
+import xeredi.integra.model.comun.dao.CrudVersionableDAO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 
@@ -11,26 +9,8 @@ import xeredi.integra.model.maestro.vo.SubparametroVO;
 /**
  * The Interface SubparametroDAO.
  */
-public interface SubparametroDAO {
-
-    /**
-     * Exists.
-     *
-     * @param sprmVO
-     *            the sprm vo
-     * @return true, if successful
-     */
-    boolean exists(final SubparametroVO sprmVO);
-
-    /**
-     * Intersects.
-     *
-     * @param sprmVO
-     *            the sprm vo
-     * @return true, if successful
-     */
-    boolean existsOverlap(final SubparametroVO sprmVO);
-
+public interface SubparametroDAO extends CrudDAO<SubparametroVO, SubparametroCriterioVO>,
+CrudVersionableDAO<SubparametroVO> {
     /**
      * Select id.
      *
@@ -39,76 +19,4 @@ public interface SubparametroDAO {
      * @return the long
      */
     Long selectId(final SubparametroVO sprmVO);
-
-    /**
-     * Insert.
-     *
-     * @param sprmVO
-     *            the sprm vo
-     */
-    void insert(final SubparametroVO sprmVO);
-
-    /**
-     * Insert version.
-     *
-     * @param sprmVO
-     *            the sprm vo
-     */
-    void insertVersion(final SubparametroVO sprmVO);
-
-    /**
-     * Update version.
-     *
-     * @param sprmVO
-     *            the sprm vo
-     * @return the int
-     */
-    int updateVersion(final SubparametroVO sprmVO);
-
-    /**
-     * Delete version.
-     *
-     * @param sprmVO
-     *            the sprm vo
-     * @return the int
-     */
-    int deleteVersion(final SubparametroVO sprmVO);
-
-    /**
-     * Count.
-     *
-     * @param sprmCriterioVO
-     *            the sprm criterio vo
-     * @return the int
-     */
-    int selectCount(final SubparametroCriterioVO sprmCriterioVO);
-
-    /**
-     * Select list.
-     *
-     * @param sprmCriterioVO
-     *            the sprm criterio vo
-     * @return the list
-     */
-    List<SubparametroVO> selectList(final SubparametroCriterioVO sprmCriterioVO);
-
-    /**
-     * Select list.
-     *
-     * @param criterio
-     *            the criterio
-     * @param bounds
-     *            the bounds
-     * @return the list
-     */
-    List<SubparametroVO> selectList(final SubparametroCriterioVO criterio, final RowBounds bounds);
-
-    /**
-     * Select object.
-     *
-     * @param sprmCriterioVO
-     *            the sprm criterio vo
-     * @return the subparametro vo
-     */
-    SubparametroVO selectObject(final SubparametroCriterioVO sprmCriterioVO);
 }

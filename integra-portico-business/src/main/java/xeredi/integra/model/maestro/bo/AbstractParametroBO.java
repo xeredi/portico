@@ -396,8 +396,11 @@ public abstract class AbstractParametroBO implements ParametroBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final ParametroDatoDAO prdtDAO = session.getMapper(ParametroDatoDAO.class);
+            final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
 
-            prdtDAO.deleteVersion(prmt);
+            prmtCriterio.setVersionId(prmt.getVersion().getId());
+
+            prdtDAO.deleteList(prmtCriterio);
 
             I18nBO.deleteMap(session, I18nPrefix.prvr, prmt.getVersion().getId());
 

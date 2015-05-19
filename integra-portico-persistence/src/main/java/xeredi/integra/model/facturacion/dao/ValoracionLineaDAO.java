@@ -1,9 +1,6 @@
 package xeredi.integra.model.facturacion.dao;
 
-import java.util.List;
-
-import org.apache.ibatis.session.RowBounds;
-
+import xeredi.integra.model.comun.dao.CrudDAO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 
@@ -11,72 +8,7 @@ import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 /**
  * The Interface ValoracionLineaDAO.
  */
-public interface ValoracionLineaDAO {
-
-    /**
-     * Insert.
-     *
-     * @param vlrlVO
-     *            the vlrl vo
-     */
-    void insert(final ValoracionLineaVO vlrlVO);
-
-    /**
-     * Update.
-     *
-     * @param vlrlVO
-     *            the vlrl vo
-     * @return the int
-     */
-    int update(final ValoracionLineaVO vlrlVO);
-
-    /**
-     * Delete.
-     *
-     * @param vlrlCriterioVO
-     *            the vlrl criterio vo
-     * @return the int
-     */
-    int delete(final ValoracionLineaCriterioVO vlrlCriterioVO);
-
-    /**
-     * Select list.
-     *
-     * @param vlrlCriterioVO
-     *            the vlrl criterio vo
-     * @return the list
-     */
-    List<ValoracionLineaVO> selectList(final ValoracionLineaCriterioVO vlrlCriterioVO);
-
-    /**
-     * Count.
-     *
-     * @param vlrlCriterioVO
-     *            the vlrl criterio vo
-     * @return the int
-     */
-    int count(final ValoracionLineaCriterioVO vlrlCriterioVO);
-
-    /**
-     * Select list.
-     *
-     * @param vlrlCriterioVO
-     *            the vlrl criterio vo
-     * @param bounds
-     *            the bounds
-     * @return the list
-     */
-    List<ValoracionLineaVO> selectList(final ValoracionLineaCriterioVO vlrlCriterioVO, final RowBounds bounds);
-
-    /**
-     * Select.
-     *
-     * @param vlrlCriterio
-     *            the vlrl criterio
-     * @return the valoracion linea vo
-     */
-    ValoracionLineaVO selectObject(final ValoracionLineaCriterioVO vlrlCriterio);
-
+public interface ValoracionLineaDAO extends CrudDAO<ValoracionLineaVO, ValoracionLineaCriterioVO> {
     /**
      * Exists dependencia.
      *

@@ -117,12 +117,12 @@ public interface ServicioBO {
     /**
      * Delete.
      *
-     * @param srvcId
-     *            the srvc id
+     * @param srvc
+     *            the srvc
      * @throws ModelException
      *             the model exception
      */
-    void delete(final Long srvcId) throws ModelException;
+    void delete(final ServicioVO srvc) throws ModelException;
 
     /**
      * Statechange.

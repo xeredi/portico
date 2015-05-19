@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.session.RowBounds;
 
+import xeredi.integra.model.comun.dao.CrudDAO;
+import xeredi.integra.model.comun.dao.CrudVersionableDAO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
@@ -14,25 +16,7 @@ import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 /**
  * The Interface ParametroDAO.
  */
-public interface ParametroDAO {
-
-    /**
-     * Exists.
-     *
-     * @param prmt
-     *            the prmt
-     * @return true, if successful
-     */
-    boolean exists(final ParametroVO prmt);
-
-    /**
-     * Exists overlap.
-     *
-     * @param prmt
-     *            the prmt
-     * @return true, if successful
-     */
-    boolean existsOverlap(final ParametroVO prmt);
+public interface ParametroDAO extends CrudDAO<ParametroVO, ParametroCriterioVO>, CrudVersionableDAO<ParametroVO> {
 
     /**
      * Select id.
@@ -42,69 +26,6 @@ public interface ParametroDAO {
      * @return the long
      */
     Long selectId(final ParametroVO prmt);
-
-    /**
-     * Insert.
-     *
-     * @param prmt
-     *            the prmt
-     */
-    void insert(final ParametroVO prmt);
-
-    /**
-     * Insert version.
-     *
-     * @param prmt
-     *            the prmt
-     */
-    void insertVersion(final ParametroVO prmt);
-
-    /**
-     * Update version.
-     *
-     * @param prmt
-     *            the prmt
-     * @return the int
-     */
-    int updateVersion(final ParametroVO prmt);
-
-    /**
-     * Delete version.
-     *
-     * @param prmt
-     *            the prmt
-     * @return the int
-     */
-    int deleteVersion(final ParametroVO prmt);
-
-    /**
-     * Select object.
-     *
-     * @param prmtCriterioVO
-     *            the prmt criterio vo
-     * @return the parametro vo
-     */
-    ParametroVO selectObject(final ParametroCriterioVO prmtCriterioVO);
-
-    /**
-     * Select list.
-     *
-     * @param prmtCriterioVO
-     *            the prmt criterio vo
-     * @return the list
-     */
-    List<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO);
-
-    /**
-     * Select list.
-     *
-     * @param prmtCriterioVO
-     *            the prmt criterio vo
-     * @param bounds
-     *            the bounds
-     * @return the list
-     */
-    List<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO, final RowBounds bounds);
 
     /**
      * Select map.
@@ -125,15 +46,6 @@ public interface ParametroDAO {
      */
     @MapKey("id")
     Map<Long, ParametroVO> selectMap(final ParametroCriterioVO prmtCriterioVO);
-
-    /**
-     * Count.
-     *
-     * @param prmtCriterioVO
-     *            the prmt criterio vo
-     * @return the int
-     */
-    int count(final ParametroCriterioVO prmtCriterioVO);
 
     /**
      * Select typeahead sprm list.

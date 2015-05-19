@@ -73,7 +73,7 @@ public final class ManifiestoBO extends AbstractServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void deletePostOperations(final SqlSession session, final Long srvcId) throws ModelException {
+    protected void deletePostOperations(final SqlSession session, final ServicioVO srvc) throws ModelException {
         // noop
     }
 

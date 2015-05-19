@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -287,8 +289,9 @@ public class ProcesoBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public final void cancelar(final Long prbtId) throws InstanceNotFoundException, OperacionNoPermitidaException {
-        Preconditions.checkNotNull(prbtId);
+    public final void cancelar(final @NonNull ProcesoVO prbt) throws InstanceNotFoundException,
+            OperacionNoPermitidaException {
+        Preconditions.checkNotNull(prbt.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
@@ -297,10 +300,10 @@ public class ProcesoBO {
             final ProcesoMensajeDAO prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
             final ProcesoParametroDAO prpmDAO = session.getMapper(ProcesoParametroDAO.class);
 
-            final ProcesoVO prbtVO = prbtDAO.select(prbtId);
+            final ProcesoVO prbtVO = prbtDAO.select(prbt.getId());
 
             if (prbtVO == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.prbt, prbtId);
+                throw new InstanceNotFoundException(MessageI18nKey.prbt, prbt);
             }
 
             if (prbtVO.getEstado() == ProcesoEstado.E) {
@@ -309,13 +312,13 @@ public class ProcesoBO {
 
             final ProcesoMensajeCriterioVO prmnCriterio = new ProcesoMensajeCriterioVO();
 
-            prmnCriterio.setPrbtId(prbtId);
+            prmnCriterio.setPrbtId(prbt.getId());
 
             prmnDAO.deleteList(prmnCriterio);
-            prarDAO.deleteList(prbtId);
-            pritDAO.delete(prbtId);
-            prpmDAO.delete(prbtId);
-            prbtDAO.delete(prbtId);
+            prarDAO.deleteList(prbt.getId());
+            pritDAO.delete(prbt.getId());
+            prpmDAO.delete(prbt.getId());
+            prbtDAO.delete(prbt);
 
             session.commit();
         }
@@ -388,9 +391,12 @@ public class ProcesoBO {
     /**
      * Select prmn list.
      *
-     * @param criterio the criterio
-     * @param offset            the offset
-     * @param limit            the limit
+     * @param criterio
+     *            the criterio
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
      * @return the paginated list
      */
     public PaginatedList<ProcesoMensajeVO> selectPrmnList(final ProcesoMensajeCriterioVO criterio, final int offset,

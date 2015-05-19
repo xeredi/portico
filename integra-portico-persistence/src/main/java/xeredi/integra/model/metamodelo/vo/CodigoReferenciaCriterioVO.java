@@ -2,17 +2,13 @@ package xeredi.integra.model.metamodelo.vo;
 
 import java.util.Set;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CodigoReferenciaCriterioVO.
  */
-public final class CodigoReferenciaCriterioVO {
-
-    /** The idioma. */
-    private String idioma;
-
+public final class CodigoReferenciaCriterioVO extends BaseCriterioVO {
     /** The id. */
     private Long id;
 
@@ -24,14 +20,6 @@ public final class CodigoReferenciaCriterioVO {
 
     /** The valor. */
     private String valor;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the tpdt ids.
@@ -88,25 +76,6 @@ public final class CodigoReferenciaCriterioVO {
      */
     public void setValor(final String value) {
         valor = value;
-    }
-
-    /**
-     * Gets the idioma.
-     *
-     * @return the idioma
-     */
-    public String getIdioma() {
-        return idioma;
-    }
-
-    /**
-     * Sets the idioma.
-     *
-     * @param value
-     *            the new idioma
-     */
-    public void setIdioma(final String value) {
-        idioma = value;
     }
 
     /**

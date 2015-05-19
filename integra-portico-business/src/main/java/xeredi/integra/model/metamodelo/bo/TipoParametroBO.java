@@ -84,7 +84,7 @@ public final class TipoParametroBO {
             final List<TipoParametroVO> list = new ArrayList<>();
 
             if (count > offset) {
-                list.addAll(tpprDAO.selectPaginatedList(tpprCriterioVO, new RowBounds(offset, limit)));
+                list.addAll(tpprDAO.selectList(tpprCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<>(list, offset, limit, count);
@@ -186,8 +186,10 @@ public final class TipoParametroBO {
     /**
      * Delete.
      *
-     * @param tppr the tppr
-     * @throws InstanceNotFoundException             the instance not found exception
+     * @param tppr
+     *            the tppr
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     public void delete(final @NonNull TipoParametroVO tppr) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tppr.getId());

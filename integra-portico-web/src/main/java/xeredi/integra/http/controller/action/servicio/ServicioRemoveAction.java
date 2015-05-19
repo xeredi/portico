@@ -22,6 +22,6 @@ public final class ServicioRemoveAction extends ItemRemoveAction<ServicioVO> {
     public void doSpecificRemove() throws ApplicationException {
         final ServicioBO itemBO = ServicioBOFactory.newInstance(model.getEntiId());
 
-        itemBO.delete(model.getId());
+        itemBO.delete(model);
     }
 }

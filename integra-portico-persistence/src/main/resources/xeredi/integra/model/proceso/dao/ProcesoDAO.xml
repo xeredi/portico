@@ -128,11 +128,11 @@
         ]]>
 	</update>
 
-	<delete id="delete" parameterType="Long">
+	<delete id="delete" parameterType="ProcesoVO">
         <![CDATA[
         DELETE FROM tbl_proceso_batch_prbt
         WHERE
-            prbt_pk = #{value}
+            prbt_pk = #{id}
             AND prbt_estado <> 'E'
         ]]>
 	</delete>

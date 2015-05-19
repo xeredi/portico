@@ -84,7 +84,7 @@ public final class TipoSubservicioBO {
             final List<TipoSubservicioVO> list = new ArrayList<>();
 
             if (count > offset) {
-                list.addAll(tpssDAO.selectPaginatedList(tpssCriterioVO, new RowBounds(offset, limit)));
+                list.addAll(tpssDAO.selectList(tpssCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<>(list, offset, limit, count);
@@ -187,8 +187,10 @@ public final class TipoSubservicioBO {
     /**
      * Delete.
      *
-     * @param tpss the tpss
-     * @throws InstanceNotFoundException             the instance not found exception
+     * @param tpss
+     *            the tpss
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     public void delete(final TipoSubservicioVO tpss) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

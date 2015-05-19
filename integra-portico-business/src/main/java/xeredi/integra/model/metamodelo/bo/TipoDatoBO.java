@@ -143,8 +143,10 @@ public final class TipoDatoBO {
     /**
      * Delete.
      *
-     * @param tpdt the tpdt
-     * @throws InstanceNotFoundException             the instance not found exception
+     * @param tpdt
+     *            the tpdt
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     public void delete(final @NonNull TipoDatoVO tpdt) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpdt.getId());
@@ -203,7 +205,7 @@ public final class TipoDatoBO {
             final List<TipoDatoVO> tpdtList = new ArrayList<>();
 
             if (count > offset) {
-                tpdtList.addAll(tpdtDAO.selectPaginatedList(tpdtCriterioVO, new RowBounds(offset, limit)));
+                tpdtList.addAll(tpdtDAO.selectList(tpdtCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<>(tpdtList, offset, limit, count);

@@ -420,7 +420,9 @@ public abstract class AbstractServicioBO implements ServicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final void delete(final @NonNull Long srvcId) throws ModelException {
+    public final void delete(final @NonNull ServicioVO srvc) throws ModelException {
+        Preconditions.checkNotNull(srvc.getId());
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
@@ -432,22 +434,22 @@ public abstract class AbstractServicioBO implements ServicioBO {
             final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
-            srvcCriterioVO.setId(srvcId);
+            srvcCriterioVO.setId(srvc.getId());
             ssrvCriterioVO.setSrvc(srvcCriterioVO);
 
-            ssssDAO.delete(ssrvCriterioVO);
-            ssdtDAO.delete(ssrvCriterioVO);
+            ssssDAO.deleteList(ssrvCriterioVO);
+            ssdtDAO.deleteList(ssrvCriterioVO);
             ssrvDAO.deleteList(ssrvCriterioVO);
-            srdtDAO.delete(srvcCriterioVO);
-            srarDAO.deleteList(srvcId);
+            srdtDAO.deleteList(srvcCriterioVO);
+            srarDAO.deleteList(srvc.getId());
 
-            final int updated = srvcDAO.delete(srvcId);
+            final int updated = srvcDAO.delete(srvc);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.srvc, srvcId);
+                throw new InstanceNotFoundException(MessageI18nKey.srvc, srvc);
             }
 
-            deletePostOperations(session, srvcId);
+            deletePostOperations(session, srvc);
 
             session.commit();
         }
@@ -463,7 +465,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
      * @throws ModelException
      *             the model exception
      */
-    protected abstract void deletePostOperations(final SqlSession session, final Long srvcId) throws ModelException;
+    protected abstract void deletePostOperations(final SqlSession session, final ServicioVO srvc) throws ModelException;
 
     /**
      * {@inheritDoc}

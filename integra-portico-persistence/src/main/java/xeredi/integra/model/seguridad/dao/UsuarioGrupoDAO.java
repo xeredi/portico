@@ -1,5 +1,6 @@
 package xeredi.integra.model.seguridad.dao;
 
+import xeredi.integra.model.comun.dao.CrudDAO;
 import xeredi.integra.model.seguridad.vo.UsuarioGrupoCriterioVO;
 import xeredi.integra.model.seguridad.vo.UsuarioGrupoVO;
 
@@ -7,31 +8,5 @@ import xeredi.integra.model.seguridad.vo.UsuarioGrupoVO;
 /**
  * The Interface UsuarioGrupoDAO.
  */
-public interface UsuarioGrupoDAO {
-
-    /**
-     * Exists.
-     *
-     * @param usgr
-     *            the usgr
-     * @return true, if successful
-     */
-    boolean exists(final UsuarioGrupoVO usgr);
-
-    /**
-     * Insert.
-     *
-     * @param usgr
-     *            the usgr
-     */
-    void insert(final UsuarioGrupoVO usgr);
-
-    /**
-     * Delete.
-     *
-     * @param usgrCriterio
-     *            the usgr criterio
-     * @return the int
-     */
-    int deleteList(final UsuarioGrupoCriterioVO usgrCriterio);
+public interface UsuarioGrupoDAO extends CrudDAO<UsuarioGrupoVO, UsuarioGrupoCriterioVO> {
 }

@@ -127,7 +127,7 @@
 		</if>
 	</sql>
 
-	<select id="selectCount" parameterType="SubservicioCriterioVO" resultType="Integer">
+	<select id="count" parameterType="SubservicioCriterioVO" resultType="Integer">
         <![CDATA[
         SELECT
             COUNT(1)

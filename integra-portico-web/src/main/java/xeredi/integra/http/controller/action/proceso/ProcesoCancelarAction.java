@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.proceso;
 
-import xeredi.integra.http.controller.action.comun.CrudChangeStateSaveAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
@@ -25,6 +24,6 @@ public final class ProcesoCancelarAction extends CrudChangeStateSaveAction<Proce
 
         final ProcesoBO prbtBO = new ProcesoBO();
 
-        prbtBO.cancelar(model.getId());
+        prbtBO.cancelar(model);
     }
 }

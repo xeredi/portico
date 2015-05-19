@@ -72,10 +72,14 @@ public class FacturadorBO {
     /**
      * Facturar valoraciones.
      *
-     * @param vlrcIds            the vlrc ids
-     * @param aspcId            the aspc id
-     * @param fcsrId            the fcsr id
-     * @param fechaFacturacion            the fecha facturacion
+     * @param vlrcIds
+     *            the vlrc ids
+     * @param aspcId
+     *            the aspc id
+     * @param fcsrId
+     *            the fcsr id
+     * @param fechaFacturacion
+     *            the fecha facturacion
      */
     public void facturarValoraciones(final Set<Long> vlrcIds, final Long aspcId, final Long fcsrId,
             final Date fechaFacturacion) {
@@ -295,8 +299,8 @@ public class FacturadorBO {
 
             LOG.info("Borrado de Valoraciones");
             vlrdDAO.deleteList(vlrdCriterioVO);
-            vlrlDAO.delete(vlrlCriterioVO);
-            vlrcDAO.delete(vlrcCriterioVO);
+            vlrlDAO.deleteList(vlrlCriterioVO);
+            vlrcDAO.deleteList(vlrcCriterioVO);
 
             session.commit();
         }

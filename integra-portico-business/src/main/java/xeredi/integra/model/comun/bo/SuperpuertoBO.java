@@ -59,6 +59,29 @@ public final class SuperpuertoBO {
     }
 
     /**
+     * Select object.
+     *
+     * @param sprtCriterio
+     *            the sprt criterio
+     * @return the superpuerto vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public SuperpuertoVO selectObject(final @NonNull SuperpuertoCriterioVO sprtCriterio)
+            throws InstanceNotFoundException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final SuperpuertoDAO sprtDAO = session.getMapper(SuperpuertoDAO.class);
+            final SuperpuertoVO sprt = sprtDAO.selectObject(sprtCriterio);
+
+            if (sprt == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.sprt, sprtCriterio);
+            }
+
+            return sprt;
+        }
+    }
+
+    /**
      * Select list.
      *
      * @param criterio

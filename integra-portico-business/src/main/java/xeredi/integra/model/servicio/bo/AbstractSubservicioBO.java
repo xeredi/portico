@@ -55,7 +55,7 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final int count = ssrvDAO.selectCount(ssrvCriterioVO);
+            final int count = ssrvDAO.count(ssrvCriterioVO);
             final List<SubservicioVO> ssrvList = new ArrayList<>();
 
             if (count > offset) {
@@ -354,7 +354,7 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
 
                 ssrvCriterio.setIds(ssrvIds);
 
-                ssdtDAO.delete(ssrvCriterio);
+                ssdtDAO.deleteList(ssrvCriterio);
             }
 
             {
@@ -363,7 +363,7 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
 
                 ssrvCriterio.setPadreIds(ssrvIds);
 
-                ssssDAO.delete(ssrvCriterio);
+                ssssDAO.deleteList(ssrvCriterio);
             }
 
             {

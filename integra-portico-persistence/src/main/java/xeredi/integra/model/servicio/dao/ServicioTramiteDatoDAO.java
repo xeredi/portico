@@ -1,7 +1,6 @@
 package xeredi.integra.model.servicio.dao;
 
-import java.util.List;
-
+import xeredi.integra.model.comun.dao.CrudDAO;
 import xeredi.integra.model.comun.vo.ItemTramiteDatoVO;
 import xeredi.integra.model.servicio.vo.ServicioTramiteCriterioVO;
 
@@ -9,22 +8,5 @@ import xeredi.integra.model.servicio.vo.ServicioTramiteCriterioVO;
 /**
  * The Interface ServicioTramiteDatoDAO.
  */
-public interface ServicioTramiteDatoDAO {
-
-    /**
-     * Insert.
-     *
-     * @param itdt
-     *            the itdt
-     */
-    void insert(final ItemTramiteDatoVO itdt);
-
-    /**
-     * Select list.
-     *
-     * @param criterio
-     *            the criterio
-     * @return the list
-     */
-    List<ItemTramiteDatoVO> selectList(final ServicioTramiteCriterioVO criterio);
+public interface ServicioTramiteDatoDAO extends CrudDAO<ItemTramiteDatoVO, ServicioTramiteCriterioVO> {
 }

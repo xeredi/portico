@@ -84,7 +84,7 @@ public final class TipoEstadisticaBO {
             final List<TipoEstadisticaVO> list = new ArrayList<>();
 
             if (count > offset) {
-                list.addAll(tpesDAO.selectPaginatedList(tpesCriterioVO, new RowBounds(offset, limit)));
+                list.addAll(tpesDAO.selectList(tpesCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<>(list, offset, limit, count);
@@ -183,8 +183,10 @@ public final class TipoEstadisticaBO {
     /**
      * Delete.
      *
-     * @param tpes the tpes
-     * @throws InstanceNotFoundException             the instance not found exception
+     * @param tpes
+     *            the tpes
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     public void delete(final @NonNull TipoEstadisticaVO tpes) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpes.getId());

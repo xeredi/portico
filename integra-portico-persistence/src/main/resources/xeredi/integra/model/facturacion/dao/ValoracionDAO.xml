@@ -223,11 +223,6 @@
 		<include refid="SelectWhere" />
 	</select>
 
-	<select id="selectPaginatedList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-	</select>
-
 	<select id="count" parameterType="ValoracionCriterioVO" resultType="Integer">
 		SELECT COUNT(1)
 		FROM
@@ -272,7 +267,7 @@
     ]]>
 	</update>
 
-	<delete id="delete" parameterType="ValoracionCriterioVO">
+	<delete id="deleteList" parameterType="ValoracionCriterioVO">
     <![CDATA[
         DELETE FROM tbl_valoracion_vlrc
     ]]>

@@ -86,7 +86,7 @@ public final class TipoSubparametroBO {
             final List<TipoSubparametroVO> list = new ArrayList<>();
 
             if (count > offset) {
-                list.addAll(tpspDAO.selectPaginatedList(tpspCriterioVO, new RowBounds(offset, limit)));
+                list.addAll(tpspDAO.selectList(tpspCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<>(list, offset, limit, count);
