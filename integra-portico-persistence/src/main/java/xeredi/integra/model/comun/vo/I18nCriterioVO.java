@@ -2,13 +2,11 @@ package xeredi.integra.model.comun.vo;
 
 import java.util.Set;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class I18nCriterioVO.
  */
-public final class I18nCriterioVO {
+public final class I18nCriterioVO extends BaseCriterioVO {
     /** The prefix. */
     private I18nPrefix prefix;
 
@@ -23,14 +21,6 @@ public final class I18nCriterioVO {
 
     /** The default language. */
     private String defaultLanguage;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the prefix.

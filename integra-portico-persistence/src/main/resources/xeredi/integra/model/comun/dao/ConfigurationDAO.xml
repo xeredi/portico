@@ -3,39 +3,47 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.comun.dao.ConfigurationDAO">
-    <resultMap type="ConfigurationVO" id="ResultMap">
-        <id column="conf_key" />
+	<resultMap type="ConfigurationVO" id="ResultMap">
+		<id column="conf_key" />
 
-        <result column="conf_key" property="key" />
-        <result column="conf_value_type" property="valueType" />
-        <result column="conf_default_value" property="defaultValue" />
-        <result column="conf_value" property="value" />
-    </resultMap>
+		<result column="conf_key" property="key" />
+		<result column="conf_value_type" property="valueType" />
+		<result column="conf_default_value" property="defaultValue" />
+		<result column="conf_value" property="value" />
+	</resultMap>
 
-    <sql id="SelectPrefix">
+	<sql id="SelectPrefix">
     <![CDATA[
     SELECT
         conf_key, conf_value_type, conf_default_value, conf_value
     FROM tbl_configuration_conf
     ]]>
-    </sql>
+	</sql>
 
-    <select id="select" parameterType="ConfigurationKey" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        WHERE conf_key = #{value}
-    </select>
+	<sql id="SelectWhere">
+		<where>
+			<if test="key != null">
+				AND conf_key = #{key}
+			</if>
+		</where>
+	</sql>
 
-    <select id="selectList" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        ORDER BY conf_key
-    </select>
+	<select id="selectObject" parameterType="ConfigurationCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
 
-    <update id="update" parameterType="I18nVO">
+	<select id="selectAll" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		ORDER BY conf_key
+	</select>
+
+	<update id="update" parameterType="ConfigurationVO">
     <![CDATA[
         UPDATE tbl_configuration_conf SET
             conf_value = #{value}
         WHERE
             conf_key = #{key}
     ]]>
-    </update>
+	</update>
 </mapper>

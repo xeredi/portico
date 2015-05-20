@@ -1,12 +1,11 @@
 package xeredi.integra.model.comun.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ArchivoCriterioVO.
  */
-public final class ArchivoCriterioVO {
+public final class ArchivoCriterioVO extends BaseCriterioVO {
 
     /** The id. */
     private Long id;
@@ -19,14 +18,6 @@ public final class ArchivoCriterioVO {
 
     /** The sentido. */
     private ArchivoSentido sentido;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the srvc id.

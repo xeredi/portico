@@ -1,25 +1,16 @@
 package xeredi.integra.model.comun.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class MessageI18nCriterioVO.
  */
-public final class MessageI18nCriterioVO {
+public final class MessageI18nCriterioVO extends BaseCriterioVO {
     /** The key. */
     private MessageI18nKey key;
 
     /** The language. */
     private String language;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the key.

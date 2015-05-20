@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.dao.ConfigurationDAO;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.ConfigurationCriterioVO;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.ConfigurationVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -29,7 +30,7 @@ public final class ConfigurationBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
 
-            return confDAO.selectList();
+            return confDAO.selectAll();
         }
     }
 
@@ -45,7 +46,11 @@ public final class ConfigurationBO {
     public final ConfigurationVO select(final @NonNull ConfigurationKey key) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
-            final ConfigurationVO conf = confDAO.select(key);
+            final ConfigurationCriterioVO confCriterio = new ConfigurationCriterioVO();
+
+            confCriterio.setKey(key);
+
+            final ConfigurationVO conf = confDAO.selectObject(confCriterio);
 
             if (conf == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.conf, key);

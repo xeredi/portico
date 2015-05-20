@@ -57,8 +57,8 @@
 		ORDER BY arch_falta
 	</select>
 
-	<select id="select" parameterType="Long" resultMap="ResultMap">
+	<select id="selectObject" parameterType="ArchivoCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
-		WHERE arch_pk = #{value}
+		<include refid="SelectWhere" />
 	</select>
 </mapper>

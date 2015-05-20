@@ -21,15 +21,18 @@
 
     <sql id="SelectWhere">
         <where>
+            <if test="key != null">
+                AND mesg_key = #{key}
+            </if>
             <if test="internal != null">
                 AND mesg_internal = #{internal}
             </if>
         </where>
     </sql>
 
-    <select id="select" parameterType="MessageI18nKey" resultMap="ResultMap">
+    <select id="selectObject" parameterType="MessageCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        WHERE mesg_key = #{value}
+        <include refid="SelectWhere" />
     </select>
 
     <select id="selectList" parameterType="MessageCriterioVO" resultMap="ResultMap">

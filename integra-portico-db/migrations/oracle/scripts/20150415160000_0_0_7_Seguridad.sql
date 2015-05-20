@@ -144,9 +144,9 @@ CREATE TABLE tbl_subservicio_tramite_sstr (
 	, sstr_ssrv_pk NUMBER(19) NOT NULL
 	, sstr_trmt_pk NUMBER(19) NOT NULL
 	, sstr_falta TIMESTAMP NOT NULL
-	, sstr_o_ssrv_fini TIMESTAMP NOT NULL
+	, sstr_o_ssrv_fini TIMESTAMP
 	, sstr_o_ssrv_ffin TIMESTAMP
-	, sstr_d_ssrv_fini TIMESTAMP NOT NULL
+	, sstr_d_ssrv_fini TIMESTAMP
 	, sstr_d_ssrv_ffin TIMESTAMP
 
 	, CONSTRAINT pk_sstr PRIMARY KEY (sstr_pk)

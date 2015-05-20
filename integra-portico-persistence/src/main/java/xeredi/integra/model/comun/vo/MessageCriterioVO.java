@@ -1,23 +1,16 @@
 package xeredi.integra.model.comun.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class MessageCriterioVO.
  */
-public final class MessageCriterioVO {
+public final class MessageCriterioVO extends BaseCriterioVO {
+
+    /** The key. */
+    private MessageI18nKey key;
 
     /** The internal. */
     private Boolean internal;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the internal.
@@ -36,6 +29,25 @@ public final class MessageCriterioVO {
      */
     public void setInternal(final Boolean value) {
         internal = value;
+    }
+
+    /**
+     * Gets the key.
+     *
+     * @return the key
+     */
+    public final MessageI18nKey getKey() {
+        return key;
+    }
+
+    /**
+     * Sets the key.
+     *
+     * @param value
+     *            the new key
+     */
+    public final void setKey(final MessageI18nKey value) {
+        key = value;
     }
 
 }

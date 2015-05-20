@@ -24,10 +24,17 @@
     ]]>
 	</sql>
 
-	<select id="select" parameterType="Long"
-		resultMap="ResultMap">
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND arch_pk = #{id}
+			</if>
+		</where>
+	</sql>
+
+	<select id="select" parameterType="ArchivoCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
-		WHERE arch_pk = #{value}
+		<include refid="SelectWhere" />
 	</select>
 
 	<insert id="insert" parameterType="ArchivoVO">

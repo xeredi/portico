@@ -35,8 +35,11 @@ public final class ArchivoBO {
     public InputStream selectStream(final @NonNull Long archId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
+            final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
 
-            final ArchivoVO arch = archDAO.select(archId);
+            archCriterio.setId(archId);
+
+            final ArchivoVO arch = archDAO.selectObject(archCriterio);
 
             if (arch == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.arch, archId);
@@ -58,8 +61,11 @@ public final class ArchivoBO {
     public ArchivoInfoVO select(final @NonNull Long archId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
+            final ArchivoCriterioVO arinCriterio = new ArchivoCriterioVO();
 
-            final ArchivoInfoVO arin = arinDAO.select(archId);
+            arinCriterio.setId(archId);
+
+            final ArchivoInfoVO arin = arinDAO.selectObject(arinCriterio);
 
             if (arin == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.arch, archId);
