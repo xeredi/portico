@@ -61,22 +61,23 @@
 	<sql id="SelectWhere">
 		<where>
 			<if test="id != null">
-				AND fcts_fctr_pk = #{id}
+				AND fcts_pk = #{id}
 			</if>
-			<if test="ids != null">
-				AND fcts_fctr_pk IN
-				<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
-				</foreach>
+			<if test="fctrId != null">
+				AND fcts_fctr_pk = #{fctrId}
+			</if>
+			<if test="srvcId != null">
+				AND fcts_srvc_pk = #{srvcId}
 			</if>
 		</where>
 	</sql>
 
-	<select id="select" resultMap="ResultMap" parameterType="Long">
+	<select id="selectObject" resultMap="ResultMap" parameterType="FacturaServicioCriterioVO">
 		<include refid="SelectPrefix" />
-		WHERE fcts_pk = #{value}
+		<include refid="SelectWhere" />
 	</select>
 
-	<select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
+	<select id="selectList" resultMap="ResultMap" parameterType="FacturaServicioCriterioVO">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 		ORDER BY fcts_fctr_pk

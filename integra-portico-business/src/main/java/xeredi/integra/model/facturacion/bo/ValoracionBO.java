@@ -514,7 +514,11 @@ public class ValoracionBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-            final ValoracionDetalleVO vlrd = vlrdDAO.select(vlrdId);
+            final ValoracionDetalleCriterioVO vlrdCriterio = new ValoracionDetalleCriterioVO();
+
+            vlrdCriterio.setId(vlrdId);
+
+            final ValoracionDetalleVO vlrd = vlrdDAO.selectObject(vlrdCriterio);
 
             if (vlrd == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.vlrd, vlrdId);

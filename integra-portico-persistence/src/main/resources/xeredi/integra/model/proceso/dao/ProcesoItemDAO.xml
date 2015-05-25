@@ -114,12 +114,20 @@
     ]]>
 	</sql>
 
-	<select id="selectList" parameterType="ProcesoItemCriterioVO"
-		resultMap="ResultMap">
+	<sql id="SelectWhere">
+		<where>
+			<if test="prbtId != null">
+				AND prit_prbt_pk = #{prbtId}
+			</if>
+			<if test="sentido != null">
+				AND prit_sentido = #{sentido}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectList" parameterType="ProcesoItemCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
-        <![CDATA[
-        WHERE prit_prbt_pk = #{prbtId} AND prit_sentido = #{sentido}
-        ]]>
+		<include refid="SelectWhere" />
 	</select>
 
 	<insert id="insert" parameterType="ProcesoItemVO">
@@ -129,11 +137,8 @@
         ]]>
 	</insert>
 
-	<delete id="delete" parameterType="Long">
-        <![CDATA[
-        DELETE FROM tbl_proceso_item_prit
-        WHERE
-            prit_prbt_pk = #{value}
-        ]]>
+	<delete id="deleteList" parameterType="ProcesoItemCriterioVO">
+		DELETE FROM tbl_proceso_item_prit
+		<include refid="SelectWhere" />
 	</delete>
 </mapper>

@@ -33,8 +33,9 @@
 		<include refid="SelectWhere" />
 	</select>
 
-	<select id="selectAll" resultMap="ResultMap">
+	<select id="selectList" parameterType="ConfigurationCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
 		ORDER BY conf_key
 	</select>
 

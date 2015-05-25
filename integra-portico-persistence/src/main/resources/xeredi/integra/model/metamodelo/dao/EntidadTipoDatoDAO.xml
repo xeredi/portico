@@ -85,13 +85,6 @@
 		</where>
 	</sql>
 
-	<select id="selectAll" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-        <![CDATA[
-        ORDER BY entd.entd_enti_pk, entd.entd_grupo, entd.entd_fila, entd.entd_orden
-        ]]>
-	</select>
-
 	<select id="selectList" resultMap="ResultMap" parameterType="EntidadTipoDatoCriterioVO">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />

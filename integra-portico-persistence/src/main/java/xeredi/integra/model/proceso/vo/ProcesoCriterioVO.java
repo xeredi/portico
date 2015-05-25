@@ -10,6 +10,9 @@ import xeredi.integra.model.comun.vo.BaseCriterioVO;
  */
 public final class ProcesoCriterioVO extends BaseCriterioVO {
 
+    /** The id. */
+    private Long id;
+
     /** The modulo. */
     private ProcesoModulo modulo;
 
@@ -120,4 +123,22 @@ public final class ProcesoCriterioVO extends BaseCriterioVO {
         faltaMax = value;
     }
 
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public final Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param value
+     *            the new id
+     */
+    public final void setId(final Long value) {
+        id = value;
+    }
 }

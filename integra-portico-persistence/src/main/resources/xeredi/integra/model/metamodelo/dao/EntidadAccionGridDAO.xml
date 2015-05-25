@@ -56,11 +56,6 @@
     <select id="selectList" parameterType="EntidadAccionGridCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
-        ORDER BY enag_orden
-    </select>
-
-    <select id="selectAll" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
         ORDER BY enag_enti_pk, enag_orden
     </select>
 

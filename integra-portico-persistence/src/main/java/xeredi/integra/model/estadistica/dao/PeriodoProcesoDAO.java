@@ -9,12 +9,4 @@ import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
  * The Interface PeriodoProcesoDAO.
  */
 public interface PeriodoProcesoDAO extends CrudDAO<PeriodoProcesoVO, PeriodoProcesoCriterioVO> {
-    /**
-     * Select.
-     *
-     * @param peprId
-     *            the pepr id
-     * @return the periodo proceso vo
-     */
-    PeriodoProcesoVO select(final Long peprId);
 }

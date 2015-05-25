@@ -26,13 +26,4 @@ public interface ProcesoDAO extends CrudDAO<ProcesoVO, ProcesoCriterioVO> {
      * @return the int
      */
     int updateFinalizar(final Long prbtId);
-
-    /**
-     * Select.
-     *
-     * @param prbtId
-     *            the prbt id
-     * @return the proceso vo
-     */
-    ProcesoVO select(final Long prbtId);
 }

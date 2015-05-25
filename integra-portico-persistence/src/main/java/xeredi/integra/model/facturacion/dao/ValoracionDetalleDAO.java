@@ -9,12 +9,4 @@ import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
  * The Interface ValoracionDetalleDAO.
  */
 public interface ValoracionDetalleDAO extends CrudDAO<ValoracionDetalleVO, ValoracionDetalleCriterioVO> {
-    /**
-     * Select.
-     *
-     * @param id
-     *            the id
-     * @return the valoracion detalle vo
-     */
-    ValoracionDetalleVO select(final Long id);
 }

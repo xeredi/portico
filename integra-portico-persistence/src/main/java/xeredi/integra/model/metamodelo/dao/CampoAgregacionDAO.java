@@ -1,7 +1,5 @@
 package xeredi.integra.model.metamodelo.dao;
 
-import java.util.List;
-
 import xeredi.integra.model.comun.dao.CrudDAO;
 import xeredi.integra.model.metamodelo.vo.CampoAgregacionCriterioVO;
 import xeredi.integra.model.metamodelo.vo.CampoAgregacionVO;
@@ -11,10 +9,4 @@ import xeredi.integra.model.metamodelo.vo.CampoAgregacionVO;
  * The Interface CampoAgregacionDAO.
  */
 public interface CampoAgregacionDAO extends CrudDAO<CampoAgregacionVO, CampoAgregacionCriterioVO> {
-    /**
-     * Select all.
-     *
-     * @return the list
-     */
-    List<CampoAgregacionVO> selectAll();
 }

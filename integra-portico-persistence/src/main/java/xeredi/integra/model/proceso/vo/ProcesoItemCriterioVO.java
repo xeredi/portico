@@ -1,26 +1,18 @@
 package xeredi.integra.model.proceso.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ProcesoItemCriterioVO.
  */
-public final class ProcesoItemCriterioVO {
+public final class ProcesoItemCriterioVO extends BaseCriterioVO {
 
     /** The prbt id. */
     private Long prbtId;
 
     /** The sentido. */
     private ItemSentido sentido;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the prbt id.

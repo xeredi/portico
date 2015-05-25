@@ -25,6 +25,6 @@ public final class PeriodoProcesoRemoveAction extends CrudRemoveAction<PeriodoPr
 
         final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
-        peprBO.delete(model.getId());
+        peprBO.delete(model);
     }
 }

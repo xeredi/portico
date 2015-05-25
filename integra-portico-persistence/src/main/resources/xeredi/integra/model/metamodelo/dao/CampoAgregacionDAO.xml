@@ -50,10 +50,6 @@
         ]]>
     </select>
 
-    <select id="selectAll" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-    </select>
-
     <select id="selectObject" parameterType="CampoAgregacionCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />

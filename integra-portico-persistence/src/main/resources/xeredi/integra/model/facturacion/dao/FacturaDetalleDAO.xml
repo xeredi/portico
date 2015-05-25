@@ -104,18 +104,12 @@
 		</where>
 	</sql>
 
-	<select id="select" resultMap="ResultMap" parameterType="Long">
+	<select id="selectObject" resultMap="ResultMap" parameterType="FacturaDetalleCriterioVO">
 		<include refid="SelectPrefix" />
-		WHERE fctd_pk = #{value}
+		<include refid="SelectWhere" />
 	</select>
 
 	<select id="selectList" resultMap="ResultMap" parameterType="FacturaDetalleCriterioVO">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-		ORDER BY fctd_fctr_pk, fctd_fctl_pk, fctd_pk
-	</select>
-
-	<select id="selectPaginatedList" resultMap="ResultMap" parameterType="FacturaDetalleCriterioVO">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 		ORDER BY fctd_fctr_pk, fctd_fctl_pk, fctd_pk

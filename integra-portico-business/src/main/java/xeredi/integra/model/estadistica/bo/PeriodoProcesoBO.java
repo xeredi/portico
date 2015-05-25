@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import lombok.NonNull;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
@@ -90,10 +92,14 @@ public class PeriodoProcesoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final PeriodoProcesoVO select(final Long peprId) throws InstanceNotFoundException {
+    public final PeriodoProcesoVO select(final @NonNull Long peprId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
-            final PeriodoProcesoVO peprVO = peprDAO.select(peprId);
+            final PeriodoProcesoCriterioVO peprCriterio = new PeriodoProcesoCriterioVO();
+
+            peprCriterio.setId(peprId);
+
+            final PeriodoProcesoVO peprVO = peprDAO.selectObject(peprCriterio);
 
             if (peprVO == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.pepr, peprId);
@@ -147,18 +153,12 @@ public class PeriodoProcesoBO {
     /**
      * Delete.
      *
-     * @param peprId
-     *            the pepr id
+     * @param pepr
+     *            the pepr
      */
-    public final void delete(final Long peprId) {
+    public final void delete(final @NonNull PeriodoProcesoVO pepr) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
-
-            final PeriodoProcesoVO peprVO = peprDAO.select(peprId);
-
-            if (peprVO != null) {
-                delete(session, peprVO);
-            }
+            delete(session, pepr);
 
             session.commit();
         }

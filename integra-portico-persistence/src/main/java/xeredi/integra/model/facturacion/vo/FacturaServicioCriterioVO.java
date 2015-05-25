@@ -11,6 +11,9 @@ public final class FacturaServicioCriterioVO extends BaseCriterioVO {
     /** The id. */
     private Long id;
 
+    /** The fctr id. */
+    private Long fctrId;
+
     /** The srvc id. */
     private Long srvcId;
 
@@ -50,6 +53,25 @@ public final class FacturaServicioCriterioVO extends BaseCriterioVO {
      */
     public void setSrvcId(final Long value) {
         srvcId = value;
+    }
+
+    /**
+     * Gets the fctr id.
+     *
+     * @return the fctr id
+     */
+    public final Long getFctrId() {
+        return fctrId;
+    }
+
+    /**
+     * Sets the fctr id.
+     *
+     * @param value
+     *            the new fctr id
+     */
+    public final void setFctrId(final Long value) {
+        fctrId = value;
     }
 
 }

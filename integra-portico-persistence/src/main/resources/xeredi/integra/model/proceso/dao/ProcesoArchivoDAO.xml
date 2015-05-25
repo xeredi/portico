@@ -21,9 +21,15 @@
     ]]>
 	</sql>
 
-	<select id="selectList" parameterType="Long" resultMap="ResultMap">
+	<sql id="SelectWhere">
+		<if test="id != null">
+			AND prar_prbt_pk = #{id}
+		</if>
+	</sql>
+
+	<select id="selectList" parameterType="ProcesoCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
-		WHERE prar_prbt_pk = #{value}
+		<include refid="SelectWhere" />
 	</select>
 
 	<insert id="insert" parameterType="ProcesoArchivoVO">
@@ -33,11 +39,8 @@
         ]]>
 	</insert>
 
-	<delete id="deleteList" parameterType="Long">
-        <![CDATA[
+	<delete id="deleteList" parameterType="ProcesoCriterioVO">
         DELETE FROM tbl_proceso_archivo_prar
-        WHERE
-            prar_prbt_pk = #{value}
-        ]]>
+		<include refid="SelectWhere" />
 	</delete>
 </mapper>

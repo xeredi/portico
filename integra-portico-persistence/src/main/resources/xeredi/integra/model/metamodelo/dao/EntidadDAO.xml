@@ -109,11 +109,6 @@
 		<include refid="SelectWhere" />
 	</select>
 
-	<select id="select" resultMap="ResultMap" parameterType="Long">
-		<include refid="SelectPrefix" />
-		WHERE enti_pk = #{value}
-	</select>
-
 	<select id="exists" parameterType="EntidadVO" resultType="boolean">
     <![CDATA[
         SELECT COUNT(1)

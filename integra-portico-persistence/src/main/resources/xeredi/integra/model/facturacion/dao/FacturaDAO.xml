@@ -115,9 +115,9 @@
 		</where>
 	</sql>
 
-	<select id="select" resultMap="ResultMap" parameterType="Long">
+	<select id="selectObject" resultMap="ResultMap" parameterType="FacturaCriterioVO">
 		<include refid="SelectPrefix" />
-		WHERE fctr_pk = #{value}
+		<include refid="SelectWhere" />
 	</select>
 
 	<select id="count" resultType="Integer" parameterType="FacturaCriterioVO">

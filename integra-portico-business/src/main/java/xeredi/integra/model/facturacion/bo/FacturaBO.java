@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -90,7 +92,7 @@ public class FacturaBO {
             fctlCriterioVO.setFctr(fctrCriterioVO);
             fctdCriterioVO.setFctl(fctlCriterioVO);
 
-            final FacturaVO fctr = fctrDAO.select(fctrId);
+            final FacturaVO fctr = fctrDAO.selectObject(fctrCriterioVO);
 
             if (fctr == null) {
                 throw new Error("No se encuentra la factura a anular");
@@ -114,7 +116,12 @@ public class FacturaBO {
             fcsrCriterio.setId(fcsrId);
 
             final FacturaSerieVO fcsr = fcsrDAO.selectObject(fcsrCriterio);
-            final List<FacturaServicioVO> fctsList = fctsDAO.selectList(fctrCriterioVO);
+
+            final FacturaServicioCriterioVO fctsCriterio = new FacturaServicioCriterioVO();
+
+            fctsCriterio.setFctrId(fctrId);
+
+            final List<FacturaServicioVO> fctsList = fctsDAO.selectList(fctsCriterio);
             final List<FacturaLineaVO> fctlList = fctlDAO.selectList(fctlCriterioVO);
             final List<FacturaDetalleVO> fctdList = fctdDAO.selectList(fctdCriterioVO);
 
@@ -181,7 +188,7 @@ public class FacturaBO {
      *            the duplicar datos
      * @return the long
      */
-    public Long rectificar(final Long fctrId, final Long fctsId, final boolean duplicarDatos) {
+    public Long rectificar(final @NonNull Long fctrId, final @NonNull Long fctsId, final boolean duplicarDatos) {
         Preconditions.checkNotNull(fctrId);
         Preconditions.checkNotNull(fctsId);
 
@@ -194,13 +201,21 @@ public class FacturaBO {
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
 
-            final FacturaVO fctr = fctrDAO.select(fctrId);
+            final FacturaCriterioVO fctrCriterio = new FacturaCriterioVO();
+
+            fctrCriterio.setId(fctrId);
+
+            final FacturaVO fctr = fctrDAO.selectObject(fctrCriterio);
 
             if (fctr == null) {
                 throw new Error("Factura no encontrada");
             }
 
-            final FacturaServicioVO fcts = fctsDAO.select(fctsId);
+            final FacturaServicioCriterioVO fctsCriterio = new FacturaServicioCriterioVO();
+
+            fctsCriterio.setId(fctsId);
+
+            final FacturaServicioVO fcts = fctsDAO.selectObject(fctsCriterio);
 
             if (fcts == null) {
                 throw new Error("Servicio de Factura no encontrado");
@@ -364,12 +379,17 @@ public class FacturaBO {
                 fctrCriterioVO.setId(fctrId);
                 fctlCriterioVO.setFctr(fctrCriterioVO);
 
-                final FacturaVO fctr = fctrDAO.select(fctrId);
+                final FacturaVO fctr = fctrDAO.selectObject(fctrCriterioVO);
 
                 if (fctr != null) {
                     final List<FacturaCargoVO> fctgList = fctgDAO.selectList(fctrCriterioVO);
                     final List<FacturaImpuestoVO> fctiList = fctiDAO.selectList(fctrCriterioVO);
-                    final List<FacturaServicioVO> fctsList = fctsDAO.selectList(fctrCriterioVO);
+
+                    final FacturaServicioCriterioVO fctsCriterio = new FacturaServicioCriterioVO();
+
+                    fctsCriterio.setFctrId(fctrId);
+
+                    final List<FacturaServicioVO> fctsList = fctsDAO.selectList(fctsCriterio);
                     final List<FacturaLineaVO> fctlList = fctlDAO.selectList(fctlCriterioVO);
 
                     final Map<Long, FacturaServicioVO> fctsMap = new HashMap<>();
@@ -395,12 +415,16 @@ public class FacturaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public FacturaVO select(final Long fctrId) throws InstanceNotFoundException {
+    public FacturaVO select(final @NonNull Long fctrId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(fctrId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
-            final FacturaVO fctr = fctrDAO.select(fctrId);
+            final FacturaCriterioVO fctrCriterio = new FacturaCriterioVO();
+
+            fctrCriterio.setId(fctrId);
+
+            final FacturaVO fctr = fctrDAO.selectObject(fctrCriterio);
 
             if (fctr == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.fctr, fctrId);
@@ -446,16 +470,16 @@ public class FacturaBO {
      *            the fctr id
      * @return the list
      */
-    public List<FacturaServicioVO> selectFctsList(final Long fctrId) {
+    public List<FacturaServicioVO> selectFctsList(final @NonNull Long fctrId) {
         Preconditions.checkNotNull(fctrId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaServicioDAO fctsDAO = session.getMapper(FacturaServicioDAO.class);
-            final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
+            final FacturaServicioCriterioVO fctsCriterio = new FacturaServicioCriterioVO();
 
-            fctrCriterioVO.setId(fctrId);
+            fctsCriterio.setFctrId(fctrId);
 
-            return fctsDAO.selectList(fctrCriterioVO);
+            return fctsDAO.selectList(fctsCriterio);
         }
     }
 
@@ -527,7 +551,7 @@ public class FacturaBO {
             final List<FacturaLineaVO> fctlList = new ArrayList<>();
 
             if (count >= offset) {
-                fctlList.addAll(fctlDAO.selectPaginatedList(fctlCriterioVO, new RowBounds(offset, limit)));
+                fctlList.addAll(fctlDAO.selectList(fctlCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<FacturaLineaVO>(fctlList, offset, limit, count);
@@ -543,12 +567,16 @@ public class FacturaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public FacturaLineaVO selectFctl(final Long fctlId) throws InstanceNotFoundException {
+    public FacturaLineaVO selectFctl(final @NonNull Long fctlId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(fctlId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaLineaDAO fctlDAO = session.getMapper(FacturaLineaDAO.class);
-            final FacturaLineaVO fctl = fctlDAO.select(fctlId);
+            final FacturaLineaCriterioVO fctlCriterio = new FacturaLineaCriterioVO();
+
+            fctlCriterio.setId(fctlId);
+
+            final FacturaLineaVO fctl = fctlDAO.selectObject(fctlCriterio);
 
             if (fctl == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.fctl, fctlId);
@@ -586,7 +614,7 @@ public class FacturaBO {
             final List<FacturaDetalleVO> fctdList = new ArrayList<>();
 
             if (count >= offset) {
-                fctdList.addAll(fctdDAO.selectPaginatedList(fctdCriterioVO, new RowBounds(offset, limit)));
+                fctdList.addAll(fctdDAO.selectList(fctdCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<FacturaDetalleVO>(fctdList, offset, limit, count);
@@ -602,12 +630,16 @@ public class FacturaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public FacturaDetalleVO selectFctd(final Long fctdId) throws InstanceNotFoundException {
+    public FacturaDetalleVO selectFctd(final @NonNull Long fctdId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(fctdId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaDetalleDAO fctdDAO = session.getMapper(FacturaDetalleDAO.class);
-            final FacturaDetalleVO fctd = fctdDAO.select(fctdId);
+            final FacturaDetalleCriterioVO fctdCriterio = new FacturaDetalleCriterioVO();
+
+            fctdCriterio.setId(fctdId);
+
+            final FacturaDetalleVO fctd = fctdDAO.selectObject(fctdCriterio);
 
             if (fctd == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.fctd, fctdId);

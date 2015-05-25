@@ -21,15 +21,6 @@ public interface EntidadDAO extends CrudDAO<EntidadVO, EntidadCriterioVO> {
     Long nextSequence();
 
     /**
-     * Select.
-     *
-     * @param id
-     *            the id
-     * @return the entidad vo
-     */
-    EntidadVO select(final Long id);
-
-    /**
      * Select map.
      *
      * @param entiCriterio

@@ -63,6 +63,9 @@
 
 	<sql id="SelectWhere">
 		<where>
+			<if test="id != null">
+				AND pepr_pk = #{id}
+			</if>
 			<if test="anio != null">
 				AND pepr_anio = #{anio}
 			</if>
@@ -95,11 +98,6 @@
 		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
-	</select>
-
-	<select id="select" parameterType="Long" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		WHERE pepr_pk = #{value}
 	</select>
 
 	<select id="exists" parameterType="PeriodoProcesoVO" resultType="Boolean">

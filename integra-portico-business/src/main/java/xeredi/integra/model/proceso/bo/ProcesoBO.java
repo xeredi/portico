@@ -221,7 +221,11 @@ public class ProcesoBO {
 
             final IgBO igBO = new IgBO();
 
-            final ProcesoVO prbt = prbtDAO.select(prbtId);
+            final ProcesoCriterioVO prbtCriterio = new ProcesoCriterioVO();
+
+            prbtCriterio.setId(prbtId);
+
+            final ProcesoVO prbt = prbtDAO.selectObject(prbtCriterio);
 
             if (prbt == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.prbt, prbtId);
@@ -295,12 +299,11 @@ public class ProcesoBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
-            final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
-            final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
-            final ProcesoMensajeDAO prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
-            final ProcesoParametroDAO prpmDAO = session.getMapper(ProcesoParametroDAO.class);
+            final ProcesoCriterioVO prbtCriterio = new ProcesoCriterioVO();
 
-            final ProcesoVO prbtVO = prbtDAO.select(prbt.getId());
+            prbtCriterio.setId(prbt.getId());
+
+            final ProcesoVO prbtVO = prbtDAO.selectObject(prbtCriterio);
 
             if (prbtVO == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.prbt, prbt);
@@ -310,14 +313,27 @@ public class ProcesoBO {
                 throw new OperacionNoPermitidaException(MessageI18nKey.prbt, MessageI18nKey.prbt_cancelar, prbtVO);
             }
 
+            final ProcesoMensajeDAO prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
             final ProcesoMensajeCriterioVO prmnCriterio = new ProcesoMensajeCriterioVO();
 
             prmnCriterio.setPrbtId(prbt.getId());
 
             prmnDAO.deleteList(prmnCriterio);
-            prarDAO.deleteList(prbt.getId());
-            pritDAO.delete(prbt.getId());
-            prpmDAO.delete(prbt.getId());
+
+            final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
+
+            prarDAO.deleteList(prbtCriterio);
+
+            final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
+            final ProcesoItemCriterioVO pritCriterio = new ProcesoItemCriterioVO();
+
+            pritCriterio.setPrbtId(prbt.getId());
+
+            pritDAO.deleteList(pritCriterio);
+
+            final ProcesoParametroDAO prpmDAO = session.getMapper(ProcesoParametroDAO.class);
+
+            prpmDAO.deleteList(prbtCriterio);
             prbtDAO.delete(prbt);
 
             session.commit();
@@ -374,17 +390,20 @@ public class ProcesoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final ProcesoVO select(final Long prbtId) throws InstanceNotFoundException {
+    public final ProcesoVO select(final @NonNull Long prbtId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
+            final ProcesoCriterioVO prbtCriterio = new ProcesoCriterioVO();
 
-            final ProcesoVO prbtVO = prbtDAO.select(prbtId);
+            prbtCriterio.setId(prbtId);
 
-            if (prbtVO == null) {
+            final ProcesoVO prbt = prbtDAO.selectObject(prbtCriterio);
+
+            if (prbt == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.prbt, prbtId);
             }
 
-            return prbtVO;
+            return prbt;
         }
     }
 
@@ -423,10 +442,14 @@ public class ProcesoBO {
      *            the prbt id
      * @return the map
      */
-    public Map<String, ProcesoParametroVO> selectPrpmMap(final Long prbtId) {
+    public Map<String, ProcesoParametroVO> selectPrpmMap(final @NonNull Long prbtId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoParametroDAO prpmDAO = session.getMapper(ProcesoParametroDAO.class);
-            final List<ProcesoParametroVO> prpmList = prpmDAO.selectList(prbtId);
+            final ProcesoCriterioVO prbtCriterio = new ProcesoCriterioVO();
+
+            prbtCriterio.setId(prbtId);
+
+            final List<ProcesoParametroVO> prpmList = prpmDAO.selectList(prbtCriterio);
             final Map<String, ProcesoParametroVO> prpmMap = new HashMap<>();
 
             for (final ProcesoParametroVO prpm : prpmList) {

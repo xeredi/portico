@@ -29,8 +29,9 @@ public final class ConfigurationBO {
     public final List<ConfigurationVO> selectList() {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
+            final ConfigurationCriterioVO confCriterio = new ConfigurationCriterioVO();
 
-            return confDAO.selectAll();
+            return confDAO.selectList(confCriterio);
         }
     }
 

@@ -147,9 +147,9 @@
 		</where>
 	</sql>
 
-	<select id="select" parameterType="Long" resultMap="ResultMap">
+	<select id="select" parameterType="ValoracionDetalleCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
-		WHERE vlrd_pk = #{value}
+		<include refid="SelectWhere" />
 	</select>
 
 	<select id="count" parameterType="ValoracionDetalleCriterioVO" resultType="Integer">

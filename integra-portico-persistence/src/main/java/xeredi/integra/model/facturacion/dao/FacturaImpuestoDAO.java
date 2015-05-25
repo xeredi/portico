@@ -1,7 +1,6 @@
 package xeredi.integra.model.facturacion.dao;
 
-import java.util.List;
-
+import xeredi.integra.model.comun.dao.CrudDAO;
 import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
 
@@ -9,13 +8,5 @@ import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
 /**
  * The Interface FacturaImpuestoDAO.
  */
-public interface FacturaImpuestoDAO {
-    /**
-     * Select list.
-     *
-     * @param fctrCriterioVO
-     *            the fctr criterio vo
-     * @return the list
-     */
-    List<FacturaImpuestoVO> selectList(final FacturaCriterioVO fctrCriterioVO);
+public interface FacturaImpuestoDAO extends CrudDAO<FacturaImpuestoVO, FacturaCriterioVO> {
 }

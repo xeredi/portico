@@ -42,11 +42,6 @@
         </where>
     </sql>
 
-    <select id="selectAll" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        ORDER BY engd_enti_pk, engd_orden
-    </select>
-
     <select id="selectList" resultMap="ResultMap" parameterType="EntidadGrupoDatoCriterioVO">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />

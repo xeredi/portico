@@ -10,6 +10,7 @@ import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.dao.EntidadEntidadDAO;
+import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
@@ -41,8 +42,17 @@ public final class EntidadEntidadBO {
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
             final EntidadEntidadDAO enenDAO = session.getMapper(EntidadEntidadDAO.class);
 
-            final EntidadVO entiPadreVO = entiDAO.select(enenVO.getEntiPadreId());
-            final EntidadVO entiHijaVO = entiDAO.select(enenVO.getEntiHija().getId());
+            final EntidadCriterioVO entipadreCriterio = new EntidadCriterioVO();
+
+            entipadreCriterio.setId(enenVO.getEntiPadreId());
+
+            final EntidadVO entiPadreVO = entiDAO.selectObject(entipadreCriterio);
+
+            final EntidadCriterioVO entihijaCriterio = new EntidadCriterioVO();
+
+            entihijaCriterio.setId(enenVO.getEntiHija().getId());
+
+            final EntidadVO entiHijaVO = entiDAO.selectObject(entihijaCriterio);
 
             if (entiPadreVO.getTipo() == TipoEntidad.P
                     && (entiHijaVO.getTipo() == TipoEntidad.T || entiHijaVO.getTipo() == TipoEntidad.S)) {

@@ -51,6 +51,9 @@
 
 	<sql id="SelectWhere">
 		<where>
+			<if test="id != null">
+				AND prbt_pk = #{id}
+			</if>
 			<if test="modulo != null">
 				AND prbt_modulo = #{modulo}
 			</if>
@@ -90,11 +93,6 @@
 		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
-	</select>
-
-	<select id="select" parameterType="Long" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		WHERE prbt_pk = #{value}
 	</select>
 
 	<insert id="insert" parameterType="ProcesoVO">
