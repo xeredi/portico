@@ -32,6 +32,7 @@ import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaDetalleVO;
 import xeredi.integra.model.facturacion.vo.FacturaEstado;
 import xeredi.integra.model.facturacion.vo.FacturaLineaVO;
+import xeredi.integra.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaSerieVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
 import xeredi.integra.model.facturacion.vo.FacturadorContextoVO;
@@ -109,7 +110,11 @@ public class FacturadorBO {
             contextoVO.setVlrcIds(vlrcIds);
             contextoVO.setPrbt(procesoTemplate.getPrbt());
 
-            final FacturaSerieVO fcsr = fcsrDAO.select(fcsrId);
+            final FacturaSerieCriterioVO fcsrCriterio = new FacturaSerieCriterioVO();
+
+            fcsrCriterio.setId(fcsrId);
+
+            final FacturaSerieVO fcsr = fcsrDAO.selectObject(fcsrCriterio);
 
             if (fcsr == null) {
                 throw new Error("Serie de factura no encontrada: " + fcsrId);
@@ -171,7 +176,7 @@ public class FacturadorBO {
 
                 fctr.getFctr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
                 fctr.getFctr().setFcsr(fcsr);
-                fctr.getFctr().setNumero(fcsrDAO.select(fcsrId).getNumeroUltimo());
+                fctr.getFctr().setNumero(fcsrDAO.selectObject(fcsrCriterio).getNumeroUltimo());
                 fctr.getFctr().setFalta(Calendar.getInstance().getTime());
                 fctr.getFctr().setFref(fechaFacturacion);
                 fctr.getFctr().setEstado(FacturaEstado.NO);

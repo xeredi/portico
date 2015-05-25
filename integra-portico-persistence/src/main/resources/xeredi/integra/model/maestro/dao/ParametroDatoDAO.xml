@@ -4,8 +4,11 @@
 
 <mapper namespace="xeredi.integra.model.maestro.dao.ParametroDatoDAO">
 	<resultMap type="ItemDatoVO" id="ResultMap">
-		<id column="prdt_prvr_pk" property="itemId" />
-		<id column="prdt_tpdt_pk" property="tpdtId" />
+		<id column="prdt_prvr_pk" />
+		<id column="prdt_tpdt_pk" />
+
+		<result column="prdt_prvr_pk" property="itemId" />
+		<result column="prdt_tpdt_pk" property="tpdtId" />
 		<result column="prdt_nentero" property="cantidadEntera" />
 		<result column="prdt_ndecimal" property="cantidadDecimal" />
 		<result column="prdt_fecha" property="fecha" />

@@ -3,6 +3,8 @@ package xeredi.integra.model.facturacion.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -81,14 +83,14 @@ public final class FacturaSerieBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final Long fcsrId) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(fcsrId);
+    public void delete(final @NonNull FacturaSerieVO fcsr) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(fcsr.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final FacturaSerieDAO fcsrDAO = session.getMapper(FacturaSerieDAO.class);
 
-            if (fcsrDAO.delete(fcsrId) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.fcsr, fcsrId);
+            if (fcsrDAO.delete(fcsr) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.fcsr, fcsr);
             }
 
             session.commit();
@@ -109,7 +111,11 @@ public final class FacturaSerieBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final FacturaSerieDAO fcsrDAO = session.getMapper(FacturaSerieDAO.class);
-            final FacturaSerieVO fcsr = fcsrDAO.select(fcsrId);
+            final FacturaSerieCriterioVO fcsrCriterio = new FacturaSerieCriterioVO();
+
+            fcsrCriterio.setId(fcsrId);
+
+            final FacturaSerieVO fcsr = fcsrDAO.selectObject(fcsrCriterio);
 
             if (fcsr == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.fcsr, fcsrId);

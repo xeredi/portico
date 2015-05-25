@@ -18,29 +18,6 @@
         </association>
     </resultMap>
 
-    <sql id="SelectWhere">
-        <where>
-            <![CDATA[
-                AND EXISTS (
-                    SELECT 1
-					FROM
-					    tbl_subparametro_sprm
-					    INNER JOIN tbl_subparametro_version_spvr ON
-					        spvr_sprm_pk = sprm_pk
-					    INNER JOIN tbl_parametro_prmt ON
-					        prmt_pk = sprm_prmt_dep_pk
-					    INNER JOIN tbl_tipo_parametro_tppr ON
-					        tppr_pk = prmt_tppr_pk
-                    WHERE
-                        spvr_pk = spdt_spvr_pk
-            ]]>
-            <include refid="xeredi.integra.model.maestro.dao.SubparametroDAO.SelectWhere" />
-            <![CDATA[
-                )
-            ]]>
-        </where>
-    </sql>
-
     <sql id="SelectPrefix">
     <![CDATA[
 		SELECT
@@ -93,6 +70,29 @@
     ]]>
     </sql>
 
+    <sql id="SelectWhere">
+        <where>
+            <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+					FROM
+					    tbl_subparametro_sprm
+					    INNER JOIN tbl_subparametro_version_spvr ON
+					        spvr_sprm_pk = sprm_pk
+					    INNER JOIN tbl_parametro_prmt ON
+					        prmt_pk = sprm_prmt_dep_pk
+					    INNER JOIN tbl_tipo_parametro_tppr ON
+					        tppr_pk = prmt_tppr_pk
+                    WHERE
+                        spvr_pk = spdt_spvr_pk
+            ]]>
+            <include refid="xeredi.integra.model.maestro.dao.SubparametroDAO.SelectWhere" />
+            <![CDATA[
+                )
+            ]]>
+        </where>
+    </sql>
+
     <select id="selectList" resultMap="ResultMap" parameterType="SubparametroCriterioVO">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
@@ -134,11 +134,8 @@
     ]]>
     </update>
 
-    <delete id="deleteVersion" parameterType="SubparametroVO">
-    <![CDATA[
+    <delete id="deleteList" parameterType="SubparametroCriterioVO">
         DELETE FROM tbl_subparametro_dato_spdt
-        WHERE
-            spdt_spvr_pk = #{version.id}
-    ]]>
+        <include refid="SelectWhere" />
     </delete>
 </mapper>

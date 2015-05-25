@@ -33,6 +33,7 @@ import xeredi.integra.model.facturacion.vo.FacturaEstado;
 import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
 import xeredi.integra.model.facturacion.vo.FacturaLineaCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaLineaVO;
+import xeredi.integra.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaSerieVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
@@ -108,7 +109,11 @@ public class FacturaBO {
             fctrDAO.updateEstado(fctr);
 
             // Crear nueva factura a partir de los datos de la factura anulada.
-            final FacturaSerieVO fcsr = fcsrDAO.select(fcsrId);
+            final FacturaSerieCriterioVO fcsrCriterio = new FacturaSerieCriterioVO();
+
+            fcsrCriterio.setId(fcsrId);
+
+            final FacturaSerieVO fcsr = fcsrDAO.selectObject(fcsrCriterio);
             final List<FacturaServicioVO> fctsList = fctsDAO.selectList(fctrCriterioVO);
             final List<FacturaLineaVO> fctlList = fctlDAO.selectList(fctlCriterioVO);
             final List<FacturaDetalleVO> fctdList = fctdDAO.selectList(fctdCriterioVO);

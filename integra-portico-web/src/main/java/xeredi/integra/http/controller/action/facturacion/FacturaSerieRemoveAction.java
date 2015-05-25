@@ -25,6 +25,6 @@ public final class FacturaSerieRemoveAction extends CrudRemoveAction<FacturaSeri
 
         final FacturaSerieBO fcsrBO = new FacturaSerieBO();
 
-        fcsrBO.delete(model.getId());
+        fcsrBO.delete(model);
     }
 }

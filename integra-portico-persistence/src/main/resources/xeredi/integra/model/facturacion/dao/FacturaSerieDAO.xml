@@ -20,15 +20,18 @@
 
     <sql id="SelectWhere">
     	<where>
+    		<if test="id != null">
+    			AND fcsr_pk = #{id}
+    		</if>
     		<if test="anio != null">
     			AND fcsr_anio = #{anio}
     		</if>
     	</where>
     </sql>
 
-    <select id="select" parameterType="Long" resultMap="ResultMap">
+    <select id="selectObject" parameterType="FacturaSerieCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        WHERE fcsr_pk = #{value}
+        <include refid="SelectWhere" />
     </select>
 
     <select id="count" parameterType="FacturaSerieCriterioVO" resultType="Integer">
@@ -67,10 +70,10 @@
     ]]>
 	</update>
 
-	<delete id="delete" parameterType="Long">
+	<delete id="delete" parameterType="FacturaSerieVO">
     <![CDATA[
     	DELETE FROM tbl_factura_serie_fcsr
-    	WHERE fcsr_pk = #{value}
+    	WHERE fcsr_pk = #{id}
     ]]>
 	</delete>
 

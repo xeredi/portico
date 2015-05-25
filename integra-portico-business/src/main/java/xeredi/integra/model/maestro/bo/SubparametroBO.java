@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -278,18 +280,20 @@ public class SubparametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    protected final void delete(final SqlSession session, final SubparametroVO sprm) throws InstanceNotFoundException {
+    protected final void delete(final @NonNull SqlSession session, final @NonNull SubparametroVO sprm)
+            throws InstanceNotFoundException {
         Preconditions.checkNotNull(sprm.getVersion());
         Preconditions.checkNotNull(sprm.getVersion().getId());
 
         final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
         final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
+        final SubparametroCriterioVO sprmCriterio = new SubparametroCriterioVO();
 
-        spdtDAO.deleteVersion(sprm);
+        sprmCriterio.setVersionId(sprm.getVersion().getId());
 
-        final int updated = sprmDAO.deleteVersion(sprm);
+        spdtDAO.deleteList(sprmCriterio);
 
-        if (updated == 0) {
+        if (sprmDAO.deleteVersion(sprm) == 0) {
             throw new InstanceNotFoundException(MessageI18nKey.sprm, sprm);
         }
     }

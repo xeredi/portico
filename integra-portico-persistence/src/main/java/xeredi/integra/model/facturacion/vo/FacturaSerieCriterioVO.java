@@ -8,8 +8,30 @@ import xeredi.integra.model.comun.vo.BaseCriterioVO;
  */
 public final class FacturaSerieCriterioVO extends BaseCriterioVO {
 
+    /** The id. */
+    private Long id;
+
     /** The anio. */
     private Integer anio;
+
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public final Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param value
+     *            the new id
+     */
+    public final void setId(final Long value) {
+        id = value;
+    }
 
     /**
      * Gets the anio.
