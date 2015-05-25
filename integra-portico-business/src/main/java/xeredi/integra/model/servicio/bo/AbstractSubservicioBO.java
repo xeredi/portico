@@ -20,8 +20,11 @@ import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
-import xeredi.integra.model.comun.vo.ItemTramiteDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.item.dao.ItemTramiteDAO;
+import xeredi.integra.model.item.dao.ItemTramiteDatoDAO;
+import xeredi.integra.model.item.vo.ItemTramiteDatoVO;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteProxy;
@@ -29,11 +32,9 @@ import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.SubservicioSubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioTramiteDAO;
-import xeredi.integra.model.servicio.dao.SubservicioTramiteDatoDAO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
-import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -399,11 +400,11 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final void statechange(final @NonNull SubservicioTramiteVO sstr) throws ModelException {
-        Preconditions.checkNotNull(sstr.getSsrvId());
-        Preconditions.checkNotNull(sstr.getTrmt());
-        Preconditions.checkNotNull(sstr.getTrmt().getId());
-        Preconditions.checkNotNull(sstr.getTrmt().getEntiId());
+    public final void statechange(final @NonNull ItemTramiteVO ittr) throws ModelException {
+        Preconditions.checkNotNull(ittr.getItemId());
+        Preconditions.checkNotNull(ittr.getTrmt());
+        Preconditions.checkNotNull(ittr.getTrmt().getId());
+        Preconditions.checkNotNull(ittr.getTrmt().getEntiId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final IgBO igBO = new IgBO();
@@ -412,59 +413,61 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
 
-            ssrvCriterio.setId(sstr.getSsrvId());
+            ssrvCriterio.setId(ittr.getItemId());
 
             final SubservicioVO ssrv = ssrvDAO.selectObject(ssrvCriterio);
 
             if (ssrv == null) {
-                throw new InstanceNotFoundException(sstr.getTrmt().getEntiId(), sstr.getSsrvId());
+                throw new InstanceNotFoundException(ittr.getTrmt().getEntiId(), ittr.getItemId());
             }
 
-            ssrv.setFini(sstr.getDssrvFini());
-            ssrv.setFfin(sstr.getDssrvFfin());
+            ssrv.setFini(ittr.getDitemFini());
+            ssrv.setFfin(ittr.getDitemFfin());
 
             ssrvDAO.update(ssrv);
 
             // Alta del tramite
-            final TramiteDetailVO trmtDetail = TramiteProxy.select(sstr.getTrmt().getId());
+            final TramiteDetailVO trmtDetail = TramiteProxy.select(ittr.getTrmt().getId());
 
-            sstr.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            sstr.setFecha(Calendar.getInstance().getTime());
+            ittr.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            ittr.setFecha(Calendar.getInstance().getTime());
 
-            if (ssrvDAO.updateEstado(sstr) == 0) {
+            if (ssrvDAO.updateEstado(ittr) == 0) {
                 throw new InstanceNotFoundException(ssrv.getEntiId(), ssrv.getId());
             }
 
+            final ItemTramiteDAO ittrDAO = session.getMapper(ItemTramiteDAO.class);
             final SubservicioTramiteDAO sstrDAO = session.getMapper(SubservicioTramiteDAO.class);
 
-            sstrDAO.insert(sstr);
+            ittrDAO.insert(ittr);
+            sstrDAO.insert(ittr);
 
             // Modificacion de los datos del subservicio introducidos en el tramite (si los hay)
             final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
-            final SubservicioTramiteDatoDAO sstdDAO = session.getMapper(SubservicioTramiteDatoDAO.class);
+            final ItemTramiteDatoDAO ittdDAO = session.getMapper(ItemTramiteDatoDAO.class);
 
-            for (final Long tpdtId : sstr.getItdtMap().keySet()) {
-                final ItemTramiteDatoVO itrd = sstr.getItdtMap().get(tpdtId);
+            for (final Long tpdtId : ittr.getIttdMap().keySet()) {
+                final ItemTramiteDatoVO ittd = ittr.getIttdMap().get(tpdtId);
 
-                itrd.setTpdtId(tpdtId);
-                itrd.setIttrId(sstr.getId());
+                ittd.setTpdtId(tpdtId);
+                ittd.setIttrId(ittr.getId());
 
                 final ItemDatoVO itdt = new ItemDatoVO();
 
-                itdt.setItemId(sstr.getSsrvId());
+                itdt.setItemId(ittr.getItemId());
                 itdt.setTpdtId(tpdtId);
-                itdt.setCantidadEntera(itrd.getDnentero());
-                itdt.setCantidadDecimal(itrd.getDndecimal());
-                itdt.setCadena(itrd.getDcadena());
-                itdt.setFecha(itrd.getDfecha());
-                itdt.setPrmt(itrd.getDprmt());
-                itdt.setSrvc(itrd.getDsrvc());
+                itdt.setCantidadEntera(ittd.getDnentero());
+                itdt.setCantidadDecimal(ittd.getDndecimal());
+                itdt.setCadena(ittd.getDcadena());
+                itdt.setFecha(ittd.getDfecha());
+                itdt.setPrmt(ittd.getDprmt());
+                itdt.setSrvc(ittd.getDsrvc());
 
                 ssdtDAO.update(itdt);
-                sstdDAO.insert(itrd);
+                ittdDAO.insert(ittd);
             }
 
-            statechangePostOperations(session, ssrv, sstr, trmtDetail);
+            statechangePostOperations(session, ssrv, ittr, trmtDetail);
 
             session.commit();
         }
@@ -485,7 +488,7 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      *             the model exception
      */
     protected abstract void statechangePostOperations(final SqlSession session, final SubservicioVO ssrv,
-            final SubservicioTramiteVO sstr, final TramiteDetailVO trmtDetail) throws ModelException;
+            final ItemTramiteVO ittr, final TramiteDetailVO trmtDetail) throws ModelException;
 
     /**
      * Fill dependencies.

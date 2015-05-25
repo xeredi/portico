@@ -14,6 +14,7 @@ import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
@@ -23,7 +24,6 @@ import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.escala.AtraqueDAO;
 import xeredi.integra.model.servicio.dao.escala.EscalaDAO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
-import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
@@ -74,7 +74,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      */
     @Override
     protected void statechangePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv,
-            final @NonNull SubservicioTramiteVO sstr, final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
+            final @NonNull ItemTramiteVO ittr, final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
         Preconditions.checkNotNull(ssrv.getId());
         Preconditions.checkNotNull(ssrv.getSrvc());
         Preconditions.checkNotNull(ssrv.getSrvc().getId());
@@ -126,7 +126,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *             the operacion no permitida exception
      */
     public void iniciar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-            OperacionNoPermitidaException {
+    OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
             final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);

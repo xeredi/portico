@@ -83,120 +83,117 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_tramite_tipo_dato_trtd TO portico\
 
 
 
-CREATE TABLE tbl_servicio_tramite_srtr (
+CREATE TABLE tbl_item_tramite_ittr (
+	ittr_pk NUMBER(19) NOT NULL
+	, ittr_item_pk NUMBER(19) NOT NULL
+	, ittr_trmt_pk NUMBER(19) NOT NULL
+	, ittr_falta TIMESTAMP NOT NULL
+	, ittr_o_item_fini TIMESTAMP
+	, ittr_o_item_ffin TIMESTAMP
+	, ittr_d_item_fini TIMESTAMP
+	, ittr_d_item_ffin TIMESTAMP
+
+	, CONSTRAINT pk_ittr PRIMARY KEY (ittr_pk)
+
+	, CONSTRAINT fk_ittr_trmt_pk FOREIGN KEY (ittr_trmt_pk)
+		REFERENCES tbl_tramite_trmt (trmt_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_item_tramite_ittr FOR tbl_item_tramite_ittr\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_item_tramite_ittr TO portico\
+
+
+CREATE TABLE tbl_item_trmt_dato_ittd (
+	ittd_ittr_pk NUMBER(19) NOT NULL
+	, ittd_tpdt_pk NUMBER(19) NOT NULL
+	, ittd_o_nentero NUMBER(19)
+	, ittd_o_ndecimal NUMBER(19)
+	, ittd_o_fecha TIMESTAMP
+	, ittd_o_prmt_pk NUMBER(19)
+	, ittd_o_srvc_pk NUMBER(19)
+	, ittd_o_cadena VARCHAR2(350)
+	, ittd_d_nentero NUMBER(19)
+	, ittd_d_ndecimal NUMBER(19)
+	, ittd_d_fecha TIMESTAMP
+	, ittd_d_prmt_pk NUMBER(19)
+	, ittd_d_srvc_pk NUMBER(19)
+	, ittd_d_cadena VARCHAR2(350)
+
+	, CONSTRAINT pk_ittd PRIMARY KEY (ittd_ittr_pk, ittd_tpdt_pk)
+
+	, CONSTRAINT fk_ittd_ittr_pk FOREIGN KEY (ittd_ittr_pk)
+		REFERENCES tbl_item_tramite_ittr (ittr_pk)
+	, CONSTRAINT fk_ittd_tpdt_pk FOREIGN KEY (ittd_tpdt_pk)
+		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
+	, CONSTRAINT fk_ittd_o_prmt_pk FOREIGN KEY (ittd_o_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_ittd_d_prmt_pk FOREIGN KEY (ittd_d_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_ittd_o_srvc_pk FOREIGN KEY (ittd_o_srvc_pk)
+		REFERENCES tbl_servicio_srvc (srvc_pk)
+	, CONSTRAINT fk_ittd_d_srvc_pk FOREIGN KEY (ittd_d_srvc_pk)
+		REFERENCES tbl_servicio_srvc (srvc_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_item_trmt_dato_ittd FOR tbl_item_trmt_dato_ittd\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_item_trmt_dato_ittd TO portico\
+
+
+
+CREATE TABLE tbl_parametro_trmt_prtr (
+	prtr_pk NUMBER(19) NOT NULL
+	, prtr_prmt_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_prtr PRIMARY KEY (prtr_pk)
+
+	, CONSTRAINT fk_prtr_ittr_pk FOREIGN KEY (prtr_pk)
+		REFERENCES tbl_item_tramite_ittr (ittr_pk)
+	, CONSTRAINT fk_prtr_prmt_pk FOREIGN KEY (prtr_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_parametro_trmt_prtr FOR tbl_parametro_trmt_prtr\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_parametro_trmt_prtr TO portico\
+
+
+
+CREATE TABLE tbl_servicio_trmt_srtr (
 	srtr_pk NUMBER(19) NOT NULL
 	, srtr_srvc_pk NUMBER(19) NOT NULL
-	, srtr_trmt_pk NUMBER(19) NOT NULL
-	, srtr_falta TIMESTAMP NOT NULL
 
 	, CONSTRAINT pk_srtr PRIMARY KEY (srtr_pk)
 
+	, CONSTRAINT fk_srtr_ittr_pk FOREIGN KEY (srtr_pk)
+		REFERENCES tbl_item_tramite_ittr (ittr_pk)
 	, CONSTRAINT fk_srtr_srvc_pk FOREIGN KEY (srtr_srvc_pk)
 		REFERENCES tbl_servicio_srvc (srvc_pk)
-	, CONSTRAINT fk_srtr_trmt_pk FOREIGN KEY (srtr_trmt_pk)
-		REFERENCES tbl_tramite_trmt (trmt_pk)
 )\
 
-CREATE OR REPLACE SYNONYM portico.tbl_servicio_tramite_srtr FOR tbl_servicio_tramite_srtr\
+CREATE OR REPLACE SYNONYM portico.tbl_servicio_trmt_srtr FOR tbl_servicio_trmt_srtr\
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_tramite_srtr TO portico\
-
-
-CREATE TABLE tbl_servicio_trmt_dato_srtd (
-	srtd_srtr_pk NUMBER(19) NOT NULL
-	, srtd_tpdt_pk NUMBER(19) NOT NULL
-	, srtd_o_nentero NUMBER(19)
-	, srtd_o_ndecimal NUMBER(19)
-	, srtd_o_fecha TIMESTAMP
-	, srtd_o_prmt_pk NUMBER(19)
-	, srtd_o_srvc_pk NUMBER(19)
-	, srtd_o_cadena VARCHAR2(350)
-	, srtd_d_nentero NUMBER(19)
-	, srtd_d_ndecimal NUMBER(19)
-	, srtd_d_fecha TIMESTAMP
-	, srtd_d_prmt_pk NUMBER(19)
-	, srtd_d_srvc_pk NUMBER(19)
-	, srtd_d_cadena VARCHAR2(350)
-
-	, CONSTRAINT pk_srtd PRIMARY KEY (srtd_srtr_pk, srtd_tpdt_pk)
-
-	, CONSTRAINT fk_srtd_srtr_pk FOREIGN KEY (srtd_srtr_pk)
-		REFERENCES tbl_servicio_tramite_srtr (srtr_pk)
-	, CONSTRAINT fk_srtd_tpdt_pk FOREIGN KEY (srtd_tpdt_pk)
-		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
-	, CONSTRAINT fk_srtd_o_prmt_pk FOREIGN KEY (srtd_o_prmt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
-	, CONSTRAINT fk_srtd_d_prmt_pk FOREIGN KEY (srtd_d_prmt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
-	, CONSTRAINT fk_srtd_o_srvc_pk FOREIGN KEY (srtd_o_srvc_pk)
-		REFERENCES tbl_servicio_srvc (srvc_pk)
-	, CONSTRAINT fk_srtd_d_srvc_pk FOREIGN KEY (srtd_d_srvc_pk)
-		REFERENCES tbl_servicio_srvc (srvc_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_servicio_trmt_dato_srtd FOR tbl_servicio_trmt_dato_srtd\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_trmt_dato_srtd TO portico\
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_trmt_srtr TO portico\
 
 
-CREATE TABLE tbl_subservicio_tramite_sstr (
+
+CREATE TABLE tbl_subservicio_trmt_sstr (
 	sstr_pk NUMBER(19) NOT NULL
 	, sstr_ssrv_pk NUMBER(19) NOT NULL
-	, sstr_trmt_pk NUMBER(19) NOT NULL
-	, sstr_falta TIMESTAMP NOT NULL
-	, sstr_o_ssrv_fini TIMESTAMP
-	, sstr_o_ssrv_ffin TIMESTAMP
-	, sstr_d_ssrv_fini TIMESTAMP
-	, sstr_d_ssrv_ffin TIMESTAMP
 
 	, CONSTRAINT pk_sstr PRIMARY KEY (sstr_pk)
 
+	, CONSTRAINT fk_sstr_ittr_pk FOREIGN KEY (sstr_pk)
+		REFERENCES tbl_item_tramite_ittr (ittr_pk)
 	, CONSTRAINT fk_sstr_ssrv_pk FOREIGN KEY (sstr_ssrv_pk)
 		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
-	, CONSTRAINT fk_sstr_trmt_pk FOREIGN KEY (sstr_trmt_pk)
-		REFERENCES tbl_tramite_trmt (trmt_pk)
 )\
 
-CREATE OR REPLACE SYNONYM portico.tbl_subservicio_tramite_sstr FOR tbl_subservicio_tramite_sstr\
+CREATE OR REPLACE SYNONYM portico.tbl_subservicio_trmt_sstr FOR tbl_subservicio_trmt_sstr\
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_subservicio_tramite_sstr TO portico\
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_subservicio_trmt_sstr TO portico\
 
-
-CREATE TABLE tbl_subservicio_trmt_dato_sstd (
-	sstd_sstr_pk NUMBER(19) NOT NULL
-	, sstd_tpdt_pk NUMBER(19) NOT NULL
-	, sstd_o_nentero NUMBER(19)
-	, sstd_o_ndecimal NUMBER(19)
-	, sstd_o_fecha TIMESTAMP
-	, sstd_o_prmt_pk NUMBER(19)
-	, sstd_o_srvc_pk NUMBER(19)
-	, sstd_o_cadena VARCHAR2(350)
-	, sstd_d_nentero NUMBER(19)
-	, sstd_d_ndecimal NUMBER(19)
-	, sstd_d_fecha TIMESTAMP
-	, sstd_d_prmt_pk NUMBER(19)
-	, sstd_d_srvc_pk NUMBER(19)
-	, sstd_d_cadena VARCHAR2(350)
-
-	, CONSTRAINT pk_sstd PRIMARY KEY (sstd_sstr_pk, sstd_tpdt_pk)
-
-	, CONSTRAINT fk_sstd_sstr_pk FOREIGN KEY (sstd_sstr_pk)
-		REFERENCES tbl_subservicio_tramite_sstr (sstr_pk)
-	, CONSTRAINT fk_sstd_tpdt_pk FOREIGN KEY (sstd_tpdt_pk)
-		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
-	, CONSTRAINT fk_sstd_o_prmt_pk FOREIGN KEY (sstd_o_prmt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
-	, CONSTRAINT fk_sstd_d_prmt_pk FOREIGN KEY (sstd_d_prmt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
-	, CONSTRAINT fk_sstd_o_srvc_pk FOREIGN KEY (sstd_o_srvc_pk)
-		REFERENCES tbl_servicio_srvc (srvc_pk)
-	, CONSTRAINT fk_sstd_d_srvc_pk FOREIGN KEY (sstd_d_srvc_pk)
-		REFERENCES tbl_servicio_srvc (srvc_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_subservicio_trmt_dato_sstd FOR tbl_subservicio_trmt_dato_sstd\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_subservicio_trmt_dato_sstd TO portico\
 
 
 -- Manifiesto
@@ -354,10 +351,11 @@ ALTER TABLE tbl_cuadro_mes_cdms ADD cdms_pk NUMBER(19) NULL\
 
 DELETE FROM tbl_i18n_i18n WHERE i18n_pref = 'trmt'\
 
-DROP TABLE tbl_subservicio_trmt_dato_sstd\
-DROP TABLE tbl_subservicio_tramite_sstr\
-DROP TABLE tbl_servicio_trmt_dato_srtd\
-DROP TABLE tbl_servicio_tramite_srtr\
+DROP TABLE tbl_subservicio_trmt_sstr\
+DROP TABLE tbl_servicio_trmt_srtr\
+DROP TABLE tbl_parametro_trmt_prtr\
+DROP TABLE tbl_item_trmt_dato_ittd\
+DROP TABLE tbl_item_tramite_ittr\
 DROP TABLE tbl_tramite_tipo_dato_trtd\
 DROP TABLE tbl_tramite_trmt\
 DROP TABLE tbl_grupo_accion_grac\

@@ -5,9 +5,9 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.comun.dao.CrudDAO;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioLupaCriterioVO;
-import xeredi.integra.model.servicio.vo.ServicioTramiteVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -27,11 +27,11 @@ public interface ServicioDAO extends CrudDAO<ServicioVO, ServicioCriterioVO> {
     /**
      * Update estado.
      *
-     * @param srtr
-     *            the srtr
+     * @param ittr
+     *            the ittr
      * @return the int
      */
-    int updateEstado(final ServicioTramiteVO srtr);
+    int updateEstado(final ItemTramiteVO ittr);
 
     /**
      * Select lupa list.

@@ -7,9 +7,9 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
-import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -58,7 +58,7 @@ public final class DefaultSubservicioBO extends AbstractSubservicioBO {
      */
     @Override
     protected void statechangePostOperations(final SqlSession session, final SubservicioVO ssrv,
-            final SubservicioTramiteVO sstr, final TramiteDetailVO trmtDetail) throws ModelException {
+            final ItemTramiteVO ittr, final TramiteDetailVO trmtDetail) throws ModelException {
         // noop
     }
 }

@@ -5,20 +5,19 @@ import java.util.Date;
 import xeredi.integra.http.controller.action.item.ItemStatechangeEditAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
-import xeredi.integra.model.comun.vo.ItemTramiteDatoVO;
+import xeredi.integra.model.item.vo.ItemTramiteDatoVO;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
-import xeredi.integra.model.servicio.vo.ServicioTramiteVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServicioStatechangeEditAction.
  */
-public final class ServicioTramiteEditAction extends
-ItemStatechangeEditAction<ServicioTramiteVO, ServicioVO, TipoServicioDetailVO> {
+public final class ServicioTramiteEditAction extends ItemStatechangeEditAction<ServicioVO, TipoServicioDetailVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7471950448846195873L;
@@ -34,36 +33,36 @@ ItemStatechangeEditAction<ServicioTramiteVO, ServicioVO, TipoServicioDetailVO> {
 
         item = srvcBO.select(item.getId(), idioma);
 
-        ittr = new ServicioTramiteVO();
+        ittr = new ItemTramiteVO();
 
-        ittr.setSrvcId(item.getId());
+        ittr.setItemId(item.getId());
         ittr.setTrmt(trmt.getTrmt());
 
         if (!trmt.getTpdtList().isEmpty()) {
             for (final Long tpdtId : trmt.getTpdtList()) {
-                final ItemTramiteDatoVO ittrDato = new ItemTramiteDatoVO();
+                final ItemTramiteDatoVO ittd = new ItemTramiteDatoVO();
 
-                ittrDato.setTpdtId(tpdtId);
+                ittd.setTpdtId(tpdtId);
 
                 if (item.getItdtMap().containsKey(tpdtId)) {
                     final ItemDatoVO itdt = item.getItdtMap().get(tpdtId);
 
-                    ittrDato.setOcadena(itdt.getCadena());
-                    ittrDato.setOnentero(itdt.getCantidadEntera());
-                    ittrDato.setOndecimal(itdt.getCantidadDecimal());
-                    ittrDato.setOfecha(itdt.getFecha());
-                    ittrDato.setOprmt(itdt.getPrmt());
-                    ittrDato.setOsrvc(itdt.getSrvc());
+                    ittd.setOcadena(itdt.getCadena());
+                    ittd.setOnentero(itdt.getCantidadEntera());
+                    ittd.setOndecimal(itdt.getCantidadDecimal());
+                    ittd.setOfecha(itdt.getFecha());
+                    ittd.setOprmt(itdt.getPrmt());
+                    ittd.setOsrvc(itdt.getSrvc());
 
-                    ittrDato.setDcadena(itdt.getCadena());
-                    ittrDato.setDnentero(itdt.getCantidadEntera());
-                    ittrDato.setDndecimal(itdt.getCantidadDecimal());
-                    ittrDato.setDfecha(itdt.getFecha());
-                    ittrDato.setDprmt(itdt.getPrmt());
-                    ittrDato.setDsrvc(itdt.getSrvc());
+                    ittd.setDcadena(itdt.getCadena());
+                    ittd.setDnentero(itdt.getCantidadEntera());
+                    ittd.setDndecimal(itdt.getCantidadDecimal());
+                    ittd.setDfecha(itdt.getFecha());
+                    ittd.setDprmt(itdt.getPrmt());
+                    ittd.setDsrvc(itdt.getSrvc());
                 }
 
-                ittr.getItdtMap().put(tpdtId, ittrDato);
+                ittr.getIttdMap().put(tpdtId, ittd);
             }
         }
     }

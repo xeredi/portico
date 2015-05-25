@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.item.dao.ItemTramiteDAO">
+	<resultMap type="ItemTramiteVO" id="ResultMap">
+		<id column="ittr_pk" />
+
+		<result column="ittr_pk" property="id" />
+		<result column="ittr_item_pk" property="itemId" />
+		<result column="ittr_falta" property="fecha" />
+		<result column="ittr_fref" property="fref" />
+
+		<result column="ittr_o_item_fini" property="oitemFini" />
+		<result column="ittr_o_item_ffin" property="oitemFfin" />
+		<result column="ittr_d_item_fini" property="ditemFini" />
+		<result column="ittr_d_item_ffin" property="ditemFfin" />
+
+		<association property="trmt" javaType="TramiteVO">
+			<result column="ittr_trmt_pk" property="id" />
+			<result column="trmt_estado_orig" property="estadoOrig" />
+			<result column="trmt_estado_dest" property="estadoDest" />
+			<result column="trmt_enti_pk" property="entiId" />
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+		SELECT
+			ittr_pk, ittr_item_pk, ittr_falta, ittr_trmt_pk
+			, ittr_o_item_fini, ittr_o_item_ffin, ittr_d_item_fini, ittr_d_item_ffin
+
+			, trmt_estado_orig, trmt_estado_dest, trmt_enti_pk
+
+			, ittr_falta AS ittr_fref
+		FROM
+			tbl_item_tramite_ittr
+			INNER JOIN tbl_tramite_trmt ON
+				trmt_pk = ittr_trmt_pk
+	]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND ittr_pk = #{id}
+			</if>
+			<if test="itemId != null">
+				AND ittr_item_pk = #{itemId}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectList" parameterType="ItemTramiteCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY ittr_item_pk, ittr_falta
+	</select>
+
+	<select id="selectObject" parameterType="ItemTramiteCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<insert id="insert" parameterType="ItemTramiteVO">
+        <![CDATA[
+        INSERT INTO tbl_item_tramite_ittr (
+        	ittr_pk, ittr_item_pk, ittr_trmt_pk, ittr_falta
+        	, ittr_o_item_fini, ittr_o_item_ffin, ittr_d_item_fini, ittr_d_item_ffin)
+        VALUES (#{id}, #{itemId}, #{trmt.id}, #{fecha}
+        	, #{oitemFini}, #{oitemFfin}, #{ditemFini}, #{ditemFfin})
+        ]]>
+	</insert>
+</mapper>

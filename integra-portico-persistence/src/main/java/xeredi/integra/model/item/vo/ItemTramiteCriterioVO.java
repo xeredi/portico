@@ -1,15 +1,20 @@
-package xeredi.integra.model.comun.vo;
+package xeredi.integra.model.item.vo;
 
 import java.util.Date;
+
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ItemTramiteCriterioVO.
  */
-public abstract class ItemTramiteCriterioVO extends BaseCriterioVO {
+public final class ItemTramiteCriterioVO extends BaseCriterioVO {
 
     /** The id. */
     private Long id;
+
+    /** The item id. */
+    private Long itemId;
 
     /** The fecha vigencia. */
     private Date fechaVigencia;
@@ -50,5 +55,24 @@ public abstract class ItemTramiteCriterioVO extends BaseCriterioVO {
      */
     public final void setFechaVigencia(final Date value) {
         fechaVigencia = value;
+    }
+
+    /**
+     * Gets the item id.
+     *
+     * @return the item id
+     */
+    public final Long getItemId() {
+        return itemId;
+    }
+
+    /**
+     * Sets the item id.
+     *
+     * @param value
+     *            the new item id
+     */
+    public final void setItemId(final Long value) {
+        itemId = value;
     }
 }

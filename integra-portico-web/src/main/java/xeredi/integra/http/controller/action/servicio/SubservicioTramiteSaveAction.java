@@ -10,13 +10,12 @@ import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteProxy;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBOFactory;
-import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class SubservicioTramiteSaveAction.
  */
-public final class SubservicioTramiteSaveAction extends ItemStatechangeSaveAction<SubservicioTramiteVO> {
+public final class SubservicioTramiteSaveAction extends ItemStatechangeSaveAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2510112295462616661L;
@@ -30,8 +29,8 @@ public final class SubservicioTramiteSaveAction extends ItemStatechangeSaveActio
         final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(ittr.getTrmt().getEntiId());
 
         if (tpssDetail.getEnti().isTemporal()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.fini, ittr.getDssrvFini());
-            FieldValidator.validatePeriod(this, ittr.getDssrvFini(), ittr.getDssrvFfin());
+            FieldValidator.validateRequired(this, MessageI18nKey.fini, ittr.getDitemFini());
+            FieldValidator.validatePeriod(this, ittr.getDitemFini(), ittr.getDitemFfin());
         }
 
         FieldValidator.validateTrmt(this, tpssDetail, trmtDetail, ittr);

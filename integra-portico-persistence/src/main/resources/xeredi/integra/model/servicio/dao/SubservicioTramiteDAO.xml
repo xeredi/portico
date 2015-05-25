@@ -3,79 +3,10 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.servicio.dao.SubservicioTramiteDAO">
-	<resultMap type="SubservicioTramiteVO" id="ResultMap">
-		<id column="sstr_pk" />
-
-		<result column="sstr_pk" property="id" />
-		<result column="sstr_ssrv_pk" property="ssrvId" />
-		<result column="sstr_falta" property="fecha" />
-		<result column="srvc_fref" property="fref" />
-		<result column="sstr_o_ssrv_fini" property="ossrvFini" />
-		<result column="sstr_o_ssrv_ffin" property="ossrvFfin" />
-		<result column="sstr_d_ssrv_fini" property="dssrvFini" />
-		<result column="sstr_d_ssrv_ffin" property="dssrvFfin" />
-
-		<association property="trmt" javaType="TramiteVO">
-			<result column="sstr_trmt_pk" property="id" />
-			<result column="trmt_estado_orig" property="estadoOrig" />
-			<result column="trmt_estado_dest" property="estadoDest" />
-			<result column="trmt_enti_pk" property="entiId" />
-		</association>
-	</resultMap>
-
-	<sql id="SelectPrefix">
+	<insert id="insert" parameterType="ItemTramiteVO">
     <![CDATA[
-		SELECT
-			sstr_pk, sstr_ssrv_pk, sstr_falta
-			, sstr_o_ssrv_fini, sstr_o_ssrv_ffin, sstr_d_ssrv_fini, sstr_d_ssrv_ffin, sstr_trmt_pk
-
-			, trmt_estado_orig, trmt_estado_dest, trmt_enti_pk
-
-			, srvc_fref
-		FROM
-			tbl_subservicio_tramite_sstr
-			INNER JOIN tbl_tramite_trmt ON
-				trmt_pk = sstr_trmt_pk
-			INNER JOIN tbl_subservicio_ssrv ON
-				ssrv_pk = sstr_ssrv_pk
-			INNER JOIN tbl_servicio_srvc ON
-				srvc_pk = ssrv_srvc_pk
-	]]>
-	</sql>
-
-	<sql id="SelectWhere">
-		<where>
-			<if test="id != null">
-				AND sstr_pk = #{id}
-			</if>
-			<if test="ssrvId != null">
-				AND sstr_ssrv_pk = #{ssrvId}
-			</if>
-		</where>
-	</sql>
-
-	<select id="selectList" parameterType="SubservicioTramiteCriterioVO" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-		ORDER BY sstr_ssrv_pk, sstr_falta
-	</select>
-
-	<select id="selectObject" parameterType="SubservicioTramiteCriterioVO" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-	</select>
-
-	<insert id="insert" parameterType="SubservicioTramiteVO">
-        <![CDATA[
-        INSERT INTO tbl_subservicio_tramite_sstr (sstr_pk, sstr_ssrv_pk, sstr_trmt_pk, sstr_falta
-        	, sstr_o_ssrv_fini, sstr_o_ssrv_ffin, sstr_d_ssrv_fini, sstr_d_ssrv_ffin)
-        VALUES (#{id}, #{ssrvId}, #{trmt.id}, #{fecha}
-        	, #{ossrvFini}, #{ossrvFfin}, #{dssrvFini}, #{dssrvFfin})
-        ]]>
+        INSERT INTO tbl_subservicio_trmt_sstr (sstr_pk, sstr_ssrv_pk)
+        VALUES (#{id}, #{itemId})
+    ]]>
 	</insert>
-
-	<delete id="deleteList" parameterType="SubservicioTramiteCriterioVO">
-		DELETE FROM tbl_subservicio_tramite_sstr
-		<include refid="SelectWhere" />
-	</delete>
 </mapper>

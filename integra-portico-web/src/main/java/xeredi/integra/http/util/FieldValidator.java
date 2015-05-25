@@ -14,11 +14,11 @@ import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
-import xeredi.integra.model.comun.vo.ItemTramiteDatoVO;
-import xeredi.integra.model.comun.vo.ItemTramiteVO;
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.comun.vo.Versionable;
+import xeredi.integra.model.item.vo.ItemTramiteDatoVO;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
@@ -306,48 +306,48 @@ public final class FieldValidator {
             final @NotNull AbstractEntidadDetailVO entiDetail, final @NotNull TramiteDetailVO trmtDetail,
             final @NotNull ItemTramiteVO ittr) {
         if (trmtDetail.getTpdtList() != null) {
-            final Map<Long, ItemTramiteDatoVO> itrdMap = ittr.getItdtMap();
+            final Map<Long, ItemTramiteDatoVO> ittdMap = ittr.getIttdMap();
 
             for (final Long tpdtId : trmtDetail.getTpdtList()) {
                 final TramiteTipoDatoVO trtd = trmtDetail.getTrtdMap().get(tpdtId);
-                final ItemTramiteDatoVO itrd = itrdMap == null ? null : itrdMap.get(tpdtId);
+                final ItemTramiteDatoVO ittd = ittdMap == null ? null : ittdMap.get(tpdtId);
                 final String fieldname = action.getText("entd_" + trtd.getEntd().getId());
                 final TipoDatoVO tpdt = entiDetail.getEntdMap().get(tpdtId).getTpdt();
 
-                validateRequired(action, fieldname, itrd, trtd.isObligatorio());
+                validateRequired(action, fieldname, ittd, trtd.isObligatorio());
 
-                if (itrd != null) {
-                    itrd.setTpdtId(tpdtId);
+                if (ittd != null) {
+                    ittd.setTpdtId(tpdtId);
                     switch (tpdt.getTipoElemento()) {
                     case BO:
                     case NE:
-                        validateRequired(action, fieldname, itrd.getDnentero(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, ittd.getDnentero(), trtd.isObligatorio());
 
                         break;
                     case ND:
-                        validateRequired(action, fieldname, itrd.getDndecimal(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, ittd.getDndecimal(), trtd.isObligatorio());
 
                         break;
                     case PR:
-                        validateRequired(action, fieldname, itrd.getDprmt(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, ittd.getDprmt(), trtd.isObligatorio());
 
                         break;
                     case SR:
-                        validateRequired(action, fieldname, itrd.getDsrvc(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, ittd.getDsrvc(), trtd.isObligatorio());
 
                         break;
                     case CR:
-                        validateRequired(action, fieldname, itrd.getDcadena(), trtd.isObligatorio());
-                        validateCR(action, fieldname, itrd.getDcadena(), tpdt.getCdrfCodeSet());
+                        validateRequired(action, fieldname, ittd.getDcadena(), trtd.isObligatorio());
+                        validateCR(action, fieldname, ittd.getDcadena(), tpdt.getCdrfCodeSet());
 
                         break;
                     case TX:
-                        validateRequired(action, fieldname, itrd.getDcadena(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, ittd.getDcadena(), trtd.isObligatorio());
 
                         break;
                     case FE:
                     case FH:
-                        validateRequired(action, fieldname, itrd.getDfecha(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, ittd.getDfecha(), trtd.isObligatorio());
 
                         break;
                     default:

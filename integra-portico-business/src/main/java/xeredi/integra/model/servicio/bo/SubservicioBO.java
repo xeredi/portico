@@ -6,10 +6,10 @@ import java.util.Set;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
-import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
@@ -123,10 +123,10 @@ public interface SubservicioBO {
     /**
      * Statechange.
      *
-     * @param sstr
-     *            the sstr
+     * @param ittr
+     *            the ittr
      * @throws ModelException
      *             the model exception
      */
-    void statechange(final SubservicioTramiteVO sstr) throws ModelException;
+    void statechange(final ItemTramiteVO ittr) throws ModelException;
 }

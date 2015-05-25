@@ -5,10 +5,10 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.ModelException;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.servicio.bo.AbstractServicioBO;
 import xeredi.integra.model.servicio.dao.escala.EscalaDAO;
-import xeredi.integra.model.servicio.vo.ServicioTramiteVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -68,8 +68,8 @@ public final class EscalaBO extends AbstractServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void statechangePostOperations(final SqlSession session, final ServicioVO srvc,
-            final ServicioTramiteVO srtr, final TramiteDetailVO trmtDetail) throws ModelException {
+    protected void statechangePostOperations(final SqlSession session, final ServicioVO srvc, final ItemTramiteVO ittr,
+            final TramiteDetailVO trmtDetail) throws ModelException {
         // noop
     }
 

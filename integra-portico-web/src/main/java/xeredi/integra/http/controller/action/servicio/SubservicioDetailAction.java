@@ -6,14 +6,14 @@ import java.util.Map;
 
 import xeredi.integra.http.controller.action.item.ItemDetailAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.item.bo.ItemTramiteBO;
+import xeredi.integra.model.item.vo.ItemTramiteCriterioVO;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBOFactory;
-import xeredi.integra.model.servicio.bo.SubservicioTramiteBO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
-import xeredi.integra.model.servicio.vo.SubservicioTramiteCriterioVO;
-import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -32,7 +32,7 @@ public final class SubservicioDetailAction extends ItemDetailAction<SubservicioV
     private Map<Long, LabelValueVO> itemPadresMap;
 
     /** The sstr list. */
-    private List<SubservicioTramiteVO> sstrList;
+    private List<ItemTramiteVO> ittrList;
 
     /**
      * {@inheritDoc}
@@ -64,12 +64,12 @@ public final class SubservicioDetailAction extends ItemDetailAction<SubservicioV
         }
 
         if (enti.getEnti().getTpdtEstado() != null) {
-            final SubservicioTramiteBO sstrBO = new SubservicioTramiteBO();
-            final SubservicioTramiteCriterioVO sstrCriterio = new SubservicioTramiteCriterioVO();
+            final ItemTramiteBO ittrBO = new ItemTramiteBO();
+            final ItemTramiteCriterioVO ittrCriterio = new ItemTramiteCriterioVO();
 
-            sstrCriterio.setSsrvId(model.getId());
+            ittrCriterio.setItemId(model.getId());
 
-            sstrList = sstrBO.selectList(sstrCriterio);
+            ittrList = ittrBO.selectList(ittrCriterio);
         }
     }
 
@@ -87,7 +87,7 @@ public final class SubservicioDetailAction extends ItemDetailAction<SubservicioV
      *
      * @return the sstr list
      */
-    public List<SubservicioTramiteVO> getSstrList() {
-        return sstrList;
+    public List<ItemTramiteVO> getIttrList() {
+        return ittrList;
     }
 }

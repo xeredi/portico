@@ -6,9 +6,9 @@ import lombok.NonNull;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioLupaCriterioVO;
-import xeredi.integra.model.servicio.vo.ServicioTramiteVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -127,10 +127,10 @@ public interface ServicioBO {
     /**
      * Statechange.
      *
-     * @param srtr
-     *            the srtr
+     * @param ittr
+     *            the ittr
      * @throws ModelException
      *             the model exception
      */
-    void statechange(final @NonNull ServicioTramiteVO srtr) throws ModelException;
+    void statechange(final @NonNull ItemTramiteVO ittr) throws ModelException;
 }

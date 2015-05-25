@@ -7,13 +7,13 @@ import xeredi.integra.model.comun.bo.ArchivoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ArchivoCriterioVO;
 import xeredi.integra.model.comun.vo.ArchivoInfoVO;
+import xeredi.integra.model.item.bo.ItemTramiteBO;
+import xeredi.integra.model.item.vo.ItemTramiteCriterioVO;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
-import xeredi.integra.model.servicio.bo.ServicioTramiteBO;
-import xeredi.integra.model.servicio.vo.ServicioTramiteCriterioVO;
-import xeredi.integra.model.servicio.vo.ServicioTramiteVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -29,7 +29,7 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
     private List<ArchivoInfoVO> arinList;
 
     /** The srtr list. */
-    private List<ServicioTramiteVO> srtrList;
+    private List<ItemTramiteVO> ittrList;
 
     /**
      * {@inheritDoc}
@@ -51,13 +51,13 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
         arinList = archBO.selectList(archCriterio);
 
         if (enti.getEnti().getTpdtEstado() != null) {
-            final ServicioTramiteBO srtrBO = new ServicioTramiteBO();
-            final ServicioTramiteCriterioVO srtrCriterio = new ServicioTramiteCriterioVO();
+            final ItemTramiteBO ittrBO = new ItemTramiteBO();
+            final ItemTramiteCriterioVO ittrCriterio = new ItemTramiteCriterioVO();
 
-            srtrCriterio.setSrvcId(model.getId());
-            srtrCriterio.setIdioma(idioma);
+            ittrCriterio.setItemId(model.getId());
+            ittrCriterio.setIdioma(idioma);
 
-            srtrList = srtrBO.selectList(srtrCriterio);
+            ittrList = ittrBO.selectList(ittrCriterio);
         }
     }
 
@@ -75,7 +75,7 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
      *
      * @return the srtr list
      */
-    public List<ServicioTramiteVO> getSrtrList() {
-        return srtrList;
+    public List<ItemTramiteVO> getIttrList() {
+        return ittrList;
     }
 }

@@ -20,8 +20,11 @@ import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
-import xeredi.integra.model.comun.vo.ItemTramiteDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.item.dao.ItemTramiteDAO;
+import xeredi.integra.model.item.dao.ItemTramiteDatoDAO;
+import xeredi.integra.model.item.vo.ItemTramiteDatoVO;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
@@ -33,14 +36,12 @@ import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.dao.ServicioDatoDAO;
 import xeredi.integra.model.servicio.dao.ServicioSecuenciaDAO;
 import xeredi.integra.model.servicio.dao.ServicioTramiteDAO;
-import xeredi.integra.model.servicio.dao.ServicioTramiteDatoDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.SubservicioSubservicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioArchivoVO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioLupaCriterioVO;
-import xeredi.integra.model.servicio.vo.ServicioTramiteVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
@@ -471,11 +472,11 @@ public abstract class AbstractServicioBO implements ServicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final void statechange(final @NonNull ServicioTramiteVO srtr) throws ModelException {
-        Preconditions.checkNotNull(srtr.getSrvcId());
-        Preconditions.checkNotNull(srtr.getTrmt());
-        Preconditions.checkNotNull(srtr.getTrmt().getId());
-        Preconditions.checkNotNull(srtr.getTrmt().getEntiId());
+    public final void statechange(final @NonNull ItemTramiteVO ittr) throws ModelException {
+        Preconditions.checkNotNull(ittr.getItemId());
+        Preconditions.checkNotNull(ittr.getTrmt());
+        Preconditions.checkNotNull(ittr.getTrmt().getId());
+        Preconditions.checkNotNull(ittr.getTrmt().getEntiId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final IgBO igBO = new IgBO();
@@ -483,51 +484,53 @@ public abstract class AbstractServicioBO implements ServicioBO {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
 
-            srvcCriterio.setId(srtr.getSrvcId());
+            srvcCriterio.setId(ittr.getItemId());
 
             final ServicioVO srvc = srvcDAO.selectObject(srvcCriterio);
 
             if (srvc == null) {
-                throw new InstanceNotFoundException(srtr.getTrmt().getEntiId(), srtr.getSrvcId());
+                throw new InstanceNotFoundException(ittr.getTrmt().getEntiId(), ittr.getItemId());
             }
 
-            if (srvcDAO.updateEstado(srtr) == 0) {
-                throw new InstanceNotFoundException(srtr.getTrmt().getEntiId(), srtr.getSrvcId());
+            if (srvcDAO.updateEstado(ittr) == 0) {
+                throw new InstanceNotFoundException(ittr.getTrmt().getEntiId(), ittr.getItemId());
             }
 
             final ServicioTramiteDAO srtrDAO = session.getMapper(ServicioTramiteDAO.class);
-            final TramiteDetailVO trmtDetail = TramiteProxy.select(srtr.getTrmt().getId());
+            final ItemTramiteDAO ittrDAO = session.getMapper(ItemTramiteDAO.class);
+            final TramiteDetailVO trmtDetail = TramiteProxy.select(ittr.getTrmt().getId());
 
-            srtr.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            srtr.setFecha(Calendar.getInstance().getTime());
+            ittr.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            ittr.setFecha(Calendar.getInstance().getTime());
 
-            srtrDAO.insert(srtr);
+            ittrDAO.insert(ittr);
+            srtrDAO.insert(ittr);
 
             final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
-            final ServicioTramiteDatoDAO srtdDAO = session.getMapper(ServicioTramiteDatoDAO.class);
+            final ItemTramiteDatoDAO ittdDAO = session.getMapper(ItemTramiteDatoDAO.class);
 
-            for (final Long tpdtId : srtr.getItdtMap().keySet()) {
-                final ItemTramiteDatoVO itrd = srtr.getItdtMap().get(tpdtId);
+            for (final Long tpdtId : ittr.getIttdMap().keySet()) {
+                final ItemTramiteDatoVO ittd = ittr.getIttdMap().get(tpdtId);
 
-                itrd.setTpdtId(tpdtId);
-                itrd.setIttrId(srtr.getId());
+                ittd.setTpdtId(tpdtId);
+                ittd.setIttrId(ittr.getId());
 
                 final ItemDatoVO itdt = new ItemDatoVO();
 
-                itdt.setItemId(srtr.getSrvcId());
+                itdt.setItemId(ittr.getItemId());
                 itdt.setTpdtId(tpdtId);
-                itdt.setCantidadEntera(itrd.getDnentero());
-                itdt.setCantidadDecimal(itrd.getDndecimal());
-                itdt.setCadena(itrd.getDcadena());
-                itdt.setFecha(itrd.getDfecha());
-                itdt.setPrmt(itrd.getDprmt());
-                itdt.setSrvc(itrd.getDsrvc());
+                itdt.setCantidadEntera(ittd.getDnentero());
+                itdt.setCantidadDecimal(ittd.getDndecimal());
+                itdt.setCadena(ittd.getDcadena());
+                itdt.setFecha(ittd.getDfecha());
+                itdt.setPrmt(ittd.getDprmt());
+                itdt.setSrvc(ittd.getDsrvc());
 
                 srdtDAO.update(itdt);
-                srtdDAO.insert(itrd);
+                ittdDAO.insert(ittd);
             }
 
-            statechangePostOperations(session, srvc, srtr, trmtDetail);
+            statechangePostOperations(session, srvc, ittr, trmtDetail);
 
             session.commit();
         }
@@ -548,7 +551,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
      *             the model exception
      */
     protected abstract void statechangePostOperations(final SqlSession session, final ServicioVO srvc,
-            final ServicioTramiteVO srtr, final TramiteDetailVO trmtDetail) throws ModelException;
+            final ItemTramiteVO srtr, final TramiteDetailVO trmtDetail) throws ModelException;
 
     /**
      * Fill dependencies.

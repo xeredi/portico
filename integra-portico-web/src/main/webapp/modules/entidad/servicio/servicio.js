@@ -373,7 +373,7 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
             vm.prtoId = data.model.prto.id;
             vm.fechaVigencia = data.fechaVigencia;
             vm.arinList = data.arinList;
-            vm.srtrList = data.srtrList;
+            vm.ittrList = data.ittrList;
 
             vm.entiHijasMap = {};
             vm.itemHijosMap = {};
@@ -522,6 +522,7 @@ function SrvcTramiteDetailController($http, $location, $routeParams, pageTitleSe
         vm.ittr = data.ittr
         vm.trmt = data.trmt;
         vm.enti = data.enti;
+        vm.item = data.item;
     });
 
     pageTitleService.setTitle("srtr", "page_detail");
@@ -687,7 +688,7 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
             vm.fechaVigencia = data.fechaVigencia;
             vm.item = data.model;
             vm.itemPadresMap = data.itemPadresMap;
-            vm.sstrList = data.sstrList;
+            vm.ittrList = data.ittrList;
 
             vm.itemHijosMap = {};
             vm.entiHijasMap = {};
@@ -819,6 +820,7 @@ function SsrvTramiteDetailController($http, $location, $routeParams, pageTitleSe
         vm.ittr = data.ittr
         vm.trmt = data.trmt;
         vm.enti = data.enti;
+        vm.item = data.item;
     });
 
     pageTitleService.setTitle("sstr", "page_detail");

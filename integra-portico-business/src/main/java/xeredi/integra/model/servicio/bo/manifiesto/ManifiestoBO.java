@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.servicio.bo.AbstractServicioBO;
@@ -16,7 +17,6 @@ import xeredi.integra.model.servicio.dao.manifiesto.BlDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoResumenDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoSubservicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
-import xeredi.integra.model.servicio.vo.ServicioTramiteVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
@@ -82,7 +82,7 @@ public final class ManifiestoBO extends AbstractServicioBO {
      */
     @Override
     protected void statechangePostOperations(final @NonNull SqlSession session, final @NonNull ServicioVO srvc,
-            final @NonNull ServicioTramiteVO srtr, final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
+            final @NonNull ItemTramiteVO ittr, final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
         Preconditions.checkNotNull(srvc.getId());
         Preconditions.checkNotNull(trmtDetail.getTrmt());
         Preconditions.checkNotNull(trmtDetail.getTrmt().getEstadoDest());

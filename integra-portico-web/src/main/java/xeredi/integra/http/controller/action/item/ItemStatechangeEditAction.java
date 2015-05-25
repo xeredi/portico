@@ -8,8 +8,8 @@ import java.util.Set;
 
 import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ItemTramiteVO;
 import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
@@ -32,8 +32,7 @@ import com.google.common.base.Preconditions;
  * @param <E>
  *            the element type
  */
-public abstract class ItemStatechangeEditAction<IT extends ItemTramiteVO, I extends ItemVO, E extends AbstractEntidadDetailVO>
-extends BaseAction {
+public abstract class ItemStatechangeEditAction<I extends ItemVO, E extends AbstractEntidadDetailVO> extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3803526996899147874L;
@@ -48,7 +47,7 @@ extends BaseAction {
     protected I item;
 
     /** The ittr. */
-    protected IT ittr;
+    protected ItemTramiteVO ittr;
 
     /** The enti. */
     protected E enti;
@@ -193,7 +192,7 @@ extends BaseAction {
      *
      * @return the ittr
      */
-    public final IT getIttr() {
+    public final ItemTramiteVO getIttr() {
         return ittr;
     }
 }

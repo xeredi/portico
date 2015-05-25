@@ -184,7 +184,7 @@
         ]]>
 	</update>
 
-	<update id="updateEstado" parameterType="SubservicioTramiteVO">
+	<update id="updateEstado" parameterType="ItemTramiteVO">
         <![CDATA[
 		UPDATE tbl_subservicio_ssrv SET
 		    ssrv_estado = (
@@ -202,7 +202,7 @@
 		            AND trmt_estado_orig = ssrv_estado
 		            AND trmt_pk = #{trmt.id}
 		    )
-		    AND ssrv_pk = #{ssrvId}
+		    AND ssrv_pk = #{itemId}
         ]]>
 	</update>
 

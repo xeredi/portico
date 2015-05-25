@@ -2,7 +2,8 @@ package xeredi.integra.http.controller.action.item;
 
 import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ItemTramiteVO;
+import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 
@@ -12,13 +13,13 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ItemStatechangeDetailAction.
  *
+ * @param <I>
+ *            the generic type
  * @param <E>
  *            the element type
- * @param <IT>
- *            the generic type
  */
-public abstract class ItemStatechangeDetailAction<E extends AbstractEntidadDetailVO, IT extends ItemTramiteVO> extends
-BaseAction {
+public abstract class ItemStatechangeDetailAction<I extends ItemVO, E extends AbstractEntidadDetailVO> extends
+        BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4896160151140904396L;
@@ -29,8 +30,11 @@ BaseAction {
     /** The enti. */
     protected E enti;
 
+    /** The item. */
+    protected I item;
+
     /** The ittr. */
-    protected IT ittr;
+    protected ItemTramiteVO ittr;
 
     /**
      * {@inheritDoc}
@@ -56,7 +60,7 @@ BaseAction {
      *
      * @return the ittr
      */
-    public final IT getIttr() {
+    public final ItemTramiteVO getIttr() {
         return ittr;
     }
 
@@ -66,7 +70,7 @@ BaseAction {
      * @param ittr
      *            the new ittr
      */
-    public final void setIttr(final IT ittr) {
+    public final void setIttr(final ItemTramiteVO ittr) {
         this.ittr = ittr;
     }
 
@@ -86,5 +90,14 @@ BaseAction {
      */
     public final E getEnti() {
         return enti;
+    }
+
+    /**
+     * Gets the item.
+     *
+     * @return the item
+     */
+    public final I getItem() {
+        return item;
     }
 }

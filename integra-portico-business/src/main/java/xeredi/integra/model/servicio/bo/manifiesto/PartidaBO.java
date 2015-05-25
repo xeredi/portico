@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
@@ -19,7 +20,6 @@ import xeredi.integra.model.servicio.dao.manifiesto.EquipamientoDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoServicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
-import xeredi.integra.model.servicio.vo.SubservicioTramiteVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
 import com.google.common.base.Preconditions;
@@ -35,7 +35,7 @@ public final class PartidaBO extends AbstractSubservicioBO {
     @Override
     protected void insertPostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrvVO,
             final @NonNull TipoSubservicioDetailVO tpssSubservicioDetail, final Set<Long> ssrvPadreIds)
-                    throws DuplicateInstanceException {
+            throws DuplicateInstanceException {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
 
@@ -126,7 +126,7 @@ public final class PartidaBO extends AbstractSubservicioBO {
      */
     @Override
     protected void statechangePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv,
-            final @NonNull SubservicioTramiteVO sstr, final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
+            final @NonNull ItemTramiteVO ittr, final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
         Preconditions.checkNotNull(ssrv.getId());
         Preconditions.checkNotNull(ssrv.getSrvc());
         Preconditions.checkNotNull(ssrv.getSrvc().getId());

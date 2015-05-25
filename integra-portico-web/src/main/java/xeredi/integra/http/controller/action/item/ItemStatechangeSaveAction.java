@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.item;
 
 import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ItemTramiteVO;
+import xeredi.integra.model.item.vo.ItemTramiteVO;
 
 import com.google.common.base.Preconditions;
 
@@ -13,13 +13,13 @@ import com.google.common.base.Preconditions;
  * @param <IT>
  *            the generic type
  */
-public abstract class ItemStatechangeSaveAction<IT extends ItemTramiteVO> extends BaseAction {
+public abstract class ItemStatechangeSaveAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 515757187193538696L;
 
     /** The item. */
-    protected IT ittr;
+    protected ItemTramiteVO ittr;
 
     /**
      * {@inheritDoc}
@@ -60,8 +60,7 @@ public abstract class ItemStatechangeSaveAction<IT extends ItemTramiteVO> extend
      * @param value
      *            the new ittr
      */
-    public final void setIttr(final IT value) {
-        this.ittr = value;
+    public final void setIttr(final ItemTramiteVO value) {
+        ittr = value;
     }
-
 }

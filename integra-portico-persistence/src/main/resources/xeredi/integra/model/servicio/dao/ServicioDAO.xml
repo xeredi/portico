@@ -209,7 +209,7 @@
         ]]>
 	</update>
 
-	<update id="updateEstado" parameterType="ServicioTramiteVO">
+	<update id="updateEstado" parameterType="ItemTramiteVO">
         <![CDATA[
 		UPDATE tbl_servicio_srvc SET
 		    srvc_estado = (
@@ -227,7 +227,7 @@
 		            AND trmt_estado_orig = srvc_estado
 		            AND trmt_pk = #{trmt.id}
 		    )
-		    AND srvc_pk = #{srvcId}
+		    AND srvc_pk = #{itemId}
         ]]>
 	</update>
 </mapper>

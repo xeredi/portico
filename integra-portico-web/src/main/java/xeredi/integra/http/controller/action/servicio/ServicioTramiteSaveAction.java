@@ -9,13 +9,12 @@ import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteProxy;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
-import xeredi.integra.model.servicio.vo.ServicioTramiteVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServicioTramiteSaveAction.
  */
-public final class ServicioTramiteSaveAction extends ItemStatechangeSaveAction<ServicioTramiteVO> {
+public final class ServicioTramiteSaveAction extends ItemStatechangeSaveAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 895782322404815962L;
