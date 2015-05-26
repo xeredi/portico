@@ -480,8 +480,8 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      *            the session
      * @param ssrv
      *            the ssrv
-     * @param sstr
-     *            the sstr
+     * @param ittr
+     *            the ittr
      * @param trmtDetail
      *            the trmt detail
      * @throws ModelException

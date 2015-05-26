@@ -78,8 +78,8 @@ public final class FacturaSerieBO {
     /**
      * Delete.
      *
-     * @param fcsrId
-     *            the fcsr id
+     * @param fcsr
+     *            the fcsr
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */

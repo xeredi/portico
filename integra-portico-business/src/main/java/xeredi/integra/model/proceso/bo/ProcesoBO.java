@@ -202,7 +202,7 @@ public class ProcesoBO {
      */
     public final void finalizar(final Long prbtId, final List<ProcesoMensajeVO> prmnList,
             final ItemTipo itemSalidaTipo, final List<Long> itemSalidaList, final File fileSalida)
-            throws InstanceNotFoundException, OperacionNoPermitidaException {
+                    throws InstanceNotFoundException, OperacionNoPermitidaException {
         // Lectura del Archivo (si lo hay)
         byte[] buffer = null;
 
@@ -286,15 +286,15 @@ public class ProcesoBO {
     /**
      * Cancelar.
      *
-     * @param prbtId
-     *            the prbt id
+     * @param prbt
+     *            the prbt
      * @throws InstanceNotFoundException
      *             the instance not found exception
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
     public final void cancelar(final @NonNull ProcesoVO prbt) throws InstanceNotFoundException,
-            OperacionNoPermitidaException {
+    OperacionNoPermitidaException {
         Preconditions.checkNotNull(prbt.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {

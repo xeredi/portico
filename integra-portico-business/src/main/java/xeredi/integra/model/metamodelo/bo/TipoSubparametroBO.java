@@ -125,8 +125,8 @@ public final class TipoSubparametroBO {
     /**
      * Insert.
      *
-     * @param tpspVO
-     *            the tpsp vo
+     * @param enti
+     *            the enti
      * @param i18nMap
      *            the i18n map
      * @throws DuplicateInstanceException
@@ -196,8 +196,8 @@ public final class TipoSubparametroBO {
     /**
      * Delete.
      *
-     * @param tpsp
-     *            the tpsp
+     * @param enti
+     *            the enti
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */

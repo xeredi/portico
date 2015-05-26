@@ -365,7 +365,9 @@ function PrmtLupaController($http, $scope) {
 
         return $http.post("maestro/parametro-typeahead-sprm.action", {
             model : {
-                tpspId : entiId,
+                tpsp : {
+                    id : entiId
+                },
                 textoBusqueda : textoBusqueda,
                 fechaVigencia : fechaVigencia,
                 prtoId : prtoId

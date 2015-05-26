@@ -47,6 +47,11 @@ public final class ParametroSaveAction extends ItemSaveAction<ParametroVO> {
             FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
         }
 
+        if (enti.getEnti().isGis()) {
+            FieldValidator.validateRequired(this, MessageI18nKey.prmt_lat, model.getVersion().getLat());
+            FieldValidator.validateRequired(this, MessageI18nKey.prmt_lon, model.getVersion().getLon());
+        }
+
         if (enti.getEnti().isI18n()) {
             FieldValidator.validateI18n(this, i18nMap);
         }

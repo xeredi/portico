@@ -275,14 +275,14 @@
 		        FROM tbl_subparametro_sprm
 		        WHERE
 		            sprm_prmt_dep_pk = prmt_pk
-		            AND sprm_tpsp_pk = #{tpspId}
+		            AND sprm_tpsp_pk = #{tpsp.id}
 		    )
 		    AND prmt_tppr_pk = (
 		        SELECT tpsp_tppr_dep_pk
 		        FROM
 		            tbl_tipo_subparametro_tpsp
 		        WHERE
-		            tpsp_pk = #{tpspId}
+		            tpsp_pk = #{tpsp.id}
 		    )
 		    AND prmt_parametro LIKE #{textoBusqueda}
 		ORDER BY prmt_tppr_pk, prmt_parametro

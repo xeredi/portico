@@ -461,8 +461,8 @@ public abstract class AbstractServicioBO implements ServicioBO {
      *
      * @param session
      *            the session
-     * @param srvcId
-     *            the srvc id
+     * @param srvc
+     *            the srvc
      * @throws ModelException
      *             the model exception
      */
