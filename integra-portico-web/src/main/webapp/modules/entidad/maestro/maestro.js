@@ -484,7 +484,7 @@ function SprmEditController($http, $location, $routeParams, pageTitleService) {
     }).success(function(data) {
         vm.enti = data.enti;
         vm.fechaVigencia = data.fechaVigencia;
-        vm.prtoId = data.prtoId;
+        vm.prtoId = data.model.prtoId;
         vm.item = data.model;
         vm.labelValuesMap = data.labelValuesMap;
     });

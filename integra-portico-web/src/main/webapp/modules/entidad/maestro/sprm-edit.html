@@ -5,7 +5,7 @@
                 <label ng-bind="'enti_' + vm.enti.enti.tpprAsociado.id | translate"></label> <input
                     ng-if="vm.accion != 'edit'" ng-controller="PrmtLupaController" type="text"
                     autocomplete="off" ng-model="vm.item.prmtAsociado"
-                    typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.enti.tpprAsociado.id, $viewValue, null, vm.fechaVigencia)"
+                    typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.enti.tpprAsociado.id, $viewValue, vm.prtoId, vm.fechaVigencia)"
                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                 <p ng-if="vm.accion == 'edit'" class="form-control-static"
                     ng-bind="vm.item.prmtAsociado.etiqueta"></p>

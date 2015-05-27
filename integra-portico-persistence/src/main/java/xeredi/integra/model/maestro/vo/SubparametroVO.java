@@ -20,6 +20,9 @@ public final class SubparametroVO extends ItemVO implements Versionable<Subparam
     /** The spvr. */
     private SubparametroVersionVO version;
 
+    /** The prto id. */
+    private Long prtoId;
+
     /**
      * Instantiates a new subparametro vo.
      */
@@ -99,4 +102,22 @@ public final class SubparametroVO extends ItemVO implements Versionable<Subparam
         version = value;
     }
 
+    /**
+     * Gets the prto id.
+     *
+     * @return the prto id
+     */
+    public final Long getPrtoId() {
+        return prtoId;
+    }
+
+    /**
+     * Sets the prto id.
+     *
+     * @param value
+     *            the new prto id
+     */
+    public final void setPrtoId(final Long value) {
+        prtoId = value;
+    }
 }

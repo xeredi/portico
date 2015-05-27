@@ -2,7 +2,10 @@ package xeredi.integra.http.controller.action.maestro;
 
 import xeredi.integra.http.controller.action.item.ItemEditAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
+import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
@@ -28,7 +31,15 @@ public final class SubparametroEditAction extends ItemEditAction<SubparametroVO,
 
         enti = TipoSubparametroProxy.select(model.getEntiId());
 
-        if (accion != ACCION_EDICION.create) {
+        if (accion == ACCION_EDICION.create) {
+            final ParametroBO prmtBO = ParametroBOFactory.newInstance(enti.getEnti().getTpprId());
+
+            final ParametroVO prmt = prmtBO.select(model.getPrmtId(), idioma, getFechaVigencia());
+
+            if (prmt.getPrto() != null) {
+                model.setPrtoId(prmt.getPrto().getId());
+            }
+        } else {
             final SubparametroBO itemBO = new SubparametroBO();
 
             model = itemBO.selectObject(model.getId(), getIdioma(), getFechaVigencia());

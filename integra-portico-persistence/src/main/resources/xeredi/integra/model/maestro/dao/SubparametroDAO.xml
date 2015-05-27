@@ -10,6 +10,7 @@
 		<result column="sprm_pk" property="id" />
 		<result column="sprm_tpsp_pk" property="entiId" />
 		<result column="sprm_prmt_pk" property="prmtId" />
+		<result column="sprm_prto_pk" property="prtoId" />
 
 		<association property="prmtAsociado" javaType="ParametroVO">
 			<result column="sprm_prmt_dep_pk" property="id" />
@@ -33,6 +34,8 @@
 		    , spvr_pk, spvr_fini, spvr_ffin
 
 		    , prmt_tppr_pk, prmt_parametro
+
+		    , (SELECT prmt_prto_pk FROM tbl_parametro_prmt WHERE prmt_pk = sprm_prmt_pk) AS sprm_prto_pk
     ]]>
 		<if test="fechaVigencia != null and idioma != null">
         <![CDATA[
