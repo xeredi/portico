@@ -38,6 +38,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.seleniumhq.selenium.fluent</groupId>
+			<artifactId>fluent-selenium</artifactId>
+			<version>1.14.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>xml-apis</groupId>
 			<artifactId>xml-apis</artifactId>
 			<version>1.4.01</version>

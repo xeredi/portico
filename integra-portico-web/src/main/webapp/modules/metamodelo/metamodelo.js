@@ -549,9 +549,7 @@ function TpspDetailController($http, $routeParams, pageTitleService) {
     function remove() {
         if (confirm("Are you sure?")) {
             $http.post("metamodelo/tipo-subparametro-remove.action", {
-                model : {
-                    id : vm.enti.id
-                }
+                model : vm.enti
             }).success(function(data) {
                 window.history.back();
             });

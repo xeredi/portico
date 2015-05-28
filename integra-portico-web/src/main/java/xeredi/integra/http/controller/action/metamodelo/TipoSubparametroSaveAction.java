@@ -26,6 +26,8 @@ public final class TipoSubparametroSaveAction extends EntidadSaveAction<TipoSubp
 
         FieldValidator.validateRequired(this, MessageI18nKey.enti_i18n, model.isI18n());
         FieldValidator.validateRequired(this, MessageI18nKey.enti_tempExp, model.isTempExp());
+
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_tpprAsociado, model.getTpprAsociado());
     }
 
     /**
