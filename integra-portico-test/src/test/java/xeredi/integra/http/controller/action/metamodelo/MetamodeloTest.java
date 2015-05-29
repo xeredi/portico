@@ -1,91 +1,29 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.SearchContext;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.seleniumhq.selenium.fluent.FluentBy;
-import org.seleniumhq.selenium.fluent.FluentSelect;
-import org.seleniumhq.selenium.fluent.FluentWebDriver;
-import org.seleniumhq.selenium.fluent.FluentWebElement;
 
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
+import xeredi.integra.test.comun.AngularJsTest;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class MetamodeloTest.
  */
-public final class MetamodeloTest {
+public final class MetamodeloTest extends AngularJsTest {
 
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(MetamodeloTest.class);
-
-    /** The driver. */
-    private final WebDriver webDriver;
-
-    /** The fluent web driver. */
-    private final FluentWebDriver fluentWebDriver;
 
     /**
      * Instantiates a new metamodelo test.
      */
     public MetamodeloTest() {
-        super();
-
-        webDriver = new FirefoxDriver();
-
-        webDriver.manage().window().maximize();
-        webDriver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-        webDriver.get("http://127.0.0.1:8080/web");
-
-        fluentWebDriver = new FluentWebDriver(webDriver);
-
-        LOG.info("Acceso a la aplicacion");
-
-        input("vm.usro.login").sendKeys("admin");
-        input("vm.usro.contrasenia").sendKeys("admin");
-
-        button("vm.acceso()").click();
-    }
-
-    /**
-     * Ng wait.
-     *
-     * @param by
-     *            the by
-     * @return the by
-     */
-    public static By ngWait(final By by) {
-        return new FluentBy() {
-            @Override
-            public void beforeFindElement(final WebDriver driver) {
-                driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
-                ((JavascriptExecutor) driver)
-                        .executeAsyncScript("var callback = arguments[arguments.length - 1];"
-                                + "angular.element(document.body).injector().get('$browser').notifyWhenNoOutstandingRequests(callback);");
-                super.beforeFindElement(driver);
-            }
-
-            @Override
-            public List<WebElement> findElements(final SearchContext context) {
-                return by.findElements(context);
-            }
-
-            @Override
-            public WebElement findElement(final SearchContext context) {
-                return by.findElement(context);
-            }
-        };
+        super(new FirefoxDriver());
     }
 
     /**
@@ -93,6 +31,8 @@ public final class MetamodeloTest {
      */
     @Test
     public void tpprTest() {
+        login("admin", "admin");
+
         LOG.info("Metamodelo - Tipo de Parametro - Grid");
 
         tpprMain();
@@ -153,83 +93,10 @@ public final class MetamodeloTest {
     }
 
     /**
-     * Back.
-     */
-    private void back() {
-        webDriver.navigate().back();
-    }
-
-    /**
-     * Link.
-     *
-     * @param cssSelector
-     *            the css selector
-     * @return the fluent web element
-     */
-    private FluentWebElement link(final String cssSelector) {
-        return fluentWebDriver.link(ngWait(By.cssSelector(cssSelector)));
-    }
-
-    /**
-     * Link href.
-     *
-     * @param cssSelector
-     *            the css selector
-     * @return the fluent web element
-     */
-    private FluentWebElement linkHref(final String cssSelector) {
-        return fluentWebDriver.link(ngWait(By.cssSelector("a[ng-href*='" + cssSelector + "']")));
-    }
-
-    /**
-     * Button.
-     *
-     * @param cssSelector
-     *            the css selector
-     * @return the fluent web element
-     */
-    private FluentWebElement button(final String cssSelector) {
-        return fluentWebDriver.button(ngWait(By.cssSelector("button[data-ng-click='" + cssSelector + "']")));
-    }
-
-    /**
-     * Span.
-     *
-     * @param cssSelector
-     *            the css selector
-     * @return the fluent web element
-     */
-    private FluentWebElement span(final String cssSelector) {
-        return fluentWebDriver.span(ngWait(By.cssSelector(cssSelector)));
-    }
-
-    /**
-     * Input.
-     *
-     * @param cssSelector
-     *            the css selector
-     * @return the fluent web element
-     */
-    private FluentWebElement input(final String cssSelector) {
-        return fluentWebDriver.input(ngWait(By.cssSelector("input[ng-model='" + cssSelector + "']")));
-    }
-
-    /**
-     * Select.
-     *
-     * @param cssSelector
-     *            the css selector
-     * @return the fluent select
-     */
-    private FluentSelect select(final String cssSelector) {
-        return fluentWebDriver.select(ngWait(By.cssSelector("select[ng-model='" + cssSelector + "']")));
-    }
-
-    /**
      * Tppr main.
      */
     private void tpprMain() {
-        link("a[translate='menu']").click();
+        mainMenu();
         linkHref("#/administracion").click();
         linkHref("#/metamodelo/tppr/grid").click();
     }

@@ -33,6 +33,9 @@
 			<if test="id != null">
 				AND grpo_pk = #{id}
 			</if>
+			<if test="nombre != null and !nombre.empty">
+				AND grpo_nombre = #{nombre}
+			</if>
 			<if test="usroId != null">
     		<![CDATA[
 				AND EXISTS (

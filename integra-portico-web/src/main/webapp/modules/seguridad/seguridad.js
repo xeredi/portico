@@ -255,7 +255,7 @@ function GrpoGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
-        $http.post("seguridad/grpo-filter.action").success(function(data) {
+        $http.post("seguridad/grupo-filter.action").success(function(data) {
         });
     }
 
@@ -388,6 +388,18 @@ function UsroGridController($http, $location, $routeParams, $modal, pageTitleSer
 
 function UsroDetailController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
+
+    vm.remove = remove;
+
+    function remove() {
+        if (confirm("Are you sure?")) {
+            $http.post("seguridad/usuario-remove.action", {
+                model : vm.usro
+            }).success(function(data) {
+                window.history.back();
+            });
+        }
+    }
 
     $http.post("seguridad/usuario-detail.action", {
         model : {
