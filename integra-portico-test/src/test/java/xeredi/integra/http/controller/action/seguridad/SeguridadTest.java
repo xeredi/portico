@@ -24,8 +24,10 @@ public final class SeguridadTest extends AngularJsTest {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(SeguridadTest.class);
 
+    /** The sprt. */
     private SuperpuertoVO sprt;
 
+    /** The prto. */
     private PuertoVO prto;
 
     /**
@@ -68,6 +70,8 @@ public final class SeguridadTest extends AngularJsTest {
 
         accnMain();
         accnInsert("ACCNTEST1", "Accion Test 1");
+        accnUpdate("ACCNTEST1_BIS", "Accion Test 1 Bis");
+        accnUpdate("ACCNTEST1", "Accion Test 1");
         back();
         accnInsert("ACCNTEST2", "Accion Test 2");
         back();
@@ -75,6 +79,8 @@ public final class SeguridadTest extends AngularJsTest {
 
         grpoMain();
         grpoInsert("Grupo Test 1");
+        grpoUpdate("Grupo Test 1 Bis");
+        grpoUpdate("Grupo Test 1");
         back();
         grpoInsert("Grupo Test 2");
         back();
@@ -82,6 +88,8 @@ public final class SeguridadTest extends AngularJsTest {
 
         usroMain();
         usroInsert("test1", "test1", "Test 1", null, null);
+        usroUpdate("test1Bis", "test1Bis", "Test 1 Bis", sprt, prto);
+        usroUpdate("test1", "test1", "Test 1", sprt, prto);
         back();
         usroInsert("test2", "test2", "Test 2", sprt, null);
         back();
@@ -194,6 +202,26 @@ public final class SeguridadTest extends AngularJsTest {
         p("vm.accn.nombre").getText().shouldBe(nombre);
     }
 
+    private void accnUpdate(final String codigo, final String nombre) {
+        linkHref("#/seguridad/accn/edit/edit").click();
+        button("vm.cancel()").click();
+        linkHref("#/seguridad/accn/edit/edit").click();
+
+        input("vm.accn.nombre").clearField();
+
+        button("vm.save()").click();
+
+        Assert.assertTrue(span("span[translate='errorList']").isDisplayed().value());
+
+        input("vm.accn.codigo").clearField().sendKeys(codigo);
+        input("vm.accn.nombre").clearField().sendKeys(nombre);
+
+        button("vm.save()").click();
+
+        p("vm.accn.codigo").getText().shouldBe(codigo);
+        p("vm.accn.nombre").getText().shouldBe(nombre);
+    }
+
     /**
      * Accn delete.
      */
@@ -248,6 +276,24 @@ public final class SeguridadTest extends AngularJsTest {
         p("vm.grpo.nombre").getText().shouldBe(nombre);
     }
 
+    private void grpoUpdate(final String nombre) {
+        linkHref("#/seguridad/grpo/edit/edit").click();
+        button("vm.cancel()").click();
+        linkHref("#/seguridad/grpo/edit/edit").click();
+
+        input("vm.grpo.nombre").clearField();
+
+        button("vm.save()").click();
+
+        Assert.assertTrue(span("span[translate='errorList']").isDisplayed().value());
+
+        input("vm.grpo.nombre").clearField().sendKeys(nombre);
+
+        button("vm.save()").click();
+
+        p("vm.grpo.nombre").getText().shouldBe(nombre);
+    }
+
     /**
      * Grpo delete.
      */
@@ -263,10 +309,10 @@ public final class SeguridadTest extends AngularJsTest {
      *
      * @param login
      *            the login
-     * @param sprtId
-     *            the sprt id
-     * @param prtoId
-     *            the prto id
+     * @param sprt
+     *            the sprt
+     * @param prto
+     *            the prto
      */
     private void usroSearch(final String login, final SuperpuertoVO sprt, final PuertoVO prto) {
         button("vm.filter('lg')").click();
@@ -302,16 +348,60 @@ public final class SeguridadTest extends AngularJsTest {
      *            the contrasenia
      * @param nombre
      *            the nombre
-     * @param sprtId
-     *            the sprt id
-     * @param prtoId
-     *            the prto id
+     * @param sprt
+     *            the sprt
+     * @param prto
+     *            the prto
      */
     private void usroInsert(final String login, final String contrasenia, final String nombre, final SuperpuertoVO sprt,
             final PuertoVO prto) {
         linkHref("#/seguridad/usro/edit/create").click();
         button("vm.cancel()").click();
         linkHref("#/seguridad/usro/edit/create").click();
+        button("vm.save()").click();
+
+        Assert.assertTrue(span("span[translate='errorList']").isDisplayed().value());
+
+        input("vm.usro.login").clearField().sendKeys(login);
+        input("vm.usro.contrasenia").clearField().sendKeys(contrasenia);
+        input("vm.usro.nombre").clearField().sendKeys(nombre);
+
+        if (sprt != null) {
+            select("vm.usro.sprt.id").selectByValue("number:" + sprt.getId());
+        }
+
+        if (prto != null) {
+            select("vm.usro.prto.id").selectByValue("number:" + prto.getId());
+        }
+
+        button("vm.save()").click();
+
+        p("vm.usro.login").getText().shouldBe(login);
+        p("vm.usro.nombre").getText().shouldBe(nombre);
+    }
+
+    /**
+     * Usro update.
+     *
+     * @param login
+     *            the login
+     * @param contrasenia
+     *            the contrasenia
+     * @param nombre
+     *            the nombre
+     * @param sprt
+     *            the sprt
+     * @param prto
+     *            the prto
+     */
+    private void usroUpdate(final String login, final String contrasenia, final String nombre, final SuperpuertoVO sprt,
+            final PuertoVO prto) {
+        linkHref("#/seguridad/usro/edit/edit").click();
+        button("vm.cancel()").click();
+        linkHref("#/seguridad/usro/edit/edit").click();
+
+        input("vm.usro.login").clearField();
+
         button("vm.save()").click();
 
         Assert.assertTrue(span("span[translate='errorList']").isDisplayed().value());
