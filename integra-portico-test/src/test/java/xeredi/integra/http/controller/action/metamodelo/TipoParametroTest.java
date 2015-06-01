@@ -14,15 +14,15 @@ import xeredi.integra.test.comun.AngularJsTest;
 /**
  * The Class MetamodeloTest.
  */
-public final class MetamodeloTest extends AngularJsTest {
+public final class TipoParametroTest extends AngularJsTest {
 
     /** The Constant LOG. */
-    private static final Log LOG = LogFactory.getLog(MetamodeloTest.class);
+    private static final Log LOG = LogFactory.getLog(TipoParametroTest.class);
 
     /**
      * Instantiates a new metamodelo test.
      */
-    public MetamodeloTest() {
+    public TipoParametroTest() {
         super(new FirefoxDriver());
     }
 
@@ -45,8 +45,8 @@ public final class MetamodeloTest extends AngularJsTest {
         engdInsert("1", "Tppr Test General");
         engdUpdate("2", "Tppr Test General New");
         back();
-        entdInsert(TipoDato.ACUERDO, null, "1", "1", "1", "3", "1", "1", "1", "Acuerdo");
-        entdUpdate(null, "1", "2", "1", "3", "1", "1", "1", "Acuerdo New");
+        entdInsert(TipoDato.ACUERDO, null, "1", "1", "1", "3", "true", "true", "true", "Acuerdo");
+        entdUpdate(null, "1", "2", "1", "3", "false", "false", "false", "Acuerdo New");
         back();
         enacInsert("tppr-enac-path", "1", "Tppr Action Test");
         enacUpdate("2", "Tppr Action Test New");
@@ -63,8 +63,8 @@ public final class MetamodeloTest extends AngularJsTest {
         engdInsert("1", "Tpsp Test General");
         engdUpdate("2", "Tpsp Test General New");
         back();
-        entdInsert(TipoDato.ACUERDO, null, "1", "1", "1", "3", "1", "1", "1", "Acuerdo");
-        entdUpdate(null, "1", "2", "1", "3", "1", "1", "1", "Acuerdo New");
+        entdInsert(TipoDato.ACUERDO, null, "1", "1", "1", "3", "true", "true", "true", "Acuerdo");
+        entdUpdate(null, "1", "2", "1", "3", "true", "false", "true", "Acuerdo New");
         back();
         enacInsert("tpsp-enac-path", "1", "Tpsp Action Test");
         enacUpdate("2", "Tpsp Action Test New");
@@ -192,7 +192,7 @@ public final class MetamodeloTest extends AngularJsTest {
         Assert.assertTrue(span("span[translate='errorList']").isDisplayed().value());
 
         input("vm.enti.codigo").sendKeys(codigo);
-        select("vm.enti.tpprAsociado.id").selectByIndex(1);
+        select("vm.enti.tpprAsociado.id").selectByValue("number:" + enti.getId());
         input("vm.enti.maxGrid").sendKeys(maxGrid);
         input("vm.i18nMap[default_language].text").sendKeys(text);
 
@@ -214,14 +214,14 @@ public final class MetamodeloTest extends AngularJsTest {
         button("vm.cancel()").click();
         linkHref("#/metamodelo/tpsp/edit/edit").click();
 
-        select("vm.enti.tpprAsociado.id").selectByIndex(0);
+        input("vm.i18nMap[default_language].text").clearField();
 
         button("vm.save()").click();
 
         Assert.assertTrue(span("span[translate='errorList']").isDisplayed().value());
 
         input("vm.enti.maxGrid").clearField().sendKeys(maxGrid);
-        select("vm.enti.tpprAsociado.id").selectByIndex(2);
+        select("vm.enti.tpprAsociado.id").selectByValue("number:" + enti.getId());
         input("vm.i18nMap[default_language].text").clearField().sendKeys(text);
 
         button("vm.save()").click();
@@ -278,15 +278,15 @@ public final class MetamodeloTest extends AngularJsTest {
 
         Assert.assertTrue(span("span[translate='errorList']").isDisplayed().value());
 
-        select("vm.entd.tpdt.id").selectByIndex(1);
+        select("vm.entd.tpdt.id").selectByValue("number:" + tpdt.getId());
         input("vm.entd.valorDefecto").sendKeys(valorDefecto);
         input("vm.entd.grupo").sendKeys(grupo);
         input("vm.entd.fila").sendKeys(fila);
         input("vm.entd.orden").sendKeys(orden);
         input("vm.entd.span").sendKeys(span);
-        select("vm.entd.obligatorio").selectByValue(obligatorio);
-        select("vm.entd.gridable").selectByValue(gridable);
-        select("vm.entd.filtrable").selectByValue(filtrable);
+        select("vm.entd.obligatorio").selectByValue("boolean:" + obligatorio);
+        select("vm.entd.gridable").selectByValue("boolean:" + gridable);
+        select("vm.entd.filtrable").selectByValue("boolean:" + filtrable);
 
         input("vm.i18nMap[default_language].text").sendKeys(etiqueta);
 
@@ -311,9 +311,9 @@ public final class MetamodeloTest extends AngularJsTest {
         input("vm.entd.fila").clearField().sendKeys(fila);
         input("vm.entd.orden").clearField().sendKeys(orden);
         input("vm.entd.span").clearField().sendKeys(span);
-        select("vm.entd.obligatorio").selectByValue(obligatorio);
-        select("vm.entd.gridable").selectByValue(gridable);
-        select("vm.entd.filtrable").selectByValue(filtrable);
+        select("vm.entd.obligatorio").selectByValue("boolean:" + obligatorio);
+        select("vm.entd.gridable").selectByValue("boolean:" + gridable);
+        select("vm.entd.filtrable").selectByValue("boolean:" + filtrable);
 
         input("vm.i18nMap[default_language].text").clearField().sendKeys(etiqueta);
 

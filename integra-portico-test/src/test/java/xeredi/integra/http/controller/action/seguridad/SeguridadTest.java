@@ -6,6 +6,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import xeredi.integra.model.comun.bo.PuertoBO;
+import xeredi.integra.model.comun.bo.SuperpuertoBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.PuertoCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
+import xeredi.integra.model.comun.vo.SuperpuertoCriterioVO;
+import xeredi.integra.model.comun.vo.SuperpuertoVO;
 import xeredi.integra.test.comun.AngularJsTest;
 
 // TODO: Auto-generated Javadoc
@@ -17,11 +24,33 @@ public final class SeguridadTest extends AngularJsTest {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(SeguridadTest.class);
 
+    private SuperpuertoVO sprt;
+
+    private PuertoVO prto;
+
     /**
      * Instantiates a new seguridad test.
      */
     public SeguridadTest() {
         super(new FirefoxDriver());
+
+        try {
+            final SuperpuertoBO sprtBO = new SuperpuertoBO();
+            final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
+
+            sprtCriterio.setCodigo("80");
+
+            sprt = sprtBO.selectObject(sprtCriterio);
+
+            final PuertoBO prtoBO = new PuertoBO();
+            final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+
+            prtoCriterio.setCodigo("81");
+
+            prto = prtoBO.selectObject(prtoCriterio);
+        } catch (final InstanceNotFoundException ex) {
+            throw new Error(ex);
+        }
     }
 
     /**
@@ -54,17 +83,17 @@ public final class SeguridadTest extends AngularJsTest {
         usroMain();
         usroInsert("test1", "test1", "Test 1", null, null);
         back();
-        usroInsert("test2", "test2", "Test 2", "80", null);
+        usroInsert("test2", "test2", "Test 2", sprt, null);
         back();
-        usroInsert("test3", "test3", "Test 3", "80", "81");
+        usroInsert("test3", "test3", "Test 3", sprt, prto);
         back();
         usroSearch("test1", null, null);
         usroDetail();
         usroDelete();
-        usroSearch("test2", null, null);
+        usroSearch("test2", sprt, null);
         usroDetail();
         usroDelete();
-        usroSearch("test3", null, null);
+        usroSearch("test3", sprt, prto);
         usroDetail();
         usroDelete();
         back();
@@ -76,6 +105,15 @@ public final class SeguridadTest extends AngularJsTest {
         grpoSearch("Grupo Test 2");
         grpoDetail();
         grpoDelete();
+        back();
+
+        accnMain();
+        accnSearch("ACCNTEST1");
+        accnDetail();
+        accnDelete();
+        accnSearch("ACCNTEST2");
+        accnDetail();
+        accnDelete();
         back();
 
         LOG.info("End");
@@ -109,6 +147,29 @@ public final class SeguridadTest extends AngularJsTest {
     }
 
     /**
+     * Accn search.
+     *
+     * @param codigo
+     *            the codigo
+     */
+    private void accnSearch(final String codigo) {
+        button("vm.filter('lg')").click();
+        button("$hide()").click();
+        button("vm.filter('lg')").click();
+
+        input("vm.accnCriterio.codigo").clearField().sendKeys(codigo);
+
+        button("vm.search(1);$hide()").click();
+    }
+
+    /**
+     * Accn detail.
+     */
+    private void accnDetail() {
+        linkHref("#/seguridad/accn/detail").click();
+    }
+
+    /**
      * Accn insert.
      *
      * @param codigo
@@ -118,8 +179,37 @@ public final class SeguridadTest extends AngularJsTest {
      */
     private void accnInsert(final String codigo, final String nombre) {
         linkHref("#/seguridad/accn/edit/create").click();
+        button("vm.cancel()").click();
+        linkHref("#/seguridad/accn/edit/create").click();
+        button("vm.save()").click();
+
+        Assert.assertTrue(span("span[translate='errorList']").isDisplayed().value());
+
+        input("vm.accn.codigo").clearField().sendKeys(codigo);
+        input("vm.accn.nombre").clearField().sendKeys(nombre);
+
+        button("vm.save()").click();
+
+        p("vm.accn.codigo").getText().shouldBe(codigo);
+        p("vm.accn.nombre").getText().shouldBe(nombre);
     }
 
+    /**
+     * Accn delete.
+     */
+    private void accnDelete() {
+        button("vm.remove()").click();
+        webDriver.switchTo().alert().dismiss();
+        button("vm.remove()").click();
+        webDriver.switchTo().alert().accept();
+    }
+
+    /**
+     * Grpo search.
+     *
+     * @param nombre
+     *            the nombre
+     */
     private void grpoSearch(final String nombre) {
         button("vm.filter('lg')").click();
         button("$hide()").click();
@@ -130,6 +220,9 @@ public final class SeguridadTest extends AngularJsTest {
         button("vm.search(1);$hide()").click();
     }
 
+    /**
+     * Grpo detail.
+     */
     private void grpoDetail() {
         linkHref("#/seguridad/grpo/detail").click();
     }
@@ -151,8 +244,13 @@ public final class SeguridadTest extends AngularJsTest {
         input("vm.grpo.nombre").clearField().sendKeys(nombre);
 
         button("vm.save()").click();
+
+        p("vm.grpo.nombre").getText().shouldBe(nombre);
     }
 
+    /**
+     * Grpo delete.
+     */
     private void grpoDelete() {
         button("vm.remove()").click();
         webDriver.switchTo().alert().dismiss();
@@ -170,19 +268,19 @@ public final class SeguridadTest extends AngularJsTest {
      * @param prtoId
      *            the prto id
      */
-    private void usroSearch(final String login, final String sprtId, final String prtoId) {
+    private void usroSearch(final String login, final SuperpuertoVO sprt, final PuertoVO prto) {
         button("vm.filter('lg')").click();
         button("$hide()").click();
         button("vm.filter('lg')").click();
 
         input("vm.usroCriterio.login").clearField().sendKeys(login);
 
-        if (sprtId != null) {
-            select("vm.usroCriterio.sprtId").selectByIndex(1);
+        if (sprt != null) {
+            select("vm.usroCriterio.sprtId").selectByValue("number:" + sprt.getId());
         }
 
-        if (prtoId != null) {
-            select("vm.usroCriterio.prtoId").selectByIndex(1);
+        if (prto != null) {
+            select("vm.usroCriterio.prtoId").selectByValue("number:" + prto.getId());
         }
 
         button("vm.search(1);$hide()").click();
@@ -209,8 +307,8 @@ public final class SeguridadTest extends AngularJsTest {
      * @param prtoId
      *            the prto id
      */
-    private void usroInsert(final String login, final String contrasenia, final String nombre, final String sprtId,
-            final String prtoId) {
+    private void usroInsert(final String login, final String contrasenia, final String nombre, final SuperpuertoVO sprt,
+            final PuertoVO prto) {
         linkHref("#/seguridad/usro/edit/create").click();
         button("vm.cancel()").click();
         linkHref("#/seguridad/usro/edit/create").click();
@@ -222,15 +320,18 @@ public final class SeguridadTest extends AngularJsTest {
         input("vm.usro.contrasenia").clearField().sendKeys(contrasenia);
         input("vm.usro.nombre").clearField().sendKeys(nombre);
 
-        if (sprtId != null) {
-            select("vm.usro.sprt.id").selectByIndex(1);
+        if (sprt != null) {
+            select("vm.usro.sprt.id").selectByValue("number:" + sprt.getId());
         }
 
-        if (prtoId != null) {
-            select("vm.usro.prto.id").selectByIndex(1);
+        if (prto != null) {
+            select("vm.usro.prto.id").selectByValue("number:" + prto.getId());
         }
 
         button("vm.save()").click();
+
+        p("vm.usro.login").getText().shouldBe(login);
+        p("vm.usro.nombre").getText().shouldBe(nombre);
     }
 
     /**

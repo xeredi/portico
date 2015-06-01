@@ -52,8 +52,7 @@ public abstract class AngularJsTest {
             @Override
             public void beforeFindElement(final WebDriver driver) {
                 driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
-                ((JavascriptExecutor) driver)
-                .executeAsyncScript("var callback = arguments[arguments.length - 1];"
+                ((JavascriptExecutor) driver).executeAsyncScript("var callback = arguments[arguments.length - 1];"
                         + "angular.element(document.body).injector().get('$browser').notifyWhenNoOutstandingRequests(callback);");
                 super.beforeFindElement(driver);
             }
@@ -108,6 +107,17 @@ public abstract class AngularJsTest {
      */
     protected final FluentWebElement button(final String cssSelector) {
         return fluentWebDriver.button(ngWait(By.cssSelector("button[data-ng-click=\"" + cssSelector + "\"]")));
+    }
+
+    /**
+     * P.
+     *
+     * @param cssSelector
+     *            the css selector
+     * @return the fluent web element
+     */
+    protected final FluentWebElement p(final String cssSelector) {
+        return fluentWebDriver.p(ngWait(By.cssSelector("p[ng-bind=\"" + cssSelector + "\"]")));
     }
 
     /**
