@@ -3,6 +3,10 @@ package xeredi.integra.test.comun;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.SearchContext;
@@ -13,11 +17,16 @@ import org.seleniumhq.selenium.fluent.FluentSelect;
 import org.seleniumhq.selenium.fluent.FluentWebDriver;
 import org.seleniumhq.selenium.fluent.FluentWebElement;
 
+import xeredi.integra.model.comun.exception.ApplicationException;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class AngularJsTest.
  */
 public abstract class AngularJsTest {
+
+    /** The Constant LOG. */
+    private static final Log LOG = LogFactory.getLog(AngularJsTest.class);
 
     /** The driver. */
     protected final WebDriver webDriver;
@@ -39,6 +48,36 @@ public abstract class AngularJsTest {
 
         webDriver.manage().window().maximize();
     }
+
+    /**
+     * Test.
+     */
+    @Test
+    public final void test() {
+        LOG.info("Test Start");
+
+        try {
+            doTest();
+        } catch (final ApplicationException ex) {
+            LOG.error(ex, ex);
+
+            Assert.fail(ex.getMessage());
+        } catch (final Throwable ex) {
+            LOG.fatal(ex, ex);
+
+            Assert.fail(ex.getMessage());
+        }
+
+        LOG.info("Test End");
+    }
+
+    /**
+     * Do test.
+     *
+     * @throws ApplicationException
+     *             the application exception
+     */
+    protected abstract void doTest() throws ApplicationException;
 
     /**
      * Ng wait.

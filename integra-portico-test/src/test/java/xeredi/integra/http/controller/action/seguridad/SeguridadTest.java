@@ -3,7 +3,6 @@ package xeredi.integra.http.controller.action.seguridad;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
-import org.junit.Test;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import xeredi.integra.model.comun.bo.PuertoBO;
@@ -56,12 +55,10 @@ public final class SeguridadTest extends AngularJsTest {
     }
 
     /**
-     * Test.
+     * {@inheritDoc}
      */
-    @Test
-    public void test() {
-        LOG.info("Start");
-
+    @Override
+    protected void doTest() {
         login("admin", "admin");
 
         mainMenu();
@@ -123,8 +120,6 @@ public final class SeguridadTest extends AngularJsTest {
         accnDetail();
         accnDelete();
         back();
-
-        LOG.info("End");
     }
 
     /**

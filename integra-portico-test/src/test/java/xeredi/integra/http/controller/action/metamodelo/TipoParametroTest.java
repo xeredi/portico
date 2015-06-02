@@ -3,7 +3,6 @@ package xeredi.integra.http.controller.action.metamodelo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
-import org.junit.Test;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import xeredi.integra.model.metamodelo.vo.Entidad;
@@ -27,10 +26,10 @@ public final class TipoParametroTest extends AngularJsTest {
     }
 
     /**
-     * Acceso test.
+     * {@inheritDoc}
      */
-    @Test
-    public void tpprTest() {
+    @Override
+    protected void doTest() {
         login("admin", "admin");
 
         LOG.info("Metamodelo - Tipo de Parametro - Grid");

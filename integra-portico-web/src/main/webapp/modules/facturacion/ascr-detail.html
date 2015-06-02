@@ -3,9 +3,9 @@
     <div class="btn-group">
         <a class="btn btn-default"
             ng-href="#/facturacion/ascr/edit/edit/{{vm.ascr.aspcId}}/{{vm.fechaVigencia}}/{{vm.ascr.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
         </button>
     </div>
 </div>
@@ -13,18 +13,18 @@
 <fieldset>
     <div class="row">
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-            <label translate>ascr_crgo</label>
+            <label translate="ascr_crgo"></label>
             <p class="form-control-static">
                 <a ng-href="#/facturacion/crgo/detail/{{vm.ascr.crgo.id}}/{{vm.fechaVigencia}}"
                     ng-bind="vm.ascr.crgo.etiqueta"></a>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate>ascr_fini</label>
+            <label translate="ascr_fini"></label>
             <p class="form-control-static" ng-bind="vm.ascr.version.fini | date: ('format_date' | translate)"></p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate>ascr_ffin</label>
+            <label translate="ascr_ffin"></label>
             <p class="form-control-static" ng-bind="vm.ascr.version.ffin | date: ('format_date' | translate)"></p>
         </div>
     </div>

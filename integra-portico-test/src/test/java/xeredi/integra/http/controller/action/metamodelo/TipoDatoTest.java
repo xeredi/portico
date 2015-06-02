@@ -3,7 +3,6 @@ package xeredi.integra.http.controller.action.metamodelo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
-import org.junit.Test;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import xeredi.integra.model.metamodelo.vo.Entidad;
@@ -28,12 +27,10 @@ public final class TipoDatoTest extends AngularJsTest {
     }
 
     /**
-     * Test.
+     * {@inheritDoc}
      */
-    @Test
-    public void test() {
-        LOG.info("Start");
-
+    @Override
+    protected void doTest() {
         login("admin", "admin");
 
         mainMenu();
@@ -48,8 +45,6 @@ public final class TipoDatoTest extends AngularJsTest {
         tpdtDelete();
         tpdtInsert("TPDT_PR_TEST", TipoElemento.PR, TipoHtml.S, Entidad.ACUERDO, "TpdtPRTest");
         tpdtDelete();
-
-        LOG.info("End");
     }
 
     /**
