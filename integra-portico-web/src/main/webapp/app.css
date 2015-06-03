@@ -29,7 +29,7 @@ body, .tooltip, .dropdown-menu, .angular-google-map-container {
 }
 
 body, label, table, legend, .tooltip, .dropdown-menu, .btn, .form-control-static, .form-control,
-	.form-group-sm .form-control, .form-group-sm>.form-control-static {
+	.form-group-sm .form-control, .form-group-sm>.form-control-static, .label {
 	font-size: 11px;
 }
 

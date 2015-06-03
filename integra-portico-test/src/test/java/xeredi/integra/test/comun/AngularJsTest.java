@@ -1,5 +1,7 @@
 package xeredi.integra.test.comun;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -18,6 +20,8 @@ import org.seleniumhq.selenium.fluent.FluentWebDriver;
 import org.seleniumhq.selenium.fluent.FluentWebElement;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -34,6 +38,18 @@ public abstract class AngularJsTest {
     /** The fluent web driver. */
     protected final FluentWebDriver fluentWebDriver;
 
+    /** The idioma. */
+    protected String idioma;
+
+    /** The date format. */
+    protected DateFormat dateFormat;
+
+    /** The datetime format. */
+    protected DateFormat datetimeFormat;
+
+    /** The time format. */
+    protected DateFormat timeFormat;
+
     /**
      * Instantiates a new angular js test.
      *
@@ -47,6 +63,12 @@ public abstract class AngularJsTest {
         fluentWebDriver = new FluentWebDriver(webDriver);
 
         webDriver.manage().window().maximize();
+
+        idioma = ConfigurationProxy.getString(ConfigurationKey.language_default);
+
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        datetimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        timeFormat = new SimpleDateFormat("HH:mm");
     }
 
     /**
@@ -57,6 +79,7 @@ public abstract class AngularJsTest {
         LOG.info("Test Start");
 
         try {
+            doPrepare();
             doTest();
         } catch (final ApplicationException ex) {
             LOG.error(ex, ex);
@@ -69,6 +92,16 @@ public abstract class AngularJsTest {
         }
 
         LOG.info("Test End");
+    }
+
+    /**
+     * Do prepare.
+     *
+     * @throws ApplicationException
+     *             the application exception
+     */
+    protected void doPrepare() throws ApplicationException {
+        // noop
     }
 
     /**
@@ -160,6 +193,17 @@ public abstract class AngularJsTest {
     }
 
     /**
+     * Li.
+     *
+     * @param index
+     *            the index
+     * @return the fluent web element
+     */
+    protected final FluentWebElement linkTab(final String index) {
+        return fluentWebDriver.link(ngWait(By.cssSelector("a[data-index=\"" + index + "\"]")));
+    }
+
+    /**
      * Span.
      *
      * @param cssSelector
@@ -215,4 +259,5 @@ public abstract class AngularJsTest {
     protected final void mainMenu() {
         link("a[translate='menu']").click();
     }
+
 }

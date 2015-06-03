@@ -65,6 +65,13 @@ integraApp
 			});
 		})
 
+		.config(function($tabProvider) {
+			angular.extend($tabProvider.defaults, {
+				animation : 'am-flip-x',
+				navClass : 'nav-pills'
+			});
+		})
+
 		.config(
 				[
 						'$httpProvider',
