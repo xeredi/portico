@@ -28,7 +28,7 @@
 		    , vlrl_fref
 		    , (SELECT crgo_codigo FROM tbl_cargo_crgo
 		        WHERE crgo_pk = rgla_crgo_pk) AS crgo_codigo
-		    , SUM(vlrl_importe) AS vlrg_importe
+		    , COALESCE(SUM(vlrl_importe), 0) AS vlrg_importe
     ]]>
 		<if test="idioma != null">
 	    <![CDATA[

@@ -1,185 +1,187 @@
-<tabset type="pills"> <tab heading="{{'vlrd' | translate}}">
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a class="btn btn-default"
-            ng-href="#/facturacion/vlrd/edit/edit/{{vm.vlrd.vlrcId}}/{{vm.vlrd.vlrlId}}/{{vm.vlrd.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
-        <button data-ng-click="vm.remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
-        </button>
+<div bs-tabs ng-model="vm.tab" ng-change="vm.tabSelected()">
+    <div title="{{'vlrd' | translate}}" name="vlrd" bs-pane>
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-default"
+                    ng-href="#/facturacion/vlrd/edit/edit/{{vm.vlrd.vlrcId}}/{{vm.vlrd.vlrlId}}/{{vm.vlrd.id}}"><i
+                    class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
+                <button data-ng-click="vm.remove()" class="btn btn-default">
+                    <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+                </button>
+            </div>
+        </div>
+
+        <fieldset>
+            <div class="row">
+                <div class="col-md-1 form-group-sm">
+                    <label translate="rgla"></label>
+                    <p class="form-control-static">
+                        <a ng-href="#/facturacion/rgla/detail/{{vm.vlrd.rgla.id}}/{{vm.vlrd.fref}}"
+                            ng-bind="vm.vlrd.rgla.codigo"></a>
+                    </p>
+                </div>
+                <div class="col-md-1 form-group-sm">
+                    <label translate="rgla_tipo"></label>
+                    <p class="form-control-static" ng-bind="vm.vlrd.rgla.tipo"></p>
+                </div>
+                <div class="col-md-1 form-group-sm">
+                    <label translate="vlrd_valorBase"></label>
+                    <p class="form-control-static number" ng-bind="vm.vlrd.valorBase | number:4"></p>
+                </div>
+                <div class="col-md-1 form-group-sm" ng-if="vm.vlrl.rgla.tipo != 'T'">
+                    <label translate="vlrd_importeBase"></label>
+                    <p class="form-control-static number">{{vm.vlrd.importeBase | number:2}} &euro;</p>
+                </div>
+                <div class="col-md-1 form-group-sm">
+                    <label translate="vlrd_importe"></label>
+                    <p class="form-control-static number">{{vm.vlrd.importe | number:2}} &euro;</p>
+                </div>
+                <div class="col-md-2 form-group-sm">
+                    <label translate="vlrd_impuesto"></label>
+                    <p class="form-control-static">
+                        <a
+                            ng-href="#/maestro/prmt/detail/{{vm.vlrlPadre.impuesto.entiId}}/{{vm.vlrlPadre.impuesto.id}}/{{vm.vlrd.fref}}"
+                            ng-bind="vm.vlrlPadre.impuesto.etiqueta"></a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 form-group-sm">
+                    <label ng-bind="'enti_' + vm.vlrl.rgla.enti.id | translate"></label>
+                    <p class="form-control-static">
+                        <a ng-if="vm.vlrd.ssrv.id"
+                            ng-href="#/servicio/ssrv/detail/{{vm.vlrd.ssrv.entiId}}/{{vm.vlrd.ssrv.id}}"
+                            ng-bind="vm.vlrd.ssrv.numero"></a>
+                    </p>
+                </div>
+                <div class="col-md-2 form-group-sm" ng-if="vlrl.rgla.crgo.version.temporal">
+                    <label translate="vlrd_fini"></label>
+                    <p class="form-control-static" ng-bind="vlrd.fini | date: ('format_datetime' | translate)"></p>
+                </div>
+                <div class="col-md-2 form-group-sm" ng-if="vlrl.rgla.crgo.version.temporal">
+                    <label translate="vlrd_ffin"></label>
+                    <p class="form-control-static" ng-bind="vlrd.ffin | date: ('format_datetime' | translate)"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div ng-if="vm.vlrlPadre.rgla.version.etiqInfo1" class="col-md-4 form-group-sm">
+                    <label ng-bind="vm.vlrlPadre.rgla.version.etiqInfo1"></label>
+                    <p class="form-control-static">{{vm.aspc.version.lgrpInfo1 ? vm.vlrlPadre.info1 :
+                        vm.vlrd.info1}}</p>
+                </div>
+                <div ng-if="vm.vlrlPadre.rgla.version.etiqInfo2" class="col-md-4 form-group-sm">
+                    <label ng-bind="vm.vlrlPadre.rgla.version.etiqInfo2"></label>
+                    <p class="form-control-static">{{vm.aspc.version.lgrpInfo2 ? vm.vlrlPadre.info2 :
+                        vm.vlrd.info2}}</p>
+                </div>
+                <div ng-if="vm.vlrlPadre.rgla.version.etiqInfo3" class="col-md-4 form-group-sm">
+                    <label ng-bind="vm.vlrlPadre.rgla.version.etiqInfo3"></label>
+                    <p class="form-control-static">{{vm.aspc.version.lgrpInfo3 ? vm.vlrlPadre.info3 :
+                        vm.vlrd.info3}}</p>
+                </div>
+                <div ng-if="vm.vlrlPadre.rgla.version.etiqInfo4" class="col-md-4 form-group-sm">
+                    <label ng-bind="vm.vlrlPadre.rgla.version.etiqInfo4"></label>
+                    <p class="form-control-static">{{vm.aspc.version.lgrpInfo4 ? vm.vlrlPadre.info4 :
+                        vm.vlrd.info4}}</p>
+                </div>
+                <div ng-if="vm.vlrlPadre.rgla.version.etiqInfo5" class="col-md-4 form-group-sm">
+                    <label ng-bind="vm.vlrlPadre.rgla.version.etiqInfo5"></label>
+                    <p class="form-control-static">{{vm.aspc.version.lgrpInfo5 ? vm.vlrlPadre.info5 :
+                        vm.vlrd.info5}}</p>
+                </div>
+                <div ng-if="vm.vlrlPadre.rgla.version.etiqInfo6" class="col-md-4 form-group-sm">
+                    <label ng-bind="vm.vlrlPadre.rgla.version.etiqInfo6"></label>
+                    <p class="form-control-static">{{vm.aspc.version.lgrpInfo6 ? vm.vlrlPadre.info6 :
+                        vm.vlrd.info6}}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div ng-if="vm.vlrlPadre.rgla.version.etiqCuant1" class="col-md-2 form-group-sm">
+                    <label ng-bind="vm.vlrlPadre.rgla.version.etiqCuant1"></label>
+                    <p class="form-control-static number" ng-bind="vm.vlrd.cuant1 | number:2"></p>
+                </div>
+                <div ng-if="vm.vlrlPadre.rgla.version.etiqCuant2" class="col-md-2 form-group-sm">
+                    <label ng-bind="vm.vlrlPadre.rgla.version.etiqCuant2"></label>
+                    <p class="form-control-static number" ng-bind="vm.vlrd.cuant2 | number:2"></p>
+                </div>
+                <div ng-if="vm.vlrlPadre.rgla.version.etiqCuant3" class="col-md-2 form-group-sm">
+                    <label ng-bind="vm.vlrlPadre.rgla.version.etiqCuant3"></label>
+                    <p class="form-control-static number" ng-bind="vm.vlrd.cuant3 | number:2"></p>
+                </div>
+                <div ng-if="vm.vlrlPadre.rgla.version.etiqCuant4" class="col-md-2 form-group-sm">
+                    <label ng-bind="vm.vlrlPadre.rgla.version.etiqCuant4"></label>
+                    <p class="form-control-static number" ng-bind="vm.vlrd.cuant4 | number:2"></p>
+                </div>
+                <div ng-if="vm.vlrlPadre.rgla.version.etiqCuant5" class="col-md-2 form-group-sm">
+                    <label ng-bind="vm.vlrlPadre.rgla.version.etiqCuant5"></label>
+                    <p class="form-control-static number" ng-bind="vm.vlrd.cuant5 | number:2"></p>
+                </div>
+                <div ng-if="vm.vlrlPadre.rgla.version.etiqCuant6" class="col-md-2 form-group-sm">
+                    <label ng-bind="vm.vlrlPadre.rgla.version.etiqCuant6"></label>
+                    <p class="form-control-static number" ng-bind="vm.vlrd.cuant6 | number:2"></p>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset ng-if="vm.vlrd.rgla.tipo == 'T'">
+            <legend>Modificadores</legend>
+
+            <div class="table-responsive">
+                <table class="table-bordered table-condensed table-hover table-nonfluid">
+                    <thead>
+                        <tr>
+                            <th />
+                            <th translate="rgla"></th>
+                            <th translate="rgla_tipo"></th>
+                            <th translate="vlrd_valorBase"></th>
+                            <th translate="vlrd_importeBase"></th>
+                            <th translate="vlrd_importe"></th>
+
+                            <th ng-if="vm.vlrlPadre.rgla.version.etiqCuant1"><span
+                                ng-bind="vm.vlrlPadre.rgla.version.etiqCuant1"></span></th>
+                            <th ng-if="vm.vlrlPadre.rgla.version.etiqCuant2"><span
+                                ng-bind="vm.vlrlPadre.rgla.version.etiqCuant2"></span></th>
+                            <th ng-if="vm.vlrlPadre.rgla.version.etiqCuant3"><span
+                                ng-bind="vm.vlrlPadre.rgla.version.etiqCuant3"></span></th>
+                            <th ng-if="vm.vlrlPadre.rgla.version.etiqCuant4"><span
+                                ng-bind="vm.vlrlPadre.rgla.version.etiqCuant4"></span></th>
+                            <th ng-if="vm.vlrlPadre.rgla.version.etiqCuant5"><span
+                                ng-bind="vm.vlrlPadre.rgla.version.etiqCuant5"></span></th>
+                            <th ng-if="vm.vlrlPadre.rgla.version.etiqCuant6"><span
+                                ng-bind="vm.vlrlPadre.rgla.version.etiqCuant6"></span></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="vlrd in vm.vlrdHijosList track by $index">
+                            <td><a
+                                ng-href="#/facturacion/vlrd/detail/{{vlrd.vlrcId}}/{{vlrd.vlrlId}}/{{vlrd.id}}"><i
+                                    class="glyphicon glyphicon-search"></i></a></td>
+                            <td nowrap="nowrap" ng-bind="vlrd.rgla.codigo"></td>
+                            <td nowrap="nowrap" ng-bind="vlrd.rgla.tipo"></td>
+                            <td class="number" ng-bind="vlrd.valorBase | number:4"></td>
+                            <td nowrap="nowrap" class="number">{{vlrd.importeBase | number:2}} &euro;</td>
+                            <td nowrap="nowrap" class="number">{{vlrd.importe | number:2}} &euro;</td>
+
+                            <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant1" class="number"
+                                ng-bind="vlrd.cuant1 | number:2"></td>
+                            <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant2" class="number"
+                                ng-bind="vlrd.cuant2 | number:2"></td>
+                            <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant3" class="number"
+                                ng-bind="vlrd.cuant3 | number:2"></td>
+                            <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant4" class="number"
+                                ng-bind="vlrd.cuant4 | number:2"></td>
+                            <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant5" class="number"
+                                ng-bind="vlrd.cuant5 | number:2"></td>
+                            <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant6" class="number"
+                                ng-bind="vlrd.cuant6 | number:2"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </fieldset>
     </div>
 </div>
-
-<fieldset>
-    <div class="row">
-        <div class="col-md-1 form-group-sm">
-            <label translate="rgla"></label>
-            <p class="form-control-static">
-                <a ng-href="#/facturacion/rgla/detail/{{vm.vlrd.rgla.id}}/{{vm.vlrd.fref}}"
-                    ng-bind="vm.vlrd.rgla.codigo"></a>
-            </p>
-        </div>
-        <div class="col-md-1 form-group-sm">
-            <label translate="rgla_tipo"></label>
-            <p class="form-control-static" ng-bind="vm.vlrd.rgla.tipo"></p>
-        </div>
-        <div class="col-md-1 form-group-sm">
-            <label translate="vlrd_valorBase"></label>
-            <p class="form-control-static number" ng-bind="vm.vlrd.valorBase | number:4"></p>
-        </div>
-        <div class="col-md-1 form-group-sm" ng-if="vm.vlrl.rgla.tipo != 'T'">
-            <label translate="vlrd_importeBase"></label>
-            <p class="form-control-static number">{{vm.vlrd.importeBase | number:2}} &euro;</p>
-        </div>
-        <div class="col-md-1 form-group-sm">
-            <label translate="vlrd_importe"></label>
-            <p class="form-control-static number">{{vm.vlrd.importe | number:2}} &euro;</p>
-        </div>
-        <div class="col-md-2 form-group-sm">
-            <label translate="vlrd_impuesto"></label>
-            <p class="form-control-static">
-                <a
-                    ng-href="#/maestro/prmt/detail/{{vm.vlrlPadre.impuesto.entiId}}/{{vm.vlrlPadre.impuesto.id}}/{{vm.vlrd.fref}}"
-                    ng-bind="vm.vlrlPadre.impuesto.etiqueta"></a>
-            </p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-2 form-group-sm">
-            <label ng-bind="'enti_' + vm.vlrl.rgla.enti.id | translate"></label>
-            <p class="form-control-static">
-                <a ng-if="vm.vlrd.ssrv.id"
-                    ng-href="#/servicio/ssrv/detail/{{vm.vlrd.ssrv.entiId}}/{{vm.vlrd.ssrv.id}}"
-                    ng-bind="vm.vlrd.ssrv.numero"></a>
-            </p>
-        </div>
-        <div class="col-md-2 form-group-sm" ng-if="vlrl.rgla.crgo.version.temporal">
-            <label translate="vlrd_fini"></label>
-            <p class="form-control-static" ng-bind="vlrd.fini | date: ('format_datetime' | translate)"></p>
-        </div>
-        <div class="col-md-2 form-group-sm" ng-if="vlrl.rgla.crgo.version.temporal">
-            <label translate="vlrd_ffin"></label>
-            <p class="form-control-static" ng-bind="vlrd.ffin | date: ('format_datetime' | translate)"></p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div ng-if="vm.vlrlPadre.rgla.version.etiqInfo1" class="col-md-4 form-group-sm">
-            <label ng-bind="vm.vlrlPadre.rgla.version.etiqInfo1"></label>
-            <p class="form-control-static">{{vm.aspc.version.lgrpInfo1 ? vm.vlrlPadre.info1 :
-                vm.vlrd.info1}}</p>
-        </div>
-        <div ng-if="vm.vlrlPadre.rgla.version.etiqInfo2" class="col-md-4 form-group-sm">
-            <label ng-bind="vm.vlrlPadre.rgla.version.etiqInfo2"></label>
-            <p class="form-control-static">{{vm.aspc.version.lgrpInfo2 ? vm.vlrlPadre.info2 :
-                vm.vlrd.info2}}</p>
-        </div>
-        <div ng-if="vm.vlrlPadre.rgla.version.etiqInfo3" class="col-md-4 form-group-sm">
-            <label ng-bind="vm.vlrlPadre.rgla.version.etiqInfo3"></label>
-            <p class="form-control-static">{{vm.aspc.version.lgrpInfo3 ? vm.vlrlPadre.info3 :
-                vm.vlrd.info3}}</p>
-        </div>
-        <div ng-if="vm.vlrlPadre.rgla.version.etiqInfo4" class="col-md-4 form-group-sm">
-            <label ng-bind="vm.vlrlPadre.rgla.version.etiqInfo4"></label>
-            <p class="form-control-static">{{vm.aspc.version.lgrpInfo4 ? vm.vlrlPadre.info4 :
-                vm.vlrd.info4}}</p>
-        </div>
-        <div ng-if="vm.vlrlPadre.rgla.version.etiqInfo5" class="col-md-4 form-group-sm">
-            <label ng-bind="vm.vlrlPadre.rgla.version.etiqInfo5"></label>
-            <p class="form-control-static">{{vm.aspc.version.lgrpInfo5 ? vm.vlrlPadre.info5 :
-                vm.vlrd.info5}}</p>
-        </div>
-        <div ng-if="vm.vlrlPadre.rgla.version.etiqInfo6" class="col-md-4 form-group-sm">
-            <label ng-bind="vm.vlrlPadre.rgla.version.etiqInfo6"></label>
-            <p class="form-control-static">{{vm.aspc.version.lgrpInfo6 ? vm.vlrlPadre.info6 :
-                vm.vlrd.info6}}</p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div ng-if="vm.vlrlPadre.rgla.version.etiqCuant1" class="col-md-2 form-group-sm">
-            <label ng-bind="vm.vlrlPadre.rgla.version.etiqCuant1"></label>
-            <p class="form-control-static number" ng-bind="vm.vlrd.cuant1 | number:2"></p>
-        </div>
-        <div ng-if="vm.vlrlPadre.rgla.version.etiqCuant2" class="col-md-2 form-group-sm">
-            <label ng-bind="vm.vlrlPadre.rgla.version.etiqCuant2"></label>
-            <p class="form-control-static number" ng-bind="vm.vlrd.cuant2 | number:2"></p>
-        </div>
-        <div ng-if="vm.vlrlPadre.rgla.version.etiqCuant3" class="col-md-2 form-group-sm">
-            <label ng-bind="vm.vlrlPadre.rgla.version.etiqCuant3"></label>
-            <p class="form-control-static number" ng-bind="vm.vlrd.cuant3 | number:2"></p>
-        </div>
-        <div ng-if="vm.vlrlPadre.rgla.version.etiqCuant4" class="col-md-2 form-group-sm">
-            <label ng-bind="vm.vlrlPadre.rgla.version.etiqCuant4"></label>
-            <p class="form-control-static number" ng-bind="vm.vlrd.cuant4 | number:2"></p>
-        </div>
-        <div ng-if="vm.vlrlPadre.rgla.version.etiqCuant5" class="col-md-2 form-group-sm">
-            <label ng-bind="vm.vlrlPadre.rgla.version.etiqCuant5"></label>
-            <p class="form-control-static number" ng-bind="vm.vlrd.cuant5 | number:2"></p>
-        </div>
-        <div ng-if="vm.vlrlPadre.rgla.version.etiqCuant6" class="col-md-2 form-group-sm">
-            <label ng-bind="vm.vlrlPadre.rgla.version.etiqCuant6"></label>
-            <p class="form-control-static number" ng-bind="vm.vlrd.cuant6 | number:2"></p>
-        </div>
-    </div>
-</fieldset>
-
-<fieldset ng-if="vm.vlrd.rgla.tipo == 'T'">
-    <legend>Modificadores</legend>
-
-    <div class="table-responsive">
-        <table class="table-bordered table-condensed table-hover table-nonfluid">
-            <thead>
-                <tr>
-                    <th />
-                    <th translate="rgla"></th>
-                    <th translate="rgla_tipo"></th>
-                    <th translate="vlrd_valorBase"></th>
-                    <th translate="vlrd_importeBase"></th>
-                    <th translate="vlrd_importe"></th>
-
-                    <th ng-if="vm.vlrlPadre.rgla.version.etiqCuant1"><span
-                        ng-bind="vm.vlrlPadre.rgla.version.etiqCuant1"></span></th>
-                    <th ng-if="vm.vlrlPadre.rgla.version.etiqCuant2"><span
-                        ng-bind="vm.vlrlPadre.rgla.version.etiqCuant2"></span></th>
-                    <th ng-if="vm.vlrlPadre.rgla.version.etiqCuant3"><span
-                        ng-bind="vm.vlrlPadre.rgla.version.etiqCuant3"></span></th>
-                    <th ng-if="vm.vlrlPadre.rgla.version.etiqCuant4"><span
-                        ng-bind="vm.vlrlPadre.rgla.version.etiqCuant4"></span></th>
-                    <th ng-if="vm.vlrlPadre.rgla.version.etiqCuant5"><span
-                        ng-bind="vm.vlrlPadre.rgla.version.etiqCuant5"></span></th>
-                    <th ng-if="vm.vlrlPadre.rgla.version.etiqCuant6"><span
-                        ng-bind="vm.vlrlPadre.rgla.version.etiqCuant6"></span></th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr ng-repeat="vlrd in vm.vlrdHijosList track by $index">
-                    <td><a
-                        ng-href="#/facturacion/vlrd/detail/{{vlrd.vlrcId}}/{{vlrd.vlrlId}}/{{vlrd.id}}"><i
-                            class="glyphicon glyphicon-search"></i></a></td>
-                    <td nowrap="nowrap" ng-bind="vlrd.rgla.codigo"></td>
-                    <td nowrap="nowrap" ng-bind="vlrd.rgla.tipo"></td>
-                    <td class="number" ng-bind="vlrd.valorBase | number:4"></td>
-                    <td nowrap="nowrap" class="number">{{vlrd.importeBase | number:2}} &euro;</td>
-                    <td nowrap="nowrap" class="number">{{vlrd.importe | number:2}} &euro;</td>
-
-                    <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant1" class="number"
-                        ng-bind="vlrd.cuant1 | number:2"></td>
-                    <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant2" class="number"
-                        ng-bind="vlrd.cuant2 | number:2"></td>
-                    <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant3" class="number"
-                        ng-bind="vlrd.cuant3 | number:2"></td>
-                    <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant4" class="number"
-                        ng-bind="vlrd.cuant4 | number:2"></td>
-                    <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant5" class="number"
-                        ng-bind="vlrd.cuant5 | number:2"></td>
-                    <td ng-if="vm.vlrlPadre.rgla.version.etiqCuant6" class="number"
-                        ng-bind="vlrd.cuant6 | number:2"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</fieldset>
-</tab></tabset>

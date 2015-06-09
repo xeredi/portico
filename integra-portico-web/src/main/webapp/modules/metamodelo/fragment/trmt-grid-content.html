@@ -3,7 +3,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/metamodelo/trmt/edit/create/{{vm.enti.id}}"><i
+            <a class="btn btn-default" ng-href="#/metamodelo/trmt/edit/create/{{::vm.enti.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>
     </div>
@@ -18,12 +18,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="trmt in vm.trmtList track by $index">
-                <td><a ng-href="#/metamodelo/trmt/detail/{{vm.enti.id}}/{{trmt.id}}"><i
+            <tr ng-repeat="trmt in ::vm.trmtList track by $index">
+                <td><a ng-href="#/metamodelo/trmt/detail/{{::vm.enti.id}}/{{::trmt.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="trmt.estadoOrig"></td>
-                <td ng-bind="trmt.estadoDest"></td>
-                <td nowrap="nowrap" ng-bind="trmt.etiqueta"></td>
+                <td ng-bind="::trmt.estadoOrig"></td>
+                <td ng-bind="::trmt.estadoDest"></td>
+                <td nowrap="nowrap" ng-bind="::trmt.etiqueta"></td>
             </tr>
         </tbody>
     </table>

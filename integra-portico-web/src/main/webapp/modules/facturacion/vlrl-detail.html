@@ -4,7 +4,7 @@
             <a class="btn btn-default"
                 ng-href="#/facturacion/vlrl/edit/edit/{{vm.vlrl.vlrcId}}/{{vm.vlrl.id}}"><i
                 class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
-            <button data-ng-click="remove()" class="btn btn-default">
+            <button data-ng-click="vm.remove()" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
             </button>
         </div>
@@ -145,6 +145,14 @@
 
         <fieldset ng-if="vm.vlrl.rgla.tipo == 'T'">
             <legend>Modificadores</legend>
+
+            <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group">
+                    <a class="btn btn-default"
+                        ng-href="#/facturacion/vlrldep/edit/create/{{vm.vlrl.vlrcId}}/{{vm.vlrl.id}}"><i
+                        class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a>
+                </div>
+            </div>
 
             <div class="table-responsive">
                 <table class="table-bordered table-condensed table-hover table-nonfluid">

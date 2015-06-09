@@ -149,6 +149,12 @@ function config($routeProvider) {
 		controllerAs : "vm"
 	})
 
+	.when("/facturacion/vlrldep/edit/create/:vlrcId/:vlrlId", {
+		templateUrl : "modules/facturacion/vlrl-edit.html",
+		controller : "VlrlDepEditController",
+		controllerAs : "vm"
+	})
+
 	.when("/facturacion/vlrd/detail/:vlrcId/:vlrlId/:vlrdId", {
 		templateUrl : "modules/facturacion/vlrd-detail.html",
 		controller : "VlrdDetailController",
@@ -765,8 +771,51 @@ function VlrlEditController($http, $location, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("vlrl", "page_" + vm.accion);
 }
 
+function VlrlDepEditController($http, $location, $routeParams, pageTitleService) {
+	var vm = this;
+
+	vm.accion = $routeParams.accion;
+	vm.save = save;
+	vm.cancel = cancel;
+
+	function save() {
+		$http.post("facturacion/valoracion-linea-save.action", {
+			model : vm.vlrl,
+			accion : vm.accion
+		}).success(
+				function(data) {
+					vm.accion == 'edit' ? setTimeout(function() {
+						window.history.back();
+					}, 0) : $location.path(
+							"/facturacion/vlrl/detail/" + data.model.vlrcId
+									+ "/" + data.model.id).replace();
+				});
+	}
+
+	function cancel() {
+		window.history.back();
+	}
+
+	$http.post("facturacion/valoracion-linea-edit.action", {
+		model : {
+			vlrcId : $routeParams.vlrcId,
+			id : $routeParams.vlrlId
+		},
+		accion : vm.accion
+	}).success(function(data) {
+		vm.vlrl = data.model;
+		vm.vlrlPadre = data.vlrlPadre;
+		vm.aspc = data.aspc;
+		vm.impuestoList = data.impuestoList;
+	});
+
+	pageTitleService.setTitle("vlrl", "page_" + vm.accion);
+}
+
 function VlrdDetailController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
+
+	vm.tab = "vlrd";
 
 	$http.post("facturacion/valoracion-detalle-detail.action", {
 		model : {

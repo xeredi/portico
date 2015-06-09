@@ -9,9 +9,12 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.facturacion.dao.AspectoDAO;
 import xeredi.integra.model.facturacion.dao.ReglaDAO;
 import xeredi.integra.model.facturacion.dao.ServicioCargoDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionCargoDAO;
@@ -19,6 +22,7 @@ import xeredi.integra.model.facturacion.dao.ValoracionDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionDetalleDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionImpuestoDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionLineaDAO;
+import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaTipo;
@@ -38,8 +42,6 @@ import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -338,7 +340,7 @@ public class ValoracionBO {
      * @param vlrd
      *            Datos de un detalle de valoracion.
      */
-    public void insertVlrl(final ValoracionLineaVO vlrl, final ValoracionDetalleVO vlrd) {
+    public void insertVlrl(final ValoracionLineaVO vlrl) {
         Preconditions.checkNotNull(vlrl);
         Preconditions.checkNotNull(vlrl.getVlrcId());
         Preconditions.checkNotNull(vlrl.getRgla());
@@ -346,14 +348,9 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrl.getImpuesto());
         Preconditions.checkNotNull(vlrl.getImpuesto().getId());
 
-        Preconditions.checkNotNull(vlrd);
-        Preconditions.checkNotNull(vlrd.getImporte());
-        Preconditions.checkNotNull(vlrd.getImporteBase());
-
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-            final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
 
@@ -387,24 +384,19 @@ public class ValoracionBO {
                 Preconditions.checkNotNull(vlrl.getPadreId());
             }
 
-            final AspectoVO aspc = vlrc.getAspc();
+            final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
+            final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
+
+            aspcCriterio.setId(vlrc.getAspc().getId());
+            aspcCriterio.setFechaVigencia(vlrc.getFref());
+
+            final AspectoVO aspc = aspcDAO.selectObject(aspcCriterio);
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
             // ssrvCriterioVO.setFechaVigencia(vlrc.getFref());
 
             if (rgla.getEnti().getTipo() == TipoEntidad.S) {
-                if (aspc.getVersion().isAgrupaDetalles()) {
-                    Preconditions.checkNotNull(vlrd.getSsrv());
-                    Preconditions.checkNotNull(vlrd.getSsrv().getId());
-
-                    ssrvCriterioVO.setId(vlrd.getSsrv().getId());
-
-                    final SubservicioVO ssrv = ssrvDAO.selectObject(ssrvCriterioVO);
-
-                    if (ssrv.getEntiId() != rgla.getEnti().getId()) {
-                        throw new Error("Subservicio no valido para la regla");
-                    }
-                } else {
+                if (!aspc.getVersion().isAgrupaDetalles()) {
                     Preconditions.checkNotNull(vlrl.getSsrv());
                     Preconditions.checkNotNull(vlrl.getSsrv().getId());
 
@@ -422,12 +414,12 @@ public class ValoracionBO {
             final IgBO igBO = new IgBO();
 
             vlrl.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            vlrd.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            vlrd.setVlrlId(vlrl.getId());
-            vlrd.setVlrcId(vlrl.getVlrcId());
+
+            if (rgla.getTipo() == ReglaTipo.T) {
+                vlrl.setPadreId(vlrl.getId());
+            }
 
             vlrlDAO.insert(vlrl);
-            vlrdDAO.insert(vlrd);
 
             session.commit();
         }
@@ -607,8 +599,18 @@ public class ValoracionBO {
                 throw new InstanceNotFoundException(MessageI18nKey.vlrl, vlrd.getVlrlId());
             }
 
+            if (vlrl.getRgla().getTipo() != ReglaTipo.T) {
+                Preconditions.checkNotNull(vlrd.getPadreId());
+                Preconditions.checkNotNull(vlrd.getImporteBase());
+            }
+
             vlrd.setVlrcId(vlrl.getVlrcId());
             vlrd.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+
+            if (vlrl.getRgla().getTipo() == ReglaTipo.T) {
+                vlrd.setPadreId(vlrd.getId());
+                vlrd.setImporteBase(0.0);
+            }
 
             vlrdDAO.insert(vlrd);
 
@@ -654,6 +656,7 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrd);
         Preconditions.checkNotNull(vlrd.getId());
         Preconditions.checkNotNull(vlrd.getVlrlId());
+        Preconditions.checkNotNull(vlrd.getVlrcId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);

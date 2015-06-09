@@ -43,6 +43,9 @@ public final class ValoracionLineaVO {
     /** The ssrv. */
     private SubservicioVO ssrv;
 
+    /** The srvc id. */
+    private Long srvcId;
+
     /** The fini. */
     private Date fini;
 
@@ -547,5 +550,24 @@ public final class ValoracionLineaVO {
      */
     public void setVlrdCount(final Integer value) {
         vlrdCount = value;
+    }
+
+    /**
+     * Gets the srvc id.
+     *
+     * @return the srvc id
+     */
+    public Long getSrvcId() {
+        return srvcId;
+    }
+
+    /**
+     * Sets the srvc id.
+     *
+     * @param value
+     *            the new srvc id
+     */
+    public void setSrvcId(final Long value) {
+        srvcId = value;
     }
 }

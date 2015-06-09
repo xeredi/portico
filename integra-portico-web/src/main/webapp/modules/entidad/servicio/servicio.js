@@ -867,8 +867,6 @@ function SsrvTramiteEditController($http, $location, $routeParams, pageTitleServ
 
 function SsrvLupaController($http, $scope) {
     $scope.search = function(entiId, srvcId, numero, fechaVigencia) {
-        alert(srvcId);
-
         return $http.post("servicio/ssrv-lupa.action", {
             model : {
                 entiId : entiId,

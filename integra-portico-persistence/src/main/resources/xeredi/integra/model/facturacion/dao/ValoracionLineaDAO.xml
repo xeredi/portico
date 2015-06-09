@@ -12,6 +12,7 @@
 		<result column="vlrl_fref" property="fref" />
 		<result column="vlrl_fini" property="fini" />
 		<result column="vlrl_ffin" property="ffin" />
+		<result column="vlrc_srvc_pk" property="srvcId" />
 
 		<result column="vlrl_importe_base" property="importeBase" />
 		<result column="vlrl_importe" property="importe" />
@@ -135,11 +136,12 @@
 		        ELSE (SELECT vlrl_info6 FROM tbl_valoracion_lin_vlrl vlrlPadre WHERE vlrlPadre.vlrl_pk = vlrl.vlrl_padre_pk)
 		    END AS vlrl_info6
 
-		    , (SELECT SUM(vlrd_importe_base) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_importe_base
-		    , (SELECT SUM(vlrd_importe) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_importe
-		    , (SELECT COUNT(1) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_vlrd_count
+		    , COALESCE((SELECT SUM(vlrd_importe_base) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk), 0) AS vlrl_importe_base
+		    , COALESCE((SELECT SUM(vlrd_importe) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk), 0) AS vlrl_importe
+		    , COALESCE((SELECT COUNT(1) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk), 0) AS vlrl_vlrd_count
 
 		    , vlrc_fref AS vlrl_fref
+		    , vlrc_srvc_pk
 
 		    , rgla_codigo, rgla_crgo_pk, rgla_tipo, rgla_enti_pk
 
@@ -316,16 +318,14 @@
             , vlrl_info4 = #{info4}
             , vlrl_info5 = #{info5}
             , vlrl_info6 = #{info6}
-    ]]>
-		<if test="rgla.tipo.equals('T')">
-	    <![CDATA[
             , vlrl_impuesto_prmt_pk = #{impuesto.id}
             , vlrl_ssrv_pk = #{ssrv.id}
             , vlrl_fini = #{fini}
             , vlrl_ffin = #{ffin}
-    	]]>
-		</if>
-		WHERE vlrl_pk = #{id}
+		WHERE
+			vlrl_pk = #{id}
+			AND vlrl_vlrc_pk = #{vlrcId}
+    ]]>
 	</update>
 
 	<delete id="deleteList" parameterType="ValoracionLineaCriterioVO">

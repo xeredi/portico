@@ -1,10 +1,8 @@
 <form role="form">
-    <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.key" />
-
     <fieldset>
-        <div class="row" ng-repeat="language in vm.availableLanguages">
+        <div class="row" ng-repeat="language in ::vm.availableLanguages">
             <div class="col-sm-10 col-md-9 col-lg-8 form-group-sm">
-                <label ng-bind="language"></label> <input type="text" ng-model="vm.m18nMap[language].value"
+                <label ng-bind="::language"></label> <input type="text" ng-model="::vm.m18nMap[language].value"
                     class="form-control">
             </div>
         </div>
@@ -12,10 +10,10 @@
 
     <div class="btn-group">
         <button data-ng-click="vm.save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+            <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
         </button>
         <button data-ng-click="vm.cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
         </button>
     </div>
 </form>

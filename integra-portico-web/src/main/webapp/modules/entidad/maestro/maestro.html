@@ -7,5 +7,5 @@
 
 <div class="list-group">
     <a ng-href="#/maestro/prmt/grid/{{::tppr.value}}" class="list-group-item col-sm-6 col-md-4 col-lg-3"
-        ng-repeat="tppr in (vm.tpprList | filter:tpprSearch) track by tppr.value" ng-bind="tppr.label"></a>
+        ng-repeat="tppr in (vm.tpprList | filter:tpprSearch) track by tppr.value" ng-bind="::tppr.label"></a>
 </div>

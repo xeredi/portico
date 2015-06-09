@@ -2,7 +2,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <button class="btn btn-default" data-ng-click="vm.reload()">
-            <i class="glyphicon glyphicon-refresh"></i> <span translate>btn_reload</span>
+            <i class="glyphicon glyphicon-refresh"></i> <span translate="btn_reload"></span>
         </button>
     </div>
 </div>
@@ -19,15 +19,15 @@
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
                 <th class="codigo" nowrap="nowrap" translate="m18n_key"></th>
-                <th ng-repeat="language in vm.availableLanguages" nowrap="nowrap" ng-bind="language" />
+                <th ng-repeat="language in ::vm.availableLanguages" nowrap="nowrap" ng-bind="language" />
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="key in vm.keyList | filter:m18nSearch">
                 <td><a ng-href="#/administracion/m18n/detail/{{::key}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="key"></td>
-                <td ng-repeat="language in vm.availableLanguages" ng-bind="vm.keyMap[key][language]"></td>
+                <td ng-bind="::key"></td>
+                <td ng-repeat="language in ::vm.availableLanguages" ng-bind="::vm.keyMap[key][language]"></td>
             </tr>
         </tbody>
     </table>

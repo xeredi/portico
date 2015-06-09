@@ -13,10 +13,11 @@
                 <label translate="vlrd_importe"></label> <input type="text" ng-model="vm.vlrd.importe"
                     class="form-control number">
             </div>
-            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.vlrl.rgla.enti.tipo == 'S'">
+            <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm"
+                ng-if="vm.vlrl.rgla.enti.tipo == 'S' && vm.aspc.version.agrupaDetalles">
                 <label ng-bind="'enti_' + vm.vlrl.rgla.enti.id | translate"></label> <input type="text"
                     autocomplete="off" ng-model="vm.vlrd.ssrv" ng-controller="SsrvLupaController"
-                    typeahead="ssrv as ssrv.numero for ssrv in search(vm.vlrl.rgla.enti.id, vm.vlrd.ssrv.srvc.id, $viewValue, vm.vlrl.fref)"
+                    typeahead="ssrv as ssrv.numero for ssrv in search(vm.vlrl.rgla.enti.id, vm.vlrl.srvcId, $viewValue, vm.vlrl.fref)"
                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
             </div>
             <!--

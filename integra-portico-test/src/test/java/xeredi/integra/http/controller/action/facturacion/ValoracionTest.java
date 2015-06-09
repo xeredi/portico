@@ -26,7 +26,11 @@ public final class ValoracionTest extends AngularJsTest {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ValoracionTest.class);
 
+    /** The pagador. */
     private ParametroVO pagador;
+
+    /** The impuesto. */
+    private ParametroVO impuesto;
 
     /**
      * Instantiates a new valoracion test.
@@ -40,12 +44,22 @@ public final class ValoracionTest extends AngularJsTest {
      */
     @Override
     protected void doPrepare() throws ApplicationException {
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.ORGANIZACION.getId());
-        final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
+        final ParametroBO pagadorPrmtBO = ParametroBOFactory.newInstance(Entidad.ORGANIZACION.getId());
+        final ParametroCriterioVO pagadorPrmtCriterio = new ParametroCriterioVO();
 
-        prmtCriterio.setParametro("GTRD");
+        pagadorPrmtCriterio.setEntiId(Entidad.ORGANIZACION.getId());
+        pagadorPrmtCriterio.setParametro("GTRD");
 
-        pagador = prmtBO.selectObject(prmtCriterio);
+        pagador = pagadorPrmtBO.selectObject(pagadorPrmtCriterio);
+
+        final ParametroBO impuestoPrmtBO = ParametroBOFactory.newInstance(Entidad.TIPO_IVA.getId());
+        final ParametroCriterioVO impuestoPrmtCriterio = new ParametroCriterioVO();
+
+        impuestoPrmtCriterio.setEntiId(Entidad.TIPO_IVA.getId());
+        impuestoPrmtCriterio.setParametro("G");
+        impuestoPrmtCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+
+        impuesto = impuestoPrmtBO.selectObject(impuestoPrmtCriterio);
     }
 
     /**
@@ -61,16 +75,28 @@ public final class ValoracionTest extends AngularJsTest {
 
         vlrcMain();
 
-        vlrcSearch("1922056", Entidad.MANIFIESTO, "P/2014/00914", "B2", "B2", "0", "GTRD");
-        vlrcDetail();
+        // vlrcSearch("1922056", Entidad.MANIFIESTO, "P/2014/00914", "B2", "B2", "0", "GTRD");
+        // vlrcDetail();
+        //
+        // back();
 
-        back();
-
-        vlrcInsert(Entidad.MANIFIESTO, "P/2013/00001", Calendar.getInstance().getTime(),
+        vlrcInsert(Entidad.MANIFIESTO, "P/2013/00013", Calendar.getInstance().getTime(),
                 Calendar.getInstance().getTime(), "B2", "0", "GTRD", true, null, null, "info1", "info2", "info3", null,
                 null, null);
 
-        vlrlInsert();
+        linkTab("1").click();
+        vlrlInsert("B2", "B2-10-0000", impuesto, "linea info 1", null, null, null, null, null);
+
+        linkTab("1").click();
+        vlrdInsert(50.0, 3000.0, "272", null, "150", null, null, null, null, null, null, null, null, null, null);
+        vlrdUpdate(200.0, 6000.0, "272", null, "250", null, null, null, null, null, null, null, null, null, null);
+
+        linkTab("0").click();
+        /*
+         * vlrlDelete();
+         *
+         * linkTab("0").click(); vlrcDelete();
+         */
     }
 
     /**
@@ -284,15 +310,284 @@ public final class ValoracionTest extends AngularJsTest {
         webDriver.switchTo().alert().accept();
     }
 
-    private void vlrlInsert() {
-        linkTab("1").click();
-
+    /**
+     * Vlrl insert.
+     *
+     * @param crgo
+     *            the crgo
+     * @param rgla
+     *            the rgla
+     * @param impuesto
+     *            the impuesto
+     * @param info1
+     *            the info1
+     * @param info2
+     *            the info2
+     * @param info3
+     *            the info3
+     * @param info4
+     *            the info4
+     * @param info5
+     *            the info5
+     * @param info6
+     *            the info6
+     */
+    private void vlrlInsert(final String crgo, final String rgla, final ParametroVO impuesto, final String info1,
+            final String info2, final String info3, final String info4, final String info5, final String info6) {
         linkHref("#/facturacion/vlrl/edit/create").click();
         button("vm.cancel()").click();
         linkHref("#/facturacion/vlrl/edit/create").click();
         button("vm.save()").click();
 
         Assert.assertTrue(span("span[translate='errorList']").isDisplayed().value());
+
+        if (crgo != null) {
+            input("vm.crgo").clearField().sendKeys(crgo);
+            input("vm.crgo").sendKeys(Keys.ENTER);
+        }
+        if (rgla != null) {
+            input("vm.vlrl.rgla").clearField().sendKeys(rgla);
+            input("vm.vlrl.rgla").sendKeys(Keys.ENTER);
+        }
+        if (impuesto != null) {
+            select("vm.vlrl.impuesto.id").selectByValue("number:" + impuesto.getId());
+        }
+
+        if (info1 != null) {
+            input("vm.vlrl.info1").clearField().sendKeys(info1);
+        }
+        if (info2 != null) {
+            input("vm.vlrl.info2").clearField().sendKeys(info2);
+        }
+        if (info3 != null) {
+            input("vm.vlrl.info3").clearField().sendKeys(info3);
+        }
+        if (info4 != null) {
+            input("vm.vlrl.info4").clearField().sendKeys(info4);
+        }
+        if (info5 != null) {
+            input("vm.vlrl.info5").clearField().sendKeys(info5);
+        }
+        if (info6 != null) {
+            input("vm.vlrl.info6").clearField().sendKeys(info6);
+        }
+
+        button("vm.save()").click();
+    }
+
+    /**
+     * Vlrl delete.
+     */
+    private void vlrlDelete() {
+        button("vm.remove()").click();
+        webDriver.switchTo().alert().dismiss();
+        button("vm.remove()").click();
+        webDriver.switchTo().alert().accept();
+    }
+
+    /**
+     * Vlrd insert.
+     *
+     * @param valorBase
+     *            the valor base
+     * @param importe
+     *            the importe
+     * @param ssrv
+     *            the ssrv
+     * @param info1
+     *            the info1
+     * @param info2
+     *            the info2
+     * @param info3
+     *            the info3
+     * @param info4
+     *            the info4
+     * @param info5
+     *            the info5
+     * @param info6
+     *            the info6
+     * @param cuant1
+     *            the cuant1
+     * @param cuant2
+     *            the cuant2
+     * @param cuant3
+     *            the cuant3
+     * @param cuant4
+     *            the cuant4
+     * @param cuant5
+     *            the cuant5
+     * @param cuant6
+     *            the cuant6
+     */
+    private void vlrdInsert(final Double valorBase, final Double importe, final String ssrv, final String info1,
+            final String info2, final String info3, final String info4, final String info5, final String info6,
+            final Double cuant1, final Double cuant2, final Double cuant3, final Double cuant4, final Double cuant5,
+            final Double cuant6) {
+        linkHref("#/facturacion/vlrd/edit/create").click();
+        button("vm.cancel()").click();
+        linkHref("#/facturacion/vlrd/edit/create").click();
+        button("vm.save()").click();
+
+        Assert.assertTrue(span("span[translate='errorList']").isDisplayed().value());
+
+        if (valorBase != null) {
+            input("vm.vlrd.valorBase").clearField().sendKeys(valorBase.toString());
+        }
+        if (importe != null) {
+            input("vm.vlrd.importe").clearField().sendKeys(importe.toString());
+        }
+        if (ssrv != null) {
+            input("vm.vlrd.ssrv").clearField().sendKeys(ssrv);
+            input("vm.vlrd.ssrv").sendKeys(Keys.ENTER);
+        }
+        if (info1 != null) {
+            input("vm.vlrd.info1").clearField().sendKeys(info1);
+        }
+        if (info2 != null) {
+            input("vm.vlrd.info2").clearField().sendKeys(info2);
+        }
+        if (info3 != null) {
+            input("vm.vlrd.info3").clearField().sendKeys(info3);
+        }
+        if (info4 != null) {
+            input("vm.vlrd.info4").clearField().sendKeys(info4);
+        }
+        if (info5 != null) {
+            input("vm.vlrd.info5").clearField().sendKeys(info5);
+        }
+        if (info6 != null) {
+            input("vm.vlrd.info6").clearField().sendKeys(info6);
+        }
+
+        if (cuant1 != null) {
+            input("vm.vlrd.cuant1").clearField().sendKeys(cuant1.toString());
+        }
+        if (cuant2 != null) {
+            input("vm.vlrd.cuant2").clearField().sendKeys(cuant2.toString());
+        }
+        if (cuant3 != null) {
+            input("vm.vlrd.cuant3").clearField().sendKeys(cuant3.toString());
+        }
+        if (cuant4 != null) {
+            input("vm.vlrd.cuant4").clearField().sendKeys(cuant4.toString());
+        }
+        if (cuant5 != null) {
+            input("vm.vlrd.cuant5").clearField().sendKeys(cuant5.toString());
+        }
+        if (cuant6 != null) {
+            input("vm.vlrd.cuant6").clearField().sendKeys(cuant6.toString());
+        }
+
+        button("vm.save()").click();
+    }
+
+    /**
+     * Vlrd update.
+     *
+     * @param valorBase
+     *            the valor base
+     * @param importe
+     *            the importe
+     * @param ssrv
+     *            the ssrv
+     * @param info1
+     *            the info1
+     * @param info2
+     *            the info2
+     * @param info3
+     *            the info3
+     * @param info4
+     *            the info4
+     * @param info5
+     *            the info5
+     * @param info6
+     *            the info6
+     * @param cuant1
+     *            the cuant1
+     * @param cuant2
+     *            the cuant2
+     * @param cuant3
+     *            the cuant3
+     * @param cuant4
+     *            the cuant4
+     * @param cuant5
+     *            the cuant5
+     * @param cuant6
+     *            the cuant6
+     */
+    private void vlrdUpdate(final Double valorBase, final Double importe, final String ssrv, final String info1,
+            final String info2, final String info3, final String info4, final String info5, final String info6,
+            final Double cuant1, final Double cuant2, final Double cuant3, final Double cuant4, final Double cuant5,
+            final Double cuant6) {
+        linkHref("#/facturacion/vlrd/edit/edit").click();
+        button("vm.cancel()").click();
+        linkHref("#/facturacion/vlrd/edit/edit").click();
+
+        input("vm.vlrd.importe").clearField();
+
+        button("vm.save()").click();
+
+        Assert.assertTrue(span("span[translate='errorList']").isDisplayed().value());
+
+        if (valorBase != null) {
+            input("vm.vlrd.valorBase").clearField().sendKeys(valorBase.toString());
+        }
+        if (importe != null) {
+            input("vm.vlrd.importe").clearField().sendKeys(importe.toString());
+        }
+        if (ssrv != null) {
+            input("vm.vlrd.ssrv").clearField().sendKeys(ssrv);
+            input("vm.vlrd.ssrv").sendKeys(Keys.ENTER);
+        }
+        if (info1 != null) {
+            input("vm.vlrd.info1").clearField().sendKeys(info1);
+        }
+        if (info2 != null) {
+            input("vm.vlrd.info2").clearField().sendKeys(info2);
+        }
+        if (info3 != null) {
+            input("vm.vlrd.info3").clearField().sendKeys(info3);
+        }
+        if (info4 != null) {
+            input("vm.vlrd.info4").clearField().sendKeys(info4);
+        }
+        if (info5 != null) {
+            input("vm.vlrd.info5").clearField().sendKeys(info5);
+        }
+        if (info6 != null) {
+            input("vm.vlrd.info6").clearField().sendKeys(info6);
+        }
+
+        if (cuant1 != null) {
+            input("vm.vlrd.cuant1").clearField().sendKeys(cuant1.toString());
+        }
+        if (cuant2 != null) {
+            input("vm.vlrd.cuant2").clearField().sendKeys(cuant2.toString());
+        }
+        if (cuant3 != null) {
+            input("vm.vlrd.cuant3").clearField().sendKeys(cuant3.toString());
+        }
+        if (cuant4 != null) {
+            input("vm.vlrd.cuant4").clearField().sendKeys(cuant4.toString());
+        }
+        if (cuant5 != null) {
+            input("vm.vlrd.cuant5").clearField().sendKeys(cuant5.toString());
+        }
+        if (cuant6 != null) {
+            input("vm.vlrd.cuant6").clearField().sendKeys(cuant6.toString());
+        }
+
+        button("vm.save()").click();
+    }
+
+    /**
+     * Vlrd delete.
+     */
+    private void vlrdDelete() {
+        button("vm.remove()").click();
+        webDriver.switchTo().alert().dismiss();
+        button("vm.remove()").click();
+        webDriver.switchTo().alert().accept();
     }
 
 }

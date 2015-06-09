@@ -147,7 +147,7 @@
 		</where>
 	</sql>
 
-	<select id="select" parameterType="ValoracionDetalleCriterioVO" resultMap="ResultMap">
+	<select id="selectObject" parameterType="ValoracionDetalleCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 	</select>
@@ -185,6 +185,34 @@
         )
     ]]>
 	</insert>
+
+	<update id="update" parameterType="ValoracionDetalleVO">
+    <![CDATA[
+        UPDATE tbl_valoracion_det_vlrd SET
+            vlrd_valor_base = #{valorBase}
+            , vlrd_importe_base = #{importeBase}
+            , vlrd_importe = #{importe}
+            , vlrd_ssrv_pk = #{ssrv.id}
+            , vlrd_fini = #{fini}
+            , vlrd_ffin = #{ffin}
+            , vlrd_cuant1 = #{cuant1}
+            , vlrd_cuant2 = #{cuant2}
+            , vlrd_cuant3 = #{cuant3}
+            , vlrd_cuant4 = #{cuant4}
+            , vlrd_cuant5 = #{cuant5}
+            , vlrd_cuant6 = #{cuant6}
+            , vlrd_info1 = #{info1}
+            , vlrd_info2 = #{info2}
+            , vlrd_info3 = #{info3}
+            , vlrd_info4 = #{info4}
+            , vlrd_info5 = #{info5}
+            , vlrd_info6 = #{info6}
+        WHERE
+        	vlrd_pk = #{id}
+        	AND vlrd_vlrl_pk = #{vlrlId}
+        	AND vlrd_vlrc_pk = #{vlrcId}
+    ]]>
+	</update>
 
 	<delete id="deleteList" parameterType="ValoracionDetalleCriterioVO">
 		DELETE FROM tbl_valoracion_det_vlrd
