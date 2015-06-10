@@ -1,12 +1,15 @@
-var integraApp = angular.module("integraApp", [ "ngRoute", "mgcrea.ngStrap",
-		"mgcrea.ngStrap.aside", "ui.bootstrap.tpls", "ui.bootstrap.tabs",
-		"ui.bootstrap.pagination", "ui.bootstrap.dropdown",
-		"ui.bootstrap.typeahead", "pascalprecht.translate", "angularSpinner",
-		"uiGmapgoogle-maps", "i18n", "administracion", "metamodelo",
-		"facturacion", "maestro", "servicio", "estadistica", "proceso",
-		"seguridad" ]);
+angular
+		.module(
+				"integraApp",
+				[ "ngRoute", "mgcrea.ngStrap", "mgcrea.ngStrap.aside",
+						"ui.bootstrap.tpls", "ui.bootstrap.tabs",
+						"ui.bootstrap.pagination", "ui.bootstrap.dropdown",
+						"ui.bootstrap.typeahead", "pascalprecht.translate",
+						"angularSpinner", "uiGmapgoogle-maps", "i18n",
+						"administracion", "metamodelo", "facturacion",
+						"maestro", "servicio", "estadistica", "proceso",
+						"seguridad" ])
 
-integraApp
 		.config([ "$routeProvider", function($routeProvider) {
 			$routeProvider
 

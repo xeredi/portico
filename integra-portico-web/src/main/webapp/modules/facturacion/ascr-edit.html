@@ -2,7 +2,7 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate="ascr_crgo"></label> <select ng-if="vm.accion == 'create'"
+                <label translate="crgo"></label> <select ng-if="vm.accion == 'create'"
                     ng-model="vm.ascr.crgo.id"
                     ng-options="crgo.id as crgo.etiqueta for crgo in vm.crgoList"
                     class="form-control">
@@ -11,11 +11,11 @@
                 <p ng-if="vm.accion != 'create'" class="form-control-static" ng-bind="vm.ascr.crgo.etiqueta"></p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate="ascr_fini"></label><input type="text" class="form-control"
+                <label translate="fini"></label><input type="text" class="form-control"
                     ng-model="vm.ascr.version.fini" data-max-date="{{vm.ascr.version.ffin}}" bs-datepicker />
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate="ascr_ffin"></label><input type="text" class="form-control"
+                <label translate="ffin"></label><input type="text" class="form-control"
                     ng-model="vm.ascr.version.ffin" data-min-date="{{vm.ascr.version.fini}}" bs-datepicker />
             </div>
         </div>

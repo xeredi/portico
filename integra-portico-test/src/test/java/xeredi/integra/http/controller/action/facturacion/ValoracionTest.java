@@ -30,7 +30,10 @@ public final class ValoracionTest extends AngularJsTest {
     private ParametroVO pagador;
 
     /** The impuesto. */
-    private ParametroVO impuesto;
+    private ParametroVO impuestoG;
+
+    /** The impuesto r. */
+    private ParametroVO impuestoR;
 
     /**
      * Instantiates a new valoracion test.
@@ -59,7 +62,11 @@ public final class ValoracionTest extends AngularJsTest {
         impuestoPrmtCriterio.setParametro("G");
         impuestoPrmtCriterio.setFechaVigencia(Calendar.getInstance().getTime());
 
-        impuesto = impuestoPrmtBO.selectObject(impuestoPrmtCriterio);
+        impuestoG = impuestoPrmtBO.selectObject(impuestoPrmtCriterio);
+
+        impuestoPrmtCriterio.setParametro("R");
+
+        impuestoR = impuestoPrmtBO.selectObject(impuestoPrmtCriterio);
     }
 
     /**
@@ -83,9 +90,12 @@ public final class ValoracionTest extends AngularJsTest {
         vlrcInsert(Entidad.MANIFIESTO, "P/2013/00013", Calendar.getInstance().getTime(),
                 Calendar.getInstance().getTime(), "B2", "0", "GTRD", true, null, null, "info1", "info2", "info3", null,
                 null, null);
+        vlrcUpdate(Calendar.getInstance().getTime(), "1", "00001", false, "info1 bis", "info2 bis", "info3 bis", null,
+                null, null);
 
         linkTab("1").click();
-        vlrlInsert("B2", "B2-10-0000", impuesto, "linea info 1", null, null, null, null, null);
+        vlrlInsert("B2", "B2-10-0000", impuestoG, "linea info 1", null, null, null, null, null);
+        vlrlUpdate(impuestoR, "linea info 1 bis", null, null, null, null, null);
 
         linkTab("1").click();
         vlrdInsert(50.0, 3000.0, "272", null, "150", null, null, null, null, null, null, null, null, null, null);
@@ -295,9 +305,53 @@ public final class ValoracionTest extends AngularJsTest {
      * @param info6
      *            the info6
      */
-    private void vlrcUpdate(final Date fliq, final String codExencion, final ParametroVO pagador,
-            final Boolean sujPasivo, final String info1, final String info2, final String info3, final String info4,
-            final String info5, final String info6) {
+    private void vlrcUpdate(final Date fliq, final String codExencion, final String pagador, final Boolean sujPasivo,
+            final String info1, final String info2, final String info3, final String info4, final String info5,
+            final String info6) {
+        linkHref("#/facturacion/vlrc/edit/edit").click();
+        button("vm.cancel()").click();
+        linkHref("#/facturacion/vlrc/edit/edit").click();
+
+        input("vm.vlrc.fliq").clearField();
+
+        button("vm.save()").click();
+
+        Assert.assertTrue(span("span[translate='errorList']").isDisplayed().value());
+
+        if (fliq != null) {
+            input("vm.vlrc.fliq").clearField().sendKeys(dateFormat.format(fliq));
+        }
+        if (codExencion != null) {
+            select("vm.vlrc.codExencion").selectByValue("string:" + codExencion);
+        }
+        if (pagador != null) {
+            input("vm.vlrc.pagador").clearField().sendKeys(pagador);
+            input("vm.vlrc.pagador").sendKeys(Keys.ENTER);
+        }
+        if (sujPasivo != null) {
+            select("vm.vlrc.sujPasivo").selectByValue("boolean:" + sujPasivo);
+        }
+
+        if (info1 != null) {
+            input("vm.vlrc.info1").clearField().sendKeys(info1);
+        }
+        if (info2 != null) {
+            input("vm.vlrc.info2").clearField().sendKeys(info2);
+        }
+        if (info3 != null) {
+            input("vm.vlrc.info3").clearField().sendKeys(info3);
+        }
+        if (info4 != null) {
+            input("vm.vlrc.info4").clearField().sendKeys(info4);
+        }
+        if (info5 != null) {
+            input("vm.vlrc.info5").clearField().sendKeys(info5);
+        }
+        if (info6 != null) {
+            input("vm.vlrc.info6").clearField().sendKeys(info6);
+        }
+
+        button("vm.save()").click();
     }
 
     /**
@@ -349,6 +403,56 @@ public final class ValoracionTest extends AngularJsTest {
             input("vm.vlrl.rgla").clearField().sendKeys(rgla);
             input("vm.vlrl.rgla").sendKeys(Keys.ENTER);
         }
+        if (impuesto != null) {
+            select("vm.vlrl.impuesto.id").selectByValue("number:" + impuesto.getId());
+        }
+
+        if (info1 != null) {
+            input("vm.vlrl.info1").clearField().sendKeys(info1);
+        }
+        if (info2 != null) {
+            input("vm.vlrl.info2").clearField().sendKeys(info2);
+        }
+        if (info3 != null) {
+            input("vm.vlrl.info3").clearField().sendKeys(info3);
+        }
+        if (info4 != null) {
+            input("vm.vlrl.info4").clearField().sendKeys(info4);
+        }
+        if (info5 != null) {
+            input("vm.vlrl.info5").clearField().sendKeys(info5);
+        }
+        if (info6 != null) {
+            input("vm.vlrl.info6").clearField().sendKeys(info6);
+        }
+
+        button("vm.save()").click();
+    }
+
+    /**
+     * Vlrl update.
+     *
+     * @param impuesto
+     *            the impuesto
+     * @param info1
+     *            the info1
+     * @param info2
+     *            the info2
+     * @param info3
+     *            the info3
+     * @param info4
+     *            the info4
+     * @param info5
+     *            the info5
+     * @param info6
+     *            the info6
+     */
+    private void vlrlUpdate(final ParametroVO impuesto, final String info1, final String info2, final String info3,
+            final String info4, final String info5, final String info6) {
+        linkHref("#/facturacion/vlrl/edit/edit").click();
+        button("vm.cancel()").click();
+        linkHref("#/facturacion/vlrl/edit/edit").click();
+
         if (impuesto != null) {
             select("vm.vlrl.impuesto.id").selectByValue("number:" + impuesto.getId());
         }

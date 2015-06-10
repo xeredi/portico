@@ -1,13 +1,13 @@
 package xeredi.integra.http.controller.action.facturacion;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.CrudSaveAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.ValoracionVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -48,8 +48,12 @@ public final class ValoracionSaveAction extends CrudSaveAction<ValoracionVO> {
         case create:
             FieldValidator.validateRequired(this, MessageI18nKey.srvc, model.getSrvc());
             FieldValidator.validateRequired(this, MessageI18nKey.aspc, model.getAspc());
-            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_fliq, model.getFliq());
             FieldValidator.validateRequired(this, MessageI18nKey.fref, model.getFref());
+
+            if (!hasErrors()) {
+                FieldValidator.validateRequired(this, MessageI18nKey.srvc, model.getSrvc().getId());
+                FieldValidator.validateRequired(this, MessageI18nKey.aspc, model.getAspc().getId());
+            }
 
             break;
         case edit:
@@ -61,8 +65,12 @@ public final class ValoracionSaveAction extends CrudSaveAction<ValoracionVO> {
             break;
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.vlrc_pagador, model.getPagador());
+        FieldValidator.validateRequired(this, MessageI18nKey.vlrc_fliq, model.getFliq());
         FieldValidator.validateRequired(this, MessageI18nKey.vlrc_sujPasivo, model.getSujPasivo());
         FieldValidator.validateRequired(this, MessageI18nKey.vlrc_codExencion, model.getCodExencion());
+
+        if (!hasErrors()) {
+            FieldValidator.validateRequired(this, MessageI18nKey.vlrc_pagador, model.getPagador().getId());
+        }
     }
 }

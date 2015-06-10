@@ -24,11 +24,11 @@ ul, li {
 	padding-right: 15px;
 }
 
-body, .tooltip, .dropdown-menu, .angular-google-map-container {
+body, .tooltip, ul.dropdown-menu>li>a, .angular-google-map-container {
 	font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif;
 }
 
-body, label, table, legend, .tooltip, .dropdown-menu, .btn, .form-control-static, .form-control,
+body, label, table, legend, .tooltip, ul.dropdown-menu>li>a, .btn, .form-control-static, .form-control,
 	.form-group-sm .form-control, .form-group-sm>.form-control-static, .label {
 	font-size: 11px;
 }

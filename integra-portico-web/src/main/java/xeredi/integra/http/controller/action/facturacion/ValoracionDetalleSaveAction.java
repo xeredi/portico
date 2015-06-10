@@ -1,11 +1,16 @@
 package xeredi.integra.http.controller.action.facturacion;
 
-import xeredi.integra.http.controller.action.comun.CrudSaveAction;
-import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.facturacion.bo.ValoracionBO;
-import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
-
 import com.google.common.base.Preconditions;
+
+import xeredi.integra.http.controller.action.comun.CrudSaveAction;
+import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.facturacion.bo.ValoracionBO;
+import xeredi.integra.model.facturacion.vo.ReglaTipo;
+import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
+import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
+import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -15,6 +20,9 @@ public final class ValoracionDetalleSaveAction extends CrudSaveAction<Valoracion
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1354136282476244950L;
+
+    /** The vlrl. */
+    private ValoracionLineaVO vlrl;
 
     /**
      * {@inheritDoc}
@@ -44,9 +52,39 @@ public final class ValoracionDetalleSaveAction extends CrudSaveAction<Valoracion
     public void doValidate() throws ApplicationException {
         Preconditions.checkNotNull(model.getVlrcId());
         Preconditions.checkNotNull(model.getVlrlId());
+        Preconditions.checkNotNull(vlrl);
+        Preconditions.checkNotNull(vlrl.getRgla());
+        Preconditions.checkNotNull(vlrl.getRgla().getEnti());
 
         if (ACCION_EDICION.edit == accion) {
             Preconditions.checkNotNull(model.getId());
         }
+
+        if (vlrl.getRgla().getTipo() == ReglaTipo.T) {
+            FieldValidator.validateRequired(this, MessageI18nKey.vlrd_valorBase, model.getValorBase());
+
+            if (vlrl.getRgla().getEnti().getTipo() == TipoEntidad.S) {
+                FieldValidator.validateRequired(this, MessageI18nKey.ssrv, model.getSsrv());
+
+                if (!hasErrors()) {
+                    FieldValidator.validateRequired(this, MessageI18nKey.ssrv, model.getSsrv().getId());
+                }
+            }
+        } else {
+            FieldValidator.validateRequired(this, MessageI18nKey.vlrd_importeBase, model.getImporteBase());
+        }
+
+        FieldValidator.validateRequired(this, MessageI18nKey.vlrd_importe, model.getImporte());
+
+    }
+
+    /**
+     * Sets the vlrl.
+     *
+     * @param value
+     *            the new vlrl
+     */
+    public void setVlrl(final ValoracionLineaVO value) {
+        vlrl = value;
     }
 }
