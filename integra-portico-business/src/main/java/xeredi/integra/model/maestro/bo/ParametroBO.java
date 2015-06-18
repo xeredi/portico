@@ -54,6 +54,23 @@ public interface ParametroBO {
             throws OverlapException, InstanceNotFoundException;
 
     /**
+     * Duplicate version.
+     *
+     * @param prvr
+     *            the prvr
+     * @param tpprDetail
+     *            the tppr detail
+     * @param i18nMap
+     *            the i18n map
+     * @throws OverlapException
+     *             the overlap exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    void duplicateVersion(final ParametroVO prmt, final TipoParametroDetailVO tpprDetail,
+            final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException;
+
+    /**
      * Update.
      *
      * @param prmt

@@ -313,6 +313,8 @@ function TpdtDetailController($http, $routeParams, pageTitleService) {
 
 	vm.remove = remove;
 
+	initialize();
+
 	function initialize() {
 		$http.post("metamodelo/tipo-dato-detail.action", {
 			model : {

@@ -80,6 +80,10 @@ public final class ParametroSaveAction extends ItemSaveAction<ParametroVO> {
             itemBO.duplicate(model, enti, i18nMap);
 
             break;
+        case duplicate_version:
+            itemBO.duplicateVersion(model, enti, i18nMap);
+
+            break;
         default:
             throw new Error("Accion no valida: " + accion);
         }

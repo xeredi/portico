@@ -5,6 +5,10 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import xeredi.integra.http.page.metamodelo.TipoDatoDetailPage;
+import xeredi.integra.http.page.metamodelo.TipoDatoEditPage;
+import xeredi.integra.http.page.metamodelo.TipoDatoGridPage;
+import xeredi.integra.http.page.seguridad.UsuarioAccesoPage;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
@@ -31,113 +35,42 @@ public final class TipoDatoTest extends AngularJsTest {
      */
     @Override
     protected void doTest() {
-        login("admin", "admin");
+        final UsuarioAccesoPage usuarioAccesoPage = new UsuarioAccesoPage(webDriver, fluentWebDriver);
 
-        mainMenu();
+        usuarioAccesoPage.gotoPage().setUsuario("admin").setContrasenia("admin").clickAcceso();
+        usuarioAccesoPage.administracionMenu();
 
-        linkHref("#/administracion").click();
+        final TipoDatoGridPage tipoDatoGridPage = new TipoDatoGridPage(webDriver, fluentWebDriver);
 
-        tpdtMain();
-        tpdtSearch("ACUERDO", null, null, null);
-        tpdtDetail();
-        back();
-        tpdtInsert("TPDT_BO_TEST", TipoElemento.BO, TipoHtml.CB, null, "TpdtBOTest");
-        tpdtDelete();
-        tpdtInsert("TPDT_PR_TEST", TipoElemento.PR, TipoHtml.S, Entidad.ACUERDO, "TpdtPRTest");
-        tpdtDelete();
+        tipoDatoGridPage.gotoPage();
+
+        tipoDatoGridPage.clickOpenFilter().clickCloseFilter().clickOpenFilter();
+        tipoDatoGridPage.setCriterioCodigo("ACUERDO").clickFilter();
+
+        final TipoDatoDetailPage tipoDatoDetailPage = new TipoDatoDetailPage(webDriver, fluentWebDriver);
+
+        tipoDatoDetailPage.gotoPage().back();
+
+        final TipoDatoEditPage tipoDatoEditPage = new TipoDatoEditPage(webDriver, fluentWebDriver);
+
+        tipoDatoEditPage.gotoCreatePage().clickCancel();
+        Assert.assertTrue(tipoDatoEditPage.gotoCreatePage().clickSave().hasErrors());
+
+        tipoDatoEditPage.setCodigo("TPDT_BO_TEST").setTpel(TipoElemento.BO).setTpht(TipoHtml.CB).setI18n("TpdtBOTest")
+                .clickSave();
+
+        Assert.assertTrue(tipoDatoEditPage.gotoEditPage().setI18n(null).clickSave().hasErrors());
+
+        tipoDatoEditPage.setI18n("TpdtBOTest Bis").clickSave();
+
+        tipoDatoDetailPage.clickDelete().confirmCancel().clickDelete().confirmOk();
+
+        // p("vm.tpdt.codigo").getText().shouldBe(codigo);
+
+        tipoDatoEditPage.gotoCreatePage();
+        tipoDatoEditPage.setCodigo("TPDT_PR_TEST").setTpel(TipoElemento.PR).setTpht(TipoHtml.S).setEnti(Entidad.ACUERDO)
+                .setI18n("TpdtPRTest").clickSave();
+
+        tipoDatoDetailPage.clickDelete().confirmCancel().clickDelete().confirmOk();
     }
-
-    /**
-     * Tpdt main.
-     */
-    private void tpdtMain() {
-        linkHref("#/metamodelo/tpdt/grid").click();
-    }
-
-    /**
-     * Tpdt search.
-     *
-     * @param codigo
-     *            the codigo
-     * @param nombre
-     *            the nombre
-     * @param tpel
-     *            the tpel
-     * @param tpht
-     *            the tpht
-     */
-    private void tpdtSearch(final String codigo, final String nombre, final TipoElemento tpel, final TipoHtml tpht) {
-        button("vm.filter('lg')").click();
-        button("$hide()").click();
-        button("vm.filter('lg')").click();
-
-        if (codigo != null) {
-            input("vm.tpdtCriterio.codigo").clearField().sendKeys(codigo);
-        }
-        if (nombre != null) {
-            input("vm.tpdtCriterio.nombre").clearField().sendKeys(nombre);
-        }
-        if (tpel != null) {
-            select("vm.tpdtCriterio.tpel").selectByValue("string:" + tpel.name());
-        }
-        if (tpht != null) {
-            select("vm.tpdtCriterio.tpht").selectByValue("string:" + tpht.name());
-        }
-
-        button("vm.search(1);$hide()").click();
-    }
-
-    /**
-     * Tpdt detail.
-     */
-    private void tpdtDetail() {
-        linkHref("#/metamodelo/tpdt/detail").click();
-    }
-
-    /**
-     * Tpdt insert.
-     *
-     * @param codigo
-     *            the codigo
-     * @param tpel
-     *            the tpel
-     * @param tpht
-     *            the tpht
-     * @param text
-     *            the text
-     */
-    private void tpdtInsert(final String codigo, final TipoElemento tpel, final TipoHtml tpht, final Entidad enti,
-            final String text) {
-        linkHref("#/metamodelo/tpdt/edit/create").click();
-        button("vm.cancel()").click();
-        linkHref("#/metamodelo/tpdt/edit/create").click();
-        button("vm.save()").click();
-
-        Assert.assertTrue(span("span[translate='errorList']").isDisplayed().value());
-
-        input("vm.tpdt.codigo").clearField().sendKeys(codigo);
-        select("vm.tpdt.tipoElemento").selectByValue("string:" + tpel.name());
-        select("vm.tpdt.tpht").selectByValue("string:" + tpht.name());
-
-        if (enti != null) {
-            select("vm.tpdt.enti.id").selectByValue("number:" + enti.getId());
-        }
-
-        input("vm.i18nMap[default_language].text").clearField().sendKeys(text);
-
-        button("vm.save()").click();
-
-        p("vm.tpdt.codigo").getText().shouldBe(codigo);
-    }
-
-    /**
-     * Tpdt delete.
-     */
-    private void tpdtDelete() {
-        button("vm.remove()").click();
-        webDriver.switchTo().alert().dismiss();
-        button("vm.remove()").click();
-        webDriver.switchTo().alert().accept();
-    }
-
 }

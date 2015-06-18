@@ -35,7 +35,14 @@ function PrbtGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.filter = filter;
     vm.xlsExport = xlsExport;
 
-    vm.prbtCriterio = $routeParams.prbtCriterio ? angular.fromJson($routeParams.prbtCriterio) : {};
+    initialize();
+
+    function initialize() {
+        vm.prbtCriterio = $routeParams.prbtCriterio ? angular.fromJson($routeParams.prbtCriterio) : {};
+
+        search($routeParams.page ? $routeParams.page : 1);
+        pageTitleService.setTitle("prbt", "page_grid");
+	}
 
     function search(page) {
         $http.post("proceso/proceso-list.action", {
@@ -82,9 +89,6 @@ function PrbtGridController($http, $location, $routeParams, $modal, pageTitleSer
             }, 0);
         });
     }
-
-    search($routeParams.page ? $routeParams.page : 1);
-    pageTitleService.setTitle("prbt", "page_grid");
 }
 
 function PrbtDetailController($http, $location, $routeParams, pageTitleService) {
@@ -93,6 +97,27 @@ function PrbtDetailController($http, $location, $routeParams, pageTitleService) 
     vm.cancel = cancel;
     vm.download = download;
     vm.pageChanged = pageChanged;
+
+    initialize();
+
+    function initialize() {
+        $http.post("proceso/proceso-detail.action", {
+            model : {
+                id : $routeParams.prbtId
+            }
+        }).success(function(data) {
+            vm.prbt = data.model;
+            vm.arinEntradaList = data.arinEntradaList;
+            vm.arinSalidaList = data.arinSalidaList;
+            vm.pritEntradaList = data.pritEntradaList;
+            vm.pritSalidaList = data.pritSalidaList;
+            vm.prpmMap = data.prpmMap;
+
+            search($routeParams.page ? $routeParams.page : 1);
+        });
+
+        pageTitleService.setTitle("prbt", "page_detail");
+	}
 
     function cancel() {
         $http.post("proceso/proceso-cancelar.action", {
@@ -138,21 +163,4 @@ function PrbtDetailController($http, $location, $routeParams, pageTitleService) 
             }).replace();
         });
     }
-
-    $http.post("proceso/proceso-detail.action", {
-        model : {
-            id : $routeParams.prbtId
-        }
-    }).success(function(data) {
-        vm.prbt = data.model;
-        vm.arinEntradaList = data.arinEntradaList;
-        vm.arinSalidaList = data.arinSalidaList;
-        vm.pritEntradaList = data.pritEntradaList;
-        vm.pritSalidaList = data.pritSalidaList;
-        vm.prpmMap = data.prpmMap;
-
-        search($routeParams.page ? $routeParams.page : 1);
-    });
-
-    pageTitleService.setTitle("prbt", "page_detail");
 }

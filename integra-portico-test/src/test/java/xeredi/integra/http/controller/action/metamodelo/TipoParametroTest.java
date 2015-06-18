@@ -5,6 +5,13 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import xeredi.integra.http.page.metamodelo.EntidadAccionEditPage;
+import xeredi.integra.http.page.metamodelo.EntidadAccionGrupoEditPage;
+import xeredi.integra.http.page.metamodelo.EntidadGrupoDatoEditPage;
+import xeredi.integra.http.page.metamodelo.EntidadTipoDatoEditPage;
+import xeredi.integra.http.page.metamodelo.TipoParametroEditPage;
+import xeredi.integra.http.page.metamodelo.TipoParametroGridPage;
+import xeredi.integra.http.page.seguridad.UsuarioAccesoPage;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.test.comun.AngularJsTest;
@@ -30,29 +37,62 @@ public final class TipoParametroTest extends AngularJsTest {
      */
     @Override
     protected void doTest() {
-        login("admin", "admin");
+        final UsuarioAccesoPage usuarioAccesoPage = new UsuarioAccesoPage(webDriver, fluentWebDriver);
 
-        LOG.info("Metamodelo - Tipo de Parametro - Grid");
+        usuarioAccesoPage.gotoPage().setUsuario("admin").setContrasenia("admin").clickAcceso();
+        usuarioAccesoPage.administracionMenu();
 
-        tpprMain();
+        final TipoParametroGridPage tpprGridPage = new TipoParametroGridPage(webDriver, fluentWebDriver);
 
-        LOG.info("Metamodelo - Tipo de Parametro - Alta");
+        tpprGridPage.gotoPage();
+        tpprGridPage.clickOpenFilter().clickCloseFilter();
 
-        // Alta tppr
-        tpprInsert("TPPR_TEST", "10000", "Tppr Test");
-        tpprUpdate("20000", "Tppr Test New");
-        engdInsert("1", "Tppr Test General");
-        engdUpdate("2", "Tppr Test General New");
-        back();
-        entdInsert(TipoDato.ACUERDO, null, "1", "1", "1", "3", "true", "true", "true", "Acuerdo");
-        entdUpdate(null, "1", "2", "1", "3", "false", "false", "false", "Acuerdo New");
-        back();
-        enacInsert("tppr-enac-path", "1", "Tppr Action Test");
-        enacUpdate("2", "Tppr Action Test New");
-        back();
-        enagInsert("tppr-enag-path", "1", "Tppr Action Grid Test");
-        enagUpdate("2", "Tppr Action Grid Test New");
-        back();
+        final TipoParametroEditPage tpprEditPage = new TipoParametroEditPage(webDriver, fluentWebDriver);
+
+        tpprEditPage.gotoCreatePage().clickCancel();
+        Assert.assertTrue(tpprEditPage.gotoCreatePage().clickSave().hasErrors());
+        tpprEditPage.setCodigo("TPPR_TEST").setMaxGrid("10000").setI18n("Tppr Test").clickSave();
+
+        Assert.assertTrue(tpprEditPage.gotoEditPage().setI18n(null).clickSave().hasErrors());
+        tpprEditPage.setMaxGrid("20000").setI18n("Tppr Test Bis").clickSave();
+
+        final EntidadGrupoDatoEditPage engdEditPage = new EntidadGrupoDatoEditPage(webDriver, fluentWebDriver);
+
+        engdEditPage.gotoCreatePage().clickCancel();
+        Assert.assertTrue(engdEditPage.gotoCreatePage().clickSave().hasErrors());
+        engdEditPage.setNumero("1").setI18n("Tppr Test General").clickSave();
+
+        Assert.assertTrue(engdEditPage.gotoEditPage().setI18n(null).clickSave().hasErrors());
+        engdEditPage.setNumero("2").setI18n("Tppr Test General Bis").clickSave().back();
+
+        final EntidadTipoDatoEditPage entdEditPage = new EntidadTipoDatoEditPage(webDriver, fluentWebDriver);
+
+        entdEditPage.gotoCreatePage().clickCancel();
+        Assert.assertTrue(entdEditPage.gotoCreatePage().clickSave().hasErrors());
+        entdEditPage.setTpdt(TipoDato.ACUERDO).setGrupo("1").setFila("1").setOrden("1").setSpan("3")
+                .setObligatorio("true").setGridable("true").setFiltrable("true").setI18n("Acuerdo").clickSave();
+
+        Assert.assertTrue(entdEditPage.gotoEditPage().setI18n(null).clickSave().hasErrors());
+        entdEditPage.setFila("2").setObligatorio("false").setGridable("false").setFiltrable("false")
+                .setI18n("Acuerdo Bis").clickSave().back();
+
+        final EntidadAccionEditPage enacEditPage = new EntidadAccionEditPage(webDriver, fluentWebDriver);
+
+        enacEditPage.gotoCreatePage().clickCancel();
+        Assert.assertTrue(enacEditPage.gotoCreatePage().clickSave().hasErrors());
+        enacEditPage.setPath("tppr-enac-path").setOrden("1").setI18n("Tppr Action Test").clickSave();
+
+        Assert.assertTrue(enacEditPage.gotoEditPage().setI18n(null).clickSave().hasErrors());
+        enacEditPage.setOrden("2").setI18n("Tppr Action Test Bis").clickSave().back();
+
+        final EntidadAccionGrupoEditPage enagEditPage = new EntidadAccionGrupoEditPage(webDriver, fluentWebDriver);
+
+        enagEditPage.gotoCreatePage().clickCancel();
+        Assert.assertTrue(enagEditPage.gotoCreatePage().clickSave().hasErrors());
+        enagEditPage.setPath("tppr-enag-path").setOrden("1").setI18n("Tppr Action Grid Test").clickSave();
+
+        Assert.assertTrue(enagEditPage.gotoEditPage().setI18n(null).clickSave().hasErrors());
+        enagEditPage.setOrden("2").setI18n("Tppr Action Grid Test Bis").clickSave().back();
 
         // tpsp
         tpspInsert("TPSP_TEST", "100", Entidad.ACUERDO, "Tpsp Test");
@@ -92,65 +132,10 @@ public final class TipoParametroTest extends AngularJsTest {
     }
 
     /**
-     * Tppr main.
-     */
-    private void tpprMain() {
-        mainMenu();
-        linkHref("#/administracion").click();
-        linkHref("#/metamodelo/tppr/grid").click();
-    }
-
-    /**
      * Tppr detail.
      */
     private void tpprDetail() {
         linkHref("#/metamodelo/tppr/detail").click();
-    }
-
-    /**
-     * Tppr insert.
-     *
-     * @param codigo
-     *            the codigo
-     * @param maxGrid
-     *            the max grid
-     * @param text
-     *            the text
-     */
-    private void tpprInsert(final String codigo, final String maxGrid, final String text) {
-        linkHref("#/metamodelo/tppr/edit/create").click();
-        button("vm.cancel()").click();
-
-        linkHref("#/metamodelo/tppr/edit/create").click();
-        button("vm.save()").click();
-
-        Assert.assertTrue(span("span[translate='errorList']").isDisplayed().value());
-
-        // Guardar con datos
-        input("vm.enti.codigo").sendKeys(codigo);
-        input("vm.enti.maxGrid").sendKeys(maxGrid);
-        input("vm.i18nMap[default_language].text").sendKeys(text);
-
-        button("vm.save()").click();
-    }
-
-    /**
-     * Tppr update.
-     *
-     * @param maxGrid
-     *            the max grid
-     * @param text
-     *            the text
-     */
-    private void tpprUpdate(final String maxGrid, final String text) {
-        linkHref("#/metamodelo/tppr/edit/edit").click();
-        button("vm.cancel()").click();
-        linkHref("#/metamodelo/tppr/edit/edit").click();
-
-        input("vm.enti.maxGrid").clearField().sendKeys(maxGrid);
-        input("vm.i18nMap[default_language].text").clearField().sendKeys(text);
-
-        button("vm.save()").click();
     }
 
     /**

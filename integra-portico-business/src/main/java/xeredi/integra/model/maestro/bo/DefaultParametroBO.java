@@ -30,8 +30,18 @@ public final class DefaultParametroBO extends AbstractParametroBO {
      */
     @Override
     protected void duplicatePostOperations(final SqlSession session, final ParametroVO prmt,
-            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap) throws OverlapException,
-            InstanceNotFoundException {
+            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+                    throws OverlapException, InstanceNotFoundException {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void duplicateVersionPostOperations(final SqlSession session, final ParametroVO prmt,
+            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+                    throws OverlapException, InstanceNotFoundException {
         // noop
     }
 
@@ -40,8 +50,8 @@ public final class DefaultParametroBO extends AbstractParametroBO {
      */
     @Override
     protected void updatePostOperations(final SqlSession session, final ParametroVO prmt,
-            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap) throws OverlapException,
-            InstanceNotFoundException {
+            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+                    throws OverlapException, InstanceNotFoundException {
         // noop
     }
 

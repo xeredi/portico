@@ -3,17 +3,21 @@
     <fieldset>
         <div class="row">
             <div ng-if="vm.enti.enti.puerto" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate="prto"></label> <select ng-if="vm.accion != 'edit'"
-                    ng-model="vm.item.prto.id" ng-change="vm.prtoId = vm.item.prto.id"
+                <label translate="prto"></label> <select
+                    ng-if="vm.accion == 'create' || vm.accion == 'duplicate'" ng-model="vm.item.prto.id"
+                    ng-change="vm.prtoId = vm.item.prto.id"
                     ng-options="prto.id as prto.etiqueta for prto in vm.prtoList" class="form-control">
                     <option />
                 </select>
-                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.prto.etiqueta"></p>
+                <p ng-if="!(vm.accion == 'create' || vm.accion == 'duplicate')" class="form-control-static"
+                    ng-bind="vm.item.prto.etiqueta"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate="prmt_parametro"></label> <input ng-if="vm.accion != 'edit'" type="text"
+                <label translate="prmt_parametro"></label> <input
+                    ng-if="vm.accion == 'create' || vm.accion == 'duplicate'" type="text"
                     ng-model="vm.item.parametro" class="form-control" />
-                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.parametro"></p>
+                <p ng-if="!(vm.accion == 'create' || vm.accion == 'duplicate')" class="form-control-static"
+                    ng-bind="vm.item.parametro"></p>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                 <label translate="fini"></label> <input type="text" class="form-control"

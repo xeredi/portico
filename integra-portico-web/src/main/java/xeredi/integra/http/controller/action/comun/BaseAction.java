@@ -9,14 +9,14 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
+import com.opensymphony.xwork2.ActionSupport;
+
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -37,12 +37,10 @@ public abstract class BaseAction extends ActionSupport {
      */
     public static enum ACCION_EDICION {
         /** The alta. */
-        create,
-        /** The modificar. */
-        edit,
-        /** The duplicar. */
-        duplicate,
-        /** The load. */
+        create, /** The modificar. */
+        edit, /** The duplicar. */
+        duplicate, /** The duplicate_version. */
+        duplicate_version, /** The load. */
         load;
     }
 

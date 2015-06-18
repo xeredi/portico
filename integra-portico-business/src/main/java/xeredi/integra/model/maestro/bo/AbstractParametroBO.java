@@ -15,6 +15,8 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
@@ -38,8 +40,6 @@ import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -215,8 +215,8 @@ public abstract class AbstractParametroBO implements ParametroBO {
 
                     prmtCriterioVO.setId(prmtActual.getId());
                     sprmCriterioVO.setPrmt(prmtCriterioVO);
-                    sprmCriterioVO.setFechaVigencia(prmtActual.getVersion().getFfin() == null ? Calendar.getInstance()
-                            .getTime() : prmtActual.getVersion().getFfin());
+                    sprmCriterioVO.setFechaVigencia(prmtActual.getVersion().getFfin() == null
+                            ? Calendar.getInstance().getTime() : prmtActual.getVersion().getFfin());
 
                     final List<SubparametroVO> sprmList = sprmDAO.selectList(sprmCriterioVO);
                     final Map<Long, SubparametroVO> sprmMap = new HashMap<>();
@@ -304,8 +304,107 @@ public abstract class AbstractParametroBO implements ParametroBO {
      *             the instance not found exception
      */
     protected abstract void duplicatePostOperations(final SqlSession session, final ParametroVO prmt,
-            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap) throws OverlapException,
-            InstanceNotFoundException;
+            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+                    throws OverlapException, InstanceNotFoundException;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void duplicateVersion(final ParametroVO prmt, final TipoParametroDetailVO tpprDetail,
+            final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
+        Preconditions.checkNotNull(prmt.getId());
+        Preconditions.checkNotNull(prmt.getVersion());
+        Preconditions.checkNotNull(prmt.getVersion().getFini());
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            if (tpprDetail.getEnti().isI18n()) {
+                Preconditions.checkNotNull(i18nMap);
+            }
+
+            // Validar que los datos del parametro son correctos
+            if (tpprDetail.getEntdList() != null && !tpprDetail.getEntdList().isEmpty()) {
+                for (final Long tpdtId : tpprDetail.getEntdList()) {
+                    if (!prmt.getItdtMap().containsKey(tpdtId)) {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(tpdtId);
+                        prmt.getItdtMap().put(tpdtId, itdt);
+
+                        // throw new Error("No se ha pasado informacion del dato "
+                        // + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " +
+                        // prmt);
+                    }
+                }
+            }
+
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
+            final ParametroDatoDAO prdtDAO = session.getMapper(ParametroDatoDAO.class);
+
+            final IgBO igBO = new IgBO();
+
+            // Busqueda del parametro a duplicar
+            final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
+
+            prmtCriterio.setVersionId(prmt.getVersion().getId());
+
+            final ParametroVO prmtActual = prmtDAO.selectObject(prmtCriterio);
+
+            if (prmtActual == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.prmt, prmt);
+            }
+
+            // Cierre de vigencia de la version actual
+            prmtActual.getVersion().setFfin(prmt.getVersion().getFini());
+
+            prmtDAO.updateVersion(prmtActual);
+
+            // Alta de la nueva version
+            prmt.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+
+            if (prmtDAO.existsOverlap(prmt)) {
+                throw new OverlapException(MessageI18nKey.prmt, prmt);
+            }
+
+            prmtDAO.insertVersion(prmt);
+
+            if (tpprDetail.getEnti().isI18n()) {
+                I18nBO.duplicateMap(session, I18nPrefix.prvr, prmt.getVersion().getId(), i18nMap);
+            }
+
+            if (prmt.getItdtMap() != null) {
+                for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
+                    itdtVO.setItemId(prmt.getVersion().getId());
+
+                    prdtDAO.insert(itdtVO);
+                }
+            }
+
+            duplicatePostOperations(session, prmtActual, tpprDetail, i18nMap);
+
+            session.commit();
+        }
+    }
+
+    /**
+     * Duplicate version post operations.
+     *
+     * @param session
+     *            the session
+     * @param prmt
+     *            the prmt
+     * @param tpprDetail
+     *            the tppr detail
+     * @param i18nMap
+     *            the i18n map
+     * @throws OverlapException
+     *             the overlap exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    protected abstract void duplicateVersionPostOperations(final SqlSession session, final ParametroVO prmt,
+            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+                    throws OverlapException, InstanceNotFoundException;
 
     /**
      * {@inheritDoc}
@@ -382,8 +481,8 @@ public abstract class AbstractParametroBO implements ParametroBO {
      *             the instance not found exception
      */
     protected abstract void updatePostOperations(final SqlSession session, final ParametroVO prmt,
-            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap) throws OverlapException,
-            InstanceNotFoundException;
+            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+                    throws OverlapException, InstanceNotFoundException;
 
     /**
      * {@inheritDoc}

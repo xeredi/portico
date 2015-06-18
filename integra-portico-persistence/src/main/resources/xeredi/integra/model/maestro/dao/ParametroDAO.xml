@@ -164,7 +164,14 @@
 		</if>
 
 		<if test="fechaVigencia != null">
-			AND #{fechaVigencia} BETWEEN prvr_fini AND coalesce(prvr_ffin, #{fechaVigencia})
+		<![CDATA[
+			AND (
+				#{fechaVigencia} >= prvr_fini
+				AND (
+					prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia}
+				)
+			)
+		]]>
 		</if>
 
 		<if test="sprmMap != null">
@@ -185,7 +192,10 @@
 					        FROM tbl_subparametro_version_spvr
 					        WHERE
 				            	spvr_sprm_pk = sprm_pk
-				            	AND #{fechaVigencia} BETWEEN spvr_fini AND coalesce(spvr_ffin, #{fechaVigencia})
+				            	AND (
+				            		#{fechaVigencia} >= spvr_fini
+				            		AND (spvr_ffin IS NULL OR spvr_ffin > #{fechaVigencia})
+				            	)
 				        )
 				]]>
 				</if>
@@ -323,9 +333,16 @@
         WHERE
             prmt_pk = #{id}
             AND (
-                #{version.fini} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{version.fini})
-                OR COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
-                    BETWEEN prvr_fini AND COALESCE(prvr_ffin, COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
+                (
+                	#{version.fini} >= prvr_fini
+                	AND (prvr_ffin IS NULL OR prvr_ffin > #{version.fini})
+                )
+                OR (
+                	COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()) >=  prvr_fini
+                	AND (
+                		prvr_ffin IS NULL OR prvr_ffin > COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
+					)
+				)
             )
     ]]>
 		<if test="version.id != null">

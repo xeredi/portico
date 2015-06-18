@@ -1,8 +1,11 @@
 package xeredi.integra.http.controller.action.maestro;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.common.base.Preconditions;
 
 import xeredi.integra.http.controller.action.item.ItemEditAction;
 import xeredi.integra.model.comun.bo.I18nBO;
@@ -17,8 +20,6 @@ import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -50,6 +51,22 @@ public final class ParametroEditAction extends ItemEditAction<ParametroVO, TipoP
             final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
 
             model = prmtBO.select(model.getId(), idioma, fechaVigencia);
+
+            if (accion == ACCION_EDICION.duplicate_version) {
+                if (model.getVersion().getFfin() != null) {
+                    model.getVersion().setFini(model.getVersion().getFfin());
+                    model.getVersion().setFfin(null);
+                } else {
+                    final Calendar ffin = Calendar.getInstance();
+
+                    ffin.set(Calendar.HOUR_OF_DAY, 0);
+                    ffin.set(Calendar.MINUTE, 0);
+                    ffin.set(Calendar.SECOND, 0);
+                    ffin.set(Calendar.MILLISECOND, 0);
+
+                    model.getVersion().setFini(ffin.getTime());
+                }
+            }
 
             if (enti.getEnti().isI18n()) {
                 i18nMap = I18nBO.selectMap(I18nPrefix.prvr, model.getVersion().getId());
