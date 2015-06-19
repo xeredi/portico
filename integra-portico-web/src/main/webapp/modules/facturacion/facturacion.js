@@ -367,14 +367,14 @@ function FctrGridController($http, $location, $routeParams, $modal,
 	}
 
 	function search(page) {
-		$http.post("facturacion/fctr-list.action", {
-			fctrCriterio : vm.fctrCriterio,
+		$http.post("facturacion/factura-list.action", {
+			model : vm.fctrCriterio,
 			page : page,
 			limit : vm.limit
 		}).success(function(data) {
-			vm.page = data.fctrList.page;
-			vm.fctrList = data.fctrList;
-			vm.fctrCriterio = data.fctrCriterio;
+			vm.page = data.resultList.page;
+			vm.fctrList = data.resultList;
+			vm.fctrCriterio = data.model;
 
 			$location.search({
 				page : vm.page,
@@ -388,7 +388,9 @@ function FctrGridController($http, $location, $routeParams, $modal,
 	}
 
 	function filter(size) {
-		$http.post("facturacion/fctr-filter.action").success(function(data) {
+		$http.post("facturacion/factura-filter.action", {
+			model : vm.fctrCriterio
+		}).success(function(data) {
 			// vm.tpsrList = data.tpsrList;
 		});
 	}
@@ -407,12 +409,12 @@ function FctrDetailController($http, $location, $routeParams, pageTitleService) 
 		vm.tab = $routeParams.tab ? $routeParams.tab : null;
 		vm.path = $location.path();
 
-		$http.post("facturacion/fctr-detail.action", {
-			fctr : {
+		$http.post("facturacion/factura-detail.action", {
+			model : {
 				id : $routeParams.fctrId
 			}
 		}).success(function(data) {
-			vm.fctr = data.fctr;
+			vm.fctr = data.model;
 			vm.fctsList = data.fctsList;
 			vm.fctgList = data.fctgList;
 			vm.fctiList = data.fctiList;

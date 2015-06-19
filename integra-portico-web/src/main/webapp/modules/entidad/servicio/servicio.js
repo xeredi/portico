@@ -622,14 +622,14 @@ function SrvcLupaController($http, $scope) {
 			return null;
 		}
 
-		return $http.post('servicio/srvc-lupa.action', {
+		return $http.post('servicio/servicio-typeahead.action', {
 			model : {
 				entiId : entiId,
 				textoBusqueda : textoBusqueda,
 				fechaVigencia : '2014-11-11T00:00:00'
 			}
 		}).then(function(res) {
-			return res.data.itemList;
+			return res.data.resultList;
 		});
 	};
 }
@@ -950,15 +950,15 @@ function SsrvTramiteEditController($http, $location, $routeParams,
 
 function SsrvLupaController($http, $scope) {
 	$scope.search = function(entiId, srvcId, numero, fechaVigencia) {
-		return $http.post("servicio/ssrv-lupa.action", {
+		return $http.post("servicio/subservicio-typeahead.action", {
 			model : {
 				entiId : entiId,
 				srvcId : srvcId,
-				numero : numero,
+				textoBusqueda : numero,
 				fechaVigencia : fechaVigencia
 			}
 		}).then(function(res) {
-			return res.data.itemList;
+			return res.data.resultList;
 		});
 	};
 }

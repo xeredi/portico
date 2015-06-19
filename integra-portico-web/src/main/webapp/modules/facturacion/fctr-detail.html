@@ -20,14 +20,14 @@
             <p class="form-control-static" ng-bind="vm.fctr.etiqueta"></p>
         </div>
         <div class="col-md-2 form-group">
-            <label translate="aspc_tpsr"></label>
+            <label translate="tpsr"></label>
             <p class="form-control-static">
                 <a ng-href="#/metamodelo/tpsr/detail/{{vm.aspc.tpsr.id}}"
-                    translate="{{'enti_' + vm.aspc.tpsr.id}}"></a>
+                    ng-bind="'enti_' + vm.aspc.tpsr.id | translate"></a>
             </p>
         </div>
         <div class="col-md-3 form-group">
-            <label translate="fctr_aspc"></label>
+            <label translate="aspc"></label>
             <p class="form-control-static">
                 <a ng-href="#/facturacion/aspc/detail/{{vm.aspc.id}}/{{vm.fctr.fref}}"
                     ng-bind="vm.aspc.etiqueta"></a>
@@ -63,11 +63,11 @@
             <p class="form-control-static" ng-bind="vm.fctr.ffac | date: ('format_date' | translate)"></p>
         </div>
         <div class="col-md-2 form-group">
-            <label translate="fctr_fini"></label>
+            <label translate="fini"></label>
             <p class="form-control-static" ng-bind="vm.fctr.fini | date: ('format_datetime' | translate)"></p>
         </div>
         <div class="col-md-2 form-group">
-            <label translate="fctr_ffin"></label>
+            <label translate="ffin"></label>
             <p class="form-control-static" ng-bind="vm.fctr.ffin | date: ('format_datetime' | translate)"></p>
         </div>
     </div>
@@ -135,10 +135,10 @@
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
                 <tr>
-                    <th translate="fcts_srvc"></th>
-                    <th translate="fcts_fref"></th>
-                    <th translate="fcts_fini"></th>
-                    <th translate="fcts_ffin"></th>
+                    <th translate="srvc"></th>
+                    <th translate="fref"></th>
+                    <th translate="fini"></th>
+                    <th translate="ffin"></th>
                     <th translate="fcts_codExencion"></th>
                     <th translate="fcts_importe"></th>
                 </tr>
@@ -166,7 +166,7 @@
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
                 <tr>
-                    <th translate="fctg_crgo"></th>
+                    <th translate="crgo"></th>
                     <th translate="fctg_importe"></th>
                 </tr>
             </thead>

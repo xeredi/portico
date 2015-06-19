@@ -1,0 +1,26 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <p class="modal-title" translate="filtro"></p>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <fieldset>
+                        <div class="row">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-ng-click="vm.search(1);$hide()">
+                    <i class="glyphicon glyphicon-search"></i><span translate="btn_buscar"></span>
+                </button>
+                <button class="btn btn-default" data-ng-click="$hide()">
+                    <i class="glyphicon glyphicon-remove"></i><span translate="btn_cancelar"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
