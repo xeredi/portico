@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+
 <mapper namespace="xeredi.integra.model.facturacion.dao.FacturaServicioDAO">
 	<resultMap type="FacturaServicioVO" id="ResultMap">
 		<id column="fcts_pk" />
@@ -26,7 +27,7 @@
 
 			<association property="prto" javaType="PuertoVO">
 				<result column="srvc_subp_pk" property="id" />
-				<result column="srvc_subp" property="codigo" />
+				<result column="prto_codigo" property="codigo" />
 			</association>
 		</association>
 	</resultMap>
@@ -38,7 +39,7 @@
 
 		    , srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_numero
 
-		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+		    , (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk) AS prto_codigo
 
 	        , (
 	            SELECT SUM(fctd_importe)
@@ -95,3 +96,31 @@
     ]]>
 	</insert>
 </mapper>
+
+<!--
+SELECT
+    fctr_pk, fctr_fref, fcts_srvc_pk, fcts_fref, fcts_fini, fcts_ffin, fcts_cod_exen
+    , srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_numero
+    , (
+        SELECT SUM(fctd_importe)
+        FROM tbl_factura_det_fctd
+        WHERE
+            fctd_fctl_pk = ANY (
+                SELECT fctl_pk
+                FROM tbl_factura_lin_fctl
+                WHERE fctl_fcts_pk = fcts_pk
+            )
+    ) AS fctd_importe
+
+    , (
+        SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk
+    ) AS prto_codigo
+FROM
+    tbl_factura_fctr
+    INNER JOIN tbl_factura_srv_fcts ON
+        fcts_fctr_pk = fctr_pk
+    INNER JOIN tbl_servicio_srvc ON
+        srvc_pk = fcts_srvc_pk
+WHERE
+    fctr_pk = 2190001
+ -->

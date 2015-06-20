@@ -25,6 +25,6 @@ public final class FacturaLineaDetailAction extends CrudDetailAction<FacturaLine
 
         final FacturaBO fctrBO = new FacturaBO();
 
-        model = fctrBO.selectFctl(model.getId());
+        model = fctrBO.selectFctl(model.getId(), getIdioma());
     }
 }

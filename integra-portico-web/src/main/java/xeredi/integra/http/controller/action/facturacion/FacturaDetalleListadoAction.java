@@ -2,12 +2,12 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import org.apache.struts2.convention.annotation.Action;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.facturacion.bo.FacturaBO;
 import xeredi.integra.model.facturacion.vo.FacturaDetalleVO;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -35,7 +35,8 @@ public final class FacturaDetalleListadoAction extends PaginableAction {
 
         final FacturaBO fctrBO = new FacturaBO();
 
-        fctdList = fctrBO.selectFctdList(fctlId, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
+        fctdList = fctrBO.selectFctdList(fctlId, getIdioma(), PaginatedList.getOffset(getPage(), getLimit()),
+                getLimit());
 
         return SUCCESS;
     }

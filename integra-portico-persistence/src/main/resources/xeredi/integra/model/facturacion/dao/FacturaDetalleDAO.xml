@@ -116,7 +116,7 @@
 	</select>
 
 	<select id="count" resultType="Integer" parameterType="FacturaDetalleCriterioVO">
-		SELECT COUNT(1) FROM vw_factura_det_fctd
+		SELECT COUNT(1) FROM tbl_factura_det_fctd
 		<include refid="SelectWhere" />
 	</select>
 

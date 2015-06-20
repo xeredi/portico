@@ -27,6 +27,6 @@ public final class FacturaLineaListAction extends GridListAction<FacturaLineaCri
 
         final FacturaBO fctrBO = new FacturaBO();
 
-        resultList = fctrBO.selectFctlList(model.getFctr().getId(), getOffset(), limit);
+        resultList = fctrBO.selectFctlList(model.getFctr().getId(), getIdioma(), getOffset(), limit);
     }
 }

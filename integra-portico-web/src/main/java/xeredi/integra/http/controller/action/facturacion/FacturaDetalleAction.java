@@ -2,13 +2,13 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import org.apache.struts2.convention.annotation.Action;
 
+import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
+
 import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.FacturaBO;
 import xeredi.integra.model.facturacion.vo.FacturaDetalleVO;
-
-import com.google.common.base.Preconditions;
-import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -36,7 +36,7 @@ public final class FacturaDetalleAction extends ItemAction implements ModelDrive
 
         final FacturaBO fctdBO = new FacturaBO();
 
-        model = fctdBO.selectFctd(model.getId());
+        model = fctdBO.selectFctd(model.getId(), getIdioma());
 
         return SUCCESS;
     }

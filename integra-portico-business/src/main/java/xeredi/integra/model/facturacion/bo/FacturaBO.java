@@ -8,12 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -45,8 +46,6 @@ import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.integra.model.facturacion.vo.ValoracionVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -222,7 +221,8 @@ public class FacturaBO {
             }
 
             if (!fcts.getFctrId().equals(fctr.getId())) {
-                throw new Error("No coinciden los identificadores de factura de la factura y el servicio de la factura");
+                throw new Error(
+                        "No coinciden los identificadores de factura de la factura y el servicio de la factura");
             }
 
             // Busqueda de los datos de la factura que se van a copiar.
@@ -415,14 +415,13 @@ public class FacturaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public FacturaVO select(final @NonNull Long fctrId) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(fctrId);
-
+    public FacturaVO select(final @NonNull Long fctrId, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
             final FacturaCriterioVO fctrCriterio = new FacturaCriterioVO();
 
             fctrCriterio.setId(fctrId);
+            fctrCriterio.setIdioma(idioma);
 
             final FacturaVO fctr = fctrDAO.selectObject(fctrCriterio);
 
@@ -445,18 +444,18 @@ public class FacturaBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<FacturaVO> selectList(final FacturaCriterioVO fctrCriterioVO, final int offset, final int limit) {
-        Preconditions.checkNotNull(fctrCriterioVO);
+    public PaginatedList<FacturaVO> selectList(final @NonNull FacturaCriterioVO fctrCriterio, final int offset,
+            final int limit) {
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
-            final int count = fctrDAO.count(fctrCriterioVO);
+            final int count = fctrDAO.count(fctrCriterio);
             final List<FacturaVO> fctrList = new ArrayList<>();
 
             if (count >= offset) {
-                fctrList.addAll(fctrDAO.selectList(fctrCriterioVO, new RowBounds(offset, limit)));
+                fctrList.addAll(fctrDAO.selectList(fctrCriterio, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<FacturaVO>(fctrList, offset, limit, count);
@@ -470,14 +469,13 @@ public class FacturaBO {
      *            the fctr id
      * @return the list
      */
-    public List<FacturaServicioVO> selectFctsList(final @NonNull Long fctrId) {
-        Preconditions.checkNotNull(fctrId);
-
+    public List<FacturaServicioVO> selectFctsList(final @NonNull Long fctrId, final String idioma) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaServicioDAO fctsDAO = session.getMapper(FacturaServicioDAO.class);
             final FacturaServicioCriterioVO fctsCriterio = new FacturaServicioCriterioVO();
 
             fctsCriterio.setFctrId(fctrId);
+            fctsCriterio.setIdioma(idioma);
 
             return fctsDAO.selectList(fctsCriterio);
         }
@@ -490,16 +488,15 @@ public class FacturaBO {
      *            the fctr id
      * @return the list
      */
-    public List<FacturaImpuestoVO> selectFctiList(final Long fctrId) {
-        Preconditions.checkNotNull(fctrId);
-
+    public List<FacturaImpuestoVO> selectFctiList(final @NonNull Long fctrId, final String idioma) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaImpuestoDAO fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
-            final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
+            final FacturaCriterioVO fctrCriterio = new FacturaCriterioVO();
 
-            fctrCriterioVO.setId(fctrId);
+            fctrCriterio.setId(fctrId);
+            fctrCriterio.setIdioma(idioma);
 
-            return fctiDAO.selectList(fctrCriterioVO);
+            return fctiDAO.selectList(fctrCriterio);
         }
     }
 
@@ -510,16 +507,15 @@ public class FacturaBO {
      *            the fctr id
      * @return the list
      */
-    public List<FacturaCargoVO> selectFctgList(final Long fctrId) {
-        Preconditions.checkNotNull(fctrId);
-
+    public List<FacturaCargoVO> selectFctgList(final @NonNull Long fctrId, final String idioma) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaCargoDAO fctgDAO = session.getMapper(FacturaCargoDAO.class);
-            final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
+            final FacturaCriterioVO fctrCriterio = new FacturaCriterioVO();
 
-            fctrCriterioVO.setId(fctrId);
+            fctrCriterio.setId(fctrId);
+            fctrCriterio.setIdioma(idioma);
 
-            return fctgDAO.selectList(fctrCriterioVO);
+            return fctgDAO.selectList(fctrCriterio);
         }
     }
 
@@ -534,24 +530,25 @@ public class FacturaBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<FacturaLineaVO> selectFctlList(final Long fctrId, final int offset, final int limit) {
-        Preconditions.checkNotNull(fctrId);
+    public PaginatedList<FacturaLineaVO> selectFctlList(final @NonNull Long fctrId, final String idioma,
+            final int offset, final int limit) {
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaLineaDAO fctlDAO = session.getMapper(FacturaLineaDAO.class);
-            final FacturaLineaCriterioVO fctlCriterioVO = new FacturaLineaCriterioVO();
-            final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
+            final FacturaLineaCriterioVO fctlCriterio = new FacturaLineaCriterioVO();
+            final FacturaCriterioVO fctrCriterio = new FacturaCriterioVO();
 
-            fctrCriterioVO.setId(fctrId);
-            fctlCriterioVO.setFctr(fctrCriterioVO);
+            fctrCriterio.setId(fctrId);
+            fctlCriterio.setFctr(fctrCriterio);
+            fctlCriterio.setIdioma(idioma);
 
-            final int count = fctlDAO.count(fctlCriterioVO);
+            final int count = fctlDAO.count(fctlCriterio);
             final List<FacturaLineaVO> fctlList = new ArrayList<>();
 
             if (count >= offset) {
-                fctlList.addAll(fctlDAO.selectList(fctlCriterioVO, new RowBounds(offset, limit)));
+                fctlList.addAll(fctlDAO.selectList(fctlCriterio, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<FacturaLineaVO>(fctlList, offset, limit, count);
@@ -567,14 +564,13 @@ public class FacturaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public FacturaLineaVO selectFctl(final @NonNull Long fctlId) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(fctlId);
-
+    public FacturaLineaVO selectFctl(final @NonNull Long fctlId, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaLineaDAO fctlDAO = session.getMapper(FacturaLineaDAO.class);
             final FacturaLineaCriterioVO fctlCriterio = new FacturaLineaCriterioVO();
 
             fctlCriterio.setId(fctlId);
+            fctlCriterio.setIdioma(idioma);
 
             final FacturaLineaVO fctl = fctlDAO.selectObject(fctlCriterio);
 
@@ -597,24 +593,25 @@ public class FacturaBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<FacturaDetalleVO> selectFctdList(final Long fctlId, final int offset, final int limit) {
-        Preconditions.checkNotNull(fctlId);
+    public PaginatedList<FacturaDetalleVO> selectFctdList(final @NonNull Long fctlId, final String idioma,
+            final int offset, final int limit) {
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaDetalleDAO fctdDAO = session.getMapper(FacturaDetalleDAO.class);
-            final FacturaDetalleCriterioVO fctdCriterioVO = new FacturaDetalleCriterioVO();
-            final FacturaLineaCriterioVO fctlCriterioVO = new FacturaLineaCriterioVO();
+            final FacturaDetalleCriterioVO fctdCriterio = new FacturaDetalleCriterioVO();
+            final FacturaLineaCriterioVO fctlCriterio = new FacturaLineaCriterioVO();
 
-            fctlCriterioVO.setId(fctlId);
-            fctdCriterioVO.setFctl(fctlCriterioVO);
+            fctlCriterio.setId(fctlId);
+            fctdCriterio.setFctl(fctlCriterio);
+            fctdCriterio.setIdioma(idioma);
 
-            final int count = fctdDAO.count(fctdCriterioVO);
+            final int count = fctdDAO.count(fctdCriterio);
             final List<FacturaDetalleVO> fctdList = new ArrayList<>();
 
             if (count >= offset) {
-                fctdList.addAll(fctdDAO.selectList(fctdCriterioVO, new RowBounds(offset, limit)));
+                fctdList.addAll(fctdDAO.selectList(fctdCriterio, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<FacturaDetalleVO>(fctdList, offset, limit, count);
@@ -630,14 +627,14 @@ public class FacturaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public FacturaDetalleVO selectFctd(final @NonNull Long fctdId) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(fctdId);
-
+    public FacturaDetalleVO selectFctd(final @NonNull Long fctdId, final String idioma)
+            throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaDetalleDAO fctdDAO = session.getMapper(FacturaDetalleDAO.class);
             final FacturaDetalleCriterioVO fctdCriterio = new FacturaDetalleCriterioVO();
 
             fctdCriterio.setId(fctdId);
+            fctdCriterio.setIdioma(idioma);
 
             final FacturaDetalleVO fctd = fctdDAO.selectObject(fctdCriterio);
 
@@ -648,5 +645,4 @@ public class FacturaBO {
             return fctd;
         }
     }
-
 }

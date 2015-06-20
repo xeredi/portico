@@ -25,7 +25,7 @@ public final class FacturaEditAction extends CrudEditAction<FacturaVO> {
 
         final FacturaBO fctrBO = new FacturaBO();
 
-        model = fctrBO.select(model.getId());
+        model = fctrBO.select(model.getId(), getIdioma());
     }
 
     /**

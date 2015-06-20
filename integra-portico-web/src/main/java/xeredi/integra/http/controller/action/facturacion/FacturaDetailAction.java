@@ -39,10 +39,10 @@ public final class FacturaDetailAction extends CrudDetailAction<FacturaVO> {
 
         final FacturaBO fctrBO = new FacturaBO();
 
-        model = fctrBO.select(model.getId());
-        fctsList = fctrBO.selectFctsList(model.getId());
-        fctiList = fctrBO.selectFctiList(model.getId());
-        fctgList = fctrBO.selectFctgList(model.getId());
+        model = fctrBO.select(model.getId(), getIdioma());
+        fctsList = fctrBO.selectFctsList(model.getId(), getIdioma());
+        fctiList = fctrBO.selectFctiList(model.getId(), getIdioma());
+        fctgList = fctrBO.selectFctgList(model.getId(), getIdioma());
     }
 
     /**

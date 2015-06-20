@@ -4,83 +4,84 @@
 
 <mapper namespace="xeredi.integra.model.facturacion.dao.FacturaImpuestoDAO">
 	<resultMap type="FacturaImpuestoVO" id="ResultMap">
-		<id column="fcti_fctr_pk" />
-		<id column="fcti_impuesto_prmt_pk" />
-		<id column="fcti_porcentaje" />
+		<id column="fctr_pk" />
+		<id column="fctl_impuesto_prmt_pk" />
+		<id column="iva" />
 
-		<result column="fcti_fctr_pk" property="fctrId" />
-		<result column="fcti_porcentaje" property="porcentaje" />
-		<result column="fcti_importe_base" property="importeBase" />
-		<result column="fcti_importe_impuesto" property="importeImpuesto" />
+		<result column="fctr_pk" property="fctrId" />
+		<result column="iva" property="porcentaje" />
+		<result column="fctd_importe" property="importeBase" />
+		<result column="fctd_importe_iva" property="importeImpuesto" />
 
 		<association property="impuesto" javaType="ParametroVO">
-			<result column="fcti_impuesto_prmt_pk" property="id" />
-			<result column="fcti_impuesto_prmt" property="parametro" />
-			<result column="fcti_impuesto_tppr_pk" property="entiId" />
+			<result column="fctl_impuesto_prmt_pk" property="id" />
+			<result column="prmt_parametro" property="parametro" />
+			<result column="prmt_tppr_pk" property="entiId" />
+			<result column="prmt_texto" property="texto" />
 		</association>
 	</resultMap>
 
 	<select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
     <![CDATA[
-		SELECT
-		    fctl_fctr_pk AS fcti_fctr_pk
-		    , fctl_impuesto_prmt_pk AS fcti_impuesto_prmt_pk
-		    , prmt_parametro AS fcti_impuesto_prmt
-		    , prmt_tppr_pk AS fcti_impuesto_tppr_pk
-		    , fcti_porcentaje
-		    , SUM(fctl_importe) AS fcti_importe_base
-		    , SUM(fctl_importe * fcti_porcentaje) / 100 AS fcti_importe_impuesto
-		FROM (
-		    WITH tipoIva AS (
-		        SELECT
-		            prvr_pk, prvr_prmt_pk, prvr_fini, prvr_ffin
-		            , (SELECT prdt_ndecimal FROM tbl_parametro_dato_prdt
-		                WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')) AS prdt_ndecimal
-		        FROM
-		            tbl_parametro_version_prvr
-		        WHERE
-		            prvr_prmt_pk = ANY (
-		                SELECT prmt_pk
-		                FROM tbl_parametro_prmt
-		                WHERE prmt_tppr_pk = portico.getEntidad('TIPO_IVA')
-		            )
-		    )
-		    SELECT
-		        fctl_pk, fctl_fctr_pk, fctl_impuesto_prmt_pk
-
+		WITH ivas AS (
+		    SELECT prmt_pk, prmt_parametro, prmt_tppr_pk, prvr_pk, prvr_fini, prvr_ffin
 		        , (
 		            SELECT prdt_ndecimal
-		            FROM tipoIva
+		            FROM tbl_parametro_dato_prdt
 		            WHERE
-		                prvr_prmt_pk = fctl_impuesto_prmt_pk
-		                AND fcts_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fcts_fref)
-		        ) AS fcti_porcentaje
-
-		        , (
-		            SELECT SUM(fctd_importe)
-		            FROM
-		                tbl_factura_det_fctd
-		            WHERE
-		                fctd_fctl_pk = fctl_pk
-		        ) AS fctl_importe
+		                prdt_prvr_pk = prvr_pk
+		                AND prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
+		        ) AS iva
 		    FROM
-		        tbl_factura_lin_fctl
-		        INNER JOIN tbl_factura_srv_fcts ON
-		            fcts_pk = fctl_fcts_pk
+		        tbl_parametro_prmt
+		        INNER JOIN tbl_parametro_version_prvr ON
+		            prvr_prmt_pk = prmt_pk
+		    WHERE
+		        prmt_tppr_pk = portico.getEntidad('TIPO_IVA')
+		)
+		SELECT
+		    fctr_pk, fctr_fref, fcts_pk, fcts_fref, fctl_impuesto_prmt_pk, iva
+		    , SUM(fctd_importe) AS fctd_importe
+		    , SUM(fctd_importe) * iva AS fctd_importe_iva
+
+		    , prmt_parametro, prmt_tppr_pk
     ]]>
-		<where>
-			<if test="id != null">
-		    <![CDATA[
-				AND fctl_fctr_pk = #{id}
-    		]]>
-			</if>
-		</where>
+		<if test="idioma != null">
+	    <![CDATA[
+		    , (
+		        SELECT i18n_text
+		        FROM tbl_i18n_i18n
+		        WHERE
+		            i18n_ext_pk = prvr_pk
+		            AND i18n_pref = 'prvr'
+		            AND i18n_lang = #{idioma}
+		    ) AS prmt_texto
+	    ]]>
+		</if>
     <![CDATA[
-		) sql
-			INNER JOIN tbl_parametro_prmt ON
-				prmt_pk = fctl_impuesto_prmt_pk
-		GROUP BY fctl_fctr_pk, fctl_impuesto_prmt_pk, prmt_parametro, prmt_tppr_pk, fcti_porcentaje
-		ORDER BY fctl_fctr_pk, fcti_porcentaje DESC
+		FROM
+		    tbl_factura_fctr
+		    INNER JOIN tbl_factura_srv_fcts ON
+		        fcts_fctr_pk = fctr_pk
+		    INNER JOIN tbl_factura_lin_fctl ON
+		        fctl_fctr_pk = fctr_pk
+		        AND fctl_fcts_pk = fcts_pk
+		    INNER JOIN tbl_factura_det_fctd ON
+		        fctd_fctl_pk = fctl_pk
+		    INNER JOIN ivas ON
+		        fctl_impuesto_prmt_pk = prmt_pk
+		        AND (
+		            prvr_fini <= fcts_fref
+		            AND (prvr_ffin IS NULL OR prvr_ffin > fcts_fref)
+		        )
+    ]]>
+    	<where>
+    		<if test="id != null">
+    			AND fctr_pk = #{id}
+    		</if>
+    	</where>
+    <![CDATA[
+		GROUP BY fctr_pk, fctr_fref, fcts_pk, fcts_fref, fctl_impuesto_prmt_pk, prmt_parametro, prmt_tppr_pk, prvr_pk, iva
     ]]>
 	</select>
 </mapper>
