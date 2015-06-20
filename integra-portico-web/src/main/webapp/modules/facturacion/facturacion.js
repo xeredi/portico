@@ -6,10 +6,10 @@ angular.module("facturacion", [])
 .controller("FacturacionController", FacturacionController)
 
 // ----------- VALORADOR ------------------
-.controller("VldrPrepareController", VldrPrepareController)
+.controller("VldrEditController", VldrEditController)
 
 // ----------- FACTURADOR ------------------
-.controller("FctrPrepareController", FctrPrepareController)
+.controller("FcdrEditController", FcdrEditController)
 
 // ----------- FACTURA ------------------
 .controller("FctrGridController", FctrGridController)
@@ -81,16 +81,16 @@ function config($routeProvider) {
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/vldr/prepare/:entiId/:srvcId", {
-		templateUrl : "modules/facturacion/vldr-prepare.html",
-		controller : "VldrPrepareController",
+	.when("/facturacion/vldr/edit/:entiId/:srvcId", {
+		templateUrl : "modules/facturacion/vldr-edit.html",
+		controller : "VldrEditController",
 		controllerAs : "vm",
 		reloadOnSearch : false
 	})
 
-	.when("/facturacion/fctr/prepare/:vlrcId", {
-		templateUrl : "modules/facturacion/fctr-prepare.html",
-		controller : "FctrPrepareController",
+	.when("/facturacion/fcdr/edit/:vlrcId", {
+		templateUrl : "modules/facturacion/fcdr-edit.html",
+		controller : "FcdrEditController",
 		controllerAs : "vm",
 		reloadOnSearch : false
 	})
@@ -272,7 +272,7 @@ function FacturacionController($http, pageTitleService) {
 	}
 }
 
-function VldrPrepareController($http, $location, $routeParams, pageTitleService) {
+function VldrEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.valorar = valorar;
@@ -281,7 +281,7 @@ function VldrPrepareController($http, $location, $routeParams, pageTitleService)
 	initialize();
 
 	function initialize() {
-		$http.post("facturacion/vldr-prepare.action", {
+		$http.post("facturacion/valorador-edit.action", {
 			srvc : {
 				id : $routeParams.srvcId,
 				entiId : $routeParams.entiId
@@ -289,13 +289,14 @@ function VldrPrepareController($http, $location, $routeParams, pageTitleService)
 		}).success(function(data) {
 			vm.srvc = data.srvc;
 			vm.fliq = data.fliq;
+			vm.crgoList = data.crgoList;
 		});
 
-		pageTitleService.setTitle("vldr", "page_prepare");
+		pageTitleService.setTitle("vldr", "page_edit");
 	}
 
 	function valorar() {
-		$http.post("facturacion/vldr-valorar.action", {
+		$http.post("facturacion/valorador-save.action", {
 			fliq : vm.fliq,
 			srvc : vm.srvc
 		}).success(function(data) {
@@ -308,7 +309,7 @@ function VldrPrepareController($http, $location, $routeParams, pageTitleService)
 	}
 }
 
-function FctrPrepareController($http, $location, $routeParams, pageTitleService) {
+function FcdrEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.facturar = facturar;
@@ -317,7 +318,7 @@ function FctrPrepareController($http, $location, $routeParams, pageTitleService)
 	initialize();
 
 	function initialize() {
-		$http.post("facturacion/fctr-prepare.action", {
+		$http.post("facturacion/facturador-edit.action", {
 			vlrc : {
 				id : $routeParams.vlrcId
 			}
@@ -329,11 +330,11 @@ function FctrPrepareController($http, $location, $routeParams, pageTitleService)
 			vm.fcsrList = data.fcsrList;
 		});
 
-		pageTitleService.setTitle("fctr", "page_prepare");
+		pageTitleService.setTitle("fcdr", "page_edit");
 	}
 
 	function facturar() {
-		$http.post("facturacion/fctr-facturar.action", {
+		$http.post("facturacion/facturador-save.action", {
 			ffac : vm.ffac,
 			vlrc : vm.vlrc,
 			aspcId : vm.aspcId,
@@ -426,12 +427,16 @@ function FctrDetailController($http, $location, $routeParams, pageTitleService) 
 	}
 
 	function findFctlList(page) {
-		$http.post("facturacion/fctl-list.action", {
-			fctrId : $routeParams.fctrId,
+		$http.post("facturacion/factura-linea-list.action", {
+			model : {
+				fctr : {
+					id : $routeParams.fctrId
+				}
+			},
 			page : page
 		}).success(function(data) {
-			vm.fctlList = data.fctlList;
-			vm.page = data.fctlList.page;
+			vm.fctlList = data.resultList;
+			vm.page = data.resultList.page;
 
 			$location.search("page", vm.page).replace();
 		});
@@ -476,12 +481,12 @@ function FctlDetailController($http, $location, $routeParams, pageTitleService) 
 		vm.tab = $routeParams.tab ? $routeParams.tab : null;
 		vm.path = $location.path();
 
-		$http.post("facturacion/fctl-detail.action", {
-			fctl : {
+		$http.post("facturacion/factura-linea-detail.action", {
+			model : {
 				id : $routeParams.fctlId
 			}
 		}).success(function(data) {
-			vm.fctl = data.fctl;
+			vm.fctl = data.model;
 
 			findFctdList($routeParams.page ? $routeParams.page : 1);
 		});

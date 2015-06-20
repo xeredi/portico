@@ -15,38 +15,38 @@
 
 <fieldset>
     <div class="row">
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 form-group-sm">
             <label translate="fctr"></label>
             <p class="form-control-static" ng-bind="vm.fctr.etiqueta"></p>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 form-group-sm">
             <label translate="tpsr"></label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tpsr/detail/{{vm.aspc.tpsr.id}}"
-                    ng-bind="'enti_' + vm.aspc.tpsr.id | translate"></a>
+                <a ng-href="#/metamodelo/tpsr/detail/{{vm.fctr.aspc.tpsr.id}}"
+                    ng-bind="'enti_' + vm.fctr.aspc.tpsr.id | translate"></a>
             </p>
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-3 form-group-sm">
             <label translate="aspc"></label>
             <p class="form-control-static">
-                <a ng-href="#/facturacion/aspc/detail/{{vm.aspc.id}}/{{vm.fctr.fref}}"
-                    ng-bind="vm.aspc.etiqueta"></a>
+                <a ng-href="#/facturacion/aspc/detail/{{vm.fctr.aspc.id}}/{{vm.fctr.fref}}"
+                    ng-bind="vm.fctr.aspc.etiqueta"></a>
             </p>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-1 form-group">
+        <div class="col-md-1 form-group-sm">
             <label translate="fctr_importe"></label>
             <p class="form-control-static number" ng-bind="vm.fctr.importe | number:2"></p>
         </div>
-        <div class="col-md-1 form-group">
+        <div class="col-md-1 form-group-sm">
             <label translate="fctr_impuesto"></label>
             <p class="form-control-static number" ng-bind="vm.fctr.impuesto | number:2"></p>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-3 form-group">
+        <div class="col-md-3 form-group-sm">
             <label translate="fctr_pagador"></label>
             <p class="form-control-static">
                 <a
@@ -54,46 +54,46 @@
                     ng-bind="vm.fctr.pagador.etiqueta"></a>
             </p>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 form-group-sm">
             <label translate="fctr_falta"></label>
             <p class="form-control-static" ng-bind="vm.fctr.falta | date: ('format_datetime' | translate)"></p>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 form-group-sm">
             <label translate="fctr_ffac"></label>
             <p class="form-control-static" ng-bind="vm.fctr.ffac | date: ('format_date' | translate)"></p>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 form-group-sm">
             <label translate="fini"></label>
             <p class="form-control-static" ng-bind="vm.fctr.fini | date: ('format_datetime' | translate)"></p>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 form-group-sm">
             <label translate="ffin"></label>
             <p class="form-control-static" ng-bind="vm.fctr.ffin | date: ('format_datetime' | translate)"></p>
         </div>
     </div>
 
     <div class="row">
-        <div ng-if="vm.aspc.version.cetiqInfo1" class="col-md-4 form-group">
+        <div ng-if="vm.aspc.version.cetiqInfo1" class="col-md-4 form-group-sm">
             <label ng-bind="vm.aspc.version.cetiqInfo1"></label>
             <p class="form-control-static" ng-bind="vm.fctr.info1"></p>
         </div>
-        <div ng-if="vm.aspc.version.cetiqInfo2" class="col-md-4 form-group">
+        <div ng-if="vm.aspc.version.cetiqInfo2" class="col-md-4 form-group-sm">
             <label ng-bind="vm.aspc.version.cetiqInfo2"></label>
             <p class="form-control-static" ng-bind="vm.fctr.info2"></p>
         </div>
-        <div ng-if="vm.aspc.version.cetiqInfo3" class="col-md-4 form-group">
+        <div ng-if="vm.aspc.version.cetiqInfo3" class="col-md-4 form-group-sm">
             <label ng-bind="vm.aspc.version.cetiqInfo3"></label>
             <p class="form-control-static" ng-bind="vm.fctr.info3"></p>
         </div>
-        <div ng-if="vm.aspc.version.cetiqInfo4" class="col-md-4 form-group">
+        <div ng-if="vm.aspc.version.cetiqInfo4" class="col-md-4 form-group-sm">
             <label ng-bind="vm.aspc.version.cetiqInfo3"></label>
             <p class="form-control-static" ng-bind="vm.fctr.info4"></p>
         </div>
-        <div ng-if="vm.aspc.version.cetiqInfo5" class="col-md-4 form-group">
+        <div ng-if="vm.aspc.version.cetiqInfo5" class="col-md-4 form-group-sm">
             <label ng-bind="vm.aspc.version.cetiqInfo5"></label>
             <p class="form-control-static" ng-bind="vm.fctr.info5"></p>
         </div>
-        <div ng-if="vm.aspc.version.cetiqInfo6" class="col-md-4 form-group">
+        <div ng-if="vm.aspc.version.cetiqInfo6" class="col-md-4 form-group-sm">
             <label ng-bind="vm.aspc.version.cetiqInfo6"></label>
             <p class="form-control-static" ng-bind="vm.fctr.info6"></p>
         </div>
@@ -198,15 +198,15 @@
         <thead>
             <tr>
                 <th />
-                <th translate="rgla_enti"></th>
-                <th translate="fctl_rgla"></th>
-                <th translate="fctl_rgla_tipo"></th>
+                <th translate="enti"></th>
+                <th translate="rgla"></th>
+                <th translate="rgla_tipo"></th>
                 <th translate="fctl_importeBase"></th>
                 <th translate="fctl_importe"></th>
                 <th translate="fctl_fctdCount"></th>
                 <th translate="fctl_impuesto"></th>
-                <th translate="fctl_fini"></th>
-                <th translate="fctl_ffin"></th>
+                <th translate="fini"></th>
+                <th translate="ffin"></th>
 
                 <th ng-if="vm.aspc.version.lgrpInfo1" translate="fctl_info1"></th>
                 <th ng-if="vm.aspc.version.lgrpInfo2" translate="fctl_info2"></th>

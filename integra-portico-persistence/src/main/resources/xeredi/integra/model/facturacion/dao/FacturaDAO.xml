@@ -42,6 +42,7 @@
 		<association property="pagador" javaType="ParametroVO">
 			<result column="fctr_pagador_prmt_pk" property="id" />
 			<result column="fctr_pagador_prmt" property="parametro" />
+			<result column="fctr_pagador_tppr_pk" property="entiId" />
 		</association>
 	</resultMap>
 
@@ -56,7 +57,8 @@
 
 		    , fcsr_serie, fcsr_anio
 
-		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = fctr_pagador_prmt_pk) AS fctr_pagador_prmt
+		    , prmt_parametro AS fctr_pagador_prmt
+		    , prmt_tppr_pk AS fctr_pagador_tppr_pk
 
 		    , (SELECT SUM(fctd_importe) FROM tbl_factura_det_fctd WHERE fctd_fctr_pk = fctr_pk) AS fctr_importe
 
@@ -96,6 +98,8 @@
 		        aspc_pk = fctr_aspc_pk
 		    INNER JOIN tbl_factura_serie_fcsr ON
 		        fcsr_pk = fctr_fcsr_pk
+		    INNER JOIN tbl_parametro_prmt ON
+		        prmt_pk = fctr_pagador_prmt_pk
     ]]>
 	</sql>
 

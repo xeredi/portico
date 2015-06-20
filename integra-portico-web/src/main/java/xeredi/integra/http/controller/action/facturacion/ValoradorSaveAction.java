@@ -9,29 +9,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.struts2.convention.annotation.Action;
+import com.google.common.base.Preconditions;
 
 import xeredi.integra.http.controller.action.comun.BaseAction;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.facturacion.vo.CargoVO;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
-import xeredi.integra.model.servicio.bo.ServicioBO;
-import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.proceso.facturacion.ProcesoValorador;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
- * The Class ValoradorAction.
+ * The Class ValoradorSaveAction.
  */
-public final class ValoradorAction extends BaseAction {
+public final class ValoradorSaveAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 3003393076467187485L;
+    private static final long serialVersionUID = 8899968426612094160L;
 
     /** The srvc. */
     private ServicioVO srvc;
@@ -42,39 +37,15 @@ public final class ValoradorAction extends BaseAction {
     /** The crgo ids. */
     private Set<Long> crgoIds;
 
-    // Acciones web
-
     /**
-     * Prepare.
-     *
-     * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * {@inheritDoc}
      */
-    @Action("vldr-prepare")
-    public String prepare() throws InstanceNotFoundException {
+    @Override
+    public void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(srvc);
         Preconditions.checkNotNull(srvc.getId());
         Preconditions.checkNotNull(srvc.getEntiId());
-
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(srvc.getEntiId());
-
-        srvc = srvcBO.select(srvc.getId(), getIdioma());
-
-        return SUCCESS;
-    }
-
-    /**
-     * Valorar.
-     *
-     * @return the string
-     */
-    @Action("vldr-valorar")
-    public String valorar() {
         Preconditions.checkNotNull(fliq);
-        Preconditions.checkNotNull(srvc);
-        Preconditions.checkNotNull(srvc.getId());
-        Preconditions.checkNotNull(srvc.getEntiId());
 
         final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         final ProcesoBO prbtBO = new ProcesoBO();
@@ -84,22 +55,6 @@ public final class ValoradorAction extends BaseAction {
         parametroMap.put(ProcesoValorador.FLIQ_PARAM, dateFormat.format(fliq));
 
         prbtBO.crear(ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc, itemEntradaList, null);
-
-        return SUCCESS;
-    }
-
-    // get / set
-
-    /** The crgo list. */
-    private List<CargoVO> crgoList;
-
-    /**
-     * Gets the srvc.
-     *
-     * @return the srvc
-     */
-    public ServicioVO getSrvc() {
-        return srvc;
     }
 
     /**
@@ -113,15 +68,6 @@ public final class ValoradorAction extends BaseAction {
     }
 
     /**
-     * Gets the fliq.
-     *
-     * @return the fliq
-     */
-    public Date getFliq() {
-        return fliq;
-    }
-
-    /**
      * Sets the fliq.
      *
      * @param value
@@ -129,15 +75,6 @@ public final class ValoradorAction extends BaseAction {
      */
     public void setFliq(final Date value) {
         fliq = value;
-    }
-
-    /**
-     * Gets the crgo list.
-     *
-     * @return the crgo list
-     */
-    public List<CargoVO> getCrgoList() {
-        return crgoList;
     }
 
     /**
@@ -149,5 +86,4 @@ public final class ValoradorAction extends BaseAction {
     public void setCrgoIds(final Set<Long> value) {
         crgoIds = value;
     }
-
 }
