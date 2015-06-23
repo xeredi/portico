@@ -2,7 +2,7 @@
 <tabset type="pills"> <tab heading="{{'fctr' | translate}}" select="vm.tabSelected(null)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/facturacion/fctr/edit/{{vm.fctr.id}}"><i
+        <a class="btn btn-default" ng-href="#/facturacion/fctr/edit/{{::vm.fctr.id}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
     </div>
 
@@ -17,31 +17,31 @@
     <div class="row">
         <div class="col-md-2 form-group-sm">
             <label translate="fctr"></label>
-            <p class="form-control-static" ng-bind="vm.fctr.etiqueta"></p>
+            <p class="form-control-static" ng-bind="::vm.fctr.etiqueta"></p>
         </div>
         <div class="col-md-2 form-group-sm">
             <label translate="tpsr"></label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tpsr/detail/{{vm.fctr.aspc.tpsr.id}}"
-                    ng-bind="'enti_' + vm.fctr.aspc.tpsr.id | translate"></a>
+                <a ng-href="#/metamodelo/tpsr/detail/{{::vm.fctr.aspc.tpsr.id}}"
+                    ng-bind="::('enti_' + vm.fctr.aspc.tpsr.id | translate)"></a>
             </p>
         </div>
         <div class="col-md-3 form-group-sm">
             <label translate="aspc"></label>
             <p class="form-control-static">
-                <a ng-href="#/facturacion/aspc/detail/{{vm.fctr.aspc.id}}/{{vm.fctr.fref}}"
-                    ng-bind="vm.fctr.aspc.etiqueta"></a>
+                <a ng-href="#/facturacion/aspc/detail/{{::vm.fctr.aspc.id}}/{{::vm.fctr.fref}}"
+                    ng-bind="::vm.fctr.aspc.etiqueta"></a>
             </p>
         </div>
     </div>
     <div class="row">
         <div class="col-md-1 form-group-sm">
             <label translate="fctr_importe"></label>
-            <p class="form-control-static number" ng-bind="vm.fctr.importe | number:2"></p>
+            <p class="form-control-static number" ng-bind="::(vm.fctr.importe | number:2)"></p>
         </div>
         <div class="col-md-1 form-group-sm">
             <label translate="fctr_impuesto"></label>
-            <p class="form-control-static number" ng-bind="vm.fctr.impuesto | number:2"></p>
+            <p class="form-control-static number" ng-bind="::(vm.fctr.impuesto | number:2)"></p>
         </div>
     </div>
 
@@ -50,52 +50,52 @@
             <label translate="fctr_pagador"></label>
             <p class="form-control-static">
                 <a
-                    ng-href="#/maestro/prmt/detail/{{vm.fctr.pagador.entiId}}/{{vm.fctr.pagador.id}}/{{vm.fctr.fref}}"
-                    ng-bind="vm.fctr.pagador.etiqueta"></a>
+                    ng-href="#/maestro/prmt/detail/{{::vm.fctr.pagador.entiId}}/{{::vm.fctr.pagador.id}}/{{::vm.fctr.fref}}"
+                    ng-bind="::vm.fctr.pagador.etiqueta"></a>
             </p>
         </div>
         <div class="col-md-2 form-group-sm">
             <label translate="fctr_falta"></label>
-            <p class="form-control-static" ng-bind="vm.fctr.falta | date: ('format_datetime' | translate)"></p>
+            <p class="form-control-static" ng-bind="::(vm.fctr.falta | date: ('format_datetime' | translate))"></p>
         </div>
         <div class="col-md-2 form-group-sm">
             <label translate="fctr_ffac"></label>
-            <p class="form-control-static" ng-bind="vm.fctr.ffac | date: ('format_date' | translate)"></p>
+            <p class="form-control-static" ng-bind="::(vm.fctr.ffac | date: ('format_date' | translate))"></p>
         </div>
         <div class="col-md-2 form-group-sm">
             <label translate="fini"></label>
-            <p class="form-control-static" ng-bind="vm.fctr.fini | date: ('format_datetime' | translate)"></p>
+            <p class="form-control-static" ng-bind="::(vm.fctr.fini | date: ('format_datetime' | translate))"></p>
         </div>
         <div class="col-md-2 form-group-sm">
             <label translate="ffin"></label>
-            <p class="form-control-static" ng-bind="vm.fctr.ffin | date: ('format_datetime' | translate)"></p>
+            <p class="form-control-static" ng-bind="::(vm.fctr.ffin | date: ('format_datetime' | translate))"></p>
         </div>
     </div>
 
     <div class="row">
-        <div ng-if="vm.aspc.version.cetiqInfo1" class="col-md-4 form-group-sm">
-            <label ng-bind="vm.aspc.version.cetiqInfo1"></label>
-            <p class="form-control-static" ng-bind="vm.fctr.info1"></p>
+        <div ng-if="::vm.aspc.version.cetiqInfo1" class="col-md-4 form-group-sm">
+            <label ng-bind="::vm.aspc.version.cetiqInfo1"></label>
+            <p class="form-control-static" ng-bind="::vm.fctr.info1"></p>
         </div>
-        <div ng-if="vm.aspc.version.cetiqInfo2" class="col-md-4 form-group-sm">
-            <label ng-bind="vm.aspc.version.cetiqInfo2"></label>
-            <p class="form-control-static" ng-bind="vm.fctr.info2"></p>
+        <div ng-if="::vm.aspc.version.cetiqInfo2" class="col-md-4 form-group-sm">
+            <label ng-bind="::vm.aspc.version.cetiqInfo2"></label>
+            <p class="form-control-static" ng-bind="::vm.fctr.info2"></p>
         </div>
-        <div ng-if="vm.aspc.version.cetiqInfo3" class="col-md-4 form-group-sm">
-            <label ng-bind="vm.aspc.version.cetiqInfo3"></label>
-            <p class="form-control-static" ng-bind="vm.fctr.info3"></p>
+        <div ng-if="::vm.aspc.version.cetiqInfo3" class="col-md-4 form-group-sm">
+            <label ng-bind="::vm.aspc.version.cetiqInfo3"></label>
+            <p class="form-control-static" ng-bind="::vm.fctr.info3"></p>
         </div>
-        <div ng-if="vm.aspc.version.cetiqInfo4" class="col-md-4 form-group-sm">
-            <label ng-bind="vm.aspc.version.cetiqInfo3"></label>
-            <p class="form-control-static" ng-bind="vm.fctr.info4"></p>
+        <div ng-if="::vm.aspc.version.cetiqInfo4" class="col-md-4 form-group-sm">
+            <label ng-bind="::vm.aspc.version.cetiqInfo4"></label>
+            <p class="form-control-static" ng-bind="::vm.fctr.info4"></p>
         </div>
-        <div ng-if="vm.aspc.version.cetiqInfo5" class="col-md-4 form-group-sm">
-            <label ng-bind="vm.aspc.version.cetiqInfo5"></label>
-            <p class="form-control-static" ng-bind="vm.fctr.info5"></p>
+        <div ng-if="::vm.aspc.version.cetiqInfo5" class="col-md-4 form-group-sm">
+            <label ng-bind="::vm.aspc.version.cetiqInfo5"></label>
+            <p class="form-control-static" ng-bind="::vm.fctr.info5"></p>
         </div>
-        <div ng-if="vm.aspc.version.cetiqInfo6" class="col-md-4 form-group-sm">
-            <label ng-bind="vm.aspc.version.cetiqInfo6"></label>
-            <p class="form-control-static" ng-bind="vm.fctr.info6"></p>
+        <div ng-if="::vm.aspc.version.cetiqInfo6" class="col-md-4 form-group-sm">
+            <label ng-bind="::vm.aspc.version.cetiqInfo6"></label>
+            <p class="form-control-static" ng-bind="::vm.fctr.info6"></p>
         </div>
     </div>
 </fieldset>
@@ -117,11 +117,11 @@
             <tbody>
                 <tr ng-repeat="fcti in vm.fctiList track by $index">
                     <td><a
-                        ng-href="#/maestro/prmt/detail/{{fcti.impuesto.entiId}}/{{fcti.impuesto.id}}/{{vm.fctr.fref}}"
-                        ng-bind="fcti.impuesto.etiqueta"></a></td>
-                    <td class="number" ng-bind="fcti.porcentaje | number:2"></td>
-                    <td class="number" ng-bind="fcti.importeBase | number:2"></td>
-                    <td class="number" ng-bind="fcti.importeImpuesto | number:2"></td>
+                        ng-href="#/maestro/prmt/detail/{{::fcti.impuesto.entiId}}/{{::fcti.impuesto.id}}/{{::vm.fctr.fref}}"
+                        ng-bind="::fcti.impuesto.etiqueta"></a></td>
+                    <td class="number" ng-bind="::(fcti.porcentaje | number:2)"></td>
+                    <td class="number" ng-bind="::(fcti.importeBase | number:2)"></td>
+                    <td class="number" ng-bind="::(fcti.importeImpuesto | number:2)"></td>
                 </tr>
             </tbody>
         </table>
@@ -146,13 +146,13 @@
 
             <tbody>
                 <tr ng-repeat="fcts in vm.fctsList track by $index">
-                    <td><a ng-href="#/servicio/srvc/detail/{{fcts.srvc.entiId}}/{{fcts.srvc.id}}"
-                        ng-bind="fcts.srvc.etiqueta"></a></td>
-                    <td ng-bind="fcts.fref | date: ('format_date' | translate)"></td>
-                    <td ng-bind="fcts.fini | date: ('format_datetime' | translate)"></td>
-                    <td ng-bind="fcts.ffin | date: ('format_datetime' | translate)"></td>
-                    <td ng-bind="fcts.codExencion"></td>
-                    <td class="number" ng-bind="fcts.importe | number:2"></td>
+                    <td><a ng-href="#/servicio/srvc/detail/{{::fcts.srvc.entiId}}/{{::fcts.srvc.id}}"
+                        ng-bind="::fcts.srvc.etiqueta"></a></td>
+                    <td ng-bind="::(fcts.fref | date: ('format_date' | translate))"></td>
+                    <td ng-bind="::(fcts.fini | date: ('format_datetime' | translate))"></td>
+                    <td ng-bind="::(fcts.ffin | date: ('format_datetime' | translate))"></td>
+                    <td ng-bind="::fcts.codExencion"></td>
+                    <td class="number" ng-bind="::(fcts.importe | number:2)"></td>
                 </tr>
             </tbody>
         </table>
@@ -173,9 +173,9 @@
 
             <tbody>
                 <tr ng-repeat="fctg in vm.fctgList track by $index">
-                    <td><a ng-href="#/facturacion/crgo/detail/{{fctg.crgo.id}}/{{vm.fctr.fref}}"
-                        ng-bind="fctg.crgo.etiqueta"></a></td>
-                    <td class="number" ng-bind="fctg.importe | number:2"></td>
+                    <td><a ng-href="#/facturacion/crgo/detail/{{::fctg.crgo.id}}/{{::vm.fctr.fref}}"
+                        ng-bind="::fctg.crgo.etiqueta"></a></td>
+                    <td class="number" ng-bind="::(fctg.importe | number:2)"></td>
                 </tr>
             </tbody>
         </table>
@@ -198,6 +198,7 @@
         <thead>
             <tr>
                 <th />
+                <th translate="srvc"></th>
                 <th translate="enti"></th>
                 <th translate="rgla"></th>
                 <th translate="rgla_tipo"></th>
@@ -208,12 +209,12 @@
                 <th translate="fini"></th>
                 <th translate="ffin"></th>
 
-                <th ng-if="vm.aspc.version.lgrpInfo1" translate="fctl_info1"></th>
-                <th ng-if="vm.aspc.version.lgrpInfo2" translate="fctl_info2"></th>
-                <th ng-if="vm.aspc.version.lgrpInfo3" translate="fctl_info3"></th>
-                <th ng-if="vm.aspc.version.lgrpInfo4" translate="fctl_info4"></th>
-                <th ng-if="vm.aspc.version.lgrpInfo5" translate="fctl_info5"></th>
-                <th ng-if="vm.aspc.version.lgrpInfo6" translate="fctl_info6"></th>
+                <th ng-if="::vm.aspc.version.lgrpInfo1" translate="fctl_info1"></th>
+                <th ng-if="::vm.aspc.version.lgrpInfo2" translate="fctl_info2"></th>
+                <th ng-if="::vm.aspc.version.lgrpInfo3" translate="fctl_info3"></th>
+                <th ng-if="::vm.aspc.version.lgrpInfo4" translate="fctl_info4"></th>
+                <th ng-if="::vm.aspc.version.lgrpInfo5" translate="fctl_info5"></th>
+                <th ng-if="::vm.aspc.version.lgrpInfo6" translate="fctl_info6"></th>
 
                 <th translate="fctl_cuant1"></th>
                 <th translate="fctl_cuant2"></th>
@@ -226,44 +227,52 @@
 
         <tbody>
             <tr ng-repeat="fctl in vm.fctlList.list track by $index">
-                <td><a ng-href="#/facturacion/fctl/detail/{{fctl.id}}"><i
+                <td><a ng-href="#/facturacion/fctl/detail/{{::fctl.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td nowrap="nowrap" translate="{{'enti_' + fctl.rgla.enti.id}}"></td>
-                <td nowrap="nowrap" ng-bind="fctl.rgla.codigo"></td>
-                <td ng-bind="fctl.rgla.tipo"></td>
-                <td class="number"><span ng-if="fctl.rgla.tipo != 'T'"
-                    ng-bind="fctl.importeBase | number:2"></span></td>
-                <td class="number" ng-bind="fctl.importe | number:2"></td>
-                <td class="number" ng-bind="fctl.fctdCount"></td>
-                <td ng-bind="fctl.impuesto.etiqueta"></td>
-                <td ng-bind="fctl.fini | date:'short'"></td>
-                <td ng-bind="fctl.ffin | date:'short'"></td>
+                <td nowrap="nowrap" ng-bind="::fctl.fcts.srvc.etiqueta"></td>
+                <td nowrap="nowrap" ng-bind="::('enti_' + fctl.rgla.enti.id | translate)"></td>
+                <td nowrap="nowrap" ng-bind="::fctl.rgla.codigo"></td>
+                <td ng-bind="::fctl.rgla.tipo" bs-tooltip
+                    data-title="{{::('ReglaTipo_' + fctl.rgla.tipo | translate)}}"></td>
+                <td class="number"><span ng-if="::(fctl.rgla.tipo != 'T')"
+                    ng-bind="::(fctl.importeBase | number:2)"></span></td>
+                <td class="number" ng-bind="::(fctl.importe | number:2)"></td>
+                <td class="number" ng-bind="::fctl.fctdCount"></td>
+                <td ng-bind="::fctl.impuesto.parametro" bs-tooltip data-title="{{::fctl.impuesto.etiqueta}}"></td>
+                <td ng-bind="::(fctl.fini | date:'short')"></td>
+                <td ng-bind="::(fctl.ffin | date:'short')"></td>
 
-                <td nowrap="nowrap" ng-if="vm.aspc.version.lgrpInfo1"><span
-                    ng-if="fctl.rgla.tipo == 'T' && fctl.info1">{{fctl.rgla.version.etiqInfo1}}:
-                        {{fctl.info1}}</span></td>
-                <td nowrap="nowrap" ng-if="vm.aspc.version.lgrpInfo2"><span
-                    ng-if="fctl.rgla.tipo == 'T' && fctl.info2">{{fctl.rgla.version.etiqInfo2}}:
-                        {{fctl.info2}}</span></td>
-                <td nowrap="nowrap" ng-if="vm.aspc.version.lgrpInfo3"><span
-                    ng-if="fctl.rgla.tipo == 'T' && fctl.info3">{{fctl.rgla.version.etiqInfo3}}:
-                        {{fctl.info3}}</span></td>
-                <td nowrap="nowrap" ng-if="vm.aspc.version.lgrpInfo4"><span
-                    ng-if="fctl.rgla.tipo == 'T' && fctl.info4">{{fctl.rgla.version.etiqInfo4}}:
-                        {{fctl.info4}}</span></td>
-                <td nowrap="nowrap" ng-if="vm.aspc.version.lgrpInfo5"><span
-                    ng-if="fctl.rgla.tipo == 'T' && fctl.info5">{{fctl.rgla.version.etiqInfo5}}:
-                        {{fctl.info5}}</span></td>
-                <td nowrap="nowrap" ng-if="vm.aspc.version.lgrpInfo6"><span
-                    ng-if="fctl.rgla.tipo == 'T' && fctl.info6">{{fctl.rgla.version.etiqInfo6}}:
-                        {{fctl.info6}}</span></td>
+                <td nowrap="nowrap" ng-if="::vm.aspc.version.lgrpInfo1"><span
+                    ng-if="::(fctl.rgla.tipo == 'T' && fctl.info1)">{{::fctl.rgla.version.etiqInfo1}}:
+                        {{::fctl.info1}}</span></td>
+                <td nowrap="nowrap" ng-if="::vm.aspc.version.lgrpInfo2"><span
+                    ng-if="::(fctl.rgla.tipo == 'T' && fctl.info2)">{{::fctl.rgla.version.etiqInfo2}}:
+                        {{::fctl.info2}}</span></td>
+                <td nowrap="nowrap" ng-if="::vm.aspc.version.lgrpInfo3"><span
+                    ng-if="::(fctl.rgla.tipo == 'T' && fctl.info3)">{{::fctl.rgla.version.etiqInfo3}}:
+                        {{::fctl.info3}}</span></td>
+                <td nowrap="nowrap" ng-if="::vm.aspc.version.lgrpInfo4"><span
+                    ng-if="::(fctl.rgla.tipo == 'T' && fctl.info4)">{{::fctl.rgla.version.etiqInfo4}}:
+                        {{::fctl.info4}}</span></td>
+                <td nowrap="nowrap" ng-if="::vm.aspc.version.lgrpInfo5"><span
+                    ng-if="::(fctl.rgla.tipo == 'T' && fctl.info5)">{{::fctl.rgla.version.etiqInfo5}}:
+                        {{::fctl.info5}}</span></td>
+                <td nowrap="nowrap" ng-if="::vm.aspc.version.lgrpInfo6"><span
+                    ng-if="::(fctl.rgla.tipo == 'T' && fctl.info6)">{{::fctl.rgla.version.etiqInfo6}}:
+                        {{::fctl.info6}}</span></td>
 
-                <td><span ng-if="fctl.cuant1">{{fctl.rgla.version.etiqCuant1}}: {{fctl.cuant1}}</span></td>
-                <td><span ng-if="fctl.cuant2">{{fctl.rgla.version.etiqCuant2}}: {{fctl.cuant2}}</span></td>
-                <td><span ng-if="fctl.cuant3">{{fctl.rgla.version.etiqCuant3}}: {{fctl.cuant3}}</span></td>
-                <td><span ng-if="fctl.cuant4">{{fctl.rgla.version.etiqCuant4}}: {{fctl.cuant4}}</span></td>
-                <td><span ng-if="fctl.cuant5">{{fctl.rgla.version.etiqCuant5}}: {{fctl.cuant5}}</span></td>
-                <td><span ng-if="fctl.cuant6">{{fctl.rgla.version.etiqCuant6}}: {{fctl.cuant6}}</span></td>
+                <td><span ng-if="::fctl.cuant1">{{::fctl.rgla.version.etiqCuant1}}:
+                        {{::fctl.cuant1}}</span></td>
+                <td><span ng-if="::fctl.cuant2">{{::fctl.rgla.version.etiqCuant2}}:
+                        {{::fctl.cuant2}}</span></td>
+                <td><span ng-if="::fctl.cuant3">{{::fctl.rgla.version.etiqCuant3}}:
+                        {{::fctl.cuant3}}</span></td>
+                <td><span ng-if="::fctl.cuant4">{{::fctl.rgla.version.etiqCuant4}}:
+                        {{::fctl.cuant4}}</span></td>
+                <td><span ng-if="::fctl.cuant5">{{::fctl.rgla.version.etiqCuant5}}:
+                        {{::fctl.cuant5}}</span></td>
+                <td><span ng-if="::fctl.cuant6">{{::fctl.rgla.version.etiqCuant6}}:
+                        {{::fctl.cuant6}}</span></td>
             </tr>
         </tbody>
     </table>

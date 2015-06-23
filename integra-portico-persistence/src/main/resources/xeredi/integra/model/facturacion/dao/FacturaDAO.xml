@@ -31,6 +31,9 @@
 			<association property="tpsr" javaType="TipoServicioVO">
 				<result column="aspc_tpsr_pk" property="id" />
 			</association>
+			<association property="version" javaType="AspectoVersionVO">
+				<result column="aspv_descripcion" property="descripcion" />
+			</association>
 		</association>
 
 		<association property="fcsr" javaType="FacturaSerieVO">
@@ -43,6 +46,7 @@
 			<result column="fctr_pagador_prmt_pk" property="id" />
 			<result column="fctr_pagador_prmt" property="parametro" />
 			<result column="fctr_pagador_tppr_pk" property="entiId" />
+			<result column="fctr_pagador" property="texto" />
 		</association>
 	</resultMap>
 
@@ -92,6 +96,47 @@
 		                fctd_fctl_pk = fctl_pk
 		        WHERE fctl_fctr_pk = fctr_pk
 		    ) AS fctr_impuesto
+    ]]>
+    	<if test="idioma != null">
+	    <![CDATA[
+	    	, (
+	    		SELECT i18n_text
+	    		FROM tbl_i18n_i18n
+				WHERE
+	    			i18n_ext_pk = (
+	    				SELECT aspv_pk
+	    				FROM tbl_aspecto_version_aspv
+	    				WHERE
+	    					aspv_aspc_pk = fctr_aspc_pk
+	    					AND (
+	    						aspv_fini <= fctr_fref
+	    						AND (aspv_ffin IS NULL OR aspv_ffin > fctr_fref)
+	    					)
+	    			)
+	    			AND i18n_pref = 'aspv'
+	    			AND i18n_lang = #{idioma}
+	    	) AS aspv_descripcion
+		    , (
+		        SELECT prdt_cadena
+		        FROM tbl_parametro_dato_prdt
+		        WHERE
+		            prdt_tpdt_pk = (
+		                SELECT tppr_tpdt_pk
+		                FROM tbl_tipo_parametro_tppr
+		                WHERE tppr_pk = prmt_tppr_pk
+		            )
+		            AND prdt_prvr_pk = (
+		                SELECT prvr_pk
+		                FROM tbl_parametro_version_prvr
+		                WHERE
+		                    prvr_prmt_pk = fctr_pagador_prmt_pk
+		                    AND prvr_fini <= fctr_fref
+		                    AND (prvr_ffin IS NULL OR prvr_ffin > fctr_fref)
+		            )
+		    ) AS fctr_pagador
+	    ]]>
+    	</if>
+    <![CDATA[
 		FROM
 		    tbl_factura_fctr
 		    INNER JOIN tbl_aspecto_aspc ON

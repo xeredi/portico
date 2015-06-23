@@ -5,10 +5,10 @@ angular
 						"ui.bootstrap.tpls", "ui.bootstrap.tabs",
 						"ui.bootstrap.pagination", "ui.bootstrap.dropdown",
 						"ui.bootstrap.typeahead", "pascalprecht.translate",
-						"angularSpinner", "uiGmapgoogle-maps", "i18n",
-						"administracion", "metamodelo", "facturacion",
-						"maestro", "servicio", "estadistica", "proceso",
-						"seguridad" ])
+						"angularSpinner", "uiGmapgoogle-maps",
+						"i18n", "administracion",
+						"metamodelo", "facturacion", "maestro", "servicio",
+						"estadistica", "proceso", "seguridad" ])
 
 		.config([ "$routeProvider", function($routeProvider) {
 			$routeProvider
@@ -31,10 +31,9 @@ angular
 		.config(function($datepickerProvider) {
 			angular.extend($datepickerProvider.defaults, {
 				dateFormat : 'dd/MM/yyyy',
-/*
-				modelDateFormat : "yyyy-MM-ddTHH:mm:ss",
-				dateType : "date",
-*/
+				/*
+				 * modelDateFormat : "yyyy-MM-ddTHH:mm:ss", dateType : "date",
+				 */
 				startWeek : 1,
 				placement : 'bottom-left',
 				container : 'body',

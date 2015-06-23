@@ -6,7 +6,10 @@ import com.google.common.base.Preconditions;
 
 import xeredi.integra.http.controller.action.comun.CrudDetailAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.FacturaBO;
+import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
+import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.FacturaCargoVO;
 import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
@@ -20,6 +23,9 @@ public final class FacturaDetailAction extends CrudDetailAction<FacturaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5987039917634891480L;
+
+    /** The aspc. */
+    private AspectoVO aspc;
 
     /** The fcts list. */
     private List<FacturaServicioVO> fctsList;
@@ -43,6 +49,14 @@ public final class FacturaDetailAction extends CrudDetailAction<FacturaVO> {
         fctsList = fctrBO.selectFctsList(model.getId(), getIdioma());
         fctiList = fctrBO.selectFctiList(model.getId(), getIdioma());
         fctgList = fctrBO.selectFctgList(model.getId(), getIdioma());
+
+        final AspectoBO aspcBO = new AspectoBO();
+        final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
+
+        aspcCriterio.setId(model.getAspc().getId());
+        aspcCriterio.setFechaVigencia(model.getFref());
+
+        aspc = aspcBO.selectObject(aspcCriterio);
     }
 
     /**
@@ -70,5 +84,14 @@ public final class FacturaDetailAction extends CrudDetailAction<FacturaVO> {
      */
     public List<FacturaCargoVO> getFctgList() {
         return fctgList;
+    }
+
+    /**
+     * Gets the aspc.
+     *
+     * @return the aspc
+     */
+    public AspectoVO getAspc() {
+        return aspc;
     }
 }

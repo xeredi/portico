@@ -60,6 +60,7 @@
 			<result column="fctl_impuesto_prmt_pk" property="id" />
 			<result column="fctl_impuesto_prmt" property="parametro" />
 			<result column="fctl_impuesto_tppr_pk" property="entiId" />
+			<result column="fctl_impuesto" property="texto" />
 		</association>
 
 		<association property="fcts" javaType="FacturaServicioVO">
@@ -105,12 +106,30 @@
 			, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
 			, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
 
-		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+		    , (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk) AS srvc_subp
 		    , (SELECT ssrv_numero FROM tbl_subservicio_ssrv WHERE ssrv_pk = fctl_ssrv_pk) AS ssrv_numero
 
 		    , (SELECT SUM(fctd_importe_base) FROM tbl_factura_det_fctd WHERE fctd_fctl_pk = fctl_pk) AS fctl_importe_base
 		    , (SELECT SUM(fctd_importe) FROM tbl_factura_det_fctd WHERE fctd_fctl_pk = fctl_pk) AS fctl_importe
 		    , (SELECT COUNT(1) FROM tbl_factura_det_fctd WHERE fctd_fctl_pk = fctl_pk) AS fctl_fctd_count
+    ]]>
+    	<if test="idioma != null">
+	    <![CDATA[
+	    	, (
+	    		SELECT i18n_text FROM tbl_i18n_i18n
+	    		WHERE i18n_pref = 'prvr'
+	    			AND i18n_ext_pk = (
+	    				SELECT prvr_pk
+	    				FROM tbl_parametro_version_prvr
+	    				WHERE prvr_prmt_pk = fctl_impuesto_prmt_pk
+	    					AND prvr_fini <= fcts_fref
+	    					AND (prvr_ffin IS NULL OR prvr_ffin > fcts_fref)
+	    			)
+	    			AND i18n_lang = #{idioma}
+	    	) AS fctl_impuesto
+	    ]]>
+    	</if>
+    <![CDATA[
 		FROM
 		    tbl_factura_lin_fctl
 		    INNER JOIN tbl_factura_srv_fcts ON

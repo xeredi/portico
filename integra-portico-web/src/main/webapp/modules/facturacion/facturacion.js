@@ -419,6 +419,7 @@ function FctrDetailController($http, $location, $routeParams, pageTitleService) 
 			vm.fctsList = data.fctsList;
 			vm.fctgList = data.fctgList;
 			vm.fctiList = data.fctiList;
+			vm.aspc = data.aspc;
 
 			findFctlList($routeParams.page ? $routeParams.page : 1);
 		});

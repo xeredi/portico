@@ -28,6 +28,9 @@ public abstract class AbstractEntidadDetailVO {
      */
     private List<Long> entdList;
 
+    /** The entd grid list. */
+    private List<Long> entdGridList;
+
     /** The entd map. */
     private Map<Long, EntidadTipoDatoVO> entdMap;
 
@@ -211,5 +214,24 @@ public abstract class AbstractEntidadDetailVO {
      */
     public void setTrmtList(final List<TramiteVO> value) {
         trmtList = value;
+    }
+
+    /**
+     * Gets the entd grid list.
+     *
+     * @return the entd grid list
+     */
+    public List<Long> getEntdGridList() {
+        return entdGridList;
+    }
+
+    /**
+     * Sets the entd grid list.
+     *
+     * @param value
+     *            the new entd grid list
+     */
+    public void setEntdGridList(final List<Long> value) {
+        entdGridList = value;
     }
 }
