@@ -16,13 +16,13 @@
             </div>
             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
                 <label translate="sprt"></label> <select ng-model="vm.usro.sprt.id"
-                    ng-options="sprt.id as sprt.etiqueta for sprt in vm.sprtList" class="form-control">
+                    ng-options="sprt.id as sprt.etiqueta for sprt in ::vm.sprtList" class="form-control">
                     <option />
                 </select>
             </div>
             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
                 <label translate="prto"></label> <select ng-model="vm.usro.prto.id"
-                    ng-options="prto.id as prto.etiqueta for prto in vm.prtoList" class="form-control">
+                    ng-options="prto.id as prto.etiqueta for prto in ::vm.prtoList" class="form-control">
                     <option />
                 </select>
             </div>
@@ -35,7 +35,7 @@
         <div class="row">
             <div class="checkbox" ng-repeat="grpo in ::vm.grpoList track by grpo.id">
                 <label> <input type="checkbox" ng-click="vm.updateGrupos($event, grpo.id)"
-                    ng-checked="vm.usro.grpoIds.indexOf(grpo.id) >= 0"> <span ng-bind="grpo.nombre"></span>
+                    ng-checked="vm.usro.grpoIds.indexOf(grpo.id) >= 0"> <span ng-bind="::grpo.nombre"></span>
                 </label>
             </div>
         </div>

@@ -8,7 +8,7 @@
     <div class="btn-group">
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
             data-template="modules/proceso/prbt-filter-content.html" bs-modal="modal">
-            <i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
+            <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
         </button>
     </div>
 
@@ -40,20 +40,21 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="prbt in vm.prbtList.list track by $index">
-                <td><a ng-href="#/proceso/prbt/detail/{{prbt.id}}"><i
+            <tr ng-repeat="prbt in vm.prbtList.list track by prbt.id">
+                <td><a ng-href="#/proceso/prbt/detail/{{::prbt.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="'ProcesoModulo_' + prbt.modulo | translate"></td>
-                <td ng-bind="'ProcesoTipo_' + prbt.tipo | translate"></td>
-                <td ng-bind="'ProcesoEstado_' + prbt.estado | translate"></td>
-                <td ng-bind="prbt.falta | date: ('format_datetime' | translate)"></td>
-                <td ng-bind="prbt.finicio | date: ('format_datetime' | translate)"></td>
-                <td ng-bind="prbt.ffin | date: ('format_datetime' | translate)"></td>
-                <td class="number" ng-bind="prbt.duracion | number:0"></td>
-                <td class="number {{prbt.erroresCnt > 0 ? 'error' : ''}}" ng-bind="prbt.erroresCnt | number:0"></td>
-                <td class="number {{prbt.alertasCnt > 0 ? 'warning' : ''}}"
-                    ng-bind="prbt.alertasCnt | number:0"></td>
-                <td class="number" ng-bind="prbt.mensajesCnt | number:0"></td>
+                <td ng-bind="::('ProcesoModulo_' + prbt.modulo | translate)"></td>
+                <td ng-bind="::('ProcesoTipo_' + prbt.tipo | translate)"></td>
+                <td ng-bind="::('ProcesoEstado_' + prbt.estado | translate)"></td>
+                <td ng-bind="::(prbt.falta | date: datetimeFormat)"></td>
+                <td ng-bind="::(prbt.finicio | date: datetimeFormat)"></td>
+                <td ng-bind="::(prbt.ffin | date: datetimeFormat)"></td>
+                <td class="number" ng-bind="::(prbt.duracion | number:0)"></td>
+                <td class="number {{::(prbt.erroresCnt > 0 ? 'error' : '')}}"
+                    ng-bind="::(prbt.erroresCnt | number:0)"></td>
+                <td class="number {{::(prbt.alertasCnt > 0 ? 'warning' : '')}}"
+                    ng-bind="::(prbt.alertasCnt | number:0)"></td>
+                <td class="number" ng-bind="::(prbt.mensajesCnt | number:0)"></td>
             </tr>
         </tbody>
     </table>

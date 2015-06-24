@@ -5,10 +5,10 @@ angular
 						"ui.bootstrap.tpls", "ui.bootstrap.tabs",
 						"ui.bootstrap.pagination", "ui.bootstrap.dropdown",
 						"ui.bootstrap.typeahead", "pascalprecht.translate",
-						"angularSpinner", "uiGmapgoogle-maps",
-						"i18n", "administracion",
-						"metamodelo", "facturacion", "maestro", "servicio",
-						"estadistica", "proceso", "seguridad" ])
+						"angularSpinner", "uiGmapgoogle-maps", "i18n",
+						"administracion", "metamodelo", "facturacion",
+						"maestro", "servicio", "estadistica", "proceso",
+						"seguridad" ])
 
 		.config([ "$routeProvider", function($routeProvider) {
 			$routeProvider
@@ -155,6 +155,8 @@ angular
 		.run([ '$location', '$rootScope', function($location, $rootScope) {
 			$rootScope.default_language = "es";
 			$rootScope.available_languages = [ "es", "ca", "en" ];
+			$rootScope.dateFormat = "dd/MM/yyyy";
+			$rootScope.datetimeFormat = "dd/MM/yyyy HH:mm";
 		} ])
 
 		.factory('pageTitleService', pageTitleService)
