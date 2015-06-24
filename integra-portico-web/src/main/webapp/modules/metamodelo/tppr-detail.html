@@ -38,49 +38,49 @@
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_cmdAlta"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{::vm.enti.cmdAlta ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.enti.cmdAlta ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_cmdBaja"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{::vm.enti.cmdBaja ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.enti.cmdBaja ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_cmdEdicion"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{::vm.enti.cmdEdicion ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.enti.cmdEdicion ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_cmdDuplicado"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{::vm.enti.cmdDuplicado ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.enti.cmdDuplicado ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_gis"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{::vm.enti.gis ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.enti.gis ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_puerto"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{::vm.enti.puerto ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.enti.puerto ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_i18n"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{::vm.enti.i18n ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.enti.i18n ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_tempExp"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{::vm.enti.tempExp ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.enti.tempExp ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
@@ -119,15 +119,15 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="subenti in ::vm.subentiList track by $index">
+        <tr ng-repeat="subenti in ::vm.subentiList track by subenti.id">
             <td><a ng-href="#/metamodelo/tpsp/detail/{{::subenti.id}}"><i
                     class="glyphicon glyphicon-search"></i></a></td>
             <td ng-bind="::subenti.codigo"></td>
             <td ng-bind="::subenti.nombre"></td>
-            <td><i class="glyphicon glyphicon-{{::subenti.cmdAlta ? 'ok' : 'remove'}}"></i></td>
-            <td><i class="glyphicon glyphicon-{{::subenti.cmdBaja ? 'ok' : 'remove'}}"></i></td>
-            <td><i class="glyphicon glyphicon-{{::subenti.cmdEdicion ? 'ok' : 'remove'}}"></i></td>
-            <td><i class="glyphicon glyphicon-{{::subenti.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
+            <td><i class="glyphicon glyphicon-{{::(subenti.cmdAlta ? 'ok' : 'remove')}}"></i></td>
+            <td><i class="glyphicon glyphicon-{{::(subenti.cmdBaja ? 'ok' : 'remove')}}"></i></td>
+            <td><i class="glyphicon glyphicon-{{::(subenti.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
+            <td><i class="glyphicon glyphicon-{{::(subenti.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
             <td class="number" ng-bind="::(subenti.maxGrid | number:0)"></td>
             <td ng-bind="::subenti.tpprAsociado.nombre"></td>
         </tr>

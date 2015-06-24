@@ -29,11 +29,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="accn in vm.accnList.list track by $index">
-                <td><a ng-href="#/seguridad/accn/detail/{{accn.id}}"><i
+            <tr ng-repeat="accn in vm.accnList.list track by accn.id">
+                <td><a ng-href="#/seguridad/accn/detail/{{::accn.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td nowrap="nowrap" ng-bind="accn.codigo"></td>
-                <td nowrap="nowrap" ng-bind="accn.nombre"></td>
+                <td nowrap="nowrap" ng-bind="::accn.codigo"></td>
+                <td nowrap="nowrap" ng-bind="::accn.nombre"></td>
             </tr>
         </tbody>
     </table>

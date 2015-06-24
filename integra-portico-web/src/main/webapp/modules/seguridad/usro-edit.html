@@ -33,7 +33,7 @@
         <legend translate="grpoList"></legend>
 
         <div class="row">
-            <div class="checkbox" ng-repeat="grpo in vm.grpoList track by $index">
+            <div class="checkbox" ng-repeat="grpo in ::vm.grpoList track by grpo.id">
                 <label> <input type="checkbox" ng-click="vm.updateGrupos($event, grpo.id)"
                     ng-checked="vm.usro.grpoIds.indexOf(grpo.id) >= 0"> <span ng-bind="grpo.nombre"></span>
                 </label>

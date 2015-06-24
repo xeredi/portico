@@ -1,6 +1,6 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/seguridad/accn/edit/edit/{{vm.accn.id}}"><i
+        <a class="btn btn-default" ng-href="#/seguridad/accn/edit/edit/{{::vm.accn.id}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
@@ -12,11 +12,11 @@
     <div class="row">
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="accn_codigo"></label>
-            <p class="form-control-static" ng-bind="vm.accn.codigo"></p>
+            <p class="form-control-static" ng-bind="::vm.accn.codigo"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="accn_nombre"></label>
-            <p class="form-control-static" ng-bind="vm.accn.nombre"></p>
+            <p class="form-control-static" ng-bind="::vm.accn.nombre"></p>
         </div>
     </div>
 </fieldset>
@@ -26,6 +26,6 @@
 
     <div class="list-group">
         <a ng-href="#/seguridad/grpo/detail/{{grpo.id}}" class="list-group-item col-sm-6 col-md-4 col-lg-3"
-            ng-repeat="grpo in vm.grpoList track by grpo.id" ng-bind="grpo.nombre"></a>
+            ng-repeat="grpo in ::vm.grpoList track by grpo.id" ng-bind="grpo.nombre"></a>
     </div>
 </fieldset>
