@@ -1,10 +1,10 @@
 <form name="editForm" novalidate role="form">
     <fieldset>
         <div class="row">
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate>enti_codigo</label> <input ng-if="vm.accion == 'create'" type="text"
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm" ng-switch="::vm.accion">
+                <label translate>enti_codigo</label> <input ng-switch-when="create" type="text"
                     ng-model="vm.enti.codigo" class="form-control" />
-                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.enti.codigo"></p>
+                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.enti.codigo"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
                 <label translate>enti_maxGrid</label> <input type="text" ng-model="vm.enti.maxGrid"

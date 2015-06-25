@@ -16,70 +16,70 @@
         <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate>tpdt</label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tpdt/detail/{{vm.entd.tpdt.id}}" ng-bind="vm.entd.tpdt.nombre"></a>
+                <a ng-href="#/metamodelo/tpdt/detail/{{::vm.entd.tpdt.id}}" ng-bind="::vm.entd.tpdt.nombre"></a>
             </p>
         </div>
         <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
             <label translate>tpdt_tpel</label>
-            <p class="form-control-static" ng-bind="vm.entd.tpdt.tipoElemento"></p>
+            <p class="form-control-static" ng-bind="::vm.entd.tpdt.tipoElemento"></p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
             <label translate>tpdt_tpht</label>
-            <p class="form-control-static" ng-bind="vm.entd.tpdt.tpht"></p>
+            <p class="form-control-static" ng-bind="::vm.entd.tpdt.tpht"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate>enti</label>
             <p class="form-control-static">
-                <span ng-if="vm.entd.tpdt.enti"> <a ng-if="vm.entd.tpdt.enti.tipo == 'P'"
-                    ng-href="#/metamodelo/tppr/detail/{{vm.entd.tpdt.enti.id}}"
-                    ng-bind="vm.entd.tpdt.enti.nombre"></a><a ng-if="vm.entd.tpdt.enti.tipo == 'T'"
-                    ng-href="#/metamodelo/tpsr/detail/{{vm.entd.tpdt.enti.id}}"
-                    ng-bind="vm.entd.tpdt.enti.nombre"></a></span>
+                <span ng-if="::vm.entd.tpdt.enti"> <a ng-if="vm.entd.tpdt.enti.tipo == 'P'"
+                    ng-href="#/metamodelo/tppr/detail/{{::vm.entd.tpdt.enti.id}}"
+                    ng-bind="::vm.entd.tpdt.enti.nombre"></a><a ng-if="vm.entd.tpdt.enti.tipo == 'T'"
+                    ng-href="#/metamodelo/tpsr/detail/{{::vm.entd.tpdt.enti.id}}"
+                    ng-bind="::vm.entd.tpdt.enti.nombre"></a></span>
             </p>
         </div>
         <div class="col-sm-3 col-md-2 form-group-sm">
             <label translate>entd_valorDefecto</label>
-            <p class="form-control-static" ng-bind="vm.entd.valorDefecto"></p>
+            <p class="form-control-static" ng-bind="::vm.entd.valorDefecto"></p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate>entd_grupo</label>
-            <p class="form-control-static" ng-bind="vm.entd.grupo"></p>
+            <p class="form-control-static" ng-bind="::vm.entd.grupo"></p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate>entd_fila</label>
-            <p class="form-control-static" ng-bind="vm.entd.fila"></p>
+            <p class="form-control-static" ng-bind="::vm.entd.fila"></p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate>entd_orden</label>
-            <p class="form-control-static" ng-bind="vm.entd.orden"></p>
+            <p class="form-control-static" ng-bind="::vm.entd.orden"></p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate>entd_span</label>
-            <p class="form-control-static" ng-bind="vm.entd.span"></p>
+            <p class="form-control-static" ng-bind="::vm.entd.span"></p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate>entd_spanLg</label>
-            <p class="form-control-static" ng-bind="vm.entd.spanLg"></p>
+            <p class="form-control-static" ng-bind="::vm.entd.spanLg"></p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate>entd_obligatorio</label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{vm.entd.obligatorio ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.entd.obligatorio ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate>entd_gridable</label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{vm.entd.gridable ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.entd.gridable ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate>entd_filtrable</label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{vm.entd.filtrable ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.entd.filtrable ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
     </div>

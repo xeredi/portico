@@ -1,10 +1,10 @@
 <form novalidate role="form">
     <fieldset>
         <div class="row">
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate>enac_path</label> <input ng-if="vm.accion == 'create'" type="text"
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" ng-switch="::vm.accion">
+                <label translate>enac_path</label> <input ng-switch_when="create" type="text"
                     ng-model="vm.enac.path" class="form-control" />
-                <p ng-if="vm.accion != 'create'" class="form-control-static" ng-bind="vm.enac.path"></p>
+                <p ng-switch_when="edit" class="form-control-static" ng-bind="vm.enac.path"></p>
             </div>
             <div class="col-sm-1 col-md-1 col-lg-1 form-group-sm">
                 <label translate>enac_orden</label> <input type="text" ng-model="vm.enac.orden"

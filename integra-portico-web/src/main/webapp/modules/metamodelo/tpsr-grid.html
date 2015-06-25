@@ -39,18 +39,18 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="enti in vm.entiList.list track by $index">
+            <tr ng-repeat="enti in vm.entiList.list track by enti.id">
                 <td><a ng-href="#/metamodelo/tpsr/detail/{{::enti.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="::enti.codigo"></td>
                 <td ng-bind="::enti.nombre"></td>
-                <td><i class="glyphicon glyphicon-{{::enti.cmdAlta ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::enti.cmdBaja ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::enti.cmdEdicion ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::enti.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::enti.temporal ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::enti.facturable ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::enti.exencionable ? 'ok' : 'remove'}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(enti.cmdAlta ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(enti.cmdBaja ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(enti.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(enti.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(enti.temporal ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(enti.facturable ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(enti.exencionable ? 'ok' : 'remove')}}"></i></td>
                 <td class="number" ng-bind="::(enti.maxGrid | number:0)"></td>
                 <td ng-bind="::enti.tpdtEstado.nombre"></td>
                 <td ng-bind="::enti.classpath"></td>

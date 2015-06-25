@@ -1,10 +1,10 @@
 <form novalidate role="form">
     <fieldset>
         <div class="row">
-            <div class="col-md-3 form-group-sm">
-                <label translate>cmag_nombre</label> <input ng-if="vm.accion == 'create'" type="text"
+            <div class="col-md-3 form-group-sm" ng-switch="::vm.accion">
+                <label translate>cmag_nombre</label> <input ng-switch-when="create" type="text"
                     ng-model="vm.cmag.nombre" class="form-control" />
-                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.cmag.nombre"></p>
+                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.cmag.nombre"></p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label translate>cmag_agregar</label> <select ng-model="vm.cmag.agregar"

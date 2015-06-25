@@ -1,6 +1,9 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import com.google.common.base.Preconditions;
 
 import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.bo.I18nBO;
@@ -9,8 +12,6 @@ import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
-
-import com.google.common.base.Preconditions;
 
 /**
  * Edición de un Código de Referencia.
@@ -28,8 +29,10 @@ public final class CodigoReferenciaEditAction extends CrudEditAction<CodigoRefer
      */
     @Override
     public void doEdit() throws ApplicationException {
+        Preconditions.checkNotNull(model.getTpdtId());
+
         if (accion == ACCION_EDICION.create) {
-            model = new CodigoReferenciaVO();
+            i18nMap = new HashMap<>();
         } else {
             Preconditions.checkNotNull(model.getId());
 

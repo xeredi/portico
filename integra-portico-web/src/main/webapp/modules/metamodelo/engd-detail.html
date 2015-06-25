@@ -1,6 +1,6 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/engd/edit/edit/{{vm.engd.entiId}}/{{vm.engd.id}}"><i
+        <a class="btn btn-default" ng-href="#/metamodelo/engd/edit/edit/{{::vm.engd.entiId}}/{{::vm.engd.id}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
@@ -12,11 +12,11 @@
     <div class="row">
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate>engd_etiqueta</label>
-            <p class="form-control-static" ng-bind="vm.engd.etiqueta"></p>
+            <p class="form-control-static" ng-bind="::vm.engd.etiqueta"></p>
         </div>
         <div class="col-sm-1 col-md-1 col-lg-1 form-group-sm">
             <label translate>engd_numero</label>
-            <p class="form-control-static number" ng-bind="vm.engd.numero"></p>
+            <p class="form-control-static number" ng-bind="::vm.engd.numero"></p>
         </div>
     </div>
 

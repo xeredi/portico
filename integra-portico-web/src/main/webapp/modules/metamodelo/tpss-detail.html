@@ -23,7 +23,7 @@
             <label translate="tpsr"></label>
             <p class="form-control-static">
                 <a ng-href="#/metamodelo/tpsr/detail/{{::vm.enti.tpsrId}}"
-                    translate="{{'enti_' + ::vm.enti.tpsrId}}"></a>
+                    translate="{{::('enti_' + vm.enti.tpsrId)}}"></a>
             </p>
         </div>
         <div class="col-sm-3 col-md-2 form-group-sm">
@@ -45,43 +45,43 @@
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_cmdAlta"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{::vm.enti.cmdAlta ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.enti.cmdAlta ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_cmdBaja"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{::vm.enti.cmdBaja ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.enti.cmdBaja ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_cmdEdicion"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{::vm.enti.cmdEdicion ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.enti.cmdEdicion ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_cmdDuplicado"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{::vm.enti.cmdDuplicado ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.enti.cmdDuplicado ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_temporal"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{::vm.enti.temporal ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.enti.temporal ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_facturable"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{::vm.enti.facturable ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.enti.facturable ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_exencionable"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{::vm.enti.exencionable ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{::(vm.enti.exencionable ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
@@ -126,10 +126,10 @@
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="::entiHija.codigo"></td>
                 <td ng-bind="::entiHija.nombre"></td>
-                <td><i class="glyphicon glyphicon-{{::entiHija.cmdAlta ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::entiHija.cmdBaja ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::entiHija.cmdEdicion ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::entiHija.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(entiHija.cmdAlta ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(entiHija.cmdBaja ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(entiHija.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(entiHija.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
             </tr>
         </tbody>
     </table>
@@ -158,10 +158,10 @@
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="::entiPadre.codigo"></td>
                 <td ng-bind="::entiPadre.nombre"></td>
-                <td><i class="glyphicon glyphicon-{{::entiPadre.cmdAlta ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::entiPadre.cmdBaja ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::entiPadre.cmdEdicion ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::entiPadre.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(entiPadre.cmdAlta ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(entiPadre.cmdBaja ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(entiPadre.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(entiPadre.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
             </tr>
         </tbody>
     </table>

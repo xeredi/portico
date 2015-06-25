@@ -3,14 +3,13 @@
         <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
 
         <div class="row">
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate>tpdt</label> <select ng-if="vm.accion == 'create'"
-                    ng-model="vm.entd.tpdt.id"
-                    ng-options="labelValue.value as labelValue.label for labelValue in vm.tpdtList"
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm" ng-switch="::vm.accion">
+                <label translate>tpdt</label> <select ng-switch-when="create" ng-model="vm.entd.tpdt.id"
+                    ng-options="labelValue.value as labelValue.label for labelValue in ::vm.tpdtList"
                     class="form-control">
                     <option />
                 </select>
-                <p ng-if="vm.accion != 'create'" class="form-control-static" ng-bind="vm.entd.tpdt.nombre"></p>
+                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.entd.tpdt.nombre"></p>
             </div>
             <div class="col-sm-3 col-md-2 form-group-sm">
                 <label translate>entd_valorDefecto</label> <input type="text" ng-model="vm.entd.valorDefecto"
