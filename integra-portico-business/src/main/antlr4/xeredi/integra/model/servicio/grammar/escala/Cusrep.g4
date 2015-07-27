@@ -1,5 +1,0 @@
-grammar Cusrep;
-
-cusrep
-:
-;

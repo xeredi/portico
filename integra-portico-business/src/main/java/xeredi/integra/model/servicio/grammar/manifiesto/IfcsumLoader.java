@@ -5,13 +5,13 @@ import java.util.Map;
 import java.util.Set;
 
 import xeredi.integra.model.metamodelo.vo.Entidad;
-import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumParser.IfcsumContext;
+import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.IfcsumContext;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class IfcsumLoader.
  */
-public final class IfcsumLoader extends IfcsumBaseVisitor {
+public final class IfcsumLoader extends IfcsumD14bBaseVisitor {
 
     /** The prmts. */
     private Map<Entidad, Set<String>> prmts;
