@@ -42,39 +42,9 @@ poc
 	'POC+' EOL
 ;
 
-tod
-:
-	'TOD+' EOL
-;
-
-tsr
-:
-	'TSR+' EOL
-;
-
 idt
 :
 	'IDT+' EOL
-;
-
-tmp
-:
-	'TMP+' EOL
-;
-
-tmd
-:
-	'TMD+' EOL
-;
-
-tpl
-:
-	'TPL+' EOL
-;
-
-tcc
-:
-	'TCC+' EOL
 ;
 
 unh
@@ -602,5 +572,86 @@ scc
 
 seq
 :
-	'SEQ+' EOL
+	'SEQ'
+	(
+		'+' f1229
+	)?
+	(
+		'+' c286
+	)? EOL
+;
+
+tcc
+:
+	'TCC'
+	(
+		'+' c200
+	)?
+	(
+		'+' c203
+	)?
+	(
+		'+' c528
+	)?
+	(
+		'+' c554
+	)? EOL
+;
+
+tmd
+:
+	'TMD'
+	(
+		'+' c219
+	)?
+	(
+		'+' f8332
+	)?
+	(
+		'+' f8341
+	)? EOL
+;
+
+tmp
+:
+	'TMP' '+' f6245
+	(
+		'+' c239
+	)? EOL
+;
+
+tod
+:
+	'TOD'
+	(
+		'+' f4055
+	)?
+	(
+		'+' f4215
+	)?
+	(
+		'+' c100
+	)? EOL
+;
+
+tpl
+:
+	'TPL' '+' c222 EOL
+;
+
+tsr
+:
+	'TSR'
+	(
+		'+' c536
+	)?
+	(
+		'+' c233
+	)?
+	(
+		'+' c537
+	)?
+	(
+		'+' c703
+	)? EOL
 ;

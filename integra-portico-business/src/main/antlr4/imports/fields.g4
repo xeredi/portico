@@ -47,7 +47,7 @@ f0073
 
 f0074
 :
-	ALPHANUMERIC
+	integer10
 ;
 
 f0110
@@ -77,17 +77,17 @@ f0118
 
 f0121
 :
-	ALPHANUMERIC
+	alphanumeric14
 ;
 
 f0122
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f0124
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f0127
@@ -120,6 +120,11 @@ f1004
 	alphanumeric70
 ;
 
+f1050
+:
+	alphanumeric10
+;
+
 f1056
 :
 	alphanumeric9
@@ -150,6 +155,11 @@ f1156
 	alphanumeric6
 ;
 
+f1159
+:
+	alphanumeric3
+;
+
 f1218
 :
 	integer2
@@ -165,9 +175,14 @@ f1225
 	alphanumeric3
 ;
 
+f1229
+:
+	alphanumeric3
+;
+
 f1312
 :
-	ALPHANUMERIC
+	integer4
 ;
 
 f1366
@@ -182,7 +197,7 @@ f1373
 
 f1490
 :
-	ALPHANUMERIC
+	integer5
 ;
 
 f1496
@@ -257,12 +272,12 @@ f3124
 
 f3126
 :
-	ALPHANUMERIC
+	alphanumeric35
 ;
 
 f3127
 :
-	ALPHANUMERIC
+	alphanumeric17
 ;
 
 f3139
@@ -365,6 +380,26 @@ f4017
 	alphanumeric3
 ;
 
+f4052
+:
+	alphanumeric70
+;
+
+f4053
+:
+	alphanumeric3
+;
+
+f4055
+:
+	alphanumeric3
+;
+
+f4065
+:
+	alphanumeric3
+;
+
 f4078
 :
 	alphanumeric512
@@ -376,6 +411,11 @@ f4079
 ;
 
 f4215
+:
+	alphanumeric3
+;
+
+f4219
 :
 	alphanumeric3
 ;
@@ -485,10 +525,19 @@ f5213
 	alphanumeric3
 ;
 
-
 f5237
 :
 	alphanumeric3
+;
+
+f5242
+:
+	alphanumeric35
+;
+
+f5243
+:
+	alphanumeric9
 ;
 
 f5245
@@ -499,6 +548,11 @@ f5245
 f5249
 :
 	alphanumeric3
+;
+
+f5275
+:
+	alphanumeric6
 ;
 
 f5284
@@ -558,7 +612,7 @@ f6063
 
 f6066
 :
-	ALPHANUMERIC
+	integer18
 ;
 
 f6069
@@ -575,7 +629,6 @@ f6145
 :
 	alphanumeric3
 ;
-
 
 f6152
 :
@@ -608,6 +661,16 @@ f6168
 ;
 
 f6182
+:
+	integer15
+;
+
+f6245
+:
+	alphanumeric3
+;
+
+f6246
 :
 	integer15
 ;
@@ -679,12 +742,12 @@ f6432
 
 f7040
 :
-	ALPHANUMERIC
+	alphanumeric17
 ;
 
 f7041
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f7064
@@ -724,7 +787,7 @@ f7124
 
 f7130
 :
-	ALPHANUMERIC
+	alphanumeric17
 ;
 
 f7140
@@ -745,6 +808,16 @@ f7224
 f7233
 :
 	alphanumeric3
+;
+
+f7273
+:
+	alphanumeric3
+;
+
+f7357
+:
+	alphanumeric18
 ;
 
 f7383
@@ -777,14 +850,24 @@ f7511
 	alphanumeric3
 ;
 
+f8022
+:
+	alphanumeric26
+;
+
+f8023
+:
+	alphanumeric17
+;
+
 f8028
 :
-	ALPHANUMERIC
+	alphanumeric17
 ;
 
 f8051
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f8053
@@ -794,12 +877,12 @@ f8053
 
 f8066
 :
-	ALPHANUMERIC
+	alphanumeric17
 ;
 
 f8067
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f8077
@@ -819,7 +902,7 @@ f8092
 
 f8101
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f8126
@@ -849,7 +932,7 @@ f8169
 
 f8178
 :
-	ALPHANUMERIC
+	alphanumeric17
 ;
 
 f8179
@@ -869,12 +952,12 @@ f8211
 
 f8212
 :
-	ALPHANUMERIC
+	alphanumeric70
 ;
 
 f8213
 :
-	ALPHANUMERIC
+	alphanumeric35
 ;
 
 f8246
@@ -904,7 +987,7 @@ f8273
 
 f8281
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f8323
@@ -912,7 +995,27 @@ f8323
 	alphanumeric3
 ;
 
+f8332
+:
+	alphanumeric26
+;
+
+f8334
+:
+	alphanumeric35
+;
+
+f8335
+:
+	alphanumeric3
+;
+
 f8339
+:
+	alphanumeric3
+;
+
+f8341
 :
 	alphanumeric3
 ;
@@ -934,17 +1037,17 @@ f8410
 
 f8453
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f8457
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f8459
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f8461
@@ -1005,6 +1108,13 @@ integer4
 :
 	ALPHANUMERIC
 	{$ALPHANUMERIC.text.length() <= 4}?
+
+;
+
+integer5
+:
+	ALPHANUMERIC
+	{$ALPHANUMERIC.text.length() <= 5}?
 
 ;
 
@@ -1138,6 +1248,13 @@ alphanumeric25
 :
 	ALPHANUMERIC
 	{$ALPHANUMERIC.text.length() <= 25}?
+
+;
+
+alphanumeric26
+:
+	ALPHANUMERIC
+	{$ALPHANUMERIC.text.length() <= 26}?
 
 ;
 
