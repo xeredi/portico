@@ -47,21 +47,6 @@ tod
 	'TOD+' EOL
 ;
 
-seq
-:
-	'SEQ+' EOL
-;
-
-rng
-:
-	'RNG+' EOL
-;
-
-pia
-:
-	'PIA+' EOL
-;
-
 tsr
 :
 	'TSR+' EOL
@@ -70,11 +55,6 @@ tsr
 idt
 :
 	'IDT+' EOL
-;
-
-gin
-:
-	'GIN+' EOL
 ;
 
 tmp
@@ -87,59 +67,14 @@ tmd
 	'TMD+' EOL
 ;
 
-han
-:
-	'HAN+' EOL
-;
-
 tpl
 :
 	'TPL+' EOL
 ;
 
-scc
-:
-	'SCC+' EOL
-;
-
-icd
-:
-	'ICD+' EOL
-;
-
-qty
-:
-	'QTY+' EOL
-;
-
-eqn
-:
-	'EQN+' EOL
-;
-
-pri
-:
-	'PRI+' EOL
-;
-
 tcc
 :
 	'TCC+' EOL
-;
-
-gds
-:
-	'GDS+' EOL
-;
-
-pcd
-:
-	'PCD+' EOL
-;
-
-moa
-:
-	'MOA+' EOL
 ;
 
 unh
@@ -217,7 +152,13 @@ gor
 
 tdt
 :
-	'TDT' '+' f8051 '+' f8028? '+' c220?
+	'TDT' '+' f8051
+	(
+		'+' f8028?
+	)?
+	(
+		'+' c220?
+	)?
 	(
 		'+' c001?
 	)?
@@ -360,7 +301,10 @@ mea
 
 pci
 :
-	'PCI' '+' f4233?
+	'PCI'
+	(
+		'+' f4233
+	)?
 	(
 		'+' c210
 	)?
@@ -540,4 +484,123 @@ eqa
 	(
 		'+' c237
 	)? EOL
+;
+
+eqn
+:
+	'EQN' '+' c523 EOL
+;
+
+gds
+:
+	'GDS'
+	(
+		'+' c703
+	)?
+	(
+		'+' c288
+	)? EOL
+;
+
+gin
+:
+	'GIN' '+' f7402 '+' c208
+	(
+		'+' c208
+	)?
+	(
+		'+' c208
+	)?
+	(
+		'+' c208
+	)?
+	(
+		'+' c208
+	)? EOL
+;
+
+han
+:
+	'HAN'
+	(
+		'+' c524
+	)?
+	(
+		'+' c218
+	)? EOL
+;
+
+icd
+:
+	'ICD' '+' c330 '+' c331 EOL
+;
+
+moa
+:
+	'MOA' '+' c516 EOL
+;
+
+pcd
+:
+	'PCD' '+' c501
+	(
+		'+' f4405
+	)? EOL
+;
+
+pia
+:
+	'PIA' '+' f4347 '+' c212
+	(
+		'+' c212
+	)?
+	(
+		'+' c212
+	)?
+	(
+		'+' c212
+	)?
+	(
+		'+' c212
+	)? EOL
+;
+
+pri
+:
+	'PRI'
+	(
+		'+' c509
+	)?
+	(
+		'+' f5213
+	)? EOL
+;
+
+qty
+:
+	'QTY' '+' c186 EOL
+;
+
+rng
+:
+	'RNG' '+' f6167
+	(
+		'+' c280
+	)? EOL
+;
+
+scc
+:
+	'SCC' '+' f4017
+	(
+		'+' f4493
+	)?
+	(
+		'+' c329
+	)? EOL
+;
+
+seq
+:
+	'SEQ+' EOL
 ;

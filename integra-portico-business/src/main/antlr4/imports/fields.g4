@@ -37,7 +37,7 @@ f0068
 
 f0070
 :
-	ALPHANUMERIC
+	integer2
 ;
 
 f0073
@@ -137,17 +137,17 @@ f1131
 
 f1153
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f1154
 :
-	ALPHANUMERIC
+	alphanumeric70
 ;
 
 f1156
 :
-	ALPHANUMERIC
+	alphanumeric6
 ;
 
 f1218
@@ -187,10 +187,25 @@ f1490
 
 f1496
 :
-	ALPHANUMERIC
+	alphanumeric6
 ;
 
 f2005
+:
+	alphanumeric3
+;
+
+f2013
+:
+	alphanumeric3
+;
+
+f2015
+:
+	alphanumeric3
+;
+
+f2017
 :
 	alphanumeric3
 ;
@@ -207,27 +222,27 @@ f2380
 
 f3035
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f3036
 :
-	ALPHANUMERIC
+	alphanumeric70
 ;
 
 f3039
 :
-	ALPHANUMERIC
+	alphanumeric35
 ;
 
 f3042
 :
-	ALPHANUMERIC
+	alphanumeric35
 ;
 
 f3045
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f3055
@@ -237,7 +252,7 @@ f3055
 
 f3124
 :
-	ALPHANUMERIC
+	alphanumeric35
 ;
 
 f3126
@@ -272,7 +287,7 @@ f3155
 
 f3164
 :
-	ALPHANUMERIC
+	alphanumeric35
 ;
 
 f3207
@@ -282,52 +297,52 @@ f3207
 
 f3222
 :
-	ALPHANUMERIC
+	alphanumeric70
 ;
 
 f3223
 :
-	ALPHANUMERIC
+	alphanumeric35
 ;
 
 f3224
 :
-	ALPHANUMERIC
+	alphanumeric256
 ;
 
 f3225
 :
-	ALPHANUMERIC
+	alphanumeric35
 ;
 
 f3227
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f3228
 :
-	ALPHANUMERIC
+	alphanumeric70
 ;
 
 f3229
 :
-	ALPHANUMERIC
+	alphanumeric9
 ;
 
 f3232
 :
-	ALPHANUMERIC
+	alphanumeric70
 ;
 
 f3233
 :
-	ALPHANUMERIC
+	alphanumeric35
 ;
 
 f3251
 :
-	ALPHANUMERIC
+	alphanumeric17
 ;
 
 f3412
@@ -345,6 +360,21 @@ f3453
 	alphanumeric3
 ;
 
+f4017
+:
+	alphanumeric3
+;
+
+f4078
+:
+	alphanumeric512
+;
+
+f4079
+:
+	alphanumeric3
+;
+
 f4215
 :
 	alphanumeric3
@@ -352,7 +382,7 @@ f4215
 
 f4233
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f4237
@@ -365,44 +395,135 @@ f4343
 	alphanumeric3
 ;
 
+f4347
+:
+	alphanumeric3
+;
+
+f4405
+:
+	alphanumeric3
+;
+
 f4440
 :
-	ALPHANUMERIC
+	alphanumeric512
 ;
 
 f4441
 :
-	ALPHANUMERIC
+	alphanumeric17
 ;
 
 f4447
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f4451
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f4453
 :
-	ALPHANUMERIC
+	alphanumeric3
+;
+
+f4493
+:
+	alphanumeric3
+;
+
+f4494
+:
+	alphanumeric35
+;
+
+f4495
+:
+	alphanumeric17
+;
+
+f4497
+:
+	alphanumeric3
 ;
 
 f4517
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f4525
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
+
+f5004
+:
+	integer35
+;
+
+f5025
+:
+	alphanumeric3
+;
+
+f5118
+:
+	integer15
+;
+
+f5125
+:
+	alphanumeric3
+;
+
+f5213
+:
+	alphanumeric3
+;
+
 
 f5237
 :
 	alphanumeric3
+;
+
+f5245
+:
+	alphanumeric3
+;
+
+f5249
+:
+	alphanumeric3
+;
+
+f5284
+:
+	integer9
+;
+
+f5375
+:
+	alphanumeric3
+;
+
+f5387
+:
+	alphanumeric3
+;
+
+f5388
+:
+	alphanumeric35
+;
+
+f5389
+:
+	alphanumeric25
 ;
 
 f5402
@@ -412,13 +533,27 @@ f5402
 
 f5479
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
+f5482
+:
+	integer10
+;
 
 f6008
 :
 	integer15
+;
+
+f6060
+:
+	alphanumeric35
+;
+
+f6063
+:
+	alphanumeric3
 ;
 
 f6066
@@ -441,26 +576,31 @@ f6145
 	alphanumeric3
 ;
 
+
 f6152
 :
-	ALPHANUMERIC
+	integer18
 ;
 
 f6154
 :
-	ALPHANUMERIC
+	alphanumeric70
 ;
 
 f6155
 :
-	ALPHANUMERIC
+	alphanumeric17
 ;
 
 f6162
 :
-	ALPHANUMERIC
+	integer18
 ;
 
+f6167
+:
+	alphanumeric3
+;
 
 f6168
 :
@@ -474,22 +614,22 @@ f6182
 
 f6311
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f6313
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f6314
 :
-	ALPHANUMERIC
+	alphanumeric18
 ;
 
 f6321
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f6341
@@ -517,6 +657,16 @@ f6348
 	integer4
 ;
 
+f6350
+:
+	integer15
+;
+
+f6353
+:
+	alphanumeric3
+;
+
 f6411
 :
 	alphanumeric8
@@ -524,7 +674,7 @@ f6411
 
 f6432
 :
-	ALPHANUMERIC
+	integer2
 ;
 
 f7040
@@ -539,12 +689,17 @@ f7041
 
 f7064
 :
-	ALPHANUMERIC
+	alphanumeric35
 ;
 
 f7065
 :
-	ALPHANUMERIC
+	alphanumeric17
+;
+
+f7085
+:
+	alphanumeric3
 ;
 
 f7088
@@ -554,7 +709,7 @@ f7088
 
 f7102
 :
-	ALPHANUMERIC
+	alphanumeric35
 ;
 
 f7106
@@ -572,29 +727,54 @@ f7130
 	ALPHANUMERIC
 ;
 
+f7140
+:
+	alphanumeric35
+;
+
+f7143
+:
+	alphanumeric3
+;
+
 f7224
 :
-	ALPHANUMERIC
+	integer8
 ;
 
 f7233
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f7383
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f7402
 :
-	ALPHANUMERIC
+	alphanumeric35
+;
+
+f7405
+:
+	alphanumeric3
+;
+
+f7418
+:
+	alphanumeric35
+;
+
+f7419
+:
+	alphanumeric7
 ;
 
 f7511
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f8028
@@ -624,7 +804,7 @@ f8067
 
 f8077
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f8078
@@ -649,12 +829,12 @@ f8126
 
 f8154
 :
-	ALPHANUMERIC
+	alphanumeric35
 ;
 
 f8155
 :
-	ALPHANUMERIC
+	alphanumeric10
 ;
 
 f8158
@@ -664,7 +844,7 @@ f8158
 
 f8169
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f8178
@@ -704,7 +884,7 @@ f8246
 
 f8249
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f8255
@@ -729,7 +909,7 @@ f8281
 
 f8323
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f8339
@@ -774,37 +954,100 @@ f8461
 
 f9302
 :
-	ALPHANUMERIC
+	alphanumeric35
 ;
 
 f9303
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f9308
 :
-	ALPHANUMERIC
+	alphanumeric35
 ;
 
 f9353
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f9411
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f9415
 :
-	ALPHANUMERIC
+	alphanumeric3
 ;
 
 f9417
 :
+	alphanumeric3
+;
+
+integer2
+:
 	ALPHANUMERIC
+	{$ALPHANUMERIC.text.length() <= 2}?
+
+;
+
+integer3
+:
+	ALPHANUMERIC
+	{$ALPHANUMERIC.text.length() <= 3}?
+
+;
+
+integer4
+:
+	ALPHANUMERIC
+	{$ALPHANUMERIC.text.length() <= 4}?
+
+;
+
+integer8
+:
+	ALPHANUMERIC
+	{$ALPHANUMERIC.text.length() <= 8}?
+
+;
+
+integer9
+:
+	ALPHANUMERIC
+	{$ALPHANUMERIC.text.length() <= 9}?
+
+;
+
+integer10
+:
+	ALPHANUMERIC
+	{$ALPHANUMERIC.text.length() <= 10}?
+
+;
+
+integer15
+:
+	ALPHANUMERIC
+	{$ALPHANUMERIC.text.length() <= 15}?
+
+;
+
+integer18
+:
+	ALPHANUMERIC
+	{$ALPHANUMERIC.text.length() <= 18}?
+
+;
+
+integer35
+:
+	ALPHANUMERIC
+	{$ALPHANUMERIC.text.length() <= 35}?
+
 ;
 
 alphanumeric1
@@ -884,6 +1127,20 @@ alphanumeric17
 
 ;
 
+alphanumeric18
+:
+	ALPHANUMERIC
+	{$ALPHANUMERIC.text.length() <= 18}?
+
+;
+
+alphanumeric25
+:
+	ALPHANUMERIC
+	{$ALPHANUMERIC.text.length() <= 25}?
+
+;
+
 alphanumeric35
 :
 	ALPHANUMERIC
@@ -912,45 +1169,19 @@ alphanumeric512
 
 ;
 
-integer2
-:
-	INTEGER
-	{$INTEGER.text.length() <= 2}?
-
-;
-
-integer3
-:
-	INTEGER
-	{$INTEGER.text.length() <= 3}?
-
-;
-
-integer4
-:
-	INTEGER
-	{$INTEGER.text.length() <= 4}?
-
-;
-
-integer15
-:
-	INTEGER
-	{$INTEGER.text.length() <= 15}?
-
-;
-
 ALPHANUMERIC
 :
 	(
-		[0-9A-Za-z]
+		[A-Za-z0-9]
 		| ' '
 	)+
 ;
 
 INTEGER
 :
-	[0-9]+
+	(
+		[0-9]
+	)+
 ;
 
 EOL
@@ -962,3 +1193,5 @@ WS
 :
 	[ \r\n\t]+ -> skip
 ;
+
+

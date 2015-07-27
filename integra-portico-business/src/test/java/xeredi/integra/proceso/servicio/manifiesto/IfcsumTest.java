@@ -13,6 +13,7 @@ import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bBaseVisitor;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bLexer;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.IfcsumContext;
+import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.UntContext;
 
 public final class IfcsumTest extends IfcsumD14bBaseVisitor {
 
@@ -21,8 +22,19 @@ public final class IfcsumTest extends IfcsumD14bBaseVisitor {
 	 */
     @Override
 	public Object visitIfcsum(IfcsumContext ctx) {
-		// TODO Auto-generated method stub
+    	System.out.println("IFCSUM!!!");
+
 		return super.visitIfcsum(ctx);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object visitUnt(UntContext ctx) {
+    	System.out.println("UNT!!!");
+
+    	return super.visitUnt(ctx);
 	}
 
 	private void parse(final String filename) throws IOException {
@@ -33,7 +45,7 @@ public final class IfcsumTest extends IfcsumD14bBaseVisitor {
             final IfcsumD14bParser parser = new IfcsumD14bParser(tokens);
             final ParseTree tree = parser.ifcsum();
 
-            visit(tree).toString();
+            visit(tree);
         }
     }
 
