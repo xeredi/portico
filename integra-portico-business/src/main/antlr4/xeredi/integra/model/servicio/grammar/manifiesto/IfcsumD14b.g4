@@ -400,7 +400,10 @@
 
  gr77
  :
- 	dgs ftx* gr78*
+ 	dgs ftx*
+ 	(
+ 		cta com*
+ 	)* /* gr78 */
  ;
 
  gr78
