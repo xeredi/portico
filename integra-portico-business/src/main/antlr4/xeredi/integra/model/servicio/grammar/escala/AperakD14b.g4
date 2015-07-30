@@ -1,6 +1,6 @@
 grammar AperakD14b;
 
-import segments, components, fields;
+import segments;
 
 aperak
 :

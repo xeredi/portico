@@ -860,6 +860,16 @@ f8023
 	alphanumeric17
 ;
 
+f8024
+:
+	alphanumeric35
+;
+
+f8025
+:
+	alphanumeric3
+;
+
 f8028
 :
 	alphanumeric17
@@ -1068,6 +1078,11 @@ f9303
 f9308
 :
 	alphanumeric35
+;
+
+f9321
+:
+	alphanumeric8
 ;
 
 f9353
@@ -1289,8 +1304,11 @@ alphanumeric512
 ALPHANUMERIC
 :
 	(
-		[A-Za-z0-9]
+		[A-Za-z0-9ñÑá-úÁ-Ú]
 		| ' '
+		| '/'
+		| ','
+		| '.'
 	)+
 ;
 
