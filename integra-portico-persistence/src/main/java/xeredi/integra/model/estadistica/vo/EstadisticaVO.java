@@ -6,93 +6,112 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
+import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
+import xeredi.integra.model.metamodelo.vo.TipoEstadisticaDetailVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EstadisticaVO.
  */
 public final class EstadisticaVO extends ItemVO {
-    /** The prpr id. */
-    private PeriodoProcesoVO pepr;
+	/** The prpr id. */
+	private PeriodoProcesoVO pepr;
 
-    /** The autp. */
-    private PuertoVO prto;
+	/** The autp. */
+	private PuertoVO prto;
 
-    /** The fref. */
-    private Date fref;
+	/** The fref. */
+	private Date fref;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
+	/**
+	 * Instantiates a new estadistica vo.
+	 */
+	public EstadisticaVO() {
+		super();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getEtiqueta() {
-        // FIXME Implementar
-        return null;
-    }
+	/**
+	 * Instantiates a new estadistica vo.
+	 *
+	 * @param entiDetail
+	 *            the enti detail
+	 */
+	public EstadisticaVO(TipoEstadisticaDetailVO entiDetail) {
+		super(entiDetail);
+	}
 
-    /**
-     * Gets the prto.
-     *
-     * @return the prto
-     */
-    public PuertoVO getPrto() {
-        return prto;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
 
-    /**
-     * Sets the prto.
-     *
-     * @param value
-     *            the new prto
-     */
-    public void setPrto(final PuertoVO value) {
-        prto = value;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getEtiqueta() {
+		// FIXME Implementar
+		return null;
+	}
 
-    /**
-     * Gets the pepr.
-     *
-     * @return the pepr
-     */
-    public PeriodoProcesoVO getPepr() {
-        return pepr;
-    }
+	/**
+	 * Gets the prto.
+	 *
+	 * @return the prto
+	 */
+	public PuertoVO getPrto() {
+		return prto;
+	}
 
-    /**
-     * Sets the pepr.
-     *
-     * @param value
-     *            the new pepr
-     */
-    public void setPepr(final PeriodoProcesoVO value) {
-        pepr = value;
-    }
+	/**
+	 * Sets the prto.
+	 *
+	 * @param value
+	 *            the new prto
+	 */
+	public void setPrto(final PuertoVO value) {
+		prto = value;
+	}
 
-    /**
-     * Gets the fref.
-     *
-     * @return the fref
-     */
-    public Date getFref() {
-        return fref;
-    }
+	/**
+	 * Gets the pepr.
+	 *
+	 * @return the pepr
+	 */
+	public PeriodoProcesoVO getPepr() {
+		return pepr;
+	}
 
-    /**
-     * Sets the fref.
-     *
-     * @param value
-     *            the new fref
-     */
-    public void setFref(final Date value) {
-        fref = value;
-    }
+	/**
+	 * Sets the pepr.
+	 *
+	 * @param value
+	 *            the new pepr
+	 */
+	public void setPepr(final PeriodoProcesoVO value) {
+		pepr = value;
+	}
+
+	/**
+	 * Gets the fref.
+	 *
+	 * @return the fref
+	 */
+	public Date getFref() {
+		return fref;
+	}
+
+	/**
+	 * Sets the fref.
+	 *
+	 * @param value
+	 *            the new fref
+	 */
+	public void setFref(final Date value) {
+		fref = value;
+	}
 
 }

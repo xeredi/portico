@@ -5,6 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioDetailVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -31,6 +32,22 @@ public final class SubservicioVO extends ItemVO {
     private String estado;
 
     /**
+     * Instantiates a new subservicio vo.
+     */
+    public SubservicioVO() {
+		super();
+	}
+
+	/**
+	 * Instantiates a new subservicio vo.
+	 *
+	 * @param entiDetail the enti detail
+	 */
+	public SubservicioVO(TipoSubservicioDetailVO entiDetail) {
+		super(entiDetail);
+	}
+
+	/**
      * {@inheritDoc}
      */
     @Override

@@ -5,15 +5,15 @@ import java.util.Iterator;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import xeredi.integra.model.facturacion.vo.ReglaVO;
-import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
+import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.integra.model.util.grammar.FormulaBaseVisitor;
 import xeredi.integra.model.util.grammar.FormulaParser.AritmethicExprContext;
 import xeredi.integra.model.util.grammar.FormulaParser.PathContext;

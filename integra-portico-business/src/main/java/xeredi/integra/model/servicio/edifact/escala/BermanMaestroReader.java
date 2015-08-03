@@ -8,12 +8,14 @@ import java.util.Set;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.servicio.grammar.escala.BermanD14bBaseVisitor;
 import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.BermanContext;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.Gr1Context;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.Gr3Context;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.Gr4Context;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.Gr7Context;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.Gr8Context;
+import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.GdsContext;
+import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.HanContext;
+import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.LocContext;
+import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.NadContext;
+import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.PocContext;
 import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.RffContext;
+import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.TdtContext;
+import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.TsrContext;
 
 public final class BermanMaestroReader extends BermanD14bBaseVisitor {
 
@@ -28,58 +30,122 @@ public final class BermanMaestroReader extends BermanD14bBaseVisitor {
 	 */
 	@Override
 	public Object visitBerman(BermanContext ctx) {
-		for (final Gr1Context gr1Context : ctx.gr1()) {
-			switch (gr1Context.nad().f3035().getText()) {
-			case "CV":
-				nifSet.add(gr1Context.nad().c082().f3039().getText());
-				break;
-			case "OV":
-				addCodigoMaestro(Entidad.NAVIERA, gr1Context.nad().c082().f3039().getText());
-				break;
-			default:
-				break;
-			}
-		}
-
-		for (final Gr3Context gr3Context : ctx.gr3()) {
-			addCodigoMaestro(Entidad.TIPO_BUQUE_EDI, gr3Context.tdt().c001().f8179().getText());
-			addCodigoMaestro(Entidad.BUQUE, gr3Context.tdt().c222().f8213().getText());
-			addCodigoMaestro(Entidad.PAIS, gr3Context.tdt().c222().f8453().getText());
-
-			for (final RffContext rffContext : gr3Context.rff()) {
-				switch (rffContext.c506().f1153().getText()) {
-				case "ZCS":
-					addCodigoMaestro(Entidad.TIPO_SERVICIO_TRAFICO, rffContext.c506().f1154().getText());
-					break;
-				case "ZNG":
-					addCodigoMaestro(Entidad.TIPO_CERTIFICADO, rffContext.c506().f1154().getText());
-					break;
-				default:
-					break;
-				}
-			}
-
-			for (final Gr4Context gr4Context : gr3Context.gr4()) {
-				switch (gr4Context.loc().f3227().getText()) {
-				case "92":
-				case "153":
-				case "61":
-				case "229":
-					addCodigoMaestro(Entidad.UNLOCODE, gr4Context.loc().c517().f3225().getText());
-					break;
-				}
-			}
-		}
-
-		for (final Gr7Context gr7Context : ctx.gr7()) {
-			addCodigoMaestro(Entidad.TIPO_ATRAQUE_EDI, gr7Context.tsr().c233().f7273(0).getText());
-
-			for (final Gr8Context gr8Context : gr7Context.gr8()) {
-				addCodigoMaestro(Entidad.ALINEACION, gr8Context.loc().c517().f3225().getText());
-			}
-		}
-
 		return super.visitBerman(ctx);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object visitNad(NadContext ctx) {
+		switch (ctx.f3035().getText()) {
+		case "CV":
+		case "TR":
+			nifSet.add(ctx.c082().f3039().getText());
+			break;
+		case "OV":
+			addCodigoMaestro(Entidad.NAVIERA, ctx.c082().f3039().getText());
+			break;
+		default:
+			break;
+		}
+
+		return super.visitNad(ctx);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object visitTdt(TdtContext ctx) {
+		addCodigoMaestro(Entidad.TIPO_BUQUE_EDI, ctx.c001().f8179().getText());
+		addCodigoMaestro(Entidad.BUQUE, ctx.c222().f8213().getText());
+		addCodigoMaestro(Entidad.PAIS, ctx.c222().f8453().getText());
+
+		return super.visitTdt(ctx);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object visitRff(RffContext ctx) {
+		switch (ctx.c506().f1153().getText()) {
+		case "ZCS":
+			addCodigoMaestro(Entidad.TIPO_SERVICIO_TRAFICO, ctx.c506().f1154().getText());
+			break;
+		case "ZNG":
+			addCodigoMaestro(Entidad.TIPO_CERTIFICADO, ctx.c506().f1154().getText());
+			break;
+		default:
+			break;
+		}
+
+		return super.visitRff(ctx);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object visitLoc(LocContext ctx) {
+		switch (ctx.f3227().getText()) {
+		case "92":
+		case "153":
+		case "61":
+		case "229":
+			addCodigoMaestro(Entidad.UNLOCODE, ctx.c517().f3225().getText());
+			break;
+		case "60":
+			addCodigoMaestro(Entidad.ALINEACION, ctx.c517().f3225().getText());
+			break;
+		}
+
+		return super.visitLoc(ctx);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object visitTsr(TsrContext ctx) {
+		final String codigoAtraque = ctx.c233().f7273(0).getText();
+
+		if (!"SEC".equals(codigoAtraque)) {
+			addCodigoMaestro(Entidad.TIPO_ATRAQUE_EDI, ctx.c233().f7273(1).getText());
+		}
+
+		return super.visitTsr(ctx);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object visitPoc(PocContext ctx) {
+		addCodigoMaestro(Entidad.TIPO_ACTIVIDAD_EDI, ctx.c525().f8025().getText());
+
+		return super.visitPoc(ctx);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object visitHan(HanContext ctx) {
+		addCodigoMaestro(Entidad.TIPO_OPERACION_MERCANCIA, ctx.c524().f4079().getText());
+
+		return super.visitHan(ctx);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object visitGds(GdsContext ctx) {
+		addCodigoMaestro(Entidad.TIPO_MERCANCIA, ctx.c703().f7085().getText());
+
+		return super.visitGds(ctx);
 	}
 
 	/**
@@ -115,5 +181,4 @@ public final class BermanMaestroReader extends BermanD14bBaseVisitor {
 	public Set<String> getNifSet() {
 		return nifSet;
 	}
-
 }

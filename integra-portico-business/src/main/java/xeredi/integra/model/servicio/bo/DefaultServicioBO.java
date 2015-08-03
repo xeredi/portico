@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.item.vo.ItemTramiteVO;
-import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
+import xeredi.integra.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;

@@ -4,6 +4,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.comun.vo.Versionable;
+import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubparametroDetailVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -33,6 +35,17 @@ public final class SubparametroVO extends ItemVO implements Versionable<Subparam
     }
 
     /**
+     * Instantiates a new subparametro vo.
+     *
+     * @param entiDetail the enti detail
+     */
+    public SubparametroVO(TipoSubparametroDetailVO entiDetail) {
+		super(entiDetail);
+
+        version = new SubparametroVersionVO();
+	}
+
+	/**
      * {@inheritDoc}
      */
     @Override

@@ -11,7 +11,7 @@ import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
-import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
+import xeredi.integra.model.metamodelo.vo.TipoParametroDetailVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 

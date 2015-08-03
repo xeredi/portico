@@ -8,8 +8,8 @@ import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.item.vo.ItemTramiteVO;
-import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
-import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioDetailVO;
+import xeredi.integra.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
 // TODO: Auto-generated Javadoc

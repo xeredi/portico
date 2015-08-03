@@ -15,6 +15,7 @@ import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.integra.model.metamodelo.vo.CampoAgregacionCriterioVO;
 import xeredi.integra.model.metamodelo.vo.CampoAgregacionVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TipoEstadisticaDetailVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 

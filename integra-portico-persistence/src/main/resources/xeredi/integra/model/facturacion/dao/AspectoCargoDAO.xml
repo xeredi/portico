@@ -14,6 +14,10 @@
 			<result column="ascr_crgo_pk" property="id" />
 			<result column="crgo_codigo" property="codigo" />
 
+			<association property="version" javaType="CargoVersionVO">
+				<result column="crgv_descripcion" property="descripcion" />
+			</association>
+
 			<association property="tpsr" javaType="TipoServicioVO">
 				<result column="crgo_tpsr_pk" property="id" />
 			</association>
@@ -34,6 +38,29 @@
 		    , ascv_pk, ascv_fini, ascv_ffin
 
 		    , crgo_codigo, crgo_tpsr_pk
+    ]]>
+    	<if test="idioma != null and fechaVigencia != null">
+	    <![CDATA[
+	    	, (
+	    		SELECT i18n_text
+	    		FROM tbl_i18n_i18n
+				WHERE
+	    			i18n_ext_pk = (
+	    				SELECT crgv_pk
+	    				FROM tbl_cargo_version_crgv
+	    				WHERE
+	    					crgv_crgo_pk = crgo_pk
+	    					AND (
+	    						crgv_fini <= #{fechaVigencia}
+	    						AND (crgv_ffin IS NULL OR crgv_ffin > #{fechaVigencia})
+	    					)
+	    			)
+	    			AND i18n_pref = 'crgv'
+	    			AND i18n_lang = #{idioma}
+	    	) AS crgv_descripcion
+	    ]]>
+    	</if>
+    <![CDATA[
 		FROM
 		    tbl_aspecto_cargo_ascr
 		    INNER JOIN tbl_aspecto_cargo_version_ascv ON

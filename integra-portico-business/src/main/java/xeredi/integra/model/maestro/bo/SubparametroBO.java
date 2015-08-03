@@ -25,7 +25,7 @@ import xeredi.integra.model.maestro.dao.SubparametroDAO;
 import xeredi.integra.model.maestro.dao.SubparametroDatoDAO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
-import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubparametroDetailVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 

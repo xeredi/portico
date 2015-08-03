@@ -25,11 +25,11 @@ import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
-import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
-import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
+import xeredi.integra.model.metamodelo.vo.TipoParametroDetailVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubparametroDetailVO;
 
 import com.google.common.base.Preconditions;
 

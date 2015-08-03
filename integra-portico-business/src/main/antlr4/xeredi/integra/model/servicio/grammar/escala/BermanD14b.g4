@@ -37,6 +37,7 @@ gr6
 	doc dtm* loc*
 ;
 
+/* Atraque */
 gr7
 :
 	tsr qty* ftx* gr8*
@@ -47,6 +48,7 @@ gr8
 	loc mea* dtm* qty* poc* ftx* gr9*
 ;
 
+/* Operacion de Atraque */
 gr9
 :
 	han nad* gr10*

@@ -11,6 +11,7 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.TramiteBO;
 import xeredi.integra.model.metamodelo.bo.TramiteTipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.TramiteCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.vo.TramiteTipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TramiteTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TramiteVO;

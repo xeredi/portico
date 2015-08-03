@@ -6,6 +6,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.comun.vo.Versionable;
+import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
+import xeredi.integra.model.metamodelo.vo.TipoParametroDetailVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -35,6 +37,17 @@ public final class ParametroVO extends ItemVO implements Versionable<ParametroVe
     }
 
     /**
+     * Instantiates a new parametro vo.
+     *
+     * @param entiDetail the enti detail
+     */
+    public ParametroVO(TipoParametroDetailVO entiDetail) {
+		super(entiDetail);
+
+        version = new ParametroVersionVO();
+	}
+
+	/**
      * {@inheritDoc}
      */
     @Override
