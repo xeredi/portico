@@ -78,16 +78,17 @@
 		<where>
 			<if test="versionId == null and versionIds == null">
             <![CDATA[
-              	AND EXISTS (
-                	SELECT 1
+              	AND prdt_prvr_pk = ANY (
+                	SELECT prvr_pk
                 	FROM
                 		tbl_parametro_prmt
                 		INNER JOIN tbl_parametro_version_prvr ON
                 			prvr_prmt_pk = prmt_pk
-                	WHERE
-                        prvr_pk = prdt_prvr_pk
             ]]>
-				<include refid="xeredi.integra.model.maestro.dao.ParametroDAO.SelectWhere" />
+				<where>
+					<include
+						refid="xeredi.integra.model.maestro.dao.ParametroDAO.SelectWhere" />
+				</where>
             <![CDATA[
                 )
             ]]>
@@ -99,7 +100,8 @@
 
 			<if test="versionIds != null">
 				AND prdt_prvr_pk IN
-				<foreach collection="versionIds" item="item" open="(" close=")" separator=",">#{item}
+				<foreach collection="versionIds" item="item" open="(" close=")"
+					separator=",">#{item}
 				</foreach>
 			</if>
 
@@ -118,7 +120,8 @@
 		</where>
 	</sql>
 
-	<select id="selectList" parameterType="ParametroCriterioVO" resultMap="ResultMap">
+	<select id="selectList" parameterType="ParametroCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 	</select>
