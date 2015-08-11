@@ -253,7 +253,7 @@ VALUES (31083, 22003, 45155, 1,  4,  4,  4, 0, 1, 1, NULL)\
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_pk, entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto)
 VALUES (31084, 22003, 41020, 1,  5,  5,  4, 0, 0, 0, NULL)\
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_pk, entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto)
-VALUES (31085, 22003, 45285, 1,  7,  7,  4, 1, 1, 1, NULL)\
+VALUES (31085, 22003, 43555, 1,  7,  7,  4, 1, 1, 1, NULL)\
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_pk, entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto)
 VALUES (31086, 22003, 45055, 1,  8,  8,  4, 0, 1, 1, NULL)\
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_pk, entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto)

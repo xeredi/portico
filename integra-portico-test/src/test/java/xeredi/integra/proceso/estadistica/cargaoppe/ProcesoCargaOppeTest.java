@@ -17,6 +17,7 @@ import xeredi.integra.model.proceso.vo.ProcesoTipo;
  */
 public final class ProcesoCargaOppeTest {
 
+    /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ProcesoCargaOppeTest.class);
 
     /**
@@ -34,7 +35,7 @@ public final class ProcesoCargaOppeTest {
             {
                 final Map<String, String> prpmMap = new HashMap<>();
 
-                prpmMap.put(ProcesoCargaOppe.AUTP_PARAM, "1030308");
+                prpmMap.put(ProcesoCargaOppe.AUTP_PARAM, "80");
                 prpmMap.put(ProcesoCargaOppe.ANIO_PARAM, "2013");
                 prpmMap.put(ProcesoCargaOppe.MES_PARAM, "04");
                 prpmMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, "true");

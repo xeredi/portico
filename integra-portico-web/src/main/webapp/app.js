@@ -31,22 +31,20 @@ angular
 		.config(function($datepickerProvider) {
 			angular.extend($datepickerProvider.defaults, {
 				dateFormat : 'dd/MM/yyyy',
-				/*
-				 * modelDateFormat : "yyyy-MM-ddTHH:mm:ss", dateType : "date",
-				 */
 				startWeek : 1,
 				placement : 'bottom-left',
 				container : 'body',
-				autoclose : true
+				autoclose : true,
+				timezone : 'UTC'
 			});
 		})
 
 		.config(function($timepickerProvider) {
 			angular.extend($timepickerProvider.defaults, {
 				timeFormat : 'HH:mm',
-				timeType : "date",
 				length : 1,
-				minuteStep : 1
+				minuteStep : 1,
+				timezone : 'UTC'
 			});
 		})
 

@@ -652,8 +652,6 @@ CREATE TABLE tbl_servicio_srvc
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )\
 
-CREATE INDEX ix_srvc_tpsr_pk ON tbl_servicio_srvc (srvc_tpsr_pk)\
-
 CREATE OR REPLACE SYNONYM portico.tbl_servicio_srvc FOR porticoadm.tbl_servicio_srvc\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_srvc TO portico\
@@ -733,7 +731,6 @@ CREATE TABLE tbl_subservicio_ssrv (
 )\
 
 CREATE INDEX ix_ssrv_srvc_pk ON tbl_subservicio_ssrv (ssrv_srvc_pk)\
-CREATE INDEX ix_ssrv_tpss_pk ON tbl_subservicio_ssrv (ssrv_tpss_pk)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_subservicio_ssrv FOR porticoadm.tbl_subservicio_ssrv\
 
@@ -935,21 +932,17 @@ COMMENT ON COLUMN tbl_estadistica_dato_esdt.esdt_cadena IS 'Valor de dato de Tip
 CREATE TABLE tbl_cuadro_mes_cdms (
 	cdms_pk NUMBER(19) NOT NULL
 	, cdms_pepr_pk NUMBER(19) NOT NULL
-	, cdms_cocu_pk NUMBER(19) NOT NULL
-	, cdms_opet_pk NUMBER(19) NOT NULL
+	, cdms_cocu VARCHAR(10) NOT NULL
+	, cdms_opet VARCHAR(2)
 	, cdms_navt_pk NUMBER(19) NOT NULL
 	, cdms_pais_pk NUMBER(19) NOT NULL
 	, cdms_cantidad DOUBLE PRECISION NOT NULL
 
 	, CONSTRAINT pk_cdms PRIMARY KEY (cdms_pk)
-	, CONSTRAINT uq_cdms UNIQUE (cdms_pepr_pk, cdms_cocu_pk, cdms_opet_pk, cdms_navt_pk, cdms_pais_pk)
+	, CONSTRAINT uq_cdms UNIQUE (cdms_pepr_pk, cdms_cocu, cdms_opet, cdms_navt_pk, cdms_pais_pk)
 
 	, CONSTRAINT fk_cdms_pepr_pk FOREIGN KEY (cdms_pepr_pk)
 		REFERENCES tbl_periodo_proceso_pepr (pepr_pk)
-	, CONSTRAINT fk_cdms_cocu_pk FOREIGN KEY (cdms_cocu_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
-	, CONSTRAINT fk_cdms_opet_pk FOREIGN KEY (cdms_opet_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
 	, CONSTRAINT fk_cdms_navt_pk FOREIGN KEY (cdms_navt_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 	, CONSTRAINT fk_cdms_pais_pk FOREIGN KEY (cdms_pais_pk)
@@ -963,8 +956,8 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_cuadro_mes_cdms TO portico\
 COMMENT ON TABLE tbl_cuadro_mes_cdms IS 'Cuadros mensuales de Estadisticas'\
 COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_pk IS 'Identificador de Cuadro mensual'\
 COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_pepr_pk IS 'Identificador de Periodo de Proceso'\
-COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_cocu_pk IS 'Identificador de Concepto de Cuadro mensual'\
-COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_opet_pk IS 'Identificador de Tipo de Operacion de BL'\
+COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_cocu IS 'Identificador de Concepto de Cuadro mensual'\
+COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_opet IS 'Identificador de Tipo de Operacion de BL'\
 COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_navt_pk IS 'Identificador de Tipo de Navegacion'\
 COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_pais_pk IS 'Identificador de Pais'\
 COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_cantidad IS 'Cantidad'\

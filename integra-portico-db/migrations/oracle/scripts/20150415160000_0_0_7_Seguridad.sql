@@ -334,6 +334,8 @@ ALTER TABLE tbl_cuadro_mes_cdms ADD cdms_prto_pk NUMBER(19) DEFAULT 37000 NOT NU
 ALTER TABLE tbl_cuadro_mes_cdms ADD cdms_orden INT DEFAULT 0 NOT NULL\
 ALTER TABLE tbl_cuadro_mes_cdms ADD CONSTRAINT fk_cdms_prto_pk FOREIGN KEY (cdms_prto_pk)
 	REFERENCES tbl_puerto_prto (prto_pk)\
+ALTER TABLE tbl_cuadro_mes_cdms DROP CONSTRAINT uq_cdms\
+ALTER TABLE tbl_cuadro_mes_cdms ADD CONSTRAINT uq_cdms UNIQUE (cdms_pepr_pk, cdms_prto_pk, cdms_cocu, cdms_opet, cdms_navt_pk, cdms_pais_pk)\
 
 -- Indice en tbl_estadistica_estd
 DROP INDEX ix_estd_pepr_pk\

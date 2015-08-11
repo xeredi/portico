@@ -158,7 +158,7 @@ INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text)
 
 -- Movimiento Mercancia
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_pk, entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto)
-VALUES (33090, 23005, 45285, 1, 1, 1, 4, 1, 1, 1, NULL)\
+VALUES (33090, 23005, 43555, 1, 1, 1, 4, 1, 1, 1, NULL)\
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_pk, entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto)
 VALUES (33091, 23005, 45055, 1, 1, 2, 4, 1, 1, 1, NULL)\
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_pk, entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto)

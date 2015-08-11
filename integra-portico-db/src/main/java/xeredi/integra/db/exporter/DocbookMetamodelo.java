@@ -4,24 +4,24 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoDatoProxy;
-import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
-import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
-import xeredi.integra.model.metamodelo.proxy.TipoServicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
-import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
+import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoEstadisticaDetailVO;
+import xeredi.integra.model.metamodelo.vo.TipoParametroDetailVO;
+import xeredi.integra.model.metamodelo.vo.TipoServicioDetailVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubparametroDetailVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc

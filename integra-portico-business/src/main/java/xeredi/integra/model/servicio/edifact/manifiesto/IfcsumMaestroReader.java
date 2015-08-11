@@ -1,11 +1,25 @@
 package xeredi.integra.model.servicio.edifact.manifiesto;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import xeredi.integra.model.comun.bo.PuertoBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
+import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
+import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
+import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
+import xeredi.integra.model.metamodelo.vo.TipoDato;
+import xeredi.integra.model.servicio.bo.ServicioBO;
+import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bBaseVisitor;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.BgmContext;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.CniContext;
@@ -17,6 +31,9 @@ import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.LocCont
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.NadContext;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.PciContext;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.RffContext;
+import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.TdtContext;
+import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
+import xeredi.integra.model.servicio.vo.ServicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -38,6 +55,18 @@ public final class IfcsumMaestroReader extends IfcsumD14bBaseVisitor {
 
     /** The numero escala. */
     private String numeroEscala;
+
+    /** The prto. */
+    private PuertoVO prto;
+
+    /** The escala. */
+    private ServicioVO escala;
+
+    /** The prmt map. */
+    private final Map<Entidad, Map<String, ParametroVO>> prmtMap = new HashMap<>();
+
+    /** The nif map. */
+    private final Map<String, ParametroVO> nifMap = new HashMap<>();
 
     /**
      * {@inheritDoc}
@@ -197,6 +226,24 @@ public final class IfcsumMaestroReader extends IfcsumD14bBaseVisitor {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object visitTdt(final TdtContext ctx) {
+        switch (ctx.f8051().getText()) {
+        case "10":
+        case "30":
+            addCodigoMaestro(Entidad.MODO_TRANSPORTE_EDI, ctx.c220().f8067().getText());
+
+            break;
+        default:
+            break;
+        }
+
+        return super.visitTdt(ctx);
+    }
+
+    /**
      * Adds the codigo maestro.
      *
      * @param entidad
@@ -213,47 +260,108 @@ public final class IfcsumMaestroReader extends IfcsumD14bBaseVisitor {
     }
 
     /**
-     * Gets the maestro codes map.
+     * Buscar dependencias.
      *
-     * @return the maestro codes map
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public Map<Entidad, Set<String>> getMaestroCodesMap() {
-        return maestroCodesMap;
+    public void buscarDependencias() throws InstanceNotFoundException {
+        // Busqueda del puerto
+        final PuertoBO prtoBO = new PuertoBO();
+        final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+
+        prtoCriterio.setRecAduanero(recAduanero);
+
+        prto = prtoBO.selectObject(prtoCriterio);
+
+        addCodigoMaestro(Entidad.UNLOCODE, prto.getUnlocode());
+
+        // Busqueda de la escala
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(Entidad.MANIFIESTO.getId());
+        final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
+
+        prtoCriterio.setId(prto.getId());
+
+        srvcCriterio.setEntiId(Entidad.MANIFIESTO.getId());
+        srvcCriterio.setPrto(prtoCriterio);
+        srvcCriterio.setAnno(anioEscala);
+        srvcCriterio.setNumero(numeroEscala);
+
+        escala = srvcBO.selectObject(srvcCriterio);
+        final Date fref = escala.getFref(); // FIXME
+
+        // Maestros
+        for (final Entidad entidad : maestroCodesMap.keySet()) {
+            prmtMap.put(entidad, new HashMap<String, ParametroVO>());
+
+            final ParametroBO prmtBO = ParametroBOFactory.newInstance(entidad.getId());
+            final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
+
+            if (TipoParametroProxy.select(entidad.getId()).getEnti().isPuerto()) {
+                prmtCriterio.setPrto(prtoCriterio);
+            }
+
+            prmtCriterio.setEntiId(entidad.getId());
+            prmtCriterio.setFechaVigencia(fref);
+            prmtCriterio.setParametros(maestroCodesMap.get(entidad));
+
+            for (final ParametroVO prmt : prmtBO.selectList(prmtCriterio)) {
+                prmtMap.get(entidad).put(prmt.getParametro(), prmt);
+            }
+        }
+
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.ORGANIZACION.getId());
+        final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
+
+        prmtCriterio.setFechaVigencia(fref);
+        prmtCriterio.setItdtMap(new HashMap<Long, ItemDatoCriterioVO>());
+
+        final ItemDatoCriterioVO itdtCriterio = new ItemDatoCriterioVO();
+
+        itdtCriterio.setTpdtId(TipoDato.CADENA_02.getId());
+        itdtCriterio.setCadenas(nifSet);
+
+        prmtCriterio.setEntiId(Entidad.ORGANIZACION.getId());
+        prmtCriterio.getItdtMap().put(TipoDato.CADENA_02.getId(), itdtCriterio);
+
+        for (final ParametroVO prmt : prmtBO.selectList(prmtCriterio)) {
+            nifMap.put(prmt.getItdt(TipoDato.CADENA_02.getId()).getCadena(), prmt);
+        }
     }
 
     /**
-     * Gets the nif set.
+     * Gets the prto.
      *
-     * @return the nif set
+     * @return the prto
      */
-    public Set<String> getNifSet() {
-        return nifSet;
+    public PuertoVO getPrto() {
+        return prto;
     }
 
     /**
-     * Gets the rec aduanero.
+     * Gets the escala.
      *
-     * @return the rec aduanero
+     * @return the escala
      */
-    public String getRecAduanero() {
-        return recAduanero;
+    public ServicioVO getEscala() {
+        return escala;
     }
 
     /**
-     * Gets the anio escala.
+     * Gets the prmt map.
      *
-     * @return the anio escala
+     * @return the prmt map
      */
-    public String getAnioEscala() {
-        return anioEscala;
+    public Map<Entidad, Map<String, ParametroVO>> getPrmtMap() {
+        return prmtMap;
     }
 
     /**
-     * Gets the numero escala.
+     * Gets the nif map.
      *
-     * @return the numero escala
+     * @return the nif map
      */
-    public String getNumeroEscala() {
-        return numeroEscala;
+    public Map<String, ParametroVO> getNifMap() {
+        return nifMap;
     }
 }

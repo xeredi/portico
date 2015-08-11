@@ -46,9 +46,9 @@ public class IfcsumLoaderTest {
         LOG.info(message);
 
         final ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(filepath));
-        final IfcsumLexer lexer = new IfcsumLexer(input);
+        final IfcsumD14bLexer lexer = new IfcsumD14bLexer(input);
         final CommonTokenStream tokens = new CommonTokenStream(lexer);
-        final IfcsumParser parser = new IfcsumParser(tokens);
+        final IfcsumD14bParser parser = new IfcsumD14bParser(tokens);
         final ParseTree tree = parser.ifcsum();
 
         final IfcsumLoader loader = new IfcsumLoader();

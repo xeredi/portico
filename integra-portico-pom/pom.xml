@@ -279,6 +279,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>
 <!-- <doclet.version>5.6.6</doclet.version> <doclet.additionalparam> -inferrel -inferdep -quiet -hide java.* -hide

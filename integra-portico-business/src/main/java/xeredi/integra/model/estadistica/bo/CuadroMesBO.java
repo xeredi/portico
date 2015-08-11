@@ -34,7 +34,7 @@ public class CuadroMesBO {
             peprCriterio.setId(peprId);
 
             for (final CuadroMesVO cdmsVO : cdmsDAO.selectList(peprCriterio)) {
-                final String cocuKey = cdmsVO.getCocu().getParametro();
+                final String cocuKey = cdmsVO.getCocu();
 
                 if (!cdmsMap.containsKey(cocuKey)) {
                     cdmsMap.put(cocuKey, new ArrayList<CuadroMesVO>());

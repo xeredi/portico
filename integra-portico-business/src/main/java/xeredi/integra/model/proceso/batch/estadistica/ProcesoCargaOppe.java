@@ -78,25 +78,25 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
         final Map<String, PuertoVO> prtoMap = new HashMap<>();
 
         // Lectura de los parametros de entrada
-        final long sprtId = Long.parseLong(prpmMap.get(AUTP_PARAM).getValor());
+        final String sprtCodigo = prpmMap.get(AUTP_PARAM).getValor();
         final int anio = Integer.parseInt(prpmMap.get(ANIO_PARAM).getValor());
         final int mes = Integer.parseInt(prpmMap.get(MES_PARAM).getValor());
         final boolean sobreescribir = Boolean.parseBoolean(prpmMap.get(SOBREESCRIBIR_PARAM).getValor());
 
-        LOG.info("Carga estadisticas: " + sprtId + ", " + anio + ", " + mes);
+        LOG.info("Carga estadisticas: " + sprtCodigo + ", " + anio + ", " + mes);
 
         try {
             final SuperpuertoBO sprtBO = new SuperpuertoBO();
             final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
 
-            sprtCriterio.setId(sprtId);
+            sprtCriterio.setCodigo(sprtCodigo);
 
             final SuperpuertoVO sprt = sprtBO.selectObject(sprtCriterio);
 
             final PuertoBO prtoBO = new PuertoBO();
             final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-            prtoCriterio.setSprtId(sprtId);
+            prtoCriterio.setSprtId(sprt.getId());
 
             for (final PuertoVO prto : prtoBO.selectList(prtoCriterio)) {
                 prtoMap.put(prto.getCodigo(), prto);
@@ -108,7 +108,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
             pepr.setAnio(anio);
             pepr.setMes(mes);
         } catch (final InstanceNotFoundException ex) {
-            addError(MensajeCodigo.E_003, String.valueOf(sprtId));
+            addError(MensajeCodigo.E_003, sprtCodigo);
         }
 
         if (prmnList.isEmpty()) {

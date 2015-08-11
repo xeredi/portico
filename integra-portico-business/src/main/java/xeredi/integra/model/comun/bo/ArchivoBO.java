@@ -3,11 +3,10 @@ package xeredi.integra.model.comun.bo;
 import java.io.InputStream;
 import java.util.List;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import lombok.NonNull;
 import xeredi.integra.model.comun.dao.ArchivoDAO;
 import xeredi.integra.model.comun.dao.ArchivoInfoDAO;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;

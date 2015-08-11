@@ -106,25 +106,25 @@ WHERE
 
 
 -- EscalaEsAvituallamiento()
-SELECT portico.escalaEsAvituallamiento(1593169, NOW());
+SELECT portico.escalaEsAvituallamiento(1593169, NOW()) FROM DUAL;
 
 -- EscalaValorContador(TipoContador)
-SELECT portico.escalaValorContador(1593079, NOW(), 'ES');
+SELECT portico.escalaValorContador(1593079, NOW(), 'ES') FROM DUAL;
 
 -- EscalaEsBuqueCertificado(TipoCertificado)
-SELECT portico.escalaEsBuqueCertificado(1593174, NOW(), '245');
+SELECT portico.escalaEsBuqueCertificado(1593174, NOW(), '245') FROM DUAL;
 
 -- EscalaEsBuqueBaseEnPuerto()
-SELECT portico.escalaEsBuqueBaseEnPuerto(1229010, NOW());
+SELECT portico.escalaEsBuqueBaseEnPuerto(1229010, NOW()) FROM DUAL;
 
 -- escalaNumeroPuertosBuque
-SELECT portico.escalaNumeroPuertosBuque(1229010, NOW());
+SELECT portico.escalaNumeroPuertosBuque(1229010, NOW()) FROM DUAL;
 
 -- atraqueUdsGt
-SELECT portico.atraqueUdsGt(1628440, NOW());
+SELECT portico.atraqueUdsGt(1628440, NOW()) FROM DUAL;
 
 -- escalaUdsGt
-SELECT portico.escalaUdsGt(1628195, NOW());
+SELECT portico.escalaUdsGt(1628195, NOW()) FROM DUAL;
 
 
 

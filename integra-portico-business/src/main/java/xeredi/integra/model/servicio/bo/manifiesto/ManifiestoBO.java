@@ -2,11 +2,12 @@ package xeredi.integra.model.servicio.bo.manifiesto;
 
 import java.util.List;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.item.vo.ItemTramiteVO;
@@ -15,6 +16,7 @@ import xeredi.integra.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.integra.model.servicio.bo.AbstractServicioBO;
 import xeredi.integra.model.servicio.dao.manifiesto.BlDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoResumenDAO;
+import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoServicioDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoSubservicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -24,8 +26,6 @@ import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesCriterioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
 import xeredi.util.mybatis.SqlMapperLocator;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -37,20 +37,23 @@ public final class ManifiestoBO extends AbstractServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void insertPostOperations(final SqlSession session, final ServicioVO srvcVO,
+    protected void insertPostOperations(final SqlSession session, final ServicioVO srvc,
             final List<SubservicioVO> ssrvList, final List<SubservicioSubservicioVO> ssssList) {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
 
         final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
         final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
 
-        srvcCriterio.setId(srvcVO.getId());
+        srvcCriterio.setId(srvc.getId());
         ssrvCriterio.setSrvc(srvcCriterio);
 
+        // FIXME
         // blDAO.updateRecalcularEstado(ssrvCriterio);
         // blDAO.updateRecalcularTipoIva(ssrvCriterio);
 
-        // TODO Recalcular estado manifiesto
+        final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
+
+        maniDAO.updateRecalcularEstado(srvc.getId());
     }
 
     /**

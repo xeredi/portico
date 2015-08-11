@@ -1,4 +1,5 @@
-﻿SELECT srvc_pepr_pk, srvc_tpsr_pk, COUNT(1)
+SELECT
+	srvc_pepr_pk, srvc_tpsr_pk, COUNT(1)
 FROM tbl_servicio_srvc 
 WHERE srvc_pepr_pk IS NOT NULL
 GROUP BY srvc_pepr_pk, srvc_tpsr_pk
@@ -67,10 +68,10 @@ SELECT
 	, UNIDAD_CARGA, BOOLEANO_01, INST_ESP, ACUERDO, TERMINAL, TIPO_EQUI
 	, SUM(COALESCE(DECIMAL_01, 0)) / 1000 AS DECIMAL_01, SUM(COALESCE(ENTERO_01, 0)) AS ENTERO_01, SUM(COALESCE(DECIMAL_02, 0) * COALESCE(ENTERO_01, 0)) AS DECIMAL_02
 FROM (
-	SELECT *
+	SELECT sql.*
 		, (
 			SELECT ssdt_prmt_pk
-			FROM tbl_subservicio_dato_ssdt
+			FROM tbl_subservicio_dato_ssdt 
 			WHERE ssdt_ssrv_pk = bl_pk
 				AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
 		) AS TIPO_OP_BL

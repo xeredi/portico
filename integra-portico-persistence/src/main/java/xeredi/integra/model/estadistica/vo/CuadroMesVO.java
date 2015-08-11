@@ -21,10 +21,10 @@ public final class CuadroMesVO {
     private PuertoVO prto;
 
     /** The cocu. */
-    private ParametroVO cocu;
+    private String cocu;
 
     /** The opet. */
-    private ParametroVO opet;
+    private String opet;
 
     /** The navt. */
     private ParametroVO navt;
@@ -67,7 +67,7 @@ public final class CuadroMesVO {
      *
      * @return the cocu
      */
-    public ParametroVO getCocu() {
+    public String getCocu() {
         return cocu;
     }
 
@@ -77,7 +77,7 @@ public final class CuadroMesVO {
      * @param value
      *            the new cocu
      */
-    public void setCocu(final ParametroVO value) {
+    public void setCocu(final String value) {
         cocu = value;
     }
 
@@ -86,7 +86,7 @@ public final class CuadroMesVO {
      *
      * @return the opet
      */
-    public ParametroVO getOpet() {
+    public String getOpet() {
         return opet;
     }
 
@@ -96,7 +96,7 @@ public final class CuadroMesVO {
      * @param value
      *            the new opet
      */
-    public void setOpet(final ParametroVO value) {
+    public void setOpet(final String value) {
         opet = value;
     }
 

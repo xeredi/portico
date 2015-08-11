@@ -13,6 +13,8 @@ import java.util.Set;
 
 import org.antlr.v4.runtime.RuleContext;
 
+import com.google.common.base.Preconditions;
+
 import lombok.NonNull;
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.vo.PuertoVO;
@@ -31,6 +33,7 @@ import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.DocCont
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.DtmContext;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.EqdContext;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.EqnContext;
+import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.FtxContext;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.GidContext;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.GorContext;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.IfcsumContext;
@@ -43,6 +46,7 @@ import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.SelCont
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.SgpContext;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.TdtContext;
 import xeredi.integra.model.servicio.vo.ServicioVO;
+import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -50,6 +54,21 @@ import xeredi.integra.model.servicio.vo.SubservicioVO;
  * The Class IfcsumServicioReader.
  */
 public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
+
+    /**
+     * The Enum ElementoActual.
+     */
+    enum ElementoActual {
+
+        /** The mani. */
+        mani, /** The mabl. */
+        mabl, /** The part. */
+        part, /** The equi. */
+        equi
+    };
+
+    /** The elemento actual. */
+    private ElementoActual elementoActual;
 
     /** The funcion. */
     private String funcion;
@@ -72,6 +91,9 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
     /** The ssrv map. */
     private final List<SubservicioVO> ssrvList = new ArrayList<>();
 
+    /** The ssss list. */
+    private final List<SubservicioSubservicioVO> ssssList = new ArrayList<>();
+
     /** The ssss map. */
     private final Map<Long, Set<Long>> ssssMap = new HashMap<>();
 
@@ -80,9 +102,15 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
     /**
      * Relacion entre partidas y equipamientos, {@link Map} indexado por matricula de equipamiento, valor el
-     * {@link Map} indexado por id de partida y valor el numero de bultos.
+     * {@link List} de partida-equipamiento.
      */
-    private final Map<String, Map<Long, Long>> paeqMap = new HashMap<>();
+    private final Map<String, List<SubservicioVO>> paeqMap = new HashMap<>();
+
+    /** The contador. */
+    private int contador = 0;
+
+    /** The maco actual. */
+    private SubservicioVO macoActual;
 
     /** The bl actual. */
     private SubservicioVO blActual;
@@ -95,6 +123,12 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
     /** The pamp actual. */
     private SubservicioVO pampActual;
+
+    /** The paeq actual. */
+    private SubservicioVO paeqActual;
+
+    /** The pado actual. */
+    private SubservicioVO padoActual;
 
     /** The equi actual. */
     private SubservicioVO equiActual;
@@ -130,10 +164,13 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
     public Object visitIfcsum(final IfcsumContext ctx) {
         final TipoServicioDetailVO tpsrDetail = TipoServicioProxy.select(Entidad.MANIFIESTO.getId());
 
+        elementoActual = ElementoActual.mani;
+
         srvc = new ServicioVO(tpsrDetail);
 
         srvc.setPrto(prto);
         srvc.setFref(escala.getFref());
+        srvc.setAnno(escala.getAnno());
         srvc.addItdt(TipoDato.ESCALA.getId(), escala);
         srvc.addItdt(TipoDato.BOOLEANO_01.getId(), 1L);
 
@@ -171,24 +208,155 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
      * {@inheritDoc}
      */
     @Override
+    public Object visitNad(final NadContext ctx) {
+        switch (ctx.f3035().getText()) {
+        case "CV":
+            srvc.addItdt(TipoDato.ORGA_2.getId(), getOrganizacion(ctx.c082().f3039().getText().substring(2)));
+
+            break;
+        case "CN":
+            final String nif = ctx.c082().f3039().getText().substring(2);
+
+            if (!macoMap.containsKey(nif)) {
+                final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy
+                        .select(Entidad.MANIFIESTO_CONSIGNATARIO.getId());
+
+                macoActual = new SubservicioVO(tpssDetail);
+
+                macoActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+                macoActual.setNumero(contador++);
+                macoActual.addItdt(TipoDato.ORGA.getId(), getOrganizacion(nif));
+
+                macoMap.put(nif, macoActual);
+                ssrvList.add(macoActual);
+            }
+
+            break;
+        case "TR":
+            srvc.addItdt(TipoDato.ORGA.getId(), getOrganizacion(ctx.c082().f3039().getText()));
+
+            // FIXME Como saber si es de Manifiesto, Bl, partida...
+
+            break;
+        default:
+            break;
+        }
+
+        return super.visitNad(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object visitCni(final CniContext ctx) {
+        final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(Entidad.BL.getId());
+
+        elementoActual = ElementoActual.mabl;
+
+        blActual = new SubservicioVO(tpssDetail);
+
+        blActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        blActual.setNumero(contador++);
+        blActual.setEstado("I"); // FIXME Calcular
+        blActual.addItdt(TipoDato.COD_EXEN.getId(), "0"); // FIXME Calcular
+        blActual.addItdt(TipoDato.BOOLEANO_01.getId(), 0L);
+        blActual.addItdt(TipoDato.BOOLEANO_02.getId(), srvc.getItdt(TipoDato.BOOLEANO_03.getId()).getCantidadEntera());
+
+        ssrvList.add(blActual);
+        addSsss(macoActual, blActual);
+
+        blActual.addItdt(TipoDato.ENTERO_01.getId(), parseLong(ctx.f1490()));
+        blActual.addItdt(TipoDato.CADENA_01.getId(), ctx.c503().f1004().getText());
+
+        switch (ctx.c503().f1373().getText()) {
+        case "ZZ1":
+            blActual.addItdt(TipoDato.TIPO_BL.getId(), "M");
+
+            break;
+        case "ZZ2":
+            blActual.addItdt(TipoDato.TIPO_BL.getId(), "P");
+
+            break;
+        case "ZZ3":
+            blActual.addItdt(TipoDato.TIPO_BL.getId(), "V");
+
+            break;
+
+        default:
+            break;
+        }
+
+        return super.visitCni(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object visitGid(final GidContext ctx) {
+        final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(Entidad.PARTIDA.getId());
+
+        elementoActual = ElementoActual.part;
+
+        partActual = new SubservicioVO(tpssDetail);
+
+        partActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        partActual.setNumero(contador++);
+        partActual.setEstado("R");
+        partActual.addItdt(TipoDato.COD_EXEN.getId(), "0"); // FIXME Calcular
+
+        ssrvList.add(partActual);
+        addSsss(blActual, partActual);
+
+        partActual.setNumero(parseInteger(ctx.f1496()));
+        partActual.addItdt(TipoDato.TIPO_BULTO.getId(), getMaestro(Entidad.TIPO_BULTO, ctx.c213(0).f7065().getText()));
+
+        switch (blActual.getItdt(TipoDato.TIPO_BL.getId()).getCadena()) {
+        case "P":
+            partActual.addItdt(TipoDato.ENTERO_03.getId(), parseLong(ctx.c213(0).f7224()));
+
+            break;
+        case "M":
+            partActual.addItdt(TipoDato.ENTERO_01.getId(), parseLong(ctx.c213(0).f7224()));
+
+            break;
+
+        default:
+            break;
+        }
+
+        return super.visitGid(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Object visitGor(final GorContext ctx) {
         switch (ctx.f8323().getText()) {
         case "1":
+            srvc.addItdt(TipoDato.TIPO_MANIF.getId(), "CA");
 
             break;
         case "ZCL":
+            srvc.addItdt(TipoDato.TIPO_MANIF.getId(), "CL");
 
             break;
         case "ZSC":
+            srvc.addItdt(TipoDato.TIPO_MANIF.getId(), "SC");
 
             break;
         case "2":
+            srvc.addItdt(TipoDato.TIPO_MANIF.getId(), "DE");
 
             break;
         case "ZDL":
+            srvc.addItdt(TipoDato.TIPO_MANIF.getId(), "DL");
 
             break;
         case "ZSD":
+            srvc.addItdt(TipoDato.TIPO_MANIF.getId(), "SD");
 
             break;
         case "ZRE":
@@ -200,11 +368,17 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
             break;
         case "ZS1":
+            srvc.addItdt(TipoDato.TRANS_SIMPL.getId(), "ZS1");
+            srvc.addItdt(TipoDato.BOOLEANO_03.getId(), 1L);
+
+            break;
         case "ZS2":
+            srvc.addItdt(TipoDato.TRANS_SIMPL.getId(), "ZS2");
             srvc.addItdt(TipoDato.BOOLEANO_03.getId(), 1L);
 
             break;
         case "ZS4":
+            srvc.addItdt(TipoDato.TRANS_SIMPL.getId(), "ZS4");
             srvc.addItdt(TipoDato.BOOLEANO_03.getId(), 0L);
 
             break;
@@ -227,9 +401,18 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
     public Object visitLoc(final LocContext ctx) {
         switch (ctx.f3227().getText()) {
         case "14":
-            srvc.addItdt(TipoDato.ALIN.getId(), getMaestro(Entidad.ALINEACION, ctx.c517().f3225().getText()));
+            switch (elementoActual) {
+            case mani:
+                srvc.addItdt(TipoDato.ALIN.getId(), getMaestro(Entidad.ALINEACION, ctx.c517().f3225().getText()));
 
-            // FIXME Como saber si es alineacion del manifiesto o del BL
+                break;
+            case mabl:
+                blActual.addItdt(TipoDato.ALIN.getId(), getMaestro(Entidad.ALINEACION, ctx.c517().f3225().getText()));
+
+                break;
+            default:
+                throw new Error("Alineacion no esperada en elemento: " + elementoActual);
+            }
 
             break;
         case "5":
@@ -238,9 +421,11 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
             break;
         case "9":
             blActual.addItdt(TipoDato.UNLOCODE_2.getId(), getMaestro(Entidad.UNLOCODE, ctx.c517().f3225().getText()));
+            blActual.addItdt(TipoDato.UNLOCODE_3.getId(), getMaestro(Entidad.UNLOCODE, srvc.getPrto().getUnlocode()));
 
             break;
         case "11":
+            blActual.addItdt(TipoDato.UNLOCODE_2.getId(), getMaestro(Entidad.UNLOCODE, srvc.getPrto().getUnlocode()));
             blActual.addItdt(TipoDato.UNLOCODE_3.getId(), getMaestro(Entidad.UNLOCODE, ctx.c517().f3225().getText()));
 
             break;
@@ -274,22 +459,64 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
             break;
         case "ZTC":
-            final ParametroVO prmt = getMaestro(Entidad.TERMINAL, ctx.c506().f1154().getText());
+            final ParametroVO terminal = getMaestro(Entidad.TERMINAL, ctx.c506().f1154().getText());
+            final ParametroVO instalacionEspecial = getMaestro(Entidad.INSTALACION_ESPECIAL,
+                    ctx.c506().f1154().getText());
 
-            if (prmt == null) {
-                srvc.addItdt(TipoDato.INST_ESP.getId(),
-                        getMaestro(Entidad.INSTALACION_ESPECIAL, ctx.c506().f1154().getText()));
-            } else {
-                srvc.addItdt(TipoDato.TERMINAL.getId(), prmt);
+            if (terminal != null) {
+                switch (elementoActual) {
+                case mani:
+                    srvc.addItdt(TipoDato.TERMINAL.getId(), terminal);
+
+                    break;
+                case mabl:
+                    blActual.addItdt(TipoDato.TERMINAL.getId(), terminal);
+
+                    break;
+                case part:
+                    partActual.addItdt(TipoDato.TERMINAL.getId(), terminal);
+
+                    break;
+                default:
+                    throw new Error("Terminal no esperada en el elemento: " + elementoActual);
+                }
             }
 
-            // FIXME Como saber si es de Manifiesto, Bl, partida...
+            if (instalacionEspecial != null) {
+                switch (elementoActual) {
+                case mabl:
+                    blActual.addItdt(TipoDato.INST_ESP.getId(), instalacionEspecial);
+
+                    break;
+                case part:
+                    partActual.addItdt(TipoDato.INST_ESP.getId(), instalacionEspecial);
+
+                    break;
+                default:
+                    throw new Error("Terminal no esperada en el elemento: " + elementoActual);
+                }
+            }
 
             break;
         case "ZBC":
-            srvc.addItdt(TipoDato.ACUERDO.getId(), getMaestro(Entidad.ACUERDO, ctx.c506().f1154().getText()));
+            final ParametroVO acuerdo = getMaestro(Entidad.ACUERDO, ctx.c506().f1154().getText());
 
-            // FIXME Como saber si es de Manifiesto, Bl, partida...
+            switch (elementoActual) {
+            case mani:
+                srvc.addItdt(TipoDato.ACUERDO.getId(), acuerdo);
+
+                break;
+            case mabl:
+                blActual.addItdt(TipoDato.ACUERDO.getId(), acuerdo);
+
+                break;
+            case part:
+                partActual.addItdt(TipoDato.ACUERDO.getId(), acuerdo);
+
+                break;
+            default:
+                throw new Error("Terminal no esperada en el elemento: " + elementoActual);
+            }
 
             break;
         case "ZLS":
@@ -331,49 +558,16 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
      * {@inheritDoc}
      */
     @Override
-    public Object visitNad(final NadContext ctx) {
-        switch (ctx.f3035().getText()) {
-        case "CV":
-            srvc.addItdt(TipoDato.ORGA_2.getId(), getOrganizacion(ctx.c082().f3039().getText().substring(2)));
-
-            break;
-        case "CN":
-            final String nif = ctx.c082().f3039().getText().substring(2);
-
-            if (!macoMap.containsKey(nif)) {
-                final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy
-                        .select(Entidad.MANIFIESTO_CONSIGNATARIO.getId());
-                final SubservicioVO maco = new SubservicioVO(tpssDetail);
-
-                maco.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
-                maco.addItdt(TipoDato.ORGA.getId(), getOrganizacion(nif));
-
-                macoMap.put(nif, maco);
-                ssrvList.add(maco);
-            }
-
-            break;
-        case "TR":
-            srvc.addItdt(TipoDato.ORGA.getId(), getOrganizacion(ctx.c082().f3039().getText()));
-
-            // FIXME Como saber si es de Manifiesto, Bl, partida...
-
-            break;
-        default:
-            break;
-        }
-
-        return super.visitNad(ctx);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Object visitDtm(final DtmContext ctx) {
+        final Date fecha = parseDate(ctx.c507().f2380(), ctx.c507().f2379());
+
         switch (ctx.c507().f2005().getText()) {
         case "137":
-            srvc.addItdt(TipoDato.FECHA_01.getId(), parseDate(ctx.c507().f2380(), ctx.c507().f2379()));
+            if (padoActual == null) {
+                srvc.addItdt(TipoDato.FECHA_01.getId(), fecha);
+            } else {
+                padoActual.addItdt(TipoDato.FECHA_01.getId(), fecha);
+            }
 
             break;
         default:
@@ -395,7 +589,18 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
             break;
         case "10":
         case "30":
-            blActual.addItdt(TipoDato.MODO_TRANS_EDI.getId(), ctx.c220().f8067().getText());
+            final ParametroVO modoTransporteEdi = getMaestro(Entidad.MODO_TRANSPORTE_EDI, ctx.c220().f8067().getText());
+
+            blActual.addItdt(TipoDato.MODO_TRANS_EDI.getId(), modoTransporteEdi);
+            blActual.addItdt(TipoDato.TIPO_TRANSPORTE.getId(),
+                    modoTransporteEdi.getItdt(TipoDato.TIPO_TRANSPORTE.getId()).getCadena());
+
+            // Calculo del Tipo de operacion del BL
+            final String tipoOperacionBl = null;
+
+            // FIXME Convertir en CR
+            blActual.addItdt(TipoDato.TIPO_OP_BL.getId(), calcularTipoOperacionBl(
+                    srvc.getItdt(TipoDato.TIPO_MANIF.getId()).getCadena(), modoTransporteEdi.getParametro()));
 
             break;
         default:
@@ -403,60 +608,6 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
         }
 
         return super.visitTdt(ctx);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Object visitCni(final CniContext ctx) {
-        final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(Entidad.BL.getId());
-
-        blActual = new SubservicioVO(tpssDetail);
-
-        blActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
-
-        ssrvList.add(blActual);
-
-        blActual.setNumero(parseInteger(ctx.f1490()));
-        blActual.addItdt(TipoDato.CADENA_01.getId(), ctx.c503().f1004().getText());
-        blActual.addItdt(TipoDato.TIPO_BL.getId(), ctx.c503().f1373().getText());
-
-        return super.visitCni(ctx);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Object visitGid(final GidContext ctx) {
-        final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(Entidad.PARTIDA.getId());
-
-        partActual = new SubservicioVO(tpssDetail);
-
-        partActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
-
-        ssrvList.add(partActual);
-        addSsss(blActual.getId(), partActual.getId());
-
-        partActual.setNumero(parseInteger(ctx.f1496()));
-        partActual.addItdt(TipoDato.TIPO_BULTO.getId(), getMaestro(Entidad.TIPO_BULTO, ctx.c213(0).f7065().getText()));
-
-        switch (blActual.getItdt(TipoDato.TIPO_BL.getId()).getCadena()) {
-        case "P":
-            partActual.addItdt(TipoDato.ENTERO_03.getId(), parseLong(ctx.c213(0).f7224()));
-
-            break;
-        case "M":
-            partActual.addItdt(TipoDato.ENTERO_01.getId(), parseLong(ctx.c213(0).f7224()));
-
-            break;
-
-        default:
-            break;
-        }
-
-        return super.visitGid(ctx);
     }
 
     /**
@@ -474,7 +625,7 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
             break;
         case "WT":
-            equiActual.addItdt(TipoDato.ENTERO_02.getId(), parseDouble(ctx.c174().f6314()));
+            equiActual.addItdt(TipoDato.ENTERO_02.getId(), parseLong(ctx.c174().f6314()));
 
             break;
         default:
@@ -495,9 +646,10 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
         paimActual = new SubservicioVO(tpssDetail);
 
         paimActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        paimActual.setNumero(contador++);
 
         ssrvList.add(paimActual);
-        addSsss(partActual.getId(), paimActual.getId());
+        addSsss(partActual, paimActual);
 
         paimActual.addItdt(TipoDato.INST_MARC.getId(), getMaestro(Entidad.INSTRUCCION_MARCAJE, ctx.f4233().getText()));
         paimActual.addItdt(TipoDato.CADENA_01.getId(), ctx.c210().f7102(0).getText());
@@ -510,7 +662,16 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
      */
     @Override
     public Object visitDoc(final DocContext ctx) {
-        // TODO Auto-generated method stub
+        final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(Entidad.PARTIDA_DOCUMENTO.getId());
+
+        padoActual = new SubservicioVO(tpssDetail);
+
+        padoActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        padoActual.setNumero(contador++);
+
+        ssrvList.add(padoActual);
+        addSsss(partActual, padoActual);
+
         return super.visitDoc(ctx);
     }
 
@@ -519,14 +680,26 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
      */
     @Override
     public Object visitSgp(final SgpContext ctx) {
+        final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(Entidad.PARTIDA_EQUIPAMIENTO.getId());
+
+        paeqActual = new SubservicioVO(tpssDetail);
+
+        paeqActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        paeqActual.setNumero(contador++);
+
+        ssrvList.add(paeqActual);
+        addSsss(partActual, paeqActual);
+
         final String matricula = ctx.c237().f8260().getText();
         final Long numeroBultos = parseLong(ctx.f7224());
 
+        paeqActual.addItdt(TipoDato.ENTERO_01.getId(), numeroBultos);
+
         if (!paeqMap.containsKey(matricula)) {
-            paeqMap.put(matricula, new HashMap<Long, Long>());
+            paeqMap.put(matricula, new ArrayList<SubservicioVO>());
         }
 
-        paeqMap.get(matricula).put(partActual.getId(), numeroBultos);
+        paeqMap.get(matricula).add(paeqActual);
 
         return super.visitSgp(ctx);
     }
@@ -541,9 +714,11 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
         pampActual = new SubservicioVO(tpssDetail);
 
         ssrvList.add(pampActual);
-        addSsss(partActual.getId(), pampActual.getId());
+        addSsss(partActual, pampActual);
 
         pampActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        pampActual.setNumero(contador++);
+
         pampActual.addItdt(TipoDato.MERC_PELIG.getId(),
                 getMaestro(Entidad.MERCANCIAS_PELIGROSAS, ctx.c234().f7124().getText() + '-'
                         + ctx.c205().f8351().getText() + '-' + ctx.c205().f8092().getText()));
@@ -558,20 +733,42 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
     public Object visitEqd(final EqdContext ctx) {
         final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(Entidad.EQUIPAMIENTO.getId());
 
+        elementoActual = ElementoActual.equi;
+
         equiActual = new SubservicioVO(tpssDetail);
 
-        ssrvList.add(equiActual);
-        addSsss(blActual.getId(), equiActual.getId());
-
         equiActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
-        equiActual.addItdt(TipoDato.TIPO_EQUI.getId(),
-                getMaestro(Entidad.TIPO_EQUIPAMIENTO, ctx.f8053().getText() + ctx.c224().f8155().getText()));
+        equiActual.setNumero(contador++);
+        equiActual.setEstado("R");
+
+        ssrvList.add(equiActual);
+        addSsss(blActual, equiActual);
+
+        equiActual.addItdt(TipoDato.COD_EXEN.getId(), "0"); // FIXME Calcular
+
+        final ParametroVO tipoEquipamiento = getMaestro(Entidad.TIPO_EQUIPAMIENTO,
+                ctx.f8053().getText() + ctx.c224().f8155().getText());
+
+        equiActual.addItdt(TipoDato.TIPO_EQUI.getId(), tipoEquipamiento);
+        equiActual.addItdt(TipoDato.UNIDAD_CARGA.getId(),
+                tipoEquipamiento.getItdt(TipoDato.UNIDAD_CARGA.getId()).getPrmt());
 
         final String matricula = ctx.c237().f8260().getText();
 
         equiActual.addItdt(TipoDato.CADENA_01.getId(), matricula);
 
-        switch (ctx.f8169().getText()) {
+        final String indLlenoVacio = ctx.f8169().getText();
+
+        equiActual.addItdt(TipoDato.CADENA_02.getId(), indLlenoVacio);
+
+        // Hacer que el equipamiento sea padre de los partida-equipamiento
+        if (paeqMap.containsKey(matricula)) {
+            for (final SubservicioVO paeq : paeqMap.get(matricula)) {
+                addSsss(equiActual, paeq);
+            }
+        }
+
+        switch (indLlenoVacio) {
         case "4":
 
             break;
@@ -606,9 +803,10 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
         preqActual = new SubservicioVO(tpssDetail);
 
         preqActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        preqActual.setNumero(contador++);
 
         ssrvList.add(preqActual);
-        addSsss(equiActual.getId(), preqActual.getId());
+        addSsss(equiActual, preqActual);
 
         preqActual.addItdt(TipoDato.CADENA_01.getId(), ctx.f9308().getText());
 
@@ -616,19 +814,94 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
     }
 
     /**
-     * Adds the ssss.
-     *
-     * @param ssrvPadreId
-     *            the ssrv padre id
-     * @param srvHijoId
-     *            the srv hijo id
+     * {@inheritDoc}
      */
-    private void addSsss(final @NonNull Long ssrvPadreId, final @NonNull Long srvHijoId) {
-        if (!ssssMap.containsKey(ssrvPadreId)) {
-            ssssMap.put(ssrvPadreId, new HashSet<Long>());
+    @Override
+    public Object visitFtx(final FtxContext ctx) {
+        switch (ctx.f4451().getText()) {
+        case "AAA":
+            partActual.addItdt(TipoDato.CADENA_03.getId(), ctx.c108().f4440(0).getText());
+
+            break;
+        default:
+            break;
         }
 
-        ssssMap.get(ssrvPadreId).add(srvHijoId);
+        return super.visitFtx(ctx);
+    }
+
+    /**
+     * Adds the ssss.
+     *
+     * @param ssrvPadre
+     *            the ssrv padre
+     * @param ssrvHijo
+     *            the ssrv hijo
+     */
+    private void addSsss(final @NonNull SubservicioVO ssrvPadre, final @NonNull SubservicioVO ssrvHijo) {
+        Preconditions.checkNotNull(ssrvPadre.getId());
+        Preconditions.checkNotNull(ssrvHijo.getId());
+
+        if (!ssssMap.containsKey(ssrvPadre.getId())) {
+            ssssMap.put(ssrvPadre.getId(), new HashSet<Long>());
+        }
+
+        ssssMap.get(ssrvPadre.getId()).add(ssrvHijo.getId());
+        ssssList.add(new SubservicioSubservicioVO(ssrvPadre.getId(), ssrvHijo.getId()));
+    }
+
+    /**
+     * Calcular tipo operacion bl.
+     *
+     * @param tipoManifiesto
+     *            the tipo manifiesto
+     * @param modoTransporteEdi
+     *            the modo transporte edi
+     * @return the string
+     */
+    private String calcularTipoOperacionBl(final @NonNull String tipoManifiesto,
+            final @NonNull String modoTransporteEdi) {
+        switch (tipoManifiesto) {
+        case "DE":
+        case "CL":
+        case "DL":
+        case "SD":
+            switch (modoTransporteEdi) {
+            case "ZZ1":
+            case "ZZ5":
+                return "DT";
+            case "ZZ2":
+            case "ZZ6":
+                return "D";
+            case "ZZ3":
+                return "TD";
+            default:
+                break;
+            }
+
+            break;
+        case "CA":
+        case "SC":
+            switch (modoTransporteEdi) {
+            case "ZZ1":
+            case "ZZ5":
+                return "ET";
+            case "ZZ2":
+            case "ZZ6":
+                return "E";
+            case "ZZ3":
+                return "TE";
+
+            default:
+                break;
+            }
+
+            break;
+        default:
+            break;
+        }
+
+        return null;
     }
 
     /**
@@ -781,6 +1054,15 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
     }
 
     /**
+     * Gets the ssss list.
+     *
+     * @return the ssss list
+     */
+    public List<SubservicioSubservicioVO> getSsssList() {
+        return ssssList;
+    }
+
+    /**
      * Gets the funcion.
      *
      * @return the funcion
@@ -788,5 +1070,4 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
     public String getFuncion() {
         return funcion;
     }
-
 }

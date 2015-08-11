@@ -1,0 +1,5 @@
+TIPO_OPERACION_BL
+	enti_id = 20050
+	tpdt_id = 45285	-> 43555
+CONCEPTO_CUADRO_EST
+	enti_id = 20084

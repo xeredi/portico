@@ -47,14 +47,14 @@ import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.ParametroVersionVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroVersionVO;
-import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
-import xeredi.integra.model.metamodelo.proxy.TipoParametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
-import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
+import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoParametroDetailVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubparametroDetailVO;
 import xeredi.util.exception.DuplicateInstanceException;
 
 // TODO: Auto-generated Javadoc

@@ -1,4 +1,4 @@
-﻿
+
 -- Tuning
 SELECT COUNT(1)
 FROM
@@ -15,7 +15,7 @@ WHERE
 ;
 
 
-SELECT *
+SELECT sql.*
 	, (
 		CASE
 			WHEN tppr_es_i18n = 1
@@ -36,11 +36,11 @@ SELECT *
 		END
 	) AS p18n_texto
 FROM (
-	SELECT *
+	SELECT prmt.*, prvr.*
 		, NULL AS rownumVar
 	FROM
-		tbl_parametro_prmt
-		INNER JOIN tbl_parametro_version_prvr ON
+		tbl_parametro_prmt prmt
+		INNER JOIN tbl_parametro_version_prvr prvr ON
 			prvr_prmt_pk = prmt_pk
 	WHERE
 		prmt_tppr_pk = 20010
@@ -53,7 +53,7 @@ FROM (
 ;
 
 
-SELECT *
+SELECT sql.*
 	, (
 		CASE
 			WHEN tppr_es_i18n = 1 THEN (

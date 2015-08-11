@@ -11,7 +11,7 @@
 		<association property="prto" javaType="PuertoVO">
 			<result column="estd_subp_pk" property="id" />
 			<result column="prto_codigo" property="codigo" />
-			<result column="i18n_text" property="nombre" />
+			<result column="prto_nombre" property="nombre" />
 		</association>
 
 		<association property="pepr" javaType="PeriodoProcesoVO">
@@ -50,16 +50,10 @@
 			SELECT i18n_text
 			FROM tbl_i18n_i18n
 			WHERE
-				i18n_pref = 'prvr'
-				AND i18n_ext_pk = (
-					SELECT prvr_pk
-					FROM tbl_parametro_version_prvr
-					WHERE
-						prvr_prmt_pk = estd_subp_pk
-						AND pepr_freferencia BETWEEN prvr_fini AND COALESCE(prvr_ffin, pepr_freferencia)
-				)
+				i18n_pref = 'prto'
+				AND i18n_ext_pk = estd_subp_pk
 				AND i18n_lang = 'es'
-		) AS p18n_texto
+		) AS prto_nombre
     	]]>
 		</if>
     <![CDATA[

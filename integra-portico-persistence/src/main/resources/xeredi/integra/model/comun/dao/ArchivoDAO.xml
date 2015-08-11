@@ -32,7 +32,7 @@
 		</where>
 	</sql>
 
-	<select id="select" parameterType="ArchivoCriterioVO" resultMap="ResultMap">
+	<select id="selectObject" parameterType="ArchivoCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 	</select>

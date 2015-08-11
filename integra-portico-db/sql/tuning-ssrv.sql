@@ -19,9 +19,9 @@ SELECT
 	ssrv_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado, srvc_fref , srvc_pk, srvc_anno, srvc_numero
 	, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
 FROM (
-	SELECT *
+	SELECT ssrv.*
 		, NULL AS rownumVar
-	FROM tbl_subservicio_ssrv
+	FROM tbl_subservicio_ssrv ssrv
 	WHERE ssrv_tpss_pk = 22004
 	ORDER BY ssrv_srvc_pk, ssrv_numero
 	OFFSET 40 ROWS FETCH NEXT 20 ROWS ONLY
