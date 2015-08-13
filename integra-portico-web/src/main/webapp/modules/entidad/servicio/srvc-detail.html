@@ -1,6 +1,6 @@
 
 <tabset type="pills"> <tab select="vm.tabSelected(null)"> <tab-heading
-    ng-bind="::('enti_' + vm.enti.enti.id | translate)"></tab-heading>
+    ng-bind="'enti_' + vm.enti.enti.id | translate"></tab-heading>
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/servicio/srvc/edit/edit/{{::vm.enti.enti.id}}/{{::vm.item.id}}"><i
@@ -45,22 +45,22 @@
 
         <div class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
             <label translate="srvc_falta"></label>
-            <p class="form-control-static" ng-bind="::(vm.item.falta | date: ('format_datetime' | translate))"></p>
+            <p class="form-control-static" ng-bind="::(vm.item.falta | date: datetimeFormat)"></p>
         </div>
 
         <div ng-if="::!vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
             <label translate="fref"></label>
-            <p class="form-control-static" ng-bind="::(vm.item.fref | date: ('format_datetime' | translate))"></p>
+            <p class="form-control-static" ng-bind="::(vm.item.fref | date: datetimeFormat)"></p>
         </div>
 
         <div ng-if="::vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
             <label translate="fini"></label>
-            <p class="form-control-static" ng-bind="::(vm.item.fini | date: ('format_datetime' | translate))"></p>
+            <p class="form-control-static" ng-bind="::(vm.item.fini | date: datetimeFormat)"></p>
         </div>
 
         <div ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
             <label translate="ffin"></label>
-            <p class="form-control-static" ng-bind="::(vm.item.ffin | date: ('format_datetime' | translate))"></p>
+            <p class="form-control-static" ng-bind="::(vm.item.ffin | date: datetimeFormat)"></p>
         </div>
     </div>
 
@@ -80,13 +80,13 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="arin in vm.arinList track by $index">
-                <td><a ng-click="vm.download(::arin.id, ::arin.nombre)"> <span
+            <tr ng-repeat="arin in vm.arinList track by arin.id">
+                <td><a ng-click="vm.download(arin.id, arin.nombre)"> <span
                         class="glyphicon glyphicon-save"></span>
                 </a></td>
                 <td ng-bind="::arin.nombre"></td>
                 <td ng-bind="::(arin.tamanio | number:0)" class="number"></td>
-                <td ng-bind="::(arin.falta | date: ('format_datetime' | translate))"></td>
+                <td ng-bind="::(arin.falta | date: datetimeFormat)"></td>
             </tr>
         </tbody>
     </table>
@@ -106,11 +106,11 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="srtr in vm.srtrList track by $index">
+            <tr ng-repeat="srtr in vm.srtrList track by srtr.id">
                 <td><a ng-href="#/servicio/srvc/tramite-detail/{{::srtr.id}}"> <span
                         class="glyphicon glyphicon-search"></span>
                 </a></td>
-                <td ng-bind="::(srtr.fecha | date: ('format_datetime' | translate))"></td>
+                <td ng-bind="::(srtr.fecha | date: datetimeFormat)"></td>
                 <td ng-bind="::('trmt_' + srtr.trmt.id | translate)"></td>
                 <td
                     ng-bind="::('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + srtr.trmt.estadoOrig | translate)"></td>
@@ -120,7 +120,7 @@
         </tbody>
     </table>
 </div>
-</tab> <tab ng-repeat="entiHijaId in ::vm.enti.entiHijasList track by $index" active="vm.tabActive[entiHijaId]"
+</tab> <tab ng-repeat="entiHijaId in ::vm.enti.entiHijasList track by entiHijaId" active="vm.tabActive[entiHijaId]"
     select="vm.tabSelected(entiHijaId)"> <tab-heading ng-bind="::('enti_' + entiHijaId | translate)"></tab-heading>
 <div ng-if="vm.itemHijosMap[entiHijaId]">
     <div class="btn-toolbar" role="toolbar">
@@ -151,13 +151,13 @@
                     <th ng-if="::vm.entiHijasMap[entiHijaId].enti.temporal" class="date" translate="fini"></th>
                     <th ng-if="::vm.entiHijasMap[entiHijaId].enti.temporal" class="date" translate="ffin"></th>
 
-                    <th ng-repeat="tpdtId in ::vm.entiHijasMap[entiHijaId].entdGridList track by $index"
+                    <th ng-repeat="tpdtId in ::vm.entiHijasMap[entiHijaId].entdGridList track by tpdtId"
                         ng-bind="::('entd_' + vm.entiHijasMap[entiHijaId].entdMap[tpdtId].id | translate)"></th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr ng-repeat="itemHijo in vm.itemHijosMap[entiHijaId].list track by $index">
+                <tr ng-repeat="itemHijo in vm.itemHijosMap[entiHijaId].list track by itemHijo.id">
                     <td><a ng-href="#/servicio/ssrv/detail/{{::entiHijaId}}/{{::itemHijo.id}}"><span
                             class="glyphicon glyphicon-search"></span></a></td>
 
@@ -170,7 +170,7 @@
                     <td ng-if="::vm.entiHijasMap[entiHijaId].enti.temporal"
                         ng-bind="::(itemHijo.ffin | date: ('format_datetime' | translate))"></td>
 
-                    <td ng-repeat="tpdtId in ::vm.entiHijasMap[entiHijaId].entdGridList track by $index"
+                    <td ng-repeat="tpdtId in ::vm.entiHijasMap[entiHijaId].entdGridList track by tpdtId"
                         ng-switch="::vm.entiHijasMap[entiHijaId].entdMap[tpdtId].tpdt.tipoElemento"
                         nowrap="nowrap"><span ng-switch-when="BO"
                         class="glyphicon glyphicon-{{::(itemHijo.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove')}}"></span>
@@ -184,9 +184,9 @@
                         ng-bind="::itemHijo.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="PR"
                         bs-tooltip data-title="{{::itemHijo.itdtMap[tpdtId].prmt.etiqueta}}"
                         ng-bind="::itemHijo.itdtMap[tpdtId].prmt.parametro"></span> <span ng-switch-when="FE"
-                        ng-bind="::(itemHijo.itdtMap[tpdtId].fecha | date: ('format_date' | translate))"></span>
-                        <span ng-switch-when="FH"
-                        ng-bind="::(itemHijo.itdtMap[tpdtId].fecha | date: ('format_datetime' | translate))"></span></td>
+                        ng-bind="::(itemHijo.itdtMap[tpdtId].fecha | date: dateFormat)"></span> <span
+                        ng-switch-when="FH"
+                        ng-bind="::(itemHijo.itdtMap[tpdtId].fecha | date: datetimeFormat)"></span></td>
                 </tr>
             </tbody>
         </table>

@@ -79,6 +79,7 @@ angular
 						'$httpProvider',
 						function($httpProvider) {
 							var activeRequests = 0;
+							var startTimeMs;
 
 							// initialize get if not there
 							if (!$httpProvider.defaults.headers.get) {
@@ -93,6 +94,11 @@ angular
 											usSpinnerService) {
 										return {
 											'request' : function(request) {
+												if (activeRequests == 0) {
+													startTimeMs = (new Date())
+															.getMilliseconds();
+												}
+
 												activeRequests++;
 												usSpinnerService
 														.spin("spinner");
@@ -105,6 +111,12 @@ angular
 												if (activeRequests <= 0) {
 													usSpinnerService
 															.stop("spinner");
+
+													activeRequests = 0;
+
+													$rootScope.requestTimeMs = (new Date())
+															.getMilliseconds()
+															- startTimeMs;
 												}
 
 												$rootScope.actionErrors = null;

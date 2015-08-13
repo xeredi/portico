@@ -5,8 +5,8 @@ import java.util.Date;
 
 import xeredi.integra.http.controller.action.item.ItemFilterAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.metamodelo.proxy.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 
 // TODO: Auto-generated Javadoc

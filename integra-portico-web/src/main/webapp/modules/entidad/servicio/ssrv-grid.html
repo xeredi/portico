@@ -39,7 +39,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in vm.itemList.list track by $index">
+            <tr ng-repeat="item in vm.itemList.list track by item.id">
                 <td><a ng-href="#/servicio/ssrv/detail/{{::vm.enti.enti.id}}/{{::item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="::item.srvc.etiqueta" nowrap="nowrap"></td>
@@ -47,11 +47,9 @@
                 <td ng-if="::vm.enti.enti.tpdtEstado" nowrap="nowrap" bs-tooltip
                     data-title="{{::('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + item.estado | translate)}}"
                     ng-bind="::item.estado"></td>
-                <td ng-if="::vm.enti.enti.temporal"
-                    ng-bind="::(item.fini | date: ('format_datetime' | translate))"></td>
-                <td ng-if="::vm.enti.enti.temporal"
-                    ng-bind="::(item.ffin | date: ('format_datetime' | translate))"></td>
-                <td ng-repeat="tpdtId in ::vm.enti.entdGridList track by $index"
+                <td ng-if="::vm.enti.enti.temporal" ng-bind="::(item.fini | date: datetimeFormat)"></td>
+                <td ng-if="::vm.enti.enti.temporal" ng-bind="::(item.ffin | date: datetimeFormat)"></td>
+                <td ng-repeat="tpdtId in ::vm.enti.entdGridList track by tpdtId"
                     ng-switch="::vm.enti.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span
                     ng-switch-when="BO"><i
                         class="glyphicon glyphicon-{{::(item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove')}}"></i></span>
@@ -60,9 +58,9 @@
                     ng-switch-when="NE" class="pull-right"
                     ng-bind="::(item.itdtMap[tpdtId].cantidadEntera | number:0)"></span> <span
                     ng-switch-when="FE" class="pull-right"
-                    ng-bind="::(item.itdtMap[tpdtId].fecha | date: ('format_date' | translate))"></span> <span
+                    ng-bind="::(item.itdtMap[tpdtId].fecha | date: dateFormat)"></span> <span
                     ng-switch-when="FH" class="pull-right"
-                    ng-bind="::(item.itdtMap[tpdtId].fecha | date: ('format_datetime' | translate))"></span> <span
+                    ng-bind="::(item.itdtMap[tpdtId].fecha | date: datetimeFormat)"></span> <span
                     ng-switch-when="CR" bs-tooltip
                     data-title="{{::('cdrf_' + tpdtId + '_' + item.itdtMap[tpdtId].cadena | translate)}}"
                     ng-bind="::item.itdtMap[tpdtId].cadena"></span><span ng-switch-when="TX"

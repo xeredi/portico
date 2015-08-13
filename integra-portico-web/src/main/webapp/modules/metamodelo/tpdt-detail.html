@@ -16,11 +16,11 @@
         </div>
         <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
             <label translate>tpdt_tpht</label>
-            <p class="form-control-static" ng-bind="::('HtmlTipo_' + vm.tpdt.tpht | translate)"></p>
+            <p class="form-control-static" ng-bind="('HtmlTipo_' + vm.tpdt.tpht | translate)"></p>
         </div>
         <div class="col-sm-2 col-md-2 col-lg-2 form-group-sm">
             <label translate>tpdt_tpel</label>
-            <p class="form-control-static" ng-bind="::('ElementoTipo_' + vm.tpdt.tipoElemento | translate)"></p>
+            <p class="form-control-static" ng-bind="('ElementoTipo_' + vm.tpdt.tipoElemento | translate)"></p>
         </div>
         <div ng-if="vm.tpdt.enti.id" class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate>enti</label>

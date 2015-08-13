@@ -15,7 +15,7 @@
                             </div>
                             <div class="col-sm-3 col-md-2 form-group-sm">
                                 <label translate="tpsr"></label> <select ng-model="vm.vlrcCriterio.tpsrId"
-                                    ng-options="item.value as (('enti_' + item.value) | translate) for item in vm.tpsrList"
+                                    ng-options="item.value as (('enti_' + item.value) | translate) for item in ::vm.tpsrList"
                                     ng-change="vm.tpsrChanged(vm.vlrcCriterio.tpsrId)" class="form-control">
                                     <option />
                                 </select>
@@ -47,7 +47,7 @@
                             <div class="col-sm-4 col-md-3 form-group-sm">
                                 <label translate="vlrc_codExencion"></label> <select
                                     ng-model="vm.vlrcCriterio.codExencion"
-                                    ng-options="cdrf.valor as ('cdrf_' + vm.tpdtCodExencion.id + '_' + cdrf.valor | translate) for cdrf in vm.tpdtCodExencion.cdrfList"
+                                    ng-options="cdrf.valor as ('cdrf_' + vm.tpdtCodExencion.id + '_' + cdrf.valor | translate) for cdrf in ::vm.tpdtCodExencion.cdrfList"
                                     class="form-control">
                                     <option />
                                 </select>

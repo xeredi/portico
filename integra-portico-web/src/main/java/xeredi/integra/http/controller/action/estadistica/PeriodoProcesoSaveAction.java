@@ -6,10 +6,12 @@ import java.util.Map;
 
 import xeredi.integra.http.controller.action.comun.CrudSaveAction;
 import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.bo.SuperpuertoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.comun.vo.SuperpuertoVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.proceso.batch.estadistica.ProcesoCargaOppe;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
@@ -32,10 +34,13 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<PeriodoProces
      */
     @Override
     public void doSave() throws ApplicationException {
+        final SuperpuertoBO sprtBO = new SuperpuertoBO();
+        final SuperpuertoVO sprt = sprtBO.select(model.getSprt().getId(), getIdioma());
+
         final ProcesoBO prbtBO = new ProcesoBO();
         final Map<String, String> parametroMap = new HashMap<>();
 
-        parametroMap.put(ProcesoCargaOppe.AUTP_PARAM, model.getSprt().getId().toString());
+        parametroMap.put(ProcesoCargaOppe.AUTP_PARAM, sprt.getCodigo());
         parametroMap.put(ProcesoCargaOppe.ANIO_PARAM, model.getAnio().toString());
         parametroMap.put(ProcesoCargaOppe.MES_PARAM, model.getMes().toString());
         parametroMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, sobreescribir.toString());
@@ -43,7 +48,7 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<PeriodoProces
         switch (accion) {
         case load:
             final String foldername = ConfigurationProxy
-            .getString(ConfigurationKey.estadistica_files_oppe_entrada_home);
+                    .getString(ConfigurationKey.estadistica_files_oppe_entrada_home);
             final String filepath = foldername + "/" + model.getFilename() + ".zip";
             final File file = new File(filepath);
 

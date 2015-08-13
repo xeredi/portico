@@ -1,5 +1,6 @@
 package xeredi.integra.model.servicio.vo;
 
+import java.util.Date;
 import java.util.Set;
 
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
@@ -27,6 +28,18 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /** The estado. */
     private String estado;
+
+    /** The fini min. */
+    private Date finiMin;
+
+    /** The fini max. */
+    private Date finiMax;
+
+    /** The ffin min. */
+    private Date ffinMin;
+
+    /** The ffin max. */
+    private Date ffinMax;
 
     /** The srvc. */
     private ServicioCriterioVO srvc;
@@ -164,4 +177,79 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
         estado = value;
     }
 
+    /**
+     * Gets the fini min.
+     *
+     * @return the fini min
+     */
+    public Date getFiniMin() {
+        return finiMin;
+    }
+
+    /**
+     * Sets the fini min.
+     *
+     * @param value
+     *            the new fini min
+     */
+    public void setFiniMin(final Date value) {
+        finiMin = value;
+    }
+
+    /**
+     * Gets the fini max.
+     *
+     * @return the fini max
+     */
+    public Date getFiniMax() {
+        return finiMax;
+    }
+
+    /**
+     * Sets the fini max.
+     *
+     * @param value
+     *            the new fini max
+     */
+    public void setFiniMax(final Date value) {
+        finiMax = value;
+    }
+
+    /**
+     * Gets the ffin min.
+     *
+     * @return the ffin min
+     */
+    public Date getFfinMin() {
+        return ffinMin;
+    }
+
+    /**
+     * Sets the ffin min.
+     *
+     * @param value
+     *            the new ffin min
+     */
+    public void setFfinMin(final Date value) {
+        ffinMin = value;
+    }
+
+    /**
+     * Gets the ffin max.
+     *
+     * @return the ffin max
+     */
+    public Date getFfinMax() {
+        return ffinMax;
+    }
+
+    /**
+     * Sets the ffin max.
+     *
+     * @param value
+     *            the new ffin max
+     */
+    public void setFfinMax(final Date value) {
+        ffinMax = value;
+    }
 }

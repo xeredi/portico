@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import xeredi.integra.model.comun.vo.ItemVO;
-import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
+import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 
 // TODO: Auto-generated Javadoc

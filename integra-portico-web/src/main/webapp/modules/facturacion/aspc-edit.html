@@ -1,19 +1,22 @@
 <form role="form">
     <fieldset>
         <div class="row">
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate>tpsr</label> <select ng-if="vm.accion == 'create'" ng-model="vm.aspc.tpsr.id"
-                    ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in vm.tpsrList"
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" ng-switch="::vm.accion">
+                <label translate>tpsr</label> <select ng-switch-when="create" ng-model="vm.aspc.tpsr.id"
+                    ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in ::vm.tpsrList"
                     class="form-control">
                     <option />
                 </select>
-                <p ng-if="vm.accion != 'create'" class="form-control-static"
+                <p ng-switch-when="edit" class="form-control-static"
+                    ng-bind="'enti_' + vm.aspc.tpsr.id | translate"></p>
+                <p ng-switch-when="duplicate" class="form-control-static"
                     ng-bind="'enti_' + vm.aspc.tpsr.id | translate"></p>
             </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>aspc_codigo</label> <input ng-if="vm.accion != 'edit'" type="text"
-                    ng-model="vm.aspc.codigo" class="form-control" />
-                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.aspc.codigo"></p>
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm" ng-switch="::vm.accion">
+                <label translate>aspc_codigo</label> <input ng-switch-when="create" type="text"
+                    ng-model="vm.aspc.codigo" class="form-control" /><input ng-switch-when="duplicate"
+                    type="text" ng-model="vm.aspc.codigo" class="form-control" />
+                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.aspc.codigo"></p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label translate>fini</label><input type="text" class="form-control"
@@ -33,9 +36,9 @@
     </fieldset>
 
     <fieldset>
-        <div class="col-sm-12 form-group-sm">
-            <legend ng-bind="'Elementos de Cabecera'"></legend>
+        <legend ng-bind="'Elementos de Cabecera'"></legend>
 
+        <div class="col-sm-12 form-group-sm">
             <table class="table-condensed table-nonfluid">
                 <thead>
                     <tr>
@@ -112,8 +115,8 @@
         </div>
     </fieldset>
 
-    <fieldset>
-        <div class="col-sm-6 col-md-4 col-lg-3 form-group-sm">
+    <div class="col-sm-6 col-md-4 form-group-sm">
+        <fieldset>
             <legend ng-bind="'Elementos Cuantitativos de Linea'"></legend>
 
             <table class="table-condensed table-nonfluid">
@@ -175,70 +178,74 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </fieldset>
+    </div>
 
-        <div class="col-sm-6 col-md-4 col-lg-3 form-group-sm">
-            <legend ng-bind="'Elementos Informativos de Linea'"></legend>
+    <fieldset>
+        <div class="col-sm-6 col-md-4 form-group-sm">
+            <fieldset>
+                <legend ng-bind="'Elementos Informativos de Linea'"></legend>
 
-            <table class="table-condensed table-nonfluid">
-                <thead>
-                    <tr>
-                        <th />
-                        <th translate>aspc_lgrpInfo</th>
-                    </tr>
-                </thead>
+                <table class="table-condensed table-nonfluid">
+                    <thead>
+                        <tr>
+                            <th />
+                            <th translate>aspc_lgrpInfo</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    <tr>
-                        <td>info1</td>
-                        <td><select ng-model="vm.aspc.version.lgrpInfo1"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>info2</td>
-                        <td><select ng-model="vm.aspc.version.lgrpInfo2"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>info3</td>
-                        <td><select ng-model="vm.aspc.version.lgrpInfo3"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>info4</td>
-                        <td><select ng-model="vm.aspc.version.lgrpInfo4"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>info5</td>
-                        <td><select ng-model="vm.aspc.version.lgrpInfo5"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>info6</td>
-                        <td><select ng-model="vm.aspc.version.lgrpInfo6"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                </tbody>
-            </table>
+                    <tbody>
+                        <tr>
+                            <td>info1</td>
+                            <td><select ng-model="vm.aspc.version.lgrpInfo1"
+                                ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                class="form-control">
+                                    <option />
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>info2</td>
+                            <td><select ng-model="vm.aspc.version.lgrpInfo2"
+                                ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                class="form-control">
+                                    <option />
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>info3</td>
+                            <td><select ng-model="vm.aspc.version.lgrpInfo3"
+                                ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                class="form-control">
+                                    <option />
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>info4</td>
+                            <td><select ng-model="vm.aspc.version.lgrpInfo4"
+                                ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                class="form-control">
+                                    <option />
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>info5</td>
+                            <td><select ng-model="vm.aspc.version.lgrpInfo5"
+                                ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                class="form-control">
+                                    <option />
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>info6</td>
+                            <td><select ng-model="vm.aspc.version.lgrpInfo6"
+                                ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                class="form-control">
+                                    <option />
+                            </select></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
         </div>
     </fieldset>
 

@@ -11,6 +11,7 @@
                         <div class="row">
                             <div ng-if="vm.enti.enti.puerto" class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
                                 <label translate="prto"></label> <select ng-model="vm.itemCriterio.prto.id"
+                                    ng-change="vm.prtoId = vm.itemCriterio.prto.id"
                                     ng-options="prto.id as prto.etiqueta for prto in vm.prtoList"
                                     class="form-control">
                                     <option />
@@ -21,9 +22,9 @@
                                     ng-model="vm.itemCriterio.parametro" class="form-control" />
                             </div>
                             <div class="col-sm-2 col-lg-1 form-group-sm">
-                                <label translate="fref"></label><input type="text"
-                                    class="form-control" ng-model="vm.itemCriterio.fechaVigencia"
-                                    data-container=".modal-body" bs-datepicker />
+                                <label translate="fref"></label><input type="text" class="form-control"
+                                    ng-model="vm.itemCriterio.fechaVigencia" data-container=".modal-body"
+                                    bs-datepicker />
                             </div>
                             <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm pull-right">
                                 <label translate="filtro_limit"></label> <select

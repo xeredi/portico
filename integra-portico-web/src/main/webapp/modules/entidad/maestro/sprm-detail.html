@@ -2,7 +2,8 @@
     <div class="btn-group">
         <a class="btn btn-default"
             ng-href="#/maestro/sprm/edit/edit/{{vm.enti.enti.id}}/{{vm.item.prmtId}}/{{vm.fechaVigencia}}/{{vm.item.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a> <a class="btn btn-default"
+            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a> <a
+            class="btn btn-default"
             ng-href="#/maestro/sprm/edit/duplicate/{{vm.enti.enti.id}}/{{vm.item.prmtId}}/{{vm.fechaVigencia}}/{{vm.item.id}}"><i
             class="glyphicon glyphicon-tags"></i> <span translate="btn_duplicar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
@@ -13,6 +14,11 @@
 
 <fieldset>
     <div class="row">
+        <div ng-if="vm.enti.enti.tpprAsociado.puerto" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+            <label translate="prto"></label>
+            <p class="form-control-static" ng-bind="vm.item.prmtAsociado.prto.etiqueta"></p>
+        </div>
+
         <div class="col-sm-4 col-md-2 col-md-2 form-group-sm">
             <label ng-bind="'enti_' + vm.enti.enti.tpprAsociado.id | translate"></label>
             <p class="form-control-static">

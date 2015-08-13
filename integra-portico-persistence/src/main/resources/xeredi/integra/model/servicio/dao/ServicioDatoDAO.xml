@@ -109,7 +109,7 @@
 		    INNER JOIN tbl_servicio_dato_srdt ON
 		        srdt_srvc_pk = sql.srvc_pk
     ]]>
-			<if test="soloDatosGrid">
+			<!-- if test="soloDatosGrid">
        		<![CDATA[
 			    AND srdt_tpdt_pk = ANY (
 			        SELECT entd_tpdt_pk
@@ -118,7 +118,7 @@
 			            AND entd_gridable = 1
 			    )
 		    ]]>
-			</if>
+			</if-->
     <![CDATA[
 		    LEFT JOIN tbl_parametro_prmt ON
 		        prmt_pk = srdt_prmt_pk

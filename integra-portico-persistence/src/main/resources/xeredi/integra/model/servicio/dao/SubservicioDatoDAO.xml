@@ -106,7 +106,7 @@
 		        ssdt_ssrv_pk = sql.ssrv_pk
         ]]>
 
-		<!-- if test="soloDatosGrid">
+		<if test="soloDatosGrid">
         <![CDATA[
 			    AND ssdt_tpdt_pk = ANY (
 			        SELECT entd_tpdt_pk
@@ -115,7 +115,7 @@
 			            AND entd_gridable = 1
 			    )
         ]]>
-		</if-->
+		</if>
 
     <![CDATA[
 		    LEFT JOIN tbl_parametro_prmt ON

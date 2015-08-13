@@ -51,7 +51,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in vm.itemList.list track by $index">
+            <tr ng-repeat="item in vm.itemList.list track by item.version.id">
                 <td><a
                     ng-href="#/maestro/prmt/detail/{{::vm.enti.enti.id}}/{{::item.id}}/{{::vm.itemCriterio.fechaVigencia}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>

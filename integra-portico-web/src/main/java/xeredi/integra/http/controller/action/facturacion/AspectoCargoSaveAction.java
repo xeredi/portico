@@ -1,13 +1,13 @@
 package xeredi.integra.http.controller.action.facturacion;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.CrudSaveAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.AspectoCargoBO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -60,5 +60,4 @@ public final class AspectoCargoSaveAction extends CrudSaveAction<AspectoCargoVO>
             FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
         }
     }
-
 }

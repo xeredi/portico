@@ -12,10 +12,10 @@ import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
-import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TramiteProxy;
+import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
+import xeredi.integra.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.vo.TramiteTipoDatoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 

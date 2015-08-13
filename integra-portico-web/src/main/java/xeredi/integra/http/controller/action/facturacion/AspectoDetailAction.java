@@ -3,6 +3,8 @@ package xeredi.integra.http.controller.action.facturacion;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.CrudDetailAction;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -14,8 +16,6 @@ import xeredi.integra.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoVO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -50,12 +50,13 @@ public final class AspectoDetailAction extends CrudDetailAction<AspectoVO> {
         i18nMap = I18nBO.selectMap(I18nPrefix.aspv, model.getVersion().getId());
 
         final AspectoCargoBO ascrBO = new AspectoCargoBO();
-        final AspectoCargoCriterioVO ascrCriterioVO = new AspectoCargoCriterioVO();
+        final AspectoCargoCriterioVO ascrCriterio = new AspectoCargoCriterioVO();
 
-        ascrCriterioVO.setAspcId(model.getId());
-        ascrCriterioVO.setFechaVigencia(fechaVigencia);
+        ascrCriterio.setAspcId(model.getId());
+        ascrCriterio.setFechaVigencia(fechaVigencia);
+        ascrCriterio.setIdioma(idioma);
 
-        ascrList = ascrBO.selectList(ascrCriterioVO);
+        ascrList = ascrBO.selectList(ascrCriterio);
     }
 
     /**

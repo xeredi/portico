@@ -17,6 +17,12 @@
 			<result column="prmt_parametro" property="parametro" />
 			<result column="prmt_tppr_pk" property="entiId" />
 			<result column="prmt_texto" property="texto" />
+
+			<association property="prto" javaType="PuertoVO">
+				<result column="prmt_prto_pk" property="id" />
+				<result column="prto_codigo" property="codigo" />
+				<result column="prto_nombre" property="nombre" />
+			</association>
 		</association>
 
 		<association property="version" javaType="SubparametroVersionVO">
@@ -33,12 +39,23 @@
 
 		    , spvr_pk, spvr_fini, spvr_ffin
 
-		    , prmt_tppr_pk, prmt_parametro
+		    , prmt_tppr_pk, prmt_parametro, prmt_prto_pk
+
+		    , prto_codigo
 
 		    , (SELECT prmt_prto_pk FROM tbl_parametro_prmt WHERE prmt_pk = sprm_prmt_pk) AS sprm_prto_pk
     ]]>
 		<if test="fechaVigencia != null and idioma != null">
         <![CDATA[
+        	, (
+                SELECT i18n_text
+                FROM tbl_i18n_i18n
+                WHERE
+                    i18n_pref = 'prto'
+                    AND i18n_ext_pk = prmt_prto_pk
+                    AND i18n_lang = #{idioma}
+        	) AS prto_nombre
+
             , (CASE
                 WHEN tppr_es_i18n = 1
                 THEN (
@@ -79,6 +96,8 @@
 		        spvr_sprm_pk = sprm_pk
 		    INNER JOIN tbl_parametro_prmt ON
 		        prmt_pk = sprm_prmt_dep_pk
+		    LEFT JOIN tbl_puerto_prto ON
+		        prto_pk = prmt_prto_pk
 		    INNER JOIN tbl_tipo_parametro_tppr ON
 		        tppr_pk = prmt_tppr_pk
     ]]>
@@ -93,7 +112,8 @@
 		</if>
 		<if test="versionIds != null and !versionIds.empty">
 			AND spvr_pk IN
-			<foreach collection="versionIds" item="item" open="(" close=")" separator=",">#{item}</foreach>
+			<foreach collection="versionIds" item="item" open="(" close=")"
+				separator=",">#{item}</foreach>
 		</if>
 		<if test="entiId != null">
 			AND sprm_tpsp_pk = #{entiId}
@@ -104,12 +124,14 @@
 			</if>
 		</if>
 		<if test="fechaVigencia != null">
-			AND #{fechaVigencia} BETWEEN spvr_fini AND COALESCE(spvr_ffin,
+			AND #{fechaVigencia} BETWEEN spvr_fini AND
+			COALESCE(spvr_ffin,
 			#{fechaVigencia})
 		</if>
 	</sql>
 
-	<select id="count" parameterType="SubparametroCriterioVO" resultType="Integer">
+	<select id="count" parameterType="SubparametroCriterioVO"
+		resultType="Integer">
     <![CDATA[
         SELECT COUNT(1)
 		FROM
@@ -126,7 +148,8 @@
 		</where>
 	</select>
 
-	<select id="selectList" parameterType="SubparametroCriterioVO" resultMap="ResultMap">
+	<select id="selectList" parameterType="SubparametroCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<where>
 			<include refid="SelectWhere" />
@@ -135,7 +158,8 @@
 		ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
 	</select>
 
-	<select id="selectObject" parameterType="SubparametroCriterioVO" resultMap="ResultMap">
+	<select id="selectObject" parameterType="SubparametroCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<where>
 			<include refid="SelectWhere" />
@@ -152,7 +176,8 @@
         ]]>
 	</select>
 
-	<select id="existsOverlap" parameterType="SubparametroVO" resultType="Boolean">
+	<select id="existsOverlap" parameterType="SubparametroVO"
+		resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM

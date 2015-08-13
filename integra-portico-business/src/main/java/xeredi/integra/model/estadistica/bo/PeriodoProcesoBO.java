@@ -222,7 +222,7 @@ public class PeriodoProcesoBO {
      */
     public final void cargarArchivo(final PeriodoProcesoVO peprVO, final Map<String, PuertoVO> prtoMap,
             final List<EstadisticaVO> estdList, final boolean removeIfExists) throws DuplicateInstanceException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
             final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
             final EstadisticaDatoDAO esdtDAO = session.getMapper(EstadisticaDatoDAO.class);

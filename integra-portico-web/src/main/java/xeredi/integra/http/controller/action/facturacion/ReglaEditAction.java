@@ -3,6 +3,8 @@ package xeredi.integra.http.controller.action.facturacion;
 import java.util.Calendar;
 import java.util.List;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.CargoBO;
@@ -18,8 +20,6 @@ import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -77,33 +77,35 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
      */
     @Override
     public void doLoadDependencies() throws ApplicationException {
-        tipos = ReglaTipo.values();
+        if (accion == ACCION_EDICION.create) {
+            tipos = ReglaTipo.values();
 
-        final TipoServicioBO tpsrBO = new TipoServicioBO();
-        final CargoBO crgoBO = new CargoBO();
-        final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
+            final TipoServicioBO tpsrBO = new TipoServicioBO();
+            final CargoBO crgoBO = new CargoBO();
+            final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
-        crgoCriterio.setId(model.getCrgo().getId());
-        crgoCriterio.setFechaVigencia(getFechaVigencia());
-        crgoCriterio.setIdioma(getIdioma());
+            crgoCriterio.setId(model.getCrgo().getId());
+            crgoCriterio.setFechaVigencia(getFechaVigencia());
+            crgoCriterio.setIdioma(getIdioma());
 
-        final CargoVO crgo = crgoBO.selectObject(crgoCriterio);
-        final TipoServicioCriterioVO tpsrCriterioVO = new TipoServicioCriterioVO();
+            final CargoVO crgo = crgoBO.selectObject(crgoCriterio);
+            final TipoServicioCriterioVO tpsrCriterioVO = new TipoServicioCriterioVO();
 
-        tpsrCriterioVO.setId(crgo.getTpsr().getId());
-        tpsrCriterioVO.setFacturable(Boolean.TRUE);
-        tpsrCriterioVO.setIdioma(getIdioma());
+            tpsrCriterioVO.setId(crgo.getTpsr().getId());
+            tpsrCriterioVO.setFacturable(Boolean.TRUE);
+            tpsrCriterioVO.setIdioma(getIdioma());
 
-        entiFacturableList = tpsrBO.selectLabelValues(tpsrCriterioVO);
+            entiFacturableList = tpsrBO.selectLabelValues(tpsrCriterioVO);
 
-        final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
-        final TipoSubservicioCriterioVO tpssCriterioVO = new TipoSubservicioCriterioVO();
+            final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
+            final TipoSubservicioCriterioVO tpssCriterioVO = new TipoSubservicioCriterioVO();
 
-        tpssCriterioVO.setTpsrId(crgo.getTpsr().getId());
-        tpssCriterioVO.setFacturable(Boolean.TRUE);
-        tpssCriterioVO.setIdioma(getIdioma());
+            tpssCriterioVO.setTpsrId(crgo.getTpsr().getId());
+            tpssCriterioVO.setFacturable(Boolean.TRUE);
+            tpssCriterioVO.setIdioma(getIdioma());
 
-        entiFacturableList.addAll(tpssBO.selectLabelValues(tpssCriterioVO));
+            entiFacturableList.addAll(tpssBO.selectLabelValues(tpssCriterioVO));
+        }
     }
 
     /**

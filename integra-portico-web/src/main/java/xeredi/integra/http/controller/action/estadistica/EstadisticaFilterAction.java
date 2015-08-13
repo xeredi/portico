@@ -10,8 +10,8 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.PuertoCriterioVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
-import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
+import xeredi.integra.model.metamodelo.vo.TipoEstadisticaDetailVO;
 
 import com.google.common.base.Preconditions;
 

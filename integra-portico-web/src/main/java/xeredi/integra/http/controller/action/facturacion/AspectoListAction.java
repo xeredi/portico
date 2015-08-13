@@ -1,5 +1,7 @@
 package xeredi.integra.http.controller.action.facturacion;
 
+import java.util.Calendar;
+
 import xeredi.integra.http.controller.action.comun.GridListAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
@@ -20,6 +22,10 @@ public final class AspectoListAction extends GridListAction<AspectoCriterioVO, A
      */
     @Override
     public void doList() throws ApplicationException {
+        if (model.getFechaVigencia() == null) {
+            model.setFechaVigencia(Calendar.getInstance().getTime());
+        }
+
         final AspectoBO aspcBO = new AspectoBO();
 
         resultList = aspcBO.selectList(model, getOffset(), limit);

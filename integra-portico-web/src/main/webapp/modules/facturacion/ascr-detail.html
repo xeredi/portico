@@ -2,7 +2,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default"
-            ng-href="#/facturacion/ascr/edit/edit/{{vm.ascr.aspcId}}/{{vm.fechaVigencia}}/{{vm.ascr.id}}"><i
+            ng-href="#/facturacion/ascr/edit/edit/{{::vm.ascr.aspcId}}/{{::vm.fechaVigencia}}/{{::vm.ascr.id}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
@@ -15,17 +15,17 @@
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="crgo"></label>
             <p class="form-control-static">
-                <a ng-href="#/facturacion/crgo/detail/{{vm.ascr.crgo.id}}/{{vm.fechaVigencia}}"
-                    ng-bind="vm.ascr.crgo.etiqueta"></a>
+                <a ng-href="#/facturacion/crgo/detail/{{::vm.ascr.crgo.id}}/{{::vm.fechaVigencia}}"
+                    ng-bind="::vm.ascr.crgo.etiqueta"></a>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="fini"></label>
-            <p class="form-control-static" ng-bind="vm.ascr.version.fini | date: ('format_date' | translate)"></p>
+            <p class="form-control-static" ng-bind="::(vm.ascr.version.fini | date: dateFormat)"></p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="ffin"></label>
-            <p class="form-control-static" ng-bind="vm.ascr.version.ffin | date: ('format_date' | translate)"></p>
+            <p class="form-control-static" ng-bind="::(vm.ascr.version.ffin | date: dateFormat)"></p>
         </div>
     </div>
 </fieldset>

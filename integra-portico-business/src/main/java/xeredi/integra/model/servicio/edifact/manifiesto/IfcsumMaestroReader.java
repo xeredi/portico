@@ -24,6 +24,7 @@ import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bBaseVisitor;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.BgmContext;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.CniContext;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.DgsContext;
+import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.DocContext;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.EqdContext;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.GidContext;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.IfcsumContext;
@@ -213,6 +214,16 @@ public final class IfcsumMaestroReader extends IfcsumD14bBaseVisitor {
                 ctx.c234().f7124().getText() + '-' + ctx.c205().f8351().getText() + '-' + ctx.c205().f8092().getText());
 
         return super.visitDgs(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object visitDoc(final DocContext ctx) {
+        addCodigoMaestro(Entidad.TIPO_DOCUMENTO_AEAT, ctx.c002().f1001().getText());
+
+        return super.visitDoc(ctx);
     }
 
     /**

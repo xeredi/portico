@@ -4,14 +4,14 @@
 
 
 
-    <sql id="TIPO_LECTURA" tempImp="false">
+	<sql id="TIPO_LECTURA" tempImp="false">
     <![CDATA[
         SELECT 'L'
         FROM DUAL
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="AREA_GEOGRAFICA" tempImp="false">
+	<sql id="AREA_GEOGRAFICA" tempImp="false">
     <![CDATA[
         SELECT MAES.AGEO_CODIGO
          , (SELECT I18N.AGEO_NOMBRE FROM IEST_AREAGEOGRAFICAi18n_AGEO I18N
@@ -22,7 +22,7 @@
         FROM IEST_AREAGEOGRAFICA_AGEO MAES
         order by MAES.ageo_ES_ACTIVO desc
     ]]>
-    </sql>
+	</sql>
 
 	<sql id="AREA_MUNDIAL" tempImp="false">
 	<![CDATA[
@@ -479,19 +479,6 @@
 	]]>
 	</sql>
 
-	<sql id="TIPO_OPERACION_BL" tempImp="false">
-	<![CDATA[
-		SELECT MAES.TOBL_CODIGO
-		 , (SELECT I18N.TOBL_NOMBRE FROM IMAN_TIPOOPERACIONi18n_TOBL I18N
-		     WHERE I18N.TOBL_ID = MAES.TOBL_ID
-		         AND I18N.TOBL_IDIOMA = ?
-		         AND ? BETWEEN TOBL_FECHA_CREACION and coalesce(TOBL_FECHA_FIN, ?)
-		 ) AS I18N_NOMBRE
-		FROM IMAN_TIPOOPERACION_TOBL MAES
-		order by MAES.TOBL_ES_ACTIVO desc
-	]]>
-	</sql>
-
 	<sql id="TIPO_OPERACION_SUPERFICIE" tempImp="false">
 	<![CDATA[
 		SELECT MAES.TOSU_CODIGO
@@ -598,11 +585,11 @@
 	]]>
 	</sql>
 
-	<!-- // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS
-		// -->
-	<!-- // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS
-		// -->
-    <sql id="TIPO_BUQUE_GT_EEE" tempImp="false">
+	<!-- // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS // MAESTROS SIN DEPENDENCIAS
+		CON DATOS ASOCIADOS // -->
+	<!-- // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS // MAESTROS SIN DEPENDENCIAS
+		CON DATOS ASOCIADOS // -->
+	<sql id="TIPO_BUQUE_GT_EEE" tempImp="false">
     <![CDATA[
 		SELECT
 		    MAES.BGTE_CODIGO
@@ -610,7 +597,7 @@
 		FROM IEST_BUQUETIPOGTEEE_BGTE MAES
 		order by MAES.BGTE_es_activo desc
     ]]>
-    </sql>
+	</sql>
 
 	<sql id="ACUERDO" tempImp="true">
 	<![CDATA[
@@ -631,22 +618,6 @@
 				TEMP.ACUE_ID = MAES.ACUE_ID
 				AND ? BETWEEN TEMP.acue_FECHA_CREACION AND COALESCE(TEMP.acue_FECHA_FIN, ?)
 		order by MAES.ACUE_es_activo desc
-	]]>
-	</sql>
-
-	<sql id="CONCEPTO_CUADRO_EST" tempImp="false">
-	<![CDATA[
-		SELECT
-		    MAES.COCU_CODIGO
-		    , maes.COCU_periodo
-		    , (SELECT I18N.COCU_NOMBRE
-		      FROM IEST_CONCEPTOCUADROi18n_COCU I18N
-		        WHERE I18N.COCU_ID = MAES.COCU_ID
-		            AND I18N.cocu_IDIOMA = ?
-		            AND ? BETWEEN COCU_FECHA_CREACION AND COALESCE(COCU_FECHA_FIN, ?)
-		    ) AS I18N_NOMBRE
-		FROM IEST_CONCEPTOCUADRO_COCU MAES
-		order by MAES.COCU_es_activo desc
 	]]>
 	</sql>
 
@@ -920,7 +891,7 @@
 	]]>
 	</sql>
 
-    <sql id="TIPO_ATRAQUE_EDI" tempImp="false">
+	<sql id="TIPO_ATRAQUE_EDI" tempImp="false">
     <![CDATA[
         select
             (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_1)
@@ -942,7 +913,7 @@
             from IESC_RELACIONATRAQUETIPO_RATT ratt
         ) sql
     ]]>
-    </sql>
+	</sql>
 
 	<sql id="SUBTIPO_RESIDUO" tempImp="false">
 	<![CDATA[
@@ -1241,7 +1212,7 @@
 	]]>
 	</sql>
 
-    <sql id="TIPO_EQUIPAMIENTO" tempImp="false">
+	<sql id="TIPO_EQUIPAMIENTO" tempImp="false">
     <![CDATA[
         SELECT
             MAES.TEQU_CODIGO || MAES.TEQU_TAMANYO AS CODIGO
@@ -1266,7 +1237,7 @@
         FROM IMAN_TIPOEQUIPAMIENTO_TEQU MAES
         order by MAES.TEQU_es_activo desc
     ]]>
-    </sql>
+	</sql>
 
 	<sql id="ZONA_COSTERA_EEE" tempImp="false">
 	<![CDATA[
@@ -1498,7 +1469,7 @@
 	]]>
 	</sql>
 
-    <sql id="INSTALACION_DEP_AUT" tempImp="false">
+	<sql id="INSTALACION_DEP_AUT" tempImp="false">
     <![CDATA[
         SELECT
               (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDA_SUBPUERTO_ID) AS SUBP_CODIGO
@@ -1521,9 +1492,9 @@
         FROM IEMD_INSTALACIONDEPA_INDA MAES
         order by INDA_ES_ACTIVO desc
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="INSTALACION_DEP" tempImp="false">
+	<sql id="INSTALACION_DEP" tempImp="false">
     <![CDATA[
         SELECT
             (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDP_SUBPUERTO_ID) AS SUBP_CODIGO
@@ -1555,9 +1526,9 @@
             IEMD_INSTALACIONDEP_INDP MAES
         order by MAES.INDP_es_activo desc
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="AMARRE_DEP" tempImp="false">
+	<sql id="AMARRE_DEP" tempImp="false">
     <![CDATA[
         SELECT
             (
@@ -1594,7 +1565,7 @@
             , maes.amad_observaciones
         FROM IEMD_AMARRE_AMAD maes
     ]]>
-    </sql>
+	</sql>
 
 	<sql id="ALINEACION" tempImp="true">
 	<![CDATA[
@@ -1633,7 +1604,7 @@
 	]]>
 	</sql>
 
-    <sql id="ORGANIZACION" tempImp="false">
+	<sql id="ORGANIZACION" tempImp="false">
     <![CDATA[
         SELECT
             MAES.ORGA_COD
@@ -1658,9 +1629,9 @@
                 DIRC_ID_ORGANIZACION = ORGA_ID
         order by MAES.ORGA_ES_ACTIVO desc
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="EMBARCACION_DEP" tempImp="false">
+	<sql id="EMBARCACION_DEP" tempImp="false">
     <![CDATA[
         select
             maes.EMBD_CODIGO
@@ -1695,9 +1666,9 @@
         from IEMD_EMBARCACION_EMBD maes
         order by maes.EMBD_ES_ACTIVO desc
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="EMBARCACION_DEP_AUT" tempImp="true">
+	<sql id="EMBARCACION_DEP_AUT" tempImp="true">
     <![CDATA[
         SELECT
             EMBA.EMBA_CODIGO
@@ -1749,7 +1720,7 @@
                 AND ? BETWEEN EACL_FECHA_INICIO AND COALESCE(EACL_FECHA_FIN, ?)
         order by EMBA.EMBA_ES_ACTIVO desc, EACL.EACL_ES_ACTIVO desc
     ]]>
-    </sql>
+	</sql>
 
 	<sql id="INSTALACION_ESPECIAL" tempImp="true">
 	<![CDATA[
@@ -1897,7 +1868,7 @@
 	]]>
 	</sql>
 
-    <sql id="PUNTO_RED" tempImp="false">
+	<sql id="PUNTO_RED" tempImp="false">
     <![CDATA[
         SELECT
             (
@@ -1964,7 +1935,7 @@
             , prsu_seccion_cable, prsu_potencia, prsu_sec_repetidores
         FROM isum_puntored_prsu maes
     ]]>
-    </sql>
+	</sql>
 
 	<sql id="REGISTRO_TIPO_BUQUE_EEE" tempImp="false">
 	<![CDATA[
@@ -2110,166 +2081,6 @@
 	]]>
 	</sql>
 
-    <sql id="PUNTO_RED_ORGANIZACION" tempImp="true">
-    <![CDATA[
-        select
-            (
-                SELECT
-                    (
-                        SELECT
-                            (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = REDS_SUBP_ID)
-                            || REDS_CODIGO
-                        FROM ISUM_RED_REDS
-                        WHERE REDS_ID = PRSU_REDS_ID
-                    ) || '-' || prsu_codigo AS CODIGO
-                FROM isum_puntored_prsu
-                where prsu_id = clsu_prsu_id
-            ) AS clsu_prsu
-            , (
-                SELECT
-                    ORGA_COD
-                FROM ICOM_ORGANIZACION_ORGA
-                where orga_id = CLSU_ORGA_ID_CLIENTE
-            ) as clsu_orga
-            , maes.CLSU_FECHA_INICIO
-            , maes.CLSU_FECHA_final
-            , maes.CLSU_porcetntaje
-            , to_char(maes.CLSU_COD_EXENCION)
-            , (SELECT EXET_CODIGO
-                    FROM IGEN_EXENCIONTIPO_EXET
-                where exet_id = CLSU_EXET_ID
-            ) AS CLSU_EXET
-        from
-          ISUM_CLIENTEPUNTORED_CLSU maes
-        where
-            ? BETWEEN CLSU_FECHA_INICIO AND COALESCE(CLSU_FECHA_final, ?)
-        order by clsu_es_activo desc
-    ]]>
-    </sql>
-
-    <sql id="PUNTO_RED_TIPO_GASTO" tempImp="true">
-    <![CDATA[
-        select
-            (
-                SELECT
-                    (
-                        SELECT
-                            (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = REDS_SUBP_ID)
-                            || REDS_CODIGO
-                        FROM ISUM_RED_REDS
-                        WHERE REDS_ID = PRSU_REDS_ID
-                    ) || '-' || prsu_codigo AS CODIGO
-                FROM isum_puntored_prsu
-                where prsu_id = GPSU_prsu_id
-            ) AS GPSU_prsu
-            , (
-              select TGSU_codigo
-              from
-                ISUM_TIPOGASTO_TGSU
-                where tgsu_id = GPSU_TGSU_ID
-            ) as GPSU_TGSU
-            , maes.GPSU_FECHA_INICIO
-            , maes.GPSU_FECHA_FINAL
-            , (
-                select IVAT_codigo
-                from IFAC_IVATIPO_IVAT
-                where IVAT_ID = GPSU_IVAT_ID
-            ) as GPSU_IVAT
-            , maes.GPSU_COSTE
-        from ISUM_GASTOPUNTORED_GPSU maes
-        where
-             ? BETWEEN GPSU_FECHA_INICIO AND COALESCE(GPSU_FECHA_final, ?)
-        order by GPSU_ES_ACTIVO desc
-    ]]>
-    </sql>
-
-    <sql id="PUNTO_RED_TIPO_LECTURA" tempImp="true">
-    <![CDATA[
-        select
-            (
-                SELECT
-                    (
-                        SELECT
-                            (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = REDS_SUBP_ID)
-                            || REDS_CODIGO
-                        FROM ISUM_RED_REDS
-                        WHERE REDS_ID = PRSU_REDS_ID
-                    ) || '-' || prsu_codigo AS CODIGO
-                FROM isum_puntored_prsu
-                where prsu_id = LPSU_prsu_id
-            ) AS LPSU_prsu
-            , 'L' as tipo_lectura
-            , maes.LPSU_FECHA_INICIO
-            , maes.LPSU_FECHA_FINAL
-            , coalesce(maes.LPSU_LECTURA_INICIO, 0)
-            , maes.LPSU_LECTURA_FINAL
-        from ISUM_LECTURAPUNTORED_LPSU maes
-        where
-             ? BETWEEN LPSU_FECHA_INICIO AND COALESCE(LPSU_FECHA_final, ?)
-        order by LPSU_ES_ACTIVO desc
-    ]]>
-    </sql>
-
-    <sql id="AMARRE_PUNTO_RED" tempImp="false">
-    <![CDATA[
-        SELECT
-            (
-                SELECT
-                    (
-                        select
-                            (select subp_codigo
-                            from IGEN_SUBPUERTO_SUBP where subp_id = INDP_SUBPUERTO_ID)
-                            || indp_codigo
-                        from IEMD_INSTALACIONDEP_INDP
-                        WHERE indp_id = AMAD_INSTALACIONDEP_ID
-                    ) || '-' || AMAD_PANTALAN || '-' || AMAD_PUESTO
-                FROM IEMD_AMARRE_AMAD
-                WHERE AMAD_ID = MAES.ADPR_AMARREDEP_ID
-            ) as amad_codigo
-            , (
-                SELECT
-                    (
-                        SELECT
-                            (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = REDS_SUBP_ID)
-                            || REDS_CODIGO
-                        FROM ISUM_RED_REDS
-                        WHERE REDS_ID = PRSU_REDS_ID
-                    ) || '-' || PRSU_CODIGO
-                FROM ISUM_PUNTORED_PRSU
-                WHERE PRSU_ID = ADPR_PUNTORED_ID
-            ) AS PRSU_CODIGO
-            , adpr_factor_consumo, adpr_observaciones
-        FROM IEMD_AMARRE_PUNTO_RED_ADPR MAES
-        order by ADPR_es_activo desc
-    ]]>
-    </sql>
-
-    <sql id="AMARRE_SERVICIO_DEPORTIVO" tempImp="false">
-    <![CDATA[
-        SELECT
-            (
-                SELECT
-                    (
-                        select
-                            (select subp_codigo
-                            from IGEN_SUBPUERTO_SUBP where subp_id = INDP_SUBPUERTO_ID)
-                            || indp_codigo
-                        from IEMD_INSTALACIONDEP_INDP
-                        WHERE indp_id = AMAD_INSTALACIONDEP_ID
-                    ) || '-' || AMAD_PANTALAN || '-' || AMAD_PUESTO
-                FROM IEMD_AMARRE_AMAD
-                WHERE AMAD_ID = MAES.Asde_AMARREDEP_ID
-            ) AS AMAD_CODIGO
-            , (
-                SELECT SDEP_CODIGO
-                FROM IEMD_SERVICIODEP_SDEP
-                WHERE SDEP_ID = ASDE_SERVICIODEP_ID
-            ) as sdep_codigo
-            , maes.asde_observaciones
-        FROM IEMD_AMARRE_SERVICIODEP_ASDE MAES
-        order by asde_es_activo desc
-    ]]>
-    </sql>
 
 	<sql id="BUQUE_CAPACIDAD" tempImp="false">
     <![CDATA[
@@ -2334,7 +2145,7 @@
     ]]>
 	</sql>
 
-    <sql id="BUQUE_TRAFICO" tempImp="false">
+	<sql id="BUQUE_TRAFICO" tempImp="false">
     <![CDATA[
         select
             maes.TRBU_BUQU_ID
@@ -2349,9 +2160,9 @@
             join IESC_TRAFICO_TRAF on
                 traf_id = TRBU_TRAF_ID
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="ORGANIZACION_SUBPUERTO" tempImp="false">
+	<sql id="ORGANIZACION_SUBPUERTO" tempImp="false">
     <![CDATA[
         SELECT
             (SELECT ORGA_COD
@@ -2376,9 +2187,9 @@
                 DIRN_SUBP_ID = ORSP_SUBPuerto_ID
                 and DIRN_orga_ID = orsp_organizacion_ID
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="ORGANIZACION_TIPO" tempImp="false">
+	<sql id="ORGANIZACION_TIPO" tempImp="false">
     <![CDATA[
         SELECT
             (SELECT orga_cod
@@ -2389,5 +2200,167 @@
               WHERE orgt_id = orot_tipo_organizacion_id) AS orga_tipo
         FROM icom_organizacionorgt_orot
     ]]>
-    </sql>
+	</sql>
+
+	<sql id="PUNTO_RED_ORGANIZACION" tempImp="true">
+    <![CDATA[
+        select
+            (
+                SELECT
+                    (
+                        SELECT
+                            (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = REDS_SUBP_ID)
+                            || REDS_CODIGO
+                        FROM ISUM_RED_REDS
+                        WHERE REDS_ID = PRSU_REDS_ID
+                    ) || '-' || prsu_codigo AS CODIGO
+                FROM isum_puntored_prsu
+                where prsu_id = clsu_prsu_id
+            ) AS clsu_prsu
+            , (
+                SELECT
+                    ORGA_COD
+                FROM ICOM_ORGANIZACION_ORGA
+                where orga_id = CLSU_ORGA_ID_CLIENTE
+            ) as clsu_orga
+            , maes.CLSU_FECHA_INICIO
+            , maes.CLSU_FECHA_final
+            , maes.CLSU_porcetntaje
+            , to_char(maes.CLSU_COD_EXENCION)
+            , (SELECT EXET_CODIGO
+                    FROM IGEN_EXENCIONTIPO_EXET
+                where exet_id = CLSU_EXET_ID
+            ) AS CLSU_EXET
+        from
+          ISUM_CLIENTEPUNTORED_CLSU maes
+        where
+            ? BETWEEN CLSU_FECHA_INICIO AND COALESCE(CLSU_FECHA_final, ?)
+        order by clsu_es_activo desc
+    ]]>
+	</sql>
+
+	<sql id="PUNTO_RED_TIPO_GASTO" tempImp="true">
+    <![CDATA[
+        select
+            (
+                SELECT
+                    (
+                        SELECT
+                            (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = REDS_SUBP_ID)
+                            || REDS_CODIGO
+                        FROM ISUM_RED_REDS
+                        WHERE REDS_ID = PRSU_REDS_ID
+                    ) || '-' || prsu_codigo AS CODIGO
+                FROM isum_puntored_prsu
+                where prsu_id = GPSU_prsu_id
+            ) AS GPSU_prsu
+            , (
+              select TGSU_codigo
+              from
+                ISUM_TIPOGASTO_TGSU
+                where tgsu_id = GPSU_TGSU_ID
+            ) as GPSU_TGSU
+            , maes.GPSU_FECHA_INICIO
+            , maes.GPSU_FECHA_FINAL
+            , (
+                select IVAT_codigo
+                from IFAC_IVATIPO_IVAT
+                where IVAT_ID = GPSU_IVAT_ID
+            ) as GPSU_IVAT
+            , maes.GPSU_COSTE
+        from ISUM_GASTOPUNTORED_GPSU maes
+        where
+             ? BETWEEN GPSU_FECHA_INICIO AND COALESCE(GPSU_FECHA_final, ?)
+        order by GPSU_ES_ACTIVO desc
+    ]]>
+	</sql>
+
+	<sql id="PUNTO_RED_TIPO_LECTURA" tempImp="true">
+    <![CDATA[
+        select
+            (
+                SELECT
+                    (
+                        SELECT
+                            (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = REDS_SUBP_ID)
+                            || REDS_CODIGO
+                        FROM ISUM_RED_REDS
+                        WHERE REDS_ID = PRSU_REDS_ID
+                    ) || '-' || prsu_codigo AS CODIGO
+                FROM isum_puntored_prsu
+                where prsu_id = LPSU_prsu_id
+            ) AS LPSU_prsu
+            , 'L' as tipo_lectura
+            , maes.LPSU_FECHA_INICIO
+            , maes.LPSU_FECHA_FINAL
+            , coalesce(maes.LPSU_LECTURA_INICIO, 0)
+            , maes.LPSU_LECTURA_FINAL
+        from ISUM_LECTURAPUNTORED_LPSU maes
+        where
+             ? BETWEEN LPSU_FECHA_INICIO AND COALESCE(LPSU_FECHA_final, ?)
+        order by LPSU_ES_ACTIVO desc
+    ]]>
+	</sql>
+
+	<sql id="AMARRE_PUNTO_RED" tempImp="false">
+    <![CDATA[
+        SELECT
+            (
+                SELECT
+                    (
+                        select
+                            (select subp_codigo
+                            from IGEN_SUBPUERTO_SUBP where subp_id = INDP_SUBPUERTO_ID)
+                            || indp_codigo
+                        from IEMD_INSTALACIONDEP_INDP
+                        WHERE indp_id = AMAD_INSTALACIONDEP_ID
+                    ) || '-' || AMAD_PANTALAN || '-' || AMAD_PUESTO
+                FROM IEMD_AMARRE_AMAD
+                WHERE AMAD_ID = MAES.ADPR_AMARREDEP_ID
+            ) as amad_codigo
+            , (
+                SELECT
+                    (
+                        SELECT
+                            (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = REDS_SUBP_ID)
+                            || REDS_CODIGO
+                        FROM ISUM_RED_REDS
+                        WHERE REDS_ID = PRSU_REDS_ID
+                    ) || '-' || PRSU_CODIGO
+                FROM ISUM_PUNTORED_PRSU
+                WHERE PRSU_ID = ADPR_PUNTORED_ID
+            ) AS PRSU_CODIGO
+            , adpr_factor_consumo, adpr_observaciones
+        FROM IEMD_AMARRE_PUNTO_RED_ADPR MAES
+        order by ADPR_es_activo desc
+    ]]>
+	</sql>
+
+	<sql id="AMARRE_SERVICIO_DEPORTIVO" tempImp="false">
+    <![CDATA[
+        SELECT
+            (
+                SELECT
+                    (
+                        select
+                            (select subp_codigo
+                            from IGEN_SUBPUERTO_SUBP where subp_id = INDP_SUBPUERTO_ID)
+                            || indp_codigo
+                        from IEMD_INSTALACIONDEP_INDP
+                        WHERE indp_id = AMAD_INSTALACIONDEP_ID
+                    ) || '-' || AMAD_PANTALAN || '-' || AMAD_PUESTO
+                FROM IEMD_AMARRE_AMAD
+                WHERE AMAD_ID = MAES.Asde_AMARREDEP_ID
+            ) AS AMAD_CODIGO
+            , (
+                SELECT SDEP_CODIGO
+                FROM IEMD_SERVICIODEP_SDEP
+                WHERE SDEP_ID = ASDE_SERVICIODEP_ID
+            ) as sdep_codigo
+            , maes.asde_observaciones
+        FROM IEMD_AMARRE_SERVICIODEP_ASDE MAES
+        order by asde_es_activo desc
+    ]]>
+	</sql>
+
 </importer>

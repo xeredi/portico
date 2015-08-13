@@ -1,16 +1,21 @@
 package xeredi.integra.http.controller.action.maestro;
 
+import java.util.List;
+
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.item.ItemEditAction;
+import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.PuertoCriterioVO;
+import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
-import xeredi.integra.model.metamodelo.proxy.TipoSubparametroDetailVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
-
-import com.google.common.base.Preconditions;
+import xeredi.integra.model.metamodelo.vo.TipoSubparametroDetailVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -20,6 +25,9 @@ public final class SubparametroEditAction extends ItemEditAction<SubparametroVO,
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6767667432126657718L;
+
+    /** The prto list. */
+    private List<PuertoVO> prtoList;
 
     /**
      * {@inheritDoc}
@@ -51,6 +59,23 @@ public final class SubparametroEditAction extends ItemEditAction<SubparametroVO,
      */
     @Override
     public void doLoadSpecificDependencies() throws ApplicationException {
-        // noop
+        if (enti.getEnti().getTpprAsociado().isPuerto()) {
+            final PuertoBO prtoBO = new PuertoBO();
+            final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+
+            prtoCriterio.setSprtId(getSprtId());
+            prtoCriterio.setIdioma(getIdioma());
+
+            prtoList = prtoBO.selectList(prtoCriterio);
+        }
+    }
+
+    /**
+     * Gets the prto list.
+     *
+     * @return the prto list
+     */
+    public List<PuertoVO> getPrtoList() {
+        return prtoList;
     }
 }

@@ -3,6 +3,8 @@ package xeredi.integra.http.controller.action.facturacion;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -14,8 +16,6 @@ import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.AspectoVersionVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -60,7 +60,9 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
      */
     @Override
     public void doLoadDependencies() throws ApplicationException {
-        tpsrList = TipoServicioProxy.selectLabelValues();
+        if (accion == ACCION_EDICION.create) {
+            tpsrList = TipoServicioProxy.selectLabelValues();
+        }
     }
 
     /**

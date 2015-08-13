@@ -2,20 +2,22 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                <label translate>srvc</label> <input ng-if="!vm.item.srvc.id" type="text" autocomplete="off"
-                    ng-model="vm.item.srvc" ng-controller="SrvcLupaController"
+                <label translate="srvc"></label> <input ng-if="!vm.item.srvc.id" type="text"
+                    autocomplete="off" ng-model="vm.item.srvc" ng-controller="SrvcLupaController"
+                    ng-selected="vm.prtoId = vm.item.srvc.prto.id"
                     typeahead="srvc as srvc.etiqueta for srvc in search(vm.enti.enti.tpsrId, $viewValue)"
                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
-                <p ng-if="vm.item.srvc.id" class="form-control-static" ng-bind="vm.item.srvc.etiqueta"></p>
+                <p ng-if="vm.item.srvc.id" class="form-control-static"
+                    ng-change="vm.prtoId = vm.item.srvc.prto.id" ng-bind="vm.item.srvc.etiqueta"></p>
             </div>
             <div class="col-sm-1 col-md-1 form-group-sm">
-                <label translate>ssrv_numero</label> <input ng-if="vm.accion != 'edit'" type="text"
+                <label translate="ssrv_numero"></label> <input ng-if="vm.accion != 'edit'" type="text"
                     ng-model="vm.item.numero" class="form-control" />
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.numero"></p>
             </div>
 
             <div ng-if="vm.enti.enti.tpdtEstado" class="col-sm-3 col-md-2 form-group-sm">
-                <label translate>ssrv_estado</label> <select ng-if="vm.accion != 'edit'"
+                <label translate="ssrv_estado"></label> <select ng-if="vm.accion != 'edit'"
                     ng-model="vm.item.estado"
                     ng-options="cdrf.valor as (('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.enti.enti.tpdtEstado.cdrfList"
                     class="form-control">
@@ -25,13 +27,13 @@
             </div>
 
             <div ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
-                <label translate>fini</label><input type="text" class="form-control"
-                    ng-model="vm.item.fini" data-max-date="{{vm.item.ffin}}" bs-datepicker />
+                <label translate>fini</label><input type="text" class="form-control" ng-model="vm.item.fini"
+                    data-max-date="{{vm.item.ffin}}" bs-datepicker />
             </div>
 
             <div ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
-                <label translate>ffin</label><input type="text" class="form-control"
-                    ng-model="vm.item.ffin" data-min-date="{{vm.item.fini}}" bs-datepicker />
+                <label translate>ffin</label><input type="text" class="form-control" ng-model="vm.item.ffin"
+                    data-min-date="{{vm.item.fini}}" bs-datepicker />
             </div>
 
             <div ng-repeat="entiId in vm.enti.entiPadresList track by $index"

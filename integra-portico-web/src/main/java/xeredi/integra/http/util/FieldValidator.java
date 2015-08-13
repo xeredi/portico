@@ -8,6 +8,8 @@ import java.util.Set;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.apache.commons.validator.GenericValidator;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.http.controller.action.comun.BaseAction.ACCION_EDICION;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
@@ -19,13 +21,11 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.comun.vo.Versionable;
 import xeredi.integra.model.item.vo.ItemTramiteDatoVO;
 import xeredi.integra.model.item.vo.ItemTramiteVO;
-import xeredi.integra.model.metamodelo.proxy.AbstractEntidadDetailVO;
-import xeredi.integra.model.metamodelo.proxy.TramiteDetailVO;
+import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.vo.TramiteTipoDatoVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -169,8 +169,8 @@ public final class FieldValidator {
      * @param validValues
      *            the valid values
      */
-    public static void validateCR(final @NotNull BaseAction action, final @NotNull String fieldName,
-            final String value, final @NotNull Set<String> validValues) {
+    public static void validateCR(final @NotNull BaseAction action, final @NotNull String fieldName, final String value,
+            final @NotNull Set<String> validValues) {
         if (value != null && !validValues.contains(value)) {
             action.addActionError(MessageI18nKey.E00012, fieldName, validValues.toString());
         }
@@ -195,7 +195,7 @@ public final class FieldValidator {
             Preconditions.checkNotNull(versionable.getVersion().getId());
         }
 
-        validateRequired(action, MessageI18nKey.version_fini, versionable.getVersion().getFini());
+        validateRequired(action, MessageI18nKey.fini, versionable.getVersion().getFini());
         validatePeriod(action, versionable.getVersion().getFini(), versionable.getVersion().getFfin());
     }
 
@@ -234,8 +234,8 @@ public final class FieldValidator {
      * @param itemVO
      *            the item vo
      */
-    public static void validateItem(final @NotNull BaseAction action,
-            final @NotNull AbstractEntidadDetailVO entiDetail, final @NotNull ItemVO itemVO) {
+    public static void validateItem(final @NotNull BaseAction action, final @NotNull AbstractEntidadDetailVO entiDetail,
+            final @NotNull ItemVO itemVO) {
         if (entiDetail.getEntdList() != null) {
             final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
 
@@ -302,9 +302,8 @@ public final class FieldValidator {
      * @param itemVO
      *            the item vo
      */
-    public static void validateTrmt(final @NotNull BaseAction action,
-            final @NotNull AbstractEntidadDetailVO entiDetail, final @NotNull TramiteDetailVO trmtDetail,
-            final @NotNull ItemTramiteVO ittr) {
+    public static void validateTrmt(final @NotNull BaseAction action, final @NotNull AbstractEntidadDetailVO entiDetail,
+            final @NotNull TramiteDetailVO trmtDetail, final @NotNull ItemTramiteVO ittr) {
         if (trmtDetail.getTpdtList() != null) {
             final Map<Long, ItemTramiteDatoVO> ittdMap = ittr.getIttdMap();
 

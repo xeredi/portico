@@ -4,3 +4,5 @@
 /.project
 /velocity.log
 /velocity.log.1
+/.eclipse-pmd
+/.pmd

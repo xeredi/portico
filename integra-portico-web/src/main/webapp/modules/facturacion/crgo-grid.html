@@ -5,8 +5,8 @@
             next-text="&rsaquo;&rsaquo;"></pagination>
     </div>
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/facturacion/crgo/edit/create"><i class="glyphicon glyphicon-file"></i>
-            <span translate>btn_crear</span> </a>
+        <a class="btn btn-default" ng-href="#/facturacion/crgo/edit/create"><i
+            class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span> </a>
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
             data-template="modules/facturacion/crgo-filter-content.html" bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
@@ -36,17 +36,18 @@
 
         <tbody>
             <tr ng-repeat="crgo in vm.crgoList.list track by $index">
-                <td><a ng-href="#/facturacion/crgo/detail/{{crgo.id}}/{{vm.crgoCriterio.fechaVigencia}}"><i
+                <td><a
+                    ng-href="#/facturacion/crgo/detail/{{::crgo.id}}/{{::vm.crgoCriterio.fechaVigencia}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="crgo.codigo"></td>
-                <td ng-bind="crgo.version.descripcion"></td>
-                <td ng-bind="crgo.version.codigoNormalizado"></td>
-                <td ng-bind="crgo.version.tipo"></td>
-                <td ng-bind="'enti_' + crgo.tpsr.id | translate"></td>
-                <td><i class="glyphicon glyphicon-{{crgo.version.principal ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{crgo.version.temporal ? 'ok' : 'remove'}}"></i></td>
-                <td ng-bind="crgo.version.fini | date: ('format_date' | translate)"></td>
-                <td ng-bind="crgo.version.ffin | date: ('format_date' | translate)"></td>
+                <td ng-bind="::crgo.codigo"></td>
+                <td ng-bind="::crgo.version.descripcion"></td>
+                <td ng-bind="::crgo.version.codigoNormalizado"></td>
+                <td ng-bind="::crgo.version.tipo"></td>
+                <td ng-bind="::('enti_' + crgo.tpsr.id | translate)"></td>
+                <td><i class="glyphicon glyphicon-{{::(crgo.version.principal ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{::(crgo.version.temporal ? 'ok' : 'remove')}}"></i></td>
+                <td ng-bind="::(crgo.version.fini | date: dateFormat)"></td>
+                <td ng-bind="::(crgo.version.ffin | date: dateFormat)"></td>
             </tr>
         </tbody>
     </table>

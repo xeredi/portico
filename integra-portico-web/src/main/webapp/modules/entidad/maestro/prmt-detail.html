@@ -1,5 +1,5 @@
 <tabset type="pills"> <tab select="vm.tabSelected(null)"> <tab-heading
-    ng-bind="::('enti_' + vm.enti.enti.id | translate)"></tab-heading>
+    ng-bind="'enti_' + vm.enti.enti.id | translate"></tab-heading>
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default"
@@ -91,6 +91,8 @@
             <thead>
                 <tr>
                     <th class="buttonLinks" />
+
+                    <th ng-if="vm.entiHijasMap[entiHijaId].enti.tpprAsociado.puerto" translate="prto"></th>
                     <th ng-bind="::('enti_' + vm.entiHijasMap[entiHijaId].enti.tpprAsociado.id | translate)"></th>
 
                     <th class="date" translate="fini"></th>
@@ -106,6 +108,9 @@
                     <td><a
                         ng-href="#/maestro/sprm/detail/{{::entiHijaId}}/{{::itemHijo.id}}/{{::vm.fechaVigencia}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
+                    <td ng-if="vm.entiHijasMap[entiHijaId].enti.tpprAsociado.puerto"
+                        ng-bind="::itemHijo.prmtAsociado.prto.etiqueta" nowrap="nowrap"></td>
+
                     <td ng-bind="::itemHijo.prmtAsociado.etiqueta" nowrap="nowrap"></td>
 
                     <td ng-bind="::(itemHijo.version.fini | date: ('format_date' | translate))"

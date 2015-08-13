@@ -170,6 +170,7 @@
             srvc_pk
             , srvc_anno
             , srvc_numero
+            , srvc_subp_pk
             , prto_codigo
             , prto_codigo_corto
         from tbl_servicio_srvc

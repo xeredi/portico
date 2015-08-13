@@ -396,36 +396,26 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
 		var pageMap = $routeParams.pageMap ? angular
 				.fromJson($routeParams.pageMap) : {};
 
-		$http
-				.post("servicio/servicio-detail.action", {
-					model : {
-						id : $routeParams.srvcId,
-						entiId : $routeParams.entiId
-					}
-				})
-				.success(
-						function(data) {
-							vm.enti = data.enti;
-							vm.item = data.model;
-							vm.prtoId = data.model.prto.id;
-							vm.fechaVigencia = data.fechaVigencia;
-							vm.arinList = data.arinList;
-							vm.ittrList = data.ittrList;
+		$http.post("servicio/servicio-detail.action", {
+			model : {
+				id : $routeParams.srvcId,
+				entiId : $routeParams.entiId
+			}
+		}).success(function(data) {
+			vm.enti = data.enti;
+			vm.item = data.model;
+			vm.prtoId = data.model.prto.id;
+			vm.fechaVigencia = data.fechaVigencia;
+			vm.arinList = data.arinList;
+			vm.ittrList = data.ittrList;
 
-							vm.entiHijasMap = {};
-							vm.itemHijosMap = {};
+			vm.entiHijasMap = {};
+			vm.itemHijosMap = {};
 
-							if (vm.enti.entiHijasList) {
-								for (i = 0; i < vm.enti.entiHijasList.length; i++) {
-									var subentiId = vm.enti.entiHijasList[i];
-
-									findSublist(
-											subentiId,
-											pageMap[subentiId] ? pageMap[subentiId]
-													: 1);
-								}
-							}
-						});
+			angular.forEach(vm.enti.entiHijasList, function(value, key) {
+				findSublist(value, pageMap[value] ? pageMap[value] : 1);
+			});
+		});
 
 		pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 	}
@@ -440,7 +430,9 @@ function SrvcDetailController($http, $location, $routeParams, pageTitleService) 
 			},
 			page : page
 		}).success(function(data) {
-			vm.entiHijasMap[data.model.entiId] = data.enti;
+			if (!vm.entiHijasMap[data.model.entiId]) {
+				vm.entiHijasMap[data.model.entiId] = data.enti;
+			}
 			vm.itemHijosMap[data.model.entiId] = data.resultList;
 			vm.pageMap[data.model.entiId] = data.resultList.page;
 
@@ -766,11 +758,9 @@ function SsrvDetailController($http, $location, $routeParams, pageTitleService) 
 			vm.itemHijosMap = {};
 			vm.entiHijasMap = {};
 
-			if (data.enti.entiHijasList) {
-				for (i = 0; i < data.enti.entiHijasList.length; i++) {
-					findSublist(data.enti.entiHijasList[i], 1);
-				}
-			}
+			angular.forEach(data.enti.entiHijasList, function(value, key) {
+				findSublist(value, 1);
+			});
 		});
 	}
 

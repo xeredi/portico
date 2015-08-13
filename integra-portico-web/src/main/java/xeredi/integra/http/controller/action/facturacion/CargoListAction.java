@@ -1,5 +1,7 @@
 package xeredi.integra.http.controller.action.facturacion;
 
+import java.util.Calendar;
+
 import xeredi.integra.http.controller.action.comun.GridListAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.CargoBO;
@@ -20,6 +22,10 @@ public final class CargoListAction extends GridListAction<CargoCriterioVO, Cargo
      */
     @Override
     public void doList() throws ApplicationException {
+        if (model.getFechaVigencia() == null) {
+            model.setFechaVigencia(Calendar.getInstance().getTime());
+        }
+
         final CargoBO crgoBO = new CargoBO();
 
         resultList = crgoBO.selectList(model, getOffset(), limit);

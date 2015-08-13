@@ -3,7 +3,8 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.metamodelo.dao.TipoSubparametroDAO">
-	<resultMap type="TipoSubparametroVO" id="ResultMap" extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
+	<resultMap type="TipoSubparametroVO" id="ResultMap"
+		extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
 		<result column="tpsp_es_i18n" property="i18n" />
 		<result column="tpsp_es_tmp_exp" property="tempExp" />
 		<result column="tpsp_tppr_pk" property="tpprId" />
@@ -12,6 +13,8 @@
 			<result column="tppr_asociado_pk" property="id" />
 			<result column="tppr_asociado_codigo" property="codigo" />
 			<result column="tppr_asociado_nombre" property="nombre" />
+			<result column="tppr_asociado_gis" property="gis" />
+			<result column="tppr_asociado_puerto" property="puerto" />
 		</association>
 	</resultMap>
 
@@ -23,6 +26,8 @@
             , tpsp.tpsp_es_i18n, tpsp.tpsp_es_tmp_exp, tpsp.tpsp_tppr_pk
             , entiAsociado.enti_pk AS tppr_asociado_pk
             , entiAsociado.enti_codigo AS tppr_asociado_codigo
+            , entiAsociado.enti_gis AS tppr_asociado_gis
+            , entiAsociado.enti_puerto AS tppr_asociado_puerto
     ]]>
 		<if test="idioma != null">
         <![CDATA[
@@ -57,7 +62,8 @@
 			</if>
 			<if test="ids != null">
 				AND enti.enti_pk IN
-				<foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}</foreach>
+				<foreach collection="ids" item="item" open="(" close=")"
+					separator=", ">#{item}</foreach>
 			</if>
 			<if test="nombre != null and !nombre.empty">
 				AND enti.enti_nombre LIKE #{nombre}
@@ -71,7 +77,8 @@
 		</where>
 	</sql>
 
-	<select id="selectList" parameterType="TipoSubparametroCriterioVO" resultMap="ResultMap">
+	<select id="selectList" parameterType="TipoSubparametroCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 		ORDER BY enti.enti_codigo, enti.enti_pk

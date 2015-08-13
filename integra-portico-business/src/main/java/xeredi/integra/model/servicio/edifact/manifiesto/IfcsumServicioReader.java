@@ -672,6 +672,11 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
         ssrvList.add(padoActual);
         addSsss(partActual, padoActual);
 
+        padoActual.addItdt(TipoDato.SIT_EMB.getId(), parseString(ctx.c503().f1373(), false));
+        padoActual.addItdt(TipoDato.TIPO_DOC_AEAT.getId(),
+                getMaestro(Entidad.TIPO_DOCUMENTO_AEAT, ctx.c002().f1001().getText()));
+        padoActual.addItdt(TipoDato.CADENA_01.getId(), parseString(ctx.c503().f1004(), true));
+
         return super.visitDoc(ctx);
     }
 

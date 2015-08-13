@@ -1,20 +1,19 @@
 <form role="form">
     <fieldset>
         <div class="row">
-            <div class="col-sm-3 col-md-2 form-group-sm">
-                <label translate>tpsr</label> <select ng-if="vm.accion == 'create'"
-                    ng-model="vm.crgo.tpsr.id"
-                    ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in vm.tpsrList"
+            <div class="col-sm-3 col-md-2 form-group-sm" ng-switch="::vm.accion">
+                <label translate>tpsr</label> <select ng-switch-when="create" ng-model="vm.crgo.tpsr.id"
+                    ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in ::vm.tpsrList"
                     class="form-control">
                     <option />
                 </select>
-                <p ng-if="vm.accion != 'create'" class="form-control-static"
+                <p ng-switch-when="edit" class="form-control-static"
                     ng-bind="'enti_' + vm.crgo.tpsr.id | translate"></p>
             </div>
-            <div class="col-sm-2 col-md-1 form-group-sm">
-                <label translate>crgo_codigo</label> <input ng-if="vm.accion == 'create'" type="text"
+            <div class="col-sm-2 col-md-1 form-group-sm" ng-switch="::vm.accion">
+                <label translate>crgo_codigo</label> <input ng-switch-when="create" type="text"
                     ng-model="vm.crgo.codigo" class="form-control" />
-                <p ng-if="vm.accion != 'create'" class="form-control-static" ng-bind="vm.crgo.codigo"></p>
+                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.crgo.codigo"></p>
             </div>
             <div class="col-sm-2 col-md-2 form-group-sm">
                 <label translate>crgo_codigoNormalizado</label> <input type="text"
@@ -22,7 +21,7 @@
             </div>
             <div class="col-sm-2 col-md-1 form-group-sm">
                 <label translate>crgo_tipo</label> <select ng-model="vm.crgo.version.tipo"
-                    ng-options="cdrf as ('CargoTipo_' + cdrf | translate) for cdrf in vm.tipos"
+                    ng-options="cdrf as ('CargoTipo_' + cdrf | translate) for cdrf in ::vm.tipos"
                     class="form-control">
                     <option />
                 </select>

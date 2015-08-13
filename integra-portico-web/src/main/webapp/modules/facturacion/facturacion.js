@@ -1086,6 +1086,7 @@ function CrgoGridController($http, $location, $routeParams, $modal,
 			page : page,
 			limit : vm.limit
 		}).success(function(data) {
+			vm.crgoCriterio = data.model;
 			vm.crgoList = data.resultList;
 			vm.page = data.resultList.page;
 

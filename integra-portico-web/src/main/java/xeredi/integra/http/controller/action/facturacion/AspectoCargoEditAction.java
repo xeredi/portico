@@ -2,6 +2,8 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.List;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
@@ -13,8 +15,6 @@ import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -44,6 +44,7 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
 
             ascrCriterio.setId(model.getId());
             ascrCriterio.setFechaVigencia(fechaVigencia);
+            ascrCriterio.setIdioma(idioma);
 
             model = ascrBO.selectObject(ascrCriterio);
         }
@@ -54,25 +55,27 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
      */
     @Override
     public void doLoadDependencies() throws ApplicationException {
-        Preconditions.checkNotNull(model.getAspcId());
+        if (accion == ACCION_EDICION.create) {
+            Preconditions.checkNotNull(model.getAspcId());
 
-        final AspectoBO aspcBO = new AspectoBO();
-        final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
+            final AspectoBO aspcBO = new AspectoBO();
+            final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
-        aspcCriterio.setId(model.getAspcId());
-        aspcCriterio.setFechaVigencia(fechaVigencia);
-        aspcCriterio.setIdioma(getIdioma());
+            aspcCriterio.setId(model.getAspcId());
+            aspcCriterio.setFechaVigencia(fechaVigencia);
+            aspcCriterio.setIdioma(getIdioma());
 
-        final AspectoVO aspc = aspcBO.selectObject(aspcCriterio);
+            final AspectoVO aspc = aspcBO.selectObject(aspcCriterio);
 
-        final CargoBO crgoBO = new CargoBO();
-        final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
+            final CargoBO crgoBO = new CargoBO();
+            final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
-        crgoCriterio.setTpsrId(aspc.getTpsr().getId());
-        crgoCriterio.setFechaVigencia(fechaVigencia);
-        crgoCriterio.setIdioma(getIdioma());
+            crgoCriterio.setTpsrId(aspc.getTpsr().getId());
+            crgoCriterio.setFechaVigencia(fechaVigencia);
+            crgoCriterio.setIdioma(getIdioma());
 
-        crgoList = crgoBO.selectList(crgoCriterio);
+            crgoList = crgoBO.selectList(crgoCriterio);
+        }
     }
 
     /**

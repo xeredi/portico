@@ -83,7 +83,7 @@
 			<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}</foreach>
 		</if>
 
-		<if test="soloDatosGrid">
+		<!-- if test="soloDatosGrid">
             <![CDATA[
                 AND EXISTS (
                     SELECT 1
@@ -94,7 +94,7 @@
                         AND entd_gridable = 1
                 )
             ]]>
-		</if>
+		</if -->
     <![CDATA[
         		)
 		) sql

@@ -112,12 +112,14 @@
         		FROM tbl_estadistica_dato_esdt
         		WHERE
             		esdt_tpdt_pk = #{tipoDato.id}
-            		AND esdt_estd_pk = ANY (
-                		SELECT estd_pk
-                		FROM tbl_estadistica_estd
-                		WHERE
-                    		estd_pk = esdt_estd_pk
-                    		AND estd_pepr_pk = pepr_pk
+
+		            AND EXISTS (
+		                SELECT 1
+		                FROM tbl_estadistica_estd
+		                WHERE
+		                    estd_pk = esdt_estd_pk
+		                    AND estd_pepr_pk = pepr_pk
+		                    AND estd_subp_pk = prto_pk
                     		AND estd_tpes_pk = #{enti.id}
                     		AND estd_subp_pk = prto_pk
             		)
@@ -133,12 +135,14 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-			AND esdt_estd_pk = ANY (
-				SELECT estd_pk
+
+            AND EXISTS (
+                SELECT 1
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
-               		AND estd_pepr_pk = pepr_pk
+                    AND estd_pepr_pk = pepr_pk
+                    AND estd_subp_pk = prto_pk
                		AND estd_tpes_pk = #{enti.id}
                		AND estd_subp_pk = prto_pk
                     AND EXISTS (
@@ -169,12 +173,14 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-			AND esdt_estd_pk = ANY (
-				SELECT estd_pk
+
+            AND EXISTS (
+                SELECT 1
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
-               		AND estd_pepr_pk = pepr_pk
+                    AND estd_pepr_pk = pepr_pk
+                    AND estd_subp_pk = prto_pk
                		AND estd_tpes_pk = #{enti.id}
                		AND estd_subp_pk = prto_pk
                     AND EXISTS (
@@ -209,12 +215,14 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-			AND esdt_estd_pk = ANY (
-				SELECT estd_pk
+
+            AND EXISTS (
+                SELECT 1
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
-               		AND estd_pepr_pk = pepr_pk
+                    AND estd_pepr_pk = pepr_pk
+                    AND estd_subp_pk = prto_pk
                		AND estd_tpes_pk = #{enti.id}
                		AND estd_subp_pk = prto_pk
                     AND EXISTS (
@@ -261,12 +269,14 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-			AND esdt_estd_pk = ANY (
-				SELECT estd_pk
+
+            AND EXISTS (
+                SELECT 1
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
-               		AND estd_pepr_pk = pepr_pk
+                    AND estd_pepr_pk = pepr_pk
+                    AND estd_subp_pk = prto_pk
                		AND estd_tpes_pk = #{enti.id}
                		AND estd_subp_pk = prto_pk
                     AND EXISTS (
@@ -313,12 +323,14 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-			AND esdt_estd_pk = ANY (
-				SELECT estd_pk
+
+            AND EXISTS (
+                SELECT 1
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
-               		AND estd_pepr_pk = pepr_pk
+                    AND estd_pepr_pk = pepr_pk
+                    AND estd_subp_pk = prto_pk
                		AND estd_tpes_pk = #{enti.id}
                		AND estd_subp_pk = prto_pk
                     AND EXISTS (
@@ -352,12 +364,13 @@
         WHERE
 	        esdt_tpdt_pk = #{tipoDato.id}
 
-	        AND esdt_estd_pk = ANY (
-	        	SELECT estd_pk
-	        	FROM tbl_estadistica_estd
-	        	WHERE
-			        estd_pepr_pk = pepr_pk
-			        AND estd_subp_pk = prto_pk
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_estadistica_estd
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND estd_pepr_pk = pepr_pk
+                    AND estd_subp_pk = prto_pk
 			        AND estd_tpes_pk = #{enti.id}
 
 		            AND EXISTS (
@@ -414,12 +427,13 @@
         WHERE
 	        esdt_tpdt_pk = #{tipoDato.id}
 
-	        AND esdt_estd_pk = ANY (
-	        	SELECT estd_pk
-	        	FROM tbl_estadistica_estd
-	        	WHERE
-			        estd_pepr_pk = pepr_pk
-			        AND estd_subp_pk = prto_pk
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_estadistica_estd
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND estd_pepr_pk = pepr_pk
+                    AND estd_subp_pk = prto_pk
 			        AND estd_tpes_pk = #{enti.id}
 
 		            AND EXISTS (
@@ -506,12 +520,13 @@
         WHERE
 	        esdt_tpdt_pk = #{tipoDato.id}
 
-	        AND esdt_estd_pk = ANY (
-	        	SELECT estd_pk
-	        	FROM tbl_estadistica_estd
-	        	WHERE
-			        estd_pepr_pk = pepr_pk
-			        AND estd_subp_pk = prto_pk
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_estadistica_estd
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND estd_pepr_pk = pepr_pk
+                    AND estd_subp_pk = prto_pk
 			        AND estd_tpes_pk = #{enti.id}
 
 		            AND EXISTS (
@@ -585,12 +600,13 @@
         WHERE
 	        esdt_tpdt_pk = #{tipoDato.id}
 
-	        AND esdt_estd_pk = ANY (
-	        	SELECT estd_pk
-	        	FROM tbl_estadistica_estd
-	        	WHERE
-			        estd_pepr_pk = pepr_pk
-			        AND estd_subp_pk = prto_pk
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_estadistica_estd
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND estd_pepr_pk = pepr_pk
+                    AND estd_subp_pk = prto_pk
 			        AND estd_tpes_pk = #{enti.id}
 
 		            AND EXISTS (
@@ -677,12 +693,13 @@
         WHERE
 	        esdt_tpdt_pk = #{tipoDato.id}
 
-	        AND esdt_estd_pk = ANY (
-	        	SELECT estd_pk
-	        	FROM tbl_estadistica_estd
-	        	WHERE
-			        estd_pepr_pk = pepr_pk
-			        AND estd_subp_pk = prto_pk
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_estadistica_estd
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND estd_pepr_pk = pepr_pk
+                    AND estd_subp_pk = prto_pk
 			        AND estd_tpes_pk = #{enti.id}
 
 		            AND EXISTS (
@@ -755,12 +772,13 @@
         WHERE
 	        esdt_tpdt_pk = #{tipoDato.id}
 
-	        AND esdt_estd_pk = ANY (
-	        	SELECT estd_pk
-	        	FROM tbl_estadistica_estd
-	        	WHERE
-			        estd_pepr_pk = pepr_pk
-			        AND estd_subp_pk = prto_pk
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_estadistica_estd
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND estd_pepr_pk = pepr_pk
+                    AND estd_subp_pk = prto_pk
 			        AND estd_tpes_pk = #{enti.id}
 
 		            AND EXISTS (
@@ -769,12 +787,7 @@
 		                WHERE
 		                    estd_pk = esdt_estd_pk
 		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('TIPO_OPERACION_BL')
-		                            AND prmt_parametro LIKE #{opetParam}
-		                    )
+		                    AND esdt_cadena LIKE #{opetParam}
 		            )
         ]]>
 		<if test="navtParam != null">
@@ -840,12 +853,13 @@
         WHERE
 	        esdt_tpdt_pk = #{tipoDato.id}
 
-	        AND esdt_estd_pk = ANY (
-	        	SELECT estd_pk
-	        	FROM tbl_estadistica_estd
-	        	WHERE
-			        estd_pepr_pk = pepr_pk
-			        AND estd_subp_pk = prto_pk
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_estadistica_estd
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND estd_pepr_pk = pepr_pk
+                    AND estd_subp_pk = prto_pk
 			        AND estd_tpes_pk = #{enti.id}
 
 		            AND EXISTS (
@@ -854,12 +868,7 @@
 		                WHERE
 		                    estd_pk = esdt_estd_pk
 		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('TIPO_OPERACION_BL')
-		                            AND prmt_parametro LIKE #{opetParam}
-		                    )
+		                    AND esdt_cadena LIKE #{opetParam}
 		            )
         ]]>
 		<if test="navtParam != null">
@@ -923,12 +932,13 @@
         WHERE
 	        esdt_tpdt_pk = #{tipoDato.id}
 
-	        AND esdt_estd_pk = ANY (
-	        	SELECT estd_pk
-	        	FROM tbl_estadistica_estd
-	        	WHERE
-			        estd_pepr_pk = pepr_pk
-			        AND estd_subp_pk = prto_pk
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_estadistica_estd
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND estd_pepr_pk = pepr_pk
+                    AND estd_subp_pk = prto_pk
 			        AND estd_tpes_pk = #{enti.id}
 
 		            AND EXISTS (
@@ -937,12 +947,7 @@
 		                WHERE
 		                    estd_pk = esdt_estd_pk
 		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('TIPO_OPERACION_BL')
-		                            AND prmt_parametro LIKE #{opetParam}
-		                    )
+		                    AND esdt_cadena LIKE #{opetParam}
 		            )
         ]]>
 		<if test="navtParam != null">
@@ -1001,12 +1006,13 @@
         WHERE
 	        esdt_tpdt_pk = #{tipoDato.id}
 
-	        AND esdt_estd_pk = ANY (
-	        	SELECT estd_pk
-	        	FROM tbl_estadistica_estd
-	        	WHERE
-			        estd_pepr_pk = pepr_pk
-			        AND estd_subp_pk = prto_pk
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_estadistica_estd
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND estd_pepr_pk = pepr_pk
+                    AND estd_subp_pk = prto_pk
 			        AND estd_tpes_pk = #{enti.id}
 
 		            AND EXISTS (
@@ -1015,12 +1021,7 @@
 		                WHERE
 		                    estd_pk = esdt_estd_pk
 		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('TIPO_OPERACION_BL')
-		                            AND prmt_parametro LIKE #{opetParam}
-		                    )
+		                    AND esdt_cadena LIKE #{opetParam}
 		            )
         ]]>
 		<if test="navtParam != null">
@@ -1092,12 +1093,13 @@
         WHERE
 	        esdt_tpdt_pk = #{tipoDato.id}
 
-	        AND esdt_estd_pk = ANY (
-	        	SELECT estd_pk
-	        	FROM tbl_estadistica_estd
-	        	WHERE
-			        estd_pepr_pk = pepr_pk
-			        AND estd_subp_pk = prto_pk
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_estadistica_estd
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND estd_pepr_pk = pepr_pk
+                    AND estd_subp_pk = prto_pk
 			        AND estd_tpes_pk = #{enti.id}
 
 		            AND EXISTS (
@@ -1106,12 +1108,7 @@
 		                WHERE
 		                    estd_pk = esdt_estd_pk
 		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('TIPO_OPERACION_BL')
-		                            AND prmt_parametro LIKE #{opetParam}
-		                    )
+		                    AND esdt_cadena LIKE #{opetParam}
 		            )
 		            AND EXISTS (
 		                SELECT 1

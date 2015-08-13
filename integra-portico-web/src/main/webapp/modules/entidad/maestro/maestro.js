@@ -519,6 +519,7 @@ function SprmEditController($http, $location, $routeParams, pageTitleService) {
 			vm.prtoId = data.model.prtoId;
 			vm.item = data.model;
 			vm.labelValuesMap = data.labelValuesMap;
+			vm.prtoList = data.prtoList;
 		});
 
 		pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);

@@ -1,6 +1,16 @@
 <form role="form">
     <fieldset>
         <div class="row">
+            <div ng-if="vm.enti.enti.tpprAsociado.puerto" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+                <label translate="prto"></label> <select
+                    ng-if="vm.accion == 'create' || vm.accion == 'duplicate'"
+                    ng-model="vm.item.prmtAsociado.prto.id" ng-change="vm.prtoId = vm.item.prmtAsociado.prto.id"
+                    ng-options="prto.id as prto.etiqueta for prto in vm.prtoList" class="form-control">
+                    <option />
+                </select>
+                <p ng-if="!(vm.accion == 'create' || vm.accion == 'duplicate')" class="form-control-static"
+                    ng-bind="vm.item.prmtAsociado.prto.etiqueta"></p>
+            </div>
             <div class="col-sm-4 col-md-2 col-md-2 form-group-sm">
                 <label ng-bind="'enti_' + vm.enti.enti.tpprAsociado.id | translate"></label> <input
                     ng-if="vm.accion != 'edit'" ng-controller="PrmtLupaController" type="text"

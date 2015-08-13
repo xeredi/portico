@@ -47,12 +47,33 @@
 		<if test="estado != null and !estado.empty">
 			AND ssrv_estado = #{estado}
 		</if>
+		<if test="finiMin != null">
+        <![CDATA[
+			AND ssrv_fini >= #{finiMin}
+        ]]>
+		</if>
+		<if test="finiMax != null">
+        <![CDATA[
+			AND ssrv_fini < #{finiMax}
+        ]]>
+		</if>
+		<if test="ffinMin != null">
+        <![CDATA[
+			AND ssrv_ffin >= #{ffinMin}
+        ]]>
+		</if>
+		<if test="ffinMax != null">
+        <![CDATA[
+			AND ssrv_ffin < #{ffinMax}
+        ]]>
+		</if>
 		<if test="id != null">
 			AND ssrv_pk = #{id}
 		</if>
 		<if test="ids != null and !ids.empty">
 			AND ssrv_pk IN
-			<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+			<foreach collection="ids" item="item" open="(" close=")"
+				separator=",">#{item}
 			</foreach>
 		</if>
 		<if test="padreId != null or (padreIds != null and !padreIds.empty)">
@@ -68,7 +89,8 @@
 			</if>
 			<if test="padreIds != null and !padreIds.empty">
 				AND ssss_ssrvp_pk IN
-				<foreach collection="padreIds" item="item" open="(" close=")" separator=",">#{item}
+				<foreach collection="padreIds" item="item" open="(" close=")"
+					separator=",">#{item}
 				</foreach>
 			</if>
 			)
@@ -86,7 +108,8 @@
 			</if>
 			<if test="hijoIds != null and !hijoIds.empty">
 				AND ssss_ssrvh_pk IN
-				<foreach collection="hijoIds" item="item" open="(" close=")" separator=",">#{item}
+				<foreach collection="hijoIds" item="item" open="(" close=")"
+					separator=",">#{item}
 				</foreach>
 			</if>
 			)
@@ -127,7 +150,8 @@
 		</if>
 	</sql>
 
-	<select id="count" parameterType="SubservicioCriterioVO" resultType="Integer">
+	<select id="count" parameterType="SubservicioCriterioVO"
+		resultType="Integer">
         <![CDATA[
         SELECT
             COUNT(1)
@@ -139,7 +163,8 @@
 		</where>
 	</select>
 
-	<select id="selectList" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
+	<select id="selectList" parameterType="SubservicioCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<where>
 			<include refid="SelectWhere" />
@@ -147,7 +172,8 @@
 		<!-- ORDER BY ssrv_tpss_pk, ssrv_srvc_pk DESC, ssrv_numero -->
 	</select>
 
-	<select id="selectObject" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
+	<select id="selectObject" parameterType="SubservicioCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<where>
 			<include refid="SelectWhere" />
@@ -206,7 +232,8 @@
         ]]>
 	</update>
 
-	<select id="selectLupaList" parameterType="SubservicioLupaCriterioVO" resultMap="ResultMap" fetchSize="10">
+	<select id="selectLupaList" parameterType="SubservicioLupaCriterioVO"
+		resultMap="ResultMap" fetchSize="10">
         <![CDATA[
         SELECT
             ssrv_pk
