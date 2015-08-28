@@ -109,9 +109,7 @@ public enum TipoDato {
     // Maestros
     /** The acuerdo. */
     ACUERDO(45245L), /** The alineacion. */
-    ALIN(45180L), /** The ALI n_2. */
-    ALIN_2(45181L), /** The ALI n_3. */
-    ALIN_3(45182L), /** The amarre dep. */
+    ALIN(45180L), /** The amarre dep. */
     AMARRE_DEP(45450L), /** The AMARR e_ de p_2. */
     AMARRE_DEP_2(45451L), /** The area geografica. */
     AREA_GEOG(45045L), /** The area mundial. */
@@ -156,17 +154,13 @@ public enum TipoDato {
     SUBT_MAN_PESCA(45080L), /** The subtipo residuo. */
     SUBT_RES(45440L), /** The terminal. */
     TERMINAL(45305L), /** The tipo actividad. */
-    TIPO_ACT(45000L), /** The TIP o_ ac t_2. */
-    TIPO_ACT_2(45001L), /** The TIP o_ ac t_3. */
-    TIPO_ACT_3(45002L), /** The tipo actividad edi. */
+    TIPO_ACT(45000L), /** The tipo actividad edi. */
     TIPO_ACTIVIDAD_EDI(45375L), /** The tipo actividad general concesional. */
     TIPO_ACT_GRAL_CONC(45165L), /** The tipo alineacion. */
     TIPO_ALIN(45060L), /** The tipo amarre. */
     TIPO_AMA(45200L), /** The tipo atraque. */
     TIPO_ATR(45280L), /** The tipo atraque edi. */
-    TIPO_ATR_EDI(45410L), /** The TIP o_ atraqu e_ ed i_2. */
-    TIPO_ATR_EDI_2(45411L), /** The TIP o_ atraqu e_ ed i_3. */
-    TIPO_ATR_EDI_3(45412L), /** The tipo bien concesional. */
+    TIPO_ATR_EDI(45410L), /** The tipo bien concesional. */
     TIPO_BIEN_CONC(45160L), /** The tipo bulto. */
     TIPO_BULTO(45345L), /** The tipo buque. */
     TIPO_BUQUE(45030L), /** The TIP o_ buqu e_2. */
@@ -245,9 +239,7 @@ public enum TipoDato {
     TIPO_BL(43135L), /** The tipo destino. */
     TIPO_DEST(43390L), /** The tipo documento. */
     TIPO_DOCUMENTO(43035L), /** The tipo estancia atraque. */
-    TIPO_ESTAN_ATR(43120L), /** The TIP o_ esta n_ at r_2. */
-    TIPO_ESTAN_ATR_2(43121L), /** The TIP o_ esta n_ at r_3. */
-    TIPO_ESTAN_ATR_3(43122L), /** The tipo estancia escala. */
+    TIPO_ESTAN_ATR(43120L), /** The tipo estancia escala. */
     TIPO_ESTAN_ESC(43115L), /** The tipo garantia. */
     TIPO_GARANTIA(43010L), /** The tipo manifiesto. */
     TIPO_MANIF(43100L), /** The tipo manifiesto edi. */

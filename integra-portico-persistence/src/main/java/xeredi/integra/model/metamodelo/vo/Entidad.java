@@ -32,7 +32,10 @@ public enum Entidad {
     BUQUE_SUBPUERTO(24003L), /** The buque trafico. */
     BUQUE_TRAFICO(24000L), /** The buque fondeado atracado. */
     BUQUE_FONDEADO_ATRACADO(23004L), /** The buque pesca. */
-    BUQUE_PESCA(20040L), /** The comprador pesca. */
+    BUQUE_PESCA(20040L),
+
+    /** The buque pesca srv. */
+    BUQUE_PESCA_SRV(21020L), /** The comprador pesca. */
     COMPRADOR_PESCA(20108L), /** The contador. */
     CONTADOR(20113L), /** The convenio. */
     CONVENIO(20093L), /** The descuento adicional. */

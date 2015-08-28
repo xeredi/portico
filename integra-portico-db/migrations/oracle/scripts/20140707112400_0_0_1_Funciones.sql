@@ -3,7 +3,7 @@
 
 
 
-CREATE FUNCTION getEntidad(entiCodigo varchar) RETURN integer IS
+CREATE FUNCTION getEntidad(entiCodigo varchar) RETURN integer RESULT_CACHE IS
 	id integer;
 BEGIN
 	SELECT enti_pk INTO id FROM tbl_entidad_enti WHERE enti_codigo = entiCodigo;
@@ -20,7 +20,7 @@ GRANT EXECUTE ON getEntidad TO portico\
 
 
 
-CREATE FUNCTION getTipoDato(tpdtCodigo varchar) RETURN integer IS
+CREATE FUNCTION getTipoDato(tpdtCodigo varchar) RETURN integer RESULT_CACHE IS
 	id integer;
 BEGIN
 	SELECT tpdt_pk INTO id FROM tbl_tipo_dato_tpdt WHERE tpdt_codigo = tpdtCodigo;

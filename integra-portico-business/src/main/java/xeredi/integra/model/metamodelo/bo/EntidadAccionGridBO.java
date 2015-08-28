@@ -3,11 +3,12 @@ package xeredi.integra.model.metamodelo.bo;
 import java.util.List;
 import java.util.Map;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
@@ -19,8 +20,6 @@ import xeredi.integra.model.metamodelo.dao.EntidadAccionGridDAO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionGridCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionGridVO;
 import xeredi.util.mybatis.SqlMapperLocator;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -105,6 +104,8 @@ public final class EntidadAccionGridBO {
             if (enagDAO.delete(enag) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.enag, enag);
             }
+
+            I18nBO.deleteMap(session, I18nPrefix.enag, enag.getId());
 
             session.commit();
         }

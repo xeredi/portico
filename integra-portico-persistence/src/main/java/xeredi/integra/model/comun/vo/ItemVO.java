@@ -7,7 +7,6 @@ import java.util.Map;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -16,229 +15,226 @@ import xeredi.integra.model.servicio.vo.ServicioVO;
  */
 public abstract class ItemVO implements ItemEntidad {
 
-	/** The id. */
-	private Long id;
+    /** The id. */
+    private Long id;
 
-	/** The enti id. */
-	private Long entiId;
+    /** The enti id. */
+    private Long entiId;
 
-	/** The itdt map. */
-	private Map<Long, ItemDatoVO> itdtMap;
+    /** The itdt map. */
+    private Map<Long, ItemDatoVO> itdtMap;
 
-	/**
-	 * Instantiates a new item vo.
-	 */
-	protected ItemVO() {
-		super();
+    /**
+     * Instantiates a new item vo.
+     */
+    protected ItemVO() {
+        super();
+    }
 
-		itdtMap = new HashMap<Long, ItemDatoVO>();
-	}
+    /**
+     * Instantiates a new item vo.
+     *
+     * @param entiDetail
+     *            the enti detail
+     */
+    protected ItemVO(final AbstractEntidadDetailVO entiDetail) {
+        super();
 
-	/**
-	 * Instantiates a new item vo.
-	 *
-	 * @param entiDetail the enti detail
-	 */
-	protected ItemVO(final AbstractEntidadDetailVO entiDetail) {
-		super();
+        setEntiId(entiDetail.getEnti().getId());
 
-		setEntiId(entiDetail.getEnti().getId());
+        for (final EntidadTipoDatoVO entd : entiDetail.getEntdMap().values()) {
+            final ItemDatoVO itdt = new ItemDatoVO();
 
-		itdtMap = new HashMap<Long, ItemDatoVO>();
+            itdt.setTpdtId(entd.getTpdt().getId());
 
-		for (final EntidadTipoDatoVO entd : entiDetail.getEntdMap().values()) {
-			final ItemDatoVO itdt = new ItemDatoVO();
+            addItdt(itdt);
+        }
+    }
 
-			itdt.setTpdtId(entd.getTpdt().getId());
+    /**
+     * Gets the itdt.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @return the itdt
+     */
+    public final ItemDatoVO getItdt(final Long tpdtId) {
+        return itdtMap == null ? null : itdtMap.get(tpdtId);
+    }
 
-			addItdt(itdt);
-		}
-	}
+    /**
+     * Adds the itdt.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @param value
+     *            the value
+     */
+    public final void addItdt(final Long tpdtId, final Long value) {
+        final ItemDatoVO itdt = new ItemDatoVO();
 
-	/**
-	 * Gets the itdt.
-	 *
-	 * @param tpdtId
-	 *            the tpdt id
-	 * @return the itdt
-	 */
-	public final ItemDatoVO getItdt(final Long tpdtId) {
-		return itdtMap == null ? null : itdtMap.get(tpdtId);
-	}
+        itdt.setTpdtId(tpdtId);
+        itdt.setCantidadEntera(value);
 
-	/**
-	 * Adds the itdt.
-	 *
-	 * @param tpdtId
-	 *            the tpdt id
-	 * @param value
-	 *            the value
-	 */
-	public final void addItdt(final Long tpdtId, final Long value) {
-		final ItemDatoVO itdt = new ItemDatoVO();
+        addItdt(itdt);
+    }
 
-		itdt.setTpdtId(tpdtId);
-		itdt.setCantidadEntera(value);
+    /**
+     * Adds the itdt.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @param value
+     *            the value
+     */
+    public final void addItdt(final Long tpdtId, final Double value) {
+        final ItemDatoVO itdt = new ItemDatoVO();
 
-		addItdt(itdt);
-	}
+        itdt.setTpdtId(tpdtId);
+        itdt.setCantidadDecimal(value);
 
-	/**
-	 * Adds the itdt.
-	 *
-	 * @param tpdtId
-	 *            the tpdt id
-	 * @param value
-	 *            the value
-	 */
-	public final void addItdt(final Long tpdtId, final Double value) {
-		final ItemDatoVO itdt = new ItemDatoVO();
+        addItdt(itdt);
+    }
 
-		itdt.setTpdtId(tpdtId);
-		itdt.setCantidadDecimal(value);
+    /**
+     * Adds the itdt.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @param value
+     *            the value
+     */
+    public final void addItdt(final Long tpdtId, final String value) {
+        final ItemDatoVO itdt = new ItemDatoVO();
 
-		addItdt(itdt);
-	}
+        itdt.setTpdtId(tpdtId);
+        itdt.setCadena(value);
 
-	/**
-	 * Adds the itdt.
-	 *
-	 * @param tpdtId
-	 *            the tpdt id
-	 * @param value
-	 *            the value
-	 */
-	public final void addItdt(final Long tpdtId, final String value) {
-		final ItemDatoVO itdt = new ItemDatoVO();
+        addItdt(itdt);
+    }
 
-		itdt.setTpdtId(tpdtId);
-		itdt.setCadena(value);
+    /**
+     * Adds the itdt.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @param value
+     *            the value
+     */
+    public final void addItdt(final Long tpdtId, final ParametroVO value) {
+        final ItemDatoVO itdt = new ItemDatoVO();
 
-		addItdt(itdt);
-	}
+        itdt.setTpdtId(tpdtId);
+        itdt.setPrmt(value);
 
-	/**
-	 * Adds the itdt.
-	 *
-	 * @param tpdtId
-	 *            the tpdt id
-	 * @param value
-	 *            the value
-	 */
-	public final void addItdt(final Long tpdtId, final ParametroVO value) {
-		final ItemDatoVO itdt = new ItemDatoVO();
+        addItdt(itdt);
+    }
 
-		itdt.setTpdtId(tpdtId);
-		itdt.setPrmt(value);
+    /**
+     * Adds the itdt.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @param value
+     *            the value
+     */
+    public final void addItdt(final Long tpdtId, final ServicioVO value) {
+        final ItemDatoVO itdt = new ItemDatoVO();
 
-		addItdt(itdt);
-	}
+        itdt.setTpdtId(tpdtId);
+        itdt.setSrvc(value);
 
-	/**
-	 * Adds the itdt.
-	 *
-	 * @param tpdtId
-	 *            the tpdt id
-	 * @param value
-	 *            the value
-	 */
-	public final void addItdt(final Long tpdtId, final ServicioVO value) {
-		final ItemDatoVO itdt = new ItemDatoVO();
+        addItdt(itdt);
+    }
 
-		itdt.setTpdtId(tpdtId);
-		itdt.setSrvc(value);
+    /**
+     * Adds the itdt.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @param value
+     *            the value
+     */
+    public final void addItdt(final Long tpdtId, final Date value) {
+        final ItemDatoVO itdt = new ItemDatoVO();
 
-		addItdt(itdt);
-	}
+        itdt.setTpdtId(tpdtId);
+        itdt.setFecha(value);
 
-	/**
-	 * Adds the itdt.
-	 *
-	 * @param tpdtId
-	 *            the tpdt id
-	 * @param value
-	 *            the value
-	 */
-	public final void addItdt(final Long tpdtId, final Date value) {
-		final ItemDatoVO itdt = new ItemDatoVO();
+        addItdt(itdt);
+    }
 
-		itdt.setTpdtId(tpdtId);
-		itdt.setFecha(value);
+    /**
+     * Adds the itdt.
+     *
+     * @param itdt
+     *            the itdt
+     */
+    private final void addItdt(final ItemDatoVO itdt) {
+        if (itdtMap == null) {
+            itdtMap = new HashMap<>();
+        }
 
-		addItdt(itdt);
-	}
+        itdtMap.put(itdt.getTpdtId(), itdt);
+    }
 
-	/**
-	 * Adds the itdt.
-	 *
-	 * @param itdt
-	 *            the itdt
-	 */
-	private final void addItdt(final ItemDatoVO itdt) {
-		if (itdtMap == null) {
-			itdtMap = new HashMap<>();
-		}
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    @Override
+    public final Long getId() {
+        return id;
+    }
 
-		itdtMap.put(itdt.getTpdtId(), itdt);
-	}
+    /**
+     * Sets the id.
+     *
+     * @param value
+     *            the new id
+     */
+    @Override
+    public final void setId(final Long value) {
+        id = value;
+    }
 
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	@Override
-	public final Long getId() {
-		return id;
-	}
+    /**
+     * Gets the enti id.
+     *
+     * @return the enti id
+     */
+    public final Long getEntiId() {
+        return entiId;
+    }
 
-	/**
-	 * Sets the id.
-	 *
-	 * @param value
-	 *            the new id
-	 */
-	@Override
-	public final void setId(final Long value) {
-		id = value;
-	}
+    /**
+     * Sets the enti id.
+     *
+     * @param value
+     *            the new enti id
+     */
+    public final void setEntiId(final Long value) {
+        entiId = value;
+    }
 
-	/**
-	 * Gets the enti id.
-	 *
-	 * @return the enti id
-	 */
-	public final Long getEntiId() {
-		return entiId;
-	}
+    /**
+     * Gets the itdt map.
+     *
+     * @return the itdt map
+     */
+    public final Map<Long, ItemDatoVO> getItdtMap() {
+        return itdtMap;
+    }
 
-	/**
-	 * Sets the enti id.
-	 *
-	 * @param value
-	 *            the new enti id
-	 */
-	public final void setEntiId(final Long value) {
-		entiId = value;
-	}
-
-	/**
-	 * Gets the itdt map.
-	 *
-	 * @return the itdt map
-	 */
-	public final Map<Long, ItemDatoVO> getItdtMap() {
-		return itdtMap;
-	}
-
-	/**
-	 * Sets the itdt map.
-	 *
-	 * @param value
-	 *            the value
-	 */
-	public final void setItdtMap(final Map<Long, ItemDatoVO> value) {
-		itdtMap = value;
-	}
+    /**
+     * Sets the itdt map.
+     *
+     * @param value
+     *            the value
+     */
+    public final void setItdtMap(final Map<Long, ItemDatoVO> value) {
+        itdtMap = value;
+    }
 
 }

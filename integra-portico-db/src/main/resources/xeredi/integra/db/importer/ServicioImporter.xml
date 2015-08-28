@@ -242,76 +242,45 @@
         , COALESCE(rea.atrd_fecha_inicio, aut.atrd_fecha_inicio, sol.atrd_fecha_inicio) AS finicio
         , COALESCE(rea.atrd_fecha_finalizacion, rea.atrd_fecha_finalizacion, sol.atrd_fecha_finalizacion) AS ffin
         , atra.atra_estado
-        , atra.atra_fecha_autorizacion
         , atra.atra_emisor_edi
         , atra.atra_numero_edi
         , TO_CHAR(atra.atra_codigo_exencion)
         , atra.atra_es_sujeto_pas_sustit
-        , atra.atra_fecha_solicitud
         , (SELECT orga_cod FROM icom_organizacion_orga WHERE orga_id = atra.atra_orga_id_cliente) AS cliente
         , (SELECT exet_codigo FROM igen_exenciontipo_exet WHERE exet_id = atra.atra_tipo_exencion) AS exet
         , (SELECT orga_cod FROM icom_organizacion_orga WHERE orga_id = atra.atra_orga_id_consignatario) AS consignatario
         , atra.atra_es_modificado_edi
         , (SELECT dead_codigo FROM igen_descuentoadic_dead WHERE dead_id = atra.atra_dead_id) AS dead
 
-        , sol.atrd_tipo_estancia
-        , (SELECT actt_codigo FROM iesc_actividadtipo_actt WHERE actt_id = sol.atrd_tipo_actividad) AS solactt
-        , (SELECT acet_codigo FROM iesc_actividadeditipo_acet WHERE acet_id = sol.atrd_tipo_actividad_edi) AS solacet
-        , (SELECT alin_codigo FROM igen_alineacion_alin WHERE alin_id = sol.atrd_alineacion) AS solalin
-        , (SELECT atrt_codigo from iesc_atraquetipo_atrt where atrt_id = sol.atrd_tipo_atraque) AS solatrt
-        , (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = sol.atrd_tipo_atraque_edi_1)
-          || (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = sol.atrd_tipo_atraque_edi_2)
-          || (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = sol.atrd_tipo_atraque_edi_3)
-          AS solatet
-        , sol.atrd_noray_inicial
-        , sol.atrd_noray_final
-        , sol.atrd_calado_entrada
-        , sol.atrd_calado_salida
-        , sol.atrd_es_exencion_prac_sol
-        , sol.atrd_rampa_adicional
-        , sol.atrd_eslora_rampa
+        , COALESCE(rea.atrd_tipo_estancia, COALESCE(aut.atrd_tipo_estancia, sol.atrd_tipo_estancia))
+        , (SELECT actt_codigo FROM iesc_actividadtipo_actt
+        	WHERE actt_id = COALESCE(rea.atrd_tipo_actividad, COALESCE(aut.atrd_tipo_actividad, sol.atrd_tipo_actividad))) AS actt
+        , (SELECT acet_codigo FROM iesc_actividadeditipo_acet
+        	WHERE acet_id = COALESCE(rea.atrd_tipo_actividad_edi, COALESCE(aut.atrd_tipo_actividad_edi, sol.atrd_tipo_actividad_edi))) AS acet
+        , (SELECT alin_codigo FROM igen_alineacion_alin
+        	WHERE alin_id = COALESCE(rea.atrd_alineacion, COALESCE(aut.atrd_alineacion, sol.atrd_alineacion))) AS alin
+        , (SELECT atrt_codigo from iesc_atraquetipo_atrt
+        	WHERE atrt_id = COALESCE(rea.atrd_tipo_atraque, COALESCE(aut.atrd_tipo_atraque, sol.atrd_tipo_atraque))) AS atrt
+        , (SELECT atet_codigo FROM iesc_atraqueeditipo_atet
+        		WHERE atet_id = COALESCE(rea.atrd_tipo_atraque_edi_1, COALESCE(aut.atrd_tipo_atraque_edi_1, sol.atrd_tipo_atraque_edi_1)))
+          || (SELECT atet_codigo FROM iesc_atraqueeditipo_atet
+          		WHERE atet_id = COALESCE(rea.atrd_tipo_atraque_edi_2, COALESCE(aut.atrd_tipo_atraque_edi_2, sol.atrd_tipo_atraque_edi_2)))
+          || (SELECT atet_codigo FROM iesc_atraqueeditipo_atet
+          		WHERE atet_id = COALESCE(rea.atrd_tipo_atraque_edi_3, COALESCE(aut.atrd_tipo_atraque_edi_3, sol.atrd_tipo_atraque_edi_3)))
+          AS atet
+        , COALESCE(rea.atrd_noray_inicial, COALESCE(aut.atrd_noray_inicial, sol.atrd_noray_inicial))
+        , COALESCE(rea.atrd_noray_final, COALESCE(aut.atrd_noray_final, sol.atrd_noray_final))
+        , COALESCE(rea.atrd_calado_entrada, COALESCE(aut.atrd_calado_entrada, sol.atrd_calado_entrada))
+        , COALESCE(rea.atrd_calado_salida, COALESCE(aut.atrd_calado_salida, sol.atrd_calado_salida))
+        , COALESCE(rea.atrd_es_exencion_prac_sol, COALESCE(aut.atrd_es_exencion_prac_sol, sol.atrd_es_exencion_prac_sol))
+        , COALESCE(rea.atrd_rampa_adicional, COALESCE(aut.atrd_rampa_adicional, sol.atrd_rampa_adicional))
+        , COALESCE(rea.atrd_eslora_rampa, COALESCE(aut.atrd_eslora_rampa, sol.atrd_eslora_rampa))
         , sol.atrd_es_luz_solicitada
         , sol.atrd_es_fuerza_solicitada
         , sol.atrd_es_combust_solicitado
         , sol.atrd_es_hielo_solicitado
         , sol.atrd_es_agua_solicitada
-        , sol.atrd_observaciones
-
-        , aut.atrd_tipo_estancia
-        , (SELECT actt_codigo FROM iesc_actividadtipo_actt WHERE actt_id = aut.atrd_tipo_actividad) AS autactt
-        , (SELECT acet_codigo FROM iesc_actividadeditipo_acet WHERE acet_id = aut.atrd_tipo_actividad_edi) AS autacet
-        , (SELECT alin_codigo FROM igen_alineacion_alin WHERE alin_id = aut.atrd_alineacion) AS autalin
-        , (SELECT atrt_codigo from iesc_atraquetipo_atrt where atrt_id = aut.atrd_tipo_atraque) AS autatrt
-        , (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = aut.atrd_tipo_atraque_edi_1)
-          || (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = aut.atrd_tipo_atraque_edi_2)
-          || (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = aut.atrd_tipo_atraque_edi_3)
-          AS autatet
-        , aut.atrd_noray_inicial
-        , aut.atrd_noray_final
-        , aut.atrd_calado_entrada
-        , aut.atrd_calado_salida
-        , aut.atrd_es_exencion_prac_sol
-        , aut.atrd_rampa_adicional
-        , aut.atrd_eslora_rampa
-        , aut.atrd_observaciones
-
-        , rea.atrd_tipo_estancia
-        , (SELECT actt_codigo FROM iesc_actividadtipo_actt WHERE actt_id = rea.atrd_tipo_actividad) AS reaactt
-        , (SELECT acet_codigo FROM iesc_actividadeditipo_acet WHERE acet_id = rea.atrd_tipo_actividad_edi) AS reaacet
-        , (SELECT alin_codigo FROM igen_alineacion_alin WHERE alin_id = rea.atrd_alineacion) AS reaalin
-        , (SELECT atrt_codigo FROM iesc_atraquetipo_atrt WHERE atrt_id = rea.atrd_tipo_atraque) AS reaatrt
-        , (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = rea.atrd_tipo_atraque_edi_1)
-          || (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = rea.atrd_tipo_atraque_edi_2)
-          || (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = rea.atrd_tipo_atraque_edi_3)
-          AS reaatet
-        , rea.atrd_noray_inicial
-        , rea.atrd_noray_final
-        , rea.atrd_calado_entrada
-        , rea.atrd_calado_salida
-        , rea.atrd_es_exencion_prac_sol
-        , rea.atrd_rampa_adicional
-        , rea.atrd_eslora_rampa
-        , rea.atrd_observaciones
+        , COALESCE(rea.atrd_observaciones, COALESCE(aut.atrd_observaciones, sol.atrd_observaciones))
     FROM iesc_atraque_atra atra
       LEFT JOIN iesc_atraquedetalle_atrd sol ON
         sol.atrd_atra_id = atra.atra_id

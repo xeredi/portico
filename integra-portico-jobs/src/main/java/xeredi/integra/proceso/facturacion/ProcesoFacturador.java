@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import xeredi.integra.model.facturacion.bo.FacturadorBO;
-import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoItemVO;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
@@ -82,14 +81,6 @@ public final class ProcesoFacturador extends ProcesoTemplate {
     @Override
     protected ProcesoTipo getProcesoTipo() {
         return ProcesoTipo.FACTURADOR;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected ItemTipo getItemTipoSalida() {
-        return ItemTipo.fctr;
     }
 
 }

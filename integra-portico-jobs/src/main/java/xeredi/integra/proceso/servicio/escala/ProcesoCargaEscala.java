@@ -33,7 +33,6 @@ import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
-import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.servicio.bo.escala.EscalaEdiBO;
@@ -302,9 +301,8 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
             }
 
             if (!BermanSegmento.segmentoValido(bermanMensaje, segmento, segmentoSiguiente, tipoTSR)) {
-                addError(MensajeCodigo.G_006,
-                        "linea:" + i + ", mensaje:" + mensaje.name() + ", segmento:" + segmento.name()
-                                + ", segmentoSiguiente:" + segmentoSiguiente.name());
+                addError(MensajeCodigo.G_006, "linea:" + i + ", mensaje:" + mensaje.name() + ", segmento:"
+                        + segmento.name() + ", segmentoSiguiente:" + segmentoSiguiente.name());
             }
         }
     }
@@ -550,11 +548,8 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
                     break;
                 case ZCS:
-                    escalaVO.getItdtMap()
-                            .get(TipoDato.SERV_TRAF.getId())
-                            .setPrmt(
-                                    getTokenMaestro(BermanKeyword.RF1_NumeroReferencia, line, i,
-                                            Entidad.SERVICIO_TRAFICO));
+                    escalaVO.getItdtMap().get(TipoDato.SERV_TRAF.getId()).setPrmt(
+                            getTokenMaestro(BermanKeyword.RF1_NumeroReferencia, line, i, Entidad.SERVICIO_TRAFICO));
 
                     break;
                 case ZNG:
@@ -861,11 +856,8 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                 final Integer calificadorLO1 = getTokenInteger(BermanKeyword.Calificador, line, i);
 
                 if (calificadorLO1 == 60) {
-                    atraqueVO
-                            .getItdtMap()
-                            .get(TipoDato.ALIN.getId())
-                            .setPrmt(
-                                    getTokenMaestro(BermanKeyword.LO1_AlineacionSolicitada, line, i, Entidad.ALINEACION));
+                    atraqueVO.getItdtMap().get(TipoDato.ALIN.getId()).setPrmt(
+                            getTokenMaestro(BermanKeyword.LO1_AlineacionSolicitada, line, i, Entidad.ALINEACION));
 
                     final String norays = getTokenString(BermanKeyword.LO1_NorayInicialFinal, line, i);
 
@@ -949,7 +941,8 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                 calificador = getTokenConstante(BermanKeyword.Calificador, line, i);
 
                 if (calificador == BermanConstante.ACB) {
-                    final BermanConstante calificadorACB = getTokenConstante(BermanKeyword.FT2_TextoCodificado, line, i);
+                    final BermanConstante calificadorACB = getTokenConstante(BermanKeyword.FT2_TextoCodificado, line,
+                            i);
 
                     if (calificadorACB == BermanConstante.ZEP) {
                         atraqueVO.getItdtMap().get(TipoDato.BOOLEANO_08.getId()).setCantidadEntera(1L);
@@ -966,12 +959,8 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                 operacionVO = new SubservicioVO();
                 operacionesMap.get(numeroAtraqueEDI).add(operacionVO);
 
-                operacionVO
-                        .getItdtMap()
-                        .get(TipoDato.TIPO_OP_MERC.getId())
-                        .setPrmt(
-                                getTokenMaestro(BermanKeyword.HAN_CodTipoOperacion, line, i,
-                                        Entidad.TIPO_OPERACION_MERCANCIA));
+                operacionVO.getItdtMap().get(TipoDato.TIPO_OP_MERC.getId()).setPrmt(
+                        getTokenMaestro(BermanKeyword.HAN_CodTipoOperacion, line, i, Entidad.TIPO_OPERACION_MERCANCIA));
 
                 break;
             case NA2:
@@ -1056,8 +1045,8 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
         try {
             return prtoBO.selectObject(prtoCriterio);
         } catch (final InstanceNotFoundException ex) {
-            addError(MensajeCodigo.G_001, "linea:" + lineNumber + ", entidad:" + Entidad.SUBPUERTO.name()
-                    + ", unlocode:" + unlocode);
+            addError(MensajeCodigo.G_001,
+                    "linea:" + lineNumber + ", entidad:" + Entidad.SUBPUERTO.name() + ", unlocode:" + unlocode);
         }
 
         return null;
@@ -1083,8 +1072,8 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
         try {
             return prtoBO.selectObject(prtoCriterio);
         } catch (final InstanceNotFoundException ex) {
-            addError(MensajeCodigo.G_001, "linea:" + lineNumber + ", entidad:" + Entidad.SUBPUERTO.name() + ", codigo:"
-                    + codigoCorto);
+            addError(MensajeCodigo.G_001,
+                    "linea:" + lineNumber + ", entidad:" + Entidad.SUBPUERTO.name() + ", codigo:" + codigoCorto);
         }
 
         return null;
@@ -1162,8 +1151,8 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
         }
 
         if (!organizacionesMap.containsKey(codigo)) {
-            addError(MensajeCodigo.G_001, "linea:" + lineNumber + ", entidad:" + Entidad.ORGANIZACION.name()
-                    + ", codigo:" + codigo);
+            addError(MensajeCodigo.G_001,
+                    "linea:" + lineNumber + ", entidad:" + Entidad.ORGANIZACION.name() + ", codigo:" + codigo);
         }
 
         return organizacionesMap.get(codigo);
@@ -1358,14 +1347,6 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
     @Override
     protected ProcesoTipo getProcesoTipo() {
         return ProcesoTipo.ESC_CARGA;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected ItemTipo getItemTipoSalida() {
-        return ItemTipo.srvc;
     }
 
 }

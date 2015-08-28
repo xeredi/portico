@@ -108,21 +108,15 @@
 	<insert id="insert_CM_PESCAF" parameterType="CuadroMesParametroVO">
 		<include refid="InsertPrefix" />
         <![CDATA[
-        		SELECT SUM(COALESCE(esdt_nentero, 0)) / 1000 AS value
-        		FROM tbl_estadistica_dato_esdt
-        		WHERE
-            		esdt_tpdt_pk = #{tipoDato.id}
-
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_estd
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND estd_pepr_pk = pepr_pk
-		                    AND estd_subp_pk = prto_pk
-                    		AND estd_tpes_pk = #{enti.id}
-                    		AND estd_subp_pk = prto_pk
-            		)
+        SELECT SUM(COALESCE(esdt_nentero, 0)) / 1000 AS value
+        FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
+        WHERE
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
         ]]>
 		<include refid="InsertSuffix" />
 	</insert>
@@ -131,35 +125,26 @@
 	<insert id="insert_CM_AVPPET" parameterType="CuadroMesParametroVO">
 		<include refid="InsertPrefix" />
         <![CDATA[
-        SELECT COALESCE(SUM(esdt_nentero), 0)
+        SELECT SUM(COALESCE(esdt_nentero, 0))
         FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
         WHERE
-            esdt_tpdt_pk = #{tipoDato.id}
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
 
             AND EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
                 WHERE
                     estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = pepr_pk
-                    AND estd_subp_pk = prto_pk
-               		AND estd_tpes_pk = #{enti.id}
-               		AND estd_subp_pk = prto_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
                     AND EXISTS (
-                        SELECT 1
-                        FROM tbl_estadistica_dato_esdt
-                        WHERE
-                            estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
-                            AND EXISTS (
-                                SELECT 1
-                                FROM tbl_parametro_prmt
-                                WHERE
-                                    prmt_pk = esdt_prmt_pk
-                                    AND (
-                                        prmt_parametro LIKE '4%'
-                                    )
-                            )
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('TIPO_SUMINISTRO')
+                            AND prmt_parametro LIKE '4%'
                     )
             )
         ]]>
@@ -169,37 +154,30 @@
 	<insert id="insert_CM_AVOTRO" parameterType="CuadroMesParametroVO">
 		<include refid="InsertPrefix" />
         <![CDATA[
-        SELECT COALESCE(SUM(esdt_nentero), 0)
+        SELECT SUM(COALESCE(esdt_nentero, 0))
         FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
         WHERE
-            esdt_tpdt_pk = #{tipoDato.id}
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
 
             AND EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
                 WHERE
                     estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = pepr_pk
-                    AND estd_subp_pk = prto_pk
-               		AND estd_tpes_pk = #{enti.id}
-               		AND estd_subp_pk = prto_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
                     AND EXISTS (
-                        SELECT 1
-                        FROM tbl_estadistica_dato_esdt
-                        WHERE
-                            estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
-                            AND EXISTS (
-                                SELECT 1
-                                FROM tbl_parametro_prmt
-                                WHERE
-                                    prmt_pk = esdt_prmt_pk
-                                    AND (
-                                        prmt_parametro LIKE '1%'
-                                        OR prmt_parametro LIKE '2%'
-                                        OR prmt_parametro LIKE '3%'
-                                        OR prmt_parametro LIKE '5%'
-                                    )
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('TIPO_SUMINISTRO')
+                            AND (
+		                        prmt_parametro LIKE '1%'
+		                        OR prmt_parametro LIKE '2%'
+		                        OR prmt_parametro LIKE '3%'
+		                        OR prmt_parametro LIKE '5%'
                             )
                     )
             )
@@ -211,51 +189,39 @@
 	<insert id="insert_CM_BUQUNI_BUQGT_ES" parameterType="CuadroMesParametroVO">
 		<include refid="InsertPrefix" />
         <![CDATA[
-        SELECT COALESCE(SUM(esdt_nentero), 0)
+        SELECT SUM(COALESCE(esdt_nentero, 0))
         FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
         WHERE
-            esdt_tpdt_pk = #{tipoDato.id}
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
 
             AND EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
                 WHERE
                     estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = pepr_pk
-                    AND estd_subp_pk = prto_pk
-               		AND estd_tpes_pk = #{enti.id}
-               		AND estd_subp_pk = prto_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE')
                     AND EXISTS (
-                        SELECT 1
-                        FROM tbl_estadistica_dato_esdt
-                        WHERE
-                            estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE')
-                            AND EXISTS (
-                                SELECT 1
-                                FROM tbl_parametro_prmt
-                                WHERE
-                                    prmt_pk = esdt_prmt_pk
-                                    AND (
-                                        prmt_parametro NOT IN ('BG', 'XX', '**')
-                                    )
-                            )
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('TIPO_BUQUE')
+                            AND prmt_parametro <> ANY('BG', 'XX', '**')
                     )
+            )
+
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('PAIS')
                     AND EXISTS (
-                        SELECT 1
-                        FROM tbl_estadistica_dato_esdt
-                        WHERE
-                            estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = portico.getTipoDato('PAIS')
-                            AND EXISTS (
-                                SELECT 1
-                                FROM tbl_parametro_prmt
-                                WHERE
-                                    prmt_pk = esdt_prmt_pk
-                                    AND (
-                                        prmt_parametro LIKE 'ES'
-                                    )
-                            )
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('PAIS')
+                            AND prmt_parametro = 'ES'
                     )
             )
         ]]>
@@ -265,51 +231,39 @@
 	<insert id="insert_CM_BUQUNI_BUQGT_ZZ" parameterType="CuadroMesParametroVO">
 		<include refid="InsertPrefix" />
         <![CDATA[
-        SELECT COALESCE(SUM(esdt_nentero), 0)
+        SELECT SUM(COALESCE(esdt_nentero, 0))
         FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
         WHERE
-            esdt_tpdt_pk = #{tipoDato.id}
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
 
             AND EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
                 WHERE
                     estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = pepr_pk
-                    AND estd_subp_pk = prto_pk
-               		AND estd_tpes_pk = #{enti.id}
-               		AND estd_subp_pk = prto_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE')
                     AND EXISTS (
-                        SELECT 1
-                        FROM tbl_estadistica_dato_esdt
-                        WHERE
-                            estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE')
-                            AND EXISTS (
-                                SELECT 1
-                                FROM tbl_parametro_prmt
-                                WHERE
-                                    prmt_pk = esdt_prmt_pk
-                                    AND (
-                                        prmt_parametro NOT IN ('BG', 'XX', '**')
-                                    )
-                            )
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('TIPO_BUQUE')
+                            AND prmt_parametro <> ANY('BG', 'XX', '**')
                     )
+            )
+
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('PAIS')
                     AND EXISTS (
-                        SELECT 1
-                        FROM tbl_estadistica_dato_esdt
-                        WHERE
-                            estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = portico.getTipoDato('PAIS')
-                            AND EXISTS (
-                                SELECT 1
-                                FROM tbl_parametro_prmt
-                                WHERE
-                                    prmt_pk = esdt_prmt_pk
-                                    AND (
-                                        prmt_parametro NOT LIKE 'ES'
-                                    )
-                            )
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('PAIS')
+                            AND prmt_parametro <> 'ES'
                     )
             )
         ]]>
@@ -319,35 +273,26 @@
 	<insert id="insert_CM_CRUBUQ" parameterType="CuadroMesParametroVO">
 		<include refid="InsertPrefix" />
         <![CDATA[
-        SELECT COALESCE(SUM(esdt_nentero), 0)
+        SELECT SUM(COALESCE(esdt_nentero, 0))
         FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
         WHERE
-            esdt_tpdt_pk = #{tipoDato.id}
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
 
             AND EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
                 WHERE
                     estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = pepr_pk
-                    AND estd_subp_pk = prto_pk
-               		AND estd_tpes_pk = #{enti.id}
-               		AND estd_subp_pk = prto_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE')
                     AND EXISTS (
-                        SELECT 1
-                        FROM tbl_estadistica_dato_esdt
-                        WHERE
-                            estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE')
-                            AND EXISTS (
-                                SELECT 1
-                                FROM tbl_parametro_prmt
-                                WHERE
-                                    prmt_pk = esdt_prmt_pk
-                                    AND (
-                                        prmt_parametro LIKE 'UC'
-                                    )
-                            )
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('TIPO_BUQUE')
+                            AND prmt_parametro LIKE 'UC'
                     )
             )
         ]]>
@@ -359,61 +304,52 @@
 		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT SUM(COALESCE(esdt_ndecimal, 0))
-        FROM
-        	tbl_estadistica_dato_esdt
+        FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
         WHERE
-	        esdt_tpdt_pk = #{tipoDato.id}
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
 
             AND EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
+                SELECT 1 FROM tbl_estadistica_dato_esdt
                 WHERE
                     estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = pepr_pk
-                    AND estd_subp_pk = prto_pk
-			        AND estd_tpes_pk = #{enti.id}
-
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
-		                    AND esdt_cadena LIKE #{opetParam}
-		            )
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
+                    AND esdt_cadena LIKE #{opetParam}
+            )
         ]]>
 		<if test="navtParam != null">
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
-		                            AND prmt_parametro LIKE #{navtParam}
-		                    )
-		            )
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
+                            AND prmt_parametro LIKE #{navtParam}
+                    )
+            )
         ]]>
 		</if>
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('UNIDAD_CARGA')
-		                            AND prmt_parametro LIKE #{campoAdicionalParam}
-		                    )
-		            )
-	        )
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('UNIDAD_CARGA')
+                            AND prmt_parametro LIKE #{campoAdicionalParam}
+                    )
+            )
         ]]>
 		<include refid="InsertSuffix" />
 	</insert>
@@ -422,91 +358,75 @@
 		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT SUM(COALESCE(esdt_ndecimal, 0))
-        FROM
-        	tbl_estadistica_dato_esdt
+        FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
         WHERE
-	        esdt_tpdt_pk = #{tipoDato.id}
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
 
             AND EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
+                SELECT 1 FROM tbl_estadistica_dato_esdt
                 WHERE
                     estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = pepr_pk
-                    AND estd_subp_pk = prto_pk
-			        AND estd_tpes_pk = #{enti.id}
-
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
-		                    AND esdt_cadena LIKE #{opetParam}
-		            )
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
+                    AND esdt_cadena LIKE #{opetParam}
+            )
         ]]>
 		<if test="navtParam != null">
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
-		                            AND prmt_parametro LIKE #{navtParam}
-		                    )
-		            )
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
+                            AND prmt_parametro LIKE #{navtParam}
+                    )
+            )
         ]]>
 		</if>
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('INST_ESP')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('INSTALACION_ESPECIAL')
-		                            AND prmt_parametro LIKE #{campoAdicionalParam}
-		                    )
-		            )
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
-		                    AND EXISTS (
-		                        SELECT 1 FROM tbl_parametro_version_prvr
-		                        WHERE
-		                            prvr_prmt_pk = esdt_prmt_pk
-		                            AND (
-		                                (
-		                                    SELECT pepr_freferencia FROM tbl_periodo_proceso_pepr
-		                                    WHERE pepr_pk = #{peprId}
-		                                )
-		                                BETWEEN prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
-		                            )
-		                            AND EXISTS (
-		                                SELECT 1 FROM tbl_parametro_dato_prdt
-		                                WHERE prdt_prvr_pk = prvr_pk
-		                                    AND prdt_tpdt_pk = portico.getTipoDato('TIPO_MERC_EST')
-		                                    AND prdt_prmt_pk = (
-		                                        select prmt_pk
-		                                        from tbl_parametro_prmt
-		                                        WHERE prmt_tppr_pk = portico.getEntidad('TIPO_MERCANCIA_EST')
-		                                        	AND prmt_parametro LIKE 'SG'
-		                                    )
-		                            )
-		                    )
-		            )
-			)
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('INST_ESP')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('INSTALACION_ESPECIAL')
+                            AND prmt_parametro LIKE #{campoAdicionalParam}
+                    )
+            )
+
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_version_prvr
+                        WHERE prvr_prmt_pk = esdt_prmt_pk
+                        	AND prvr_fini <= pepr_freferencia AND (prvr_ffin IS NULL OR prvr_ffin > pepr_freferencia)
+                        	AND EXISTS (
+                        		SELECT 1 FROM tbl_parametro_dato_prdt
+                        		WHERE prdt_prvr_pk = prvr_pk
+                        			AND prdt_tpdt_pk = portico.getTipoDato('TIPO_MERC_EST')
+                        			AND EXISTS (
+                        				SELECT 1 FROM tbl_parametro_prmt
+                        				WHERE prmt_pk = prdt_prmt_pk
+				                            AND prmt_tppr_pk = portico.getEntidad('TIPO_MERCANCIA_EST')
+                        					AND prmt_parametro LIKE 'SG'
+                        			)
+                        	)
+                    )
+            )
         ]]>
 		<include refid="InsertSuffix" />
 	</insert>
@@ -515,78 +435,62 @@
 		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT SUM(COALESCE(COALESCE(esdt_ndecimal, esdt_nentero), 0))
-        FROM
-        	tbl_estadistica_dato_esdt
+        FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
         WHERE
-	        esdt_tpdt_pk = #{tipoDato.id}
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
 
             AND EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
+                SELECT 1 FROM tbl_estadistica_dato_esdt
                 WHERE
                     estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = pepr_pk
-                    AND estd_subp_pk = prto_pk
-			        AND estd_tpes_pk = #{enti.id}
-
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
-		                    AND esdt_cadena LIKE #{opetParam}
-		            )
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
+                    AND esdt_cadena LIKE #{opetParam}
+            )
         ]]>
 		<if test="navtParam != null">
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
-		                            AND prmt_parametro LIKE #{navtParam}
-		                    )
-		            )
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
+                            AND prmt_parametro LIKE #{navtParam}
+                    )
+            )
         ]]>
 		</if>
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
-		                    AND EXISTS (
-		                        SELECT 1 FROM tbl_parametro_version_prvr
-		                        WHERE
-		                            prvr_prmt_pk = esdt_prmt_pk
-		                            AND (
-		                                (
-		                                    SELECT pepr_freferencia FROM tbl_periodo_proceso_pepr
-		                                    WHERE pepr_pk = #{peprId}
-		                                )
-		                                between prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
-		                            )
-		                            AND EXISTS (
-		                                SELECT 1 FROM tbl_parametro_dato_prdt
-		                                WHERE prdt_prvr_pk = prvr_pk
-		                                    AND prdt_tpdt_pk = portico.getTipoDato('TIPO_MERC_EST')
-		                                    AND prdt_prmt_pk = (
-		                                        select prmt_pk
-		                                        from tbl_parametro_prmt
-		                                        WHERE prmt_tppr_pk = portico.getEntidad('TIPO_MERCANCIA_EST')
-		                                        	and PRMT_PARAMETRO LIKE #{campoAdicionalParam}
-		                                    )
-		                            )
-		                    )
-		            )
-			)
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_version_prvr
+                        WHERE prvr_prmt_pk = esdt_prmt_pk
+                        	AND prvr_fini <= pepr_freferencia AND (prvr_ffin IS NULL OR prvr_ffin > pepr_freferencia)
+                        	AND EXISTS (
+                        		SELECT 1 FROM tbl_parametro_dato_prdt
+                        		WHERE prdt_prvr_pk = prvr_pk
+                        			AND prdt_tpdt_pk = portico.getTipoDato('TIPO_MERC_EST')
+				                    AND EXISTS (
+				                        SELECT 1 FROM tbl_parametro_prmt
+				                        WHERE prmt_pk = prdt_prmt_pk
+				                            AND prmt_tppr_pk = portico.getEntidad('TIPO_MERCANCIA_EST')
+				                            AND prmt_parametro LIKE #{campoAdicionalParam}
+				                    )
+                        	)
+                    )
+            )
         ]]>
 		<include refid="InsertSuffix" />
 	</insert>
@@ -595,91 +499,75 @@
 		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT SUM(COALESCE(esdt_nentero, 0))
-        FROM
-        	tbl_estadistica_dato_esdt
+        FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
         WHERE
-	        esdt_tpdt_pk = #{tipoDato.id}
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
 
             AND EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
+                SELECT 1 FROM tbl_estadistica_dato_esdt
                 WHERE
                     estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = pepr_pk
-                    AND estd_subp_pk = prto_pk
-			        AND estd_tpes_pk = #{enti.id}
-
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
-		                    AND esdt_cadena LIKE #{opetParam}
-		            )
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
+                    AND esdt_cadena LIKE #{opetParam}
+            )
         ]]>
 		<if test="navtParam != null">
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
-		                            AND prmt_parametro LIKE #{navtParam}
-		                    )
-		            )
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
+                            AND prmt_parametro LIKE #{navtParam}
+                    )
+            )
         ]]>
 		</if>
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
-		                    AND EXISTS (
-		                        SELECT 1 FROM tbl_parametro_version_prvr
-		                        WHERE
-		                            prvr_prmt_pk = esdt_prmt_pk
-		                            AND (
-		                                (
-		                                    SELECT pepr_freferencia FROM tbl_periodo_proceso_pepr
-		                                    WHERE pepr_pk = #{peprId}
-		                                )
-		                                BETWEEN prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
-		                            )
-		                            AND EXISTS (
-		                                SELECT 1 FROM tbl_parametro_dato_prdt
-		                                WHERE prdt_prvr_pk = prvr_pk
-		                                    AND prdt_tpdt_pk = portico.getTipoDato('TIPO_MERC_EST')
-		                                    AND prdt_prmt_pk = (
-		                                        SELECT prmt_pk
-		                                        FROM tbl_parametro_prmt
-		                                        WHERE prmt_tppr_pk = portico.getEntidad('TIPO_MERCANCIA_EST')
-		                                        	AND prmt_parametro LIKE 'PS'
-		                                    )
-		                            )
-		                    )
-		            )
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('MERCANCIA')
-		                            AND prmt_parametro IN (${campoAdicionalParam})
-		                    )
-		            )
-			)
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_version_prvr
+                        WHERE prvr_prmt_pk = esdt_prmt_pk
+                        	AND prvr_fini <= pepr_freferencia AND (prvr_ffin IS NULL OR prvr_ffin > pepr_freferencia)
+                        	AND EXISTS (
+                        		SELECT 1 FROM tbl_parametro_dato_prdt
+                        		WHERE prdt_prvr_pk = prvr_pk
+                        			AND prdt_tpdt_pk = portico.getTipoDato('TIPO_MERC_EST')
+                        			AND EXISTS (
+                        				SELECT 1 FROM tbl_parametro_prmt
+                        				WHERE prmt_pk = prdt_prmt_pk
+				                            AND prmt_tppr_pk = portico.getEntidad('TIPO_MERCANCIA_EST')
+                        					AND prmt_parametro LIKE 'PS'
+                        			)
+                        	)
+                    )
+            )
+
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+				            AND prmt_tppr_pk = portico.getEntidad('MERCANCIA')
+                            AND prmt_parametro IN (${campoAdicionalParam})
+                    )
+            )
         ]]>
 		<include refid="InsertSuffix" />
 	</insert>
@@ -688,77 +576,55 @@
 		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT SUM(COALESCE(esdt_nentero, 0))
-        FROM
-        	tbl_estadistica_dato_esdt
+        FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
         WHERE
-	        esdt_tpdt_pk = #{tipoDato.id}
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
 
             AND EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
+                SELECT 1 FROM tbl_estadistica_dato_esdt
                 WHERE
                     estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = pepr_pk
-                    AND estd_subp_pk = prto_pk
-			        AND estd_tpes_pk = #{enti.id}
-
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
-		                    AND esdt_cadena LIKE #{opetParam}
-		            )
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
+                    AND esdt_cadena LIKE #{opetParam}
+            )
         ]]>
 		<if test="navtParam != null">
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
-		                            AND prmt_parametro LIKE #{navtParam}
-		                    )
-		            )
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
+                            AND prmt_parametro LIKE #{navtParam}
+                    )
+            )
         ]]>
 		</if>
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('UNIDAD_CARGA')
-		                            AND (
-		                                prmt_parametro LIKE '3%'
-		                                OR prmt_parametro LIKE 'CP%'
-		                            )
-		                    )
-		            )
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('MERCANCIA')
-		                            AND prmt_parametro IN ('86091', '86092', '86093', '86094', '86095', '86096', '86097', '8609T')
-		                    )
-		            )
-			)
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('UNIDAD_CARGA')
+                            AND (
+                            	prmt_parametro LIKE '3%'
+                            	OR prmt_parametro LIKE 'CP%'
+                            )
+                    )
+            )
         ]]>
 		<include refid="InsertSuffix" />
 	</insert>
@@ -767,77 +633,67 @@
 		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT SUM(COALESCE(esdt_ndecimal, 0))
-        FROM
-        	tbl_estadistica_dato_esdt
+        FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
         WHERE
-	        esdt_tpdt_pk = #{tipoDato.id}
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
 
             AND EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
+                SELECT 1 FROM tbl_estadistica_dato_esdt
                 WHERE
                     estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = pepr_pk
-                    AND estd_subp_pk = prto_pk
-			        AND estd_tpes_pk = #{enti.id}
-
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
-		                    AND esdt_cadena LIKE #{opetParam}
-		            )
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
+                    AND esdt_cadena LIKE #{opetParam}
+            )
         ]]>
 		<if test="navtParam != null">
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
-		                            AND prmt_parametro LIKE #{navtParam}
-		                    )
-		            )
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
+                            AND prmt_parametro LIKE #{navtParam}
+                    )
+            )
         ]]>
 		</if>
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('UNIDAD_CARGA')
-		                            AND (
-		                                prmt_parametro LIKE '3%'
-		                                OR prmt_parametro LIKE 'CP%'
-		                            )
-		                    )
-		            )
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('MERCANCIA')
-		                            AND prmt_parametro NOT LIKE '8609*'
-		                    )
-		            )
-			)
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('UNIDAD_CARGA')
+                            AND (
+                            	prmt_parametro LIKE '3%'
+                            	OR prmt_parametro LIKE 'CP%'
+                            )
+                    )
+            )
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('MERCANCIA')
+                            AND prmt_parametro NOT LIKE '8609*'
+                    )
+            )
         ]]>
 		<include refid="InsertSuffix" />
 		<!-- AND prmt_parametro IN ( '86091', '86092', '86093', '86094', '86095'
@@ -848,77 +704,67 @@
 		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT SUM(COALESCE(COALESCE(esdt_nentero, esdt_ndecimal), 0))
-        FROM
-        	tbl_estadistica_dato_esdt
+        FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
         WHERE
-	        esdt_tpdt_pk = #{tipoDato.id}
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
 
             AND EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
+                SELECT 1 FROM tbl_estadistica_dato_esdt
                 WHERE
                     estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = pepr_pk
-                    AND estd_subp_pk = prto_pk
-			        AND estd_tpes_pk = #{enti.id}
-
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
-		                    AND esdt_cadena LIKE #{opetParam}
-		            )
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
+                    AND esdt_cadena LIKE #{opetParam}
+            )
         ]]>
 		<if test="navtParam != null">
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
-		                            AND prmt_parametro LIKE #{navtParam}
-		                    )
-		            )
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
+                            AND prmt_parametro LIKE #{navtParam}
+                    )
+            )
         ]]>
 		</if>
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('UNIDAD_CARGA')
-		                            AND (
-		                                prmt_parametro LIKE '3%'
-		                                OR prmt_parametro LIKE 'CP%'
-		                            )
-		                    )
-		            )
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('MERCANCIA')
-		                            AND prmt_parametro LIKE #{campoAdicionalParam}
-		                    )
-		            )
-			)
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('UNIDAD_CARGA')
+                            AND (
+                            	prmt_parametro LIKE '3%'
+                            	OR prmt_parametro LIKE 'CP%'
+                            )
+                    )
+            )
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('MERCANCIA')
+                            AND prmt_parametro LIKE #{campoAdicionalParam}
+                    )
+            )
         ]]>
 		<include refid="InsertSuffix" />
 	</insert>
@@ -926,73 +772,64 @@
 	<insert id="insert_CM_RRTEUS_RRTONC" parameterType="CuadroMesParametroVO">
 		<include refid="InsertPrefix" />
         <![CDATA[
-        SELECT SUM(COALESCE(esdt_ndecimal, 0))
-        FROM
-        	tbl_estadistica_dato_esdt
+        SELECT SUM(COALESCE(COALESCE(esdt_nentero, esdt_ndecimal), 0))
+        FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
         WHERE
-	        esdt_tpdt_pk = #{tipoDato.id}
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
 
             AND EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
+                SELECT 1 FROM tbl_estadistica_dato_esdt
                 WHERE
                     estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = pepr_pk
-                    AND estd_subp_pk = prto_pk
-			        AND estd_tpes_pk = #{enti.id}
-
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
-		                    AND esdt_cadena LIKE #{opetParam}
-		            )
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
+                    AND esdt_cadena LIKE #{opetParam}
+            )
         ]]>
 		<if test="navtParam != null">
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
-		                            AND prmt_parametro LIKE #{navtParam}
-		                    )
-		            )
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
+                            AND prmt_parametro LIKE #{navtParam}
+                    )
+            )
         ]]>
 		</if>
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('UNIDAD_CARGA')
-		                            AND (
-		                                prmt_parametro LIKE '3%'
-		                                OR prmt_parametro LIKE 'CP%'
-		                            )
-		                    )
-		            )
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
-		                    AND esdt_nentero = 1
-		            )
-			)
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('UNIDAD_CARGA')
+                            AND (
+		                        prmt_parametro LIKE '3%'
+		                        OR prmt_parametro LIKE 'CP%'
+                            )
+                    )
+            )
+
+            AND EXISTS (
+                SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+                    AND esdt_nentero = 1
+            )
         ]]>
 		<include refid="InsertSuffix" />
 	</insert>
@@ -1001,85 +838,74 @@
 		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT SUM(COALESCE(esdt_ndecimal, 0))
-        FROM
-        	tbl_estadistica_dato_esdt
+        FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
         WHERE
-	        esdt_tpdt_pk = #{tipoDato.id}
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
 
             AND EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
+                SELECT 1 FROM tbl_estadistica_dato_esdt
                 WHERE
                     estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = pepr_pk
-                    AND estd_subp_pk = prto_pk
-			        AND estd_tpes_pk = #{enti.id}
-
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
-		                    AND esdt_cadena LIKE #{opetParam}
-		            )
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
+                    AND esdt_cadena LIKE #{opetParam}
+            )
         ]]>
 		<if test="navtParam != null">
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
-		                            AND prmt_parametro LIKE #{navtParam}
-		                    )
-		            )
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
+                            AND prmt_parametro LIKE #{navtParam}
+                    )
+            )
         ]]>
 		</if>
         <![CDATA[
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('UNIDAD_CARGA')
-		                            AND (
-		                                prmt_parametro NOT LIKE '3%'
-		                                AND prmt_parametro NOT LIKE 'CP%'
-		                            )
-		                    )
-		            )
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
-		                    AND esdt_nentero = 1
-		            )
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('MERCANCIA')
-		                            AND prmt_parametro NOT LIKE '000%'
-		                    )
-		            )
-			)
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('UNIDAD_CARGA')
+                            AND (
+		                        prmt_parametro NOT LIKE '3%'
+		                        AND prmt_parametro NOT LIKE 'CP%'
+                            )
+                    )
+            )
+            AND EXISTS (
+                SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+                    AND esdt_nentero = 1
+            )
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('MERCANCIA')
+                            AND prmt_parametro NOT LIKE '000%'
+                    )
+            )
         ]]>
 		<include refid="InsertSuffix" />
 	</insert>
@@ -1088,42 +914,35 @@
 		<include refid="InsertPrefix" />
         <![CDATA[
         SELECT SUM(COALESCE(esdt_ndecimal, 0))
-        FROM
-        	tbl_estadistica_dato_esdt
+        FROM tbl_estadistica_dato_esdt
+            INNER JOIN tbl_estadistica_estd ON
+                estd_pk = esdt_estd_pk
         WHERE
-	        esdt_tpdt_pk = #{tipoDato.id}
+            estd_pepr_pk = pepr_pk
+            AND estd_tpes_pk = #{enti.id}
+            AND estd_subp_pk = prto_pk
+            AND esdt_tpdt_pk = #{tipoDato.id}
 
             AND EXISTS (
-                SELECT 1
-                FROM tbl_estadistica_estd
+                SELECT 1 FROM tbl_estadistica_dato_esdt
                 WHERE
                     estd_pk = esdt_estd_pk
-                    AND estd_pepr_pk = pepr_pk
-                    AND estd_subp_pk = prto_pk
-			        AND estd_tpes_pk = #{enti.id}
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
+                    AND esdt_cadena LIKE #{opetParam}
+            )
 
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
-		                    AND esdt_cadena LIKE #{opetParam}
-		            )
-		            AND EXISTS (
-		                SELECT 1
-		                FROM tbl_estadistica_dato_esdt
-		                WHERE
-		                    estd_pk = esdt_estd_pk
-		                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
-		                    AND esdt_prmt_pk = ANY (
-		                        SELECT prmt_pk FROM tbl_parametro_prmt
-		                        WHERE
-			                        prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
-		                            AND prmt_parametro LIKE #{navtParam}
-		                    )
-		            )
-			)
+            AND EXISTS (
+           		SELECT 1 FROM tbl_estadistica_dato_esdt
+                WHERE
+                    estd_pk = esdt_estd_pk
+                    AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_prmt
+                        WHERE prmt_pk = esdt_prmt_pk
+                            AND prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
+                            AND prmt_parametro LIKE #{navtParam}
+                    )
+            )
         ]]>
 		<include refid="InsertSuffix" />
 	</insert>

@@ -217,9 +217,9 @@
 
         <tbody>
             <tr ng-repeat="prmn in vm.prmnList.list track by $index">
-                <td ng-bind="::('MensajeNivel_' + prmn.nivel | translate)" nowrap="nowrap"></td>
-                <td ng-bind="::prmn.codigo" nowrap="nowrap"></td>
-                <td ng-bind="::prmn.mensaje"></td>
+                <td ng-bind="('MensajeNivel_' + prmn.nivel | translate)" nowrap="nowrap"></td>
+                <td ng-bind="prmn.codigo" nowrap="nowrap"></td>
+                <td ng-bind="prmn.mensaje"></td>
             </tr>
         </tbody>
     </table>

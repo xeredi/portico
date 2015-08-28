@@ -10,7 +10,7 @@ import xeredi.integra.model.comun.vo.PuertoVO;
 /**
  * The Class EstadisticaAgregadoVO.
  */
-public class EstadisticaAgregadoVO {
+public final class EstadisticaAgregadoVO {
 
     /** The subp id. */
     private PuertoVO prto;

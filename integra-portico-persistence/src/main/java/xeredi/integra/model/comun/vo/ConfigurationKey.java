@@ -12,6 +12,12 @@ public enum ConfigurationKey {
     /** The language_available. */
     language_available,
 
+    /** The date_format. */
+    date_format,
+
+    /** The datetime_format. */
+    datetime_format,
+
     /** The parametrizacion_app_mode. */
     parametrizacion_app_mode,
 

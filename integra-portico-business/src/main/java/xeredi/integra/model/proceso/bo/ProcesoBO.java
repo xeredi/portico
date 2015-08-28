@@ -8,12 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.dao.ArchivoDAO;
 import xeredi.integra.model.comun.dao.ArchivoInfoDAO;
@@ -44,8 +45,6 @@ import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.integra.model.util.GzipUtil;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -165,8 +164,8 @@ public class ProcesoBO {
             prbtCriterioVO.setModulo(tipo.getModulo());
             prbtCriterioVO.setTipo(tipo);
 
-            final List<ProcesoVO> prbtList = prbtDAO.selectList(prbtCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET,
-                    1));
+            final List<ProcesoVO> prbtList = prbtDAO.selectList(prbtCriterioVO,
+                    new RowBounds(RowBounds.NO_ROW_OFFSET, 1));
 
             if (!prbtList.isEmpty()) {
                 final ProcesoVO prbtVO = prbtList.get(0);
@@ -200,8 +199,8 @@ public class ProcesoBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public final void finalizar(final Long prbtId, final List<ProcesoMensajeVO> prmnList,
-            final ItemTipo itemSalidaTipo, final List<Long> itemSalidaList, final File fileSalida)
+    public final void finalizar(final Long prbtId, final List<ProcesoMensajeVO> prmnList, final ItemTipo itemSalidaTipo,
+            final List<Long> itemSalidaList, final File fileSalida)
                     throws InstanceNotFoundException, OperacionNoPermitidaException {
         // Lectura del Archivo (si lo hay)
         byte[] buffer = null;
@@ -293,11 +292,11 @@ public class ProcesoBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public final void cancelar(final @NonNull ProcesoVO prbt) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+    public final void cancelar(final @NonNull ProcesoVO prbt)
+            throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(prbt.getId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoCriterioVO prbtCriterio = new ProcesoCriterioVO();
 

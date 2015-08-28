@@ -1,6 +1,8 @@
 package xeredi.integra.proceso;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +13,8 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.google.common.base.Preconditions;
 
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
@@ -28,7 +32,6 @@ import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoParametroDetailVO;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
-import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.MensajeNivel;
 import xeredi.integra.model.proceso.vo.ProcesoItemVO;
@@ -36,8 +39,6 @@ import xeredi.integra.model.proceso.vo.ProcesoMensajeVO;
 import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -117,7 +118,8 @@ public abstract class ProcesoTemplate {
                 }
 
                 try {
-                    prbtBO.finalizar(prbt.getId(), prmnList, getItemTipoSalida(), itemSalidaList, fileSalida);
+                    prbtBO.finalizar(prbt.getId(), prmnList, getProcesoTipo().getItemTipoSalida(), itemSalidaList,
+                            fileSalida);
                 } catch (final InstanceNotFoundException ex) {
                     LOG.fatal("Proceso " + prbt.getId() + " no encontrado al tratar de finalizarlo. " + prbt);
                 } catch (final OperacionNoPermitidaException ex) {
@@ -370,6 +372,53 @@ public abstract class ProcesoTemplate {
     }
 
     /**
+     * Find date parameter.
+     *
+     * @param paramName
+     *            the param name
+     * @return the date
+     */
+    protected final Date findDateParameter(final String paramName) {
+        final String parameterValueString = findStringParameter(paramName);
+
+        if (parameterValueString != null) {
+            final SimpleDateFormat format = new SimpleDateFormat(
+                    ConfigurationProxy.getString(ConfigurationKey.date_format));
+
+            try {
+                return format.parse(parameterValueString);
+            } catch (final ParseException ex) {
+                addError(MensajeCodigo.G_002, paramName + ": " + parameterValueString);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Find string parameter.
+     *
+     * @param paramName
+     *            the param name
+     * @return the string
+     */
+    protected final String findStringParameter(final String paramName) {
+        if (prpmMap.containsKey(paramName)) {
+            final String parameterValue = prpmMap.get(paramName).getValor();
+
+            if (parameterValue == null || parameterValue.isEmpty()) {
+                addError(MensajeCodigo.G_012, paramName);
+            } else {
+                return parameterValue;
+            }
+        } else {
+            addError(MensajeCodigo.G_012, paramName);
+        }
+
+        return null;
+    }
+
+    /**
      * Gets the prbt.
      *
      * @return the prbt
@@ -404,11 +453,4 @@ public abstract class ProcesoTemplate {
      * @return the proceso tipo
      */
     protected abstract ProcesoTipo getProcesoTipo();
-
-    /**
-     * Gets the item tipo salida.
-     *
-     * @return the item tipo salida
-     */
-    protected abstract ItemTipo getItemTipoSalida();
 }

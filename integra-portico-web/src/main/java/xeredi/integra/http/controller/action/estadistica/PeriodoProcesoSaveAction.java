@@ -40,10 +40,10 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<PeriodoProces
         final ProcesoBO prbtBO = new ProcesoBO();
         final Map<String, String> parametroMap = new HashMap<>();
 
-        parametroMap.put(ProcesoCargaOppe.AUTP_PARAM, sprt.getCodigo());
-        parametroMap.put(ProcesoCargaOppe.ANIO_PARAM, model.getAnio().toString());
-        parametroMap.put(ProcesoCargaOppe.MES_PARAM, model.getMes().toString());
-        parametroMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, sobreescribir.toString());
+        parametroMap.put(ProcesoCargaOppe.params.autp.name(), sprt.getCodigo());
+        parametroMap.put(ProcesoCargaOppe.params.anio.name(), model.getAnio().toString());
+        parametroMap.put(ProcesoCargaOppe.params.mes.name(), model.getMes().toString());
+        parametroMap.put(ProcesoCargaOppe.params.sobreescribir.name(), sobreescribir.toString());
 
         switch (accion) {
         case load:

@@ -344,14 +344,6 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 43120, 'Tipo de Estancia de Atraque')\
 	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (51150, portico.getTipoDato('TIPO_ESTAN_ATR'), 'C',  1)\
 	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (51151, portico.getTipoDato('TIPO_ESTAN_ATR'), 'L',  2)\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (43121, 'S', 'CR', NULL , 'TIPO_ESTAN_ATR_2')\
-	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 43121, 'Tipo de Estancia de Atraque 2')\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (51200, portico.getTipoDato('TIPO_ESTAN_ATR_2'), 'C',  1)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (51201, portico.getTipoDato('TIPO_ESTAN_ATR_2'), 'L',  2)\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (43122, 'S', 'CR', NULL , 'TIPO_ESTAN_ATR_3')\
-	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 43122, 'Tipo de Estancia de Atraque 3')\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (51250, portico.getTipoDato('TIPO_ESTAN_ATR_3'), 'C',  1)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (51251, portico.getTipoDato('TIPO_ESTAN_ATR_3'), 'L',  2)\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (43125, 'S', 'CR', NULL , 'TIPO_TRANSPORTE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 43125, 'Tipo de Transporte')\
 	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (51300, portico.getTipoDato('TIPO_TRANSPORTE'), 'ZZ',  1)\
@@ -944,76 +936,6 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55230, portico.getTipoDato('TIPO_ACT_EDI'), 'ZPV',  31)\
 	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55231, portico.getTipoDato('TIPO_ACT_EDI'), 'ZOT',  32)\
 	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55232, portico.getTipoDato('TIPO_ACT_EDI'), 'ZSV',  33)\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (43526, 'S', 'CR', NULL , 'TIPO_ACT_EDI_2')\
-	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 43526, 'Tipo de Actividad EDI 2')\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55250, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZOP',  1)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55251, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZAB',  2)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55252, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZAO',  3)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55253, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZAR',  4)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55254, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZCT',  5)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55255, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZTI',  6)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55256, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZVO',  7)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55257, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZAF',  8)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55258, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZIN',  9)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55259, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZIP',  10)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55260, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZBO',  11)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55261, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZCO',  12)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55262, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZCA',  13)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55263, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZRA',  14)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55264, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZRF',  15)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55265, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZRT',  16)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55266, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZDE',  17)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55267, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZDA',  18)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55268, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZTA',  19)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55269, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZTF',  20)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55270, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZAP',  21)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55271, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZDR',  22)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55272, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZPB',  23)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55273, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZCL',  24)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55274, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZDJ',  25)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55275, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZMR',  26)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55276, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZPR',  27)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55277, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZRE',  28)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55278, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZVA',  29)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55279, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZDS',  30)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55280, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZPV',  31)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55281, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZOT',  32)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55282, portico.getTipoDato('TIPO_ACT_EDI_2'), 'ZSV',  33)\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (43527, 'S', 'CR', NULL , 'TIPO_ACT_EDI_3')\
-	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 43527, 'Tipo de Actividad EDI 3')\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55300, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZOP',  1)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55301, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZAB',  2)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55302, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZAO',  3)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55303, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZAR',  4)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55304, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZCT',  5)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55305, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZTI',  6)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55306, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZVO',  7)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55307, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZAF',  8)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55308, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZIN',  9)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55309, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZIP',  10)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55310, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZBO',  11)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55311, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZCO',  12)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55312, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZCA',  13)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55313, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZRA',  14)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55314, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZRF',  15)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55315, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZRT',  16)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55316, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZDE',  17)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55317, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZDA',  18)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55318, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZTA',  19)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55319, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZTF',  20)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55320, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZAP',  21)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55321, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZDR',  22)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55322, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZPB',  23)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55323, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZCL',  24)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55324, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZDJ',  25)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55325, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZMR',  26)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55326, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZPR',  27)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55327, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZRE',  28)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55328, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZVA',  29)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55329, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZDS',  30)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55330, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZPV',  31)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55331, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZOT',  32)\
-	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55332, portico.getTipoDato('TIPO_ACT_EDI_3'), 'ZSV',  33)\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (43540, 'S', 'CR', NULL , 'TIPO_HORA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 43540, 'Tipo de Hora')\
 	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55350, portico.getTipoDato('TIPO_HORA'), 'E',  1)\
@@ -1747,10 +1669,6 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 -- Tipos de dato - Parametros
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45000, 'S', 'PR', 20001, 'TIPO_ACT')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45000, 'Tipo de Actividad')\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45001, 'S', 'PR', 20001, 'TIPO_ACT_2')\
-	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45001, 'Tipo de Actividad 2')\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45002, 'S', 'PR', 20001, 'TIPO_ACT_3')\
-	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45002, 'Tipo de Actividad 3')\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45005, 'F', 'PR', 20004, 'PAIS')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45005, 'País')\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45006, 'F', 'PR', 20004, 'PAIS_2')\
@@ -1839,10 +1757,6 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45175, 'Registro de Tipo de Buque')\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45180, 'F', 'PR', 20109, 'ALIN')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45180, 'Alineación')\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45181, 'F', 'PR', 20109, 'ALIN_2')\
-	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45181, 'Alineación 2')\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45182, 'F', 'PR', 20109, 'ALIN_3')\
-	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45182, 'Alineación 3')\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45185, 'S', 'PR', 20088, 'TIPO_RESIDUO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45185, 'Tipo de Residuo')\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45190, 'F', 'PR', 20091, 'MUELLE')\
@@ -1913,10 +1827,6 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45370, 'Tipo de Operación de Mercancía')\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45380, 'S', 'PR', 20096, 'TIPO_ATR')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45380, 'Tipo de Atraque')\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45381, 'S', 'PR', 20096, 'TIPO_ATR_2')\
-	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45381, 'Tipo de Atraque 2')\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45382, 'S', 'PR', 20096, 'TIPO_ATR_3')\
-	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45382, 'Tipo de Atraque 3')\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45385, 'S', 'PR', 20112, 'TIPO_MERC')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45385, 'Tipo de Mercancía')\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45390, 'S', 'PR', 20025, 'TIPO_GASTO_SUM')\
@@ -1929,10 +1839,6 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45405, 'Punto de Red (Maestro)')\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45410, 'S', 'PR', 20115, 'TIPO_ATR_EDI')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45410, 'Tipo de Atraque EDI')\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45411, 'S', 'PR', 20115, 'TIPO_ATR_EDI_2')\
-	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45411, 'Tipo de Atraque EDI 2')\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45412, 'S', 'PR', 20115, 'TIPO_ATR_EDI_3')\
-	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45412, 'Tipo de Atraque EDI 3')\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45415, 'S', 'PR', 20017, 'TIPO_MOV_AMA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45415, 'Tipo de Movimiento de Amarre')\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45420, 'S', 'PR', 20016, 'TIPO_MED_AMA')\
@@ -2006,8 +1912,6 @@ WHERE i18n_pref = 'tpdt' AND i18n_lang = 'es' AND EXISTS (
 	SELECT 1 FROM portico.tbl_tipo_dato_tpdt
 	WHERE tpdt_pk = i18n_ext_pk AND tpdt_pk IN (
 		45000
-		, 45001
-		, 45002
 		, 45005
 		, 45006
 		, 45010
@@ -2052,8 +1956,6 @@ WHERE i18n_pref = 'tpdt' AND i18n_lang = 'es' AND EXISTS (
 		, 45170
 		, 45175
 		, 45180
-		, 45181
-		, 45182
 		, 45185
 		, 45190
 		, 45195
@@ -2089,16 +1991,12 @@ WHERE i18n_pref = 'tpdt' AND i18n_lang = 'es' AND EXISTS (
 		, 45365
 		, 45370
 		, 45380
-		, 45381
-		, 45382
 		, 45385
 		, 45390
 		, 45395
 		, 45400
 		, 45405
 		, 45410
-		, 45411
-		, 45412
 		, 45415
 		, 45420
 		, 45425
@@ -2118,8 +2016,6 @@ WHERE i18n_pref = 'tpdt' AND i18n_lang = 'es' AND EXISTS (
 DELETE FROM portico.tbl_tipo_dato_tpdt
 WHERE tpdt_pk IN (
 	45000
-	, 45001
-	, 45002
 	, 45005
 	, 45006
 	, 45010
@@ -2164,8 +2060,6 @@ WHERE tpdt_pk IN (
 	, 45170
 	, 45175
 	, 45180
-	, 45181
-	, 45182
 	, 45185
 	, 45190
 	, 45195
@@ -2201,16 +2095,12 @@ WHERE tpdt_pk IN (
 	, 45365
 	, 45370
 	, 45380
-	, 45381
-	, 45382
 	, 45385
 	, 45390
 	, 45395
 	, 45400
 	, 45405
 	, 45410
-	, 45411
-	, 45412
 	, 45415
 	, 45420
 	, 45425
@@ -2979,8 +2869,6 @@ WHERE i18n_pref = 'cdrf' AND i18n_lang = 'es' AND EXISTS (
 		, 43110
 		, 43115
 		, 43120
-		, 43121
-		, 43122
 		, 43125
 		, 43130
 		, 43135
@@ -3059,8 +2947,6 @@ WHERE i18n_pref = 'cdrf' AND i18n_lang = 'es' AND EXISTS (
 		, 43515
 		, 43520
 		, 43525
-		, 43526
-		, 43527
 		, 43540
 		, 43545
 		, 43550
@@ -3094,8 +2980,6 @@ WHERE cdrf_tpdt_pk IN (
 	, 43110
 	, 43115
 	, 43120
-	, 43121
-	, 43122
 	, 43125
 	, 43130
 	, 43135
@@ -3174,8 +3058,6 @@ WHERE cdrf_tpdt_pk IN (
 	, 43515
 	, 43520
 	, 43525
-	, 43526
-	, 43527
 	, 43540
 	, 43545
 	, 43550
@@ -3210,8 +3092,6 @@ WHERE i18n_pref = 'tpdt' AND i18n_lang = 'es' AND EXISTS (
 		, 43110
 		, 43115
 		, 43120
-		, 43121
-		, 43122
 		, 43125
 		, 43130
 		, 43135
@@ -3290,8 +3170,6 @@ WHERE i18n_pref = 'tpdt' AND i18n_lang = 'es' AND EXISTS (
 		, 43515
 		, 43520
 		, 43525
-		, 43526
-		, 43527
 		, 43540
 		, 43545
 		, 43550
@@ -3324,8 +3202,6 @@ WHERE tpdt_pk IN (
 	, 43110
 	, 43115
 	, 43120
-	, 43121
-	, 43122
 	, 43125
 	, 43130
 	, 43135
@@ -3404,8 +3280,6 @@ WHERE tpdt_pk IN (
 	, 43515
 	, 43520
 	, 43525
-	, 43526
-	, 43527
 	, 43540
 	, 43545
 	, 43550

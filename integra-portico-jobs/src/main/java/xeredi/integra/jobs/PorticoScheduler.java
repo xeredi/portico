@@ -59,6 +59,16 @@ public final class PorticoScheduler {
 
             instance.scheduleJob(agregacionApJob, agregacionApTrigger);
 
+            final JobDetail buquePescaJob = JobBuilder.newJob(BuquePescaJob.class)
+                    .withIdentity("buquePescaJob", "srvcGroup").build();
+
+            final Trigger buquePescaTrigger = TriggerBuilder.newTrigger().withIdentity("buquePescaTrigger", "srvcGroup")
+                    .startNow()
+                    .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(300).repeatForever())
+                    .build();
+
+            instance.scheduleJob(buquePescaJob, buquePescaTrigger);
+
             final JobDetail pescaJob = JobBuilder.newJob(CargaPescaJob.class).withIdentity("pescaJob", "srvcGroup")
                     .build();
 
@@ -72,8 +82,8 @@ public final class PorticoScheduler {
             final JobDetail manifiestoJob = JobBuilder.newJob(CargaManifiestoJob.class)
                     .withIdentity("manifiestoJob", "srvcGroup").build();
 
-            final Trigger manifiestoTrigger = TriggerBuilder.newTrigger()
-                    .withIdentity("manifiestoTrigger", "srvcGroup").startNow()
+            final Trigger manifiestoTrigger = TriggerBuilder.newTrigger().withIdentity("manifiestoTrigger", "srvcGroup")
+                    .startNow()
                     .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(300).repeatForever())
                     .build();
 
@@ -92,8 +102,8 @@ public final class PorticoScheduler {
             final JobDetail facturadorJob = JobBuilder.newJob(FacturadorJob.class)
                     .withIdentity("facturadorJob", "fctrGroup").build();
 
-            final Trigger facturadorTrigger = TriggerBuilder.newTrigger()
-                    .withIdentity("facturadorTrigger", "fctrGroup").startNow()
+            final Trigger facturadorTrigger = TriggerBuilder.newTrigger().withIdentity("facturadorTrigger", "fctrGroup")
+                    .startNow()
                     .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(300).repeatForever())
                     .build();
 

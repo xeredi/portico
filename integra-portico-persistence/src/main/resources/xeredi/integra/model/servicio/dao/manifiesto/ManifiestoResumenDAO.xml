@@ -86,6 +86,7 @@
                             ssss_ssrvp_pk = ANY (SELECT ssrv_pk FROM blsMerc)
                     )
                     AND ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+                	AND ssrv_srvc_pk = #{maniId}
             )
             , equiMerc AS (
                 SELECT ssrv.ssrv_pk
@@ -121,6 +122,7 @@
                             ssss_ssrvp_pk = ANY (SELECT ssrv_pk FROM blsMerc)
                     )
                     AND ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO')
+                	AND ssrv_srvc_pk = #{maniId}
             )
             , partPasa AS (
                 SELECT ssrv.ssrv_pk
@@ -150,6 +152,7 @@
                             ssss_ssrvp_pk = ANY (SELECT ssrv_pk FROM blsPasa)
                     )
                     AND ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+                	AND ssrv_srvc_pk = #{maniId}
             )
         SELECT
             (

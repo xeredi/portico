@@ -2,13 +2,13 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                <label translate="srvc"></label> <input ng-if="!vm.item.srvc.id" type="text"
+                <label translate="srvc"></label> <input ng-if="vm.accion != 'edit'" type="text"
                     autocomplete="off" ng-model="vm.item.srvc" ng-controller="SrvcLupaController"
                     ng-selected="vm.prtoId = vm.item.srvc.prto.id"
                     typeahead="srvc as srvc.etiqueta for srvc in search(vm.enti.enti.tpsrId, $viewValue)"
                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
-                <p ng-if="vm.item.srvc.id" class="form-control-static"
-                    ng-change="vm.prtoId = vm.item.srvc.prto.id" ng-bind="vm.item.srvc.etiqueta"></p>
+                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.srvc.etiqueta"></p>
+                <!-- ng-change="vm.prtoId = vm.item.srvc.prto.id"  -->
             </div>
             <div class="col-sm-1 col-md-1 form-group-sm">
                 <label translate="ssrv_numero"></label> <input ng-if="vm.accion != 'edit'" type="text"

@@ -22,7 +22,6 @@ import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.PuertoCriterioVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
-import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.servicio.bo.pesca.ManifiestoPescaBO;
@@ -141,14 +140,6 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
     @Override
     protected ProcesoTipo getProcesoTipo() {
         return ProcesoTipo.PES_CARGA;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected ItemTipo getItemTipoSalida() {
-        return ItemTipo.srvc;
     }
 
     /**

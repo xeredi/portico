@@ -43,6 +43,54 @@ COMMENT ON COLUMN tbl_ig.ig_ultimo IS 'Ultimo Valor generado para la secuencia'\
 
 
 
+
+-- tbl_superpuerto_sprt
+CREATE TABLE tbl_superpuerto_sprt (
+	sprt_pk NUMBER(19) NOT NULL
+	, sprt_codigo VARCHAR2(10) NOT NULL
+
+	, CONSTRAINT pk_sprt PRIMARY KEY (sprt_pk)
+
+	, CONSTRAINT uk_sprt UNIQUE (sprt_codigo)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_superpuerto_sprt FOR tbl_superpuerto_sprt\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_superpuerto_sprt TO portico\
+
+
+
+
+-- tbl_puerto_prto
+CREATE TABLE tbl_puerto_prto (
+	prto_pk NUMBER(19) NOT NULL
+	, prto_sprt_pk NUMBER(19) NOT NULL
+	, prto_codigo VARCHAR2(10) NOT NULL
+	, prto_codigo_corto VARCHAR2(10) NOT NULL
+	, prto_codigo_edi VARCHAR2(10)
+	, prto_rec_aduanero VARCHAR2(10)
+	, prto_unlocode CHAR(5) NOT NULL
+
+	, CONSTRAINT pk_prto PRIMARY KEY (prto_pk)
+
+	, CONSTRAINT uk_prto_codigo UNIQUE (prto_codigo)
+	, CONSTRAINT uk_prto_codigo_corto UNIQUE (prto_sprt_pk, prto_codigo_corto)
+	, CONSTRAINT uk_prto_codigo_edi UNIQUE (prto_sprt_pk, prto_codigo_edi)
+	, CONSTRAINT uk_prto_rec_aduanero UNIQUE (prto_sprt_pk, prto_rec_aduanero)
+	, CONSTRAINT uk_prto_unlocode UNIQUE (prto_sprt_pk, prto_unlocode)
+
+	, CONSTRAINT fk_prto_sprt_pk FOREIGN KEY (prto_sprt_pk)
+		REFERENCES tbl_superpuerto_sprt (sprt_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_puerto_prto FOR tbl_puerto_prto\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_puerto_prto TO portico\
+
+
+
+
+
 -- tbl_usuario_usro
 CREATE TABLE tbl_usuario_usro (
 	usro_pk NUMBER(19) NOT NULL
@@ -117,6 +165,8 @@ CREATE TABLE tbl_entidad_enti (
 	, enti_cmd_baja int NOT NULL
 	, enti_cmd_edicion int NOT NULL
 	, enti_cmd_duplicado int NOT NULL
+	, enti_gis int DEFAULT 0 NOT NULL
+	, enti_puerto int DEFAULT 0 NOT NULL
 
 	, CONSTRAINT pk_enti PRIMARY KEY (enti_pk)
 	, CONSTRAINT uq_enti_codigo UNIQUE (enti_codigo)
@@ -134,6 +184,8 @@ COMMENT ON COLUMN tbl_entidad_enti.enti_cmd_alta IS 'Comando de alta Habilitado?
 COMMENT ON COLUMN tbl_entidad_enti.enti_cmd_baja IS 'Comando de baja Habilitado?'\
 COMMENT ON COLUMN tbl_entidad_enti.enti_cmd_edicion IS 'Comando de edicion Habilitado?'\
 COMMENT ON COLUMN tbl_entidad_enti.enti_cmd_duplicado IS 'Comando de duplicado Habilitado?'\
+COMMENT ON COLUMN tbl_entidad_enti.enti_gis IS 'Entidad Gisable?'\
+COMMENT ON COLUMN tbl_entidad_enti.enti_puerto IS 'Entidad Asociada a Puerto?'\
 
 
 
@@ -338,12 +390,15 @@ CREATE TABLE tbl_parametro_prmt (
 	prmt_pk NUMBER(19) NOT NULL
 	, prmt_tppr_pk NUMBER(19) NOT NULL
 	, prmt_parametro VARCHAR2(30) NOT NULL
+	, prmt_prto_pk NUMBER(19)
 
 	, CONSTRAINT pk_prmt PRIMARY KEY (prmt_pk)
-	, CONSTRAINT uq_prmt UNIQUE (prmt_tppr_pk, prmt_parametro)
+	, CONSTRAINT uq_prmt UNIQUE (prmt_tppr_pk, prmt_parametro, prmt_prto_pk)
 
 	, CONSTRAINT fk_prmt_tppr_pk FOREIGN KEY (prmt_tppr_pk)
 		REFERENCES tbl_tipo_parametro_tppr (tppr_pk)
+	, CONSTRAINT fk_prmt_prto_pk FOREIGN KEY (prmt_prto_pk)
+		REFERENCES tbl_puerto_prto (prto_pk)
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_parametro_prmt FOR porticoadm.tbl_parametro_prmt\
@@ -354,6 +409,7 @@ COMMENT ON TABLE tbl_parametro_prmt IS 'Parametros de la aplicacion (Datos de Ma
 COMMENT ON COLUMN tbl_parametro_prmt.prmt_pk IS 'Identificador de Parametro'\
 COMMENT ON COLUMN tbl_parametro_prmt.prmt_tppr_pk IS 'Identificador de Tipo de Parametro al que pertenece el parametro'\
 COMMENT ON COLUMN tbl_parametro_prmt.prmt_parametro IS 'Valor de Parametro'\
+COMMENT ON COLUMN tbl_parametro_prmt.prmt_prto_pk IS 'Identificador de Puerto'\
 
 
 
@@ -363,6 +419,8 @@ CREATE TABLE tbl_parametro_version_prvr (
 	, prvr_prmt_pk NUMBER(19) NOT NULL
 	, prvr_fini TIMESTAMP NOT NULL
 	, prvr_ffin TIMESTAMP
+	, prvr_lat DOUBLE PRECISION
+	, prvr_lon DOUBLE PRECISION
 
 	, CONSTRAINT pk_prvr PRIMARY KEY (prvr_pk)
 
@@ -618,7 +676,7 @@ CREATE TABLE tbl_servicio_secuencia_srsc (
 	, CONSTRAINT fk_srsc_tpsr_pk FOREIGN KEY (srsc_tpsr_pk)
 		REFERENCES tbl_tipo_servicio_tpsr (tpsr_pk)
 	, CONSTRAINT fk_srsc_subp_pk FOREIGN KEY (srsc_subp_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES tbl_puerto_prto (prto_pk)
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_servicio_secuencia_srsc FOR porticoadm.tbl_servicio_secuencia_srsc\
@@ -652,7 +710,7 @@ CREATE TABLE tbl_servicio_srvc
 	, CONSTRAINT fk_srvc_tpsr_pk FOREIGN KEY (srvc_tpsr_pk)
 		REFERENCES tbl_tipo_servicio_tpsr (tpsr_pk)
 	, CONSTRAINT fk_srvc_subp_pk FOREIGN KEY (srvc_subp_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES tbl_puerto_prto (prto_pk)
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_servicio_srvc FOR porticoadm.tbl_servicio_srvc\
@@ -846,7 +904,7 @@ CREATE TABLE tbl_periodo_proceso_pepr (
 	, CONSTRAINT uq_pepr UNIQUE (pepr_autp_pk, pepr_anio, pepr_mes)
 
 	, CONSTRAINT fk_pepr_autp_pk FOREIGN KEY (pepr_autp_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES tbl_superpuerto_sprt (sprt_pk)
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_periodo_proceso_pepr FOR porticoadm.tbl_periodo_proceso_pepr\
@@ -878,7 +936,7 @@ CREATE TABLE tbl_estadistica_estd (
 	, CONSTRAINT fk_estd_tpes_pk FOREIGN KEY (estd_tpes_pk)
 		REFERENCES tbl_tipo_estadistica_tpes (tpes_pk)
 	, CONSTRAINT fk_estd_subp_pk FOREIGN KEY (estd_subp_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES tbl_puerto_prto (prto_pk)
 )\
 
 CREATE INDEX ix_estd_pepr_pk ON tbl_estadistica_estd (estd_tpes_pk, estd_pepr_pk)\
@@ -933,19 +991,21 @@ COMMENT ON COLUMN tbl_estadistica_dato_esdt.esdt_cadena IS 'Valor de dato de Tip
 
 -- tbl_cuadro_mes_cdms
 CREATE TABLE tbl_cuadro_mes_cdms (
-	cdms_pk NUMBER(19) NOT NULL
-	, cdms_pepr_pk NUMBER(19) NOT NULL
+	cdms_pepr_pk NUMBER(19) NOT NULL
+	, cdms_prto_pk NUMBER(19) NOT NULL
 	, cdms_cocu VARCHAR(10) NOT NULL
+	, cdms_orden INT NOT NULL
 	, cdms_opet VARCHAR(2)
 	, cdms_navt_pk NUMBER(19) NOT NULL
 	, cdms_pais_pk NUMBER(19) NOT NULL
 	, cdms_cantidad DOUBLE PRECISION NOT NULL
 
-	, CONSTRAINT pk_cdms PRIMARY KEY (cdms_pk)
-	, CONSTRAINT uq_cdms UNIQUE (cdms_pepr_pk, cdms_cocu, cdms_opet, cdms_navt_pk, cdms_pais_pk)
+	, CONSTRAINT pk_cdms PRIMARY KEY (cdms_pepr_pk, cdms_prto_pk, cdms_cocu, cdms_opet, cdms_navt_pk, cdms_pais_pk)
 
 	, CONSTRAINT fk_cdms_pepr_pk FOREIGN KEY (cdms_pepr_pk)
 		REFERENCES tbl_periodo_proceso_pepr (pepr_pk)
+	, CONSTRAINT fk_cdms_prto_pk FOREIGN KEY (cdms_prto_pk)
+		REFERENCES tbl_puerto_prto (prto_pk)
 	, CONSTRAINT fk_cdms_navt_pk FOREIGN KEY (cdms_navt_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 	, CONSTRAINT fk_cdms_pais_pk FOREIGN KEY (cdms_pais_pk)
@@ -957,8 +1017,8 @@ CREATE OR REPLACE SYNONYM portico.tbl_cuadro_mes_cdms FOR porticoadm.tbl_cuadro_
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_cuadro_mes_cdms TO portico\
 
 COMMENT ON TABLE tbl_cuadro_mes_cdms IS 'Cuadros mensuales de Estadisticas'\
-COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_pk IS 'Identificador de Cuadro mensual'\
 COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_pepr_pk IS 'Identificador de Periodo de Proceso'\
+COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_prto_pk IS 'Identificador de Puerto'\
 COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_cocu IS 'Identificador de Concepto de Cuadro mensual'\
 COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_opet IS 'Identificador de Tipo de Operacion de BL'\
 COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_navt_pk IS 'Identificador de Tipo de Navegacion'\
@@ -1168,5 +1228,7 @@ DROP TABLE tbl_entidad_enti\
 DROP TABLE tbl_usuario_grupo_usgr\
 DROP TABLE tbl_grupo_grpo\
 DROP TABLE tbl_usuario_usro\
+DROP TABLE tbl_puerto_prto\
+DROP TABLE tbl_superpuerto_sprt\
 DROP TABLE tbl_ig\
 DROP TABLE tbl_i18n_i18n\

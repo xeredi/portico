@@ -3,11 +3,12 @@ package xeredi.integra.model.metamodelo.bo;
 import java.util.List;
 import java.util.Map;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
@@ -19,8 +20,6 @@ import xeredi.integra.model.metamodelo.dao.EntidadAccionDAO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
 import xeredi.util.mybatis.SqlMapperLocator;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -91,8 +90,10 @@ public final class EntidadAccionBO {
     /**
      * Delete.
      *
-     * @param enac the enac
-     * @throws InstanceNotFoundException             the instance not found exception
+     * @param enac
+     *            the enac
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     public void delete(final @NonNull EntidadAccionVO enac) throws InstanceNotFoundException {
         Preconditions.checkNotNull(enac.getId());
@@ -103,6 +104,8 @@ public final class EntidadAccionBO {
             if (enacDAO.delete(enac) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.enac, enac);
             }
+
+            I18nBO.deleteMap(session, I18nPrefix.enac, enac.getId());
 
             session.commit();
         }

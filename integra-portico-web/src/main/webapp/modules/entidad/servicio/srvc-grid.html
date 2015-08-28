@@ -20,6 +20,11 @@
             <i class="glyphicon glyphicon-download-alt"></i> <span translate="btn_exportar"></span>
         </button>
     </div>
+
+    <div class="btn-group">
+        <button ng-repeat="enag in ::vm.enti.enagList track by $index" ng-click="vm.srvcAction(enag.path)"
+            class="btn btn-default" ng-bind="::('enag_' + enag.id | translate)"></button>
+    </div>
 </div>
 
 <div class="table-responsive">

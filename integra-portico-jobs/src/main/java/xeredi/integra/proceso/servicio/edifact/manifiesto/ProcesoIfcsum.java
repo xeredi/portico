@@ -74,7 +74,7 @@ public final class ProcesoIfcsum {
 
             srvcBO.insert(servicioReader.getSrvc(), servicioReader.getSsrvList(), servicioReader.getSsssList(), null);
 
-            LOG.info("Test OK");
+            LOG.info("Proceso OK");
         }
     }
 }

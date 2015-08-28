@@ -310,7 +310,7 @@ public class PeriodoProcesoBO {
         Preconditions.checkNotNull(pepr.getAnio());
         Preconditions.checkNotNull(pepr.getMes());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
             final EstadisticaAgregadoDAO esagDAO = session.getMapper(EstadisticaAgregadoDAO.class);
 
@@ -336,8 +336,6 @@ public class PeriodoProcesoBO {
                 LOG.debug("Busqueda de datos agregados");
             }
 
-            final EstadisticaAgregadoCriterioVO esagCriterioVO = new EstadisticaAgregadoCriterioVO();
-
             final Calendar finicio = Calendar.getInstance();
             finicio.setTimeInMillis(0);
             finicio.set(Calendar.YEAR, pepr.getAnio());
@@ -350,9 +348,8 @@ public class PeriodoProcesoBO {
             ffin.set(Calendar.MONTH, pepr.getMes());
             ffin.set(Calendar.DAY_OF_MONTH, 1);
 
-            esagCriterioVO.setFini(finicio.getTime());
-            esagCriterioVO.setFfin(ffin.getTime());
-            esagCriterioVO.setPeprId(pepr.getId());
+            final EstadisticaAgregadoCriterioVO esagCriterioVO = new EstadisticaAgregadoCriterioVO(pepr.getId(),
+                    pepr.getSprt().getId(), finicio.getTime(), ffin.getTime());
 
             final Map<Entidad, List<EstadisticaVO>> estdMap = new HashMap<Entidad, List<EstadisticaVO>>();
 
@@ -446,9 +443,13 @@ public class PeriodoProcesoBO {
 
             estdMap.put(Entidad.MOVIMIENTO_MERCANCIA, obtenerEstadisticas(pepr, Entidad.MOVIMIENTO_MERCANCIA.getId(),
                     esagDAO.selectMovimientoMercancia(esagCriterioVO)));
-            // FIXME Acabar
-            // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_MERCANCIA_EEE.getId(),
-            // esagDAO.selectMovimientoMercanciaEEE(esagCriterioVO)));
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Movimiento Mercancia EEE - select");
+            }
+
+            estdMap.put(Entidad.MOVIMIENTO_MERCANCIA_EEE, obtenerEstadisticas(pepr,
+                    Entidad.MOVIMIENTO_MERCANCIA_EEE.getId(), esagDAO.selectMovimientoMercanciaEEE(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Generacion de archivo de OPPE");
@@ -543,10 +544,9 @@ public class PeriodoProcesoBO {
             export.generarEMM(zipOutputStream, estdMap.get(Entidad.MOVIMIENTO_MERCANCIA));
             zipOutputStream.closeEntry();
 
-            // FIXME Acabar
-            // zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EME));
-            // export.generarEME(zipOutputStream, estdMap.get(Entidad.MOVIMIENTO_MERCANCIA_EEE));
-            // zipOutputStream.closeEntry();
+            zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EME));
+            export.generarEME(zipOutputStream, estdMap.get(Entidad.MOVIMIENTO_MERCANCIA_EEE));
+            zipOutputStream.closeEntry();
 
             zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EMT));
             export.generarEMT(zipOutputStream, estdMap.get(Entidad.MOVIMIENTO_TIPO_BUQUE_EEE));

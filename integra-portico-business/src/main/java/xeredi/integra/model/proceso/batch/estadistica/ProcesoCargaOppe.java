@@ -30,7 +30,6 @@ import xeredi.integra.model.estadistica.io.EstadisticaFileType;
 import xeredi.integra.model.estadistica.io.OppeFileImport;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
-import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.proceso.ProcesoTemplate;
@@ -44,17 +43,22 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ProcesoCargaOppe.class);
 
-    /** The Constant AUTP_PARAM. */
-    public static final String AUTP_PARAM = "autp";
+    /**
+     * The Enum params.
+     */
+    public enum params {
+        /** The autp. */
+        autp,
 
-    /** The Constant MES_PARAM. */
-    public static final String MES_PARAM = "mes";
+        /** The mes. */
+        mes,
 
-    /** The Constant ANIO_PARAM. */
-    public static final String ANIO_PARAM = "anio";
+        /** The anio. */
+        anio,
 
-    /** The Constant SOBREESCRIBIR_PARAM. */
-    public static final String SOBREESCRIBIR_PARAM = "sobreescribir";
+        /** The sobreescribir. */
+        sobreescribir
+    }
 
     /** The is sigma. */
     private boolean isSigma;
@@ -78,10 +82,10 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
         final Map<String, PuertoVO> prtoMap = new HashMap<>();
 
         // Lectura de los parametros de entrada
-        final String sprtCodigo = prpmMap.get(AUTP_PARAM).getValor();
-        final int anio = Integer.parseInt(prpmMap.get(ANIO_PARAM).getValor());
-        final int mes = Integer.parseInt(prpmMap.get(MES_PARAM).getValor());
-        final boolean sobreescribir = Boolean.parseBoolean(prpmMap.get(SOBREESCRIBIR_PARAM).getValor());
+        final String sprtCodigo = prpmMap.get(params.autp.name()).getValor();
+        final int anio = Integer.parseInt(prpmMap.get(params.anio.name()).getValor());
+        final int mes = Integer.parseInt(prpmMap.get(params.mes.name()).getValor());
+        final boolean sobreescribir = Boolean.parseBoolean(prpmMap.get(params.sobreescribir.name()).getValor());
 
         LOG.info("Carga estadisticas: " + sprtCodigo + ", " + anio + ", " + mes);
 
@@ -189,14 +193,6 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
     @Override
     protected ProcesoTipo getProcesoTipo() {
         return ProcesoTipo.EST_CARGA;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected ItemTipo getItemTipoSalida() {
-        return ItemTipo.pepr;
     }
 
     /**

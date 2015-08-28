@@ -9,7 +9,7 @@ import xeredi.integra.test.comun.FluentPage;
 /**
  * The Class EntidadAccionGrupoEditPage.
  */
-public final class EntidadAccionGrupoEditPage extends FluentPage {
+public final class EntidadAccionGridEditPage extends FluentPage {
 
     /**
      * Instantiates a new entidad accion grupo edit page.
@@ -19,7 +19,7 @@ public final class EntidadAccionGrupoEditPage extends FluentPage {
      * @param afluentWebDriver
      *            the afluent web driver
      */
-    public EntidadAccionGrupoEditPage(final WebDriver awebDriver, final FluentWebDriver afluentWebDriver) {
+    public EntidadAccionGridEditPage(final WebDriver awebDriver, final FluentWebDriver afluentWebDriver) {
         super(awebDriver, afluentWebDriver);
     }
 
@@ -28,7 +28,7 @@ public final class EntidadAccionGrupoEditPage extends FluentPage {
      *
      * @return the entidad accion edit page
      */
-    public EntidadAccionGrupoEditPage gotoCreatePage() {
+    public EntidadAccionGridEditPage gotoCreatePage() {
         linkHref("#/metamodelo/enag/edit/create").click();
 
         return this;
@@ -39,7 +39,7 @@ public final class EntidadAccionGrupoEditPage extends FluentPage {
      *
      * @return the entidad accion edit page
      */
-    public EntidadAccionGrupoEditPage gotoEditPage() {
+    public EntidadAccionGridEditPage gotoEditPage() {
         linkHref("#/metamodelo/enag/edit/edit").click();
 
         return this;
@@ -52,7 +52,7 @@ public final class EntidadAccionGrupoEditPage extends FluentPage {
      *            the path
      * @return the entidad accion edit page
      */
-    public EntidadAccionGrupoEditPage setPath(final String path) {
+    public EntidadAccionGridEditPage setPath(final String path) {
         setInput("vm.enag.path", path);
 
         return this;
@@ -65,7 +65,7 @@ public final class EntidadAccionGrupoEditPage extends FluentPage {
      *            the orden
      * @return the entidad accion edit page
      */
-    public EntidadAccionGrupoEditPage setOrden(final String orden) {
+    public EntidadAccionGridEditPage setOrden(final String orden) {
         setInput("vm.enag.orden", orden);
 
         return this;

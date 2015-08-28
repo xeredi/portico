@@ -27,7 +27,6 @@ import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
-import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.servicio.bo.escala.EscalaBO;
@@ -157,14 +156,6 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected ItemTipo getItemTipoSalida() {
-        return ItemTipo.srvc;
-    }
-
-    /**
      * Find escala.
      *
      * @param fileImport
@@ -207,8 +198,9 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                         try {
                             // Busqueda del buque de la escala
                             final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.BUQUE.getId());
-                            final ParametroVO buque = prmtBO.select(escala.getItdtMap().get(TipoDato.BUQUE.getId())
-                                    .getPrmt().getId(), null, fechaVigencia);
+                            final ParametroVO buque = prmtBO.select(
+                                    escala.getItdtMap().get(TipoDato.BUQUE.getId()).getPrmt().getId(), null,
+                                    fechaVigencia);
 
                             escala.getItdtMap().get(TipoDato.BUQUE.getId()).setPrmt(buque);
 

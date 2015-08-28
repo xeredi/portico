@@ -1,3 +1,8 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak,
+	.x-ng-cloak {
+	display: none !important;
+}
+
 /* IE */
 ul, li {
 	list-style: none;
@@ -22,15 +27,18 @@ ul, li {
 
 .navbar {
 	padding-right: 15px;
+	min-height: 40px;
+	max-height: 40px;
 }
 
 body, .tooltip, ul.dropdown-menu>li>a, .angular-google-map-container {
-	font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif;
+	font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma,
+		Geneva, Arial, Sans-serif;
 }
 
-body, label, .checkbox label, .radio label, table, legend, .tooltip, ul.dropdown-menu>li>a, .btn,
-	.form-control-static, .form-control, .form-group-sm .form-control, .form-group-sm>.form-control-static,
-	.label {
+body, label, .checkbox label, .radio label, table, legend, .tooltip, ul.dropdown-menu>li>a,
+	.btn, .form-control-static, .form-control, .form-group-sm .form-control,
+	.form-group-sm>.form-control-static, .label {
 	font-size: 11px;
 }
 
@@ -109,7 +117,8 @@ fieldset {
 	color: orange;
 }
 
-.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td,
+.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th,
+	.table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td,
 	.table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td {
 	padding: 4px;
 }
@@ -131,77 +140,6 @@ td span {
 	color: black;
 }
 
-/*
-
-.container-fluid, .modal-body {
-	padding-left: 5px;
-}
-
-.row {
-	margin: 0px;
-}
-
-.nav-pills, .btn-toolbar {
-	margin-bottom: 5px;
-}
-
-label, .btn, .form-group-sm>.form-control-static, .form-control-static, .form-control, .form-group-sm>div>.form-control-static,
-	.form-group-sm>.form-control, .form-group-sm .form-control, .tooltip, .pagination>li>a, .alert li, .checkbox label
-	{
-	font-size: 11px;
-}
-
-.control-label:after {
-	content: " :";
-}
-
-.nav-pills>li, .modal-title, legend, .bg-primary, .nav-tabs, .list-group-item, .alert ul {
-	text-transform: uppercase;
-	font-size: 12px;
-}
-
-.btn-toolbar {
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-fieldset {
-	margin-top: 5px;
-	margin-bottom: 15px;
-}
-
-legend {
-	margin-top: 5px;
-	margin-bottom: 10px;
-}
-
-.form-group-sm, .form-group {
-	padding-right: 0px;
-	padding-left: 5px;
-	padding-bottom: 0px;
-	margin-bottom: 10px;
-}
-
-.form-group-sm>.form-control-static, .form-group>.form-control-static {
-	background-color: #4e5d6c;
-	padding-top: 8px;
-	padding-bottom: 4px;
-	padding-left: 5px;
-	padding-right: 5px;
-}
-
-.form-control, .form-group-sm>.form-control {
-	padding: 5px;
-}
-
-.modal.custom, .modal-dialog {
-	width: 95%;
-}
-*/
-[ng\:cloak], [ng-cloak], .ng-cloak {
-	display: none !important
-}
-
 .error {
 	background-color: red;
 }
@@ -218,7 +156,8 @@ legend {
 *   Site: WebVakman.nl
 *
 */
-.visible-xl-block, .visible-xl-inline, .visible-xl-inline-block, .visible-xl {
+.visible-xl-block, .visible-xl-inline, .visible-xl-inline-block,
+	.visible-xl {
 	display: none !important;
 }
 
@@ -226,8 +165,8 @@ legend {
 	.container {
 		width: 1570px;
 	}
-	.col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10,
-		.col-xl-11, .col-xl-12 {
+	.col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6,
+		.col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12 {
 		float: left;
 	}
 	.col-xl-12 {

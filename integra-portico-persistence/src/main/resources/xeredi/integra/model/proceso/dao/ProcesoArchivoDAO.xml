@@ -22,12 +22,15 @@
 	</sql>
 
 	<sql id="SelectWhere">
-		<if test="id != null">
-			AND prar_prbt_pk = #{id}
-		</if>
+		<where>
+			<if test="id != null">
+				AND prar_prbt_pk = #{id}
+			</if>
+		</where>
 	</sql>
 
-	<select id="selectList" parameterType="ProcesoCriterioVO" resultMap="ResultMap">
+	<select id="selectList" parameterType="ProcesoCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 	</select>
@@ -40,7 +43,7 @@
 	</insert>
 
 	<delete id="deleteList" parameterType="ProcesoCriterioVO">
-        DELETE FROM tbl_proceso_archivo_prar
+		DELETE FROM tbl_proceso_archivo_prar
 		<include refid="SelectWhere" />
 	</delete>
 </mapper>

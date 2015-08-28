@@ -5,11 +5,11 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
-import org.antlr.v4.runtime.misc.NotNull;
 import org.apache.commons.validator.GenericValidator;
 
 import com.google.common.base.Preconditions;
 
+import lombok.NonNull;
 import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.http.controller.action.comun.BaseAction.ACCION_EDICION;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
@@ -43,7 +43,7 @@ public final class FieldValidator {
      * @param fieldValue
      *            the field value
      */
-    public static void validateRequired(final @NotNull BaseAction action, final @NotNull MessageI18nKey fieldName,
+    public static void validateRequired(final @NonNull BaseAction action, final @NonNull MessageI18nKey fieldName,
             final Object fieldValue) {
         if (fieldValue == null || fieldValue instanceof String && ((String) fieldValue).isEmpty()) {
             action.addActionError(MessageI18nKey.E00001, action.getText(fieldName));
@@ -62,7 +62,7 @@ public final class FieldValidator {
      * @param required
      *            the required
      */
-    public static void validateRequired(final @NotNull BaseAction action, final MessageI18nKey fieldName,
+    public static void validateRequired(final @NonNull BaseAction action, final MessageI18nKey fieldName,
             final Object fieldValue, final boolean required) {
         if (required) {
             validateRequired(action, fieldName, fieldValue);
@@ -79,7 +79,7 @@ public final class FieldValidator {
      * @param fieldValue
      *            the field value
      */
-    public static void validateRequired(final @NotNull BaseAction action, final @NotNull String fieldName,
+    public static void validateRequired(final @NonNull BaseAction action, final @NonNull String fieldName,
             final ItemVO fieldValue) {
         if (fieldValue == null || fieldValue.getId() == null) {
             action.addActionError(MessageI18nKey.E00001, fieldName);
@@ -98,7 +98,7 @@ public final class FieldValidator {
      * @param required
      *            the required
      */
-    public static void validateRequired(final @NotNull BaseAction action, final @NotNull String fieldName,
+    public static void validateRequired(final @NonNull BaseAction action, final @NonNull String fieldName,
             final ItemVO fieldValue, final boolean required) {
         if (required) {
             validateRequired(action, fieldName, fieldValue);
@@ -115,7 +115,7 @@ public final class FieldValidator {
      * @param fieldValue
      *            the field value
      */
-    public static void validateRequired(final @NotNull BaseAction action, final @NotNull String fieldName,
+    public static void validateRequired(final @NonNull BaseAction action, final @NonNull String fieldName,
             final Object fieldValue) {
         if (fieldValue == null || fieldValue instanceof String && ((String) fieldValue).isEmpty()) {
             action.addActionError(MessageI18nKey.E00001, fieldName);
@@ -134,7 +134,7 @@ public final class FieldValidator {
      * @param required
      *            the required
      */
-    public static void validateRequired(final @NotNull BaseAction action, final @NotNull String fieldName,
+    public static void validateRequired(final @NonNull BaseAction action, final @NonNull String fieldName,
             final Object fieldValue, final boolean required) {
         if (required) {
             validateRequired(action, fieldName, fieldValue);
@@ -151,7 +151,7 @@ public final class FieldValidator {
      * @param endDate
      *            the end date
      */
-    public static void validatePeriod(final @NotNull BaseAction action, final Date startDate, final Date endDate) {
+    public static void validatePeriod(final @NonNull BaseAction action, final Date startDate, final Date endDate) {
         if (startDate != null && endDate != null && startDate.after(endDate)) {
             action.addActionError(MessageI18nKey.E00006);
         }
@@ -169,8 +169,8 @@ public final class FieldValidator {
      * @param validValues
      *            the valid values
      */
-    public static void validateCR(final @NotNull BaseAction action, final @NotNull String fieldName, final String value,
-            final @NotNull Set<String> validValues) {
+    public static void validateCR(final @NonNull BaseAction action, final @NonNull String fieldName, final String value,
+            final @NonNull Set<String> validValues) {
         if (value != null && !validValues.contains(value)) {
             action.addActionError(MessageI18nKey.E00012, fieldName, validValues.toString());
         }
@@ -186,7 +186,7 @@ public final class FieldValidator {
      * @param versionable
      *            the versionable
      */
-    public static void validateVersion(final @NotNull BaseAction action, final ACCION_EDICION accion,
+    public static void validateVersion(final @NonNull BaseAction action, final ACCION_EDICION accion,
             final Versionable<?> versionable) {
         Preconditions.checkNotNull(versionable);
         Preconditions.checkNotNull(versionable.getVersion());
@@ -207,7 +207,7 @@ public final class FieldValidator {
      * @param i18nMap
      *            the i18n map
      */
-    public static void validateI18n(final @NotNull BaseAction action, final Map<String, I18nVO> i18nMap) {
+    public static void validateI18n(final @NonNull BaseAction action, final Map<String, I18nVO> i18nMap) {
         final String language_default = ConfigurationProxy.getString(ConfigurationKey.language_default);
 
         if (i18nMap != null) {
@@ -234,8 +234,8 @@ public final class FieldValidator {
      * @param itemVO
      *            the item vo
      */
-    public static void validateItem(final @NotNull BaseAction action, final @NotNull AbstractEntidadDetailVO entiDetail,
-            final @NotNull ItemVO itemVO) {
+    public static void validateItem(final @NonNull BaseAction action, final @NonNull AbstractEntidadDetailVO entiDetail,
+            final @NonNull ItemVO itemVO) {
         if (entiDetail.getEntdList() != null) {
             final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
 
@@ -302,8 +302,8 @@ public final class FieldValidator {
      * @param itemVO
      *            the item vo
      */
-    public static void validateTrmt(final @NotNull BaseAction action, final @NotNull AbstractEntidadDetailVO entiDetail,
-            final @NotNull TramiteDetailVO trmtDetail, final @NotNull ItemTramiteVO ittr) {
+    public static void validateTrmt(final @NonNull BaseAction action, final @NonNull AbstractEntidadDetailVO entiDetail,
+            final @NonNull TramiteDetailVO trmtDetail, final @NonNull ItemTramiteVO ittr) {
         if (trmtDetail.getTpdtList() != null) {
             final Map<Long, ItemTramiteDatoVO> ittdMap = ittr.getIttdMap();
 
@@ -367,7 +367,7 @@ public final class FieldValidator {
      *            the valid values
      * @return true, if is in list
      */
-    public static boolean isInList(final Object value, final @NotNull Object... validValues) {
+    public static boolean isInList(final Object value, final @NonNull Object... validValues) {
         return Arrays.asList(validValues).contains(value);
     }
 

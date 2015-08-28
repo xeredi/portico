@@ -48,7 +48,7 @@
             <p class="form-control-static" ng-bind="::(vm.item.falta | date: datetimeFormat)"></p>
         </div>
 
-        <div ng-if="::!vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
+        <div ng-if="!vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
             <label translate="fref"></label>
             <p class="form-control-static" ng-bind="::(vm.item.fref | date: datetimeFormat)"></p>
         </div>

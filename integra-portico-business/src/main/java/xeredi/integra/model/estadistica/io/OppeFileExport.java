@@ -12,12 +12,12 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -214,8 +214,8 @@ public final class OppeFileExport {
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Mes, estdVO.getPepr().getMes()));
             buffer.append(getTokenString(EstadisticaFileKeyword.Autp, estdVO.getPrto().getCodigo()));
 
-            final String tipoOperacionBl = getTokenPrmt(EstadisticaFileKeyword.EMM_TipoOperacion, estdVO.getItdtMap()
-                    .get(TipoDato.TIPO_OP_BL.getId()).getPrmt());
+            final String tipoOperacionBl = getTokenPrmt(EstadisticaFileKeyword.EMM_TipoOperacion,
+                    estdVO.getItdtMap().get(TipoDato.TIPO_OP_BL.getId()).getPrmt());
 
             buffer.append(tipoOperacionBl);
             buffer.append(getTokenPrmt(EstadisticaFileKeyword.EMM_UnloOrigen,
@@ -295,14 +295,14 @@ public final class OppeFileExport {
             buffer.append(getTokenPrmt(EstadisticaFileKeyword.EME_UnidadCarga,
                     estdVO.getItdtMap().get(TipoDato.UNIDAD_CARGA.getId()).getPrmt()));
 
-            // TODO Ver si hay que pasar la mercancia
+            // TODO Ver si hay que pasar la mercancia o el Grupo NST
             buffer.append(getTokenPrmt(EstadisticaFileKeyword.EME_Mercancia,
-                    estdVO.getItdtMap().get(TipoDato.GRUPO_NST.getId()).getPrmt()));
+                    estdVO.getItdtMap().get(TipoDato.MERCANCIA.getId()).getPrmt()));
             buffer.append(getTokenPrmt(EstadisticaFileKeyword.EME_RegistroBuqueEEE,
                     estdVO.getItdtMap().get(TipoDato.REG_TBUQUE_EEE.getId()).getPrmt()));
 
-            final String direccion = getTokenString(EstadisticaFileKeyword.EME_DireccionTransporte, estdVO.getItdtMap()
-                    .get(TipoDato.DIREC_MERC.getId()).getCadena());
+            final String direccion = getTokenString(EstadisticaFileKeyword.EME_DireccionTransporte,
+                    estdVO.getItdtMap().get(TipoDato.DIREC_MERC.getId()).getCadena());
 
             buffer.append("E".equals(direccion) ? "1" : "2");
 

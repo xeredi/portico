@@ -9,7 +9,6 @@ import java.util.StringTokenizer;
 
 import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.facturacion.bo.ValoradorBO;
-import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoItemVO;
 import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
@@ -78,14 +77,6 @@ public final class ProcesoValorador extends ProcesoTemplate {
     @Override
     protected ProcesoTipo getProcesoTipo() {
         return ProcesoTipo.VALORADOR;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected ItemTipo getItemTipoSalida() {
-        return ItemTipo.vlrc;
     }
 
 }

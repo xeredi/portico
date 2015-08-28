@@ -10,14 +10,37 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public final class EstadisticaAgregadoCriterioVO {
 
+    /** The pepr id. */
+    private final Long peprId;
+
+    /** The sprt id. */
+    private final Long sprtId;
+
     /** The finicio. */
-    private Date fini;
+    private final Date fini;
 
     /** The ffin. */
-    private Date ffin;
+    private final Date ffin;
 
-    /** The pepr id. */
-    private Long peprId;
+    /**
+     * Instantiates a new estadistica agregado criterio vo.
+     *
+     * @param apeprId
+     *            the apepr id
+     * @param asprtId
+     *            the asprt id
+     * @param afini
+     *            the afini
+     * @param affin
+     *            the affin
+     */
+    public EstadisticaAgregadoCriterioVO(final Long apeprId, final Long asprtId, final Date afini, final Date affin) {
+        super();
+        peprId = apeprId;
+        sprtId = asprtId;
+        fini = afini;
+        ffin = affin;
+    }
 
     /**
      * {@inheritDoc}
@@ -37,32 +60,12 @@ public final class EstadisticaAgregadoCriterioVO {
     }
 
     /**
-     * Sets the finicio.
-     *
-     * @param value
-     *            the new finicio
-     */
-    public void setFini(final Date value) {
-        fini = value;
-    }
-
-    /**
      * Gets the ffin.
      *
      * @return the ffin
      */
     public Date getFfin() {
         return ffin;
-    }
-
-    /**
-     * Sets the ffin.
-     *
-     * @param value
-     *            the new ffin
-     */
-    public void setFfin(final Date value) {
-        ffin = value;
     }
 
     /**
@@ -73,15 +76,4 @@ public final class EstadisticaAgregadoCriterioVO {
     public Long getPeprId() {
         return peprId;
     }
-
-    /**
-     * Sets the pepr id.
-     *
-     * @param value
-     *            the new pepr id
-     */
-    public void setPeprId(final Long value) {
-        peprId = value;
-    }
-
 }

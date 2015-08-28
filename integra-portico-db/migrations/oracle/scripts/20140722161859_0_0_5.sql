@@ -38,6 +38,10 @@ INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_defa
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'language_available', 'StringList', 'es, ca, en')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'date_format', 'String', 'dd/MM/yyyy')\
+INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'datetime_format', 'String', 'dd/MM/yyyy HH:mm')\
+INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'parametrizacion_app_mode', 'Boolean', 'true')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'estadistica_files_home', 'String', '${files_home}/estadistica')\
