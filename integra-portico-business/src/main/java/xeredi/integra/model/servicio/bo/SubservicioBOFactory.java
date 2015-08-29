@@ -34,8 +34,10 @@ public final class SubservicioBOFactory {
     /**
      * Load.
      */
-    private static void load() {
-        LOG.info("Inicio de la Factoria de SubservicioBO");
+    private static final void load() {
+        if (LOG.isDebugEnabled()) {
+            LOG.info("Factory start");
+        }
 
         for (final TipoSubservicioDetailVO entiDetail : TipoSubservicioProxy.selectMap().values()) {
             if (entiDetail.getEnti().getClasspath() != null) {
@@ -52,8 +54,6 @@ public final class SubservicioBOFactory {
                 }
             }
         }
-
-        LOG.info("Fin de la Factoria de SubservicioBO");
     }
 
     /**
@@ -63,7 +63,7 @@ public final class SubservicioBOFactory {
      *            the enti id
      * @return the subservicio bo
      */
-    public static SubservicioBO newInstance(final Long entiId) {
+    public static final SubservicioBO newInstance(final Long entiId) {
         if (MAP.containsKey(entiId)) {
             try {
                 return (SubservicioBO) MAP.get(entiId).newInstance();
@@ -74,7 +74,16 @@ public final class SubservicioBOFactory {
             }
         }
 
-        return new DefaultSubservicioBO();
+        return new SubservicioBO();
+    }
+
+    /**
+     * New default instance.
+     *
+     * @return the subservicio bo
+     */
+    public static final SubservicioBO newDefaultInstance() {
+        return new SubservicioBO();
     }
 
 }

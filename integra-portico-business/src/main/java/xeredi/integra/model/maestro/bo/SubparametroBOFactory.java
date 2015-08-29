@@ -1,4 +1,4 @@
-package xeredi.integra.model.servicio.bo;
+package xeredi.integra.model.maestro.bo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,25 +6,25 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.integra.model.metamodelo.vo.TipoServicioDetailVO;
+import lombok.NonNull;
+import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
+import xeredi.integra.model.metamodelo.vo.TipoSubparametroDetailVO;
 
 // TODO: Auto-generated Javadoc
 /**
- * A factory for creating ServicioBO objects.
+ * A factory for creating SubparametroBO objects.
  */
-public final class ServicioBOFactory {
-
+public final class SubparametroBOFactory {
     /** The Constant LOG. */
-    private static final Log LOG = LogFactory.getLog(ServicioBOFactory.class);
+    private static final Log LOG = LogFactory.getLog(SubparametroBOFactory.class);
 
     /** The Constant MAP. */
     private static final Map<Long, Class<?>> MAP = new HashMap<Long, Class<?>>();
 
     /**
-     * Instantiates a new servicio bo factory.
+     * Instantiates a new subparametro bo factory.
      */
-    private ServicioBOFactory() {
+    private SubparametroBOFactory() {
         super();
     }
 
@@ -35,15 +35,15 @@ public final class ServicioBOFactory {
     /**
      * Load.
      */
-    private static final void load() {
+    private static void load() {
         if (LOG.isDebugEnabled()) {
             LOG.info("Factory start");
         }
 
-        for (final TipoServicioDetailVO entiDetail : TipoServicioProxy.selectMap().values()) {
+        for (final TipoSubparametroDetailVO entiDetail : TipoSubparametroProxy.selectMap().values()) {
             if (entiDetail.getEnti().getClasspath() != null) {
                 try {
-                    final String classname = "xeredi.integra.model.servicio.bo." + entiDetail.getEnti().getClasspath();
+                    final String classname = "xeredi.integra.model.maestro.bo." + entiDetail.getEnti().getClasspath();
 
                     if (LOG.isDebugEnabled()) {
                         LOG.debug("Carga de la clase " + classname);
@@ -62,12 +62,12 @@ public final class ServicioBOFactory {
      *
      * @param entiId
      *            the enti id
-     * @return the servicio bo
+     * @return the subparametro bo
      */
-    public static final ServicioBO newInstance(final Long entiId) {
+    public static SubparametroBO newInstance(final @NonNull Long entiId) {
         if (MAP.containsKey(entiId)) {
             try {
-                return (ServicioBO) MAP.get(entiId).newInstance();
+                return (SubparametroBO) MAP.get(entiId).newInstance();
             } catch (final IllegalAccessException ex) {
                 throw new Error(ex);
             } catch (final InstantiationException ex) {
@@ -75,10 +75,16 @@ public final class ServicioBOFactory {
             }
         }
 
-        return new ServicioBO();
+        return new SubparametroBO();
     }
 
-    public static final ServicioBO newDefaultInstance() {
-        return new ServicioBO();
+    /**
+     * New default instance.
+     *
+     * @return the subparametro bo
+     */
+    public static SubparametroBO newDefaultInstance() {
+        return new SubparametroBO();
     }
+
 }

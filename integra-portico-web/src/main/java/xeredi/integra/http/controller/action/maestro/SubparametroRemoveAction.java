@@ -3,6 +3,7 @@ package xeredi.integra.http.controller.action.maestro;
 import xeredi.integra.http.controller.action.item.ItemRemoveAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
+import xeredi.integra.model.maestro.bo.SubparametroBOFactory;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 
 // TODO: Auto-generated Javadoc
@@ -19,7 +20,7 @@ public final class SubparametroRemoveAction extends ItemRemoveAction<Subparametr
      */
     @Override
     public void doSpecificRemove() throws ApplicationException {
-        final SubparametroBO itemBO = new SubparametroBO();
+        final SubparametroBO itemBO = SubparametroBOFactory.newInstance(model.getEntiId());
 
         itemBO.delete(model);
     }

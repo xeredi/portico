@@ -15,7 +15,7 @@ import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.vo.TramiteDetailVO;
-import xeredi.integra.model.servicio.bo.AbstractSubservicioBO;
+import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoResumenDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoServicioDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoSubservicioDAO;
@@ -32,7 +32,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class BlBO.
  */
-public final class BlBO extends AbstractSubservicioBO {
+public final class BlBO extends SubservicioBO {
     /**
      * {@inheritDoc}
      */

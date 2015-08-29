@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.item.ItemFileExportAction;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -17,6 +19,7 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
+import xeredi.integra.model.maestro.bo.SubparametroBOFactory;
 import xeredi.integra.model.maestro.report.ParametroPdf;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -26,8 +29,6 @@ import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroDetailVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroDetailVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -57,7 +58,6 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
         final Map<Long, List<SubparametroVO>> itemHijosMap = new HashMap<>();
 
         if (entiDetail.getEntiHijasList() != null) {
-            final SubparametroBO sprmBO = new SubparametroBO();
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
             prmtCriterioVO.setId(model.getId());
@@ -65,6 +65,7 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
             prmtCriterioVO.setIdioma(idioma);
 
             for (final Long entiId : entiDetail.getEntiHijasList()) {
+                final SubparametroBO sprmBO = SubparametroBOFactory.newInstance(entiId);
                 final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
                 sprmCriterioVO.setPrmt(prmtCriterioVO);

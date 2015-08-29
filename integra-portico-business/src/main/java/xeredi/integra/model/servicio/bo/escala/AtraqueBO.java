@@ -1,14 +1,13 @@
 package xeredi.integra.model.servicio.bo.escala;
 
 import java.util.Map;
-import java.util.Set;
-
-import lombok.NonNull;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
@@ -16,9 +15,8 @@ import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.integra.model.metamodelo.vo.TramiteDetailVO;
-import xeredi.integra.model.servicio.bo.AbstractSubservicioBO;
+import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.escala.AtraqueDAO;
@@ -27,53 +25,16 @@ import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class AtraqueBO.
  */
-public final class AtraqueBO extends AbstractSubservicioBO {
+public final class AtraqueBO extends SubservicioBO {
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void insertPostOperations(final SqlSession session, final SubservicioVO ssrvVO,
-            final TipoSubservicioDetailVO tpssDetail, final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
-        // noop
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void duplicatePostOperations(final SqlSession session, final SubservicioVO ssrvVO) {
-        // noop
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void updatePostOperations(final SqlSession session, final SubservicioVO ssrvVO)
-            throws InstanceNotFoundException {
-        // noop
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void deletePostOperations(final SqlSession session, final SubservicioVO ssrv)
-            throws InstanceNotFoundException {
-        // noop
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void statechangePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv,
+    protected final void statechangePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv,
             final @NonNull ItemTramiteVO ittr, final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
         Preconditions.checkNotNull(ssrv.getId());
         Preconditions.checkNotNull(ssrv.getSrvc());
@@ -105,7 +66,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *            the ssrv id
      * @return true, if is iniciable
      */
-    public boolean isIniciable(final Long ssrvId) {
+    public final boolean isIniciable(final Long ssrvId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession();) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
 
@@ -125,8 +86,8 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public void iniciar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+    public final void iniciar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap)
+            throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
             final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);
@@ -173,7 +134,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *            the ssrv id
      * @return true, if is cambio muelle
      */
-    public boolean isCambioMuelle(final Long ssrvId) {
+    public final boolean isCambioMuelle(final Long ssrvId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession();) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
 
@@ -188,7 +149,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *            the ssrv id
      * @return true, if is autorizable f previo
      */
-    public boolean isAutorizableFprevio(final Long ssrvId) {
+    public final boolean isAutorizableFprevio(final Long ssrvId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession();) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
 
@@ -208,7 +169,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public void autorizarFprevio(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap)
+    public final void autorizarFprevio(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap)
             throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);

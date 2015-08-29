@@ -13,7 +13,7 @@ import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TramiteDetailVO;
-import xeredi.integra.model.servicio.bo.AbstractServicioBO;
+import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.dao.manifiesto.BlDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoResumenDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoServicioDAO;
@@ -31,13 +31,13 @@ import xeredi.util.mybatis.SqlMapperLocator;
 /**
  * The Class ManifiestoBO.
  */
-public final class ManifiestoBO extends AbstractServicioBO {
+public final class ManifiestoBO extends ServicioBO {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void insertPostOperations(final SqlSession session, final ServicioVO srvc,
+    protected final void insertPostOperations(final SqlSession session, final ServicioVO srvc,
             final List<SubservicioVO> ssrvList, final List<SubservicioSubservicioVO> ssssList) {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
 
@@ -60,31 +60,7 @@ public final class ManifiestoBO extends AbstractServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void updatePostOperations(final SqlSession session, final ServicioVO srvcVO) throws ModelException {
-        // noop
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void duplicatePostOperations(final SqlSession session, final ServicioVO srvcVO) throws ModelException {
-        // noop
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void deletePostOperations(final SqlSession session, final ServicioVO srvc) throws ModelException {
-        // noop
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void statechangePostOperations(final @NonNull SqlSession session, final @NonNull ServicioVO srvc,
+    protected final void statechangePostOperations(final @NonNull SqlSession session, final @NonNull ServicioVO srvc,
             final @NonNull ItemTramiteVO ittr, final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
         Preconditions.checkNotNull(srvc.getId());
         Preconditions.checkNotNull(trmtDetail.getTrmt());
@@ -128,7 +104,7 @@ public final class ManifiestoBO extends AbstractServicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ResumenTotalesVO selectResumen(final Long maniId) throws InstanceNotFoundException {
+    public final ResumenTotalesVO selectResumen(final Long maniId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ManifiestoResumenDAO resumenDAO = session.getMapper(ManifiestoResumenDAO.class);
             final ResumenTotalesCriterioVO totalCriterioVO = new ResumenTotalesCriterioVO();

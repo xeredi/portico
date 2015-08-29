@@ -358,8 +358,6 @@ function PrmtLupaController($http, $scope) {
             return null;
         }
 
-        textoBusqueda += "%";
-
         return $http.post("maestro/parametro-typeahead.action", {
             model : {
                 entiId : entiId,

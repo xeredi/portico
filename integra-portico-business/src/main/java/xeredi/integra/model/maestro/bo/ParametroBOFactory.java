@@ -3,11 +3,10 @@ package xeredi.integra.model.maestro.bo;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.NonNull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import lombok.NonNull;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroDetailVO;
 
@@ -37,7 +36,9 @@ public final class ParametroBOFactory {
      * Load.
      */
     private static void load() {
-        LOG.info("Inicio de la Factoria de ParametroBO");
+        if (LOG.isDebugEnabled()) {
+            LOG.info("Factory start");
+        }
 
         for (final TipoParametroDetailVO entiDetail : TipoParametroProxy.selectMap().values()) {
             if (entiDetail.getEnti().getClasspath() != null) {
@@ -54,8 +55,6 @@ public final class ParametroBOFactory {
                 }
             }
         }
-
-        LOG.info("Fin de la Factoria de ParametroBO");
     }
 
     /**
@@ -76,7 +75,7 @@ public final class ParametroBOFactory {
             }
         }
 
-        return new DefaultParametroBO();
+        return new ParametroBO();
     }
 
     /**
@@ -85,6 +84,6 @@ public final class ParametroBOFactory {
      * @return the parametro bo
      */
     public static ParametroBO newDefaultInstance() {
-        return new DefaultParametroBO();
+        return new ParametroBO();
     }
 }

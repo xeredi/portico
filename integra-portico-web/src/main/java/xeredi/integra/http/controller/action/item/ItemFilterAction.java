@@ -7,17 +7,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.GridFilterAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
-import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -28,8 +28,8 @@ import com.google.common.base.Preconditions;
  * @param <E>
  *            the element type
  */
-public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends AbstractEntidadDetailVO> extends
-GridFilterAction<C> {
+public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends AbstractEntidadDetailVO>
+        extends GridFilterAction<C> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8917073535249583222L;
@@ -72,7 +72,7 @@ GridFilterAction<C> {
             }
 
             if (!tpprIds.isEmpty()) {
-                final ParametroBO prmtBO = new DefaultParametroBO();
+                final ParametroBO prmtBO = ParametroBOFactory.newDefaultInstance();
 
                 labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), idioma));
             }

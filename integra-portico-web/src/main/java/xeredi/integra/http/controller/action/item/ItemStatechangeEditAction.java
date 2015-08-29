@@ -6,20 +6,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.item.vo.ItemTramiteVO;
-import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.metamodelo.proxy.TramiteProxy;
 import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.integra.model.metamodelo.vo.TramiteTipoDatoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -32,7 +32,8 @@ import com.google.common.base.Preconditions;
  * @param <E>
  *            the element type
  */
-public abstract class ItemStatechangeEditAction<I extends ItemVO, E extends AbstractEntidadDetailVO> extends BaseAction {
+public abstract class ItemStatechangeEditAction<I extends ItemVO, E extends AbstractEntidadDetailVO>
+        extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3803526996899147874L;
@@ -94,7 +95,7 @@ public abstract class ItemStatechangeEditAction<I extends ItemVO, E extends Abst
         }
 
         if (!tpprIds.isEmpty()) {
-            final ParametroBO prmtBO = new DefaultParametroBO();
+            final ParametroBO prmtBO = ParametroBOFactory.newDefaultInstance();
 
             labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), idioma));
         }

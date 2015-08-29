@@ -20,8 +20,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import oracle.sql.TIMESTAMP;
-
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,6 +27,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import oracle.sql.TIMESTAMP;
 import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
@@ -43,6 +42,7 @@ import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
+import xeredi.integra.model.maestro.bo.SubparametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.ParametroVersionVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
@@ -152,8 +152,8 @@ public final class MaestroImporterBO {
 
                 for (final MaestroNodoVO maestroVO : maestrosList) {
                     final AbstractEntidadDetailVO entiDetail = EntidadProxy.select(maestroVO.getEntidad().getId());
-                    final String entiName = bundle.getString(I18nPrefix.enti.name() + "_"
-                            + entiDetail.getEnti().getId());
+                    final String entiName = bundle
+                            .getString(I18nPrefix.enti.name() + "_" + entiDetail.getEnti().getId());
 
                     switch (entiDetail.getEnti().getTipo()) {
                     case P:
@@ -161,7 +161,8 @@ public final class MaestroImporterBO {
                             LOG.info("Importacion del maestro: " + entiName);
                         }
 
-                        importTipoParametro(con, maestroVO.getEntidad(), maestroVO.isTempImp(), maestroVO.getSqlQuery());
+                        importTipoParametro(con, maestroVO.getEntidad(), maestroVO.isTempImp(),
+                                maestroVO.getSqlQuery());
 
                         break;
 
@@ -336,12 +337,12 @@ public final class MaestroImporterBO {
      */
     private void importSubtipoParametro(final Connection con, final Entidad entidad, final boolean isTmpImpl,
             final StringBuffer sql) throws SQLException, DuplicateInstanceException, InstanceNotFoundException {
-        final SubparametroBO sprmBO = new SubparametroBO();
+        final SubparametroBO sprmBO = SubparametroBOFactory.newDefaultInstance();
         final TipoSubparametroDetailVO tpspDetail = TipoSubparametroProxy.select(entidad.getId());
         final TipoParametroDetailVO tpprPadreDetail = TipoParametroProxy.select(tpspDetail.getEnti().getTpprId());
         final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + tpspDetail.getEnti().getId());
-        final String entiAsociadaName = bundle.getString(I18nPrefix.enti.name() + "_"
-                + tpspDetail.getEnti().getTpprAsociado().getId());
+        final String entiAsociadaName = bundle
+                .getString(I18nPrefix.enti.name() + "_" + tpspDetail.getEnti().getTpprAsociado().getId());
         final String entiPadreName = bundle.getString(I18nPrefix.enti.name() + "_" + tpprPadreDetail.getEnti().getId());
 
         if (tpspDetail.getEntiPadresList() == null || tpspDetail.getEntiPadresList().isEmpty()) {
@@ -373,8 +374,8 @@ public final class MaestroImporterBO {
                 final String parametro = rs.getString(i++);
                 final String parametroAsociado = rs.getString(i++);
                 final Long prmtId = tpprPrmtMap.get(tpspDetail.getEnti().getTpprId()).get(parametro);
-                final Long prmtAsociadoId = tpprPrmtMap.get(tpspDetail.getEnti().getTpprAsociado().getId()).get(
-                        parametroAsociado);
+                final Long prmtAsociadoId = tpprPrmtMap.get(tpspDetail.getEnti().getTpprAsociado().getId())
+                        .get(parametroAsociado);
                 final ParametroVO prmtAsociadoVO = new ParametroVO();
 
                 prmtAsociadoVO.setId(prmtAsociadoId);
@@ -409,7 +410,8 @@ public final class MaestroImporterBO {
                 }
 
                 if (prmtAsociadoId == null) {
-                    LOG.error("No encontrado parametro: " + parametroAsociado + " para la entidad: " + entiAsociadaName);
+                    LOG.error(
+                            "No encontrado parametro: " + parametroAsociado + " para la entidad: " + entiAsociadaName);
                 }
 
                 // TODO i18n
@@ -516,8 +518,8 @@ public final class MaestroImporterBO {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private void parseXml(final List<MaestroNodoVO> amaestrosList) throws ParserConfigurationException, SAXException,
-    IOException {
+    private void parseXml(final List<MaestroNodoVO> amaestrosList)
+            throws ParserConfigurationException, SAXException, IOException {
         LOG.info("Lectura del Archivo XML de consultas de Maestros");
 
         final SAXParserFactory factory = SAXParserFactory.newInstance();

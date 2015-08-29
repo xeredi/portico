@@ -6,11 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.exception.ModelException;
-import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioDetailVO;
-import xeredi.integra.model.metamodelo.vo.TramiteDetailVO;
-import xeredi.integra.model.servicio.bo.AbstractSubservicioBO;
+import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.dao.pesca.ManifiestoPescaDAO;
 import xeredi.integra.model.servicio.dao.pesca.PartidaPescaDAO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -19,7 +16,7 @@ import xeredi.integra.model.servicio.vo.SubservicioVO;
 /**
  * The Class PartidaPescaBO.
  */
-public final class PartidaPescaBO extends AbstractSubservicioBO {
+public final class PartidaPescaBO extends SubservicioBO {
 
     /**
      * {@inheritDoc}
@@ -76,14 +73,4 @@ public final class PartidaPescaBO extends AbstractSubservicioBO {
         mapeDAO.updateRecalcularImporte(ssrv.getSrvc().getId());
         mapeDAO.updateRecalcularPeso(ssrv.getSrvc().getId());
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void statechangePostOperations(final SqlSession session, final SubservicioVO ssrv,
-            final ItemTramiteVO ittr, final TramiteDetailVO trmtDetail) throws ModelException {
-        // noop
-    }
-
 }

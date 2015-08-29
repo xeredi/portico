@@ -5,15 +5,13 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.ModelException;
-import xeredi.integra.model.item.vo.ItemTramiteVO;
-import xeredi.integra.model.metamodelo.vo.TramiteDetailVO;
-import xeredi.integra.model.servicio.bo.AbstractServicioBO;
+import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.dao.pesca.ManifiestoPescaDAO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
-public final class ManifiestoPescaBO extends AbstractServicioBO {
+public final class ManifiestoPescaBO extends ServicioBO {
 
     /**
      * {@inheritDoc}
@@ -47,22 +45,5 @@ public final class ManifiestoPescaBO extends AbstractServicioBO {
 
         mapeDAO.updateRecalcularImporte(srvcVO.getId());
         mapeDAO.updateRecalcularPeso(srvcVO.getId());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void deletePostOperations(final SqlSession session, final ServicioVO srvc) throws ModelException {
-        // noop
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void statechangePostOperations(final SqlSession session, final ServicioVO srvc, final ItemTramiteVO ittr,
-            final TramiteDetailVO trmtDetail) throws ModelException {
-        // noop
     }
 }

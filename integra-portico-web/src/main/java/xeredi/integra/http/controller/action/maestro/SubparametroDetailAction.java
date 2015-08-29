@@ -3,6 +3,7 @@ package xeredi.integra.http.controller.action.maestro;
 import xeredi.integra.http.controller.action.item.ItemDetailAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
+import xeredi.integra.model.maestro.bo.SubparametroBOFactory;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroDetailVO;
@@ -21,7 +22,7 @@ public final class SubparametroDetailAction extends ItemDetailAction<Subparametr
      */
     @Override
     public void doSpecificDetail() throws ApplicationException {
-        final SubparametroBO itemBO = new SubparametroBO();
+        final SubparametroBO itemBO = SubparametroBOFactory.newInstance(model.getEntiId());
 
         model = itemBO.selectObject(model.getId(), idioma, fechaVigencia);
         enti = TipoSubparametroProxy.select(model.getEntiId());

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.dao.embdeportivas.AmarreDeportivoDAO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -13,12 +14,12 @@ import xeredi.util.mybatis.SqlMapperLocator;
 /**
  * The Class EmbarcacionDeportivaAutonomicaBO.
  */
-public final class AmarreDeportivoBO {
+public final class AmarreDeportivoBO extends ParametroBO {
 
     /**
      * Update recalcular estado.
      */
-    public void updateRecalcularEstado() {
+    public final void updateRecalcularEstado() {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AmarreDeportivoDAO embaDAO = session.getMapper(AmarreDeportivoDAO.class);
             final ParametroCriterioVO embaCriterio = new ParametroCriterioVO();

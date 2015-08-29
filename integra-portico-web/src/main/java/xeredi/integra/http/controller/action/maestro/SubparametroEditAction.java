@@ -12,6 +12,7 @@ import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
+import xeredi.integra.model.maestro.bo.SubparametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
@@ -48,7 +49,7 @@ public final class SubparametroEditAction extends ItemEditAction<SubparametroVO,
                 model.setPrtoId(prmt.getPrto().getId());
             }
         } else {
-            final SubparametroBO itemBO = new SubparametroBO();
+            final SubparametroBO itemBO = SubparametroBOFactory.newInstance(model.getEntiId());
 
             model = itemBO.selectObject(model.getId(), getIdioma(), getFechaVigencia());
         }
