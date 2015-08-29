@@ -12,7 +12,8 @@ public enum Entidad {
     AGREGACION_ESCALA(23001L), /** The agregacion superficie. */
     AGREGACION_SUPERFICIE(23002L), /** The alineacion. */
     ALINEACION(20109L), /** The amarre dep. */
-    AMARRE_DEP(20118L), /** The amarre punto red. */
+    AMARRE_DEP(20118L), /** The amarre dep srv. */
+    AMARRE_DEP_SRV(21021L), /** The amarre punto red. */
     AMARRE_PUNTO_RED(24016L), /** The amarre servicio deportivo. */
     AMARRE_SERVICIO_DEPORTIVO(24015L), /** The area geografica. */
     AREA_GEOGRAFICA(20012L), /** The area mundial. */
@@ -194,5 +195,4 @@ public enum Entidad {
     public long getId() {
         return id;
     }
-
 }

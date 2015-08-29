@@ -69,6 +69,16 @@ public final class PorticoScheduler {
 
             instance.scheduleJob(buquePescaJob, buquePescaTrigger);
 
+            final JobDetail amarreDeportivoJob = JobBuilder.newJob(AmarreDeportivoJob.class)
+                    .withIdentity("amarreDeportivoJob", "srvcGroup").build();
+
+            final Trigger amarreDeportivoTrigger = TriggerBuilder.newTrigger()
+                    .withIdentity("amarreDeportivoTrigger", "srvcGroup").startNow()
+                    .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(300).repeatForever())
+                    .build();
+
+            instance.scheduleJob(amarreDeportivoJob, amarreDeportivoTrigger);
+
             final JobDetail pescaJob = JobBuilder.newJob(CargaPescaJob.class).withIdentity("pescaJob", "srvcGroup")
                     .build();
 

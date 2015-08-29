@@ -12,13 +12,16 @@ public enum ProcesoTipo {
     /** The facturador. */
     FACTURADOR(ProcesoModulo.F, ItemTipo.fctr),
 
-    /** The est carga. */
+    /** Carga de un periodo de proceso. */
     EST_CARGA(ProcesoModulo.E, ItemTipo.pepr),
 
-    /** The est creacion. */
+    /** Agregacion de un periodo de proceso. */
     EST_CREACION(ProcesoModulo.E, ItemTipo.pepr),
 
-    /** The pes creacion. */
+    /** Creacion de servicios de amarre deportivo. */
+    SAMD_CREACION(ProcesoModulo.S, ItemTipo.srvc),
+
+    /** Creacion de servicios de buques de pesca. */
     SBUP_CREACION(ProcesoModulo.S, ItemTipo.srvc),
 
     /** The pes carga. */

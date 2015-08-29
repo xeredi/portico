@@ -1,4 +1,4 @@
-package xeredi.integra.model.proceso.batch.pesca;
+package xeredi.integra.model.proceso.batch.amarredep;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -11,7 +11,7 @@ import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
-import xeredi.integra.model.servicio.bo.buquepesca.BuquePescaServicioBO;
+import xeredi.integra.model.servicio.bo.amarredep.AmarreDeportivoServicioBO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioMaestroVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -19,9 +19,9 @@ import xeredi.integra.proceso.ProcesoTemplate;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ProcesoBuquePesca.
+ * The Class ProcesoAmarreDeportivo.
  */
-public final class ProcesoBuquePesca extends ProcesoTemplate {
+public final class ProcesoAmarreDeportivo extends ProcesoTemplate {
 
     /**
      * The Enum params.
@@ -47,9 +47,9 @@ public final class ProcesoBuquePesca extends ProcesoTemplate {
         final Date ffin = findDateParameter(params.ffin.name());
 
         if (prmnList.isEmpty()) {
-            final TipoServicioDetailVO enti = TipoServicioProxy.select(Entidad.BUQUE_PESCA_SRV.getId());
+            final TipoServicioDetailVO enti = TipoServicioProxy.select(Entidad.AMARRE_DEP_SRV.getId());
 
-            final BuquePescaServicioBO bo = new BuquePescaServicioBO();
+            final AmarreDeportivoServicioBO bo = new AmarreDeportivoServicioBO();
             final ServicioCriterioVO criterio = new ServicioCriterioVO();
 
             criterio.setFrefMax(ffin);
@@ -69,12 +69,21 @@ public final class ProcesoBuquePesca extends ProcesoTemplate {
 
                     srvc.setAnno(String.valueOf(calendar.get(Calendar.YEAR)));
 
-                    final ParametroVO buque = new ParametroVO();
+                    final ParametroVO amarre = new ParametroVO();
 
-                    buque.setId(Long.parseLong(maestro.getItdtMap().get(TipoDato.BUQUE_PESCA.name()).toString()));
-                    buque.setParametro(maestro.getItdtMap().get(TipoDato.BUQUE_PESCA.name() + "_prmt").toString());
+                    amarre.setId(Long.parseLong(maestro.getItdtMap().get(TipoDato.AMARRE_DEP.name()).toString()));
+                    amarre.setParametro(maestro.getItdtMap().get(TipoDato.AMARRE_DEP.name() + "_prmt").toString());
 
-                    srvc.addItdt(TipoDato.BUQUE_PESCA.getId(), buque);
+                    srvc.addItdt(TipoDato.AMARRE_DEP.getId(), amarre);
+
+                    final ParametroVO embarcacion = new ParametroVO();
+
+                    embarcacion.setId(
+                            Long.parseLong(maestro.getItdtMap().get(TipoDato.EMBARCACION_DEP.name()).toString()));
+                    embarcacion.setParametro(
+                            maestro.getItdtMap().get(TipoDato.EMBARCACION_DEP.name() + "_prmt").toString());
+
+                    srvc.addItdt(TipoDato.EMBARCACION_DEP.getId(), embarcacion);
 
                     final ParametroVO tipoIva = new ParametroVO();
 
@@ -86,7 +95,8 @@ public final class ProcesoBuquePesca extends ProcesoTemplate {
 
                     addPritSalida(srvc.getId());
                 } catch (final DuplicateInstanceException ex) {
-                    addError(MensajeCodigo.G_011, srvc.getItdt(TipoDato.BUQUE_PESCA.getId()).getPrmt().getParametro());
+                    addError(MensajeCodigo.G_011, srvc.getItdt(TipoDato.AMARRE_DEP.getId()).getPrmt().getParametro()
+                            + " - " + srvc.getItdt(TipoDato.EMBARCACION_DEP.getId()).getPrmt().getParametro());
                 }
             }
         }
@@ -97,6 +107,6 @@ public final class ProcesoBuquePesca extends ProcesoTemplate {
      */
     @Override
     protected ProcesoTipo getProcesoTipo() {
-        return ProcesoTipo.SBUP_CREACION;
+        return ProcesoTipo.SAMD_CREACION;
     }
 }

@@ -130,12 +130,32 @@
 
 		<if test="prto != null">
 			<if test="prto.id != null">
-				AND prmt_prto_pk = #{prto.id}
+			<![CDATA[
+				AND (
+					EXISTS (
+						SELECT 1 FROM tbl_entidad_enti
+						WHERE enti_pk = prmt_tppr_pk AND enti_puerto = 0
+					)
+
+					OR prmt_prto_pk = #{prto.id}
+				)
+			]]>
 			</if>
 			<if test="prto.ids != null">
-				AND prmt_prto_pk IN
+			<![CDATA[
+				AND (
+					EXISTS (
+						SELECT 1 FROM tbl_entidad_enti
+						WHERE enti_pk = prmt_tppr_pk AND enti_puerto = 0
+					)
+
+					OR prmt_prto_pk IN
+			]]>
 				<foreach collection="prto.ids" item="item" open="(" close=")" separator=",">#{item}
 				</foreach>
+			<![CDATA[
+				)
+			]]>
 			</if>
 		</if>
 

@@ -28,6 +28,8 @@ angular.module("servicio", [])
 
 .controller("SbupGenerarController", SbupGenerarController)
 
+.controller("SamdGenerarController", SamdGenerarController)
+
 // ----------- SUBSERVICIOS ------------------
 .controller("SsrvGridController", SsrvGridController)
 
@@ -111,6 +113,12 @@ function config($routeProvider) {
         templateUrl : "modules/entidad/servicio/manifiesto/mani-totales.html",
         controller : "ManiTotalesController",
         controllerAs : "vm"
+    })
+
+    .when("/servicio/srvc/amarredep/generar/prepare", {
+        templateUrl : "modules/entidad/servicio/amarredep/generar-prepare.html",
+        controller : "SamdGenerarController",
+        controllerAs : 'vm'
     })
 
     .when("/servicio/srvc/buquepesca/generar/prepare", {
@@ -380,9 +388,14 @@ function SrvcGridController($http, $location, $routeParams, $modal, pageTitleSer
         switch (accName) {
         // ----------- BUQUES DE PESCA ------------------
         // ----------- BUQUES DE PESCA ------------------
-        // ----------- BUQUES DE PESCA ------------------
         case "sbup-generar":
             $location.path("/servicio/srvc/buquepesca/generar/prepare");
+
+            break;
+        // ----------- AMARRES DEPORTIVOS ------------------
+        // ----------- AMARRES DEPORTIVOS ------------------
+        case "samd-generar":
+            $location.path("/servicio/srvc/amarredep/generar/prepare");
 
             break;
         default:
@@ -658,6 +671,31 @@ function ManiTotalesController($http, $routeParams, pageTitleService) {
         });
 
         pageTitleService.setTitleEnti($routeParams.entiId, "page_verificarTotales");
+    }
+}
+
+function SamdGenerarController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.execute = execute;
+
+    initialize();
+
+    function initialize() {
+        vm.itemCriterio = {};
+
+        $http.post("servicio/amarredep/generar-prepare.action", {}).success(function(data) {
+        });
+
+        pageTitleService.setTitleEnti($routeParams.entiId, "page_generar");
+    }
+
+    function execute() {
+        $http.post("servicio/amarredep/generar-execute.action", {
+            model : vm.itemCriterio
+        }).success(function(data) {
+            $location.path("/proceso/prbt/grid").replace();
+        });
     }
 }
 

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="xeredi.integra.model.servicio.dao.amarredep.AmarreDeportivoServicioDAO">
+	<resultMap id="ResultMapServicioMaestro" type="ServicioMaestroVO">
+		<id column="AMARRE_DEP" />
+		<id column="EMBARCACION_DEP" />
+
+		<result column="fini" property="fini" />
+		<result column="ffin" property="ffin" />
+
+		<association property="prto" javaType="PuertoVO">
+			<result column="prto_pk" property="id" />
+		</association>
+
+		<association property="itdtMap" javaType="java.util.Map">
+			<result column="AMARRE_DEP" property="AMARRE_DEP" />
+			<result column="AMARRE_DEP_prmt" property="AMARRE_DEP_prmt" />
+			<result column="EMBARCACION_DEP" property="EMBARCACION_DEP" />
+			<result column="EMBARCACION_DEP_prmt" property="EMBARCACION_DEP_prmt" />
+			<result column="TIPO_IVA" property="TIPO_IVA" />
+		</association>
+	</resultMap>
+
+	<select id="selectGenerateList" parameterType="ServicioCriterioVO"
+		resultMap="ResultMapServicioMaestro">
+    <![CDATA[
+		SELECT
+		    prmt_prto_pk AS prto_pk
+		    , fini
+		    , ffin
+		    , prmt_pk AS AMARRE_DEP
+		    , prmt_parametro AS AMARRE_DEP_prmt
+		    , sprm_prmt_dep_pk AS EMBARCACION_DEP
+		    , (
+		        SELECT prmt_parametro FROM tbl_parametro_prmt
+		        WHERE prmt_pk = sprm_prmt_dep_pk
+		    ) AS EMBARCACION_DEP_prmt
+		    , (
+		        SELECT prmt_pk
+		        FROM tbl_parametro_prmt
+		        WHERE prmt_tppr_pk = portico.getEntidad('TIPO_IVA')
+		            AND prmt_parametro LIKE 'G'
+		    ) AS TIPO_IVA
+		FROM (
+		    SELECT
+		        prmt_pk, prmt_parametro, prmt_prto_pk, sprm_pk, sprm_prmt_dep_pk
+		        , fini
+		        , COALESCE(LEAST(spvr_ffin, #{frefMax}), #{frefMax}) AS ffin
+		    FROM (
+		        SELECT
+		            prmt_pk, prmt_parametro, prmt_prto_pk, sprm_pk, sprm_prmt_dep_pk
+		            , (
+		                SELECT MAX(spvr_ffin)
+		                FROM tbl_subparametro_version_spvr
+		                WHERE spvr_sprm_pk = sprm_pk
+		            ) AS spvr_ffin
+		            , COALESCE(
+		                (
+		                    SELECT MAX(srvc_ffin)
+		                    FROM tbl_servicio_srvc
+		                    WHERE
+		                        srvc_tpsr_pk = portico.getEntidad('AMARRE_DEP_SRV')
+		                        AND EXISTS (
+		                            SELECT 1
+		                            FROM tbl_servicio_dato_srdt
+		                            WHERE srdt_srvc_pk = srvc_pk
+		                                AND srdt_tpdt_pk = portico.getTipoDato('AMARRE_DEP')
+		                                AND srdt_prmt_pk = prmt_pk
+		                        )
+		                        AND EXISTS (
+		                            SELECT 1
+		                            FROM tbl_servicio_dato_srdt
+		                            WHERE srdt_srvc_pk = srvc_pk
+		                                AND srdt_tpdt_pk = portico.getTipoDato('EMBARCACION_DEP')
+		                                AND srdt_prmt_pk = sprm_prmt_dep_pk
+		                        )
+		                )
+		                , (
+		                    SELECT MIN(spvr_fini)
+		                    FROM tbl_subparametro_version_spvr
+		                    WHERE spvr_sprm_pk = sprm_pk
+		                )
+		            ) AS fini
+		        FROM tbl_parametro_prmt
+		            INNER JOIN tbl_subparametro_sprm ON
+		                sprm_prmt_pk = prmt_pk
+		        WHERE
+		            prmt_tppr_pk = portico.getEntidad('AMARRE_DEP')
+		            AND sprm_tpsp_pk = portico.getEntidad('AMARRE_EMB_DEP')
+		    ) sql
+		    WHERE fini < #{frefMax}
+		) sql
+    ]]>
+	</select>
+</mapper>

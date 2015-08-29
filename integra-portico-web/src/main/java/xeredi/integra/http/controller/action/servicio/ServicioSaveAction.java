@@ -1,5 +1,7 @@
 package xeredi.integra.http.controller.action.servicio;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.item.ItemSaveAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -10,13 +12,13 @@ import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 
-import com.google.common.base.Preconditions;
-
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ServicioSaveAction.
+ */
 public final class ServicioSaveAction extends ItemSaveAction<ServicioVO> {
 
-    /**
-     *
-     */
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8100605830957326882L;
 
     /**
@@ -41,6 +43,9 @@ public final class ServicioSaveAction extends ItemSaveAction<ServicioVO> {
         if (enti.getEnti().isTemporal()) {
             FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getFini());
             FieldValidator.validateRequired(this, MessageI18nKey.ffin, model.getFfin());
+
+            // FIXME ¿Deberia estar en la clase de negocio?
+            model.setFref(model.getFini());
         } else {
             FieldValidator.validateRequired(this, MessageI18nKey.fref, model.getFref());
         }

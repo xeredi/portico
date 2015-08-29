@@ -1,4 +1,4 @@
-package xeredi.integra.model.servicio.bo.buquepesca;
+package xeredi.integra.model.servicio.bo.amarredep;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.item.vo.ItemTramiteVO;
 import xeredi.integra.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.integra.model.servicio.bo.AbstractServicioBO;
-import xeredi.integra.model.servicio.dao.buquepesca.BuquePescaServicioDAO;
+import xeredi.integra.model.servicio.dao.amarredep.AmarreDeportivoServicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioMaestroVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -19,9 +19,9 @@ import xeredi.util.mybatis.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ServicioBuquePescaBO.
+ * The Class AmarreDeportivoServicioBO.
  */
-public final class ServicioBuquePescaBO extends AbstractServicioBO {
+public final class AmarreDeportivoServicioBO extends AbstractServicioBO {
 
     /**
      * Select generate.
@@ -32,9 +32,9 @@ public final class ServicioBuquePescaBO extends AbstractServicioBO {
      */
     public List<ServicioMaestroVO> selectGenerate(final ServicioCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final BuquePescaServicioDAO sbupDAO = session.getMapper(BuquePescaServicioDAO.class);
+            final AmarreDeportivoServicioDAO samadDAO = session.getMapper(AmarreDeportivoServicioDAO.class);
 
-            return sbupDAO.selectGenerateList(criterio);
+            return samadDAO.selectGenerateList(criterio);
         }
     }
 
@@ -79,4 +79,5 @@ public final class ServicioBuquePescaBO extends AbstractServicioBO {
             final TramiteDetailVO trmtDetail) throws ModelException {
         // noop
     }
+
 }

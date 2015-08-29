@@ -119,7 +119,8 @@ public enum TipoDato {
     BUQUE(45010L), /** The buque pesca. */
     BUQUE_PESCA(45105L), /** The comprador pesca. */
     COMPRADOR_PESCA(45220L), /** The conc cuad mes. */
-    CONC_CUAD_MES(43560L), /** The especie pesca. */
+    CONC_CUAD_MES(43560L), /** The EMBARCACION_DEP. */
+    EMBARCACION_DEP(45470L), /** The familia pesca. */
     ESPECIE_PESCA(45215L), /** The familia pesca. */
     FAM_PESCA(45090L), /** The grupo arancelario. */
     GRUPO_ARAN(45130L), /** The grupo familia pesca. */

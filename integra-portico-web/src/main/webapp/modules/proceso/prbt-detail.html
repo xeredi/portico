@@ -93,13 +93,13 @@
                     </thead>
 
                     <tbody>
-                        <tr ng-repeat="arin in ::vm.arinEntradaList track by arin.id">
-                            <td><a ng-click="vm.download(arin.id, arin.nombre)"> <span
+                        <tr ng-repeat="arin in vm.arinEntradaList track by arin.id">
+                            <td><a ng-click="vm.download(arin.id,arin.nombre)"> <span
                                     class="glyphicon glyphicon-save" aria-hidden="true"></span>
                             </a></td>
-                            <td ng-bind="::arin.nombre"></td>
-                            <td ng-bind="::(arin.tamanio | number:0)" class="number"></td>
-                            <td ng-bind="::(arin.falta | date: datetimeFormat)"></td>
+                            <td ng-bind="arin.nombre"></td>
+                            <td ng-bind="(arin.tamanio | number:0)" class="number"></td>
+                            <td ng-bind="(arin.falta | date: datetimeFormat)"></td>
                         </tr>
                     </tbody>
                 </table>
