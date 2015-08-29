@@ -32,9 +32,17 @@
 
 <fieldset>
     <div class="row">
-        <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-            <label translate="srvc"></label>
-            <p class="form-control-static" ng-bind="::vm.item.etiqueta"></p>
+        <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+            <label translate="prto"></label>
+            <p class="form-control-static" ng-bind="::vm.item.prto.etiqueta"></p>
+        </div>
+        <div class="col-sm-1 form-group-sm">
+            <label translate="srvc_anno"></label>
+            <p class="form-control-static" ng-bind="::vm.item.anno"></p>
+        </div>
+        <div class="col-sm-2 col-md-1 form-group-sm">
+            <label translate="srvc_numero"></label>
+            <p class="form-control-static" ng-bind="::vm.item.numero"></p>
         </div>
 
         <div ng-if="::vm.enti.enti.tpdtEstado" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">

@@ -1049,245 +1049,245 @@ WHERE NOT EXISTS (
 -- Entidades - Tipos de parametro
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20001, 'P', 1, 1, 1, 1, 'TIPO_ACTIVIDAD')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20001, 'Tipo de Actividad')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_ACTIVIDAD'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_ACTIVIDAD'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20002, 'P', 1, 1, 1, 1, 'TIPO_ACTIVIDAD_EDI')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20002, 'Tipo de Actividad EDI')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_ACTIVIDAD_EDI'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_ACTIVIDAD_EDI'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20003, 'P', 1, 1, 1, 1, 'ACUERDO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20003, 'Acuerdo')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('ACUERDO'), 1, 1)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('ACUERDO'), 1, 1, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20004, 'P', 1, 1, 1, 1, 'PAIS')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20004, 'País')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('PAIS'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('PAIS'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20005, 'P', 1, 1, 1, 1, 'BUQUE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20005, 'Buque')\
 	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('BUQUE'), 0, 0, 41020)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20006, 'P', 1, 1, 1, 1, 'AREA_MUNDIAL')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20006, 'Area Mundial')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('AREA_MUNDIAL'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('AREA_MUNDIAL'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20007, 'P', 1, 1, 1, 1, 'TIPO_BUQUE_EEE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20007, 'Tipo de Buque EEE')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_BUQUE_EEE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_BUQUE_EEE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20008, 'P', 1, 1, 1, 1, 'TIPO_BUQUE_EST')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20008, 'Tipo de Buque Est')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_BUQUE_EST'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_BUQUE_EST'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20009, 'P', 1, 1, 1, 1, 'TIPO_BUQUE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20009, 'Tipo de Buque')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_BUQUE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_BUQUE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20010, 'P', 1, 1, 1, 1, 'ORGANIZACION')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20010, 'Organización')\
 	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('ORGANIZACION'), 0, 0, 41020)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20011, 'P', 1, 1, 1, 1, 'TIPO_IVA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20011, 'Tipo de IVA')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_IVA'), 1, 1)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_IVA'), 1, 1, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20012, 'P', 1, 1, 1, 1, 'AREA_GEOGRAFICA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20012, 'Area Geográfica')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('AREA_GEOGRAFICA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('AREA_GEOGRAFICA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20013, 'P', 1, 1, 1, 1, 'ZONA_COSTERA_EEE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20013, 'Zona Costera EEE')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('ZONA_COSTERA_EEE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('ZONA_COSTERA_EEE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20014, 'P', 1, 1, 1, 1, 'UNLOCODE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20014, 'Unlocode')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('UNLOCODE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('UNLOCODE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20015, 'P', 1, 1, 1, 1, 'TIPO_ALINEACION')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20015, 'Tipo de Alineación')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_ALINEACION'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_ALINEACION'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20016, 'P', 1, 1, 1, 1, 'TIPO_MEDIO_AMARRE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20016, 'Tipo de Medio de Amarre')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_MEDIO_AMARRE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_MEDIO_AMARRE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20017, 'P', 1, 1, 1, 1, 'TIPO_MOVIMIENTO_AMARRE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20017, 'Tipo de Movimiento de Amarre')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_MOVIMIENTO_AMARRE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_MOVIMIENTO_AMARRE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20018, 'P', 1, 1, 1, 1, 'TIPO_VIA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20018, 'Tipo de Vía')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_VIA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_VIA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20019, 'P', 1, 1, 1, 1, 'TIPO_USUARIO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20019, 'Tipo de Usuario')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_USUARIO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_USUARIO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20020, 'P', 1, 1, 1, 1, 'TIPO_SUPERFICIE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20020, 'Tipo de Superficie')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_SUPERFICIE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_SUPERFICIE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20021, 'P', 1, 1, 1, 1, 'GRUPO_ZONA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20021, 'Grupo Zona')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('GRUPO_ZONA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('GRUPO_ZONA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20022, 'P', 1, 1, 1, 1, 'UNIDAD_SUPERFICIE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20022, 'Unidad de Superficie')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('UNIDAD_SUPERFICIE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('UNIDAD_SUPERFICIE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20023, 'P', 1, 1, 1, 1, 'TIPO_OPERACION_SUPERFICIE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20023, 'Tipo de Operación de Superficie')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_OPERACION_SUPERFICIE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_OPERACION_SUPERFICIE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20024, 'P', 1, 1, 1, 1, 'TIPO_SUMINISTRO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20024, 'Tipo de Suministro')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_SUMINISTRO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_SUMINISTRO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20025, 'P', 1, 1, 1, 1, 'TIPO_GASTO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20025, 'Tipo de Gasto')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_GASTO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_GASTO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20026, 'P', 1, 1, 1, 1, 'TIPO_CONTADOR')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20026, 'Tipo de Contador')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_CONTADOR'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_CONTADOR'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20027, 'P', 1, 1, 1, 1, 'TIPO_MEDIO_REMOLQUE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20027, 'Tipo de Medio de Remolque')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_MEDIO_REMOLQUE'), 1, 1)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_MEDIO_REMOLQUE'), 1, 1, NULL)\
 -- TODO - Ver Tipos de Datos
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20028, 'P', 1, 1, 1, 1, 'TIPO_MOVIMIENTO_REMOLQUE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20028, 'Tipo de Movimiento de Remolque')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_MOVIMIENTO_REMOLQUE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_MOVIMIENTO_REMOLQUE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20029, 'P', 1, 1, 1, 1, 'TIPO_MANIOBRA_REMOLQUE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20029, 'Tipo de Maniobra de Remolque')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_MANIOBRA_REMOLQUE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_MANIOBRA_REMOLQUE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20030, 'P', 1, 1, 1, 1, 'ZONA_PESCA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20030, 'Zona de Pesca')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('ZONA_PESCA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('ZONA_PESCA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20031, 'P', 1, 1, 1, 1, 'PRESENTACION_PESCA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20031, 'Presentación de Pesca')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('PRESENTACION_PESCA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('PRESENTACION_PESCA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20032, 'P', 1, 1, 1, 1, 'TIPO_OPERACION_PESCA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20032, 'Tipo de Operación de Pesca')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_OPERACION_PESCA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_OPERACION_PESCA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20033, 'P', 1, 1, 1, 1, 'TIPO_MANIFIESTO_PESCA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20033, 'Tipo de Manifiesto de Pesca')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_MANIFIESTO_PESCA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_MANIFIESTO_PESCA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20034, 'P', 1, 1, 1, 1, 'SUBTIPO_MANIFIESTO_PESCA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20034, 'Subtipo de Manifiesto de Pesca')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('SUBTIPO_MANIFIESTO_PESCA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('SUBTIPO_MANIFIESTO_PESCA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20035, 'P', 1, 1, 1, 1, 'GRUPO_FAMILIA_ESPECIE_PESCA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20035, 'Grupo de Familia de Especies de Pesca')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('GRUPO_FAMILIA_ESPECIE_PESCA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('GRUPO_FAMILIA_ESPECIE_PESCA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20036, 'P', 1, 1, 1, 1, 'FAMILIA_ESPECIE_PESCA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20036, 'Familia de Especies de Pesca')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('FAMILIA_ESPECIE_PESCA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('FAMILIA_ESPECIE_PESCA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20037, 'P', 1, 1, 1, 1, 'TIPO_CAPTURA_PESCA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20037, 'Tipo de Captura de Pesca')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_CAPTURA_PESCA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_CAPTURA_PESCA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20038, 'P', 1, 1, 1, 1, 'ESPECIE_PESCA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20038, 'Especie de Pesca')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('ESPECIE_PESCA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('ESPECIE_PESCA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20039, 'P', 1, 1, 1, 1, 'TIPO_BUQUE_PESCA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20039, 'Tipo de Buque de Pesca')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_BUQUE_PESCA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_BUQUE_PESCA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20040, 'P', 1, 1, 1, 1, 'BUQUE_PESCA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20040, 'Buque de Pesca')\
 	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('BUQUE_PESCA'), 0, 0, 41020)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20041, 'P', 1, 1, 1, 1, 'ARTE_PESCA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20041, 'Arte de Pesca')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('ARTE_PESCA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('ARTE_PESCA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20042, 'P', 1, 1, 1, 1, 'TIPO_MERCANCIA_EST')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20042, 'Tipo de Mercancía Est')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_MERCANCIA_EST'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_MERCANCIA_EST'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20043, 'P', 1, 1, 1, 1, 'GRUPO_NATURALEZA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20043, 'Grupo de Naturaleza de Mercancía')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('GRUPO_NATURALEZA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('GRUPO_NATURALEZA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20044, 'P', 1, 1, 1, 1, 'NATURALEZA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20044, 'Naturaleza de Mercancía')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('NATURALEZA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('NATURALEZA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20045, 'P', 1, 1, 1, 1, 'GRUPO_ARANCELARIO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20045, 'Grupo Arancelario')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('GRUPO_ARANCELARIO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('GRUPO_ARANCELARIO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20046, 'P', 1, 1, 1, 1, 'SUBGRUPO_MERCANCIA_EST')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20046, 'Subgrupo Mercancía Est')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('SUBGRUPO_MERCANCIA_EST'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('SUBGRUPO_MERCANCIA_EST'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20047, 'P', 1, 1, 1, 1, 'GRUPO_NST')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20047, 'Grupo NST-2000')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('GRUPO_NST'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('GRUPO_NST'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20048, 'P', 1, 1, 1, 1, 'UNIDAD_CARGA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20048, 'Unidad de Carga')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('UNIDAD_CARGA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('UNIDAD_CARGA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20049, 'P', 1, 1, 1, 1, 'MERCANCIA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20049, 'Mercancía')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('MERCANCIA'), 1, 1)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('MERCANCIA'), 1, 1, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20051, 'P', 1, 1, 1, 1, 'TIPO_EQUIPAMIENTO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20051, 'Tipo de Equipamiento')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_EQUIPAMIENTO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_EQUIPAMIENTO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20052, 'P', 1, 1, 1, 1, 'TIPO_DOCUMENTO_AEAT')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20052, 'Tipo de Documento AEAT')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_DOCUMENTO_AEAT'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_DOCUMENTO_AEAT'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20053, 'P', 1, 1, 1, 1, 'TIPO_BULTO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20053, 'Tipo de Bulto')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_BULTO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_BULTO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20054, 'P', 1, 1, 1, 1, 'RECINTO_ADUANERO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20054, 'Recinto Aduanero')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('RECINTO_ADUANERO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('RECINTO_ADUANERO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20055, 'P', 1, 1, 1, 1, 'TERMINAL')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20055, 'Terminal')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TERMINAL'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TERMINAL'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20056, 'P', 1, 1, 1, 1, 'RECEPTOR_MERCANCIA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20056, 'Receptor de Mercancía')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('RECEPTOR_MERCANCIA'), 0, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('RECEPTOR_MERCANCIA'), 0, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20057, 'P', 1, 1, 1, 1, 'MODO_TRANSPORTE_EDI')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20057, 'Modo de Transporte EDI de Mercancía')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('MODO_TRANSPORTE_EDI'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('MODO_TRANSPORTE_EDI'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20058, 'P', 1, 1, 1, 1, 'MERCANCIAS_PELIGROSAS')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20058, 'Mercancías Peligrosas')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('MERCANCIAS_PELIGROSAS'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('MERCANCIAS_PELIGROSAS'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20059, 'P', 1, 1, 1, 1, 'MARCA_VEHICULO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20059, 'Marca de Vehículo')\
 	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('MARCA_VEHICULO'), 0, 0, 41020)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20060, 'P', 1, 1, 1, 1, 'INSTRUCCION_MARCAJE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20060, 'Instrucción de Marcaje')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('INSTRUCCION_MARCAJE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('INSTRUCCION_MARCAJE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20061, 'P', 1, 1, 1, 1, 'INSTALACION_ESPECIAL')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20061, 'Instalación Especial')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('INSTALACION_ESPECIAL'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('INSTALACION_ESPECIAL'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20062, 'P', 1, 1, 1, 1, 'PROVINCIA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20062, 'Provincia')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('PROVINCIA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('PROVINCIA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20063, 'P', 1, 1, 1, 1, 'SUBPUERTO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20063, 'Subpuerto')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('SUBPUERTO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('SUBPUERTO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20064, 'P', 1, 1, 1, 1, 'TIPO_OPERACION_MERCANCIA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20064, 'Tipo de Operación de Mercancía')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_OPERACION_MERCANCIA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_OPERACION_MERCANCIA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20065, 'P', 1, 1, 1, 1, 'TIPO_NAVEGACION')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20065, 'Tipo de Navegación')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_NAVEGACION'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_NAVEGACION'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20066, 'P', 1, 1, 1, 1, 'TIPO_EXENCION')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20066, 'Tipo de Exención')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_EXENCION'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_EXENCION'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20067, 'P', 1, 1, 1, 1, 'TIPO_ERROR_EDI')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20067, 'Tipo de Error EDI')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_ERROR_EDI'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_ERROR_EDI'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20068, 'P', 1, 1, 1, 1, 'DESCUENTO_ADICIONAL')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20068, 'Descuento Adicional')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('DESCUENTO_ADICIONAL'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('DESCUENTO_ADICIONAL'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20069, 'P', 1, 1, 1, 1, 'TIPO_CANON')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20069, 'Tipo de Canon')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_CANON'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_CANON'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20070, 'P', 1, 1, 1, 1, 'BONIFICACION_FP')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20070, 'Bonificación de FP')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('BONIFICACION_FP'), 1, 1)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('BONIFICACION_FP'), 1, 1, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20071, 'P', 1, 1, 1, 1, 'BAREMO_FP')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20071, 'Baremo de FP')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('BAREMO_FP'), 1, 1)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('BAREMO_FP'), 1, 1, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20072, 'P', 1, 1, 1, 1, 'ZONA_PORTUARIA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20072, 'Zona Portuaria')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('ZONA_PORTUARIA'), 1, 1)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('ZONA_PORTUARIA'), 1, 1, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20073, 'P', 1, 1, 1, 1, 'TIPO_SUPERFICIE_BIEN')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20073, 'Tipo de Superficie de Bien')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_SUPERFICIE_BIEN'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_SUPERFICIE_BIEN'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20074, 'P', 1, 1, 1, 1, 'TIPO_EXPEDIENTE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20074, 'Tipo de Expediente')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_EXPEDIENTE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_EXPEDIENTE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20075, 'P', 1, 1, 1, 1, 'TIPO_BIEN_CONCESIONAL')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20075, 'Tipo de Bien Concesional')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_BIEN_CONCESIONAL'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_BIEN_CONCESIONAL'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20076, 'P', 1, 1, 1, 1, 'TIPO_ACT_GRAL_CONCESIONAL')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20076, 'Tipo de Actividad General Concesional')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_ACT_GRAL_CONCESIONAL'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_ACT_GRAL_CONCESIONAL'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20077, 'P', 1, 1, 1, 1, 'TIPO_ACTIVIDAD_CONCESIONAL')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20077, 'Tipo de Actividad Concesional')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_ACTIVIDAD_CONCESIONAL'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_ACTIVIDAD_CONCESIONAL'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20078, 'P', 1, 1, 1, 1, 'SUPRABIEN')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20078, 'Suprabien')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('SUPRABIEN'), 0, 1)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('SUPRABIEN'), 0, 1, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20079, 'P', 1, 1, 1, 1, 'GARANTIA_EXPEDIENTE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20079, 'Garantía de Expediente')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('GARANTIA_EXPEDIENTE'), 0, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('GARANTIA_EXPEDIENTE'), 0, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20080, 'P', 1, 1, 1, 1, 'FASE_EXPEDIENTE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20080, 'Fase de Expediente')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('FASE_EXPEDIENTE'), 0, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('FASE_EXPEDIENTE'), 0, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20081, 'P', 1, 1, 1, 1, 'ESTADO_EXPEDIENTE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20081, 'Estado de Expediente')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('ESTADO_EXPEDIENTE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('ESTADO_EXPEDIENTE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20082, 'P', 1, 1, 1, 1, 'REGISTRO_TIPO_BUQUE_EEE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20082, 'Registro de Tipo de Buque EEE')\
 	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('REGISTRO_TIPO_BUQUE_EEE'), 0, 0, 41020)\
@@ -1296,116 +1296,116 @@ INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd
 	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('REGISTRO_TIPO_BUQUE'), 0, 0, 41020)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20084, 'P', 1, 1, 1, 1, 'CONCEPTO_CUADRO_EST')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20084, 'Concepto de Cuadro Estadístico')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('CONCEPTO_CUADRO_EST'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('CONCEPTO_CUADRO_EST'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20085, 'P', 1, 1, 1, 1, 'TIPO_BUQUE_GT')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20085, 'Tipo de Buque GT')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_BUQUE_GT'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_BUQUE_GT'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20086, 'P', 1, 1, 1, 1, 'SERVICIO_TRAFICO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20086, 'Servicio de Tráfico')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('SERVICIO_TRAFICO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('SERVICIO_TRAFICO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20087, 'P', 1, 1, 1, 1, 'TIPO_SERVICIO_TRAFICO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20087, 'Tipo de Servicio de Tráfico')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_SERVICIO_TRAFICO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_SERVICIO_TRAFICO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20088, 'P', 1, 1, 1, 1, 'TIPO_RESIDUO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20088, 'Tipo de Residuo')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_RESIDUO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_RESIDUO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20089, 'P', 1, 1, 1, 1, 'SUBTIPO_RESIDUO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20089, 'Subtipo de Residuo')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('SUBTIPO_RESIDUO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('SUBTIPO_RESIDUO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20090, 'P', 1, 1, 1, 1, 'NAVIERA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20090, 'Naviera')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('NAVIERA'), 0, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('NAVIERA'), 0, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20091, 'P', 1, 1, 1, 1, 'MUELLE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20091, 'Muelle')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('MUELLE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('MUELLE'), 1, 0, NULL)\
 -- TODO ver datos asociados
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20093, 'P', 1, 1, 1, 1, 'CONVENIO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20093, 'Convenio')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('CONVENIO'), 1, 1)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('CONVENIO'), 1, 1, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20094, 'P', 1, 1, 1, 1, 'TIPO_CERTIFICADO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20094, 'Tipo de Certificado')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_CERTIFICADO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_CERTIFICADO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20095, 'P', 1, 1, 1, 1, 'TIPO_BUQUE_EDI')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20095, 'Tipo de Buque EDI')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_BUQUE_EDI'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_BUQUE_EDI'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20096, 'P', 1, 1, 1, 1, 'TIPO_ATRAQUE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20096, 'Tipo de Atraque')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_ATRAQUE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_ATRAQUE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20097, 'P', 1, 1, 1, 1, 'TIPO_EMBARCACION')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20097, 'Tipo de Embarcación')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_EMBARCACION'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_EMBARCACION'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20098, 'P', 1, 1, 1, 1, 'TIPO_AMARRE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20098, 'Tipo de Amarre')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_AMARRE'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_AMARRE'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20099, 'P', 1, 1, 1, 1, 'SERVICIO_DEPORTIVO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20099, 'Servicio Deportivo')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('SERVICIO_DEPORTIVO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('SERVICIO_DEPORTIVO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20100, 'P', 1, 1, 1, 1, 'INSTALACION_DEP_AUT')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20100, 'Instalación Deportiva Autónomica')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('INSTALACION_DEP_AUT'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('INSTALACION_DEP_AUT'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20101, 'P', 1, 1, 1, 1, 'INSTALACION_DEP')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20101, 'Instalación Deportiva')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('INSTALACION_DEP'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('INSTALACION_DEP'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20102, 'P', 1, 1, 1, 1, 'MODULO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20102, 'Módulo')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('MODULO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('MODULO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20103, 'P', 1, 1, 1, 1, 'TIPO_DOCUMENTO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20103, 'Tipo de Documento')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_DOCUMENTO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_DOCUMENTO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20104, 'P', 1, 1, 1, 1, 'MODULO_BATCH')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20104, 'Módulo Batch')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('MODULO_BATCH'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('MODULO_BATCH'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20105, 'P', 1, 1, 1, 1, 'TIPO_PRESTADOR_SERVICIO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20105, 'Tipo de Prestador de Servicio')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_PRESTADOR_SERVICIO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_PRESTADOR_SERVICIO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20106, 'P', 1, 1, 1, 1, 'TIPO_ORGANIZACION')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20106, 'Tipo de Organización')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_ORGANIZACION'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_ORGANIZACION'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20107, 'P', 1, 1, 1, 1, 'AUTORIDAD_PORTUARIA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20107, 'Autoridad Portuaria')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('AUTORIDAD_PORTUARIA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('AUTORIDAD_PORTUARIA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20108, 'P', 1, 1, 1, 1, 'COMPRADOR_PESCA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20108, 'Comprador de Pesca')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('COMPRADOR_PESCA'), 0, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('COMPRADOR_PESCA'), 0, 0, 41020)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20109, 'P', 1, 1, 1, 1, 'ALINEACION')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20109, 'Alineación')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('ALINEACION'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('ALINEACION'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20110, 'P', 1, 1, 1, 1, 'REDES')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20110, 'Redes')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('REDES'), 0, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('REDES'), 0, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20111, 'P', 1, 1, 1, 1, 'ZONA_DEPOSITO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20111, 'Zona de Depósito')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('ZONA_DEPOSITO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('ZONA_DEPOSITO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20112, 'P', 1, 1, 1, 1, 'TIPO_MERCANCIA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20112, 'Tipo de Mercancía')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_MERCANCIA'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_MERCANCIA'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20113, 'P', 1, 1, 1, 1, 'CONTADOR')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20113, 'Contador')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('CONTADOR'), 0, 1)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('CONTADOR'), 0, 1, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20114, 'P', 1, 1, 1, 1, 'PUNTO_RED')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20114, 'Punto de Red (Maestro)')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('PUNTO_RED'), 0, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('PUNTO_RED'), 0, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20115, 'P', 1, 1, 1, 1, 'TIPO_ATRAQUE_EDI')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20115, 'Tipo de Atraque EDI')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_ATRAQUE_EDI'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_ATRAQUE_EDI'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20116, 'P', 1, 1, 1, 1, 'MUNICIPIO')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20116, 'Municipio')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('MUNICIPIO'), 1, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('MUNICIPIO'), 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20117, 'P', 1, 1, 1, 1, 'TIPO_BUQUE_GT_EEE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20117, 'Tipo de Buque GT EEE')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_BUQUE_GT_EEE'), 0, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_BUQUE_GT_EEE'), 0, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20118, 'P', 1, 1, 1, 1, 'AMARRE_DEP')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20118, 'Amarre Deportivo')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('AMARRE_DEP'), 0, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('AMARRE_DEP'), 0, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20119, 'P', 1, 1, 1, 1, 'TIPO_LECTURA')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20119, 'Tipo de Lectura (Pto Red)')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_LECTURA'), 0, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_LECTURA'), 0, 0, NULL)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20120, 'P', 1, 1, 1, 1, 'EMBARCACION_DEP')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20120, 'Embarcación Dep.')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('EMBARCACION_DEP'), 0, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('EMBARCACION_DEP'), 0, 0, 41021)\
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (20121, 'P', 1, 1, 1, 1, 'EMBARCACION_DEP_AUT')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20121, 'Embarcación Dep. Aut.')\
-	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('EMBARCACION_DEP_AUT'), 0, 0)\
+	INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('EMBARCACION_DEP_AUT'), 0, 0, 41021)\
 
 
 
@@ -1853,19 +1853,19 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45440, 'Subtipo de Residuo')\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45445, 'S', 'PR', 20117, 'TIPO_BUQUE_GT_EEE')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45445, 'Tipo de Buque GT EEE')\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45450, 'S', 'PR', 20118, 'AMARRE_DEP')\
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45450, 'F', 'PR', 20118, 'AMARRE_DEP')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45450, 'Amarre Dep.')\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45451, 'S', 'PR', 20118, 'AMARRE_DEP_2')\
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45451, 'F', 'PR', 20118, 'AMARRE_DEP_2')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45451, 'Amarre Dep. 2')\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45455, 'S', 'PR', 20101, 'INSTALACION_DEP')\
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45455, 'F', 'PR', 20101, 'INSTALACION_DEP')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45455, 'Instalación Dep.')\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45460, 'S', 'PR', 20110, 'REDES')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45460, 'Red')\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45465, 'S', 'PR', 20100, 'INSTALACION_DEP_AUT')\
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45465, 'F', 'PR', 20100, 'INSTALACION_DEP_AUT')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45465, 'Instalación Dep. Aut.')\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45470, 'S', 'PR', 20120, 'EMBARCACION_DEP')\
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45470, 'F', 'PR', 20120, 'EMBARCACION_DEP')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45470, 'Embarcación Dep.')\
-INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45475, 'S', 'PR', 20121, 'EMBARCACION_DEP_AUT')\
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45475, 'F', 'PR', 20121, 'EMBARCACION_DEP_AUT')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45475, 'Embarcación Dep. Aut.')\
 
 

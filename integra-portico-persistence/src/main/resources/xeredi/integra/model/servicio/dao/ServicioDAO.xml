@@ -18,6 +18,7 @@
 			<result column="srvc_subp_pk" property="id" />
 			<result column="prto_codigo" property="codigo" />
 			<result column="prto_codigo_corto" property="codigoCorto" />
+			<result column="prto_nombre" property="nombre" />
 		</association>
 	</resultMap>
 
@@ -25,6 +26,20 @@
     <![CDATA[
 		SELECT srvc_pk, srvc_tpsr_pk, srvc_anno, srvc_numero, srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado, srvc_subp_pk
 			, prto_codigo, prto_codigo_corto
+    ]]>
+		<if test="idioma != null">
+        <![CDATA[
+        	, (
+        		SELECT i18n_text
+        		FROM tbl_i18n_i18n
+        		WHERE
+        			i18n_pref = 'prto'
+        			AND i18n_lang = #{idioma}
+        			AND i18n_ext_pk = prto_pk
+        	) AS prto_nombre
+        ]]>
+		</if>
+        <![CDATA[
 		FROM
 			tbl_servicio_srvc
 			INNER JOIN tbl_puerto_prto ON
