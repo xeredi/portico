@@ -21,25 +21,62 @@
 		</association>
 	</resultMap>
 
-	<select id="selectList" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND ssdt_ssrv_pk = #{id}
+			</if>
+
+			<if test="ids != null">
+				AND ssdt_ssrv_pk IN
+				<foreach collection="ids" item="item" open="(" close=")"
+					separator=",">#{item}</foreach>
+			</if>
+
+			<if test="id == null and ids == null">
+	        <![CDATA[
+			    AND EXISTS (
+			        SELECT 1
+			        FROM tbl_subservicio_ssrv
+			        	INNER JOIN tbl_servicio_srvc ON
+			        		srvc_pk = ssrv_srvc_pk
+    	    ]]>
+				<where>
+					<include
+						refid="xeredi.integra.model.servicio.dao.SubservicioDAO.SelectWhere" />
+				</where>
+	        <![CDATA[
+			    )
+    	    ]]>
+			</if>
+
+			<if test="soloDatosGrid">
+	        <![CDATA[
+			    AND EXISTS (
+			        SELECT 1 FROM tbl_entidad_tipo_dato_entd
+			        WHERE
+			            entd_tpdt_pk = ssdt_tpdt_pk
+			            AND entd_enti_pk = #{entiId} AND entd_gridable = 1
+			    )
+    	    ]]>
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectList" parameterType="SubservicioCriterioVO"
+		resultMap="ResultMap">
     <![CDATA[
-		SELECT
-		    ssdt_ssrv_pk, ssdt_tpdt_pk, ssdt_nentero, ssdt_ndecimal, ssdt_prmt_pk, ssdt_fecha, ssdt_cadena
-
-		    , prmt_parametro
-
+		SELECT ssdt_ssrv_pk, ssdt_tpdt_pk, ssdt_nentero, ssdt_ndecimal, ssdt_fecha, ssdt_cadena, ssdt_prmt_pk
+			, prmt_parametro, prmt_prto_pk
     ]]>
-
 		<if test="idioma != null">
         <![CDATA[
 		    , (
 		        CASE
 		            WHEN
 		                EXISTS (
-		                    SELECT 1
-		                    FROM tbl_tipo_parametro_tppr
-		                    WHERE tppr_pk = prmt_tppr_pk
-		                        AND tppr_es_i18n = 1
+		                    SELECT 1 FROM tbl_tipo_parametro_tppr
+		                    WHERE tppr_pk = prmt_tppr_pk AND tppr_es_i18n = 1
 		                )
 		            THEN (
 		                SELECT i18n_text
@@ -52,75 +89,58 @@
 		                        FROM tbl_parametro_version_prvr
 		                        WHERE
 		                            prvr_prmt_pk = ssdt_prmt_pk
-		                            AND sql.srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, sql.srvc_fref)
+		                            AND EXISTS (
+		                                SELECT 1
+		                                FROM tbl_servicio_srvc
+		                                WHERE prvr_fini <= srvc_fref
+		                                    AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+		                                    AND srvc_pk = (
+		                                        SELECT ssrv_srvc_pk
+		                                        FROM tbl_subservicio_ssrv
+		                                        WHERE ssrv_pk = ssdt_ssrv_pk
+		                                    )
+
+		                            )
 		                    )
 		            )
-
 		            ELSE (
 		                SELECT prdt_cadena
 		                FROM tbl_parametro_dato_prdt
 		                WHERE
-		                    prdt_prvr_pk = (
+		                    prdt_tpdt_pk = (
+		                        SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr
+		                        WHERE tppr_pk = prmt_tppr_pk
+		                    )
+		                    AND prdt_prvr_pk = (
 		                        SELECT prvr_pk
 		                        FROM tbl_parametro_version_prvr
 		                        WHERE
 		                            prvr_prmt_pk = ssdt_prmt_pk
-		                            AND sql.srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, sql.srvc_fref)
-		                    )
-		                    AND prdt_tpdt_pk = (
-		                        SELECT tppr_tpdt_pk
-		                        FROM tbl_tipo_parametro_tppr
-		                        WHERE tppr_pk = prmt_tppr_pk
+		                            AND EXISTS (
+		                                SELECT 1
+		                                FROM tbl_servicio_srvc
+		                                WHERE prvr_fini <= srvc_fref
+		                                    AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+		                                    AND srvc_pk = (
+		                                        SELECT ssrv_srvc_pk
+		                                        FROM tbl_subservicio_ssrv
+		                                        WHERE ssrv_pk = ssdt_ssrv_pk
+		                                    )
+
+		                            )
 		                    )
 		            )
 		        END
 		    ) AS p18n_texto
-        ]]>
+	    ]]>
 		</if>
-
-        <![CDATA[
-		FROM (
-		    SELECT ssrv_pk
-            , (SELECT srvc_fref FROM tbl_servicio_srvc WHERE srvc_pk = ssrv_srvc_pk) AS srvc_fref
-		    FROM tbl_subservicio_ssrv
-        ]]>
-
-		<where>
-			<if test="id != null">
-				AND ssrv_pk = #{id}
-			</if>
-
-			<if test="ids != null">
-				AND ssrv_pk IN
-				<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}</foreach>
-			</if>
-
-			<if test="id == null and ids == null">
-				<include refid="xeredi.integra.model.servicio.dao.SubservicioDAO.SelectWhere" />
-			</if>
-		</where>
-
-        <![CDATA[
-		) sql
-		    INNER JOIN tbl_subservicio_dato_ssdt ON
-		        ssdt_ssrv_pk = sql.ssrv_pk
-        ]]>
-
-		<if test="soloDatosGrid">
-        <![CDATA[
-			    AND ssdt_tpdt_pk = ANY (
-			        SELECT entd_tpdt_pk
-			        FROM tbl_entidad_tipo_dato_entd
-			        WHERE entd_enti_pk = #{entiId}
-			            AND entd_gridable = 1
-			    )
-        ]]>
-		</if>
-
     <![CDATA[
+		FROM
+		    tbl_subservicio_dato_ssdt
 		    LEFT JOIN tbl_parametro_prmt ON
 		        prmt_pk = ssdt_prmt_pk
     ]]>
+		<include refid="SelectWhere" />
 	</select>
 
 	<insert id="insert" parameterType="ItemDatoVO">
@@ -148,4 +168,9 @@
             AND ssdt_tpdt_pk = #{tpdtId}
         ]]>
 	</update>
+
+	<delete id="deleteList" parameterType="SubservicioCriterioVO">
+		DELETE FROM tbl_subservicio_dato_ssdt
+		<include refid="SelectWhere" />
+	</delete>
 </mapper>

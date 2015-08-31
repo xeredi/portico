@@ -96,8 +96,27 @@ public class SubparametroBO {
                 }
             }
 
+            insertPostOperations(session, sprm, tpspDetail);
+
             session.commit();
         }
+    }
+
+    /**
+     * Insert post operations.
+     *
+     * @param session
+     *            the session
+     * @param sprm
+     *            the sprm
+     * @param tpspDetail
+     *            the tpsp detail
+     * @throws OverlapException
+     *             the overlap exception
+     */
+    protected void insertPostOperations(final SqlSession session, final SubparametroVO sprm,
+            final TipoSubparametroDetailVO tpspDetail) throws OverlapException {
+        // noop
     }
 
     /**
@@ -143,8 +162,27 @@ public class SubparametroBO {
                 }
             }
 
+            duplicatePostOperations(session, sprm, tpspDetail);
+
             session.commit();
         }
+    }
+
+    /**
+     * Duplicate post operations.
+     *
+     * @param session
+     *            the session
+     * @param sprm
+     *            the sprm
+     * @param tpspDetail
+     *            the tpsp detail
+     * @throws OverlapException
+     *             the overlap exception
+     */
+    protected void duplicatePostOperations(final SqlSession session, final SubparametroVO sprm,
+            final TipoSubparametroDetailVO tpspDetail) throws OverlapException {
+        // noop
     }
 
     /**
@@ -204,8 +242,29 @@ public class SubparametroBO {
                 }
             }
 
+            updatePostOperations(session, sprm, tpspDetail);
+
             session.commit();
         }
+    }
+
+    /**
+     * Update post operations.
+     *
+     * @param session
+     *            the session
+     * @param sprm
+     *            the sprm
+     * @param tpspDetail
+     *            the tpsp detail
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OverlapException
+     *             the overlap exception
+     */
+    protected void updatePostOperations(final SqlSession session, final SubparametroVO sprm,
+            final TipoSubparametroDetailVO tpspDetail) throws InstanceNotFoundException, OverlapException {
+        // noop
     }
 
     /**
@@ -233,8 +292,25 @@ public class SubparametroBO {
                 throw new InstanceNotFoundException(MessageI18nKey.sprm, sprm);
             }
 
+            deletePostOperations(session, sprm);
+
             session.commit();
         }
+    }
+
+    /**
+     * Delete post operations.
+     *
+     * @param session
+     *            the session
+     * @param sprm
+     *            the sprm
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    protected void deletePostOperations(final SqlSession session, final SubparametroVO sprm)
+            throws InstanceNotFoundException {
+        // noop
     }
 
     /**

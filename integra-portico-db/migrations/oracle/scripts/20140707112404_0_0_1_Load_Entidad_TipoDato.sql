@@ -951,6 +951,7 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55451, portico.getTipoDato('ESTADO_AMAD'), 'R',  2)\
 	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55452, portico.getTipoDato('ESTADO_AMAD'), 'T',  3)\
 	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55453, portico.getTipoDato('ESTADO_AMAD'), 'B',  4)\
+	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55454, portico.getTipoDato('ESTADO_AMAD'), 'O',  5)\
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (43555, 'S', 'CR', NULL, 'TIPO_OP_BL')\
 	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 43555, 'Tipo de Operación BL')\
 	INSERT INTO portico.tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55500, portico.getTipoDato('TIPO_OP_BL'), 'AC',  1)\

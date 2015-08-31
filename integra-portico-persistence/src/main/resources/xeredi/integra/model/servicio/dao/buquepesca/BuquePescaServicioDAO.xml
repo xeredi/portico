@@ -97,6 +97,7 @@
 		    ) sql
 		    WHERE fini < #{frefMax}
 		) sql
+	    WHERE fini < ffin
     ]]>
 	</select>
 </mapper>

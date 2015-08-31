@@ -28,16 +28,56 @@
 		</association>
 	</resultMap>
 
-	<select id="selectList" parameterType="ServicioCriterioVO" resultMap="ResultMap">
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND srdt_srvc_pk = #{id}
+			</if>
+			<if test="ids != null">
+				AND srdt_srvc_pk = ANY
+				<foreach collection="ids" item="item" open="(" close=")"
+					separator=",">#{item}
+				</foreach>
+			</if>
+
+			<if test="id == null and ids == null">
+	        <![CDATA[
+			    AND EXISTS (
+			        SELECT tbl_servicio_srvc ON
+    	    ]]>
+				<where>
+					<include
+						refid="xeredi.integra.model.servicio.dao.ServicioDAO.SelectWhere" />
+				</where>
+	        <![CDATA[
+			    )
+    	    ]]>
+			</if>
+
+			<if test="soloDatosGrid">
+	        <![CDATA[
+			    AND EXISTS (
+			        SELECT 1 FROM tbl_entidad_tipo_dato_entd
+			        WHERE
+			            entd_tpdt_pk = srdt_tpdt_pk
+			            AND entd_enti_pk = #{entiId} AND entd_gridable = 1
+			    )
+    	    ]]>
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectList" parameterType="ServicioCriterioVO"
+		resultMap="ResultMap">
     <![CDATA[
-		SELECT
-		    srdt_srvc_pk, srdt_tpdt_pk, srdt_nentero, srdt_ndecimal, srdt_prmt_pk, srdt_srvc_dep_pk, srdt_fecha, srdt_cadena
+		SELECT srdt_srvc_pk, srdt_tpdt_pk, srdt_nentero, srdt_ndecimal, srdt_fecha, srdt_cadena, srdt_prmt_pk, srdt_srvc_dep_pk
+		    , prmt_parametro, prmt_prto_pk
+		    , srvc_subp_pk, srvc_anno, srvc_numero
 
-		    , prmt_parametro
-
-		    , srvc_anno, srvc_numero
-
-		    , (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk) AS prto_codigo
+		    , (
+		        SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk
+		    ) AS prto_codigo
         ]]>
 		<if test="idioma != null">
         <![CDATA[
@@ -45,41 +85,49 @@
 		        CASE
 		            WHEN
 		                EXISTS (
-		                    SELECT 1
-		                    FROM tbl_tipo_parametro_tppr
-		                    WHERE tppr_pk = prmt_tppr_pk
-		                        AND tppr_es_i18n = 1
+		                    SELECT 1 FROM tbl_tipo_parametro_tppr
+		                    WHERE tppr_pk = prmt_tppr_pk AND tppr_es_i18n = 1
 		                )
 		            THEN (
 		                SELECT i18n_text
 		                FROM tbl_i18n_i18n
 		                WHERE
-		                    i18n_lang = #{idioma}
+		                    i18n_lang = 'es'
 		                    AND i18n_pref = 'prvr'
 		                    AND i18n_ext_pk = (
 		                        SELECT prvr_pk
 		                        FROM tbl_parametro_version_prvr
 		                        WHERE
 		                            prvr_prmt_pk = srdt_prmt_pk
-		                            AND sql.srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, sql.srvc_fref)
+		                            AND EXISTS (
+		                                SELECT 1
+		                                FROM tbl_servicio_srvc
+		                                WHERE prvr_fini <= srvc_fref
+		                                    AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+		                                    AND srvc_pk = srdt_srvc_pk
+		                            )
 		                    )
 		            )
-
 		            ELSE (
 		                SELECT prdt_cadena
 		                FROM tbl_parametro_dato_prdt
 		                WHERE
-		                    prdt_prvr_pk = (
+		                    prdt_tpdt_pk = (
+		                        SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr
+		                        WHERE tppr_pk = prmt_tppr_pk
+		                    )
+		                    AND prdt_prvr_pk = (
 		                        SELECT prvr_pk
 		                        FROM tbl_parametro_version_prvr
 		                        WHERE
 		                            prvr_prmt_pk = srdt_prmt_pk
-		                            AND sql.srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, sql.srvc_fref)
-		                    )
-		                    AND prdt_tpdt_pk = (
-		                        SELECT tppr_tpdt_pk
-		                        FROM tbl_tipo_parametro_tppr
-		                        WHERE tppr_pk = prmt_tppr_pk
+		                            AND EXISTS (
+		                                SELECT 1
+		                                FROM tbl_servicio_srvc
+		                                WHERE prvr_fini <= srvc_fref
+		                                    AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+		                                    AND srvc_pk = srdt_srvc_pk
+		                            )
 		                    )
 		            )
 		        END
@@ -87,44 +135,27 @@
         ]]>
 		</if>
     <![CDATA[
-		FROM (
-		    SELECT srvc_pk, srvc_fref
-		    FROM tbl_servicio_srvc
+		FROM
+		    tbl_servicio_dato_srdt
+		    LEFT JOIN tbl_parametro_prmt ON
+		        prmt_pk = srdt_prmt_pk
+		    LEFT JOIN tbl_servicio_srvc ON
+		        srvc_pk = srdt_srvc_dep_pk
     ]]>
 		<where>
 			<if test="id == null and ids == null">
 				<include refid="xeredi.integra.model.servicio.dao.ServicioDAO.SelectWhere" />
 			</if>
 			<if test="id != null">
-				AND srvc_pk = #{id}
+				AND srdt_srvc_pk = #{id}
 			</if>
 			<if test="ids != null">
-				AND srvc_pk = ANY
-				<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+				AND srdt_srvc_pk = ANY
+				<foreach collection="ids" item="item" open="(" close=")"
+					separator=",">#{item}
 				</foreach>
 			</if>
 		</where>
-    <![CDATA[
-		) sql
-		    INNER JOIN tbl_servicio_dato_srdt ON
-		        srdt_srvc_pk = sql.srvc_pk
-    ]]>
-			<!-- if test="soloDatosGrid">
-       		<![CDATA[
-			    AND srdt_tpdt_pk = ANY (
-			        SELECT entd_tpdt_pk
-			        FROM tbl_entidad_tipo_dato_entd
-			        WHERE entd_enti_pk = #{entiId}
-			            AND entd_gridable = 1
-			    )
-		    ]]>
-			</if-->
-    <![CDATA[
-		    LEFT JOIN tbl_parametro_prmt ON
-		        prmt_pk = srdt_prmt_pk
-		    LEFT JOIN tbl_servicio_srvc srvcDep ON
-		        srvcDep.srvc_pk = srdt_srvc_dep_pk
-   ]]>
 	</select>
 
 	<insert id="insert" parameterType="ItemDatoVO">
@@ -153,4 +184,9 @@
         	AND srdt_tpdt_pk = #{tpdtId}
         ]]>
 	</update>
+
+	<delete id="deleteList" parameterType="ServicioCriterioVO">
+		DELETE FROM tbl_servicio_dato_srdt
+		<include refid="SelectWhere" />
+	</delete>
 </mapper>

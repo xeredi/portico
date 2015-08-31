@@ -245,4 +245,11 @@
         	AND ssrv_numero >= #{numero}
         ]]>
 	</select>
+
+	<delete id="deleteList" parameterType="SubservicioCriterioVO">
+		DELETE FROM tbl_subservicio_ssrv
+		<where>
+			<include refid="SelectWhere" />
+		</where>
+	</delete>
 </mapper>

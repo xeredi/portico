@@ -484,7 +484,7 @@ public class ServicioBO {
     public final void delete(final @NonNull ServicioVO srvc) throws ModelException {
         Preconditions.checkNotNull(srvc.getId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);

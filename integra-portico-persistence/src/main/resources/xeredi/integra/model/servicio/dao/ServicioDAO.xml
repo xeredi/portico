@@ -217,6 +217,11 @@
         ]]>
 	</insert>
 
+	<delete id="delete" parameterType="ServicioVO">
+		DELETE FROM tbl_servicio_srvc
+		WHERE srvc_pk = #{id}
+	</delete>
+
 	<update id="updatePeprDesasociar" parameterType="Long">
         <![CDATA[
 			UPDATE tbl_servicio_srvc SET

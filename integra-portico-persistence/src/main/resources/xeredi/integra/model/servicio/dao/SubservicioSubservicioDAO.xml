@@ -28,11 +28,19 @@
 			<if test="srvc != null">
 				<if test="srvc.id != null">
                 <![CDATA[
-                AND EXISTS (
-                    SELECT 1
-                    FROM tbl_subservicio_ssrv
-                    WHERE ssrv_pk = ssss_ssrvp_pk
-                        AND ssrv_srvc_pk = #{srvc.id}
+                AND (
+	                ssss_ssrvp_pk = ANY (
+	                    SELECT ssrv_pk
+	                    FROM tbl_subservicio_ssrv
+	                    WHERE
+	                        ssrv_srvc_pk = #{srvc.id}
+	                )
+	                OR ssss_ssrvh_pk = ANY (
+	                    SELECT ssrv_pk
+	                    FROM tbl_subservicio_ssrv
+	                    WHERE
+	                        ssrv_srvc_pk = #{srvc.id}
+	                )
                 )
                 ]]>
 				</if>
@@ -48,4 +56,9 @@
     ]]>
 		<include refid="SelectWhere" />
 	</select>
+
+	<delete id="deleteList" parameterType="SubservicioCriterioVO">
+		DELETE FROM tbl_subserv_subserv_ssss
+		<include refid="SelectWhere" />
+	</delete>
 </mapper>

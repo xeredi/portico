@@ -116,6 +116,7 @@
             <th translate="enti_cmdDuplicado"></th>
             <th translate="enti_maxGrid"></th>
             <th translate="tppr"></th>
+            <th translate="enti_classpath"></th>
         </tr>
     </thead>
     <tbody>
@@ -130,6 +131,7 @@
             <td><i class="glyphicon glyphicon-{{::(subenti.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
             <td class="number" ng-bind="::(subenti.maxGrid | number:0)"></td>
             <td ng-bind="::subenti.tpprAsociado.nombre"></td>
+            <td ng-bind="::subenti.classpath"></td>
         </tr>
     </tbody>
 </table>
