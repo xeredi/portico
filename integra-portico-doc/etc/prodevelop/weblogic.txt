@@ -1,0 +1,16 @@
+INSTALL
+-------
+
+- Descomprimir wls1036_dev.zip
+- Variables de entorno
+	MW_HOME
+	JAVA_HOME
+	JAVA_VENDOR (Sun | Oracle)
+
+SET MW_HOME=C:\weblogic\wlserver
+SET WL_HOME=C:\weblogic\wlserver
+SET JAVA_HOME=C:\java\jdk18
+SET JAVA_VENDOR=Sun
+
+- Ejecutar
+	%MW_HOME%\configure.cmd

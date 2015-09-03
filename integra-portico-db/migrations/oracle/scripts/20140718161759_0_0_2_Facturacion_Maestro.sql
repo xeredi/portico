@@ -326,18 +326,6 @@ INSERT INTO portico.tbl_factura_serie_fcsr (fcsr_pk, fcsr_serie, fcsr_anio, fcsr
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-TRUNCATE TABLE tbl_servicio_cargo_srcr\
-
-TRUNCATE TABLE tbl_factura_det_fctd\
-DELETE FROM portico.tbl_factura_lin_fctl\
-DELETE FROM tbl_factura_srv_fcts\
-DELETE FROM portico.tbl_factura_fctr\
-
-TRUNCATE TABLE tbl_valoracion_tmp_vlrt\
-TRUNCATE TABLE tbl_valoracion_det_vlrd\
-DELETE FROM portico.tbl_valoracion_lin_vlrl\
-DELETE FROM portico.tbl_valoracion_vlrc\
-
 DELETE FROM portico.tbl_factura_serie_fcsr
 WHERE fcsr_pk IN (
 	68000
@@ -346,197 +334,20 @@ WHERE fcsr_pk IN (
 	, 68003
 )\
 
-DELETE FROM portico.tbl_aspecto_cargo_version_ascv
-WHERE EXISTS (
-	SELECT 1 FROM  portico.tbl_aspecto_cargo_ascr
-	WHERE
-		ascr_pk = ascv_ascr_pk
-		AND EXISTS (
-			SELECT 1
-			FROM portico.tbl_aspecto_aspc
-			WHERE aspc_pk = ascr_aspc_pk
-				AND aspc_pk IN (
-							  61000
-							, 61001
-							, 61002
-							, 61003
-							, 61004
-				)
-		)
-)\
+BEGIN
+	-- Aspectos
+	eraseAspc(61000);
+	eraseAspc(61001);
+	eraseAspc(61002);
+	eraseAspc(61003);
+	eraseAspc(61004);
 
-DELETE FROM portico.tbl_aspecto_cargo_ascr
-WHERE EXISTS (
-		SELECT 1
-		FROM portico.tbl_aspecto_aspc
-		WHERE aspc_pk = ascr_aspc_pk
-			AND aspc_pk IN (
-						  61000
-						, 61001
-						, 61002
-						, 61003
-						, 61004
-			)
-)\
-
-DELETE FROM portico.tbl_i18n_i18n
-WHERE i18n_pref = 'aspv' AND i18n_lang = 'es' AND EXISTS (
-	SELECT 1
-	FROM portico.tbl_aspecto_version_aspv
-	WHERE aspv_pk = i18n_ext_pk AND EXISTS (
-		SELECT 1 FROM portico.tbl_aspecto_aspc
-		WHERE
-			aspc_pk = aspv_aspc_pk
-			AND aspc_pk IN (
-				  61000
-				, 61001
-				, 61002
-				, 61003
-				, 61004
-			)
-	)
-)\
-DELETE FROM portico.tbl_aspecto_version_aspv WHERE EXISTS (
-	SELECT 1 FROM portico.tbl_aspecto_aspc
-	WHERE
-		aspc_pk = aspv_aspc_pk
-		AND aspc_pk IN (
-			  61000
-			, 61001
-			, 61002
-			, 61003
-			, 61004
-		)
-)\
-
-DELETE FROM portico.tbl_aspecto_aspc WHERE aspc_pk IN (
-	  61000
-	, 61001
-	, 61002
-	, 61003
-	, 61004
-)\
-
-DELETE FROM portico.tbl_regla_inc_version_rgiv WHERE EXISTS (
-	SELECT 1
-	FROM portico.tbl_regla_inc_rgin
-	WHERE
-		EXISTS (
-			SELECT 1
-			FROM portico.tbl_regla_rgla
-			WHERE
-				(
-					rgla_pk = rgin_rgla1_pk
-					OR rgla_pk = rgin_rgla2_pk
-				)
-				AND rgla_crgo_pk IN (
-					  60000
-					, 60001
-					, 60002
-					, 60003
-					, 60004
-					, 60005
-				)
-		)
-		AND rgin_pk = rgiv_rgin_pk
-)\
-
-DELETE FROM portico.tbl_regla_inc_rgin WHERE EXISTS (
-	SELECT 1
-	FROM portico.tbl_regla_rgla
-	WHERE
-		(
-			rgla_pk = rgin_rgla1_pk
-			OR rgla_pk = rgin_rgla2_pk
-		)
-		AND rgla_crgo_pk IN (
-			  60000
-			, 60001
-			, 60002
-			, 60003
-			, 60004
-			, 60005
-		)
-)\
-
-DELETE FROM portico.tbl_regla_version_rglv WHERE EXISTS (
-	SELECT 1
-	FROM portico.tbl_regla_rgla
-	WHERE
-		rgla_pk = rglv_rgla_pk
-		AND rgla_crgo_pk IN (
-			  60000
-			, 60001
-			, 60002
-			, 60003
-			, 60004
-			, 60005
-		)
-)\
-
-DELETE FROM portico.tbl_regla_rgla WHERE rgla_crgo_pk IN (
-	  60000
-	, 60001
-	, 60002
-	, 60003
-	, 60004
-	, 60005
-)\
-
-DELETE FROM portico.tbl_cargo_dep_version_crdv
-WHERE EXISTS (
-	SELECT 1
-	FROM
-		portico.tbl_cargo_dep_crdp
-	WHERE
-		crdp_pk = crdv_crdp_pk
-		AND crdp_crgop_pk IN (
-			  60000
-			, 60001
-			, 60002
-			, 60003
-			, 60004
-			, 60005
-		)
-)\
-
-DELETE FROM portico.tbl_cargo_dep_crdp WHERE crdp_crgop_pk IN (
-	  60000
-	, 60001
-	, 60002
-	, 60003
-	, 60004
-	, 60005
-)\
-
-
-DELETE FROM portico.tbl_i18n_i18n
-WHERE i18n_pref = 'crgv' AND i18n_lang = 'es' AND EXISTS (
-	SELECT 1
-	FROM portico.tbl_cargo_version_crgv
-	WHERE crgv_pk = i18n_ext_pk AND crgv_crgo_pk IN (
-		  60000
-		, 60001
-		, 60002
-		, 60003
-		, 60004
-		, 60005
-	)
-)\
-DELETE FROM portico.tbl_cargo_version_crgv WHERE crgv_crgo_pk IN (
-	  60000
-	, 60001
-	, 60002
-	, 60003
-	, 60004
-	, 60005
-)\
-
-DELETE FROM portico.tbl_cargo_crgo WHERE crgo_pk IN (
-	  60000
-	, 60001
-	, 60002
-	, 60003
-	, 60004
-	, 60005
-)\
+	-- Cargos
+	eraseCrgo(60000);
+	eraseCrgo(60001);
+	eraseCrgo(60002);
+	eraseCrgo(60003);
+	eraseCrgo(60004);
+	eraseCrgo(60005);
+END;
+\

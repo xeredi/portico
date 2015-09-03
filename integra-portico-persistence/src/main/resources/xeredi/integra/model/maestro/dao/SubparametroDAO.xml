@@ -41,52 +41,56 @@
 
 		    , prmt_tppr_pk, prmt_parametro, prmt_prto_pk
 
-		    , prto_codigo
+		    , (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = prmt_prto_pk) AS prto_codigo
 
 		    , (SELECT prmt_prto_pk FROM tbl_parametro_prmt WHERE prmt_pk = sprm_prmt_pk) AS sprm_prto_pk
     ]]>
 		<if test="fechaVigencia != null and idioma != null">
         <![CDATA[
         	, (
-                SELECT i18n_text
-                FROM tbl_i18n_i18n
-                WHERE
-                    i18n_pref = 'prto'
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'prto'
                     AND i18n_ext_pk = prmt_prto_pk
                     AND i18n_lang = #{idioma}
         	) AS prto_nombre
 
-            , (CASE
-                WHEN tppr_es_i18n = 1
-                THEN (
-                    SELECT i18n_text
-                    FROM tbl_i18n_i18n
-                    WHERE
-                        i18n_pref = 'prvr'
-                        AND i18n_ext_pk = (
-                            SELECT prvr_pk
-                            FROM tbl_parametro_version_prvr
-                            WHERE
-                                prvr_prmt_pk = prmt_pk
-                                AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
-                        )
-                        AND i18n_lang = #{idioma}
-                )
-                WHEN tppr_tpdt_pk IS NOT NULL
-                THEN (
-                    SELECT prdt_cadena
-                    FROM tbl_parametro_dato_prdt
-                    WHERE
-                        prdt_prvr_pk = (
-                            SELECT prvr_pk
-                            FROM tbl_parametro_version_prvr
-                            WHERE
-                                prvr_prmt_pk = prmt_pk
-                                AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
-                        )
-                        AND prdt_tpdt_pk = tppr_tpdt_pk
-                )
-            END) as prmt_texto
+		    , (
+		        CASE
+		            WHEN EXISTS (
+		                SELECT 1 FROM tbl_tipo_parametro_tppr
+		                WHERE tppr_pk = prmt_tppr_pk
+		                    AND tppr_es_i18n = 1
+		            )
+		            THEN (
+		                SELECT i18n_text FROM tbl_i18n_i18n
+		                WHERE i18n_pref = 'prvr'
+		                    AND i18n_lang = #{idioma}
+		                    AND i18n_ext_pk = (
+		                        SELECT prvr_pk FROM tbl_parametro_version_prvr
+		                        WHERE prvr_prmt_pk = prmt_pk
+		                            AND ( #{fechaVigencia} >= prvr_fini AND ( prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia} ) )
+		                    )
+		            )
+		            WHEN EXISTS (
+		                SELECT 1 FROM tbl_tipo_parametro_tppr
+		                WHERE tppr_pk = prmt_tppr_pk
+		                    AND tppr_tpdt_pk IS NOT NULL
+		            )
+		            THEN (
+		                SELECT prdt_cadena FROM tbl_parametro_dato_prdt
+		                WHERE
+		                    prdt_prvr_pk = (
+		                        SELECT prvr_pk FROM tbl_parametro_version_prvr
+		                        WHERE prvr_prmt_pk = prmt_pk
+		                            AND ( #{fechaVigencia} >= prvr_fini AND ( prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia} ) )
+		                    )
+		                    AND prdt_tpdt_pk = (
+		                        SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr
+		                        WHERE tppr_pk = prmt_tppr_pk
+		                    )
+		            )
+		        END
+		    ) AS prmt_texto
         ]]>
 		</if>
     <![CDATA[
@@ -96,10 +100,6 @@
 		        spvr_sprm_pk = sprm_pk
 		    INNER JOIN tbl_parametro_prmt ON
 		        prmt_pk = sprm_prmt_dep_pk
-		    LEFT JOIN tbl_puerto_prto ON
-		        prto_pk = prmt_prto_pk
-		    INNER JOIN tbl_tipo_parametro_tppr ON
-		        tppr_pk = prmt_tppr_pk
     ]]>
 	</sql>
 
@@ -124,24 +124,18 @@
 			</if>
 		</if>
 		<if test="fechaVigencia != null">
-			AND #{fechaVigencia} BETWEEN spvr_fini AND
-			COALESCE(spvr_ffin,
-			#{fechaVigencia})
+	    <![CDATA[
+		    AND ( #{fechaVigencia} >= spvr_fini AND ( spvr_ffin IS NULL OR spvr_ffin > #{fechaVigencia} ) )
+	    ]]>
 		</if>
 	</sql>
 
 	<select id="count" parameterType="SubparametroCriterioVO"
 		resultType="Integer">
     <![CDATA[
-        SELECT COUNT(1)
-		FROM
-		    tbl_subparametro_sprm
-		    INNER JOIN tbl_subparametro_version_spvr ON
-		        spvr_sprm_pk = sprm_pk
-		    INNER JOIN tbl_parametro_prmt ON
-		        prmt_pk = sprm_prmt_dep_pk
-		    INNER JOIN tbl_tipo_parametro_tppr ON
-		        tppr_pk = prmt_tppr_pk
+		SELECT COUNT(1)
+		FROM tbl_subparametro_sprm
+		    INNER JOIN tbl_subparametro_version_spvr ON spvr_sprm_pk = sprm_pk
     ]]>
 		<where>
 			<include refid="SelectWhere" />

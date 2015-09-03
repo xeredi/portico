@@ -15,7 +15,6 @@
 		<association property="prto" javaType="PuertoVO">
 			<result column="prmt_prto_pk" property="id" />
 			<result column="prto_codigo" property="codigo" />
-			<result column="prto_codigo_corto" property="codigoCorto" />
 			<result column="prto_nombre" property="nombre" />
 		</association>
 
@@ -33,9 +32,11 @@
 		SELECT
 		    prmt_pk, prmt_tppr_pk, prmt_parametro, prmt_prto_pk
 
-		    , prto_codigo, prto_codigo_corto
-
 		    , prvr_pk, prvr_fini, prvr_ffin, prvr_lat, prvr_lon
+		    , (
+		        SELECT prto_codigo FROM tbl_puerto_prto
+		        WHERE prto_pk = prmt_prto_pk
+		    ) AS prto_codigo
     ]]>
 		<if test="idioma != null">
         <![CDATA[
@@ -45,24 +46,33 @@
         		WHERE
         			i18n_pref = 'prto'
         			AND i18n_lang = #{idioma}
-        			AND i18n_ext_pk = prto_pk
+        			AND i18n_ext_pk = prmt_prto_pk
         	) AS prto_nombre
 		    , (
 		        CASE
-		            WHEN tppr_es_i18n = 1 THEN (
-		                SELECT i18n_text
-		                FROM tbl_i18n_i18n
-		                WHERE
-		                    i18n_pref = 'prvr'
+		            WHEN EXISTS (
+		                SELECT 1 FROM tbl_tipo_parametro_tppr
+		                WHERE tppr_pk = prmt_tppr_pk
+		                    AND tppr_es_i18n = 1
+		            )
+		            THEN (
+		                SELECT i18n_text FROM tbl_i18n_i18n
+		                WHERE i18n_pref = 'prvr'
 		                    AND i18n_lang = #{idioma}
 		                    AND i18n_ext_pk = prvr_pk
 		            )
-		            ELSE (
-		                SELECT prdt_cadena
-		                FROM tbl_parametro_dato_prdt
-		                WHERE
-		                    prdt_prvr_pk = prvr_pk
-		                    AND prdt_tpdt_pk = tppr_tpdt_pk
+		            WHEN EXISTS (
+		                SELECT 1 FROM tbl_tipo_parametro_tppr
+		                WHERE tppr_pk = prmt_tppr_pk
+		                    AND tppr_tpdt_pk IS NOT NULL
+		            )
+		            THEN (
+		                SELECT prdt_cadena FROM tbl_parametro_dato_prdt
+		                WHERE prdt_prvr_pk = prvr_pk
+		                    AND prdt_tpdt_pk = (
+		                        SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr
+		                        WHERE tppr_pk = prmt_tppr_pk
+		                    )
 		            )
 		        END
 		    ) AS p18n_texto
@@ -71,12 +81,8 @@
         <![CDATA[
 		FROM
 		    tbl_parametro_prmt
-		    INNER JOIN tbl_tipo_parametro_tppr ON
-		        tppr_pk = prmt_tppr_pk
 		    INNER JOIN tbl_parametro_version_prvr ON
 		        prvr_prmt_pk = prmt_pk
-		    LEFT JOIN tbl_puerto_prto ON
-		    	prto_pk = prmt_prto_pk
         ]]>
 	</sql>
 
@@ -88,8 +94,6 @@
 		    tbl_parametro_prmt
 		    INNER JOIN tbl_parametro_version_prvr ON
 		        prvr_prmt_pk = prmt_pk
-		    LEFT JOIN tbl_puerto_prto ON
-		    	prto_pk = prmt_prto_pk
     ]]>
 	</sql>
 
@@ -128,7 +132,10 @@
 		                SELECT 1
 		                FROM tbl_parametro_dato_prdt
 		                WHERE prdt_prvr_pk = prvr_pk
-		                    AND prdt_tpdt_pk = tppr_tpdt_pk
+		                    AND prdt_tpdt_pk = (
+		                        SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr
+		                        WHERE tppr_pk = prmt_tppr_pk
+		                    )
 		                    AND prdt_cadena LIKE #{textoBusqueda}
 		            )
 		        )

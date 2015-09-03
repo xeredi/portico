@@ -4,8 +4,11 @@
 
 <mapper namespace="xeredi.integra.model.maestro.dao.SubparametroDatoDAO">
     <resultMap type="ItemDatoVO" id="ResultMap">
-        <id column="spdt_spvr_pk" property="itemId" />
-        <id column="spdt_tpdt_pk" property="tpdtId" />
+        <id column="spdt_spvr_pk" />
+        <id column="spdt_tpdt_pk" />
+
+        <result column="spdt_spvr_pk" property="itemId" />
+        <result column="spdt_tpdt_pk" property="tpdtId" />
         <result column="spdt_nentero" property="cantidadEntera" />
         <result column="spdt_ndecimal" property="cantidadDecimal" />
         <result column="spdt_fecha" property="fecha" />
@@ -27,37 +30,43 @@
     ]]>
         <if test="idioma != null and fechaVigencia != null">
         <![CDATA[
-            , (
-              CASE
-                WHEN tppr_es_i18n = 1 THEN (
-                    SELECT i18n_text
-                    FROM tbl_i18n_i18n
-                    WHERE
-                        i18n_pref = 'prvr'
-                        AND i18n_ext_pk = (
-                            SELECT prvr_pk
-                            FROM tbl_parametro_version_prvr
-                            WHERE
-                                prvr_prmt_pk = spdt_prmt_pk
-                                AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
-                        )
-                        AND i18n_lang = #{idioma}
-                )
-                WHEN tppr_tpdt_pk IS NOT NULL THEN (
-                    SELECT prdt_cadena
-                    FROM tbl_parametro_dato_prdt
-                    WHERE
-                        prdt_prvr_pk = (
-                            SELECT prvr_pk
-                            FROM tbl_parametro_version_prvr
-                            WHERE
-                                prvr_prmt_pk = spdt_prmt_pk
-                                AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
-                        )
-                        AND prdt_tpdt_pk = tppr_tpdt_pk
-                )
-              END
-            ) AS p18n_texto
+		    , (
+		        CASE
+		            WHEN EXISTS (
+		                SELECT 1 FROM tbl_tipo_parametro_tppr
+		                WHERE tppr_pk = prmt_tppr_pk
+		                    AND tppr_es_i18n = 1
+		            )
+		            THEN (
+		                SELECT i18n_text FROM tbl_i18n_i18n
+		                WHERE i18n_pref = 'prvr'
+		                    AND i18n_lang = #{idioma}
+		                    AND i18n_ext_pk = (
+		                        SELECT prvr_pk FROM tbl_parametro_version_prvr
+		                        WHERE prvr_prmt_pk = prmt_pk
+		                            AND ( #{fechaVigencia} >= prvr_fini AND ( prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia} ) )
+		                    )
+		            )
+		            WHEN EXISTS (
+		                SELECT 1 FROM tbl_tipo_parametro_tppr
+		                WHERE tppr_pk = prmt_tppr_pk
+		                    AND tppr_tpdt_pk IS NOT NULL
+		            )
+		            THEN (
+		                SELECT prdt_cadena FROM tbl_parametro_dato_prdt
+		                WHERE
+		                    prdt_prvr_pk = (
+		                        SELECT prvr_pk FROM tbl_parametro_version_prvr
+		                        WHERE prvr_prmt_pk = prmt_pk
+		                            AND ( #{fechaVigencia} >= prvr_fini AND ( prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia} ) )
+		                    )
+		                    AND prdt_tpdt_pk = (
+		                        SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr
+		                        WHERE tppr_pk = prmt_tppr_pk
+		                    )
+		            )
+		        END
+		    ) AS p18n_texto
         ]]>
         </if>
     <![CDATA[
@@ -65,32 +74,53 @@
 		    tbl_subparametro_dato_spdt
 		    LEFT JOIN tbl_parametro_prmt ON
 		        prmt_pk = spdt_prmt_pk
-		    LEFT JOIN tbl_tipo_parametro_tppr ON
-		        tppr_pk = prmt_tppr_pk
     ]]>
     </sql>
 
     <sql id="SelectWhere">
-        <where>
+		<where>
+			<if test="versionId == null and versionIds == null">
             <![CDATA[
-                AND EXISTS (
-                    SELECT 1
-					FROM
-					    tbl_subparametro_sprm
-					    INNER JOIN tbl_subparametro_version_spvr ON
-					        spvr_sprm_pk = sprm_pk
-					    INNER JOIN tbl_parametro_prmt ON
-					        prmt_pk = sprm_prmt_dep_pk
-					    INNER JOIN tbl_tipo_parametro_tppr ON
-					        tppr_pk = prmt_tppr_pk
-                    WHERE
-                        spvr_pk = spdt_spvr_pk
+              	AND prdt_prvr_pk = ANY (
+                	SELECT spvr_pk
+                	FROM
+                		tbl_subparametro_sprm
+                		INNER JOIN tbl_subparametro_version_spvr ON spvr_sprm_pk = sprm_pk
+					    INNER JOIN tbl_parametro_prmt ON prmt_pk = sprm_prmt_dep_pk
             ]]>
-            <include refid="xeredi.integra.model.maestro.dao.SubparametroDAO.SelectWhere" />
+				<where>
+					<include
+						refid="xeredi.integra.model.maestro.dao.SubparametroDAO.SelectWhere" />
+				</where>
             <![CDATA[
                 )
             ]]>
-        </where>
+			</if>
+
+			<if test="versionId != null">
+				AND spdt_spvr_pk = #{versionId}
+			</if>
+
+			<if test="versionIds != null">
+				AND spdt_spvr_pk IN
+				<foreach collection="versionIds" item="item" open="(" close=")"
+					separator=",">#{item}
+				</foreach>
+			</if>
+
+			<if test="entiId != null and soloDatosGrid">
+                <![CDATA[
+                    AND EXISTS (
+                        SELECT 1
+                        FROM tbl_entidad_tipo_dato_entd
+                        WHERE
+                            entd_tpdt_pk = spdt_tpdt_pk
+                            AND entd_enti_pk = #{entiId}
+                            AND entd_gridable = 1
+                    )
+                ]]>
+			</if>
+		</where>
     </sql>
 
     <select id="selectList" resultMap="ResultMap" parameterType="SubparametroCriterioVO">

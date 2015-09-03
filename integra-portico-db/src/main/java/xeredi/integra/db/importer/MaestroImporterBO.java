@@ -237,6 +237,8 @@ public final class MaestroImporterBO {
 
             rs = stmt.executeQuery();
 
+            final int columnCount = rs.getMetaData().getColumnCount();
+
             while (rs.next()) {
                 i = 1;
 
@@ -273,8 +275,12 @@ public final class MaestroImporterBO {
 
                     for (final Long tpdtId : tpprDetail.getEntdList()) {
                         final EntidadTipoDatoVO entd = tpprDetail.getEntdMap().get(tpdtId);
+                        Object value = null;
 
-                        final Object value = rs.getObject(i++);
+                        if (i <= columnCount) {
+                            value = rs.getObject(i++);
+                        }
+
                         final ItemDatoVO itdt = getItdt(value, entd, entiName);
 
                         prmtVO.getItdtMap().put(entd.getTpdt().getId(), itdt);

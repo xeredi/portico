@@ -2,37 +2,45 @@
 -- Migration SQL that makes the change goes here.
 
 
--- Columna de limite de filas visibles en un grid
-ALTER TABLE tbl_entidad_enti ADD enti_max_grid INT DEFAULT 0 NOT NULL\
+-- AP y Puertos
+INSERT INTO tbl_superpuerto_sprt (sprt_pk, sprt_codigo) VALUES (36100, '0')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('sprt', 36100, 'es', 'Autp Genérica')\
+INSERT INTO tbl_superpuerto_sprt (sprt_pk, sprt_codigo) VALUES (36101, '*')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('sprt', 36101, 'es', 'Autp Genérica 2')\
 
-UPDATE tbl_entidad_enti SET enti_max_grid = CASE
-	WHEN enti_tipo = 'P' THEN 10000
-	WHEN enti_tipo = 'B' THEN 100
-	WHEN enti_tipo = 'T' THEN 10000
-	WHEN enti_tipo = 'S' THEN 50000
-	WHEN enti_tipo = 'E' THEN 10000
-END\
+INSERT INTO tbl_superpuerto_sprt (sprt_pk, sprt_codigo) VALUES (36000, '80')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('sprt', 36000, 'es', 'Baleares')\
 
--- Ruta a clase de negocio de la entidad
-ALTER TABLE tbl_entidad_enti ADD enti_classpath VARCHAR2(50)\
+-- Usuarios
+INSERT INTO tbl_usuario_usro (usro_pk, usro_login, usro_contrasenia, usro_nombre, usro_sprt_pk, usro_prto_pk) VALUES (
+	1000, 'admin', 'admin', 'Administrador', NULL, NULL)\
 
 
+INSERT INTO tbl_puerto_prto (prto_pk, prto_sprt_pk, prto_codigo, prto_codigo_corto, prto_codigo_edi, prto_rec_aduanero, prto_unlocode)
+VALUES (37100, 36100, '0', '0', NULL, NULL, 'ES***')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('prto', 37100, 'es', 'Puerto Genérico')\
+INSERT INTO tbl_puerto_prto (prto_pk, prto_sprt_pk, prto_codigo, prto_codigo_corto, prto_codigo_edi, prto_rec_aduanero, prto_unlocode)
+VALUES (37101, 36101, '*', '*', NULL, NULL, 'ES***')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('prto', 37101, 'es', 'Puerto Genérico 2')\
+
+INSERT INTO tbl_puerto_prto (prto_pk, prto_sprt_pk, prto_codigo, prto_codigo_corto, prto_codigo_edi, prto_rec_aduanero, prto_unlocode)
+VALUES (37000, 36000, '81', 'P', '1', '0711', 'ESPMI')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('prto', 37000, 'es', 'Palma')\
+INSERT INTO tbl_puerto_prto (prto_pk, prto_sprt_pk, prto_codigo, prto_codigo_corto, prto_codigo_edi, prto_rec_aduanero, prto_unlocode)
+VALUES (37001, 36000, '82', 'A', '2', '0717', 'ESALD')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('prto', 37001, 'es', 'Alcudia')\
+INSERT INTO tbl_puerto_prto (prto_pk, prto_sprt_pk, prto_codigo, prto_codigo_corto, prto_codigo_edi, prto_rec_aduanero, prto_unlocode)
+VALUES (37002, 36000, '83', 'I', '3', '0721', 'ESIBZ')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('prto', 37002, 'es', 'Ibiza')\
+INSERT INTO tbl_puerto_prto (prto_pk, prto_sprt_pk, prto_codigo, prto_codigo_corto, prto_codigo_edi, prto_rec_aduanero, prto_unlocode)
+VALUES (37003, 36000, '84', 'F', '4', '0725', 'ESFNI')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('prto', 37003, 'es', 'Formentera')\
+INSERT INTO tbl_puerto_prto (prto_pk, prto_sprt_pk, prto_codigo, prto_codigo_corto, prto_codigo_edi, prto_rec_aduanero, prto_unlocode)
+VALUES (37004, 36000, '85', 'M', '5', NULL, 'ESMAH')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('prto', 37004, 'es', 'La Savina')\
 
 
 -- Configuracion
-CREATE TABLE tbl_configuration_conf (
-	conf_key VARCHAR2(250) NOT NULL
-	, conf_value_type VARCHAR2(20) NOT NULL
-	, conf_default_value VARCHAR2(250) NOT NULL
-	, conf_value VARCHAR2(250)
-
-	, CONSTRAINT pk_conf PRIMARY KEY (conf_key)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_configuration_conf FOR tbl_configuration_conf\
-
-GRANT SELECT, UPDATE ON tbl_configuration_conf TO portico\
-
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'language_default', 'String', 'es')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
@@ -96,34 +104,6 @@ INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_defa
 
 
 -- Mensajes i18n
-CREATE TABLE tbl_message_mesg (
-	mesg_key VARCHAR2(100) NOT NULL
-	, mesg_internal INT NOT NULL
-
-	, CONSTRAINT pk_mesg PRIMARY KEY (mesg_key)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_message_mesg FOR tbl_message_mesg\
-
-GRANT SELECT ON tbl_message_mesg TO portico\
-
-CREATE TABLE tbl_message_i18n_m18n (
-	m18n_key VARCHAR2(100) NOT NULL
-	, m18n_language VARCHAR2(5) NOT NULL
-	, m18n_value VARCHAR2(250) NOT NULL
-
-	, CONSTRAINT pk_m18n PRIMARY KEY (m18n_key, m18n_language)
-
-	, CONSTRAINT fk_m18n_mesg_key FOREIGN KEY (m18n_key)
-		REFERENCES tbl_message_mesg (mesg_key)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_message_i18n_m18n FOR tbl_message_i18n_m18n\
-
-GRANT SELECT, INSERT, DELETE ON tbl_message_i18n_m18n TO portico\
-
-
-
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'app_nombre')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'app_nombre', 'Argo')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'menu')\
@@ -1247,199 +1227,25 @@ INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (1, 'atra_
 
 
 
--- Campos de Agregacion de estadisticas
-CREATE TABLE tbl_campo_agregacion_cmag (
-	cmag_tpes_pk NUMBER(19) NOT NULL
-	, cmag_entd_pk NUMBER(19) NOT NULL
-	, cmag_agregar INT NOT NULL
-	, cmag_nombre VARCHAR2(250)
-
-	, CONSTRAINT pk_cmag PRIMARY KEY (cmag_tpes_pk, cmag_entd_pk)
-
-	, CONSTRAINT fk_cmag_tpes_pk FOREIGN KEY (cmag_tpes_pk)
-		REFERENCES tbl_tipo_estadistica_tpes (tpes_pk)
-	, CONSTRAINT fk_cmag_entd_pk FOREIGN KEY (cmag_entd_pk)
-		REFERENCES tbl_entidad_tipo_dato_entd (entd_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_campo_agregacion_cmag FOR tbl_campo_agregacion_cmag\
-
-GRANT SELECT, UPDATE ON tbl_campo_agregacion_cmag TO portico\
-
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23000, 33003, 1, 'tipoOperacion')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23000, 33006, 1, 'zonaPesca')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23000, 33005, 1, 'artePesca')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23000, 33007, 1, 'vendedor')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23000, 33004, 1, 'especie')\
-
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23001, 33028, 1, 'buque')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23001, 33029, 1, 'tipoEstancia')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23001, 33030, 1, 'servicio')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23001, 33031, 1, 'acuerdo')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23001, 33032, 1, 'consignatario')\
-
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23002, 33042, 1, 'tipoMercancia')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23002, 33043, 1, 'tipoOperacion')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23002, 33044, 1, 'cliente')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23002, 33045, 1, 'roro')\
-
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23004, 33071, 1, 'consignatario')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23004, 33072, 1, 'buque')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23004, 33073, 1, 'servicio')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23004, 33074, 1, 'alineacion')\
-
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23005, 33106, 1, 'consignatario')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23005, 33107, 1, 'buque')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23005, 33108, 1, 'servicio')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23005, 33105, 1, 'estibador')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23005, 33109, 1, 'acuerdo')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23005, 33110, 1, 'terminal')\
-INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23005, 33111, 1, 'tipoEquipamiento')\
 
 
-ALTER TABLE tbl_servicio_srvc
-	ADD srvc_pepr_pk NUMBER(19)\
 
-
--- Guardar archivos en la BD
-CREATE TABLE tbl_archivo_arch (
-	arch_pk NUMBER(19) NOT NULL
-	, arch_sentido CHAR(1) NOT NULL
-	, arch_nombre VARCHAR2(100) NOT NULL
-	, arch_tamanio INT NOT NULL
-	, arch_falta TIMESTAMP NOT NULL
-	, arch_archivo BLOB NOT NULL
-
-	, CONSTRAINT pk_arch PRIMARY KEY (arch_pk)
-)
-\
-
-CREATE OR REPLACE SYNONYM portico.tbl_archivo_arch FOR tbl_archivo_arch\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_archivo_arch TO portico\
-
-DROP TABLE tbl_proceso_archivo_prar\
-
-CREATE TABLE tbl_proceso_archivo_prar (
-	prar_prbt_pk NUMBER(19) NOT NULL
-	, prar_arch_pk NUMBER(19) NOT NULL
-
-	, CONSTRAINT pk_prar PRIMARY KEY (prar_prbt_pk, prar_arch_pk)
-
-	, CONSTRAINT fk_prar_prbt_pk FOREIGN KEY (prar_prbt_pk)
-		REFERENCES tbl_proceso_batch_prbt (prbt_pk)
-	, CONSTRAINT fk_prar_arch_pk FOREIGN KEY (prar_arch_pk)
-		REFERENCES tbl_archivo_arch (arch_pk)
-)
-\
-
-CREATE OR REPLACE SYNONYM portico.tbl_proceso_archivo_prar FOR tbl_proceso_archivo_prar\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_proceso_archivo_prar TO portico\
-
-CREATE TABLE tbl_servicio_archivo_srar (
-	srar_srvc_pk NUMBER(19) NOT NULL
-	, srar_arch_pk NUMBER(19) NOT NULL
-
-	, CONSTRAINT pk_srar PRIMARY KEY (srar_srvc_pk, srar_arch_pk)
-
-	, CONSTRAINT fk_srar_srvc_pk FOREIGN KEY (srar_srvc_pk)
-		REFERENCES tbl_servicio_srvc (srvc_pk)
-	, CONSTRAINT fk_srar_arch_pk FOREIGN KEY (srar_arch_pk)
-		REFERENCES tbl_archivo_arch (arch_pk)
-)
-\
-
-CREATE OR REPLACE SYNONYM portico.tbl_servicio_archivo_srar FOR tbl_servicio_archivo_srar\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_archivo_srar TO portico\
-
-
-ALTER TABLE tbl_proceso_item_prit ADD prit_tipo VARCHAR2(4)\
-
-ALTER TABLE tbl_periodo_proceso_pepr ADD pepr_arch_pk NUMBER(19)\
-ALTER TABLE tbl_periodo_proceso_pepr ADD CONSTRAINT fk_pepr_arch_pk FOREIGN KEY (pepr_arch_pk)
-	REFERENCES tbl_archivo_arch (arch_pk)\
-
--- Acciones de entidad a nivel de GRID
-CREATE TABLE tbl_entidad_accgrid_enag (
-	enag_pk NUMBER(19) NOT NULL
-	, enag_enti_pk NUMBER(19) NOT NULL
-	, enag_path VARCHAR2(30) NOT NULL
-	, enag_orden INT NOT NULL
-
-	, CONSTRAINT pk_enag PRIMARY KEY (enag_pk)
-
-	, CONSTRAINT uq_enag UNIQUE (enag_enti_pk, enag_path)
-
-	, CONSTRAINT fk_enag_enti_pk FOREIGN KEY (enag_enti_pk)
-		REFERENCES tbl_entidad_enti (enti_pk)
-)
-\
-
-CREATE OR REPLACE SYNONYM portico.tbl_entidad_accgrid_enag FOR tbl_entidad_accgrid_enag\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_entidad_accgrid_enag TO portico\
-
-INSERT INTO portico.tbl_entidad_accgrid_enag (enag_pk, enag_enti_pk, enag_path, enag_orden) VALUES (28000, 20118, 'amad-recalc-estado', 1)\
-	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enag', 'es', 28000, 'Recalc. Estados')\
 
 -- //@UNDO
 -- SQL to undo the change goes here.
 
--- Acciones de entidad a nivel de GRID
-DELETE FROM tbl_i18n_i18n WHERE i18n_ext_pk=28000 AND i18n_pref='enag'\
-
-DROP TABLE tbl_entidad_accgrid_enag\
-
--- Guardar archivos en la BD
-ALTER TABLE tbl_periodo_proceso_pepr DROP COLUMN pepr_arch_pk\
-
-ALTER TABLE tbl_proceso_item_prit DROP COLUMN prit_tipo\
-
-DROP TABLE tbl_servicio_archivo_srar\
-DROP TABLE tbl_proceso_archivo_prar\
-DROP TABLE tbl_archivo_arch\
-
-CREATE TABLE tbl_proceso_archivo_prar
-(
-	prar_prbt_pk NUMBER(19) NOT NULL
-	, prar_nombre VARCHAR2(50) NOT NULL
-	, prar_sentido char(1) NOT NULL
-
-	, CONSTRAINT pk_prar PRIMARY KEY (prar_prbt_pk, prar_sentido, prar_nombre)
-
-	, CONSTRAINT fk_prar_prbt_pk FOREIGN KEY (prar_prbt_pk)
-		REFERENCES tbl_proceso_batch_prbt (prbt_pk)
-)
-\
-
-CREATE OR REPLACE SYNONYM portico.tbl_proceso_archivo_prar FOR tbl_proceso_archivo_prar\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_proceso_archivo_prar TO portico\
-
-COMMENT ON TABLE tbl_proceso_archivo_prar IS 'Ficheros tratados (leidos-generados) en las Ejecuciones de Procesos Batch'\
-COMMENT ON COLUMN tbl_proceso_archivo_prar.prar_prbt_pk IS 'Identificador de proceso al que pertenece el archivo'\
-COMMENT ON COLUMN tbl_proceso_archivo_prar.prar_nombre IS 'Nombre del archivo'\
-COMMENT ON COLUMN tbl_proceso_archivo_prar.prar_sentido IS 'Sentido de Archivo: E (Entrada), S (Salida)'\
-
-
--- Campos de agregacion de estadisticas
-ALTER TABLE tbl_servicio_srvc
-	DROP COLUMN srvc_pepr_pk\
-
-DROP TABLE tbl_campo_agregacion_cmag\
-
 -- Mensajes i18n
-DROP TABLE tbl_message_i18n_m18n\
-DROP TABLE tbl_message_mesg\
-
+DELETE FROM tbl_message_i18n_m18n\
+DELETE FROM tbl_message_mesg\
 
 -- Configuracion
-DROP TABLE tbl_configuration_conf\
+DELETE FROM tbl_configuration_conf\
 
--- Ruta a clase de negocio de la entidad
-ALTER TABLE tbl_entidad_enti DROP COLUMN enti_classpath\
+-- Usuarios
+DELETE FROM tbl_usuario_usro\
 
--- Columna de limite de filas visibles en un grid
-ALTER TABLE tbl_entidad_enti DROP COLUMN enti_max_grid\
+-- AP y Puertos
+DELETE FROM tbl_i18n_i18n WHERE i18n_pref = 'prto'\
+DELETE FROM tbl_i18n_i18n WHERE i18n_pref = 'sprt'\
+DELETE FROM tbl_puerto_prto\
+DELETE FROM tbl_superpuerto_sprt\

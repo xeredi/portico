@@ -1,0 +1,28 @@
+email
+		https://correo.prodevelop.es/exchange
+
+		xrey@prodevelop.es (xrey / 1ntegrad7HQ)
+
+VPN
+	vpn.puertos.es
+	jrey_prodevelop / X25veh53
+
+Doc Ténnica
+	integramandesa.puertos.es
+		DocumentacionTecnica.zip
+
+		SO: GNU/Linux Ubuntu Server 14.04.2 LTS
+		Hostname: integramandesa.puertos.es
+		IP: 172.20.22.90
+		Usuario: externos
+		Password: 3xt3rn4lsupport
+
+SVN
+	https://svn.puertos.es:4343/repos/IntegraMan
+	prodevelop / Pro2015lop
+
+OTR (incidencias)
+	cau.puertos.es/otrs/index.pl
+
+	jrey_prodevelop / X25veh53
+	rcorreas_prodevelop / KalaXok290

@@ -1,6 +1,24 @@
 -- // 0.0.1
 -- Migration SQL that makes the change goes here.
 
+-- tbl_archivo_arch
+CREATE TABLE tbl_archivo_arch (
+	arch_pk NUMBER(19) NOT NULL
+	, arch_sentido CHAR(1) NOT NULL
+	, arch_nombre VARCHAR2(100) NOT NULL
+	, arch_tamanio INT NOT NULL
+	, arch_falta TIMESTAMP NOT NULL
+	, arch_archivo BLOB NOT NULL
+
+	, CONSTRAINT pk_arch PRIMARY KEY (arch_pk)
+)
+\
+
+CREATE OR REPLACE SYNONYM portico.tbl_archivo_arch FOR tbl_archivo_arch\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_archivo_arch TO portico\
+
+
 -- Tabla Unica para i18n
 CREATE TABLE tbl_i18n_i18n (
 	i18n_pref VARCHAR2(4) NOT NULL
@@ -97,9 +115,16 @@ CREATE TABLE tbl_usuario_usro (
 	, usro_login VARCHAR2(50) NOT NULL
 	, usro_contrasenia VARCHAR2(50) NOT NULL
 	, usro_nombre VARCHAR2(50) NOT NULL
+	, usro_sprt_pk NUMBER(19)
+	, usro_prto_pk NUMBER(19)
 
 	, CONSTRAINT pk_usro PRIMARY KEY (usro_pk)
 	, CONSTRAINT uq_usro UNIQUE (usro_login)
+
+	, CONSTRAINT fk_usro_sprt_pk FOREIGN KEY (usro_sprt_pk)
+		REFERENCES tbl_superpuerto_sprt (sprt_pk)
+	, CONSTRAINT fk_usro_prto_pk FOREIGN KEY (usro_prto_pk)
+		REFERENCES tbl_puerto_prto (prto_pk)
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_usuario_usro FOR porticoadm.tbl_usuario_usro\
@@ -167,6 +192,8 @@ CREATE TABLE tbl_entidad_enti (
 	, enti_cmd_duplicado int NOT NULL
 	, enti_gis int DEFAULT 0 NOT NULL
 	, enti_puerto int DEFAULT 0 NOT NULL
+	, enti_max_grid int DEFAULT 0 NOT NULL
+	, enti_classpath VARCHAR2(100)
 
 	, CONSTRAINT pk_enti PRIMARY KEY (enti_pk)
 	, CONSTRAINT uq_enti_codigo UNIQUE (enti_codigo)
@@ -529,7 +556,7 @@ CREATE TABLE tbl_subparametro_sprm (
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )\
 
-CREATE INDEX ix_sprm_prmt_dep_pk ON tbl_subparametro_sprm (sprm_prmt_dep_pk)\
+CREATE INDEX ix_sprm_prmt_dep_pk ON tbl_subparametro_sprm (sprm_prmt_dep_pk, sprm_tpsp_pk)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_subparametro_sprm FOR porticoadm.tbl_subparametro_sprm\
 
@@ -704,6 +731,7 @@ CREATE TABLE tbl_servicio_srvc
 	, srvc_fini TIMESTAMP
 	, srvc_ffin TIMESTAMP
 	, srvc_estado char(1)
+	, srvc_pepr_pk NUMBER(19)
 
 	, CONSTRAINT pk_srvc PRIMARY KEY (srvc_pk)
 
@@ -899,12 +927,15 @@ CREATE TABLE tbl_periodo_proceso_pepr (
 	, pepr_trimestre int NOT NULL
 	, pepr_freferencia TIMESTAMP NOT NULL
 	, pepr_falta TIMESTAMP NOT NULL
+	, pepr_arch_pk NUMBER(19)
 
 	, CONSTRAINT pk_pepr PRIMARY KEY (pepr_pk)
 	, CONSTRAINT uq_pepr UNIQUE (pepr_autp_pk, pepr_anio, pepr_mes)
 
 	, CONSTRAINT fk_pepr_autp_pk FOREIGN KEY (pepr_autp_pk)
 		REFERENCES tbl_superpuerto_sprt (sprt_pk)
+	, CONSTRAINT fk_pepr_arch_pk FOREIGN KEY (pepr_arch_pk)
+		REFERENCES tbl_archivo_arch (arch_pk)
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_periodo_proceso_pepr FOR porticoadm.tbl_periodo_proceso_pepr\
@@ -1078,34 +1109,12 @@ COMMENT ON COLUMN tbl_proceso_parametro_prpm.prpm_valor IS 'Valor del parametro'
 
 
 
--- tbl_proceso_archivo_prar
-CREATE TABLE tbl_proceso_archivo_prar (
-	prar_prbt_pk NUMBER(19) NOT NULL
-	, prar_nombre VARCHAR2(50) NOT NULL
-	, prar_sentido char(1) NOT NULL
-
-	, CONSTRAINT pk_prar PRIMARY KEY (prar_prbt_pk, prar_sentido, prar_nombre)
-
-	, CONSTRAINT fk_prar_prbt_pk FOREIGN KEY (prar_prbt_pk)
-		REFERENCES tbl_proceso_batch_prbt (prbt_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_proceso_archivo_prar FOR porticoadm.tbl_proceso_archivo_prar\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_proceso_archivo_prar TO portico\
-
-COMMENT ON TABLE tbl_proceso_archivo_prar IS 'Ficheros tratados (leidos-generados) en las Ejecuciones de Procesos Batch'\
-COMMENT ON COLUMN tbl_proceso_archivo_prar.prar_prbt_pk IS 'Identificador de proceso al que pertenece el archivo'\
-COMMENT ON COLUMN tbl_proceso_archivo_prar.prar_nombre IS 'Nombre del archivo'\
-COMMENT ON COLUMN tbl_proceso_archivo_prar.prar_sentido IS 'Sentido de Archivo: E (Entrada), S (Salida)'\
-
-
-
 -- tbl_proceso_item_prit
 CREATE TABLE tbl_proceso_item_prit (
 	prit_prbt_pk NUMBER(19) NOT NULL
 	, prit_item_pk NUMBER(19) NOT NULL
 	, prit_sentido char(1) NOT NULL
+	, prit_tipo VARCHAR2(4) NOT NULL
 
 	, CONSTRAINT pk_prit PRIMARY KEY (prit_prbt_pk, prit_sentido, prit_item_pk)
 
@@ -1153,6 +1162,916 @@ COMMENT ON COLUMN tbl_proceso_mensaje_prmn.prmn_mensaje IS 'Texto del mensaje'\
 
 
 
+-- tbl_cargo_crgo
+CREATE TABLE tbl_cargo_crgo (
+	crgo_pk NUMBER(19) NOT NULL
+	, crgo_codigo VARCHAR2(15) NOT NULL
+	, crgo_tpsr_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_crgo PRIMARY KEY (crgo_pk)
+	, CONSTRAINT uq_crgo UNIQUE (crgo_tpsr_pk, crgo_codigo)
+
+	, CONSTRAINT fk_crgo_tpsr_pk FOREIGN KEY (crgo_tpsr_pk)
+		REFERENCES tbl_tipo_servicio_tpsr (tpsr_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_cargo_crgo FOR porticoadm.tbl_cargo_crgo\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_cargo_crgo TO portico\
+
+COMMENT ON TABLE tbl_cargo_crgo IS 'Maestro de Tasas-Tarifas'\
+COMMENT ON COLUMN tbl_cargo_crgo.crgo_pk IS 'Identificador de Tasa-Tarifa'\
+COMMENT ON COLUMN tbl_cargo_crgo.crgo_codigo IS 'Codigo de Tasa-Tarifa'\
+COMMENT ON COLUMN tbl_cargo_crgo.crgo_tpsr_pk IS 'Identificador de Modulo al que pertenece la Tasa-Tarifa'\
+
+
+
+-- tbl_cargo_version_crgv
+CREATE TABLE tbl_cargo_version_crgv (
+	crgv_pk NUMBER(19) NOT NULL
+	, crgv_crgo_pk NUMBER(19) NOT NULL
+	, crgv_fini TIMESTAMP NOT NULL
+	, crgv_ffin TIMESTAMP
+	, crgv_codigo_norm VARCHAR2(15)
+	, crgv_es_principal INT NOT NULL
+	, crgv_es_temporal INT NOT NULL
+	, crgv_tipo VARCHAR2(1) NOT NULL
+
+	, CONSTRAINT pk_crgv PRIMARY KEY (crgv_pk)
+
+	, CONSTRAINT fk_crgv_crgo_pk FOREIGN KEY (crgv_crgo_pk)
+		REFERENCES tbl_cargo_crgo (crgo_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_cargo_version_crgv FOR porticoadm.tbl_cargo_version_crgv\
+
+CREATE INDEX ix_crgv_crgo_pk ON tbl_cargo_version_crgv (crgv_crgo_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_cargo_version_crgv TO portico\
+
+
+
+-- tbl_cargo_dep_crdp
+CREATE TABLE tbl_cargo_dep_crdp (
+	crdp_pk NUMBER(19) NOT NULL
+	, crdp_crgop_pk NUMBER(19) NOT NULL
+	, crdp_crgoh_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_crdp PRIMARY KEY (crdp_pk)
+	, CONSTRAINT uq_crdp UNIQUE (crdp_crgop_pk, crdp_crgoh_pk)
+
+	, CONSTRAINT fk_crdp_crgop_pk FOREIGN KEY (crdp_crgop_pk)
+		REFERENCES tbl_cargo_crgo (crgo_pk)
+	, CONSTRAINT fk_crdp_crgoh_pk FOREIGN KEY (crdp_crgoh_pk)
+		REFERENCES tbl_cargo_crgo (crgo_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_cargo_dep_crdp FOR porticoadm.tbl_cargo_dep_crdp\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_cargo_dep_crdp TO portico\
+
+
+
+-- tbl_cargo_dep_version_crdv
+CREATE TABLE tbl_cargo_dep_version_crdv (
+	crdv_pk NUMBER(19) NOT NULL
+	, crdv_crdp_pk NUMBER(19) NOT NULL
+	, crdv_fini TIMESTAMP NOT NULL
+	, crdv_ffin TIMESTAMP
+
+	, CONSTRAINT pk_crdv PRIMARY KEY (crdv_pk)
+
+	, CONSTRAINT fk_crdv_crdp_pk FOREIGN KEY (crdv_crdp_pk)
+		REFERENCES tbl_cargo_dep_crdp (crdp_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_cargo_dep_version_crdv FOR porticoadm.tbl_cargo_dep_version_crdv\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_cargo_dep_version_crdv TO portico\
+
+
+
+-- tbl_regla_rgla
+CREATE TABLE tbl_regla_rgla (
+	rgla_pk NUMBER(19) NOT NULL
+	, rgla_crgo_pk NUMBER(19) NOT NULL
+	, rgla_codigo VARCHAR2(20) NOT NULL
+	, rgla_enti_pk NUMBER(19) NOT NULL
+	, rgla_tipo VARCHAR2(1) NOT NULL
+
+	, CONSTRAINT pk_rgla PRIMARY KEY (rgla_pk)
+	, CONSTRAINT uq_rgla UNIQUE (rgla_crgo_pk, rgla_codigo)
+
+	, CONSTRAINT fk_rgla_crgo_pk FOREIGN KEY (rgla_crgo_pk)
+		REFERENCES tbl_cargo_crgo (crgo_pk)
+	, CONSTRAINT fk_rgla_enti_pk FOREIGN KEY (rgla_enti_pk)
+		REFERENCES tbl_entidad_enti (enti_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_regla_rgla FOR porticoadm.tbl_regla_rgla\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_regla_rgla TO portico\
+
+
+
+-- tbl_regla_version_rglv
+CREATE TABLE tbl_regla_version_rglv (
+	rglv_pk NUMBER(19) NOT NULL
+	, rglv_rgla_pk NUMBER(19) NOT NULL
+	, rglv_fini TIMESTAMP NOT NULL
+	, rglv_ffin TIMESTAMP
+	, rglv_orden INT NOT NULL
+	, rglv_valor_base NUMERIC(10, 4) NOT NULL
+	, rglv_condicion VARCHAR2(2000) NOT NULL
+	, rglv_formula VARCHAR2(2000) NOT NULL
+
+	, rglv_path_impuesto VARCHAR2(250)
+	, rglv_path_pagador VARCHAR2(250)
+	, rglv_path_es_suj_pasivo VARCHAR2(250)
+	, rglv_path_cod_exen VARCHAR2(250)
+
+	, rglv_path_info1 VARCHAR2(250)
+	, rglv_path_info2 VARCHAR2(250)
+	, rglv_path_info3 VARCHAR2(250)
+	, rglv_path_info4 VARCHAR2(250)
+	, rglv_path_info5 VARCHAR2(250)
+	, rglv_path_info6 VARCHAR2(250)
+
+	, rglv_etiq_info1 VARCHAR2(50)
+	, rglv_etiq_info2 VARCHAR2(50)
+	, rglv_etiq_info3 VARCHAR2(50)
+	, rglv_etiq_info4 VARCHAR2(50)
+	, rglv_etiq_info5 VARCHAR2(50)
+	, rglv_etiq_info6 VARCHAR2(50)
+
+	, rglv_path_cuant1 VARCHAR2(250)
+	, rglv_path_cuant2 VARCHAR2(250)
+	, rglv_path_cuant3 VARCHAR2(250)
+	, rglv_path_cuant4 VARCHAR2(250)
+	, rglv_path_cuant5 VARCHAR2(250)
+	, rglv_path_cuant6 VARCHAR2(250)
+
+	, rglv_etiq_cuant1 VARCHAR2(50)
+	, rglv_etiq_cuant2 VARCHAR2(50)
+	, rglv_etiq_cuant3 VARCHAR2(50)
+	, rglv_etiq_cuant4 VARCHAR2(50)
+	, rglv_etiq_cuant5 VARCHAR2(50)
+	, rglv_etiq_cuant6 VARCHAR2(50)
+
+	, CONSTRAINT pk_rglv PRIMARY KEY (rglv_pk)
+
+	, CONSTRAINT fk_rglv_rgla_pk FOREIGN KEY (rglv_rgla_pk)
+		REFERENCES tbl_regla_rgla (rgla_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_regla_version_rglv FOR porticoadm.tbl_regla_version_rglv\
+
+CREATE INDEX ix_rglv_rgla_pk ON tbl_regla_version_rglv (rglv_rgla_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_regla_version_rglv TO portico\
+
+
+
+-- tbl_regla_inc_rgin
+CREATE TABLE tbl_regla_inc_rgin (
+	rgin_pk NUMBER(19) NOT NULL
+	, rgin_rgla1_pk NUMBER(19) NOT NULL
+	, rgin_rgla2_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_rgin PRIMARY KEY (rgin_pk)
+	, CONSTRAINT uq_rgin UNIQUE (rgin_rgla1_pk, rgin_rgla2_pk)
+
+	, CONSTRAINT fk_rgin_rgla1_pk FOREIGN KEY (rgin_rgla1_pk)
+		REFERENCES tbl_regla_rgla (rgla_pk)
+	, CONSTRAINT fk_rgin_rgla2_pk FOREIGN KEY (rgin_rgla2_pk)
+		REFERENCES tbl_regla_rgla (rgla_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_regla_inc_rgin FOR porticoadm.tbl_regla_inc_rgin\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_regla_inc_rgin TO portico\
+
+
+
+-- tbl_regla_inc_version_rgiv
+CREATE TABLE tbl_regla_inc_version_rgiv (
+	rgiv_pk NUMBER(19) NOT NULL
+	, rgiv_rgin_pk NUMBER(19) NOT NULL
+	, rgiv_fini TIMESTAMP NOT NULL
+	, rgiv_ffin TIMESTAMP
+
+	, CONSTRAINT pk_rgiv PRIMARY KEY (rgiv_pk)
+
+	, CONSTRAINT fk_rgiv_rgin_pk FOREIGN KEY (rgiv_rgin_pk)
+		REFERENCES tbl_regla_inc_rgin (rgin_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_regla_inc_version_rgiv FOR porticoadm.tbl_regla_inc_version_rgiv\
+
+CREATE INDEX ix_rgiv_rgin_pk ON tbl_regla_inc_version_rgiv (rgiv_rgin_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_regla_inc_version_rgiv TO portico\
+
+
+
+-- tbl_aspecto_aspc
+CREATE TABLE tbl_aspecto_aspc (
+	aspc_pk NUMBER(19) NOT NULL
+	, aspc_codigo VARCHAR2(10) NOT NULL
+	, aspc_tpsr_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_aspc PRIMARY KEY (aspc_pk)
+	, CONSTRAINT uq_aspc UNIQUE (aspc_tpsr_pk, aspc_codigo)
+
+	, CONSTRAINT fk_aspc_tpsr_pk FOREIGN KEY (aspc_tpsr_pk)
+		REFERENCES tbl_tipo_servicio_tpsr (tpsr_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_aspecto_aspc FOR porticoadm.tbl_aspecto_aspc\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_aspecto_aspc TO portico\
+
+
+
+-- tbl_aspecto_version_aspv
+CREATE TABLE tbl_aspecto_version_aspv (
+	aspv_pk NUMBER(19) NOT NULL
+	, aspv_aspc_pk NUMBER(19) NOT NULL
+	, aspv_fini TIMESTAMP NOT NULL
+	, aspv_ffin TIMESTAMP
+	, aspv_prioridad INT NOT NULL
+
+	, aspv_cpath_info1 VARCHAR2(250)
+	, aspv_cpath_info2 VARCHAR2(250)
+	, aspv_cpath_info3 VARCHAR2(250)
+	, aspv_cpath_info4 VARCHAR2(250)
+	, aspv_cpath_info5 VARCHAR2(250)
+	, aspv_cpath_info6 VARCHAR2(250)
+
+	, aspv_cetiq_info1 VARCHAR2(50)
+	, aspv_cetiq_info2 VARCHAR2(50)
+	, aspv_cetiq_info3 VARCHAR2(50)
+	, aspv_cetiq_info4 VARCHAR2(50)
+	, aspv_cetiq_info5 VARCHAR2(50)
+	, aspv_cetiq_info6 VARCHAR2(50)
+
+	, aspv_cgrp_info1 INT
+	, aspv_cgrp_info2 INT
+	, aspv_cgrp_info3 INT
+	, aspv_cgrp_info4 INT
+	, aspv_cgrp_info5 INT
+	, aspv_cgrp_info6 INT
+
+	, aspv_lsum_cuant1 INT
+	, aspv_lsum_cuant2 INT
+	, aspv_lsum_cuant3 INT
+	, aspv_lsum_cuant4 INT
+	, aspv_lsum_cuant5 INT
+	, aspv_lsum_cuant6 INT
+
+	, aspv_lgrp_info1 INT
+	, aspv_lgrp_info2 INT
+	, aspv_lgrp_info3 INT
+	, aspv_lgrp_info4 INT
+	, aspv_lgrp_info5 INT
+	, aspv_lgrp_info6 INT
+
+	, CONSTRAINT pk_aspv PRIMARY KEY (aspv_pk)
+
+	, CONSTRAINT fk_aspv_aspc_pk FOREIGN KEY (aspv_aspc_pk)
+		REFERENCES tbl_aspecto_aspc (aspc_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_aspecto_version_aspv FOR porticoadm.tbl_aspecto_version_aspv\
+
+CREATE INDEX ix_aspv_aspc_pk ON tbl_aspecto_version_aspv (aspv_aspc_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_aspecto_version_aspv TO portico\
+
+
+
+-- tbl_aspecto_cargo_ascr
+CREATE TABLE tbl_aspecto_cargo_ascr (
+	ascr_pk NUMBER(19) NOT NULL
+	, ascr_aspc_pk NUMBER(19) NOT NULL
+	, ascr_crgo_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_ascr PRIMARY KEY (ascr_pk)
+	, CONSTRAINT uq_ascr UNIQUE (ascr_aspc_pk, ascr_crgo_pk)
+
+	, CONSTRAINT fk_ascr_aspc_pk FOREIGN KEY (ascr_aspc_pk)
+		REFERENCES tbl_aspecto_aspc (aspc_pk)
+	, CONSTRAINT fk_ascr_crgo_pk FOREIGN KEY (ascr_crgo_pk)
+		REFERENCES tbl_cargo_crgo (crgo_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_aspecto_cargo_ascr FOR porticoadm.tbl_aspecto_cargo_ascr\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_aspecto_cargo_ascr TO portico\
+
+
+
+CREATE TABLE tbl_aspecto_cargo_version_ascv (
+	ascv_pk NUMBER(19) NOT NULL
+	, ascv_ascr_pk NUMBER(19) NOT NULL
+	, ascv_fini TIMESTAMP NOT NULL
+	, ascv_ffin TIMESTAMP
+
+	, CONSTRAINT pk_ascv PRIMARY KEY (ascv_pk)
+
+	, CONSTRAINT fk_ascv_ascr_pk FOREIGN KEY (ascv_ascr_pk)
+		REFERENCES tbl_aspecto_cargo_ascr (ascr_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_aspecto_cargo_version_ascv FOR porticoadm.tbl_aspecto_cargo_version_ascv\
+
+CREATE INDEX ix_ascv_ascr_pk ON tbl_aspecto_cargo_version_ascv (ascv_ascr_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_aspecto_cargo_version_ascv TO portico\
+
+
+
+-- tbl_factura_serie_fcsr
+CREATE TABLE tbl_factura_serie_fcsr (
+	fcsr_pk NUMBER(19) NOT NULL
+	, fcsr_serie CHAR(1) NOT NULL
+	, fcsr_anio INT NOT NULL
+	, fcsr_numero_ultimo INT NOT NULL
+
+	, CONSTRAINT pk_fcsr PRIMARY KEY (fcsr_pk)
+	, CONSTRAINT uq_fcsr UNIQUE (fcsr_serie, fcsr_anio)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_factura_serie_fcsr FOR porticoadm.tbl_factura_serie_fcsr\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_serie_fcsr TO portico\
+
+
+
+-- tbl_valoracion_vlrc
+CREATE TABLE tbl_valoracion_vlrc (
+	vlrc_pk NUMBER(19) NOT NULL
+	, vlrc_srvc_pk NUMBER(19) NOT NULL
+	, vlrc_aspc_pk NUMBER(19) NOT NULL
+	, vlrc_pagador_prmt_pk NUMBER(19) NOT NULL
+	, vlrc_fref TIMESTAMP NOT NULL
+	, vlrc_fliq TIMESTAMP NOT NULL
+	, vlrc_falta TIMESTAMP NOT NULL
+	, vlrc_fini TIMESTAMP
+	, vlrc_ffin TIMESTAMP
+	, vlrc_es_suj_pasivo INT NOT NULL
+	, vlrc_cod_exen CHAR(1) NOT NULL
+
+	, vlrc_info1 VARCHAR2(100)
+	, vlrc_info2 VARCHAR2(100)
+	, vlrc_info3 VARCHAR2(100)
+	, vlrc_info4 VARCHAR2(100)
+	, vlrc_info5 VARCHAR2(100)
+	, vlrc_info6 VARCHAR2(100)
+
+	, CONSTRAINT pk_vlrc PRIMARY KEY (vlrc_pk)
+
+	, CONSTRAINT fk_vlrc_srvc_pk FOREIGN KEY (vlrc_srvc_pk)
+		REFERENCES tbl_servicio_srvc (srvc_pk)
+	, CONSTRAINT fk_vlrc_aspc_pk FOREIGN KEY (vlrc_aspc_pk)
+		REFERENCES tbl_aspecto_aspc (aspc_pk)
+	, CONSTRAINT fk_vlrc_pagador_prmt_pk FOREIGN KEY (vlrc_pagador_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_valoracion_vlrc FOR porticoadm.tbl_valoracion_vlrc\
+
+CREATE INDEX ix_vlrc_srvc_pk ON tbl_valoracion_vlrc (vlrc_srvc_pk)\
+CREATE INDEX ix_vlrc_pagador_prmt_pk ON tbl_valoracion_vlrc (vlrc_pagador_prmt_pk)\
+CREATE INDEX ix_vlrc_aspc_pk ON tbl_valoracion_vlrc (vlrc_aspc_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_vlrc TO portico\
+
+
+
+-- tbl_valoracion_lin_vlrl
+CREATE TABLE tbl_valoracion_lin_vlrl (
+	vlrl_pk NUMBER(19) NOT NULL
+	, vlrl_padre_pk NUMBER(19) NOT NULL
+	, vlrl_vlrc_pk NUMBER(19) NOT NULL
+	, vlrl_rgla_pk NUMBER(19) NOT NULL
+	, vlrl_impuesto_prmt_pk NUMBER(19)
+	, vlrl_ssrv_pk NUMBER(19)
+	, vlrl_fini TIMESTAMP
+	, vlrl_ffin TIMESTAMP
+
+	, vlrl_info1 VARCHAR2(100)
+	, vlrl_info2 VARCHAR2(100)
+	, vlrl_info3 VARCHAR2(100)
+	, vlrl_info4 VARCHAR2(100)
+	, vlrl_info5 VARCHAR2(100)
+	, vlrl_info6 VARCHAR2(100)
+
+	, CONSTRAINT pk_vlrl PRIMARY KEY (vlrl_pk)
+
+	, CONSTRAINT fk_vlrl_vlrc_pk FOREIGN KEY (vlrl_vlrc_pk)
+		REFERENCES tbl_valoracion_vlrc (vlrc_pk)
+	, CONSTRAINT fk_vlrl_padre_pk FOREIGN KEY (vlrl_padre_pk)
+		REFERENCES tbl_valoracion_lin_vlrl (vlrl_pk)
+	, CONSTRAINT fk_vlrl_rgla_pk FOREIGN KEY (vlrl_rgla_pk)
+		REFERENCES tbl_regla_rgla (rgla_pk)
+	, CONSTRAINT fk_vlrl_impuesto_prmt_pk FOREIGN KEY (vlrl_impuesto_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_vlrl_ssrv_pk FOREIGN KEY (vlrl_ssrv_pk)
+		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_valoracion_lin_vlrl FOR porticoadm.tbl_valoracion_lin_vlrl\
+
+CREATE INDEX ix_vlrl_vlrc_pk ON tbl_valoracion_lin_vlrl (vlrl_vlrc_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_lin_vlrl TO portico\
+
+
+
+-- tbl_valoracion_det_vlrd
+CREATE TABLE tbl_valoracion_det_vlrd (
+	vlrd_pk NUMBER(19) NOT NULL
+	, vlrd_vlrc_pk NUMBER(19) NOT NULL
+	, vlrd_padre_pk NUMBER(19) NOT NULL
+	, vlrd_vlrl_pk NUMBER(19) NOT NULL
+	, vlrd_valor_base NUMERIC(10, 4) NOT NULL
+	, vlrd_importe_base NUMERIC(10, 2) NOT NULL
+	, vlrd_importe NUMERIC(10, 2) NOT NULL
+	, vlrd_ssrv_pk NUMBER(19)
+	, vlrd_fini TIMESTAMP
+	, vlrd_ffin TIMESTAMP
+
+	, vlrd_cuant1 DOUBLE PRECISION
+	, vlrd_cuant2 DOUBLE PRECISION
+	, vlrd_cuant3 DOUBLE PRECISION
+	, vlrd_cuant4 DOUBLE PRECISION
+	, vlrd_cuant5 DOUBLE PRECISION
+	, vlrd_cuant6 DOUBLE PRECISION
+
+	, vlrd_info1 VARCHAR2(100)
+	, vlrd_info2 VARCHAR2(100)
+	, vlrd_info3 VARCHAR2(100)
+	, vlrd_info4 VARCHAR2(100)
+	, vlrd_info5 VARCHAR2(100)
+	, vlrd_info6 VARCHAR2(100)
+
+	, CONSTRAINT pk_vlrd PRIMARY KEY (vlrd_pk)
+
+	, CONSTRAINT fk_vlrd_padre_pk FOREIGN KEY (vlrd_padre_pk)
+		REFERENCES tbl_valoracion_det_vlrd (vlrd_pk)
+	, CONSTRAINT fk_vlrd_vlrc_pk FOREIGN KEY (vlrd_vlrc_pk)
+		REFERENCES tbl_valoracion_vlrc (vlrc_pk)
+	, CONSTRAINT fk_vlrd_vlrl_pk FOREIGN KEY (vlrd_vlrl_pk)
+		REFERENCES tbl_valoracion_lin_vlrl (vlrl_pk)
+	, CONSTRAINT fk_vlrd_ssrv_pk FOREIGN KEY (vlrd_ssrv_pk)
+		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_valoracion_det_vlrd FOR porticoadm.tbl_valoracion_det_vlrd\
+
+CREATE INDEX ix_vlrd_vlrc_pk ON tbl_valoracion_det_vlrd (vlrd_vlrc_pk)\
+CREATE INDEX ix_vlrd_vlrl_pk ON tbl_valoracion_det_vlrd (vlrd_vlrl_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_det_vlrd TO portico\
+
+
+
+-- tbl_valoracion_tmp_vlrt
+CREATE TABLE tbl_valoracion_tmp_vlrt (
+	vlrt_pk NUMBER(19) NOT NULL
+	, vlrt_padre_pk NUMBER(19) NOT NULL
+	, vlrt_prbt_pk NUMBER(19) NOT NULL
+	, vlrt_srvc_pk NUMBER(19) NOT NULL
+	, vlrt_ssrv_pk NUMBER(19)
+	, vlrt_crgo_pk NUMBER(19) NOT NULL
+	, vlrt_rgla_pk NUMBER(19) NOT NULL
+	, vlrt_rgla_tipo CHAR(1) NOT NULL
+	, vlrt_impuesto_prmt_pk NUMBER(19) NOT NULL
+	, vlrt_pagador_prmt_pk NUMBER(19) NOT NULL
+	, vlrt_valor_base NUMERIC(10, 4) NOT NULL
+	, vlrt_orden INT
+	, vlrt_importe_base NUMERIC(10, 2) NOT NULL
+	, vlrt_importe NUMERIC(10, 2) NOT NULL
+	, vlrt_es_suj_pasivo INT NOT NULL
+	, vlrt_cod_exen CHAR(1) NOT NULL
+	, vlrt_fref TIMESTAMP NOT NULL
+	, vlrt_fliq TIMESTAMP NOT NULL
+	, vlrt_fini TIMESTAMP
+	, vlrt_ffin TIMESTAMP
+
+	, vlrt_cuant1 DOUBLE PRECISION
+	, vlrt_cuant2 DOUBLE PRECISION
+	, vlrt_cuant3 DOUBLE PRECISION
+	, vlrt_cuant4 DOUBLE PRECISION
+	, vlrt_cuant5 DOUBLE PRECISION
+	, vlrt_cuant6 DOUBLE PRECISION
+
+	, vlrt_info1 VARCHAR2(100)
+	, vlrt_info2 VARCHAR2(100)
+	, vlrt_info3 VARCHAR2(100)
+	, vlrt_info4 VARCHAR2(100)
+	, vlrt_info5 VARCHAR2(100)
+	, vlrt_info6 VARCHAR2(100)
+
+	, CONSTRAINT pk_vlrt PRIMARY KEY (vlrt_pk)
+
+	, CONSTRAINT fk_vlrt_padre_pk FOREIGN KEY (vlrt_padre_pk)
+		REFERENCES tbl_valoracion_tmp_vlrt (vlrt_pk)
+	, CONSTRAINT fk_vlrt_prbt_pk FOREIGN KEY (vlrt_prbt_pk)
+		REFERENCES tbl_proceso_batch_prbt (prbt_pk)
+	, CONSTRAINT fk_vlrt_srvc_pk FOREIGN KEY (vlrt_srvc_pk)
+		REFERENCES tbl_servicio_srvc (srvc_pk)
+	, CONSTRAINT fk_vlrt_ssrv_pk FOREIGN KEY (vlrt_ssrv_pk)
+		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
+	, CONSTRAINT fk_vlrt_crgo_pk FOREIGN KEY (vlrt_crgo_pk)
+		REFERENCES tbl_cargo_crgo (crgo_pk)
+	, CONSTRAINT fk_vlrt_rgla_pk FOREIGN KEY (vlrt_rgla_pk)
+		REFERENCES tbl_regla_rgla (rgla_pk)
+	, CONSTRAINT fk_vlrt_impuesto_prmt_pk FOREIGN KEY (vlrt_impuesto_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_vlrt_pagador_prmt_pk FOREIGN KEY (vlrt_pagador_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_valoracion_tmp_vlrt FOR porticoadm.tbl_valoracion_tmp_vlrt\
+
+CREATE INDEX ix_vlrt ON tbl_valoracion_tmp_vlrt (
+	vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_tipo)\
+CREATE INDEX ix_vlrt_padre_pk ON tbl_valoracion_tmp_vlrt (vlrt_padre_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_tmp_vlrt TO portico\
+
+
+
+-- tbl_factura_fctr
+CREATE TABLE tbl_factura_fctr (
+	fctr_pk NUMBER(19) NOT NULL
+	, fctr_aspc_pk NUMBER(19) NOT NULL
+	, fctr_pagador_prmt_pk NUMBER(19) NOT NULL
+	, fctr_fcsr_pk NUMBER(19) NOT NULL
+	, fctr_numero INT NOT NULL
+	, fctr_fref TIMESTAMP NOT NULL
+	, fctr_falta TIMESTAMP NOT NULL
+	, fctr_fini TIMESTAMP
+	, fctr_ffin TIMESTAMP
+	, fctr_estado CHAR(2) NOT NULL
+	, fctr_es_suj_pasivo INT NOT NULL
+	, fctr_info1 VARCHAR2(100)
+	, fctr_info2 VARCHAR2(100)
+	, fctr_info3 VARCHAR2(100)
+	, fctr_info4 VARCHAR2(100)
+	, fctr_info5 VARCHAR2(100)
+	, fctr_info6 VARCHAR2(100)
+
+	, CONSTRAINT pk_fctr PRIMARY KEY (fctr_pk)
+
+	, CONSTRAINT fk_fctr_aspc_pk FOREIGN KEY (fctr_aspc_pk)
+		REFERENCES tbl_aspecto_aspc (aspc_pk)
+	, CONSTRAINT fk_fctr_pagador_prmt_pk FOREIGN KEY (fctr_pagador_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_fctr_fcsr_pk FOREIGN KEY (fctr_fcsr_pk)
+		REFERENCES tbl_factura_serie_fcsr (fcsr_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_factura_fctr FOR porticoadm.tbl_factura_fctr\
+
+CREATE INDEX ix_fctr_aspc_pk ON tbl_factura_fctr (fctr_aspc_pk)\
+CREATE INDEX ix_fctr_pagador_prmt_pk ON tbl_factura_fctr (fctr_pagador_prmt_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_fctr TO portico\
+
+
+
+-- tbl_factura_srv_fcts
+CREATE TABLE tbl_factura_srv_fcts (
+	fcts_pk NUMBER(19) NOT NULL
+	, fcts_fctr_pk NUMBER(19) NOT NULL
+	, fcts_srvc_pk NUMBER(19) NOT NULL
+	, fcts_aspc_pk NUMBER(19) NOT NULL
+	, fcts_cod_exen CHAR(1) NOT NULL
+	, fcts_fref TIMESTAMP NOT NULL
+	, fcts_fini TIMESTAMP
+	, fcts_ffin TIMESTAMP
+
+	, CONSTRAINT pk_fcts PRIMARY KEY (fcts_pk)
+
+	, CONSTRAINT fk_fcts_fctr_pk FOREIGN KEY (fcts_fctr_pk)
+		REFERENCES tbl_factura_fctr (fctr_pk)
+	, CONSTRAINT fk_fcts_srvc_pk FOREIGN KEY (fcts_srvc_pk)
+		REFERENCES tbl_servicio_srvc (srvc_pk)
+	, CONSTRAINT fk_fcts_aspc_pk FOREIGN KEY (fcts_aspc_pk)
+		REFERENCES tbl_aspecto_aspc (aspc_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_factura_srv_fcts FOR porticoadm.tbl_factura_srv_fcts\
+
+CREATE INDEX ix_fcts_fctr_pk ON tbl_factura_srv_fcts (fcts_fctr_pk)\
+CREATE INDEX ix_fcts_srvc_pk ON tbl_factura_srv_fcts (fcts_srvc_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_srv_fcts TO portico\
+
+
+
+-- tbl_factura_lin_fctl
+CREATE TABLE tbl_factura_lin_fctl (
+	fctl_pk NUMBER(19) NOT NULL
+	, fctl_padre_pk NUMBER(19) NOT NULL
+	, fctl_fctr_pk NUMBER(19) NOT NULL
+	, fctl_fcts_pk NUMBER(19) NOT NULL
+	, fctl_rgla_pk NUMBER(19) NOT NULL
+	, fctl_impuesto_prmt_pk NUMBER(19) NOT NULL
+	, fctl_ssrv_pk NUMBER(19)
+	, fctl_fini TIMESTAMP
+	, fctl_ffin TIMESTAMP
+
+	, fctl_cuant1 DOUBLE PRECISION
+	, fctl_cuant2 DOUBLE PRECISION
+	, fctl_cuant3 DOUBLE PRECISION
+	, fctl_cuant4 DOUBLE PRECISION
+	, fctl_cuant5 DOUBLE PRECISION
+	, fctl_cuant6 DOUBLE PRECISION
+
+	, fctl_info1 VARCHAR2(100)
+	, fctl_info2 VARCHAR2(100)
+	, fctl_info3 VARCHAR2(100)
+	, fctl_info4 VARCHAR2(100)
+	, fctl_info5 VARCHAR2(100)
+	, fctl_info6 VARCHAR2(100)
+
+	, CONSTRAINT pk_fctl PRIMARY KEY (fctl_pk)
+
+	, CONSTRAINT fk_fctl_padre_pk FOREIGN KEY (fctl_padre_pk)
+		REFERENCES tbl_factura_lin_fctl (fctl_pk)
+	, CONSTRAINT fk_fctl_fctr_pk FOREIGN KEY (fctl_fctr_pk)
+		REFERENCES tbl_factura_fctr (fctr_pk)
+	, CONSTRAINT fk_fctl_fcts_pk FOREIGN KEY (fctl_fcts_pk)
+		REFERENCES tbl_factura_srv_fcts (fcts_pk)
+	, CONSTRAINT fk_fctl_rgla_pk FOREIGN KEY (fctl_rgla_pk)
+		REFERENCES tbl_regla_rgla (rgla_pk)
+	, CONSTRAINT fk_fctl_impuesto_prmt_pk FOREIGN KEY (fctl_impuesto_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_fctl_ssrv_pk FOREIGN KEY (fctl_ssrv_pk)
+		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_factura_lin_fctl FOR porticoadm.tbl_factura_lin_fctl\
+
+CREATE INDEX ix_fctl_padre_pk ON tbl_factura_lin_fctl (fctl_padre_pk)\
+CREATE INDEX ix_fctl_fctr_pk ON tbl_factura_lin_fctl (fctl_fctr_pk)\
+CREATE INDEX ix_fctl_fcts_pk ON tbl_factura_lin_fctl (fctl_fcts_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_lin_fctl TO portico\
+
+
+
+-- tbl_factura_det_fctd
+CREATE TABLE tbl_factura_det_fctd (
+	fctd_pk NUMBER(19) NOT NULL
+	, fctd_fctr_pk NUMBER(19) NOT NULL
+	, fctd_fctl_pk NUMBER(19) NOT NULL
+	, fctd_importe_base NUMERIC(10, 2) NOT NULL
+	, fctd_importe NUMERIC(10, 2) NOT NULL
+	, fctd_ssrv_pk NUMBER(19)
+	, fctd_fini TIMESTAMP
+	, fctd_ffin TIMESTAMP
+
+	, fctd_cuant1 DOUBLE PRECISION
+	, fctd_cuant2 DOUBLE PRECISION
+	, fctd_cuant3 DOUBLE PRECISION
+	, fctd_cuant4 DOUBLE PRECISION
+	, fctd_cuant5 DOUBLE PRECISION
+	, fctd_cuant6 DOUBLE PRECISION
+
+	, fctd_info1 VARCHAR2(100)
+	, fctd_info2 VARCHAR2(100)
+	, fctd_info3 VARCHAR2(100)
+	, fctd_info4 VARCHAR2(100)
+	, fctd_info5 VARCHAR2(100)
+	, fctd_info6 VARCHAR2(100)
+
+	, CONSTRAINT pk_fctd PRIMARY KEY (fctd_pk)
+
+	, CONSTRAINT fk_fctd_fctr_pk FOREIGN KEY (fctd_fctr_pk)
+		REFERENCES tbl_factura_fctr (fctr_pk)
+	, CONSTRAINT fk_fctd_fctl_pk FOREIGN KEY (fctd_fctl_pk)
+		REFERENCES tbl_factura_lin_fctl (fctl_pk)
+	, CONSTRAINT fk_fctd_ssrv_pk FOREIGN KEY (fctd_ssrv_pk)
+		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_factura_det_fctd FOR porticoadm.tbl_factura_det_fctd\
+
+CREATE INDEX ix_fctd_fctr_pk ON tbl_factura_det_fctd (fctd_fctr_pk)\
+CREATE INDEX ix_fctd_fctl_pk ON tbl_factura_det_fctd (fctd_fctl_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_det_fctd TO portico\
+
+
+
+-- tbl_servicio_cargo_srcr
+CREATE TABLE tbl_servicio_cargo_srcr (
+	srcr_srvc_pk NUMBER(19) NOT NULL
+	, srcr_ssrv_pk NUMBER(19)
+	, srcr_crgo_pk NUMBER(19) NOT NULL
+	, srcr_fini TIMESTAMP
+	, srcr_ffin TIMESTAMP
+	, srcr_vlrc_pk NUMBER(19)
+	, srcr_fctr_pk NUMBER(19)
+
+	, CONSTRAINT fk_srcr_srvc_pk FOREIGN KEY (srcr_srvc_pk)
+		REFERENCES tbl_servicio_srvc (srvc_pk)
+	, CONSTRAINT fk_srcr_ssrv_pk FOREIGN KEY (srcr_ssrv_pk)
+		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
+	, CONSTRAINT fk_srcr_crgo_pk FOREIGN KEY (srcr_crgo_pk)
+		REFERENCES tbl_cargo_crgo (crgo_pk)
+	, CONSTRAINT fk_srcr_vlrc_pk FOREIGN KEY (srcr_vlrc_pk)
+		REFERENCES tbl_valoracion_vlrc (vlrc_pk)
+	, CONSTRAINT fk_srcr_fctr_pk FOREIGN KEY (srcr_fctr_pk)
+		REFERENCES tbl_factura_fctr (fctr_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_servicio_cargo_srcr FOR porticoadm.tbl_servicio_cargo_srcr\
+
+CREATE INDEX ix_srcr_srvc_pk ON tbl_servicio_cargo_srcr (srcr_srvc_pk)\
+CREATE INDEX ix_srcr_vlrc_pk ON tbl_servicio_cargo_srcr (srcr_vlrc_pk)\
+CREATE INDEX ix_srcr_fctr_pk ON tbl_servicio_cargo_srcr (srcr_fctr_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_cargo_srcr TO portico\
+
+
+
+
+-- tbl_estadistica_trim_estr
+CREATE TABLE tbl_estadistica_trim_estr
+(
+	estr_pk NUMBER(19) NOT NULL
+	, estr_autp_pk NUMBER(19) NOT NULL
+	, estr_anio INT NOT NULL
+	, estr_trimestre INT NOT NULL
+	, estr_fref TIMESTAMP NOT NULL
+	, estr_falta TIMESTAMP NOT NULL
+
+	, CONSTRAINT pk_estr PRIMARY KEY (estr_pk)
+	, CONSTRAINT uq_estr UNIQUE (estr_autp_pk, estr_anio, estr_trimestre)
+
+	, CONSTRAINT fk_estr_autp_pk FOREIGN KEY (estr_autp_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+)
+\
+
+CREATE OR REPLACE SYNONYM portico.tbl_estadistica_trim_estr FOR porticoadm.tbl_estadistica_trim_estr\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_estadistica_trim_estr TO portico\
+
+COMMENT ON TABLE tbl_estadistica_trim_estr IS 'Estadistica trimestral de una AP'\
+COMMENT ON COLUMN tbl_estadistica_trim_estr.estr_pk IS 'Identificador de Estadistica Trimestral'\
+COMMENT ON COLUMN tbl_estadistica_trim_estr.estr_autp_pk IS 'Identificador de A. P.'\
+COMMENT ON COLUMN tbl_estadistica_trim_estr.estr_anio IS 'Anio de los datos de origen'\
+COMMENT ON COLUMN tbl_estadistica_trim_estr.estr_trimestre IS 'Trimestre de los datos de origen'\
+COMMENT ON COLUMN tbl_estadistica_trim_estr.estr_fref IS 'Fecha de Referencia utilizada para obtener los datos de los maestros asociados'\
+COMMENT ON COLUMN tbl_estadistica_trim_estr.estr_falta IS 'Fecha de alta de la Estadistica Trimestral'\
+
+
+
+-- tbl_cuadro_trim_cdtr
+CREATE TABLE tbl_cuadro_trim_cdtr
+(
+	cdtr_pk 		NUMBER(19) 				CONSTRAINT nn_cdtr_pk 			NOT NULL
+	, cdtr_estr_pk 	NUMBER(19) 				CONSTRAINT nn_cdtr_estr_pk 	NOT NULL
+	, cdtr_cocu_pk 	NUMBER(19) 				CONSTRAINT nn_cdtr_cocu_pk 	NOT NULL
+	, cdtr_opet_pk 	NUMBER(19) 				CONSTRAINT nn_cdtr_opet_pk 	NOT NULL
+	, cdtr_cantidad DOUBLE PRECISION 	CONSTRAINT nn_cdtr_cantidad 	NOT NULL
+
+	, CONSTRAINT pk_cdtr PRIMARY KEY (cdtr_pk)
+	, CONSTRAINT uq_cdtr UNIQUE (cdtr_estr_pk, cdtr_cocu_pk, cdtr_opet_pk)
+
+	, CONSTRAINT fk_cdtr_estr_pk FOREIGN KEY (cdtr_estr_pk)
+		REFERENCES tbl_estadistica_trim_estr (estr_pk)
+	, CONSTRAINT fk_cdtr_cocu_pk FOREIGN KEY (cdtr_cocu_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_cdtr_opet_pk FOREIGN KEY (cdtr_opet_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+)
+\
+
+CREATE OR REPLACE SYNONYM portico.tbl_cuadro_trim_cdtr FOR porticoadm.tbl_cuadro_trim_cdtr\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_cuadro_trim_cdtr TO portico\
+
+COMMENT ON TABLE tbl_cuadro_trim_cdtr IS 'Datos del Cuadro trimestral de la Estadistica de una AP'\
+COMMENT ON COLUMN tbl_cuadro_trim_cdtr.cdtr_pk IS 'Identificador de Dato del Cuadro trimestral'\
+COMMENT ON COLUMN tbl_cuadro_trim_cdtr.cdtr_estr_pk IS 'Identificador de Estadistica Trimestral a la que pertenece el dato del cuadro'\
+COMMENT ON COLUMN tbl_cuadro_trim_cdtr.cdtr_cocu_pk IS 'Identificador de Concepto de Cuadro trimestral'\
+COMMENT ON COLUMN tbl_cuadro_trim_cdtr.cdtr_opet_pk IS 'Identificador de Tipo de Operacion'\
+COMMENT ON COLUMN tbl_cuadro_trim_cdtr.cdtr_cantidad IS 'Valor de Dato del Cuadro trimestral'\
+
+
+
+-- tbl_configuration_conf
+CREATE TABLE tbl_configuration_conf (
+	conf_key VARCHAR2(250) NOT NULL
+	, conf_value_type VARCHAR2(20) NOT NULL
+	, conf_default_value VARCHAR2(250) NOT NULL
+	, conf_value VARCHAR2(250)
+
+	, CONSTRAINT pk_conf PRIMARY KEY (conf_key)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_configuration_conf FOR tbl_configuration_conf\
+
+GRANT SELECT, UPDATE ON tbl_configuration_conf TO portico\
+
+
+
+-- tbl_message_mesg
+CREATE TABLE tbl_message_mesg (
+	mesg_key VARCHAR2(100) NOT NULL
+	, mesg_internal INT NOT NULL
+
+	, CONSTRAINT pk_mesg PRIMARY KEY (mesg_key)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_message_mesg FOR tbl_message_mesg\
+
+GRANT SELECT ON tbl_message_mesg TO portico\
+
+-- tbl_message_i18n_m18n
+CREATE TABLE tbl_message_i18n_m18n (
+	m18n_key VARCHAR2(100) NOT NULL
+	, m18n_language VARCHAR2(5) NOT NULL
+	, m18n_value VARCHAR2(250) NOT NULL
+
+	, CONSTRAINT pk_m18n PRIMARY KEY (m18n_key, m18n_language)
+
+	, CONSTRAINT fk_m18n_mesg_key FOREIGN KEY (m18n_key)
+		REFERENCES tbl_message_mesg (mesg_key)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_message_i18n_m18n FOR tbl_message_i18n_m18n\
+
+GRANT SELECT, INSERT, DELETE ON tbl_message_i18n_m18n TO portico\
+
+
+
+
+-- tbl_campo_agregacion_cmag
+CREATE TABLE tbl_campo_agregacion_cmag (
+	cmag_tpes_pk NUMBER(19) NOT NULL
+	, cmag_entd_pk NUMBER(19) NOT NULL
+	, cmag_agregar INT NOT NULL
+	, cmag_nombre VARCHAR2(250)
+
+	, CONSTRAINT pk_cmag PRIMARY KEY (cmag_tpes_pk, cmag_entd_pk)
+
+	, CONSTRAINT fk_cmag_tpes_pk FOREIGN KEY (cmag_tpes_pk)
+		REFERENCES tbl_tipo_estadistica_tpes (tpes_pk)
+	, CONSTRAINT fk_cmag_entd_pk FOREIGN KEY (cmag_entd_pk)
+		REFERENCES tbl_entidad_tipo_dato_entd (entd_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_campo_agregacion_cmag FOR tbl_campo_agregacion_cmag\
+
+GRANT SELECT, UPDATE ON tbl_campo_agregacion_cmag TO portico\
+
+
+
+
+-- tbl_proceso_archivo_prar
+CREATE TABLE tbl_proceso_archivo_prar (
+	prar_prbt_pk NUMBER(19) NOT NULL
+	, prar_arch_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_prar PRIMARY KEY (prar_prbt_pk, prar_arch_pk)
+
+	, CONSTRAINT fk_prar_prbt_pk FOREIGN KEY (prar_prbt_pk)
+		REFERENCES tbl_proceso_batch_prbt (prbt_pk)
+	, CONSTRAINT fk_prar_arch_pk FOREIGN KEY (prar_arch_pk)
+		REFERENCES tbl_archivo_arch (arch_pk)
+)
+\
+
+CREATE OR REPLACE SYNONYM portico.tbl_proceso_archivo_prar FOR tbl_proceso_archivo_prar\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_proceso_archivo_prar TO portico\
+
+-- tbl_servicio_archivo_srar
+CREATE TABLE tbl_servicio_archivo_srar (
+	srar_srvc_pk NUMBER(19) NOT NULL
+	, srar_arch_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_srar PRIMARY KEY (srar_srvc_pk, srar_arch_pk)
+
+	, CONSTRAINT fk_srar_srvc_pk FOREIGN KEY (srar_srvc_pk)
+		REFERENCES tbl_servicio_srvc (srvc_pk)
+	, CONSTRAINT fk_srar_arch_pk FOREIGN KEY (srar_arch_pk)
+		REFERENCES tbl_archivo_arch (arch_pk)
+)
+\
+
+CREATE OR REPLACE SYNONYM portico.tbl_servicio_archivo_srar FOR tbl_servicio_archivo_srar\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_archivo_srar TO portico\
 
 
 
@@ -1162,25 +2081,214 @@ COMMENT ON COLUMN tbl_proceso_mensaje_prmn.prmn_mensaje IS 'Texto del mensaje'\
 
 
 
+-- tbl_entidad_accgrid_enag
+CREATE TABLE tbl_entidad_accgrid_enag (
+	enag_pk NUMBER(19) NOT NULL
+	, enag_enti_pk NUMBER(19) NOT NULL
+	, enag_path VARCHAR2(30) NOT NULL
+	, enag_orden INT NOT NULL
+
+	, CONSTRAINT pk_enag PRIMARY KEY (enag_pk)
+
+	, CONSTRAINT uq_enag UNIQUE (enag_enti_pk, enag_path)
+
+	, CONSTRAINT fk_enag_enti_pk FOREIGN KEY (enag_enti_pk)
+		REFERENCES tbl_entidad_enti (enti_pk)
+)
+\
+
+CREATE OR REPLACE SYNONYM portico.tbl_entidad_accgrid_enag FOR tbl_entidad_accgrid_enag\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_entidad_accgrid_enag TO portico\
 
 
 
 
 
+-- tbl_accion_accn
+CREATE TABLE tbl_accion_accn (
+	accn_pk NUMBER(19) NOT NULL
+	, accn_codigo VARCHAR2(100) NOT NULL
+	, accn_nombre VARCHAR2(100) NOT NULL
+
+	, CONSTRAINT pk_accn PRIMARY KEY (accn_pk)
+
+	, CONSTRAINT uk_accn UNIQUE (accn_codigo)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_accion_accn FOR tbl_accion_accn\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_accion_accn TO portico\
 
 
+-- tbl_grupo_accion_grac
+CREATE TABLE tbl_grupo_accion_grac (
+	grac_grpo_pk NUMBER(19) NOT NULL
+	, grac_accn_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_grac PRIMARY KEY (grac_grpo_pk, grac_accn_pk)
+
+	, CONSTRAINT fk_grac_grpo_pk FOREIGN KEY (grac_grpo_pk)
+		REFERENCES tbl_grupo_grpo (grpo_pk)
+		ON DELETE CASCADE
+	, CONSTRAINT fk_grac_accn_pk FOREIGN KEY (grac_accn_pk)
+		REFERENCES tbl_accion_accn (accn_pk)
+		ON DELETE CASCADE
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_grupo_accion_grac FOR tbl_grupo_accion_grac\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_grupo_accion_grac TO portico\
 
 
+-- tbl_tramite_trmt
+CREATE TABLE tbl_tramite_trmt (
+	trmt_pk NUMBER(19) NOT NULL
+	, trmt_enti_pk NUMBER(19) NOT NULL
+	, trmt_estado_orig CHAR(1) NOT NULL
+	, trmt_estado_dest CHAR(1) NOT NULL
+
+	, CONSTRAINT pk_trmt PRIMARY KEY (trmt_pk)
+	, CONSTRAINT uq_trmt UNIQUE (trmt_enti_pk, trmt_estado_orig, trmt_estado_dest)
+
+	, CONSTRAINT fk_trmt_enti_pk FOREIGN KEY (trmt_enti_pk)
+		REFERENCES tbl_entidad_enti (enti_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_tramite_trmt FOR tbl_tramite_trmt\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_tramite_trmt TO portico\
 
 
+-- tbl_tramite_tipo_dato_trtd
+CREATE TABLE tbl_tramite_tipo_dato_trtd (
+	trtd_trmt_pk NUMBER(19) NOT NULL
+	, trtd_tpdt_pk NUMBER(19) NOT NULL
+	, trtd_obligatorio INTEGER NOT NULL
+
+	, CONSTRAINT pk_trtd PRIMARY KEY (trtd_trmt_pk, trtd_tpdt_pk)
+
+	, CONSTRAINT fk_trtd_trmt_pk FOREIGN KEY (trtd_trmt_pk)
+		REFERENCES tbl_tramite_trmt (trmt_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_tramite_tipo_dato_trtd FOR tbl_tramite_tipo_dato_trtd\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_tramite_tipo_dato_trtd TO portico\
 
 
+-- tbl_item_tramite_ittr
+CREATE TABLE tbl_item_tramite_ittr (
+	ittr_pk NUMBER(19) NOT NULL
+	, ittr_item_pk NUMBER(19) NOT NULL
+	, ittr_trmt_pk NUMBER(19) NOT NULL
+	, ittr_falta TIMESTAMP NOT NULL
+	, ittr_o_item_fini TIMESTAMP
+	, ittr_o_item_ffin TIMESTAMP
+	, ittr_d_item_fini TIMESTAMP
+	, ittr_d_item_ffin TIMESTAMP
+
+	, CONSTRAINT pk_ittr PRIMARY KEY (ittr_pk)
+
+	, CONSTRAINT fk_ittr_trmt_pk FOREIGN KEY (ittr_trmt_pk)
+		REFERENCES tbl_tramite_trmt (trmt_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_item_tramite_ittr FOR tbl_item_tramite_ittr\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_item_tramite_ittr TO portico\
 
 
+-- tbl_item_trmt_dato_ittd
+CREATE TABLE tbl_item_trmt_dato_ittd (
+	ittd_ittr_pk NUMBER(19) NOT NULL
+	, ittd_tpdt_pk NUMBER(19) NOT NULL
+	, ittd_o_nentero NUMBER(19)
+	, ittd_o_ndecimal NUMBER(19)
+	, ittd_o_fecha TIMESTAMP
+	, ittd_o_prmt_pk NUMBER(19)
+	, ittd_o_srvc_pk NUMBER(19)
+	, ittd_o_cadena VARCHAR2(350)
+	, ittd_d_nentero NUMBER(19)
+	, ittd_d_ndecimal NUMBER(19)
+	, ittd_d_fecha TIMESTAMP
+	, ittd_d_prmt_pk NUMBER(19)
+	, ittd_d_srvc_pk NUMBER(19)
+	, ittd_d_cadena VARCHAR2(350)
+
+	, CONSTRAINT pk_ittd PRIMARY KEY (ittd_ittr_pk, ittd_tpdt_pk)
+
+	, CONSTRAINT fk_ittd_ittr_pk FOREIGN KEY (ittd_ittr_pk)
+		REFERENCES tbl_item_tramite_ittr (ittr_pk)
+	, CONSTRAINT fk_ittd_tpdt_pk FOREIGN KEY (ittd_tpdt_pk)
+		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
+	, CONSTRAINT fk_ittd_o_prmt_pk FOREIGN KEY (ittd_o_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_ittd_d_prmt_pk FOREIGN KEY (ittd_d_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_ittd_o_srvc_pk FOREIGN KEY (ittd_o_srvc_pk)
+		REFERENCES tbl_servicio_srvc (srvc_pk)
+	, CONSTRAINT fk_ittd_d_srvc_pk FOREIGN KEY (ittd_d_srvc_pk)
+		REFERENCES tbl_servicio_srvc (srvc_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_item_trmt_dato_ittd FOR tbl_item_trmt_dato_ittd\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_item_trmt_dato_ittd TO portico\
 
 
+-- tbl_parametro_trmt_prtr
+CREATE TABLE tbl_parametro_trmt_prtr (
+	prtr_pk NUMBER(19) NOT NULL
+	, prtr_prmt_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_prtr PRIMARY KEY (prtr_pk)
+
+	, CONSTRAINT fk_prtr_ittr_pk FOREIGN KEY (prtr_pk)
+		REFERENCES tbl_item_tramite_ittr (ittr_pk)
+	, CONSTRAINT fk_prtr_prmt_pk FOREIGN KEY (prtr_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_parametro_trmt_prtr FOR tbl_parametro_trmt_prtr\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_parametro_trmt_prtr TO portico\
 
 
+-- tbl_servicio_trmt_srtr
+CREATE TABLE tbl_servicio_trmt_srtr (
+	srtr_pk NUMBER(19) NOT NULL
+	, srtr_srvc_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_srtr PRIMARY KEY (srtr_pk)
+
+	, CONSTRAINT fk_srtr_ittr_pk FOREIGN KEY (srtr_pk)
+		REFERENCES tbl_item_tramite_ittr (ittr_pk)
+	, CONSTRAINT fk_srtr_srvc_pk FOREIGN KEY (srtr_srvc_pk)
+		REFERENCES tbl_servicio_srvc (srvc_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_servicio_trmt_srtr FOR tbl_servicio_trmt_srtr\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_trmt_srtr TO portico\
+
+
+-- tbl_subservicio_trmt_sstr
+CREATE TABLE tbl_subservicio_trmt_sstr (
+	sstr_pk NUMBER(19) NOT NULL
+	, sstr_ssrv_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_sstr PRIMARY KEY (sstr_pk)
+
+	, CONSTRAINT fk_sstr_ittr_pk FOREIGN KEY (sstr_pk)
+		REFERENCES tbl_item_tramite_ittr (ittr_pk)
+	, CONSTRAINT fk_sstr_ssrv_pk FOREIGN KEY (sstr_ssrv_pk)
+		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_subservicio_trmt_sstr FOR tbl_subservicio_trmt_sstr\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_subservicio_trmt_sstr TO portico\
 
 
 
@@ -1191,10 +2299,48 @@ COMMENT ON COLUMN tbl_proceso_mensaje_prmn.prmn_mensaje IS 'Texto del mensaje'\
 
 -- //@UNDO
 -- SQL to undo the change goes here.
-
+DROP TABLE tbl_subservicio_trmt_sstr\
+DROP TABLE tbl_servicio_trmt_srtr\
+DROP TABLE tbl_parametro_trmt_prtr\
+DROP TABLE tbl_item_trmt_dato_ittd\
+DROP TABLE tbl_item_tramite_ittr\
+DROP TABLE tbl_tramite_tipo_dato_trtd\
+DROP TABLE tbl_tramite_trmt\
+DROP TABLE tbl_grupo_accion_grac\
+DROP TABLE tbl_accion_accn\
+DROP TABLE tbl_entidad_accgrid_enag\
+DROP TABLE tbl_servicio_archivo_srar\
+DROP TABLE tbl_proceso_archivo_prar\
+DROP TABLE tbl_campo_agregacion_cmag\
+DROP TABLE tbl_message_i18n_m18n\
+DROP TABLE tbl_message_mesg\
+DROP TABLE tbl_configuration_conf\
+DROP TABLE tbl_cuadro_trim_cdtr\
+DROP TABLE tbl_estadistica_trim_estr\
+DROP TABLE tbl_servicio_cargo_srcr\
+DROP TABLE tbl_factura_det_fctd\
+DROP TABLE tbl_factura_lin_fctl\
+DROP TABLE tbl_factura_srv_fcts\
+DROP TABLE tbl_factura_fctr\
+DROP TABLE tbl_valoracion_tmp_vlrt\
+DROP TABLE tbl_valoracion_det_vlrd\
+DROP TABLE tbl_valoracion_lin_vlrl\
+DROP TABLE tbl_valoracion_vlrc\
+DROP TABLE tbl_factura_serie_fcsr\
+DROP TABLE tbl_aspecto_cargo_version_ascv\
+DROP TABLE tbl_aspecto_cargo_ascr\
+DROP TABLE tbl_aspecto_version_aspv\
+DROP TABLE tbl_aspecto_aspc\
+DROP TABLE tbl_regla_inc_version_rgiv\
+DROP TABLE tbl_regla_inc_rgin\
+DROP TABLE tbl_regla_version_rglv\
+DROP TABLE tbl_regla_rgla\
+DROP TABLE tbl_cargo_dep_version_crdv\
+DROP TABLE tbl_cargo_dep_crdp\
+DROP TABLE tbl_cargo_version_crgv\
+DROP TABLE tbl_cargo_crgo\
 DROP TABLE tbl_proceso_mensaje_prmn\
 DROP TABLE tbl_proceso_item_prit\
-DROP TABLE tbl_proceso_archivo_prar\
 DROP TABLE tbl_proceso_parametro_prpm\
 DROP TABLE tbl_proceso_batch_prbt\
 DROP TABLE tbl_cuadro_mes_cdms\
@@ -1232,3 +2378,4 @@ DROP TABLE tbl_puerto_prto\
 DROP TABLE tbl_superpuerto_sprt\
 DROP TABLE tbl_ig\
 DROP TABLE tbl_i18n_i18n\
+DROP TABLE tbl_archivo_arch\
