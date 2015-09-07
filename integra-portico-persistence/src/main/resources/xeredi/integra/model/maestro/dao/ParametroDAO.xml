@@ -15,6 +15,7 @@
 		<association property="prto" javaType="PuertoVO">
 			<result column="prmt_prto_pk" property="id" />
 			<result column="prto_codigo" property="codigo" />
+			<result column="prto_codigo_corto" property="codigoCorto" />
 			<result column="prto_nombre" property="nombre" />
 		</association>
 
@@ -33,10 +34,8 @@
 		    prmt_pk, prmt_tppr_pk, prmt_parametro, prmt_prto_pk
 
 		    , prvr_pk, prvr_fini, prvr_ffin, prvr_lat, prvr_lon
-		    , (
-		        SELECT prto_codigo FROM tbl_puerto_prto
-		        WHERE prto_pk = prmt_prto_pk
-		    ) AS prto_codigo
+
+		    , prto_codigo, prto_codigo_corto
     ]]>
 		<if test="idioma != null">
         <![CDATA[
@@ -83,6 +82,8 @@
 		    tbl_parametro_prmt
 		    INNER JOIN tbl_parametro_version_prvr ON
 		        prvr_prmt_pk = prmt_pk
+		    LEFT JOIN tbl_puerto_prto ON
+		        prto_pk = prmt_prto_pk
         ]]>
 	</sql>
 

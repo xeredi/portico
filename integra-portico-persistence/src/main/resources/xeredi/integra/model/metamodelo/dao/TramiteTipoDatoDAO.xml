@@ -24,6 +24,7 @@
 				<result column="tpdt_pk" property="id" />
 				<result column="tpdt_tipo_elemento" property="tipoElemento" />
 				<result column="tpdt_tipo_html" property="tpht" />
+				<result column="tpdt_nombre" property="nombre" />
 
 				<association property="enti" javaType="EntidadVO">
 					<result column="enti_pk" property="id" />
@@ -53,6 +54,12 @@
                     AND i18n_ext_pk = entd_pk
                     AND i18n_lang = #{idioma}
             ) AS entd_etiqueta
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'tpdt'
+                    AND i18n_ext_pk = tpdt_pk
+                    AND i18n_lang = #{idioma}
+            ) AS tpdt_nombre
         ]]>
 		</if>
     <![CDATA[
@@ -81,7 +88,8 @@
 		</where>
 	</sql>
 
-	<select id="selectList" parameterType="TramiteTipoDatoCriterioVO" resultMap="ResultMap">
+	<select id="selectList" parameterType="TramiteTipoDatoCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
         <![CDATA[
@@ -94,7 +102,8 @@
 		<include refid="SelectWhere" />
 	</select>
 
-	<select id="exists" parameterType="TramiteTipoDatoVO" resultType="boolean">
+	<select id="exists" parameterType="TramiteTipoDatoVO"
+		resultType="boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM

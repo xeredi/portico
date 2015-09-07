@@ -638,6 +638,8 @@ CREATE TABLE tbl_tipo_servicio_tpsr (
 	, tpsr_es_facturable int NOT NULL
 	, tpsr_es_exencionable INT NOT NULL
 	, tpsr_tpdt_estado_pk NUMBER(19)
+	, tpsr_estados_vlrc VARCHAR2(30)
+	, tpsr_estado_def VARCHAR2(5)
 
 	, CONSTRAINT pk_tpsr PRIMARY KEY (tpsr_pk)
 
@@ -656,6 +658,8 @@ COMMENT ON COLUMN tbl_tipo_servicio_tpsr.tpsr_pk IS 'Identificador de Tipo de Se
 COMMENT ON COLUMN tbl_tipo_servicio_tpsr.tpsr_es_temporal IS 'Indicador de si el tipo de servicio tiene temporalidad'\
 COMMENT ON COLUMN tbl_tipo_servicio_tpsr.tpsr_es_facturable IS 'Indicador de si el tipo de servicio es facturable'\
 COMMENT ON COLUMN tbl_tipo_servicio_tpsr.tpsr_tpdt_estado_pk IS 'Tipo de dato que añmacena los estados por los que pueden pasar los servicios de este tipo de servicio'\
+COMMENT ON COLUMN tbl_tipo_servicio_tpsr.tpsr_estados_vlrc IS 'Lista de estados en los que un servicio es Valorable (separados por comas)'\
+COMMENT ON COLUMN tbl_tipo_servicio_tpsr.tpsr_estado_def IS 'Estado por defecto'\
 
 
 
@@ -667,6 +671,8 @@ CREATE TABLE tbl_tipo_subservicio_tpss (
 	, tpss_es_facturable int NOT NULL
 	, tpss_es_exencionable int NOT NULL
 	, tpss_tpdt_estado_pk NUMBER(19)
+	, tpss_estados_vlrc VARCHAR2(30)
+	, tpss_estado_def VARCHAR2(5)
 
 	, CONSTRAINT pk_tpss PRIMARY KEY (tpss_pk)
 
@@ -688,6 +694,8 @@ COMMENT ON COLUMN tbl_tipo_subservicio_tpss.tpss_tpsr_pk IS 'Identificador de Ti
 COMMENT ON COLUMN tbl_tipo_subservicio_tpss.tpss_es_temporal IS 'Indicador de si el tipo de subservicio tiene temporalidad'\
 COMMENT ON COLUMN tbl_tipo_subservicio_tpss.tpss_es_facturable IS 'Indicador de si el tipo de subservicio es facturable'\
 COMMENT ON COLUMN tbl_tipo_subservicio_tpss.tpss_tpdt_estado_pk IS 'Tipo de dato que añmacena los estados por los que pueden pasar los subservicios de este tipo de subservicio'\
+COMMENT ON COLUMN tbl_tipo_subservicio_tpss.tpss_estados_vlrc IS 'Lista de estados en los que un subservicio es Valorable (separados por comas)'\
+COMMENT ON COLUMN tbl_tipo_subservicio_tpss.tpss_estado_def IS 'Estado por defecto'\
 
 
 

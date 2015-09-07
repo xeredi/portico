@@ -9,18 +9,20 @@
 </div>
 
 <fieldset>
+    <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+
     <div class="row">
         <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-            <label translate="trmt"></label>
-            <p class="form-control-static" ng-bind="::vm.trmt.etiqueta"></p>
+            <label translate="enti"></label>
+            <p class="form-control-static" ng-bind="vm.enti.nombre"></p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate="trmt_estado_orig"></label>
-            <p class="form-control-static" ng-bind="::vm.trmt.estadoOrig"></p>
+            <p class="form-control-static" ng-bind="vm.trmt.estadoOrig"></p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate="trmt_estado_dest"></label>
-            <p class="form-control-static" ng-bind="::vm.trmt.estadoDest"></p>
+            <p class="form-control-static" ng-bind="vm.trmt.estadoDest"></p>
         </div>
     </div>
 </fieldset>
@@ -30,7 +32,8 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/metamodelo/trtd/edit/create/{{::vm.trmt.id}}"><i
+            <a class="btn btn-default"
+                ng-href="#/metamodelo/trtd/edit/create/{{vm.trmt.entiId}}/{{vm.trmt.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>
     </div>
@@ -41,14 +44,23 @@
                 <th nowrap="nowrap" class="buttonLinks" nowrap="nowrap" />
                 <th nowrap="nowrap" translate="entd_etiqueta"></th>
                 <th nowrap="nowrap" translate="trtd_obligatorio"></th>
+                <th nowrap="nowrap" translate="tpdt"></th>
+                <th nowrap="nowrap" translate="tpdt_tpel"></th>
+                <th nowrap="nowrap" translate="tpdt_tpht"></th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="trtd in ::vm.trtdList track by $index">
-                <td><a ng-href="#/metamodelo/trtd/detail/{{::vm.trmt.id}}/{{::vm.trtd.entd.tpdt.id}}"><i
+            <tr ng-repeat="trtd in vm.trtdList track by $index">
+                <td><a
+                    ng-href="#/metamodelo/trtd/detail/{{vm.trmt.entiId}}/{{vm.trmt.id}}/{{trtd.entd.tpdt.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="trtd.entd.etiqueta"></td>
-                <td><i class="glyphicon glyphicon-{{::(trtd.obligatorio ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(trtd.obligatorio ? 'ok' : 'remove')}}"></i></td>
+                <td ng-bind="trtd.entd.tpdt.nombre"></td>
+                <td ng-bind="trtd.entd.tpdt.tipoElemento" bs-tooltip
+                    data-title="{{('ElementoTipo_' + trtd.entd.tpdt.tipoElemento | translate)}}"></td>
+                <td ng-bind="trtd.entd.tpdt.tpht" bs-tooltip
+                    data-title="{{('HtmlTipo_' + trtd.entd.tpdt.tpht | translate)}}"></td>
             </tr>
         </tbody>
     </table>

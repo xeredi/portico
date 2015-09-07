@@ -1,5 +1,9 @@
 package xeredi.integra.model.metamodelo.vo;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 // TODO: Auto-generated Javadoc
@@ -22,6 +26,15 @@ public final class TipoSubservicioVO extends EntidadVO {
 
     /** The tpdt estado. */
     private TipoDatoVO tpdtEstado;
+
+    /** The estados vlrc. */
+    private String estadosVlrc;
+
+    /** The estado def. */
+    private String estadoDef;
+
+    /** The estados vlrc set. */
+    private Set<String> estadosVlrcSet;
 
     /**
      * {@inheritDoc}
@@ -126,4 +139,60 @@ public final class TipoSubservicioVO extends EntidadVO {
         exencionable = value;
     }
 
+    /**
+     * Gets the estados vlrc.
+     *
+     * @return the estados vlrc
+     */
+    public String getEstadosVlrc() {
+        return estadosVlrc;
+    }
+
+    /**
+     * Sets the estados vlrc.
+     *
+     * @param value
+     *            the new estados vlrc
+     */
+    public void setEstadosVlrc(final String value) {
+        estadosVlrc = value;
+
+        if (estadosVlrc != null) {
+            estadosVlrcSet = new HashSet<>();
+
+            final StringTokenizer tokenizer = new StringTokenizer(estadosVlrc, ",");
+
+            while (tokenizer.hasMoreTokens()) {
+                estadosVlrcSet.add(tokenizer.nextToken().trim());
+            }
+        }
+    }
+
+    /**
+     * Gets the estados vlrc set.
+     *
+     * @return the estados vlrc set
+     */
+    public Set<String> getEstadosVlrcSet() {
+        return estadosVlrcSet;
+    }
+
+    /**
+     * Gets the estado def.
+     *
+     * @return the estado def
+     */
+    public String getEstadoDef() {
+        return estadoDef;
+    }
+
+    /**
+     * Sets the estado def.
+     *
+     * @param value
+     *            the new estado def
+     */
+    public void setEstadoDef(final String value) {
+        estadoDef = value;
+    }
 }

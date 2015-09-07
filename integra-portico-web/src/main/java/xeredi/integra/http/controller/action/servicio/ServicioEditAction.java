@@ -3,6 +3,8 @@ package xeredi.integra.http.controller.action.servicio;
 import java.util.Calendar;
 import java.util.List;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.item.ItemEditAction;
 import xeredi.integra.http.util.FieldFiller;
 import xeredi.integra.model.comun.bo.PuertoBO;
@@ -14,8 +16,6 @@ import xeredi.integra.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.vo.ServicioVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -34,19 +34,34 @@ public final class ServicioEditAction extends ItemEditAction<ServicioVO, TipoSer
      */
     @Override
     public void doSpecificEdit() throws ApplicationException {
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId());
+
         enti = TipoServicioProxy.select(model.getEntiId());
 
-        if (accion == ACCION_EDICION.create) {
+        switch (accion) {
+        case create:
             model.setFref(Calendar.getInstance().getTime());
             model.setAnno(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+            model.setEstado(enti.getEnti().getEstadoDef());
 
             FieldFiller.fillDefaultValues(model, enti);
-        } else {
+
+            break;
+        case duplicate:
             Preconditions.checkNotNull(model.getId());
 
-            final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId());
+            model = srvcBO.select(model.getId(), getIdioma());
+            model.setEstado(enti.getEnti().getEstadoDef());
+
+            break;
+        case edit:
+            Preconditions.checkNotNull(model.getId());
 
             model = srvcBO.select(model.getId(), getIdioma());
+
+            break;
+        default:
+            throw new Error("Invalid action: " + accion.name());
         }
 
         setFechaVigencia(model.getFref());

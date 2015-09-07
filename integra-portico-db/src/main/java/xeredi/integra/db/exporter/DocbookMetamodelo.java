@@ -39,7 +39,8 @@ public final class DocbookMetamodelo {
     public void generar() {
         try (final PrintWriter writer = new PrintWriter(new File(FILE_PATH));) {
             writer.println("<?xml version='1.0' encoding='UTF-8'?>");
-            writer.println("<book xml:lang='en' xmlns='http://docbook.org/ns/docbook' version='5.0' xmlns:xi='http://www.w3.org/2001/XInclude' xmlns:xl='http://www.w3.org/1999/xlink'>");
+            writer.println(
+                    "<book xml:lang='en' xmlns='http://docbook.org/ns/docbook' version='5.0' xmlns:xi='http://www.w3.org/2001/XInclude' xmlns:xl='http://www.w3.org/1999/xlink'>");
             writer.println("<info><title>Metamodelo de Datos</title></info>");
 
             // Entidades
@@ -104,8 +105,8 @@ public final class DocbookMetamodelo {
             for (final LabelValueVO labelValueVO : TipoSubparametroProxy.selectLabelValues()) {
                 final TipoSubparametroDetailVO entiDetail = TipoSubparametroProxy
                         .select((Long) labelValueVO.getValue());
-                final TipoParametroDetailVO tpprPadreDetail = TipoParametroProxy.select(entiDetail.getEnti()
-                        .getTpprId());
+                final TipoParametroDetailVO tpprPadreDetail = TipoParametroProxy
+                        .select(entiDetail.getEnti().getTpprId());
 
                 writer.println("<row>");
                 writer.println("<entry>" + entiDetail.getEnti().getId() + "</entry>");
@@ -152,9 +153,8 @@ public final class DocbookMetamodelo {
                 writer.println("<entry>" + (entiDetail.getEnti().isCmdDuplicado() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiDetail.getEnti().isTemporal() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiDetail.getEnti().isFacturable() ? "S" : "") + "</entry>");
-                writer.println("<entry>"
-                        + (entiDetail.getEnti().getTpdtEstado() == null ? "" : entiDetail.getEnti().getTpdtEstado()
-                                .getNombre()) + "</entry>");
+                writer.println("<entry>" + (entiDetail.getEnti().getTpdtEstado() == null ? ""
+                        : entiDetail.getEnti().getTpdtEstado().getNombre()) + "</entry>");
                 writer.println("</row>");
             }
 
@@ -191,9 +191,8 @@ public final class DocbookMetamodelo {
                 writer.println("<entry>" + (entiDetail.getEnti().isCmdDuplicado() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiDetail.getEnti().isTemporal() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiDetail.getEnti().isFacturable() ? "S" : "") + "</entry>");
-                writer.println("<entry>"
-                        + (entiDetail.getEnti().getTpdtEstado() == null ? "" : entiDetail.getEnti().getTpdtEstado()
-                                .getNombre()) + "</entry>");
+                writer.println("<entry>" + (entiDetail.getEnti().getTpdtEstado() == null ? ""
+                        : entiDetail.getEnti().getTpdtEstado().getNombre()) + "</entry>");
                 writer.println("</row>");
             }
 
@@ -290,12 +289,12 @@ public final class DocbookMetamodelo {
                 writer.println("<colspec colnum='1' colname='col1' colwidth='1*' />");
                 writer.println("<colspec colnum='2' colname='col2' colwidth='4*' />");
                 writer.println("<tbody>");
-                writer.println("<row><entry>Codigo</entry><entry>" + entiDetail.getEnti().getCodigo()
-                        + "</entry></row>");
-                writer.println("<row><entry>Nombre</entry><entry>" + entiDetail.getEnti().getNombre()
-                        + "</entry></row>");
-                writer.println("<row><entry>Etiqueta</entry><entry>" + entiDetail.getEnti().getEtiqueta()
-                        + "</entry></row>");
+                writer.println(
+                        "<row><entry>Codigo</entry><entry>" + entiDetail.getEnti().getCodigo() + "</entry></row>");
+                writer.println(
+                        "<row><entry>Nombre</entry><entry>" + entiDetail.getEnti().getNombre() + "</entry></row>");
+                writer.println(
+                        "<row><entry>Etiqueta</entry><entry>" + entiDetail.getEnti().getEtiqueta() + "</entry></row>");
                 writer.println("<row><entry>Temporalidad Explicita?</entry><entry>"
                         + (entiDetail.getEnti().isTempExp() ? "S" : "N") + "</entry></row>");
                 writer.println("<row><entry>I18N?</entry><entry>" + (entiDetail.getEnti().isI18n() ? "S" : "N")
@@ -324,10 +323,10 @@ public final class DocbookMetamodelo {
             for (final LabelValueVO labelValueVO : TipoSubparametroProxy.selectLabelValues()) {
                 final TipoSubparametroDetailVO entiDetail = TipoSubparametroProxy
                         .select((Long) labelValueVO.getValue());
-                final TipoParametroDetailVO tpprPadreDetail = TipoParametroProxy.select(entiDetail.getEnti()
-                        .getTpprId());
-                final TipoParametroDetailVO tpprAsociadoDetail = TipoParametroProxy.select(entiDetail.getEnti()
-                        .getTpprAsociado().getId());
+                final TipoParametroDetailVO tpprPadreDetail = TipoParametroProxy
+                        .select(entiDetail.getEnti().getTpprId());
+                final TipoParametroDetailVO tpprAsociadoDetail = TipoParametroProxy
+                        .select(entiDetail.getEnti().getTpprAsociado().getId());
 
                 writer.println("<section xml:id='ent_" + entiDetail.getEnti().getCodigo() + "'><title>"
                         + entiDetail.getEnti().getNombre() + "</title>");
@@ -338,12 +337,12 @@ public final class DocbookMetamodelo {
                 writer.println("<colspec colnum='1' colname='col1' colwidth='1*' />");
                 writer.println("<colspec colnum='2' colname='col2' colwidth='4*' />");
                 writer.println("<tbody>");
-                writer.println("<row><entry>Codigo</entry><entry>" + entiDetail.getEnti().getCodigo()
-                        + "</entry></row>");
-                writer.println("<row><entry>Nombre</entry><entry>" + entiDetail.getEnti().getNombre()
-                        + "</entry></row>");
-                writer.println("<row><entry>Etiqueta</entry><entry>" + entiDetail.getEnti().getEtiqueta()
-                        + "</entry></row>");
+                writer.println(
+                        "<row><entry>Codigo</entry><entry>" + entiDetail.getEnti().getCodigo() + "</entry></row>");
+                writer.println(
+                        "<row><entry>Nombre</entry><entry>" + entiDetail.getEnti().getNombre() + "</entry></row>");
+                writer.println(
+                        "<row><entry>Etiqueta</entry><entry>" + entiDetail.getEnti().getEtiqueta() + "</entry></row>");
                 writer.println("<row><entry>Maestro Padre</entry><entry>" + getLinkEntidad(tpprPadreDetail)
                         + "</entry></row>");
                 writer.println("<row><entry>Maestro Asoc.</entry><entry>" + getLinkEntidad(tpprAsociadoDetail)
@@ -385,12 +384,12 @@ public final class DocbookMetamodelo {
                 writer.println("<colspec colnum='1' colname='col1' colwidth='1*' />");
                 writer.println("<colspec colnum='2' colname='col2' colwidth='4*' />");
                 writer.println("<tbody>");
-                writer.println("<row><entry>Codigo</entry><entry>" + entiDetail.getEnti().getCodigo()
-                        + "</entry></row>");
-                writer.println("<row><entry>Nombre</entry><entry>" + entiDetail.getEnti().getNombre()
-                        + "</entry></row>");
-                writer.println("<row><entry>Etiqueta</entry><entry>" + entiDetail.getEnti().getEtiqueta()
-                        + "</entry></row>");
+                writer.println(
+                        "<row><entry>Codigo</entry><entry>" + entiDetail.getEnti().getCodigo() + "</entry></row>");
+                writer.println(
+                        "<row><entry>Nombre</entry><entry>" + entiDetail.getEnti().getNombre() + "</entry></row>");
+                writer.println(
+                        "<row><entry>Etiqueta</entry><entry>" + entiDetail.getEnti().getEtiqueta() + "</entry></row>");
                 writer.println("<row><entry>Temporal?</entry><entry>" + (entiDetail.getEnti().isTemporal() ? "S" : "N")
                         + "</entry></row>");
                 writer.println("<row><entry>Facturable?</entry><entry>"
@@ -429,14 +428,15 @@ public final class DocbookMetamodelo {
                 writer.println("<colspec colnum='1' colname='col1' colwidth='1*' />");
                 writer.println("<colspec colnum='2' colname='col2' colwidth='4*' />");
                 writer.println("<tbody>");
-                writer.println("<row><entry>Codigo</entry><entry>" + entiDetail.getEnti().getCodigo()
-                        + "</entry></row>");
-                writer.println("<row><entry>Nombre</entry><entry>" + entiDetail.getEnti().getNombre()
-                        + "</entry></row>");
-                writer.println("<row><entry>Etiqueta</entry><entry>" + entiDetail.getEnti().getEtiqueta()
-                        + "</entry></row>");
+                writer.println(
+                        "<row><entry>Codigo</entry><entry>" + entiDetail.getEnti().getCodigo() + "</entry></row>");
+                writer.println(
+                        "<row><entry>Nombre</entry><entry>" + entiDetail.getEnti().getNombre() + "</entry></row>");
+                writer.println(
+                        "<row><entry>Etiqueta</entry><entry>" + entiDetail.getEnti().getEtiqueta() + "</entry></row>");
                 writer.println("<row><entry>Tipo de Servicio</entry><entry>"
-                        + getLinkEntidad(TipoServicioProxy.select(entiDetail.getEnti().getTpsrId())) + "</entry></row>");
+                        + getLinkEntidad(TipoServicioProxy.select(entiDetail.getEnti().getTpsrId()))
+                        + "</entry></row>");
                 writer.println("<row><entry>Temporal?</entry><entry>" + (entiDetail.getEnti().isTemporal() ? "S" : "N")
                         + "</entry></row>");
                 writer.println("<row><entry>Facturable?</entry><entry>"
@@ -475,12 +475,12 @@ public final class DocbookMetamodelo {
                 writer.println("<colspec colnum='1' colname='col1' colwidth='1*' />");
                 writer.println("<colspec colnum='2' colname='col2' colwidth='4*' />");
                 writer.println("<tbody>");
-                writer.println("<row><entry>Codigo</entry><entry>" + entiDetail.getEnti().getCodigo()
-                        + "</entry></row>");
-                writer.println("<row><entry>Nombre</entry><entry>" + entiDetail.getEnti().getNombre()
-                        + "</entry></row>");
-                writer.println("<row><entry>Etiqueta</entry><entry>" + entiDetail.getEnti().getEtiqueta()
-                        + "</entry></row>");
+                writer.println(
+                        "<row><entry>Codigo</entry><entry>" + entiDetail.getEnti().getCodigo() + "</entry></row>");
+                writer.println(
+                        "<row><entry>Nombre</entry><entry>" + entiDetail.getEnti().getNombre() + "</entry></row>");
+                writer.println(
+                        "<row><entry>Etiqueta</entry><entry>" + entiDetail.getEnti().getEtiqueta() + "</entry></row>");
                 // writer.println("<row><entry>Cmd. Alta?</entry><entry>" + (entiVO.isCmdAlta() ? "S" :
                 // "N")
                 // + "</entry></row>");
@@ -514,8 +514,8 @@ public final class DocbookMetamodelo {
     /**
      * Write enti info.
      *
-     * @param entiVO
-     *            the enti vo
+     * @param entiDetail
+     *            the enti detail
      * @param writer
      *            the writer
      * @throws IOException
@@ -580,8 +580,8 @@ public final class DocbookMetamodelo {
 
             for (final Long tpdtId : entiDetail.getEntdList()) {
                 final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
-                final AbstractEntidadDetailVO entdEntiDetail = entd.getTpdt().getEnti() == null ? null : EntidadProxy
-                        .select(entd.getTpdt().getEnti().getId());
+                final AbstractEntidadDetailVO entdEntiDetail = entd.getTpdt().getEnti() == null ? null
+                        : EntidadProxy.select(entd.getTpdt().getEnti().getId());
 
                 writer.println("<row>");
                 writer.println("<entry>" + entd.getEtiqueta() + "</entry>");

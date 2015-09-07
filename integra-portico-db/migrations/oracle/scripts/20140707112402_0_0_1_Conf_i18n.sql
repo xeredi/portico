@@ -285,6 +285,10 @@ INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'enti_
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_exencionable', 'Exencionable?')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'enti_tpdtEstado')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_tpdtEstado', 'T. Dato Estado')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'enti_estado_def')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_estado_def', 'Estado Def.')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'enti_estados_vlrc')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_estados_vlrc', 'Estados Fact.')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'enti_tpdtNombre')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_tpdtNombre', 'T. Dato Nombre')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'enti_classpath')\
@@ -328,6 +332,10 @@ INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'trmt_
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'trmt_estado_dest', 'Estado Dt.')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'trmt_etiqueta')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'trmt_etiqueta', 'Texto')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'trtdList')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'trtdList', 'Datos del Trámite')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'trtd_obligatorio')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'trtd_obligatorio', 'Obligatorio?')\
 
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'enac')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enac', 'Acción Asociada a Entidad')\

@@ -17,6 +17,15 @@
                     <option />
                 </select>
             </div>
+            <div class="col-sm-2 col-md-1 form-group-sm" ng-if="vm.enti.tpdtEstado.id">
+                <label translate="enti_estado_def"></label> <input type="text" ng-model="vm.enti.estadoDef"
+                    class="form-control" />
+            </div>
+            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm"
+                ng-if="vm.enti.tpdtEstado.id && vm.enti.facturable">
+                <label translate="enti_estados_vlrc"></label> <input type="text"
+                    ng-model="vm.enti.estadosVlrc" class="form-control" />
+            </div>
         </div>
 
         <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
@@ -51,28 +60,28 @@
                 </select>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>enti_temporal</label> <select ng-model="vm.enti.temporal"
+                <label translate="enti_temporal"></label> <select ng-model="vm.enti.temporal"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                     <option />
                 </select>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>enti_facturable</label> <select ng-model="vm.enti.facturable"
+                <label translate="enti_facturable"></label> <select ng-model="vm.enti.facturable"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                     <option />
                 </select>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>enti_exencionable</label> <select ng-model="vm.enti.exencionable"
+                <label translate="enti_exencionable"></label> <select ng-model="vm.enti.exencionable"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                     <option />
                 </select>
             </div>
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate>enti_classpath</label> <input type="text" ng-model="vm.enti.classpath"
+                <label translate="enti_classpath"></label> <input type="text" ng-model="vm.enti.classpath"
                     class="form-control" />
             </div>
         </div>

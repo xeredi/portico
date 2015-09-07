@@ -7,6 +7,8 @@
 		<result column="tpsr_es_temporal" property="temporal" />
 		<result column="tpsr_es_facturable" property="facturable" />
 		<result column="tpsr_es_exencionable" property="exencionable" />
+		<result column="tpsr_estados_vlrc" property="estadosVlrc" />
+		<result column="tpsr_estado_def" property="estadoDef" />
 
 		<association property="tpdtEstado" javaType="TipoDatoVO">
 			<result column="tpdt_pk" property="id" />
@@ -20,7 +22,7 @@
             enti_pk, enti_codigo, enti_tipo, enti_max_grid, enti_classpath
             , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
             , tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable
-            , tpdt_pk
+            , tpdt_pk, tpsr_estados_vlrc, tpsr_estado_def
     ]]>
 		<if test="idioma != null">
         <![CDATA[
@@ -94,12 +96,16 @@
 
 	<insert id="insert" parameterType="TipoServicioVO">
         <![CDATA[
-        INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable, tpsr_tpdt_estado_pk)
+        INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable
+        	, tpsr_tpdt_estado_pk, tpsr_estados_vlrc, tpsr_estado_def)
         VALUES (#{id}
         	, #{temporal, jdbcType=INTEGER, javaType=Boolean}
         	, #{facturable, jdbcType=INTEGER, javaType=Boolean}
         	, #{exencionable, jdbcType=INTEGER, javaType=Boolean}
-        	, #{tpdtEstado.id})
+        	, #{tpdtEstado.id}
+        	, #{estadosVlrc}
+        	, #{estadoDef}
+        )
         ]]>
 	</insert>
 
@@ -110,6 +116,8 @@
             , tpsr_es_facturable = #{facturable, jdbcType=INTEGER, javaType=Boolean}
             , tpsr_es_exencionable = #{exencionable, jdbcType=INTEGER, javaType=Boolean}
             , tpsr_tpdt_estado_pk = #{tpdtEstado.id}
+            , tpsr_estados_vlrc = #{estadosVlrc}
+            , tpsr_estado_def = #{estadoDef}
         WHERE tpsr_pk = #{id}
         ]]>
 	</update>

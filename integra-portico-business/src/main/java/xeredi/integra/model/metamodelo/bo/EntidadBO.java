@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import lombok.NonNull;
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
@@ -17,6 +18,28 @@ import xeredi.util.mybatis.SqlMapperLocator;
  * The Class EntidadAdminBO.
  */
 public final class EntidadBO {
+
+    /**
+     * Select.
+     *
+     * @param entiId
+     *            the enti id
+     * @param idioma
+     *            the idioma
+     * @return the entidad vo
+     */
+    public EntidadVO select(final @NonNull Long entiId, final String idioma) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
+            final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
+
+            entiCriterio.setId(entiId);
+            entiCriterio.setIdioma(idioma);
+
+            return entiDAO.selectObject(entiCriterio);
+        }
+    }
+
     /**
      * Select list.
      *

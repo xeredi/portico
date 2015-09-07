@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.NonNull;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
@@ -37,7 +38,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param entiDetail
      *            the enti detail
      */
-    protected ItemVO(final AbstractEntidadDetailVO entiDetail) {
+    protected ItemVO(final @NonNull AbstractEntidadDetailVO entiDetail) {
         super();
 
         setEntiId(entiDetail.getEnti().getId());

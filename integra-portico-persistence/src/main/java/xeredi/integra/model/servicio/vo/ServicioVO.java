@@ -7,7 +7,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
-import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioDetailVO;
 
 // TODO: Auto-generated Javadoc
@@ -50,19 +49,22 @@ public final class ServicioVO extends ItemVO {
      * Instantiates a new servicio vo.
      */
     public ServicioVO() {
-		super();
-	}
+        super();
+    }
 
-	/**
-	 * Instantiates a new servicio vo.
-	 *
-	 * @param entiDetail the enti detail
-	 */
-	public ServicioVO(TipoServicioDetailVO entiDetail) {
-		super(entiDetail);
-	}
+    /**
+     * Instantiates a new servicio vo.
+     *
+     * @param entiDetail
+     *            the enti detail
+     */
+    public ServicioVO(final TipoServicioDetailVO entiDetail) {
+        super(entiDetail);
 
-	/**
+        estado = entiDetail.getEnti().getEstadoDef();
+    }
+
+    /**
      * Convert numero.
      *
      * @param numero

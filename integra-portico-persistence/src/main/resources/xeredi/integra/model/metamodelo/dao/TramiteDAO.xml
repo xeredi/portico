@@ -80,6 +80,16 @@
     ]]>
 	</insert>
 
+	<update id="update" parameterType="TramiteVO">
+    <![CDATA[
+        UPDATE tbl_tramite_trmt SET
+        	trmt_estado_orig = #{estadoOrig}
+        	, trmt_estado_dest = #{estadoDest}
+        WHERE trmt_pk = #{id}
+        	AND trmt_enti_pk = #{entiId}
+    ]]>
+	</update>
+
 	<delete id="delete" parameterType="TramiteVO">
     <![CDATA[
         DELETE FROM tbl_tramite_trmt

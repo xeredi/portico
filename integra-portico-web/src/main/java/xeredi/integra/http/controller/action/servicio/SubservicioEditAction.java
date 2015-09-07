@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.item.ItemEditAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
@@ -15,8 +17,6 @@ import xeredi.integra.model.servicio.bo.SubservicioBOFactory;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -35,9 +35,12 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
      */
     @Override
     public void doSpecificEdit() throws ApplicationException {
+        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId());
+
         enti = TipoSubservicioProxy.select(model.getEntiId());
 
-        if (accion == ACCION_EDICION.create) {
+        switch (accion) {
+        case create:
             if (model.getSrvc() != null && model.getSrvc().getId() != null) {
                 final ServicioBO srvcBO = ServicioBOFactory.newInstance(enti.getEnti().getTpsrId());
 
@@ -46,11 +49,36 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
             } else {
                 model.setFref(Calendar.getInstance().getTime());
             }
-        } else {
+
+            model.setEstado(enti.getEnti().getEstadoDef());
+
+            break;
+        case duplicate:
             Preconditions.checkNotNull(model.getSrvc());
             Preconditions.checkNotNull(model.getSrvc().getId());
 
-            final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId());
+            model = ssrvBO.select(model.getId(), getIdioma());
+            model.setEstado(enti.getEnti().getEstadoDef());
+
+            if (enti.getEntiPadresList() != null) {
+                itemPadresMap = new HashMap<Long, LabelValueVO>();
+
+                for (final Long entiId : enti.getEntiPadresList()) {
+                    if (!enti.getEnti().getTpsrId().equals(entiId)) {
+                        final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+
+                        ssrvCriterioVO.setHijoId(model.getId());
+                        ssrvCriterioVO.setEntiId(entiId);
+
+                        itemPadresMap.put(entiId, ssrvBO.selectLabelValueObject(ssrvCriterioVO));
+                    }
+                }
+            }
+
+            break;
+        case edit:
+            Preconditions.checkNotNull(model.getSrvc());
+            Preconditions.checkNotNull(model.getSrvc().getId());
 
             model = ssrvBO.select(model.getId(), getIdioma());
 
@@ -68,6 +96,10 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
                     }
                 }
             }
+
+            break;
+        default:
+            throw new Error("Invalid action: " + accion.name());
         }
 
         fechaVigencia = model.getFref();

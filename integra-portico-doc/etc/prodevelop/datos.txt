@@ -19,7 +19,7 @@ Doc Ténnica
 
 SVN
 	https://svn.puertos.es:4343/repos/IntegraMan
-	prodevelop / Pro2015lop
+	jrey_prodevelop / X25veh53
 
 OTR (incidencias)
 	cau.puertos.es/otrs/index.pl

@@ -8,6 +8,8 @@
 		<result column="tpss_es_facturable" property="facturable" />
 		<result column="tpss_es_exencionable" property="exencionable" />
 		<result column="tpss_tpsr_pk" property="tpsrId" />
+		<result column="tpss_estados_vlrc" property="estadosVlrc" />
+		<result column="tpss_estado_def" property="estadoDef" />
 
 		<association property="tpdtEstado" javaType="TipoDatoVO">
 			<result column="tpdt_pk" property="id" />
@@ -21,6 +23,7 @@
             enti.enti_pk, enti.enti_codigo, enti.enti_tipo, enti.enti_max_grid, enti.enti_classpath
             , enti.enti_cmd_alta, enti.enti_cmd_baja, enti.enti_cmd_edicion, enti.enti_cmd_duplicado
             , tpss.tpss_es_temporal, tpss.tpss_es_facturable, tpss.tpss_es_exencionable, tpss.tpss_tpsr_pk
+            , tpss.tpss_estados_vlrc, tpss.tpss_estado_def
             , tpdt_pk
     ]]>
 		<if test="idioma != null">
@@ -99,7 +102,8 @@
 
 	<insert id="insert" parameterType="TipoSubservicioVO">
         <![CDATA[
-        INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk)
+        INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable
+        	, tpss_es_exencionable, tpss_tpdt_estado_pk, tpss_estados_vlrc, tpss_estado_def)
         VALUES (
             #{id}
             , #{tpsrId}
@@ -107,6 +111,8 @@
             , #{facturable, jdbcType=INTEGER, javaType=Boolean}
             , #{exencionable, jdbcType=INTEGER, javaType=Boolean}
             , #{tpdtEstado.id}
+            , #{estadosVlrc}
+            , #{estadoDef}
         )
         ]]>
 	</insert>
@@ -118,6 +124,8 @@
         	, tpss_es_facturable = #{facturable, jdbcType=INTEGER, javaType=Boolean}
         	, tpss_es_exencionable = #{exencionable, jdbcType=INTEGER, javaType=Boolean}
         	, tpss_tpdt_estado_pk = #{tpdtEstado.id}
+        	, tpss_estados_vlrc = #{estadosVlrc}
+        	, tpss_estado_def = #{estadoDef}
         WHERE
         	tpss_pk = #{id}
         	AND tpss_tpsr_pk = #{tpsrId}

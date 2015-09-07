@@ -35,19 +35,22 @@ public final class SubservicioVO extends ItemVO {
      * Instantiates a new subservicio vo.
      */
     public SubservicioVO() {
-		super();
-	}
+        super();
+    }
 
-	/**
-	 * Instantiates a new subservicio vo.
-	 *
-	 * @param entiDetail the enti detail
-	 */
-	public SubservicioVO(TipoSubservicioDetailVO entiDetail) {
-		super(entiDetail);
-	}
+    /**
+     * Instantiates a new subservicio vo.
+     *
+     * @param entiDetail
+     *            the enti detail
+     */
+    public SubservicioVO(final TipoSubservicioDetailVO entiDetail) {
+        super(entiDetail);
 
-	/**
+        estado = entiDetail.getEnti().getEstadoDef();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

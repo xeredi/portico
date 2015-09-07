@@ -17,6 +17,15 @@
                     <option />
                 </select>
             </div>
+            <div class="col-sm-2 col-md-1 form-group-sm" ng-if="vm.enti.tpdtEstado.id">
+                <label translate="enti_estado_def"></label> <input type="text" ng-model="vm.enti.estadoDef"
+                    class="form-control" />
+            </div>
+            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm"
+                ng-if="vm.enti.tpdtEstado.id && vm.enti.facturable">
+                <label translate="enti_estados_vlrc"></label> <input type="text"
+                    ng-model="vm.enti.estadosVlrc" class="form-control" />
+            </div>
         </div>
 
         <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
