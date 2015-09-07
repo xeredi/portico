@@ -524,6 +524,7 @@ function TpprDetailController($http, $location, $routeParams, pageTitleService) 
     var vm = this;
 
     vm.remove = remove;
+    vm.tabSelected = tabSelected;
 
     initialize();
 
@@ -554,6 +555,12 @@ function TpprDetailController($http, $location, $routeParams, pageTitleService) 
             }).success(function(data) {
                 window.history.back();
             });
+        }
+    }
+
+    function tabSelected(tabNo) {
+        if (vm.path == $location.path()) {
+            $location.search("tab", tabNo).replace();
         }
     }
 }
@@ -604,6 +611,7 @@ function TpspDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.remove = remove;
+    vm.tabSelected = tabSelected;
 
     initialize();
 
@@ -631,6 +639,12 @@ function TpspDetailController($http, $routeParams, pageTitleService) {
             }).success(function(data) {
                 window.history.back();
             });
+        }
+    }
+
+    function tabSelected(tabNo) {
+        if (vm.path == $location.path()) {
+            $location.search("tab", tabNo).replace();
         }
     }
 }
@@ -722,6 +736,7 @@ function TpsrDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.remove = remove;
+    vm.tabSelected = tabSelected;
 
     initialize();
 
@@ -752,6 +767,12 @@ function TpsrDetailController($http, $routeParams, pageTitleService) {
             }).success(function(data) {
                 window.history.back();
             });
+        }
+    }
+
+    function tabSelected(tabNo) {
+        if (vm.path == $location.path()) {
+            $location.search("tab", tabNo).replace();
         }
     }
 }
@@ -802,6 +823,7 @@ function TpssDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.remove = remove;
+    vm.tabSelected = tabSelected;
 
     initialize();
 
@@ -832,6 +854,12 @@ function TpssDetailController($http, $routeParams, pageTitleService) {
             }).success(function(data) {
                 window.history.back();
             });
+        }
+    }
+
+    function tabSelected(tabNo) {
+        if (vm.path == $location.path()) {
+            $location.search("tab", tabNo).replace();
         }
     }
 }
@@ -923,6 +951,7 @@ function TpesDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.remove = remove;
+    vm.tabSelected = tabSelected;
 
     initialize();
 
@@ -952,6 +981,12 @@ function TpesDetailController($http, $routeParams, pageTitleService) {
             }).success(function(data) {
                 window.history.back();
             });
+        }
+    }
+
+    function tabSelected(tabNo) {
+        if (vm.path == $location.path()) {
+            $location.search("tab", tabNo).replace();
         }
     }
 }

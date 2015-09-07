@@ -1,6 +1,8 @@
+<tabset type="pills"> <tab select="vm.tabSelected(null)"> <tab-heading
+    ng-bind="'enti' | translate"></tab-heading>
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/tpss/edit/edit/{{::vm.enti.tpsrId}}/{{::vm.enti.id}}"><i
+        <a class="btn btn-default" ng-href="#/metamodelo/tpss/edit/edit/{{vm.enti.tpsrId}}/{{vm.enti.id}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
@@ -12,29 +14,29 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
             <label translate="enti_codigo"></label>
-            <p class="form-control-static" ng-bind="::vm.enti.codigo"></p>
+            <p class="form-control-static" ng-bind="vm.enti.codigo"></p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate="enti_tipo"></label>
             <p class="form-control-static" bs-tooltip
-                data-title="{{('EntidadTipo_' + vm.enti.tipo | translate)}}" ng-bind="::vm.enti.tipo"></p>
+                data-title="{{('EntidadTipo_' + vm.enti.tipo | translate)}}" ng-bind="vm.enti.tipo"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="tpsr"></label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tpsr/detail/{{::vm.enti.tpsrId}}"
+                <a ng-href="#/metamodelo/tpsr/detail/{{vm.enti.tpsrId}}"
                     translate="{{('enti_' + vm.enti.tpsrId)}}"></a>
             </p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
             <label translate="enti_maxGrid"></label>
-            <p class="form-control-static number" ng-bind="::(vm.enti.maxGrid | number:0)"></p>
+            <p class="form-control-static number" ng-bind="(vm.enti.maxGrid | number:0)"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="enti_tpdtEstado"></label>
             <p class="form-control-static">
-                <a ng-if="vm.enti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{::vm.enti.tpdtEstado.id}}"
-                    ng-bind="::vm.enti.tpdtEstado.nombre"></a>
+                <a ng-if="vm.enti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{vm.enti.tpdtEstado.id}}"
+                    ng-bind="vm.enti.tpdtEstado.nombre"></a>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 form-group-sm" ng-if="vm.enti.tpdtEstado.id">
@@ -95,29 +97,22 @@
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="enti_classpath"></label>
-            <p class="form-control-static" ng-bind="::vm.enti.classpath"></p>
+            <p class="form-control-static" ng-bind="vm.enti.classpath"></p>
         </div>
     </div>
 </fieldset>
-
-<div ng-include="'modules/metamodelo/fragment/engd-grid-content.html'"></div>
-<div ng-include="'modules/metamodelo/fragment/entd-grid-content.html'"></div>
-<div ng-include="'modules/metamodelo/fragment/trmt-grid-content.html'"></div>
-<div ng-include="'modules/metamodelo/fragment/enac-grid-content.html'"></div>
-<div ng-include="'modules/metamodelo/fragment/enag-grid-content.html'"></div>
-
 
 <fieldset>
     <legend ng-bind="'Entidades Hijas'"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/metamodelo/enen/edit/create/{{::vm.enti.id}}"><i
+            <a class="btn btn-default" ng-href="#/metamodelo/enen/edit/create/{{vm.enti.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>
     </div>
 
-    <table ng-if="::vm.entiHijasList" class="table-bordered table-condensed table-hover table-nonfluid">
+    <table ng-if="vm.entiHijasList" class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
@@ -130,15 +125,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="entiHija in ::vm.entiHijasList track by $index">
-                <td><a ng-href="#/metamodelo/tpss/detail/{{::entiHija.id}}"><i
+            <tr ng-repeat="entiHija in vm.entiHijasList track by $index">
+                <td><a ng-href="#/metamodelo/tpss/detail/{{entiHija.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="::entiHija.codigo"></td>
-                <td ng-bind="::entiHija.nombre"></td>
-                <td><i class="glyphicon glyphicon-{{::(entiHija.cmdAlta ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::(entiHija.cmdBaja ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::(entiHija.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::(entiHija.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
+                <td ng-bind="entiHija.codigo"></td>
+                <td ng-bind="entiHija.nombre"></td>
+                <td><i class="glyphicon glyphicon-{{(entiHija.cmdAlta ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(entiHija.cmdBaja ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(entiHija.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(entiHija.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
             </tr>
         </tbody>
     </table>
@@ -146,7 +141,7 @@
 
 <fieldset>
     <legend ng-bind="'Entidades Padres'"></legend>
-    <table ng-if="::vm.entiPadresList" class="table-bordered table-condensed table-hover table-nonfluid">
+    <table ng-if="vm.entiPadresList" class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
@@ -159,19 +154,29 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="entiPadre in ::vm.entiPadresList track by $index">
+            <tr ng-repeat="entiPadre in vm.entiPadresList track by $index">
                 <td><a ng-if="entiPadre.tipo == 'T'"
-                    ng-href="#/metamodelo/tpsr/detail/{{::entiPadre.id}}"><i
+                    ng-href="#/metamodelo/tpsr/detail/{{entiPadre.id}}"><i
                         class="glyphicon glyphicon-search"></i></a><a ng-if="entiPadre.tipo == 'S'"
-                    ng-href="#/metamodelo/tpss/detail/{{::entiPadre.id}}"><i
+                    ng-href="#/metamodelo/tpss/detail/{{entiPadre.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="::entiPadre.codigo"></td>
-                <td ng-bind="::entiPadre.nombre"></td>
-                <td><i class="glyphicon glyphicon-{{::(entiPadre.cmdAlta ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::(entiPadre.cmdBaja ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::(entiPadre.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::(entiPadre.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
+                <td ng-bind="entiPadre.codigo"></td>
+                <td ng-bind="entiPadre.nombre"></td>
+                <td><i class="glyphicon glyphicon-{{(entiPadre.cmdAlta ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(entiPadre.cmdBaja ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(entiPadre.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(entiPadre.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
             </tr>
         </tbody>
     </table>
 </fieldset>
+</tab> <tab select="vm.tabSelected('entdList')"> <tab-heading ng-bind="'entdList' | translate"></tab-heading>
+<div ng-include="'modules/metamodelo/fragment/engd-grid-content.html'"></div>
+<div ng-include="'modules/metamodelo/fragment/entd-grid-content.html'"></div>
+</tab>
+<tab select="vm.tabSelected('accnList')"> <tab-heading ng-bind="'accnList' | translate"></tab-heading>
+<div ng-include="'modules/metamodelo/fragment/enac-grid-content.html'"></div>
+<div ng-include="'modules/metamodelo/fragment/enag-grid-content.html'"></div>
+</tab> <tab select="vm.tabSelected('trmtList')"> <tab-heading ng-bind="'trmtList' | translate"></tab-heading>
+<div ng-include="'modules/metamodelo/fragment/trmt-grid-content.html'"></div>
+</tab></tabset>

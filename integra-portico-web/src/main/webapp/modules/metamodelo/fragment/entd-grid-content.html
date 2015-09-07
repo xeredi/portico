@@ -3,7 +3,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/metamodelo/entd/edit/create/{{::vm.enti.id}}"><i
+            <a class="btn btn-default" ng-href="#/metamodelo/entd/edit/create/{{vm.enti.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>
     </div>
@@ -29,25 +29,25 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="entd in ::vm.entdList track by entd.id">
-                <td><a ng-href="#/metamodelo/entd/detail/{{::vm.enti.id}}/{{::entd.tpdt.id}}"><i
+            <tr ng-repeat="entd in vm.entdList track by entd.id">
+                <td><a ng-href="#/metamodelo/entd/detail/{{vm.enti.id}}/{{entd.tpdt.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="::entd.grupo" class="number"></td>
-                <td ng-bind="::entd.fila" class="number"></td>
-                <td ng-bind="::entd.orden" class="number"></td>
-                <td ng-bind="::entd.span" class="number"></td>
-                <td ng-bind="::entd.spanLg" class="number"></td>
-                <td nowrap="nowrap" ng-bind="::entd.etiqueta"></td>
-                <td><i class="glyphicon glyphicon-{{::(entd.obligatorio ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::(entd.gridable ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::(entd.filtrable ? 'ok' : 'remove')}}"></i></td>
-                <td nowrap="nowrap" ng-bind="::entd.tpdt.nombre"></td>
-                <td bs-tooltip data-title="{{::('ElementoTipo_' + entd.tpdt.tipoElemento | translate)}}"
-                    ng-bind="::entd.tpdt.tipoElemento"></td>
-                <td bs-tooltip data-title="{{::('HtmlTipo_' + entd.tpdt.tpht | translate)}}"
-                    ng-bind="::entd.tpdt.tpht"></td>
-                <td nowrap="nowrap" ng-bind="::entd.tpdt.enti.nombre"></span></td>
-                <td nowrap="nowrap" ng-bind="::entd.valorDefecto"></span></td>
+                <td ng-bind="entd.grupo" class="number"></td>
+                <td ng-bind="entd.fila" class="number"></td>
+                <td ng-bind="entd.orden" class="number"></td>
+                <td ng-bind="entd.span" class="number"></td>
+                <td ng-bind="entd.spanLg" class="number"></td>
+                <td nowrap="nowrap" ng-bind="entd.etiqueta"></td>
+                <td><i class="glyphicon glyphicon-{{(entd.obligatorio ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(entd.gridable ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(entd.filtrable ? 'ok' : 'remove')}}"></i></td>
+                <td nowrap="nowrap" ng-bind="entd.tpdt.nombre"></td>
+                <td bs-tooltip data-title="{{('ElementoTipo_' + entd.tpdt.tipoElemento | translate)}}"
+                    ng-bind="entd.tpdt.tipoElemento"></td>
+                <td bs-tooltip data-title="{{('HtmlTipo_' + entd.tpdt.tpht | translate)}}"
+                    ng-bind="entd.tpdt.tpht"></td>
+                <td nowrap="nowrap" ng-bind="entd.tpdt.enti.nombre"></span></td>
+                <td nowrap="nowrap" ng-bind="entd.valorDefecto"></span></td>
             </tr>
         </tbody>
     </table>

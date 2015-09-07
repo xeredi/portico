@@ -12,13 +12,13 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.google.common.collect.Sets;
+
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.collect.Sets;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -71,10 +71,7 @@ public class I18nJs {
             }
 
             final String jsTemplate = "angular.module('i18n', [ 'pascalprecht.translate' ]).config(function($translateProvider) { $translateProvider.translations('"
-                    + language
-                    + "', {"
-                    + i18nParams.toString()
-                    + "}); $translateProvider.preferredLanguage('"
+                    + language + "', {" + i18nParams.toString() + "}); $translateProvider.preferredLanguage('"
                     + defaultLanguage + "'); });";
 
             final String filename = webappInstallPath + "/modules/i18n/i18n_messages_" + language + ".js";
@@ -107,7 +104,3 @@ public class I18nJs {
     }
 
 }
-
-// cdrf_ACC_PET_AMARRE_AB : 'AB',
-// cdrf_ZONA_II : 'II'
-

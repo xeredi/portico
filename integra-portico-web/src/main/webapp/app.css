@@ -44,7 +44,8 @@ body, label, .checkbox label, .radio label, table, legend, .tooltip, ul.dropdown
 
 legend {
 	text-transform: uppercase;
-	margin-top: 10px;
+	padding-top: 15px;
+	padding-bottom: 3px;
 	margin-bottom: 5px;
 }
 
@@ -102,7 +103,7 @@ a {
 }
 
 fieldset {
-	margin-bottom: 10px;
+	padding-bottom: 10px;
 }
 
 .pagination {

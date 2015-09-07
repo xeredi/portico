@@ -41,22 +41,22 @@
 
         <tbody>
             <tr ng-repeat="enti in vm.entiList.list track by enti.id">
-                <td><a ng-href="#/metamodelo/tppr/detail/{{::enti.id}}"><i
+                <td><a ng-href="#/metamodelo/tppr/detail/{{enti.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="::enti.codigo"></td>
-                <td ng-bind="::enti.nombre"></td>
-                <td><i class="glyphicon glyphicon-{{::(enti.cmdAlta ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::(enti.cmdBaja ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::(enti.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::(enti.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::(enti.gis ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::(enti.puerto ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::(enti.i18n ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{::(enti.tempExp ? 'ok' : 'remove')}}"></i></td>
-                <td class="number" ng-bind="::(enti.maxGrid | number:0)"></td>
-                <td><a ng-href="#/metamodelo/tpdt/detail/{{::enti.tpdtNombre.id}}"
-                    ng-bind="::enti.tpdtNombre.nombre"></a></td>
-                <td ng-bind="::enti.classpath"></td>
+                <td ng-bind="enti.codigo"></td>
+                <td ng-bind="enti.nombre"></td>
+                <td><i class="glyphicon glyphicon-{{(enti.cmdAlta ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(enti.cmdBaja ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(enti.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(enti.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(enti.gis ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(enti.puerto ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(enti.i18n ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(enti.tempExp ? 'ok' : 'remove')}}"></i></td>
+                <td class="number" ng-bind="(enti.maxGrid | number:0)"></td>
+                <td><a ng-href="#/metamodelo/tpdt/detail/{{enti.tpdtNombre.id}}"
+                    ng-bind="enti.tpdtNombre.nombre"></a></td>
+                <td ng-bind="enti.classpath"></td>
             </tr>
         </tbody>
     </table>

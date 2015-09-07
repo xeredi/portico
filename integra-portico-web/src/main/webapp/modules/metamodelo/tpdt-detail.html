@@ -1,6 +1,6 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/tpdt/edit/edit/{{::vm.tpdt.id}}"><i
+        <a class="btn btn-default" ng-href="#/metamodelo/tpdt/edit/edit/{{vm.tpdt.id}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate>tpdt_codigo</label>
-            <p class="form-control-static" ng-bind="::vm.tpdt.codigo"></p>
+            <p class="form-control-static" ng-bind="vm.tpdt.codigo"></p>
         </div>
         <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
             <label translate>tpdt_tpht</label>
@@ -25,14 +25,14 @@
         <div ng-if="vm.tpdt.enti.id" class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate>enti</label>
             <p class="form-control-static">
-                <a ng-if="vm.tpdt.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{::vm.tpdt.enti.id}}"
-                    ng-bind="::vm.tpdt.enti.nombre"></a><a ng-if="vm.tpdt.enti.tipo == 'S'"
-                    ng-href="#/metamodelo/tpss/detail/{{::vm.tpdt.enti.id}}" ng-bind="::vm.tpdt.enti.nombre"></a><a
-                    ng-if="vm.tpdt.enti.tipo == 'P'" ng-href="#/metamodelo/tppr/detail/{{::vm.tpdt.enti.id}}"
-                    ng-bind="::vm.tpdt.enti.nombre"></a><a ng-if="vm.tpdt.enti.tipo == 'B'"
-                    ng-href="#/metamodelo/tpsp/detail/{{::vm.tpdt.enti.id}}" ng-bind="::vm.tpdt.enti.nombre"></a>
-                <a ng-if="vm.tpdt.enti.tipo == 'E'" ng-href="#/metamodelo/tpes/detail/{{::vm.tpdt.enti.id}}"
-                    ng-bind="::vm.tpdt.enti.nombre"></a>
+                <a ng-if="vm.tpdt.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{vm.tpdt.enti.id}}"
+                    ng-bind="vm.tpdt.enti.nombre"></a><a ng-if="vm.tpdt.enti.tipo == 'S'"
+                    ng-href="#/metamodelo/tpss/detail/{{vm.tpdt.enti.id}}" ng-bind="vm.tpdt.enti.nombre"></a><a
+                    ng-if="vm.tpdt.enti.tipo == 'P'" ng-href="#/metamodelo/tppr/detail/{{vm.tpdt.enti.id}}"
+                    ng-bind="vm.tpdt.enti.nombre"></a><a ng-if="vm.tpdt.enti.tipo == 'B'"
+                    ng-href="#/metamodelo/tpsp/detail/{{vm.tpdt.enti.id}}" ng-bind="vm.tpdt.enti.nombre"></a>
+                <a ng-if="vm.tpdt.enti.tipo == 'E'" ng-href="#/metamodelo/tpes/detail/{{vm.tpdt.enti.id}}"
+                    ng-bind="vm.tpdt.enti.nombre"></a>
             </p>
         </div>
     </div>
@@ -45,7 +45,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/metamodelo/cdrf/edit/create/{{::vm.tpdt.id}}"><i
+            <a class="btn btn-default" ng-href="#/metamodelo/cdrf/edit/create/{{vm.tpdt.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>
@@ -60,12 +60,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="cdrf in ::vm.tpdt.cdrfList track by $index">
-                <td><a ng-href="#/metamodelo/cdrf/detail/{{::cdrf.id}}"><i
+            <tr ng-repeat="cdrf in vm.tpdt.cdrfList track by $index">
+                <td><a ng-href="#/metamodelo/cdrf/detail/{{cdrf.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="::cdrf.valor"></td>
-                <td ng-bind="::cdrf.texto"></td>
-                <td class="number" ng-bind="::cdrf.orden"></td>
+                <td ng-bind="cdrf.valor"></td>
+                <td ng-bind="cdrf.texto"></td>
+                <td class="number" ng-bind="cdrf.orden"></td>
             </tr>
         </tbody>
     </table>

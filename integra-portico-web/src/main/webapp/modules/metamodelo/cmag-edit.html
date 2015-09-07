@@ -1,7 +1,7 @@
 <form novalidate role="form">
     <fieldset>
         <div class="row">
-            <div class="col-md-3 form-group-sm" ng-switch="::vm.accion">
+            <div class="col-md-3 form-group-sm" ng-switch="vm.accion">
                 <label translate>cmag_nombre</label> <input ng-switch-when="create" type="text"
                     ng-model="vm.cmag.nombre" class="form-control" />
                 <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.cmag.nombre"></p>

@@ -1,6 +1,8 @@
+<tabset type="pills"> <tab select="vm.tabSelected(null)"> <tab-heading
+    ng-bind="'enti' | translate"></tab-heading>
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/tpes/edit/edit/{{::vm.enti.id}}"><i
+        <a class="btn btn-default" ng-href="#/metamodelo/tpes/edit/edit/{{vm.enti.id}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
@@ -12,22 +14,22 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate>enti_codigo</label>
-            <p class="form-control-static" ng-bind="::vm.enti.codigo"></p>
+            <p class="form-control-static" ng-bind="vm.enti.codigo"></p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate>enti_tipo</label>
             <p class="form-control-static" bs-tooltip
-                data-title="{{::('EntidadTipo_' + vm.enti.tipo | translate)}}" ng-bind="::vm.enti.tipo"></p>
+                data-title="{{('EntidadTipo_' + vm.enti.tipo | translate)}}" ng-bind="vm.enti.tipo"></p>
         </div>
         <div class="col-sm-3 col-md-2 form-group-sm">
             <label translate>enti_maxGrid</label>
-            <p class="form-control-static number" ng-bind="::(vm.enti.maxGrid | number:0)"></p>
+            <p class="form-control-static number" ng-bind="(vm.enti.maxGrid | number:0)"></p>
         </div>
     </div>
 
     <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
 </fieldset>
-
+</tab> <tab select="vm.tabSelected('entdList')"> <tab-heading ng-bind="'entdList' | translate"></tab-heading>
 <div ng-include="'modules/metamodelo/fragment/engd-grid-content.html'"></div>
 <div ng-include="'modules/metamodelo/fragment/entd-grid-content.html'"></div>
 
@@ -36,7 +38,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/metamodelo/cmag/edit/create/{{::vm.enti.id}}"><i
+            <a class="btn btn-default" ng-href="#/metamodelo/cmag/edit/create/{{vm.enti.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>
@@ -50,14 +52,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="cmag in ::vm.cmagList track by $index">
-                <td><a ng-href="#/metamodelo/cmag/detail/{{::cmag.tpesId}}/{{::cmag.entd.id}}"><i
+            <tr ng-repeat="cmag in vm.cmagList track by $index">
+                <td><a ng-href="#/metamodelo/cmag/detail/{{cmag.tpesId}}/{{cmag.entd.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="::cmag.nombre"></td>
-                <td><i class="glyphicon glyphicon-{{::(cmag.agregar ? 'ok' : 'remove')}}"></i></td>
+                <td ng-bind="cmag.nombre"></td>
+                <td><i class="glyphicon glyphicon-{{(cmag.agregar ? 'ok' : 'remove')}}"></i></td>
             </tr>
         </tbody>
     </table>
 </fieldset>
-
-<div ng-include="'modules/metamodelo/fragment/enac-grid-content.html'"></div>
+</tab></tabset>

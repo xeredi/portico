@@ -1,7 +1,7 @@
 <form name="editForm" novalidate role="form">
     <fieldset>
         <div class="row">
-            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm" ng-switch="::vm.accion">
+            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm" ng-switch="vm.accion">
                 <label translate>enti_codigo</label> <input ng-switch-when="create" type="text"
                     ng-model="vm.enti.codigo" class="form-control" />
                 <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.enti.codigo"></p>
@@ -12,7 +12,7 @@
             </div>
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                 <label translate>enti_tpdtEstado</label> <select ng-model="vm.enti.tpdtEstado.id"
-                    ng-options="labelValue.value as labelValue.label for labelValue in ::vm.tpdtEstadoList"
+                    ng-options="labelValue.value as labelValue.label for labelValue in vm.tpdtEstadoList"
                     class="form-control">
                     <option />
                 </select>

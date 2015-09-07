@@ -1,6 +1,8 @@
+<tabset type="pills"> <tab select="vm.tabSelected(null)"> <tab-heading
+    ng-bind="'enti' | translate"></tab-heading>
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/tppr/edit/edit/{{::vm.enti.id}}"><i
+        <a class="btn btn-default" ng-href="#/metamodelo/tppr/edit/edit/{{vm.enti.id}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
@@ -12,22 +14,22 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate="enti_codigo"></label>
-            <p class="form-control-static" ng-bind="::vm.enti.codigo"></p>
+            <p class="form-control-static" ng-bind="vm.enti.codigo"></p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate="enti_tipo"></label>
             <p class="form-control-static" bs-tooltip
-                data-title="{{::('EntidadTipo_' + vm.enti.tipo | translate)}}" ng-bind="::vm.enti.tipo"></p>
+                data-title="{{('EntidadTipo_' + vm.enti.tipo | translate)}}" ng-bind="vm.enti.tipo"></p>
         </div>
         <div class="col-sm-3 col-md-2 form-group-sm">
             <label translate="enti_maxGrid"></label>
-            <p class="form-control-static number" ng-bind="::(vm.enti.maxGrid | number:0)"></p>
+            <p class="form-control-static number" ng-bind="(vm.enti.maxGrid | number:0)"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="enti_tpdtNombre"></label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tpdt/detail/{{::vm.enti.tpdtNombre.id}}"
-                    ng-bind="::vm.enti.tpdtNombre.nombre"></a>
+                <a ng-href="#/metamodelo/tpdt/detail/{{vm.enti.tpdtNombre.id}}"
+                    ng-bind="vm.enti.tpdtNombre.nombre"></a>
             </p>
         </div>
     </div>
@@ -85,21 +87,16 @@
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="enti_classpath"></label>
-            <p class="form-control-static" ng-bind="::vm.enti.classpath"></p>
+            <p class="form-control-static" ng-bind="vm.enti.classpath"></p>
         </div>
     </div>
 </fieldset>
-
-<div ng-include="'modules/metamodelo/fragment/engd-grid-content.html'"></div>
-<div ng-include="'modules/metamodelo/fragment/entd-grid-content.html'"></div>
-<div ng-include="'modules/metamodelo/fragment/enac-grid-content.html'"></div>
-<div ng-include="'modules/metamodelo/fragment/enag-grid-content.html'"></div>
 
 <legend ng-bind="'Subentidades'"></legend>
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/tpsp/edit/create/{{::vm.enti.id}}"><i
+        <a class="btn btn-default" ng-href="#/metamodelo/tpsp/edit/create/{{vm.enti.id}}"><i
             class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
     </div>
 </div>
@@ -120,18 +117,25 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="subenti in ::vm.subentiList track by subenti.id">
-            <td><a ng-href="#/metamodelo/tpsp/detail/{{::subenti.id}}"><i
+        <tr ng-repeat="subenti in vm.subentiList track by subenti.id">
+            <td><a ng-href="#/metamodelo/tpsp/detail/{{subenti.id}}"><i
                     class="glyphicon glyphicon-search"></i></a></td>
-            <td ng-bind="::subenti.codigo"></td>
-            <td ng-bind="::subenti.nombre"></td>
-            <td><i class="glyphicon glyphicon-{{::(subenti.cmdAlta ? 'ok' : 'remove')}}"></i></td>
-            <td><i class="glyphicon glyphicon-{{::(subenti.cmdBaja ? 'ok' : 'remove')}}"></i></td>
-            <td><i class="glyphicon glyphicon-{{::(subenti.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
-            <td><i class="glyphicon glyphicon-{{::(subenti.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
-            <td class="number" ng-bind="::(subenti.maxGrid | number:0)"></td>
-            <td ng-bind="::subenti.tpprAsociado.nombre"></td>
-            <td ng-bind="::subenti.classpath"></td>
+            <td ng-bind="subenti.codigo"></td>
+            <td ng-bind="subenti.nombre"></td>
+            <td><i class="glyphicon glyphicon-{{(subenti.cmdAlta ? 'ok' : 'remove')}}"></i></td>
+            <td><i class="glyphicon glyphicon-{{(subenti.cmdBaja ? 'ok' : 'remove')}}"></i></td>
+            <td><i class="glyphicon glyphicon-{{(subenti.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
+            <td><i class="glyphicon glyphicon-{{(subenti.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
+            <td class="number" ng-bind="(subenti.maxGrid | number:0)"></td>
+            <td ng-bind="subenti.tpprAsociado.nombre"></td>
+            <td ng-bind="subenti.classpath"></td>
         </tr>
     </tbody>
 </table>
+</tab> <tab select="vm.tabSelected('entdList')"> <tab-heading ng-bind="'entdList' | translate"></tab-heading>
+<div ng-include="'modules/metamodelo/fragment/engd-grid-content.html'"></div>
+<div ng-include="'modules/metamodelo/fragment/entd-grid-content.html'"></div>
+</tab> <tab select="vm.tabSelected('accnList')"> <tab-heading ng-bind="'accnList' | translate"></tab-heading>
+<div ng-include="'modules/metamodelo/fragment/enac-grid-content.html'"></div>
+<div ng-include="'modules/metamodelo/fragment/enag-grid-content.html'"></div>
+</tab></tabset>

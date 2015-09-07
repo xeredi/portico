@@ -114,6 +114,10 @@ public enum MessageI18nKey {
     enti_estados_vlrc, /** The enti_tpdt nombre. */
     enti_tpdtNombre, /** The enti_classpath. */
     enti_classpath, /** The tppr. */
+    enti_gis, /** The enti_puerto. */
+    enti_puerto,
+
+    /** The tppr. */
     tppr, /** The tppr list. */
     tpprList, /** The tpsp. */
     tpsp, /** The tpsp list. */
@@ -395,6 +399,12 @@ public enum MessageI18nKey {
     vlrc_falta, /** The vlrc_suj pasivo. */
     vlrc_sujPasivo, /** The vlrc_cod exencion. */
     vlrc_codExencion, /** The vlrg list. */
+    vlrc_info1, /** The vlrc_info2. */
+    vlrc_info2, /** The vlrc_info3. */
+    vlrc_info3, /** The vlrc_info4. */
+    vlrc_info4, /** The vlrc_info5. */
+    vlrc_info5, /** The vlrc_info6. */
+    vlrc_info6, /** The vlrg list. */
     vlrgList, /** The vlrg_importe. */
     vlrg_importe, /** The vlri list. */
     vlriList, /** The vlri_impuesto. */
