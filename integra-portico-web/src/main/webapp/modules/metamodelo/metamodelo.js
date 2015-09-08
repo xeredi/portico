@@ -122,7 +122,8 @@ function config($routeProvider) {
     .when("/metamodelo/tppr/detail/:entiId", {
         templateUrl : "modules/metamodelo/tppr-detail.html",
         controller : "TpprDetailController",
-        controllerAs : 'vm'
+        controllerAs : 'vm',
+        reloadOnSearch : false
     })
 
     .when("/metamodelo/tppr/edit/:accion/:entiId?", {
@@ -134,7 +135,8 @@ function config($routeProvider) {
     .when("/metamodelo/tpsp/detail/:entiId", {
         templateUrl : "modules/metamodelo/tpsp-detail.html",
         controller : "TpspDetailController",
-        controllerAs : 'vm'
+        controllerAs : 'vm',
+        reloadOnSearch : false
     })
 
     .when("/metamodelo/tpsp/edit/:accion/:tpprId/:entiId?", {
@@ -153,7 +155,8 @@ function config($routeProvider) {
     .when("/metamodelo/tpsr/detail/:entiId", {
         templateUrl : "modules/metamodelo/tpsr-detail.html",
         controller : "TpsrDetailController",
-        controllerAs : 'vm'
+        controllerAs : 'vm',
+        reloadOnSearch : false
     })
 
     .when("/metamodelo/tpsr/edit/:accion/:entiId?", {
@@ -165,7 +168,8 @@ function config($routeProvider) {
     .when("/metamodelo/tpss/detail/:entiId", {
         templateUrl : "modules/metamodelo/tpss-detail.html",
         controller : "TpssDetailController",
-        controllerAs : 'vm'
+        controllerAs : 'vm',
+        reloadOnSearch : false
     })
 
     .when("/metamodelo/tpss/edit/:accion/:tpsrId/:entiId?", {
@@ -184,7 +188,8 @@ function config($routeProvider) {
     .when("/metamodelo/tpes/detail/:entiId", {
         templateUrl : "modules/metamodelo/tpes-detail.html",
         controller : "TpesDetailController",
-        controllerAs : 'vm'
+        controllerAs : 'vm',
+        reloadOnSearch : false
     })
 
     .when("/metamodelo/tpes/edit/:accion/:entiId?", {
@@ -529,6 +534,12 @@ function TpprDetailController($http, $location, $routeParams, pageTitleService) 
     initialize();
 
     function initialize() {
+        vm.tabActive = {};
+
+        if ($routeParams.tab) {
+            vm.tabActive[$routeParams.tab] = true;
+        }
+
         $http.post("metamodelo/tipo-parametro-detail.action", {
             model : {
                 id : $routeParams.entiId
@@ -559,9 +570,7 @@ function TpprDetailController($http, $location, $routeParams, pageTitleService) 
     }
 
     function tabSelected(tabNo) {
-        if (vm.path == $location.path()) {
-            $location.search("tab", tabNo).replace();
-        }
+        $location.search("tab", tabNo).replace();
     }
 }
 
@@ -607,7 +616,7 @@ function TpprEditController($http, $location, $routeParams, pageTitleService) {
     }
 }
 
-function TpspDetailController($http, $routeParams, pageTitleService) {
+function TpspDetailController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.remove = remove;
@@ -616,6 +625,12 @@ function TpspDetailController($http, $routeParams, pageTitleService) {
     initialize();
 
     function initialize() {
+        vm.tabActive = {};
+
+        if ($routeParams.tab) {
+            vm.tabActive[$routeParams.tab] = true;
+        }
+
         $http.post("metamodelo/tipo-subparametro-detail.action", {
             model : {
                 id : $routeParams.entiId
@@ -643,9 +658,7 @@ function TpspDetailController($http, $routeParams, pageTitleService) {
     }
 
     function tabSelected(tabNo) {
-        if (vm.path == $location.path()) {
-            $location.search("tab", tabNo).replace();
-        }
+        $location.search("tab", tabNo).replace();
     }
 }
 
@@ -732,7 +745,7 @@ function TpsrGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 }
 
-function TpsrDetailController($http, $routeParams, pageTitleService) {
+function TpsrDetailController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.remove = remove;
@@ -741,6 +754,12 @@ function TpsrDetailController($http, $routeParams, pageTitleService) {
     initialize();
 
     function initialize() {
+        vm.tabActive = {};
+
+        if ($routeParams.tab) {
+            vm.tabActive[$routeParams.tab] = true;
+        }
+
         $http.post("metamodelo/tipo-servicio-detail.action", {
             model : {
                 id : $routeParams.entiId
@@ -771,9 +790,7 @@ function TpsrDetailController($http, $routeParams, pageTitleService) {
     }
 
     function tabSelected(tabNo) {
-        if (vm.path == $location.path()) {
-            $location.search("tab", tabNo).replace();
-        }
+        $location.search("tab", tabNo).replace();
     }
 }
 
@@ -819,7 +836,7 @@ function TpsrEditController($http, $location, $routeParams, pageTitleService) {
     }
 }
 
-function TpssDetailController($http, $routeParams, pageTitleService) {
+function TpssDetailController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.remove = remove;
@@ -828,6 +845,12 @@ function TpssDetailController($http, $routeParams, pageTitleService) {
     initialize();
 
     function initialize() {
+        vm.tabActive = {};
+
+        if ($routeParams.tab) {
+            vm.tabActive[$routeParams.tab] = true;
+        }
+
         $http.post("metamodelo/tipo-subservicio-detail.action", {
             model : {
                 id : $routeParams.entiId
@@ -858,9 +881,7 @@ function TpssDetailController($http, $routeParams, pageTitleService) {
     }
 
     function tabSelected(tabNo) {
-        if (vm.path == $location.path()) {
-            $location.search("tab", tabNo).replace();
-        }
+        $location.search("tab", tabNo).replace();
     }
 }
 
@@ -947,7 +968,7 @@ function TpesGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 }
 
-function TpesDetailController($http, $routeParams, pageTitleService) {
+function TpesDetailController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.remove = remove;
@@ -956,6 +977,12 @@ function TpesDetailController($http, $routeParams, pageTitleService) {
     initialize();
 
     function initialize() {
+        vm.tabActive = {};
+
+        if ($routeParams.tab) {
+            vm.tabActive[$routeParams.tab] = true;
+        }
+
         $http.post("metamodelo/tipo-estadistica-detail.action", {
             model : {
                 id : $routeParams.entiId
@@ -985,9 +1012,7 @@ function TpesDetailController($http, $routeParams, pageTitleService) {
     }
 
     function tabSelected(tabNo) {
-        if (vm.path == $location.path()) {
-            $location.search("tab", tabNo).replace();
-        }
+        $location.search("tab", tabNo).replace();
     }
 }
 

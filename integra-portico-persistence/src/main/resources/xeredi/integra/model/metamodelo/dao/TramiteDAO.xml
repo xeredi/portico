@@ -10,7 +10,10 @@
 		<result column="trmt_enti_pk" property="entiId" />
 		<result column="trmt_estado_orig" property="estadoOrig" />
 		<result column="trmt_estado_dest" property="estadoDest" />
+
 		<result column="trmt_etiqueta" property="etiqueta" />
+		<result column="trmt_estado_orig_texto" property="estadoOrigTexto" />
+		<result column="trmt_estado_dest_texto" property="estadoDestTexto" />
 	</resultMap>
 
 	<sql id="SelectPrefix">
@@ -26,11 +29,65 @@
                     AND i18n_ext_pk = trmt_pk
                     AND i18n_lang = #{idioma}
             ) AS trmt_etiqueta
+		    , (
+		        SELECT i18n_text FROM tbl_i18n_i18n
+		        WHERE i18n_pref = 'cdrf' AND i18n_lang = #{idioma} AND i18n_ext_pk = (
+		            SELECT cdrf_pk
+		            FROM tbl_codigo_ref_cdrf
+		            WHERE
+		                cdrf_tpdt_pk = (
+		                    CASE
+		                        WHEN enti_tipo = 'T'
+		                        THEN (
+		                            SELECT tpsr_tpdt_estado_pk
+		                            FROM tbl_tipo_servicio_tpsr
+		                            WHERE tpsr_pk = trmt_enti_pk
+		                        )
+		                        WHEN enti_tipo = 'S'
+		                        THEN (
+		                            SELECT tpss_tpdt_estado_pk
+		                            FROM tbl_tipo_subservicio_tpss
+		                            WHERE tpss_pk = trmt_enti_pk
+		                        )
+		                        ELSE NULL
+		                    END
+		                )
+		                AND cdrf_valor = trmt_estado_orig
+		        )
+		    ) AS trmt_estado_orig_texto
+		    , (
+		        SELECT i18n_text FROM tbl_i18n_i18n
+		        WHERE i18n_pref = 'cdrf' AND i18n_lang = #{idioma} AND i18n_ext_pk = (
+		            SELECT cdrf_pk
+		            FROM tbl_codigo_ref_cdrf
+		            WHERE
+		                cdrf_tpdt_pk = (
+		                    CASE
+		                        WHEN enti_tipo = 'T'
+		                        THEN (
+		                            SELECT tpsr_tpdt_estado_pk
+		                            FROM tbl_tipo_servicio_tpsr
+		                            WHERE tpsr_pk = trmt_enti_pk
+		                        )
+		                        WHEN enti_tipo = 'S'
+		                        THEN (
+		                            SELECT tpss_tpdt_estado_pk
+		                            FROM tbl_tipo_subservicio_tpss
+		                            WHERE tpss_pk = trmt_enti_pk
+		                        )
+		                        ELSE NULL
+		                    END
+		                )
+		                AND cdrf_valor = trmt_estado_dest
+		        )
+		    ) AS trmt_estado_dest_texto
         ]]>
 		</if>
     <![CDATA[
         FROM
             tbl_tramite_trmt
+		    INNER JOIN tbl_entidad_enti ON
+		        enti_pk = trmt_enti_pk
     ]]>
 	</sql>
 

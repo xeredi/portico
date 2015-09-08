@@ -155,8 +155,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="entiPadre in vm.entiPadresList track by $index">
-                <td><a ng-if="entiPadre.tipo == 'T'"
-                    ng-href="#/metamodelo/tpsr/detail/{{entiPadre.id}}"><i
+                <td><a ng-if="entiPadre.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{entiPadre.id}}"><i
                         class="glyphicon glyphicon-search"></i></a><a ng-if="entiPadre.tipo == 'S'"
                     ng-href="#/metamodelo/tpss/detail/{{entiPadre.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
@@ -170,13 +169,15 @@
         </tbody>
     </table>
 </fieldset>
-</tab> <tab select="vm.tabSelected('entdList')"> <tab-heading ng-bind="'entdList' | translate"></tab-heading>
+</tab> <tab select="vm.tabSelected('entdList')" active="vm.tabActive['entdList']"> <tab-heading
+    ng-bind="'entdList' | translate"></tab-heading>
 <div ng-include="'modules/metamodelo/fragment/engd-grid-content.html'"></div>
 <div ng-include="'modules/metamodelo/fragment/entd-grid-content.html'"></div>
-</tab>
-<tab select="vm.tabSelected('accnList')"> <tab-heading ng-bind="'accnList' | translate"></tab-heading>
+</tab> <tab select="vm.tabSelected('accnList')" active="vm.tabActive['accnList']"> <tab-heading
+    ng-bind="'accnList' | translate"></tab-heading>
 <div ng-include="'modules/metamodelo/fragment/enac-grid-content.html'"></div>
 <div ng-include="'modules/metamodelo/fragment/enag-grid-content.html'"></div>
-</tab> <tab select="vm.tabSelected('trmtList')"> <tab-heading ng-bind="'trmtList' | translate"></tab-heading>
+</tab> <tab select="vm.tabSelected('trmtList')" active="vm.tabActive['trmtList']"> <tab-heading
+    ng-bind="'trmtList' | translate"></tab-heading>
 <div ng-include="'modules/metamodelo/fragment/trmt-grid-content.html'"></div>
 </tab></tabset>

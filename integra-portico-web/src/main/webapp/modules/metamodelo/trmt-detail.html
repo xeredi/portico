@@ -18,11 +18,11 @@
         </div>
         <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate="trmt_estado_orig"></label>
-            <p class="form-control-static" ng-bind="vm.trmt.estadoOrig"></p>
+            <p class="form-control-static">{{vm.trmt.estadoOrig}} - {{vm.trmt.estadoOrigTexto}}</p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate="trmt_estado_dest"></label>
-            <p class="form-control-static" ng-bind="vm.trmt.estadoDest"></p>
+            <p class="form-control-static">{{vm.trmt.estadoDest}} - {{vm.trmt.estadoDestTexto}}</p>
         </div>
     </div>
 </fieldset>

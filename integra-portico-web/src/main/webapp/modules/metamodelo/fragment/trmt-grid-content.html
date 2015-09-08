@@ -12,18 +12,18 @@
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
+                <th translate="trmt"></th>
                 <th translate="trmt_estado_orig"></th>
                 <th translate="trmt_estado_dest"></th>
-                <th translate="trmt_etiqueta"></th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="trmt in vm.trmtList track by trmt.id">
                 <td><a ng-href="#/metamodelo/trmt/detail/{{vm.enti.id}}/{{trmt.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="trmt.estadoOrig"></td>
-                <td ng-bind="trmt.estadoDest"></td>
                 <td nowrap="nowrap" ng-bind="trmt.etiqueta"></td>
+                <td>{{trmt.estadoOrig}} - {{trmt.estadoOrigTexto}}</td>
+                <td>{{trmt.estadoDest}} - {{trmt.estadoDestTexto}}</td>
             </tr>
         </tbody>
     </table>

@@ -23,6 +23,12 @@ public final class TramiteVO {
     /** The etiqueta. */
     private String etiqueta;
 
+    /** The estado orig texto. */
+    private String estadoOrigTexto;
+
+    /** The estado dest texto. */
+    private String estadoDestTexto;
+
     /**
      * {@inheritDoc}
      */
@@ -124,5 +130,43 @@ public final class TramiteVO {
      */
     public void setEtiqueta(final String value) {
         etiqueta = value;
+    }
+
+    /**
+     * Gets the estado orig texto.
+     *
+     * @return the estado orig texto
+     */
+    public String getEstadoOrigTexto() {
+        return estadoOrigTexto;
+    }
+
+    /**
+     * Sets the estado orig texto.
+     *
+     * @param value
+     *            the new estado orig texto
+     */
+    public void setEstadoOrigTexto(final String value) {
+        estadoOrigTexto = value;
+    }
+
+    /**
+     * Gets the estado dest texto.
+     *
+     * @return the estado dest texto
+     */
+    public String getEstadoDestTexto() {
+        return estadoDestTexto;
+    }
+
+    /**
+     * Sets the estado dest texto.
+     *
+     * @param value
+     *            the new estado dest texto
+     */
+    public void setEstadoDestTexto(final String value) {
+        estadoDestTexto = value;
     }
 }

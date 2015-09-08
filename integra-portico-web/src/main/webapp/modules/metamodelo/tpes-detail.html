@@ -29,7 +29,7 @@
 
     <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
 </fieldset>
-</tab> <tab select="vm.tabSelected('entdList')"> <tab-heading ng-bind="'entdList' | translate"></tab-heading>
+</tab> <tab select="vm.tabSelected('entdList')" active="vm.tabActive['entdList']"> <tab-heading ng-bind="'entdList' | translate"></tab-heading>
 <div ng-include="'modules/metamodelo/fragment/engd-grid-content.html'"></div>
 <div ng-include="'modules/metamodelo/fragment/entd-grid-content.html'"></div>
 
