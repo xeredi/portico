@@ -238,4 +238,80 @@ public abstract class ItemVO implements ItemEntidad {
         itdtMap = value;
     }
 
+    /**
+     * Gets the itdt fecha.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @return the itdt fecha
+     */
+    public final Date getItdtFecha(final @NonNull Long tpdtId) {
+        return itdtMap != null && itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getFecha() : null;
+    }
+
+    /**
+     * Gets the itdt prmt.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @return the itdt prmt
+     */
+    public final ParametroVO getItdtPrmt(final @NonNull Long tpdtId) {
+        return itdtMap != null && itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getPrmt() : null;
+    }
+
+    /**
+     * Gets the itdt srvc.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @return the itdt srvc
+     */
+    public final ServicioVO getItdtSrvc(final @NonNull Long tpdtId) {
+        return itdtMap != null && itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getSrvc() : null;
+    }
+
+    /**
+     * Gets the itdt entero.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @return the itdt entero
+     */
+    public final Long getItdtEntero(final @NonNull Long tpdtId) {
+        return itdtMap != null && itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCantidadEntera() : null;
+    }
+
+    /**
+     * Gets the itdt decimal.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @return the itdt decimal
+     */
+    public final Double getItdtDecimal(final @NonNull Long tpdtId) {
+        return itdtMap != null && itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCantidadDecimal() : null;
+    }
+
+    /**
+     * Gets the itdt booleano.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @return the itdt booleano
+     */
+    public final Boolean getItdtBooleano(final @NonNull Long tpdtId) {
+        return itdtMap != null && itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCantidadEntera() == 1 : null;
+    }
+
+    /**
+     * Gets the itdt cadena.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @return the itdt cadena
+     */
+    public final String getItdtCadena(final @NonNull Long tpdtId) {
+        return itdtMap != null && itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCadena() : null;
+    }
 }

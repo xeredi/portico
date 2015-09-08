@@ -209,11 +209,9 @@
 
 		<if test="fechaVigencia != null">
 		<![CDATA[
+			AND #{fechaVigencia} >= prvr_fini
 			AND (
-				#{fechaVigencia} >= prvr_fini
-				AND (
-					prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia}
-				)
+				prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia}
 			)
 		]]>
 		</if>
@@ -236,10 +234,8 @@
 					        FROM tbl_subparametro_version_spvr
 					        WHERE
 				            	spvr_sprm_pk = sprm_pk
-				            	AND (
-				            		#{fechaVigencia} >= spvr_fini
-				            		AND (spvr_ffin IS NULL OR spvr_ffin > #{fechaVigencia})
-				            	)
+				            	AND #{fechaVigencia} >= spvr_fini
+			            		AND (spvr_ffin IS NULL OR spvr_ffin > #{fechaVigencia})
 				        )
 				]]>
 				</if>

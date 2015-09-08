@@ -4,6 +4,9 @@ import java.util.Calendar;
 
 import org.apache.struts2.convention.annotation.Action;
 
+import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
+
 import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
@@ -15,9 +18,6 @@ import xeredi.integra.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.integra.model.servicio.bo.escala.AtraqueBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-
-import com.google.common.base.Preconditions;
-import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -86,16 +86,6 @@ public final class AtraqueAction extends ItemAction implements ModelDriven<Subse
      */
     @Action(value = "atra-cambiar-muelle")
     public String cambiarMuelle() {
-        return SUCCESS;
-    }
-
-    /**
-     * Deshacer estado.
-     *
-     * @return the string
-     */
-    @Action(value = "atra-deshacer-estado")
-    public String deshacerEstado() {
         return SUCCESS;
     }
 

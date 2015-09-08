@@ -5,15 +5,15 @@ import java.util.Calendar;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
+import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
+
 import xeredi.integra.http.controller.action.ItemAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.servicio.bo.escala.EscalaBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaEdiBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
-
-import com.google.common.base.Preconditions;
-import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -39,7 +39,8 @@ public final class EscalaAction extends ItemAction implements ModelDriven<Servic
      * @throws ApplicationException
      *             the application exception
      */
-    @Action(value = "esca-notificar-popup", results = { @Result(name = "success", location = "escala/esca-notificar.jsp") })
+    @Action(value = "esca-notificar-popup", results = {
+            @Result(name = "success", location = "escala/esca-notificar.jsp") })
     public String notificar() throws ApplicationException {
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getId());
@@ -70,8 +71,8 @@ public final class EscalaAction extends ItemAction implements ModelDriven<Servic
 
         final EscalaEdiBO escaEdiBO = new EscalaEdiBO();
 
-        escaEdiBO.notificarPractico(model.getId(), model.getItdtMap().get(TipoDato.CADENA_03.getId()).getCadena(),
-                model.getItdtMap().get(TipoDato.FECHA_02.getId()).getFecha());
+        escaEdiBO.notificarPractico(model.getId(), model.getItdtCadena(TipoDato.CADENA_03.getId()),
+                model.getItdtFecha(TipoDato.FECHA_02.getId()));
 
         return SUCCESS;
     }
