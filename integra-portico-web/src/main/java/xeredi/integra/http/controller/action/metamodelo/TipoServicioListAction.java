@@ -20,10 +20,6 @@ public final class TipoServicioListAction extends GridListAction<TipoServicioCri
      */
     @Override
     public void doList() throws ApplicationException {
-        if (model.getCodigo() != null) {
-            model.setCodigo(model.getCodigo().toUpperCase());
-        }
-
         final TipoServicioBO entiBO = new TipoServicioBO();
 
         resultList = entiBO.selectList(model, getOffset(), limit);

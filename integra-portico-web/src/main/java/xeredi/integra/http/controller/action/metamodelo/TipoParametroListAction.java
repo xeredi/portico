@@ -20,10 +20,6 @@ public final class TipoParametroListAction extends GridListAction<TipoParametroC
      */
     @Override
     public void doList() throws ApplicationException {
-        if (model.getCodigo() != null) {
-            model.setCodigo(model.getCodigo().toUpperCase());
-        }
-
         final TipoParametroBO entiBO = new TipoParametroBO();
 
         resultList = entiBO.selectList(model, getOffset(), limit);

@@ -38,7 +38,7 @@
 				AND sprt_pk = #{id}
 			</if>
 			<if test="codigo != null and !codigo.empty">
-				AND sprt_codigo = #{codigo}
+				AND sprt_codigo LIKE #{codigo}
 			</if>
 		</where>
 	</sql>

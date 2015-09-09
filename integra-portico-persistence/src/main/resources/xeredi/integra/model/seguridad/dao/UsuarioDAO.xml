@@ -32,14 +32,14 @@
         , (SELECT sprt_codigo FROM tbl_superpuerto_sprt WHERE sprt_pk = usro_sprt_pk) AS sprt_codigo
         , (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = usro_prto_pk) AS prto_codigo
     ]]>
-    	<if test="idioma != null">
+		<if test="idioma != null">
 	    <![CDATA[
 	    , (SELECT i18n_text FROM tbl_i18n_i18n
 	    	WHERE i18n_ext_pk = usro_sprt_pk AND i18n_pref = 'sprt' AND i18n_lang = #{idioma}) AS sprt_nombre
 	    , (SELECT i18n_text FROM tbl_i18n_i18n
 	    	WHERE i18n_ext_pk = usro_prto_pk AND i18n_pref = 'prto' AND i18n_lang = #{idioma}) AS prto_nombre
 	    ]]>
-    	</if>
+		</if>
     <![CDATA[
     FROM
         tbl_usuario_usro
@@ -60,7 +60,7 @@
 			<if test="id != null">
 				AND usro_pk = #{id}
 			</if>
-			<if test="login != null">
+			<if test="login != null and !login.empty">
 				AND usro_login = #{login}
 			</if>
 			<if test="sprtId != null">
@@ -77,13 +77,15 @@
 		<include refid="SelectWhere" />
 	</select>
 
-	<select id="selectList" parameterType="UsuarioCriterioVO" resultMap="ResultMap">
+	<select id="selectList" parameterType="UsuarioCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 		ORDER BY usro_login
 	</select>
 
-	<select id="selectObject" parameterType="UsuarioCriterioVO" resultMap="ResultMap">
+	<select id="selectObject" parameterType="UsuarioCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 	</select>

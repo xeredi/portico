@@ -39,8 +39,8 @@
 				<foreach collection="tpdtIds" item="item" separator="," open="(" close=")">#{item}
 				</foreach>
 			</if>
-			<if test="valor != null">
-				AND cdrf_valor = #{valor}
+			<if test="valor != null and !valor.empty">
+				AND cdrf_valor LIKE #{valor}
 			</if>
 		</where>
 	</sql>

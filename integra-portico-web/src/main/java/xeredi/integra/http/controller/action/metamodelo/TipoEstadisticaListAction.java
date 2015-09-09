@@ -20,10 +20,6 @@ public final class TipoEstadisticaListAction extends GridListAction<TipoEstadist
      */
     @Override
     public void doList() throws ApplicationException {
-        if (model.getCodigo() != null) {
-            model.setCodigo(model.getCodigo().toUpperCase());
-        }
-
         final TipoEstadisticaBO entiBO = new TipoEstadisticaBO();
 
         resultList = entiBO.selectList(model, getOffset(), limit);

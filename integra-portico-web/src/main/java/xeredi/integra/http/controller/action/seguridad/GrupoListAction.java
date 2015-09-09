@@ -20,10 +20,6 @@ public final class GrupoListAction extends GridListAction<GrupoCriterioVO, Grupo
      */
     @Override
     public void doList() throws ApplicationException {
-        if (model == null) {
-            model = new GrupoCriterioVO();
-        }
-
         final GrupoBO grpoBO = new GrupoBO();
 
         resultList = grpoBO.selectList(model, getOffset(), limit);

@@ -34,7 +34,7 @@
 				AND grpo_pk = #{id}
 			</if>
 			<if test="nombre != null and !nombre.empty">
-				AND grpo_nombre = #{nombre}
+				AND grpo_nombre LIKE #{nombre}
 			</if>
 			<if test="usroId != null">
     		<![CDATA[

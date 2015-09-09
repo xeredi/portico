@@ -42,8 +42,8 @@
             <if test="entiId != null">
                 AND enag_enti_pk = #{entiId}
             </if>
-            <if test="path != null">
-                AND enag_path = #{path}
+            <if test="path != null and !path.empty">
+                AND enag_path LIKE #{path}
             </if>
         </where>
     </sql>

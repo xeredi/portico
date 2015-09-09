@@ -1,10 +1,11 @@
 package xeredi.integra.http.controller.action.comun;
 
+import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
+
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.BaseCriterioVO;
 import xeredi.util.pagination.PaginatedList;
-
-import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -40,6 +41,8 @@ public abstract class GridListAction<C extends BaseCriterioVO, R> extends BaseAc
      */
     @Override
     public final void doExecute() throws ApplicationException {
+        Preconditions.checkNotNull(model);
+
         model.setIdioma(idioma);
 
         doList();

@@ -61,19 +61,19 @@
 				AND prto_sprt_pk = #{sprtId}
 			</if>
 			<if test="codigo != null and !codigo.empty">
-				AND prto_codigo = #{codigo}
+				AND prto_codigo LIKE #{codigo}
 			</if>
 			<if test="codigoCorto != null and !codigoCorto.empty">
-				AND prto_codigo_corto = #{codigoCorto}
+				AND prto_codigo_corto LIKE #{codigoCorto}
 			</if>
 			<if test="codigoEdi != null and !codigoEdi.empty">
-				AND prto_codigo_edi = #{codigoEdi}
+				AND prto_codigo_edi LIKE #{codigoEdi}
 			</if>
 			<if test="recAduanero != null and !recAduanero.empty">
-				AND prto_rec_aduanero = #{recAduanero}
+				AND prto_rec_aduanero LIKE #{recAduanero}
 			</if>
 			<if test="unlocode != null and !unlocode.empty">
-				AND prto_unlocode = #{unlocode}
+				AND prto_unlocode LIKE #{unlocode}
 			</if>
 			<if test="sprtId != null">
 				AND prto_sprt_pk = #{sprtId}

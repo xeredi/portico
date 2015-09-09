@@ -34,8 +34,8 @@
 			<if test="id != null">
 				AND accn_pk = #{id}
 			</if>
-			<if test="codigo != null">
-				AND accn_codigo = #{codigo}
+			<if test="codigo != null and !codigo.empty">
+				AND accn_codigo LIKE #{codigo}
 			</if>
 			<if test="grpoId != null">
     		<![CDATA[
