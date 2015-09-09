@@ -25,7 +25,7 @@
     <div class="btn-group">
         <a ng-repeat="trmt in ::vm.enti.trmtList track by $index"
             ng-if="::(vm.item.estado == trmt.estadoOrig)"
-            ng-href="#/servicio/srvc/tramite-edit/{{::vm.enti.enti.id}}/{{::vm.item.id}}/{{::trmt.id}}"
+            ng-href="#/item/ittr/edit/create/{{::vm.enti.enti.id}}/{{::vm.item.id}}/{{::trmt.id}}"
             class="btn btn-default" ng-bind="::('trmt_' + trmt.id | translate)"></a>
     </div>
 </div>
@@ -99,35 +99,9 @@
         </tbody>
     </table>
 </div>
-</tab> <tab active="vm.tabActive[-2]" select="vm.tabSelected(-2)" ng-if="vm.srtrList.length"> <tab-heading
-    translate="trmtList"></tab-heading>
-<div class="table-responsive">
-    <table class="table-bordered table-condensed table-hover table-nonfluid">
-        <thead>
-            <tr>
-                <th />
-                <th translate="srtr_fecha"></th>
-                <th translate="trmt"></th>
-                <th translate="trmt_estado_orig"></th>
-                <th translate="trmt_estado_dest"></th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr ng-repeat="srtr in vm.srtrList track by srtr.id">
-                <td><a ng-href="#/servicio/srvc/tramite-detail/{{::srtr.id}}"> <span
-                        class="glyphicon glyphicon-search"></span>
-                </a></td>
-                <td ng-bind="::(srtr.fecha | date: datetimeFormat)"></td>
-                <td ng-bind="::('trmt_' + srtr.trmt.id | translate)"></td>
-                <td
-                    ng-bind="::('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + srtr.trmt.estadoOrig | translate)"></td>
-                <td
-                    ng-bind="::('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + srtr.trmt.estadoDest | translate)"></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+</tab> <tab active="vm.tabActive[-2]" select="vm.tabSelected(-2)" ng-if="vm.ittrList.length"> <tab-heading
+    ng-bind="::('trmtList' | translate)"></tab-heading>
+<div ng-include="'modules/entidad/common/ittr-grid-content.html'"></div>
 </tab> <tab ng-repeat="entiHijaId in ::vm.enti.entiHijasList track by entiHijaId" active="vm.tabActive[entiHijaId]"
     select="vm.tabSelected(entiHijaId)"> <tab-heading ng-bind="::('enti_' + entiHijaId | translate)"></tab-heading>
 <div ng-if="vm.itemHijosMap[entiHijaId]">

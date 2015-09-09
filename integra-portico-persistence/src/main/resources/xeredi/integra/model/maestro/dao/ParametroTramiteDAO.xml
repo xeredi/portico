@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.maestro.dao.ParametroTramiteDAO">
+	<insert id="insert" parameterType="ItemTramiteVO">
+    <![CDATA[
+        INSERT INTO tbl_parametro_trmt_prtr (prtr_pk, prtr_prmt_pk)
+        VALUES (#{id}, #{itemId})
+    ]]>
+	</insert>
+</mapper>

@@ -18,10 +18,6 @@ angular.module("servicio", [])
 
 .controller("SrvcEditController", SrvcEditController)
 
-.controller("SrvcTramiteDetailController", SrvcTramiteDetailController)
-
-.controller("SrvcTramiteEditController", SrvcTramiteEditController)
-
 .controller("SrvcLupaController", SrvcLupaController)
 
 .controller("ManiTotalesController", ManiTotalesController)
@@ -36,10 +32,6 @@ angular.module("servicio", [])
 .controller("SsrvDetailController", SsrvDetailController)
 
 .controller("SsrvEditController", SsrvEditController)
-
-.controller("SsrvTramiteDetailController", SsrvTramiteDetailController)
-
-.controller("SsrvTramiteEditController", SsrvTramiteEditController)
 
 .controller("SsrvLupaController", SsrvLupaController)
 
@@ -97,18 +89,6 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    .when("/servicio/srvc/tramite-detail/:ittrId", {
-        templateUrl : "modules/entidad/servicio/srvc-tramite-detail.html",
-        controller : "SrvcTramiteDetailController",
-        controllerAs : "vm"
-    })
-
-    .when("/servicio/srvc/tramite-edit/:entiId/:srvcId/:trmtId", {
-        templateUrl : "modules/entidad/servicio/srvc-tramite-edit.html",
-        controller : "SrvcTramiteEditController",
-        controllerAs : "vm"
-    })
-
     .when("/servicio/srvc/maniTotales/:entiId/:srvcId", {
         templateUrl : "modules/entidad/servicio/manifiesto/mani-totales.html",
         controller : "ManiTotalesController",
@@ -144,18 +124,6 @@ function config($routeProvider) {
     .when("/servicio/ssrv/edit/:accion/:entiId/:srvcId?/:ssrvId?", {
         templateUrl : "modules/entidad/servicio/ssrv-edit.html",
         controller : "SsrvEditController",
-        controllerAs : "vm"
-    })
-
-    .when("/servicio/ssrv/tramite-detail/:ittrId", {
-        templateUrl : "modules/entidad/servicio/ssrv-tramite-detail.html",
-        controller : "SsrvTramiteDetailController",
-        controllerAs : "vm"
-    })
-
-    .when("/servicio/ssrv/tramite-edit/:entiId/:srvcId/:ssrvId/:trmtId", {
-        templateUrl : "modules/entidad/servicio/ssrv-tramite-edit.html",
-        controller : "SsrvTramiteEditController",
         controllerAs : "vm"
     })
 
@@ -573,70 +541,6 @@ function SrvcEditController($http, $location, $routeParams, pageTitleService) {
     }
 }
 
-function SrvcTramiteDetailController($http, $location, $routeParams, pageTitleService) {
-    var vm = this;
-
-    initialize();
-
-    function initialize() {
-        $http.post("servicio/servicio-tramite-detail.action", {
-            ittr : {
-                id : $routeParams.ittrId,
-            }
-        }).success(function(data) {
-            vm.ittr = data.ittr
-            vm.trmt = data.trmt;
-            vm.enti = data.enti;
-            vm.item = data.item;
-        });
-
-        pageTitleService.setTitle("srtr", "page_detail");
-    }
-}
-
-function SrvcTramiteEditController($http, $location, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.save = save;
-    vm.cancel = cancel;
-
-    initialize();
-
-    function initialize() {
-        $http.post("servicio/servicio-tramite-edit.action", {
-            item : {
-                id : $routeParams.srvcId,
-                entiId : $routeParams.entiId
-            },
-            trmtId : $routeParams.trmtId
-        }).success(function(data) {
-            vm.enti = data.enti;
-            vm.item = data.item;
-            vm.trmt = data.trmt;
-            vm.ittr = data.ittr;
-            vm.prtoId = data.prtoId;
-            vm.fechaVigencia = data.fechaVigencia;
-            vm.labelValuesMap = data.labelValuesMap;
-        });
-
-        pageTitleService.setTitle("srtr", "page_edit");
-    }
-
-    function save() {
-        $http.post("servicio/servicio-tramite-save.action", {
-            ittr : vm.ittr
-        }).success(function(data) {
-            setTimeout(function() {
-                window.history.back();
-            }, 0);
-        });
-    }
-
-    function cancel() {
-        window.history.back();
-    }
-}
-
 function SrvcLupaController($http, $scope) {
     $scope.search = function(entiId, textoBusqueda) {
         if (textoBusqueda.length <= 0) {
@@ -935,70 +839,6 @@ function SsrvEditController($http, $location, $routeParams, pageTitleService) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
             }, 0) : $location.path("/servicio/ssrv/detail/" + data.model.id).replace();
-        });
-    }
-
-    function cancel() {
-        window.history.back();
-    }
-}
-
-function SsrvTramiteDetailController($http, $location, $routeParams, pageTitleService) {
-    var vm = this;
-
-    initialize();
-
-    function initialize() {
-        $http.post("servicio/subservicio-tramite-detail.action", {
-            ittr : {
-                id : $routeParams.ittrId,
-            }
-        }).success(function(data) {
-            vm.ittr = data.ittr
-            vm.trmt = data.trmt;
-            vm.enti = data.enti;
-            vm.item = data.item;
-        });
-
-        pageTitleService.setTitle("sstr", "page_detail");
-    }
-}
-
-function SsrvTramiteEditController($http, $location, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.save = save;
-    vm.cancel = cancel;
-
-    initialize();
-
-    function initialize() {
-        $http.post("servicio/subservicio-tramite-edit.action", {
-            item : {
-                id : $routeParams.ssrvId,
-                entiId : $routeParams.entiId
-            },
-            trmtId : $routeParams.trmtId
-        }).success(function(data) {
-            vm.enti = data.enti;
-            vm.item = data.item;
-            vm.trmt = data.trmt;
-            vm.ittr = data.ittr;
-            vm.prtoId = data.prtoId;
-            vm.fechaVigencia = data.fechaVigencia;
-            vm.labelValuesMap = data.labelValuesMap;
-        });
-
-        pageTitleService.setTitle("sstr", "page_edit");
-    }
-
-    function save() {
-        $http.post("servicio/subservicio-tramite-save.action", {
-            ittr : vm.ittr
-        }).success(function(data) {
-            setTimeout(function() {
-                window.history.back();
-            }, 0);
         });
     }
 
