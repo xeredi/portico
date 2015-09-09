@@ -13,15 +13,13 @@ function config($routeProvider) {
 
     .when("/proceso/prbt/grid", {
         templateUrl : "modules/proceso/prbt-grid.html",
-        controller : "PrbtGridController",
-        controllerAs : 'vm',
+        controller : "PrbtGridController as vm",
         reloadOnSearch : false
     })
 
     .when("/proceso/prbt/detail/:prbtId", {
         templateUrl : "modules/proceso/prbt-detail.html",
-        controller : "PrbtDetailController",
-        controllerAs : 'vm',
+        controller : "PrbtDetailController as vm",
         reloadOnSearch : false
 
     });
@@ -42,7 +40,7 @@ function PrbtGridController($http, $location, $routeParams, $modal, pageTitleSer
 
         search($routeParams.page ? $routeParams.page : 1);
         pageTitleService.setTitle("prbt", "page_grid");
-	}
+    }
 
     function search(page) {
         $http.post("proceso/proceso-list.action", {
@@ -117,7 +115,7 @@ function PrbtDetailController($http, $location, $routeParams, pageTitleService) 
         });
 
         pageTitleService.setTitle("prbt", "page_detail");
-	}
+    }
 
     function cancel() {
         $http.post("proceso/proceso-cancelar.action", {

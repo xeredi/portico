@@ -14,14 +14,12 @@ function config($routeProvider) {
 
     .when("/item/ittr/detail/:id", {
         templateUrl : "modules/entidad/item/ittr-detail.html",
-        controller : "IttrDetailController",
-        controllerAs : "vm"
+        controller : "IttrDetailController as vm"
     })
 
     .when("/item/ittr/edit/:accion/:entiId/:itemId/:trmtId", {
         templateUrl : "modules/entidad/item/ittr-edit.html",
-        controller : "IttrEditController",
-        controllerAs : "vm"
+        controller : "IttrEditController as vm"
     })
 
     ;

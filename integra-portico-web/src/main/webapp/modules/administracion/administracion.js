@@ -45,94 +45,79 @@ function config($routeProvider) {
 
     .when("/administracion", {
         templateUrl : "modules/administracion/administracion.html",
-        controller : "AdministracionController",
-        controllerAs : "vm"
+        controller : "AdministracionController as vm"
     })
 
     .when("/administracion/metamodelo/reload", {
         templateUrl : "modules/administracion/metamodelo-reload.html",
-        controller : "MetamodeloReloadController",
-        controllerAs : "vm"
+        controller : "MetamodeloReloadController as vm"
     })
 
     .when("/administracion/conf/grid", {
         templateUrl : "modules/administracion/conf-grid.html",
-        controller : "ConfGridController",
-        controllerAs : "vm"
+        controller : "ConfGridController as vm"
     })
 
     .when("/administracion/conf/detail/:key", {
         templateUrl : "modules/administracion/conf-detail.html",
-        controller : "ConfDetailController",
-        controllerAs : "vm"
+        controller : "ConfDetailController as vm"
     })
 
     .when("/administracion/conf/edit/:accion/:key?", {
         templateUrl : "modules/administracion/conf-edit.html",
-        controller : "ConfEditController",
-        controllerAs : "vm"
+        controller : "ConfEditController as vm"
     })
 
     .when("/administracion/m18n/grid", {
         templateUrl : "modules/administracion/m18n-grid.html",
-        controller : "M18nGridController",
-        controllerAs : "vm"
+        controller : "M18nGridController as vm"
     })
 
     .when("/administracion/m18n/detail/:key", {
         templateUrl : "modules/administracion/m18n-detail.html",
-        controller : "M18nDetailController",
-        controllerAs : "vm"
+        controller : "M18nDetailController as vm"
     })
 
     .when("/administracion/m18n/edit/:accion/:key", {
         templateUrl : "modules/administracion/m18n-edit.html",
-        controller : "M18nEditController",
-        controllerAs : "vm"
+        controller : "M18nEditController as vm"
     })
 
     .when("/administracion/schr/detail", {
         templateUrl : "modules/administracion/schr-detail.html",
-        controller : "SchrDetailController",
-        controllerAs : "vm"
+        controller : "SchrDetailController as vm"
     })
 
     .when("/administracion/superpuerto-grid", {
         templateUrl : "modules/administracion/superpuerto-grid.html",
-        controller : "SuperpuertoGridController",
-        controllerAs : "vm",
+        controller : "SuperpuertoGridController as vm",
         reloadOnSearch : false
     })
 
     .when("/administracion/superpuerto-detail/:sprtId", {
         templateUrl : "modules/administracion/superpuerto-detail.html",
-        controller : "SuperpuertoDetailController",
-        controllerAs : "vm"
+        controller : "SuperpuertoDetailController as vm"
     })
 
     .when("/administracion/superpuerto-edit/:accion/:sprtId?", {
         templateUrl : "modules/administracion/superpuerto-edit.html",
-        controller : "SuperpuertoEditController",
-        controllerAs : "vm"
+        controller : "SuperpuertoEditController as vm"
     })
 
     .when("/administracion/puerto-grid", {
         templateUrl : "modules/administracion/puerto-grid.html",
-        controller : "PuertoGridController",
-        controllerAs : "vm",
+        controller : "PuertoGridController as vm",
         reloadOnSearch : false
     })
 
     .when("/administracion/puerto-detail/:prtoId", {
         templateUrl : "modules/administracion/puerto-detail.html",
-        controller : "PuertoDetailController",
-        controllerAs : "vm"
+        controller : "PuertoDetailController as vm"
     })
 
     .when("/administracion/puerto-edit/:accion/:prtoId?", {
         templateUrl : "modules/administracion/puerto-edit.html",
-        controller : "PuertoEditController",
-        controllerAs : "vm"
+        controller : "PuertoEditController as vm"
     })
 
     ;

@@ -31,76 +31,65 @@ function config($routeProvider) {
 
 	.when("/seguridad/accn/grid", {
 		templateUrl : "modules/seguridad/accn-grid.html",
-		controller : "AccnGridController",
-		controllerAs : 'vm',
+		controller : "AccnGridController as vm",
 		reloadOnSearch : false
 	})
 
 	.when("/seguridad/accn/detail/:accnId", {
 		templateUrl : "modules/seguridad/accn-detail.html",
-		controller : "AccnDetailController",
-		controllerAs : 'vm',
+		controller : "AccnDetailController as vm",
 		reloadOnSearch : false
 	})
 
 	.when("/seguridad/accn/edit/:accion/:accnId?", {
 		templateUrl : "modules/seguridad/accn-edit.html",
-		controller : "AccnEditController",
-		controllerAs : 'vm',
+		controller : "AccnEditController as vm",
 		reloadOnSearch : false
 	})
 
 	.when("/seguridad/grpo/grid", {
 		templateUrl : "modules/seguridad/grpo-grid.html",
-		controller : "GrpoGridController",
-		controllerAs : 'vm',
+		controller : "GrpoGridController as vm",
 		reloadOnSearch : false
 	})
 
 	.when("/seguridad/grpo/detail/:grpoId", {
 		templateUrl : "modules/seguridad/grpo-detail.html",
-		controller : "GrpoDetailController",
-		controllerAs : 'vm',
+		controller : "GrpoDetailController as vm",
 		reloadOnSearch : false
 	})
 
 	.when("/seguridad/grpo/edit/:accion/:grpoId?", {
 		templateUrl : "modules/seguridad/grpo-edit.html",
-		controller : "GrpoEditController",
-		controllerAs : 'vm',
+		controller : "GrpoEditController as vm",
 		reloadOnSearch : false
 	})
 
 	.when("/seguridad/usro/grid", {
 		templateUrl : "modules/seguridad/usro-grid.html",
-		controller : "UsroGridController",
-		controllerAs : 'vm',
+		controller : "UsroGridController as vm",
 		reloadOnSearch : false
 	})
 
 	.when("/seguridad/usro/detail/:usroId", {
 		templateUrl : "modules/seguridad/usro-detail.html",
-		controller : "UsroDetailController",
-		controllerAs : 'vm',
+		controller : "UsroDetailController as vm",
 		reloadOnSearch : false
 	})
 
 	.when("/seguridad/usro/edit/:accion/:usroId?", {
 		templateUrl : "modules/seguridad/usro-edit.html",
-		controller : "UsroEditController",
-		controllerAs : 'vm',
+		controller : "UsroEditController as vm",
 		reloadOnSearch : false
 	})
 
 	.when("/seguridad/usro/acceso", {
 		templateUrl : "modules/seguridad/usro-acceso.html",
-		controller : "UsroAccesoController",
-		controllerAs : 'vm'
+		controller : "UsroAccesoController as vm"
 	})
 
 	.when("/seguridad/usro/salir", {
-		controller : "UsroSalirController",
-		controllerAs : 'vm'
+		controller : "UsroSalirController as vm"
 	})
 
 	;

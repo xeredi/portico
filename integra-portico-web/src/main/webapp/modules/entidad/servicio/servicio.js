@@ -44,93 +44,79 @@ function config($routeProvider) {
 
     .when("/servicio/srsc/grid", {
         templateUrl : "modules/entidad/servicio/srsc-grid.html",
-        controller : "SrscGridController",
-        controllerAs : "vm",
+        controller : "SrscGridController as vm",
         reloadOnSearch : false
     })
 
     .when("/servicio/srsc/detail/:prtoId/:tpsrId/:anno", {
         templateUrl : "modules/entidad/servicio/srsc-detail.html",
-        controller : "SrscDetailController",
-        controllerAs : "vm",
+        controller : "SrscDetailController as vm",
         reloadOnSearch : false
     })
 
     .when("/servicio/srsc/edit/:accion/:prtoId?/:tpsrId?/:anno?", {
         templateUrl : "modules/entidad/servicio/srsc-edit.html",
-        controller : "SrscEditController",
-        controllerAs : "vm"
+        controller : "SrscEditController as vm"
     })
 
     .when("/servicio", {
         title : 'servicio_main',
         templateUrl : "modules/entidad/servicio/servicio.html",
-        controller : "ServicioController",
-        controllerAs : "vm"
+        controller : "ServicioController as vm"
     })
 
     .when("/servicio/srvc/grid/:entiId", {
         templateUrl : "modules/entidad/servicio/srvc-grid.html",
-        controller : "SrvcGridController",
-        controllerAs : "vm",
+        controller : "SrvcGridController as vm",
         reloadOnSearch : false
     })
 
     .when("/servicio/srvc/detail/:entiId/:srvcId", {
         templateUrl : "modules/entidad/servicio/srvc-detail.html",
-        controller : "SrvcDetailController",
-        controllerAs : "vm",
+        controller : "SrvcDetailController as vm",
         reloadOnSearch : false
     })
 
     .when("/servicio/srvc/edit/:accion/:entiId/:srvcId?", {
         templateUrl : "modules/entidad/servicio/srvc-edit.html",
-        controller : "SrvcEditController",
-        controllerAs : "vm"
+        controller : "SrvcEditController as vm"
     })
 
     .when("/servicio/srvc/maniTotales/:entiId/:srvcId", {
         templateUrl : "modules/entidad/servicio/manifiesto/mani-totales.html",
-        controller : "ManiTotalesController",
-        controllerAs : "vm"
+        controller : "ManiTotalesController as vm"
     })
 
     .when("/servicio/srvc/amarredep/generar/prepare", {
         templateUrl : "modules/entidad/servicio/amarredep/generar-prepare.html",
-        controller : "SamdGenerarController",
-        controllerAs : 'vm'
+        controller : "SamdGenerarController as vm"
     })
 
     .when("/servicio/srvc/buquepesca/generar/prepare", {
         templateUrl : "modules/entidad/servicio/buquepesca/generar-prepare.html",
-        controller : "SbupGenerarController",
-        controllerAs : 'vm'
+        controller : "SbupGenerarController as vm"
     })
 
     .when("/servicio/ssrv/grid/:entiId", {
         templateUrl : "modules/entidad/servicio/ssrv-grid.html",
-        controller : "SsrvGridController",
-        controllerAs : "vm",
+        controller : "SsrvGridController as vm",
         reloadOnSearch : false
     })
 
     .when("/servicio/ssrv/detail/:entiId/:ssrvId", {
         templateUrl : "modules/entidad/servicio/ssrv-detail.html",
-        controller : "SsrvDetailController",
-        controllerAs : "vm",
+        controller : "SsrvDetailController as vm",
         reloadOnSearch : false
     })
 
     .when("/servicio/ssrv/edit/:accion/:entiId/:srvcId?/:ssrvId?", {
         templateUrl : "modules/entidad/servicio/ssrv-edit.html",
-        controller : "SsrvEditController",
-        controllerAs : "vm"
+        controller : "SsrvEditController as vm"
     })
 
     .when("/servicio/ssrv/mablTotales/:entiId/:srvcId/:ssrvId", {
         templateUrl : "modules/entidad/servicio/manifiesto/mani-totales.html",
-        controller : "MablTotalesController",
-        controllerAs : "vm"
+        controller : "MablTotalesController as vm"
     })
 
     ;

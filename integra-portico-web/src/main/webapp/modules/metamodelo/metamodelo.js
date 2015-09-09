@@ -83,209 +83,176 @@ function config($routeProvider) {
 
     .when("/metamodelo/tpdt/grid", {
         templateUrl : "modules/metamodelo/tpdt-grid.html",
-        controller : "TpdtGridController",
-        controllerAs : 'vm',
+        controller : "TpdtGridController as vm",
         reloadOnSearch : false
     })
 
     .when("/metamodelo/tpdt/detail/:tpdtId", {
         templateUrl : "modules/metamodelo/tpdt-detail.html",
-        controller : "TpdtDetailController",
-        controllerAs : 'vm'
+        controller : "TpdtDetailController as vm"
     })
 
     .when("/metamodelo/tpdt/edit/:accion/:tpdtId?", {
         templateUrl : "modules/metamodelo/tpdt-edit.html",
-        controller : "TpdtEditController",
-        controllerAs : 'vm'
+        controller : "TpdtEditController as vm"
     })
 
     .when("/metamodelo/cdrf/detail/:cdrfId", {
         templateUrl : "modules/metamodelo/cdrf-detail.html",
-        controller : "CdrfDetailController",
-        controllerAs : 'vm'
+        controller : "CdrfDetailController as vm"
     })
 
     .when("/metamodelo/cdrf/edit/:accion/:tpdtId/:cdrfId?", {
         templateUrl : "modules/metamodelo/cdrf-edit.html",
-        controller : "CdrfEditController",
-        controllerAs : 'vm'
+        controller : "CdrfEditController as vm"
     })
 
     .when("/metamodelo/tppr/grid", {
         templateUrl : "modules/metamodelo/tppr-grid.html",
-        controller : "TpprGridController",
-        controllerAs : 'vm',
+        controller : "TpprGridController as vm",
         reloadOnSearch : false
     })
 
     .when("/metamodelo/tppr/detail/:entiId", {
         templateUrl : "modules/metamodelo/tppr-detail.html",
-        controller : "TpprDetailController",
-        controllerAs : 'vm',
+        controller : "TpprDetailController as vm",
         reloadOnSearch : false
     })
 
     .when("/metamodelo/tppr/edit/:accion/:entiId?", {
         templateUrl : "modules/metamodelo/tppr-edit.html",
-        controller : "TpprEditController",
-        controllerAs : 'vm'
+        controller : "TpprEditController as vm"
     })
 
     .when("/metamodelo/tpsp/detail/:entiId", {
         templateUrl : "modules/metamodelo/tpsp-detail.html",
-        controller : "TpspDetailController",
-        controllerAs : 'vm',
+        controller : "TpspDetailController as vm",
         reloadOnSearch : false
     })
 
     .when("/metamodelo/tpsp/edit/:accion/:tpprId/:entiId?", {
         templateUrl : "modules/metamodelo/tpsp-edit.html",
-        controller : "TpspEditController",
-        controllerAs : 'vm'
+        controller : "TpspEditController as vm"
     })
 
     .when("/metamodelo/tpsr/grid", {
         templateUrl : "modules/metamodelo/tpsr-grid.html",
-        controller : "TpsrGridController",
-        controllerAs : 'vm',
+        controller : "TpsrGridController as vm",
         reloadOnSearch : false
     })
 
     .when("/metamodelo/tpsr/detail/:entiId", {
         templateUrl : "modules/metamodelo/tpsr-detail.html",
-        controller : "TpsrDetailController",
-        controllerAs : 'vm',
+        controller : "TpsrDetailController as vm",
         reloadOnSearch : false
     })
 
     .when("/metamodelo/tpsr/edit/:accion/:entiId?", {
         templateUrl : "modules/metamodelo/tpsr-edit.html",
-        controller : "TpsrEditController",
-        controllerAs : 'vm'
+        controller : "TpsrEditController as vm"
     })
 
     .when("/metamodelo/tpss/detail/:entiId", {
         templateUrl : "modules/metamodelo/tpss-detail.html",
-        controller : "TpssDetailController",
-        controllerAs : 'vm',
+        controller : "TpssDetailController as vm",
         reloadOnSearch : false
     })
 
     .when("/metamodelo/tpss/edit/:accion/:tpsrId/:entiId?", {
         templateUrl : "modules/metamodelo/tpss-edit.html",
-        controller : "TpssEditController",
-        controllerAs : 'vm'
+        controller : "TpssEditController as vm"
     })
 
     .when("/metamodelo/tpes/grid", {
         templateUrl : "modules/metamodelo/tpes-grid.html",
-        controller : "TpesGridController",
-        controllerAs : 'vm',
+        controller : "TpesGridController as vm",
         reloadOnSearch : false
     })
 
     .when("/metamodelo/tpes/detail/:entiId", {
         templateUrl : "modules/metamodelo/tpes-detail.html",
-        controller : "TpesDetailController",
-        controllerAs : 'vm',
+        controller : "TpesDetailController as vm",
         reloadOnSearch : false
     })
 
     .when("/metamodelo/tpes/edit/:accion/:entiId?", {
         templateUrl : "modules/metamodelo/tpes-edit.html",
-        controller : "TpesEditController",
-        controllerAs : 'vm'
+        controller : "TpesEditController as vm"
     })
 
     .when("/metamodelo/cmag/detail/:tpesId/:entdId", {
         templateUrl : "modules/metamodelo/cmag-detail.html",
-        controller : "CmagDetailController",
-        controllerAs : 'vm'
+        controller : "CmagDetailController as vm"
     })
 
     .when("/metamodelo/cmag/edit/:accion/:tpesId/:entdId?", {
         templateUrl : "modules/metamodelo/cmag-edit.html",
-        controller : "CmagEditController",
-        controllerAs : 'vm'
+        controller : "CmagEditController as vm"
     })
 
     .when("/metamodelo/entd/detail/:entiId/:tpdtId", {
         templateUrl : "modules/metamodelo/entd-detail.html",
-        controller : "EntdDetailController",
-        controllerAs : 'vm'
+        controller : "EntdDetailController as vm"
     })
 
     .when("/metamodelo/entd/edit/:accion/:entiId/:tpdtId?", {
         templateUrl : "modules/metamodelo/entd-edit.html",
-        controller : "EntdEditController",
-        controllerAs : 'vm'
+        controller : "EntdEditController as vm"
     })
 
     .when("/metamodelo/engd/detail/:engdId", {
         templateUrl : "modules/metamodelo/engd-detail.html",
-        controller : "EngdDetailController",
-        controllerAs : 'vm'
+        controller : "EngdDetailController as vm"
     })
 
     .when("/metamodelo/engd/edit/:accion/:entiId/:engdId?", {
         templateUrl : "modules/metamodelo/engd-edit.html",
-        controller : "EngdEditController",
-        controllerAs : 'vm'
+        controller : "EngdEditController as vm"
     })
 
     .when("/metamodelo/trmt/detail/:entiId/:id", {
         templateUrl : "modules/metamodelo/trmt-detail.html",
-        controller : "TrmtDetailController",
-        controllerAs : 'vm'
+        controller : "TrmtDetailController as vm"
     })
 
     .when("/metamodelo/trmt/edit/:accion/:entiId/:id?", {
         templateUrl : "modules/metamodelo/trmt-edit.html",
-        controller : "TrmtEditController",
-        controllerAs : 'vm'
+        controller : "TrmtEditController as vm"
     })
 
     .when("/metamodelo/trtd/detail/:entiId/:trmtId/:tpdtId", {
         templateUrl : "modules/metamodelo/trtd-detail.html",
-        controller : "TrtdDetailController",
-        controllerAs : 'vm'
+        controller : "TrtdDetailController as vm"
     })
 
     .when("/metamodelo/trtd/edit/:accion/:entiId/:trmtId/:tpdtId?", {
         templateUrl : "modules/metamodelo/trtd-edit.html",
-        controller : "TrtdEditController",
-        controllerAs : 'vm'
+        controller : "TrtdEditController as vm"
     })
 
     .when("/metamodelo/enac/detail/:id", {
         templateUrl : "modules/metamodelo/enac-detail.html",
-        controller : "EnacDetailController",
-        controllerAs : 'vm'
+        controller : "EnacDetailController as vm"
     })
 
     .when("/metamodelo/enac/edit/:accion/:entiId/:id?", {
         templateUrl : "modules/metamodelo/enac-edit.html",
-        controller : "EnacEditController",
-        controllerAs : 'vm'
+        controller : "EnacEditController as vm"
     })
 
     .when("/metamodelo/enag/detail/:id", {
         templateUrl : "modules/metamodelo/enag-detail.html",
-        controller : "EnagDetailController",
-        controllerAs : 'vm'
+        controller : "EnagDetailController as vm"
     })
 
     .when("/metamodelo/enag/edit/:accion/:entiId/:id?", {
         templateUrl : "modules/metamodelo/enag-edit.html",
-        controller : "EnagEditController",
-        controllerAs : 'vm'
+        controller : "EnagEditController as vm"
     })
 
     .when("/metamodelo/enen/edit/:accion/:entipId", {
         templateUrl : "modules/metamodelo/enen-edit.html",
-        controller : "EnenEditController",
-        controllerAs : 'vm'
+        controller : "EnenEditController as vm"
     });
 }
 

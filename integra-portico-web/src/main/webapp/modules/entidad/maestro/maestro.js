@@ -28,46 +28,39 @@ function config($routeProvider) {
 
     .when("/maestro", {
         templateUrl : "modules/entidad/maestro/maestro.html",
-        controller : "MaestroController",
-        controllerAs : 'vm'
+        controller : "MaestroController as vm"
     })
 
     .when("/maestro/prmt/grid/:entiId/:page?", {
         templateUrl : "modules/entidad/maestro/prmt-grid.html",
-        controller : "PrmtGridController",
-        controllerAs : 'vm',
+        controller : "PrmtGridController as vm",
         reloadOnSearch : false
     })
 
     .when("/maestro/prmt/detail/:entiId/:itemId/:fechaVigencia?", {
         templateUrl : "modules/entidad/maestro/prmt-detail.html",
-        controller : "PrmtDetailController",
-        controllerAs : 'vm',
+        controller : "PrmtDetailController as vm",
         reloadOnSearch : false
     })
 
     .when("/maestro/prmt/edit/:accion/:entiId/:fechaVigencia?/:itemId?", {
         templateUrl : "modules/entidad/maestro/prmt-edit.html",
-        controller : "PrmtEditController",
-        controllerAs : 'vm'
+        controller : "PrmtEditController as vm"
     })
 
     .when("/maestro/prmt/gis", {
         templateUrl : "modules/entidad/maestro/prmt-gis.html",
-        controller : "PrmtGisController",
-        controllerAs : 'vm'
+        controller : "PrmtGisController as vm"
     })
 
     .when("/maestro/sprm/detail/:entiId/:itemId/:fechaVigencia?", {
         templateUrl : "modules/entidad/maestro/sprm-detail.html",
-        controller : "SprmDetailController",
-        controllerAs : 'vm'
+        controller : "SprmDetailController as vm"
     })
 
     .when("/maestro/sprm/edit/:accion/:entiId/:prmtId/:fechaVigencia?/:itemId?", {
         templateUrl : "modules/entidad/maestro/sprm-edit.html",
-        controller : "SprmEditController",
-        controllerAs : 'vm'
+        controller : "SprmEditController as vm"
     })
 
     ;
