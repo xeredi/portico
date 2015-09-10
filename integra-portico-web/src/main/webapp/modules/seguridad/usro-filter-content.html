@@ -3,25 +3,25 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <p class="modal-title" translate="filtro"></p>
+                <p class="modal-title">{{'usro' | translate}}: {{'filtro' | translate}}</p>
             </div>
             <div class="modal-body">
-                <form>
+                <form role="form">
                     <fieldset>
                         <div class="row">
                             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
                                 <label translate="usro_login"></label> <input type="text"
-                                    ng-model="vm.usroCriterio.login" class="form-control">
+                                    ng-model="vm.searchCriteria.login" class="form-control">
                             </div>
                             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
-                                <label translate="sprt"></label> <select ng-model="vm.usroCriterio.sprtId"
+                                <label translate="sprt"></label> <select ng-model="vm.searchCriteria.sprtId"
                                     ng-options="sprt.id as sprt.etiqueta for sprt in ::vm.sprtList"
                                     class="form-control">
                                     <option />
                                 </select>
                             </div>
                             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
-                                <label translate="prto"></label> <select ng-model="vm.usroCriterio.prtoId"
+                                <label translate="prto"></label> <select ng-model="vm.searchCriteria.prtoId"
                                     ng-options="prto.id as prto.etiqueta for prto in ::vm.prtoList"
                                     class="form-control">
                                     <option />
@@ -32,11 +32,14 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" data-ng-click="vm.search(1);$hide()">
+                <button type="submit" class="btn btn-primary" data-ng-click="vm.search(1);$hide()">
                     <i class="glyphicon glyphicon-search"></i> <span translate="btn_buscar"></span>
                 </button>
-                <button class="btn btn-default" data-ng-click="$hide()">
+                <button type="button" class="btn btn-default" data-ng-click="$hide()">
                     <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
+                </button>
+                <button type="button" class="btn btn-default" data-ng-click="vm.resetFilter()">
+                    <i class="glyphicon glyphicon-erase"></i> <span translate="btn_reset"></span>
                 </button>
             </div>
         </div>

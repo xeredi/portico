@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <p class="modal-title" translate="filtro"></p>
+                <p class="modal-title">{{'grpo' | translate}}: {{'filtro' | translate}}</p>
             </div>
             <div class="modal-body">
                 <form>
@@ -11,7 +11,7 @@
                         <div class="row">
                             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
                                 <label translate="grpo_nombre"></label> <input type="text"
-                                    ng-model="vm.grpoCriterio.nombre" class="form-control">
+                                    ng-model="vm.searchCriteria.nombre" class="form-control">
                             </div>
                         </div>
                     </fieldset>
@@ -23,6 +23,9 @@
                 </button>
                 <button class="btn btn-default" data-ng-click="$hide()">
                     <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
+                </button>
+                <button class="btn btn-default" data-ng-click="vm.resetFilter()">
+                    <i class="glyphicon glyphicon-erase"></i> <span translate="btn_reset"></span>
                 </button>
             </div>
         </div>

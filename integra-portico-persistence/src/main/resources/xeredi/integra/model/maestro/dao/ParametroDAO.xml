@@ -105,7 +105,8 @@
 
 		<if test="ids != null and !ids.empty">
 			AND prmt_pk IN
-			<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+			<foreach collection="ids" item="item" open="(" close=")"
+				separator=",">#{item}
 			</foreach>
 		</if>
 
@@ -115,15 +116,16 @@
 
 		<if test="entiIds != null and !entiIds.empty">
 			AND prmt_tppr_pk IN
-			<foreach collection="entiIds" item="item" open="(" close=")" separator=",">#{item}
+			<foreach collection="entiIds" item="item" open="(" close=")"
+				separator=",">#{item}
 			</foreach>
 		</if>
 
-		<if test="parametro != null">
+		<if test="parametro != null and !parametro.empty">
 			AND prmt_parametro LIKE #{parametro}
 		</if>
 
-		<if test="textoBusqueda != null">
+		<if test="textoBusqueda != null and !textoBusqueda.empty">
 		<![CDATA[
 			AND (
 				prmt_parametro LIKE #{textoBusqueda}
@@ -162,7 +164,8 @@
 
 		<if test="parametros != null and !parametros.empty">
 			AND prmt_parametro IN
-			<foreach collection="parametros" item="item" open="(" close=")" separator=",">#{item}
+			<foreach collection="parametros" item="item" open="(" close=")"
+				separator=",">#{item}
 			</foreach>
 		</if>
 
@@ -189,7 +192,8 @@
 
 					OR prmt_prto_pk IN
 			]]>
-				<foreach collection="prto.ids" item="item" open="(" close=")" separator=",">#{item}
+				<foreach collection="prto.ids" item="item" open="(" close=")"
+					separator=",">#{item}
 				</foreach>
 			<![CDATA[
 				)
@@ -203,7 +207,8 @@
 
 		<if test="versionIds != null and !versionIds.empty">
 			AND prvr_pk IN
-			<foreach collection="versionIds" item="item" open="(" close=")" separator=",">#{item}
+			<foreach collection="versionIds" item="item" open="(" close=")"
+				separator=",">#{item}
 			</foreach>
 		</if>
 
@@ -218,28 +223,31 @@
 
 		<if test="sprmMap != null">
 			<foreach collection="sprmMap" index="key" item="sprm">
-			<![CDATA[
-			    AND EXISTS (
-			        SELECT 1
-			        FROM tbl_subparametro_sprm
-			        WHERE
-			            sprm_prmt_pk = prmt_pk
-			            AND sprm_tpsp_pk = #{key}
-			            AND sprm_prmt_dep_pk = #{sprm.prmtAsociado.id}
-			]]>
-				<if test="fechaVigencia != null">
+				<if
+					test="key != null and sprm.prmtAsociado != null and sprm.prmtAsociado.id != null">
 				<![CDATA[
-					    AND EXISTS (
-					        SELECT 1
-					        FROM tbl_subparametro_version_spvr
-					        WHERE
-				            	spvr_sprm_pk = sprm_pk
-				            	AND #{fechaVigencia} >= spvr_fini
-			            		AND (spvr_ffin IS NULL OR spvr_ffin > #{fechaVigencia})
-				        )
+				    AND EXISTS (
+				        SELECT 1
+				        FROM tbl_subparametro_sprm
+				        WHERE
+				            sprm_prmt_pk = prmt_pk
+				            AND sprm_tpsp_pk = #{key}
+				            AND sprm_prmt_dep_pk = #{sprm.prmtAsociado.id}
 				]]>
+					<if test="fechaVigencia != null">
+					<![CDATA[
+						    AND EXISTS (
+						        SELECT 1
+						        FROM tbl_subparametro_version_spvr
+						        WHERE
+					            	spvr_sprm_pk = sprm_pk
+					            	AND #{fechaVigencia} >= spvr_fini
+				            		AND (spvr_ffin IS NULL OR spvr_ffin > #{fechaVigencia})
+					        )
+					]]>
+					</if>
+					)
 				</if>
-				)
 			</foreach>
 		</if>
 
@@ -270,7 +278,8 @@
 					</if>
 					<if test="itdt.cadenas != null and !itdt.cadenas.empty">
 						AND prdt_cadena IN
-						<foreach collection="itdt.cadenas" item="cadena" open="(" close=")" separator=",">#{cadena}
+						<foreach collection="itdt.cadenas" item="cadena" open="("
+							close=")" separator=",">#{cadena}
 						</foreach>
 					</if>
 					)
@@ -279,14 +288,16 @@
 		</if>
 	</sql>
 
-	<select id="count" parameterType="ParametroCriterioVO" resultType="Integer">
+	<select id="count" parameterType="ParametroCriterioVO"
+		resultType="Integer">
 		<include refid="SelectCountPrefix" />
 		<where>
 			<include refid="SelectWhere" />
 		</where>
 	</select>
 
-	<select id="selectList" parameterType="ParametroCriterioVO" resultMap="ResultMap">
+	<select id="selectList" parameterType="ParametroCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<where>
 			<include refid="SelectWhere" />
@@ -295,28 +306,32 @@
 		ORDER BY prmt_tppr_pk, prmt_parametro
 	</select>
 
-	<select id="selectMap" parameterType="ParametroCriterioVO" resultMap="ResultMap">
+	<select id="selectMap" parameterType="ParametroCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<where>
 			<include refid="SelectWhere" />
 		</where>
 	</select>
 
-	<select id="selectMapByCodigo" parameterType="ParametroCriterioVO" resultMap="ResultMap">
+	<select id="selectMapByCodigo" parameterType="ParametroCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<where>
 			<include refid="SelectWhere" />
 		</where>
 	</select>
 
-	<select id="selectObject" parameterType="ParametroCriterioVO" resultMap="ResultMap">
+	<select id="selectObject" parameterType="ParametroCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<where>
 			<include refid="SelectWhere" />
 		</where>
 	</select>
 
-	<select id="selectSprmList" parameterType="SubparametroCriterioVO" resultMap="ResultMap">
+	<select id="selectSprmList" parameterType="SubparametroCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
         <![CDATA[
 		WHERE
@@ -363,7 +378,8 @@
 		</if>
 	</select>
 
-	<select id="existsOverlap" parameterType="ParametroVO" resultType="Boolean">
+	<select id="existsOverlap" parameterType="ParametroVO"
+		resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM

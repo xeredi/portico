@@ -118,10 +118,9 @@ public class JSONInterceptor extends AbstractInterceptor {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see
-     * com.opensymphony.xwork2.interceptor.AbstractInterceptor#intercept(com.opensymphony.xwork2.ActionInvocation
-     * )
+     *
+     * @see com.opensymphony.xwork2.interceptor.AbstractInterceptor#intercept(com.opensymphony.xwork2.
+     * ActionInvocation )
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -155,7 +154,7 @@ public class JSONInterceptor extends AbstractInterceptor {
             final ObjectMapper mapper = new ObjectMapper();
 
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            // mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, false);
+            mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
             mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
             mapper.readerForUpdating(rootObject).readValue(request.getReader());
         } else if (contentType != null && contentType.equalsIgnoreCase("application/json-rpc")) {
@@ -239,9 +238,9 @@ public class JSONInterceptor extends AbstractInterceptor {
      *             the introspection exception
      */
     @SuppressWarnings("unchecked")
-    public RPCResponse invoke(final Object object, final Map data) throws IllegalArgumentException,
-            IllegalAccessException, InvocationTargetException, JSONException, InstantiationException,
-            NoSuchMethodException, IntrospectionException {
+    public RPCResponse invoke(final Object object, final Map data)
+            throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, JSONException,
+            InstantiationException, NoSuchMethodException, IntrospectionException {
 
         final RPCResponse response = new RPCResponse();
 
@@ -357,8 +356,8 @@ public class JSONInterceptor extends AbstractInterceptor {
         if (smdMethodAnntotation != null) {
             final String alias = smdMethodAnntotation.name();
             final boolean paramsMatch = method.getParameterTypes().length == parameterCount;
-            if (alias.length() == 0 && method.getName().equals(name) && paramsMatch || alias.equals(name)
-                    && paramsMatch) {
+            if (alias.length() == 0 && method.getName().equals(name) && paramsMatch
+                    || alias.equals(name) && paramsMatch) {
                 return true;
             }
         }

@@ -2,9 +2,9 @@ angular.module(
         "integraApp",
         [ "ngRoute", "mgcrea.ngStrap", "mgcrea.ngStrap.aside", "ui.bootstrap.tpls", "ui.bootstrap.tabs",
                 "ui.bootstrap.pagination", "ui.bootstrap.dropdown", "ui.bootstrap.typeahead",
-                "pascalprecht.translate", "angularSpinner", "uiGmapgoogle-maps", "i18n", "administracion",
-                "metamodelo", "facturacion", "item", "maestro", "servicio", "estadistica", "proceso",
-                "seguridad" ])
+                "pascalprecht.translate", "angularSpinner", "uiGmapgoogle-maps", "i18n", "crud",
+                "administracion", "metamodelo", "facturacion", "item", "maestro", "servicio", "estadistica",
+                "proceso", "seguridad" ])
 
 .config([ "$routeProvider", function($routeProvider) {
     $routeProvider

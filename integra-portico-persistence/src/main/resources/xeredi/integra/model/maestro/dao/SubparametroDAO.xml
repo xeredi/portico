@@ -118,10 +118,8 @@
 		<if test="entiId != null">
 			AND sprm_tpsp_pk = #{entiId}
 		</if>
-		<if test="prmt != null">
-			<if test="prmt.id != null">
-				AND sprm_prmt_pk = #{prmt.id}
-			</if>
+		<if test="prmt != null and prmt.id != null">
+			AND sprm_prmt_pk = #{prmt.id}
 		</if>
 		<if test="fechaVigencia != null">
 	    <![CDATA[
