@@ -1,6 +1,6 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/tpdt/edit/edit/{{vm.tpdt.id}}"><i
+        <a class="btn btn-default" ui-sref="tipodato-edit({accion: 'edit', id: vm.tpdt.id})"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
@@ -45,7 +45,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/metamodelo/cdrf/edit/create/{{vm.tpdt.id}}"><i
+            <a class="btn btn-default" ui-sref="codigoreferencia-edit({accion: 'create', tpdtId: vm.tpdt.id})"><i
                 class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>
@@ -61,7 +61,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="cdrf in vm.tpdt.cdrfList track by $index">
-                <td><a ng-href="#/metamodelo/cdrf/detail/{{cdrf.id}}"><i
+                <td><a ui-sref="codigoreferencia-detail({id: cdrf.id})"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="cdrf.valor"></td>
                 <td ng-bind="cdrf.texto"></td>

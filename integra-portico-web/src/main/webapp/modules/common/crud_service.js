@@ -143,10 +143,35 @@ function CrudService($http, $q, $state) {
             }
         }
 
+        function saveI18n(accion, item, i18nMap) {
+            console.log('save i18n');
+
+            return $http.post(_uri + "-save.action", {model: item, i18nMap: i18nMap, accion : accion})
+                .then(success)
+                .catch(fail);
+
+            function success(response) {
+                return response.data;
+            }
+
+            function fail(error) {
+                var msg = 'Save I18n failed. ' + error.data;
+                console.log(msg);
+
+                return $q.reject(msg);
+            }
+        }
+
         return {
             list: list
             , filter: filter
-            , detail: detail, remove: remove, edit: edit, save: save, setUri: setUri, getUri: getUri
+            , detail: detail
+            , remove: remove
+            , edit: edit
+            , save: save
+            , saveI18n: saveI18n
+            , setUri: setUri
+            , getUri: getUri
         };
     }
 

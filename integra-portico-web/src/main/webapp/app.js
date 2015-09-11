@@ -3,9 +3,9 @@ angular.module(
         [ "ui.router", "ngRoute", "mgcrea.ngStrap", "mgcrea.ngStrap.aside", "ui.bootstrap.tpls",
                 "ui.bootstrap.tabs", "ui.bootstrap.pagination", "ui.bootstrap.dropdown",
                 "ui.bootstrap.typeahead", "pascalprecht.translate", "angularSpinner", "uiGmapgoogle-maps",
-                "i18n", "crud_service", "crud_controller", "administracion", "metamodelo", "facturacion",
-                "item", "maestro", "servicio", "estadistica", "proceso", "seguridad_service",
-                "seguridad_controller" ])
+                "i18n", "crud_service", "crud_controller", "administracion", "metamodelo_service",
+                "metamodelo_controller", "facturacion", "item", "maestro", "servicio", "estadistica",
+                "proceso", "seguridad_service", "seguridad_controller" ])
 
 .config([ "$routeProvider", function($routeProvider) {
     $routeProvider

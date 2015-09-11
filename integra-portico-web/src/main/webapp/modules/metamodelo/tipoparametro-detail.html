@@ -2,7 +2,7 @@
     ng-bind="'enti' | translate"></tab-heading>
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/tppr/edit/edit/{{vm.enti.id}}"><i
+        <a class="btn btn-default" ui-sref="tipoparametro-edit({accion: 'edit', id: vm.enti.id})"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
@@ -28,8 +28,7 @@
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="enti_tpdtNombre"></label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tpdt/detail/{{vm.enti.tpdtNombre.id}}"
-                    ng-bind="vm.enti.tpdtNombre.nombre"></a>
+                <a ui-sref="tipodato-detail({id:vm.enti.tpdtNombre.id})" ng-bind="vm.enti.tpdtNombre.nombre"></a>
             </p>
         </div>
     </div>

@@ -6,10 +6,10 @@
     </div>
 
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/tppr/edit/create"><i
+        <a class="btn btn-default" ui-sref="tipoparametro-edit({accion: 'create'})"><i
             class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a>
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template="modules/metamodelo/tppr-filter-modal.html" bs-modal="modal">
+            data-template="modules/metamodelo/tipoparametro-filter-content.html" bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
         </button>
     </div>
@@ -41,7 +41,7 @@
 
         <tbody>
             <tr ng-repeat="enti in vm.entiList.list track by enti.id">
-                <td><a ng-href="#/metamodelo/tppr/detail/{{enti.id}}"><i
+                <td><a ui-sref="tipoparametro-detail({id:enti.id})"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="enti.codigo"></td>
                 <td ng-bind="enti.nombre"></td>
@@ -54,7 +54,7 @@
                 <td><i class="glyphicon glyphicon-{{(enti.i18n ? 'ok' : 'remove')}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{(enti.tempExp ? 'ok' : 'remove')}}"></i></td>
                 <td class="number" ng-bind="(enti.maxGrid | number:0)"></td>
-                <td><a ng-href="#/metamodelo/tpdt/detail/{{enti.tpdtNombre.id}}"
+                <td><a ui-sref="tipodato-detail({id:enti.tpdtNombre.id})"
                     ng-bind="enti.tpdtNombre.nombre"></a></td>
                 <td ng-bind="enti.classpath"></td>
             </tr>
