@@ -162,6 +162,19 @@ function CrudService($http, $q, $state) {
             }
         }
 
+        function tabSelected(tab) {
+            console.log('tabSelected');
+
+            $state.go('.', {
+                tab : tab
+            }, {
+                notify : false,
+                reload : false,
+                location : 'replace',
+                inherit : true
+            });
+        }
+
         return {
             list: list
             , filter: filter
@@ -170,6 +183,7 @@ function CrudService($http, $q, $state) {
             , edit: edit
             , save: save
             , saveI18n: saveI18n
+            , tabSelected: tabSelected
             , setUri: setUri
             , getUri: getUri
         };

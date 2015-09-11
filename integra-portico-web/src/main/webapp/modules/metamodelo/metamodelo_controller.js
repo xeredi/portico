@@ -20,9 +20,9 @@ angular.module("metamodelo_controller", [])
 
 .controller("TipoParametroEditController", TipoParametroEditController)
 
-.controller("TpspDetailController", TpspDetailController)
+.controller("TipoSubparametroDetailController", TipoSubparametroDetailController)
 
-.controller("TpspEditController", TpspEditController)
+.controller("TipoSubparametroEditController", TipoSubparametroEditController)
 
 // -------------------- TIPO DE SERVICIO ------------------
 .controller("TpsrGridController", TpsrGridController)
@@ -120,9 +120,10 @@ function config($routeProvider, $stateProvider) {
     })
 
     .state("tipoparametro-detail", {
-        url : "/metamodelo/tipoparametro/detail/:id",
+        url : "/metamodelo/tipoparametro/detail/:id?tab",
         templateUrl : "modules/metamodelo/tipoparametro-detail.html",
         controller : "TipoParametroDetailController as vm",
+        reloadOnSearch : false
     })
 
     .state("tipoparametro-edit", {
@@ -131,20 +132,22 @@ function config($routeProvider, $stateProvider) {
         controller : "TipoParametroEditController as vm",
     })
 
-    ;
-
-    $routeProvider
-
-    .when("/metamodelo/tpsp/detail/:entiId", {
-        templateUrl : "modules/metamodelo/tpsp-detail.html",
-        controller : "TpspDetailController as vm",
+    .state("tiposubparametro-detail", {
+        url : "/metamodelo/tiposubparametro/detail/:id?tab",
+        templateUrl : "modules/metamodelo/tiposubparametro-detail.html",
+        controller : "TipoSubparametroDetailController as vm",
         reloadOnSearch : false
     })
 
-    .when("/metamodelo/tpsp/edit/:accion/:tpprId/:entiId?", {
-        templateUrl : "modules/metamodelo/tpsp-edit.html",
-        controller : "TpspEditController as vm"
+    .state("tiposubparametro-edit", {
+        url : "/metamodelo/tiposubparametro/edit/:accion/:tpprId?id",
+        templateUrl : "modules/metamodelo/tiposubparametro-edit.html",
+        controller : "TipoSubparametroEditController as vm",
     })
+
+    ;
+
+    $routeProvider
 
     .when("/metamodelo/tpsr/grid", {
         templateUrl : "modules/metamodelo/tpsr-grid.html",
@@ -472,7 +475,7 @@ function TipoParametroDetailController($stateParams, pageTitleService, TipoParam
     }
 
     function tabSelected(tabNo) {
-        // $location.search("tab", tabNo).replace();
+        TipoParametroService.tabSelected(tabNo);
     }
 
     vm.tabActive = {};
@@ -532,93 +535,77 @@ function TipoParametroEditController($state, $stateParams, pageTitleService, Tip
     pageTitleService.setTitle("tppr", "page_" + vm.accion);
 }
 
-function TpspDetailController($http, $location, $routeParams, pageTitleService) {
+function TipoSubparametroDetailController($stateParams, pageTitleService, TipoSubparametroService) {
     var vm = this;
 
     vm.remove = remove;
     vm.tabSelected = tabSelected;
 
-    initialize();
-
-    function initialize() {
-        vm.tabActive = {};
-
-        if ($routeParams.tab) {
-            vm.tabActive[$routeParams.tab] = true;
-        }
-
-        $http.post("metamodelo/tipo-subparametro-detail.action", {
-            model : {
-                id : $routeParams.entiId
-            }
-        }).success(function(data) {
-            vm.enti = data.model;
-            vm.i18nMap = data.i18nMap;
-            vm.entdList = data.entdList;
-            vm.engdList = data.engdList;
-            vm.enacList = data.enacList;
-            vm.enagList = data.enagList;
-        });
-
-        pageTitleService.setTitle("tpsp", "page_detail");
-    }
-
     function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("metamodelo/tipo-subparametro-remove.action", {
-                model : vm.enti
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
+        TipoSubparametroService.remove(vm.enti).then(function(data) {
+            window.history.back();
+        });
     }
 
     function tabSelected(tabNo) {
-        $location.search("tab", tabNo).replace();
+        TipoSubparametroService.tabSelected(tabNo);
     }
+
+    vm.tabActive = {};
+
+    if ($stateParams.tab) {
+        vm.tabActive[$stateParams.tab] = true;
+    }
+
+    TipoSubparametroService.detail({
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.enti = data.model;
+        vm.i18nMap = data.i18nMap;
+        vm.entdList = data.entdList;
+        vm.engdList = data.engdList;
+        vm.enacList = data.enacList;
+        vm.enagList = data.enagList;
+    });
+
+    pageTitleService.setTitle("tpsp", "page_detail");
 }
 
-function TpspEditController($http, $location, $routeParams, pageTitleService) {
+function TipoSubparametroEditController($state, $stateParams, pageTitleService, TipoSubparametroService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
-    initialize();
-
-    function initialize() {
-        vm.accion = $routeParams.accion;
-
-        $http.post("metamodelo/tipo-subparametro-edit.action", {
-            model : {
-                tpprId : $routeParams.tpprId,
-                id : $routeParams.entiId
-            },
-            accion : vm.accion
-        }).success(function(data) {
-            vm.enti = data.model;
-            vm.i18nMap = data.i18nMap;
-            vm.entiList = data.tpprList;
-        });
-
-        pageTitleService.setTitle("tpsp", "page_" + vm.accion);
-    }
-
     function save() {
-        $http.post("metamodelo/tipo-subparametro-save.action", {
-            model : vm.enti,
-            i18nMap : vm.i18nMap,
-            accion : vm.accion
-        }).success(function(data) {
+        TipoSubparametroService.saveI18n(vm.accion, vm.enti, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $location.path("/metamodelo/tpsp/detail/" + data.model.id).replace();
+            }, 0) : $state.go("tiposubparametro-detail", {
+                id : data.model.id
+            }, {
+                location : 'replace'
+            });
         });
     }
 
     function cancel() {
         window.history.back();
     }
+
+    vm.accion = $stateParams.accion;
+
+    TipoSubparametroService.edit($stateParams.accion, {
+        tpprId : $stateParams.tpprId,
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.enti = data.model;
+        vm.i18nMap = data.i18nMap;
+
+        vm.entiList = data.tpprList;
+    });
+
+    pageTitleService.setTitle("tpsp", "page_" + vm.accion);
 }
 
 function TpsrGridController($http, $location, $routeParams, $modal, pageTitleService) {

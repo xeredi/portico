@@ -95,7 +95,7 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/tpsp/edit/create/{{vm.enti.id}}"><i
+        <a class="btn btn-default" ui-sref="tiposubparametro-edit({accion: 'create', tpprId: vm.enti.id})"><i
             class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
     </div>
 </div>
@@ -117,7 +117,7 @@
     </thead>
     <tbody>
         <tr ng-repeat="subenti in vm.subentiList track by subenti.id">
-            <td><a ng-href="#/metamodelo/tpsp/detail/{{subenti.id}}"><i
+            <td><a ui-sref="tiposubparametro-detail({id:subenti.id})"><i
                     class="glyphicon glyphicon-search"></i></a></td>
             <td ng-bind="subenti.codigo"></td>
             <td ng-bind="subenti.nombre"></td>
