@@ -6,11 +6,11 @@
     </div>
 
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/seguridad/usro/edit/create"><i
+        <a class="btn btn-default" ui-sref="usuario-edit({accion: 'create'})"><i
             class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a>
 
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template="modules/seguridad/usro-filter-content.html" bs-modal="modal">
+            data-template="modules/seguridad/usuario-filter-content.html" bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
         </button>
     </div>
@@ -32,8 +32,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="usro in vm.usroList.list track by usro.id">
-                <td><a ng-href="#/seguridad/usro/detail/{{::usro.id}}"><i
-                        class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ui-sref="usuario-detail({id: usro.id})"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap" ng-bind="::usro.login"></td>
                 <td nowrap="nowrap" ng-bind="::usro.nombre"></td>
                 <td nowrap="nowrap" ng-bind="::usro.sprt.etiqueta"></td>

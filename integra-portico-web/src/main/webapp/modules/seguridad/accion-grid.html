@@ -1,16 +1,15 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <pagination total-items="vm.grpoList.count" items-per-page="vm.grpoList.limit" ng-model="vm.page"
+        <pagination total-items="vm.accnList.count" items-per-page="vm.accnList.limit" ng-model="vm.page"
             ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
             next-text="&rsaquo;&rsaquo;"></pagination>
     </div>
 
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/seguridad/grpo/edit/create"><i
+        <a class="btn btn-default" ui-sref="accion-edit({accion: 'create'})"><i
             class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a>
-
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template="modules/seguridad/grpo-filter-content.html" bs-modal="modal">
+            data-template="modules/seguridad/accion-filter-content.html" bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
         </button>
     </div>
@@ -18,20 +17,21 @@
 
 <div class="table-responsive">
     <span class="label label-default" translate="grid_count"
-        translate-value-count="{{vm.grpoList.count | number:0}}"></span>
+        translate-value-count="{{vm.accnList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th class="codigo" nowrap="nowrap" translate="grpo_nombre"></th>
+                <th nowrap="nowrap" translate="accn_codigo"></th>
+                <th nowrap="nowrap" translate="accn_nombre"></th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="grpo in vm.grpoList.list track by grpo.id">
-                <td><a ng-href="#/seguridad/grpo/detail/{{::grpo.id}}"><i
-                        class="glyphicon glyphicon-search"></i></a></td>
-                <td nowrap="nowrap" ng-bind="::grpo.nombre"></td>
+            <tr ng-repeat="accn in vm.accnList.list track by accn.id">
+                <td><a ui-sref="accion-detail({id: accn.id})"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td nowrap="nowrap" ng-bind="::accn.codigo"></td>
+                <td nowrap="nowrap" ng-bind="::accn.nombre"></td>
             </tr>
         </tbody>
     </table>

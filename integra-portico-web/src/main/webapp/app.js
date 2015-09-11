@@ -1,10 +1,11 @@
 angular.module(
         "integraApp",
-        [ "ngRoute", "mgcrea.ngStrap", "mgcrea.ngStrap.aside", "ui.bootstrap.tpls", "ui.bootstrap.tabs",
-                "ui.bootstrap.pagination", "ui.bootstrap.dropdown", "ui.bootstrap.typeahead",
-                "pascalprecht.translate", "angularSpinner", "uiGmapgoogle-maps", "i18n", "crud",
-                "administracion", "metamodelo", "facturacion", "item", "maestro", "servicio", "estadistica",
-                "proceso", "seguridad" ])
+        [ "ui.router", "ngRoute", "mgcrea.ngStrap", "mgcrea.ngStrap.aside", "ui.bootstrap.tpls",
+                "ui.bootstrap.tabs", "ui.bootstrap.pagination", "ui.bootstrap.dropdown",
+                "ui.bootstrap.typeahead", "pascalprecht.translate", "angularSpinner", "uiGmapgoogle-maps",
+                "i18n", "crud_service", "crud_controller", "administracion", "metamodelo", "facturacion",
+                "item", "maestro", "servicio", "estadistica", "proceso", "seguridad_service",
+                "seguridad_controller" ])
 
 .config([ "$routeProvider", function($routeProvider) {
     $routeProvider
@@ -82,7 +83,7 @@ angular.module(
     $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
     $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
 
-    $httpProvider.interceptors.push(function($q, $rootScope, $location, usSpinnerService) {
+    $httpProvider.interceptors.push(function($q, $rootScope, $injector, usSpinnerService) {
         return {
             'request' : function(request) {
                 if (activeRequests == 0) {
@@ -111,7 +112,8 @@ angular.module(
                     if (response.data.responseCode) {
                         switch (response.data.responseCode) {
                         case "login":
-                            $location.path("/seguridad/usro/acceso");
+                            $injector.get('$state').go("usuario-acceso");
+
                             return $q.reject(response);
 
                             break;

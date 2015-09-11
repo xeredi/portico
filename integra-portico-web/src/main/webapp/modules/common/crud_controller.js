@@ -1,11 +1,14 @@
-angular.module("crud", [])
+angular.module("crud_controller", [])
 
 .controller("CrudGridController", CrudGridController)
 
 ;
 
-function CrudGridController($http, $location, $routeParams, $modal, listUrl, filterUrl) {
+function CrudGridController($http, $location, $routeParams, $modal, baseUri) {
     var vm = this;
+
+    var listUrl = baseUri + "-list.action";
+    var filterUrl = baseUri + "-filter.action";
 
     vm.search = search;
     vm.pageChanged = pageChanged;
@@ -57,4 +60,3 @@ CrudGridController.prototype.retrieveResult = function(data) {
 CrudGridController.prototype.retrieveFilterDependencies = function(data) {
     console.log("retrieveFilterData Parent");
 };
-
