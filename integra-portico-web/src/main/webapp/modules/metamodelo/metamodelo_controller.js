@@ -25,15 +25,15 @@ angular.module("metamodelo_controller", [])
 .controller("TipoSubparametroEditController", TipoSubparametroEditController)
 
 // -------------------- TIPO DE SERVICIO ------------------
-.controller("TpsrGridController", TpsrGridController)
+.controller("TipoServicioGridController", TipoServicioGridController)
 
-.controller("TpsrDetailController", TpsrDetailController)
+.controller("TipoServicioDetailController", TipoServicioDetailController)
 
-.controller("TpsrEditController", TpsrEditController)
+.controller("TipoServicioEditController", TipoServicioEditController)
 
-.controller("TpssDetailController", TpssDetailController)
+.controller("TipoSubservicioDetailController", TipoSubservicioDetailController)
 
-.controller("TpssEditController", TpssEditController)
+.controller("TipoSubservicioEditController", TipoSubservicioEditController)
 
 // -------------------- ESTADISTICA ------------------
 .controller("TpesGridController", TpesGridController)
@@ -145,37 +145,42 @@ function config($routeProvider, $stateProvider) {
         controller : "TipoSubparametroEditController as vm",
     })
 
+    .state("tiposervicio-grid", {
+        url : "/metamodelo/tiposervicio/grid?page&searchCriteria&limit",
+        templateUrl : "modules/metamodelo/tiposervicio-grid.html",
+        controller : "TipoServicioGridController as vm",
+        reloadOnSearch : false
+    })
+
+    .state("tiposervicio-detail", {
+        url : "/metamodelo/tiposervicio/detail/:id?tab",
+        templateUrl : "modules/metamodelo/tiposervicio-detail.html",
+        controller : "TipoServicioDetailController as vm",
+        reloadOnSearch : false
+    })
+
+    .state("tiposervicio-edit", {
+        url : "/metamodelo/tiposervicio/edit/:accion?id",
+        templateUrl : "modules/metamodelo/tiposervicio-edit.html",
+        controller : "TipoServicioEditController as vm",
+    })
+
+    .state("tiposubservicio-detail", {
+        url : "/metamodelo/tiposubservicio/detail/:id?tab",
+        templateUrl : "modules/metamodelo/tiposubservicio-detail.html",
+        controller : "TipoSubservicioDetailController as vm",
+        reloadOnSearch : false
+    })
+
+    .state("tiposubservicio-edit", {
+        url : "/metamodelo/tiposubservicio/edit/:accion/:tpsrId?id",
+        templateUrl : "modules/metamodelo/tiposubservicio-edit.html",
+        controller : "TipoSubservicioEditController as vm",
+    })
+
     ;
 
     $routeProvider
-
-    .when("/metamodelo/tpsr/grid", {
-        templateUrl : "modules/metamodelo/tpsr-grid.html",
-        controller : "TpsrGridController as vm",
-        reloadOnSearch : false
-    })
-
-    .when("/metamodelo/tpsr/detail/:entiId", {
-        templateUrl : "modules/metamodelo/tpsr-detail.html",
-        controller : "TpsrDetailController as vm",
-        reloadOnSearch : false
-    })
-
-    .when("/metamodelo/tpsr/edit/:accion/:entiId?", {
-        templateUrl : "modules/metamodelo/tpsr-edit.html",
-        controller : "TpsrEditController as vm"
-    })
-
-    .when("/metamodelo/tpss/detail/:entiId", {
-        templateUrl : "modules/metamodelo/tpss-detail.html",
-        controller : "TpssDetailController as vm",
-        reloadOnSearch : false
-    })
-
-    .when("/metamodelo/tpss/edit/:accion/:tpsrId/:entiId?", {
-        templateUrl : "modules/metamodelo/tpss-edit.html",
-        controller : "TpssEditController as vm"
-    })
 
     .when("/metamodelo/tpes/grid", {
         templateUrl : "modules/metamodelo/tpes-grid.html",
@@ -608,35 +613,28 @@ function TipoSubparametroEditController($state, $stateParams, pageTitleService, 
     pageTitleService.setTitle("tpsp", "page_" + vm.accion);
 }
 
-function TpsrGridController($http, $location, $routeParams, $modal, pageTitleService) {
+function TipoServicioGridController($state, $stateParams, $modal, pageTitleService, TipoServicioService) {
     var vm = this;
 
+    vm.filter = filter;
+    vm.resetFilter = resetFilter;
     vm.search = search;
     vm.pageChanged = pageChanged;
-    vm.filter = filter;
 
-    initialize();
+    function filter() {
+        TipoServicioService.filter(vm.searchCriteria).then(function(data) {
+        });
+    }
 
-    function initialize() {
-        vm.entiCriterio = $routeParams.entiCriterio ? angular.fromJson($routeParams.entiCriterio) : {};
-
-        search($routeParams.page ? $routeParams.page : 1);
-        pageTitleService.setTitle("tpsr", "page_grid");
+    function resetFilter() {
+        vm.searchCriteria = {};
     }
 
     function search(page) {
-        $http.post("metamodelo/tipo-servicio-list.action", {
-            model : vm.entiCriterio,
-            page : page,
-            limit : vm.limit
-        }).success(function(data) {
-            vm.entiList = data.resultList;
+        TipoServicioService.list(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
-
-            $location.search({
-                page : vm.page,
-                entiCriterio : JSON.stringify(vm.entiCriterio)
-            }).replace();
+            vm.limit = data.resultList.limit;
+            vm.entiList = data.resultList;
         });
     }
 
@@ -644,191 +642,163 @@ function TpsrGridController($http, $location, $routeParams, $modal, pageTitleSer
         search(vm.page);
     }
 
-    function filter(size) {
-    }
+    vm.searchCriteria = $stateParams.searchCriteria ? angular.fromJson($stateParams.searchCriteria) : {};
+    vm.limit = $stateParams.limit;
+
+    search($stateParams.page ? $stateParams.page : 1);
+
+    pageTitleService.setTitle("tpsr", "page_grid");
 }
 
-function TpsrDetailController($http, $location, $routeParams, pageTitleService) {
+function TipoServicioDetailController($stateParams, pageTitleService, TipoServicioService) {
     var vm = this;
 
     vm.remove = remove;
     vm.tabSelected = tabSelected;
 
-    initialize();
-
-    function initialize() {
-        vm.tabActive = {};
-
-        if ($routeParams.tab) {
-            vm.tabActive[$routeParams.tab] = true;
-        }
-
-        $http.post("metamodelo/tipo-servicio-detail.action", {
-            model : {
-                id : $routeParams.entiId
-            }
-        }).success(function(data) {
-            vm.enti = data.model;
-            vm.i18nMap = data.i18nMap;
-            vm.subentiList = data.subentiList;
-            vm.entiHijasList = data.entiHijasList;
-            vm.entdList = data.entdList;
-            vm.engdList = data.engdList;
-            vm.trmtList = data.trmtList;
-            vm.enacList = data.enacList;
-            vm.enagList = data.enagList;
-        });
-
-        pageTitleService.setTitle("tpsr", "page_detail");
-    }
-
     function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("metamodelo/tipo-servicio-remove.action", {
-                model : vm.enti
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
+        TipoServicioService.remove(vm.enti).then(function(data) {
+            window.history.back();
+        });
     }
 
     function tabSelected(tabNo) {
-        $location.search("tab", tabNo).replace();
+        TipoServicioService.tabSelected(tabNo);
     }
+
+    vm.tabActive = {};
+
+    if ($stateParams.tab) {
+        vm.tabActive[$stateParams.tab] = true;
+    }
+
+    TipoServicioService.detail({
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.enti = data.model;
+        vm.i18nMap = data.i18nMap;
+        vm.subentiList = data.subentiList;
+        vm.entiHijasList = data.entiHijasList;
+        vm.entdList = data.entdList;
+        vm.engdList = data.engdList;
+        vm.trmtList = data.trmtList;
+        vm.enacList = data.enacList;
+        vm.enagList = data.enagList;
+    });
+
+    pageTitleService.setTitle("tpsr", "page_detail");
 }
 
-function TpsrEditController($http, $location, $routeParams, pageTitleService) {
+function TipoServicioEditController($state, $stateParams, pageTitleService, TipoServicioService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
-    initialize();
-
-    function initialize() {
-        vm.accion = $routeParams.accion;
-
-        $http.post("metamodelo/tipo-servicio-edit.action", {
-            model : {
-                id : $routeParams.entiId
-            },
-            accion : vm.accion
-        }).success(function(data) {
-            vm.enti = data.model;
-            vm.i18nMap = data.i18nMap;
-            vm.tpdtEstadoList = data.tpdtEstadoList;
-        });
-
-        pageTitleService.setTitle("tpsr", "page_" + vm.accion);
-    }
-
     function save() {
-        $http.post("metamodelo/tipo-servicio-save.action", {
-            model : vm.enti,
-            i18nMap : vm.i18nMap,
-            accion : vm.accion
-        }).success(function(data) {
+        TipoServicioService.saveI18n(vm.accion, vm.enti, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $location.path("/metamodelo/tpsr/detail/" + data.model.id).replace();
+            }, 0) : $state.go("tiposervicio-detail", {
+                id : data.model.id
+            }, {
+                location : 'replace'
+            });
         });
     }
 
     function cancel() {
         window.history.back();
     }
+
+    vm.accion = $stateParams.accion;
+
+    TipoServicioService.edit($stateParams.accion, {
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.enti = data.model;
+        vm.i18nMap = data.i18nMap;
+
+        vm.tpdtEstadoList = data.tpdtEstadoList;
+    });
+
+    pageTitleService.setTitle("tpsr", "page_" + vm.accion);
 }
 
-function TpssDetailController($http, $location, $routeParams, pageTitleService) {
+function TipoSubservicioDetailController($stateParams, pageTitleService, TipoSubservicioService) {
     var vm = this;
 
     vm.remove = remove;
     vm.tabSelected = tabSelected;
 
-    initialize();
-
-    function initialize() {
-        vm.tabActive = {};
-
-        if ($routeParams.tab) {
-            vm.tabActive[$routeParams.tab] = true;
-        }
-
-        $http.post("metamodelo/tipo-subservicio-detail.action", {
-            model : {
-                id : $routeParams.entiId
-            }
-        }).success(function(data) {
-            vm.enti = data.model;
-            vm.i18nMap = data.i18nMap;
-            vm.entiHijasList = data.entiHijasList;
-            vm.entiPadresList = data.entiPadresList;
-            vm.entdList = data.entdList;
-            vm.engdList = data.engdList;
-            vm.trmtList = data.trmtList;
-            vm.enacList = data.enacList;
-            vm.enagList = data.enagList;
-        });
-
-        pageTitleService.setTitle("tpss", "page_detail");
-    }
-
     function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("metamodelo/tipo-subservicio-remove.action", {
-                model : vm.enti
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
+        TipoSubservicioService.remove(vm.enti).then(function(data) {
+            window.history.back();
+        });
     }
 
     function tabSelected(tabNo) {
-        $location.search("tab", tabNo).replace();
+        TipoSubservicioService.tabSelected(tabNo);
     }
+
+    vm.tabActive = {};
+
+    if ($stateParams.tab) {
+        vm.tabActive[$stateParams.tab] = true;
+    }
+
+    TipoSubservicioService.detail({
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.enti = data.model;
+        vm.i18nMap = data.i18nMap;
+        vm.entiHijasList = data.entiHijasList;
+        vm.entiPadresList = data.entiPadresList;
+        vm.entdList = data.entdList;
+        vm.engdList = data.engdList;
+        vm.trmtList = data.trmtList;
+        vm.enacList = data.enacList;
+        vm.enagList = data.enagList;
+    });
+
+    pageTitleService.setTitle("tpss", "page_detail");
 }
 
-function TpssEditController($http, $location, $routeParams, pageTitleService) {
+function TipoSubservicioEditController($state, $stateParams, pageTitleService, TipoSubservicioService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
-    initialize();
-
-    function initialize() {
-        vm.accion = $routeParams.accion;
-
-        $http.post("metamodelo/tipo-subservicio-edit.action", {
-            model : {
-                id : $routeParams.entiId,
-                tpsrId : $routeParams.tpsrId
-            },
-            accion : vm.accion
-        }).success(function(data) {
-            vm.enti = data.model;
-            vm.i18nMap = data.i18nMap;
-            vm.tpdtEstadoList = data.tpdtEstadoList;
-        });
-
-        pageTitleService.setTitle("tpss", "page_" + vm.accion);
-    }
-
     function save() {
-        $http.post("metamodelo/tipo-subservicio-save.action", {
-            model : vm.enti,
-            i18nMap : vm.i18nMap,
-            accion : vm.accion
-        }).success(function(data) {
+        TipoSubservicioService.saveI18n(vm.accion, vm.enti, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $location.path("/metamodelo/tpss/detail/" + data.model.id).replace();
+            }, 0) : $state.go("tiposubservicio-detail", {
+                id : data.model.id
+            }, {
+                location : 'replace'
+            });
         });
     }
 
     function cancel() {
         window.history.back();
     }
+
+    vm.accion = $stateParams.accion;
+
+    TipoSubservicioService.edit($stateParams.accion, {
+        tpsrId : $stateParams.tpsrId,
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.enti = data.model;
+        vm.i18nMap = data.i18nMap;
+
+        vm.tpdtEstadoList = data.tpdtEstadoList;
+    });
+
+    pageTitleService.setTitle("tpss", "page_" + vm.accion);
 }
 
 function TpesGridController($http, $location, $routeParams, $modal, pageTitleService) {

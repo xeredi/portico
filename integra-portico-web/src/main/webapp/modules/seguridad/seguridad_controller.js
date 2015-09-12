@@ -336,6 +336,8 @@ function UsuarioGridController($state, $stateParams, $modal, pageTitleService, U
 
     function filter() {
         UsuarioService.filter(vm.searchCriteria).then(function(data) {
+            vm.sprtList = data.sprtList;
+            vm.prtoList = data.prtoList;
         });
     }
 
