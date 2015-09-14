@@ -2,7 +2,7 @@
     ng-bind="'enti' | translate"></tab-heading>
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/tpes/edit/edit/{{vm.enti.id}}"><i
+        <a class="btn btn-default" ui-sref="tipoestadistica-edit({accion: 'edit', id: vm.enti.id})"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
@@ -29,7 +29,8 @@
 
     <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
 </fieldset>
-</tab> <tab select="vm.tabSelected('entdList')" active="vm.tabActive['entdList']"> <tab-heading ng-bind="'entdList' | translate"></tab-heading>
+</tab> <tab select="vm.tabSelected('entdList')" active="vm.tabActive['entdList']"> <tab-heading
+    ng-bind="'entdList' | translate"></tab-heading>
 <div ng-include="'modules/metamodelo/fragment/engd-grid-content.html'"></div>
 <div ng-include="'modules/metamodelo/fragment/entd-grid-content.html'"></div>
 
@@ -38,7 +39,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/metamodelo/cmag/edit/create/{{vm.enti.id}}"><i
+            <a class="btn btn-default" ui-sref="campoagregacion-edit({accion: 'create', tpesId: vm.enti.id})"><i
                 class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>
@@ -53,7 +54,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="cmag in vm.cmagList track by $index">
-                <td><a ng-href="#/metamodelo/cmag/detail/{{cmag.tpesId}}/{{cmag.entd.id}}"><i
+                <td><a ui-sref="campoagregacion-detail({tpesId: cmag.tpesId, entdId: cmag.entd.id})"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="cmag.nombre"></td>
                 <td><i class="glyphicon glyphicon-{{(cmag.agregar ? 'ok' : 'remove')}}"></i></td>

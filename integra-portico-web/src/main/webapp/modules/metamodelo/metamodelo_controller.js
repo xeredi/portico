@@ -36,15 +36,15 @@ angular.module("metamodelo_controller", [])
 .controller("TipoSubservicioEditController", TipoSubservicioEditController)
 
 // -------------------- ESTADISTICA ------------------
-.controller("TpesGridController", TpesGridController)
+.controller("TipoEstadisticaGridController", TipoEstadisticaGridController)
 
-.controller("TpesDetailController", TpesDetailController)
+.controller("TipoEstadisticaDetailController", TipoEstadisticaDetailController)
 
-.controller("TpesEditController", TpesEditController)
+.controller("TipoEstadisticaEditController", TipoEstadisticaEditController)
 
-.controller("CmagDetailController", CmagDetailController)
+.controller("CampoAgregacionDetailController", CampoAgregacionDetailController)
 
-.controller("CmagEditController", CmagEditController)
+.controller("CampoAgregacionEditController", CampoAgregacionEditController)
 
 // ------------------- GRUPO DE DATO DE ENTIDAD --------------------
 .controller("EngdDetailController", EngdDetailController)
@@ -178,36 +178,41 @@ function config($routeProvider, $stateProvider) {
         controller : "TipoSubservicioEditController as vm",
     })
 
+    .state("tipoestadistica-grid", {
+        url : "/metamodelo/tipoestadistica/grid?page&searchCriteria&limit",
+        templateUrl : "modules/metamodelo/tipoestadistica-grid.html",
+        controller : "TipoEstadisticaGridController as vm",
+        reloadOnSearch : false
+    })
+
+    .state("tipoestadistica-detail", {
+        url : "/metamodelo/tipoestadistica/detail/:id?tab",
+        templateUrl : "modules/metamodelo/tipoestadistica-detail.html",
+        controller : "TipoEstadisticaDetailController as vm",
+        reloadOnSearch : false
+    })
+
+    .state("tipoestadistica-edit", {
+        url : "/metamodelo/tipoestadistica/edit/:accion?id",
+        templateUrl : "modules/metamodelo/tipoestadistica-edit.html",
+        controller : "TipoEstadisticaEditController as vm",
+    })
+
+    .state("campoagregacion-detail", {
+        url : "/metamodelo/campoagregacion/detail/:tpesId/:entdId",
+        templateUrl : "modules/metamodelo/campoagregacion-detail.html",
+        controller : "CampoAgregacionDetailController as vm",
+    })
+
+    .state("campoagregacion-edit", {
+        url : "/metamodelo/campoagregacion/edit/:accion/:tpesId?entdId",
+        templateUrl : "modules/metamodelo/campoagregacion-edit.html",
+        controller : "CampoAgregacionEditController as vm",
+    })
+
     ;
 
     $routeProvider
-
-    .when("/metamodelo/tpes/grid", {
-        templateUrl : "modules/metamodelo/tpes-grid.html",
-        controller : "TpesGridController as vm",
-        reloadOnSearch : false
-    })
-
-    .when("/metamodelo/tpes/detail/:entiId", {
-        templateUrl : "modules/metamodelo/tpes-detail.html",
-        controller : "TpesDetailController as vm",
-        reloadOnSearch : false
-    })
-
-    .when("/metamodelo/tpes/edit/:accion/:entiId?", {
-        templateUrl : "modules/metamodelo/tpes-edit.html",
-        controller : "TpesEditController as vm"
-    })
-
-    .when("/metamodelo/cmag/detail/:tpesId/:entdId", {
-        templateUrl : "modules/metamodelo/cmag-detail.html",
-        controller : "CmagDetailController as vm"
-    })
-
-    .when("/metamodelo/cmag/edit/:accion/:tpesId/:entdId?", {
-        templateUrl : "modules/metamodelo/cmag-edit.html",
-        controller : "CmagEditController as vm"
-    })
 
     .when("/metamodelo/entd/detail/:entiId/:tpdtId", {
         templateUrl : "modules/metamodelo/entd-detail.html",
@@ -801,35 +806,28 @@ function TipoSubservicioEditController($state, $stateParams, pageTitleService, T
     pageTitleService.setTitle("tpss", "page_" + vm.accion);
 }
 
-function TpesGridController($http, $location, $routeParams, $modal, pageTitleService) {
+function TipoEstadisticaGridController($state, $stateParams, $modal, pageTitleService, TipoEstadisticaService) {
     var vm = this;
 
+    vm.filter = filter;
+    vm.resetFilter = resetFilter;
     vm.search = search;
     vm.pageChanged = pageChanged;
-    vm.filter = filter;
 
-    initialize();
+    function filter() {
+        TipoEstadisticaService.filter(vm.searchCriteria).then(function(data) {
+        });
+    }
 
-    function initialize() {
-        vm.entiCriterio = $routeParams.entiCriterio ? angular.fromJson($routeParams.entiCriterio) : {};
-
-        search($routeParams.page ? $routeParams.page : 1);
-        pageTitleService.setTitle("tpes", "page_grid");
+    function resetFilter() {
+        vm.searchCriteria = {};
     }
 
     function search(page) {
-        $http.post("metamodelo/tipo-estadistica-list.action", {
-            model : vm.entiCriterio,
-            page : page,
-            limit : vm.limit
-        }).success(function(data) {
-            vm.entiList = data.resultList;
+        TipoEstadisticaService.list(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
-
-            $location.search({
-                page : vm.page,
-                entiCriterio : JSON.stringify(vm.entiCriterio)
-            }).replace();
+            vm.limit = data.resultList.limit;
+            vm.entiList = data.resultList;
         });
     }
 
@@ -837,175 +835,144 @@ function TpesGridController($http, $location, $routeParams, $modal, pageTitleSer
         search(vm.page);
     }
 
-    function filter(size) {
-    }
+    vm.searchCriteria = $stateParams.searchCriteria ? angular.fromJson($stateParams.searchCriteria) : {};
+    vm.limit = $stateParams.limit;
+
+    search($stateParams.page ? $stateParams.page : 1);
+
+    pageTitleService.setTitle("tpes", "page_grid");
 }
 
-function TpesDetailController($http, $location, $routeParams, pageTitleService) {
+function TipoEstadisticaDetailController($stateParams, pageTitleService, TipoEstadisticaService) {
     var vm = this;
 
     vm.remove = remove;
     vm.tabSelected = tabSelected;
 
-    initialize();
-
-    function initialize() {
-        vm.tabActive = {};
-
-        if ($routeParams.tab) {
-            vm.tabActive[$routeParams.tab] = true;
-        }
-
-        $http.post("metamodelo/tipo-estadistica-detail.action", {
-            model : {
-                id : $routeParams.entiId
-            }
-        }).success(function(data) {
-            vm.enti = data.model;
-            vm.i18nMap = data.i18nMap;
-            vm.cmagList = data.cmagList;
-            vm.subentiList = data.subentiList;
-            vm.entdList = data.entdList;
-            vm.engdList = data.engdList;
-            vm.enacList = data.enacList;
-            vm.enagList = data.enagList;
-        });
-
-        pageTitleService.setTitle("tpes", "page_detail");
-    }
-
     function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("metamodelo/tipo-estadistica-remove.action", {
-                model : vm.enti
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
+        TipoEstadisticaService.remove(vm.enti).then(function(data) {
+            window.history.back();
+        });
     }
 
     function tabSelected(tabNo) {
-        $location.search("tab", tabNo).replace();
+        TipoEstadisticaService.tabSelected(tabNo);
     }
+
+    vm.tabActive = {};
+
+    if ($stateParams.tab) {
+        vm.tabActive[$stateParams.tab] = true;
+    }
+
+    TipoEstadisticaService.detail({
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.enti = data.model;
+        vm.i18nMap = data.i18nMap;
+        vm.cmagList = data.cmagList;
+        vm.subentiList = data.subentiList;
+        vm.entdList = data.entdList;
+        vm.engdList = data.engdList;
+        vm.enacList = data.enacList;
+        vm.enagList = data.enagList;
+    });
+
+    pageTitleService.setTitle("tpes", "page_detail");
 }
 
-function TpesEditController($http, $location, $routeParams, pageTitleService) {
+function TipoEstadisticaEditController($state, $stateParams, pageTitleService, TipoEstadisticaService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
-    initialize();
-
-    function initialize() {
-        vm.accion = $routeParams.accion;
-
-        $http.post("metamodelo/tipo-estadistica-edit.action", {
-            model : {
-                id : $routeParams.entiId
-            },
-            accion : vm.accion
-        }).success(function(data) {
-            vm.enti = data.model;
-            vm.i18nMap = data.i18nMap;
-        });
-
-        pageTitleService.setTitle("tpes", "page_" + vm.accion);
-    }
-
     function save() {
-        $http.post("metamodelo/tipo-estadistica-save.action", {
-            model : vm.enti,
-            i18nMap : vm.i18nMap,
-            accion : vm.accion
-        }).success(function(data) {
+        TipoEstadisticaService.saveI18n(vm.accion, vm.enti, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $location.path("/metamodelo/tpes/detail/" + data.model.id).replace();
+            }, 0) : $state.go("tipoestadistica-detail", {
+                id : data.model.id
+            }, {
+                location : 'replace'
+            });
         });
     }
 
     function cancel() {
         window.history.back();
     }
+
+    vm.accion = $stateParams.accion;
+
+    TipoEstadisticaService.edit($stateParams.accion, {
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.enti = data.model;
+        vm.i18nMap = data.i18nMap;
+    });
+
+    pageTitleService.setTitle("tpes", "page_" + vm.accion);
 }
 
-function CmagDetailController($http, $location, $routeParams, pageTitleService) {
+function CampoAgregacionDetailController($stateParams, pageTitleService, CampoAgregacionService) {
     var vm = this;
 
     vm.remove = remove;
 
-    initialize();
-
-    function initialize() {
-        $http.post("metamodelo/campo-agregacion-detail.action", {
-            model : {
-                tpesId : $routeParams.tpesId,
-                entd : {
-                    id : $routeParams.entdId
-                }
-            }
-        }).success(function(data) {
-            vm.cmag = data.model;
-        });
-
-        pageTitleService.setTitle("cmag", "page_detail");
-    }
-
     function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("metamodelo/campo-agregacion-remove.action", {
-                model : vm.cmag
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
+        CampoAgregacionService.remove(vm.cmag).then(function(data) {
+            window.history.back();
+        });
     }
+
+    CampoAgregacionService.detail({
+        tpesId : $stateParams.tpesId,
+        entd : {
+            id : $stateParams.entdId
+        }
+    }).then(function(data) {
+        vm.cmag = data.model;
+    });
+
+    pageTitleService.setTitle("cmag", "page_detail");
 }
 
-function CmagEditController($http, $location, $routeParams, pageTitleService) {
+function CampoAgregacionEditController($state, $stateParams, pageTitleService, CampoAgregacionService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
-    initialize();
-
-    function initialize() {
-        vm.accion = $routeParams.accion;
-
-        $http.post("metamodelo/campo-agregacion-edit.action", {
-            model : {
-                tpesId : $routeParams.tpesId,
-                entd : {
-                    id : $routeParams.entdId
-                }
-            },
-            accion : vm.accion
-        }).success(function(data) {
-            vm.cmag = data.model;
-        });
-
-        pageTitleService.setTitle("cmag", "page_" + vm.accion);
-    }
-
     function save() {
-        $http.post("metamodelo/campo-agregacion-save.action", {
-            model : vm.cmag,
-            accion : vm.accion
-        }).success(
-                function(data) {
-                    vm.accion == 'edit' ? setTimeout(function() {
-                        window.history.back();
-                    }, 0) : $location.path(
-                            "/metamodelo/cmag/detail/" + data.model.tpesId + "/" + data.model.entd.id)
-                            .replace();
-                });
+        CampoAgregacionService.save(vm.accion, vm.cmag).then(function(data) {
+            vm.accion == 'edit' ? setTimeout(function() {
+                window.history.back();
+            }, 0) : $state.go("campoagregacion-detail", {
+                tpesId : data.model.tpesId,
+                entdId : data.model.entd.id
+            }, {
+                location : 'replace'
+            });
+        });
     }
 
     function cancel() {
         window.history.back();
     }
+
+    vm.accion = $stateParams.accion;
+
+    CampoAgregacionService.edit($stateParams.accion, {
+        tpesId : $stateParams.tpesId,
+        entd : {
+            id : $stateParams.entdId
+        }
+    }).then(function(data) {
+        vm.cmag = data.model;
+    });
+
+    pageTitleService.setTitle("cmag", "page_" + vm.accion);
 }
 
 function EntdDetailController($http, $routeParams, pageTitleService) {
