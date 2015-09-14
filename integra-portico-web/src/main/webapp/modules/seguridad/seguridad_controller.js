@@ -118,7 +118,7 @@ function AccionGridController($state, $stateParams, $modal, pageTitleService, Ac
     }
 
     function search(page) {
-        AccionService.list(vm.searchCriteria, page, vm.limit).then(function(data) {
+        AccionService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
             vm.accnList = data.resultList;
@@ -227,7 +227,7 @@ function GrupoGridController($state, $stateParams, $modal, pageTitleService, Gru
     }
 
     function search(page) {
-        GrupoService.list(vm.searchCriteria, page, vm.limit).then(function(data) {
+        GrupoService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
             vm.grpoList = data.resultList;
@@ -338,7 +338,7 @@ function UsuarioGridController($state, $stateParams, $modal, pageTitleService, U
     }
 
     function search(page) {
-        UsuarioService.list(vm.searchCriteria, page, vm.limit).then(function(data) {
+        UsuarioService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
             vm.usroList = data.resultList;

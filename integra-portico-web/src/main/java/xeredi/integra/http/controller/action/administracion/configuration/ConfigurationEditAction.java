@@ -1,6 +1,6 @@
-package xeredi.integra.http.controller.action.administracion.configuracion;
+package xeredi.integra.http.controller.action.administracion.configuration;
 
-import xeredi.integra.http.controller.action.comun.CrudSaveAction;
+import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.bo.ConfigurationBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ConfigurationVO;
@@ -9,23 +9,25 @@ import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ConfigurationSaveAction.
+ * The Class ConfigurationEditAction.
  */
-public final class ConfigurationSaveAction extends CrudSaveAction<ConfigurationVO> {
+public final class ConfigurationEditAction extends CrudEditAction<ConfigurationVO> {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -6903870337366067759L;
+    private static final long serialVersionUID = 7232090855025643651L;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void doSave() throws ApplicationException {
+    public void doEdit() throws ApplicationException {
+        Preconditions.checkNotNull(model.getKey());
+
         switch (accion) {
         case edit:
             final ConfigurationBO confBO = new ConfigurationBO();
 
-            confBO.update(model);
+            model = confBO.select(model.getKey());
 
             break;
         default:
@@ -37,7 +39,7 @@ public final class ConfigurationSaveAction extends CrudSaveAction<ConfigurationV
      * {@inheritDoc}
      */
     @Override
-    public void doValidate() throws ApplicationException {
-        Preconditions.checkNotNull(model.getKey());
+    public void doLoadDependencies() throws ApplicationException {
+        // noop
     }
 }

@@ -311,7 +311,7 @@ function TipoDatoGridController($state, $stateParams, $modal, pageTitleService, 
     }
 
     function search(page) {
-        TipoDatoService.list(vm.searchCriteria, page, vm.limit).then(function(data) {
+        TipoDatoService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
             vm.tpdtList = data.resultList;
@@ -460,7 +460,7 @@ function TipoParametroGridController($state, $stateParams, $modal, pageTitleServ
     }
 
     function search(page) {
-        TipoParametroService.list(vm.searchCriteria, page, vm.limit).then(function(data) {
+        TipoParametroService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
             vm.entiList = data.resultList;
@@ -639,7 +639,7 @@ function TipoServicioGridController($state, $stateParams, $modal, pageTitleServi
     }
 
     function search(page) {
-        TipoServicioService.list(vm.searchCriteria, page, vm.limit).then(function(data) {
+        TipoServicioService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
             vm.entiList = data.resultList;
@@ -823,7 +823,7 @@ function TipoEstadisticaGridController($state, $stateParams, $modal, pageTitleSe
     }
 
     function search(page) {
-        TipoEstadisticaService.list(vm.searchCriteria, page, vm.limit).then(function(data) {
+        TipoEstadisticaService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
             vm.entiList = data.resultList;

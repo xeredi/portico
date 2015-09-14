@@ -1,4 +1,4 @@
-package xeredi.integra.http.controller.action.administracion.configuracion;
+package xeredi.integra.http.controller.action.administracion.configuration;
 
 import xeredi.integra.http.controller.action.comun.CrudDetailAction;
 import xeredi.integra.model.comun.bo.ConfigurationBO;

@@ -16,6 +16,18 @@ angular.module("administracion_controller", [])
 
 .controller("PuertoEditController", PuertoEditController)
 
+.controller("ConfigurationGridController", ConfigurationGridController)
+
+.controller("ConfigurationDetailController", ConfigurationDetailController)
+
+.controller("ConfigurationEditController", ConfigurationEditController)
+
+.controller("MessageI18nGridController", MessageI18nGridController)
+
+.controller("MessageI18nDetailController", MessageI18nDetailController)
+
+.controller("MessageI18nEditController", MessageI18nEditController)
+
 ;
 
 function config($stateProvider) {
@@ -65,6 +77,44 @@ function config($stateProvider) {
         controller : "PuertoEditController as vm",
     })
 
+    .state("configuration-grid", {
+        url : "/administracion/configuration/configuration/grid",
+        templateUrl : "modules/administracion/configuration-grid.html",
+        controller : "ConfigurationGridController as vm",
+        reloadOnSearch : false
+    })
+
+    .state("configuration-detail", {
+        url : "/administracion/configuration/configuration/detail/:key",
+        templateUrl : "modules/administracion/configuration-detail.html",
+        controller : "ConfigurationDetailController as vm",
+    })
+
+    .state("configuration-edit", {
+        url : "/administracion/configuration/configuration/edit/:accion?key",
+        templateUrl : "modules/administracion/configuration-edit.html",
+        controller : "ConfigurationEditController as vm",
+    })
+
+    .state("messagei18n-grid", {
+        url : "/administracion/messagei18n/messagei18n/grid",
+        templateUrl : "modules/administracion/messagei18n-grid.html",
+        controller : "MessageI18nGridController as vm",
+        reloadOnSearch : false
+    })
+
+    .state("messagei18n-detail", {
+        url : "/administracion/messagei18n/messagei18n/detail/:key",
+        templateUrl : "modules/administracion/messagei18n-detail.html",
+        controller : "MessageI18nDetailController as vm",
+    })
+
+    .state("messagei18n-edit", {
+        url : "/administracion/messagei18n/messagei18n/edit/:accion?key",
+        templateUrl : "modules/administracion/messagei18n-edit.html",
+        controller : "MessageI18nEditController as vm",
+    })
+
     ;
 }
 
@@ -95,7 +145,7 @@ function SuperpuertoGridController($state, $stateParams, $modal, pageTitleServic
     }
 
     function search(page) {
-        SuperpuertoService.list(vm.searchCriteria, page, vm.limit).then(function(data) {
+        SuperpuertoService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
             vm.sprtList = data.resultList;
@@ -186,7 +236,7 @@ function PuertoGridController($state, $stateParams, $modal, pageTitleService, Pu
     }
 
     function search(page) {
-        PuertoService.list(vm.searchCriteria, page, vm.limit).then(function(data) {
+        PuertoService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
             vm.prtoList = data.resultList;
@@ -258,4 +308,140 @@ function PuertoEditController($state, $stateParams, pageTitleService, PuertoServ
     });
 
     pageTitleService.setTitle("prto", "page_" + vm.accion);
+}
+
+function ConfigurationGridController($state, $stateParams, $modal, pageTitleService, ConfigurationService) {
+    var vm = this;
+
+    vm.search = search;
+    vm.reload = reload;
+
+    function search() {
+        ConfigurationService.list().then(function(data) {
+            vm.confList = data.resultList;
+        });
+    }
+
+    function reload() {
+        alert('Implementar');
+    }
+
+    search();
+
+    pageTitleService.setTitle("conf", "page_grid");
+}
+
+function ConfigurationDetailController($stateParams, pageTitleService, ConfigurationService) {
+    var vm = this;
+
+    ConfigurationService.detail({
+        key : $stateParams.key
+    }).then(function(data) {
+        vm.conf = data.model;
+    });
+
+    pageTitleService.setTitle("conf", "page_detail");
+}
+
+function ConfigurationEditController($state, $stateParams, pageTitleService, ConfigurationService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        ConfigurationService.save(vm.accion, vm.conf).then(function(data) {
+            vm.accion == 'edit' ? setTimeout(function() {
+                window.history.back();
+            }, 0) : $state.go("configuration-detail", data.model, {
+                location : 'replace'
+            });
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.accion = $stateParams.accion;
+
+    ConfigurationService.edit($stateParams.accion, {
+        key : $stateParams.key
+    }).then(function(data) {
+        vm.conf = data.model;
+    });
+
+    pageTitleService.setTitle("conf", "page_" + vm.accion);
+}
+
+function MessageI18nGridController($state, $stateParams, $modal, pageTitleService, MessageI18nService) {
+    var vm = this;
+
+    vm.search = search;
+    vm.reload = reload;
+
+    function search() {
+        MessageI18nService.list().then(function(data) {
+            vm.keyList = data.resultList;
+            vm.keyMap = data.keyMap;
+            vm.availableLanguages = data.availableLanguages;
+        });
+    }
+
+    function reload() {
+        alert('Implementar');
+    }
+
+    search();
+
+    pageTitleService.setTitle("m18n", "page_grid");
+}
+
+function MessageI18nDetailController($stateParams, pageTitleService, MessageI18nService) {
+    var vm = this;
+
+    MessageI18nService.detail({
+        key : $stateParams.key
+    }).then(function(data) {
+        vm.key = data.model;
+        vm.i18nMap = data.i18nMap;
+
+        vm.availableLanguages = data.availableLanguages;
+    });
+
+    pageTitleService.setTitle("m18n", "page_detail");
+}
+
+function MessageI18nEditController($state, $stateParams, pageTitleService, MessageI18nService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        MessageI18nService.saveI18n(vm.accion, vm.key, vm.i18nMap).then(function(data) {
+            vm.accion == 'edit' ? setTimeout(function() {
+                window.history.back();
+            }, 0) : $state.go("messagei18n-detail", data.model, {
+                location : 'replace'
+            });
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.accion = $stateParams.accion;
+
+    MessageI18nService.edit($stateParams.accion, {
+        key : $stateParams.key
+    }).then(function(data) {
+        vm.key = data.model;
+        vm.i18nMap = data.i18nMap;
+
+        vm.availableLanguages = data.availableLanguages;
+    });
+
+    pageTitleService.setTitle("m18n", "page_" + vm.accion);
 }

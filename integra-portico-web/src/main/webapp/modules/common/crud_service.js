@@ -35,9 +35,36 @@ function CrudService($http, $q, $state) {
             }
         }
 
-
-        function list(searchCriteria, page, limit) {
+        function list(searchCriteria) {
             console.log('list');
+
+            return $http.post(_uri + "-list.action", {model: searchCriteria})
+                .then(success)
+                .catch(fail);
+
+            function success(response) {
+                $state.go('.', {
+                    searchCriteria : JSON.stringify(searchCriteria)
+                }, {
+                    notify : false,
+                    reload : false,
+                    location : 'replace',
+                    inherit : true
+                });
+
+                return response.data;
+            }
+
+            function fail(error) {
+                var msg = 'List failed. ' + error.data;
+                console.log(msg);
+
+                return $q.reject(msg);
+            }
+        }
+
+        function listPage(searchCriteria, page, limit) {
+            console.log('list page');
 
             return $http.post(_uri + "-list.action", {model: searchCriteria, page: page, limit: limit})
                 .then(success)
@@ -59,7 +86,7 @@ function CrudService($http, $q, $state) {
             }
 
             function fail(error) {
-                var msg = 'List failed. ' + error.data;
+                var msg = 'List Page failed. ' + error.data;
                 console.log(msg);
 
                 return $q.reject(msg);
@@ -197,6 +224,7 @@ function CrudService($http, $q, $state) {
 
         return {
             index: index
+            , listPage: listPage
             , list: list
             , filter: filter
             , detail: detail

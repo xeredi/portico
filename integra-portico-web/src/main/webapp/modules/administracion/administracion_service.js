@@ -2,13 +2,13 @@ angular.module("administracion_service", [ "crud_service" ])
 
 .factory("AdministracionService", AdministracionService)
 
-.factory("ConfiguracionService", ConfiguracionService)
-
-.factory("MessageI18nService", MessageI18nService)
+.factory("SuperpuertoService", SuperpuertoService)
 
 .factory("PuertoService", PuertoService)
 
-.factory("SuperpuertoService", SuperpuertoService)
+.factory("ConfigurationService", ConfigurationService)
+
+.factory("MessageI18nService", MessageI18nService)
 
 ;
 
@@ -16,18 +16,18 @@ function AdministracionService($http, $q, CrudService) {
     return CrudService.create("administracion");
 }
 
-function ConfiguracionService($http, $q, CrudService) {
-    return CrudService.create("administracion/configuracion/configuracion");
-}
-
-function MessageI18nService($http, $q, CrudService) {
-    return CrudService.create("administracion/messagei18n/messagei18n");
+function SuperpuertoService($http, $q, CrudService) {
+    return CrudService.create("administracion/puerto/superpuerto");
 }
 
 function PuertoService($http, $q, CrudService) {
     return CrudService.create("administracion/puerto/puerto");
 }
 
-function SuperpuertoService($http, $q, CrudService) {
-    return CrudService.create("administracion/puerto/superpuerto");
+function ConfigurationService($http, $q, CrudService) {
+    return CrudService.create("administracion/configuration/configuration");
+}
+
+function MessageI18nService($http, $q, CrudService) {
+    return CrudService.create("administracion/messagei18n/message-i18n");
 }
