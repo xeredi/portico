@@ -3,18 +3,22 @@ angular.module(
         [ "ui.router", "ngRoute", "mgcrea.ngStrap", "mgcrea.ngStrap.aside", "ui.bootstrap.tpls",
                 "ui.bootstrap.tabs", "ui.bootstrap.pagination", "ui.bootstrap.dropdown",
                 "ui.bootstrap.typeahead", "pascalprecht.translate", "angularSpinner", "uiGmapgoogle-maps",
-                "i18n", "crud_service", "administracion", "metamodelo_service", "metamodelo_controller",
-                "facturacion", "item", "maestro", "servicio", "estadistica", "proceso", "seguridad_service",
+                "i18n", "crud_service", "administracion", "administracion_service",
+                "administracion_controller", "metamodelo_service", "metamodelo_controller", "facturacion",
+                "item", "maestro", "servicio", "estadistica", "proceso", "seguridad_service",
                 "seguridad_controller" ])
 
-.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
+.config([ "$stateProvider", function($stateProvider) {
+    $stateProvider
 
-    .when("/", {
+    .state("home", {
+        url : "/",
         templateUrl : "modules/home.html",
-        controller : "HomeController",
-        controllerAs : "vm"
-    });
+        controller : "HomeController as vm",
+        reloadOnSearch : false
+    })
+
+    ;
 } ])
 
 .config(function(uiGmapGoogleMapApiProvider) {

@@ -29,10 +29,6 @@ angular.module("seguridad_controller", [ "seguridad_service" ])
 function config($stateProvider) {
     $stateProvider
 
-    .state("home", {
-        templateUrl : "modules/home.html"
-    })
-
     .state("accion-grid", {
         url : "/seguridad/accion/grid?page&searchCriteria&limit",
         templateUrl : "modules/seguridad/accion-grid.html",

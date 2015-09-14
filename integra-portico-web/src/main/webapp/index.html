@@ -29,7 +29,7 @@
                         translate="menu"></a>
                         <ul class="dropdown-menu" role="menu">
                             <li role="presentation" class="divider"></li>
-                            <li><a ng-href="#/" translate="page_home"></a></li>
+                            <li><a ui-sref="home" translate="page_home"></a></li>
                             <li role="presentation" class="divider"></li>
                             <li><a ng-href="#/servicio" translate="srvcList"></a></li>
                             <li><a ng-href="#/estadistica/pepr/grid" translate="estdList"></a></li>
@@ -37,7 +37,7 @@
                             <li><a ng-href="#/facturacion" translate="sec_facturacion"></a></li>
                             <li><a ng-href="#/proceso/prbt/grid" translate="prbtList"></a></li>
                             <li role="presentation" class="divider"></li>
-                            <li><a ng-href="#/administracion" translate="sec_administracion"></a></li>
+                            <li><a ui-sref="administracion-index" translate="sec_administracion"></a></li>
                             <li role="presentation" class="divider"></li>
                             <li><a ng-href="#/seguridad/usro/salir" translate="usro_salir"></a></li>
                         </ul></li>
@@ -86,6 +86,8 @@
     <script type="text/javascript" src="modules/common/crud_service.js"></script>
     <script type="text/javascript" src="modules/i18n/i18n_messages_es.js"></script>
     <script type="text/javascript" src="modules/administracion/administracion.js"></script>
+    <script type="text/javascript" src="modules/administracion/administracion_service.js"></script>
+    <script type="text/javascript" src="modules/administracion/administracion_controller.js"></script>
     <script type="text/javascript" src="modules/metamodelo/metamodelo_service.js"></script>
     <script type="text/javascript" src="modules/metamodelo/metamodelo_controller.js"></script>
     <script type="text/javascript" src="modules/entidad/item/item.js"></script>

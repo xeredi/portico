@@ -16,6 +16,26 @@ function CrudService($http, $q, $state) {
             return _uri;
         }
 
+        function index() {
+            console.log('index');
+
+            return $http.post(_uri + "-index.action")
+                .then(success)
+                .catch(fail);
+
+            function success(response) {
+                return response.data;
+            }
+
+            function fail(error) {
+                var msg = 'Index failed. ' + error.data;
+                console.log(msg);
+
+                return $q.reject(msg);
+            }
+        }
+
+
         function list(searchCriteria, page, limit) {
             console.log('list');
 
@@ -176,7 +196,8 @@ function CrudService($http, $q, $state) {
         }
 
         return {
-            list: list
+            index: index
+            , list: list
             , filter: filter
             , detail: detail
             , remove: remove

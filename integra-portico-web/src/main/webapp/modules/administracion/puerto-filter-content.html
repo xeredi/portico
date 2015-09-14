@@ -11,10 +11,10 @@
                         <div class="row">
                             <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                                 <label translate="prto_codigo"></label> <input type="text"
-                                    ng-model="vm.prtoCriterio.codigo" class="form-control" />
+                                    ng-model="vm.searchCriteria.codigo" class="form-control" />
                             </div>
                             <div class="col-sm-2 form-group-sm">
-                                <label translate="sprt"></label> <select ng-model="vm.prtoCriterio.sprtId"
+                                <label translate="sprt"></label> <select ng-model="vm.searchCriteria.sprtId"
                                     ng-options="sprt.id as sprt.etiqueta for sprt in vm.sprtList"
                                     class="form-control">
                                     <option />
