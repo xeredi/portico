@@ -1,6 +1,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/trmt/edit/edit/{{vm.trmt.entiId}}/{{vm.trmt.id}}"><i
+        <a class="btn btn-default"
+            ui-sref="tramite-edit({accion: 'edit', entiId: vm.trmt.entiId, id: vm.trmt.id})"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
@@ -32,8 +33,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default"
-                ng-href="#/metamodelo/trtd/edit/create/{{vm.trmt.entiId}}/{{vm.trmt.id}}"><i
+            <a class="btn btn-default" ui-sref="tramitetipodato-edit({accion: 'create',trmtId: vm.trmt.id})"><i
                 class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>
     </div>
@@ -51,8 +51,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="trtd in vm.trtdList track by $index">
-                <td><a
-                    ng-href="#/metamodelo/trtd/detail/{{vm.trmt.entiId}}/{{vm.trmt.id}}/{{trtd.entd.tpdt.id}}"><i
+                <td><a ui-sref="tramitetipodato-detail({trmtId: trtd.trmtId, tpdtId: trtd.entd.tpdt.id})"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="trtd.entd.etiqueta"></td>
                 <td><i class="glyphicon glyphicon-{{(trtd.obligatorio ? 'ok' : 'remove')}}"></i></td>

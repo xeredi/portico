@@ -29,8 +29,8 @@
         </thead>
         <tbody>
             <tr ng-repeat="grpo in vm.grpoList.list track by grpo.id">
-                <td><a ui-sref="grupo-detail({id: grpo.id})"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td nowrap="nowrap" ng-bind="::grpo.nombre"></td>
+                <td><a ui-sref="grupo-detail(grpo)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td nowrap="nowrap" ng-bind="grpo.nombre"></td>
             </tr>
         </tbody>
     </table>

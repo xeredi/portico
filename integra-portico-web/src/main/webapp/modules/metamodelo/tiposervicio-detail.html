@@ -28,7 +28,7 @@
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="enti_tpdtEstado"></label>
             <p class="form-control-static">
-                <a ng-if="vm.enti.tpdtEstado" ui-sref="tipodato-detail({id:vm.enti.tpdtEstado.id})"
+                <a ng-if="vm.enti.tpdtEstado" ui-sref="tipodato-detail(vm.enti.tpdtEstado)"
                     ng-bind="vm.enti.tpdtEstado.nombre"></a>
             </p>
         </div>
@@ -163,7 +163,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="entiHija in vm.entiHijasList">
-                <td><a ui-sref="tiposubservicio-detail({id:entiHija.id})"><i
+                <td><a ui-sref="tiposubservicio-detail(entiHija)"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="entiHija.codigo"></td>
                 <td ng-bind="entiHija.nombre"></td>

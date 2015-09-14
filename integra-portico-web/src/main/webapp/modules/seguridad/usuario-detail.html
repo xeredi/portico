@@ -12,19 +12,19 @@
     <div class="row">
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="usro_login"></label>
-            <p class="form-control-static" ng-bind="::vm.usro.login"></p>
+            <p class="form-control-static" ng-bind="vm.usro.login"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="usro_nombre"></label>
-            <p class="form-control-static" ng-bind="::vm.usro.nombre"></p>
+            <p class="form-control-static" ng-bind="vm.usro.nombre"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="sprt"></label>
-            <p class="form-control-static" ng-bind="::vm.usro.sprt.etiqueta"></p>
+            <p class="form-control-static" ng-bind="vm.usro.sprt.etiqueta"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="prto"></label>
-            <p class="form-control-static" ng-bind="::vm.usro.prto.etiqueta"></p>
+            <p class="form-control-static" ng-bind="vm.usro.prto.etiqueta"></p>
         </div>
     </div>
 </fieldset>
@@ -33,7 +33,7 @@
     <legend translate="grpoList"></legend>
 
     <div class="list-group">
-        <a ui-sref="grupo-detail({id: grpo.id})" class="list-group-item col-sm-6 col-md-4 col-lg-3"
-            ng-repeat="grpo in ::vm.grpoList track by grpo.id" ng-bind="grpo.nombre"></a>
+        <a ui-sref="grupo-detail(grpo)" class="list-group-item col-sm-6 col-md-4 col-lg-3"
+            ng-repeat="grpo in vm.grpoList track by grpo.id" ng-bind="grpo.nombre"></a>
     </div>
 </fieldset>

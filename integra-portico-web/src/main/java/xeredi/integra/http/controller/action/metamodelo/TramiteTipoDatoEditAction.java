@@ -7,10 +7,12 @@ import com.google.common.base.Preconditions;
 import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
+import xeredi.integra.model.metamodelo.bo.TramiteBO;
 import xeredi.integra.model.metamodelo.bo.TramiteTipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TramiteTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TramiteVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -30,7 +32,6 @@ public final class TramiteTipoDatoEditAction extends CrudEditAction<TramiteTipoD
     @Override
     public void doEdit() throws ApplicationException {
         Preconditions.checkNotNull(model.getTrmtId());
-        Preconditions.checkNotNull(model.getEntd().getEntiId());
 
         switch (accion) {
         case edit:
@@ -51,13 +52,17 @@ public final class TramiteTipoDatoEditAction extends CrudEditAction<TramiteTipoD
      */
     @Override
     public void doLoadDependencies() throws ApplicationException {
-        Preconditions.checkNotNull(model.getEntd().getEntiId());
+        Preconditions.checkNotNull(model.getTrmtId());
 
         if (accion == ACCION_EDICION.create) {
+            final TramiteBO trmtBO = new TramiteBO();
+
+            final TramiteVO trmt = trmtBO.select(model.getTrmtId(), getIdioma());
+
             final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
             final EntidadTipoDatoCriterioVO entdCriterio = new EntidadTipoDatoCriterioVO();
 
-            entdCriterio.setEntiId(model.getEntd().getEntiId());
+            entdCriterio.setEntiId(trmt.getEntiId());
             entdCriterio.setIdioma(getIdioma());
 
             entdList = entdBO.selectList(entdCriterio);

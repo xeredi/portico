@@ -42,7 +42,6 @@ public final class TramiteDetailAction extends CrudDetailAction<TramiteVO> {
     @Override
     public void doDetail() throws ApplicationException {
         Preconditions.checkNotNull(model.getId());
-        Preconditions.checkNotNull(model.getEntiId());
 
         final TramiteBO trmtBO = new TramiteBO();
 

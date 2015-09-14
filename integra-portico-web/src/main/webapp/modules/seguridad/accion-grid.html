@@ -29,7 +29,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="accn in vm.accnList.list track by accn.id">
-                <td><a ui-sref="accion-detail({id: accn.id})"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ui-sref="accion-detail(accn)"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap" ng-bind="::accn.codigo"></td>
                 <td nowrap="nowrap" ng-bind="::accn.nombre"></td>
             </tr>

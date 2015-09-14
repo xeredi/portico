@@ -1,6 +1,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/enac/edit/edit/{{vm.enac.entiId}}/{{vm.enac.id}}"><i
+        <a class="btn btn-default"
+            ui-sref="entidadaccion-edit({accion: 'edit', entiId: vm.enac.entiId, id: vm.enac.id})"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>

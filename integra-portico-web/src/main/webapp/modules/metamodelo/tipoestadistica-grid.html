@@ -31,8 +31,7 @@
 
         <tbody>
             <tr ng-repeat="enti in vm.entiList.list track by enti.id">
-                <td><a ui-sref="tipoestadistica-detail({id:enti.id})"><i
-                        class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ui-sref="tipoestadistica-detail(enti)"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="enti.codigo"></td>
                 <td ng-bind="enti.nombre"></td>
                 <td class="number" ng-bind="(enti.maxGrid | number:0)"></td>

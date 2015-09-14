@@ -40,8 +40,7 @@
 
         <tbody>
             <tr ng-repeat="enti in vm.entiList.list track by enti.id">
-                <td><a ui-sref="tiposervicio-detail({id:enti.id})"><i
-                        class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ui-sref="tiposervicio-detail(enti)"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="enti.codigo"></td>
                 <td ng-bind="enti.nombre"></td>
                 <td><i class="glyphicon glyphicon-{{(enti.cmdAlta ? 'ok' : 'remove')}}"></i></td>

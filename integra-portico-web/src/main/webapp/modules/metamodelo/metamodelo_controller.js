@@ -57,23 +57,23 @@ angular.module("metamodelo_controller", [])
 .controller("EntidadTipoDatoEditController", EntidadTipoDatoEditController)
 
 // ------------------- TRAMITE --------------------
-.controller("TrmtDetailController", TrmtDetailController)
+.controller("TramiteDetailController", TramiteDetailController)
 
-.controller("TrmtEditController", TrmtEditController)
+.controller("TramiteEditController", TramiteEditController)
 
-.controller("TrtdDetailController", TrtdDetailController)
+.controller("TramiteTipoDatoDetailController", TramiteTipoDatoDetailController)
 
-.controller("TrtdEditController", TrtdEditController)
+.controller("TramiteTipoDatoEditController", TramiteTipoDatoEditController)
 
 // ------------------- ACCION DE ENTIDAD --------------------
-.controller("EnacDetailController", EnacDetailController)
+.controller("EntidadAccionDetailController", EntidadAccionDetailController)
 
-.controller("EnacEditController", EnacEditController)
+.controller("EntidadAccionEditController", EntidadAccionEditController)
 
 // ------------------- ACCION DE GRID DE ENTIDAD --------------------
-.controller("EnagDetailController", EnagDetailController)
+.controller("EntidadAccionGridDetailController", EntidadAccionGridDetailController)
 
-.controller("EnagEditController", EnagEditController)
+.controller("EntidadAccionGridEditController", EntidadAccionGridEditController)
 
 // ------------------- DEPENDENCIA ENTRE ENTIDADES --------------------
 .controller("EnenEditController", EnenEditController);
@@ -234,39 +234,45 @@ function config($routeProvider, $stateProvider) {
         controller : "EntidadTipoDatoEditController as vm",
     })
 
+    .state("tramite-detail", {
+        url : "/metamodelo/tramite/detail/:id",
+        templateUrl : "modules/metamodelo/tramite-detail.html",
+        controller : "TramiteDetailController as vm",
+    })
+
+    .state("tramite-edit", {
+        url : "/metamodelo/tramite/edit/:accion/:entiId?id",
+        templateUrl : "modules/metamodelo/tramite-edit.html",
+        controller : "TramiteEditController as vm",
+    })
+
+    .state("tramitetipodato-detail", {
+        url : "/metamodelo/tramitetipodato/detail/:trmtId/:tpdtId",
+        templateUrl : "modules/metamodelo/tramitetipodato-detail.html",
+        controller : "TramiteTipoDatoDetailController as vm",
+    })
+
+    .state("tramitetipodato-edit", {
+        url : "/metamodelo/tramitetipodato/edit/:accion/:trmtId?tpdtId",
+        templateUrl : "modules/metamodelo/tramitetipodato-edit.html",
+        controller : "TramiteTipoDatoEditController as vm",
+    })
+
+    .state("entidadaccion-detail", {
+        url : "/metamodelo/entidadaccion/detail/:id",
+        templateUrl : "modules/metamodelo/entidadaccion-detail.html",
+        controller : "EntidadAccionDetailController as vm",
+    })
+
+    .state("entidadaccion-edit", {
+        url : "/metamodelo/entidadaccion/edit/:accion/:entiId?id",
+        templateUrl : "modules/metamodelo/entidadaccion-edit.html",
+        controller : "EntidadAccionEditController as vm",
+    })
+
     ;
 
     $routeProvider
-
-    .when("/metamodelo/trmt/detail/:entiId/:id", {
-        templateUrl : "modules/metamodelo/trmt-detail.html",
-        controller : "TrmtDetailController as vm"
-    })
-
-    .when("/metamodelo/trmt/edit/:accion/:entiId/:id?", {
-        templateUrl : "modules/metamodelo/trmt-edit.html",
-        controller : "TrmtEditController as vm"
-    })
-
-    .when("/metamodelo/trtd/detail/:entiId/:trmtId/:tpdtId", {
-        templateUrl : "modules/metamodelo/trtd-detail.html",
-        controller : "TrtdDetailController as vm"
-    })
-
-    .when("/metamodelo/trtd/edit/:accion/:entiId/:trmtId/:tpdtId?", {
-        templateUrl : "modules/metamodelo/trtd-edit.html",
-        controller : "TrtdEditController as vm"
-    })
-
-    .when("/metamodelo/enac/detail/:id", {
-        templateUrl : "modules/metamodelo/enac-detail.html",
-        controller : "EnacDetailController as vm"
-    })
-
-    .when("/metamodelo/enac/edit/:accion/:entiId/:id?", {
-        templateUrl : "modules/metamodelo/enac-edit.html",
-        controller : "EnacEditController as vm"
-    })
 
     .when("/metamodelo/enag/detail/:id", {
         templateUrl : "modules/metamodelo/enag-detail.html",
@@ -354,9 +360,7 @@ function TipoDatoEditController($state, $stateParams, pageTitleService, TipoDato
         TipoDatoService.saveI18n(vm.accion, vm.tpdt, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $state.go("tipodato-detail", {
-                id : data.model.id
-            }, {
+            }, 0) : $state.go("tipodato-detail", data.model, {
                 location : 'replace'
             });
         });
@@ -414,9 +418,7 @@ function CodigoReferenciaEditController($state, $stateParams, pageTitleService, 
         CodigoReferenciaService.saveI18n(vm.accion, vm.cdrf, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $state.go("codigoreferencia-detail", {
-                id : data.model.id
-            }, {
+            }, 0) : $state.go("codigoreferencia-detail", data.model, {
                 location : 'replace'
             });
         });
@@ -523,9 +525,7 @@ function TipoParametroEditController($state, $stateParams, pageTitleService, Tip
         TipoParametroService.saveI18n(vm.accion, vm.enti, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $state.go("tipoparametro-detail", {
-                id : data.model.id
-            }, {
+            }, 0) : $state.go("tipoparametro-detail", data.model, {
                 location : 'replace'
             });
         });
@@ -595,9 +595,7 @@ function TipoSubparametroEditController($state, $stateParams, pageTitleService, 
         TipoSubparametroService.saveI18n(vm.accion, vm.enti, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $state.go("tiposubparametro-detail", {
-                id : data.model.id
-            }, {
+            }, 0) : $state.go("tiposubparametro-detail", data.model, {
                 location : 'replace'
             });
         });
@@ -708,9 +706,7 @@ function TipoServicioEditController($state, $stateParams, pageTitleService, Tipo
         TipoServicioService.saveI18n(vm.accion, vm.enti, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $state.go("tiposervicio-detail", {
-                id : data.model.id
-            }, {
+            }, 0) : $state.go("tiposervicio-detail", data.model, {
                 location : 'replace'
             });
         });
@@ -783,9 +779,7 @@ function TipoSubservicioEditController($state, $stateParams, pageTitleService, T
         TipoSubservicioService.saveI18n(vm.accion, vm.enti, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $state.go("tiposubservicio-detail", {
-                id : data.model.id
-            }, {
+            }, 0) : $state.go("tiposubservicio-detail", data.model, {
                 location : 'replace'
             });
         });
@@ -895,9 +889,7 @@ function TipoEstadisticaEditController($state, $stateParams, pageTitleService, T
         TipoEstadisticaService.saveI18n(vm.accion, vm.enti, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $state.go("tipoestadistica-detail", {
-                id : data.model.id
-            }, {
+            }, 0) : $state.go("tipoestadistica-detail", data.model, {
                 location : 'replace'
             });
         });
@@ -952,10 +944,7 @@ function CampoAgregacionEditController($state, $stateParams, pageTitleService, C
         CampoAgregacionService.save(vm.accion, vm.cmag).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $state.go("campoagregacion-detail", {
-                tpesId : data.model.tpesId,
-                entdId : data.model.entd.id
-            }, {
+            }, 0) : $state.go("campoagregacion-detail", data.model, {
                 location : 'replace'
             });
         });
@@ -1010,9 +999,7 @@ function EntidadTipoDatoEditController($state, $stateParams, pageTitleService, E
         EntidadTipoDatoService.saveI18n(vm.accion, vm.entd, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $state.go("entidadtipodato-detail", {
-                id : data.model.id
-            }, {
+            }, 0) : $state.go("entidadtipodato-detail", data.model, {
                 location : 'replace'
             });
         });
@@ -1069,9 +1056,7 @@ function EntidadGrupoDatoEditController($state, $stateParams, pageTitleService, 
         EntidadGrupoDatoService.saveI18n(vm.accion, vm.engd, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $state.go("entidadgrupodato-detail", {
-                id : data.model.id
-            }, {
+            }, 0) : $state.go("entidadgrupodato-detail", data.model, {
                 location : 'replace'
             });
         });
@@ -1094,240 +1079,180 @@ function EntidadGrupoDatoEditController($state, $stateParams, pageTitleService, 
     pageTitleService.setTitle("engd", "page_" + vm.accion);
 }
 
-function TrmtDetailController($http, $location, $routeParams, pageTitleService) {
+function TramiteDetailController($stateParams, pageTitleService, TramiteService) {
     var vm = this;
 
     vm.remove = remove;
 
-    initialize();
-
-    function initialize() {
-        $http.post("metamodelo/tramite-detail.action", {
-            model : {
-                id : $routeParams.id,
-                entiId : $routeParams.entiId
-            }
-        }).success(function(data) {
-            vm.trmt = data.model;
-            vm.i18nMap = data.i18nMap;
-            vm.trtdList = data.trtdList;
-            vm.enti = data.enti;
-        });
-
-        pageTitleService.setTitle("trmt", "page_detail");
-    }
-
     function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("metamodelo/tramite-remove.action", {
-                model : vm.trmt
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
+        TramiteService.remove(vm.trmt).then(function(data) {
+            window.history.back();
+        });
     }
+
+    TramiteService.detail({
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.trmt = data.model;
+        vm.i18nMap = data.i18nMap;
+
+        vm.trtdList = data.trtdList;
+        vm.enti = data.enti;
+    });
+
+    pageTitleService.setTitle("trmt", "page_detail");
 }
 
-function TrmtEditController($http, $location, $routeParams, pageTitleService) {
+function TramiteEditController($state, $stateParams, pageTitleService, TramiteService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
-    initialize();
-
-    function initialize() {
-        vm.accion = $routeParams.accion;
-
-        $http.post("metamodelo/tramite-edit.action", {
-            model : {
-                entiId : $routeParams.entiId,
-                id : $routeParams.id
-            },
-            accion : vm.accion
-        }).success(function(data) {
-            vm.trmt = data.model;
-            vm.i18nMap = data.i18nMap;
-            vm.tpdtEstado = data.tpdtEstado;
-        });
-
-        pageTitleService.setTitle("trmt", "page_edit");
-    }
-
     function save() {
-        $http.post("metamodelo/tramite-save.action", {
-            model : vm.trmt,
-            i18nMap : vm.i18nMap,
-            accion : vm.accion
-        }).success(
-                function(data) {
-                    vm.accion == 'edit' ? setTimeout(function() {
-                        window.history.back();
-                    }, 0) : $location.path(
-                            "/metamodelo/trmt/detail/" + data.model.entiId + "/" + data.model.id).replace();
-                });
-    }
-
-    function cancel() {
-        window.history.back();
-    }
-}
-
-function TrtdDetailController($http, $location, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.remove = remove;
-
-    initialize();
-
-    function initialize() {
-        $http.post("metamodelo/tramite-tipo-dato-detail.action", {
-            model : {
-                trmtId : $routeParams.trmtId,
-                entd : {
-                    tpdt : {
-                        id : $routeParams.tpdtId
-                    }
-                }
-            }
-        }).success(function(data) {
-            vm.trtd = data.model;
-        });
-
-        pageTitleService.setTitle("trtd", "page_detail");
-    }
-
-    function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("metamodelo/tramite-tipo-dato-remove.action", {
-                model : vm.trtd
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
-    }
-}
-
-function TrtdEditController($http, $location, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.save = save;
-    vm.cancel = cancel;
-
-    initialize();
-
-    function initialize() {
-        vm.accion = $routeParams.accion;
-
-        $http.post("metamodelo/tramite-tipo-dato-edit.action", {
-            model : {
-                trmtId : $routeParams.trmtId,
-                entd : {
-                    entiId : $routeParams.entiId,
-                    tpdt : {
-                        id : $routeParams.tpdtId
-                    }
-                }
-            },
-            accion : vm.accion
-        }).success(function(data) {
-            vm.trtd = data.model;
-            vm.entdList = data.entdList;
-        });
-
-        pageTitleService.setTitle("trtd", "page_edit");
-    }
-
-    function save() {
-        $http.post("metamodelo/tramite-tipo-dato-save.action", {
-            model : vm.trtd,
-            accion : vm.accion
-        }).success(
-                function(data) {
-                    vm.accion == 'edit' ? setTimeout(function() {
-                        window.history.back();
-                    }, 0) : $location.path(
-                            "/metamodelo/trtd/detail/" + data.model.entiId + "/" + data.model.entd.trmtId
-                                    + "/" + data.model.entd.tpdt.id).replace();
-                });
-    }
-
-    function cancel() {
-        window.history.back();
-    }
-}
-
-function EnacDetailController($http, $location, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.remove = remove;
-
-    initialize();
-
-    function initialize() {
-        $http.post("metamodelo/entidad-accion-detail.action", {
-            model : {
-                id : $routeParams.id
-            }
-        }).success(function(data) {
-            vm.enac = data.model;
-            vm.i18nMap = data.i18nMap;
-        });
-
-        pageTitleService.setTitle("enac", "page_detail");
-    }
-
-    function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("metamodelo/entidad-accion-remove.action", {
-                model : vm.enac
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
-    }
-}
-
-function EnacEditController($http, $location, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.save = save;
-    vm.cancel = cancel;
-
-    initialize();
-
-    function initialize() {
-        vm.accion = $routeParams.accion;
-
-        $http.post("metamodelo/entidad-accion-edit.action", {
-            model : {
-                entiId : $routeParams.entiId,
-                id : $routeParams.id
-            },
-            accion : vm.accion
-        }).success(function(data) {
-            vm.enac = data.model;
-            vm.i18nMap = data.i18nMap;
-        });
-
-        pageTitleService.setTitle("enac", "page_" + vm.accion);
-    }
-
-    function save() {
-        $http.post("metamodelo/entidad-accion-save.action", {
-            model : vm.enac,
-            i18nMap : vm.i18nMap,
-            accion : vm.accion
-        }).success(function(data) {
+        TramiteService.saveI18n(vm.accion, vm.trmt, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $location.path("/metamodelo/enac/detail/" + data.model.id).replace();
+            }, 0) : $state.go("tramite-detail", data.model, {
+                location : 'replace'
+            });
         });
     }
 
     function cancel() {
         window.history.back();
     }
+
+    vm.accion = $stateParams.accion;
+
+    TramiteService.edit($stateParams.accion, {
+        entiId : $stateParams.entiId,
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.trmt = data.model;
+        vm.i18nMap = data.i18nMap;
+
+        vm.tpdtEstado = data.tpdtEstado;
+    });
+
+    pageTitleService.setTitle("trmt", "page_" + vm.accion);
+}
+
+function TramiteTipoDatoDetailController($stateParams, pageTitleService, TramiteTipoDatoService) {
+    var vm = this;
+
+    vm.remove = remove;
+
+    function remove() {
+        TramiteTipoDatoService.remove(vm.trtd).then(function(data) {
+            window.history.back();
+        });
+    }
+
+    TramiteTipoDatoService.detail({
+        trmtId : $stateParams.trmtId,
+        entd : {
+            tpdt : {
+                id : $stateParams.tpdtId
+            }
+        }
+    }).then(function(data) {
+        vm.trtd = data.model;
+    });
+
+    pageTitleService.setTitle("trtd", "page_detail");
+}
+
+function TramiteTipoDatoEditController($state, $stateParams, pageTitleService, TramiteTipoDatoService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        TramiteTipoDatoService.save(vm.accion, vm.trtd).then(function(data) {
+            vm.accion == 'edit' ? setTimeout(function() {
+                window.history.back();
+            }, 0) : $state.go("tramitetipodato-detail", data.model, {
+                location : 'replace'
+            });
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.accion = $stateParams.accion;
+
+    TramiteTipoDatoService.edit($stateParams.accion, {
+        trmtId : $stateParams.trmtId,
+        entd : {
+            tpdt : {
+                id : $stateParams.tpdtId
+            }
+        }
+    }).then(function(data) {
+        vm.trtd = data.model;
+
+        vm.entdList = data.entdList;
+    });
+
+    pageTitleService.setTitle("trtd", "page_" + vm.accion);
+}
+
+function EntidadAccionDetailController($stateParams, pageTitleService, EntidadAccionService) {
+    var vm = this;
+
+    vm.remove = remove;
+
+    function remove() {
+        EntidadAccionService.remove(vm.enac).then(function(data) {
+            window.history.back();
+        });
+    }
+
+    EntidadAccionService.detail({
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.enac = data.model;
+        vm.i18nMap = data.i18nMap;
+    });
+
+    pageTitleService.setTitle("enac", "page_detail");
+}
+
+function EntidadAccionEditController($state, $stateParams, pageTitleService, EntidadAccionService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        EntidadAccionService.saveI18n(vm.accion, vm.enac, vm.i18nMap).then(function(data) {
+            vm.accion == 'edit' ? setTimeout(function() {
+                window.history.back();
+            }, 0) : $state.go("entidadaccion-detail", data.model, {
+                location : 'replace'
+            });
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.accion = $stateParams.accion;
+
+    EntidadAccionService.edit($stateParams.accion, {
+        entiId : $stateParams.entiId,
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.enac = data.model;
+        vm.i18nMap = data.i18nMap;
+    });
+
+    pageTitleService.setTitle("enac", "page_" + vm.accion);
 }
 
 function EnagDetailController($http, $location, $routeParams, pageTitleService) {

@@ -173,9 +173,7 @@ function AccionEditController($state, $stateParams, pageTitleService, AccionServ
         AccionService.save(vm.accion, vm.accn).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $state.go("accion-detail", {
-                id : data.model.id
-            }, {
+            }, 0) : $state.go("accion-detail", data.model, {
                 location : 'replace'
             });
         });
@@ -284,9 +282,7 @@ function GrupoEditController($state, $stateParams, pageTitleService, GrupoServic
         GrupoService.save(vm.accion, vm.grpo).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $state.go("grupo-detail", {
-                id : data.model.id
-            }, {
+            }, 0) : $state.go("grupo-detail", data.model, {
                 location : 'replace'
             });
         });
@@ -397,9 +393,7 @@ function UsuarioEditController($state, $stateParams, pageTitleService, UsuarioSe
         UsuarioService.save(vm.accion, vm.usro).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $state.go("usuario-detail", {
-                id : data.model.id
-            }, {
+            }, 0) : $state.go("usuario-detail", data.model, {
                 location : 'replace'
             });
         });

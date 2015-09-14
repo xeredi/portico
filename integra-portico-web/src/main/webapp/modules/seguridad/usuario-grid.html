@@ -32,7 +32,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="usro in vm.usroList.list track by usro.id">
-                <td><a ui-sref="usuario-detail({id: usro.id})"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ui-sref="usuario-detail(usro)"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap" ng-bind="::usro.login"></td>
                 <td nowrap="nowrap" ng-bind="::usro.nombre"></td>
                 <td nowrap="nowrap" ng-bind="::usro.sprt.etiqueta"></td>
