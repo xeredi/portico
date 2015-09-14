@@ -52,9 +52,9 @@ angular.module("metamodelo_controller", [])
 .controller("EntidadGrupoDatoEditController", EntidadGrupoDatoEditController)
 
 // ------------------- DATO DE ENTIDAD --------------------
-.controller("EntdDetailController", EntdDetailController)
+.controller("EntidadTipoDatoDetailController", EntidadTipoDatoDetailController)
 
-.controller("EntdEditController", EntdEditController)
+.controller("EntidadTipoDatoEditController", EntidadTipoDatoEditController)
 
 // ------------------- TRAMITE --------------------
 .controller("TrmtDetailController", TrmtDetailController)
@@ -222,19 +222,21 @@ function config($routeProvider, $stateProvider) {
         controller : "EntidadGrupoDatoEditController as vm",
     })
 
+    .state("entidadtipodato-detail", {
+        url : "/metamodelo/entidadtipodato/detail/:id",
+        templateUrl : "modules/metamodelo/entidadtipodato-detail.html",
+        controller : "EntidadTipoDatoDetailController as vm",
+    })
+
+    .state("entidadtipodato-edit", {
+        url : "/metamodelo/entidadtipodato/edit/:accion/:entiId?id",
+        templateUrl : "modules/metamodelo/entidadtipodato-edit.html",
+        controller : "EntidadTipoDatoEditController as vm",
+    })
+
     ;
 
     $routeProvider
-
-    .when("/metamodelo/entd/detail/:entiId/:tpdtId", {
-        templateUrl : "modules/metamodelo/entd-detail.html",
-        controller : "EntdDetailController as vm"
-    })
-
-    .when("/metamodelo/entd/edit/:accion/:entiId/:tpdtId?", {
-        templateUrl : "modules/metamodelo/entd-edit.html",
-        controller : "EntdEditController as vm"
-    })
 
     .when("/metamodelo/trmt/detail/:entiId/:id", {
         templateUrl : "modules/metamodelo/trmt-detail.html",
@@ -977,87 +979,63 @@ function CampoAgregacionEditController($state, $stateParams, pageTitleService, C
     pageTitleService.setTitle("cmag", "page_" + vm.accion);
 }
 
-function EntdDetailController($http, $routeParams, pageTitleService) {
+function EntidadTipoDatoDetailController($stateParams, pageTitleService, EntidadTipoDatoService) {
     var vm = this;
 
     vm.remove = remove;
 
-    initialize();
-
-    function initialize() {
-        $http.post("metamodelo/entidad-tipo-dato-detail.action", {
-            model : {
-                entiId : $routeParams.entiId,
-                tpdt : {
-                    id : $routeParams.tpdtId
-                }
-            }
-        }).success(function(data) {
-            vm.entd = data.model;
-            vm.i18nMap = data.i18nMap;
-        });
-
-        pageTitleService.setTitle("entd", "page_detail");
-    }
-
     function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("metamodelo/entidad-tipo-dato-remove.action", {
-                model : vm.entd
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
+        EntidadTipoDatoService.remove(vm.entd).then(function(data) {
+            window.history.back();
+        });
     }
+
+    EntidadTipoDatoService.detail({
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.entd = data.model;
+        vm.i18nMap = data.i18nMap;
+    });
+
+    pageTitleService.setTitle("entd", "page_detail");
 }
 
-function EntdEditController($http, $location, $routeParams, pageTitleService) {
+function EntidadTipoDatoEditController($state, $stateParams, pageTitleService, EntidadTipoDatoService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
-    initialize();
-
-    function initialize() {
-        vm.accion = $routeParams.accion;
-
-        $http.post("metamodelo/entidad-tipo-dato-edit.action", {
-            model : {
-                entiId : $routeParams.entiId,
-                tpdt : {
-                    id : $routeParams.tpdtId
-                }
-            },
-            accion : vm.accion
-        }).success(function(data) {
-            vm.entd = data.model;
-            vm.i18nMap = data.i18nMap;
-            vm.tpdtList = data.tpdtList;
-            vm.engdList = data.engdList;
-        });
-
-        pageTitleService.setTitle("entd", "page_" + vm.accion);
-    }
-
     function save() {
-        $http.post("metamodelo/entidad-tipo-dato-save.action", {
-            model : vm.entd,
-            i18nMap : vm.i18nMap,
-            accion : vm.accion
-        }).success(
-                function(data) {
-                    vm.accion == 'edit' ? setTimeout(function() {
-                        window.history.back();
-                    }, 0) : $location.path(
-                            "/metamodelo/entd/detail/" + data.model.entiId + "/" + data.model.tpdt.id)
-                            .replace();
-                });
+        EntidadTipoDatoService.saveI18n(vm.accion, vm.entd, vm.i18nMap).then(function(data) {
+            vm.accion == 'edit' ? setTimeout(function() {
+                window.history.back();
+            }, 0) : $state.go("entidadtipodato-detail", {
+                id : data.model.id
+            }, {
+                location : 'replace'
+            });
+        });
     }
 
     function cancel() {
         window.history.back();
     }
+
+    vm.accion = $stateParams.accion;
+
+    EntidadTipoDatoService.edit($stateParams.accion, {
+        entiId : $stateParams.entiId,
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.entd = data.model;
+        vm.i18nMap = data.i18nMap;
+
+        vm.tpdtList = data.tpdtList;
+        vm.engdList = data.engdList;
+    });
+
+    pageTitleService.setTitle("entd", "page_" + vm.accion);
 }
 
 function EntidadGrupoDatoDetailController($stateParams, pageTitleService, EntidadGrupoDatoService) {

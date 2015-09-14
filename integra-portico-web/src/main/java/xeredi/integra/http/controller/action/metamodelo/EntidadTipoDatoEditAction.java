@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -16,8 +18,6 @@ import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -45,12 +45,11 @@ public final class EntidadTipoDatoEditAction extends CrudEditAction<EntidadTipoD
         Preconditions.checkNotNull(model.getEntiId());
 
         if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(model.getTpdt());
-            Preconditions.checkNotNull(model.getTpdt().getId());
+            Preconditions.checkNotNull(model.getId());
 
             final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-            model = entdBO.select(model.getEntiId(), model.getTpdt().getId(), getIdioma());
+            model = entdBO.select(model.getId(), getIdioma());
             i18nMap = I18nBO.selectMap(I18nPrefix.entd, model.getId());
         }
     }

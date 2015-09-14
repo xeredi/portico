@@ -6,6 +6,9 @@ import java.util.Map;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
@@ -17,8 +20,6 @@ import xeredi.integra.model.metamodelo.dao.EntidadTipoDatoDAO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.util.mybatis.SqlMapperLocator;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -125,14 +126,12 @@ public final class EntidadTipoDatoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public EntidadTipoDatoVO select(final Long entiId, final Long tpdtId, final String idioma)
-            throws InstanceNotFoundException {
+    public EntidadTipoDatoVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadTipoDatoDAO entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
             final EntidadTipoDatoCriterioVO entdCriterioVO = new EntidadTipoDatoCriterioVO();
 
-            entdCriterioVO.setEntiId(entiId);
-            entdCriterioVO.setTpdtId(tpdtId);
+            entdCriterioVO.setId(id);
             entdCriterioVO.setIdioma(idioma);
 
             final EntidadTipoDatoVO entdVO = entdDAO.selectObject(entdCriterioVO);

@@ -2,6 +2,8 @@ package xeredi.integra.http.controller.action.metamodelo;
 
 import java.util.Map;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.CrudDetailAction;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -9,8 +11,6 @@ import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -29,13 +29,11 @@ public final class EntidadTipoDatoDetailAction extends CrudDetailAction<EntidadT
      */
     @Override
     public void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model.getEntiId());
-        Preconditions.checkNotNull(model.getTpdt());
-        Preconditions.checkNotNull(model.getTpdt().getId());
+        Preconditions.checkNotNull(model.getId());
 
         final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-        model = entdBO.select(model.getEntiId(), model.getTpdt().getId(), getIdioma());
+        model = entdBO.select(model.getId(), getIdioma());
         i18nMap = I18nBO.selectMap(I18nPrefix.entd, model.getId());
     }
 

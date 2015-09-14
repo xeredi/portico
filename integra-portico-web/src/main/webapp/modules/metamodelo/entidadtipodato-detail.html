@@ -1,7 +1,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default"
-            ng-href="#/metamodelo/entd/edit/edit/{{vm.entd.entiId}}/{{vm.entd.tpdt.id}}"><i
+            ui-sref="entidadtipodato-edit({accion: 'edit', entiId: vm.entd.entiId, id: vm.entd.id})"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
@@ -16,7 +16,7 @@
         <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate>tpdt</label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tpdt/detail/{{vm.entd.tpdt.id}}" ng-bind="vm.entd.tpdt.nombre"></a>
+                <a ui-sref="tipodato-detail({id:vm.entd.tpdt.id})" ng-bind="vm.entd.tpdt.nombre"></a>
             </p>
         </div>
         <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
@@ -31,9 +31,9 @@
             <label translate>enti</label>
             <p class="form-control-static">
                 <span ng-if="vm.entd.tpdt.enti"> <a ng-if="vm.entd.tpdt.enti.tipo == 'P'"
-                    ng-href="#/metamodelo/tppr/detail/{{vm.entd.tpdt.enti.id}}"
+                    ui-sref="tipoparametro-detail({id:vm.entd.tpdt.enti.id})"
                     ng-bind="vm.entd.tpdt.enti.nombre"></a><a ng-if="vm.entd.tpdt.enti.tipo == 'T'"
-                    ng-href="#/metamodelo/tpsr/detail/{{vm.entd.tpdt.enti.id}}"
+                    ui-sref="tiposervicio-detail({id:vm.entd.tpdt.enti.id})"
                     ng-bind="vm.entd.tpdt.enti.nombre"></a></span>
             </p>
         </div>
