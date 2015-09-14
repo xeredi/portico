@@ -270,19 +270,21 @@ function config($routeProvider, $stateProvider) {
         controller : "EntidadAccionEditController as vm",
     })
 
+    .state("entidadacciongrid-detail", {
+        url : "/metamodelo/entidadacciongrid/detail/:id",
+        templateUrl : "modules/metamodelo/entidadacciongrid-detail.html",
+        controller : "EntidadAccionGridDetailController as vm",
+    })
+
+    .state("entidadacciongrid-edit", {
+        url : "/metamodelo/entidadacciongrid/edit/:accion/:entiId?id",
+        templateUrl : "modules/metamodelo/entidadacciongrid-edit.html",
+        controller : "EntidadAccionGridEditController as vm",
+    })
+
     ;
 
     $routeProvider
-
-    .when("/metamodelo/enag/detail/:id", {
-        templateUrl : "modules/metamodelo/enag-detail.html",
-        controller : "EnagDetailController as vm"
-    })
-
-    .when("/metamodelo/enag/edit/:accion/:entiId/:id?", {
-        templateUrl : "modules/metamodelo/enag-edit.html",
-        controller : "EnagEditController as vm"
-    })
 
     .when("/metamodelo/enen/edit/:accion/:entipId", {
         templateUrl : "modules/metamodelo/enen-edit.html",
@@ -1255,77 +1257,58 @@ function EntidadAccionEditController($state, $stateParams, pageTitleService, Ent
     pageTitleService.setTitle("enac", "page_" + vm.accion);
 }
 
-function EnagDetailController($http, $location, $routeParams, pageTitleService) {
+function EntidadAccionGridDetailController($stateParams, pageTitleService, EntidadAccionGridService) {
     var vm = this;
 
     vm.remove = remove;
 
-    initialize();
-
-    function initialize() {
-        $http.post("metamodelo/entidad-accion-grid-detail.action", {
-            model : {
-                id : $routeParams.id
-            }
-        }).success(function(data) {
-            vm.enag = data.model;
-            vm.i18nMap = data.i18nMap;
-        });
-
-        pageTitleService.setTitle("enag", "page_detail");
-    }
-
     function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("metamodelo/entidad-accion-grid-remove.action", {
-                model : vm.enag
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
+        EntidadAccionGridService.remove(vm.enag).then(function(data) {
+            window.history.back();
+        });
     }
+
+    EntidadAccionGridService.detail({
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.enag = data.model;
+        vm.i18nMap = data.i18nMap;
+    });
+
+    pageTitleService.setTitle("enag", "page_detail");
 }
 
-function EnagEditController($http, $location, $routeParams, pageTitleService) {
+function EntidadAccionGridEditController($state, $stateParams, pageTitleService, EntidadAccionGridService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
-    initialize();
-
-    function initialize() {
-        vm.accion = $routeParams.accion;
-
-        $http.post("metamodelo/entidad-accion-grid-edit.action", {
-            model : {
-                entiId : $routeParams.entiId,
-                id : $routeParams.id
-            },
-            accion : vm.accion
-        }).success(function(data) {
-            vm.enag = data.model;
-            vm.i18nMap = data.i18nMap;
-        });
-
-        pageTitleService.setTitle("enag", "page_" + vm.accion);
-    }
-
     function save() {
-        $http.post("metamodelo/entidad-accion-grid-save.action", {
-            model : vm.enag,
-            i18nMap : vm.i18nMap,
-            accion : vm.accion
-        }).success(function(data) {
+        EntidadAccionGridService.saveI18n(vm.accion, vm.enag, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $location.path("/metamodelo/enag/detail/" + data.model.id).replace();
+            }, 0) : $state.go("entidadacciongrid-detail", data.model, {
+                location : 'replace'
+            });
         });
     }
 
     function cancel() {
         window.history.back();
     }
+
+    vm.accion = $stateParams.accion;
+
+    EntidadAccionGridService.edit($stateParams.accion, {
+        entiId : $stateParams.entiId,
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.enag = data.model;
+        vm.i18nMap = data.i18nMap;
+    });
+
+    pageTitleService.setTitle("enag", "page_" + vm.accion);
 }
 
 function EnenEditController($http, $routeParams, pageTitleService) {
