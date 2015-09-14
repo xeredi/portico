@@ -47,9 +47,9 @@ angular.module("metamodelo_controller", [])
 .controller("CampoAgregacionEditController", CampoAgregacionEditController)
 
 // ------------------- GRUPO DE DATO DE ENTIDAD --------------------
-.controller("EngdDetailController", EngdDetailController)
+.controller("EntidadGrupoDatoDetailController", EntidadGrupoDatoDetailController)
 
-.controller("EngdEditController", EngdEditController)
+.controller("EntidadGrupoDatoEditController", EntidadGrupoDatoEditController)
 
 // ------------------- DATO DE ENTIDAD --------------------
 .controller("EntdDetailController", EntdDetailController)
@@ -210,6 +210,18 @@ function config($routeProvider, $stateProvider) {
         controller : "CampoAgregacionEditController as vm",
     })
 
+    .state("entidadgrupodato-detail", {
+        url : "/metamodelo/entidadgrupodato/detail/:id",
+        templateUrl : "modules/metamodelo/entidadgrupodato-detail.html",
+        controller : "EntidadGrupoDatoDetailController as vm",
+    })
+
+    .state("entidadgrupodato-edit", {
+        url : "/metamodelo/entidadgrupodato/edit/:accion/:entiId?id",
+        templateUrl : "modules/metamodelo/entidadgrupodato-edit.html",
+        controller : "EntidadGrupoDatoEditController as vm",
+    })
+
     ;
 
     $routeProvider
@@ -222,16 +234,6 @@ function config($routeProvider, $stateProvider) {
     .when("/metamodelo/entd/edit/:accion/:entiId/:tpdtId?", {
         templateUrl : "modules/metamodelo/entd-edit.html",
         controller : "EntdEditController as vm"
-    })
-
-    .when("/metamodelo/engd/detail/:engdId", {
-        templateUrl : "modules/metamodelo/engd-detail.html",
-        controller : "EngdDetailController as vm"
-    })
-
-    .when("/metamodelo/engd/edit/:accion/:entiId/:engdId?", {
-        templateUrl : "modules/metamodelo/engd-edit.html",
-        controller : "EngdEditController as vm"
     })
 
     .when("/metamodelo/trmt/detail/:entiId/:id", {
@@ -1058,77 +1060,60 @@ function EntdEditController($http, $location, $routeParams, pageTitleService) {
     }
 }
 
-function EngdDetailController($http, $location, $routeParams, pageTitleService) {
+function EntidadGrupoDatoDetailController($stateParams, pageTitleService, EntidadGrupoDatoService) {
     var vm = this;
 
     vm.remove = remove;
 
-    initialize();
-
-    function initialize() {
-        $http.post("metamodelo/entidad-grupo-dato-detail.action", {
-            model : {
-                id : $routeParams.engdId
-            }
-        }).success(function(data) {
-            vm.engd = data.model;
-            vm.i18nMap = data.i18nMap;
-        });
-
-        pageTitleService.setTitle("engd", "page_detail");
-    }
-
     function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("metamodelo/entidad-grupo-dato-remove.action", {
-                model : vm.engd
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
+        EntidadGrupoDatoService.remove(vm.engd).then(function(data) {
+            window.history.back();
+        });
     }
+
+    EntidadGrupoDatoService.detail({
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.engd = data.model;
+        vm.i18nMap = data.i18nMap;
+    });
+
+    pageTitleService.setTitle("engd", "page_detail");
 }
 
-function EngdEditController($http, $location, $routeParams, pageTitleService) {
+function EntidadGrupoDatoEditController($state, $stateParams, pageTitleService, EntidadGrupoDatoService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
-    initialize();
-
-    function initialize() {
-        vm.accion = $routeParams.accion;
-
-        $http.post("metamodelo/entidad-grupo-dato-edit.action", {
-            model : {
-                entiId : $routeParams.entiId,
-                id : $routeParams.engdId
-            },
-            accion : vm.accion
-        }).success(function(data) {
-            vm.engd = data.model;
-            vm.i18nMap = data.i18nMap;
-        });
-
-        pageTitleService.setTitle("engd", "page_" + vm.accion);
-    }
-
     function save() {
-        $http.post("metamodelo/entidad-grupo-dato-save.action", {
-            model : vm.engd,
-            i18nMap : vm.i18nMap,
-            accion : vm.accion
-        }).success(function(data) {
+        EntidadGrupoDatoService.saveI18n(vm.accion, vm.engd, vm.i18nMap).then(function(data) {
             vm.accion == 'edit' ? setTimeout(function() {
                 window.history.back();
-            }, 0) : $location.path("/metamodelo/engd/detail/" + data.model.id).replace();
+            }, 0) : $state.go("entidadgrupodato-detail", {
+                id : data.model.id
+            }, {
+                location : 'replace'
+            });
         });
     }
 
     function cancel() {
         window.history.back();
     }
+
+    vm.accion = $stateParams.accion;
+
+    EntidadGrupoDatoService.edit($stateParams.accion, {
+        entiId : $stateParams.entiId,
+        id : $stateParams.id
+    }).then(function(data) {
+        vm.engd = data.model;
+        vm.i18nMap = data.i18nMap;
+    });
+
+    pageTitleService.setTitle("engd", "page_" + vm.accion);
 }
 
 function TrmtDetailController($http, $location, $routeParams, pageTitleService) {

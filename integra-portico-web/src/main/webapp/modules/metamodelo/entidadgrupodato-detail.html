@@ -1,6 +1,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/engd/edit/edit/{{vm.engd.entiId}}/{{vm.engd.id}}"><i
+        <a class="btn btn-default"
+            ui-sref="entidadgrupodato-edit({accion: 'edit', entiId: vm.engd.entiId, id: vm.engd.id})"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>

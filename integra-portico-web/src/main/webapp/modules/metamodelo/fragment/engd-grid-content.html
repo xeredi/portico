@@ -4,7 +4,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/metamodelo/engd/edit/create/{{vm.enti.id}}"><i
+            <a class="btn btn-default" ui-sref="entidadgrupodato-edit({accion: 'create', entiId: vm.enti.id})"><i
                 class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>
     </div>
@@ -19,7 +19,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="engd in vm.engdList track by engd.id">
-                <td><a ng-href="#/metamodelo/engd/detail/{{engd.id}}"><i
+                <td><a ui-sref="entidadgrupodato-detail({id:engd.id})"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="engd.etiqueta"></td>
                 <td ng-bind="engd.numero" class="number"></td>
