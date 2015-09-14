@@ -33,7 +33,7 @@
 
         <tbody>
             <tr ng-repeat="tpdt in vm.tpdtList.list track by tpdt.id">
-                <td><a ui-sref="tipodato-detail({id: tpdt.id})"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ui-sref="tipodato-detail(tpdt)"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="tpdt.codigo"></td>
                 <td ng-bind="tpdt.nombre"></td>
                 <td nowrap="nowrap" bs-tooltip data-title="{{('HtmlTipo_' + tpdt.tpht | translate)}}"

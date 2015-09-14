@@ -76,9 +76,9 @@ angular.module("metamodelo_controller", [])
 .controller("EntidadAccionGridEditController", EntidadAccionGridEditController)
 
 // ------------------- DEPENDENCIA ENTRE ENTIDADES --------------------
-.controller("EnenEditController", EnenEditController);
+.controller("EntidadEntidadEditController", EntidadEntidadEditController);
 
-function config($routeProvider, $stateProvider) {
+function config($stateProvider) {
     $stateProvider
 
     .state("tipodato-grid", {
@@ -282,14 +282,13 @@ function config($routeProvider, $stateProvider) {
         controller : "EntidadAccionGridEditController as vm",
     })
 
+    .state("entidadentidad-edit", {
+        url : "/metamodelo/entidadentidad/edit/:accion/:entiPadreId?entiHijaId",
+        templateUrl : "modules/metamodelo/entidadentidad-edit.html",
+        controller : "EntidadEntidadEditController as vm",
+    })
+
     ;
-
-    $routeProvider
-
-    .when("/metamodelo/enen/edit/:accion/:entipId", {
-        templateUrl : "modules/metamodelo/enen-edit.html",
-        controller : "EnenEditController as vm"
-    });
 }
 
 function TipoDatoGridController($state, $stateParams, $modal, pageTitleService, TipoDatoService) {
@@ -1311,40 +1310,38 @@ function EntidadAccionGridEditController($state, $stateParams, pageTitleService,
     pageTitleService.setTitle("enag", "page_" + vm.accion);
 }
 
-function EnenEditController($http, $routeParams, pageTitleService) {
+function EntidadEntidadEditController($state, $stateParams, pageTitleService, EntidadEntidadService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
-    initialize();
-
-    function initialize() {
-        vm.accion = $routeParams.accion;
-
-        $http.post("metamodelo/entidad-entidad-edit.action", {
-            model : {
-                entiPadreId : $routeParams.entipId
-            },
-            accion : vm.accion
-        }).success(function(data) {
-            vm.enen = data.model;
-            vm.entiList = data.tpssList;
-        });
-
-        pageTitleService.setTitle("enen", "page_" + vm.accion);
-    }
-
     function save() {
-        $http.post("metamodelo/entidad-entidad-save.action", {
-            model : vm.enen,
-            accion : vm.accion
-        }).success(function(data) {
-            $location.path("/metamodelo/enen/detail/" + data.model.id).replace();
+        EntidadEntidadService.saveI18n(vm.accion, vm.enen, vm.i18nMap).then(function(data) {
+            vm.accion == 'edit' ? setTimeout(function() {
+                window.history.back();
+            }, 0) : $state.go("entidadentidad-detail", data.model, {
+                location : 'replace'
+            });
         });
     }
 
     function cancel() {
         window.history.back();
     }
+
+    vm.accion = $stateParams.accion;
+
+    EntidadEntidadService.edit($stateParams.accion, {
+        entiPadreId : $stateParams.entiPadreId,
+        entiHija : {
+            id : $stateParams.entiHijaId
+        }
+    }).then(function(data) {
+        vm.enen = data.model;
+
+        vm.entiList = data.tpssList;
+    });
+
+    pageTitleService.setTitle("enen", "page_" + vm.accion);
 }

@@ -4,9 +4,9 @@
     <div class="btn-group">
         <a class="btn btn-default"
             ui-sref="tiposubparametro-edit({accion: 'edit', tpprId: vm.enti.tpprId, id: vm.enti.id})"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
         </button>
     </div>
 </div>
@@ -23,10 +23,9 @@
                 data-title="{{('EntidadTipo_' + vm.enti.tipo | translate)}}" ng-bind="vm.enti.tipo"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-            <label translate>enti_tpprAsociado</label>
+            <label translate="enti_tpprAsociado"></label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tppr/detail/{{vm.enti.tpprAsociado.id}}"
-                    ng-bind="vm.enti.tpprAsociado.nombre"></a>
+                <a ui-sref="tipoparametro-detail(vm.enti.tpprAsociado)" ng-bind="vm.enti.tpprAsociado.nombre"></a>
             </p>
         </div>
     </div>
@@ -35,43 +34,43 @@
 
     <div class="row">
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate>enti_cmdAlta</label>
+            <label translate="enti_cmdAlta"></label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{(vm.enti.cmdAlta ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate>enti_cmdBaja</label>
+            <label translate="enti_cmdBaja"></label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{(vm.enti.cmdBaja ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate>enti_cmdEdicion</label>
+            <label translate="enti_cmdEdicion"></label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{(vm.enti.cmdEdicion ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate>enti_cmdDuplicado</label>
+            <label translate="enti_cmdDuplicado"></label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{(vm.enti.cmdDuplicado ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate>enti_i18n</label>
+            <label translate="enti_i18n"></label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{(vm.enti.i18n ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate>enti_tempExp</label>
+            <label translate="enti_tempExp"></label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{(vm.enti.tempExp ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-3 col-md-2 form-group-sm">
-            <label translate>enti_maxGrid</label>
+            <label translate="enti_maxGrid"></label>
             <p class="form-control-static number" ng-bind="(vm.enti.maxGrid | number:0)"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">

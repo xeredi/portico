@@ -19,8 +19,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="engd in vm.engdList track by engd.id">
-                <td><a ui-sref="entidadgrupodato-detail({id:engd.id})"><i
-                        class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ui-sref="entidadgrupodato-detail(engd)"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="engd.etiqueta"></td>
                 <td ng-bind="engd.numero" class="number"></td>
             </tr>

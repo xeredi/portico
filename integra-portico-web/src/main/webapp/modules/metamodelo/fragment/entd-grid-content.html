@@ -30,8 +30,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="entd in vm.entdList track by entd.id">
-                <td><a ui-sref="entidadtipodato-detail({id:entd.id})"><i
-                        class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ui-sref="entidadtipodato-detail(entd)"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="entd.grupo" class="number"></td>
                 <td ng-bind="entd.fila" class="number"></td>
                 <td ng-bind="entd.orden" class="number"></td>

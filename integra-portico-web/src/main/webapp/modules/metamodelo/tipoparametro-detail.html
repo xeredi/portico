@@ -28,7 +28,7 @@
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="enti_tpdtNombre"></label>
             <p class="form-control-static">
-                <a ui-sref="tipodato-detail({id:vm.enti.tpdtNombre.id})" ng-bind="vm.enti.tpdtNombre.nombre"></a>
+                <a ui-sref="tipodato-detail(vm.enti.tpdtNombre)" ng-bind="vm.enti.tpdtNombre.nombre"></a>
             </p>
         </div>
     </div>
@@ -117,8 +117,7 @@
     </thead>
     <tbody>
         <tr ng-repeat="subenti in vm.subentiList track by subenti.id">
-            <td><a ui-sref="tiposubparametro-detail({id:subenti.id})"><i
-                    class="glyphicon glyphicon-search"></i></a></td>
+            <td><a ui-sref="tiposubparametro-detail(subenti)"><i class="glyphicon glyphicon-search"></i></a></td>
             <td ng-bind="subenti.codigo"></td>
             <td ng-bind="subenti.nombre"></td>
             <td><i class="glyphicon glyphicon-{{(subenti.cmdAlta ? 'ok' : 'remove')}}"></i></td>

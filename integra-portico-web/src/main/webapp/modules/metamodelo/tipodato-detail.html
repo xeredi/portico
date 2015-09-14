@@ -25,13 +25,13 @@
         <div ng-if="vm.tpdt.enti.id" class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate>enti</label>
             <p class="form-control-static">
-                <a ng-if="vm.tpdt.enti.tipo == 'T'" ui-sref="tiposervicio-detail({id: vm.tpdt.enti.id})"
+                <a ng-if="vm.tpdt.enti.tipo == 'T'" ui-sref="tiposervicio-detail(vm.tpdt.enti)"
                     ng-bind="vm.tpdt.enti.nombre"></a><a ng-if="vm.tpdt.enti.tipo == 'S'"
-                    ui-sref="tiposubservicio-detail({id: vm.tpdt.enti.id})" ng-bind="vm.tpdt.enti.nombre"></a><a
-                    ng-if="vm.tpdt.enti.tipo == 'P'" ui-sref="tipoparametro-detail({id: vm.tpdt.enti.id})"
+                    ui-sref="tiposubservicio-detail(vm.tpdt.enti)" ng-bind="vm.tpdt.enti.nombre"></a><a
+                    ng-if="vm.tpdt.enti.tipo == 'P'" ui-sref="tipoparametro-detail(vm.tpdt.enti)"
                     ng-bind="vm.tpdt.enti.nombre"></a><a ng-if="vm.tpdt.enti.tipo == 'B'"
-                    ui-sref="tiposubparametro-detail({id: vm.tpdt.enti.id})" ng-bind="vm.tpdt.enti.nombre"></a>
-                <a ng-if="vm.tpdt.enti.tipo == 'E'" ui-sref="tipoestadistica-detail({id: vm.tpdt.enti.id})"
+                    ui-sref="tiposubparametro-detail(vm.tpdt.enti)" ng-bind="vm.tpdt.enti.nombre"></a> <a
+                    ng-if="vm.tpdt.enti.tipo == 'E'" ui-sref="tipoestadistica-detail(vm.tpdt.enti)"
                     ng-bind="vm.tpdt.enti.nombre"></a>
             </p>
         </div>
@@ -61,8 +61,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="cdrf in vm.tpdt.cdrfList track by $index">
-                <td><a ui-sref="codigoreferencia-detail({id: cdrf.id})"><i
-                        class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ui-sref="codigoreferencia-detail(cdrf)"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="cdrf.valor"></td>
                 <td ng-bind="cdrf.texto"></td>
                 <td class="number" ng-bind="cdrf.orden"></td>
