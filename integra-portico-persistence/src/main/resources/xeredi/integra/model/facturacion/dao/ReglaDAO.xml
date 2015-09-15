@@ -3,66 +3,68 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.facturacion.dao.ReglaDAO">
-	<resultMap type="ReglaVO" id="ResultMap">
-		<id column="rglv_pk" />
-		<result column="rgla_pk" property="id" />
-		<result column="rgla_codigo" property="codigo" />
-		<result column="rgla_tipo" property="tipo" />
+    <resultMap type="ReglaVO" id="ResultMap">
+        <id column="rglv_pk" />
+        <result column="rgla_pk" property="id" />
+        <result column="rgla_codigo" property="codigo" />
+        <result column="rgla_tipo" property="tipo" />
 
-		<association property="enti" javaType="EntidadVO">
-			<result column="rgla_enti_pk" property="id" />
-			<result column="enti_tipo" property="tipo" />
-		</association>
+        <result column="rgla_fref" property="fref" />
 
-		<association property="version" javaType="ReglaVersionVO">
-			<result column="rglv_pk" property="id" />
-			<result column="rglv_fini" property="fini" />
-			<result column="rglv_ffin" property="ffin" />
-			<result column="rglv_orden" property="orden" />
-			<result column="rglv_valor_base" property="valorBase" />
-			<result column="rglv_condicion" property="condicion" />
-			<result column="rglv_formula" property="formula" />
-			<result column="rglv_path_impuesto" property="pathImpuesto" />
-			<result column="rglv_path_pagador" property="pathPagador" />
-			<result column="rglv_path_es_suj_pasivo" property="pathEsSujPasivo" />
-			<result column="rglv_path_cod_exen" property="pathCodExen" />
+        <association property="enti" javaType="EntidadVO">
+            <result column="rgla_enti_pk" property="id" />
+            <result column="enti_tipo" property="tipo" />
+        </association>
 
-			<result column="rglv_path_info1" property="pathInfo1" />
-			<result column="rglv_path_info2" property="pathInfo2" />
-			<result column="rglv_path_info3" property="pathInfo3" />
-			<result column="rglv_path_info4" property="pathInfo4" />
-			<result column="rglv_path_info5" property="pathInfo5" />
-			<result column="rglv_path_info6" property="pathInfo6" />
+        <association property="version" javaType="ReglaVersionVO">
+            <result column="rglv_pk" property="id" />
+            <result column="rglv_fini" property="fini" />
+            <result column="rglv_ffin" property="ffin" />
+            <result column="rglv_orden" property="orden" />
+            <result column="rglv_valor_base" property="valorBase" />
+            <result column="rglv_condicion" property="condicion" />
+            <result column="rglv_formula" property="formula" />
+            <result column="rglv_path_impuesto" property="pathImpuesto" />
+            <result column="rglv_path_pagador" property="pathPagador" />
+            <result column="rglv_path_es_suj_pasivo" property="pathEsSujPasivo" />
+            <result column="rglv_path_cod_exen" property="pathCodExen" />
 
-			<result column="rglv_etiq_info1" property="etiqInfo1" />
-			<result column="rglv_etiq_info2" property="etiqInfo2" />
-			<result column="rglv_etiq_info3" property="etiqInfo3" />
-			<result column="rglv_etiq_info4" property="etiqInfo4" />
-			<result column="rglv_etiq_info5" property="etiqInfo5" />
-			<result column="rglv_etiq_info6" property="etiqInfo6" />
+            <result column="rglv_path_info1" property="pathInfo1" />
+            <result column="rglv_path_info2" property="pathInfo2" />
+            <result column="rglv_path_info3" property="pathInfo3" />
+            <result column="rglv_path_info4" property="pathInfo4" />
+            <result column="rglv_path_info5" property="pathInfo5" />
+            <result column="rglv_path_info6" property="pathInfo6" />
 
-			<result column="rglv_path_cuant1" property="pathCuant1" />
-			<result column="rglv_path_cuant2" property="pathCuant2" />
-			<result column="rglv_path_cuant3" property="pathCuant3" />
-			<result column="rglv_path_cuant4" property="pathCuant4" />
-			<result column="rglv_path_cuant5" property="pathCuant5" />
-			<result column="rglv_path_cuant6" property="pathCuant6" />
+            <result column="rglv_etiq_info1" property="etiqInfo1" />
+            <result column="rglv_etiq_info2" property="etiqInfo2" />
+            <result column="rglv_etiq_info3" property="etiqInfo3" />
+            <result column="rglv_etiq_info4" property="etiqInfo4" />
+            <result column="rglv_etiq_info5" property="etiqInfo5" />
+            <result column="rglv_etiq_info6" property="etiqInfo6" />
 
-			<result column="rglv_etiq_cuant1" property="etiqCuant1" />
-			<result column="rglv_etiq_cuant2" property="etiqCuant2" />
-			<result column="rglv_etiq_cuant3" property="etiqCuant3" />
-			<result column="rglv_etiq_cuant4" property="etiqCuant4" />
-			<result column="rglv_etiq_cuant5" property="etiqCuant5" />
-			<result column="rglv_etiq_cuant6" property="etiqCuant6" />
-		</association>
+            <result column="rglv_path_cuant1" property="pathCuant1" />
+            <result column="rglv_path_cuant2" property="pathCuant2" />
+            <result column="rglv_path_cuant3" property="pathCuant3" />
+            <result column="rglv_path_cuant4" property="pathCuant4" />
+            <result column="rglv_path_cuant5" property="pathCuant5" />
+            <result column="rglv_path_cuant6" property="pathCuant6" />
 
-		<association property="crgo" javaType="CargoVO">
-			<result column="rgla_crgo_pk" property="id" />
-			<result column="crgo_codigo" property="codigo" />
-		</association>
-	</resultMap>
+            <result column="rglv_etiq_cuant1" property="etiqCuant1" />
+            <result column="rglv_etiq_cuant2" property="etiqCuant2" />
+            <result column="rglv_etiq_cuant3" property="etiqCuant3" />
+            <result column="rglv_etiq_cuant4" property="etiqCuant4" />
+            <result column="rglv_etiq_cuant5" property="etiqCuant5" />
+            <result column="rglv_etiq_cuant6" property="etiqCuant6" />
+        </association>
 
-	<sql id="SelectPrefix">
+        <association property="crgo" javaType="CargoVO">
+            <result column="rgla_crgo_pk" property="id" />
+            <result column="crgo_codigo" property="codigo" />
+        </association>
+    </resultMap>
+
+    <sql id="SelectPrefix">
     <![CDATA[
 		SELECT
 		    rgla_pk, rgla_crgo_pk, rgla_codigo, rgla_enti_pk, rgla_tipo
@@ -81,29 +83,31 @@
 		    , (
 		        SELECT enti_tipo FROM tbl_entidad_enti WHERE enti_pk = rgla_enti_pk
 		    ) AS enti_tipo
+
+            , #{fechaVigencia} AS rgla_fref
 		FROM
 		    tbl_regla_rgla
 		    INNER JOIN tbl_regla_version_rglv ON
 		        rglv_rgla_pk = rgla_pk
     ]]>
-	</sql>
+    </sql>
 
-	<sql id="SelectWhere">
-		<where>
-			<if test="fechaVigencia != null">
-				AND #{fechaVigencia} BETWEEN rglv_fini AND COALESCE(rglv_ffin, #{fechaVigencia})
-			</if>
+    <sql id="SelectWhere">
+        <where>
+            <if test="fechaVigencia != null">
+                AND #{fechaVigencia} BETWEEN rglv_fini AND COALESCE(rglv_ffin, #{fechaVigencia})
+            </if>
 
-			<if test="id != null">
-				AND rgla_pk = #{id}
-			</if>
+            <if test="id != null">
+                AND rgla_pk = #{id}
+            </if>
 
-			<if test="ids != null">
-				AND rgla_pk IN
-				<foreach collection="ids" open="(" close=")" separator="," item="value">#{value}</foreach>
-			</if>
+            <if test="ids != null">
+                AND rgla_pk IN
+                <foreach collection="ids" open="(" close=")" separator="," item="value">#{value}</foreach>
+            </if>
 
-			<if test="incompatibleId != null">
+            <if test="incompatibleId != null">
             <![CDATA[
             	AND EXISTS (
             		SELECT 1
@@ -111,7 +115,7 @@
             		WHERE
             			rgin_rgla1_pk = rgla_pk
             ]]>
-				<if test="fechaVigencia != null">
+                <if test="fechaVigencia != null">
                 <![CDATA[
             			AND EXISTS (
             				SELECT 1
@@ -120,17 +124,17 @@
             					AND #{fechaVigencia} BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, #{fechaVigencia})
             			)
                 ]]>
-				</if>
+                </if>
             <![CDATA[
                         AND  rgin_rgla2_pk = #{incompatibleId}
                 )
             ]]>
-			</if>
+            </if>
 
-			<if test="crgoId != null">
-				AND rgla_crgo_pk = #{crgoId}
+            <if test="crgoId != null">
+                AND rgla_crgo_pk = #{crgoId}
 
-				<if test="fechaVigencia != null">
+                <if test="fechaVigencia != null">
 	            <![CDATA[
 	            	AND EXISTS (
 	            		SELECT 1
@@ -140,14 +144,14 @@
 	            			AND #{fechaVigencia} BETWEEN crgv_fini AND COALESCE(crgv_ffin, #{fechaVigencia})
 	            	)
 	            ]]>
-				</if>
-			</if>
+                </if>
+            </if>
 
-			<if test="tipo != null">
-				AND rgla_tipo = #{tipo}
-			</if>
+            <if test="tipo != null">
+                AND rgla_tipo = #{tipo}
+            </if>
 
-			<if test="vlrcId != null">
+            <if test="vlrcId != null">
             <![CDATA[
             	AND EXISTS (
             		SELECT 1
@@ -164,22 +168,22 @@
             			AND vlrc_pk = #{vlrcId}
             	)
             ]]>
-			</if>
-		</where>
-	</sql>
+            </if>
+        </where>
+    </sql>
 
-	<select id="selectList" parameterType="ReglaCriterioVO" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-		ORDER BY rgla_crgo_pk, rgla_enti_pk, rglv_orden
-	</select>
+    <select id="selectList" parameterType="ReglaCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY rgla_crgo_pk, rgla_enti_pk, rglv_orden
+    </select>
 
-	<select id="selectObject" parameterType="ReglaCriterioVO" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-	</select>
+    <select id="selectObject" parameterType="ReglaCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
 
-	<select id="count" parameterType="ReglaCriterioVO" resultType="Integer">
+    <select id="count" parameterType="ReglaCriterioVO" resultType="Integer">
     <![CDATA[
         SELECT COUNT(1)
 		FROM
@@ -187,19 +191,19 @@
 		    INNER JOIN tbl_regla_version_rglv ON
 		        rglv_rgla_pk = rgla_pk
     ]]>
-		<include refid="SelectWhere" />
-	</select>
+        <include refid="SelectWhere" />
+    </select>
 
-	<select id="exists" parameterType="ReglaVO" resultType="Boolean">
+    <select id="exists" parameterType="ReglaVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM tbl_regla_rgla
         WHERE rgla_codigo = #{codigo}
             AND rgla_crgo_pk = #{crgo.id}
     ]]>
-	</select>
+    </select>
 
-	<select id="existsOverlap" parameterType="ReglaVO" resultType="Boolean">
+    <select id="existsOverlap" parameterType="ReglaVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
 		FROM
@@ -214,30 +218,30 @@
                     BETWEEN rglv_fini AND COALESCE(rglv_ffin, COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
             )
     ]]>
-		<if test="version.id != null">
+        <if test="version.id != null">
         <![CDATA[
             AND rglv_pk <> #{version.id}
         ]]>
-		</if>
-	</select>
+        </if>
+    </select>
 
-	<select id="selectId" parameterType="ReglaVO" resultType="Long">
+    <select id="selectId" parameterType="ReglaVO" resultType="Long">
     <![CDATA[
         SELECT rgla_pk
         FROM tbl_regla_rgla
         WHERE rgla_codigo = #{codigo}
             AND rgla_crgo_pk = #{crgo.id}
     ]]>
-	</select>
+    </select>
 
-	<insert id="insert" parameterType="ReglaVO">
+    <insert id="insert" parameterType="ReglaVO">
     <![CDATA[
         INSERT INTO tbl_regla_rgla (rgla_pk, rgla_codigo, rgla_enti_pk, rgla_tipo, rgla_crgo_pk)
         VALUES (#{id}, #{codigo}, #{enti.id}, #{tipo}, #{crgo.id})
     ]]>
-	</insert>
+    </insert>
 
-	<insert id="insertVersion" parameterType="ReglaVO">
+    <insert id="insertVersion" parameterType="ReglaVO">
     <![CDATA[
         INSERT INTO tbl_regla_version_rglv (
             rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_valor_base, rglv_condicion, rglv_formula
@@ -255,9 +259,9 @@
             , #{version.etiqCuant1}, #{version.etiqCuant2}, #{version.etiqCuant3}, #{version.etiqCuant4}, #{version.etiqCuant5}, #{version.etiqCuant6}
         )
     ]]>
-	</insert>
+    </insert>
 
-	<update id="updateVersion" parameterType="ReglaVO">
+    <update id="updateVersion" parameterType="ReglaVO">
     <![CDATA[
         UPDATE tbl_regla_version_rglv SET
             rglv_fini = #{version.fini}
@@ -301,13 +305,13 @@
         WHERE
             rglv_pk = #{version.id}
     ]]>
-	</update>
+    </update>
 
-	<delete id="deleteVersion" parameterType="ReglaVO">
+    <delete id="deleteVersion" parameterType="ReglaVO">
     <![CDATA[
         DELETE FROM tbl_regla_version_rglv
         WHERE
             rglv_pk = #{version.id}
     ]]>
-	</delete>
+    </delete>
 </mapper>

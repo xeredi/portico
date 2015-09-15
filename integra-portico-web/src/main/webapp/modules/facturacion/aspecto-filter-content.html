@@ -11,10 +11,10 @@
                         <div class="row">
                             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                                 <label translate>aspc_codigo</label> <input type="text"
-                                    ng-model="vm.aspcCriterio.codigo" class="form-control" />
+                                    ng-model="vm.searchCriteria.codigo" class="form-control" />
                             </div>
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                                <label translate>tpsr</label> <select ng-model="vm.aspcCriterio.tpsrId"
+                                <label translate>tpsr</label> <select ng-model="vm.searchCriteria.tpsrId"
                                     ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in ::vm.tpsrList"
                                     class="form-control">
                                     <option />
@@ -23,7 +23,7 @@
                             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                                 <label translate>aspc_fechaVigencia</label> <input type="text"
                                     class="form-control" data-container=".modal-body"
-                                    ng-model="vm.aspcCriterio.fechaVigencia" bs-datepicker />
+                                    ng-model="vm.searchCriteria.fechaVigencia" bs-datepicker />
                             </div>
                         </div>
                     </fieldset>

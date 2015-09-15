@@ -7,7 +7,7 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 /**
  * The Class IndexAction.
  */
-public final class IndexAction extends BaseAction {
+public final class FacturacionIndexAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5379259443693673160L;

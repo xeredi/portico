@@ -10,6 +10,8 @@
 		<result column="rgin_pk" property="id" />
 		<result column="rgin_rgla1_pk" property="rgla1Id" />
 
+        <result column="rgin_fref" property="fref" />
+
 		<association property="rgla2" javaType="ReglaVO">
 			<result column="rgin_rgla2_pk" property="id" />
 			<result column="rgla_codigo" property="codigo" />
@@ -39,6 +41,8 @@
 		    , rgiv_pk, rgiv_fini, rgiv_ffin
 
 		    , rgla_crgo_pk, rgla_codigo, rgla_enti_pk, rgla_tipo
+
+            , #{fechaVigencia} AS rgin_fref
 		FROM
 		    tbl_regla_inc_rgin
 		    INNER JOIN tbl_regla_inc_version_rgiv ON

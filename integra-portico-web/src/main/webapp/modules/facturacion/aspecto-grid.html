@@ -8,7 +8,7 @@
         <a class="btn btn-default" ng-href="#/facturacion/aspc/edit/create"><i
             class="glyphicon glyphicon-file"></i><span translate>btn_crear</span> </a>
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template="modules/facturacion/aspc-filter-content.html" bs-modal="modal">
+            data-template="modules/facturacion/aspecto-filter-content.html" bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
         </button>
     </div>
@@ -33,15 +33,13 @@
 
         <tbody>
             <tr ng-repeat="aspc in vm.aspcList.list track by aspc.id">
-                <td><a
-                    ng-href="#/facturacion/aspc/detail/{{::aspc.id}}/{{::vm.aspcCriterio.fechaVigencia}}"><i
-                        class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="::aspc.codigo"></td>
-                <td ng-bind="::aspc.version.descripcion"></td>
-                <td ng-bind="::('enti_' + aspc.tpsr.id | translate)"></td>
-                <td ng-bind="::(aspc.version.fini | date: dateFormat)"></td>
-                <td ng-bind="::(aspc.version.ffin | date: dateFormat)"></td>
-                <td class="number" ng-bind="::aspc.version.prioridad"></td>
+                <td><a ui-sref="aspecto-detail(aspc)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td ng-bind="aspc.codigo"></td>
+                <td ng-bind="aspc.version.descripcion"></td>
+                <td ng-bind="('enti_' + aspc.tpsr.id | translate)"></td>
+                <td ng-bind="(aspc.version.fini | date: dateFormat)"></td>
+                <td ng-bind="(aspc.version.ffin | date: dateFormat)"></td>
+                <td class="number" ng-bind="aspc.version.prioridad"></td>
             </tr>
         </tbody>
     </table>

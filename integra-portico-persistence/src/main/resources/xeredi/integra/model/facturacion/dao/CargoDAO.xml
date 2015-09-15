@@ -10,6 +10,8 @@
 		<result column="crgo_pk" property="id" />
 		<result column="crgo_codigo" property="codigo" />
 
+        <result column="crgo_fref" property="fref" />
+
 		<association property="version" javaType="CargoVersionVO">
 			<result column="crgv_pk" property="id" />
 			<result column="crgv_fini" property="fini" />
@@ -37,6 +39,8 @@
 		    , (
 		        SELECT enti_tipo FROM tbl_entidad_enti WHERE enti_pk = crgo_tpsr_pk
 		    ) AS enti_tipo
+
+            , #{fechaVigencia} AS crgo_fref
     ]]>
 		<if test="idioma != null">
         <![CDATA[

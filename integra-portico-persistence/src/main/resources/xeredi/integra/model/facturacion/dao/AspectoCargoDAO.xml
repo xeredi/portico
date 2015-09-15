@@ -10,6 +10,8 @@
 		<result column="ascr_pk" property="id" />
 		<result column="ascr_aspc_pk" property="aspcId" />
 
+        <result column="ascr_fref" property="fref" />
+
 		<association property="crgo" javaType="CargoVO">
 			<result column="ascr_crgo_pk" property="id" />
 			<result column="crgo_codigo" property="codigo" />
@@ -38,6 +40,8 @@
 		    , ascv_pk, ascv_fini, ascv_ffin
 
 		    , crgo_codigo, crgo_tpsr_pk
+
+            , #{fechaVigencia} AS ascr_fref
     ]]>
     	<if test="idioma != null and fechaVigencia != null">
 	    <![CDATA[

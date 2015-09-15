@@ -11,14 +11,14 @@
                         <div class="row">
                             <div class="col-sm-2 col-md-1 form-group-sm">
                                 <label translate>crgo_codigo</label> <input type="text"
-                                    ng-model="vm.crgoCriterio.codigo" class="form-control" />
+                                    ng-model="vm.searchCriteria.codigo" class="form-control" />
                             </div>
                             <div class="col-sm-2 col-md-2 form-group-sm">
                                 <label translate>crgo_codigoNormalizado</label> <input type="text"
-                                    ng-model="vm.crgoCriterio.codigoNormalizado" class="form-control" />
+                                    ng-model="vm.searchCriteria.codigoNormalizado" class="form-control" />
                             </div>
                             <div class="col-sm-3 col-md-2 form-group-sm">
-                                <label translate>tpsr</label> <select ng-model="vm.crgoCriterio.tpsrId"
+                                <label translate>tpsr</label> <select ng-model="vm.searchCriteria.tpsrId"
                                     ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in ::vm.tpsrList"
                                     class="form-control">
                                     <option />
@@ -27,7 +27,7 @@
                             <div class="col-sm-2 col-md-2 form-group-sm">
                                 <label translate>crgo_fechaVigencia</label><input type="text"
                                     class="form-control" data-container=".modal-body"
-                                    ng-model="vm.crgoCriterio.fechaVigencia" bs-datepicker />
+                                    ng-model="vm.searchCriteria.fechaVigencia" bs-datepicker />
                             </div>
                         </div>
                     </fieldset>

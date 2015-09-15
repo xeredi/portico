@@ -14,7 +14,7 @@
         <div class="col-md-2 form-group-sm">
             <label translate>rgin_rgla2</label>
             <p class="form-control-static">
-                <a ng-href="#/facturacion/rgla/detail/{{vm.rgin.rgla2.id}}/{{vm.fechaVigencia}}"
+                <a ui-sref="regla-detail({id: vm.rgin.rgla2.id, fref: vm.rgin.fref})"
                     ng-bind="vm.rgin.rgla2.codigo"></a>
             </p>
         </div>

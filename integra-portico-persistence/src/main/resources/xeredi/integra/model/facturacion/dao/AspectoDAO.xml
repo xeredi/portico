@@ -10,6 +10,8 @@
 		<result column="aspc_pk" property="id" />
 		<result column="aspc_codigo" property="codigo" />
 
+        <result column="aspc_fref" property="fref" />
+
 		<association property="tpsr" javaType="TipoServicioVO">
 			<result column="aspc_tpsr_pk" property="id" />
 			<result column="enti_tipo" property="tipo" />
@@ -74,6 +76,8 @@
 		    , (
 		        SELECT enti_tipo FROM tbl_entidad_enti WHERE enti_pk = aspc_tpsr_pk
 		    ) AS enti_tipo
+
+            , #{fechaVigencia} AS aspc_fref
     ]]>
 		<if test="idioma != null">
         <![CDATA[

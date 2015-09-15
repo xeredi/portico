@@ -41,44 +41,26 @@ angular.module("facturacion", [])
 .controller("FcsrEditController", FcsrEditController)
 
 // ----------- CARGO y REGLA ------------------
-.controller("CrgoGridController", CrgoGridController)
-
-.controller("CrgoDetailController", CrgoDetailController)
 
 .controller("CrgoEditController", CrgoEditController)
 
 .controller("CrgoLupaController", CrgoLupaController)
 
-.controller("RglaDetailController", RglaDetailController)
-
 .controller("RglaEditController", RglaEditController)
 
 .controller("RglaLupaController", RglaLupaController)
 
-.controller("RginDetailController", RginDetailController)
-
 .controller("RginEditController", RginEditController)
 
 // ----------- ASPECTO y ASPECTO CARGO ------------------
-.controller("AspcGridController", AspcGridController)
-
-.controller("AspcDetailController", AspcDetailController)
-
 .controller("AspcEditController", AspcEditController)
 
 .controller("AspcLupaController", AspcLupaController)
-
-.controller("AscrDetailController", AscrDetailController)
 
 .controller("AscrEditController", AscrEditController);
 
 function config($routeProvider) {
     $routeProvider
-
-    .when("/facturacion", {
-        templateUrl : "modules/facturacion/facturacion.html",
-        controller : "FacturacionController as vm"
-    })
 
     .when("/facturacion/vldr/edit/:entiId/:srvcId", {
         templateUrl : "modules/facturacion/vldr-edit.html",
@@ -169,25 +151,9 @@ function config($routeProvider) {
         controller : "FcsrEditController as vm"
     })
 
-    .when("/facturacion/crgo/grid", {
-        templateUrl : "modules/facturacion/crgo-grid.html",
-        controller : "CrgoGridController as vm",
-        reloadOnSearch : false
-    })
-
-    .when("/facturacion/crgo/detail/:crgoId/:fechaVigencia?", {
-        templateUrl : "modules/facturacion/crgo-detail.html",
-        controller : "CrgoDetailController as vm"
-    })
-
     .when("/facturacion/crgo/edit/:accion/:crgoId?/:fechaVigencia?", {
         templateUrl : "modules/facturacion/crgo-edit.html",
         controller : "CrgoEditController as vm"
-    })
-
-    .when("/facturacion/rgla/detail/:rglaId/:fechaVigencia?", {
-        templateUrl : "modules/facturacion/rgla-detail.html",
-        controller : "RglaDetailController as vm"
     })
 
     .when("/facturacion/rgla/edit/:accion/:crgoId/:fechaVigencia?/:rglaId?", {
@@ -195,25 +161,9 @@ function config($routeProvider) {
         controller : "RglaEditController as vm"
     })
 
-    .when("/facturacion/rgin/detail/:rginId/:fechaVigencia?", {
-        templateUrl : "modules/facturacion/rgin-detail.html",
-        controller : "RginDetailController as vm"
-    })
-
     .when("/facturacion/rgin/edit/:accion/:rgla1Id/:fechaVigencia?/:rginId?", {
         templateUrl : "modules/facturacion/rgin-edit.html",
         controller : "RginEditController as vm"
-    })
-
-    .when("/facturacion/aspc/grid", {
-        templateUrl : "modules/facturacion/aspc-grid.html",
-        controller : "AspcGridController as vm",
-        reloadOnSearch : false
-    })
-
-    .when("/facturacion/aspc/detail/:aspcId/:fechaVigencia?", {
-        templateUrl : "modules/facturacion/aspc-detail.html",
-        controller : "AspcDetailController as vm"
     })
 
     .when("/facturacion/aspc/edit/:accion/:aspcId?/:fechaVigencia?", {
@@ -221,26 +171,10 @@ function config($routeProvider) {
         controller : "AspcEditController as vm"
     })
 
-    .when("/facturacion/ascr/detail/:ascrId/:fechaVigencia?", {
-        templateUrl : "modules/facturacion/ascr-detail.html",
-        controller : "AscrDetailController as vm"
-    })
-
     .when("/facturacion/ascr/edit/:accion/:aspcId/:fechaVigencia?/:ascrId?", {
         templateUrl : "modules/facturacion/ascr-edit.html",
         controller : "AscrEditController as vm"
     });
-}
-
-function FacturacionController($http, pageTitleService) {
-    initialize();
-
-    function initialize() {
-        $http.post("facturacion/index.action").success(function(data) {
-        });
-
-        pageTitleService.setTitle("sec_facturacion", "page_home");
-    }
 }
 
 function VldrEditController($http, $location, $routeParams, pageTitleService) {
@@ -1017,87 +951,6 @@ function FcsrEditController($http, $location, $routeParams, pageTitleService) {
     }
 }
 
-function CrgoGridController($http, $location, $routeParams, $modal, pageTitleService) {
-    var vm = this;
-
-    vm.pageChanged = pageChanged;
-    vm.filter = filter;
-    vm.search = search;
-
-    initialize();
-
-    function initialize() {
-        vm.crgoCriterio = $routeParams.crgoCriterio ? angular.fromJson($routeParams.crgoCriterio) : {};
-        vm.page = $routeParams.page ? $routeParams.page : 1;
-
-        search($routeParams.page ? $routeParams.page : 1);
-        pageTitleService.setTitle("crgo", "page_grid");
-    }
-
-    function search(page) {
-        $http.post("facturacion/cargo-list.action", {
-            model : vm.crgoCriterio,
-            page : page,
-            limit : vm.limit
-        }).success(function(data) {
-            vm.crgoCriterio = data.model;
-            vm.crgoList = data.resultList;
-            vm.page = data.resultList.page;
-
-            $location.search({
-                page : vm.page,
-                crgoCriterio : JSON.stringify(vm.crgoCriterio)
-            }).replace();
-        });
-    }
-
-    function pageChanged() {
-        search(vm.page);
-    }
-
-    function filter(size) {
-        $http.post("facturacion/cargo-filter.action", {
-            model : vm.crgoCriterio
-        }).success(function(data) {
-            vm.tpsrList = data.tpsrList;
-        });
-    }
-}
-
-function CrgoDetailController($http, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.remove = remove;
-
-    initialize();
-
-    function initialize() {
-        $http.post("facturacion/cargo-detail.action", {
-            model : {
-                id : $routeParams.crgoId
-            },
-            fechaVigencia : $routeParams.fechaVigencia
-        }).success(function(data) {
-            vm.crgo = data.model;
-            vm.i18nMap = data.i18nMap;
-            vm.rglaList = data.rglaList;
-            vm.fechaVigencia = data.fechaVigencia;
-        });
-
-        pageTitleService.setTitle("crgo", "page_detail");
-    }
-
-    function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("facturacion/cargo-remove.action", {
-                model : vm.crgo
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
-    }
-}
-
 function CrgoEditController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
@@ -1194,39 +1047,6 @@ function CrgoLupaController($http, $scope) {
     };
 }
 
-function RglaDetailController($http, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.remove = remove;
-
-    initialize();
-
-    function initialize() {
-        $http.post("facturacion/regla-detail.action", {
-            model : {
-                id : $routeParams.rglaId
-            },
-            fechaVigencia : $routeParams.fechaVigencia
-        }).success(function(data) {
-            vm.rgla = data.model;
-            vm.rginList = data.rginList;
-            vm.fechaVigencia = data.fechaVigencia;
-        });
-
-        pageTitleService.setTitle("rgla", "page_detail");
-    }
-
-    function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("facturacion/regla-remove.action", {
-                model : vm.rgla
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
-    }
-}
-
 function RglaEditController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
@@ -1309,38 +1129,6 @@ function RglaLupaController($http, $scope) {
     };
 }
 
-function RginDetailController($http, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.remove = remove;
-
-    initialize();
-
-    function initialize() {
-        $http.post("facturacion/regla-incompatible-detail.action", {
-            model : {
-                id : $routeParams.rginId
-            },
-            fechaVigencia : $routeParams.fechaVigencia
-        }).success(function(data) {
-            vm.rgin = data.model;
-            vm.fechaVigencia = data.fechaVigencia;
-        });
-
-        pageTitleService.setTitle("rgin", "page_detail");
-    }
-
-    function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("facturacion/regla-incompatible-remove.action", {
-                model : vm.rgin
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
-    }
-}
-
 function RginEditController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
@@ -1383,88 +1171,6 @@ function RginEditController($http, $location, $routeParams, pageTitleService) {
 
     function cancel() {
         window.history.back();
-    }
-}
-
-function AspcGridController($http, $location, $routeParams, $modal, pageTitleService) {
-    var vm = this;
-
-    vm.search = search;
-    vm.pageChanged = pageChanged;
-    vm.filter = filter;
-
-    initialize();
-
-    function initialize() {
-        vm.aspcCriterio = $routeParams.aspcCriterio ? angular.fromJson($routeParams.aspcCriterio) : {};
-        vm.page = $routeParams.page ? $routeParams.page : 1;
-
-        search($routeParams.page ? $routeParams.page : 1);
-        pageTitleService.setTitle("aspc", "page_grid");
-    }
-
-    function search(page) {
-        $http.post("facturacion/aspecto-list.action", {
-            model : vm.aspcCriterio,
-            page : page,
-            limit : vm.limit
-        }).success(function(data) {
-            vm.aspcCriterio = data.model;
-            vm.aspcList = data.resultList;
-            vm.page = data.resultList.page;
-
-            $location.search({
-                page : vm.page,
-                aspcCriterio : JSON.stringify(vm.aspcCriterio)
-            }).replace();
-        });
-    }
-
-    function pageChanged() {
-        search(vm.page);
-    }
-
-    function filter(size) {
-        $http.post("facturacion/aspecto-filter.action", {
-            model : vm.aspcCriterio
-        }).success(function(data) {
-            vm.tpsrList = data.tpsrList;
-        });
-    }
-}
-
-function AspcDetailController($http, $location, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.remove = remove;
-
-    initialize();
-
-    function initialize() {
-        vm.fechaVigencia = $routeParams.fechaVigencia;
-
-        $http.post("facturacion/aspecto-detail.action", {
-            model : {
-                id : $routeParams.aspcId
-            },
-            fechaVigencia : vm.fechaVigencia
-        }).success(function(data) {
-            vm.aspc = data.model;
-            vm.i18nMap = data.i18nMap;
-            vm.ascrList = data.ascrList;
-        });
-
-        pageTitleService.setTitle("aspc", "page_detail");
-    }
-
-    function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("facturacion/aspecto-remove.action", {
-                model : vm.aspc
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
     }
 }
 
@@ -1530,38 +1236,6 @@ function AspcLupaController($http, $scope) {
             return res.data.resultList;
         });
     };
-}
-
-function AscrDetailController($http, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.remove = remove;
-
-    initialize();
-
-    function initialize() {
-        $http.post("facturacion/aspecto-cargo-detail.action", {
-            model : {
-                id : $routeParams.ascrId
-            },
-            fechaVigencia : $routeParams.fechaVigencia
-        }).success(function(data) {
-            vm.ascr = data.model;
-            vm.fechaVigencia = data.fechaVigencia;
-        });
-
-        pageTitleService.setTitle("ascr", "page_detail");
-    }
-
-    function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("facturacion/aspecto-cargo-remove.action", {
-                model : vm.ascr
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
-    }
 }
 
 function AscrEditController($http, $location, $routeParams, pageTitleService) {
