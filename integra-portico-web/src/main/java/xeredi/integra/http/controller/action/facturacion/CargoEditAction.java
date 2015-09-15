@@ -51,7 +51,7 @@ public final class CargoEditAction extends CrudEditAction<CargoVO> {
             final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
             crgoCriterio.setId(model.getId());
-            crgoCriterio.setFechaVigencia(fechaVigencia);
+            crgoCriterio.setFechaVigencia(model.getFref());
             crgoCriterio.setIdioma(idioma);
 
             model = crgoBO.selectObject(crgoCriterio);

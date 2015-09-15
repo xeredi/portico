@@ -1,5 +1,7 @@
 package xeredi.integra.model.comun.vo;
 
+import java.util.Date;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Interface Versionable.
@@ -22,4 +24,11 @@ public interface Versionable<T extends VersionVO> {
      *            the new version
      */
     void setVersion(final T value);
+
+    /**
+     * Gets the fref.
+     *
+     * @return the fref
+     */
+    Date getFref();
 }

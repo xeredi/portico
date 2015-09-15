@@ -10,6 +10,8 @@
 		<result column="prmt_pk" property="id" />
 		<result column="prmt_parametro" property="parametro" />
 		<result column="prmt_tppr_pk" property="entiId" />
+
+        <result column="prmt_fref" property="fref" />
 		<result column="p18n_texto" property="texto" />
 
 		<association property="prto" javaType="PuertoVO">
@@ -36,6 +38,8 @@
 		    , prvr_pk, prvr_fini, prvr_ffin, prvr_lat, prvr_lon
 
 		    , prto_codigo, prto_codigo_corto
+
+            , #{fechaVigencia} AS prmt_fref
     ]]>
 		<if test="idioma != null">
         <![CDATA[

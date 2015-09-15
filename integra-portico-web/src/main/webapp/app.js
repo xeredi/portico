@@ -5,8 +5,8 @@ angular.module(
                 "ui.bootstrap.typeahead", "pascalprecht.translate", "angularSpinner", "uiGmapgoogle-maps",
                 "i18n", "crud_service", "administracion", "administracion_service",
                 "administracion_controller", "metamodelo_service", "metamodelo_controller", "facturacion",
-                "item", "maestro", "servicio", "estadistica", "proceso", "seguridad_service",
-                "seguridad_controller" ])
+                "item", "maestro", "maestro_service", "maestro_controller", "servicio", "estadistica",
+                "proceso", "seguridad_service", "seguridad_controller" ])
 
 .config([ "$stateProvider", function($stateProvider) {
     $stateProvider

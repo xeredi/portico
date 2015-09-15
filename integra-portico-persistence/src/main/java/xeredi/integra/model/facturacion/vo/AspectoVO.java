@@ -1,5 +1,7 @@
 package xeredi.integra.model.facturacion.vo;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.Versionable;
@@ -21,6 +23,9 @@ public final class AspectoVO implements Versionable<AspectoVersionVO> {
 
     /** The aspv. */
     private AspectoVersionVO version;
+
+    /** The fref. */
+    private Date fref;
 
     /**
      * Instantiates a new aspecto vo.
@@ -131,5 +136,23 @@ public final class AspectoVO implements Versionable<AspectoVersionVO> {
     @Override
     public void setVersion(final AspectoVersionVO value) {
         version = value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Date getFref() {
+        return fref;
+    }
+
+    /**
+     * Sets the fref.
+     *
+     * @param value
+     *            the new fref
+     */
+    public void setFref(final Date value) {
+        fref = value;
     }
 }

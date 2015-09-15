@@ -50,7 +50,7 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
             final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
 
             rglaCriterio.setId(model.getId());
-            rglaCriterio.setFechaVigencia(fechaVigencia);
+            rglaCriterio.setFechaVigencia(model.getFref());
 
             model = rglaBO.selectObject(rglaCriterio);
         } else {
@@ -58,7 +58,7 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
             final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
             crgoCriterio.setId(model.getCrgo().getId());
-            crgoCriterio.setFechaVigencia(fechaVigencia);
+            crgoCriterio.setFechaVigencia(model.getFref());
             crgoCriterio.setIdioma(idioma);
 
             final CargoVO crgo = crgoBO.selectObject(crgoCriterio);
@@ -85,7 +85,7 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
             final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
             crgoCriterio.setId(model.getCrgo().getId());
-            crgoCriterio.setFechaVigencia(getFechaVigencia());
+            crgoCriterio.setFechaVigencia(model.getFref());
             crgoCriterio.setIdioma(getIdioma());
 
             final CargoVO crgo = crgoBO.selectObject(crgoCriterio);

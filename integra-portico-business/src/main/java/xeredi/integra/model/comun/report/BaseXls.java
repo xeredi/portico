@@ -11,8 +11,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
-import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.item.vo.ItemDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 
 // TODO: Auto-generated Javadoc

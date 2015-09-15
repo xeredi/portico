@@ -10,8 +10,8 @@
                     <fieldset>
                         <div class="row">
                             <div ng-if="vm.enti.enti.puerto" class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
-                                <label translate="prto"></label> <select ng-model="vm.itemCriterio.prto.id"
-                                    ng-change="vm.prtoId = vm.itemCriterio.prto.id"
+                                <label translate="prto"></label> <select ng-model="vm.searchCriteria.prto.id"
+                                    ng-change="vm.prtoId = vm.searchCriteria.prto.id"
                                     ng-options="prto.id as prto.etiqueta for prto in vm.prtoList"
                                     class="form-control">
                                     <option />
@@ -19,16 +19,16 @@
                             </div>
                             <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
                                 <label translate="prmt_parametro"></label> <input type="text"
-                                    ng-model="vm.itemCriterio.parametro" class="form-control" />
+                                    ng-model="vm.searchCriteria.parametro" class="form-control" />
                             </div>
                             <div class="col-sm-2 col-lg-1 form-group-sm">
                                 <label translate="fref"></label><input type="text" class="form-control"
-                                    ng-model="vm.itemCriterio.fechaVigencia" data-container=".modal-body"
+                                    ng-model="vm.searchCriteria.fechaVigencia" data-container=".modal-body"
                                     bs-datepicker />
                             </div>
                             <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm pull-right">
                                 <label translate="filtro_limit"></label> <select
-                                    ng-model="vm.itemCriterio.limit"
+                                    ng-model="vm.searchCriteria.limit"
                                     ng-options="limitValue for limitValue in vm.limits" class="form-control">
                                     <option />
                                 </select>
@@ -42,8 +42,8 @@
                                 class="col-sm-6 col-md-4 col-lg-3 form-group-sm">
                                 <label>{{'enti_' + entiHijaId | translate}}</label><input
                                     ng-controller="PrmtLupaController" type="text" autocomplete="off"
-                                    ng-model="vm.itemCriterio.sprmMap[entiHijaId].prmtAsociado"
-                                    typeahead="prmt as prmt.etiqueta for prmt in getLabelValuesSprm(entiHijaId, $viewValue, vm.itemCriterio.fechaVigencia)"
+                                    ng-model="vm.searchCriteria.sprmMap[entiHijaId].prmtAsociado"
+                                    typeahead="prmt as prmt.etiqueta for prmt in getLabelValuesSprm(entiHijaId, $viewValue, vm.searchCriteria.fechaVigencia)"
                                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                             </div>
                         </div>

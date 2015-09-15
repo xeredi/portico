@@ -10,7 +10,7 @@ import com.google.common.base.Preconditions;
 
 import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.item.vo.ItemVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
@@ -77,7 +77,7 @@ public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidad
             if (!tpprIds.isEmpty()) {
                 final ParametroBO prmtBO = ParametroBOFactory.newDefaultInstance();
 
-                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), idioma));
+                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, model.getFref(), idioma));
             }
         }
 

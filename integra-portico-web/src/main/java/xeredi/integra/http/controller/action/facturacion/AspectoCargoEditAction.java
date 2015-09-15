@@ -34,7 +34,6 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
     @Override
     public void doEdit() throws ApplicationException {
         Preconditions.checkNotNull(model.getAspcId());
-        Preconditions.checkNotNull(fechaVigencia);
 
         if (accion == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model.getId());
@@ -43,7 +42,7 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
             final AspectoCargoCriterioVO ascrCriterio = new AspectoCargoCriterioVO();
 
             ascrCriterio.setId(model.getId());
-            ascrCriterio.setFechaVigencia(fechaVigencia);
+            ascrCriterio.setFechaVigencia(model.getFref());
             ascrCriterio.setIdioma(idioma);
 
             model = ascrBO.selectObject(ascrCriterio);
@@ -62,7 +61,7 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
             final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
             aspcCriterio.setId(model.getAspcId());
-            aspcCriterio.setFechaVigencia(fechaVigencia);
+            aspcCriterio.setFechaVigencia(model.getFref());
             aspcCriterio.setIdioma(getIdioma());
 
             final AspectoVO aspc = aspcBO.selectObject(aspcCriterio);
@@ -71,7 +70,7 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
             final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
             crgoCriterio.setTpsrId(aspc.getTpsr().getId());
-            crgoCriterio.setFechaVigencia(fechaVigencia);
+            crgoCriterio.setFechaVigencia(model.getFref());
             crgoCriterio.setIdioma(getIdioma());
 
             crgoList = crgoBO.selectList(crgoCriterio);

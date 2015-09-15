@@ -1,37 +1,37 @@
 
-<div class="row" ng-repeat="engd in ::vm.enti.engdList track by engd.id">
-    <legend ng-if="vm.enti.engdList.length > 1" ng-bind="::('engd_' + engd.id | translate)"></legend>
+<div class="row" ng-repeat="engd in vm.enti.engdList track by engd.id">
+    <legend ng-if="vm.enti.engdList.length > 1" ng-bind="('engd_' + engd.id | translate)"></legend>
 
-    <div ng-repeat="tpdtId in ::vm.enti.entdList track by tpdtId"
-        ng-if="::(vm.enti.entdMap[tpdtId].grupo == engd.numero)"
-        ng-switch="::vm.enti.entdMap[tpdtId].tpdt.tipoElemento"
-        class="col-sm-{{::vm.enti.entdMap[tpdtId].spanSm}} col-md-{{::vm.enti.entdMap[tpdtId].span}} col-lg-{{::vm.enti.entdMap[tpdtId].spanLg}} col-xl-{{::vm.enti.entdMap[tpdtId].spanXl}} form-group-sm">
-        <label ng-bind="::('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
+    <div ng-repeat="tpdtId in vm.enti.entdList track by tpdtId"
+        ng-if="(vm.enti.entdMap[tpdtId].grupo == engd.numero)"
+        ng-switch="vm.enti.entdMap[tpdtId].tpdt.tipoElemento"
+        class="col-sm-{{vm.enti.entdMap[tpdtId].spanSm}} col-md-{{vm.enti.entdMap[tpdtId].span}} col-lg-{{vm.enti.entdMap[tpdtId].spanLg}} col-xl-{{vm.enti.entdMap[tpdtId].spanXl}} form-group-sm">
+        <label ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
         <p ng-switch-when="BO" class="form-control-static">
-            <i class="glyphicon glyphicon-{{::(vm.item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove')}}"></i>
+            <i class="glyphicon glyphicon-{{(vm.item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove')}}"></i>
         </p>
         <p class="form-control-static number" ng-switch-when="ND"
-            ng-bind="::(vm.item.itdtMap[tpdtId].cantidadDecimal | number:2)"></p>
+            ng-bind="(vm.item.itdtMap[tpdtId].cantidadDecimal | number:2)"></p>
         <p class="form-control-static number" ng-switch-when="NE"
-            ng-bind="::(vm.item.itdtMap[tpdtId].cantidadEntera | number:0)"></p>
+            ng-bind="(vm.item.itdtMap[tpdtId].cantidadEntera | number:0)"></p>
         <p class="form-control-static" ng-switch-when="FE"
-            ng-bind="::(vm.item.itdtMap[tpdtId].fecha | date: dateFormat)"></p>
+            ng-bind="(vm.item.itdtMap[tpdtId].fecha | date: dateFormat)"></p>
         <p class="form-control-static" ng-switch-when="FH"
-            ng-bind="::(vm.item.itdtMap[tpdtId].fecha | date: datetimeFormat)"></p>
+            ng-bind="(vm.item.itdtMap[tpdtId].fecha | date: datetimeFormat)"></p>
         <p class="form-control-static" ng-switch-when="CR">
-            <span ng-if="::vm.item.itdtMap[tpdtId].cadena"
-                ng-bind="::('cdrf_' + tpdtId + '_' + vm.item.itdtMap[tpdtId].cadena | translate)"></span>
+            <span ng-if="vm.item.itdtMap[tpdtId].cadena"
+                ng-bind="('cdrf_' + tpdtId + '_' + vm.item.itdtMap[tpdtId].cadena | translate)"></span>
         </p>
-        <p class="form-control-static" ng-switch-when="TX" ng-bind="::vm.item.itdtMap[tpdtId].cadena"></p>
+        <p class="form-control-static" ng-switch-when="TX" ng-bind="vm.item.itdtMap[tpdtId].cadena"></p>
         <p class="form-control-static" ng-switch-when="PR">
             <a
-                ng-href="#/maestro/prmt/detail/{{::vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{::vm.item.itdtMap[tpdtId].prmt.id}}/{{::vm.fechaVigencia}}"
-                ng-bind="::vm.item.itdtMap[tpdtId].prmt.etiqueta"></a>
+                ui-sref="parametro-detail({entiId: vm.enti.entdMap[tpdtId].tpdt.enti.id, id: vm.item.itdtMap[tpdtId].prmt.id, fref: vm.item.fref})"
+                ng-bind="vm.item.itdtMap[tpdtId].prmt.etiqueta"></a>
         </p>
         <p class="form-control-static" ng-switch-when="SR">
             <a
-                ng-href="#/servicio/srvc/detail/{{::vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{::vm.item.itdtMap[tpdtId].srvc.id}}"
-                ng-bind="::vm.item.itdtMap[tpdtId].srvc.etiqueta"></a>
+                ng-href="#/servicio/srvc/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.item.itdtMap[tpdtId].srvc.id}}"
+                ng-bind="vm.item.itdtMap[tpdtId].srvc.etiqueta"></a>
         </p>
     </div>
 </div>

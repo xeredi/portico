@@ -2,6 +2,8 @@ package xeredi.integra.http.controller.action.metamodelo;
 
 import java.util.List;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;
@@ -27,12 +29,12 @@ public final class TipoSubservicioEditAction extends EntidadEditAction<TipoSubse
      */
     @Override
     public void doSpecificEdit() throws ApplicationException {
+        Preconditions.checkNotNull(model.getTpsrId());
+
         if (accion == ACCION_EDICION.edit) {
             final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
 
             model = tpssBO.select(model.getId(), idioma);
-        } else {
-            model = new TipoSubservicioVO();
         }
     }
 

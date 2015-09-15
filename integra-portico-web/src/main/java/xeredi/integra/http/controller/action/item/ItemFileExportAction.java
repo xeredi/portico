@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import xeredi.integra.http.controller.action.comun.CrudFileExportAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.item.vo.ItemVO;
 
 import com.google.common.base.Preconditions;
 

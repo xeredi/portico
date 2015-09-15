@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
-
 import xeredi.integra.http.controller.action.item.ItemEditAction;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.bo.PuertoBO;
@@ -41,8 +39,6 @@ public final class ParametroEditAction extends ItemEditAction<ParametroVO, TipoP
      */
     @Override
     public void doSpecificEdit() throws ApplicationException {
-        Preconditions.checkNotNull(fechaVigencia);
-
         enti = TipoParametroProxy.select(model.getEntiId());
 
         if (accion == ACCION_EDICION.create) {
@@ -50,7 +46,7 @@ public final class ParametroEditAction extends ItemEditAction<ParametroVO, TipoP
         } else {
             final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
 
-            model = prmtBO.select(model.getId(), idioma, fechaVigencia);
+            model = prmtBO.select(model.getId(), idioma, model.getFref());
 
             if (accion == ACCION_EDICION.duplicate_version) {
                 if (model.getVersion().getFfin() != null) {

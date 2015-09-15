@@ -1,7 +1,9 @@
-package xeredi.integra.model.comun.vo;
+package xeredi.integra.model.item.vo;
 
 import java.util.Map;
 import java.util.Set;
+
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**

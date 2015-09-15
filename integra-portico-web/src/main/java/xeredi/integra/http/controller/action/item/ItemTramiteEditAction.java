@@ -9,10 +9,10 @@ import com.google.common.base.Preconditions;
 
 import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ItemDatoVO;
-import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.item.vo.ItemDatoVO;
 import xeredi.integra.model.item.vo.ItemTramiteDatoVO;
 import xeredi.integra.model.item.vo.ItemTramiteVO;
+import xeredi.integra.model.item.vo.ItemVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
@@ -80,7 +80,6 @@ public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> {
             final ServicioVO srvc = srvcBO.select(model.getItemId(), getIdioma());
 
             prtoId = srvc.getPrto().getId();
-            fechaVigencia = srvc.getFref();
 
             item = srvc;
             enti = tpsr;
@@ -92,7 +91,6 @@ public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> {
             final SubservicioVO ssrv = ssrvBO.select(model.getItemId(), getIdioma());
 
             prtoId = ssrv.getSrvc().getPrto().getId();
-            fechaVigencia = ssrv.getFref();
 
             model.setOitemFini(ssrv.getFini());
             model.setOitemFfin(ssrv.getFfin());
@@ -159,7 +157,7 @@ public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> {
         if (!tpprIds.isEmpty()) {
             final ParametroBO prmtBO = ParametroBOFactory.newDefaultInstance();
 
-            labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), idioma));
+            labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, model.getFref(), idioma));
         }
     }
 

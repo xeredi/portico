@@ -93,6 +93,27 @@ function CrudService($http, $q, $state) {
             }
         }
 
+        function xlsExport(searchCriteria) {
+            console.log('xls export');
+
+            return $http.post(_uri + "-xls-export.action", {criterio: searchCriteria}, {
+                responseType : 'arraybuffer'
+            })
+                .then(success)
+                .catch(fail);
+
+            function success(response) {
+                return response.data;
+            }
+
+            function fail(error) {
+                var msg = 'Xls Export failed. ' + error.data;
+                console.log(msg);
+
+                return $q.reject(msg);
+            }
+        }
+
         function filter(searchCriteria) {
             console.log('filter');
 
@@ -125,6 +146,27 @@ function CrudService($http, $q, $state) {
 
             function fail(error) {
                 var msg = 'Detail failed. ' + error.data;
+                console.log(msg);
+
+                return $q.reject(msg);
+            }
+        }
+
+        function pdfExport(id) {
+            console.log('Pdf export');
+
+            return $http.post(_uri + "-pdf-export.action", {model: id}, {
+                responseType : 'arraybuffer'
+            })
+                .then(success)
+                .catch(fail);
+
+            function success(response) {
+                return response.data;
+            }
+
+            function fail(error) {
+                var msg = 'Pdf export failed. ' + error.data;
                 console.log(msg);
 
                 return $q.reject(msg);
@@ -226,8 +268,10 @@ function CrudService($http, $q, $state) {
             index: index
             , listPage: listPage
             , list: list
+            , xlsExport: xlsExport
             , filter: filter
             , detail: detail
+            , pdfExport: pdfExport
             , remove: remove
             , edit: edit
             , save: save

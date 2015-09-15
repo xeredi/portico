@@ -4,9 +4,9 @@ import java.util.Map;
 
 import xeredi.integra.http.controller.action.comun.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ItemCriterioVO;
-import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.gis.vo.MapVO;
+import xeredi.integra.model.item.vo.ItemCriterioVO;
+import xeredi.integra.model.item.vo.ItemVO;
 import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
 
 import com.google.common.base.Preconditions;

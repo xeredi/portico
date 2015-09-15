@@ -8,6 +8,8 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
@@ -22,8 +24,6 @@ import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -76,8 +76,8 @@ public final class TipoSubservicioBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<TipoSubservicioVO> selectList(final TipoSubservicioCriterioVO tpssCriterioVO,
-            final int offset, final int limit) {
+    public PaginatedList<TipoSubservicioVO> selectList(final TipoSubservicioCriterioVO tpssCriterioVO, final int offset,
+            final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoSubservicioDAO tpssDAO = session.getMapper(TipoSubservicioDAO.class);
             final int count = tpssDAO.count(tpssCriterioVO);
@@ -145,7 +145,7 @@ public final class TipoSubservicioBO {
             final Long id = entiDAO.nextSequence();
 
             tpssVO.setId(id);
-            tpssVO.setTipo(TipoEntidad.P);
+            tpssVO.setTipo(TipoEntidad.S);
 
             entiDAO.insert(tpssVO);
             tpssDAO.insert(tpssVO);

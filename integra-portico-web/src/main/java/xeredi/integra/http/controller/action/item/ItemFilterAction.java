@@ -11,7 +11,7 @@ import com.google.common.base.Preconditions;
 
 import xeredi.integra.http.controller.action.comun.GridFilterAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ItemCriterioVO;
+import xeredi.integra.model.item.vo.ItemCriterioVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;

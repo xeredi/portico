@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.item;
 
 import xeredi.integra.http.controller.action.comun.CrudDetailAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.item.vo.ItemVO;
 import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
 
 import com.google.common.base.Preconditions;

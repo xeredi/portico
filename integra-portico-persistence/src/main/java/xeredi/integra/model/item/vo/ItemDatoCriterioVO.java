@@ -1,4 +1,4 @@
-package xeredi.integra.model.comun.vo;
+package xeredi.integra.model.item.vo;
 
 import java.util.Date;
 import java.util.Set;

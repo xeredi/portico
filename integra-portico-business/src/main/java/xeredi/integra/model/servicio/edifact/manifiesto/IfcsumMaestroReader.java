@@ -8,9 +8,9 @@ import java.util.Set;
 
 import xeredi.integra.model.comun.bo.PuertoBO;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.comun.vo.PuertoCriterioVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
+import xeredi.integra.model.item.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;

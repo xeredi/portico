@@ -2,7 +2,7 @@ package xeredi.integra.http.controller.action.item;
 
 import xeredi.integra.http.controller.action.comun.CrudSaveAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.item.vo.ItemVO;
 
 import com.google.common.base.Preconditions;
 

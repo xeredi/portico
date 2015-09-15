@@ -1,5 +1,7 @@
 package xeredi.integra.model.facturacion.vo;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.Versionable;
@@ -28,6 +30,9 @@ public final class ReglaVO implements Versionable<ReglaVersionVO> {
 
     /** The rglv. */
     private ReglaVersionVO version;
+
+    /** The fref. */
+    private Date fref;
 
     /**
      * Instantiates a new regla vo.
@@ -155,6 +160,24 @@ public final class ReglaVO implements Versionable<ReglaVersionVO> {
      */
     public void setTipo(final ReglaTipo value) {
         tipo = value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Date getFref() {
+        return fref;
+    }
+
+    /**
+     * Sets the fref.
+     *
+     * @param value
+     *            the new fref
+     */
+    public void setFref(final Date value) {
+        fref = value;
     }
 
 }

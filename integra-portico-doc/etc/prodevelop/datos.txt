@@ -26,3 +26,13 @@ OTR (incidencias)
 
 	jrey_prodevelop / X25veh53
 	rcorreas_prodevelop / KalaXok290
+
+
+puertos
+	alicante
+		Patricia Fernandez	649775106
+
+
+
+prodevelop
+	xrey@prodevelop.es / prodevelop

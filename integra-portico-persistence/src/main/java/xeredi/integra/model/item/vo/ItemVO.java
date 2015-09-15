@@ -1,10 +1,11 @@
-package xeredi.integra.model.comun.vo;
+package xeredi.integra.model.item.vo;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import lombok.NonNull;
+import xeredi.integra.model.comun.vo.ItemEntidad;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
@@ -21,6 +22,9 @@ public abstract class ItemVO implements ItemEntidad {
 
     /** The enti id. */
     private Long entiId;
+
+    /** The fref. */
+    private Date fref;
 
     /** The itdt map. */
     private Map<Long, ItemDatoVO> itdtMap;
@@ -313,5 +317,24 @@ public abstract class ItemVO implements ItemEntidad {
      */
     public final String getItdtCadena(final @NonNull Long tpdtId) {
         return itdtMap != null && itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCadena() : null;
+    }
+
+    /**
+     * Gets the fref.
+     *
+     * @return the fref
+     */
+    public final Date getFref() {
+        return fref;
+    }
+
+    /**
+     * Sets the fref.
+     *
+     * @param value
+     *            the new fref
+     */
+    public final void setFref(final Date value) {
+        fref = value;
     }
 }

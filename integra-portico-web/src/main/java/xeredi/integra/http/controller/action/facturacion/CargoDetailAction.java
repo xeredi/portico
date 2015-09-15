@@ -3,6 +3,8 @@ package xeredi.integra.http.controller.action.facturacion;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.CrudDetailAction;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -14,8 +16,6 @@ import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -43,7 +43,7 @@ public final class CargoDetailAction extends CrudDetailAction<CargoVO> {
         final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
         crgoCriterio.setId(model.getId());
-        crgoCriterio.setFechaVigencia(fechaVigencia);
+        crgoCriterio.setFechaVigencia(model.getFref());
         crgoCriterio.setIdioma(getIdioma());
 
         model = crgoBO.selectObject(crgoCriterio);
@@ -53,7 +53,7 @@ public final class CargoDetailAction extends CrudDetailAction<CargoVO> {
         final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
 
         rglaCriterioVO.setCrgoId(model.getId());
-        rglaCriterioVO.setFechaVigencia(fechaVigencia);
+        rglaCriterioVO.setFechaVigencia(model.getFref());
 
         rglaList = rglaBO.selectList(rglaCriterioVO);
     }

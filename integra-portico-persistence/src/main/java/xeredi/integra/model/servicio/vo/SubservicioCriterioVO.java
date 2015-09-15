@@ -3,7 +3,7 @@ package xeredi.integra.model.servicio.vo;
 import java.util.Date;
 import java.util.Set;
 
-import xeredi.integra.model.comun.vo.ItemCriterioVO;
+import xeredi.integra.model.item.vo.ItemCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**

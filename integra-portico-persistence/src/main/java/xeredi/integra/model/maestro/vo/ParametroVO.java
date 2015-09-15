@@ -3,9 +3,9 @@ package xeredi.integra.model.maestro.vo;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.comun.vo.Versionable;
+import xeredi.integra.model.item.vo.ItemVO;
 import xeredi.integra.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroDetailVO;
 

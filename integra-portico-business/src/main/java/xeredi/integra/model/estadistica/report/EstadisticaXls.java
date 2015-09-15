@@ -13,9 +13,9 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.report.BaseXls;
-import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
+import xeredi.integra.model.item.vo.ItemDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaDetailVO;
 

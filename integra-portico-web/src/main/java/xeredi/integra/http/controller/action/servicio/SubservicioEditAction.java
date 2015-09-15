@@ -101,8 +101,6 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
         default:
             throw new Error("Invalid action: " + accion.name());
         }
-
-        fechaVigencia = model.getFref();
     }
 
     /**

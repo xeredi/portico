@@ -3,7 +3,6 @@ package xeredi.integra.http.controller.action.maestro;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,20 +38,17 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8831808221487676723L;
 
-    /** The fecha vigencia. */
-    protected Date fechaVigencia;
-
     /**
      * {@inheritDoc}
      */
     @Override
     public final void doSpecificFileExport() throws ApplicationException, IOException {
-        Preconditions.checkNotNull(fechaVigencia);
+        Preconditions.checkNotNull(model.getFref());
 
         final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
         final Map<Long, TipoSubparametroDetailVO> entiHijasMap = new HashMap<>();
 
-        model = prmtBO.select(model.getId(), idioma, fechaVigencia);
+        model = prmtBO.select(model.getId(), idioma, model.getFref());
 
         final TipoParametroDetailVO entiDetail = TipoParametroProxy.select(model.getEntiId());
         final Map<Long, List<SubparametroVO>> itemHijosMap = new HashMap<>();
@@ -61,7 +57,7 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
             prmtCriterioVO.setId(model.getId());
-            prmtCriterioVO.setFechaVigencia(fechaVigencia);
+            prmtCriterioVO.setFechaVigencia(model.getFref());
             prmtCriterioVO.setIdioma(idioma);
 
             for (final Long entiId : entiDetail.getEntiHijasList()) {
@@ -70,7 +66,7 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
 
                 sprmCriterioVO.setPrmt(prmtCriterioVO);
                 sprmCriterioVO.setEntiId(entiId);
-                sprmCriterioVO.setFechaVigencia(fechaVigencia);
+                sprmCriterioVO.setFechaVigencia(model.getFref());
                 sprmCriterioVO.setIdioma(idioma);
 
                 entiHijasMap.put(entiId, TipoSubparametroProxy.select(entiId));
@@ -107,15 +103,5 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
     @Override
     public ContentType getContentType() {
         return ContentType.pdf;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public final void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 }

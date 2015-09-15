@@ -8,7 +8,7 @@ import xeredi.util.applicationobjects.LabelValueVO;
 /**
  * The Class MensajeListadoAction.
  */
-public final class IndexAction extends ListAction<LabelValueVO> {
+public final class MaestroIndexAction extends ListAction<LabelValueVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6957331552111084410L;

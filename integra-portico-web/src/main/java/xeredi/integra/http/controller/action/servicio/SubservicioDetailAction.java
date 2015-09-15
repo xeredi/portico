@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.item.ItemDetailAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.item.bo.ItemTramiteBO;
@@ -16,8 +18,6 @@ import xeredi.integra.model.servicio.bo.SubservicioBOFactory;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -46,7 +46,6 @@ public final class SubservicioDetailAction extends ItemDetailAction<SubservicioV
         final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId());
 
         model = ssrvBO.select(model.getId(), idioma);
-        fechaVigencia = model.getFref();
 
         if (enti.getEntiPadresList() != null) {
             itemPadresMap = new HashMap<Long, LabelValueVO>();

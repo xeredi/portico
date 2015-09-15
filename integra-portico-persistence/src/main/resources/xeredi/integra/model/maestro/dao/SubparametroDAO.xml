@@ -3,36 +3,38 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.maestro.dao.SubparametroDAO">
-	<resultMap type="SubparametroVO" id="ResultMap">
-		<id column="spvr_pk" />
-		<id column="sprm_pk" />
+    <resultMap type="SubparametroVO" id="ResultMap">
+        <id column="spvr_pk" />
+        <id column="sprm_pk" />
 
-		<result column="sprm_pk" property="id" />
-		<result column="sprm_tpsp_pk" property="entiId" />
-		<result column="sprm_prmt_pk" property="prmtId" />
-		<result column="sprm_prto_pk" property="prtoId" />
+        <result column="sprm_pk" property="id" />
+        <result column="sprm_tpsp_pk" property="entiId" />
+        <result column="sprm_prmt_pk" property="prmtId" />
+        <result column="sprm_prto_pk" property="prtoId" />
 
-		<association property="prmtAsociado" javaType="ParametroVO">
-			<result column="sprm_prmt_dep_pk" property="id" />
-			<result column="prmt_parametro" property="parametro" />
-			<result column="prmt_tppr_pk" property="entiId" />
-			<result column="prmt_texto" property="texto" />
+        <result column="sprm_fref" property="fref" />
 
-			<association property="prto" javaType="PuertoVO">
-				<result column="prmt_prto_pk" property="id" />
-				<result column="prto_codigo" property="codigo" />
-				<result column="prto_nombre" property="nombre" />
-			</association>
-		</association>
+        <association property="prmtAsociado" javaType="ParametroVO">
+            <result column="sprm_prmt_dep_pk" property="id" />
+            <result column="prmt_parametro" property="parametro" />
+            <result column="prmt_tppr_pk" property="entiId" />
+            <result column="prmt_texto" property="texto" />
 
-		<association property="version" javaType="SubparametroVersionVO">
-			<result column="spvr_pk" property="id" />
-			<result column="spvr_fini" property="fini" />
-			<result column="spvr_ffin" property="ffin" />
-		</association>
-	</resultMap>
+            <association property="prto" javaType="PuertoVO">
+                <result column="prmt_prto_pk" property="id" />
+                <result column="prto_codigo" property="codigo" />
+                <result column="prto_nombre" property="nombre" />
+            </association>
+        </association>
 
-	<sql id="SelectPrefix">
+        <association property="version" javaType="SubparametroVersionVO">
+            <result column="spvr_pk" property="id" />
+            <result column="spvr_fini" property="fini" />
+            <result column="spvr_ffin" property="ffin" />
+        </association>
+    </resultMap>
+
+    <sql id="SelectPrefix">
     <![CDATA[
 		SELECT
 		    sprm_pk, sprm_tpsp_pk, sprm_prmt_pk, sprm_prmt_dep_pk
@@ -44,8 +46,10 @@
 		    , (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = prmt_prto_pk) AS prto_codigo
 
 		    , (SELECT prmt_prto_pk FROM tbl_parametro_prmt WHERE prmt_pk = sprm_prmt_pk) AS sprm_prto_pk
+
+            , #{fechaVigencia} AS sprm_fref
     ]]>
-		<if test="fechaVigencia != null and idioma != null">
+        <if test="fechaVigencia != null and idioma != null">
         <![CDATA[
         	, (
                 SELECT i18n_text FROM tbl_i18n_i18n
@@ -92,7 +96,7 @@
 		        END
 		    ) AS prmt_texto
         ]]>
-		</if>
+        </if>
     <![CDATA[
 		FROM
 		    tbl_subparametro_sprm
@@ -101,64 +105,61 @@
 		    INNER JOIN tbl_parametro_prmt ON
 		        prmt_pk = sprm_prmt_dep_pk
     ]]>
-	</sql>
+    </sql>
 
-	<sql id="SelectWhere">
-		<if test="id != null">
-			AND sprm_pk = #{id}
-		</if>
-		<if test="versionId != null">
-			AND spvr_pk = #{versionId}
-		</if>
-		<if test="versionIds != null and !versionIds.empty">
-			AND spvr_pk IN
-			<foreach collection="versionIds" item="item" open="(" close=")"
-				separator=",">#{item}</foreach>
-		</if>
-		<if test="entiId != null">
-			AND sprm_tpsp_pk = #{entiId}
-		</if>
-		<if test="prmt != null and prmt.id != null">
-			AND sprm_prmt_pk = #{prmt.id}
-		</if>
-		<if test="fechaVigencia != null">
+    <sql id="SelectWhere">
+        <if test="id != null">
+            AND sprm_pk = #{id}
+        </if>
+        <if test="versionId != null">
+            AND spvr_pk = #{versionId}
+        </if>
+        <if test="versionIds != null and !versionIds.empty">
+            AND spvr_pk IN
+            <foreach collection="versionIds" item="item" open="(" close=")" separator=",">#{item}
+            </foreach>
+        </if>
+        <if test="entiId != null">
+            AND sprm_tpsp_pk = #{entiId}
+        </if>
+        <if test="prmt != null and prmt.id != null">
+            AND sprm_prmt_pk = #{prmt.id}
+        </if>
+        <if test="fechaVigencia != null">
 	    <![CDATA[
 		    AND ( #{fechaVigencia} >= spvr_fini AND ( spvr_ffin IS NULL OR spvr_ffin > #{fechaVigencia} ) )
 	    ]]>
-		</if>
-	</sql>
+        </if>
+    </sql>
 
-	<select id="count" parameterType="SubparametroCriterioVO"
-		resultType="Integer">
+    <select id="count" parameterType="SubparametroCriterioVO" resultType="Integer">
     <![CDATA[
 		SELECT COUNT(1)
 		FROM tbl_subparametro_sprm
 		    INNER JOIN tbl_subparametro_version_spvr ON spvr_sprm_pk = sprm_pk
     ]]>
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-	</select>
+        <where>
+            <include refid="SelectWhere" />
+        </where>
+    </select>
 
-	<select id="selectList" parameterType="SubparametroCriterioVO"
-		resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
+    <select id="selectList" parameterType="SubparametroCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
 
-		ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
-	</select>
+        ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
+    </select>
 
-	<select id="selectObject" parameterType="SubparametroCriterioVO"
-		resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-	</select>
+    <select id="selectObject" parameterType="SubparametroCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
+    </select>
 
-	<select id="exists" parameterType="SubparametroVO" resultType="Boolean">
+    <select id="exists" parameterType="SubparametroVO" resultType="Boolean">
         <![CDATA[
         SELECT COUNT(1)
         FROM tbl_subparametro_sprm
@@ -166,10 +167,9 @@
             sprm_prmt_pk = #{prmtId}
             AND sprm_prmt_dep_pk = #{prmtAsociado.id}
         ]]>
-	</select>
+    </select>
 
-	<select id="existsOverlap" parameterType="SubparametroVO"
-		resultType="Boolean">
+    <select id="existsOverlap" parameterType="SubparametroVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM
@@ -184,14 +184,14 @@
                     BETWEEN spvr_fini AND COALESCE(spvr_ffin, COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
             )
     ]]>
-		<if test="version.id != null">
+        <if test="version.id != null">
         <![CDATA[
             AND spvr_pk <> #{version.id}
         ]]>
-		</if>
-	</select>
+        </if>
+    </select>
 
-	<select id="selectId" parameterType="SubparametroVO" resultType="Long">
+    <select id="selectId" parameterType="SubparametroVO" resultType="Long">
         <![CDATA[
         SELECT sprm_pk
         FROM
@@ -199,35 +199,35 @@
         WHERE sprm_prmt_pk = #{prmtId}
             AND sprm_prmt_dep_pk = #{prmtAsociado.id}
         ]]>
-	</select>
+    </select>
 
-	<insert id="insert" parameterType="SubparametroVO">
+    <insert id="insert" parameterType="SubparametroVO">
         <![CDATA[
         INSERT INTO tbl_subparametro_sprm (sprm_pk, sprm_prmt_pk, sprm_prmt_dep_pk, sprm_tpsp_pk)
         VALUES (#{id}, #{prmtId}, #{prmtAsociado.id}, #{entiId})
         ]]>
-	</insert>
+    </insert>
 
-	<insert id="insertVersion" parameterType="SubparametroVO">
+    <insert id="insertVersion" parameterType="SubparametroVO">
     <![CDATA[
         INSERT INTO tbl_subparametro_version_spvr (spvr_pk, spvr_sprm_pk, spvr_fini, spvr_ffin)
         VALUES (#{version.id}, #{id}, #{version.fini}, #{version.ffin, jdbcType=TIMESTAMP})
     ]]>
-	</insert>
+    </insert>
 
-	<update id="updateVersion" parameterType="SubparametroVO">
+    <update id="updateVersion" parameterType="SubparametroVO">
     <![CDATA[
         UPDATE tbl_subparametro_version_spvr SET
             spvr_fini = #{version.fini}
             , spvr_ffin = #{version.ffin, jdbcType=TIMESTAMP}
         WHERE spvr_pk = #{version.id}
     ]]>
-	</update>
+    </update>
 
-	<delete id="deleteVersion" parameterType="SubparametroVO">
+    <delete id="deleteVersion" parameterType="SubparametroVO">
     <![CDATA[
         DELETE FROM tbl_subparametro_version_spvr
         WHERE spvr_pk = #{version.id}
     ]]>
-	</delete>
+    </delete>
 </mapper>

@@ -4,9 +4,9 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
-import xeredi.integra.model.comun.vo.ItemCriterioVO;
-import xeredi.integra.model.comun.vo.ItemTypeahead;
 import xeredi.integra.model.comun.vo.PuertoCriterioVO;
+import xeredi.integra.model.item.vo.ItemCriterioVO;
+import xeredi.integra.model.item.vo.ItemTypeahead;
 
 // TODO: Auto-generated Javadoc
 /**

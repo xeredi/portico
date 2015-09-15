@@ -1,7 +1,7 @@
 package xeredi.integra.model.servicio.vo;
 
 import xeredi.integra.model.comun.vo.BaseCriterioVO;
-import xeredi.integra.model.comun.vo.ItemTypeahead;
+import xeredi.integra.model.item.vo.ItemTypeahead;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -3,6 +3,8 @@ package xeredi.integra.http.controller.action.facturacion;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
@@ -12,8 +14,6 @@ import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVersionVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -39,13 +39,13 @@ public final class ReglaIncompatibleEditAction extends CrudEditAction<ReglaIncom
             final ReglaIncompatibleCriterioVO rginCriterio = new ReglaIncompatibleCriterioVO();
 
             rginCriterio.setId(model.getId());
-            rginCriterio.setFechaVigencia(fechaVigencia);
+            rginCriterio.setFechaVigencia(model.getFref());
             rginCriterio.setIdioma(idioma);
 
             model = rginBO.selectObject(rginCriterio);
         } else {
             model.setVersion(new ReglaIncompatibleVersionVO());
-            model.getVersion().setFini(fechaVigencia);
+            model.getVersion().setFini(model.getFref());
         }
     }
 
@@ -58,14 +58,14 @@ public final class ReglaIncompatibleEditAction extends CrudEditAction<ReglaIncom
         final ReglaCriterioVO rgla1Criterio = new ReglaCriterioVO();
 
         rgla1Criterio.setId(model.getRgla1Id());
-        rgla1Criterio.setFechaVigencia(fechaVigencia);
+        rgla1Criterio.setFechaVigencia(model.getFref());
 
         final ReglaVO rgla = rglaBO.selectObject(rgla1Criterio);
 
         final ReglaCriterioVO rgla2Criterio = new ReglaCriterioVO();
 
         rgla2Criterio.setCrgoId(rgla.getCrgo().getId());
-        rgla2Criterio.setFechaVigencia(fechaVigencia);
+        rgla2Criterio.setFechaVigencia(model.getFref());
 
         rgla2List = rglaBO.selectList(rgla2Criterio);
     }

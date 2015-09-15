@@ -44,7 +44,7 @@ public final class AspectoDetailAction extends CrudDetailAction<AspectoVO> {
 
         aspcCriterio.setId(model.getId());
         aspcCriterio.setIdioma(idioma);
-        aspcCriterio.setFechaVigencia(fechaVigencia);
+        aspcCriterio.setFechaVigencia(model.getFref());
 
         model = aspcBO.selectObject(aspcCriterio);
         i18nMap = I18nBO.selectMap(I18nPrefix.aspv, model.getVersion().getId());
@@ -53,7 +53,7 @@ public final class AspectoDetailAction extends CrudDetailAction<AspectoVO> {
         final AspectoCargoCriterioVO ascrCriterio = new AspectoCargoCriterioVO();
 
         ascrCriterio.setAspcId(model.getId());
-        ascrCriterio.setFechaVigencia(fechaVigencia);
+        ascrCriterio.setFechaVigencia(model.getFref());
         ascrCriterio.setIdioma(idioma);
 
         ascrList = ascrBO.selectList(ascrCriterio);

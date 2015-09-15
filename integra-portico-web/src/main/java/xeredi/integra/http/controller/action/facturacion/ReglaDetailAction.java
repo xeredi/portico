@@ -2,6 +2,8 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.List;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.CrudDetailAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
@@ -10,8 +12,6 @@ import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -36,7 +36,7 @@ public final class ReglaDetailAction extends CrudDetailAction<ReglaVO> {
         final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
 
         rglaCriterio.setId(model.getId());
-        rglaCriterio.setFechaVigencia(fechaVigencia);
+        rglaCriterio.setFechaVigencia(model.getFref());
 
         model = rglaBO.selectObject(rglaCriterio);
 
@@ -44,7 +44,7 @@ public final class ReglaDetailAction extends CrudDetailAction<ReglaVO> {
         final ReglaIncompatibleCriterioVO rginCriterioVO = new ReglaIncompatibleCriterioVO();
 
         rginCriterioVO.setRgla1Id(model.getId());
-        rginCriterioVO.setFechaVigencia(fechaVigencia);
+        rginCriterioVO.setFechaVigencia(model.getFref());
 
         rginList = rginBO.selectList(rginCriterioVO);
     }

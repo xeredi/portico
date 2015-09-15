@@ -2,8 +2,8 @@ package xeredi.integra.http.controller.action.item;
 
 import xeredi.integra.http.controller.action.comun.TypeaheadAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ItemTypeahead;
-import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.item.vo.ItemTypeahead;
+import xeredi.integra.model.item.vo.ItemVO;
 
 import com.google.common.base.Preconditions;
 

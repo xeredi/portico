@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
-import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.item.vo.ItemDatoVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.servicio.dao.ServicioDAO;

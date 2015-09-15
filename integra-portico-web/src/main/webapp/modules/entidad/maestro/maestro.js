@@ -2,9 +2,6 @@ angular.module("maestro", [])
 
 .config(config)
 
-// ----------------- MENU PRINCIPAL --------------------------
-.controller("MaestroController", MaestroController)
-
 // ----------- PARAMETROS ------------------
 .controller("PrmtGridController", PrmtGridController)
 
@@ -16,20 +13,10 @@ angular.module("maestro", [])
 
 .controller("PrmtGisController", PrmtGisController)
 
-// ----------- SUBPARAMETROS ------------------
-.controller("SprmDetailController", SprmDetailController)
-
-.controller("SprmEditController", SprmEditController)
-
 ;
 
 function config($routeProvider) {
     $routeProvider
-
-    .when("/maestro", {
-        templateUrl : "modules/entidad/maestro/maestro.html",
-        controller : "MaestroController as vm"
-    })
 
     .when("/maestro/prmt/grid/:entiId/:page?", {
         templateUrl : "modules/entidad/maestro/prmt-grid.html",
@@ -64,26 +51,6 @@ function config($routeProvider) {
     })
 
     ;
-}
-
-function MaestroController($http, $translate, pageTitleService) {
-    var vm = this;
-
-    initialize();
-
-    function initialize() {
-        $http.post('maestro/index.action').success(function(data) {
-            vm.tpprList = data.resultList.map(function(tppr) {
-                $translate('enti_' + tppr.value).then(function(translation) {
-                    tppr.label = translation.toUpperCase();
-                });
-
-                return tppr;
-            });
-        });
-
-        pageTitleService.setTitle("prmtList", "page_home");
-    }
 }
 
 function PrmtGridController($location, $routeParams, $http, $modal, pageTitleService) {
@@ -427,90 +394,5 @@ function PrmtGisController($http, $location, $routeParams, pageTitleService, uiG
     function closeClick(marker) {
         marker.windowOptions.visible = false;
         marker.options.icon = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
-    }
-}
-
-function SprmDetailController($http, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.remove = remove;
-
-    initialize();
-
-    function initialize() {
-        $http.post("maestro/subparametro-detail.action", {
-            model : {
-                id : $routeParams.itemId,
-                entiId : $routeParams.entiId
-            },
-            fechaVigencia : $routeParams.fechaVigencia
-        }).success(function(data) {
-            vm.enti = data.enti;
-            vm.fechaVigencia = data.fechaVigencia;
-            vm.prtoId = data.prtoId;
-            vm.item = data.model;
-        });
-
-        pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
-    }
-
-    function remove() {
-        if (confirm("Are you sure?")) {
-            $http.post("maestro/subparametro-remove.action", {
-                model : vm.item
-            }).success(function(data) {
-                window.history.back();
-            });
-        }
-    }
-}
-
-function SprmEditController($http, $location, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.save = save;
-    vm.cancel = cancel;
-
-    initialize();
-
-    function initialize() {
-        vm.accion = $routeParams.accion;
-
-        $http.post("maestro/subparametro-edit.action", {
-            model : {
-                entiId : $routeParams.entiId,
-                prmtId : $routeParams.prmtId,
-                id : $routeParams.itemId
-            },
-            accion : vm.accion,
-            fechaVigencia : $routeParams.fechaVigencia
-        }).success(function(data) {
-            vm.enti = data.enti;
-            vm.fechaVigencia = data.fechaVigencia;
-            vm.prtoId = data.model.prtoId;
-            vm.item = data.model;
-            vm.labelValuesMap = data.labelValuesMap;
-            vm.prtoList = data.prtoList;
-        });
-
-        pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);
-    }
-
-    function save() {
-        $http.post("maestro/subparametro-save.action", {
-            model : vm.item,
-            accion : vm.accion
-        }).success(
-                function(data) {
-                    vm.accion == 'edit' ? setTimeout(function() {
-                        window.history.back();
-                    }, 0) : $location.path(
-                            "/maestro/sprm/detail/" + data.model.entiId + "/" + data.model.id + "/"
-                                    + data.model.version.fini).replace();
-                });
-    }
-
-    function cancel() {
-        window.history.back();
     }
 }

@@ -1,12 +1,10 @@
 package xeredi.integra.http.controller.action.comun;
 
-import java.util.Date;
+import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.Versionable;
-
-import com.google.common.base.Preconditions;
-import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,9 +24,6 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
     /** The model. */
     protected T model;
 
-    /** The fecha vigencia. */
-    protected Date fechaVigencia;
-
     /**
      * {@inheritDoc}
      */
@@ -40,7 +35,7 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
             Preconditions.checkNotNull(model);
 
             if (model instanceof Versionable<?>) {
-                Preconditions.checkNotNull(fechaVigencia);
+                Preconditions.checkNotNull(((Versionable<?>) model).getFref());
             }
         }
 
@@ -93,24 +88,5 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
      */
     public final void setModel(final T value) {
         this.model = value;
-    }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public final Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public final void setFechaVigencia(final Date value) {
-        this.fechaVigencia = value;
     }
 }

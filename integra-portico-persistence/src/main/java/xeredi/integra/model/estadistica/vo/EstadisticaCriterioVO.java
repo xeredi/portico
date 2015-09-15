@@ -1,7 +1,7 @@
 package xeredi.integra.model.estadistica.vo;
 
-import xeredi.integra.model.comun.vo.ItemCriterioVO;
 import xeredi.integra.model.comun.vo.PuertoCriterioVO;
+import xeredi.integra.model.item.vo.ItemCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**

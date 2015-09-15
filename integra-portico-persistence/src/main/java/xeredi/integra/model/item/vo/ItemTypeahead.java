@@ -1,4 +1,6 @@
-package xeredi.integra.model.comun.vo;
+package xeredi.integra.model.item.vo;
+
+import xeredi.integra.model.comun.vo.Typeahead;
 
 // TODO: Auto-generated Javadoc
 /**

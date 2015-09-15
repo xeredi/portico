@@ -13,7 +13,7 @@ import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
-import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.item.vo.ItemDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 

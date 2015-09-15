@@ -11,9 +11,9 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
+import xeredi.integra.model.item.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;

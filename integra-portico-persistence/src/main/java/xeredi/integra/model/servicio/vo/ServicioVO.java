@@ -5,8 +5,8 @@ import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.comun.vo.PuertoVO;
+import xeredi.integra.model.item.vo.ItemVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioDetailVO;
 
 // TODO: Auto-generated Javadoc
@@ -38,9 +38,6 @@ public final class ServicioVO extends ItemVO {
 
     /** The ffin. */
     private Date ffin;
-
-    /** The fref. */
-    private Date fref;
 
     /** The estado. */
     private String estado;
@@ -249,25 +246,6 @@ public final class ServicioVO extends ItemVO {
      */
     public void setEstado(final String value) {
         estado = value;
-    }
-
-    /**
-     * Gets the fref.
-     *
-     * @return the fref
-     */
-    public Date getFref() {
-        return fref;
-    }
-
-    /**
-     * Sets the fref.
-     *
-     * @param value
-     *            the new fref
-     */
-    public void setFref(final Date value) {
-        fref = value;
     }
 
 }

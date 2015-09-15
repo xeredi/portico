@@ -1,12 +1,12 @@
 package xeredi.integra.http.controller.action.facturacion;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.CrudDetailAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.AspectoCargoBO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -28,7 +28,7 @@ public final class AspectoCargoDetailAction extends CrudDetailAction<AspectoCarg
         final AspectoCargoCriterioVO ascrCriterio = new AspectoCargoCriterioVO();
 
         ascrCriterio.setId(model.getId());
-        ascrCriterio.setFechaVigencia(fechaVigencia);
+        ascrCriterio.setFechaVigencia(model.getFref());
         ascrCriterio.setIdioma(idioma);
 
         model = ascrBO.selectObject(ascrCriterio);

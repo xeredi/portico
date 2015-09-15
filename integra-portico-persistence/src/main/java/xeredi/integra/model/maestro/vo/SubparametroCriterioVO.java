@@ -3,8 +3,8 @@ package xeredi.integra.model.maestro.vo;
 import java.util.Date;
 import java.util.Set;
 
-import xeredi.integra.model.comun.vo.ItemCriterioVO;
 import xeredi.integra.model.comun.vo.Typeahead;
+import xeredi.integra.model.item.vo.ItemCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroCriterioVO;
 
 // TODO: Auto-generated Javadoc

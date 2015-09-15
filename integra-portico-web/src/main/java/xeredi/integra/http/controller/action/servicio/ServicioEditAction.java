@@ -63,8 +63,6 @@ public final class ServicioEditAction extends ItemEditAction<ServicioVO, TipoSer
         default:
             throw new Error("Invalid action: " + accion.name());
         }
-
-        setFechaVigencia(model.getFref());
     }
 
     /**

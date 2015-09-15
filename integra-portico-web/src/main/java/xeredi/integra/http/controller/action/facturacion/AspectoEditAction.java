@@ -47,7 +47,7 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
             final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
             aspcCriterio.setId(model.getId());
-            aspcCriterio.setFechaVigencia(fechaVigencia);
+            aspcCriterio.setFechaVigencia(model.getFref());
             aspcCriterio.setIdioma(idioma);
 
             model = aspcBO.selectObject(aspcCriterio);

@@ -1,5 +1,7 @@
 package xeredi.integra.model.facturacion.vo;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.Versionable;
@@ -21,6 +23,9 @@ public final class ReglaIncompatibleVO implements Versionable<ReglaIncompatibleV
 
     /** The rgiv. */
     private ReglaIncompatibleVersionVO version;
+
+    /** The fref. */
+    private Date fref;
 
     /**
      * Instantiates a new regla incompatible vo.
@@ -110,6 +115,24 @@ public final class ReglaIncompatibleVO implements Versionable<ReglaIncompatibleV
     @Override
     public void setVersion(final ReglaIncompatibleVersionVO value) {
         version = value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Date getFref() {
+        return fref;
+    }
+
+    /**
+     * Sets the fref.
+     *
+     * @param value
+     *            the new fref
+     */
+    public void setFref(final Date value) {
+        fref = value;
     }
 
 }

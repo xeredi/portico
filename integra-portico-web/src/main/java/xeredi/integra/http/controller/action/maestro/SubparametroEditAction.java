@@ -35,7 +35,6 @@ public final class SubparametroEditAction extends ItemEditAction<SubparametroVO,
      */
     @Override
     public void doSpecificEdit() throws ApplicationException {
-        Preconditions.checkNotNull(fechaVigencia);
         Preconditions.checkNotNull(model.getPrmtId());
 
         enti = TipoSubparametroProxy.select(model.getEntiId());
@@ -43,7 +42,7 @@ public final class SubparametroEditAction extends ItemEditAction<SubparametroVO,
         if (accion == ACCION_EDICION.create) {
             final ParametroBO prmtBO = ParametroBOFactory.newInstance(enti.getEnti().getTpprId());
 
-            final ParametroVO prmt = prmtBO.select(model.getPrmtId(), idioma, getFechaVigencia());
+            final ParametroVO prmt = prmtBO.select(model.getPrmtId(), idioma, model.getFref());
 
             if (prmt.getPrto() != null) {
                 model.setPrtoId(prmt.getPrto().getId());
@@ -51,7 +50,7 @@ public final class SubparametroEditAction extends ItemEditAction<SubparametroVO,
         } else {
             final SubparametroBO itemBO = SubparametroBOFactory.newInstance(model.getEntiId());
 
-            model = itemBO.selectObject(model.getId(), getIdioma(), getFechaVigencia());
+            model = itemBO.selectObject(model.getId(), getIdioma(), model.getFref());
         }
     }
 

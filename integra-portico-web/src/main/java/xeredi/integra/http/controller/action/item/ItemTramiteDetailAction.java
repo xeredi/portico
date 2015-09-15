@@ -4,9 +4,9 @@ import com.google.common.base.Preconditions;
 
 import xeredi.integra.http.controller.action.comun.CrudDetailAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.item.bo.ItemTramiteBO;
 import xeredi.integra.model.item.vo.ItemTramiteVO;
+import xeredi.integra.model.item.vo.ItemVO;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
@@ -62,8 +62,6 @@ public final class ItemTramiteDetailAction extends CrudDetailAction<ItemTramiteV
             final ServicioBO srvcBO = ServicioBOFactory.newInstance(tpsr.getEnti().getId());
             final ServicioVO srvc = srvcBO.select(model.getItemId(), getIdioma());
 
-            fechaVigencia = srvc.getFref();
-
             item = srvc;
             enti = tpsr;
 
@@ -72,8 +70,6 @@ public final class ItemTramiteDetailAction extends CrudDetailAction<ItemTramiteV
             final TipoSubservicioDetailVO tpss = TipoSubservicioProxy.select(model.getTrmt().getEntiId());
             final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getTrmt().getEntiId());
             final SubservicioVO ssrv = ssrvBO.select(model.getItemId(), getIdioma());
-
-            fechaVigencia = ssrv.getFref();
 
             item = ssrv;
             enti = tpss;

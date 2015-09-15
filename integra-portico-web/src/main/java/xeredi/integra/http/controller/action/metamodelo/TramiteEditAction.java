@@ -75,12 +75,16 @@ public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
             final TipoServicioBO tpsrBO = new TipoServicioBO();
             final TipoServicioVO tpsr = tpsrBO.select(model.getEntiId(), getIdioma());
 
+            Preconditions.checkNotNull(tpsr.getTpdtEstado().getId());
+
             tpdtEstado = tpdtBO.select(tpsr.getTpdtEstado().getId(), getIdioma());
 
             break;
         case S:
             final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
             final TipoSubservicioVO tpss = tpssBO.select(model.getEntiId(), getIdioma());
+
+            Preconditions.checkNotNull(tpss.getTpdtEstado().getId());
 
             tpdtEstado = tpdtBO.select(tpss.getTpdtEstado().getId(), getIdioma());
 
