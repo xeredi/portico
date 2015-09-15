@@ -1,5 +1,7 @@
 package xeredi.integra.http.controller.action.comun;
 
+import java.util.Calendar;
+
 import com.google.common.base.Preconditions;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -30,12 +32,15 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
     @Override
     public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(model);
 
         if (accion == ACCION_EDICION.edit || accion == ACCION_EDICION.duplicate) {
-            Preconditions.checkNotNull(model);
-
             if (model instanceof Versionable<?>) {
                 Preconditions.checkNotNull(((Versionable<?>) model).getFref());
+            }
+        } else {
+            if (model instanceof Versionable<?> && ((Versionable<?>) model).getFref() == null) {
+                ((Versionable<?>) model).setFref(Calendar.getInstance().getTime());
             }
         }
 

@@ -93,6 +93,25 @@ function CrudService($http, $q, $state) {
             }
         }
 
+        function typeahead(searchCriteria) {
+            console.log('typeahead');
+
+            return $http.post(_uri + "-typeahead.action", {model: searchCriteria})
+                .then(success)
+                .catch(fail);
+
+            function success(response) {
+                return response.data;
+            }
+
+            function fail(error) {
+                var msg = 'Typeahead failed. ' + error.data;
+                console.log(msg);
+
+                return $q.reject(msg);
+            }
+        }
+
         function xlsExport(searchCriteria) {
             console.log('xls export');
 
@@ -268,6 +287,7 @@ function CrudService($http, $q, $state) {
             index: index
             , listPage: listPage
             , list: list
+            , typeahead: typeahead
             , xlsExport: xlsExport
             , filter: filter
             , detail: detail

@@ -31,4 +31,12 @@ public interface Versionable<T extends VersionVO> {
      * @return the fref
      */
     Date getFref();
+
+    /**
+     * Sets the fref.
+     *
+     * @param date
+     *            the new fref
+     */
+    void setFref(final Date date);
 }

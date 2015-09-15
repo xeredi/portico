@@ -12,7 +12,6 @@ import xeredi.integra.model.facturacion.bo.ReglaIncompatibleBO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
-import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVersionVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 
 // TODO: Auto-generated Javadoc
@@ -32,6 +31,8 @@ public final class ReglaIncompatibleEditAction extends CrudEditAction<ReglaIncom
      */
     @Override
     public void doEdit() throws ApplicationException {
+        Preconditions.checkNotNull(model.getRgla1Id());
+
         if (accion == ACCION_EDICION.edit) {
             Preconditions.checkNotNull(model.getId());
 
@@ -44,7 +45,6 @@ public final class ReglaIncompatibleEditAction extends CrudEditAction<ReglaIncom
 
             model = rginBO.selectObject(rginCriterio);
         } else {
-            model.setVersion(new ReglaIncompatibleVersionVO());
             model.getVersion().setFini(model.getFref());
         }
     }

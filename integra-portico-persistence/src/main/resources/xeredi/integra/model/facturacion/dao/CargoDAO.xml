@@ -299,10 +299,10 @@
     ]]>
 	</update>
 
-	<insert id="deleteVersion" parameterType="CargoVO">
+	<delete id="deleteVersion" parameterType="CargoVO">
     <![CDATA[
         DELETE FROM tbl_cargo_version_crgv
-        WHERE crgv_pk = #{crgo.version.id}
+        WHERE crgv_pk = #{version.id}
     ]]>
-	</insert>
+	</delete>
 </mapper>

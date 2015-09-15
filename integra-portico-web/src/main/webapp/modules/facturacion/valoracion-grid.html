@@ -10,7 +10,7 @@
             class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a>
 
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template="modules/facturacion/vlrc-filter-content.html" bs-modal="modal">
+            data-template="modules/facturacion/valoracion-filter-content.html" bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i><span translate="btn_filtrar"></span>
         </button>
     </div>
@@ -53,35 +53,34 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="item in ::vm.vlrcList.list track by item.id">
-                <td><a ng-href="#/facturacion/vlrc/detail/{{::item.id}}"><i
-                        class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="::item.id"></td>
-                <td nowrap="nowrap" ng-bind="::('enti_' + item.srvc.entiId | translate)"></td>
-                <td ng-bind="::item.srvc.etiqueta"></td>
-                <td ng-bind="::item.aspc.codigo" bs-tooltip data-title="{{::item.aspc.etiqueta}}"></td>
-                <td ng-bind="::item.pagador.parametro" bs-tooltip data-title="{{::item.pagador.etiqueta}}"></td>
-                <td><i class="glyphicon glyphicon-{{::(item.sujPasivo ? 'ok' : 'remove')}}"></i></td>
-                <td nowrap="nowrap" class="number">{{::(item.importe | number:2)}} &euro;</td>
-                <td nowrap="nowrap" class="number">{{::(item.impuesto | number:2)}} &euro;</td>
-                <td ng-bind="::(item.fliq | date: dateFormat)"></td>
-                <td ng-bind="::(item.fini | date: datetimeFormat)"></td>
-                <td ng-bind="::(item.ffin | date: datetimeFormat)"></td>
-                <td ng-bind="::item.codExencion" bs-tooltip
-                    data-title="{{::('cdrf_' + vm.tpdtCodExencion.id + '_' + item.codExencion | translate)}}"></td>
+            <tr ng-repeat="item in vm.vlrcList.list track by item.id">
+                <td><a ui-sref="valoracion-detail(item)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td ng-bind="item.id"></td>
+                <td nowrap="nowrap" ng-bind="('enti_' + item.srvc.entiId | translate)"></td>
+                <td ng-bind="item.srvc.etiqueta"></td>
+                <td ng-bind="item.aspc.codigo" bs-tooltip data-title="{{item.aspc.etiqueta}}"></td>
+                <td ng-bind="item.pagador.parametro" bs-tooltip data-title="{{item.pagador.etiqueta}}"></td>
+                <td><i class="glyphicon glyphicon-{{(item.sujPasivo ? 'ok' : 'remove')}}"></i></td>
+                <td nowrap="nowrap" class="number">{{(item.importe | number:2)}} &euro;</td>
+                <td nowrap="nowrap" class="number">{{(item.impuesto | number:2)}} &euro;</td>
+                <td ng-bind="(item.fliq | date: dateFormat)"></td>
+                <td ng-bind="(item.fini | date: datetimeFormat)"></td>
+                <td ng-bind="(item.ffin | date: datetimeFormat)"></td>
+                <td ng-bind="item.codExencion" bs-tooltip
+                    data-title="{{('cdrf_' + vm.tpdtCodExencion.id + '_' + item.codExencion | translate)}}"></td>
 
-                <td nowrap="nowrap"><span ng-if="::item.info1">{{::item.aspc.version.cetiqInfo1}}:
-                        {{::item.info1}}</span></td>
-                <td nowrap="nowrap"><span ng-if="::item.info2">{{::item.aspc.version.cetiqInfo2}}:
-                        {{::item.info2}}</span></td>
-                <td nowrap="nowrap"><span ng-if="::item.info3">{{::item.aspc.version.cetiqInfo3}}:
-                        {{::item.info3}}</span></td>
-                <td nowrap="nowrap"><span ng-if="::item.info4">{{::item.aspc.version.cetiqInfo4}}:
-                        {{::item.info4}}</span></td>
-                <td nowrap="nowrap"><span ng-if="::item.info5">{{::item.aspc.version.cetiqInfo5}}:
-                        {{::item.info5}}</span></td>
-                <td nowrap="nowrap"><span ng-if="::item.info6">{{::item.aspc.version.cetiqInfo6}}:
-                        {{::item.info6}}</span></td>
+                <td nowrap="nowrap"><span ng-if="item.info1">{{item.aspc.version.cetiqInfo1}}:
+                        {{item.info1}}</span></td>
+                <td nowrap="nowrap"><span ng-if="item.info2">{{item.aspc.version.cetiqInfo2}}:
+                        {{item.info2}}</span></td>
+                <td nowrap="nowrap"><span ng-if="item.info3">{{item.aspc.version.cetiqInfo3}}:
+                        {{item.info3}}</span></td>
+                <td nowrap="nowrap"><span ng-if="item.info4">{{item.aspc.version.cetiqInfo4}}:
+                        {{item.info4}}</span></td>
+                <td nowrap="nowrap"><span ng-if="item.info5">{{item.aspc.version.cetiqInfo5}}:
+                        {{item.info5}}</span></td>
+                <td nowrap="nowrap"><span ng-if="item.info6">{{item.aspc.version.cetiqInfo6}}:
+                        {{item.info6}}</span></td>
             </tr>
         </tbody>
     </table>

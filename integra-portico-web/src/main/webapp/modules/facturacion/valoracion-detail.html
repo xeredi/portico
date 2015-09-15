@@ -27,8 +27,8 @@
                 <div class="col-md-2 form-group-sm">
                     <label translate="tpsr"></label>
                     <p class="form-control-static">
-                        <a ng-href="#/metamodelo/tpsr/detail/{{vm.vlrc.srvc.entiId}}"
-                            translate="{{'enti_' + vm.vlrc.srvc.entiId}}"></a>
+                        <a ui-sref="tiposervicio-detail({id: vm.vlrc.srvc.entiId})"
+                            ng-bind="'enti_' + vm.vlrc.srvc.entiId | translate"></a>
                     </p>
                 </div>
                 <div class="col-md-2 col-lg-1 form-group-sm">
@@ -41,7 +41,7 @@
                 <div class="col-md-3 form-group-sm">
                     <label translate="aspc"></label>
                     <p class="form-control-static">
-                        <a ng-href="#/facturacion/aspc/detail/{{vm.vlrc.aspc.id}}/{{vm.vlrc.fref}}"
+                        <a ui-sref="aspecto-detail({id: vm.vlrc.aspc.id, fref: vm.vlrc.fref})"
                             ng-bind="vm.vlrc.aspc.etiqueta"></a>
                     </p>
                 </div>
@@ -71,7 +71,7 @@
                     <label translate="vlrc_pagador"></label>
                     <p class="form-control-static">
                         <a
-                            ng-href="#/maestro/prmt/detail/{{vm.vlrc.pagador.entiId}}/{{vm.vlrc.pagador.id}}/{{vm.vlrc.fref}}"
+                            ui-sref="parametro-detail({entiId: vm.vlrc.pagador.entiId, id: vm.vlrc.pagador.id, fref: vm.vlrc.fref})"
                             ng-bind="vm.vlrc.pagador.etiqueta"></a>
                     </p>
                 </div>
@@ -149,7 +149,7 @@
 
                     <tbody>
                         <tr ng-repeat="vlrg in vm.vlrgList track by $index">
-                            <td><a ng-href="#/facturacion/crgo/detail/{{vlrg.crgo.id}}/{{vlrg.fref}}"
+                            <td><a ui-sref="cargo-detail({id: vlrg.crgo.id, fref: vlrg.fref})"
                                 ng-bind="vlrg.crgo.etiqueta"></a></td>
                             <td nowrap="nowrap" class="number">{{vlrg.importe | number:2}} &euro;</td>
                         </tr>
@@ -173,7 +173,7 @@
                     <tbody>
                         <tr ng-repeat="vlri in vm.vlriList track by $index">
                             <td><a
-                                ng-href="#/maestro/prmt/detail/{{vlri.impuesto.entiId}}/{{vlri.impuesto.id}}/{{vlri.fref}}"
+                                ui-sref="parametro-detail({entiId: vlri.impuesto.entiId, id: vlri.impuesto.id, fref: vlri.fref})"
                                 ng-bind="vlri.impuesto.etiqueta"></a></td>
                             <td class="number" ng-bind="vlri.porcentaje | number:2"></td>
                             <td nowrap="nowrap" class="number">{{vlri.importeBase | number:2}} &euro;</td>

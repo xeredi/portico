@@ -14,7 +14,6 @@ import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoTipo;
 import xeredi.integra.model.facturacion.vo.CargoVO;
-import xeredi.integra.model.facturacion.vo.CargoVersionVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -41,10 +40,7 @@ public final class CargoEditAction extends CrudEditAction<CargoVO> {
      */
     @Override
     public void doEdit() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
-            model = new CargoVO();
-            model.setVersion(new CargoVersionVO());
-        } else {
+        if (accion != ACCION_EDICION.create) {
             Preconditions.checkNotNull(model.getId());
 
             final CargoBO crgoBO = new CargoBO();

@@ -1,7 +1,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default"
-            ng-href="#/facturacion/rgla/edit/edit/{{vm.rgla.crgo.id}}/{{vm.fechaVigencia}}/{{vm.rgla.id}}"><i
+            ui-sref="regla-edit({accion: 'edit', crgoId: vm.rgla.crgo.id, id: vm.rgla.id, fref: vm.rgla.fref})"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
@@ -174,7 +174,7 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default"
-                ng-href="#/facturacion/rgin/edit/create/{{vm.rgla.id}}/{{vm.fechaVigencia}}"><i
+                ui-sref="regla-incompatible-edit({accion: 'create', rgla1Id: vm.rgla.id, fref: vm.rgla.fref})"><i
                 class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>

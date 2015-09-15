@@ -1,7 +1,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default"
-            ng-href="#/facturacion/rgin/edit/edit/{{vm.rgin.rgla1Id}}/{{vm.fechaVigencia}}/{{vm.rgin.id}}"><i
+            ui-sref="regla-incompatible-edit({accion: 'edit', rgla1Id: vm.rgin.rgla1Id, id: vm.rgin.id, fref: vm.rgin.fref})"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>

@@ -2,9 +2,6 @@ angular.module("facturacion", [])
 
 .config(config)
 
-// ----------------- MENU PRINCIPAL --------------------------
-.controller("FacturacionController", FacturacionController)
-
 // ----------- VALORADOR ------------------
 .controller("VldrEditController", VldrEditController)
 
@@ -41,12 +38,6 @@ angular.module("facturacion", [])
 .controller("FcsrEditController", FcsrEditController)
 
 // ----------- CARGO y REGLA ------------------
-
-.controller("CrgoEditController", CrgoEditController)
-
-.controller("CrgoLupaController", CrgoLupaController)
-
-.controller("RglaEditController", RglaEditController)
 
 .controller("RglaLupaController", RglaLupaController)
 
@@ -149,16 +140,6 @@ function config($routeProvider) {
     .when("/facturacion/fcsr/edit/:accion/:fcsrId?", {
         templateUrl : "modules/facturacion/fcsr-edit.html",
         controller : "FcsrEditController as vm"
-    })
-
-    .when("/facturacion/crgo/edit/:accion/:crgoId?/:fechaVigencia?", {
-        templateUrl : "modules/facturacion/crgo-edit.html",
-        controller : "CrgoEditController as vm"
-    })
-
-    .when("/facturacion/rgla/edit/:accion/:crgoId/:fechaVigencia?/:rglaId?", {
-        templateUrl : "modules/facturacion/rgla-edit.html",
-        controller : "RglaEditController as vm"
     })
 
     .when("/facturacion/rgin/edit/:accion/:rgla1Id/:fechaVigencia?/:rginId?", {
@@ -944,150 +925,6 @@ function FcsrEditController($http, $location, $routeParams, pageTitleService) {
                 window.history.back();
             }, 0) : $location.path("/facturacion/fcsr/detail/" + data.model.id).replace();
         });
-    }
-
-    function cancel() {
-        window.history.back();
-    }
-}
-
-function CrgoEditController($http, $location, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.save = save;
-    vm.cancel = cancel;
-
-    initialize();
-
-    function initialize() {
-        vm.accion = $routeParams.accion;
-
-        $http.post("facturacion/cargo-edit.action", {
-            model : {
-                id : $routeParams.crgoId
-            },
-            fechaVigencia : $routeParams.fechaVigencia,
-            accion : vm.accion
-        }).success(function(data) {
-            vm.crgo = data.model;
-            vm.i18nMap = data.i18nMap;
-            vm.tipos = data.tipos;
-            vm.tpsrList = data.tpsrList;
-        });
-
-        pageTitleService.setTitle("crgo", "page_" + vm.accion);
-    }
-
-    function save() {
-        $http.post("facturacion/cargo-save.action", {
-            model : vm.crgo,
-            i18nMap : vm.i18nMap,
-            accion : vm.accion
-        }).success(
-                function(data) {
-                    vm.accion == 'edit' ? setTimeout(function() {
-                        window.history.back();
-                    }, 0) : $location.path(
-                            "/facturacion/crgo/detail/" + data.model.id + "/" + data.model.version.fini)
-                            .replace();
-                });
-    }
-
-    function cancel() {
-        window.history.back();
-    }
-}
-
-function CrgoLupaController($http, $scope) {
-    $scope.searchTpsr = function(entiId, textoBusqueda, fechaVigencia) {
-        if (textoBusqueda.length <= 0) {
-            return null;
-        }
-
-        return $http.post("facturacion/cargo-typeahead.action", {
-            model : {
-                tpsrId : entiId,
-                textoBusqueda : textoBusqueda,
-                fechaVigencia : fechaVigencia
-            }
-        }).then(function(res) {
-            return res.data.resultList;
-        });
-    };
-
-    $scope.searchAspc = function(aspcId, textoBusqueda, fechaVigencia) {
-        if (textoBusqueda.length <= 0) {
-            return null;
-        }
-
-        return $http.post("facturacion/cargo-typeahead.action", {
-            model : {
-                aspcId : aspcId,
-                textoBusqueda : textoBusqueda,
-                fechaVigencia : fechaVigencia
-            }
-        }).then(function(res) {
-            return res.data.resultList;
-        });
-    };
-
-    $scope.searchVlrc = function(vlrcId, textoBusqueda) {
-        if (textoBusqueda.length <= 0) {
-            return null;
-        }
-
-        return $http.post("facturacion/cargo-typeahead.action", {
-            model : {
-                vlrcId : vlrcId,
-                textoBusqueda : textoBusqueda
-            }
-        }).then(function(res) {
-            return res.data.resultList;
-        });
-    };
-}
-
-function RglaEditController($http, $location, $routeParams, pageTitleService) {
-    var vm = this;
-
-    vm.save = save;
-    vm.cancel = cancel;
-
-    initialize();
-
-    function initialize() {
-        vm.accion = $routeParams.accion;
-
-        $http.post("facturacion/regla-edit.action", {
-            model : {
-                crgo : {
-                    id : $routeParams.crgoId
-                },
-                id : $routeParams.rglaId
-            },
-            fechaVigencia : $routeParams.fechaVigencia,
-            accion : vm.accion
-        }).success(function(data) {
-            vm.rgla = data.model;
-            vm.tipos = data.tipos;
-            vm.entiFacturableList = data.entiFacturableList;
-        });
-
-        pageTitleService.setTitle("rgla", "page_" + vm.accion);
-    }
-
-    function save() {
-        $http.post("facturacion/regla-save.action", {
-            model : vm.rgla,
-            accion : vm.accion
-        }).success(
-                function(data) {
-                    vm.accion == 'edit' ? setTimeout(function() {
-                        window.history.back();
-                    }, 0) : $location.path(
-                            "/facturacion/rgla/detail/" + data.model.id + "/" + data.model.version.fini)
-                            .replace();
-                });
     }
 
     function cancel() {

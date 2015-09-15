@@ -11,42 +11,44 @@
                         <div class="row">
                             <div class="col-sm-2 col-md-1 form-group-sm">
                                 <label translate="vlrc_id"></label> <input type="text"
-                                    ng-model="vm.vlrcCriterio.id" class="form-control" />
+                                    ng-model="vm.searchCriteria.id" class="form-control" />
                             </div>
                             <div class="col-sm-3 col-md-2 form-group-sm">
-                                <label translate="tpsr"></label> <select ng-model="vm.vlrcCriterio.tpsrId"
+                                <label translate="tpsr"></label> <select ng-model="vm.searchCriteria.tpsrId"
                                     ng-options="item.value as (('enti_' + item.value) | translate) for item in ::vm.tpsrList"
-                                    ng-change="vm.tpsrChanged(vm.vlrcCriterio.tpsrId)" class="form-control">
+                                    ng-change="vm.searchCriteria.srvc = null; vm.searchCriteria.aspc = null; vm.searchCriteria.crgo = null"
+                                    class="form-control">
                                     <option />
                                 </select>
                             </div>
-                            <div class="col-sm-3 col-md-2 form-group-sm" ng-show="vm.vlrcCriterio.tpsrId">
+                            <div class="col-sm-3 col-md-2 form-group-sm" ng-show="vm.searchCriteria.tpsrId">
                                 <label translate="srvc"></label> <input type="text" autocomplete="off"
-                                    ng-model="vm.vlrcCriterio.srvc" ng-controller="SrvcLupaController"
-                                    typeahead="srvc as srvc.etiqueta for srvc in search(vm.vlrcCriterio.tpsrId, $viewValue)"
+                                    ng-model="vm.searchCriteria.srvc" ng-controller="SrvcLupaController"
+                                    typeahead="srvc as srvc.etiqueta for srvc in search(vm.searchCriteria.tpsrId, $viewValue)"
                                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                             </div>
-                            <div class="col-sm-3 col-md-2 form-group-sm" ng-show="vm.vlrcCriterio.tpsrId">
+                            <div class="col-sm-3 col-md-2 form-group-sm" ng-show="vm.searchCriteria.tpsrId">
                                 <label translate="aspc"></label> <input type="text" autocomplete="off"
-                                    ng-model="vm.vlrcCriterio.aspc" ng-controller="AspcLupaController"
-                                    typeahead="item as item.etiqueta for item in search(vm.vlrcCriterio.tpsrId, $viewValue)"
+                                    ng-model="vm.searchCriteria.aspc" ng-controller="AspcLupaController"
+                                    typeahead="item as item.etiqueta for item in search(vm.searchCriteria.tpsrId, $viewValue)"
                                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                             </div>
-                            <div class="col-sm-3 col-md-2 form-group-sm" ng-show="vm.vlrcCriterio.tpsrId">
+                            <div class="col-sm-3 col-md-2 form-group-sm" ng-show="vm.searchCriteria.tpsrId">
                                 <label translate="crgo"></label> <input type="text" autocomplete="off"
-                                    ng-model="vm.vlrcCriterio.crgo" ng-controller="CrgoLupaController"
-                                    typeahead="item as item.etiqueta for item in searchTpsr(vm.vlrcCriterio.tpsrId, $viewValue)"
+                                    ng-model="vm.searchCriteria.crgo"
+                                    ng-controller="CargoTypeaheadController as ta"
+                                    typeahead="item as item.etiqueta for item in ta.searchTpsr(vm.searchCriteria.tpsrId, $viewValue)"
                                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                             </div>
                             <div class="col-sm-4 col-md-3 form-group-sm">
                                 <label translate="vlrc_pagador"></label> <input type="text" autocomplete="off"
-                                    ng-model="vm.vlrcCriterio.pagador" ng-controller="PrmtLupaController"
+                                    ng-model="vm.searchCriteria.pagador" ng-controller="PrmtLupaController"
                                     typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(20010, $viewValue)"
                                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                             </div>
                             <div class="col-sm-4 col-md-3 form-group-sm">
                                 <label translate="vlrc_codExencion"></label> <select
-                                    ng-model="vm.vlrcCriterio.codExencion"
+                                    ng-model="vm.searchCriteria.codExencion"
                                     ng-options="cdrf.valor as ('cdrf_' + vm.tpdtCodExencion.id + '_' + cdrf.valor | translate) for cdrf in ::vm.tpdtCodExencion.cdrfList"
                                     class="form-control">
                                     <option />

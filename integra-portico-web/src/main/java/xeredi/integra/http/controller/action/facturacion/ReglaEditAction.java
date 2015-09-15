@@ -14,7 +14,6 @@ import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaTipo;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
-import xeredi.integra.model.facturacion.vo.ReglaVersionVO;
 import xeredi.integra.model.metamodelo.bo.TipoServicioBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
@@ -62,13 +61,9 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
             crgoCriterio.setIdioma(idioma);
 
             final CargoVO crgo = crgoBO.selectObject(crgoCriterio);
-            final ReglaVersionVO rglv = new ReglaVersionVO();
 
-            rglv.setFini(Calendar.getInstance().getTime());
-
-            model = new ReglaVO();
-            model.setVersion(rglv);
             model.setCrgo(crgo);
+            model.getVersion().setFini(Calendar.getInstance().getTime());
         }
     }
 
