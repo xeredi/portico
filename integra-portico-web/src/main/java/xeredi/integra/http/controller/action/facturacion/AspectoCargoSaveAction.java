@@ -44,9 +44,9 @@ public final class AspectoCargoSaveAction extends CrudSaveAction<AspectoCargoVO>
      */
     @Override
     public void doValidate() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
-            Preconditions.checkNotNull(model.getAspcId());
+        Preconditions.checkNotNull(model.getAspcId());
 
+        if (accion == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.crgo, model.getCrgo());
         } else {
             Preconditions.checkNotNull(model.getId());

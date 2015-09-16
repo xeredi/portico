@@ -23,8 +23,8 @@
             <!--
             <div class="col-md-2 col-lg-1 form-group-sm" ng-if="vm.vlrl.rgla.id || vm.crgo.id">
                 <label translate="rgla"></label> <input type="text" ng-if="vm.accion == 'create'"
-                    autocomplete="off" ng-model="vm.vlrl.rgla" ng-controller="RglaLupaController"
-                    typeahead="rgla as rgla.codigo for rgla in searchVlrc(vm.vlrl.vlrcId, vm.vlrl.rgla.crgo.id, $viewValue)"
+                    autocomplete="off" ng-model="vm.vlrl.rgla" ng-controller="ReglaTypeaheadController as ta"
+                    typeahead="rgla as rgla.codigo for rgla in ta.searchVlrc(vm.vlrl.vlrcId, vm.vlrl.rgla.crgo.id, $viewValue)"
                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.vlrl.rgla.codigo"></p>
             </div>

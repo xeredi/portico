@@ -12,6 +12,8 @@ angular.module("facturacion_service", [ "crud_service" ])
 
 .factory("AspectoCargoService", AspectoCargoService)
 
+.factory("FacturaSerieService", FacturaSerieService)
+
 .factory("ValoracionService", ValoracionService)
 
 .factory("ValoracionLineaService", ValoracionLineaService)
@@ -19,8 +21,6 @@ angular.module("facturacion_service", [ "crud_service" ])
 .factory("ValoracionDetalleService", ValoracionDetalleService)
 
 .factory("FacturaService", FacturaService)
-
-.factory("FacturaServicioService", FacturaServicioService)
 
 .factory("FacturaLineaService", FacturaLineaService)
 
@@ -56,6 +56,10 @@ function AspectoCargoService($http, $q, CrudService) {
     return CrudService.create("facturacion/aspecto-cargo");
 }
 
+function FacturaSerieService($http, $q, CrudService) {
+    return CrudService.create("facturacion/factura-serie");
+}
+
 function ValoracionService($http, $q, CrudService) {
     return CrudService.create("facturacion/valoracion");
 }
@@ -70,10 +74,6 @@ function ValoracionDetalleService($http, $q, CrudService) {
 
 function FacturaService($http, $q, CrudService) {
     return CrudService.create("facturacion/factura");
-}
-
-function FacturaServicioService($http, $q, CrudService) {
-    return CrudService.create("facturacion/factura-servicio");
 }
 
 function FacturaLineaService($http, $q, CrudService) {

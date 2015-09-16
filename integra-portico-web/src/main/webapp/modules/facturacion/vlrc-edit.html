@@ -33,8 +33,8 @@
             </div>
             <div class="col-sm-3 col-md-2 form-group-sm" ng-if="vm.tpsrId">
                 <label translate="aspc"></label> <input type="text" autocomplete="off" ng-model="vm.vlrc.aspc"
-                    ng-controller="AspcLupaController" ng-if="vm.accion == 'create'"
-                    typeahead="item as item.etiqueta for item in search(vm.tpsrId, $viewValue)"
+                    ng-controller="AspectoTypeaheadController as ta" ng-if="vm.accion == 'create'"
+                    typeahead="item as item.etiqueta for item in ta.search(vm.tpsrId, $viewValue)"
                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control input">
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.vlrc.aspc.etiqueta"></p>
             </div>

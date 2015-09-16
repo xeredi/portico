@@ -13,7 +13,6 @@ import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
-import xeredi.integra.model.facturacion.vo.AspectoVersionVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -37,10 +36,7 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
      */
     @Override
     public void doEdit() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
-            model = new AspectoVO();
-            model.setVersion(new AspectoVersionVO());
-        } else {
+        if (accion != ACCION_EDICION.create) {
             Preconditions.checkNotNull(model.getId());
 
             final AspectoBO aspcBO = new AspectoBO();

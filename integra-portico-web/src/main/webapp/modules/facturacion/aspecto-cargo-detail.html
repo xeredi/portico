@@ -2,7 +2,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default"
-            ng-href="#/facturacion/ascr/edit/edit/{{vm.ascr.aspcId}}/{{vm.fechaVigencia}}/{{vm.ascr.id}}"><i
+            ui-sref="aspecto-cargo-edit({accion: 'edit', id: vm.ascr.id, aspcId: vm.ascr.aspcId, fref: vm.ascr.fref})"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>

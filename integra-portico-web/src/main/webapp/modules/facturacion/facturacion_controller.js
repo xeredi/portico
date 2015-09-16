@@ -18,6 +18,8 @@ angular.module("facturacion_controller", [])
 
 .controller("ReglaEditController", ReglaEditController)
 
+.controller("ReglaTypeaheadController", ReglaTypeaheadController)
+
 .controller("ReglaIncompatibleDetailController", ReglaIncompatibleDetailController)
 
 .controller("ReglaIncompatibleEditController", ReglaIncompatibleEditController)
@@ -26,7 +28,19 @@ angular.module("facturacion_controller", [])
 
 .controller("AspectoDetailController", AspectoDetailController)
 
+.controller("AspectoEditController", AspectoEditController)
+
+.controller("AspectoTypeaheadController", AspectoTypeaheadController)
+
 .controller("AspectoCargoDetailController", AspectoCargoDetailController)
+
+.controller("AspectoCargoEditController", AspectoCargoEditController)
+
+.controller("FacturaSerieGridController", FacturaSerieGridController)
+
+.controller("FacturaSerieDetailController", FacturaSerieDetailController)
+
+.controller("FacturaSerieEditController", FacturaSerieEditController)
 
 // -------------------- Gestion ------------------
 .controller("ValoracionGridController", ValoracionGridController)
@@ -103,10 +117,41 @@ function config($stateProvider) {
         controller : "AspectoDetailController as vm",
     })
 
+    .state("aspecto-edit", {
+        url : "/facturacion/aspecto/edit/:accion?id&fref",
+        templateUrl : "modules/facturacion/aspecto-edit.html",
+        controller : "AspectoEditController as vm",
+    })
+
     .state("aspecto-cargo-detail", {
         url : "/facturacion/aspecto-cargo/detail/:id?fref",
         templateUrl : "modules/facturacion/aspecto-cargo-detail.html",
         controller : "AspectoCargoDetailController as vm",
+    })
+
+    .state("aspecto-cargo-edit", {
+        url : "/facturacion/aspecto-cargo/edit/:accion/:aspcId?id&fref",
+        templateUrl : "modules/facturacion/aspecto-cargo-edit.html",
+        controller : "AspectoCargoEditController as vm",
+    })
+
+    .state("factura-serie-grid", {
+        url : "/facturacion/factura-serie/grid?page&searchCriteria&limit",
+        templateUrl : "modules/facturacion/factura-serie-grid.html",
+        controller : "FacturaSerieGridController as vm",
+        reloadOnSearch : false
+    })
+
+    .state("factura-serie-detail", {
+        url : "/facturacion/factura-serie/detail/:id?fref",
+        templateUrl : "modules/facturacion/factura-serie-detail.html",
+        controller : "FacturaSerieDetailController as vm",
+    })
+
+    .state("factura-serie-edit", {
+        url : "/facturacion/factura-serie/edit/:accion?id&fref",
+        templateUrl : "modules/facturacion/factura-serie-edit.html",
+        controller : "FacturaSerieEditController as vm",
     })
 
     // -------------------- Gestion ------------------
@@ -210,11 +255,7 @@ function CargoEditController($state, $stateParams, pageTitleService, CargoServic
 
     function save() {
         CargoService.saveI18n(vm.accion, vm.crgo, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("cargo-detail", data.model, {
-                location : 'replace'
-            });
+            CargoService.redirectAfterSave(vm.accion, data.model, "cargo-detail");
         });
     }
 
@@ -324,11 +365,7 @@ function ReglaEditController($state, $stateParams, pageTitleService, ReglaServic
 
     function save() {
         ReglaService.save(vm.accion, vm.rgla).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("regla-detail", data.model, {
-                location : 'replace'
-            });
+            ReglaService.redirectAfterSave(vm.accion, data.model, "regla-detail");
         });
     }
 
@@ -354,6 +391,41 @@ function ReglaEditController($state, $stateParams, pageTitleService, ReglaServic
     });
 
     pageTitleService.setTitle("rgla", "page_" + vm.accion);
+}
+
+function ReglaTypeaheadController($scope, ReglaService) {
+    var ta = this;
+
+    ta.searchCrgo = searchCrgo;
+    ta.searchVlrc = searchVlrc;
+
+    function searchCrgo(crgoId, textoBusqueda, fechaVigencia) {
+        if (textoBusqueda.length <= 0) {
+            return null;
+        }
+
+        return CargoService.typeahead({
+            crgoId : crgoId,
+            textoBusqueda : textoBusqueda,
+            fechaVigencia : fechaVigencia
+        }).then(function(data) {
+            return data.resultList;
+        });
+    }
+
+    function searchVlrc(vlrcId, crgoId, textoBusqueda) {
+        if (textoBusqueda.length <= 0) {
+            return null;
+        }
+
+        return ReglaService.typeahead({
+            vlrcId : vlrcId,
+            crgoId : crgoId,
+            textoBusqueda : textoBusqueda
+        }).then(function(data) {
+            return data.resultList;
+        });
+    }
 }
 
 function ReglaIncompatibleDetailController($stateParams, pageTitleService, ReglaIncompatibleService) {
@@ -387,11 +459,7 @@ function ReglaIncompatibleEditController($state, $stateParams, pageTitleService,
 
     function save() {
         ReglaIncompatibleService.save(vm.accion, vm.rgin).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("regla-incompatible-detail", data.model, {
-                location : 'replace'
-            });
+            ReglaIncompatibleService.redirectAfterSave(vm.accion, data.model, "regla-incompatible-detail");
         });
     }
 
@@ -479,6 +547,58 @@ function AspectoDetailController($stateParams, pageTitleService, AspectoService)
     pageTitleService.setTitle("aspc", "page_detail");
 }
 
+function AspectoEditController($state, $stateParams, pageTitleService, AspectoService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        AspectoService.saveI18n(vm.accion, vm.aspc, vm.i18nMap).then(function(data) {
+            AspectoService.redirectAfterSave(vm.accion, data.model, "aspecto-detail");
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.accion = $stateParams.accion;
+    vm.aspc = {
+        id : $stateParams.id,
+        fref : $stateParams.fref
+    }
+
+    AspectoService.edit($stateParams.accion, vm.aspc).then(function(data) {
+        vm.aspc = data.model;
+        vm.i18nMap = data.i18nMap;
+
+        vm.tpsrList = data.tpsrList;
+    });
+
+    pageTitleService.setTitle("aspc", "page_" + vm.accion);
+}
+
+function AspectoTypeaheadController($scope, AspectoService) {
+    var ta = this;
+
+    ta.search = search;
+
+    function search(entiId, textoBusqueda, fechaVigencia) {
+        if (textoBusqueda.length <= 0) {
+            return null;
+        }
+
+        return AspectoService.typeahead({
+            tpsrId : entiId,
+            textoBusqueda : textoBusqueda,
+            fechaVigencia : fechaVigencia
+        }).then(function(data) {
+            return data.resultList;
+        });
+    }
+}
+
 function AspectoCargoDetailController($stateParams, pageTitleService, AspectoCargoService) {
     var vm = this;
 
@@ -500,6 +620,128 @@ function AspectoCargoDetailController($stateParams, pageTitleService, AspectoCar
     });
 
     pageTitleService.setTitle("ascr", "page_detail");
+}
+
+function AspectoCargoEditController($state, $stateParams, pageTitleService, AspectoCargoService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        AspectoCargoService.saveI18n(vm.accion, vm.ascr, vm.i18nMap).then(function(data) {
+            AspectoCargoService.redirectAfterSave(vm.accion, data.model, "aspecto-cargo-detail");
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.accion = $stateParams.accion;
+    vm.ascr = {
+        aspcId : $stateParams.aspcId,
+        id : $stateParams.id,
+        fref : $stateParams.fref
+    }
+
+    AspectoCargoService.edit($stateParams.accion, vm.ascr).then(function(data) {
+        vm.ascr = data.model;
+
+        vm.crgoList = data.crgoList;
+    });
+
+    pageTitleService.setTitle("ascr", "page_" + vm.accion);
+}
+
+function FacturaSerieGridController($state, $stateParams, $modal, pageTitleService, FacturaSerieService) {
+    var vm = this;
+
+    vm.filter = filter;
+    vm.resetFilter = resetFilter;
+    vm.search = search;
+    vm.pageChanged = pageChanged;
+
+    function filter() {
+        FacturaSerieService.filter(vm.searchCriteria).then(function(data) {
+            vm.fcsrList = data.tpsrList;
+        });
+    }
+
+    function resetFilter() {
+        vm.searchCriteria = {};
+    }
+
+    function search(page) {
+        FacturaSerieService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
+            vm.page = data.resultList.page;
+            vm.limit = data.resultList.limit;
+            vm.fcsrList = data.resultList;
+        });
+    }
+
+    function pageChanged() {
+        search(vm.page);
+    }
+
+    vm.searchCriteria = $stateParams.searchCriteria ? angular.fromJson($stateParams.searchCriteria) : {};
+    vm.limit = $stateParams.limit;
+
+    search($stateParams.page ? $stateParams.page : 1);
+
+    pageTitleService.setTitle("fcsr", "page_grid");
+}
+
+function FacturaSerieDetailController($stateParams, pageTitleService, FacturaSerieService) {
+    var vm = this;
+
+    vm.remove = remove;
+
+    function remove() {
+        FacturaSerieService.remove(vm.fcsr).then(function(data) {
+            window.history.back();
+        });
+    }
+
+    vm.fcsr = {
+        id : $stateParams.id,
+        fref : $stateParams.fref
+    };
+
+    FacturaSerieService.detail(vm.fcsr).then(function(data) {
+        vm.fcsr = data.model;
+    });
+
+    pageTitleService.setTitle("fcsr", "page_detail");
+}
+
+function FacturaSerieEditController($state, $stateParams, pageTitleService, FacturaSerieService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        FacturaSerieService.save(vm.accion, vm.fcsr).then(function(data) {
+            FacturaSerieService.redirectAfterSave(vm.accion, data.model, "factura-serie-detail");
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.accion = $stateParams.accion;
+    vm.fcsr = {
+        id : $stateParams.id,
+        fref : $stateParams.fref
+    }
+
+    FacturaSerieService.edit($stateParams.accion, vm.fcsr).then(function(data) {
+        vm.fcsr = data.model;
+    });
+
+    pageTitleService.setTitle("fcsr", "page_" + vm.accion);
 }
 
 // -------------------- Gestion ------------------
