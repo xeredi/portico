@@ -205,7 +205,7 @@ function CargoGridController($state, $stateParams, $modal, pageTitleService, Car
         CargoService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
-            vm.crgoList = data.resultList;
+            vm.resultList = data.resultList;
         });
     }
 
@@ -505,7 +505,7 @@ function AspectoGridController($state, $stateParams, $modal, pageTitleService, A
         AspectoService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
-            vm.aspcList = data.resultList;
+            vm.resultList = data.resultList;
         });
     }
 
@@ -676,7 +676,7 @@ function FacturaSerieGridController($state, $stateParams, $modal, pageTitleServi
         FacturaSerieService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
-            vm.fcsrList = data.resultList;
+            vm.resultList = data.resultList;
         });
     }
 
@@ -767,7 +767,7 @@ function ValoracionGridController($state, $stateParams, $modal, pageTitleService
         ValoracionService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
-            vm.vlrcList = data.resultList;
+            vm.resultList = data.resultList;
 
             vm.tpdtCodExencion = data.tpdtCodExencion;
         });

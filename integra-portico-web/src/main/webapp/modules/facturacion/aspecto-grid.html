@@ -1,6 +1,6 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <pagination total-items="vm.aspcList.count" items-per-page="vm.aspcList.limit" ng-model="vm.page"
+        <pagination total-items="vm.resultList.count" items-per-page="vm.resultList.limit" ng-model="vm.page"
             ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
             next-text="&rsaquo;&rsaquo;"></pagination>
     </div>
@@ -16,7 +16,7 @@
 
 <div class="table-responsive">
     <span class="label label-default" translate="grid_count"
-        translate-value-count="{{vm.aspcList.count | number:0}}"></span>
+        translate-value-count="{{vm.resultList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
@@ -32,7 +32,7 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="aspc in vm.aspcList.list track by aspc.id">
+            <tr ng-repeat="aspc in vm.resultList.list track by aspc.id">
                 <td><a ui-sref="aspecto-detail(aspc)"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="aspc.codigo"></td>
                 <td ng-bind="aspc.version.descripcion"></td>

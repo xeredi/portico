@@ -1,7 +1,7 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <pagination total-items="vm.vlrcList.count" items-per-page="vm.vlrcList.limit" ng-model="vm.page"
+        <pagination total-items="vm.resultList.count" items-per-page="vm.resultList.limit" ng-model="vm.page"
             ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
             next-text="&rsaquo;&rsaquo;"></pagination>
     </div>
@@ -24,7 +24,7 @@
 
 <div class="table-responsive">
     <span class="label label-default" translate="grid_count"
-        translate-value-count="{{vm.vlrcList.count | number:0}}"></span>
+        translate-value-count="{{vm.resultList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
@@ -53,7 +53,7 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="item in vm.vlrcList.list track by item.id">
+            <tr ng-repeat="item in vm.resultList.list track by item.id">
                 <td><a ui-sref="valoracion-detail(item)"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="item.id"></td>
                 <td nowrap="nowrap" ng-bind="('enti_' + item.srvc.entiId | translate)"></td>
