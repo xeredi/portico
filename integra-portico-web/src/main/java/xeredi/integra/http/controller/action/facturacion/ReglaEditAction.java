@@ -39,20 +39,10 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
      */
     @Override
     public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getCrgo());
-        Preconditions.checkNotNull(model.getCrgo().getId());
+        if (accion == ACCION_EDICION.create) {
+            Preconditions.checkNotNull(model.getCrgo());
+            Preconditions.checkNotNull(model.getCrgo().getId());
 
-        if (accion == ACCION_EDICION.edit) {
-            Preconditions.checkNotNull(model.getId());
-
-            final ReglaBO rglaBO = new ReglaBO();
-            final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
-
-            rglaCriterio.setId(model.getId());
-            rglaCriterio.setFechaVigencia(model.getFref());
-
-            model = rglaBO.selectObject(rglaCriterio);
-        } else {
             final CargoBO crgoBO = new CargoBO();
             final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
@@ -64,6 +54,16 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
 
             model.setCrgo(crgo);
             model.getVersion().setFini(Calendar.getInstance().getTime());
+        } else {
+            Preconditions.checkNotNull(model.getId());
+
+            final ReglaBO rglaBO = new ReglaBO();
+            final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
+
+            rglaCriterio.setId(model.getId());
+            rglaCriterio.setFechaVigencia(model.getFref());
+
+            model = rglaBO.selectObject(rglaCriterio);
         }
     }
 

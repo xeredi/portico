@@ -1,8 +1,8 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ui-sref="cargo-edit({accion: 'edit', id: vm.crgo.id, fref: vm.crgo.fref})"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+        <a class="btn btn-default" ui-sref="cargo-edit(vm.model)"><i class="glyphicon glyphicon-edit"></i>
+            <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
@@ -14,31 +14,32 @@
         <div class="col-sm-3 col-md-2 form-group-sm">
             <label translate>tpsr</label>
             <p class="form-control-static">
-                <a ui-sref="tiposervicio-detail(vm.crgo.tpsr)" ng-bind="'enti_' + vm.crgo.tpsr.id | translate"></a>
+                <a ui-sref="tiposervicio-detail(vm.model.tpsr)"
+                    ng-bind="'enti_' + vm.model.tpsr.id | translate"></a>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 form-group-sm">
             <label translate>crgo_codigo</label>
-            <p class="form-control-static" ng-bind="vm.crgo.codigo"></p>
+            <p class="form-control-static" ng-bind="vm.model.codigo"></p>
         </div>
         <div class="col-sm-2 col-md-2 form-group-sm">
             <label translate>crgo_codigoNormalizado</label>
-            <p class="form-control-static" ng-bind="vm.crgo.version.codigoNormalizado"></p>
+            <p class="form-control-static" ng-bind="vm.model.version.codigoNormalizado"></p>
         </div>
         <div class="col-sm-2 col-md-1 form-group-sm">
             <label translate>crgo_tipo</label>
-            <p class="form-control-static" ng-bind="'CargoTipo_' + vm.crgo.version.tipo | translate"></p>
+            <p class="form-control-static" ng-bind="'CargoTipo_' + vm.model.version.tipo | translate"></p>
         </div>
         <div class="col-sm-1 col-md-1 form-group-sm">
             <label translate>crgo_principal</label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.crgo.version.principal ? 'ok' : 'remove')}}"></i>
+                <i class="glyphicon glyphicon-{{(vm.model.version.principal ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-1 col-md-1 form-group-sm">
             <label translate>crgo_temporal</label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.crgo.version.temporal ? 'ok' : 'remove')}}"></i>
+                <i class="glyphicon glyphicon-{{(vm.model.version.temporal ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
     </div>
@@ -46,11 +47,11 @@
     <div class="row">
         <div class="col-sm-2 col-md-1 form-group-sm">
             <label translate>fini</label>
-            <p class="form-control-static" ng-bind="(vm.crgo.version.fini | date: dateFormat)"></p>
+            <p class="form-control-static" ng-bind="(vm.model.version.fini | date: dateFormat)"></p>
         </div>
         <div class="col-sm-2 col-md-1 form-group-sm">
             <label translate>ffin</label>
-            <p class="form-control-static" ng-bind="(vm.crgo.version.ffin | date: dateFormat)"></p>
+            <p class="form-control-static" ng-bind="(vm.model.version.ffin | date: dateFormat)"></p>
         </div>
     </div>
 
@@ -61,8 +62,7 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default"
-            ui-sref="regla-edit({accion: 'create', crgoId: vm.crgo.id, fref: vm.crgo.fref})"><i
+        <a class="btn btn-default" ui-sref="regla-create({crgoId: vm.model.id, fref: vm.model.fref})"><i
             class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
     </div>
 </div>

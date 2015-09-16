@@ -171,7 +171,7 @@ function CrudService($http, $q, $state) {
             }
         }
 
-        function pdfExport(id) {
+        function pdfExport(id, filename) {
             console.log('Pdf export');
 
             return $http.post(_uri + "-pdf-export.action", {model: id}, {
@@ -181,6 +181,14 @@ function CrudService($http, $q, $state) {
                 .catch(fail);
 
             function success(response) {
+                var file = new Blob([ response.data ], {
+                    type : 'application/pdf'
+                });
+
+                setTimeout(function() {
+                    saveAs(file, filename  + '.pdf');
+                }, 0);
+
                 return response.data;
             }
 

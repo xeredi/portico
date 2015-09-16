@@ -1,20 +1,20 @@
 <form role="form">
     <fieldset>
         <div class="row">
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" ng-switch="::vm.accion">
-                <label translate="crgo"></label> <select ng-switch-when="create" ng-model="vm.ascr.crgo.id"
-                    ng-options="crgo.id as crgo.etiqueta for crgo in ::vm.crgoList" class="form-control">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" ng-switch="vm.accion">
+                <label translate="crgo"></label> <select ng-switch-when="create" ng-model="vm.model.crgo.id"
+                    ng-options="crgo.id as crgo.etiqueta for crgo in vm.crgoList" class="form-control">
                     <option />
                 </select>
-                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.ascr.crgo.etiqueta"></p>
+                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.crgo.etiqueta"></p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label translate="fini"></label><input type="text" class="form-control"
-                    ng-model="vm.ascr.version.fini" data-max-date="{{vm.ascr.version.ffin}}" bs-datepicker />
+                    ng-model="vm.model.version.fini" data-max-date="{{vm.model.version.ffin}}" bs-datepicker />
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label translate="ffin"></label><input type="text" class="form-control"
-                    ng-model="vm.ascr.version.ffin" data-min-date="{{vm.ascr.version.fini}}" bs-datepicker />
+                    ng-model="vm.model.version.ffin" data-min-date="{{vm.model.version.fini}}" bs-datepicker />
             </div>
         </div>
     </fieldset>

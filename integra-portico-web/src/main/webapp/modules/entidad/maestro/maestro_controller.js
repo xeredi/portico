@@ -147,15 +147,7 @@ function ParametroDetailController($stateParams, pageTitleService, ParametroServ
     }
 
     function pdfExport() {
-        ParametroService.pdfExport(vm.item).then(function(data) {
-            var file = new Blob([ data ], {
-                type : 'application/pdf'
-            });
-
-            setTimeout(function() {
-                saveAs(file, 'prmt_' + vm.item.entiId + '_' + vm.item.id + '.pdf');
-            }, 0);
-        });
+        ParametroService.pdfExport(vm.item, 'prmt_' + vm.item.entiId + '_' + vm.item.id);
     }
 
     function tabSelected(tabNo) {

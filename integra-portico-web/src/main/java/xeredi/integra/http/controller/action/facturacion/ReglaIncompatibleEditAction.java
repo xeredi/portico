@@ -31,9 +31,11 @@ public final class ReglaIncompatibleEditAction extends CrudEditAction<ReglaIncom
      */
     @Override
     public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getRgla1Id());
+        if (accion == ACCION_EDICION.create) {
+            Preconditions.checkNotNull(model.getRgla1Id());
 
-        if (accion == ACCION_EDICION.edit) {
+            model.getVersion().setFini(model.getFref());
+        } else {
             Preconditions.checkNotNull(model.getId());
 
             final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
@@ -44,8 +46,6 @@ public final class ReglaIncompatibleEditAction extends CrudEditAction<ReglaIncom
             rginCriterio.setIdioma(idioma);
 
             model = rginBO.selectObject(rginCriterio);
-        } else {
-            model.getVersion().setFini(model.getFref());
         }
     }
 

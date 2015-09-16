@@ -1,7 +1,6 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default"
-            ui-sref="regla-incompatible-edit({accion: 'edit', rgla1Id: vm.rgin.rgla1Id, id: vm.rgin.id, fref: vm.rgin.fref})"><i
+        <a class="btn btn-default" ui-sref="regla-incompatible-edit(vm.model)"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
@@ -14,17 +13,17 @@
         <div class="col-md-2 form-group-sm">
             <label translate>rgin_rgla2</label>
             <p class="form-control-static">
-                <a ui-sref="regla-detail({id: vm.rgin.rgla2.id, fref: vm.rgin.fref})"
-                    ng-bind="vm.rgin.rgla2.codigo"></a>
+                <a ui-sref="regla-detail({id: vm.model.rgla2.id, fref: vm.model.fref})"
+                    ng-bind="vm.model.rgla2.codigo"></a>
             </p>
         </div>
         <div class="col-md-1 form-group-sm">
             <label translate>fini</label>
-            <p class="form-control-static" ng-bind="vm.rgin.version.fini | date: ('format_date' | translate)"></p>
+            <p class="form-control-static" ng-bind="vm.model.version.fini | date: ('format_date' | translate)"></p>
         </div>
         <div class="col-md-1 form-group-sm">
             <label translate>ffin</label>
-            <p class="form-control-static" ng-bind="vm.rgin.version.ffin | date: ('format_date' | translate)"></p>
+            <p class="form-control-static" ng-bind="vm.model.version.ffin | date: ('format_date' | translate)"></p>
         </div>
     </div>
 </fieldset>

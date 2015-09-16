@@ -74,10 +74,22 @@ function config($stateProvider) {
         controller : "CargoDetailController as vm",
     })
 
-    .state("cargo-edit", {
-        url : "/facturacion/cargo/edit/:accion?id&fref",
+    .state("cargo-create", {
+        url : "/facturacion/cargo/create?fref",
         templateUrl : "modules/facturacion/cargo-edit.html",
         controller : "CargoEditController as vm",
+        data : {
+            accion : 'create'
+        }
+    })
+
+    .state("cargo-edit", {
+        url : "/facturacion/cargo/edit/:id?fref",
+        templateUrl : "modules/facturacion/cargo-edit.html",
+        controller : "CargoEditController as vm",
+        data : {
+            accion : 'edit'
+        }
     })
 
     .state("regla-detail", {
@@ -86,10 +98,22 @@ function config($stateProvider) {
         controller : "ReglaDetailController as vm",
     })
 
-    .state("regla-edit", {
-        url : "/facturacion/regla/edit/:accion/:crgoId?id&fref",
+    .state("regla-create", {
+        url : "/facturacion/regla/create/:crgoId?fref",
         templateUrl : "modules/facturacion/regla-edit.html",
         controller : "ReglaEditController as vm",
+        data : {
+            accion : 'create'
+        }
+    })
+
+    .state("regla-edit", {
+        url : "/facturacion/regla/edit/:id?fref",
+        templateUrl : "modules/facturacion/regla-edit.html",
+        controller : "ReglaEditController as vm",
+        data : {
+            accion : 'edit'
+        }
     })
 
     .state("regla-incompatible-detail", {
@@ -98,10 +122,22 @@ function config($stateProvider) {
         controller : "ReglaIncompatibleDetailController as vm",
     })
 
-    .state("regla-incompatible-edit", {
-        url : "/facturacion/regla-incompatible/edit/:accion/:rgla1Id?id&fref",
+    .state("regla-incompatible-create", {
+        url : "/facturacion/regla-incompatible/create/:rgla1Id?fref",
         templateUrl : "modules/facturacion/regla-incompatible-edit.html",
         controller : "ReglaIncompatibleEditController as vm",
+        data : {
+            accion : 'create'
+        }
+    })
+
+    .state("regla-incompatible-edit", {
+        url : "/facturacion/regla-incompatible/edit/:id?fref",
+        templateUrl : "modules/facturacion/regla-incompatible-edit.html",
+        controller : "ReglaIncompatibleEditController as vm",
+        data : {
+            accion : 'edit'
+        }
     })
 
     .state("aspecto-grid", {
@@ -117,10 +153,31 @@ function config($stateProvider) {
         controller : "AspectoDetailController as vm",
     })
 
-    .state("aspecto-edit", {
-        url : "/facturacion/aspecto/edit/:accion?id&fref",
+    .state("aspecto-create", {
+        url : "/facturacion/aspecto/create?fref",
         templateUrl : "modules/facturacion/aspecto-edit.html",
         controller : "AspectoEditController as vm",
+        data : {
+            accion : 'create'
+        }
+    })
+
+    .state("aspecto-edit", {
+        url : "/facturacion/aspecto/edit/:id?fref",
+        templateUrl : "modules/facturacion/aspecto-edit.html",
+        controller : "AspectoEditController as vm",
+        data : {
+            accion : 'edit'
+        }
+    })
+
+    .state("aspecto-duplicate", {
+        url : "/facturacion/aspecto/duplicate/:id?fref",
+        templateUrl : "modules/facturacion/aspecto-edit.html",
+        controller : "AspectoEditController as vm",
+        data : {
+            accion : 'duplicate'
+        }
     })
 
     .state("aspecto-cargo-detail", {
@@ -129,10 +186,22 @@ function config($stateProvider) {
         controller : "AspectoCargoDetailController as vm",
     })
 
-    .state("aspecto-cargo-edit", {
-        url : "/facturacion/aspecto-cargo/edit/:accion/:aspcId?id&fref",
+    .state("aspecto-cargo-create", {
+        url : "/facturacion/aspecto-cargo/create/:aspcId?fref",
         templateUrl : "modules/facturacion/aspecto-cargo-edit.html",
         controller : "AspectoCargoEditController as vm",
+        data : {
+            accion : 'create'
+        }
+    })
+
+    .state("aspecto-cargo-edit", {
+        url : "/facturacion/aspecto-cargo/edit/:id?fref",
+        templateUrl : "modules/facturacion/aspecto-cargo-edit.html",
+        controller : "AspectoCargoEditController as vm",
+        data : {
+            accion : 'edit'
+        }
     })
 
     .state("factura-serie-grid", {
@@ -232,13 +301,13 @@ function CargoDetailController($stateParams, pageTitleService, CargoService) {
         });
     }
 
-    vm.crgo = {
+    vm.model = {
         id : $stateParams.id,
         fref : $stateParams.fref
     };
 
-    CargoService.detail(vm.crgo).then(function(data) {
-        vm.crgo = data.model;
+    CargoService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
         vm.rglaList = data.rglaList;
@@ -254,7 +323,7 @@ function CargoEditController($state, $stateParams, pageTitleService, CargoServic
     vm.cancel = cancel;
 
     function save() {
-        CargoService.saveI18n(vm.accion, vm.crgo, vm.i18nMap).then(function(data) {
+        CargoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
             CargoService.redirectAfterSave(vm.accion, data.model, "cargo-detail");
         });
     }
@@ -263,14 +332,14 @@ function CargoEditController($state, $stateParams, pageTitleService, CargoServic
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-    vm.crgo = {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         id : $stateParams.id,
         fref : $stateParams.fref
     }
 
-    CargoService.edit($stateParams.accion, vm.crgo).then(function(data) {
-        vm.crgo = data.model;
+    CargoService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
         vm.tipos = data.tipos;
@@ -338,18 +407,18 @@ function ReglaDetailController($stateParams, pageTitleService, ReglaService) {
     vm.remove = remove;
 
     function remove() {
-        ReglaService.remove(vm.rgla).then(function(data) {
+        ReglaService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
 
-    vm.rgla = {
+    vm.model = {
         id : $stateParams.id,
         fref : $stateParams.fref
     };
 
-    ReglaService.detail(vm.rgla).then(function(data) {
-        vm.rgla = data.model;
+    ReglaService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
 
         vm.rginList = data.rginList;
     });
@@ -364,7 +433,7 @@ function ReglaEditController($state, $stateParams, pageTitleService, ReglaServic
     vm.cancel = cancel;
 
     function save() {
-        ReglaService.save(vm.accion, vm.rgla).then(function(data) {
+        ReglaService.save(vm.accion, vm.model).then(function(data) {
             ReglaService.redirectAfterSave(vm.accion, data.model, "regla-detail");
         });
     }
@@ -373,18 +442,17 @@ function ReglaEditController($state, $stateParams, pageTitleService, ReglaServic
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-    vm.rgla = {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         crgo : {
             id : $stateParams.crgoId
-
         },
         id : $stateParams.id,
         fref : $stateParams.fref
     }
 
-    ReglaService.edit($stateParams.accion, vm.rgla).then(function(data) {
-        vm.rgla = data.model;
+    ReglaService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
 
         vm.tipos = data.tipos;
         vm.entiFacturableList = data.entiFacturableList;
@@ -434,18 +502,18 @@ function ReglaIncompatibleDetailController($stateParams, pageTitleService, Regla
     vm.remove = remove;
 
     function remove() {
-        ReglaIncompatibleService.remove(vm.rgin).then(function(data) {
+        ReglaIncompatibleService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
 
-    vm.rgin = {
+    vm.model = {
         id : $stateParams.id,
         fref : $stateParams.fref
     };
 
-    ReglaIncompatibleService.detail(vm.rgin).then(function(data) {
-        vm.rgin = data.model;
+    ReglaIncompatibleService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
     });
 
     pageTitleService.setTitle("rgin", "page_detail");
@@ -458,7 +526,7 @@ function ReglaIncompatibleEditController($state, $stateParams, pageTitleService,
     vm.cancel = cancel;
 
     function save() {
-        ReglaIncompatibleService.save(vm.accion, vm.rgin).then(function(data) {
+        ReglaIncompatibleService.save(vm.accion, vm.model).then(function(data) {
             ReglaIncompatibleService.redirectAfterSave(vm.accion, data.model, "regla-incompatible-detail");
         });
     }
@@ -467,15 +535,15 @@ function ReglaIncompatibleEditController($state, $stateParams, pageTitleService,
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-    vm.rgin = {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         rgla1Id : $stateParams.rgla1Id,
         id : $stateParams.id,
         fref : $stateParams.fref
     }
 
-    ReglaIncompatibleService.edit($stateParams.accion, vm.rgin).then(function(data) {
-        vm.rgin = data.model;
+    ReglaIncompatibleService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
 
         vm.rgla2List = data.rgla2List;
     });
@@ -527,18 +595,18 @@ function AspectoDetailController($stateParams, pageTitleService, AspectoService)
     vm.remove = remove;
 
     function remove() {
-        AspectoService.remove(vm.aspc).then(function(data) {
+        AspectoService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
 
-    vm.aspc = {
+    vm.model = {
         id : $stateParams.id,
         fref : $stateParams.fref
     };
 
-    AspectoService.detail(vm.aspc).then(function(data) {
-        vm.aspc = data.model;
+    AspectoService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
         vm.ascrList = data.ascrList;
@@ -554,7 +622,7 @@ function AspectoEditController($state, $stateParams, pageTitleService, AspectoSe
     vm.cancel = cancel;
 
     function save() {
-        AspectoService.saveI18n(vm.accion, vm.aspc, vm.i18nMap).then(function(data) {
+        AspectoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
             AspectoService.redirectAfterSave(vm.accion, data.model, "aspecto-detail");
         });
     }
@@ -563,14 +631,14 @@ function AspectoEditController($state, $stateParams, pageTitleService, AspectoSe
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-    vm.aspc = {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         id : $stateParams.id,
         fref : $stateParams.fref
     }
 
-    AspectoService.edit($stateParams.accion, vm.aspc).then(function(data) {
-        vm.aspc = data.model;
+    AspectoService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
         vm.tpsrList = data.tpsrList;
@@ -605,18 +673,18 @@ function AspectoCargoDetailController($stateParams, pageTitleService, AspectoCar
     vm.remove = remove;
 
     function remove() {
-        AspectoCargoService.remove(vm.ascr).then(function(data) {
+        AspectoCargoService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
 
-    vm.ascr = {
+    vm.model = {
         id : $stateParams.id,
         fref : $stateParams.fref
     };
 
-    AspectoCargoService.detail(vm.ascr).then(function(data) {
-        vm.ascr = data.model;
+    AspectoCargoService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
     });
 
     pageTitleService.setTitle("ascr", "page_detail");
@@ -629,7 +697,7 @@ function AspectoCargoEditController($state, $stateParams, pageTitleService, Aspe
     vm.cancel = cancel;
 
     function save() {
-        AspectoCargoService.saveI18n(vm.accion, vm.ascr, vm.i18nMap).then(function(data) {
+        AspectoCargoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
             AspectoCargoService.redirectAfterSave(vm.accion, data.model, "aspecto-cargo-detail");
         });
     }
@@ -638,15 +706,15 @@ function AspectoCargoEditController($state, $stateParams, pageTitleService, Aspe
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-    vm.ascr = {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         aspcId : $stateParams.aspcId,
         id : $stateParams.id,
         fref : $stateParams.fref
     }
 
-    AspectoCargoService.edit($stateParams.accion, vm.ascr).then(function(data) {
-        vm.ascr = data.model;
+    AspectoCargoService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
 
         vm.crgoList = data.crgoList;
     });
@@ -809,15 +877,7 @@ function ValoracionDetailController($stateParams, pageTitleService, ValoracionSe
     }
 
     function print() {
-        ValoracionService.pdfExport(vm.vlrc).then(function(data) {
-            var file = new Blob([ data ], {
-                type : 'application/pdf'
-            });
-
-            setTimeout(function() {
-                saveAs(file, 'vlrc_' + vm.vlrc.id + '.pdf');
-            }, 0);
-        });
+        ValoracionService.pdfExport(vm.vlrc, 'vlrc_' + vm.vlrc.id);
     }
 
     vm.tabActive = {};

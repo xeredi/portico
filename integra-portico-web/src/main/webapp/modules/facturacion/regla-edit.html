@@ -3,91 +3,90 @@
         <div class="row">
             <div class="col-md-2 form-group-sm">
                 <label translate>crgo</label>
-                <p class="form-control-static" ng-bind="vm.rgla.crgo.etiqueta"></p>
+                <p class="form-control-static" ng-bind="vm.model.crgo.etiqueta"></p>
             </div>
             <div class="col-md-1 form-group-sm" ng-switch="::vm.accion">
                 <label translate>rgla_codigo</label> <input ng-switch-when="create" type="text"
-                    ng-model="vm.rgla.codigo" class="form-control" />
-                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.rgla.codigo"></p>
+                    ng-model="vm.model.codigo" class="form-control" />
+                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.codigo"></p>
             </div>
             <div class="col-md-2 form-group-sm" ng-switch="::vm.accion">
-                <label translate>rgla_tipo</label> <select ng-switch-when="create" ng-model="vm.rgla.tipo"
+                <label translate>rgla_tipo</label> <select ng-switch-when="create" ng-model="vm.model.tipo"
                     ng-options="cdrf as ('ReglaTipo_' + cdrf | translate) for cdrf in ::vm.tipos"
                     class="form-control">
                     <option />
                 </select>
                 <p ng-switch-when="edit" class="form-control-static"
-                    ng-bind="'ReglaTipo_' + vm.rgla.tipo | translate"></p>
+                    ng-bind="'ReglaTipo_' + vm.model.tipo | translate"></p>
             </div>
             <div class="col-md-2 form-group-sm" ng-switch="::vm.accion">
-                <label translate>enti</label> <select ng-switch-when="create" ng-model="vm.rgla.enti.id"
+                <label translate>enti</label> <select ng-switch-when="create" ng-model="vm.model.enti.id"
                     ng-options="item.value as item.label for item in ::vm.entiFacturableList"
                     class="form-control">
                     <option />
                 </select>
                 <p ng-switch-when="edit" class="form-control-static">
-                    <a ng-if="vm.rgla.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{vm.rgla.enti.id}}"
-                        ng-bind="'enti_' + vm.rgla.enti.id | translate"></a> <a
-                        ng-if="vm.rgla.enti.tipo == 'S'"
-                        ng-href="#/metamodelo/tpss/detail/{{vm.rgla.enti.id}}"
-                        ng-bind="'enti_' + vm.rgla.enti.id | translate"></a>
+                    <a ng-if="vm.model.enti.tipo == 'T'" ui-sref="tiposervicio-detail(vm.model.enti)"
+                        ng-bind="'enti_' + vm.model.enti.id | translate"></a> <a
+                        ng-if="vm.model.enti.tipo == 'S'" ui-sref="tiposubservicio-detail(vm.model.enti)"
+                        ng-bind="'enti_' + vm.model.enti.id | translate"></a>
                 </p>
             </div>
             <div class="col-md-1 form-group-sm">
                 <label translate>fini</label><input type="text" class="form-control"
-                    ng-model="vm.rgla.version.fini" data-max-date="{{vm.rgla.version.ffin}}" bs-datepicker />
+                    ng-model="vm.model.version.fini" data-max-date="{{vm.model.version.ffin}}" bs-datepicker />
             </div>
             <div class="col-md-1 form-group-sm">
                 <label translate>ffin</label><input type="text" class="form-control"
-                    ng-model="vm.rgla.version.ffin" data-min-date="{{vm.rgla.version.fini}}" bs-datepicker />
+                    ng-model="vm.model.version.ffin" data-min-date="{{vm.model.version.fini}}" bs-datepicker />
             </div>
             <div class="col-md-1 form-group-sm">
-                <label translate>rgla_orden</label> <input type="text" ng-model="vm.rgla.version.orden"
+                <label translate>rgla_orden</label> <input type="text" ng-model="vm.model.version.orden"
                     class="form-control number" />
             </div>
             <div class="col-md-1 form-group-sm">
                 <label translate>rgla_valorBase</label> <input type="text"
-                    ng-model="vm.rgla.version.valorBase" class="form-control number" />
+                    ng-model="vm.model.version.valorBase" class="form-control number" />
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6 form-group-sm">
                 <label translate>rgla_condicion</label>
-                <textarea class="form-control" rows="7" ng-model="vm.rgla.version.condicion"
-                    ng-bind="vm.rgla.version.condicion"></textarea>
+                <textarea class="form-control" rows="7" ng-model="vm.model.version.condicion"
+                    ng-bind="vm.model.version.condicion"></textarea>
             </div>
             <div class="col-md-6 form-group-sm">
                 <label translate>rgla_formula</label>
-                <textarea class="form-control" rows="7" ng-model="vm.rgla.version.formula"
-                    ng-bind="vm.rgla.version.formula"></textarea>
+                <textarea class="form-control" rows="7" ng-model="vm.model.version.formula"
+                    ng-bind="vm.model.version.formula"></textarea>
             </div>
         </div>
 
-        <div ng-if="vm.rgla.tipo == 'T'" class="row">
+        <div ng-if="vm.model.tipo == 'T'" class="row">
             <div class="col-md-6 form-group-sm">
                 <label translate>rgla_pathImpuesto</label> <input type="text"
-                    ng-model="vm.rgla.version.pathImpuesto" class="form-control" />
+                    ng-model="vm.model.version.pathImpuesto" class="form-control" />
             </div>
             <div class="col-md-6 form-group-sm">
                 <label translate>rgla_pathPagador</label> <input type="text"
-                    ng-model="vm.rgla.version.pathPagador" class="form-control" />
+                    ng-model="vm.model.version.pathPagador" class="form-control" />
             </div>
         </div>
 
-        <div ng-if="vm.rgla.tipo == 'T'" class="row">
+        <div ng-if="vm.model.tipo == 'T'" class="row">
             <div class="col-md-6 form-group-sm">
                 <label translate>rgla_pathEsSujPasivo</label> <input type="text"
-                    ng-model="vm.rgla.version.pathEsSujPasivo" class="form-control" />
+                    ng-model="vm.model.version.pathEsSujPasivo" class="form-control" />
             </div>
             <div class="col-md-6 form-group-sm">
                 <label translate>rgla_pathCodExen</label> <input type="text"
-                    ng-model="vm.rgla.version.pathCodExen" class="form-control" />
+                    ng-model="vm.model.version.pathCodExen" class="form-control" />
             </div>
         </div>
     </fieldset>
 
-    <fieldset ng-if="vm.rgla.tipo == 'T'">
+    <fieldset ng-if="vm.model.tipo == 'T'">
         <legend ng-bind="'Elementos Informativos'"></legend>
 
         <div class="col-sm-12 form-group-sm">
@@ -102,40 +101,40 @@
                 <tbody>
                     <tr>
                         <td>info1</td>
-                        <td><input type="text" ng-model="vm.rgla.version.etiqInfo1" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.rgla.version.pathInfo1" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.etiqInfo1" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathInfo1" class="form-control" /></td>
                     </tr>
                     <tr>
                         <td>info2</td>
-                        <td><input type="text" ng-model="vm.rgla.version.etiqInfo2" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.rgla.version.pathInfo2" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.etiqInfo2" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathInfo2" class="form-control" /></td>
                     </tr>
                     <tr>
                         <td>info3</td>
-                        <td><input type="text" ng-model="vm.rgla.version.etiqInfo3" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.rgla.version.pathInfo3" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.etiqInfo3" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathInfo3" class="form-control" /></td>
                     </tr>
                     <tr>
                         <td>info4</td>
-                        <td><input type="text" ng-model="vm.rgla.version.etiqInfo4" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.rgla.version.pathInfo4" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.etiqInfo4" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathInfo4" class="form-control" /></td>
                     </tr>
                     <tr>
                         <td>info5</td>
-                        <td><input type="text" ng-model="vm.rgla.version.etiqInfo5" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.rgla.version.pathInfo5" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.etiqInfo5" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathInfo5" class="form-control" /></td>
                     </tr>
                     <tr>
                         <td>info6</td>
-                        <td><input type="text" ng-model="vm.rgla.version.etiqInfo6" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.rgla.version.pathInfo6" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.etiqInfo6" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathInfo6" class="form-control" /></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </fieldset>
 
-    <fieldset ng-if="vm.rgla.tipo == 'T'">
+    <fieldset ng-if="vm.model.tipo == 'T'">
         <legend ng-bind="'Elementos Cuantitativos'"></legend>
 
         <div class="col-sm-12 form-group-sm">
@@ -151,33 +150,45 @@
                 <tbody>
                     <tr>
                         <td>cuant1</td>
-                        <td><input type="text" ng-model="vm.rgla.version.etiqCuant1" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.rgla.version.pathCuant1" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.etiqCuant1"
+                            class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathCuant1"
+                            class="form-control" /></td>
                     </tr>
                     <tr>
                         <td>cuant2</td>
-                        <td><input type="text" ng-model="vm.rgla.version.etiqCuant2" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.rgla.version.pathCuant2" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.etiqCuant2"
+                            class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathCuant2"
+                            class="form-control" /></td>
                     </tr>
                     <tr>
                         <td>cuant3</td>
-                        <td><input type="text" ng-model="vm.rgla.version.etiqCuant3" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.rgla.version.pathCuant3" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.etiqCuant3"
+                            class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathCuant3"
+                            class="form-control" /></td>
                     </tr>
                     <tr>
                         <td>cuant4</td>
-                        <td><input type="text" ng-model="vm.rgla.version.etiqCuant4" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.rgla.version.pathCuant4" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.etiqCuant4"
+                            class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathCuant4"
+                            class="form-control" /></td>
                     </tr>
                     <tr>
                         <td>cuant5</td>
-                        <td><input type="text" ng-model="vm.rgla.version.etiqCuant5" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.rgla.version.pathCuant5" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.etiqCuant5"
+                            class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathCuant5"
+                            class="form-control" /></td>
                     </tr>
                     <tr>
                         <td>cuant6</td>
-                        <td><input type="text" ng-model="vm.rgla.version.etiqCuant6" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.rgla.version.pathCuant6" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.etiqCuant6"
+                            class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathCuant6"
+                            class="form-control" /></td>
                     </tr>
                 </tbody>
             </table>

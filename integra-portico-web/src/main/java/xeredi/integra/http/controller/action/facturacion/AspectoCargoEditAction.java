@@ -33,9 +33,9 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
      */
     @Override
     public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getAspcId());
-
-        if (accion == ACCION_EDICION.edit) {
+        if (accion == ACCION_EDICION.create) {
+            Preconditions.checkNotNull(model.getAspcId());
+        } else {
             Preconditions.checkNotNull(model.getId());
 
             final AspectoCargoBO ascrBO = new AspectoCargoBO();

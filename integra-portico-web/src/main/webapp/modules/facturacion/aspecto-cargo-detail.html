@@ -1,8 +1,7 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default"
-            ui-sref="aspecto-cargo-edit({accion: 'edit', id: vm.ascr.id, aspcId: vm.ascr.aspcId, fref: vm.ascr.fref})"><i
+        <a class="btn btn-default" ui-sref="aspecto-cargo-edit(vm.model)"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
@@ -15,17 +14,17 @@
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="crgo"></label>
             <p class="form-control-static">
-                <a ui-sref="cargo-detail({id: vm.ascr.crgo.id, fref: vm.ascr.fref})"
-                    ng-bind="vm.ascr.crgo.etiqueta"></a>
+                <a ui-sref="cargo-detail({id: vm.model.crgo.id, fref: vm.model.fref})"
+                    ng-bind="vm.model.crgo.etiqueta"></a>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="fini"></label>
-            <p class="form-control-static" ng-bind="(vm.ascr.version.fini | date: dateFormat)"></p>
+            <p class="form-control-static" ng-bind="(vm.model.version.fini | date: dateFormat)"></p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="ffin"></label>
-            <p class="form-control-static" ng-bind="(vm.ascr.version.ffin | date: dateFormat)"></p>
+            <p class="form-control-static" ng-bind="(vm.model.version.ffin | date: dateFormat)"></p>
         </div>
     </div>
 </fieldset>

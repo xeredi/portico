@@ -3,19 +3,19 @@
         <div class="row">
             <div class="col-md-2 form-group-sm">
                 <label translate>rgin_rgla2</label> <select ng-if="vm.accion == 'create'"
-                    ng-model="vm.rgin.rgla2.id" ng-options="rgla.id as rgla.codigo for rgla in vm.rgla2List"
+                    ng-model="vm.model.rgla2.id" ng-options="rgla.id as rgla.codigo for rgla in vm.rgla2List"
                     class="form-control">
                     <option />
                 </select>
-                <p ng-if="vm.accion != 'create'" class="form-control-static" ng-bind="vm.rgin.rgla2.codigo"></p>
+                <p ng-if="vm.accion != 'create'" class="form-control-static" ng-bind="vm.model.rgla2.codigo"></p>
             </div>
             <div class="col-md-1 form-group-sm">
                 <label translate>fini</label><input type="text" class="form-control"
-                    ng-model="vm.rgin.version.fini" data-max-date="{{vm.rgin.version.ffin}}" bs-datepicker />
+                    ng-model="vm.model.version.fini" data-max-date="{{vm.model.version.ffin}}" bs-datepicker />
             </div>
             <div class="col-md-1 form-group-sm">
                 <label translate>ffin</label><input type="text" class="form-control"
-                    ng-model="vm.rgin.version.ffin" data-min-date="{{vm.rgin.version.fini}}" bs-datepicker />
+                    ng-model="vm.model.version.ffin" data-min-date="{{vm.model.version.fini}}" bs-datepicker />
             </div>
         </div>
     </fieldset>
