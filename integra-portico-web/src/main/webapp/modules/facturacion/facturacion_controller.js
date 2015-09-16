@@ -217,10 +217,22 @@ function config($stateProvider) {
         controller : "FacturaSerieDetailController as vm",
     })
 
-    .state("factura-serie-edit", {
-        url : "/facturacion/factura-serie/edit/:accion?id&fref",
+    .state("factura-serie-create", {
+        url : "/facturacion/factura-serie/create",
         templateUrl : "modules/facturacion/factura-serie-edit.html",
         controller : "FacturaSerieEditController as vm",
+        data : {
+            accion : 'create'
+        }
+    })
+
+    .state("factura-serie-edit", {
+        url : "/facturacion/factura-serie/edit/:id",
+        templateUrl : "modules/facturacion/factura-serie-edit.html",
+        controller : "FacturaSerieEditController as vm",
+        data : {
+            accion : 'edit'
+        }
     })
 
     // -------------------- Gestion ------------------
@@ -766,18 +778,18 @@ function FacturaSerieDetailController($stateParams, pageTitleService, FacturaSer
     vm.remove = remove;
 
     function remove() {
-        FacturaSerieService.remove(vm.fcsr).then(function(data) {
+        FacturaSerieService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
 
-    vm.fcsr = {
+    vm.model = {
         id : $stateParams.id,
         fref : $stateParams.fref
     };
 
-    FacturaSerieService.detail(vm.fcsr).then(function(data) {
-        vm.fcsr = data.model;
+    FacturaSerieService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
     });
 
     pageTitleService.setTitle("fcsr", "page_detail");
@@ -790,7 +802,7 @@ function FacturaSerieEditController($state, $stateParams, pageTitleService, Fact
     vm.cancel = cancel;
 
     function save() {
-        FacturaSerieService.save(vm.accion, vm.fcsr).then(function(data) {
+        FacturaSerieService.save(vm.accion, vm.model).then(function(data) {
             FacturaSerieService.redirectAfterSave(vm.accion, data.model, "factura-serie-detail");
         });
     }
@@ -799,14 +811,14 @@ function FacturaSerieEditController($state, $stateParams, pageTitleService, Fact
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-    vm.fcsr = {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         id : $stateParams.id,
         fref : $stateParams.fref
     }
 
-    FacturaSerieService.edit($stateParams.accion, vm.fcsr).then(function(data) {
-        vm.fcsr = data.model;
+    FacturaSerieService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
     });
 
     pageTitleService.setTitle("fcsr", "page_" + vm.accion);
@@ -862,7 +874,7 @@ function ValoracionDetailController($stateParams, pageTitleService, ValoracionSe
     vm.print = print;
 
     function remove() {
-        ValoracionService.remove(vm.vlrc).then(function(data) {
+        ValoracionService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
@@ -877,7 +889,7 @@ function ValoracionDetailController($stateParams, pageTitleService, ValoracionSe
     }
 
     function print() {
-        ValoracionService.pdfExport(vm.vlrc, 'vlrc_' + vm.vlrc.id);
+        ValoracionService.pdfExport(vm.model, 'vlrc_' + vm.model.id);
     }
 
     vm.tabActive = {};
@@ -886,12 +898,12 @@ function ValoracionDetailController($stateParams, pageTitleService, ValoracionSe
         vm.tabActive[$stateParams.tab] = true;
     }
 
-    vm.vlrc = {
+    vm.model = {
         id : $stateParams.id
     };
 
-    ValoracionService.detail(vm.vlrc).then(function(data) {
-        vm.vlrc = data.model;
+    ValoracionService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
 
         vm.aspc = data.aspc;
         vm.tpdtCodExencion = data.tpdtCodExencion;

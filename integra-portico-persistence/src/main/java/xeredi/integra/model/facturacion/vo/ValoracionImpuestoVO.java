@@ -1,7 +1,5 @@
 package xeredi.integra.model.facturacion.vo;
 
-import java.util.Date;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -26,9 +24,6 @@ public final class ValoracionImpuestoVO {
 
     /** The importe impuesto. */
     private Double importeImpuesto;
-
-    /** The fref. */
-    private Date fref;
 
     /**
      * {@inheritDoc}
@@ -132,24 +127,4 @@ public final class ValoracionImpuestoVO {
     public void setPorcentaje(final Double value) {
         porcentaje = value;
     }
-
-    /**
-     * Gets the fref.
-     *
-     * @return the fref
-     */
-    public Date getFref() {
-        return fref;
-    }
-
-    /**
-     * Sets the fref.
-     *
-     * @param value
-     *            the new fref
-     */
-    public void setFref(final Date value) {
-        fref = value;
-    }
-
 }

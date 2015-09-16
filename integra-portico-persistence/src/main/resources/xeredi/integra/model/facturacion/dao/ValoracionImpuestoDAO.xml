@@ -3,29 +3,29 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.facturacion.dao.ValoracionImpuestoDAO">
-	<resultMap type="ValoracionImpuestoVO" id="ResultMap">
-		<id column="vlrc_pk" />
-		<id column="prvr_pk" />
+    <resultMap type="ValoracionImpuestoVO" id="ResultMap">
+        <id column="vlrc_pk" />
+        <id column="prvr_pk" />
 
-		<result column="vlrc_pk" property="vlrcId" />
-		<result column="vlrl_impuesto_porcentaje" property="porcentaje" />
-		<result column="vlri_importe" property="importeBase" />
-		<result column="vlri_importe_impuesto" property="importeImpuesto" />
-		<result column="vlrc_fref" property="fref" />
+        <result column="vlrc_pk" property="vlrcId" />
+        <result column="vlrl_impuesto_porcentaje" property="porcentaje" />
+        <result column="vlri_importe" property="importeBase" />
+        <result column="vlri_importe_impuesto" property="importeImpuesto" />
 
-		<association property="impuesto" javaType="ParametroVO">
-			<result column="vlrl_impuesto_prmt_pk" property="id" />
-			<result column="vlrl_impuesto_prmt" property="parametro" />
-			<result column="vlrl_impuesto_tppr_pk" property="entiId" />
-			<result column="vlrl_impuesto_descripcion" property="texto" />
+        <association property="impuesto" javaType="ParametroVO">
+            <result column="vlrl_impuesto_prmt_pk" property="id" />
+            <result column="vlrl_impuesto_prmt" property="parametro" />
+            <result column="vlrl_impuesto_tppr_pk" property="entiId" />
+            <result column="vlrl_impuesto_descripcion" property="texto" />
+            <result column="vlrc_fref" property="fref" />
 
-			<association property="version" javaType="ParametroVersionVO">
-				<result column="prvr_pk" property="id" />
-			</association>
-		</association>
-	</resultMap>
+            <association property="version" javaType="ParametroVersionVO">
+                <result column="prvr_pk" property="id" />
+            </association>
+        </association>
+    </resultMap>
 
-	<select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
+    <select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
     <![CDATA[
 		SELECT
 		    vlrc_pk, vlrc_fref, prvr_pk, vlrl_impuesto_prmt_pk, vlrl_impuesto_porcentaje, vlri_importe
@@ -33,7 +33,7 @@
 		    , prmt_parametro AS vlrl_impuesto_prmt
 		    , prmt_tppr_pk AS vlrl_impuesto_tppr_pk
     ]]>
-		<if test="idioma != null">
+        <if test="idioma != null">
 	    <![CDATA[
 		    , (
 		        SELECT i18n_text
@@ -44,7 +44,7 @@
 		            AND i18n_ext_pk = prvr_pk
 		    ) AS vlrl_impuesto_descripcion
 	    ]]>
-		</if>
+        </if>
     <![CDATA[
 		FROM (
 		    SELECT
@@ -66,21 +66,21 @@
 		            prvr_prmt_pk = vlrl_impuesto_prmt_pk
 		            AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
     ]]>
-		<where>
-			<if test="id != null">
-				AND vlrc_pk = #{id}
-			</if>
-			<if test="ids != null">
-				AND vlrc_pk IN
-				<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
-				</foreach>
-			</if>
-		</where>
+        <where>
+            <if test="id != null">
+                AND vlrc_pk = #{id}
+            </if>
+            <if test="ids != null">
+                AND vlrc_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+                </foreach>
+            </if>
+        </where>
     <![CDATA[
 		    GROUP BY vlrc_pk, prvr_pk, vlrc_fref, vlrl_impuesto_prmt_pk
 		) sql
 			INNER JOIN tbl_parametro_prmt ON
 		        prmt_pk = vlrl_impuesto_prmt_pk
     ]]>
-	</select>
+    </select>
 </mapper>
