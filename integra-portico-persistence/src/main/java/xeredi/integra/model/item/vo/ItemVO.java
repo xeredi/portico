@@ -34,6 +34,8 @@ public abstract class ItemVO implements ItemEntidad {
      */
     protected ItemVO() {
         super();
+
+        itdtMap = new HashMap<>();
     }
 
     /**
@@ -45,7 +47,8 @@ public abstract class ItemVO implements ItemEntidad {
     protected ItemVO(final @NonNull AbstractEntidadDetailVO entiDetail) {
         super();
 
-        setEntiId(entiDetail.getEnti().getId());
+        entiId = entiDetail.getEnti().getId();
+        itdtMap = new HashMap<>();
 
         for (final EntidadTipoDatoVO entd : entiDetail.getEntdMap().values()) {
             final ItemDatoVO itdt = new ItemDatoVO();
@@ -63,8 +66,8 @@ public abstract class ItemVO implements ItemEntidad {
      *            the tpdt id
      * @return the itdt
      */
-    public final ItemDatoVO getItdt(final Long tpdtId) {
-        return itdtMap == null ? null : itdtMap.get(tpdtId);
+    public final ItemDatoVO getItdt(final @NonNull Long tpdtId) {
+        return itdtMap.get(tpdtId);
     }
 
     /**
@@ -75,7 +78,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public final void addItdt(final Long tpdtId, final Long value) {
+    public final void addItdt(final @NonNull Long tpdtId, final Long value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -92,7 +95,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public final void addItdt(final Long tpdtId, final Double value) {
+    public final void addItdt(final @NonNull Long tpdtId, final Double value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -109,7 +112,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public final void addItdt(final Long tpdtId, final String value) {
+    public final void addItdt(final @NonNull Long tpdtId, final String value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -126,7 +129,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public final void addItdt(final Long tpdtId, final ParametroVO value) {
+    public final void addItdt(final @NonNull Long tpdtId, final ParametroVO value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -143,7 +146,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public final void addItdt(final Long tpdtId, final ServicioVO value) {
+    public final void addItdt(final @NonNull Long tpdtId, final ServicioVO value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -160,7 +163,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public final void addItdt(final Long tpdtId, final Date value) {
+    public final void addItdt(final @NonNull Long tpdtId, final Date value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -175,18 +178,12 @@ public abstract class ItemVO implements ItemEntidad {
      * @param itdt
      *            the itdt
      */
-    private final void addItdt(final ItemDatoVO itdt) {
-        if (itdtMap == null) {
-            itdtMap = new HashMap<>();
-        }
-
+    private final void addItdt(final @NonNull ItemDatoVO itdt) {
         itdtMap.put(itdt.getTpdtId(), itdt);
     }
 
     /**
-     * Gets the id.
-     *
-     * @return the id
+     * {@inheritDoc}
      */
     @Override
     public final Long getId() {
@@ -194,13 +191,10 @@ public abstract class ItemVO implements ItemEntidad {
     }
 
     /**
-     * Sets the id.
-     *
-     * @param value
-     *            the new id
+     * {@inheritDoc}
      */
     @Override
-    public final void setId(final Long value) {
+    public final void setId(final @NonNull Long value) {
         id = value;
     }
 
@@ -219,7 +213,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the new enti id
      */
-    public final void setEntiId(final Long value) {
+    public final void setEntiId(final @NonNull Long value) {
         entiId = value;
     }
 
@@ -250,7 +244,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @return the itdt fecha
      */
     public final Date getItdtFecha(final @NonNull Long tpdtId) {
-        return itdtMap != null && itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getFecha() : null;
+        return itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getFecha() : null;
     }
 
     /**
@@ -261,7 +255,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @return the itdt prmt
      */
     public final ParametroVO getItdtPrmt(final @NonNull Long tpdtId) {
-        return itdtMap != null && itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getPrmt() : null;
+        return itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getPrmt() : null;
     }
 
     /**
@@ -272,7 +266,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @return the itdt srvc
      */
     public final ServicioVO getItdtSrvc(final @NonNull Long tpdtId) {
-        return itdtMap != null && itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getSrvc() : null;
+        return itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getSrvc() : null;
     }
 
     /**
@@ -283,7 +277,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @return the itdt entero
      */
     public final Long getItdtEntero(final @NonNull Long tpdtId) {
-        return itdtMap != null && itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCantidadEntera() : null;
+        return itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCantidadEntera() : null;
     }
 
     /**
@@ -294,7 +288,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @return the itdt decimal
      */
     public final Double getItdtDecimal(final @NonNull Long tpdtId) {
-        return itdtMap != null && itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCantidadDecimal() : null;
+        return itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCantidadDecimal() : null;
     }
 
     /**
@@ -305,7 +299,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @return the itdt booleano
      */
     public final Boolean getItdtBooleano(final @NonNull Long tpdtId) {
-        return itdtMap != null && itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCantidadEntera() == 1 : null;
+        return itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCantidadEntera() == 1 : null;
     }
 
     /**
@@ -316,7 +310,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @return the itdt cadena
      */
     public final String getItdtCadena(final @NonNull Long tpdtId) {
-        return itdtMap != null && itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCadena() : null;
+        return itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCadena() : null;
     }
 
     /**

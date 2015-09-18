@@ -1,6 +1,6 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ui-sref="grupo-edit({accion: 'edit', id: vm.grpo.id})"><i
+        <a class="btn btn-default" ui-sref="grupo-edit(vm.model)"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="grpo_nombre"></label>
-            <p class="form-control-static" ng-bind="::vm.grpo.nombre"></p>
+            <p class="form-control-static" ng-bind="vm.model.nombre"></p>
         </div>
     </div>
 </fieldset>
@@ -22,6 +22,6 @@
 
     <div class="list-group">
         <a ui-sref="accion-detail(accn)" class="list-group-item col-sm-6 col-md-4 col-lg-3"
-            ng-repeat="accn in ::vm.accnList track by accn.id" ng-bind="accn.nombre"></a>
+            ng-repeat="accn in vm.accnList track by accn.id" ng-bind="accn.nombre"></a>
     </div>
 </fieldset>

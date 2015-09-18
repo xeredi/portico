@@ -75,7 +75,7 @@ function config($stateProvider) {
     })
 
     .state("cargo-create", {
-        url : "/facturacion/cargo/create?fref",
+        url : "/facturacion/cargo/create",
         templateUrl : "modules/facturacion/cargo-edit.html",
         controller : "CargoEditController as vm",
         data : {
@@ -308,7 +308,7 @@ function CargoDetailController($stateParams, pageTitleService, CargoService) {
     vm.remove = remove;
 
     function remove() {
-        CargoService.remove(vm.crgo).then(function(data) {
+        CargoService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }

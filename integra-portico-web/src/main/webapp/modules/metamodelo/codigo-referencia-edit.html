@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col-md-3 form-group-sm" ng-switch="vm.accion">
                 <label translate="cdrf_valor"></label> <input ng-switch-when="create" type="text"
-                    ng-model="vm.cdrf.valor" class="form-control" />
-                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.cdrf.valor"></p>
+                    ng-model="vm.model.valor" class="form-control" />
+                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.valor"></p>
             </div>
             <div class="col-md-1 form-group-sm">
-                <label translate="cdrf_orden"></label> <input type="text" ng-model="vm.cdrf.orden"
+                <label translate="cdrf_orden"></label> <input type="text" ng-model="vm.model.orden"
                     class="form-control number" />
             </div>
         </div>

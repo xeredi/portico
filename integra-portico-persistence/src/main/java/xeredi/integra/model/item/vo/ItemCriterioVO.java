@@ -1,5 +1,6 @@
 package xeredi.integra.model.item.vo;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ import xeredi.integra.model.comun.vo.BaseCriterioVO;
 /**
  * The Class ItemCriterioVO.
  */
+
 /**
  * @author xeredi
  *
@@ -34,6 +36,15 @@ public abstract class ItemCriterioVO extends BaseCriterioVO {
 
     /** The itdt map. */
     private Map<Long, ItemDatoCriterioVO> itdtMap;
+
+    /**
+     * Instantiates a new item criterio vo.
+     */
+    public ItemCriterioVO() {
+        super();
+
+        itdtMap = new HashMap<>();
+    }
 
     /**
      * Gets the id.
@@ -147,16 +158,6 @@ public abstract class ItemCriterioVO extends BaseCriterioVO {
      */
     public final void setItdtMap(final Map<Long, ItemDatoCriterioVO> value) {
         itdtMap = value;
-
-        if (itdtMap != null) {
-            for (final Object key : itdtMap.keySet()) {
-                if (key instanceof Long) {
-                    itdtMap.get(key).setTpdtId((Long) key);
-                } else {
-                    itdtMap.get(key).setTpdtId(Long.valueOf(key.toString()));
-                }
-            }
-        }
     }
 
     /**

@@ -1,6 +1,6 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ui-sref="usuario-edit({accion: 'edit', id: vm.usro.id})"><i
+        <a class="btn btn-default" ui-sref="usuario-edit(vm.model)"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
@@ -12,19 +12,19 @@
     <div class="row">
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="usro_login"></label>
-            <p class="form-control-static" ng-bind="vm.usro.login"></p>
+            <p class="form-control-static" ng-bind="vm.model.login"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="usro_nombre"></label>
-            <p class="form-control-static" ng-bind="vm.usro.nombre"></p>
+            <p class="form-control-static" ng-bind="vm.model.nombre"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="sprt"></label>
-            <p class="form-control-static" ng-bind="vm.usro.sprt.etiqueta"></p>
+            <p class="form-control-static" ng-bind="vm.model.sprt.etiqueta"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="prto"></label>
-            <p class="form-control-static" ng-bind="vm.usro.prto.etiqueta"></p>
+            <p class="form-control-static" ng-bind="vm.model.prto.etiqueta"></p>
         </div>
     </div>
 </fieldset>

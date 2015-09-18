@@ -3,31 +3,31 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.servicio.dao.ServicioDAO">
-	<resultMap type="ServicioVO" id="ResultMap">
-		<id column="srvc_pk" property="id" />
-		<result column="srvc_tpsr_pk" property="entiId" />
-		<result column="srvc_anno" property="anno" />
-		<result column="srvc_numero" property="numero" />
-		<result column="srvc_falta" property="falta" />
-		<result column="srvc_fref" property="fref" />
-		<result column="srvc_fini" property="fini" />
-		<result column="srvc_ffin" property="ffin" />
-		<result column="srvc_estado" property="estado" />
+    <resultMap type="ServicioVO" id="ResultMap">
+        <id column="srvc_pk" property="id" />
+        <result column="srvc_tpsr_pk" property="entiId" />
+        <result column="srvc_anno" property="anno" />
+        <result column="srvc_numero" property="numero" />
+        <result column="srvc_falta" property="falta" />
+        <result column="srvc_fref" property="fref" />
+        <result column="srvc_fini" property="fini" />
+        <result column="srvc_ffin" property="ffin" />
+        <result column="srvc_estado" property="estado" />
 
-		<association property="prto" javaType="PuertoVO">
-			<result column="srvc_subp_pk" property="id" />
-			<result column="prto_codigo" property="codigo" />
-			<result column="prto_codigo_corto" property="codigoCorto" />
-			<result column="prto_nombre" property="nombre" />
-		</association>
-	</resultMap>
+        <association property="prto" javaType="PuertoVO">
+            <result column="srvc_subp_pk" property="id" />
+            <result column="prto_codigo" property="codigo" />
+            <result column="prto_codigo_corto" property="codigoCorto" />
+            <result column="prto_nombre" property="nombre" />
+        </association>
+    </resultMap>
 
-	<sql id="SelectPrefix">
+    <sql id="SelectPrefix">
     <![CDATA[
 		SELECT srvc_pk, srvc_tpsr_pk, srvc_anno, srvc_numero, srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado, srvc_subp_pk
 			, prto_codigo, prto_codigo_corto
     ]]>
-		<if test="idioma != null">
+        <if test="idioma != null">
         <![CDATA[
         	, (
         		SELECT i18n_text
@@ -38,115 +38,114 @@
         			AND i18n_ext_pk = prto_pk
         	) AS prto_nombre
         ]]>
-		</if>
+        </if>
         <![CDATA[
 		FROM
 			tbl_servicio_srvc
 			INNER JOIN tbl_puerto_prto ON
 				prto_pk = srvc_subp_pk
     ]]>
-	</sql>
+    </sql>
 
-	<sql id="SelectCountPrefix">
+    <sql id="SelectCountPrefix">
     <![CDATA[
     SELECT
         COUNT(1)
     FROM
     	tbl_servicio_srvc
     ]]>
-	</sql>
+    </sql>
 
-	<sql id="SelectWhere">
-		<if test="id != null">
-			AND srvc_pk = #{id}
-		</if>
-		<if test="ids != null and !ids.empty">
-			AND srvc_pk IN
-			<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
-			</foreach>
-		</if>
+    <sql id="SelectWhere">
+        <if test="id != null">
+            AND srvc_pk = #{id}
+        </if>
+        <if test="ids != null and !ids.empty">
+            AND srvc_pk IN
+            <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+            </foreach>
+        </if>
 
-		<if test="entiId != null">
-			AND srvc_tpsr_pk = #{entiId}
-		</if>
-		<if test="prto != null">
-			<if test="prto.id != null">
-				AND srvc_subp_pk = #{prto.id}
-			</if>
-		</if>
-		<if test="anno != null and !anno.empty">
-			AND srvc_anno = #{anno}
-		</if>
-		<if test="numero != null and !numero.empty">
-			AND srvc_numero = #{numero}
-		</if>
-		<if test="estado != null and !estado.empty">
-			AND srvc_estado = #{estado}
-		</if>
-		<if test="frefMin != null">
+        <if test="entiId != null">
+            AND srvc_tpsr_pk = #{entiId}
+        </if>
+        <if test="prto != null">
+            <if test="prto.id != null">
+                AND srvc_subp_pk = #{prto.id}
+            </if>
+        </if>
+        <if test="anno != null and !anno.empty">
+            AND srvc_anno = #{anno}
+        </if>
+        <if test="numero != null and !numero.empty">
+            AND srvc_numero = #{numero}
+        </if>
+        <if test="estado != null and !estado.empty">
+            AND srvc_estado = #{estado}
+        </if>
+        <if test="frefMin != null">
         <![CDATA[
 			AND srvc_fref >= #{frefMin}
         ]]>
-		</if>
-		<if test="frefMax != null">
+        </if>
+        <if test="frefMax != null">
         <![CDATA[
 			AND srvc_fref < #{frefMax}
         ]]>
-		</if>
-		<if test="finiMin != null">
+        </if>
+        <if test="finiMin != null">
         <![CDATA[
 			AND srvc_fini >= #{finiMin}
         ]]>
-		</if>
-		<if test="finiMax != null">
+        </if>
+        <if test="finiMax != null">
         <![CDATA[
 			AND srvc_fini < #{finiMax}
         ]]>
-		</if>
-		<if test="ffinMin != null">
+        </if>
+        <if test="ffinMin != null">
         <![CDATA[
 			AND srvc_ffin >= #{ffinMin}
         ]]>
-		</if>
-		<if test="ffinMax != null">
+        </if>
+        <if test="ffinMax != null">
         <![CDATA[
 			AND srvc_ffin < #{ffinMax}
         ]]>
-		</if>
-		<if test="itdtMap != null and !itdtMap.empty">
-			<foreach collection="itdtMap" item="itdt">
-				<if
-					test="(itdt.prmt != null and itdt.prmt.id != null) or (itdt.srvc != null and itdt.srvc.id != null) or itdt.cantidadEntera != null or itdt.cantidadDecimal != null or (itdt.cadena != null and !itdt.cadena.empty)">
-                        <![CDATA[
-                        AND EXISTS (
-                            SELECT 1
-                            FROM tbl_servicio_dato_srdt
-                            WHERE srdt_srvc_pk = srvc_pk
-                                AND srdt_tpdt_pk = #{itdt.tpdtId}
-                        ]]>
-					<if test="itdt.prmt != null and itdt.prmt.id != null">
-						AND srdt_prmt_pk = #{itdt.prmt.id}
-					</if>
-					<if test="itdt.srvc != null and itdt.srvc.id != null">
-						AND srdt_srvc_dep_pk = #{itdt.srvc.id}
-					</if>
-					<if test="itdt.cantidadEntera != null">
-						AND srdt_nentero = #{itdt.cantidadEntera}
-					</if>
-					<if test="itdt.cantidadDecimal != null">
-						AND srdt_ndecimal = #{itdt.cantidadDecimal}
-					</if>
-					<if test="itdt.cadena != null and !itdt.cadena.empty">
-						AND srdt_cadena LIKE #{itdt.cadena}
-					</if>
-					<!-- FIXME Faltan las fechas -->
-					)
-				</if>
-			</foreach>
-		</if>
-	</sql>
+        </if>
 
-	<select id="exists" parameterType="ServicioVO" resultType="boolean">
+        <foreach collection="itdtMap" item="itdt">
+            <if
+                test="(itdt.prmt != null and itdt.prmt.id != null) or (itdt.srvc != null and itdt.srvc.id != null) or itdt.cantidadEntera != null or itdt.cantidadDecimal != null or (itdt.cadena != null and !itdt.cadena.empty)">
+                <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_servicio_dato_srdt
+                    WHERE srdt_srvc_pk = srvc_pk
+                        AND srdt_tpdt_pk = #{key}
+                ]]>
+                <if test="itdt.prmt != null and itdt.prmt.id != null">
+                    AND srdt_prmt_pk = #{itdt.prmt.id}
+                </if>
+                <if test="itdt.srvc != null and itdt.srvc.id != null">
+                    AND srdt_srvc_dep_pk = #{itdt.srvc.id}
+                </if>
+                <if test="itdt.cantidadEntera != null">
+                    AND srdt_nentero = #{itdt.cantidadEntera}
+                </if>
+                <if test="itdt.cantidadDecimal != null">
+                    AND srdt_ndecimal = #{itdt.cantidadDecimal}
+                </if>
+                <if test="itdt.cadena != null and !itdt.cadena.empty">
+                    AND srdt_cadena LIKE #{itdt.cadena}
+                </if>
+                <!-- FIXME Faltan las fechas -->
+                )
+            </if>
+        </foreach>
+    </sql>
+
+    <select id="exists" parameterType="ServicioVO" resultType="boolean">
         <![CDATA[
         SELECT COUNT(1)
         FROM tbl_servicio_srvc
@@ -155,31 +154,31 @@
             AND srvc_anno = #{anno}
             AND srvc_numero = #{numero}
         ]]>
-	</select>
+    </select>
 
-	<select id="count" parameterType="ServicioCriterioVO" resultType="Integer">
-		<include refid="SelectCountPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-	</select>
+    <select id="count" parameterType="ServicioCriterioVO" resultType="Integer">
+        <include refid="SelectCountPrefix" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
+    </select>
 
-	<select id="selectList" parameterType="ServicioCriterioVO" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-		ORDER BY srvc_pk DESC
-	</select>
+    <select id="selectList" parameterType="ServicioCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
+        ORDER BY srvc_pk DESC
+    </select>
 
-	<select id="selectObject" parameterType="ServicioCriterioVO" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-	</select>
+    <select id="selectObject" parameterType="ServicioCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
+    </select>
 
-	<select id="selectLupaList" parameterType="ServicioLupaCriterioVO" resultMap="ResultMap" fetchSize="10">
+    <select id="selectLupaList" parameterType="ServicioLupaCriterioVO" resultMap="ResultMap" fetchSize="10">
         <![CDATA[
         select
             srvc_pk
@@ -194,18 +193,18 @@
         WHERE
             srvc_tpsr_pk = #{entiId}
         ]]>
-		<if test="subpuerto != null and !subpuerto.empty">
-			AND prto_codigo_corto LIKE #{subpuerto}
-		</if>
-		<if test="anno != null and !anno.empty">
-			AND srvc_anno LIKE #{anno}
-		</if>
-		<if test="numero != null and !numero.empty">
-			AND srvc_numero LIKE #{numero}
-		</if>
-	</select>
+        <if test="subpuerto != null and !subpuerto.empty">
+            AND prto_codigo_corto LIKE #{subpuerto}
+        </if>
+        <if test="anno != null and !anno.empty">
+            AND srvc_anno LIKE #{anno}
+        </if>
+        <if test="numero != null and !numero.empty">
+            AND srvc_numero LIKE #{numero}
+        </if>
+    </select>
 
-	<insert id="insert" parameterType="ServicioVO">
+    <insert id="insert" parameterType="ServicioVO">
         <![CDATA[
         INSERT INTO tbl_servicio_srvc (
             srvc_pk, srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_numero
@@ -215,22 +214,22 @@
             , portico.getSysDatetime(), #{fref}, #{fini}, #{ffin}, #{estado}
         )
         ]]>
-	</insert>
+    </insert>
 
-	<delete id="delete" parameterType="ServicioVO">
-		DELETE FROM tbl_servicio_srvc
-		WHERE srvc_pk = #{id}
-	</delete>
+    <delete id="delete" parameterType="ServicioVO">
+        DELETE FROM tbl_servicio_srvc
+        WHERE srvc_pk = #{id}
+    </delete>
 
-	<update id="updatePeprDesasociar" parameterType="Long">
+    <update id="updatePeprDesasociar" parameterType="Long">
         <![CDATA[
 			UPDATE tbl_servicio_srvc SET
 				srvc_pepr_pk = NULL
 			WHERE srvc_pepr_pk = #{value}
         ]]>
-	</update>
+    </update>
 
-	<update id="updateEstado" parameterType="ItemTramiteVO">
+    <update id="updateEstado" parameterType="ItemTramiteVO">
         <![CDATA[
 		UPDATE tbl_servicio_srvc SET
 		    srvc_estado = (
@@ -250,5 +249,5 @@
 		    )
 		    AND srvc_pk = #{itemId}
         ]]>
-	</update>
+    </update>
 </mapper>

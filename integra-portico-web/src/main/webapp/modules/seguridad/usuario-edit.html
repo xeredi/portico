@@ -3,26 +3,26 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate="usro_login"></label> <input type="text" ng-model="vm.usro.login"
+                <label translate="usro_login"></label> <input type="text" ng-model="vm.model.login"
                     class="form-control" />
             </div>
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                 <label translate="usro_contrasenia"></label> <input type="password"
-                    ng-model="vm.usro.contrasenia" class="form-control" />
+                    ng-model="vm.model.contrasenia" class="form-control" />
             </div>
             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
-                <label translate="usro_nombre"></label> <input type="text" ng-model="vm.usro.nombre"
+                <label translate="usro_nombre"></label> <input type="text" ng-model="vm.model.nombre"
                     class="form-control" />
             </div>
             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
-                <label translate="sprt"></label> <select ng-model="vm.usro.sprt.id"
-                    ng-options="sprt.id as sprt.etiqueta for sprt in ::vm.sprtList" class="form-control">
+                <label translate="sprt"></label> <select ng-model="vm.model.sprt.id"
+                    ng-options="sprt.id as sprt.etiqueta for sprt in vm.sprtList" class="form-control">
                     <option />
                 </select>
             </div>
             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
-                <label translate="prto"></label> <select ng-model="vm.usro.prto.id"
-                    ng-options="prto.id as prto.etiqueta for prto in ::vm.prtoList" class="form-control">
+                <label translate="prto"></label> <select ng-model="vm.model.prto.id"
+                    ng-options="prto.id as prto.etiqueta for prto in vm.prtoList" class="form-control">
                     <option />
                 </select>
             </div>
@@ -33,9 +33,9 @@
         <legend translate="grpoList"></legend>
 
         <div class="row">
-            <div class="checkbox" ng-repeat="grpo in ::vm.grpoList track by grpo.id">
+            <div class="checkbox" ng-repeat="grpo in vm.grpoList track by grpo.id">
                 <label> <input type="checkbox" ng-click="vm.updateGrupos($event, grpo.id)"
-                    ng-checked="vm.usro.grpoIds.indexOf(grpo.id) >= 0"> <span ng-bind="::grpo.nombre"></span>
+                    ng-checked="vm.model.grpoIds.indexOf(grpo.id) >= 0"> <span ng-bind="grpo.nombre"></span>
                 </label>
             </div>
         </div>

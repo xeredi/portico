@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
@@ -29,10 +28,8 @@ public final class CodigoReferenciaEditAction extends CrudEditAction<CodigoRefer
      */
     @Override
     public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getTpdtId());
-
         if (accion == ACCION_EDICION.create) {
-            i18nMap = new HashMap<>();
+            Preconditions.checkNotNull(model.getTpdtId());
         } else {
             Preconditions.checkNotNull(model.getId());
 

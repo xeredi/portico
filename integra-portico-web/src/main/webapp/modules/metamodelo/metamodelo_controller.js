@@ -81,35 +81,59 @@ angular.module("metamodelo_controller", [])
 function config($stateProvider) {
     $stateProvider
 
-    .state("tipodato-grid", {
-        url : "/metamodelo/tipodato/grid?page&searchCriteria&limit",
-        templateUrl : "modules/metamodelo/tipodato-grid.html",
+    .state("tipo-dato-grid", {
+        url : "/metamodelo/tipo-dato/grid?page&searchCriteria&limit",
+        templateUrl : "modules/metamodelo/tipo-dato-grid.html",
         controller : "TipoDatoGridController as vm",
         reloadOnSearch : false
     })
 
-    .state("tipodato-detail", {
-        url : "/metamodelo/tipodato/detail/:id",
-        templateUrl : "modules/metamodelo/tipodato-detail.html",
+    .state("tipo-dato-detail", {
+        url : "/metamodelo/tipo-dato/detail/:id",
+        templateUrl : "modules/metamodelo/tipo-dato-detail.html",
         controller : "TipoDatoDetailController as vm",
     })
 
-    .state("tipodato-edit", {
-        url : "/metamodelo/tipodato/edit/:accion?id",
-        templateUrl : "modules/metamodelo/tipodato-edit.html",
+    .state("tipo-dato-create", {
+        url : "/metamodelo/tipo-dato/create",
+        templateUrl : "modules/metamodelo/tipo-dato-edit.html",
         controller : "TipoDatoEditController as vm",
+        data : {
+            accion : 'create'
+        }
     })
 
-    .state("codigoreferencia-detail", {
-        url : "/metamodelo/codigoreferencia/detail/:id",
-        templateUrl : "modules/metamodelo/codigoreferencia-detail.html",
+    .state("tipo-dato-edit", {
+        url : "/metamodelo/tipo-dato/edit/:id",
+        templateUrl : "modules/metamodelo/tipo-dato-edit.html",
+        controller : "TipoDatoEditController as vm",
+        data : {
+            accion : 'edit'
+        }
+    })
+
+    .state("codigo-referencia-detail", {
+        url : "/metamodelo/codigo-referencia/detail/:id",
+        templateUrl : "modules/metamodelo/codigo-referencia-detail.html",
         controller : "CodigoReferenciaDetailController as vm",
     })
 
-    .state("codigoreferencia-edit", {
-        url : "/metamodelo/codigoreferencia/edit/:accion/:tpdtId?id",
-        templateUrl : "modules/metamodelo/codigoreferencia-edit.html",
+    .state("codigo-referencia-create", {
+        url : "/metamodelo/codigo-referencia/create/:tpdtId",
+        templateUrl : "modules/metamodelo/codigo-referencia-edit.html",
         controller : "CodigoReferenciaEditController as vm",
+        data : {
+            accion : 'create'
+        }
+    })
+
+    .state("codigo-referencia-edit", {
+        url : "/metamodelo/codigo-referencia/edit/:id",
+        templateUrl : "modules/metamodelo/codigo-referencia-edit.html",
+        controller : "CodigoReferenciaEditController as vm",
+        data : {
+            accion : 'edit'
+        }
     })
 
     .state("tipoparametro-grid", {
@@ -314,7 +338,7 @@ function TipoDatoGridController($state, $stateParams, $modal, pageTitleService, 
         TipoDatoService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
-            vm.tpdtList = data.resultList;
+            vm.resultList = data.resultList;
         });
     }
 
@@ -336,15 +360,17 @@ function TipoDatoDetailController($stateParams, pageTitleService, TipoDatoServic
     vm.remove = remove;
 
     function remove() {
-        TipoDatoService.remove(vm.tpdt).then(function(data) {
+        TipoDatoService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
 
-    TipoDatoService.detail({
+    vm.model = {
         id : $stateParams.id
-    }).then(function(data) {
-        vm.tpdt = data.model;
+    };
+
+    TipoDatoService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
 
@@ -358,12 +384,8 @@ function TipoDatoEditController($state, $stateParams, pageTitleService, TipoDato
     vm.cancel = cancel;
 
     function save() {
-        TipoDatoService.saveI18n(vm.accion, vm.tpdt, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("tipodato-detail", data.model, {
-                location : 'replace'
-            });
+        TipoDatoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
+            TipoDatoService.redirectAfterSave(vm.accion, data.model, "tipo-dato-detail");
         });
     }
 
@@ -371,12 +393,14 @@ function TipoDatoEditController($state, $stateParams, pageTitleService, TipoDato
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
+    vm.accion = $state.current.data.accion;
+    vm.model = {
+        id : $stateParams.id,
+        fref : $stateParams.fref
+    }
 
-    TipoDatoService.edit($stateParams.accion, {
-        id : $stateParams.id
-    }).then(function(data) {
-        vm.tpdt = data.model;
+    TipoDatoService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
         vm.tphtList = data.tphtList;
@@ -394,15 +418,17 @@ function CodigoReferenciaDetailController($stateParams, pageTitleService, Codigo
     vm.remove = remove;
 
     function remove() {
-        CodigoReferenciaService.remove(vm.cdrf).then(function(data) {
+        CodigoReferenciaService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
 
-    CodigoReferenciaService.detail({
+    vm.model = {
         id : $stateParams.id
-    }).then(function(data) {
-        vm.cdrf = data.model;
+    }
+
+    CodigoReferenciaService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
 
@@ -416,12 +442,8 @@ function CodigoReferenciaEditController($state, $stateParams, pageTitleService, 
     vm.cancel = cancel;
 
     function save() {
-        CodigoReferenciaService.saveI18n(vm.accion, vm.cdrf, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("codigoreferencia-detail", data.model, {
-                location : 'replace'
-            });
+        CodigoReferenciaService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
+            CodigoReferenciaService.redirectAfterSave(vm.accion, data.model, "codigo-referencia-detail");
         });
     }
 
@@ -429,13 +451,14 @@ function CodigoReferenciaEditController($state, $stateParams, pageTitleService, 
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-
-    CodigoReferenciaService.edit($stateParams.accion, {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         tpdtId : $stateParams.tpdtId,
         id : $stateParams.id
-    }).then(function(data) {
-        vm.cdrf = data.model;
+    }
+
+    CodigoReferenciaService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
 

@@ -2,11 +2,11 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate="accn_codigo"></label> <input type="text" ng-model="vm.accn.codigo"
+                <label translate="accn_codigo"></label> <input type="text" ng-model="vm.model.codigo"
                     class="form-control" />
             </div>
             <div class="col-sm-6 col-md-5 col-lg-4 form-group-sm">
-                <label translate="accn_nombre"></label> <input type="text" ng-model="vm.accn.nombre"
+                <label translate="accn_nombre"></label> <input type="text" ng-model="vm.model.nombre"
                     class="form-control" />
             </div>
         </div>
@@ -18,7 +18,7 @@
         <div class="row">
             <div class="checkbox" ng-repeat="grpo in ::vm.grpoList track by $index">
                 <label> <input type="checkbox" ng-click="vm.updateGrupos($event, grpo.id)"
-                    ng-checked="vm.accn.grpoIds.indexOf(grpo.id) >= 0"> <span ng-bind="grpo.nombre"></span>
+                    ng-checked="vm.model.grpoIds.indexOf(grpo.id) >= 0"> <span ng-bind="grpo.nombre"></span>
                 </label>
             </div>
         </div>

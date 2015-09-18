@@ -2,7 +2,7 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-6 col-md-5 col-lg-4 form-group-sm">
-                <label translate="grpo_nombre"></label> <input type="text" ng-model="vm.grpo.nombre"
+                <label translate="grpo_nombre"></label> <input type="text" ng-model="vm.model.nombre"
                     class="form-control" />
             </div>
         </div>
@@ -12,9 +12,9 @@
         <legend translate="accnList"></legend>
 
         <div class="row">
-            <div class="checkbox" ng-repeat="accn in ::vm.accnList track by accn.id">
+            <div class="checkbox" ng-repeat="accn in vm.accnList track by accn.id">
                 <label> <input type="checkbox" ng-click="vm.updateAcciones($event, accn.id)"
-                    ng-checked="vm.grpo.accnIds.indexOf(accn.id) >= 0"> <span ng-bind="::accn.nombre"></span>
+                    ng-checked="vm.model.accnIds.indexOf(accn.id) >= 0"> <span ng-bind="accn.nombre"></span>
                 </label>
             </div>
         </div>

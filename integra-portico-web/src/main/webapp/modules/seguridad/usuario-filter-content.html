@@ -15,14 +15,14 @@
                             </div>
                             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
                                 <label translate="sprt"></label> <select ng-model="vm.searchCriteria.sprtId"
-                                    ng-options="sprt.id as sprt.etiqueta for sprt in ::vm.sprtList"
+                                    ng-options="sprt.id as sprt.etiqueta for sprt in vm.sprtList"
                                     class="form-control">
                                     <option />
                                 </select>
                             </div>
                             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
                                 <label translate="prto"></label> <select ng-model="vm.searchCriteria.prtoId"
-                                    ng-options="prto.id as prto.etiqueta for prto in ::vm.prtoList"
+                                    ng-options="prto.id as prto.etiqueta for prto in vm.prtoList"
                                     class="form-control">
                                     <option />
                                 </select>

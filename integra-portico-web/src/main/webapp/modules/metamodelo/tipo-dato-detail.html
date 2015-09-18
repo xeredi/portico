@@ -1,7 +1,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ui-sref="tipodato-edit({accion: 'edit', id: vm.tpdt.id})"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+        <a class="btn btn-default" ui-sref="tipo-dato-edit(vm.model)"><i class="glyphicon glyphicon-edit"></i>
+            <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
@@ -12,27 +12,27 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate>tpdt_codigo</label>
-            <p class="form-control-static" ng-bind="vm.tpdt.codigo"></p>
+            <p class="form-control-static" ng-bind="vm.model.codigo"></p>
         </div>
         <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
             <label translate>tpdt_tpht</label>
-            <p class="form-control-static" ng-bind="('HtmlTipo_' + vm.tpdt.tpht | translate)"></p>
+            <p class="form-control-static" ng-bind="('HtmlTipo_' + vm.model.tpht | translate)"></p>
         </div>
         <div class="col-sm-2 col-md-2 col-lg-2 form-group-sm">
             <label translate>tpdt_tpel</label>
-            <p class="form-control-static" ng-bind="('ElementoTipo_' + vm.tpdt.tipoElemento | translate)"></p>
+            <p class="form-control-static" ng-bind="('ElementoTipo_' + vm.model.tipoElemento | translate)"></p>
         </div>
-        <div ng-if="vm.tpdt.enti.id" class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+        <div ng-if="vm.model.enti.id" class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate>enti</label>
             <p class="form-control-static">
-                <a ng-if="vm.tpdt.enti.tipo == 'T'" ui-sref="tiposervicio-detail(vm.tpdt.enti)"
-                    ng-bind="vm.tpdt.enti.nombre"></a><a ng-if="vm.tpdt.enti.tipo == 'S'"
-                    ui-sref="tiposubservicio-detail(vm.tpdt.enti)" ng-bind="vm.tpdt.enti.nombre"></a><a
-                    ng-if="vm.tpdt.enti.tipo == 'P'" ui-sref="tipoparametro-detail(vm.tpdt.enti)"
-                    ng-bind="vm.tpdt.enti.nombre"></a><a ng-if="vm.tpdt.enti.tipo == 'B'"
-                    ui-sref="tiposubparametro-detail(vm.tpdt.enti)" ng-bind="vm.tpdt.enti.nombre"></a> <a
-                    ng-if="vm.tpdt.enti.tipo == 'E'" ui-sref="tipoestadistica-detail(vm.tpdt.enti)"
-                    ng-bind="vm.tpdt.enti.nombre"></a>
+                <a ng-if="vm.model.enti.tipo == 'T'" ui-sref="tiposervicio-detail(vm.model.enti)"
+                    ng-bind="vm.model.enti.nombre"></a><a ng-if="vm.model.enti.tipo == 'S'"
+                    ui-sref="tiposubservicio-detail(vm.model.enti)" ng-bind="vm.model.enti.nombre"></a><a
+                    ng-if="vm.model.enti.tipo == 'P'" ui-sref="tipoparametro-detail(vm.model.enti)"
+                    ng-bind="vm.model.enti.nombre"></a><a ng-if="vm.model.enti.tipo == 'B'"
+                    ui-sref="tiposubparametro-detail(vm.model.enti)" ng-bind="vm.model.enti.nombre"></a> <a
+                    ng-if="vm.model.enti.tipo == 'E'" ui-sref="tipoestadistica-detail(vm.model.enti)"
+                    ng-bind="vm.model.enti.nombre"></a>
             </p>
         </div>
     </div>
@@ -40,12 +40,12 @@
     <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
 </fieldset>
 
-<div ng-if="vm.tpdt.tipoElemento == 'CR'">
+<div ng-if="vm.model.tipoElemento == 'CR'">
     <legend ng-bind="'Valores de Codigo de Referencia'"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ui-sref="codigoreferencia-edit({accion: 'create', tpdtId: vm.tpdt.id})"><i
+            <a class="btn btn-default" ui-sref="codigo-referencia-create({tpdtId: vm.model.id})"><i
                 class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>
@@ -60,8 +60,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="cdrf in vm.tpdt.cdrfList track by $index">
-                <td><a ui-sref="codigoreferencia-detail(cdrf)"><i class="glyphicon glyphicon-search"></i></a></td>
+            <tr ng-repeat="cdrf in vm.model.cdrfList track by $index">
+                <td><a ui-sref="codigo-referencia-detail(cdrf)"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="cdrf.valor"></td>
                 <td ng-bind="cdrf.texto"></td>
                 <td class="number" ng-bind="cdrf.orden"></td>

@@ -3,34 +3,34 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.maestro.dao.ParametroDAO">
-	<resultMap type="ParametroVO" id="ResultMap">
-		<id column="prmt_pk" />
-		<id column="prvr_pk" />
+    <resultMap type="ParametroVO" id="ResultMap">
+        <id column="prmt_pk" />
+        <id column="prvr_pk" />
 
-		<result column="prmt_pk" property="id" />
-		<result column="prmt_parametro" property="parametro" />
-		<result column="prmt_tppr_pk" property="entiId" />
+        <result column="prmt_pk" property="id" />
+        <result column="prmt_parametro" property="parametro" />
+        <result column="prmt_tppr_pk" property="entiId" />
 
         <result column="prmt_fref" property="fref" />
-		<result column="p18n_texto" property="texto" />
+        <result column="p18n_texto" property="texto" />
 
-		<association property="prto" javaType="PuertoVO">
-			<result column="prmt_prto_pk" property="id" />
-			<result column="prto_codigo" property="codigo" />
-			<result column="prto_codigo_corto" property="codigoCorto" />
-			<result column="prto_nombre" property="nombre" />
-		</association>
+        <association property="prto" javaType="PuertoVO">
+            <result column="prmt_prto_pk" property="id" />
+            <result column="prto_codigo" property="codigo" />
+            <result column="prto_codigo_corto" property="codigoCorto" />
+            <result column="prto_nombre" property="nombre" />
+        </association>
 
-		<association property="version" javaType="ParametroVersionVO">
-			<result column="prvr_pk" property="id" />
-			<result column="prvr_fini" property="fini" />
-			<result column="prvr_ffin" property="ffin" />
-			<result column="prvr_lat" property="lat" />
-			<result column="prvr_lon" property="lon" />
-		</association>
-	</resultMap>
+        <association property="version" javaType="ParametroVersionVO">
+            <result column="prvr_pk" property="id" />
+            <result column="prvr_fini" property="fini" />
+            <result column="prvr_ffin" property="ffin" />
+            <result column="prvr_lat" property="lat" />
+            <result column="prvr_lon" property="lon" />
+        </association>
+    </resultMap>
 
-	<sql id="SelectPrefix">
+    <sql id="SelectPrefix">
     <![CDATA[
 		SELECT
 		    prmt_pk, prmt_tppr_pk, prmt_parametro, prmt_prto_pk
@@ -41,7 +41,7 @@
 
             , #{fechaVigencia} AS prmt_fref
     ]]>
-		<if test="idioma != null">
+        <if test="idioma != null">
         <![CDATA[
         	, (
         		SELECT i18n_text
@@ -80,7 +80,7 @@
 		        END
 		    ) AS p18n_texto
         ]]>
-		</if>
+        </if>
         <![CDATA[
 		FROM
 		    tbl_parametro_prmt
@@ -89,9 +89,9 @@
 		    LEFT JOIN tbl_puerto_prto ON
 		        prto_pk = prmt_prto_pk
         ]]>
-	</sql>
+    </sql>
 
-	<sql id="SelectCountPrefix">
+    <sql id="SelectCountPrefix">
     <![CDATA[
 	    SELECT
 	        COUNT(1)
@@ -100,36 +100,34 @@
 		    INNER JOIN tbl_parametro_version_prvr ON
 		        prvr_prmt_pk = prmt_pk
     ]]>
-	</sql>
+    </sql>
 
-	<sql id="SelectWhere">
-		<if test="id != null">
-			AND prmt_pk = #{id}
-		</if>
+    <sql id="SelectWhere">
+        <if test="id != null">
+            AND prmt_pk = #{id}
+        </if>
 
-		<if test="ids != null and !ids.empty">
-			AND prmt_pk IN
-			<foreach collection="ids" item="item" open="(" close=")"
-				separator=",">#{item}
-			</foreach>
-		</if>
+        <if test="ids != null and !ids.empty">
+            AND prmt_pk IN
+            <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+            </foreach>
+        </if>
 
-		<if test="entiId != null">
-			AND prmt_tppr_pk = #{entiId}
-		</if>
+        <if test="entiId != null">
+            AND prmt_tppr_pk = #{entiId}
+        </if>
 
-		<if test="entiIds != null and !entiIds.empty">
-			AND prmt_tppr_pk IN
-			<foreach collection="entiIds" item="item" open="(" close=")"
-				separator=",">#{item}
-			</foreach>
-		</if>
+        <if test="entiIds != null and !entiIds.empty">
+            AND prmt_tppr_pk IN
+            <foreach collection="entiIds" item="item" open="(" close=")" separator=",">#{item}
+            </foreach>
+        </if>
 
-		<if test="parametro != null and !parametro.empty">
-			AND prmt_parametro LIKE #{parametro}
-		</if>
+        <if test="parametro != null and !parametro.empty">
+            AND prmt_parametro LIKE #{parametro}
+        </if>
 
-		<if test="textoBusqueda != null and !textoBusqueda.empty">
+        <if test="textoBusqueda != null and !textoBusqueda.empty">
 		<![CDATA[
 			AND (
 				prmt_parametro LIKE #{textoBusqueda}
@@ -147,7 +145,7 @@
 		            )
 		        )
 		]]>
-			<if test="idioma != null">
+            <if test="idioma != null">
 	        <![CDATA[
 		        OR (
 		            EXISTS (
@@ -160,21 +158,20 @@
 		            )
 		        )
 	        ]]>
-			</if>
+            </if>
 		<![CDATA[
 			)
 		]]>
-		</if>
+        </if>
 
-		<if test="parametros != null and !parametros.empty">
-			AND prmt_parametro IN
-			<foreach collection="parametros" item="item" open="(" close=")"
-				separator=",">#{item}
-			</foreach>
-		</if>
+        <if test="parametros != null and !parametros.empty">
+            AND prmt_parametro IN
+            <foreach collection="parametros" item="item" open="(" close=")" separator=",">#{item}
+            </foreach>
+        </if>
 
-		<if test="prto != null">
-			<if test="prto.id != null">
+        <if test="prto != null">
+            <if test="prto.id != null">
 			<![CDATA[
 				AND (
 					EXISTS (
@@ -185,8 +182,8 @@
 					OR prmt_prto_pk = #{prto.id}
 				)
 			]]>
-			</if>
-			<if test="prto.ids != null">
+            </if>
+            <if test="prto.ids != null">
 			<![CDATA[
 				AND (
 					EXISTS (
@@ -196,39 +193,36 @@
 
 					OR prmt_prto_pk IN
 			]]>
-				<foreach collection="prto.ids" item="item" open="(" close=")"
-					separator=",">#{item}
-				</foreach>
+                <foreach collection="prto.ids" item="item" open="(" close=")" separator=",">#{item}
+                </foreach>
 			<![CDATA[
 				)
 			]]>
-			</if>
-		</if>
+            </if>
+        </if>
 
-		<if test="versionId != null">
-			AND prvr_pk = #{versionId}
-		</if>
+        <if test="versionId != null">
+            AND prvr_pk = #{versionId}
+        </if>
 
-		<if test="versionIds != null and !versionIds.empty">
-			AND prvr_pk IN
-			<foreach collection="versionIds" item="item" open="(" close=")"
-				separator=",">#{item}
-			</foreach>
-		</if>
+        <if test="versionIds != null and !versionIds.empty">
+            AND prvr_pk IN
+            <foreach collection="versionIds" item="item" open="(" close=")" separator=",">#{item}
+            </foreach>
+        </if>
 
-		<if test="fechaVigencia != null">
+        <if test="fechaVigencia != null">
 		<![CDATA[
 			AND #{fechaVigencia} >= prvr_fini
 			AND (
 				prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia}
 			)
 		]]>
-		</if>
+        </if>
 
-		<if test="sprmMap != null">
-			<foreach collection="sprmMap" index="key" item="sprm">
-				<if
-					test="key != null and sprm.prmtAsociado != null and sprm.prmtAsociado.id != null">
+        <if test="sprmMap != null">
+            <foreach collection="sprmMap" index="key" item="sprm">
+                <if test="key != null and sprm.prmtAsociado != null and sprm.prmtAsociado.id != null">
 				<![CDATA[
 				    AND EXISTS (
 				        SELECT 1
@@ -238,7 +232,7 @@
 				            AND sprm_tpsp_pk = #{key}
 				            AND sprm_prmt_dep_pk = #{sprm.prmtAsociado.id}
 				]]>
-					<if test="fechaVigencia != null">
+                    <if test="fechaVigencia != null">
 					<![CDATA[
 						    AND EXISTS (
 						        SELECT 1
@@ -249,94 +243,85 @@
 				            		AND (spvr_ffin IS NULL OR spvr_ffin > #{fechaVigencia})
 					        )
 					]]>
-					</if>
-					)
-				</if>
-			</foreach>
-		</if>
+                    </if>
+                    )
+                </if>
+            </foreach>
+        </if>
 
-		<if test="itdtMap != null and !itdtMap.empty">
-			<foreach collection="itdtMap" index="key" item="itdt">
-				<!-- FIXME ojo, faltan las fechas -->
-				<if
-					test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadDecimal or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) or (itdt.cadenas != null and !itdt.cadenas.empty)">
-                        <![CDATA[
-                        AND EXISTS (
-                            SELECT 1
-                            FROM tbl_parametro_dato_prdt
-                            WHERE
-                                prdt_prvr_pk = prvr_pk
-                                AND prdt_tpdt_pk = #{itdt.tpdtId}
-                        ]]>
-					<if test="itdt.prmt != null and itdt.prmt.id != null">
-						AND prdt_prmt_pk = #{itdt.prmt.id}
-					</if>
-					<if test="itdt.cantidadEntera != null">
-						AND prdt_nentero = #{itdt.cantidadEntera}
-					</if>
-					<if test="itdt.cantidadDecimal != null">
-						AND prdt_ndecimal = #{itdt.cantidadDecimal}
-					</if>
-					<if test="itdt.cadena != null and !itdt.cadena.empty">
-						AND prdt_cadena LIKE #{itdt.cadena}
-					</if>
-					<if test="itdt.cadenas != null and !itdt.cadenas.empty">
-						AND prdt_cadena IN
-						<foreach collection="itdt.cadenas" item="cadena" open="("
-							close=")" separator=",">#{cadena}
-						</foreach>
-					</if>
-					)
-				</if>
-			</foreach>
-		</if>
-	</sql>
+        <foreach collection="itdtMap" index="key" item="itdt">
+            <!-- FIXME ojo, faltan las fechas -->
+            <if
+                test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadDecimal or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) or (itdt.cadenas != null and !itdt.cadenas.empty)">
+                <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_parametro_dato_prdt
+                    WHERE
+                        prdt_prvr_pk = prvr_pk
+                        AND prdt_tpdt_pk = #{key}
+                ]]>
+                <if test="itdt.prmt != null and itdt.prmt.id != null">
+                    AND prdt_prmt_pk = #{itdt.prmt.id}
+                </if>
+                <if test="itdt.cantidadEntera != null">
+                    AND prdt_nentero = #{itdt.cantidadEntera}
+                </if>
+                <if test="itdt.cantidadDecimal != null">
+                    AND prdt_ndecimal = #{itdt.cantidadDecimal}
+                </if>
+                <if test="itdt.cadena != null and !itdt.cadena.empty">
+                    AND prdt_cadena LIKE #{itdt.cadena}
+                </if>
+                <if test="itdt.cadenas != null and !itdt.cadenas.empty">
+                    AND prdt_cadena IN
+                    <foreach collection="itdt.cadenas" item="cadena" open="(" close=")" separator=",">#{cadena}
+                    </foreach>
+                </if>
+                )
+            </if>
+        </foreach>
+    </sql>
 
-	<select id="count" parameterType="ParametroCriterioVO"
-		resultType="Integer">
-		<include refid="SelectCountPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-	</select>
+    <select id="count" parameterType="ParametroCriterioVO" resultType="Integer">
+        <include refid="SelectCountPrefix" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
+    </select>
 
-	<select id="selectList" parameterType="ParametroCriterioVO"
-		resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
+    <select id="selectList" parameterType="ParametroCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
 
-		ORDER BY prmt_tppr_pk, prmt_parametro
-	</select>
+        ORDER BY prmt_tppr_pk, prmt_parametro
+    </select>
 
-	<select id="selectMap" parameterType="ParametroCriterioVO"
-		resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-	</select>
+    <select id="selectMap" parameterType="ParametroCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
+    </select>
 
-	<select id="selectMapByCodigo" parameterType="ParametroCriterioVO"
-		resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-	</select>
+    <select id="selectMapByCodigo" parameterType="ParametroCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
+    </select>
 
-	<select id="selectObject" parameterType="ParametroCriterioVO"
-		resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-	</select>
+    <select id="selectObject" parameterType="ParametroCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
+    </select>
 
-	<select id="selectSprmList" parameterType="SubparametroCriterioVO"
-		resultMap="ResultMap">
-		<include refid="SelectPrefix" />
+    <select id="selectSprmList" parameterType="SubparametroCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
         <![CDATA[
 		WHERE
 		    EXISTS (
@@ -356,9 +341,9 @@
 		    AND prmt_parametro LIKE #{textoBusqueda}
 		ORDER BY prmt_tppr_pk, prmt_parametro
         ]]>
-	</select>
+    </select>
 
-	<select id="selectId" parameterType="ParametroVO" resultType="Long">
+    <select id="selectId" parameterType="ParametroVO" resultType="Long">
         <![CDATA[
         SELECT prmt_pk
         FROM
@@ -366,24 +351,23 @@
         WHERE prmt_tppr_pk = #{entiId}
             AND prmt_parametro = #{parametro}
         ]]>
-	</select>
+    </select>
 
-	<select id="exists" parameterType="ParametroVO" resultType="Boolean">
+    <select id="exists" parameterType="ParametroVO" resultType="Boolean">
         <![CDATA[
         SELECT COUNT(1)
         FROM tbl_parametro_prmt
         WHERE prmt_tppr_pk = #{entiId}
             AND prmt_parametro = #{parametro}
         ]]>
-		<if test="prto != null">
-			<if test="prto.id != null">
-				AND prmt_prto_pk = #{prto.id}
-			</if>
-		</if>
-	</select>
+        <if test="prto != null">
+            <if test="prto.id != null">
+                AND prmt_prto_pk = #{prto.id}
+            </if>
+        </if>
+    </select>
 
-	<select id="existsOverlap" parameterType="ParametroVO"
-		resultType="Boolean">
+    <select id="existsOverlap" parameterType="ParametroVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM
@@ -405,28 +389,28 @@
 				)
             )
     ]]>
-		<if test="version.id != null">
+        <if test="version.id != null">
         <![CDATA[
             AND prvr_pk <> #{version.id}
         ]]>
-		</if>
-	</select>
+        </if>
+    </select>
 
-	<insert id="insert" parameterType="ParametroVO">
+    <insert id="insert" parameterType="ParametroVO">
         <![CDATA[
         INSERT INTO tbl_parametro_prmt(prmt_pk, prmt_tppr_pk, prmt_parametro, prmt_prto_pk)
         VALUES (#{id}, #{entiId}, #{parametro}, #{prto.id})
         ]]>
-	</insert>
+    </insert>
 
-	<insert id="insertVersion" parameterType="ParametroVO">
+    <insert id="insertVersion" parameterType="ParametroVO">
     <![CDATA[
         INSERT INTO tbl_parametro_version_prvr(prvr_pk, prvr_prmt_pk, prvr_fini, prvr_ffin, prvr_lat, prvr_lon)
         VALUES (#{version.id}, #{id}, #{version.fini}, #{version.ffin}, #{version.lat}, #{version.lon})
     ]]>
-	</insert>
+    </insert>
 
-	<update id="updateVersion" parameterType="ParametroVO">
+    <update id="updateVersion" parameterType="ParametroVO">
     <![CDATA[
         UPDATE tbl_parametro_version_prvr SET
             prvr_fini = #{version.fini}
@@ -435,12 +419,12 @@
             , prvr_lon = #{version.lon}
         WHERE prvr_pk = #{version.id}
     ]]>
-	</update>
+    </update>
 
-	<delete id="deleteVersion" parameterType="ParametroVO">
+    <delete id="deleteVersion" parameterType="ParametroVO">
     <![CDATA[
         DELETE FROM tbl_parametro_version_prvr
         WHERE prvr_pk = #{version.id}
     ]]>
-	</delete>
+    </delete>
 </mapper>

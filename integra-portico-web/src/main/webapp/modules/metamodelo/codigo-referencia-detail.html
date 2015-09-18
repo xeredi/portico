@@ -1,7 +1,6 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default"
-            ui-sref="codigoreferencia-edit({accion: 'edit', tpdtId: vm.cdrf.tpdtId, id: vm.cdrf.id})"><i
+        <a class="btn btn-default" ui-sref="codigo-referencia-edit(vm.model)"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
@@ -13,11 +12,11 @@
     <div class="row">
         <div class="col-md-2 form-group-sm">
             <label translate="cdrf_valor"></label>
-            <p class="form-control-static" ng-bind="vm.cdrf.valor"></p>
+            <p class="form-control-static" ng-bind="vm.model.valor"></p>
         </div>
         <div class="col-md-1 form-group-sm">
             <label translate="cdrf_orden"></label>
-            <p class="form-control-static number" ng-bind="vm.cdrf.orden"></p>
+            <p class="form-control-static number" ng-bind="vm.model.orden"></p>
         </div>
     </div>
 
