@@ -40,12 +40,12 @@ public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
      */
     @Override
     public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getEntiId());
-
         final TramiteBO trmtBO = new TramiteBO();
 
         switch (accion) {
         case create:
+            Preconditions.checkNotNull(model.getEntiId());
+
             break;
         case edit:
             Preconditions.checkNotNull(model.getId());

@@ -360,22 +360,46 @@ function config($stateProvider) {
         controller : "TramiteDetailController as vm",
     })
 
-    .state("tramite-edit", {
-        url : "/metamodelo/tramite/edit/:accion/:entiId?id",
+    .state("tramite-create", {
+        url : "/metamodelo/tramite/create/:entiId",
         templateUrl : "modules/metamodelo/tramite-edit.html",
         controller : "TramiteEditController as vm",
+        data : {
+            accion : 'create'
+        }
     })
 
-    .state("tramitetipodato-detail", {
-        url : "/metamodelo/tramitetipodato/detail/:trmtId/:tpdtId",
-        templateUrl : "modules/metamodelo/tramitetipodato-detail.html",
+    .state("tramite-edit", {
+        url : "/metamodelo/tramite/edit/:id",
+        templateUrl : "modules/metamodelo/tramite-edit.html",
+        controller : "TramiteEditController as vm",
+        data : {
+            accion : 'edit'
+        }
+    })
+
+    .state("tramite-tipo-dato-detail", {
+        url : "/metamodelo/tramite-tipo-dato/detail/:trmtId/:tpdtId",
+        templateUrl : "modules/metamodelo/tramite-tipo-dato-detail.html",
         controller : "TramiteTipoDatoDetailController as vm",
     })
 
-    .state("tramitetipodato-edit", {
-        url : "/metamodelo/tramitetipodato/edit/:accion/:trmtId?tpdtId",
-        templateUrl : "modules/metamodelo/tramitetipodato-edit.html",
+    .state("tramite-tipo-dato-create", {
+        url : "/metamodelo/tramite-tipo-dato/create/:trmtId",
+        templateUrl : "modules/metamodelo/tramite-tipo-dato-edit.html",
         controller : "TramiteTipoDatoEditController as vm",
+        data : {
+            accion : 'create'
+        }
+    })
+
+    .state("tramite-tipo-dato-edit", {
+        url : "/metamodelo/tramite-tipo-dato/edit/:trmtId/:tpdtId",
+        templateUrl : "modules/metamodelo/tramite-tipo-dato-edit.html",
+        controller : "TramiteTipoDatoEditController as vm",
+        data : {
+            accion : 'edit'
+        }
     })
 
     .state("entidad-accion-detail", {
@@ -1232,15 +1256,17 @@ function TramiteDetailController($stateParams, pageTitleService, TramiteService)
     vm.remove = remove;
 
     function remove() {
-        TramiteService.remove(vm.trmt).then(function(data) {
+        TramiteService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
 
-    TramiteService.detail({
+    vm.model = {
         id : $stateParams.id
-    }).then(function(data) {
-        vm.trmt = data.model;
+    };
+
+    TramiteService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
         vm.trtdList = data.trtdList;
@@ -1257,12 +1283,8 @@ function TramiteEditController($state, $stateParams, pageTitleService, TramiteSe
     vm.cancel = cancel;
 
     function save() {
-        TramiteService.saveI18n(vm.accion, vm.trmt, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("tramite-detail", data.model, {
-                location : 'replace'
-            });
+        TramiteService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
+            TramiteService.redirectAfterSave(vm.accion, data.model, "tramite-detail");
         });
     }
 
@@ -1270,13 +1292,14 @@ function TramiteEditController($state, $stateParams, pageTitleService, TramiteSe
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-
-    TramiteService.edit($stateParams.accion, {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         entiId : $stateParams.entiId,
         id : $stateParams.id
-    }).then(function(data) {
-        vm.trmt = data.model;
+    }
+
+    TramiteService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
         vm.tpdtEstado = data.tpdtEstado;
@@ -1291,20 +1314,22 @@ function TramiteTipoDatoDetailController($stateParams, pageTitleService, Tramite
     vm.remove = remove;
 
     function remove() {
-        TramiteTipoDatoService.remove(vm.trtd).then(function(data) {
+        TramiteTipoDatoService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
 
-    TramiteTipoDatoService.detail({
+    vm.model = {
         trmtId : $stateParams.trmtId,
         entd : {
             tpdt : {
                 id : $stateParams.tpdtId
             }
         }
-    }).then(function(data) {
-        vm.trtd = data.model;
+    };
+
+    TramiteTipoDatoService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
     });
 
     pageTitleService.setTitle("trtd", "page_detail");
@@ -1317,12 +1342,8 @@ function TramiteTipoDatoEditController($state, $stateParams, pageTitleService, T
     vm.cancel = cancel;
 
     function save() {
-        TramiteTipoDatoService.save(vm.accion, vm.trtd).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("tramitetipodato-detail", data.model, {
-                location : 'replace'
-            });
+        TramiteTipoDatoService.save(vm.accion, vm.model).then(function(data) {
+            TramiteTipoDatoService.redirectAfterSave(vm.accion, data.model, "tramite-tipo-dato-detail");
         });
     }
 
@@ -1330,17 +1351,18 @@ function TramiteTipoDatoEditController($state, $stateParams, pageTitleService, T
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-
-    TramiteTipoDatoService.edit($stateParams.accion, {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         trmtId : $stateParams.trmtId,
         entd : {
             tpdt : {
                 id : $stateParams.tpdtId
             }
         }
-    }).then(function(data) {
-        vm.trtd = data.model;
+    }
+
+    TramiteTipoDatoService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
 
         vm.entdList = data.entdList;
     });
