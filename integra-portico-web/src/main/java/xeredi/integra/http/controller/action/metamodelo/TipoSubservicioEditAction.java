@@ -29,9 +29,9 @@ public final class TipoSubservicioEditAction extends EntidadEditAction<TipoSubse
      */
     @Override
     public void doSpecificEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getTpsrId());
-
-        if (accion == ACCION_EDICION.edit) {
+        if (accion == ACCION_EDICION.create) {
+            Preconditions.checkNotNull(model.getTpsrId());
+        } else {
             final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
 
             model = tpssBO.select(model.getId(), idioma);

@@ -2,6 +2,8 @@ package xeredi.integra.http.controller.action.metamodelo;
 
 import java.util.List;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametroBO;
@@ -9,8 +11,6 @@ import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -28,9 +28,11 @@ public final class TipoSubparametroEditAction extends EntidadEditAction<TipoSubp
      */
     @Override
     public void doSpecificEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getTpprId());
+        if (accion == ACCION_EDICION.create) {
+            Preconditions.checkNotNull(model.getTpprId());
+        } else {
+            Preconditions.checkNotNull(model.getId());
 
-        if (accion == ACCION_EDICION.edit) {
             final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
             model = tpspBO.select(model.getId(), getIdioma());

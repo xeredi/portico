@@ -2,8 +2,7 @@
     ng-bind="'enti' | translate"></tab-heading>
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default"
-            ui-sref="tiposubservicio-edit({accion: 'edit', tpsrId: vm.enti.tpsrId, id: vm.enti.id})"><i
+        <a class="btn btn-default" ui-sref="tipo-subservicio-edit(vm.model)"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
@@ -15,39 +14,39 @@
     <div class="row">
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="enti_codigo"></label>
-            <p class="form-control-static" ng-bind="vm.enti.codigo"></p>
+            <p class="form-control-static" ng-bind="vm.model.codigo"></p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label translate="enti_tipo"></label>
             <p class="form-control-static" bs-tooltip
-                data-title="{{('EntidadTipo_' + vm.enti.tipo | translate)}}" ng-bind="vm.enti.tipo"></p>
+                data-title="{{('EntidadTipo_' + vm.model.tipo | translate)}}" ng-bind="vm.model.tipo"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="tpsr"></label>
             <p class="form-control-static">
-                <a ui-sref="tiposervicio-detail({id:vm.enti.tpsrId})"
-                    translate="{{('enti_' + vm.enti.tpsrId)}}"></a>
+                <a ui-sref="tipo-servicio-detail({id:vm.model.tpsrId})"
+                    translate="{{('enti_' + vm.model.tpsrId)}}"></a>
             </p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
             <label translate="enti_maxGrid"></label>
-            <p class="form-control-static number" ng-bind="(vm.enti.maxGrid | number:0)"></p>
+            <p class="form-control-static number" ng-bind="(vm.model.maxGrid | number:0)"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="enti_tpdtEstado"></label>
             <p class="form-control-static">
-                <a ng-if="vm.enti.tpdtEstado" ui-sref="tipodato-detail(vm.enti.tpdtEstado)"
-                    ng-bind="vm.enti.tpdtEstado.nombre"></a>
+                <a ng-if="vm.model.tpdtEstado" ui-sref="tipo-dato-detail(vm.model.tpdtEstado)"
+                    ng-bind="vm.model.tpdtEstado.nombre"></a>
             </p>
         </div>
-        <div class="col-sm-2 col-md-1 form-group-sm" ng-if="vm.enti.tpdtEstado.id">
+        <div class="col-sm-2 col-md-1 form-group-sm" ng-if="vm.model.tpdtEstado.id">
             <label translate="enti_estado_def"></label>
-            <p class="form-control-static" ng-bind="vm.enti.estadoDef"></p>
+            <p class="form-control-static" ng-bind="vm.model.estadoDef"></p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm"
-            ng-if="vm.enti.tpdtEstado.id && vm.enti.facturable">
+            ng-if="vm.model.tpdtEstado.id && vm.model.facturable">
             <label translate="enti_estados_vlrc"></label>
-            <p class="form-control-static" ng-bind="vm.enti.estadosVlrc"></p>
+            <p class="form-control-static" ng-bind="vm.model.estadosVlrc"></p>
         </div>
     </div>
 
@@ -57,48 +56,48 @@
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_cmdAlta"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.enti.cmdAlta ? 'ok' : 'remove')}}"></i>
+                <i class="glyphicon glyphicon-{{(vm.model.cmdAlta ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_cmdBaja"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.enti.cmdBaja ? 'ok' : 'remove')}}"></i>
+                <i class="glyphicon glyphicon-{{(vm.model.cmdBaja ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_cmdEdicion"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.enti.cmdEdicion ? 'ok' : 'remove')}}"></i>
+                <i class="glyphicon glyphicon-{{(vm.model.cmdEdicion ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_cmdDuplicado"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.enti.cmdDuplicado ? 'ok' : 'remove')}}"></i>
+                <i class="glyphicon glyphicon-{{(vm.model.cmdDuplicado ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_temporal"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.enti.temporal ? 'ok' : 'remove')}}"></i>
+                <i class="glyphicon glyphicon-{{(vm.model.temporal ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_facturable"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.enti.facturable ? 'ok' : 'remove')}}"></i>
+                <i class="glyphicon glyphicon-{{(vm.model.facturable ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
             <label translate="enti_exencionable"></label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.enti.exencionable ? 'ok' : 'remove')}}"></i>
+                <i class="glyphicon glyphicon-{{(vm.model.exencionable ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="enti_classpath"></label>
-            <p class="form-control-static" ng-bind="vm.enti.classpath"></p>
+            <p class="form-control-static" ng-bind="vm.model.classpath"></p>
         </div>
     </div>
 </fieldset>
@@ -108,7 +107,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ui-sref="entidadentidad-edit({accion: 'create', entipId: vm.enti.id})"><i
+            <a class="btn btn-default" ui-sref="entidadentidad-edit({accion: 'create', entipId: vm.model.id})"><i
                 class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>
     </div>
@@ -127,7 +126,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="entiHija in vm.entiHijasList track by $index">
-                <td><a ui-sref="tiposubservicio-detail(entiHija)"><i
+                <td><a ui-sref="tipo-subservicio-detail(entiHija)"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="entiHija.codigo"></td>
                 <td ng-bind="entiHija.nombre"></td>
@@ -156,9 +155,9 @@
         </thead>
         <tbody>
             <tr ng-repeat="entiPadre in vm.entiPadresList track by $index">
-                <td><a ng-if="entiPadre.tipo == 'T'" ui-sref="tiposervicio-detail(entiPadre)"><i
+                <td><a ng-if="entiPadre.tipo == 'T'" ui-sref="tipo-servicio-detail(entiPadre)"><i
                         class="glyphicon glyphicon-search"></i></a><a ng-if="entiPadre.tipo == 'S'"
-                    ui-sref="tiposubservicio-detail(entiPadre)"><i class="glyphicon glyphicon-search"></i></a></td>
+                    ui-sref="tipo-subservicio-detail(entiPadre)"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="entiPadre.codigo"></td>
                 <td ng-bind="entiPadre.nombre"></td>
                 <td><i class="glyphicon glyphicon-{{(entiPadre.cmdAlta ? 'ok' : 'remove')}}"></i></td>
@@ -177,7 +176,7 @@
     ng-bind="'accnList' | translate"></tab-heading>
 <div ng-include="'modules/metamodelo/fragment/enac-grid-content.html'"></div>
 <div ng-include="'modules/metamodelo/fragment/enag-grid-content.html'"></div>
-</tab> <tab ng-if="vm.enti.tpdtEstado.id" select="vm.tabSelected('trmtList')" active="vm.tabActive['trmtList']">
+</tab> <tab ng-if="vm.model.tpdtEstado.id" select="vm.tabSelected('trmtList')" active="vm.tabActive['trmtList']">
 <tab-heading ng-bind="'trmtList' | translate"></tab-heading>
 <div ng-include="'modules/metamodelo/fragment/trmt-grid-content.html'"></div>
 </tab></tabset>

@@ -25,13 +25,13 @@
         <div ng-if="vm.model.enti.id" class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate>enti</label>
             <p class="form-control-static">
-                <a ng-if="vm.model.enti.tipo == 'T'" ui-sref="tiposervicio-detail(vm.model.enti)"
+                <a ng-if="vm.model.enti.tipo == 'T'" ui-sref="tipo-servicio-detail(vm.model.enti)"
                     ng-bind="vm.model.enti.nombre"></a><a ng-if="vm.model.enti.tipo == 'S'"
-                    ui-sref="tiposubservicio-detail(vm.model.enti)" ng-bind="vm.model.enti.nombre"></a><a
-                    ng-if="vm.model.enti.tipo == 'P'" ui-sref="tipoparametro-detail(vm.model.enti)"
+                    ui-sref="tipo-subservicio-detail(vm.model.enti)" ng-bind="vm.model.enti.nombre"></a><a
+                    ng-if="vm.model.enti.tipo == 'P'" ui-sref="tipo-parametro-detail(vm.model.enti)"
                     ng-bind="vm.model.enti.nombre"></a><a ng-if="vm.model.enti.tipo == 'B'"
-                    ui-sref="tiposubparametro-detail(vm.model.enti)" ng-bind="vm.model.enti.nombre"></a> <a
-                    ng-if="vm.model.enti.tipo == 'E'" ui-sref="tipoestadistica-detail(vm.model.enti)"
+                    ui-sref="tipo-subparametro-detail(vm.model.enti)" ng-bind="vm.model.enti.nombre"></a> <a
+                    ng-if="vm.model.enti.tipo == 'E'" ui-sref="tipo-estadistica-detail(vm.model.enti)"
                     ng-bind="vm.model.enti.nombre"></a>
             </p>
         </div>

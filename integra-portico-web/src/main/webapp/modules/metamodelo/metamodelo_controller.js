@@ -185,7 +185,7 @@ function config($stateProvider) {
     })
 
     .state("tipo-subparametro-edit", {
-        url : "/metamodelo/tipo-subparametro/edit/:tpprId/:id",
+        url : "/metamodelo/tipo-subparametro/edit/:id",
         templateUrl : "modules/metamodelo/tipo-subparametro-edit.html",
         controller : "TipoSubparametroEditController as vm",
         data : {
@@ -193,37 +193,61 @@ function config($stateProvider) {
         }
     })
 
-    .state("tiposervicio-grid", {
-        url : "/metamodelo/tiposervicio/grid?page&searchCriteria&limit",
-        templateUrl : "modules/metamodelo/tiposervicio-grid.html",
+    .state("tipo-servicio-grid", {
+        url : "/metamodelo/tipo-servicio/grid?page&searchCriteria&limit",
+        templateUrl : "modules/metamodelo/tipo-servicio-grid.html",
         controller : "TipoServicioGridController as vm",
         reloadOnSearch : false
     })
 
-    .state("tiposervicio-detail", {
-        url : "/metamodelo/tiposervicio/detail/:id?tab",
-        templateUrl : "modules/metamodelo/tiposervicio-detail.html",
+    .state("tipo-servicio-detail", {
+        url : "/metamodelo/tipo-servicio/detail/:id?tab",
+        templateUrl : "modules/metamodelo/tipo-servicio-detail.html",
         controller : "TipoServicioDetailController as vm",
         reloadOnSearch : false
     })
 
-    .state("tiposervicio-edit", {
-        url : "/metamodelo/tiposervicio/edit/:accion?id",
-        templateUrl : "modules/metamodelo/tiposervicio-edit.html",
+    .state("tipo-servicio-create", {
+        url : "/metamodelo/tipo-servicio/create",
+        templateUrl : "modules/metamodelo/tipo-servicio-edit.html",
         controller : "TipoServicioEditController as vm",
+        data : {
+            accion : 'create'
+        }
     })
 
-    .state("tiposubservicio-detail", {
-        url : "/metamodelo/tiposubservicio/detail/:id?tab",
-        templateUrl : "modules/metamodelo/tiposubservicio-detail.html",
+    .state("tipo-servicio-edit", {
+        url : "/metamodelo/tipo-servicio/edit/:id",
+        templateUrl : "modules/metamodelo/tipo-servicio-edit.html",
+        controller : "TipoServicioEditController as vm",
+        data : {
+            accion : 'edit'
+        }
+    })
+
+    .state("tipo-subservicio-detail", {
+        url : "/metamodelo/tipo-subservicio/detail/:id?tab",
+        templateUrl : "modules/metamodelo/tipo-subservicio-detail.html",
         controller : "TipoSubservicioDetailController as vm",
         reloadOnSearch : false
     })
 
-    .state("tiposubservicio-edit", {
-        url : "/metamodelo/tiposubservicio/edit/:accion/:tpsrId?id",
-        templateUrl : "modules/metamodelo/tiposubservicio-edit.html",
+    .state("tipo-subservicio-create", {
+        url : "/metamodelo/tipo-subservicio/create/:tpsrId",
+        templateUrl : "modules/metamodelo/tipo-subservicio-edit.html",
         controller : "TipoSubservicioEditController as vm",
+        data : {
+            accion : 'create'
+        }
+    })
+
+    .state("tipo-subservicio-edit", {
+        url : "/metamodelo/tipo-subservicio/edit/:id",
+        templateUrl : "modules/metamodelo/tipo-subservicio-edit.html",
+        controller : "TipoSubservicioEditController as vm",
+        data : {
+            accion : 'edit'
+        }
     })
 
     .state("tipoestadistica-grid", {
@@ -258,28 +282,52 @@ function config($stateProvider) {
         controller : "CampoAgregacionEditController as vm",
     })
 
-    .state("entidadgrupodato-detail", {
-        url : "/metamodelo/entidadgrupodato/detail/:id",
-        templateUrl : "modules/metamodelo/entidadgrupodato-detail.html",
+    .state("entidad-grupo-dato-detail", {
+        url : "/metamodelo/entidad-grupo-dato/detail/:id",
+        templateUrl : "modules/metamodelo/entidad-grupo-dato-detail.html",
         controller : "EntidadGrupoDatoDetailController as vm",
     })
 
-    .state("entidadgrupodato-edit", {
-        url : "/metamodelo/entidadgrupodato/edit/:accion/:entiId?id",
-        templateUrl : "modules/metamodelo/entidadgrupodato-edit.html",
+    .state("entidad-grupo-dato-create", {
+        url : "/metamodelo/entidad-grupo-dato/create/:entiId",
+        templateUrl : "modules/metamodelo/entidad-grupo-dato-edit.html",
         controller : "EntidadGrupoDatoEditController as vm",
+        data : {
+            accion : 'create'
+        }
     })
 
-    .state("entidadtipodato-detail", {
-        url : "/metamodelo/entidadtipodato/detail/:id",
-        templateUrl : "modules/metamodelo/entidadtipodato-detail.html",
+    .state("entidad-grupo-dato-edit", {
+        url : "/metamodelo/entidad-grupo-dato/edit/:entiId/:id",
+        templateUrl : "modules/metamodelo/entidad-grupo-dato-edit.html",
+        controller : "EntidadGrupoDatoEditController as vm",
+        data : {
+            accion : 'edit'
+        }
+    })
+
+    .state("entidad-tipo-dato-detail", {
+        url : "/metamodelo/entidad-tipo-dato/detail/:id",
+        templateUrl : "modules/metamodelo/entidad-tipo-dato-detail.html",
         controller : "EntidadTipoDatoDetailController as vm",
     })
 
-    .state("entidadtipodato-edit", {
-        url : "/metamodelo/entidadtipodato/edit/:accion/:entiId?id",
-        templateUrl : "modules/metamodelo/entidadtipodato-edit.html",
+    .state("entidad-tipo-dato-create", {
+        url : "/metamodelo/entidad-tipo-dato/create/:entiId",
+        templateUrl : "modules/metamodelo/entidad-tipo-dato-edit.html",
         controller : "EntidadTipoDatoEditController as vm",
+        data : {
+            accion : 'create'
+        }
+    })
+
+    .state("entidad-tipo-dato-edit", {
+        url : "/metamodelo/entidad-tipo-dato/edit/:entiId/:id",
+        templateUrl : "modules/metamodelo/entidad-tipo-dato-edit.html",
+        controller : "EntidadTipoDatoEditController as vm",
+        data : {
+            accion : 'edit'
+        }
     })
 
     .state("tramite-detail", {
@@ -419,8 +467,7 @@ function TipoDatoEditController($state, $stateParams, pageTitleService, TipoDato
 
     vm.accion = $state.current.data.accion;
     vm.model = {
-        id : $stateParams.id,
-        fref : $stateParams.fref
+        id : $stateParams.id
     }
 
     TipoDatoService.edit(vm.accion, vm.model).then(function(data) {
@@ -687,7 +734,7 @@ function TipoServicioGridController($state, $stateParams, $modal, pageTitleServi
         TipoServicioService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
-            vm.entiList = data.resultList;
+            vm.resultList = data.resultList;
         });
     }
 
@@ -710,7 +757,7 @@ function TipoServicioDetailController($stateParams, pageTitleService, TipoServic
     vm.tabSelected = tabSelected;
 
     function remove() {
-        TipoServicioService.remove(vm.enti).then(function(data) {
+        TipoServicioService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
@@ -725,10 +772,12 @@ function TipoServicioDetailController($stateParams, pageTitleService, TipoServic
         vm.tabActive[$stateParams.tab] = true;
     }
 
-    TipoServicioService.detail({
+    vm.model = {
         id : $stateParams.id
-    }).then(function(data) {
-        vm.enti = data.model;
+    };
+
+    TipoServicioService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
         vm.subentiList = data.subentiList;
         vm.entiHijasList = data.entiHijasList;
@@ -749,12 +798,8 @@ function TipoServicioEditController($state, $stateParams, pageTitleService, Tipo
     vm.cancel = cancel;
 
     function save() {
-        TipoServicioService.saveI18n(vm.accion, vm.enti, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("tiposervicio-detail", data.model, {
-                location : 'replace'
-            });
+        TipoServicioService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
+            TipoServicioService.redirectAfterSave(vm.accion, data.model, "tipo-servicio-detail");
         });
     }
 
@@ -762,12 +807,13 @@ function TipoServicioEditController($state, $stateParams, pageTitleService, Tipo
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-
-    TipoServicioService.edit($stateParams.accion, {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         id : $stateParams.id
-    }).then(function(data) {
-        vm.enti = data.model;
+    }
+
+    TipoServicioService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
         vm.tpdtEstadoList = data.tpdtEstadoList;
@@ -783,7 +829,7 @@ function TipoSubservicioDetailController($stateParams, pageTitleService, TipoSub
     vm.tabSelected = tabSelected;
 
     function remove() {
-        TipoSubservicioService.remove(vm.enti).then(function(data) {
+        TipoSubservicioService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
@@ -798,10 +844,12 @@ function TipoSubservicioDetailController($stateParams, pageTitleService, TipoSub
         vm.tabActive[$stateParams.tab] = true;
     }
 
-    TipoSubservicioService.detail({
+    vm.model = {
         id : $stateParams.id
-    }).then(function(data) {
-        vm.enti = data.model;
+    };
+
+    TipoSubservicioService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
         vm.entiHijasList = data.entiHijasList;
         vm.entiPadresList = data.entiPadresList;
@@ -822,12 +870,8 @@ function TipoSubservicioEditController($state, $stateParams, pageTitleService, T
     vm.cancel = cancel;
 
     function save() {
-        TipoSubservicioService.saveI18n(vm.accion, vm.enti, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("tiposubservicio-detail", data.model, {
-                location : 'replace'
-            });
+        TipoSubservicioService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
+            TipoSubservicioService.redirectAfterSave(vm.accion, data.model, "tipo-subservicio-detail");
         });
     }
 
@@ -835,13 +879,14 @@ function TipoSubservicioEditController($state, $stateParams, pageTitleService, T
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-
-    TipoSubservicioService.edit($stateParams.accion, {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         tpsrId : $stateParams.tpsrId,
         id : $stateParams.id
-    }).then(function(data) {
-        vm.enti = data.model;
+    }
+
+    TipoSubservicioService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
         vm.tpdtEstadoList = data.tpdtEstadoList;
@@ -1020,15 +1065,17 @@ function EntidadTipoDatoDetailController($stateParams, pageTitleService, Entidad
     vm.remove = remove;
 
     function remove() {
-        EntidadTipoDatoService.remove(vm.entd).then(function(data) {
+        EntidadTipoDatoService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
 
-    EntidadTipoDatoService.detail({
+    vm.model = {
         id : $stateParams.id
-    }).then(function(data) {
-        vm.entd = data.model;
+    };
+
+    EntidadTipoDatoService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
 
@@ -1042,12 +1089,8 @@ function EntidadTipoDatoEditController($state, $stateParams, pageTitleService, E
     vm.cancel = cancel;
 
     function save() {
-        EntidadTipoDatoService.saveI18n(vm.accion, vm.entd, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("entidadtipodato-detail", data.model, {
-                location : 'replace'
-            });
+        EntidadTipoDatoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
+            EntidadTipoDatoService.redirectAfterSave(vm.accion, data.model, "entidad-tipo-dato-detail");
         });
     }
 
@@ -1055,13 +1098,14 @@ function EntidadTipoDatoEditController($state, $stateParams, pageTitleService, E
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-
-    EntidadTipoDatoService.edit($stateParams.accion, {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         entiId : $stateParams.entiId,
         id : $stateParams.id
-    }).then(function(data) {
-        vm.entd = data.model;
+    }
+
+    EntidadTipoDatoService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
         vm.tpdtList = data.tpdtList;
@@ -1077,15 +1121,17 @@ function EntidadGrupoDatoDetailController($stateParams, pageTitleService, Entida
     vm.remove = remove;
 
     function remove() {
-        EntidadGrupoDatoService.remove(vm.engd).then(function(data) {
+        EntidadGrupoDatoService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
 
-    EntidadGrupoDatoService.detail({
+    vm.model = {
         id : $stateParams.id
-    }).then(function(data) {
-        vm.engd = data.model;
+    };
+
+    EntidadGrupoDatoService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
 
@@ -1099,12 +1145,8 @@ function EntidadGrupoDatoEditController($state, $stateParams, pageTitleService, 
     vm.cancel = cancel;
 
     function save() {
-        EntidadGrupoDatoService.saveI18n(vm.accion, vm.engd, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("entidadgrupodato-detail", data.model, {
-                location : 'replace'
-            });
+        EntidadGrupoDatoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
+            EntidadGrupoDatoService.redirectAfterSave(vm.accion, data.model, "entidad-grupo-dato-detail");
         });
     }
 
@@ -1112,13 +1154,14 @@ function EntidadGrupoDatoEditController($state, $stateParams, pageTitleService, 
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-
-    EntidadGrupoDatoService.edit($stateParams.accion, {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         entiId : $stateParams.entiId,
         id : $stateParams.id
-    }).then(function(data) {
-        vm.engd = data.model;
+    }
+
+    EntidadGrupoDatoService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
 
