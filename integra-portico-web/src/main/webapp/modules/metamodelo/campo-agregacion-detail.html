@@ -1,7 +1,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default"
-            ui-sref="campoagregacion-edit({accion: 'edit', tpesId: vm.cmag.tpesId, entdId: vm.cmag.entd.id})"><i
+            ui-sref="campo-agregacion-edit({tpesId: vm.model.tpesId, entdId: vm.model.entd.id})"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
@@ -13,12 +13,12 @@
     <div class="row">
         <div class="col-md-2 form-group-sm">
             <label translate>cmag_nombre</label>
-            <p class="form-control-static" ng-bind="vm.cmag.nombre"></p>
+            <p class="form-control-static" ng-bind="vm.model.nombre"></p>
         </div>
         <div class="col-md-1 form-group-sm">
             <label translate>cmag_agregar</label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.cmag.agregar ? 'ok' : 'remove')}}"></i>
+                <i class="glyphicon glyphicon-{{(vm.model.agregar ? 'ok' : 'remove')}}"></i>
             </p>
         </div>
     </div>

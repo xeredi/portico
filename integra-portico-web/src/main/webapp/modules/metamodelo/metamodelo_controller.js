@@ -250,36 +250,60 @@ function config($stateProvider) {
         }
     })
 
-    .state("tipoestadistica-grid", {
-        url : "/metamodelo/tipoestadistica/grid?page&searchCriteria&limit",
-        templateUrl : "modules/metamodelo/tipoestadistica-grid.html",
+    .state("tipo-estadistica-grid", {
+        url : "/metamodelo/tipo-estadistica/grid?page&searchCriteria&limit",
+        templateUrl : "modules/metamodelo/tipo-estadistica-grid.html",
         controller : "TipoEstadisticaGridController as vm",
         reloadOnSearch : false
     })
 
-    .state("tipoestadistica-detail", {
-        url : "/metamodelo/tipoestadistica/detail/:id?tab",
-        templateUrl : "modules/metamodelo/tipoestadistica-detail.html",
+    .state("tipo-estadistica-detail", {
+        url : "/metamodelo/tipo-estadistica/detail/:id?tab",
+        templateUrl : "modules/metamodelo/tipo-estadistica-detail.html",
         controller : "TipoEstadisticaDetailController as vm",
         reloadOnSearch : false
     })
 
-    .state("tipoestadistica-edit", {
-        url : "/metamodelo/tipoestadistica/edit/:accion?id",
-        templateUrl : "modules/metamodelo/tipoestadistica-edit.html",
+    .state("tipo-estadistica-create", {
+        url : "/metamodelo/tipo-estadistica/create",
+        templateUrl : "modules/metamodelo/tipo-estadistica-edit.html",
         controller : "TipoEstadisticaEditController as vm",
+        data : {
+            accion : 'create'
+        }
     })
 
-    .state("campoagregacion-detail", {
-        url : "/metamodelo/campoagregacion/detail/:tpesId/:entdId",
-        templateUrl : "modules/metamodelo/campoagregacion-detail.html",
+    .state("tipo-estadistica-edit", {
+        url : "/metamodelo/tipo-estadistica/edit/:id",
+        templateUrl : "modules/metamodelo/tipo-estadistica-edit.html",
+        controller : "TipoEstadisticaEditController as vm",
+        data : {
+            accion : 'edit'
+        }
+    })
+
+    .state("campo-agregacion-detail", {
+        url : "/metamodelo/campo-agregacion/detail/:tpesId/:entdId",
+        templateUrl : "modules/metamodelo/campo-agregacion-detail.html",
         controller : "CampoAgregacionDetailController as vm",
     })
 
-    .state("campoagregacion-edit", {
-        url : "/metamodelo/campoagregacion/edit/:accion/:tpesId?entdId",
-        templateUrl : "modules/metamodelo/campoagregacion-edit.html",
+    .state("campo-agregacion-create", {
+        url : "/metamodelo/campo-agregacion/create/:tpesId",
+        templateUrl : "modules/metamodelo/campo-agregacion-edit.html",
         controller : "CampoAgregacionEditController as vm",
+        data : {
+            accion : 'create'
+        }
+    })
+
+    .state("campo-agregacion-edit", {
+        url : "/metamodelo/campo-agregacion/edit/:tpesId/:entdId",
+        templateUrl : "modules/metamodelo/campo-agregacion-edit.html",
+        controller : "CampoAgregacionEditController as vm",
+        data : {
+            accion : 'edit'
+        }
     })
 
     .state("entidad-grupo-dato-detail", {
@@ -916,7 +940,7 @@ function TipoEstadisticaGridController($state, $stateParams, $modal, pageTitleSe
         TipoEstadisticaService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
-            vm.entiList = data.resultList;
+            vm.resultList = data.resultList;
         });
     }
 
@@ -939,7 +963,7 @@ function TipoEstadisticaDetailController($stateParams, pageTitleService, TipoEst
     vm.tabSelected = tabSelected;
 
     function remove() {
-        TipoEstadisticaService.remove(vm.enti).then(function(data) {
+        TipoEstadisticaService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
@@ -954,10 +978,12 @@ function TipoEstadisticaDetailController($stateParams, pageTitleService, TipoEst
         vm.tabActive[$stateParams.tab] = true;
     }
 
-    TipoEstadisticaService.detail({
+    vm.model = {
         id : $stateParams.id
-    }).then(function(data) {
-        vm.enti = data.model;
+    };
+
+    TipoEstadisticaService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
         vm.cmagList = data.cmagList;
         vm.subentiList = data.subentiList;
@@ -977,12 +1003,8 @@ function TipoEstadisticaEditController($state, $stateParams, pageTitleService, T
     vm.cancel = cancel;
 
     function save() {
-        TipoEstadisticaService.saveI18n(vm.accion, vm.enti, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("tipoestadistica-detail", data.model, {
-                location : 'replace'
-            });
+        TipoEstadisticaService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
+            TipoEstadisticaService.redirectAfterSave(vm.accion, data.model, "tipo-estadistica-detail");
         });
     }
 
@@ -990,12 +1012,13 @@ function TipoEstadisticaEditController($state, $stateParams, pageTitleService, T
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-
-    TipoEstadisticaService.edit($stateParams.accion, {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         id : $stateParams.id
-    }).then(function(data) {
-        vm.enti = data.model;
+    }
+
+    TipoEstadisticaService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
 
@@ -1008,18 +1031,20 @@ function CampoAgregacionDetailController($stateParams, pageTitleService, CampoAg
     vm.remove = remove;
 
     function remove() {
-        CampoAgregacionService.remove(vm.cmag).then(function(data) {
+        CampoAgregacionService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
 
-    CampoAgregacionService.detail({
+    vm.model = {
         tpesId : $stateParams.tpesId,
         entd : {
             id : $stateParams.entdId
         }
-    }).then(function(data) {
-        vm.cmag = data.model;
+    }
+
+    CampoAgregacionService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
     });
 
     pageTitleService.setTitle("cmag", "page_detail");
@@ -1032,12 +1057,8 @@ function CampoAgregacionEditController($state, $stateParams, pageTitleService, C
     vm.cancel = cancel;
 
     function save() {
-        CampoAgregacionService.save(vm.accion, vm.cmag).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("campoagregacion-detail", data.model, {
-                location : 'replace'
-            });
+        CampoAgregacionService.save(vm.accion, vm.model).then(function(data) {
+            CampoAgregacionService.redirectAfterSave(vm.accion, data.model, "campo-agregacion-detail");
         });
     }
 
@@ -1045,15 +1066,16 @@ function CampoAgregacionEditController($state, $stateParams, pageTitleService, C
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-
-    CampoAgregacionService.edit($stateParams.accion, {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         tpesId : $stateParams.tpesId,
         entd : {
             id : $stateParams.entdId
         }
-    }).then(function(data) {
-        vm.cmag = data.model;
+    }
+
+    CampoAgregacionService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
     });
 
     pageTitleService.setTitle("cmag", "page_" + vm.accion);

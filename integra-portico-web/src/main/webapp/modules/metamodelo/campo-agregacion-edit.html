@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col-md-3 form-group-sm" ng-switch="vm.accion">
                 <label translate>cmag_nombre</label> <input ng-switch-when="create" type="text"
-                    ng-model="vm.cmag.nombre" class="form-control" />
-                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.cmag.nombre"></p>
+                    ng-model="vm.model.nombre" class="form-control" />
+                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.nombre"></p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>cmag_agregar</label> <select ng-model="vm.cmag.agregar"
+                <label translate>cmag_agregar</label> <select ng-model="vm.model.agregar"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                     <option />
