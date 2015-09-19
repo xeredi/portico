@@ -136,37 +136,61 @@ function config($stateProvider) {
         }
     })
 
-    .state("tipoparametro-grid", {
-        url : "/metamodelo/tipoparametro/grid?page&searchCriteria&limit",
-        templateUrl : "modules/metamodelo/tipoparametro-grid.html",
+    .state("tipo-parametro-grid", {
+        url : "/metamodelo/tipo-parametro/grid?page&searchCriteria&limit",
+        templateUrl : "modules/metamodelo/tipo-parametro-grid.html",
         controller : "TipoParametroGridController as vm",
         reloadOnSearch : false
     })
 
-    .state("tipoparametro-detail", {
-        url : "/metamodelo/tipoparametro/detail/:id?tab",
-        templateUrl : "modules/metamodelo/tipoparametro-detail.html",
+    .state("tipo-parametro-detail", {
+        url : "/metamodelo/tipo-parametro/detail/:id?tab",
+        templateUrl : "modules/metamodelo/tipo-parametro-detail.html",
         controller : "TipoParametroDetailController as vm",
         reloadOnSearch : false
     })
 
-    .state("tipoparametro-edit", {
-        url : "/metamodelo/tipoparametro/edit/:accion?id",
-        templateUrl : "modules/metamodelo/tipoparametro-edit.html",
+    .state("tipo-parametro-create", {
+        url : "/metamodelo/tipo-parametro/create",
+        templateUrl : "modules/metamodelo/tipo-parametro-edit.html",
         controller : "TipoParametroEditController as vm",
+        data : {
+            accion : 'create'
+        }
     })
 
-    .state("tiposubparametro-detail", {
-        url : "/metamodelo/tiposubparametro/detail/:id?tab",
-        templateUrl : "modules/metamodelo/tiposubparametro-detail.html",
+    .state("tipo-parametro-edit", {
+        url : "/metamodelo/tipo-parametro/edit/:id",
+        templateUrl : "modules/metamodelo/tipo-parametro-edit.html",
+        controller : "TipoParametroEditController as vm",
+        data : {
+            accion : 'edit'
+        }
+    })
+
+    .state("tipo-subparametro-detail", {
+        url : "/metamodelo/tipo-subparametro/detail/:id?tab",
+        templateUrl : "modules/metamodelo/tipo-subparametro-detail.html",
         controller : "TipoSubparametroDetailController as vm",
         reloadOnSearch : false
     })
 
-    .state("tiposubparametro-edit", {
-        url : "/metamodelo/tiposubparametro/edit/:accion/:tpprId?id",
-        templateUrl : "modules/metamodelo/tiposubparametro-edit.html",
+    .state("tipo-subparametro-create", {
+        url : "/metamodelo/tipo-subparametro/create/:tpprId",
+        templateUrl : "modules/metamodelo/tipo-subparametro-edit.html",
         controller : "TipoSubparametroEditController as vm",
+        data : {
+            accion : 'create'
+        }
+    })
+
+    .state("tipo-subparametro-edit", {
+        url : "/metamodelo/tipo-subparametro/edit/:tpprId/:id",
+        templateUrl : "modules/metamodelo/tipo-subparametro-edit.html",
+        controller : "TipoSubparametroEditController as vm",
+        data : {
+            accion : 'edit'
+        }
     })
 
     .state("tiposervicio-grid", {
@@ -486,7 +510,7 @@ function TipoParametroGridController($state, $stateParams, $modal, pageTitleServ
         TipoParametroService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
             vm.page = data.resultList.page;
             vm.limit = data.resultList.limit;
-            vm.entiList = data.resultList;
+            vm.resultList = data.resultList;
         });
     }
 
@@ -509,7 +533,7 @@ function TipoParametroDetailController($stateParams, pageTitleService, TipoParam
     vm.tabSelected = tabSelected;
 
     function remove() {
-        TipoParametroService.remove(vm.enti).then(function(data) {
+        TipoParametroService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
@@ -524,10 +548,12 @@ function TipoParametroDetailController($stateParams, pageTitleService, TipoParam
         vm.tabActive[$stateParams.tab] = true;
     }
 
-    TipoParametroService.detail({
+    vm.model = {
         id : $stateParams.id
-    }).then(function(data) {
-        vm.enti = data.model;
+    };
+
+    TipoParametroService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
         vm.subentiList = data.subentiList;
         vm.entdList = data.entdList;
@@ -546,12 +572,8 @@ function TipoParametroEditController($state, $stateParams, pageTitleService, Tip
     vm.cancel = cancel;
 
     function save() {
-        TipoParametroService.saveI18n(vm.accion, vm.enti, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("tipoparametro-detail", data.model, {
-                location : 'replace'
-            });
+        TipoParametroService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
+            TipoParametroService.redirectAfterSave(vm.accion, data.model, "tipo-parametro-detail");
         });
     }
 
@@ -559,12 +581,13 @@ function TipoParametroEditController($state, $stateParams, pageTitleService, Tip
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-
-    TipoParametroService.edit($stateParams.accion, {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         id : $stateParams.id
-    }).then(function(data) {
-        vm.enti = data.model;
+    }
+
+    TipoParametroService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
         vm.tpdtNombreList = data.tpdtNombreList;
@@ -580,7 +603,7 @@ function TipoSubparametroDetailController($stateParams, pageTitleService, TipoSu
     vm.tabSelected = tabSelected;
 
     function remove() {
-        TipoSubparametroService.remove(vm.enti).then(function(data) {
+        TipoSubparametroService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
@@ -595,10 +618,12 @@ function TipoSubparametroDetailController($stateParams, pageTitleService, TipoSu
         vm.tabActive[$stateParams.tab] = true;
     }
 
-    TipoSubparametroService.detail({
+    vm.model = {
         id : $stateParams.id
-    }).then(function(data) {
-        vm.enti = data.model;
+    };
+
+    TipoSubparametroService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
         vm.entdList = data.entdList;
         vm.engdList = data.engdList;
@@ -616,12 +641,8 @@ function TipoSubparametroEditController($state, $stateParams, pageTitleService, 
     vm.cancel = cancel;
 
     function save() {
-        TipoSubparametroService.saveI18n(vm.accion, vm.enti, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("tiposubparametro-detail", data.model, {
-                location : 'replace'
-            });
+        TipoSubparametroService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
+            TipoSubparametroService.redirectAfterSave(vm.accion, data.model, "tipo-subparametro-detail");
         });
     }
 
@@ -629,16 +650,17 @@ function TipoSubparametroEditController($state, $stateParams, pageTitleService, 
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-
-    TipoSubparametroService.edit($stateParams.accion, {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         tpprId : $stateParams.tpprId,
         id : $stateParams.id
-    }).then(function(data) {
-        vm.enti = data.model;
+    }
+
+    TipoSubparametroService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
-        vm.entiList = data.tpprList;
+        vm.tpprList = data.tpprList;
     });
 
     pageTitleService.setTitle("tpsp", "page_" + vm.accion);
