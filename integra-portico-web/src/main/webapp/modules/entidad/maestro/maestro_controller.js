@@ -21,7 +21,7 @@ function config($stateProvider) {
 
     .state("maestro-index", {
         url : "/maestro",
-        templateUrl : "modules/entidad/maestro/maestro.html",
+        templateUrl : "modules/entidad/maestro/maestro-index.html",
         controller : "MaestroIndexController as vm"
     })
 

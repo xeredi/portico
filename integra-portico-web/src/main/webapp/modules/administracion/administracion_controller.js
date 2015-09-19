@@ -35,7 +35,7 @@ function config($stateProvider) {
 
     .state("administracion-index", {
         url : "/administracion",
-        templateUrl : "modules/administracion/administracion.html",
+        templateUrl : "modules/administracion/administracion-index.html",
         controller : "AdministracionIndexController as vm"
     })
 

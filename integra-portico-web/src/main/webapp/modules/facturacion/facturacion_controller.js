@@ -55,7 +55,7 @@ function config($stateProvider) {
     // -------------------- Inicio Facturacion ------------------
     .state("facturacion-index", {
         url : "/facturacion/facturacion/index",
-        templateUrl : "modules/facturacion/facturacion.html",
+        templateUrl : "modules/facturacion/facturacion-index.html",
         controller : "FacturacionIndexController as vm",
         reloadOnSearch : false
     })
