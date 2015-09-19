@@ -378,34 +378,70 @@ function config($stateProvider) {
         controller : "TramiteTipoDatoEditController as vm",
     })
 
-    .state("entidadaccion-detail", {
-        url : "/metamodelo/entidadaccion/detail/:id",
-        templateUrl : "modules/metamodelo/entidadaccion-detail.html",
+    .state("entidad-accion-detail", {
+        url : "/metamodelo/entidad-accion/detail/:id",
+        templateUrl : "modules/metamodelo/entidad-accion-detail.html",
         controller : "EntidadAccionDetailController as vm",
     })
 
-    .state("entidadaccion-edit", {
-        url : "/metamodelo/entidadaccion/edit/:accion/:entiId?id",
-        templateUrl : "modules/metamodelo/entidadaccion-edit.html",
+    .state("entidad-accion-create", {
+        url : "/metamodelo/entidad-accion/create/:entiId",
+        templateUrl : "modules/metamodelo/entidad-accion-edit.html",
         controller : "EntidadAccionEditController as vm",
+        data : {
+            accion : 'create'
+        }
     })
 
-    .state("entidadacciongrid-detail", {
-        url : "/metamodelo/entidadacciongrid/detail/:id",
-        templateUrl : "modules/metamodelo/entidadacciongrid-detail.html",
+    .state("entidad-accion-edit", {
+        url : "/metamodelo/entidad-accion/edit/:id",
+        templateUrl : "modules/metamodelo/entidad-accion-edit.html",
+        controller : "EntidadAccionEditController as vm",
+        data : {
+            accion : 'edit'
+        }
+    })
+
+    .state("entidad-accion-grid-detail", {
+        url : "/metamodelo/entidad-accion-grid/detail/:id",
+        templateUrl : "modules/metamodelo/entidad-accion-grid-detail.html",
         controller : "EntidadAccionGridDetailController as vm",
     })
 
-    .state("entidadacciongrid-edit", {
-        url : "/metamodelo/entidadacciongrid/edit/:accion/:entiId?id",
-        templateUrl : "modules/metamodelo/entidadacciongrid-edit.html",
+    .state("entidad-accion-grid-create", {
+        url : "/metamodelo/entidad-accion-grid/create/:entiId",
+        templateUrl : "modules/metamodelo/entidad-accion-grid-edit.html",
         controller : "EntidadAccionGridEditController as vm",
+        data : {
+            accion : 'create'
+        }
     })
 
-    .state("entidadentidad-edit", {
-        url : "/metamodelo/entidadentidad/edit/:accion/:entiPadreId?entiHijaId",
-        templateUrl : "modules/metamodelo/entidadentidad-edit.html",
+    .state("entidad-accion-grid-edit", {
+        url : "/metamodelo/entidad-accion-grid/edit/:id",
+        templateUrl : "modules/metamodelo/entidad-accion-grid-edit.html",
+        controller : "EntidadAccionGridEditController as vm",
+        data : {
+            accion : 'edit'
+        }
+    })
+
+    .state("entidad-entidad-create", {
+        url : "/metamodelo/entidad-entidad/create/:entiPadreId",
+        templateUrl : "modules/metamodelo/entidad-entidad-edit.html",
         controller : "EntidadEntidadEditController as vm",
+        data : {
+            accion : 'create'
+        }
+    })
+
+    .state("entidad-entidad-edit", {
+        url : "/metamodelo/entidad-entidad/edit/:entiPadreId/:entiHijaId",
+        templateUrl : "modules/metamodelo/entidad-entidad-edit.html",
+        controller : "EntidadEntidadEditController as vm",
+        data : {
+            accion : 'edit'
+        }
     })
 
     ;
@@ -1318,15 +1354,17 @@ function EntidadAccionDetailController($stateParams, pageTitleService, EntidadAc
     vm.remove = remove;
 
     function remove() {
-        EntidadAccionService.remove(vm.enac).then(function(data) {
+        EntidadAccionService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
 
-    EntidadAccionService.detail({
+    vm.model = {
         id : $stateParams.id
-    }).then(function(data) {
-        vm.enac = data.model;
+    }
+
+    EntidadAccionService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
 
@@ -1340,12 +1378,8 @@ function EntidadAccionEditController($state, $stateParams, pageTitleService, Ent
     vm.cancel = cancel;
 
     function save() {
-        EntidadAccionService.saveI18n(vm.accion, vm.enac, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("entidadaccion-detail", data.model, {
-                location : 'replace'
-            });
+        EntidadAccionService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
+            EntidadAccionService.redirectAfterSave(vm.accion, data.model, "entidad-accion-detail");
         });
     }
 
@@ -1353,17 +1387,18 @@ function EntidadAccionEditController($state, $stateParams, pageTitleService, Ent
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-
-    EntidadAccionService.edit($stateParams.accion, {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         entiId : $stateParams.entiId,
         id : $stateParams.id
-    }).then(function(data) {
-        vm.enac = data.model;
+    }
+
+    EntidadAccionService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
 
-    pageTitleService.setTitle("enac", "page_" + vm.accion);
+    pageTitleService.setTitle("enag", "page_" + vm.accion);
 }
 
 function EntidadAccionGridDetailController($stateParams, pageTitleService, EntidadAccionGridService) {
@@ -1372,15 +1407,17 @@ function EntidadAccionGridDetailController($stateParams, pageTitleService, Entid
     vm.remove = remove;
 
     function remove() {
-        EntidadAccionGridService.remove(vm.enag).then(function(data) {
+        EntidadAccionGridService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
 
-    EntidadAccionGridService.detail({
+    vm.model = {
         id : $stateParams.id
-    }).then(function(data) {
-        vm.enag = data.model;
+    }
+
+    EntidadAccionGridService.detail(vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
 
@@ -1394,12 +1431,8 @@ function EntidadAccionGridEditController($state, $stateParams, pageTitleService,
     vm.cancel = cancel;
 
     function save() {
-        EntidadAccionGridService.saveI18n(vm.accion, vm.enag, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("entidadacciongrid-detail", data.model, {
-                location : 'replace'
-            });
+        EntidadAccionGridService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
+            EntidadAccionGridService.redirectAfterSave(vm.accion, data.model, "entidad-accion-grid-detail");
         });
     }
 
@@ -1407,13 +1440,14 @@ function EntidadAccionGridEditController($state, $stateParams, pageTitleService,
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-
-    EntidadAccionGridService.edit($stateParams.accion, {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         entiId : $stateParams.entiId,
         id : $stateParams.id
-    }).then(function(data) {
-        vm.enag = data.model;
+    }
+
+    EntidadAccionGridService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
 
@@ -1427,12 +1461,8 @@ function EntidadEntidadEditController($state, $stateParams, pageTitleService, En
     vm.cancel = cancel;
 
     function save() {
-        EntidadEntidadService.saveI18n(vm.accion, vm.enen, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("entidadentidad-detail", data.model, {
-                location : 'replace'
-            });
+        EntidadEntidadService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
+            EntidadEntidadService.redirectAfterSave(vm.accion, data.model, "entidad-entidad-detail");
         });
     }
 
@@ -1440,15 +1470,17 @@ function EntidadEntidadEditController($state, $stateParams, pageTitleService, En
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
-
-    EntidadEntidadService.edit($stateParams.accion, {
+    vm.accion = $state.current.data.accion;
+    vm.model = {
         entiPadreId : $stateParams.entiPadreId,
         entiHija : {
             id : $stateParams.entiHijaId
         }
-    }).then(function(data) {
-        vm.enen = data.model;
+    }
+
+    EntidadEntidadService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
+        vm.i18nMap = data.i18nMap;
 
         vm.entiList = data.tpssList;
     });

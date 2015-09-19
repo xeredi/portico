@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" ng-switch="vm.accion">
                 <label translate>enag_path</label> <input ng-switch-when="create" type="text"
-                    ng-model="vm.enag.path" class="form-control" />
-                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.enag.path"></p>
+                    ng-model="vm.model.path" class="form-control" />
+                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.path"></p>
             </div>
             <div class="col-sm-1 col-md-1 col-lg-1 form-group-sm">
-                <label translate>enag_orden</label> <input type="text" ng-model="vm.enag.orden"
+                <label translate>enag_orden</label> <input type="text" ng-model="vm.model.orden"
                     class="form-control number" />
             </div>
         </div>

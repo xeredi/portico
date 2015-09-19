@@ -3,7 +3,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ui-sref="entidadaccion-edit({accion: 'create', entiId: vm.enti.id})"><i
+            <a class="btn btn-default" ui-sref="entidad-accion-create({entiId: vm.model.id})"><i
                 class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>
     </div>
@@ -19,7 +19,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="enac in vm.enacList track by enac.id">
-                <td><a ui-sref="entidadaccion-detail(enac)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ui-sref="entidad-accion-detail(enac)"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="enac.path"></td>
                 <td ng-bind="enac.etiqueta"></td>
                 <td ng-bind="enac.orden" class="number"></td>

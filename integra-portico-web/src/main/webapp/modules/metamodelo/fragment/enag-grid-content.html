@@ -5,7 +5,7 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default"
-                ui-sref="entidadacciongrid-edit({accion: 'create', entiId: vm.enti.id})"><i
+                ui-sref="entidad-accion-grid-create({entiId: vm.model.id})"><i
                 class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>
     </div>
@@ -21,7 +21,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="enag in vm.enagList track by enag.id">
-                <td><a ui-sref="entidadacciongrid-detail(enag)"><i
+                <td><a ui-sref="entidad-accion-grid-detail(enag)"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="enag.path"></td>
                 <td ng-bind="enag.etiqueta"></td>

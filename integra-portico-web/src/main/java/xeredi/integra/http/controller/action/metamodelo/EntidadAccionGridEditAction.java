@@ -2,6 +2,8 @@ package xeredi.integra.http.controller.action.metamodelo;
 
 import java.util.Map;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.comun.CrudEditAction;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
@@ -9,8 +11,6 @@ import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.metamodelo.bo.EntidadAccionGridBO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionGridVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -29,9 +29,9 @@ public final class EntidadAccionGridEditAction extends CrudEditAction<EntidadAcc
      */
     @Override
     public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getEntiId());
-
-        if (accion == ACCION_EDICION.edit) {
+        if (accion == ACCION_EDICION.create) {
+            Preconditions.checkNotNull(model.getEntiId());
+        } else {
             Preconditions.checkNotNull(model.getId());
 
             final EntidadAccionGridBO enagBO = new EntidadAccionGridBO();
