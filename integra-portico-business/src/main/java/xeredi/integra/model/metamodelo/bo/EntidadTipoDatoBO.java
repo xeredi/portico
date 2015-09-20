@@ -116,10 +116,8 @@ public final class EntidadTipoDatoBO {
     /**
      * Select.
      *
-     * @param entiId
-     *            the enti id
-     * @param tpdtId
-     *            the tpdt id
+     * @param id
+     *            the id
      * @param idioma
      *            the idioma
      * @return the entidad tipo dato vo

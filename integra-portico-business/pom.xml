@@ -39,6 +39,11 @@
 	</build>
 
 	<dependencies>
+        <dependency>
+            <groupId>xeredi</groupId>
+            <artifactId>edifact</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 		<dependency>
 			<groupId>integra-portico</groupId>
 			<artifactId>persistence</artifactId>
@@ -72,7 +77,7 @@
 		<dependency>
 			<groupId>org.antlr</groupId>
 			<artifactId>antlr4-runtime</artifactId>
-			<version>4.5.1</version>
+			<version>4.5.1-1</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.opensagres.xdocreport</groupId>

@@ -5,17 +5,17 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import xeredi.edifact.grammar.BermanD14bBaseVisitor;
+import xeredi.edifact.grammar.BermanD14bParser.BermanContext;
+import xeredi.edifact.grammar.BermanD14bParser.GdsContext;
+import xeredi.edifact.grammar.BermanD14bParser.HanContext;
+import xeredi.edifact.grammar.BermanD14bParser.LocContext;
+import xeredi.edifact.grammar.BermanD14bParser.NadContext;
+import xeredi.edifact.grammar.BermanD14bParser.PocContext;
+import xeredi.edifact.grammar.BermanD14bParser.RffContext;
+import xeredi.edifact.grammar.BermanD14bParser.TdtContext;
+import xeredi.edifact.grammar.BermanD14bParser.TsrContext;
 import xeredi.integra.model.metamodelo.vo.Entidad;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bBaseVisitor;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.BermanContext;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.GdsContext;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.HanContext;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.LocContext;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.NadContext;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.PocContext;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.RffContext;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.TdtContext;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser.TsrContext;
 
 public final class BermanMaestroReader extends BermanD14bBaseVisitor {
 
@@ -72,10 +72,12 @@ public final class BermanMaestroReader extends BermanD14bBaseVisitor {
 	public Object visitRff(RffContext ctx) {
 		switch (ctx.c506().f1153().getText()) {
 		case "ZCS":
-			addCodigoMaestro(Entidad.TIPO_SERVICIO_TRAFICO, ctx.c506().f1154().getText());
+			addCodigoMaestro(Entidad.TIPO_SERVICIO_TRAFICO, ctx.c506().f1154()
+					.getText());
 			break;
 		case "ZNG":
-			addCodigoMaestro(Entidad.TIPO_CERTIFICADO, ctx.c506().f1154().getText());
+			addCodigoMaestro(Entidad.TIPO_CERTIFICADO, ctx.c506().f1154()
+					.getText());
 			break;
 		default:
 			break;
@@ -112,7 +114,8 @@ public final class BermanMaestroReader extends BermanD14bBaseVisitor {
 		final String codigoAtraque = ctx.c233().f7273(0).getText();
 
 		if (!"SEC".equals(codigoAtraque)) {
-			addCodigoMaestro(Entidad.TIPO_ATRAQUE_EDI, ctx.c233().f7273(1).getText());
+			addCodigoMaestro(Entidad.TIPO_ATRAQUE_EDI, ctx.c233().f7273(1)
+					.getText());
 		}
 
 		return super.visitTsr(ctx);
@@ -123,7 +126,8 @@ public final class BermanMaestroReader extends BermanD14bBaseVisitor {
 	 */
 	@Override
 	public Object visitPoc(PocContext ctx) {
-		addCodigoMaestro(Entidad.TIPO_ACTIVIDAD_EDI, ctx.c525().f8025().getText());
+		addCodigoMaestro(Entidad.TIPO_ACTIVIDAD_EDI, ctx.c525().f8025()
+				.getText());
 
 		return super.visitPoc(ctx);
 	}
@@ -133,7 +137,8 @@ public final class BermanMaestroReader extends BermanD14bBaseVisitor {
 	 */
 	@Override
 	public Object visitHan(HanContext ctx) {
-		addCodigoMaestro(Entidad.TIPO_OPERACION_MERCANCIA, ctx.c524().f4079().getText());
+		addCodigoMaestro(Entidad.TIPO_OPERACION_MERCANCIA, ctx.c524().f4079()
+				.getText());
 
 		return super.visitHan(ctx);
 	}

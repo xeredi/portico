@@ -337,8 +337,6 @@ public class ValoracionBO {
      *
      * @param vlrl
      *            Datos de una linea de valoracion.
-     * @param vlrd
-     *            Datos de un detalle de valoracion.
      */
     public void insertVlrl(final ValoracionLineaVO vlrl) {
         Preconditions.checkNotNull(vlrl);

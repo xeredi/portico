@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import xeredi.edifact.grammar.IfcsumD14bBaseVisitor;
+import xeredi.edifact.grammar.IfcsumD14bParser.IfcsumContext;
 import xeredi.integra.model.metamodelo.vo.Entidad;
-import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser.IfcsumContext;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -20,7 +21,7 @@ public final class IfcsumLoader extends IfcsumD14bBaseVisitor {
      * {@inheritDoc}
      */
     @Override
-    public Object visitIfcsum(IfcsumContext ctx) {
+    public Object visitIfcsum(final IfcsumContext ctx) {
         prmts = new HashMap<Entidad, Set<String>>();
 
         // TODO Auto-generated method stub

@@ -411,6 +411,8 @@ public class FacturaBO {
      *
      * @param fctrId
      *            the fctr id
+     * @param idioma
+     *            the idioma
      * @return the factura vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -436,8 +438,8 @@ public class FacturaBO {
     /**
      * Select list.
      *
-     * @param fctrCriterioVO
-     *            the fctr criterio vo
+     * @param fctrCriterio
+     *            the fctr criterio
      * @param offset
      *            the offset
      * @param limit
@@ -467,6 +469,8 @@ public class FacturaBO {
      *
      * @param fctrId
      *            the fctr id
+     * @param idioma
+     *            the idioma
      * @return the list
      */
     public List<FacturaServicioVO> selectFctsList(final @NonNull Long fctrId, final String idioma) {
@@ -486,6 +490,8 @@ public class FacturaBO {
      *
      * @param fctrId
      *            the fctr id
+     * @param idioma
+     *            the idioma
      * @return the list
      */
     public List<FacturaImpuestoVO> selectFctiList(final @NonNull Long fctrId, final String idioma) {
@@ -505,6 +511,8 @@ public class FacturaBO {
      *
      * @param fctrId
      *            the fctr id
+     * @param idioma
+     *            the idioma
      * @return the list
      */
     public List<FacturaCargoVO> selectFctgList(final @NonNull Long fctrId, final String idioma) {
@@ -524,6 +532,8 @@ public class FacturaBO {
      *
      * @param fctrId
      *            the fctr id
+     * @param idioma
+     *            the idioma
      * @param offset
      *            the offset
      * @param limit
@@ -560,6 +570,8 @@ public class FacturaBO {
      *
      * @param fctlId
      *            the fctl id
+     * @param idioma
+     *            the idioma
      * @return the factura linea vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -587,6 +599,8 @@ public class FacturaBO {
      *
      * @param fctlId
      *            the fctl id
+     * @param idioma
+     *            the idioma
      * @param offset
      *            the offset
      * @param limit
@@ -623,6 +637,8 @@ public class FacturaBO {
      *
      * @param fctdId
      *            the fctd id
+     * @param idioma
+     *            the idioma
      * @return the factura detalle vo
      * @throws InstanceNotFoundException
      *             the instance not found exception

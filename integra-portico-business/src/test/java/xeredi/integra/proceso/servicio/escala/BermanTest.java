@@ -9,9 +9,9 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Test;
 
+import xeredi.edifact.grammar.BermanD14bLexer;
+import xeredi.edifact.grammar.BermanD14bParser;
 import xeredi.integra.model.servicio.edifact.escala.BermanMaestroReader;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bLexer;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser;
 
 public final class BermanTest {
 

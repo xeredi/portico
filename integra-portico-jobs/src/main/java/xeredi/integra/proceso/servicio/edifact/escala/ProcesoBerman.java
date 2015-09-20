@@ -10,6 +10,8 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import xeredi.edifact.grammar.BermanD14bLexer;
+import xeredi.edifact.grammar.BermanD14bParser;
 import xeredi.integra.model.item.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
@@ -19,8 +21,6 @@ import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.servicio.edifact.escala.BermanMaestroReader;
 import xeredi.integra.model.servicio.edifact.escala.BermanServicioReader;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bLexer;
-import xeredi.integra.model.servicio.grammar.escala.BermanD14bParser;
 
 // TODO: Auto-generated Javadoc
 /**

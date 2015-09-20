@@ -10,6 +10,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import xeredi.edifact.grammar.IfcsumD14bLexer;
+import xeredi.edifact.grammar.IfcsumD14bParser;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.metamodelo.vo.Entidad;
@@ -17,8 +19,6 @@ import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.edifact.manifiesto.IfcsumMaestroReader;
 import xeredi.integra.model.servicio.edifact.manifiesto.IfcsumServicioReader;
-import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bLexer;
-import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumD14bParser;
 
 // TODO: Auto-generated Javadoc
 /**

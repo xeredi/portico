@@ -102,7 +102,8 @@ public class ValoradorBO {
      */
     public void valorarServicio(final Long srvcId, final Set<Long> crgoIds, final Date fechaLiquidacion)
             throws ModelException {
-        LOG.info("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion);
+        LOG.info(
+                "Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion);
 
         Preconditions.checkNotNull(srvcId);
         Preconditions.checkNotNull(crgoIds);
@@ -558,8 +559,8 @@ public class ValoradorBO {
 
         rgla.getVersion().setPathImpuestoSql(generateSqlPath(entiDetail, rgla.getVersion().getPathImpuesto(), false));
         rgla.getVersion().setPathPagadorSql(generateSqlPath(entiDetail, rgla.getVersion().getPathPagador(), false));
-        rgla.getVersion().setPathEsSujPasivoSql(
-                generateSqlPath(entiDetail, rgla.getVersion().getPathEsSujPasivo(), false));
+        rgla.getVersion()
+                .setPathEsSujPasivoSql(generateSqlPath(entiDetail, rgla.getVersion().getPathEsSujPasivo(), false));
         rgla.getVersion().setPathCodExenSql(generateSqlPath(entiDetail, rgla.getVersion().getPathCodExen(), false));
 
         rgla.getVersion().setPathInfo1Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathInfo1(), true));
