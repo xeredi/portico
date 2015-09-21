@@ -2,12 +2,10 @@
     ng-bind="'enti_' + vm.enti.enti.id | translate"></tab-heading>
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default"
-            ui-sref="parametro-edit({accion: 'edit', entiId: vm.item.entiId, id: vm.item.id, fref: vm.item.fref})"><i
-            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a> <a
-            class="btn btn-default"
-            ui-sref="parametro-edit({accion: 'duplicate', entiId: vm.item.entiId, id: vm.item.id, fref: vm.item.fref})"><i
-            class="glyphicon glyphicon-tags"></i> <span translate="btn_duplicar"></span></a>
+        <a class="btn btn-default" ui-sref="parametro-edit(vm.item)"><i class="glyphicon glyphicon-edit"></i>
+            <span translate="btn_editar"></span></a> <a class="btn btn-default"
+            ui-sref="parametro-duplicate(vm.item)"><i class="glyphicon glyphicon-tags"></i> <span
+            translate="btn_duplicar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
         </button>
@@ -75,7 +73,7 @@
 
         <div class="btn-group">
             <a class="btn btn-default"
-                ui-sref="subparametro-edit({accion: 'create', entiId: entiHijaId, prmtId: vm.item.id, fref:vm.item.fref})"><i
+                ui-sref="subparametro-create({entiId: entiHijaId, prmtId: vm.item.id, fref:vm.item.fref})"><i
                 class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>
     </div>

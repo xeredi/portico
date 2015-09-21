@@ -351,6 +351,11 @@
         WHERE prmt_tppr_pk = #{entiId}
             AND prmt_parametro = #{parametro}
         ]]>
+        <if test="prto != null">
+            <if test="prto.id != null">
+                AND prmt_prto_pk = #{prto.id}
+            </if>
+        </if>
     </select>
 
     <select id="exists" parameterType="ParametroVO" resultType="Boolean">

@@ -1,10 +1,8 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default"
-            ui-sref="subparametro-edit({accion: 'edit', entiId: vm.item.entiId, prmtId: vm.item.prmtId, id: vm.item.id, fref: vm.item.fref})"><i
+        <a class="btn btn-default" ui-sref="subparametro-edit(vm.item)"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a> <a
-            class="btn btn-default"
-            ui-sref="subparametro-edit({accion: 'duplicate', entiId: vm.item.entiId, prmtId: vm.item.prmtId, id: vm.item.id, fref: vm.item.fref})"><i
+            class="btn btn-default" ui-sref="subparametro-duplicate(vm.item)"><i
             class="glyphicon glyphicon-tags"></i> <span translate="btn_duplicar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>

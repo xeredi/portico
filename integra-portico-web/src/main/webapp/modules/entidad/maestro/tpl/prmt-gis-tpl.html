@@ -3,8 +3,7 @@
         <tr>
             <th>{{'enti_' + parameter.item.entiId | translate}}
             </td>
-            <td><a style="color: black"
-                ng-href="#/maestro/prmt/detail/{{parameter.item.entiId}}/{{parameter.item.id}}/{{parameter.fechaVigencia}}">{{parameter.item.etiqueta}}</a></td>
+            <td><a style="color: black" ui-srf="parametro-detail(parameter.item)">{{parameter.item.etiqueta}}</a></td>
         </tr>
         <tr ng-if="parameter.enti.enti.puerto">
             <th>{{'prto' | translate}}

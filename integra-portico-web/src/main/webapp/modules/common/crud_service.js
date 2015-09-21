@@ -112,7 +112,7 @@ function CrudService($http, $q, $state) {
             }
         }
 
-        function xlsExport(searchCriteria) {
+        function xlsExport(searchCriteria, filename) {
             console.log('xls export');
 
             return $http.post(_uri + "-xls-export.action", {criterio: searchCriteria}, {
@@ -122,6 +122,14 @@ function CrudService($http, $q, $state) {
                 .catch(fail);
 
             function success(response) {
+                var file = new Blob([ response.data ], {
+                    type : 'application/xls'
+                });
+
+                setTimeout(function() {
+                    saveAs(file, filename  + '.xls');
+                }, 0);
+
                 return response.data;
             }
 

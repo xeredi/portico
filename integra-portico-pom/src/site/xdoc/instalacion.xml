@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+    <properties>
+        <title>Instalación</title>
+        <author>Xesus Rey Diaz</author>
+        <date>2015/09/21</date>
+    </properties>
+
+    <body>
+        <section name="Instalación">
+            <subsection name="Requisitos Software - Ejecución">
+                <p>Para poder ejecutar la aplicación argo, es necesario el siguiente software:</p>
+                <ul>
+                    <li>
+                        <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Oracle Java JDK</a>
+                        (versión 1.7 o superior)
+                    </li>
+                    <li>
+                        Base de datos SQL
+                        <ul>
+                            <li>
+                                <a
+                                    href="http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html">Oracle</a>
+                                (versión 11g R2 o superior)
+                            </li>
+                            <li>
+                                <a href="http://www.postgresql.org/download/">PostgreSQL</a>
+                                (versión 9.3 o superior)
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        Servidor de aplicaciones JEE
+                        <ul>
+                            <li>
+                                <a href="http://tomcat.apache.org/">Apache Tomcat</a>
+                                (versión 7 o superior)
+                            </li>
+                            <li>Oracle Weblogic (versión 11g R2 o superior)</li>
+                        </ul>
+                    </li>
+                </ul>
+            </subsection>
+            <subsection name="Preparación de la Base de Datos - Oracle">
+                <p>Para poder instalar argo, se da por supuesto que tenemos instalado un Oracle 11gR2 o
+                    superior.
+                </p>
+
+                <ul>
+                    <li>
+                        Abrir una consola de línea de comandos
+                    </li>
+                    <li>
+                        Posicionarse en la carpeta
+                        <code>integra-portico-db</code>
+                    </li>
+                    <li>
+                        Ejecutar con el usuario SYS de Oracle el archivo SQL
+                        <code>/migrations/oracle/scripts/bootstrap.sql</code>
+                        . Este archivo crea los usuarios:
+                        <ul>
+                            <li>argoadm - Propietario de la base de datos, con este usuario se realizarán las
+                                tareas de administración de la Base de datos (Creación de tablas, índices,
+                                etc).
+                            </li>
+                            <li>argo - Usuario de la aplicación, con este usuario se realizará el acceso a la
+                                Base de datos desde la aplicación (Alta de filas, consultas, borrados, etc).
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        Ejecutar el comando maven
+                        <code>mvn -P oracle migration:up</code>
+                        . Este comando crea todos los objetos necesarios para la base de datos. El propietario
+                        de dichos objetos será el usuario
+                        <code>argoadm</code>
+                        , y éste usuario se encargará de darle permisos de acceso al usuario
+                        <code>argo</code>
+                    </li>
+                </ul>
+            </subsection>
+        </section>
+    </body>
+</document>
