@@ -1,0 +1,46 @@
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for integra-portico:db:jar:0.0.1-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-site-plugin is missing. @ integra-portico:pom:0.0.1-SNAPSHOT, D:\home\xeredi\proyectos\team\git\portico\integra-portico-pom\pom.xml, line 125, column 12
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building B.D. 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- migrations-maven-plugin:1.1.2:down (default-cli) @ db ---
+[INFO] Executing  MyBatis Migration Schema DownCommand
+[INFO] ========== Undoing: 20150526160000_0_0_9_DominioPublico.sql ====================
+[INFO] -- @UNDO
+[INFO] -- SQL to undo the change goes here.
+[INFO] -- SERVICIO DE AMARRE DEPORTIVO
+[INFO] -- A?ADIR EMBARCACION DEPORTIVA AL AMARRE
+[INFO] -- SERVICIO DE BUQUE DE PESCA
+[INFO] -- DOMINIO PUBLICO
+[INFO] BEGIN
+[INFO] 	eraseTpsr(21021);
+[INFO] 	eraseTpsp(24017);
+[INFO] 	eraseTpsr(21020);
+[INFO] 	eraseTpsp(24023);
+[INFO] 	eraseTpsp(24022);
+[INFO] 	eraseTpsp(24021);
+[INFO] 	eraseTppr(20125);
+[INFO] 	eraseTppr(20126);
+[INFO] 	eraseTppr(20124);
+[INFO] 	eraseTppr(20123);
+[INFO] 	eraseTppr(20122);
+[INFO] END;
+[INFO] 
+[INFO] 
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1.776 s
+[INFO] Finished at: 2015-09-16T05:01:04+02:00
+[INFO] Final Memory: 12M/171M
+[INFO] ------------------------------------------------------------------------

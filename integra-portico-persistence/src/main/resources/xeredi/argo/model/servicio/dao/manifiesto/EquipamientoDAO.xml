@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.servicio.dao.manifiesto.EquipamientoDAO">
+    <update id="updateBloquearFromPartida" parameterType="Long">
+        <![CDATA[
+        UPDATE tbl_subservicio_ssrv SET
+            ssrv_estado = 'B'
+        WHERE
+            ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO')
+            AND ssrv_estado = 'R'
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_subserv_subserv_ssss
+                WHERE ssrv_pk = ssss_ssrvp_pk
+                    AND ssss_ssrvh_pk = ANY (
+                        SELECT ssss_ssrvh_pk
+                        FROM tbl_subserv_subserv_ssss
+                        WHERE
+                            EXISTS (
+                                SELECT 1
+                                FROM tbl_subservicio_ssrv
+                                WHERE
+                                    ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+                                    AND ssrv_pk = ssss_ssrvp_pk
+                                    AND ssrv_pk = #{value}
+                            )
+                    )
+            )
+        ]]>
+    </update>
+
+    <update id="updateIniciarFromPartida" parameterType="Long">
+        <![CDATA[
+        UPDATE tbl_subservicio_ssrv SET
+            ssrv_estado = 'R'
+        WHERE
+            ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO')
+            AND ssrv_estado = 'B'
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_subserv_subserv_ssss
+                WHERE ssrv_pk = ssss_ssrvp_pk
+                    AND ssss_ssrvh_pk = ANY (
+                        SELECT ssss_ssrvh_pk
+                        FROM tbl_subserv_subserv_ssss
+                        WHERE
+                            EXISTS (
+                                SELECT 1
+                                FROM tbl_subservicio_ssrv
+                                WHERE
+                                    ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+                                    AND ssrv_pk = ssss_ssrvp_pk
+                                    AND ssrv_pk = #{value}
+                            )
+                    )
+            )
+        ]]>
+    </update>
+</mapper>
+

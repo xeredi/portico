@@ -1,11 +1,12 @@
 <div class="row">
     <div class="col-sm-6 col-md-4 col-lg-3">
-        <span class="list-group-item active" translate="sec_metamodelo"></span>
+        <span class="list-group-item active" ng-bind="'sec_metamodelo' | translate | uppercase"></span>
     </div>
     <div class="list-group col-sm-6 col-md-8 col-lg-9">
-        <a class="col-md-6 col-lg-4 list-group-item" ui-sref="tipo-servicio-grid" translate="tpsrList"></a> <a
-            class="col-md-6 col-lg-4 list-group-item" ui-sref="tipo-parametro-grid" translate="tpprList"></a>
-        <a class="col-md-6 col-lg-4 list-group-item" ui-sref="tipo-estadistica-grid" translate="tpesList"></a>
+        <a class="col-md-6 col-lg-4 list-group-item" ui-sref="tipo-servicio-grid"
+            ng-bind="'tpsrList' | translate | uppercase"></a> <a class="col-md-6 col-lg-4 list-group-item"
+            ui-sref="tipo-parametro-grid" translate="tpprList"></a> <a
+            class="col-md-6 col-lg-4 list-group-item" ui-sref="tipo-estadistica-grid" translate="tpesList"></a>
         <a class="col-md-6 col-lg-4 list-group-item" ui-sref="tipo-dato-grid" translate="tpdtList"></a><a
             class="col-md-6 col-lg-4 list-group-item" ng-href="#/servicio/srsc/grid" translate="srscList"></a><a
             class="col-md-6 col-lg-4 list-group-item" ng-href="#/administracion/metamodelo/reload"

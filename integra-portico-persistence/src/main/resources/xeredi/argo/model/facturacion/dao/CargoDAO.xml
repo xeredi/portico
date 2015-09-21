@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.facturacion.dao.CargoDAO">
+	<resultMap type="CargoVO" id="ResultMap">
+		<id column="crgv_pk" />
+		<id column="crgo_pk" />
+
+		<result column="crgo_pk" property="id" />
+		<result column="crgo_codigo" property="codigo" />
+
+        <result column="crgo_fref" property="fref" />
+
+		<association property="version" javaType="CargoVersionVO">
+			<result column="crgv_pk" property="id" />
+			<result column="crgv_fini" property="fini" />
+			<result column="crgv_ffin" property="ffin" />
+			<result column="crgv_codigo_norm" property="codigoNormalizado" />
+			<result column="crgv_es_principal" property="principal" />
+			<result column="crgv_es_temporal" property="temporal" />
+			<result column="crgv_tipo" property="tipo" />
+			<result column="crgv_descripcion" property="descripcion" />
+		</association>
+
+		<association property="tpsr" javaType="TipoServicioVO">
+			<result column="crgo_tpsr_pk" property="id" />
+			<result column="enti_tipo" property="tipo" />
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+		SELECT
+		    crgo_pk, crgo_codigo, crgo_tpsr_pk
+
+		    , crgv_pk, crgv_fini, crgv_ffin, crgv_codigo_norm, crgv_es_principal, crgv_es_temporal, crgv_tipo
+
+		    , (
+		        SELECT enti_tipo FROM tbl_entidad_enti WHERE enti_pk = crgo_tpsr_pk
+		    ) AS enti_tipo
+
+            , #{fechaVigencia} AS crgo_fref
+    ]]>
+		<if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'crgv'
+                    AND i18n_ext_pk = crgv_pk
+                    AND i18n_lang = #{idioma}
+            ) AS crgv_descripcion
+        ]]>
+		</if>
+    <![CDATA[
+		FROM
+		    tbl_cargo_crgo
+		    INNER JOIN tbl_cargo_version_crgv ON
+		        crgv_crgo_pk = crgo_pk
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="fechaVigencia != null">
+				AND #{fechaVigencia} BETWEEN crgv_fini AND COALESCE(crgv_ffin,
+				#{fechaVigencia})
+			</if>
+
+			<if test="id != null">
+				AND crgo_pk = #{id}
+			</if>
+
+			<if test="ids != null">
+				AND crgo_pk IN
+				<foreach collection="ids" open="(" close=")" separator="," item="value">#{value}</foreach>
+			</if>
+
+			<if test="tpsrId != null">
+				AND crgo_tpsr_pk = #{tpsrId}
+			</if>
+
+			<if test="srvcId != null">
+            <![CDATA[
+				AND EXISTS (
+					SELECT 1
+					FROM tbl_servicio_srvc
+					WHERE
+						srvc_tpsr_pk = crgo_tpsr_pk
+						AND srvc_pk = #{srvcId}
+				)
+            ]]>
+			</if>
+
+			<if test="aspcId != null">
+            <![CDATA[
+				AND EXISTS (
+					SELECT 1
+					FROM tbl_aspecto_cargo_ascr
+					WHERE
+						ascr_crgo_pk = crgo_pk
+						AND ascr_aspc_pk = #{aspcId}
+            ]]>
+				<if test="fechaVigencia != null">
+                <![CDATA[
+                        AND EXISTS (
+                            SELECT 1
+                            FROM tbl_aspecto_cargo_version_ascv
+                            WHERE ascv_ascr_pk = ascr_pk
+                                AND #{fechaVigencia} BETWEEN ascv_fini AND COALESCE(ascv_ffin, #{fechaVigencia})
+                        )
+                ]]>
+				</if>
+				)
+			</if>
+
+			<if test="padreId != null">
+            <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_cargo_dep_crdp
+                    WHERE crdp_crgoh_pk = crgo_pk
+                        AND crdp_crgop_pk = #{padreId}
+            ]]>
+				<if test="fechaVigencia != null">
+                <![CDATA[
+                        AND EXISTS (
+                            SELECT 1
+                            FROM tbl_cargo_dep_version_crdv
+                            WHERE crdv_crdp_pk = crdp_pk
+                                AND #{fechaVigencia} BETWEEN crdv_fini AND COALESCE(crdv_ffin, #{fechaVigencia})
+                        )
+                ]]>
+				</if>
+            <![CDATA[
+                )
+            ]]>
+			</if>
+
+			<if test="padreIds != null">
+            <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_cargo_dep_crdp
+                    WHERE crdp_crgoh_pk = crgo_pk
+                        AND crdp_crgop_pk IN
+            ]]>
+				<foreach collection="padreIds" open="(" close=")" separator="," item="value">#{value}</foreach>
+				<if test="fechaVigencia != null">
+                <![CDATA[
+                        AND EXISTS (
+                            SELECT 1
+                            FROM tbl_cargo_dep_version_crdv
+                            WHERE crdv_crdp_pk = crdp_pk
+                                AND #{fechaVigencia} BETWEEN crdv_fini AND COALESCE(crdv_ffin, #{fechaVigencia})
+                        )
+                ]]>
+				</if>
+            <![CDATA[
+                )
+            ]]>
+			</if>
+
+			<if test="soloPrincipales">
+				AND crgv_es_principal = 1
+			</if>
+
+			<if test="soloDependientes">
+				AND crgv_es_principal = 0
+			</if>
+
+			<if test="codigo != null">
+				AND crgo_codigo LIKE #{codigo}
+			</if>
+
+			<if test="codigoNormalizado != null">
+				AND crgv_codigo_norm LIKE #{codigoNormalizado}
+			</if>
+
+			<if test="vlrcId != null">
+            <![CDATA[
+				AND EXISTS (
+					SELECT 1
+					FROM tbl_valoracion_vlrc
+					WHERE
+						EXISTS (
+							SELECT 1
+							FROM tbl_servicio_srvc
+							WHERE
+								srvc_pk = vlrc_srvc_pk
+								AND srvc_tpsr_pk = crgo_tpsr_pk
+						)
+						AND EXISTS (
+							SELECT 1
+							FROM tbl_aspecto_cargo_ascr
+							WHERE
+								ascr_crgo_pk = crgo_pk
+								AND ascr_aspc_pk = vlrc_aspc_pk
+						)
+						AND vlrc_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, vlrc_fref)
+						AND vlrc_pk = #{vlrcId}
+				)
+            ]]>
+			</if>
+		</where>
+	</sql>
+
+	<select id="count" parameterType="CargoCriterioVO" resultType="Integer">
+    <![CDATA[
+        SELECT COUNT(1)
+		FROM
+		    tbl_cargo_crgo
+		    INNER JOIN tbl_cargo_version_crgv ON
+		        crgv_crgo_pk = crgo_pk
+    ]]>
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="exists" parameterType="CargoVO" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_cargo_crgo
+        WHERE crgo_codigo = #{codigo}
+            AND crgo_tpsr_pk = #{tpsr.id}
+    ]]>
+	</select>
+
+	<select id="existsOverlap" parameterType="CargoVO" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+		FROM
+		    tbl_cargo_crgo
+		    INNER JOIN tbl_cargo_version_crgv ON
+		        crgv_crgo_pk = crgo_pk
+        WHERE
+            crgo_pk = #{id}
+            AND (
+        		#{version.fini} BETWEEN crgv_fini AND COALESCE(crgv_ffin, #{version.fini})
+        		OR COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
+                    BETWEEN crgv_fini AND COALESCE(crgv_ffin, COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
+            )
+    ]]>
+		<if test="version.id != null">
+        <![CDATA[
+            AND crgv_pk <> #{version.id}
+        ]]>
+		</if>
+	</select>
+
+	<select id="selectId" parameterType="CargoVO" resultType="Long">
+    <![CDATA[
+        SELECT crgo_pk
+        FROM tbl_cargo_crgo
+        WHERE crgo_codigo = #{codigo}
+            AND crgo_tpsr_pk = #{tpsr.id}
+    ]]>
+	</select>
+
+	<select id="selectList" parameterType="CargoCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY crgo_tpsr_pk, crgo_codigo
+	</select>
+
+	<select id="selectObject" parameterType="CargoCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<insert id="insert" parameterType="CargoVO">
+    <![CDATA[
+        INSERT INTO tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_tpsr_pk)
+        VALUES (
+            #{id}, #{codigo}, #{tpsr.id})
+    ]]>
+	</insert>
+
+	<insert id="insertVersion" parameterType="CargoVO">
+    <![CDATA[
+        INSERT INTO tbl_cargo_version_crgv (crgv_pk, crgv_crgo_pk, crgv_fini, crgv_ffin, crgv_codigo_norm, crgv_es_principal, crgv_es_temporal, crgv_tipo)
+        VALUES (#{version.id}, #{id}, #{version.fini}, #{version.ffin}, #{version.codigoNormalizado}
+            , #{version.principal, jdbcType=INTEGER, javaType=Boolean}
+            , #{version.temporal, jdbcType=INTEGER, javaType=Boolean}
+            , #{version.tipo})
+    ]]>
+	</insert>
+
+	<update id="updateVersion" parameterType="CargoVO">
+    <![CDATA[
+        UPDATE tbl_cargo_version_crgv SET
+            crgv_fini = #{version.fini}
+            , crgv_ffin = #{version.ffin}
+            , crgv_codigo_norm = #{version.codigoNormalizado}
+            , crgv_es_principal = #{version.principal, jdbcType=INTEGER, javaType=Boolean}
+            , crgv_es_temporal = #{version.temporal, jdbcType=INTEGER, javaType=Boolean}
+            , crgv_tipo = #{version.tipo}
+        WHERE
+            crgv_pk = #{version.id}
+    ]]>
+	</update>
+
+	<delete id="deleteVersion" parameterType="CargoVO">
+    <![CDATA[
+        DELETE FROM tbl_cargo_version_crgv
+        WHERE crgv_pk = #{version.id}
+    ]]>
+	</delete>
+</mapper>

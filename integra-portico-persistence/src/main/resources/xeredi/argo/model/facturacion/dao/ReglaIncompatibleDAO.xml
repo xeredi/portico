@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.facturacion.dao.ReglaIncompatibleDAO">
+	<resultMap type="ReglaIncompatibleVO" id="ResultMap">
+		<id column="rgiv_pk" />
+		<id column="rgin_pk" />
+
+		<result column="rgin_pk" property="id" />
+		<result column="rgin_rgla1_pk" property="rgla1Id" />
+
+        <result column="rgin_fref" property="fref" />
+
+		<association property="rgla2" javaType="ReglaVO">
+			<result column="rgin_rgla2_pk" property="id" />
+			<result column="rgla_codigo" property="codigo" />
+			<result column="rgla_tipo" property="tipo" />
+
+			<association property="enti" javaType="EntidadVO">
+				<result column="rgla_enti_pk" property="id" />
+			</association>
+
+			<association property="crgo" javaType="CargoVO">
+				<result column="rgla_crgo_pk" property="id" />
+			</association>
+		</association>
+
+		<association property="version" javaType="ReglaIncompatibleVersionVO">
+			<result column="rgiv_pk" property="id" />
+			<result column="rgiv_fini" property="fini" />
+			<result column="rgiv_ffin" property="ffin" />
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+		SELECT
+		    rgin_pk, rgin_rgla1_pk, rgin_rgla2_pk
+
+		    , rgiv_pk, rgiv_fini, rgiv_ffin
+
+		    , rgla_crgo_pk, rgla_codigo, rgla_enti_pk, rgla_tipo
+
+            , #{fechaVigencia} AS rgin_fref
+		FROM
+		    tbl_regla_inc_rgin
+		    INNER JOIN tbl_regla_inc_version_rgiv ON
+		        rgiv_rgin_pk = rgin_pk
+		    INNER JOIN tbl_regla_rgla ON
+		        rgla_pk = rgin_rgla2_pk
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="fechaVigencia != null">
+				AND #{fechaVigencia} BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, #{fechaVigencia})
+			</if>
+
+			<if test="id != null">
+				AND rgin_pk = #{id}
+			</if>
+
+			<if test="rgivId != null">
+				AND rgiv_pk = #{rgivId}
+			</if>
+
+			<if test="rgla1Id != null">
+				AND rgin_rgla1_pk = #{rgla1Id}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectList" parameterType="ReglaIncompatibleCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY rgin_pk, rgiv_fini
+	</select>
+
+	<select id="selectObject" parameterType="ReglaIncompatibleCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="exists" parameterType="ReglaIncompatibleVO" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_regla_inc_rgin
+        WHERE rgin_rgla1_pk = #{rgla1Id}
+            AND rgin_rgla2_pk = #{rgla2.id}
+    ]]>
+	</select>
+
+	<select id="existsOverlap" parameterType="ReglaIncompatibleVO" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM
+        	tbl_regla_inc_rgin
+		    INNER JOIN tbl_regla_inc_version_rgiv ON
+		        rgiv_rgin_pk = rgin_pk
+        WHERE
+            rgin_pk = #{id}
+            AND (
+                #{version.fini} BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, #{version.fini})
+                OR COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
+                    BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
+            )
+    ]]>
+		<if test="version.id != null">
+        <![CDATA[
+            AND rgiv_pk <> #{version.id}
+        ]]>
+		</if>
+	</select>
+
+	<select id="selectId" parameterType="ReglaIncompatibleVO" resultType="Long">
+    <![CDATA[
+        SELECT rgin_pk
+        FROM tbl_regla_inc_rgin
+        WHERE rgin_rgla1_pk = #{rgla1Id}
+            AND rgin_rgla2_pk = #{rgla2.id}
+    ]]>
+	</select>
+
+	<insert id="insert" parameterType="ReglaIncompatibleVO">
+    <![CDATA[
+        INSERT INTO tbl_regla_inc_rgin (rgin_pk, rgin_rgla1_pk, rgin_rgla2_pk)
+        VALUES (#{id}, #{rgla1Id}, #{rgla2.id})
+    ]]>
+	</insert>
+
+	<insert id="insertVersion" parameterType="ReglaIncompatibleVO">
+    <![CDATA[
+        INSERT INTO tbl_regla_inc_version_rgiv (rgiv_pk, rgiv_rgin_pk, rgiv_fini, rgiv_ffin)
+        VALUES (#{version.id}, #{id}, #{version.fini}, #{version.ffin})
+    ]]>
+	</insert>
+
+	<insert id="updateVersion" parameterType="ReglaIncompatibleVO">
+    <![CDATA[
+        UPDATE tbl_regla_inc_version_rgiv SET
+            rgiv_fini = #{version.fini}
+            , rgiv_ffin = #{version.ffin}
+        WHERE rgiv_pk = #{version.id}
+    ]]>
+	</insert>
+
+	<insert id="deleteVersion" parameterType="ReglaIncompatibleVO">
+    <![CDATA[
+        DELETE FROM tbl_regla_inc_version_rgiv
+        WHERE rgiv_pk = #{version.id}
+    ]]>
+	</insert>
+</mapper>

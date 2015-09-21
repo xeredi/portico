@@ -8,18 +8,20 @@
 
     <settings>
         <setting name="logImpl" value="${db.logImpl}" />
-        <setting name="proxyFactory" value="CGLIB"/>
-        <setting name="jdbcTypeForNull" value="NULL"/>
+        <setting name="proxyFactory" value="CGLIB" />
+        <setting name="jdbcTypeForNull" value="NULL" />
     </settings>
 
     <typeAliases>
         <typeAlias type="xeredi.util.applicationobjects.LabelValueVO" alias="LabelValueVO" />
 
+        <package name="xeredi.argo.model" />
         <package name="xeredi.integra.model" />
     </typeAliases>
 
     <typeHandlers>
-        <typeHandler handler="xeredi.util.mybatis.BooleanTypeHandler" javaType="java.lang.Boolean" jdbcType="INTEGER" />
+        <typeHandler handler="xeredi.util.mybatis.BooleanTypeHandler" javaType="java.lang.Boolean"
+            jdbcType="INTEGER" />
     </typeHandlers>
 
     <environments default="local">
@@ -58,6 +60,7 @@
     </databaseIdProvider>
 
     <mappers>
+        <package name="xeredi.argo.model" />
         <package name="xeredi.integra.model" />
     </mappers>
 </configuration>

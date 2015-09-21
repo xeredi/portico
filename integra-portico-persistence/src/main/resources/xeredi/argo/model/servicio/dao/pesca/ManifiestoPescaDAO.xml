@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.servicio.dao.pesca.ManifiestoPescaDAO">
+	<update id="updateRecalcularImporte" parameterType="Long">
+        <![CDATA[
+        UPDATE tbl_servicio_dato_srdt SET
+            srdt_ndecimal = COALESCE(
+				(
+					SELECT SUM(COALESCE(ssdt_ndecimal, 0))
+					FROM tbl_subservicio_dato_ssdt
+					WHERE
+						EXISTS (
+							SELECT 1
+							FROM tbl_subservicio_ssrv
+							WHERE
+								ssrv_pk = ssdt_ssrv_pk
+								AND ssrv_srvc_pk = srdt_srvc_pk
+								AND ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
+						)
+						AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_04')
+				)
+			, 0)
+		WHERE
+			EXISTS (
+				SELECT 1
+				FROM tbl_servicio_srvc
+				WHERE
+					srvc_pk = srdt_srvc_pk
+					AND srvc_tpsr_pk = portico.getEntidad('MANIFIESTO_PESCA')
+			)
+			AND srdt_tpdt_pk = portico.getTipoDato('DECIMAL_02')
+			AND srdt_srvc_pk = #{value}
+        ]]>
+	</update>
+
+	<update id="updateRecalcularPeso" parameterType="Long">
+        <![CDATA[
+        UPDATE tbl_servicio_dato_srdt SET
+            srdt_ndecimal = COALESCE(
+				(
+					SELECT SUM(COALESCE(ssdt_ndecimal, 0))
+					FROM tbl_subservicio_dato_ssdt
+					WHERE
+						EXISTS (
+							SELECT 1
+							FROM tbl_subservicio_ssrv
+							WHERE
+								ssrv_pk = ssdt_ssrv_pk
+								AND ssrv_srvc_pk = srdt_srvc_pk
+								AND ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
+						)
+						AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_02')
+				)
+			, 0)
+		WHERE
+			EXISTS (
+				SELECT 1
+				FROM tbl_servicio_srvc
+				WHERE
+					srvc_pk = srdt_srvc_pk
+					AND srvc_tpsr_pk = portico.getEntidad('MANIFIESTO_PESCA')
+			)
+			AND srdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
+			AND srdt_srvc_pk = #{value}
+        ]]>
+	</update>
+</mapper>
+

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.metamodelo.dao.TramiteDAO">
+	<resultMap type="TramiteVO" id="ResultMap">
+		<id column="trmr_pk" />
+
+		<result column="trmt_pk" property="id" />
+		<result column="trmt_enti_pk" property="entiId" />
+		<result column="trmt_estado_orig" property="estadoOrig" />
+		<result column="trmt_estado_dest" property="estadoDest" />
+
+		<result column="trmt_etiqueta" property="etiqueta" />
+		<result column="trmt_estado_orig_texto" property="estadoOrigTexto" />
+		<result column="trmt_estado_dest_texto" property="estadoDestTexto" />
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+        SELECT
+            trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest
+    ]]>
+		<if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'trmt'
+                    AND i18n_ext_pk = trmt_pk
+                    AND i18n_lang = #{idioma}
+            ) AS trmt_etiqueta
+		    , (
+		        SELECT i18n_text FROM tbl_i18n_i18n
+		        WHERE i18n_pref = 'cdrf' AND i18n_lang = #{idioma} AND i18n_ext_pk = (
+		            SELECT cdrf_pk
+		            FROM tbl_codigo_ref_cdrf
+		            WHERE
+		                cdrf_tpdt_pk = (
+		                    CASE
+		                        WHEN enti_tipo = 'T'
+		                        THEN (
+		                            SELECT tpsr_tpdt_estado_pk
+		                            FROM tbl_tipo_servicio_tpsr
+		                            WHERE tpsr_pk = trmt_enti_pk
+		                        )
+		                        WHEN enti_tipo = 'S'
+		                        THEN (
+		                            SELECT tpss_tpdt_estado_pk
+		                            FROM tbl_tipo_subservicio_tpss
+		                            WHERE tpss_pk = trmt_enti_pk
+		                        )
+		                        ELSE NULL
+		                    END
+		                )
+		                AND cdrf_valor = trmt_estado_orig
+		        )
+		    ) AS trmt_estado_orig_texto
+		    , (
+		        SELECT i18n_text FROM tbl_i18n_i18n
+		        WHERE i18n_pref = 'cdrf' AND i18n_lang = #{idioma} AND i18n_ext_pk = (
+		            SELECT cdrf_pk
+		            FROM tbl_codigo_ref_cdrf
+		            WHERE
+		                cdrf_tpdt_pk = (
+		                    CASE
+		                        WHEN enti_tipo = 'T'
+		                        THEN (
+		                            SELECT tpsr_tpdt_estado_pk
+		                            FROM tbl_tipo_servicio_tpsr
+		                            WHERE tpsr_pk = trmt_enti_pk
+		                        )
+		                        WHEN enti_tipo = 'S'
+		                        THEN (
+		                            SELECT tpss_tpdt_estado_pk
+		                            FROM tbl_tipo_subservicio_tpss
+		                            WHERE tpss_pk = trmt_enti_pk
+		                        )
+		                        ELSE NULL
+		                    END
+		                )
+		                AND cdrf_valor = trmt_estado_dest
+		        )
+		    ) AS trmt_estado_dest_texto
+        ]]>
+		</if>
+    <![CDATA[
+        FROM
+            tbl_tramite_trmt
+		    INNER JOIN tbl_entidad_enti ON
+		        enti_pk = trmt_enti_pk
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND trmt_pk = #{id}
+			</if>
+			<if test="entiId != null">
+				AND trmt_enti_pk = #{entiId}
+			</if>
+			<if test="estadoOrig != null and !estadoOrig.empty">
+				AND trmt_estado_orig LIKE #{estadoOrig}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectList" parameterType="TramiteCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+        <![CDATA[
+        ORDER BY trmt_enti_pk, trmt_estado_orig
+        ]]>
+	</select>
+
+	<select id="selectObject" resultMap="ResultMap" parameterType="TramiteCriterioVO">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="exists" parameterType="TramiteVO" resultType="boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM
+            tbl_tramite_trmt
+        WHERE
+            trmt_enti_pk = #{entiId}
+            AND trmt_estado_orig = #{estadoOrig}
+            AND trmt_estado_dest = #{estadoDest}
+    ]]>
+	</select>
+
+	<insert id="insert" parameterType="TramiteVO">
+    <![CDATA[
+        INSERT INTO tbl_tramite_trmt(trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest)
+        VALUES (#{id}, #{entiId}, #{estadoOrig}, #{estadoDest})
+    ]]>
+	</insert>
+
+	<update id="update" parameterType="TramiteVO">
+    <![CDATA[
+        UPDATE tbl_tramite_trmt SET
+        	trmt_estado_orig = #{estadoOrig}
+        	, trmt_estado_dest = #{estadoDest}
+        WHERE trmt_pk = #{id}
+        	AND trmt_enti_pk = #{entiId}
+    ]]>
+	</update>
+
+	<delete id="delete" parameterType="TramiteVO">
+    <![CDATA[
+        DELETE FROM tbl_tramite_trmt
+        WHERE trmt_pk = #{id}
+    ]]>
+	</delete>
+</mapper>

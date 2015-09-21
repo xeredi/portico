@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.comun.dao.I18nDAO">
+    <resultMap type="I18nVO" id="ResultMap">
+        <result column="i18n_pref" property="prefix" />
+        <result column="i18n_ext_pk" property="externalId" />
+        <result column="i18n_lang" property="language" />
+        <result column="i18n_text" property="text" />
+    </resultMap>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+        i18n_pref, i18n_ext_pk, i18n_lang, i18n_text
+    FROM tbl_i18n_i18n
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="prefix != null">
+                AND i18n_pref = #{prefix}
+            </if>
+            <if test="prefixSet != null">
+                AND i18n_pref IN
+                <foreach collection="prefixSet" item="item" open="(" close=")" separator=",">#{item}</foreach>
+            </if>
+            <if test="externalId != null">
+                AND i18n_ext_pk = #{externalId}
+            </if>
+            <if test="language != null">
+                AND i18n_lang = #{language}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectList" parameterType="I18nCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY i18n_pref, i18n_ext_pk, i18n_lang
+    </select>
+
+    <select id="selectLabelValueList" parameterType="I18nCriterioVO" resultType="LabelValueVO" databaseId="postgres">
+    <![CDATA[
+        SELECT
+            portico.concatenate(
+                CASE
+                    WHEN cdrf_tpdt_pk IS NOT NULL
+                    THEN portico.concatenate(portico.concatenate(i18n_pref, '_'), CAST (cdrf_tpdt_pk AS VARCHAR))
+                    ELSE i18n_pref
+                END
+                , portico.concatenate('_',
+                    CASE
+                        WHEN cdrf_tpdt_pk IS NOT NULL
+                        THEN cdrf_valor
+                        ELSE CAST (i18n.i18n_ext_pk AS VARCHAR)
+                    END
+                )
+            ) AS label
+            , (
+				CASE
+					WHEN cdrf_tpdt_pk IS NOT NULL
+					THEN portico.concatenate(portico.concatenate(cdrf_valor, ' - '), i18n_text)
+					ELSE i18n.i18n_text
+				END
+            ) AS value
+        FROM
+            tbl_i18n_i18n i18n
+            LEFT JOIN tbl_codigo_ref_cdrf ON
+                cdrf_pk = i18n_ext_pk
+    ]]>
+        <include refid="SelectWhere" />
+        ORDER BY i18n_pref, i18n_ext_pk, i18n_lang
+    </select>
+
+    <select id="selectLabelValueList" parameterType="I18nCriterioVO" resultType="LabelValueVO" databaseId="oracle">
+    <![CDATA[
+        SELECT
+            portico.concatenate(
+                CASE
+                    WHEN cdrf_tpdt_pk IS NOT NULL
+                    THEN portico.concatenate(portico.concatenate(i18n_pref, '_'), cdrf_tpdt_pk)
+                    ELSE i18n_pref
+                END
+                , portico.concatenate('_',
+                    CASE
+                        WHEN cdrf_tpdt_pk IS NOT NULL
+                        THEN cdrf_valor
+                        ELSE TO_CHAR(i18n.i18n_ext_pk)
+                    END
+                )
+            ) AS label
+            , (
+				CASE
+					WHEN cdrf_tpdt_pk IS NOT NULL
+					THEN portico.concatenate(portico.concatenate(cdrf_valor, ' - '), i18n_text)
+					ELSE i18n.i18n_text
+				END
+            ) AS value
+        FROM
+            tbl_i18n_i18n i18n
+            LEFT JOIN tbl_codigo_ref_cdrf ON
+                cdrf_pk = i18n_ext_pk
+    ]]>
+        <include refid="SelectWhere" />
+        ORDER BY i18n_pref, i18n_ext_pk, i18n_lang
+    </select>
+
+    <select id="selectLabelValueList" parameterType="I18nCriterioVO" resultType="LabelValueVO" databaseId="sqlserver">
+    <![CDATA[
+        SELECT
+            portico.concatenate(
+                CASE
+                    WHEN cdrf_tpdt_pk IS NOT NULL
+                    THEN portico.concatenate(portico.concatenate(i18n_pref, '_'), CAST (cdrf_tpdt_pk AS VARCHAR))
+                    ELSE i18n_pref
+                END
+                , portico.concatenate('_',
+                    CASE
+                        WHEN cdrf_tpdt_pk IS NOT NULL
+                        THEN cdrf_valor
+                        ELSE TO_CHAR(i18n.i18n_ext_pk)
+                    END
+                )
+            ) AS label
+            , (
+				CASE
+					WHEN cdrf_tpdt_pk IS NOT NULL
+					THEN portico.concatenate(portico.concatenate(cdrf_valor, ' - '), i18n_text)
+					ELSE i18n.i18n_text
+				END
+            ) AS value
+        FROM
+            tbl_i18n_i18n i18n
+            LEFT JOIN tbl_codigo_ref_cdrf ON
+                cdrf_pk = i18n_ext_pk
+    ]]>
+        <include refid="SelectWhere" />
+        ORDER BY i18n_pref, i18n_ext_pk, i18n_lang
+    </select>
+
+    <select id="exists" parameterType="I18nVO" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM
+            tbl_i18n_i18n SET
+        WHERE
+            i18n_pref = #{prefix}
+            AND i18n_ext_pk = #{externalId}
+            AND i18n_lang = #{language}
+    ]]>
+    </select>
+
+    <insert id="insert" parameterType="I18nVO">
+    <![CDATA[
+        INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text)
+        VALUES (#{prefix}, #{externalId}, #{language}, #{text})
+    ]]>
+    </insert>
+
+    <update id="update" parameterType="I18nVO">
+    <![CDATA[
+        UPDATE tbl_i18n_i18n SET
+            i18n_text = #{text}
+        WHERE
+            i18n_pref = #{prefix}
+            AND i18n_ext_pk = #{externalId}
+            AND i18n_lang = #{language}
+    ]]>
+    </update>
+
+    <delete id="delete" parameterType="I18nVO">
+    <![CDATA[
+        DELETE FROM tbl_i18n_i18n
+        WHERE
+            i18n_pref = #{prefix}
+            AND i18n_ext_pk = #{externalId}
+            AND i18n_lang = #{language}
+    ]]>
+    </delete>
+
+    <delete id="deleteList" parameterType="I18nCriterioVO">
+        DELETE FROM tbl_i18n_i18n
+        <include refid="SelectWhere" />
+    </delete>
+</mapper>

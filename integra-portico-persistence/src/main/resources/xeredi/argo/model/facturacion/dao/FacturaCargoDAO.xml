@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.facturacion.dao.FacturaCargoDAO">
+	<resultMap type="FacturaCargoVO" id="ResultMap">
+		<id column="fctr_pk" />
+		<id column="rgla_crgo_pk" />
+
+		<result column="fctr_pk" property="fctrId" />
+		<result column="fctd_importe" property="importe" />
+
+		<association property="crgo" javaType="CargoVO">
+			<result column="rgla_crgo_pk" property="id" />
+			<result column="crgo_codigo" property="codigo" />
+
+			<association property="version" javaType="CargoVersionVO">
+				<result column="crgv_descripcion" property="descripcion" />
+			</association>
+		</association>
+	</resultMap>
+
+	<select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
+    <![CDATA[
+		SELECT
+			fctr_pk, fctr_fref, rgla_crgo_pk
+		    , (
+		        SELECT crgo_codigo
+		        FROM tbl_cargo_crgo
+		        WHERE crgo_pk = rgla_crgo_pk
+		    ) AS crgo_codigo
+		    , SUM(fctd_importe) AS fctd_importe
+    ]]>
+		<if test="idioma != null">
+	    <![CDATA[
+		    , (
+		        SELECT i18n_text FROM tbl_i18n_i18n
+		        WHERE i18n_pref = 'crgv'
+		            AND i18n_ext_pk = (
+		              SELECT crgv_pk
+		              FROM tbl_cargo_version_crgv
+		              WHERE
+		                crgv_crgo_pk = rgla_crgo_pk
+		                AND (
+		                  crgv_fini <= fctr_fref
+		                  AND (crgv_ffin IS NULL OR crgv_ffin > fctr_fref)
+		                )
+		            )
+		            AND i18n_lang = #{idioma}
+		    ) AS crgv_descripcion
+    	]]>
+		</if>
+    <![CDATA[
+		FROM
+		    tbl_factura_det_fctd
+		    INNER JOIN tbl_factura_lin_fctl ON
+		        fctl_pk = fctd_fctl_pk
+		    INNER JOIN tbl_regla_rgla ON
+		        rgla_pk = fctl_rgla_pk
+		    INNER JOIN tbl_factura_fctr ON
+		        fctr_pk = fctd_fctr_pk
+    ]]>
+    	<where>
+			<if test="id != null">
+    			AND fctr_pk = #{id}
+			</if>
+    	</where>
+    <![CDATA[
+		GROUP BY fctr_pk, fctr_fref, rgla_crgo_pk
+    	ORDER BY fctr_pk, crgo_codigo
+    ]]>
+	</select>
+</mapper>

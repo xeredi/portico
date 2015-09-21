@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="xeredi.argo.model.facturacion.dao.FacturaServicioDAO">
+	<resultMap type="FacturaServicioVO" id="ResultMap">
+		<id column="fcts_pk" />
+
+		<result column="fcts_pk" property="id" />
+		<result column="fcts_fctr_pk" property="fctrId" />
+		<result column="fcts_fref" property="fref" />
+		<result column="fcts_fini" property="fini" />
+		<result column="fcts_ffin" property="ffin" />
+		<result column="fcts_cod_exen" property="codExencion" />
+		<result column="fcts_importe" property="importe" />
+
+		<association property="aspc" javaType="AspectoVO">
+			<result column="fcts_aspc_pk" property="id" />
+		</association>
+
+		<association property="srvc" javaType="ServicioVO">
+			<result column="fcts_srvc_pk" property="id" />
+			<result column="srvc_tpsr_pk" property="entiId" />
+			<result column="srvc_anno" property="anno" />
+			<result column="srvc_numero" property="numero" />
+
+			<association property="prto" javaType="PuertoVO">
+				<result column="srvc_subp_pk" property="id" />
+				<result column="prto_codigo" property="codigo" />
+			</association>
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+		SELECT
+		    fcts_pk, fcts_fctr_pk, fcts_srvc_pk, fcts_aspc_pk, fcts_cod_exen, fcts_fref, fcts_fini, fcts_ffin
+
+		    , srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_numero
+
+		    , (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk) AS prto_codigo
+
+	        , (
+	            SELECT SUM(fctd_importe)
+	            FROM tbl_factura_det_fctd
+	            WHERE
+	                fctd_fctl_pk = ANY(
+	                    SELECT fctl_pk
+	                    FROM tbl_factura_lin_fctl
+	                    WHERE
+	                        fctl_fcts_pk = fcts_pk
+	                )
+	        ) AS fcts_importe
+		FROM
+		    tbl_factura_srv_fcts
+		    INNER JOIN tbl_servicio_srvc ON
+		        srvc_pk = fcts_srvc_pk
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND fcts_pk = #{id}
+			</if>
+			<if test="fctrId != null">
+				AND fcts_fctr_pk = #{fctrId}
+			</if>
+			<if test="srvcId != null">
+				AND fcts_srvc_pk = #{srvcId}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectObject" resultMap="ResultMap" parameterType="FacturaServicioCriterioVO">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="selectList" resultMap="ResultMap" parameterType="FacturaServicioCriterioVO">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY fcts_fctr_pk
+	</select>
+
+	<insert id="insert" parameterType="FacturaServicioVO">
+    <![CDATA[
+        INSERT INTO tbl_factura_srv_fcts (
+            fcts_pk, fcts_fctr_pk, fcts_aspc_pk, fcts_srvc_pk, fcts_cod_exen
+            , fcts_fref, fcts_fini, fcts_ffin
+        ) VALUES (
+            #{id}, #{fctrId}, #{aspc.id}, #{srvc.id}, #{codExencion}
+            , #{fref}, #{fini}, #{ffin}
+        )
+    ]]>
+	</insert>
+</mapper>
+
+<!--
+SELECT
+    fctr_pk, fctr_fref, fcts_srvc_pk, fcts_fref, fcts_fini, fcts_ffin, fcts_cod_exen
+    , srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_numero
+    , (
+        SELECT SUM(fctd_importe)
+        FROM tbl_factura_det_fctd
+        WHERE
+            fctd_fctl_pk = ANY (
+                SELECT fctl_pk
+                FROM tbl_factura_lin_fctl
+                WHERE fctl_fcts_pk = fcts_pk
+            )
+    ) AS fctd_importe
+
+    , (
+        SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk
+    ) AS prto_codigo
+FROM
+    tbl_factura_fctr
+    INNER JOIN tbl_factura_srv_fcts ON
+        fcts_fctr_pk = fctr_pk
+    INNER JOIN tbl_servicio_srvc ON
+        srvc_pk = fcts_srvc_pk
+WHERE
+    fctr_pk = 2190001
+ -->

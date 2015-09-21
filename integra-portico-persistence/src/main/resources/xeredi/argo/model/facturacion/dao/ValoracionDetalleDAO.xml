@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.facturacion.dao.ValoracionDetalleDAO">
+	<resultMap type="ValoracionDetalleVO" id="ResultMap">
+		<id column="vlrd_pk" />
+
+		<result column="vlrd_pk" property="id" />
+		<result column="vlrd_padre_pk" property="padreId" />
+		<result column="vlrd_vlrc_pk" property="vlrcId" />
+		<result column="vlrd_vlrl_pk" property="vlrlId" />
+		<result column="vlrd_valor_base" property="valorBase" />
+		<result column="vlrd_importe_base" property="importeBase" />
+		<result column="vlrd_importe" property="importe" />
+		<result column="vlrd_fini" property="fini" />
+		<result column="vlrd_ffin" property="ffin" />
+		<result column="vlrd_fref" property="fref" />
+
+		<result column="vlrd_cuant1" property="cuant1" />
+		<result column="vlrd_cuant2" property="cuant2" />
+		<result column="vlrd_cuant3" property="cuant3" />
+		<result column="vlrd_cuant4" property="cuant4" />
+		<result column="vlrd_cuant5" property="cuant5" />
+		<result column="vlrd_cuant6" property="cuant6" />
+		<result column="vlrd_info1" property="info1" />
+		<result column="vlrd_info2" property="info2" />
+		<result column="vlrd_info3" property="info3" />
+		<result column="vlrd_info4" property="info4" />
+		<result column="vlrd_info5" property="info5" />
+		<result column="vlrd_info6" property="info6" />
+
+		<association property="ssrv" javaType="SubservicioVO">
+			<result column="vlrd_ssrv_pk" property="id" />
+			<result column="ssrv_numero" property="numero" />
+			<result column="ssrv_tpss_pk" property="entiId" />
+
+			<association property="srvc" javaType="ServicioVO">
+				<result column="ssrv_srvc_pk" property="id" />
+			</association>
+		</association>
+
+		<association property="rgla" javaType="ReglaVO">
+			<result column="rgla_pk" property="id" />
+			<result column="rgla_codigo" property="codigo" />
+			<result column="rgla_tipo" property="tipo" />
+
+			<association property="crgo" javaType="CargoVO">
+				<result column="rgla_crgo_pk" property="id" />
+			</association>
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+		SELECT
+		    vlrd_pk, vlrd_padre_pk, vlrd_vlrc_pk, vlrd_vlrl_pk
+		    , vlrd_valor_base, vlrd_importe_base, vlrd_importe
+		    , vlrd_cuant1, vlrd_cuant2, vlrd_cuant3, vlrd_cuant4, vlrd_cuant5, vlrd_cuant6
+
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_ssrv_pk
+		        ELSE (SELECT vlrd_ssrv_pk FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_ssrv_pk
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_fini
+		        ELSE (SELECT vlrd_fini FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_fini
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_ffin
+		        ELSE (SELECT vlrd_ffin FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_ffin
+
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_info1
+		        ELSE (SELECT vlrd_info1 FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_info1
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_info2
+		        ELSE (SELECT vlrd_info2 FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_info2
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_info3
+		        ELSE (SELECT vlrd_info3 FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_info3
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_info4
+		        ELSE (SELECT vlrd_info4 FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_info4
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_info5
+		        ELSE (SELECT vlrd_info5 FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_info5
+		    , CASE
+		        WHEN vlrd_pk = vlrd_padre_pk THEN vlrd_info6
+		        ELSE (SELECT vlrd_info6 FROM tbl_valoracion_det_vlrd vlrdPadre WHERE vlrdPadre.vlrd_pk = vlrd.vlrd_padre_pk)
+		    END AS vlrd_info6
+
+		    , rgla_pk, rgla_crgo_pk, rgla_codigo, rgla_enti_pk, rgla_tipo
+
+		    , ssrv_numero, ssrv_tpss_pk, ssrv_srvc_pk
+
+		    , (SELECT vlrc_fref FROM tbl_valoracion_vlrc WHERE vlrc_pk = vlrd_vlrc_pk) AS vlrd_fref
+		FROM
+		    tbl_valoracion_det_vlrd vlrd
+		    INNER JOIN tbl_regla_rgla rgla
+		        ON EXISTS (
+		            SELECT 1
+		            FROM tbl_valoracion_lin_vlrl
+		            WHERE
+		                vlrl_pk = vlrd_vlrl_pk
+		                AND vlrl_rgla_pk = rgla_pk
+		        )
+		    LEFT JOIN tbl_subservicio_ssrv ssrv ON
+		        ssrv_pk = vlrd_ssrv_pk
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND vlrd_pk = #{id}
+			</if>
+			<if test="padreId != null">
+				AND vlrd_padre_pk = #{padreId}
+			</if>
+			<if test="soloHijos">
+		    <![CDATA[
+				AND vlrd_padre_pk <> vlrd_pk
+		    ]]>
+			</if>
+			<if test="vlrl != null">
+				<if test="vlrl.id != null">
+					AND vlrd_vlrl_pk = #{vlrl.id}
+				</if>
+				<if test="vlrl.vlrc != null">
+					<if test="vlrl.vlrc.id != null">
+						AND vlrd_vlrc_pk = #{vlrl.vlrc.id}
+					</if>
+					<if test="vlrl.vlrc.ids != null">
+						AND vlrd_vlrc_pk IN
+						<foreach collection="vlrl.vlrc.ids" item="item" open="(" close=")" separator=",">#{item}
+						</foreach>
+					</if>
+				</if>
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectObject" parameterType="ValoracionDetalleCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="count" parameterType="ValoracionDetalleCriterioVO" resultType="Integer">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM
+		    tbl_valoracion_det_vlrd
+		    LEFT JOIN tbl_subservicio_ssrv ON
+		        ssrv_pk = vlrd_ssrv_pk
+    ]]>
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="selectList" parameterType="ValoracionDetalleCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY vlrd_vlrc_pk, vlrd_vlrl_pk, vlrd_pk
+	</select>
+
+	<insert id="insert" parameterType="ValoracionDetalleVO">
+    <![CDATA[
+        INSERT INTO tbl_valoracion_det_vlrd (
+            vlrd_pk, vlrd_padre_pk, vlrd_vlrl_pk, vlrd_vlrc_pk, vlrd_valor_base, vlrd_importe_base, vlrd_importe
+            , vlrd_ssrv_pk, vlrd_fini, vlrd_ffin
+            , vlrd_cuant1, vlrd_cuant2, vlrd_cuant3, vlrd_cuant4, vlrd_cuant5, vlrd_cuant6
+            , vlrd_info1, vlrd_info2, vlrd_info3, vlrd_info4, vlrd_info5, vlrd_info6
+        )
+        VALUES (
+            #{id}, #{padreId}, #{vlrlId}, #{vlrcId}, #{valorBase}, #{importeBase}, #{importe}
+            , #{ssrv.id}, #{fini}, #{ffin}
+            , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
+            , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
+        )
+    ]]>
+	</insert>
+
+	<update id="update" parameterType="ValoracionDetalleVO">
+    <![CDATA[
+        UPDATE tbl_valoracion_det_vlrd SET
+            vlrd_valor_base = #{valorBase}
+            , vlrd_importe_base = #{importeBase}
+            , vlrd_importe = #{importe}
+            , vlrd_ssrv_pk = #{ssrv.id}
+            , vlrd_fini = #{fini}
+            , vlrd_ffin = #{ffin}
+            , vlrd_cuant1 = #{cuant1}
+            , vlrd_cuant2 = #{cuant2}
+            , vlrd_cuant3 = #{cuant3}
+            , vlrd_cuant4 = #{cuant4}
+            , vlrd_cuant5 = #{cuant5}
+            , vlrd_cuant6 = #{cuant6}
+            , vlrd_info1 = #{info1}
+            , vlrd_info2 = #{info2}
+            , vlrd_info3 = #{info3}
+            , vlrd_info4 = #{info4}
+            , vlrd_info5 = #{info5}
+            , vlrd_info6 = #{info6}
+        WHERE
+        	vlrd_pk = #{id}
+        	AND vlrd_vlrl_pk = #{vlrlId}
+        	AND vlrd_vlrc_pk = #{vlrcId}
+    ]]>
+	</update>
+
+	<delete id="deleteList" parameterType="ValoracionDetalleCriterioVO">
+		DELETE FROM tbl_valoracion_det_vlrd
+		<include refid="SelectWhere" />
+	</delete>
+
+	<delete id="delete" parameterType="ValoracionDetalleVO">
+    <![CDATA[
+		DELETE FROM tbl_valoracion_det_vlrd
+		WHERE vlrd_pk = #{id}
+    ]]>
+	</delete>
+</mapper>

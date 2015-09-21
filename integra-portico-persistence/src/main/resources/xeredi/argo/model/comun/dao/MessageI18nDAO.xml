@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="xeredi.argo.model.comun.dao.MessageI18nDAO">
+	<resultMap type="MessageI18nVO" id="ResultMap">
+		<id column="m18n_language" />
+		<id column="m18n_key" />
+
+		<result column="m18n_language" property="language" />
+		<result column="m18n_key" property="key" />
+		<result column="m18n_value" property="value" />
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+        m18n_language, m18n_key, m18n_value
+    FROM tbl_message_i18n_m18n
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="language != null">
+				AND m18n_language = #{language}
+			</if>
+			<if test="key != null">
+				AND m18n_key = #{key}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectList" parameterType="MessageI18nCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY m18n_key, m18n_language
+	</select>
+
+	<delete id="deleteList" parameterType="MessageI18nCriterioVO">
+		DELETE FROM tbl_message_i18n_m18n
+		<include refid="SelectWhere" />
+	</delete>
+
+	<insert id="insert" parameterType="MessageI18nVO">
+		INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value)
+		VALUES (#{language}, #{key}, #{value})
+	</insert>
+</mapper>

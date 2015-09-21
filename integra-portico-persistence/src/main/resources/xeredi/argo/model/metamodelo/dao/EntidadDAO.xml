@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.metamodelo.dao.EntidadDAO">
+	<resultMap type="EntidadVO" id="ResultMap">
+		<id column="enti_pk" property="id" />
+		<result column="enti_codigo" property="codigo" />
+		<result column="enti_nombre" property="nombre" />
+		<result column="enti_tipo" property="tipo" />
+		<result column="enti_cmd_alta" property="cmdAlta" />
+		<result column="enti_cmd_baja" property="cmdBaja" />
+		<result column="enti_cmd_edicion" property="cmdEdicion" />
+		<result column="enti_cmd_duplicado" property="cmdDuplicado" />
+		<result column="enti_gis" property="gis" />
+		<result column="enti_puerto" property="puerto" />
+		<result column="enti_max_grid" property="maxGrid" />
+		<result column="enti_classpath" property="classpath" />
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+        SELECT
+            enti_pk, enti_codigo, enti_tipo
+            , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
+            , enti_gis, enti_puerto, enti_max_grid, enti_classpath
+    ]]>
+		<if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'enti'
+                    AND i18n_ext_pk = enti_pk
+                    AND i18n_lang = #{idioma}
+            ) AS enti_nombre
+        ]]>
+		</if>
+    <![CDATA[
+        FROM
+            tbl_entidad_enti
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND enti_pk = #{id}
+			</if>
+
+			<if test="ids != null">
+				AND enti_pk IN
+				<foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}
+				</foreach>
+			</if>
+
+			<if test="nombre != null and !nombre.empty">
+				AND enti_nombre LIKE #{nombre}
+			</if>
+
+			<if test="codigo != null and !codigo.empty">
+				AND enti_codigo LIKE #{codigo}
+			</if>
+
+			<if test="tipo != null">
+				AND enti_tipo = #{tipo}
+			</if>
+
+			<if test="entiPadreId != null">
+            <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_entidad_entidad_enen
+                    WHERE
+                        enen_entih_pk = enti_pk
+                        AND enen_entip_pk = #{entiPadreId}
+                )
+            ]]>
+			</if>
+
+			<if test="entiHijaId != null">
+            <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_entidad_entidad_enen
+                    WHERE
+                        enen_entip_pk = enti_pk
+                        AND enen_entih_pk = #{entiHijaId}
+                )
+            ]]>
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectList" parameterType="EntidadCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+        <![CDATA[
+        ORDER BY enti_codigo, enti_pk
+        ]]>
+	</select>
+
+	<select id="selectMap" parameterType="EntidadCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="selectObject" resultMap="ResultMap" parameterType="EntidadCriterioVO">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="exists" parameterType="EntidadVO" resultType="boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM
+            tbl_entidad_enti
+        WHERE
+            enti_codigo = #{codigo}
+    ]]>
+	</select>
+
+	<select id="nextSequence" resultType="Long">
+    <![CDATA[
+        SELECT COALESCE(MAX(enti_pk), 20000) + 1 as enti_pk FROM tbl_entidad_enti
+    ]]>
+	</select>
+
+	<insert id="insert" parameterType="EntidadVO">
+    <![CDATA[
+        INSERT INTO tbl_entidad_enti(enti_pk, enti_codigo, enti_tipo
+            , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
+            , enti_gis, enti_puerto, enti_max_grid, enti_classpath)
+        VALUES (
+        	#{id}, #{codigo}, #{tipo}
+            , #{cmdAlta, jdbcType=INTEGER, javaType=Boolean}
+            , #{cmdBaja, jdbcType=INTEGER, javaType=Boolean}
+            , #{cmdEdicion, jdbcType=INTEGER, javaType=Boolean}
+            , #{cmdDuplicado, jdbcType=INTEGER, javaType=Boolean}
+            , #{gis, jdbcType=INTEGER, javaType=Boolean}
+            , #{puerto, jdbcType=INTEGER, javaType=Boolean}
+            , #{maxGrid}, #{classpath}
+        )
+    ]]>
+	</insert>
+
+	<update id="update" parameterType="EntidadVO">
+    <![CDATA[
+        UPDATE tbl_entidad_enti SET
+            enti_cmd_alta = #{cmdAlta, jdbcType=INTEGER, javaType=Boolean}
+            , enti_cmd_baja = #{cmdBaja, jdbcType=INTEGER, javaType=Boolean}
+            , enti_cmd_edicion = #{cmdEdicion, jdbcType=INTEGER, javaType=Boolean}
+            , enti_cmd_duplicado = #{cmdDuplicado, jdbcType=INTEGER, javaType=Boolean}
+            , enti_gis = #{gis, jdbcType=INTEGER, javaType=Boolean}
+            , enti_puerto = #{puerto, jdbcType=INTEGER, javaType=Boolean}
+            , enti_max_grid = #{maxGrid}, enti_classpath = #{classpath}
+        WHERE enti_pk = #{id}
+    ]]>
+	</update>
+
+	<delete id="delete" parameterType="EntidadVO">
+    <![CDATA[
+        DELETE FROM tbl_entidad_enti
+        WHERE enti_pk = #{id}
+    ]]>
+	</delete>
+</mapper>

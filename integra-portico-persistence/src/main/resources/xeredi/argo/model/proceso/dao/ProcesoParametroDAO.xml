@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.proceso.dao.ProcesoParametroDAO">
+	<resultMap type="ProcesoParametroVO" id="ResultMap">
+		<id column="prpm_prbt_pk" property="prbtId" />
+		<result column="prpm_nombre" property="nombre" />
+		<result column="prpm_valor" property="valor" />
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+        prpm_prbt_pk
+        , prpm_nombre
+        , prpm_valor
+    FROM
+        tbl_proceso_parametro_prpm
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND prpm_prbt_pk = #{id}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectList" parameterType="ProcesoCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<insert id="insert" parameterType="ProcesoParametroVO">
+        <![CDATA[
+        INSERT INTO tbl_proceso_parametro_prpm (prpm_prbt_pk, prpm_nombre, prpm_valor)
+        VALUES (#{prbtId}, #{nombre}, #{valor})
+        ]]>
+	</insert>
+
+	<delete id="deleteList" parameterType="ProcesoCriterioVO">
+		DELETE FROM tbl_proceso_parametro_prpm
+		<include refid="SelectWhere" />
+	</delete>
+</mapper>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.maestro.dao.ParametroDatoDAO">
+	<resultMap type="ItemDatoVO" id="ResultMap">
+		<id column="prdt_prvr_pk" />
+		<id column="prdt_tpdt_pk" />
+
+		<result column="prdt_prvr_pk" property="itemId" />
+		<result column="prdt_tpdt_pk" property="tpdtId" />
+		<result column="prdt_nentero" property="cantidadEntera" />
+		<result column="prdt_ndecimal" property="cantidadDecimal" />
+		<result column="prdt_fecha" property="fecha" />
+		<result column="prdt_cadena" property="cadena" />
+
+		<association property="prmt" javaType="ParametroVO">
+			<result column="prdt_prmt_pk" property="id" />
+			<result column="prmt_parametro" property="parametro" />
+			<result column="p18n_texto" property="texto" />
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+		SELECT
+		    prdt_prvr_pk, prdt_tpdt_pk, prdt_nentero, prdt_ndecimal, prdt_fecha, prdt_prmt_pk, prdt_cadena
+
+		    , prmt_parametro, prmt_prto_pk
+
+    ]]>
+		<if test="idioma != null and fechaVigencia != null">
+        <![CDATA[
+		    , (
+		        CASE
+		            WHEN EXISTS (
+		                SELECT 1 FROM tbl_tipo_parametro_tppr
+		                WHERE tppr_pk = prmt_tppr_pk
+		                    AND tppr_es_i18n = 1
+		            )
+		            THEN (
+		                SELECT i18n_text FROM tbl_i18n_i18n
+		                WHERE i18n_pref = 'prvr'
+		                    AND i18n_lang = #{idioma}
+		                    AND i18n_ext_pk = (
+		                        SELECT prvr_pk FROM tbl_parametro_version_prvr
+		                        WHERE prvr_prmt_pk = prmt_pk
+		                            AND ( #{fechaVigencia} >= prvr_fini AND ( prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia} ) )
+		                    )
+		            )
+		            WHEN EXISTS (
+		                SELECT 1 FROM tbl_tipo_parametro_tppr
+		                WHERE tppr_pk = prmt_tppr_pk
+		                    AND tppr_tpdt_pk IS NOT NULL
+		            )
+		            THEN (
+		                SELECT prdt_cadena FROM tbl_parametro_dato_prdt
+		                WHERE
+		                    prdt_prvr_pk = (
+		                        SELECT prvr_pk FROM tbl_parametro_version_prvr
+		                        WHERE prvr_prmt_pk = prmt_pk
+		                            AND ( #{fechaVigencia} >= prvr_fini AND ( prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia} ) )
+		                    )
+		                    AND prdt_tpdt_pk = (
+		                        SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr
+		                        WHERE tppr_pk = prmt_tppr_pk
+		                    )
+		            )
+		        END
+		    ) AS p18n_texto
+        ]]>
+		</if>
+    <![CDATA[
+		FROM
+		    tbl_parametro_dato_prdt
+		    LEFT JOIN tbl_parametro_prmt ON
+		        prmt_pk = prdt_prmt_pk
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="versionId == null and versionIds == null">
+            <![CDATA[
+              	AND prdt_prvr_pk = ANY (
+                	SELECT prvr_pk
+                	FROM
+                		tbl_parametro_prmt
+                		INNER JOIN tbl_parametro_version_prvr ON
+                			prvr_prmt_pk = prmt_pk
+            ]]>
+				<where>
+					<include
+						refid="xeredi.argo.model.maestro.dao.ParametroDAO.SelectWhere" />
+				</where>
+            <![CDATA[
+                )
+            ]]>
+			</if>
+
+			<if test="versionId != null">
+				AND prdt_prvr_pk = #{versionId}
+			</if>
+
+			<if test="versionIds != null">
+				AND prdt_prvr_pk IN
+				<foreach collection="versionIds" item="item" open="(" close=")"
+					separator=",">#{item}
+				</foreach>
+			</if>
+
+			<if test="entiId != null and soloDatosGrid">
+                <![CDATA[
+                    AND EXISTS (
+                        SELECT 1
+                        FROM tbl_entidad_tipo_dato_entd
+                        WHERE
+                            entd_tpdt_pk = prdt_tpdt_pk
+                            AND entd_enti_pk = #{entiId}
+                            AND entd_gridable = 1
+                    )
+                ]]>
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectList" parameterType="ParametroCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<insert id="insert" parameterType="ItemDatoVO">
+    <![CDATA[
+        INSERT INTO tbl_parametro_dato_prdt (
+            prdt_prvr_pk
+            , prdt_tpdt_pk
+            , prdt_nentero
+            , prdt_ndecimal
+            , prdt_fecha
+            , prdt_prmt_pk
+            , prdt_cadena
+        ) VALUES (
+            #{itemId}
+            , #{tpdtId}
+            , #{cantidadEntera, jdbcType=BIGINT}
+            , #{cantidadDecimal, jdbcType=DOUBLE}
+            , #{fecha, jdbcType=TIMESTAMP}
+            , #{prmt.id, jdbcType=BIGINT}
+            , #{cadena, jdbcType=VARCHAR}
+        )
+    ]]>
+	</insert>
+
+	<update id="update" parameterType="ItemDatoVO">
+    <![CDATA[
+        UPDATE tbl_parametro_dato_prdt SET
+            prdt_nentero = #{cantidadEntera, jdbcType=BIGINT}
+            , prdt_ndecimal = #{cantidadDecimal, jdbcType=DOUBLE}
+            , prdt_fecha = #{fecha, jdbcType=TIMESTAMP}
+            , prdt_prmt_pk = #{prmt.id, jdbcType=BIGINT}
+            , prdt_cadena = #{cadena, jdbcType=VARCHAR}
+        WHERE
+            prdt_prvr_pk = #{itemId}
+            AND prdt_tpdt_pk = #{tpdtId}
+    ]]>
+	</update>
+
+	<delete id="deleteList" parameterType="ParametroCriterioVO">
+		DELETE FROM tbl_parametro_dato_prdt
+		<include refid="SelectWhere" />
+	</delete>
+</mapper>

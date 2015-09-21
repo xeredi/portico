@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.seguridad.dao.UsuarioGrupoDAO">
+	<sql id="SelectWhere">
+		<where>
+			<if test="usroId != null">
+				AND usgr_usro_pk = #{usroId}
+			</if>
+			<if test="grpoId != null">
+				AND usgr_grpo_pk = #{grpoId}
+			</if>
+		</where>
+	</sql>
+
+	<select id="exists" parameterType="UsuarioGrupoVO" resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_usuario_grupo_usgr
+        WHERE
+        	usgr_usro_pk = #{usroId}
+        	AND usgr_grpo_pk = #{grpoId}
+        ]]>
+	</select>
+
+	<insert id="insert" parameterType="UsuarioGrupoVO">
+        <![CDATA[
+        INSERT INTO tbl_usuario_grupo_usgr (usgr_usro_pk, usgr_grpo_pk)
+        VALUES (#{usroId}, #{grpoId})
+        ]]>
+	</insert>
+
+	<delete id="deleteList" parameterType="UsuarioGrupoCriterioVO">
+		DELETE FROM tbl_usuario_grupo_usgr
+		<include refid="SelectWhere" />
+	</delete>
+</mapper>

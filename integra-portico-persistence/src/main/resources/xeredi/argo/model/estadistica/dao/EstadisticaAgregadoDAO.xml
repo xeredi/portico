@@ -1,0 +1,2533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.estadistica.dao.EstadisticaAgregadoDAO">
+	<update id="updateSrvcActividadPesquera" parameterType="EstadisticaAgregadoCriterioVO">
+    <![CDATA[
+		UPDATE tbl_servicio_srvc SET
+			srvc_pepr_pk = #{peprId}
+		WHERE
+			srvc_tpsr_pk = portico.getEntidad('MANIFIESTO_PESCA')
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_subservicio_ssrv
+				WHERE
+					ssrv_srvc_pk = srvc_pk
+					AND ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
+			)
+			AND (
+				srvc_fref >= #{fini}
+				AND srvc_fref < #{ffin}
+			)
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_servicio_dato_srdt
+				WHERE
+					srdt_srvc_pk = srvc_pk
+					AND srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+					AND srdt_cadena IN ('0', '2')
+			)
+			AND srvc_subp_pk IN (
+				SELECT prto_pk
+				FROM tbl_puerto_prto
+				WHERE
+					prto_sprt_pk = #{sprtId}
+			)
+    ]]>
+	</update>
+
+	<resultMap id="ResultMapActividadPesquera" type="EstadisticaAgregadoVO">
+		<id column="srvc_subp_pk" />
+		<id column="TIPO_CAPTURA_PESCA" />
+		<id column="TIPO_OP_PESCA" />
+		<id column="ESPECIE_PESCA" />
+		<id column="ARTE_PESCA" />
+		<id column="ZONA_PESCA" />
+		<id column="ORGA" />
+
+		<association property="prto" javaType="PuertoVO">
+			<result column="srvc_subp_pk" property="id" />
+			<result column="srvc_subp" property="codigo" />
+		</association>
+
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="TIPO_CAPTURA_PESCA" property="TIPO_CAPTURA_PESCA" />
+			<result column="TIPO_CAPTURA_PESCA_prmt" property="TIPO_CAPTURA_PESCA_prmt" />
+			<result column="TIPO_OP_PESCA" property="TIPO_OP_PESCA" />
+			<result column="TIPO_OP_PESCA_prmt" property="TIPO_OP_PESCA_prmt" />
+			<result column="ESPECIE_PESCA" property="ESPECIE_PESCA" />
+			<result column="ESPECIE_PESCA_prmt" property="ESPECIE_PESCA_prmt" />
+			<result column="ARTE_PESCA" property="ARTE_PESCA" />
+			<result column="ARTE_PESCA_prmt" property="ARTE_PESCA_prmt" />
+			<result column="ZONA_PESCA" property="ZONA_PESCA" />
+			<result column="ZONA_PESCA_prmt" property="ZONA_PESCA_prmt" />
+			<result column="ORGA" property="ORGA" />
+			<result column="ORGA_prmt" property="ORGA_prmt" />
+
+			<result column="ENTERO_01" property="ENTERO_01" />
+			<result column="DECIMAL_01" property="DECIMAL_01" />
+		</association>
+	</resultMap>
+
+	<select id="selectActividadPesquera" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapActividadPesquera">
+    <![CDATA[
+		SELECT
+			srvc_subp_pk
+			, (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk) AS srvc_subp
+			, TIPO_CAPTURA_PESCA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_CAPTURA_PESCA) AS TIPO_CAPTURA_PESCA_prmt
+			, SUM(kilos) AS ENTERO_01, SUM(precio) AS DECIMAL_01
+			, TIPO_OP_PESCA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_OP_PESCA) AS TIPO_OP_PESCA_prmt
+			, ESPECIE_PESCA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ESPECIE_PESCA) AS ESPECIE_PESCA_prmt
+			, ARTE_PESCA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ARTE_PESCA) AS ARTE_PESCA_prmt
+			, ZONA_PESCA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ZONA_PESCA) AS ZONA_PESCA_prmt
+			, ORGA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ORGA) AS ORGA_prmt
+		FROM (
+			SELECT
+				srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_fref, srvc_estado, ssrv_tpss_pk, ssrv_estado
+				, (
+					SELECT prdt_prmt_pk
+					FROM tbl_parametro_dato_prdt
+					WHERE
+						prdt_tpdt_pk = portico.getTipoDato('TIPO_CAPTURA_PESCA')
+						AND prdt_prvr_pk = (
+							SELECT prvr_pk
+							FROM tbl_parametro_version_prvr
+							WHERE
+								srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+								AND prvr_prmt_pk = (
+									SELECT ssdt_prmt_pk
+									FROM tbl_subservicio_dato_ssdt
+									WHERE
+										ssdt_ssrv_pk = ssrv_pk
+										AND ssdt_tpdt_pk = portico.getTipoDato('ESPECIE_PESCA')
+								)
+						)
+				) AS TIPO_CAPTURA_PESCA
+				, (
+					SELECT ssdt_ndecimal
+					FROM tbl_subservicio_dato_ssdt
+					WHERE
+						ssdt_ssrv_pk = ssrv_pk
+						AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_02')
+				) AS kilos
+				, (
+					SELECT ssdt_ndecimal
+					FROM tbl_subservicio_dato_ssdt
+					WHERE
+						ssdt_ssrv_pk = ssrv_pk
+						AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_03')
+				) AS precio
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('TIPO_OP_PESCA')
+				) AS TIPO_OP_PESCA
+				, (
+					SELECT ssdt_prmt_pk
+					FROM tbl_subservicio_dato_ssdt
+					WHERE
+						ssdt_ssrv_pk = ssrv_pk
+						AND ssdt_tpdt_pk = portico.getTipoDato('ESPECIE_PESCA')
+				) AS ESPECIE_PESCA
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('ARTE_PESCA')
+				) AS ARTE_PESCA
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('ZONA_PESCA')
+				) AS ZONA_PESCA
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('ORGA')
+				) AS ORGA
+			FROM
+				tbl_servicio_srvc
+				INNER JOIN tbl_subservicio_ssrv ON
+					ssrv_srvc_pk = srvc_pk
+			WHERE
+				srvc_tpsr_pk = portico.getEntidad('MANIFIESTO_PESCA')
+				AND ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
+				AND EXISTS (
+					SELECT 1
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+						AND srdt_cadena IN ('0', '2')
+						AND srdt_srvc_pk = srvc_pk
+				)
+				AND srvc_subp_pk IN (
+					SELECT prto_pk
+					FROM tbl_puerto_prto
+					WHERE
+						prto_sprt_pk = #{sprtId}
+				)
+				AND (
+					srvc_fref >= #{fini}
+					AND srvc_fref < #{ffin}
+				)
+		) sql
+		GROUP BY
+			srvc_subp_pk, TIPO_CAPTURA_PESCA
+			, TIPO_OP_PESCA, ESPECIE_PESCA, ARTE_PESCA, ZONA_PESCA, ORGA
+    ]]>
+	</select>
+
+	<update id="updateSrvcAvituallamiento" parameterType="EstadisticaAgregadoCriterioVO">
+    <![CDATA[
+		UPDATE tbl_servicio_srvc SET
+			srvc_pepr_pk = #{peprId}
+    	WHERE srvc_pk = ANY (
+			SELECT srvc_pk
+			FROM tbl_servicio_srvc
+			WHERE
+			    srvc_subp_pk = ANY(
+			        SELECT prto_pk FROM tbl_puerto_prto WHERE prto_sprt_pk = #{sprtId}
+			    )
+
+			    AND srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
+			    AND srvc_fref >= #{fini}
+			    AND srvc_fref < #{ffin}
+
+			    AND EXISTS (
+			        SELECT 1 FROM tbl_subservicio_ssrv
+			        WHERE ssrv_srvc_pk = srvc_pk
+			            AND ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+			            AND ssrv_estado = 'R'
+
+			            AND EXISTS (
+			                SELECT 1
+			                FROM tbl_subservicio_dato_ssdt
+			                WHERE ssdt_ssrv_pk = ssrv_pk
+			                    AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+			                    AND ssdt_cadena = ANY ('0', '2')
+			            )
+
+			            AND EXISTS (
+			                SELECT 1
+			                FROM tbl_subservicio_dato_ssdt
+			                WHERE ssdt_ssrv_pk = ssrv_pk
+			                    AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
+			                    AND EXISTS (
+			                        SELECT 1
+			                        FROM tbl_parametro_version_prvr
+			                        WHERE prvr_prmt_pk = ssdt_prmt_pk
+			                            AND prvr_fini <= srvc_fref AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+			                            AND EXISTS (
+			                                SELECT 1 FROM tbl_parametro_dato_prdt
+			                                WHERE prdt_prvr_pk = prvr_pk
+			                                    AND prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+			                                    AND prdt_nentero = 1
+			                            )
+			                    )
+			            )
+			    )
+
+			UNION ALL
+
+			SELECT srvc_pk FROM tbl_servicio_srvc
+			WHERE
+			    srvc_subp_pk = ANY(
+			        SELECT prto_pk FROM tbl_puerto_prto WHERE prto_sprt_pk = #{sprtId}
+			    )
+
+			    AND srvc_tpsr_pk = portico.getEntidad('SUMINISTRO_CONSUMO')
+			    AND srvc_ffin >= #{fini}
+			    AND srvc_ffin < #{ffin}
+
+			    AND EXISTS (
+			        SELECT 1
+			        FROM tbl_servicio_dato_srdt
+			        WHERE srdt_srvc_pk = srvc_pk
+			            AND srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+			            AND srdt_cadena IN ('0', '2')
+			    )
+
+			    AND EXISTS (
+			        SELECT 1
+			        FROM tbl_servicio_dato_srdt
+			        WHERE srdt_srvc_pk = srvc_pk
+			            AND srdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
+			            AND EXISTS (
+			                SELECT 1
+			                FROM tbl_parametro_version_prvr
+			                WHERE
+			                    prvr_prmt_pk = srdt_prmt_pk
+			                    AND prvr_fini <= srvc_fref AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+			                    AND EXISTS (
+			                        SELECT 1
+			                        FROM tbl_parametro_dato_prdt
+			                        WHERE
+			                            prdt_prvr_pk = prvr_pk
+			                            AND prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+			                            AND prdt_nentero = 1
+			                    )
+			            )
+			    )
+    		)
+	]]>
+	</update>
+
+	<resultMap id="ResultMapAvituallamiento" type="EstadisticaAgregadoVO">
+		<id column="srvc_subp_pk" />
+		<id column="TIPO_SUM" />
+
+		<association property="prto" javaType="PuertoVO">
+			<result column="srvc_subp_pk" property="id" />
+			<result column="srvc_subp" property="codigo" />
+		</association>
+
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="TIPO_SUM" property="TIPO_SUM" />
+			<result column="TIPO_SUM_prmt" property="TIPO_SUM_prmt" />
+
+			<result column="ENTERO_01" property="ENTERO_01" />
+		</association>
+	</resultMap>
+
+	<select id="selectAvituallamiento" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapAvituallamiento">
+    <![CDATA[
+		SELECT
+		    srvc_subp_pk
+		    , (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk) AS srvc_subp
+		    , TIPO_SUM
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = TIPO_SUM) AS TIPO_SUM_prmt
+		    , SUM(ENTERO_01) AS ENTERO_01
+		FROM (
+		    WITH ssrvs AS (
+		        SELECT ssrv_pk
+		        FROM (
+		            SELECT ssrv_pk, ssrv_tpss_pk
+		            FROM tbl_subservicio_ssrv
+		            WHERE
+		                EXISTS (
+		                    SELECT 1
+		                    FROM tbl_subservicio_dato_ssdt
+		                    WHERE ssdt_ssrv_pk = ssrv_pk
+		                        AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
+		                        AND ssdt_prmt_pk = ANY (
+		                            SELECT prmt_pk FROM tbl_parametro_prmt
+		                            WHERE prmt_tppr_pk = portico.getEntidad('TIPO_SUMINISTRO')
+		                        )
+		                )
+		        ) sql
+		        WHERE ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+		    )
+		    SELECT srvc_subp_pk
+		        , (
+		            SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		            WHERE ssdt_ssrv_pk = ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
+		        ) AS TIPO_SUM
+		        , (
+		            SELECT COALESCE(ssdt_nentero, 0) / 1000 FROM tbl_subservicio_dato_ssdt
+		            WHERE ssdt_ssrv_pk = ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('ENTERO_04')
+		        ) AS ENTERO_01
+		    FROM tbl_servicio_srvc
+		        INNER JOIN tbl_subservicio_ssrv ON
+		            ssrv_srvc_pk = srvc_pk
+		    WHERE
+		        ssrv_pk = ANY (
+		            SELECT ssrv_pk FROM ssrvs
+		        )
+
+		        AND srvc_subp_pk = ANY(
+		            SELECT prto_pk FROM tbl_puerto_prto WHERE prto_sprt_pk = #{sprtId}
+		        )
+
+		        AND srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
+		        AND srvc_fref >= #{fini}
+		        AND srvc_fref < #{ffin}
+
+		        AND ssrv_estado = 'R'
+
+		        AND EXISTS (
+		            SELECT 1
+		            FROM tbl_subservicio_dato_ssdt
+		            WHERE ssdt_ssrv_pk = ssrv_pk
+		                AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+		                AND ssdt_cadena IN ('0', '2')
+		        )
+
+		        AND EXISTS (
+		            SELECT 1
+		            FROM tbl_subservicio_dato_ssdt
+		            WHERE ssdt_ssrv_pk = ssrv_pk
+		                AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
+		                AND EXISTS (
+		                    SELECT 1
+		                    FROM tbl_parametro_version_prvr
+		                    WHERE prvr_prmt_pk = ssdt_prmt_pk
+		                        AND prvr_fini <= srvc_fref AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+		                        AND EXISTS (
+		                            SELECT 1
+		                            FROM tbl_parametro_dato_prdt
+		                            WHERE
+		                                prdt_prvr_pk = prvr_pk
+		                                AND prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+		                                AND prdt_nentero = 1
+		                        )
+		                )
+		        )
+
+		    UNION ALL
+
+		    SELECT srvc_subp_pk
+		        , (
+		            SELECT srdt_prmt_pk FROM tbl_servicio_dato_srdt
+		            WHERE srdt_srvc_pk = srvc_pk AND srdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
+		        ) AS TIPO_SUM
+		        , (
+		            SELECT COALESCE(ssdt_ndecimal, 0) FROM tbl_subservicio_dato_ssdt
+		            WHERE ssdt_ssrv_pk = ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_03')
+		        ) AS ENTERO_01
+		    FROM tbl_servicio_srvc
+		        INNER JOIN tbl_subservicio_ssrv ON
+		            ssrv_srvc_pk = srvc_pk
+		    WHERE
+		        srvc_subp_pk = ANY(
+		            SELECT prto_pk FROM tbl_puerto_prto WHERE prto_sprt_pk = #{sprtId}
+		        )
+
+		        AND srvc_tpsr_pk = portico.getEntidad('SUMINISTRO_CONSUMO')
+		        AND ssrv_tpss_pk = portico.getEntidad('SUMINISTRO_CONSUMO_LECTURA')
+		        AND srvc_fini >= #{fini}
+		        AND srvc_ffin < #{ffin}
+
+		        AND EXISTS (
+		            SELECT 1
+		            FROM tbl_servicio_dato_srdt
+		            WHERE srdt_srvc_pk = srvc_pk
+		                AND srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+		                AND srdt_cadena IN ('0', '2')
+		        )
+
+		        AND EXISTS (
+		            SELECT 1
+		            FROM tbl_servicio_dato_srdt
+		            WHERE srdt_srvc_pk = srvc_pk
+		                AND srdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
+		                AND EXISTS (
+		                    SELECT 1
+		                    FROM tbl_parametro_dato_prdt
+		                    WHERE prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+		                        AND prdt_nentero = 1
+		                        AND prdt_prvr_pk = (
+		                            SELECT prvr_pk
+		                            FROM tbl_parametro_version_prvr
+		                            WHERE prvr_prmt_pk = srdt_prmt_pk
+		                                AND prvr_fini <= srvc_fref AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+		                        )
+		                )
+		        )
+		) sql
+		GROUP BY srvc_subp_pk, TIPO_SUM
+    ]]>
+	</select>
+
+	<update id="updateSrvcAgregacionSuperficie" parameterType="EstadisticaAgregadoCriterioVO">
+    <![CDATA[
+		UPDATE tbl_servicio_srvc SET
+			srvc_pepr_pk = #{peprId}
+		WHERE
+			srvc_tpsr_pk = portico.getEntidad('OCUPACION_SUPERFICIE')
+
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_servicio_dato_srdt
+				WHERE
+					srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+					AND (
+						srdt_cadena = '0'
+						OR srdt_cadena = '2'
+					)
+					AND srdt_srvc_pk = srvc_pk
+			)
+
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_subservicio_ssrv
+				WHERE
+					ssrv_srvc_pk = srvc_pk
+					AND ssrv_tpss_pk = portico.getEntidad('OCUPACION_SUPERFICIE_LINEA')
+					AND ssrv_ffin >= #{fini}
+					AND ssrv_ffin < #{ffin}
+			)
+			AND srvc_subp_pk IN (
+				SELECT prto_pk
+				FROM tbl_puerto_prto
+				WHERE
+					prto_sprt_pk = (
+						SELECT pepr_autp_pk
+						FROM tbl_periodo_proceso_pepr
+						WHERE pepr_pk = #{peprId}
+					)
+			)
+    ]]>
+	</update>
+
+	<resultMap id="ResultMapAgregacionSuperficie" type="EstadisticaAgregadoVO">
+		<id column="estd_subp_pk" />
+		<id column="ZONA_DEP" />
+		<id column="UNID_SUP" />
+		<id column="TIPO_MERC_EST" />
+		<id column="TIPO_OP_SUP" />
+		<id column="ORGA" />
+		<id column="BOOLEANO_01" />
+
+		<association property="prto" javaType="PuertoVO">
+			<result column="estd_subp_pk" property="id" />
+			<result column="estd_subp" property="codigo" />
+		</association>
+
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="ZONA_DEP" property="ZONA_DEP" />
+			<result column="ZONA_DEP_prmt" property="ZONA_DEP_prmt" />
+			<result column="UNID_SUP" property="UNID_SUP" />
+			<result column="UNID_SUP_prmt" property="UNID_SUP_prmt" />
+			<result column="TIPO_MERC_EST" property="TIPO_MERC_EST" />
+			<result column="TIPO_MERC_EST_prmt" property="TIPO_MERC_EST_prmt" />
+			<result column="TIPO_OP_SUP" property="TIPO_OP_SUP" />
+			<result column="TIPO_OP_SUP_prmt" property="TIPO_OP_SUP_prmt" />
+			<result column="ORGA" property="ORGA" />
+			<result column="ORGA_prmt" property="ORGA_prmt" />
+
+			<result column="BOOLEANO_01" property="BOOLEANO_01" />
+			<result column="ENTERO_01" property="ENTERO_01" />
+		</association>
+	</resultMap>
+
+	<select id="selectAgregacionSuperficie" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapAgregacionSuperficie">
+    <![CDATA[
+		SELECT
+			estd_subp_pk
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = estd_subp_pk) AS estd_subp
+			, ZONA_DEP
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ZONA_DEP) AS ZONA_DEP_prmt
+			, UNID_SUP
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = UNID_SUP) AS UNID_SUP_prmt
+			, TIPO_MERC_EST
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_MERC_EST) AS TIPO_MERC_EST_prmt
+			, TIPO_OP_SUP
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_OP_SUP) AS TIPO_OP_SUP_prmt
+			, ORGA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ORGA) AS ORGA_prmt
+			, BOOLEANO_01, SUM(dias * ENTERO_01) AS ENTERO_01
+		FROM (
+			SELECT
+				srvc_pk, srvc_fref, ssrv_pk, ssrv_fini, ssrv_ffin
+				, portico.daysBetween(ssrv_fini, ssrv_ffin) AS dias
+				, (
+					SELECT prdt_prmt_pk
+					FROM tbl_parametro_dato_prdt
+					WHERE
+						prdt_tpdt_pk = portico.getTipoDato('AUT_PORT')
+						AND prdt_prvr_pk = ANY (
+							SELECT prvr_pk
+							FROM tbl_parametro_version_prvr
+							WHERE
+								srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+								AND prvr_prmt_pk = srvc_subp_pk
+						)
+				) AS estd_subp_pk
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('ZONA_DEP')
+				) AS ZONA_DEP
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('UNID_SUP')
+				) AS UNID_SUP
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('TIPO_MERC_EST')
+				) AS TIPO_MERC_EST
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('TIPO_OP_SUP')
+				) AS TIPO_OP_SUP
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('ORGA')
+				) AS ORGA
+				, (
+					SELECT srdt_nentero
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('BOOLEANO_02')
+				) AS BOOLEANO_01
+				, (
+					SELECT ssdt_nentero
+					FROM tbl_subservicio_dato_ssdt
+					WHERE ssdt_ssrv_pk = ssrv_pk
+						AND ssdt_tpdt_pk = portico.getTipoDato('ENTERO_02')
+				) AS ENTERO_01
+			FROM
+				tbl_servicio_srvc
+				INNER JOIN tbl_subservicio_ssrv ON
+					ssrv_srvc_pk = srvc_pk
+			WHERE
+				srvc_tpsr_pk = portico.getEntidad('OCUPACION_SUPERFICIE')
+				AND ssrv_tpss_pk = portico.getEntidad('OCUPACION_SUPERFICIE_LINEA')
+
+				AND EXISTS (
+					SELECT 1
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+						AND (
+							srdt_cadena = '0'
+							OR srdt_cadena = '2'
+						)
+						AND srdt_srvc_pk = srvc_pk
+				)
+				AND (
+					ssrv_ffin >= #{fini}
+					AND ssrv_ffin < #{ffin}
+				)
+				AND srvc_subp_pk IN (
+					SELECT prto_pk
+					FROM tbl_puerto_prto
+					WHERE
+						prto_sprt_pk = (
+							SELECT pepr_autp_pk
+							FROM tbl_periodo_proceso_pepr
+							WHERE pepr_pk = #{peprId}
+						)
+				)
+		) sql
+		GROUP BY
+			estd_subp_pk, ZONA_DEP, UNID_SUP, TIPO_MERC_EST, TIPO_OP_SUP, ORGA, BOOLEANO_01
+    ]]>
+	</select>
+
+	<update id="updateSrvcAgregacionEscala" parameterType="EstadisticaAgregadoCriterioVO">
+    <![CDATA[
+		UPDATE tbl_servicio_srvc SET
+			srvc_pepr_pk = #{peprId}
+		WHERE
+	        srvc_subp_pk = ANY(
+	            SELECT prto_pk FROM tbl_puerto_prto WHERE prto_sprt_pk = #{sprtId}
+	        )
+
+	        AND srvc_tpsr_pk = portico.getEntidad('ESCALA')
+	        AND srvc_ffin >= #{fini}
+	        AND srvc_ffin < #{ffin}
+
+	        AND EXISTS (
+	            SELECT 1 FROM tbl_servicio_dato_srdt
+	            WHERE srdt_srvc_pk = srvc_pk
+	                AND srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+	                AND srdt_cadena = ANY('0', '2')
+	        )
+
+	        AND srvc_estado = ANY ('I', 'F')
+
+	        AND EXISTS (
+	            SELECT 1 FROM tbl_subservicio_ssrv
+	            WHERE ssrv_srvc_pk = srvc_pk
+	                AND ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+	                AND ssrv_estado = 'F'
+	                AND EXISTS (
+	                    SELECT 1 FROM tbl_subservicio_dato_ssdt
+	                    WHERE
+	                      ssdt_ssrv_pk = ssrv_pk
+	                      AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ATR')
+	                      AND EXISTS (
+	                          SELECT 1
+	                          FROM tbl_parametro_prmt
+	                          WHERE prmt_pk = ssdt_prmt_pk
+	                              AND prmt_tppr_pk = portico.getEntidad('TIPO_ATRAQUE')
+	                              AND prmt_parametro <> 'F'
+	                      )
+	                )
+	        )
+    ]]>
+	</update>
+
+	<resultMap id="ResultMapAgregacionEscala" type="EstadisticaAgregadoVO">
+		<id column="estd_subp_pk" />
+		<id column="TIPO_BUQUE" />
+		<id column="PAIS" />
+		<id column="TIPO_NAV" />
+		<id column="TIPO_NAV_2" />
+		<id column="TIPO_ACT" />
+		<id column="BUQUE" />
+		<id column="TIPO_ESTAN_ESC" />
+		<id column="SERV_TRAF" />
+		<id column="ACUERDO" />
+		<id column="ORGA" />
+		<id column="TIPO_BUQUE_GT" />
+
+		<association property="prto" javaType="PuertoVO">
+			<result column="estd_subp_pk" property="id" />
+			<result column="estd_subp" property="codigo" />
+		</association>
+
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="TIPO_BUQUE" property="TIPO_BUQUE" />
+			<result column="TIPO_BUQUE_prmt" property="TIPO_BUQUE_prmt" />
+			<result column="PAIS" property="PAIS" />
+			<result column="PAIS_prmt" property="PAIS_prmt" />
+			<result column="TIPO_NAV" property="TIPO_NAV" />
+			<result column="TIPO_NAV_prmt" property="TIPO_NAV_prmt" />
+			<result column="TIPO_NAV_2" property="TIPO_NAV_2" />
+			<result column="TIPO_NAV_2_prmt" property="TIPO_NAV_2_prmt" />
+			<result column="TIPO_ACT" property="TIPO_ACT" />
+			<result column="TIPO_ACT_prmt" property="TIPO_ACT_prmt" />
+			<result column="BUQUE" property="BUQUE" />
+			<result column="BUQUE_prmt" property="BUQUE_prmt" />
+			<result column="SERV_TRAF" property="SERV_TRAF" />
+			<result column="SERV_TRAF_prmt" property="SERV_TRAF_prmt" />
+			<result column="ACUERDO" property="ACUERDO" />
+			<result column="ACUERDO_prmt" property="ACUERDO_prmt" />
+			<result column="ORGA" property="ORGA" />
+			<result column="ORGA_prmt" property="ORGA_prmt" />
+			<result column="TIPO_BUQUE_GT" property="TIPO_BUQUE_GT" />
+			<result column="TIPO_BUQUE_GT_prmt" property="TIPO_BUQUE_GT_prmt" />
+
+			<result column="TIPO_ESTAN_ESC" property="TIPO_ESTAN_ESC" />
+
+			<result column="ENTERO_01" property="ENTERO_01" />
+			<result column="ENTERO_02" property="ENTERO_02" />
+		</association>
+	</resultMap>
+
+	<select id="selectAgregacionEscala" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapAgregacionEscala">
+    <![CDATA[
+		SELECT
+			estd_subp_pk
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = estd_subp_pk) AS estd_subp
+			, TIPO_ACT
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_ACT) AS TIPO_ACT_prmt
+			, TIPO_BUQUE
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_BUQUE) AS TIPO_BUQUE_prmt
+			, TIPO_BUQUE_GT
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_BUQUE_GT) AS TIPO_BUQUE_GT_prmt
+			, TIPO_NAV
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_NAV) AS TIPO_NAV_prmt
+			, TIPO_NAV_2
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_NAV_2) AS TIPO_NAV_2_prmt
+			, PAIS
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = PAIS) AS PAIS_prmt
+			, BUQUE
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = BUQUE) AS BUQUE_prmt
+			, SERV_TRAF
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = SERV_TRAF) AS SERV_TRAF_prmt
+			, ACUERDO
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ACUERDO) AS ACUERDO_prmt
+			, ORGA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ORGA) AS ORGA_prmt
+
+			, TIPO_ESTAN_ESC
+
+			, COUNT(1) AS ENTERO_01, SUM(ENTERO_02) AS ENTERO_02
+		FROM (
+			WITH buqueTipoGT AS (
+				SELECT prmt_pk, prvr_fini, prvr_ffin
+					, (
+						SELECT prdt_nentero
+						FROM tbl_parametro_dato_prdt
+						WHERE prdt_prvr_pk = prvr_pk
+							AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+					) AS limiteSup
+				FROM
+					tbl_parametro_prmt
+					INNER JOIN tbl_parametro_version_prvr ON
+						prvr_prmt_pk = prmt_pk
+				WHERE
+					prmt_tppr_pk = portico.getEntidad('TIPO_BUQUE_GT')
+			)
+			SELECT
+				srvc_subp_pk, BUQUE
+				, (
+					SELECT prdt_prmt_pk
+					FROM tbl_parametro_dato_prdt
+					WHERE
+						prdt_tpdt_pk = portico.getTipoDato('AUT_PORT')
+						AND prdt_prvr_pk = ANY (
+							SELECT prvr_pk
+							FROM tbl_parametro_version_prvr
+							WHERE
+								srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+								AND prvr_prmt_pk = srvc_subp_pk
+						)
+				) AS estd_subp_pk
+				, (
+					SELECT ssdt_prmt_pk
+					FROM tbl_subservicio_dato_ssdt
+					WHERE
+						ssdt_ssrv_pk = atraque_pk
+						AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ACT')
+				) AS TIPO_ACT
+				, (
+					SELECT prdt_prmt_pk
+					FROM tbl_parametro_dato_prdt
+					WHERE
+						prdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE')
+						AND prdt_prvr_pk = ANY (
+							SELECT prvr_pk
+							FROM tbl_parametro_version_prvr
+							WHERE
+								srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+								AND prvr_prmt_pk = BUQUE
+						)
+				) AS TIPO_BUQUE
+				, (
+					SELECT prmt_pk
+					FROM buqueTipoGT
+					WHERE
+						srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+						AND limiteSup = (
+							SELECT MIN(limiteSup)
+							FROM buqueTipoGT
+							WHERE
+								srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+								AND limiteSup >= (
+									SELECT prdt_nentero
+									FROM tbl_parametro_dato_prdt
+									WHERE
+										prdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+										AND prdt_prvr_pk = ANY (
+											SELECT prvr_pk
+											FROM tbl_parametro_version_prvr
+											WHERE
+												srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+												AND prvr_prmt_pk = BUQUE
+										)
+								)
+
+						)
+				) AS TIPO_BUQUE_GT
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
+				) AS TIPO_NAV
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('TIPO_NAV_2')
+				) AS TIPO_NAV_2
+				, (
+					SELECT prdt_prmt_pk
+					FROM tbl_parametro_dato_prdt
+					WHERE
+						prdt_tpdt_pk = portico.getTipoDato('PAIS')
+						AND prdt_prvr_pk = ANY (
+							SELECT prvr_pk
+							FROM tbl_parametro_version_prvr
+							WHERE
+								srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+								AND prvr_prmt_pk = BUQUE
+						)
+				) AS PAIS
+				, (
+					SELECT srdt_cadena
+					FROM tbl_servicio_dato_srdt
+					WHERE srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('TIPO_ESTAN_ESC')
+				) AS TIPO_ESTAN_ESC
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('SERV_TRAF')
+				) AS SERV_TRAF
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('ACUERDO')
+				) AS ACUERDO
+				, (
+					SELECT ssdt_prmt_pk
+					FROM tbl_subservicio_dato_ssdt
+					WHERE ssdt_ssrv_pk = atraque_pk
+						AND ssdt_tpdt_pk = portico.getTipoDato('ORGA_2')
+				) AS ORGA
+				, (
+					SELECT prdt_nentero
+					FROM tbl_parametro_dato_prdt
+					WHERE
+						prdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+						AND prdt_prvr_pk = ANY (
+							SELECT prvr_pk
+							FROM tbl_parametro_version_prvr
+							WHERE
+								srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+								AND prvr_prmt_pk = BUQUE
+						)
+				) AS ENTERO_02
+			FROM (
+				SELECT
+					srvc_pk, srvc_subp_pk, srvc_fref, srvc_fini, srvc_ffin
+					, (
+						SELECT srdt_prmt_pk
+						FROM
+							tbl_servicio_dato_srdt
+						WHERE
+							srdt_srvc_pk = srvc_pk
+							AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+					) AS BUQUE
+					, (
+						SELECT MIN(ssrv_pk)
+						FROM tbl_subservicio_ssrv
+						WHERE
+							ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+							AND ssrv_estado = 'F'
+							AND ssrv_srvc_pk = srvc_pk
+							AND EXISTS (
+								SELECT 1
+								FROM tbl_subservicio_dato_ssdt
+								WHERE ssdt_ssrv_pk = ssrv_pk
+									AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ATR')
+									AND ssdt_prmt_pk <> (
+										SELECT prmt_pk
+										FROM
+											tbl_parametro_prmt
+										WHERE
+											prmt_tppr_pk = portico.getEntidad('TIPO_ATRAQUE')
+											AND prmt_parametro = 'F'
+									)
+							)
+							AND ssrv_fini = (
+								SELECT MIN(ssrv_fini)
+								FROM tbl_subservicio_ssrv
+								WHERE
+									ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+									AND ssrv_estado = 'F'
+									AND ssrv_srvc_pk = srvc_pk
+									AND EXISTS (
+										SELECT 1
+										FROM tbl_subservicio_dato_ssdt
+										WHERE ssdt_ssrv_pk = ssrv_pk
+											AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ATR')
+											AND ssdt_prmt_pk <> (
+												SELECT prmt_pk
+												FROM
+													tbl_parametro_prmt
+												WHERE
+													prmt_tppr_pk = portico.getEntidad('TIPO_ATRAQUE')
+													AND prmt_parametro = 'F'
+											)
+									)
+							)
+					) AS atraque_pk
+				FROM
+					tbl_servicio_srvc
+				WHERE
+					srvc_tpsr_pk = portico.getEntidad('ESCALA')
+					AND EXISTS (
+						SELECT 1
+						FROM tbl_subservicio_ssrv
+						WHERE
+							ssrv_srvc_pk = srvc_pk
+							AND ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+							AND ssrv_estado = 'F'
+							AND EXISTS (
+								SELECT 1
+								FROM tbl_subservicio_dato_ssdt
+								WHERE ssdt_ssrv_pk = ssrv_pk
+									AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ATR')
+									AND ssdt_prmt_pk <> (
+										SELECT prmt_pk
+										FROM
+											tbl_parametro_prmt
+										WHERE
+											prmt_tppr_pk = portico.getEntidad('TIPO_ATRAQUE')
+											AND prmt_parametro = 'F'
+									)
+							)
+					)
+					AND EXISTS (
+						SELECT 1
+						FROM tbl_servicio_dato_srdt
+						WHERE
+							srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+							AND (
+								srdt_cadena = '0'
+								OR srdt_cadena = '2'
+							)
+							AND srdt_srvc_pk = srvc_pk
+					)
+					AND (
+						srvc_ffin >= #{fini}
+						AND srvc_ffin < #{ffin}
+					)
+					AND srvc_subp_pk IN (
+						SELECT prto_pk
+						FROM tbl_puerto_prto
+						WHERE
+							prto_sprt_pk = (
+								SELECT pepr_autp_pk
+								FROM tbl_periodo_proceso_pepr
+								WHERE pepr_pk = #{peprId}
+							)
+					)
+			) sql
+		) sql
+		GROUP BY
+			estd_subp_pk, TIPO_ACT, TIPO_BUQUE, TIPO_BUQUE_GT, TIPO_NAV, TIPO_NAV_2, PAIS
+			, BUQUE, TIPO_ESTAN_ESC, SERV_TRAF, ACUERDO, ORGA
+    ]]>
+	</select>
+
+	<update id="updateSrvcMovimientoTipoBuqueEEE" parameterType="EstadisticaAgregadoCriterioVO">
+    <![CDATA[
+		UPDATE tbl_servicio_srvc SET
+			srvc_pepr_pk = #{peprId}
+		WHERE
+			srvc_tpsr_pk = portico.getEntidad('ESCALA')
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_subservicio_ssrv
+				WHERE
+					ssrv_srvc_pk = srvc_pk
+					AND ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+					AND ssrv_estado = 'F'
+					AND EXISTS (
+						SELECT 1
+						FROM tbl_subservicio_dato_ssdt
+						WHERE ssdt_ssrv_pk = ssrv_pk
+							AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ATR')
+							AND ssdt_prmt_pk <> (
+								SELECT prmt_pk
+								FROM
+									tbl_parametro_prmt
+								WHERE
+									prmt_tppr_pk = portico.getEntidad('TIPO_ATRAQUE')
+									AND prmt_parametro = 'F'
+							)
+					)
+			)
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_servicio_dato_srdt
+				WHERE
+					srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+					AND (
+						srdt_cadena = '0'
+						OR srdt_cadena = '2'
+					)
+					AND srdt_srvc_pk = srvc_pk
+			)
+			AND (
+				srvc_ffin >= #{fini}
+				AND srvc_ffin < #{ffin}
+			)
+			AND srvc_subp_pk IN (
+				SELECT prto_pk
+				FROM tbl_puerto_prto
+				WHERE
+					prto_sprt_pk = (
+						SELECT pepr_autp_pk
+						FROM tbl_periodo_proceso_pepr
+						WHERE pepr_pk = #{peprId}
+					)
+			)
+    ]]>
+	</update>
+
+	<resultMap id="ResultMapMovimientoTipoBuqueEEE" type="EstadisticaAgregadoVO">
+		<id column="estd_subp_pk" />
+		<id column="TIPO_BUQUE_EEE" />
+		<id column="TIPO_BUQUE_GT_EEE" />
+
+		<association property="prto" javaType="PuertoVO">
+			<result column="estd_subp_pk" property="id" />
+			<result column="estd_subp" property="codigo" />
+		</association>
+
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="TIPO_BUQUE_EEE" property="TIPO_BUQUE_EEE" />
+			<result column="TIPO_BUQUE_EEE_prmt" property="TIPO_BUQUE_EEE_prmt" />
+			<result column="TIPO_BUQUE_GT_EEE" property="TIPO_BUQUE_GT_EEE" />
+			<result column="TIPO_BUQUE_GT_EEE_prmt" property="TIPO_BUQUE_GT_EEE_prmt" />
+			<result column="ENTERO_01" property="ENTERO_01" />
+			<result column="ENTERO_02" property="ENTERO_02" />
+		</association>
+	</resultMap>
+
+	<select id="selectMovimientoTipoBuqueEEE" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapMovimientoTipoBuqueEEE">
+    <![CDATA[
+		SELECT
+			estd_subp_pk
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = estd_subp_pk) AS estd_subp
+			, TIPO_BUQUE_EEE
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_BUQUE_EEE) AS TIPO_BUQUE_EEE_prmt
+			, TIPO_BUQUE_GT_EEE
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_BUQUE_GT_EEE) AS TIPO_BUQUE_GT_EEE_prmt
+			, COUNT(1) AS ENTERO_01, SUM(gt) AS ENTERO_02
+		FROM (
+			WITH buqueTipoGTEEE AS (
+				SELECT prmt_pk, prvr_fini, prvr_ffin
+					, (
+						SELECT prdt_nentero
+						FROM tbl_parametro_dato_prdt
+						WHERE prdt_prvr_pk = prvr_pk
+							AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+					) AS limiteInf
+				FROM
+					tbl_parametro_prmt
+					INNER JOIN tbl_parametro_version_prvr ON
+						prvr_prmt_pk = prmt_pk
+				WHERE
+					prmt_tppr_pk = portico.getEntidad('TIPO_BUQUE_GT_EEE')
+			)
+			SELECT
+				srvc_subp_pk, buque_pk
+				, (
+					SELECT prdt_prmt_pk
+					FROM tbl_parametro_dato_prdt
+					WHERE
+						prdt_tpdt_pk = portico.getTipoDato('AUT_PORT')
+						AND prdt_prvr_pk = ANY (
+							SELECT prvr_pk
+							FROM tbl_parametro_version_prvr
+							WHERE
+								srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+								AND prvr_prmt_pk = srvc_subp_pk
+						)
+				) AS estd_subp_pk
+				, (
+					SELECT prdt_prmt_pk
+					FROM tbl_parametro_dato_prdt
+					WHERE
+						prdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE_EEE')
+						AND prdt_prvr_pk = ANY (
+							SELECT prvr_pk
+							FROM tbl_parametro_version_prvr
+							WHERE
+								srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+								AND prvr_prmt_pk = (
+									SELECT prdt_prmt_pk
+									FROM tbl_parametro_dato_prdt
+									WHERE
+										prdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE_EST')
+										AND prdt_prvr_pk = ANY (
+											SELECT prvr_pk
+											FROM tbl_parametro_version_prvr
+											WHERE
+												srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+												AND prvr_prmt_pk = (
+													SELECT prdt_prmt_pk
+													FROM tbl_parametro_dato_prdt
+													WHERE
+														prdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE')
+														AND prdt_prvr_pk = ANY (
+															SELECT prvr_pk
+															FROM tbl_parametro_version_prvr
+															WHERE
+																srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+																AND prvr_prmt_pk = buque_pk
+														)
+												)
+										)
+								)
+						)
+				) AS TIPO_BUQUE_EEE
+				, (
+					SELECT prmt_pk
+					FROM buqueTipoGTEEE
+					WHERE
+						srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+						AND limiteInf = (
+							SELECT MAX(limiteInf)
+							FROM buqueTipoGTEEE
+							WHERE
+								srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+								AND limiteInf <= (
+									SELECT prdt_nentero
+									FROM tbl_parametro_dato_prdt
+									WHERE
+										prdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+										AND prdt_prvr_pk = ANY (
+											SELECT prvr_pk
+											FROM tbl_parametro_version_prvr
+											WHERE
+												srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+												AND prvr_prmt_pk = buque_pk
+										)
+								)
+
+						)
+				) AS TIPO_BUQUE_GT_EEE
+				, (
+					SELECT prdt_nentero
+					FROM tbl_parametro_dato_prdt
+					WHERE
+						prdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+						AND prdt_prvr_pk = ANY (
+							SELECT prvr_pk
+							FROM tbl_parametro_version_prvr
+							WHERE
+								srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+								AND prvr_prmt_pk = buque_pk
+						)
+				) AS gt
+			FROM (
+				SELECT
+					srvc_pk, srvc_subp_pk, srvc_fref, srvc_fini, srvc_ffin
+					, (
+						SELECT srdt_prmt_pk
+						FROM
+							tbl_servicio_dato_srdt
+						WHERE
+							srdt_srvc_pk = srvc_pk
+							AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+					) AS buque_pk
+				FROM
+					tbl_servicio_srvc
+				WHERE
+					srvc_tpsr_pk = portico.getEntidad('ESCALA')
+					AND EXISTS (
+						SELECT 1
+						FROM tbl_subservicio_ssrv
+						WHERE
+							ssrv_srvc_pk = srvc_pk
+							AND ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+							AND ssrv_estado = 'F'
+							AND EXISTS (
+								SELECT 1
+								FROM tbl_subservicio_dato_ssdt
+								WHERE ssdt_ssrv_pk = ssrv_pk
+									AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ATR')
+									AND ssdt_prmt_pk <> (
+										SELECT prmt_pk
+										FROM
+											tbl_parametro_prmt
+										WHERE
+											prmt_tppr_pk = portico.getEntidad('TIPO_ATRAQUE')
+											AND prmt_parametro = 'F'
+									)
+							)
+					)
+					AND EXISTS (
+						SELECT 1
+						FROM tbl_servicio_dato_srdt
+						WHERE
+							srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+							AND (
+								srdt_cadena = '0'
+								OR srdt_cadena = '2'
+							)
+							AND srdt_srvc_pk = srvc_pk
+					)
+					AND (
+						srvc_ffin >= #{fini}
+						AND srvc_ffin < #{ffin}
+					)
+					AND srvc_subp_pk IN (
+						SELECT prto_pk
+						FROM tbl_puerto_prto
+						WHERE
+							prto_sprt_pk = (
+								SELECT pepr_autp_pk
+								FROM tbl_periodo_proceso_pepr
+								WHERE pepr_pk = #{peprId}
+							)
+					)
+			) sql
+		) sql
+		GROUP BY
+			estd_subp_pk, TIPO_BUQUE_EEE, TIPO_BUQUE_GT_EEE
+    ]]>
+	</select>
+
+	<update id="updateSrvcBuqueFondeadoAtracado" parameterType="EstadisticaAgregadoCriterioVO">
+    <![CDATA[
+		UPDATE tbl_servicio_srvc SET
+			srvc_pepr_pk = #{peprId}
+		WHERE
+			srvc_tpsr_pk = portico.getEntidad('ESCALA')
+
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_servicio_dato_srdt
+				WHERE
+					srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+					AND (
+						srdt_cadena = '0'
+						OR srdt_cadena = '2'
+					)
+					AND srdt_srvc_pk = srvc_pk
+			)
+
+			AND (
+				srvc_ffin >= #{fini}
+				AND srvc_ffin < #{ffin}
+			)
+
+			AND EXISTS (
+				SELECT 1
+				FROM
+					tbl_parametro_dato_prdt
+				WHERE
+					prdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE')
+					AND prdt_prvr_pk = (
+						SELECT prvr_pk
+						FROM tbl_parametro_version_prvr
+						WHERE
+							srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+							AND prvr_prmt_pk = (
+								SELECT srdt_prmt_pk
+								FROM tbl_servicio_dato_srdt
+								WHERE
+									srdt_srvc_pk = srvc_pk
+									AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+							)
+					)
+					AND prdt_prmt_pk NOT IN (
+						SELECT prmt_pk
+						FROM tbl_parametro_prmt
+						WHERE prmt_tppr_pk = portico.getEntidad('TIPO_BUQUE')
+							AND (
+								prmt_parametro LIKE 'P%'
+								OR prmt_parametro LIKE 'O%'
+								OR prmt_parametro LIKE 'BG'
+							)
+					)
+
+			)
+
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_subservicio_ssrv
+				WHERE
+					ssrv_srvc_pk = srvc_pk
+					AND ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+					AND ssrv_estado = 'F'
+					AND EXISTS (
+						SELECT 1
+						FROM tbl_subservicio_dato_ssdt
+						WHERE ssdt_ssrv_pk = ssrv_pk
+							AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ACT_3')
+							AND EXISTS (
+								SELECT 1 prmt_pk, prvr_fini, prvr_ffin
+								FROM
+									tbl_parametro_prmt
+									INNER JOIN tbl_parametro_version_prvr ON
+										prvr_prmt_pk = prmt_pk
+								WHERE
+									prmt_pk = ssdt_prmt_pk
+									AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+									AND prmt_tppr_pk = portico.getEntidad('TIPO_ACTIVIDAD')
+									AND EXISTS (
+										SELECT 1
+										FROM tbl_parametro_dato_prdt
+										WHERE prdt_prvr_pk = prvr_pk
+											AND prdt_tpdt_pk = portico.getTipoDato('TIPO_ACT_EST')
+											AND prdt_cadena = 'SI'
+									)
+
+							)
+					)
+			)
+
+			AND srvc_subp_pk IN (
+				SELECT prto_pk
+				FROM tbl_puerto_prto
+				WHERE
+					prto_sprt_pk = (
+						SELECT pepr_autp_pk
+						FROM tbl_periodo_proceso_pepr
+						WHERE pepr_pk = #{peprId}
+					)
+			)
+    ]]>
+	</update>
+
+	<resultMap id="ResultMapBuqueFondeadoAtracado" type="EstadisticaAgregadoVO">
+		<id column="estd_subp_pk" />
+		<id column="TIPO_ATR" />
+		<id column="ORGA" />
+		<id column="BUQUE" />
+		<id column="SERV_TRAF" />
+		<id column="ALIN" />
+
+		<association property="prto" javaType="PuertoVO">
+			<result column="estd_subp_pk" property="id" />
+			<result column="estd_subp" property="codigo" />
+		</association>
+
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="TIPO_ATR" property="TIPO_ATR" />
+			<result column="TIPO_ATR_prmt" property="TIPO_ATR_prmt" />
+			<result column="ORGA" property="ORGA" />
+			<result column="ORGA_prmt" property="ORGA_prmt" />
+			<result column="BUQUE" property="BUQUE" />
+			<result column="BUQUE_prmt" property="BUQUE_prmt" />
+			<result column="SERV_TRAF" property="SERV_TRAF" />
+			<result column="SERV_TRAF_prmt" property="SERV_TRAF_prmt" />
+			<result column="ALIN" property="ALIN" />
+			<result column="ALIN_prmt" property="ALIN_prmt" />
+			<result column="ENTERO_01" property="ENTERO_01" />
+			<result column="ENTERO_02" property="ENTERO_02" />
+			<result column="ENTERO_03" property="ENTERO_03" />
+			<result column="ENTERO_04" property="ENTERO_04" />
+			<result column="ENTERO_05" property="ENTERO_05" />
+		</association>
+	</resultMap>
+
+	<select id="selectBuqueFondeadoAtracado" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapBuqueFondeadoAtracado">
+    <![CDATA[
+		SELECT
+			estd_subp_pk
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = estd_subp_pk) AS estd_subp
+			, TIPO_ATR
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_ATR) AS TIPO_ATR_prmt
+			, ORGA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ORGA) AS ORGA_prmt
+			, BUQUE
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = BUQUE) AS BUQUE_prmt
+			, SERV_TRAF
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = SERV_TRAF) AS SERV_TRAF_prmt
+			, ALIN
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ALIN) AS ALIN_prmt
+			, COUNT(1) AS ENTERO_01, SUM(eslora) AS ENTERO_02, SUM(eslora * diasatr) AS ENTERO_03
+			, SUM(gt) AS ENTERO_04, SUM(gt * diasatr) AS ENTERO_05
+		FROM (
+			SELECT srvc_subp_pk, TIPO_ATR, ORGA, BUQUE, SERV_TRAF, ALIN, diasatr
+				, (
+					SELECT prdt_prmt_pk
+					FROM tbl_parametro_dato_prdt
+					WHERE
+						prdt_tpdt_pk = portico.getTipoDato('AUT_PORT')
+						AND prdt_prvr_pk = ANY (
+							SELECT prvr_pk
+							FROM tbl_parametro_version_prvr
+							WHERE
+								srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+								AND prvr_prmt_pk = srvc_subp_pk
+						)
+				) AS estd_subp_pk
+				, (
+					SELECT prdt_nentero
+					FROM tbl_parametro_dato_prdt
+					WHERE
+						prdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+						AND prdt_prvr_pk = (
+							SELECT prvr_pk
+							FROM tbl_parametro_version_prvr
+							WHERE prvr_prmt_pk = BUQUE
+								AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+						)
+				) AS gt
+				, (
+					SELECT prdt_ndecimal
+					FROM tbl_parametro_dato_prdt
+					WHERE
+						prdt_tpdt_pk = portico.getTipoDato('DECIMAL_03')
+						AND prdt_prvr_pk = (
+							SELECT prvr_pk
+							FROM tbl_parametro_version_prvr
+							WHERE prvr_prmt_pk = BUQUE
+								AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+						)
+				) AS eslora
+			FROM (
+				WITH actividadesEst AS (
+					SELECT prmt_pk, prvr_fini, prvr_ffin
+					FROM
+						tbl_parametro_prmt
+						INNER JOIN tbl_parametro_version_prvr ON
+							prvr_prmt_pk = prmt_pk
+					WHERE
+						prmt_tppr_pk = portico.getEntidad('TIPO_ACTIVIDAD')
+						AND EXISTS (
+							SELECT 1
+							FROM tbl_parametro_dato_prdt
+							WHERE prdt_prvr_pk = prvr_pk
+								AND prdt_tpdt_pk = portico.getTipoDato('TIPO_ACT_EST')
+								AND prdt_cadena = 'SI'
+						)
+				)
+				SELECT
+					srvc_pk, srvc_subp_pk, srvc_fref
+					, ssrv_pk, ssrv_fini, ssrv_ffin
+					, (
+						SELECT ssdt_prmt_pk
+						FROM
+							tbl_subservicio_dato_ssdt
+						WHERE
+							ssdt_ssrv_pk = ssrv_pk
+							AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ATR_3')
+					) AS TIPO_ATR
+					, (
+						SELECT ssdt_prmt_pk
+						FROM
+							tbl_subservicio_dato_ssdt
+						WHERE
+							ssdt_ssrv_pk = ssrv_pk
+							AND ssdt_tpdt_pk = portico.getTipoDato('ORGA_2')
+					) AS ORGA
+					, (
+						SELECT srdt_prmt_pk
+						FROM
+							tbl_servicio_dato_srdt
+						WHERE
+							srdt_srvc_pk = srvc_pk
+							AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+					) AS BUQUE
+					, (
+						SELECT srdt_prmt_pk
+						FROM
+							tbl_servicio_dato_srdt
+						WHERE
+							srdt_srvc_pk = srvc_pk
+							AND srdt_tpdt_pk = portico.getTipoDato('SERV_TRAF')
+					) AS SERV_TRAF
+					, (
+						SELECT ssdt_prmt_pk
+						FROM
+							tbl_subservicio_dato_ssdt
+						WHERE
+							ssdt_ssrv_pk = ssrv_pk
+							AND ssdt_tpdt_pk = portico.getTipoDato('ALIN_3')
+					) AS ALIN
+					, portico.daysBetween(ssrv_fini, ssrv_ffin) AS diasAtr
+				FROM
+					tbl_servicio_srvc
+					INNER JOIN tbl_subservicio_ssrv ON
+						srvc_pk = ssrv_srvc_pk
+				WHERE
+					srvc_tpsr_pk = portico.getEntidad('ESCALA')
+					AND ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+					AND EXISTS (
+						SELECT 1
+						FROM tbl_servicio_dato_srdt
+						WHERE
+							srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+							AND (
+								srdt_cadena = '0'
+								OR srdt_cadena = '2'
+							)
+							AND srdt_srvc_pk = srvc_pk
+					)
+					AND (
+						srvc_ffin >= #{fini}
+						AND srvc_ffin < #{ffin}
+					)
+
+					AND EXISTS (
+						SELECT 1
+						FROM
+							tbl_parametro_dato_prdt
+						WHERE
+							prdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE')
+							AND prdt_prvr_pk = (
+								SELECT prvr_pk
+								FROM tbl_parametro_version_prvr
+								WHERE
+									srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+									AND prvr_prmt_pk = (
+										SELECT srdt_prmt_pk
+										FROM tbl_servicio_dato_srdt
+										WHERE
+											srdt_srvc_pk = srvc_pk
+											AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+									)
+							)
+							AND prdt_prmt_pk NOT IN (
+								SELECT prmt_pk
+								FROM tbl_parametro_prmt
+								WHERE prmt_tppr_pk = portico.getEntidad('TIPO_BUQUE')
+									AND (
+										prmt_parametro LIKE 'P%'
+										OR prmt_parametro LIKE 'O%'
+										OR prmt_parametro LIKE 'BG'
+									)
+							)
+
+					)
+
+					AND ssrv_estado = 'F'
+
+					AND EXISTS (
+						SELECT 1
+						FROM tbl_subservicio_dato_ssdt
+						WHERE ssdt_ssrv_pk = ssrv_pk
+							AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ACT_3')
+							AND ssdt_prmt_pk = ANY (
+								SELECT prmt_pk
+								FROM actividadesEst
+								WHERE srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+							)
+					)
+
+					AND srvc_subp_pk IN (
+						SELECT prto_pk
+						FROM tbl_puerto_prto
+						WHERE
+							prto_sprt_pk = (
+								SELECT pepr_autp_pk
+								FROM tbl_periodo_proceso_pepr
+								WHERE pepr_pk = #{peprId}
+							)
+					)
+			) sql
+		) sql
+		GROUP BY
+			estd_subp_pk, TIPO_ATR, ORGA, BUQUE, SERV_TRAF, ALIN
+    ]]>
+	</select>
+
+	<update id="updateSrvcMovimientoMercancia" parameterType="EstadisticaAgregadoCriterioVO">
+    <![CDATA[
+		UPDATE tbl_servicio_srvc SET
+			srvc_pepr_pk = #{peprId}
+		WHERE
+	        srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
+
+	        AND srvc_subp_pk = ANY(
+	            SELECT prto_pk FROM tbl_puerto_prto WHERE prto_sprt_pk = #{sprtId}
+	        )
+
+	        AND srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
+	        AND srvc_fref >= #{fini}
+	        AND srvc_fref < #{ffin}
+
+	        AND EXISTS (
+	            SELECT 1
+	            FROM tbl_subservicio_ssrv bl
+	            WHERE bl.ssrv_srvc_pk = srvc_pk
+	                AND bl.ssrv_tpss_pk = portico.getEntidad('BL')
+	                AND NOT EXISTS (
+	                    SELECT 1 FROM tbl_subservicio_dato_ssdt
+	                    WHERE ssdt_ssrv_pk = bl.ssrv_pk
+	                        AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
+	                        AND ssdt_cadena = 'TE'
+	                )
+
+	                AND EXISTS (
+	                    SELECT 1
+	                    FROM tbl_subservicio_ssrv paeq
+	                    WHERE paeq.ssrv_srvc_pk = srvc_pk
+	                        AND EXISTS (
+	                            SELECT 1 FROM tbl_subserv_subserv_ssss
+	                            WHERE
+	                                ssss_ssrvp_pk = bl.ssrv_pk
+	                                AND ssss_ssrvh_pk = paeq.ssrv_pk
+	                        )
+
+	                        AND ssrv_estado = 'R'
+
+	                        AND EXISTS (
+	                            SELECT 1
+	                            FROM tbl_subservicio_dato_ssdt
+	                            WHERE ssdt_ssrv_pk = paeq.ssrv_pk
+	                                AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+	                                AND ssdt_cadena = ANY ('0', '2')
+	                        )
+
+	                        AND (
+	                            (
+	                                paeq.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+
+	                                AND EXISTS (
+	                                    SELECT 1
+	                                    FROM tbl_subservicio_dato_ssdt
+	                                    WHERE ssdt_ssrv_pk = paeq.ssrv_pk
+	                                        AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
+	                                        AND (
+	                                            ssdt_prmt_pk IS NULL
+	                                            OR EXISTS (
+	                                                SELECT 1
+	                                                FROM tbl_parametro_version_prvr
+	                                                WHERE prvr_prmt_pk = ssdt_prmt_pk
+	                                                    AND prvr_fini <= srvc_fref AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+	                                                    AND EXISTS (
+	                                                        SELECT 1 FROM tbl_parametro_dato_prdt
+	                                                        WHERE prdt_prvr_pk = prvr_pk
+	                                                            AND prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+	                                                            AND prdt_nentero = 0
+	                                                    )
+	                                            )
+	                                        )
+	                                )
+	                            )
+
+	                            OR
+
+	                            (
+	                                paeq.ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO')
+
+	                                AND EXISTS (
+	                                    SELECT 1
+	                                    FROM tbl_subservicio_dato_ssdt
+	                                    WHERE ssdt_ssrv_pk = paeq.ssrv_pk
+	                                        AND ssdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+	                                        AND EXISTS (
+	                                            SELECT 1
+	                                            FROM tbl_parametro_version_prvr
+	                                            WHERE
+	                                                prvr_prmt_pk = ssdt_prmt_pk
+	                                                AND prvr_fini <= srvc_fref
+	                                                AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+	                                                AND EXISTS (
+	                                                    SELECT 1 FROM tbl_parametro_dato_prdt
+	                                                    WHERE
+	                                                        prdt_prvr_pk = prvr_pk
+	                                                        AND prdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+	                                                        AND prdt_prmt_pk IS NOT NULL
+	                                                )
+	                                        )
+	                                )
+	                            )
+	                        )
+	                )
+	        )
+    ]]>
+	</update>
+
+	<resultMap id="ResultMapMovimientoMercancia" type="EstadisticaAgregadoVO">
+		<id column="srvc_subp_pk" />
+		<id column="TIPO_OP_BL" />
+		<id column="UNLOCODE" />
+		<id column="UNLOCODE_2" />
+		<id column="ALIN" />
+		<id column="UNLOCODE_3" />
+		<id column="UNLOCODE_4" />
+		<id column="MERCANCIA" />
+		<id column="TIPO_NAV" />
+		<id column="UNIDAD_CARGA" />
+		<id column="INST_ESP" />
+		<id column="TIPO_TRANSPORTE" />
+		<id column="BOOLEANO_01" />
+		<id column="ORGA" />
+		<id column="ORGA_2" />
+		<id column="BUQUE" />
+		<id column="SERV_TRAF" />
+		<id column="ACUERDO" />
+		<id column="TERMINAL" />
+		<id column="CADENA_01" />
+
+		<association property="prto" javaType="PuertoVO">
+			<result column="srvc_subp_pk" property="id" />
+			<result column="srvc_subp" property="codigo" />
+		</association>
+
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="TIPO_OP_BL" property="TIPO_OP_BL" />
+			<result column="UNLOCODE" property="UNLOCODE" />
+			<result column="UNLOCODE_prmt" property="UNLOCODE_prmt" />
+			<result column="UNLOCODE_2" property="UNLOCODE_2" />
+			<result column="UNLOCODE_2_prmt" property="UNLOCODE_2_prmt" />
+			<result column="ALIN" property="ALIN" />
+			<result column="ALIN_prmt" property="ALIN_prmt" />
+			<result column="UNLOCODE_3" property="UNLOCODE_3" />
+			<result column="UNLOCODE_3_prmt" property="UNLOCODE_3_prmt" />
+			<result column="UNLOCODE_4" property="UNLOCODE_4" />
+			<result column="UNLOCODE_4_prmt" property="UNLOCODE_4_prmt" />
+			<result column="MERCANCIA" property="MERCANCIA" />
+			<result column="MERCANCIA_prmt" property="MERCANCIA_prmt" />
+			<result column="TIPO_NAV" property="TIPO_NAV" />
+			<result column="TIPO_NAV_prmt" property="TIPO_NAV_prmt" />
+			<result column="UNIDAD_CARGA" property="UNIDAD_CARGA" />
+			<result column="UNIDAD_CARGA_prmt" property="UNIDAD_CARGA_prmt" />
+			<result column="INST_ESP" property="INST_ESP" />
+			<result column="INST_ESP_prmt" property="INST_ESP_prmt" />
+			<result column="TIPO_TRANSPORTE" property="TIPO_TRANSPORTE" />
+			<result column="BOOLEANO_01" property="BOOLEANO_01" />
+			<result column="ORGA" property="ORGA" />
+			<result column="ORGA_prmt" property="ORGA_prmt" />
+			<result column="ORGA_2" property="ORGA_2" />
+			<result column="ORGA_2_prmt" property="ORGA_2_prmt" />
+			<result column="BUQUE" property="BUQUE" />
+			<result column="BUQUE_prmt" property="BUQUE_prmt" />
+			<result column="SERV_TRAF" property="SERV_TRAF" />
+			<result column="SERV_TRAF_prmt" property="SERV_TRAF_prmt" />
+			<result column="ACUERDO" property="ACUERDO" />
+			<result column="ACUERDO_prmt" property="ACUERDO_prmt" />
+			<result column="TERMINAL" property="TERMINAL" />
+			<result column="TERMINAL_prmt" property="TERMINAL_prmt" />
+			<result column="CADENA_01" property="CADENA_01" />
+			<result column="DECIMAL_01" property="DECIMAL_01" />
+			<result column="ENTERO_01" property="ENTERO_01" />
+			<result column="DECIMAL_02" property="DECIMAL_02" />
+		</association>
+	</resultMap>
+
+	<select id="selectMovimientoMercancia" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapMovimientoMercancia">
+    <![CDATA[
+		SELECT
+		    srvc_subp_pk
+		    , (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk) AS srvc_subp
+		    , BUQUE
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = BUQUE) AS BUQUE_prmt
+
+		    , TIPO_OP_BL
+		    , UNLOCODE
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = UNLOCODE) AS UNLOCODE_prmt
+		    , UNLOCODE_2
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = UNLOCODE_2) AS UNLOCODE_2_prmt
+		    , UNLOCODE_3
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = UNLOCODE_3) AS UNLOCODE_3_prmt
+		    , UNLOCODE_4
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = UNLOCODE_4) AS UNLOCODE_4_prmt
+		    , ALIN
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = ALIN) AS ALIN_prmt
+		    , TIPO_NAV
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = TIPO_NAV) AS TIPO_NAV_prmt
+		    , TIPO_TRANSPORTE
+		    , SERV_TRAF
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = SERV_TRAF) AS SERV_TRAF_prmt
+		    , ORGA_2
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = ORGA_2) AS ORGA_2_prmt
+
+		    , BOOLEANO_01
+		    , MERCANCIA
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = MERCANCIA) AS MERCANCIA_prmt
+		    , UNIDAD_CARGA
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = UNIDAD_CARGA) AS UNIDAD_CARGA_prmt
+		    , INST_ESP
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = INST_ESP) AS INST_ESP_prmt
+		    , ORGA
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = ORGA) AS ORGA_prmt
+		    , ACUERDO
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = ACUERDO) AS ACUERDO_prmt
+		    , TERMINAL
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = TERMINAL) AS TERMINAL_prmt
+		    , TIPO_EQUI
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = TIPO_EQUI) AS TIPO_EQUI_prmt
+
+		    , SUM(COALESCE(DECIMAL_01, 0)) / 1000 AS DECIMAL_01
+		    , SUM(COALESCE(ENTERO_01, 0)) AS ENTERO_01
+		    , SUM(COALESCE(DECIMAL_02, 0)) AS DECIMAL_02
+		FROM (
+		    SELECT srvc_subp_pk
+		        , BUQUE
+
+		        , TIPO_OP_BL, UNLOCODE, UNLOCODE_2, UNLOCODE_3, UNLOCODE_4, ALIN, TIPO_NAV, TIPO_TRANSPORTE, SERV_TRAF, ORGA_2
+
+		        , BOOLEANO_01, MERCANCIA, UNIDAD_CARGA, INST_ESP
+
+		        , DECIMAL_01, ENTERO_01
+		        , (SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		            WHERE ssdt_tpdt_pk = portico.getTipoDato('ORGA') AND ssdt_ssrv_pk = part_pk
+		        ) AS ORGA
+		        , (SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		            WHERE ssdt_tpdt_pk = portico.getTipoDato('ACUERDO') AND ssdt_ssrv_pk = part_pk
+		        ) AS ACUERDO
+		        , (SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		            WHERE ssdt_tpdt_pk = portico.getTipoDato('TERMINAL') AND ssdt_ssrv_pk = part_pk
+		        ) AS TERMINAL
+		        , (
+		            CASE
+		                WHEN ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO') AND BOOLEANO_01 = 1
+		                THEN (
+		                    SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                    WHERE ssdt_ssrv_pk = paeq_pk AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_EQUI')
+		                )
+		                ELSE NULL
+		            END
+		        ) AS TIPO_EQUI
+		        , (
+		            CASE
+		                WHEN ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+		                THEN 0
+		                ELSE (
+		                    SELECT ssdt_nentero * (
+		                        SELECT prdt_ndecimal FROM tbl_parametro_dato_prdt
+		                        WHERE prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
+		                            AND prdt_prvr_pk = (
+		                                SELECT prvr_pk FROM tbl_parametro_version_prvr
+		                                WHERE prvr_prmt_pk = UNIDAD_CARGA
+		                                    AND prvr_fini <= srvc_fref
+		                                    AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+		                            )
+		                    )
+		                    FROM tbl_subservicio_dato_ssdt
+		                    WHERE ssdt_ssrv_pk = paeq_pk AND ssdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+		                )
+		            END
+		        ) AS DECIMAL_02
+		    FROM (
+		        SELECT
+		            srvc_pk, srvc_subp_pk, srvc_fref, ssss_ssrvp_pk AS bl_pk, paeq.ssrv_pk AS paeq_pk, paeq.ssrv_tpss_pk
+		            , (
+		                CASE
+		                    WHEN paeq.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+		                    THEN paeq.ssrv_pk
+		                    WHEN paeq.ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO')
+		                    THEN (
+		                        SELECT MIN(part.ssrv_pk)
+		                        FROM tbl_subservicio_ssrv part
+		                        WHERE part.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+		                            AND EXISTS (
+		                                SELECT 1 FROM tbl_subserv_subserv_ssss ssssPart
+		                                WHERE ssssPart.ssss_ssrvp_pk = part.ssrv_pk
+		                                    AND EXISTS (
+		                                        SELECT 1 FROM tbl_subserv_subserv_ssss ssssEqui
+		                                        WHERE
+		                                            ssssEqui.ssss_ssrvp_pk = paeq.ssrv_pk
+		                                            AND ssssEqui.ssss_ssrvh_pk = ssssPart.ssss_ssrvh_pk
+		                                    )
+		                            )
+		                    )
+		                    ELSE -1
+		                END
+		            ) AS part_pk
+		            , (SELECT srdt_prmt_pk FROM tbl_servicio_dato_srdt
+		                WHERE
+		                    srdt_tpdt_pk = portico.getTipoDato('BUQUE') AND srdt_srvc_pk = (
+		                        SELECT srdt_srvc_dep_pk FROM tbl_servicio_dato_srdt
+		                        WHERE srdt_srvc_pk = srvc_pk AND srdt_tpdt_pk = portico.getTipoDato('ESCALA')
+		                    )
+		            ) AS BUQUE
+
+		            , (SELECT ssdt_cadena FROM tbl_subservicio_dato_ssdt
+		                WHERE ssdt_ssrv_pk = ssss_ssrvp_pk AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
+		            ) AS TIPO_OP_BL
+		            , (SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                WHERE ssdt_ssrv_pk = ssss_ssrvp_pk AND ssdt_tpdt_pk = portico.getTipoDato('UNLOCODE')
+		            ) AS UNLOCODE_3
+		            , (SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                WHERE ssdt_ssrv_pk = ssss_ssrvp_pk AND ssdt_tpdt_pk = portico.getTipoDato('UNLOCODE_2')
+		            ) AS UNLOCODE
+		            , (SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                WHERE ssdt_ssrv_pk = ssss_ssrvp_pk AND ssdt_tpdt_pk = portico.getTipoDato('UNLOCODE_3')
+		            ) AS UNLOCODE_2
+		            , (SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                WHERE ssdt_ssrv_pk = ssss_ssrvp_pk AND ssdt_tpdt_pk = portico.getTipoDato('UNLOCODE_4')
+		            ) AS UNLOCODE_4
+		            , (SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                WHERE ssdt_ssrv_pk = ssss_ssrvp_pk AND ssdt_tpdt_pk = portico.getTipoDato('ALIN')
+		            ) AS ALIN
+		            , (SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                WHERE ssdt_ssrv_pk = ssss_ssrvp_pk AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
+		            ) AS TIPO_NAV
+		            , (SELECT ssdt_cadena FROM tbl_subservicio_dato_ssdt
+		                WHERE ssdt_ssrv_pk = ssss_ssrvp_pk AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_TRANSPORTE')
+		            ) AS TIPO_TRANSPORTE
+		            , (SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                WHERE ssdt_ssrv_pk = ssss_ssrvp_pk AND ssdt_tpdt_pk = portico.getTipoDato('SERV_TRAF')
+		            ) AS SERV_TRAF
+		            , (
+		                SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                WHERE
+		                    ssdt_tpdt_pk = portico.getTipoDato('ORGA') AND ssdt_ssrv_pk = (
+		                        SELECT ssss_ssrvp_pk FROM tbl_subserv_subserv_ssss
+		                        WHERE ssss_ssrvh_pk = ssss_ssrvp_pk
+		                    )
+		            ) AS ORGA_2
+
+		            , (
+		                CASE
+		                    WHEN paeq.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+		                    THEN (
+		                        SELECT COALESCE(ssdt_nentero, 0) FROM tbl_subservicio_dato_ssdt
+		                        WHERE ssdt_ssrv_pk = paeq.ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('BOOLEANO_02')
+		                    )
+		                    ELSE (
+		                        SELECT COALESCE(ssdt_nentero, 0) FROM tbl_subservicio_dato_ssdt
+		                        WHERE ssdt_ssrv_pk = paeq.ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+		                    )
+		                END
+		            ) AS BOOLEANO_01
+		            , (
+		                CASE
+		                    WHEN paeq.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+		                    THEN (
+		                        SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                        WHERE ssdt_ssrv_pk = paeq.ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+		                    )
+		                    ELSE (
+		                        SELECT prdt_prmt_pk FROM tbl_parametro_dato_prdt
+		                        WHERE prdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+		                            AND prdt_prvr_pk = (
+		                                SELECT prvr_pk FROM tbl_parametro_version_prvr
+		                                WHERE
+		                                    prvr_fini <= srvc_fref AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+		                                    AND prvr_prmt_pk = (
+		                                        SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                                        WHERE ssdt_ssrv_pk = paeq.ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+		                                    )
+		                            )
+		                    )
+		                END
+		            ) AS MERCANCIA
+		            , (SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                WHERE ssdt_ssrv_pk = paeq.ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+		            ) AS UNIDAD_CARGA
+		            , (SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                WHERE ssdt_ssrv_pk = paeq.ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('INST_ESP')
+		            ) AS INST_ESP
+		            , (
+		                CASE
+		                    WHEN paeq.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+		                    THEN (
+		                        SELECT ssdt_nentero FROM tbl_subservicio_dato_ssdt
+		                        WHERE ssdt_ssrv_pk = paeq.ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('ENTERO_04')
+		                    )
+		                    ELSE (
+		                        SELECT ssdt_nentero FROM tbl_subservicio_dato_ssdt
+		                        WHERE ssdt_ssrv_pk = paeq.ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('ENTERO_02')
+		                    )
+		                END
+		            ) AS DECIMAL_01
+		            , (
+		                CASE
+		                    WHEN paeq.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+		                    THEN (
+		                        SELECT ssdt_nentero FROM tbl_subservicio_dato_ssdt
+		                        WHERE ssdt_ssrv_pk = paeq.ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('ENTERO_03')
+		                    )
+		                    WHEN paeq.ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO')
+		                        AND EXISTS (
+		                            SELECT 1 FROM tbl_subservicio_dato_ssdt
+		                            WHERE ssdt_ssrv_pk = paeq.ssrv_pk
+		                                AND ssdt_tpdt_pk = portico.getTipoDato('CADENA_02')
+		                                AND ssdt_cadena LIKE '4'
+		                        )
+		                    THEN (
+		                        SELECT ssdt_nentero FROM tbl_subservicio_dato_ssdt
+		                        WHERE ssdt_ssrv_pk = paeq.ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+		                    )
+		                    ELSE 1
+		                END
+		            ) AS ENTERO_01
+		        FROM tbl_subserv_subserv_ssss
+		            INNER JOIN tbl_subservicio_ssrv paeq ON
+		                ssss_ssrvh_pk = paeq.ssrv_pk
+		            INNER JOIN tbl_servicio_srvc ON
+		                srvc_pk = paeq.ssrv_srvc_pk
+		        WHERE
+		            ssss_ssrvp_pk = ANY (
+		                SELECT ssrv_pk
+		                FROM tbl_subservicio_ssrv bl
+		                WHERE
+		                    ssrv_srvc_pk = ANY (
+		                        SELECT srvc_pk
+		                        FROM tbl_servicio_srvc
+		                        WHERE
+		                            srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
+		                            AND srvc_subp_pk IN (
+		                                SELECT prto_pk
+		                                FROM tbl_puerto_prto
+		                                WHERE prto_sprt_pk = #{sprtId}
+		                            )
+		                            AND srvc_fref >= #{fini}
+		                            AND srvc_fref < #{ffin}
+		                    )
+
+		                    AND ssrv_tpss_pk = (portico.getEntidad('BL'))
+
+		                    AND NOT EXISTS (
+		                        SELECT 1 FROM tbl_subservicio_dato_ssdt
+		                        WHERE
+		                            ssdt_ssrv_pk = bl.ssrv_pk
+		                            AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
+		                            AND ssdt_cadena LIKE 'TE'
+		                    )
+		            )
+
+		            AND paeq.ssrv_estado = 'R'
+
+		            AND (
+		                (
+		                    paeq.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+                            AND EXISTS (
+                                SELECT 1
+                                FROM tbl_subservicio_dato_ssdt
+                                WHERE ssdt_ssrv_pk = paeq.ssrv_pk
+                                    AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
+                                    AND (
+                                        ssdt_prmt_pk IS NULL
+                                        OR EXISTS (
+                                            SELECT 1
+                                            FROM tbl_parametro_version_prvr
+                                            WHERE prvr_prmt_pk = ssdt_prmt_pk
+                                                AND prvr_fini <= srvc_fref AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+                                                AND EXISTS (
+                                                    SELECT 1 FROM tbl_parametro_dato_prdt
+                                                    WHERE prdt_prvr_pk = prvr_pk
+                                                        AND prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+                                                        AND prdt_nentero = 0
+                                                )
+                                        )
+                                    )
+                            )
+		                )
+
+		                OR
+
+		                (
+		                    paeq.ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO')
+		                    AND EXISTS (
+		                        SELECT 1 FROM tbl_parametro_dato_prdt
+		                        WHERE
+		                            prdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+		                            AND prdt_prmt_pk IS NOT NULL
+		                            AND prdt_prvr_pk = (
+		                                SELECT prvr_pk
+		                                FROM tbl_parametro_version_prvr
+		                                WHERE
+		                                    prvr_fini <= srvc_fref
+		                                    AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+		                                    AND prvr_prmt_pk = (
+		                                        SELECT ssdt_prmt_pk
+		                                        FROM tbl_subservicio_dato_ssdt
+		                                        WHERE
+		                                            ssdt_ssrv_pk = paeq.ssrv_pk
+		                                            AND ssdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+		                                    )
+		                            )
+		                    )
+		                )
+		            )
+		    ) sql
+		) sql
+		GROUP BY srvc_subp_pk
+		    , BUQUE
+
+		    , TIPO_OP_BL, UNLOCODE, UNLOCODE_2, UNLOCODE_3, UNLOCODE_4, ALIN, TIPO_NAV, TIPO_TRANSPORTE, SERV_TRAF, ORGA_2
+
+		    , BOOLEANO_01, MERCANCIA, UNIDAD_CARGA, ORGA, ACUERDO, TERMINAL, TIPO_EQUI, INST_ESP
+    ]]>
+	</select>
+
+	<resultMap id="ResultMapMovimientoMercanciaEEE" type="EstadisticaAgregadoVO">
+		<id column="srvc_subp_pk" />
+		<id column="UNLOCODE" />
+		<id column="MERCANCIA" />
+		<id column="UNIDAD_CARGA" />
+		<id column="GRUPO_NST" />
+		<id column="REG_TBUQUE_EEE" />
+		<id column="DIREC_MERC" />
+		<id column="BOOLEANO_01" />
+
+		<association property="prto" javaType="PuertoVO">
+			<result column="srvc_subp_pk" property="id" />
+			<result column="srvc_subp" property="codigo" />
+		</association>
+
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="UNLOCODE" property="UNLOCODE" />
+			<result column="UNLOCODE_prmt" property="UNLOCODE_prmt" />
+			<result column="MERCANCIA" property="MERCANCIA" />
+			<result column="MERCANCIA_prmt" property="MERCANCIA_prmt" />
+			<result column="UNIDAD_CARGA" property="UNIDAD_CARGA" />
+			<result column="UNIDAD_CARGA_prmt" property="UNIDAD_CARGA_prmt" />
+			<result column="GRUPO_NST" property="GRUPO_NST" />
+			<result column="GRUPO_NST_prmt" property="GRUPO_NST_prmt" />
+			<result column="REG_TBUQUE_EEE" property="REG_TBUQUE_EEE" />
+			<result column="REG_TBUQUE_EEE_prmt" property="REG_TBUQUE_EEE_prmt" />
+			<result column="DIREC_MERC" property="DIREC_MERC" />
+			<result column="BOOLEANO_01" property="BOOLEANO_01" />
+
+			<result column="DECIMAL_01" property="DECIMAL_01" />
+			<result column="ENTERO_01" property="ENTERO_01" />
+			<result column="ENTERO_02" property="ENTERO_02" />
+			<result column="ENTERO_03" property="ENTERO_03" />
+			<result column="ENTERO_04" property="ENTERO_04" />
+			<result column="ENTERO_05" property="ENTERO_05" />
+		</association>
+	</resultMap>
+
+	<select id="selectMovimientoMercanciaEEE" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapMovimientoMercanciaEEE">
+    <![CDATA[
+		SELECT
+		    srvc_subp_pk
+		    , MERCANCIA
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = MERCANCIA) AS MERCANCIA_prmt
+		    , UNIDAD_CARGA
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = UNIDAD_CARGA) AS UNIDAD_CARGA_prmt
+		    , REG_TBUQUE_EEE
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = REG_TBUQUE_EEE) AS REG_TBUQUE_EEE_prmt
+		    , UNLOCODE
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = UNLOCODE) AS UNLOCODE_prmt
+		    , GRUPO_NST
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = GRUPO_NST) AS GRUPO_NST_prmt
+		    , DIREC_MERC
+		    , BOOLEANO_01
+
+		    , SUM(COALESCE(DECIMAL_01, 0)) / 1000 AS DECIMAL_01
+		    , SUM(COALESCE(ENTERO_01, 0)) AS ENTERO_01
+		    , SUM(COALESCE(ENTERO_02, 0)) AS ENTERO_02
+		    , SUM(COALESCE(ENTERO_03, 0)) AS ENTERO_03
+		    , SUM(COALESCE(ENTERO_04, 0)) AS ENTERO_04
+		    , SUM(COALESCE(ENTERO_05, 0)) AS ENTERO_05
+		FROM (
+		    SELECT srvc_subp_pk, DIREC_MERC, MERCANCIA, UNIDAD_CARGA, BOOLEANO_01, REG_TBUQUE_EEE
+		        , (
+		            CASE
+		                WHEN DIREC_MERC LIKE 'S'
+		                THEN (
+		                    SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                    WHERE ssdt_ssrv_pk = bl_pk AND ssdt_tpdt_pk = portico.getTipoDato('UNLOCODE_3')
+		                )
+		                ELSE (
+		                    SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                    WHERE ssdt_ssrv_pk = bl_pk AND ssdt_tpdt_pk = portico.getTipoDato('UNLOCODE_2')
+		                )
+		            END
+		        ) AS UNLOCODE
+		        , (
+		            SELECT prdt_prmt_pk FROM tbl_parametro_dato_prdt
+		            WHERE
+		                prdt_tpdt_pk = portico.getTipoDato('GRUPO_NST')
+		                AND prdt_prvr_pk = (
+		                    SELECT prvr_pk FROM tbl_parametro_version_prvr
+		                    WHERE
+		                        prvr_prmt_pk = MERCANCIA
+		                        AND prvr_fini <= srvc_fref AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+		                )
+		        ) AS GRUPO_NST
+		        , (
+		            CASE
+		                WHEN ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+		                THEN (
+		                    SELECT ssdt_nentero FROM tbl_subservicio_dato_ssdt
+		                    WHERE ssdt_ssrv_pk = paeq_pk AND ssdt_tpdt_pk = portico.getTipoDato('ENTERO_04')
+		                )
+		                ELSE (
+		                    SELECT ssdt_nentero FROM tbl_subservicio_dato_ssdt
+		                    WHERE ssdt_ssrv_pk = paeq_pk AND ssdt_tpdt_pk = portico.getTipoDato('ENTERO_02')
+		                )
+		            END
+		        ) AS DECIMAL_01
+		        , (
+		            CASE
+		                WHEN ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+		                    AND EXISTS (
+		                        SELECT 1 FROM tbl_parametro_prmt
+		                        WHERE prmt_pk = MERCANCIA
+		                            AND (prmt_parametro LIKE '0001%' OR prmt_parametro LIKE '0002%')
+		                    )
+		                THEN (
+		                    SELECT ssdt_nentero FROM tbl_subservicio_dato_ssdt
+		                    WHERE ssdt_ssrv_pk = paeq_pk AND ssdt_tpdt_pk = portico.getTipoDato('ENTERO_03')
+		                )
+		                ELSE 0
+		            END
+		        ) AS ENTERO_01
+		        , (
+		            CASE
+		                WHEN ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+		                    AND EXISTS (
+		                        SELECT 1 FROM tbl_parametro_prmt
+		                        WHERE prmt_pk = MERCANCIA
+		                            AND (prmt_parametro LIKE '0001C' OR prmt_parametro LIKE '0002C')
+		                    )
+		                THEN (
+		                    SELECT ssdt_nentero FROM tbl_subservicio_dato_ssdt
+		                    WHERE ssdt_ssrv_pk = paeq_pk AND ssdt_tpdt_pk = portico.getTipoDato('ENTERO_03')
+		                )
+		                ELSE 0
+		            END
+		        ) AS ENTERO_02
+		        , (
+		            CASE
+		                WHEN ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+		                    AND EXISTS (
+		                        SELECT 1 FROM tbl_parametro_prmt
+		                        WHERE prmt_pk = MERCANCIA
+		                            AND (prmt_parametro LIKE '0001X' OR prmt_parametro LIKE '0002X')
+		                    )
+		                THEN (
+		                    SELECT ssdt_nentero FROM tbl_subservicio_dato_ssdt
+		                    WHERE ssdt_ssrv_pk = paeq_pk AND ssdt_tpdt_pk = portico.getTipoDato('ENTERO_03')
+		                )
+		                ELSE 0
+		            END
+		        ) AS ENTERO_03
+		        , (
+		            CASE
+		                WHEN ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO')
+		                    AND EXISTS (
+		                        SELECT 1 FROM tbl_subservicio_dato_ssdt
+		                        WHERE ssdt_ssrv_pk = paeq_pk
+		                            AND ssdt_tpdt_pk = portico.getTipoDato('CADENA_02')
+		                            AND ssdt_cadena NOT LIKE '4'
+		                    )
+		                THEN 1
+		                ELSE 0
+		            END
+		        ) AS ENTERO_04
+		        , (
+		            CASE
+		                WHEN ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO')
+		                THEN (
+		                    SELECT ssdt_nentero FROM tbl_subservicio_dato_ssdt
+		                    WHERE ssdt_ssrv_pk = paeq_pk AND ssdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+		                )
+		                ELSE 0
+		            END
+		        ) AS ENTERO_05
+		    FROM (
+		        SELECT srvc_subp_pk, srvc_fref, ssrv.ssrv_tpss_pk, ssrv.ssrv_pk AS paeq_pk, bl.ssrv_pk AS bl_pk
+		            , (
+		                SELECT prdt_prmt_pk FROM tbl_parametro_dato_prdt
+		                WHERE
+		                    prdt_tpdt_pk = portico.getTipoDato('REG_TBUQUE_EEE')
+		                    AND prdt_prvr_pk = (
+		                        SELECT prvr_pk FROM tbl_parametro_version_prvr
+		                        WHERE
+		                            prvr_fini <= srvc_fref
+		                            AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+		                            AND prvr_prmt_pk = (
+		                                SELECT prdt_prmt_pk FROM tbl_parametro_dato_prdt
+		                                WHERE
+		                                    prdt_tpdt_pk = portico.getTipoDato('REG_TBUQUE')
+		                                    AND prdt_prvr_pk = (
+		                                        SELECT prvr_pk FROM tbl_parametro_version_prvr
+		                                        WHERE
+		                                            prvr_fini <= srvc_fref
+		                                            AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+		                                            AND prvr_prmt_pk = (
+		                                                SELECT srdt_prmt_pk FROM tbl_servicio_dato_srdt
+		                                                WHERE
+		                                                    srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+		                                                    AND srdt_srvc_pk = (
+		                                                        SELECT srdt_srvc_dep_pk FROM tbl_servicio_dato_srdt
+		                                                        WHERE
+		                                                            srdt_tpdt_pk = portico.getTipoDato('ESCALA')
+		                                                            AND srdt_srvc_pk = srvc_pk
+		                                                    )
+		                                            )
+		                                    )
+		                            )
+		                    )
+		            ) AS REG_TBUQUE_EEE
+		            , (
+		                CASE
+		                    WHEN EXISTS (
+		                        SELECT 1 FROM tbl_subservicio_dato_ssdt
+		                        WHERE ssdt_ssrv_pk = bl.ssrv_pk
+		                            AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
+		                            AND ssdt_cadena LIKE 'E%'
+		                    )
+		                    THEN 'S'
+		                    ELSE 'E'
+		                END
+		            ) AS DIREC_MERC
+		            , (
+		                CASE
+		                    WHEN ssrv.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+		                    THEN (
+		                        SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                        WHERE ssdt_ssrv_pk = ssrv.ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+		                    )
+		                    ELSE (
+		                        SELECT prdt_prmt_pk FROM tbl_parametro_dato_prdt
+		                        WHERE prdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+		                            AND prdt_prvr_pk = (
+		                                SELECT prvr_pk FROM tbl_parametro_version_prvr
+		                                WHERE
+		                                    prvr_fini <= srvc_fref
+		                                    AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+		                                    AND prvr_prmt_pk = (
+		                                        SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                                        WHERE ssdt_ssrv_pk = ssrv.ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+		                                    )
+		                            )
+		                    )
+		                END
+		            ) AS MERCANCIA
+		            , (
+		                SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+		                WHERE ssdt_ssrv_pk = ssrv.ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+		            ) AS UNIDAD_CARGA
+		            , (
+		                CASE
+		                    WHEN ssrv.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+		                    THEN (
+		                        SELECT ssdt_nentero FROM tbl_subservicio_dato_ssdt
+		                        WHERE ssdt_ssrv_pk = ssrv.ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('BOOLEANO_02')
+		                    )
+		                    ELSE (
+		                        SELECT ssdt_nentero FROM tbl_subservicio_dato_ssdt
+		                        WHERE ssdt_ssrv_pk = ssrv.ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+		                    )
+		                END
+		            ) AS BOOLEANO_01
+		        FROM tbl_subservicio_ssrv ssrv
+		            INNER JOIN tbl_servicio_srvc ON
+		                srvc_pk = ssrv.ssrv_srvc_pk
+		            INNER JOIN tbl_subservicio_ssrv bl ON
+		                srvc_pk = bl.ssrv_srvc_pk
+		                AND EXISTS (
+		                    SELECT 1 FROM tbl_subserv_subserv_ssss
+		                    WHERE
+		                        ssss_ssrvp_pk = bl.ssrv_pk
+		                        AND ssss_ssrvh_pk = ssrv.ssrv_pk
+		                )
+		        WHERE
+		            srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
+		            AND bl.ssrv_tpss_pk = portico.getEntidad('BL')
+		            AND srvc_subp_pk IN (
+		                SELECT prto_pk FROM tbl_puerto_prto
+		                WHERE prto_sprt_pk = #{sprtId}
+		            )
+		            AND srvc_fref >= #{fini}
+		            AND srvc_fref < #{ffin}
+
+		            AND EXISTS (
+		                SELECT 1 FROM tbl_servicio_dato_srdt
+		                WHERE srdt_srvc_pk = srvc_pk
+		                    AND srdt_tpdt_pk = portico.getTipoDato('ESCALA')
+		                    AND srdt_srvc_dep_pk IS NOT NULL
+		            )
+
+		            AND ssrv.ssrv_estado = 'R'
+
+		            AND EXISTS (
+		                SELECT 1 FROM tbl_subservicio_dato_ssdt
+		                WHERE
+		                    ssdt_ssrv_pk = ssrv.ssrv_pk
+		                    AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+		                    AND ssdt_cadena IN ('0', '2')
+		            )
+
+		            AND EXISTS (
+		                SELECT 1 FROM tbl_subservicio_dato_ssdt
+		                WHERE
+		                    ssdt_ssrv_pk = bl.ssrv_pk
+		                    AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
+		                    AND ssdt_cadena NOT LIKE 'TE'
+		            )
+
+		            AND EXISTS (
+		                SELECT 1 FROM tbl_subservicio_dato_ssdt
+		                WHERE
+		                    ssdt_ssrv_pk = bl.ssrv_pk
+		                    AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
+		                    AND ssdt_prmt_pk <> (
+		                        SELECT prmt_pk FROM tbl_parametro_prmt
+		                        WHERE prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
+		                            AND prmt_parametro = 'I'
+		                    )
+		            )
+
+		            AND (
+		                (
+		                    ssrv.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+                            AND EXISTS (
+                                SELECT 1
+                                FROM tbl_subservicio_dato_ssdt
+                                WHERE ssdt_ssrv_pk = ssrv.ssrv_pk
+                                    AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
+                                    AND (
+                                        ssdt_prmt_pk IS NULL
+                                        OR EXISTS (
+                                            SELECT 1
+                                            FROM tbl_parametro_version_prvr
+                                            WHERE prvr_prmt_pk = ssdt_prmt_pk
+                                                AND prvr_fini <= srvc_fref AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+                                                AND EXISTS (
+                                                    SELECT 1 FROM tbl_parametro_dato_prdt
+                                                    WHERE prdt_prvr_pk = prvr_pk
+                                                        AND prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+                                                        AND prdt_nentero = 0
+                                                )
+                                        )
+                                    )
+                            )
+		                )
+		                OR
+		                (
+		                    ssrv.ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO')
+		                    AND EXISTS (
+		                        SELECT 1 FROM tbl_parametro_dato_prdt
+		                        WHERE
+		                            prdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+		                            AND prdt_prmt_pk IS NOT NULL
+		                            AND prdt_prvr_pk = (
+		                                SELECT prvr_pk FROM tbl_parametro_version_prvr
+		                                WHERE
+		                                    prvr_fini <= srvc_fref
+		                                    AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+		                                    AND prvr_prmt_pk = (
+		                                        SELECT ssdt_prmt_pk
+		                                        FROM tbl_subservicio_dato_ssdt
+		                                        WHERE
+		                                            ssdt_ssrv_pk = ssrv.ssrv_pk
+		                                            AND ssdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+		                                    )
+		                            )
+		                    )
+		                )
+		            )
+		    ) sql
+		) sql
+		GROUP BY srvc_subp_pk, DIREC_MERC, MERCANCIA, UNIDAD_CARGA, BOOLEANO_01, REG_TBUQUE_EEE, UNLOCODE, GRUPO_NST
+    ]]>
+	</select>
+</mapper>

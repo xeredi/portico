@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.facturacion.dao.ValoracionDAO">
+    <resultMap type="ValoracionVO" id="ResultMap">
+        <id column="vlrc_pk" />
+
+        <result column="vlrc_pk" property="id" />
+        <result column="vlrc_fref" property="fref" />
+        <result column="vlrc_falta" property="falta" />
+        <result column="vlrc_fliq" property="fliq" />
+        <result column="vlrc_fini" property="fini" />
+        <result column="vlrc_ffin" property="ffin" />
+        <result column="vlrc_es_suj_pasivo" property="sujPasivo" />
+        <result column="vlrc_cod_exen" property="codExencion" />
+
+        <result column="vlrc_importe" property="importe" />
+        <result column="vlrc_importe_impuesto" property="impuesto" />
+
+        <result column="vlrc_info1" property="info1" />
+        <result column="vlrc_info2" property="info2" />
+        <result column="vlrc_info3" property="info3" />
+        <result column="vlrc_info4" property="info4" />
+        <result column="vlrc_info5" property="info5" />
+        <result column="vlrc_info6" property="info6" />
+
+        <association property="srvc" javaType="ServicioVO">
+            <result property="id" column="vlrc_srvc_pk" />
+            <result property="anno" column="srvc_anno" />
+            <result property="numero" column="srvc_numero" />
+            <result property="entiId" column="srvc_tpsr_pk" />
+
+            <association property="prto" javaType="PuertoVO">
+                <result property="id" column="srvc_subp_pk" />
+                <result property="codigo" column="prto_codigo" />
+            </association>
+        </association>
+
+        <association property="aspc" javaType="AspectoVO">
+            <result property="id" column="vlrc_aspc_pk" />
+            <result property="codigo" column="aspc_codigo" />
+            <result property="fref" column="vlrc_fref" />
+
+            <association property="version" javaType="AspectoVersionVO">
+                <result property="descripcion" column="aspc_descripcion" />
+
+                <result property="cetiqInfo1" column="aspv_cetiq_info1" />
+                <result property="cetiqInfo2" column="aspv_cetiq_info2" />
+                <result property="cetiqInfo3" column="aspv_cetiq_info3" />
+                <result property="cetiqInfo4" column="aspv_cetiq_info4" />
+                <result property="cetiqInfo5" column="aspv_cetiq_info5" />
+                <result property="cetiqInfo6" column="aspv_cetiq_info6" />
+            </association>
+        </association>
+
+        <association property="pagador" javaType="ParametroVO">
+            <result property="id" column="vlrc_pagador_prmt_pk" />
+            <result property="parametro" column="vlrc_pagador_prmt" />
+            <result property="entiId" column="vlrc_pagador_tppr_pk" />
+            <result property="texto" column="vlrc_pagador_texto" />
+            <result property="fref" column="vlrc_fref" />
+        </association>
+    </resultMap>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+		SELECT
+		    vlrc_pk, vlrc_srvc_pk, vlrc_aspc_pk, vlrc_pagador_prmt_pk, vlrc_fref
+		    , vlrc_fliq, vlrc_falta, vlrc_fini, vlrc_ffin, vlrc_es_suj_pasivo, vlrc_cod_exen
+		    , vlrc_info1, vlrc_info2, vlrc_info3, vlrc_info4, vlrc_info5, vlrc_info6
+
+		    , srvc_subp_pk, srvc_anno, srvc_numero, srvc_tpsr_pk
+
+		    , prmt_parametro AS vlrc_pagador_prmt
+		    , prmt_tppr_pk AS vlrc_pagador_tppr_pk
+
+		    , aspv_cetiq_info1, aspv_cetiq_info2, aspv_cetiq_info3, aspv_cetiq_info4, aspv_cetiq_info5, aspv_cetiq_info6
+
+			, (
+				SELECT prdt_cadena
+				FROM tbl_parametro_dato_prdt
+				WHERE
+					prdt_prvr_pk = (
+						SELECT prvr_pk
+						FROM tbl_parametro_version_prvr
+						WHERE
+							prvr_prmt_pk = vlrc_pagador_prmt_pk
+							AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
+					)
+					AND prdt_tpdt_pk = (
+						SELECT tppr_tpdt_pk
+						FROM tbl_tipo_parametro_tppr
+						WHERE tppr_pk = prmt_tppr_pk
+					)
+			) AS vlrc_pagador_texto
+
+		    , (
+		        SELECT aspc_codigo
+		        FROM tbl_aspecto_aspc
+		        WHERE aspc_pk = vlrc_aspc_pk
+		    ) AS aspc_codigo
+
+		    , (
+		        SELECT prto_codigo
+		        FROM tbl_puerto_prto
+		        WHERE prto_pk = srvc_subp_pk
+		    ) AS prto_codigo
+
+		    , COALESCE(
+		    	(
+			        SELECT SUM(vlrd_importe)
+			        FROM tbl_valoracion_det_vlrd
+			        WHERE vlrd_vlrc_pk = vlrc_pk
+		        ), 0
+		    ) AS vlrc_importe
+
+		    , COALESCE(
+		    	(
+			        WITH tipoIva AS (
+			            SELECT
+			                prvr_prmt_pk, prvr_fini, prvr_ffin
+			                , (SELECT prdt_ndecimal FROM tbl_parametro_dato_prdt
+			                    WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')) AS prdt_ndecimal
+			            FROM
+			                tbl_parametro_version_prvr
+			            WHERE
+			                prvr_prmt_pk = ANY (
+			                    SELECT prmt_pk
+			                    FROM tbl_parametro_prmt
+			                    WHERE prmt_tppr_pk = portico.getEntidad('TIPO_IVA')
+			                )
+			        )
+			        SELECT
+			            SUM(
+			                vlrd_importe * (
+			                    SELECT prdt_ndecimal
+			                    FROM tipoIva
+			                    WHERE prvr_prmt_pk = vlrl_impuesto_prmt_pk
+			                        AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
+			                )
+			            ) / 100
+			        FROM
+			            tbl_valoracion_lin_vlrl
+			            INNER JOIN tbl_valoracion_det_vlrd ON
+			                vlrd_vlrl_pk = vlrl_pk
+			        WHERE vlrl_vlrc_pk = vlrc_pk
+				), 0
+		    ) AS vlrc_importe_impuesto
+    ]]>
+        <if test="idioma != null">
+        <![CDATA[
+			, (
+				SELECT i18n_text
+				FROM tbl_i18n_i18n
+				WHERE
+					i18n_pref = 'aspv'
+					AND i18n_ext_pk = aspv_pk
+					AND i18n_lang = #{idioma}
+			) AS aspc_descripcion
+        ]]>
+        </if>
+    <![CDATA[
+		FROM
+		    tbl_valoracion_vlrc
+		    INNER JOIN tbl_servicio_srvc ON
+		        srvc_pk = vlrc_srvc_pk
+		    INNER JOIN tbl_parametro_prmt ON
+		        prmt_pk = vlrc_pagador_prmt_pk
+		    LEFT JOIN tbl_aspecto_version_aspv ON
+		    	aspv_aspc_pk = vlrc_aspc_pk
+	            AND vlrc_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, vlrc_fref)
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND vlrc_pk = #{id}
+            </if>
+            <if test="ids != null">
+                AND vlrc_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+                </foreach>
+            </if>
+            <if test="srvc != null">
+                <if test="srvc.id != null">
+                    AND vlrc_srvc_pk = #{srvc.id}
+                </if>
+            </if>
+            <if test="tpsrId != null">
+                AND srvc_tpsr_pk = #{tpsrId}
+            </if>
+            <if test="codExencion != null">
+                AND vlrc_cod_exen = #{codExencion}
+            </if>
+            <if test="aspc != null and aspc.id != null">
+                AND vlrc_aspc_pk = #{aspc.id}
+            </if>
+            <if test="pagador != null and pagador.id != null">
+                AND vlrc_pagador_prmt_pk = #{pagador.id}
+            </if>
+            <if test="crgo != null and crgo.id != null">
+            <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_valoracion_lin_vlrl
+                    WHERE
+                        vlrl_vlrc_pk = vlrc_pk
+                        AND vlrl_rgla_pk = ANY (
+                        	SELECT rgla_pk
+                        	FROM tbl_regla_rgla
+                        	WHERE
+                        		rgla_crgo_pk = #{crgo.id}
+                        )
+                )
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectObject" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        WHERE vlrc_pk = #{id}
+    </select>
+
+    <select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="count" parameterType="ValoracionCriterioVO" resultType="Integer">
+        SELECT COUNT(1)
+        FROM
+        tbl_valoracion_vlrc
+        INNER JOIN tbl_servicio_srvc ON
+        srvc_pk = vlrc_srvc_pk
+        INNER JOIN tbl_parametro_prmt ON
+        prmt_pk = vlrc_pagador_prmt_pk
+        <include refid="SelectWhere" />
+    </select>
+
+    <insert id="insert" parameterType="ValoracionVO">
+    <![CDATA[
+        INSERT INTO tbl_valoracion_vlrc (
+            vlrc_pk, vlrc_srvc_pk, vlrc_aspc_pk, vlrc_pagador_prmt_pk
+            , vlrc_fref, vlrc_fliq, vlrc_falta, vlrc_fini, vlrc_ffin
+            , vlrc_es_suj_pasivo, vlrc_cod_exen
+            , vlrc_info1, vlrc_info2, vlrc_info3, vlrc_info4, vlrc_info5, vlrc_info6
+        )
+        VALUES (
+            #{id}, #{srvc.id}, #{aspc.id}, #{pagador.id}
+            , #{fref}, #{fliq}, #{falta}, #{fini}, #{ffin}
+            , #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}, #{codExencion}
+            , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
+        )
+    ]]>
+    </insert>
+
+    <update id="update" parameterType="ValoracionVO">
+    <![CDATA[
+        UPDATE tbl_valoracion_vlrc SET
+            vlrc_pagador_prmt_pk = #{pagador.id}
+            , vlrc_es_suj_pasivo = #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}
+            , vlrc_cod_exen = #{codExencion}
+            , vlrc_info1 = #{info1}
+            , vlrc_info2 = #{info2}
+            , vlrc_info3 = #{info3}
+            , vlrc_info4 = #{info4}
+            , vlrc_info5 = #{info5}
+            , vlrc_info6 = #{info6}
+        WHERE vlrc_pk = #{id}
+    ]]>
+    </update>
+
+    <delete id="deleteList" parameterType="ValoracionCriterioVO">
+    <![CDATA[
+        DELETE FROM tbl_valoracion_vlrc
+    ]]>
+        <include refid="SelectWhere" />
+    </delete>
+</mapper>

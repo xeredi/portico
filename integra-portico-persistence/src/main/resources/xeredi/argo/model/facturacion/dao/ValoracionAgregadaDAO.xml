@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.facturacion.dao.ValoracionAgregadaDAO">
+	<resultMap type="ValoracionAgregadaVO" id="ResultMap">
+		<id column="vlrc_srvc_pk" />
+		<id column="vlrc_pagador_prmt_pk" />
+		<id column="vlrc_es_suj_pasivo" />
+		<id column="vlrc_cod_exen" />
+
+		<association property="vlrc" javaType="ValoracionVO">
+			<result column="vlrc_fref" property="fref" />
+			<result column="vlrc_fliq" property="fliq" />
+			<result column="vlrc_es_suj_pasivo" property="sujPasivo" />
+			<result column="vlrc_cod_exen" property="codExencion" />
+
+			<result column="vlrc_info1" property="info1" />
+			<result column="vlrc_info2" property="info2" />
+			<result column="vlrc_info3" property="info3" />
+			<result column="vlrc_info4" property="info4" />
+			<result column="vlrc_info5" property="info5" />
+			<result column="vlrc_info6" property="info6" />
+
+			<association property="srvc" javaType="ServicioVO">
+				<id column="vlrc_srvc_pk" />
+
+				<result column="vlrc_srvc_pk" property="id" />
+			</association>
+
+			<association property="pagador" javaType="ParametroVO">
+				<id column="vlrc_pagador_prmt_pk" />
+
+				<result column="vlrc_pagador_prmt_pk" property="id" />
+			</association>
+		</association>
+
+		<collection property="vlrlList" ofType="ValoracionLineaAgregadaVO" javaType="ArrayList">
+			<id column="vlrl_ssrv_pk" />
+			<id column="vlrl_rgla_pk" />
+
+			<id column="vlrl_info1" />
+			<id column="vlrl_info2" />
+			<id column="vlrl_info3" />
+			<id column="vlrl_info4" />
+			<id column="vlrl_info5" />
+			<id column="vlrl_info6" />
+
+			<id column="vlrl_impuesto_prmt_pk" />
+
+			<association property="vlrl" javaType="ValoracionLineaVO">
+				<result column="vlrl_fini" property="fini" />
+				<result column="vlrl_ffin" property="ffin" />
+
+				<result column="vlrl_info1" property="info1" />
+				<result column="vlrl_info2" property="info2" />
+				<result column="vlrl_info3" property="info3" />
+				<result column="vlrl_info4" property="info4" />
+				<result column="vlrl_info5" property="info5" />
+				<result column="vlrl_info6" property="info6" />
+
+				<association property="ssrv" javaType="SubservicioVO">
+					<id column="vlrl_ssrv_pk" />
+
+					<result column="vlrl_ssrv_pk" property="id" />
+				</association>
+
+				<association property="rgla" javaType="ReglaVO">
+					<id column="vlrl_rgla_pk" />
+
+					<result column="vlrl_rgla_pk" property="id" />
+					<result column="vlrl_rgla_tipo" property="tipo" />
+
+					<association property="crgo" javaType="CargoVO">
+						<id column="vlrl_rgla_crgo_pk" />
+
+						<result column="vlrl_rgla_crgo_pk" property="id" />
+					</association>
+				</association>
+
+				<association property="impuesto" javaType="ParametroVO">
+					<id column="vlrl_impuesto_prmt_pk" />
+
+					<result column="vlrl_impuesto_prmt_pk" property="id" />
+				</association>
+			</association>
+
+			<collection property="vlrdList" ofType="ValoracionDetalleVO" javaType="ArrayList">
+				<id column="vlrt_pk" />
+
+				<result column="vlrt_pk" property="id" />
+				<result column="vlrt_padre_pk" property="padreId" />
+
+				<result column="vlrd_fini" property="fini" />
+				<result column="vlrd_ffin" property="ffin" />
+				<result column="vlrd_valor_base" property="valorBase" />
+				<result column="vlrd_importe_base" property="importeBase" />
+				<result column="vlrd_importe" property="importe" />
+
+				<result column="vlrd_info1" property="info1" />
+				<result column="vlrd_info2" property="info2" />
+				<result column="vlrd_info3" property="info3" />
+				<result column="vlrd_info4" property="info4" />
+				<result column="vlrd_info5" property="info5" />
+				<result column="vlrd_info6" property="info6" />
+
+				<result column="vlrd_cuant1" property="cuant1" />
+				<result column="vlrd_cuant2" property="cuant2" />
+				<result column="vlrd_cuant3" property="cuant3" />
+				<result column="vlrd_cuant4" property="cuant4" />
+				<result column="vlrd_cuant5" property="cuant5" />
+				<result column="vlrd_cuant6" property="cuant6" />
+
+				<association property="ssrv" javaType="SubservicioVO">
+					<id column="vlrd_ssrv_pk" />
+
+					<result column="vlrd_ssrv_pk" property="id" />
+				</association>
+			</collection>
+		</collection>
+	</resultMap>
+
+	<select id="selectList" parameterType="ValoradorContextoVO" resultMap="ResultMap" fetchSize="1000">
+    <![CDATA[
+        SELECT
+            item.*
+    ]]>
+
+		<if test="aspc.version.cpathInfo1Sql != null">
+			, (${aspc.version.cpathInfo1Sql}) AS vlrc_info1
+		</if>
+		<if test="aspc.version.cpathInfo2Sql != null">
+			, (${aspc.version.cpathInfo2Sql}) AS vlrc_info2
+		</if>
+		<if test="aspc.version.cpathInfo3Sql != null">
+			, (${aspc.version.cpathInfo3Sql}) AS vlrc_info3
+		</if>
+		<if test="aspc.version.cpathInfo4Sql != null">
+			, (${aspc.version.cpathInfo4Sql}) AS vlrc_info4
+		</if>
+		<if test="aspc.version.cpathInfo5Sql != null">
+			, (${aspc.version.cpathInfo5Sql}) AS vlrc_info5
+		</if>
+		<if test="aspc.version.cpathInfo6Sql != null">
+			, (${aspc.version.cpathInfo6Sql}) AS vlrc_info6
+		</if>
+
+    <![CDATA[
+        FROM (
+            SELECT
+                vlrt_pk
+                , vlrt_padre_pk
+
+                , vlrt_srvc_pk AS vlrc_srvc_pk
+                , vlrt_pagador_prmt_pk AS vlrc_pagador_prmt_pk
+                , vlrt_es_suj_pasivo AS vlrc_es_suj_pasivo
+                , vlrt_cod_exen AS vlrc_cod_exen
+
+                , vlrt_fliq AS vlrc_fliq
+                , vlrt_fref AS vlrc_fref
+
+                , rgla_pk AS vlrl_rgla_pk
+                , rgla_tipo AS vlrl_rgla_tipo
+                , rgla_crgo_pk AS vlrl_rgla_crgo_pk
+
+                , vlrt_impuesto_prmt_pk AS vlrl_impuesto_prmt_pk
+                , vlrt_fref AS fref
+                , vlrt_srvc_pk AS srvc_pk
+    ]]>
+
+		<if test="aspc.version.lgrpInfo1">
+			, vlrt_info1 AS vlrl_info1
+		</if>
+		<if test="!aspc.version.lgrpInfo1">
+			, vlrt_info1 AS vlrd_info1
+		</if>
+		<if test="aspc.version.lgrpInfo2">
+			, vlrt_info2 AS vlrl_info2
+		</if>
+		<if test="!aspc.version.lgrpInfo2">
+			, vlrt_info2 AS vlrd_info2
+		</if>
+		<if test="aspc.version.lgrpInfo3">
+			, vlrt_info3 AS vlrl_info3
+		</if>
+		<if test="!aspc.version.lgrpInfo3">
+			, vlrt_info3 AS vlrd_info3
+		</if>
+		<if test="aspc.version.lgrpInfo4">
+			, vlrt_info4 AS vlrl_info4
+		</if>
+		<if test="!aspc.version.lgrpInfo4">
+			, vlrt_info4 AS vlrd_info4
+		</if>
+		<if test="aspc.version.lgrpInfo5">
+			, vlrt_info5 AS vlrl_info5
+		</if>
+		<if test="!aspc.version.lgrpInfo5">
+			, vlrt_info5 AS vlrd_info5
+		</if>
+		<if test="aspc.version.lgrpInfo6">
+			, vlrt_info6 AS vlrl_info6
+		</if>
+		<if test="!aspc.version.lgrpInfo6">
+			, vlrt_info6 AS vlrd_info6
+		</if>
+
+		<if test="aspc.version.agrupaDetalles">
+        <![CDATA[
+                , vlrt_ssrv_pk AS vlrd_ssrv_pk
+                , vlrt_fini AS vlrd_fini
+                , vlrt_ffin AS vlrd_ffin
+        ]]>
+		</if>
+
+		<if test="!aspc.version.agrupaDetalles">
+        <![CDATA[
+                , vlrt_ssrv_pk AS vlrl_ssrv_pk
+                , vlrt_fini AS vlrl_fini
+                , vlrt_ffin AS vlrl_ffin
+        ]]>
+		</if>
+    <![CDATA[
+                , vlrt_cuant1 AS vlrd_cuant1
+                , vlrt_cuant2 AS vlrd_cuant2
+                , vlrt_cuant3 AS vlrd_cuant3
+                , vlrt_cuant4 AS vlrd_cuant4
+                , vlrt_cuant5 AS vlrd_cuant5
+                , vlrt_cuant6 AS vlrd_cuant6
+
+                , vlrt_valor_base AS vlrd_valor_base
+                , vlrt_importe_base AS vlrd_importe_base
+                , vlrt_importe AS vlrd_importe
+
+                , (
+                    CASE
+                        WHEN rgla_tipo = 'T' THEN 1
+                        WHEN rgla_tipo = 'C' THEN 2
+                        ELSE 3
+                    END
+                ) AS regla_tipo_orden
+            FROM
+                tbl_valoracion_tmp_vlrt vlrt
+                INNER JOIN tbl_regla_rgla rgla ON
+                    rgla_pk = vlrt_rgla_pk
+                INNER JOIN tbl_regla_version_rglv rglv ON
+                    rglv_rgla_pk = rgla_pk
+                    AND vlrt_fref BETWEEN rglv_fini AND COALESCE(rglv_ffin, vlrt_fref)
+                LEFT JOIN tbl_subservicio_ssrv ssrv ON
+                    ssrv_pk = vlrt_ssrv_pk
+            WHERE
+                EXISTS (
+                    SELECT 1
+                    FROM tbl_aspecto_cargo_ascr
+                    WHERE
+                        EXISTS (
+                            SELECT 1
+                            FROM tbl_aspecto_cargo_version_ascv
+                            WHERE
+                                ascv_ascr_pk = ascr_pk
+                                AND vlrt_fref BETWEEN ascv_fini AND COALESCE(ascv_ffin, vlrt_fref)
+                        )
+                        AND ascr_crgo_pk = vlrt_crgo_pk
+                        AND ascr_aspc_pk = #{aspc.id}
+                )
+                AND vlrt_srvc_pk = #{srvc.id}
+                AND vlrt_prbt_pk = #{prbt.id}
+            ORDER BY vlrt_prbt_pk, vlrt_srvc_pk, vlrt_pagador_prmt_pk, vlrt_es_suj_pasivo, vlrt_cod_exen
+                , ssrv_tpss_pk
+    ]]>
+
+		<if test="!aspc.version.agrupaDetalles">
+			, ssrv_numero
+		</if>
+
+    <![CDATA[
+                , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
+                , vlrt_impuesto_prmt_pk, regla_tipo_orden, rglv_orden
+        ) item
+    ]]>
+	</select>
+
+</mapper>

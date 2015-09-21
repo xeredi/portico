@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.item.dao.ItemTramiteDatoDAO">
+	<resultMap type="ItemTramiteDatoVO" id="ResultMap">
+		<id column="ittd_ittr_pk" />
+		<id column="ittd_tpdt_pk" />
+
+		<result column="ittd_ittr_pk" property="ittrId" />
+		<result column="ittd_tpdt_pk" property="tpdtId" />
+
+		<result column="ittd_o_nentero" property="onentero" />
+		<result column="ittd_o_ndecimal" property="ondecimal" />
+		<result column="ittd_o_cadena" property="ocadena" />
+		<result column="ittd_o_fecha" property="ofecha" />
+
+		<result column="ittd_d_nentero" property="dnentero" />
+		<result column="ittd_d_ndecimal" property="dndecimal" />
+		<result column="ittd_d_cadena" property="dcadena" />
+		<result column="ittd_d_fecha" property="dfecha" />
+
+		<association property="oprmt" javaType="ParametroVO">
+			<result column="ittd_o_prmt_pk" property="id" />
+			<result column="o_prmt_parametro" property="parametro" />
+			<result column="o_prmt_texto" property="texto" />
+		</association>
+
+		<association property="dprmt" javaType="ParametroVO">
+			<result column="ittd_d_prmt_pk" property="id" />
+			<result column="d_prmt_parametro" property="parametro" />
+			<result column="d_prmt_texto" property="texto" />
+		</association>
+
+		<association property="osrvc" javaType="ServicioVO">
+			<result column="ittd_o_srvc_pk" property="id" />
+		</association>
+
+		<association property="dsrvc" javaType="ServicioVO">
+			<result column="ittd_d_srvc_pk" property="id" />
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+		SELECT
+			ittd_ittr_pk, ittd_tpdt_pk
+			, ittd_o_nentero, ittd_o_ndecimal, ittd_o_cadena, ittd_o_fecha, ittd_o_prmt_pk, ittd_o_srvc_pk
+			, ittd_d_nentero, ittd_d_ndecimal, ittd_d_cadena, ittd_d_fecha, ittd_d_prmt_pk, ittd_d_srvc_pk
+
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = ittd_o_prmt_pk) AS o_prmt_parametro
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = ittd_d_prmt_pk) AS d_prmt_parametro
+	]]>
+		<if test="idioma != null and fechaVigencia != null">
+	    <![CDATA[
+	    	, (SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref = 'prvr' AND i18n_lang = #{idioma} AND i18n_ext_pk = (
+	    			SELECT prvr_pk FROM tbl_parametro_version_prvr
+	    			WHERE prvr_prmt_pk = ittd_o_prmt_pk AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
+	    		)
+	    	) AS o_prmt_texto
+	    	, (SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref = 'prvr' AND i18n_lang = #{idioma} AND i18n_ext_pk = (
+	    			SELECT prvr_pk FROM tbl_parametro_version_prvr
+	    			WHERE prvr_prmt_pk = ittd_d_prmt_pk AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
+	    		)
+	    	) AS d_prmt_texto
+		]]>
+		</if>
+    <![CDATA[
+		FROM
+			tbl_item_trmt_dato_ittd
+	]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND ittd_ittr_pk = #{id}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectList" parameterType="ItemTramiteCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<insert id="insert" parameterType="ItemTramiteDatoVO">
+        <![CDATA[
+        INSERT INTO tbl_item_trmt_dato_ittd (
+        	ittd_ittr_pk, ittd_tpdt_pk
+			, ittd_o_nentero, ittd_o_ndecimal, ittd_o_cadena, ittd_o_fecha, ittd_o_prmt_pk, ittd_o_srvc_pk
+			, ittd_d_nentero, ittd_d_ndecimal, ittd_d_cadena, ittd_d_fecha, ittd_d_prmt_pk, ittd_d_srvc_pk)
+        VALUES (
+        	#{ittrId}, #{tpdtId}
+        	, #{onentero}, #{ondecimal}, #{ocadena}, #{ofecha}, #{oprmt.id}, #{osrvc.id}
+        	, #{dnentero}, #{dndecimal}, #{dcadena}, #{dfecha}, #{dprmt.id}, #{dsrvc.id}
+        )
+        ]]>
+	</insert>
+</mapper>

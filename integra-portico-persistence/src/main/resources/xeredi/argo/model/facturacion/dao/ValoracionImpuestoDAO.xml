@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.facturacion.dao.ValoracionImpuestoDAO">
+    <resultMap type="ValoracionImpuestoVO" id="ResultMap">
+        <id column="vlrc_pk" />
+        <id column="prvr_pk" />
+
+        <result column="vlrc_pk" property="vlrcId" />
+        <result column="vlrl_impuesto_porcentaje" property="porcentaje" />
+        <result column="vlri_importe" property="importeBase" />
+        <result column="vlri_importe_impuesto" property="importeImpuesto" />
+
+        <association property="impuesto" javaType="ParametroVO">
+            <result column="vlrl_impuesto_prmt_pk" property="id" />
+            <result column="vlrl_impuesto_prmt" property="parametro" />
+            <result column="vlrl_impuesto_tppr_pk" property="entiId" />
+            <result column="vlrl_impuesto_descripcion" property="texto" />
+            <result column="vlrc_fref" property="fref" />
+
+            <association property="version" javaType="ParametroVersionVO">
+                <result column="prvr_pk" property="id" />
+            </association>
+        </association>
+    </resultMap>
+
+    <select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
+    <![CDATA[
+		SELECT
+		    vlrc_pk, vlrc_fref, prvr_pk, vlrl_impuesto_prmt_pk, vlrl_impuesto_porcentaje, vlri_importe
+		    , vlrl_impuesto_porcentaje * vlri_importe / 100 AS vlri_importe_impuesto
+		    , prmt_parametro AS vlrl_impuesto_prmt
+		    , prmt_tppr_pk AS vlrl_impuesto_tppr_pk
+    ]]>
+        <if test="idioma != null">
+	    <![CDATA[
+		    , (
+		        SELECT i18n_text
+		        FROM tbl_i18n_i18n
+		        WHERE
+		            i18n_pref = 'prvr'
+		            AND i18n_lang = #{idioma}
+		            AND i18n_ext_pk = prvr_pk
+		    ) AS vlrl_impuesto_descripcion
+	    ]]>
+        </if>
+    <![CDATA[
+		FROM (
+		    SELECT
+		        vlrc_pk, vlrc_fref, vlrl_impuesto_prmt_pk, prvr_pk, SUM(vlrd_importe) AS vlri_importe
+		        , (
+		            SELECT prdt_ndecimal
+		            FROM tbl_parametro_dato_prdt
+		            WHERE
+		                prdt_prvr_pk = prvr_pk
+		                AND prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
+		        ) AS vlrl_impuesto_porcentaje
+		    FROM
+		        tbl_valoracion_vlrc
+		        INNER JOIN tbl_valoracion_lin_vlrl ON
+		            vlrl_vlrc_pk = vlrc_pk
+		        INNER JOIN tbl_valoracion_det_vlrd ON
+		            vlrd_vlrl_pk = vlrl_pk
+		        LEFT JOIN tbl_parametro_version_prvr ON
+		            prvr_prmt_pk = vlrl_impuesto_prmt_pk
+		            AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
+    ]]>
+        <where>
+            <if test="id != null">
+                AND vlrc_pk = #{id}
+            </if>
+            <if test="ids != null">
+                AND vlrc_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+                </foreach>
+            </if>
+        </where>
+    <![CDATA[
+		    GROUP BY vlrc_pk, prvr_pk, vlrc_fref, vlrl_impuesto_prmt_pk
+		) sql
+			INNER JOIN tbl_parametro_prmt ON
+		        prmt_pk = vlrl_impuesto_prmt_pk
+    ]]>
+    </select>
+</mapper>

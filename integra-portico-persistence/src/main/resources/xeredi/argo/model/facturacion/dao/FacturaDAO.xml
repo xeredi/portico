@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.facturacion.dao.FacturaDAO">
+	<resultMap type="FacturaVO" id="ResultMap">
+		<id column="fctr_pk" />
+
+		<result column="fctr_pk" property="id" />
+		<result column="fctr_fref" property="fref" />
+		<result column="fctr_falta" property="falta" />
+		<result column="fctr_fini" property="fini" />
+		<result column="fctr_ffin" property="ffin" />
+		<result column="fctr_numero" property="numero" />
+		<result column="fctr_importe" property="importe" />
+		<result column="fctr_impuesto" property="impuesto" />
+		<result column="fctr_estado" property="estado" />
+		<result column="fctr_es_suj_pasivo" property="sujPasivo" />
+
+		<result column="fctr_info1" property="info1" />
+		<result column="fctr_info2" property="info2" />
+		<result column="fctr_info3" property="info3" />
+		<result column="fctr_info4" property="info4" />
+		<result column="fctr_info5" property="info5" />
+		<result column="fctr_info6" property="info6" />
+
+		<association property="aspc" javaType="AspectoVO">
+			<result column="fctr_aspc_pk" property="id" />
+			<result column="aspc_codigo" property="codigo" />
+
+			<association property="tpsr" javaType="TipoServicioVO">
+				<result column="aspc_tpsr_pk" property="id" />
+			</association>
+			<association property="version" javaType="AspectoVersionVO">
+				<result column="aspv_descripcion" property="descripcion" />
+			</association>
+		</association>
+
+		<association property="fcsr" javaType="FacturaSerieVO">
+			<result column="fctr_fcsr_pk" property="id" />
+			<result column="fcsr_serie" property="serie" />
+			<result column="fcsr_anio" property="anio" />
+		</association>
+
+		<association property="pagador" javaType="ParametroVO">
+			<result column="fctr_pagador_prmt_pk" property="id" />
+			<result column="fctr_pagador_prmt" property="parametro" />
+			<result column="fctr_pagador_tppr_pk" property="entiId" />
+			<result column="fctr_pagador" property="texto" />
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+		SELECT
+		    fctr_pk, fctr_aspc_pk, fctr_pagador_prmt_pk, fctr_fcsr_pk, fctr_numero
+		    , fctr_fref, fctr_falta, fctr_fini, fctr_ffin, fctr_estado, fctr_es_suj_pasivo
+		    , fctr_info1, fctr_info2, fctr_info3, fctr_info4, fctr_info5, fctr_info6
+
+		    , aspc_codigo, aspc_tpsr_pk
+
+		    , fcsr_serie, fcsr_anio
+
+		    , prmt_parametro AS fctr_pagador_prmt
+		    , prmt_tppr_pk AS fctr_pagador_tppr_pk
+
+		    , (SELECT SUM(fctd_importe) FROM tbl_factura_det_fctd WHERE fctd_fctr_pk = fctr_pk) AS fctr_importe
+
+		    , (
+		        WITH tipoIva AS (
+		            SELECT
+		                prvr_prmt_pk, prvr_fini, prvr_ffin
+		                , (SELECT prdt_ndecimal FROM tbl_parametro_dato_prdt
+		                    WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')) AS prdt_ndecimal
+		            FROM
+		                tbl_parametro_version_prvr
+		            WHERE
+		                prvr_prmt_pk = ANY (
+		                    SELECT prmt_pk
+		                    FROM tbl_parametro_prmt
+		                    WHERE prmt_tppr_pk = portico.getEntidad('TIPO_IVA')
+		                )
+		        )
+		        SELECT
+		            SUM(
+		                fctd_importe * (
+		                    SELECT prdt_ndecimal
+		                    FROM tipoIva
+		                    WHERE prvr_prmt_pk = fctl_impuesto_prmt_pk
+		                        AND fctr_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fctr_fref)
+		                )
+		            ) / 100
+		        FROM
+		            tbl_factura_lin_fctl
+		            INNER JOIN tbl_factura_det_fctd ON
+		                fctd_fctl_pk = fctl_pk
+		        WHERE fctl_fctr_pk = fctr_pk
+		    ) AS fctr_impuesto
+    ]]>
+    	<if test="idioma != null">
+	    <![CDATA[
+	    	, (
+	    		SELECT i18n_text
+	    		FROM tbl_i18n_i18n
+				WHERE
+	    			i18n_ext_pk = (
+	    				SELECT aspv_pk
+	    				FROM tbl_aspecto_version_aspv
+	    				WHERE
+	    					aspv_aspc_pk = fctr_aspc_pk
+	    					AND (
+	    						aspv_fini <= fctr_fref
+	    						AND (aspv_ffin IS NULL OR aspv_ffin > fctr_fref)
+	    					)
+	    			)
+	    			AND i18n_pref = 'aspv'
+	    			AND i18n_lang = #{idioma}
+	    	) AS aspv_descripcion
+		    , (
+		        SELECT prdt_cadena
+		        FROM tbl_parametro_dato_prdt
+		        WHERE
+		            prdt_tpdt_pk = (
+		                SELECT tppr_tpdt_pk
+		                FROM tbl_tipo_parametro_tppr
+		                WHERE tppr_pk = prmt_tppr_pk
+		            )
+		            AND prdt_prvr_pk = (
+		                SELECT prvr_pk
+		                FROM tbl_parametro_version_prvr
+		                WHERE
+		                    prvr_prmt_pk = fctr_pagador_prmt_pk
+		                    AND prvr_fini <= fctr_fref
+		                    AND (prvr_ffin IS NULL OR prvr_ffin > fctr_fref)
+		            )
+		    ) AS fctr_pagador
+	    ]]>
+    	</if>
+    <![CDATA[
+		FROM
+		    tbl_factura_fctr
+		    INNER JOIN tbl_aspecto_aspc ON
+		        aspc_pk = fctr_aspc_pk
+		    INNER JOIN tbl_factura_serie_fcsr ON
+		        fcsr_pk = fctr_fcsr_pk
+		    INNER JOIN tbl_parametro_prmt ON
+		        prmt_pk = fctr_pagador_prmt_pk
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				fctr_pk = #{id}
+			</if>
+			<if test="ids != null">
+				AND fctr_pk IN
+				<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+				</foreach>
+			</if>
+			<if test="estado != null">
+				fctr_estado = #{estado}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectObject" resultMap="ResultMap" parameterType="FacturaCriterioVO">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="count" resultType="Integer" parameterType="FacturaCriterioVO">
+		SELECT COUNT(1)
+		FROM
+		tbl_factura_fctr
+		INNER JOIN tbl_aspecto_aspc ON
+		aspc_pk = fctr_aspc_pk
+		INNER JOIN tbl_factura_serie_fcsr ON
+		fcsr_pk = fctr_fcsr_pk
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+
+	<insert id="insert" parameterType="FacturaVO">
+    <![CDATA[
+        INSERT INTO tbl_factura_fctr (
+            fctr_pk, fctr_aspc_pk, fctr_pagador_prmt_pk, fctr_fcsr_pk, fctr_numero
+            , fctr_fref, fctr_falta, fctr_fini, fctr_ffin, fctr_estado, fctr_es_suj_pasivo
+            , fctr_info1, fctr_info2, fctr_info3, fctr_info4, fctr_info5, fctr_info6
+        ) VALUES (
+            #{id}, #{aspc.id}, #{pagador.id}, #{fcsr.id}, #{numero}
+            , #{fref}, #{falta}, #{fini}, #{ffin}, #{estado}, #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}
+            , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
+        )
+    ]]>
+	</insert>
+
+	<insert id="updateEstado" parameterType="FacturaVO">
+    <![CDATA[
+        UPDATE tbl_factura_fctr SET
+            fctr_estado = #{estado}
+        WHERE
+            fctr_pk = #{id}
+    ]]>
+	</insert>
+	<select id="existsFacturaPosterior" parameterType="Long" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM
+            tbl_factura_srv_fcts fcts1
+            INNER JOIN tbl_factura_srv_fcts fcts2 ON
+                fcts1.fcts_fctr_pk <> fcts2.fcts_fctr_pk
+                AND fcts1.fcts_srvc_pk = fcts2.fcts_srvc_pk
+                AND fcts2.fcts_fref > fcts1.fcts_fref
+        WHERE
+            fcts1.fcts_fctr_pk = #{value}
+    ]]>
+	</select>
+
+	<select id="existsValoracionPosterior" parameterType="Long" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM
+            tbl_valoracion_vlrc
+            JOIN tbl_factura_srv_fcts ON
+                fcts_srvc_pk = vlrc_srvc_pk
+                AND vlrc_fref > fcts_fref
+        WHERE
+            fcts_fctr_pk = #{value}
+    ]]>
+	</select>
+</mapper>
