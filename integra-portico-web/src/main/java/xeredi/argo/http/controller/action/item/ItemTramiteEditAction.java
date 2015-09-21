@@ -65,7 +65,6 @@ public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> {
     public final void doEdit() throws ApplicationException {
         Preconditions.checkNotNull(model.getItemId());
         Preconditions.checkNotNull(model.getTrmt().getId());
-        Preconditions.checkNotNull(model.getTrmt().getEntiId());
 
         trmt = TramiteProxy.select(model.getTrmt().getId());
 

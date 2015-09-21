@@ -5,11 +5,10 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.NonNull;
+
 import org.apache.commons.validator.GenericValidator;
 
-import com.google.common.base.Preconditions;
-
-import lombok.NonNull;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.http.controller.action.comun.BaseAction.ACCION_EDICION;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
@@ -26,6 +25,8 @@ import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -169,8 +170,8 @@ public final class FieldValidator {
      * @param validValues
      *            the valid values
      */
-    public static void validateCR(final @NonNull BaseAction action, final @NonNull String fieldName, final String value,
-            final @NonNull Set<String> validValues) {
+    public static void validateCR(final @NonNull BaseAction action, final @NonNull String fieldName,
+            final String value, final @NonNull Set<String> validValues) {
         if (value != null && !validValues.contains(value)) {
             action.addActionError(MessageI18nKey.E00012, fieldName, validValues.toString());
         }
@@ -234,8 +235,8 @@ public final class FieldValidator {
      * @param itemVO
      *            the item vo
      */
-    public static void validateItem(final @NonNull BaseAction action, final @NonNull AbstractEntidadDetailVO entiDetail,
-            final @NonNull ItemVO itemVO) {
+    public static void validateItem(final @NonNull BaseAction action,
+            final @NonNull AbstractEntidadDetailVO entiDetail, final @NonNull ItemVO itemVO) {
         if (entiDetail.getEntdList() != null) {
             final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
 
@@ -299,11 +300,12 @@ public final class FieldValidator {
      *            the enti detail
      * @param trmtDetail
      *            the trmt detail
-     * @param itemVO
-     *            the item vo
+     * @param ittr
+     *            the ittr
      */
-    public static void validateTrmt(final @NonNull BaseAction action, final @NonNull AbstractEntidadDetailVO entiDetail,
-            final @NonNull TramiteDetailVO trmtDetail, final @NonNull ItemTramiteVO ittr) {
+    public static void validateTrmt(final @NonNull BaseAction action,
+            final @NonNull AbstractEntidadDetailVO entiDetail, final @NonNull TramiteDetailVO trmtDetail,
+            final @NonNull ItemTramiteVO ittr) {
         if (trmtDetail.getTpdtList() != null) {
             final Map<Long, ItemTramiteDatoVO> ittdMap = ittr.getIttdMap();
 
