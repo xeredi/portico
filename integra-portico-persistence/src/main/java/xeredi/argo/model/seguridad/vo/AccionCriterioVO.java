@@ -11,6 +11,9 @@ public final class AccionCriterioVO extends BaseCriterioVO {
     /** The id. */
     private Long id;
 
+    /** The prefix. */
+    private AccionPrefix prefix;
+
     /** The codigo. */
     private String codigo;
 
@@ -96,4 +99,22 @@ public final class AccionCriterioVO extends BaseCriterioVO {
         usroId = value;
     }
 
+    /**
+     * Gets the prefix.
+     *
+     * @return the prefix
+     */
+    public AccionPrefix getPrefix() {
+        return prefix;
+    }
+
+    /**
+     * Sets the prefix.
+     *
+     * @param value
+     *            the new prefix
+     */
+    public void setPrefix(AccionPrefix value) {
+        this.prefix = value;
+    }
 }

@@ -1,13 +1,8 @@
 package xeredi.argo.http.controller.action.seguridad;
 
-import java.util.List;
-
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.seguridad.bo.AccionBO;
 import xeredi.argo.model.seguridad.bo.GrupoBO;
-import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
-import xeredi.argo.model.seguridad.vo.AccionVO;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
 
@@ -21,9 +16,6 @@ public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5574343207861340756L;
-
-    /** The accn list. */
-    private List<AccionVO> accnList;
 
     /**
      * {@inheritDoc}
@@ -49,19 +41,6 @@ public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
      */
     @Override
     public void doLoadDependencies() throws ApplicationException {
-        final AccionBO accnBO = new AccionBO();
-        final AccionCriterioVO accnCriterio = new AccionCriterioVO();
-
-        accnList = accnBO.selectList(accnCriterio);
+        // noop
     }
-
-    /**
-     * Gets the accn list.
-     *
-     * @return the accn list
-     */
-    public List<AccionVO> getAccnList() {
-        return accnList;
-    }
-
 }

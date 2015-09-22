@@ -1,9 +1,7 @@
 package xeredi.argo.model.seguridad.bo;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
@@ -13,14 +11,10 @@ import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.seguridad.dao.AccionDAO;
 import xeredi.argo.model.seguridad.dao.GrupoAccionDAO;
 import xeredi.argo.model.seguridad.dao.GrupoDAO;
 import xeredi.argo.model.seguridad.dao.UsuarioGrupoDAO;
-import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
-import xeredi.argo.model.seguridad.vo.AccionVO;
 import xeredi.argo.model.seguridad.vo.GrupoAccionCriterioVO;
-import xeredi.argo.model.seguridad.vo.GrupoAccionVO;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
 import xeredi.argo.model.seguridad.vo.UsuarioGrupoCriterioVO;
@@ -53,16 +47,6 @@ public final class GrupoBO {
             grpo.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             grpoDAO.insert(grpo);
 
-            if (grpo.getAccnIds() != null) {
-                final GrupoAccionDAO gracDAO = session.getMapper(GrupoAccionDAO.class);
-
-                for (final Long accnId : grpo.getAccnIds()) {
-                    final GrupoAccionVO grac = new GrupoAccionVO(grpo.getId(), accnId);
-
-                    gracDAO.insert(grac);
-                }
-            }
-
             session.commit();
         }
     }
@@ -89,14 +73,6 @@ public final class GrupoBO {
             gracCriterio.setGrpoId(grpo.getId());
 
             gracDAO.deleteList(gracCriterio);
-
-            if (grpo.getAccnIds() != null) {
-                for (final Long accnId : grpo.getAccnIds()) {
-                    final GrupoAccionVO grac = new GrupoAccionVO(grpo.getId(), accnId);
-
-                    gracDAO.insert(grac);
-                }
-            }
 
             session.commit();
         }
@@ -193,18 +169,6 @@ public final class GrupoBO {
             if (grpo == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.grpo, grpoCriterio);
             }
-
-            final Set<Long> accnIds = new HashSet<>();
-            final AccionDAO accnDAO = session.getMapper(AccionDAO.class);
-            final AccionCriterioVO accnCriterio = new AccionCriterioVO();
-
-            accnCriterio.setGrpoId(grpo.getId());
-
-            for (final AccionVO accn : accnDAO.selectList(accnCriterio)) {
-                accnIds.add(accn.getId());
-            }
-
-            grpo.setAccnIds(accnIds);
 
             return grpo;
         }

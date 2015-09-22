@@ -9,12 +9,13 @@ import xeredi.argo.model.seguridad.vo.AccionVO;
  * The Interface AccionDAO.
  */
 public interface AccionDAO extends CrudDAO<AccionVO, AccionCriterioVO> {
+
     /**
      * Exists.
      *
-     * @param accnCriterio
-     *            the accn criterio
+     * @param criterio
+     *            the criterio
      * @return true, if successful
      */
-    boolean exists(final AccionCriterioVO accnCriterio);
+    boolean existsCriterio(final AccionCriterioVO criterio);
 }

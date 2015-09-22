@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+    <properties>
+        <title>Guia de Administracion - Metamodelo</title>
+        <author>Xesus Rey Diaz</author>
+        <date>2015/09/21</date>
+    </properties>
+
+    <body>
+        <section name="Metamodelo">
+            <p>En esta parte de la aplicación se define las estructura de las entidades de los servicios,
+                maestros y estadísticas de la aplicación.
+            </p>
+        </section>
+
+        <section name="Tipos de Dato"></section>
+
+        <section name="Entidades - Tipos de Maestro/Submaestro">
+        </section>
+
+        <section name="Entidades - Tipos de Servicio/Subservicio">
+            <p>Parametrización de los tipos de servicio del sistema.</p>
+
+            <subsection name="Listado">
+                <img src="../images/adminguide/tipo-servicio-listado.png" alt="Listado de Tipos de Servicio" />
+            </subsection>
+
+            <subsection name="Filtro">
+                <img src="../images/adminguide/tipo-servicio-filtro.png" alt="Filtrado de Tipos de Servicio" />
+            </subsection>
+
+            <subsection name="Alta">
+                <img src="../images/adminguide/tipo-servicio-alta.png" alt="Alta de Tipos de Servicio" />
+            </subsection>
+
+            <subsection name="Detalle">
+                <p>Detalle de Tipos de Servicio - Pestaña General</p>
+
+                <img src="../images/adminguide/tipo-servicio-detalle-general.png" />
+
+                <p>Detalle de Tipos de Servicio - Pestaña de Datos</p>
+
+                <img src="../images/adminguide/tipo-servicio-detalle-datos-entidad.png" />
+
+                <p>Detalle de Tipos de Servicio - Pestaña Trámites</p>
+
+                <img src="../images/adminguide/tipo-servicio-detalle-tramites.png" />
+
+                <p>Detalle de Tipos de Servicio - Pestaña Acciones Específicas</p>
+
+                <img src="../images/adminguide/tipo-servicio-detalle-acciones.png" />
+            </subsection>
+
+            <subsection name="Edición">
+                <img src="../images/adminguide/tipo-servicio-edicion.png" alt="Edición de Tipos de Servicio" />
+            </subsection>
+        </section>
+
+        <section name="Entidades - Tipos de Estadistica"></section>
+
+        <section name="Asociación de Grupos de Datos a una Entidad"></section>
+
+        <section name="Asociación de Tipos de Datos a una Entidad"></section>
+
+        <section name="Asociación de Trámites a una Entidad"></section>
+
+        <section name="Asociación de Acciones Específicas a una Entidad"></section>
+
+        <section name="Asociación de Acciones Específicas de Grid a una Entidad"></section>
+    </body>
+</document>

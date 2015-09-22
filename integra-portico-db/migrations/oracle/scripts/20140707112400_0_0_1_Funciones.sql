@@ -318,6 +318,35 @@ END;
 
 CREATE PROCEDURE eraseTpss(entiId NUMBER) IS
 BEGIN
+	DELETE FROM tbl_item_trmt_dato_ittd
+	WHERE
+		EXISTS (
+			SELECT 1 FROM tbl_item_tramite_ittr
+			WHERE
+				ittr_pk = ittd_ittr_pk
+				AND EXISTS (
+					SELECT 1 FROM tbl_subservicio_ssrv
+					WHERE ssrv_pk = ittr_item_pk
+						AND ssrv_tpss_pk = entiId
+				)
+		)
+	;
+	DELETE FROM tbl_subservicio_trmt_sstr
+	WHERE
+		EXISTS (
+			SELECT 1 FROM tbl_subservicio_ssrv
+			WHERE ssrv_pk = sstr_ssrv_pk
+				AND ssrv_tpss_pk = entiId
+			)
+	;
+	DELETE FROM tbl_item_tramite_ittr
+	WHERE
+		EXISTS (
+			SELECT 1 FROM tbl_subservicio_ssrv
+			WHERE ssrv_pk = ittr_item_pk
+				AND ssrv_tpss_pk = entiId
+		)
+	;
 	DELETE FROM tbl_subserv_subserv_ssss
 	WHERE
     	EXISTS (
@@ -452,6 +481,35 @@ END;
 
 CREATE PROCEDURE eraseTpsr(entiId NUMBER) IS
 BEGIN
+	DELETE FROM tbl_item_trmt_dato_ittd
+	WHERE
+		EXISTS (
+			SELECT 1 FROM tbl_item_tramite_ittr
+			WHERE
+				ittr_pk = ittd_ittr_pk
+				AND EXISTS (
+					SELECT 1 FROM tbl_servicio_srvc
+					WHERE srvc_pk = ittr_item_pk
+						AND srvc_tpsr_pk = entiId
+				)
+		)
+	;
+	DELETE FROM tbl_servicio_trmt_srtr
+	WHERE
+		EXISTS (
+			SELECT 1 FROM tbl_servicio_srvc
+			WHERE srvc_pk = srtr_srvc_pk
+				AND srvc_tpsr_pk = entiId
+		)
+	;
+	DELETE FROM tbl_item_tramite_ittr
+	WHERE
+		EXISTS (
+			SELECT 1 FROM tbl_servicio_srvc
+			WHERE srvc_pk = ittr_item_pk
+				AND srvc_tpsr_pk = entiId
+		)
+	;
 	DELETE FROM tbl_servicio_dato_srdt
 	WHERE
 	    EXISTS (

@@ -5,8 +5,22 @@
     </bannerLeft>
     <body>
         <menu name="Argo" inherit="top">
+            <item name="Módulos de la aplicación" href="modulos.html" />
             <item name="Instalación" href="instalacion.html" />
-            <item name="Ejemplo" href="ejemplo.html" />
+        </menu>
+
+        <menu name="Manual de Usuario" inherit="top">
+            <item name="Acceso a la aplicación" href="userguide/acceso.html" />
+            <item name="Gestión de Servicios" href="userguide/servicios.html" />
+            <item name="Gestión de Maestros" href="userguide/maestros.html" />
+            <item name="Gestión de Estadísticas" href="userguide/estadisticas.html" />
+        </menu>
+
+        <menu name="Manual de Administrador" inherit="top">
+            <item name="Pantalla Principal" href="adminguide/inicio.html" />
+            <item name="Metamodelo" href="adminguide/metamodelo.html" />
+            <item name="Configuración" href="adminguide/configuracion.html" />
+            <item name="Usuarios" href="adminguide/usuarios.html" />
         </menu>
 
         <menu ref="parent" />

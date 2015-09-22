@@ -233,7 +233,7 @@ public final class UsuarioBO {
             accnCriterio.setUsroId(usro.getId());
             accnCriterio.setCodigo(accnPath);
 
-            return accnDAO.exists(accnCriterio);
+            return accnDAO.existsCriterio(accnCriterio);
         }
     }
 

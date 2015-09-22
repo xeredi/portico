@@ -125,16 +125,23 @@
         <plugins>
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
+                <version>3.4</version>
                 <inherited>false</inherited>
                 <configuration>
                     <siteDirectory>${project.basedir}/src/site</siteDirectory>
                     <stagingSiteURL>${siteDeploy.url}</stagingSiteURL>
                     <relativizeDecorationLinks>false</relativizeDecorationLinks>
+
+                    <chmod>true</chmod>
+                    <inputEncoding>UTF-8</inputEncoding>
+                    <outputEncoding>UTF-8</outputEncoding>
                 </configuration>
                 <dependencies>
+                    <!-- dependency> <groupId>org.apache.maven.doxia</groupId> <artifactId>doxia-module-markdown</artifactId> 
+                        <version>1.6</version> </dependency -->
                     <dependency>
                         <groupId>org.apache.maven.doxia</groupId>
-                        <artifactId>doxia-module-markdown</artifactId>
+                        <artifactId>doxia-module-docbook-simple</artifactId>
                         <version>1.6</version>
                     </dependency>
                 </dependencies>

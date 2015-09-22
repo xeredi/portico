@@ -1,15 +1,11 @@
 package xeredi.argo.http.controller.action.seguridad;
 
-import java.util.List;
-
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.seguridad.bo.AccionBO;
-import xeredi.argo.model.seguridad.bo.GrupoBO;
 import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.AccionVO;
-import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
-import xeredi.argo.model.seguridad.vo.GrupoVO;
 
 import com.google.common.base.Preconditions;
 
@@ -22,8 +18,8 @@ public final class AccionEditAction extends CrudEditAction<AccionVO> {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3956096847895499243L;
 
-    /** The grpo ids. */
-    private List<GrupoVO> grpoList;
+    /** The prefix list. */
+    private AccionPrefix[] prefixList;
 
     /**
      * {@inheritDoc}
@@ -49,18 +45,15 @@ public final class AccionEditAction extends CrudEditAction<AccionVO> {
      */
     @Override
     public void doLoadDependencies() throws ApplicationException {
-        final GrupoBO grpoBO = new GrupoBO();
-        final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
-
-        grpoList = grpoBO.selectList(grpoCriterio);
+        prefixList = AccionPrefix.values();
     }
 
     /**
-     * Gets the grpo list.
+     * Gets the prefix list.
      *
-     * @return the grpo list
+     * @return the prefix list
      */
-    public List<GrupoVO> getGrpoList() {
-        return grpoList;
+    public AccionPrefix[] getPrefixList() {
+        return prefixList;
     }
 }

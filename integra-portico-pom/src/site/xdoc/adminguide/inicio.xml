@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+    <properties>
+        <title>Guia de Administracion - Inicio</title>
+        <author>Xesus Rey Diaz</author>
+        <date>2015/09/21</date>
+    </properties>
+
+    <body>
+        <section name="Guía de Administración">
+            <p>Una vez conectados a la aplicación argo, se accede a la pantalla de administración desde el
+                menú principal (opción 'Administración').
+            </p>
+
+            <img src="../images/adminguide/inicio.png" alt="Pantalla de inicio de administración" />
+
+            <p>Desde esta pantalla se puede acceder a las siguientes opciones:</p>
+
+            <dl>
+                <dt>
+                    <a href="metamodelo.html">Metamodelo</a>
+                </dt>
+                <dd>Definición de la estructura de las entidades de servicios, maestros y estadísticas.</dd>
+
+                <dt>
+                    <a href="usuarios.html">Usuarios</a>
+                </dt>
+                <dd>Gestión de los usuarios de la aplicación (Usuarios) y sus permisos (Acciones/Grupos).</dd>
+
+                <dt>
+                    <a href="configuracion.html">Configuración</a>
+                </dt>
+                <dd>Gestión de parámetros de configuración, internacionalización, puertos y Autoridades
+                    Portuarias de la aplicación.
+                </dd>
+            </dl>
+        </section>
+    </body>
+</document>

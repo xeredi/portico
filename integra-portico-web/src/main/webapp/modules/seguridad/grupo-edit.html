@@ -8,18 +8,6 @@
         </div>
     </fieldset>
 
-    <fieldset>
-        <legend translate="accnList"></legend>
-
-        <div class="row">
-            <div class="checkbox" ng-repeat="accn in vm.accnList track by accn.id">
-                <label> <input type="checkbox" ng-click="vm.updateAcciones($event, accn.id)"
-                    ng-checked="vm.model.accnIds.indexOf(accn.id) >= 0"> <span ng-bind="accn.nombre"></span>
-                </label>
-            </div>
-        </div>
-    </fieldset>
-
     <div class="btn-group">
         <button data-ng-click="vm.save()" class="btn btn-primary">
             <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>

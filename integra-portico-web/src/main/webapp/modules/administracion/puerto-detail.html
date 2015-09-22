@@ -32,7 +32,9 @@
         </div>
         <div class="col-sm-2 form-group-sm">
             <label translate="sprt"></label>
-            <p class="form-control-static" ng-bind="vm.prto.sprt.etiqueta"></p>
+            <p class="form-control-static">
+                <a ui-sref="superpuerto-detail(vm.prto.sprt)" ng-bind="vm.prto.sprt.etiqueta"></a>
+            </p>
         </div>
     </div>
 

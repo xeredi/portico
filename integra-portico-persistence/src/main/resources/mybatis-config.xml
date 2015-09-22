@@ -16,7 +16,6 @@
         <typeAlias type="xeredi.util.applicationobjects.LabelValueVO" alias="LabelValueVO" />
 
         <package name="xeredi.argo.model" />
-        <package name="xeredi.integra.model" />
     </typeAliases>
 
     <typeHandlers>
@@ -61,6 +60,5 @@
 
     <mappers>
         <package name="xeredi.argo.model" />
-        <package name="xeredi.integra.model" />
     </mappers>
 </configuration>

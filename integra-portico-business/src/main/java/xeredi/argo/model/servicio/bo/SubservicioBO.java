@@ -134,8 +134,7 @@ public class SubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final SubservicioVO select(final @NonNull Long ssrvId, final String idioma)
-            throws InstanceNotFoundException {
+    public final SubservicioVO select(final @NonNull Long ssrvId, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
@@ -187,6 +186,12 @@ public class SubservicioBO {
      */
     public final void insert(final @NonNull SubservicioVO ssrvVO, final @NonNull TipoSubservicioDetailVO tpssDetail,
             final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
+        // FIXME En entidades padre, NO debería estar el propio tipo de servicio
+        // if (tpssDetail.getEntiPadresList() != null && !tpssDetail.getEntiPadresList().isEmpty()) {
+        // Preconditions.checkNotNull(ssrvPadreIds);
+        // Preconditions.checkArgument(!ssrvPadreIds.isEmpty());
+        // }
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
@@ -220,10 +225,12 @@ public class SubservicioBO {
                 ssdtDAO.insert(itdtVO);
             }
 
-            for (final Long ssrvPadreId : ssrvPadreIds) {
-                final SubservicioSubservicioVO ssssVO = new SubservicioSubservicioVO(ssrvPadreId, ssrvVO.getId());
+            if (ssrvPadreIds != null) {
+                for (final Long ssrvPadreId : ssrvPadreIds) {
+                    final SubservicioSubservicioVO ssssVO = new SubservicioSubservicioVO(ssrvPadreId, ssrvVO.getId());
 
-                ssssDAO.insert(ssssVO);
+                    ssssDAO.insert(ssssVO);
+                }
             }
 
             insertPostOperations(session, ssrvVO, tpssDetail, ssrvPadreIds);

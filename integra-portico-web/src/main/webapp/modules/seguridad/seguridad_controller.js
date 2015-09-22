@@ -146,6 +146,7 @@ function AccionGridController($state, $stateParams, $modal, pageTitleService, Ac
 
     function filter() {
         AccionService.filter(vm.searchCriteria).then(function(data) {
+            vm.prefixList = data.prefixList;
         });
     }
 
@@ -202,7 +203,6 @@ function AccionEditController($state, $stateParams, pageTitleService, AccionServ
 
     vm.save = save;
     vm.cancel = cancel;
-    vm.updateGrupos = updateGrupos;
 
     function save() {
         AccionService.save(vm.accion, vm.model).then(function(data) {
@@ -214,24 +214,6 @@ function AccionEditController($state, $stateParams, pageTitleService, AccionServ
         window.history.back();
     }
 
-    function updateGrupos($event, grpoId) {
-        var checkbox = $event.target;
-
-        if (!vm.model) {
-            vm.model = {};
-        }
-
-        if (!vm.model.grpoIds) {
-            vm.model.grpoIds = [];
-        }
-
-        if (checkbox.checked) {
-            vm.model.grpoIds.push(grpoId);
-        } else {
-            vm.model.grpoIds.splice(vm.model.grpoIds.indexOf(grpoId), 1);
-        }
-    }
-
     vm.accion = $state.current.data.accion;
     vm.model = {
         id : $stateParams.id
@@ -240,7 +222,7 @@ function AccionEditController($state, $stateParams, pageTitleService, AccionServ
     AccionService.edit(vm.accion, vm.model).then(function(data) {
         vm.model = data.model;
 
-        vm.grpoList = data.grpoList;
+        vm.prefixList = data.prefixList;
     });
 
     pageTitleService.setTitle("accn", "page_" + vm.accion);
@@ -300,8 +282,6 @@ function GrupoDetailController($stateParams, pageTitleService, GrupoService) {
 
     GrupoService.detail(vm.model).then(function(data) {
         vm.model = data.model;
-
-        vm.accnList = data.accnList;
     });
 
     pageTitleService.setTitle("grpo", "page_detail");
@@ -312,7 +292,6 @@ function GrupoEditController($state, $stateParams, pageTitleService, GrupoServic
 
     vm.save = save;
     vm.cancel = cancel;
-    vm.updateAcciones = updateAcciones;
 
     function save() {
         GrupoService.save(vm.accion, vm.model).then(function(data) {
@@ -324,24 +303,6 @@ function GrupoEditController($state, $stateParams, pageTitleService, GrupoServic
         window.history.back();
     }
 
-    function updateAcciones($event, accnId) {
-        var checkbox = $event.target;
-
-        if (!vm.model) {
-            vm.model = {};
-        }
-
-        if (!vm.model.accnIds) {
-            vm.model.accnIds = [];
-        }
-
-        if (checkbox.checked) {
-            vm.model.accnIds.push(accnId);
-        } else {
-            vm.model.accnIds.splice(vm.model.accnIds.indexOf(accnId), 1);
-        }
-    }
-
     vm.accion = $state.current.data.accion;
     vm.model = {
         id : $stateParams.id
@@ -349,8 +310,6 @@ function GrupoEditController($state, $stateParams, pageTitleService, GrupoServic
 
     GrupoService.edit(vm.accion, vm.model).then(function(data) {
         vm.model = data.model;
-
-        vm.accnList = data.accnList;
     });
 
     pageTitleService.setTitle("grpo", "page_" + vm.accion);

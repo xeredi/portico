@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+    <properties>
+        <title>Guia de Administracion - Usuarios</title>
+        <author>Xesus Rey Diaz</author>
+        <date>2015/09/21</date>
+    </properties>
+
+    <body>
+        <section name="Metamodelo">
+            <p>En esta parte de la aplicación se definen:
+            </p>
+
+            <dl>
+                <dt>
+                    Acciones
+                </dt>
+                <dd>
+                    Funcionalidades disponibles en la aplicación
+                </dd>
+
+                <dt>
+                    Grupos
+                </dt>
+                <dd>
+                    Grupos de usuarios de la aplicación. Cada grupo agrupará una serie de acciones que podrá
+                    realizar
+                </dd>
+
+                <dt>
+                    Usuarios
+                </dt>
+                <dd>
+                    Usuarios que pueden acceder a la aplicación. Los usuarios se asociarán a Grupos, por lo
+                    que un usuario podrá realizar todas las acciones del grupo o grupos a los que pertenezca.
+                </dd>
+            </dl>
+        </section>
+    </body>
+</document>

@@ -2116,17 +2116,38 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_entidad_accgrid_enag TO portico\
 -- tbl_accion_accn
 CREATE TABLE tbl_accion_accn (
 	accn_pk NUMBER(19) NOT NULL
+	, accn_prefix VARCHAR2(4) NOT NULL
 	, accn_codigo VARCHAR2(100) NOT NULL
-	, accn_nombre VARCHAR2(100) NOT NULL
 
 	, CONSTRAINT pk_accn PRIMARY KEY (accn_pk)
 
-	, CONSTRAINT uk_accn UNIQUE (accn_codigo)
+	, CONSTRAINT uk_accn UNIQUE (accn_prefix, accn_codigo)
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_accion_accn FOR tbl_accion_accn\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_accion_accn TO portico\
+
+
+-- tbl_accion_entidad_acen
+CREATE TABLE tbl_accion_entidad_acen (
+	acen_pk NUMBER(19) NOT NULL
+	, acen_accn_pk NUMBER(19) NOT NULL
+	, acen_enti_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_acen PRIMARY KEY (acen_pk)
+
+	, CONSTRAINT uk_acen UNIQUE (acen_accn_pk, acen_enti_pk)
+
+	, CONSTRAINT fk_acen_accn_pk FOREIGN KEY (acen_accn_pk)
+		REFERENCES tbl_accion_accn (accn_pk)
+	, CONSTRAINT fk_acen_enti_pk FOREIGN KEY (acen_enti_pk)
+		REFERENCES tbl_entidad_enti (enti_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_accion_entidad_acen FOR tbl_accion_entidad_acen\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_accion_entidad_acen TO portico\
 
 
 -- tbl_grupo_accion_grac
@@ -2147,6 +2168,26 @@ CREATE TABLE tbl_grupo_accion_grac (
 CREATE OR REPLACE SYNONYM portico.tbl_grupo_accion_grac FOR tbl_grupo_accion_grac\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_grupo_accion_grac TO portico\
+
+
+-- tbl_grupo_accion_entidad_grae
+CREATE TABLE tbl_grupo_accion_entidad_grae (
+	grae_grpo_pk NUMBER(19) NOT NULL
+	, grae_acen_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_grae PRIMARY KEY (grae_grpo_pk, grae_acen_pk)
+
+	, CONSTRAINT fk_grae_grpo_pk FOREIGN KEY (grae_grpo_pk)
+		REFERENCES tbl_grupo_grpo (grpo_pk)
+		ON DELETE CASCADE
+	, CONSTRAINT fk_grae_acen_pk FOREIGN KEY (grae_acen_pk)
+		REFERENCES tbl_accion_entidad_acen (acen_pk)
+		ON DELETE CASCADE
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_grupo_accion_entidad_grae FOR tbl_grupo_accion_entidad_grae\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_grupo_accion_entidad_grae TO portico\
 
 
 -- tbl_tramite_trmt
@@ -2314,7 +2355,9 @@ DROP TABLE tbl_item_trmt_dato_ittd\
 DROP TABLE tbl_item_tramite_ittr\
 DROP TABLE tbl_tramite_tipo_dato_trtd\
 DROP TABLE tbl_tramite_trmt\
+DROP TABLE tbl_grupo_accion_entidad_grae\
 DROP TABLE tbl_grupo_accion_grac\
+DROP TABLE tbl_accion_entidad_acen\
 DROP TABLE tbl_accion_accn\
 DROP TABLE tbl_entidad_accgrid_enag\
 DROP TABLE tbl_servicio_archivo_srar\

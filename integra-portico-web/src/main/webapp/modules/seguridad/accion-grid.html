@@ -23,15 +23,15 @@
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
+                <th nowrap="nowrap" translate="accn_prefix"></th>
                 <th nowrap="nowrap" translate="accn_codigo"></th>
-                <th nowrap="nowrap" translate="accn_nombre"></th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="accn in vm.resultList.list track by accn.id">
                 <td><a ui-sref="accion-detail(accn)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td nowrap="nowrap" ng-bind="accn.prefix"></td>
                 <td nowrap="nowrap" ng-bind="accn.codigo"></td>
-                <td nowrap="nowrap" ng-bind="accn.nombre"></td>
             </tr>
         </tbody>
     </table>

@@ -33,7 +33,9 @@
     <div class="row">
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="prto"></label>
-            <p class="form-control-static" ng-bind="vm.item.prto.etiqueta"></p>
+            <p class="form-control-static">
+                <a ui-sref="puerto-detail(vm.item.prto)" ng-bind="vm.item.prto.etiqueta"></a>
+            </p>
         </div>
         <div class="col-sm-1 form-group-sm">
             <label translate="srvc_anno"></label>

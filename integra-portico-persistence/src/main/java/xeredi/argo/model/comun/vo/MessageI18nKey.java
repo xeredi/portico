@@ -73,7 +73,7 @@ public enum MessageI18nKey {
     grpo_nombre, /** The accn. */
     accn, /** The accn_codigo. */
     accn_codigo, /** The accn_nombre. */
-    accn_nombre, /** The accn list. */
+    accn_prefix, /** The accn list. */
     accnList, /** The grac. */
     grac, /** The usgr. */
     usgr, /** The sprt. */

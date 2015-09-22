@@ -21,7 +21,8 @@
                         <ul>
                             <li>
                                 <a
-                                    href="http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html">Oracle</a>
+                                    href="http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html">
+                                    Oracle</a>
                                 (versión 11g R2 o superior)
                             </li>
                             <li>
@@ -42,6 +43,16 @@
                     </li>
                 </ul>
             </subsection>
+            <subsection name="Requisitos Software - Instalación">
+                <p>Para poder instalar la aplicación argo, además del software indicado en el apartado
+                    anterior, es necesario el siguiente software:</p>
+                <ul>
+                    <li>
+                        <a href="http://maven.apache.org">Apache Maven</a>
+                        (versión 3 o superior)
+                    </li>
+                </ul>
+            </subsection>
             <subsection name="Preparación de la Base de Datos - Oracle">
                 <p>Para poder instalar argo, se da por supuesto que tenemos instalado un Oracle 11gR2 o
                     superior.
@@ -53,7 +64,7 @@
                     </li>
                     <li>
                         Posicionarse en la carpeta
-                        <code>integra-portico-db</code>
+                        <code>argo-db</code>
                     </li>
                     <li>
                         Ejecutar con el usuario SYS de Oracle el archivo SQL
@@ -79,6 +90,27 @@
                         <code>argo</code>
                     </li>
                 </ul>
+            </subsection>
+
+            <subsection name="Construcción de la aplicación - Oracle">
+                <ul>
+                    <li>
+                        Abrir una consola de línea de comandos
+                    </li>
+                    <li>
+                        Posicionarse en la carpeta
+                        <code>argo-pom</code>
+                    </li>
+                    <li>
+                        Ejecución del comando maven
+                        <code>mvn -P oracle install</code>
+                        . Este comando genera dentro de la carpeta
+                        <code>argo-web/target/oracle</code>
+                    </li>
+                </ul>
+            </subsection>
+
+            <subsection name="Despliegue de la aplicación">
             </subsection>
         </section>
     </body>

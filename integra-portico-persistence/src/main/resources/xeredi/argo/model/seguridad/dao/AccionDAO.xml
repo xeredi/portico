@@ -7,14 +7,14 @@
 		<id column="accn_pk" />
 
 		<result column="accn_pk" property="id" />
+        <result column="accn_prefix" property="prefix" />
 		<result column="accn_codigo" property="codigo" />
-		<result column="accn_nombre" property="nombre" />
 	</resultMap>
 
 	<sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        accn_pk, accn_codigo, accn_nombre
+        accn_pk, accn_prefix, accn_codigo
     FROM
         tbl_accion_accn
     ]]>
@@ -34,6 +34,9 @@
 			<if test="id != null">
 				AND accn_pk = #{id}
 			</if>
+            <if test="prefix != null">
+                AND accn_prefix = #{prefix}
+            </if>
 			<if test="codigo != null and !codigo.empty">
 				AND accn_codigo LIKE #{codigo}
 			</if>
@@ -77,7 +80,7 @@
 	<select id="selectList" parameterType="AccionCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
-		ORDER BY accn_codigo
+		ORDER BY accn_prefix, accn_codigo
 	</select>
 
 	<select id="selectObject" parameterType="AccionCriterioVO" resultMap="ResultMap">
@@ -93,18 +96,26 @@
         ]]>
 	</select>
 
+    <select id="existsCriterio" parameterType="AccionCriterioVO" resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_accion_accn
+        ]]>
+        <include refid="SelectWhere" />
+    </select>
+
 	<insert id="insert" parameterType="AccionVO">
         <![CDATA[
-        INSERT INTO tbl_accion_accn (accn_pk, accn_codigo, accn_nombre)
-        VALUES (#{id}, #{codigo}, #{nombre})
+        INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo)
+        VALUES (#{id}, #{prefix}, #{codigo})
         ]]>
 	</insert>
 
 	<update id="update" parameterType="AccionVO">
         <![CDATA[
         UPDATE tbl_accion_accn SET
-            accn_codigo = #{codigo}
-            , accn_nombre = #{nombre}
+            accn_prefix = #{prefix}
+            , accn_codigo = #{codigo}
         WHERE
             accn_pk = #{id}
         ]]>

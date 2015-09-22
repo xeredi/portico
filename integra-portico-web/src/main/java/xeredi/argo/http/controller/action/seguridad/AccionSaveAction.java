@@ -47,6 +47,6 @@ public final class AccionSaveAction extends CrudSaveAction<AccionVO> {
         }
 
         FieldValidator.validateRequired(this, MessageI18nKey.accn_codigo, model.getCodigo());
-        FieldValidator.validateRequired(this, MessageI18nKey.accn_nombre, model.getNombre());
+        FieldValidator.validateRequired(this, MessageI18nKey.accn_prefix, model.getPrefix());
     }
 }

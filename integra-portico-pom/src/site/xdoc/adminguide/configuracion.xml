@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+    <properties>
+        <title>Guia de Administracion - Configuración</title>
+        <author>Xesus Rey Diaz</author>
+        <date>2015/09/21</date>
+    </properties>
+
+    <body>
+        <section name="Configuración">
+            <p>En esta parte de la aplicación se definen:
+            </p>
+
+            <dl>
+                <dt>
+                    <a href="#Autoridades_Portuarias">Autoridades Portuarias</a>
+                </dt>
+                <dd>
+                    Gestión de las Autoridades Portuarias disponibles en la aplicación.
+                </dd>
+
+                <dt>
+                    <a href="#Puertos">Puertos</a>
+                </dt>
+                <dd>
+                    Gestión de los Puertos disponibles en la aplicación.
+                </dd>
+
+                <dt>
+                    Parámetros de Configuración
+                </dt>
+                <dd>
+                    Gestión de los valores de los parámetros de configuración de la aplicación.
+                </dd>
+
+                <dt>
+                    Mensajes i18n
+                </dt>
+                <dd>
+                    Gestión de la internacionalización de la aplicación.
+                </dd>
+            </dl>
+        </section>
+
+        <section name="Autoridades Portuarias">
+            <p>Gestión de las Autoridades Portuarias disponibles en el sistema.</p>
+
+            <subsection name="Listado">
+                <img src="../images/adminguide/autoridad-portuaria-listado.png" alt="Listado de Autoridades Portuarias" />
+            </subsection>
+
+            <subsection name="Filtro">
+                <img src="../images/adminguide/autoridad-portuaria-filtro.png" alt="Filtrado de Autoridades Portuarias" />
+            </subsection>
+
+            <subsection name="Alta">
+                <img src="../images/adminguide/autoridad-portuaria-alta.png" alt="Alta de Autoridades Portuarias" />
+            </subsection>
+
+            <subsection name="Detalle">
+                <img src="../images/adminguide/autoridad-portuaria-detalle.png" alt="Detalle de Autoridades Portuarias" />
+            </subsection>
+
+            <subsection name="Edición">
+                <img src="../images/adminguide/autoridad-portuaria-edicion.png" alt="Edición de Autoridades Portuarias" />
+            </subsection>
+        </section>
+
+        <section name="Puertos">
+            <p>Gestión de los puertos disponibles en el sistema.</p>
+
+            <subsection name="Listado">
+                <img src="../images/adminguide/puerto-listado.png" alt="Listado de Puertos" />
+            </subsection>
+
+            <subsection name="Filtro">
+                <img src="../images/adminguide/puerto-filtro.png" alt="Filtrado de Puertos" />
+            </subsection>
+
+            <subsection name="Alta">
+                <img src="../images/adminguide/puerto-alta.png" alt="Alta de Puertos" />
+            </subsection>
+
+            <subsection name="Detalle">
+                <img src="../images/adminguide/puerto-detalle.png" alt="Detalle de Puertos" />
+            </subsection>
+
+            <subsection name="Edición">
+                <img src="../images/adminguide/puerto-edicion.png" alt="Edición de Puertos" />
+            </subsection>
+        </section>
+
+        <section name="Parámetros de Configuración">
+            <p>Gestión de los valores de los parámetros de configuración del sistema.</p>
+
+            <subsection name="Listado">
+                <img src="../images/adminguide/configuracion-listado.png" alt="Listado de Parámetros de Configuración" />
+            </subsection>
+
+            <subsection name="Detalle">
+                <img src="../images/adminguide/configuracion-detalle.png" alt="Detalle de Parámetros de Configuración" />
+            </subsection>
+
+            <subsection name="Edición">
+                <img src="../images/adminguide/configuracion-edicion.png" alt="Edición de Parámetros de Configuración" />
+            </subsection>
+        </section>
+    </body>
+</document>

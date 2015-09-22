@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+    <properties>
+        <title>Módulos de la aplicación</title>
+        <author>Xesus Rey Diaz</author>
+        <date>2015/09/21</date>
+    </properties>
+
+    <body>
+        <section name="Módulos de la aplicación">
+            <p>La aplicación argo se divide en los siguientes módulos, cada uno de ellos en una carpeta dentro
+                de la carpeta de argo.
+            </p>
+
+            <subsection name="argo-pom">
+                <p>Módulo padre. Desde esta carpeta se coordinan el resto de módulos de la aplicación.
+                    Adicionalmente aquí se guarda toda la documentación de la aplicación.
+                </p>
+            </subsection>
+
+            <subsection name="argo-db">
+                <p>En esta carpeta se encuentran todos los scripts de creación de la base de datos</p>
+            </subsection>
+
+            <subsection name="argo-persistence">
+                <p>En esta carpeta se encuentran todas las clases de la capa de persistencia de la aplicación.
+                </p>
+            </subsection>
+
+            <subsection name="argo-business">
+                <p>En esta carpeta se encuentran todas las clases de la capa de negocio de la aplicación.</p>
+            </subsection>
+
+            <subsection name="argo-jobs">
+                <p>En esta carpeta se encuentran todas las clases de la capa de procesos batch de la aplicación.
+                </p>
+            </subsection>
+
+            <subsection name="argo-web">
+                <p>En esta carpeta se encuentran todas las clases de la capa de presentación de la aplicación.
+                </p>
+            </subsection>
+
+            <subsection name="xeredi-edifact">
+                <p>En esta carpeta se encuentran todas las clases de parseo de archivos EDIFACT.</p>
+            </subsection>
+        </section>
+    </body>
+</document>

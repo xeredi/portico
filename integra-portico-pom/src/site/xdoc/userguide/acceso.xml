@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+    <properties>
+        <title>Acceso</title>
+        <author>Xesus Rey Diaz</author>
+        <date>2015/09/21</date>
+    </properties>
+
+    <body>
+        <section name="Acceso">
+            <p>Para acceder a la aplicación argo, nos conectamos desde un navegador web a la URL de la
+                aplicación, introduciendo el usuario/contaseña que nos hayan asignado. Los scripts de
+                instalación de base de datos crean por defecto el usuario admin/admin.
+            </p>
+
+            <img src="../images/userguide/acceso.png" alt="Pantalla de acceso a la aplicación" />
+
+            <p>Una vez autenticados en el sistema, podremos acceder a la pantalla de inicio de la aplicación y
+                su menú principal.
+            </p>
+
+            <img src="../images/userguide/home.png" alt="Pantalla de inicio de la aplicación" />
+
+            <p>Desde esta pantalla se puede acceder a las siguientes opciones:</p>
+
+            <dl>
+                <dt>Servicios</dt>
+                <dd>Gestión de los servicios prestados por argo (Escalas, Manifiestos, ...).</dd>
+
+                <dt>Estadísticas</dt>
+                <dd>Gestión, Importación y Generación de estadísticas del puerto.</dd>
+
+                <dt>Maestros</dt>
+                <dd>Gestión de los maestros de datos (Buques Clientes, ...).</dd>
+
+                <dt>Facturación</dt>
+                <dd>Gestión de valoraciones y facturas de los servicios prestados, así como la parametrización
+                    de tasas, tarifas, coeficientes, bonificaciones y aspectos de valoraciones y facturas.
+                </dd>
+            </dl>
+
+            <p>Desde el menú, además de a las opciones ya citadas, se puede accedes a las siguientes opciones:
+            </p>
+
+            <dl>
+                <dt>Inicio</dt>
+                <dd>Acceso directo a la pantalla de inicio de la aplicación (esta página).</dd>
+
+                <dt>Procesos</dt>
+                <dd>Gestión de los procesos batch de la aplicación (procesos de valoración, facturación,
+                    generación de estadísticas mensuales, ...).
+                </dd>
+
+                <dt>Administración</dt>
+                <dd>Accceso a las opciones de administración de la aplicación (usuarios, permisos, parámetros
+                    de configuración, ...).
+                </dd>
+
+                <dt>Salir</dt>
+                <dd>Abandono de la aplicación.</dd>
+            </dl>
+        </section>
+    </body>
+</document>

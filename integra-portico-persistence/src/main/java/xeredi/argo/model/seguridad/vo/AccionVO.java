@@ -1,7 +1,5 @@
 package xeredi.argo.model.seguridad.vo;
 
-import java.util.Set;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 // TODO: Auto-generated Javadoc
@@ -13,14 +11,11 @@ public final class AccionVO {
     /** The id. */
     private Long id;
 
+    /** The prefix. */
+    private AccionPrefix prefix;
+
     /** The codigo. */
     private String codigo;
-
-    /** The nombre. */
-    private String nombre;
-
-    /** The grpo ids. */
-    private Set<Long> grpoIds;
 
     /**
      * {@inheritDoc}
@@ -69,41 +64,21 @@ public final class AccionVO {
     }
 
     /**
-     * Gets the nombre.
+     * Gets the prefix.
      *
-     * @return the nombre
+     * @return the prefix
      */
-    public String getNombre() {
-        return nombre;
+    public AccionPrefix getPrefix() {
+        return prefix;
     }
 
     /**
-     * Sets the nombre.
+     * Sets the prefix.
      *
      * @param value
-     *            the new nombre
+     *            the new prefix
      */
-    public void setNombre(final String value) {
-        nombre = value;
+    public void setPrefix(AccionPrefix value) {
+        this.prefix = value;
     }
-
-    /**
-     * Gets the grpo ids.
-     *
-     * @return the grpo ids
-     */
-    public Set<Long> getGrpoIds() {
-        return grpoIds;
-    }
-
-    /**
-     * Sets the grpo ids.
-     *
-     * @param value
-     *            the new grpo ids
-     */
-    public void setGrpoIds(final Set<Long> value) {
-        grpoIds = value;
-    }
-
 }
