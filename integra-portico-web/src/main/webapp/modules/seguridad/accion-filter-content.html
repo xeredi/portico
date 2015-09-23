@@ -20,6 +20,13 @@
                                 <label translate="accn_codigo"></label> <input type="text"
                                     ng-model="vm.searchCriteria.codigo" class="form-control">
                             </div>
+                            <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
+                                <label translate="grpo"></label> <select ng-model="vm.searchCriteria.grpoId"
+                                    ng-options="grpo.id as grpo.nombre for grpo in vm.grpoList"
+                                    class="form-control">
+                                    <option />
+                                </select>
+                            </div>
                         </div>
                     </fieldset>
                 </form>

@@ -7,6 +7,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.argo.model.metamodelo.proxy.TipoEstadisticaProxy;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
@@ -43,6 +44,14 @@ public final class PeriodoProcesoDetailAction extends CrudDetailAction<PeriodoPr
      */
     public List<LabelValueVO> getTpesList() {
         return tpesList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.pepr;
     }
 
 }

@@ -13,6 +13,7 @@ import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -75,5 +76,13 @@ public final class PuertoEditAction extends CrudEditAction<PuertoVO> {
      */
     public final List<SuperpuertoVO> getSprtList() {
         return sprtList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.prto;
     }
 }

@@ -10,6 +10,7 @@ import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -72,5 +73,13 @@ public final class ServicioSecuenciaFilterAction extends GridFilterAction<Servic
      */
     public List<PuertoVO> getPrtoList() {
         return prtoList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.srsc;
     }
 }

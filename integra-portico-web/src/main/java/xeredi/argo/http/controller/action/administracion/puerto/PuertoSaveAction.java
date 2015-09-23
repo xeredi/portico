@@ -9,6 +9,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.PuertoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -72,5 +73,13 @@ public final class PuertoSaveAction extends CrudSaveAction<PuertoVO> {
      */
     public final void setI18nMap(final Map<String, I18nVO> value) {
         i18nMap = value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.prto;
     }
 }

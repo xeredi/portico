@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -21,5 +22,13 @@ public final class TipoSubparametroDetailAction extends EntidadDetailAction<Tipo
         final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
         model = tpspBO.select(model.getId(), idioma);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tpsp;
     }
 }

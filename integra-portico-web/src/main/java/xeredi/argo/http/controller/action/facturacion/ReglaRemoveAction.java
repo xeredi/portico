@@ -4,6 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.ReglaBO;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -26,5 +27,13 @@ public final class ReglaRemoveAction extends CrudRemoveAction<ReglaVO> {
         final ReglaBO rglaBO = new ReglaBO();
 
         rglaBO.delete(model);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.rgla;
     }
 }

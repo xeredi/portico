@@ -17,6 +17,7 @@ import xeredi.argo.model.maestro.bo.ParametroBOFactory;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoHtml;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -29,7 +30,7 @@ import xeredi.util.applicationobjects.LabelValueVO;
  *            the element type
  */
 public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends AbstractEntidadDetailVO>
-        extends GridFilterAction<C> {
+        extends GridFilterAction<C> implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8917073535249583222L;
@@ -120,5 +121,21 @@ public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends Abstr
      */
     public final Map<Long, List<LabelValueVO>> getLabelValuesMap() {
         return labelValuesMap;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Long getEntiId() {
+        return model.getEntiId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final AccionPrefix getAccnPrefix() {
+        return AccionPrefix.item;
     }
 }

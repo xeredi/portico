@@ -13,7 +13,8 @@ import com.opensymphony.xwork2.ModelDriven;
  * @param <C>
  *            the generic type
  */
-public abstract class GridFilterAction<C extends BaseCriterioVO> extends BaseAction implements ModelDriven<C> {
+public abstract class GridFilterAction<C extends BaseCriterioVO> extends BaseAction implements ModelDriven<C>,
+        ProtectedAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -777906795137481254L;
@@ -78,6 +79,14 @@ public abstract class GridFilterAction<C extends BaseCriterioVO> extends BaseAct
      */
     public final int[] getLimits() {
         return VALID_ROWS_PER_PAGE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final String getAccnCodigo() {
+        return "list";
     }
 
 }

@@ -5,6 +5,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -23,5 +24,13 @@ public final class TipoEstadisticaListAction extends GridListAction<TipoEstadist
         final TipoEstadisticaBO entiBO = new TipoEstadisticaBO();
 
         resultList = entiBO.selectList(model, getOffset(), limit);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tpes;
     }
 }

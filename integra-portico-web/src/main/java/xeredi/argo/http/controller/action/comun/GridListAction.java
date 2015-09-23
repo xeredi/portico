@@ -16,7 +16,8 @@ import xeredi.util.pagination.PaginatedList;
  * @param <R>
  *            the generic type
  */
-public abstract class GridListAction<C extends BaseCriterioVO, R> extends BaseAction implements ModelDriven<C> {
+public abstract class GridListAction<C extends BaseCriterioVO, R> extends BaseAction implements ModelDriven<C>,
+        ProtectedAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6646875422640202469L;
@@ -121,4 +122,11 @@ public abstract class GridListAction<C extends BaseCriterioVO, R> extends BaseAc
         return (page - PaginatedList.FIRST_PAGE) * limit;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final String getAccnCodigo() {
+        return "list";
+    }
 }

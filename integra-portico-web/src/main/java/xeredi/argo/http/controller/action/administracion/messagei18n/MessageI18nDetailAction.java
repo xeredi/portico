@@ -7,6 +7,7 @@ import xeredi.argo.model.comun.bo.MessageBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.MessageI18nVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -37,5 +38,13 @@ public final class MessageI18nDetailAction extends CrudDetailAction<MessageI18nK
      */
     public Map<String, MessageI18nVO> getI18nMap() {
         return i18nMap;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.m18n;
     }
 }

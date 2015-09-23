@@ -20,3 +20,32 @@
         </div>
     </div>
 </fieldset>
+
+<fieldset>
+    <legend translate="grpoList"></legend>
+
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" ui-sref="grupo-accion-create({accnId: vm.model.id})"><i
+                class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th class="codigo" nowrap="nowrap" translate="grpo_nombre"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="grpo in vm.grpoList track by grpo.id">
+                    <td><a ui-sref="grupo-accion-detail({grpoId:grpo.id, accnId: vm.model.id})"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
+                    <td nowrap="nowrap" ng-bind="grpo.nombre"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>

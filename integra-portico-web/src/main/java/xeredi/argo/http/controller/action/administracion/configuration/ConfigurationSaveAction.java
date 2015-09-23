@@ -4,6 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.model.comun.bo.ConfigurationBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ConfigurationVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -39,5 +40,13 @@ public final class ConfigurationSaveAction extends CrudSaveAction<ConfigurationV
     @Override
     public void doValidate() throws ApplicationException {
         Preconditions.checkNotNull(model.getKey());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.conf;
     }
 }

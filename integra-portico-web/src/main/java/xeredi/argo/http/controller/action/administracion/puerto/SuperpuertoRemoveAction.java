@@ -4,6 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -22,5 +23,13 @@ public final class SuperpuertoRemoveAction extends CrudRemoveAction<SuperpuertoV
         final SuperpuertoBO sprtBO = new SuperpuertoBO();
 
         sprtBO.delete(model);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.sprt;
     }
 }

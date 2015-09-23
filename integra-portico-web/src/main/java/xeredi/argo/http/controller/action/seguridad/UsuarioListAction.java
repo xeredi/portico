@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.seguridad;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.seguridad.bo.UsuarioBO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
 
@@ -24,4 +25,13 @@ public final class UsuarioListAction extends GridListAction<UsuarioCriterioVO, U
 
         resultList = usroBO.selectList(model, getOffset(), limit);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.usro;
+    }
+
 }

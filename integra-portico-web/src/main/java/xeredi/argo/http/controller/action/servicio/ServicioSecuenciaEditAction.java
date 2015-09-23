@@ -10,6 +10,7 @@ import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.servicio.bo.ServicioSecuenciaBO;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaVO;
@@ -92,5 +93,13 @@ public final class ServicioSecuenciaEditAction extends CrudEditAction<ServicioSe
      */
     public List<TipoServicioVO> getTpsrList() {
         return tpsrList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.srsc;
     }
 }

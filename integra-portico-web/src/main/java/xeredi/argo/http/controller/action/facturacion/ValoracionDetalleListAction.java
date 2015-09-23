@@ -5,6 +5,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -28,5 +29,13 @@ public final class ValoracionDetalleListAction extends GridListAction<Valoracion
         final ValoracionBO vlrcBO = new ValoracionBO();
 
         resultList = vlrcBO.selectVlrdList(model, idioma, getOffset(), limit);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.vlrd;
     }
 }

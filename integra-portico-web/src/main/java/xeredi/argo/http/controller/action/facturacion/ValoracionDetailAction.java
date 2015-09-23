@@ -15,6 +15,7 @@ import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -100,5 +101,13 @@ public final class ValoracionDetailAction extends CrudDetailAction<ValoracionVO>
      */
     public TipoDatoVO getTpdtCodExencion() {
         return tpdtCodExencion;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.vlrc;
     }
 }

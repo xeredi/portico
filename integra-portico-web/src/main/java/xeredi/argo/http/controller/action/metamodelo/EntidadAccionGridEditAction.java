@@ -11,6 +11,7 @@ import xeredi.argo.model.comun.vo.I18nPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.EntidadAccionGridBO;
 import xeredi.argo.model.metamodelo.vo.EntidadAccionGridVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -56,5 +57,13 @@ public final class EntidadAccionGridEditAction extends CrudEditAction<EntidadAcc
      */
     public Map<String, I18nVO> getI18nMap() {
         return i18nMap;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.enag;
     }
 }

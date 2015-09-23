@@ -19,6 +19,7 @@ import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -110,5 +111,13 @@ public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
      */
     public Map<String, I18nVO> getI18nMap() {
         return i18nMap;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.trmt;
     }
 }

@@ -6,6 +6,7 @@ import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,5 +27,13 @@ public final class TramiteRemoveAction extends CrudRemoveAction<TramiteVO> {
         final TramiteBO trmtBO = new TramiteBO();
 
         trmtBO.delete(model);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.trmt;
     }
 }

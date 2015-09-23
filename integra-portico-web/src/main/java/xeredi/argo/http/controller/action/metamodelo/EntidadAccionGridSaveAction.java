@@ -9,6 +9,7 @@ import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.EntidadAccionGridBO;
 import xeredi.argo.model.metamodelo.vo.EntidadAccionGridVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -77,5 +78,13 @@ public final class EntidadAccionGridSaveAction extends CrudSaveAction<EntidadAcc
      */
     public void setI18nMap(final Map<String, I18nVO> value) {
         i18nMap = value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.enag;
     }
 }

@@ -4,6 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.ConfigurationBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ConfigurationVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -41,5 +42,13 @@ public final class ConfigurationEditAction extends CrudEditAction<ConfigurationV
     @Override
     public void doLoadDependencies() throws ApplicationException {
         // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.conf;
     }
 }

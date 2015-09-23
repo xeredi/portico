@@ -6,6 +6,7 @@ import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.FacturaBO;
 import xeredi.argo.model.facturacion.vo.FacturaLineaVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,5 +27,13 @@ public final class FacturaLineaDetailAction extends CrudDetailAction<FacturaLine
         final FacturaBO fctrBO = new FacturaBO();
 
         model = fctrBO.selectFctl(model.getId(), getIdioma());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.fctl;
     }
 }

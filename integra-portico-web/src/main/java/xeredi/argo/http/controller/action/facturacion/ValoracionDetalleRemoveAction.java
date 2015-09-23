@@ -4,6 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -27,5 +28,13 @@ public final class ValoracionDetalleRemoveAction extends CrudRemoveAction<Valora
         final ValoracionBO vlrcBO = new ValoracionBO();
 
         vlrcBO.deleteVlrd(model);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.vlrd;
     }
 }

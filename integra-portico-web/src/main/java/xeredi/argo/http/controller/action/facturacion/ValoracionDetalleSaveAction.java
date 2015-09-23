@@ -11,6 +11,7 @@ import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -86,5 +87,13 @@ public final class ValoracionDetalleSaveAction extends CrudSaveAction<Valoracion
      */
     public void setVlrl(final ValoracionLineaVO value) {
         vlrl = value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.vlrd;
     }
 }

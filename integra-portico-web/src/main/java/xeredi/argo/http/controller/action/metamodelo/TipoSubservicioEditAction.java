@@ -10,6 +10,7 @@ import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -59,5 +60,13 @@ public final class TipoSubservicioEditAction extends EntidadEditAction<TipoSubse
      */
     public List<LabelValueVO> getTpdtEstadoList() {
         return tpdtEstadoList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tpss;
     }
 }

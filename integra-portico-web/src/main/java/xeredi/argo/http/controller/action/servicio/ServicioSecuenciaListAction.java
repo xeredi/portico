@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.servicio;
 
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.servicio.bo.ServicioSecuenciaBO;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaVO;
@@ -23,5 +24,13 @@ public final class ServicioSecuenciaListAction extends GridListAction<ServicioSe
         final ServicioSecuenciaBO srscBO = new ServicioSecuenciaBO();
 
         resultList = srscBO.selectList(model, getOffset(), limit);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.srsc;
     }
 }

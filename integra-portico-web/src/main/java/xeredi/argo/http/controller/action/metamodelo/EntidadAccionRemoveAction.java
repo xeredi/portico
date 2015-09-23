@@ -4,6 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.EntidadAccionBO;
 import xeredi.argo.model.metamodelo.vo.EntidadAccionVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -26,5 +27,13 @@ public final class EntidadAccionRemoveAction extends CrudRemoveAction<EntidadAcc
         final EntidadAccionBO enacBO = new EntidadAccionBO();
 
         enacBO.delete(model);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.enac;
     }
 }

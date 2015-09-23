@@ -4,6 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -22,5 +23,13 @@ public final class AspectoRemoveAction extends CrudRemoveAction<AspectoVO> {
         final AspectoBO aspcBO = new AspectoBO();
 
         aspcBO.delete(model);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.aspc;
     }
 }

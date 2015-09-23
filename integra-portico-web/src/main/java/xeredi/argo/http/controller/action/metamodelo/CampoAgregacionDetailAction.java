@@ -4,6 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -30,4 +31,11 @@ public final class CampoAgregacionDetailAction extends CrudDetailAction<CampoAgr
         model = cmagBO.select(model.getTpesId(), model.getEntd().getId(), idioma);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.cmag;
+    }
 }

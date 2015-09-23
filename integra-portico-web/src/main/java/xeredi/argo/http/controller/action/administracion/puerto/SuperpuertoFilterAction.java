@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.administracion.puerto;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -27,5 +28,13 @@ public final class SuperpuertoFilterAction extends GridFilterAction<SuperpuertoC
     @Override
     public void doLoadDependencies() throws ApplicationException {
         // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.sprt;
     }
 }

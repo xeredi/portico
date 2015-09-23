@@ -11,7 +11,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
  * @param <R>
  *            the generic type
  */
-public abstract class ListAction<R> extends BaseAction {
+public abstract class ListAction<R> extends BaseAction implements ProtectedAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6821401412110909190L;
@@ -42,5 +42,13 @@ public abstract class ListAction<R> extends BaseAction {
      */
     public final List<R> getResultList() {
         return resultList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final String getAccnCodigo() {
+        return "list";
     }
 }

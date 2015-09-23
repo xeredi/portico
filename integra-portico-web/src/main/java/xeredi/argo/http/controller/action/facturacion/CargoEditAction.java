@@ -15,6 +15,7 @@ import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoTipo;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -92,5 +93,13 @@ public final class CargoEditAction extends CrudEditAction<CargoVO> {
      */
     public CargoTipo[] getTipos() {
         return tipos;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.crgo;
     }
 }

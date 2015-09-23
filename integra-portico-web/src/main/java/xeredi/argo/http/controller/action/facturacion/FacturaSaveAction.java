@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.facturacion;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -29,6 +30,14 @@ public final class FacturaSaveAction extends CrudSaveAction<ValoracionVO> {
     public void doValidate() throws ApplicationException {
         // TODO Auto-generated method stub
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.fctr;
     }
 
 }

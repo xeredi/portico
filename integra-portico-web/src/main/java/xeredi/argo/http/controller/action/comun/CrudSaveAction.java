@@ -12,7 +12,7 @@ import com.google.common.base.Preconditions;
  * @param <T>
  *            the generic type
  */
-public abstract class CrudSaveAction<T> extends BaseAction {
+public abstract class CrudSaveAction<T> extends BaseAction implements ProtectedAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6571569363320765658L;
@@ -89,5 +89,13 @@ public abstract class CrudSaveAction<T> extends BaseAction {
      */
     public final void setModel(final T value) {
         this.model = value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final String getAccnCodigo() {
+        return accion.name();
     }
 }

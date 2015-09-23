@@ -4,6 +4,7 @@ import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.seguridad.bo.AccionBO;
 import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.AccionVO;
 
 // TODO: Auto-generated Javadoc
@@ -23,5 +24,13 @@ public final class AccionListAction extends GridListAction<AccionCriterioVO, Acc
         final AccionBO accnBO = new AccionBO();
 
         resultList = accnBO.selectList(model, getOffset(), limit);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.accn;
     }
 }

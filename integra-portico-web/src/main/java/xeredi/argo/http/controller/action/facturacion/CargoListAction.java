@@ -7,6 +7,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.CargoBO;
 import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -29,5 +30,13 @@ public final class CargoListAction extends GridListAction<CargoCriterioVO, Cargo
         final CargoBO crgoBO = new CargoBO();
 
         resultList = crgoBO.selectList(model, getOffset(), limit);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.crgo;
     }
 }

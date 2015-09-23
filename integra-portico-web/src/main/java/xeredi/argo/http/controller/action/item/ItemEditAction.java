@@ -16,6 +16,7 @@ import xeredi.argo.model.maestro.bo.ParametroBOFactory;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoHtml;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -27,7 +28,8 @@ import xeredi.util.applicationobjects.LabelValueVO;
  * @param <E>
  *            the element type
  */
-public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidadDetailVO> extends CrudEditAction<I> {
+public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidadDetailVO> extends CrudEditAction<I>
+        implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4070230048819938799L;
@@ -116,5 +118,21 @@ public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidad
      */
     public final E getEnti() {
         return enti;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Long getEntiId() {
+        return model.getEntiId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final AccionPrefix getAccnPrefix() {
+        return AccionPrefix.item;
     }
 }

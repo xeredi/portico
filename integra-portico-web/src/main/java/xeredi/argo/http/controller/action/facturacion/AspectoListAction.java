@@ -7,6 +7,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -29,5 +30,13 @@ public final class AspectoListAction extends GridListAction<AspectoCriterioVO, A
         final AspectoBO aspcBO = new AspectoBO();
 
         resultList = aspcBO.selectList(model, getOffset(), limit);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.aspc;
     }
 }

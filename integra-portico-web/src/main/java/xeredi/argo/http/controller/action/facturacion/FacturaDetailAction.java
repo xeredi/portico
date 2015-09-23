@@ -14,6 +14,7 @@ import xeredi.argo.model.facturacion.vo.FacturaCargoVO;
 import xeredi.argo.model.facturacion.vo.FacturaImpuestoVO;
 import xeredi.argo.model.facturacion.vo.FacturaServicioVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -93,5 +94,13 @@ public final class FacturaDetailAction extends CrudDetailAction<FacturaVO> {
      */
     public AspectoVO getAspc() {
         return aspc;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.fctr;
     }
 }

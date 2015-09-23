@@ -5,6 +5,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -23,5 +24,13 @@ public final class TipoServicioListAction extends GridListAction<TipoServicioCri
         final TipoServicioBO entiBO = new TipoServicioBO();
 
         resultList = entiBO.selectList(model, getOffset(), limit);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tpsr;
     }
 }

@@ -13,6 +13,7 @@ import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -76,5 +77,13 @@ public final class TramiteTipoDatoEditAction extends CrudEditAction<TramiteTipoD
      */
     public List<EntidadTipoDatoVO> getEntdList() {
         return entdList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.trtd;
     }
 }

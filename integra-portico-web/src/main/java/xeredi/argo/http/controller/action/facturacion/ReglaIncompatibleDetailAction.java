@@ -7,6 +7,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.ReglaIncompatibleBO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -31,5 +32,13 @@ public final class ReglaIncompatibleDetailAction extends CrudDetailAction<ReglaI
         rginCriterio.setFechaVigencia(model.getFref());
 
         model = rginBO.selectObject(rginCriterio);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.rgin;
     }
 }

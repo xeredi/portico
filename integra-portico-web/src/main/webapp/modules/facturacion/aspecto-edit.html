@@ -2,7 +2,7 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" ng-switch="::vm.accion">
-                <label translate>tpsr</label> <select ng-switch-when="create" ng-model="vm.model.tpsr.id"
+                <label translate="tpsr"></label> <select ng-switch-when="create" ng-model="vm.model.tpsr.id"
                     ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in ::vm.tpsrList"
                     class="form-control">
                     <option />

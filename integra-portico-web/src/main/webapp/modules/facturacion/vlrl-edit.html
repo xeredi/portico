@@ -8,7 +8,7 @@
 
             <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm">
                 <label translate="crgo"></label> <input type="text" ng-if="vm.accion == 'create'"
-                    autocomplete="off" ng-model="vm.crgo" ng-controller="CrgoLupaController"
+                    autocomplete="off" ng-model="vm.crgo" ng-controller="CargoTypeaheadController"
                     typeahead="crgo as crgo.etiqueta for crgo in searchVlrc(vm.vlrl.vlrcId, $viewValue)"
                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                 <p ng-if="vm.accion == 'edit'" class="form-control-static"

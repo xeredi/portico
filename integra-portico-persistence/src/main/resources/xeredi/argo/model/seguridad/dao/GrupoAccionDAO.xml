@@ -3,18 +3,31 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.argo.model.seguridad.dao.GrupoAccionDAO">
-	<sql id="SelectWhere">
-		<where>
-			<if test="grpoId != null">
-				AND grac_grpo_pk = #{grpoId}
-			</if>
-			<if test="accnId != null">
-				AND grac_accn_pk = #{accnId}
-			</if>
-		</where>
-	</sql>
+    <resultMap type="GrupoAccionVO" id="ResultMap">
+        <id column="grac_grpo_pk" />
+        <id column="grac_accn_pk" />
 
-	<select id="exists" parameterType="GrupoAccionVO" resultType="Boolean">
+        <result column="grac_grpo_pk" property="grpoId" />
+        <result column="grac_accn_pk" property="accnId" />
+    </resultMap>
+
+    <sql id="SelectPrefix">
+        SELECT grac_grpo_pk, grac_accn_pk
+        FROM tbl_grupo_accion_grac
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="grpoId != null">
+                AND grac_grpo_pk = #{grpoId}
+            </if>
+            <if test="accnId != null">
+                AND grac_accn_pk = #{accnId}
+            </if>
+        </where>
+    </sql>
+
+    <select id="exists" parameterType="GrupoAccionVO" resultType="Boolean">
         <![CDATA[
         SELECT COUNT(1)
         FROM tbl_grupo_accion_grac
@@ -22,17 +35,28 @@
         	grac_grpo_pk = #{grpoId}
         	AND grac_accn_pk = #{accnId}
         ]]>
-	</select>
+    </select>
 
-	<insert id="insert" parameterType="GrupoAccionVO">
+    <select id="selectObject" parameterType="GrupoAccionCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <insert id="insert" parameterType="GrupoAccionVO">
         <![CDATA[
         INSERT INTO tbl_grupo_accion_grac (grac_grpo_pk, grac_accn_pk)
         VALUES (#{grpoId}, #{accnId})
         ]]>
-	</insert>
+    </insert>
 
-	<delete id="deleteList" parameterType="GrupoAccionCriterioVO">
-		DELETE FROM tbl_grupo_accion_grac
-		<include refid="SelectWhere" />
-	</delete>
+    <delete id="delete" parameterType="GrupoAccionVO">
+        DELETE FROM tbl_grupo_accion_grac
+        WHERE grac_grpo_pk = #{grpoId}
+        AND grac_accn_pk = #{accnId}
+    </delete>
+
+    <delete id="deleteList" parameterType="GrupoAccionCriterioVO">
+        DELETE FROM tbl_grupo_accion_grac
+        <include refid="SelectWhere" />
+    </delete>
 </mapper>

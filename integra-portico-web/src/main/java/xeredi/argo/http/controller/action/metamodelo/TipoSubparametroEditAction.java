@@ -10,6 +10,7 @@ import xeredi.argo.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -60,5 +61,13 @@ public final class TipoSubparametroEditAction extends EntidadEditAction<TipoSubp
      */
     public List<LabelValueVO> getTpprList() {
         return tpprList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tpsp;
     }
 }

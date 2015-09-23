@@ -4,6 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -25,5 +26,13 @@ public final class TipoDatoRemoveAction extends CrudRemoveAction<TipoDatoVO> {
         final TipoDatoBO tpdtBO = new TipoDatoBO();
 
         tpdtBO.delete(model);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tpdt;
     }
 }

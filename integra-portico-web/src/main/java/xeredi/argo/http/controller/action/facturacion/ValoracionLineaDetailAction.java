@@ -11,6 +11,7 @@ import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -108,5 +109,13 @@ public final class ValoracionLineaDetailAction extends CrudDetailAction<Valoraci
      */
     public AspectoVO getAspc() {
         return aspc;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.vlrl;
     }
 }

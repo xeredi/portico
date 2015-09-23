@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -40,5 +41,13 @@ public final class TipoEstadisticaSaveAction extends EntidadSaveAction<TipoEstad
         default:
             throw new Error("Accion no soportada: " + accion);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tpes;
     }
 }

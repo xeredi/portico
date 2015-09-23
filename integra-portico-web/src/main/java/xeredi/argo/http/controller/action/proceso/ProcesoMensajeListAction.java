@@ -5,6 +5,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ProcesoMensajeCriterioVO;
 import xeredi.argo.model.proceso.vo.ProcesoMensajeVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -27,5 +28,13 @@ public final class ProcesoMensajeListAction extends GridListAction<ProcesoMensaj
         final ProcesoBO prbtBO = new ProcesoBO();
 
         resultList = prbtBO.selectPrmnList(model, getOffset(), limit);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.prmn;
     }
 }

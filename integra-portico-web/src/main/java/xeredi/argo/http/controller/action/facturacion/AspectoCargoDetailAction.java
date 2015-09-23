@@ -7,6 +7,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.AspectoCargoBO;
 import xeredi.argo.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoCargoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -32,5 +33,13 @@ public final class AspectoCargoDetailAction extends CrudDetailAction<AspectoCarg
         ascrCriterio.setIdioma(idioma);
 
         model = ascrBO.selectObject(ascrCriterio);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.ascr;
     }
 }

@@ -8,6 +8,7 @@ import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -39,5 +40,13 @@ public final class ValoracionListAction extends GridListAction<ValoracionCriteri
      */
     public TipoDatoVO getTpdtCodExencion() {
         return tpdtCodExencion;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.vlrc;
     }
 }

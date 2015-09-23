@@ -17,6 +17,7 @@ import xeredi.argo.model.maestro.bo.ParametroBOFactory;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.vo.Entidad;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -138,5 +139,13 @@ public final class ValoracionLineaEditAction extends CrudEditAction<ValoracionLi
      */
     public AspectoVO getAspc() {
         return aspc;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.vlrl;
     }
 }

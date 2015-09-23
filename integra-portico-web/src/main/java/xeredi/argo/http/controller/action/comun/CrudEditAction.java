@@ -15,7 +15,7 @@ import xeredi.argo.model.comun.vo.Versionable;
  * @param <T>
  *            the generic type
  */
-public abstract class CrudEditAction<T> extends BaseAction implements ModelDriven<T> {
+public abstract class CrudEditAction<T> extends BaseAction implements ModelDriven<T>, ProtectedAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7147721554331909672L;
@@ -93,5 +93,13 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
      */
     public final void setModel(final T value) {
         this.model = value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final String getAccnCodigo() {
+        return accion.name();
     }
 }

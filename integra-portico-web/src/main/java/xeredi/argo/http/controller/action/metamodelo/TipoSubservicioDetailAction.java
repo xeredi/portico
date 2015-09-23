@@ -11,6 +11,7 @@ import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -93,5 +94,13 @@ public final class TipoSubservicioDetailAction extends EntidadDetailAction<TipoS
      */
     public List<TramiteVO> getTrmtList() {
         return trmtList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tpss;
     }
 }

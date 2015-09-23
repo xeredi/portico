@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.servicio;
 
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.servicio.bo.ServicioSecuenciaBO;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaVO;
 
@@ -30,5 +31,13 @@ public class ServicioSecuenciaRemoveAction extends CrudRemoveAction<ServicioSecu
         final ServicioSecuenciaBO srscBO = new ServicioSecuenciaBO();
 
         srscBO.delete(model);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.srsc;
     }
 }

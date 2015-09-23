@@ -18,6 +18,7 @@ import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioCriterioVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -119,5 +120,13 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
      */
     public ReglaTipo[] getTipos() {
         return tipos;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.rgla;
     }
 }

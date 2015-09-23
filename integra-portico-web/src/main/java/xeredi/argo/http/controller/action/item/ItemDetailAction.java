@@ -4,6 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.vo.ItemVO;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -16,7 +17,7 @@ import com.google.common.base.Preconditions;
  * @param <E>
  *            the element type
  */
-public abstract class ItemDetailAction<I extends ItemVO, E extends AbstractEntidadDetailVO> extends CrudDetailAction<I> {
+public abstract class ItemDetailAction<I extends ItemVO, E extends AbstractEntidadDetailVO> extends CrudDetailAction<I> implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5159354861110927934L;
@@ -51,5 +52,21 @@ public abstract class ItemDetailAction<I extends ItemVO, E extends AbstractEntid
      */
     public final E getEnti() {
         return enti;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Long getEntiId() {
+        return model.getEntiId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final AccionPrefix getAccnPrefix() {
+        return AccionPrefix.item;
     }
 }

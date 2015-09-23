@@ -5,6 +5,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.TipoParametroBO;
 import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -43,5 +44,13 @@ public final class TipoParametroSaveAction extends EntidadSaveAction<TipoParamet
         default:
             throw new Error("Accion no soportada: " + accion);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tppr;
     }
 }

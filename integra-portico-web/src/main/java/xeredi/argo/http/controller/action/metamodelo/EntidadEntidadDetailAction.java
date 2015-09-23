@@ -5,6 +5,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.EntidadEntidadBO;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -33,5 +34,13 @@ public final class EntidadEntidadDetailAction extends CrudDetailAction<EntidadEn
         enenCriterioVO.setEntiHijaId(model.getEntiHija().getId());
 
         model = enenBO.selectObject(enenCriterioVO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.enen;
     }
 }

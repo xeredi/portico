@@ -9,6 +9,7 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ReglaBO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -156,5 +157,13 @@ public final class ReglaSaveAction extends CrudSaveAction<ReglaVO> {
                         .getPathCuant6());
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.rgla;
     }
 }

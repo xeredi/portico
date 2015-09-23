@@ -8,6 +8,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -72,5 +73,13 @@ public final class ValoracionSaveAction extends CrudSaveAction<ValoracionVO> {
         if (!hasErrors()) {
             FieldValidator.validateRequired(this, MessageI18nKey.vlrc_pagador, model.getPagador().getId());
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.vlrc;
     }
 }

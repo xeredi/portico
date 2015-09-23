@@ -14,6 +14,7 @@ import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -77,5 +78,13 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
      */
     public Map<String, I18nVO> getI18nMap() {
         return i18nMap;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.aspc;
     }
 }

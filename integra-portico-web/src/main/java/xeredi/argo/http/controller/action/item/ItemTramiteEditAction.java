@@ -26,6 +26,7 @@ import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.servicio.bo.ServicioBO;
 import xeredi.argo.model.servicio.bo.ServicioBOFactory;
 import xeredi.argo.model.servicio.bo.SubservicioBO;
@@ -38,7 +39,7 @@ import xeredi.util.applicationobjects.LabelValueVO;
 /**
  * The Class ItemTramiteEditAction.
  */
-public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> {
+public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7371401403513787913L;
@@ -203,5 +204,25 @@ public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> {
      */
     public AbstractEntidadDetailVO getEnti() {
         return enti;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Long getEntiId() {
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getTrmt());
+        Preconditions.checkNotNull(model.getTrmt().getEntiId());
+
+        return model.getTrmt().getEntiId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final AccionPrefix getAccnPrefix() {
+        return AccionPrefix.item;
     }
 }

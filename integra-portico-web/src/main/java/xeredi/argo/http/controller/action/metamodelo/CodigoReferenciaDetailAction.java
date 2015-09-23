@@ -9,6 +9,7 @@ import xeredi.argo.model.comun.vo.I18nPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.CodigoReferenciaBO;
 import xeredi.argo.model.metamodelo.vo.CodigoReferenciaVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -44,5 +45,13 @@ public final class CodigoReferenciaDetailAction extends CrudDetailAction<CodigoR
      */
     public Map<String, I18nVO> getI18nMap() {
         return i18nMap;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.cdrf;
     }
 }

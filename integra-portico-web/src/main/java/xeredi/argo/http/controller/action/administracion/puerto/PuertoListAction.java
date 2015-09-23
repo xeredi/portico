@@ -5,6 +5,7 @@ import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -25,4 +26,11 @@ public final class PuertoListAction extends GridListAction<PuertoCriterioVO, Pue
         resultList = prtoBO.selectList(model, getOffset(), limit);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.prto;
+    }
 }

@@ -12,7 +12,7 @@ import com.google.common.base.Preconditions;
  * @param <T>
  *            the generic type
  */
-public abstract class CrudRemoveAction<T> extends BaseAction {
+public abstract class CrudRemoveAction<T> extends BaseAction implements ProtectedAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8487722303118008776L;
@@ -51,6 +51,14 @@ public abstract class CrudRemoveAction<T> extends BaseAction {
      */
     public final void setModel(final T value) {
         this.model = value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getAccnCodigo() {
+        return "remove";
     }
 
 }

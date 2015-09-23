@@ -512,45 +512,64 @@ public enum MessageI18nKey {
     schr,
 
     /** Error no controlado. Se pasa como argumento el mensaje de la excepcion. */
-    E00000, /** Campo obligatorio. Se pasa como argumento la etiqueta del campo. */
-    E00001, /** Texto obligatorio para un idioma. Se pasa como argumento el idioma. */
-    E00002, /** Instancia Duplicada. Se pasa como argumento el nombre de la entidad. */
-    E00005, /**
-             * Error de rango de vigencia de un parametro, Fecha fin debe ser posterior a fecha inicio. sin
-             * argumentos.
-             */
-    E00006, /**
-             * Instancia no encontrada. Se pasan como argumentos el nombre de la entidad de la instancia y su
-             * identificador.
-             */
-    E00008, /**
-             * Error de solape de rangos de vigencia de una entidad. Se pasa como argumento el nombre de la
-             * entidad.
-             */
-    E00009, /**
-             * Error de subservicio en estado inválido para realizar una acción. Se pasa como argumento el
-             * estado del subservicio.
-             */
-    E00011, /**
-             * Error de valor no perteneciente a una lista de valores válidos. Se pasa como argumento el
-             * nombre del campo y la lista de valores válidos.
-             */
-    E00012, /**
-             * Error de operacion no permitida. Por ejemplo, finalizar un atraque que no puede ser finalizado,
-             * o cancelar un proceso batch en curso...
-             */
-    E00013, /** Error de contraseña incorrecta. */
+    E00000,
+    /** Campo obligatorio. Se pasa como argumento la etiqueta del campo. */
+    E00001,
+    /** Texto obligatorio para un idioma. Se pasa como argumento el idioma. */
+    E00002,
+    /** Instancia Duplicada. Se pasa como argumento el nombre de la entidad. */
+    E00005,
+    /**
+     * Error de rango de vigencia de un parametro, Fecha fin debe ser posterior a fecha inicio. sin
+     * argumentos.
+     */
+    E00006,
+    /**
+     * Instancia no encontrada. Se pasan como argumentos el nombre de la entidad de la instancia y su
+     * identificador.
+     */
+    E00008,
+    /**
+     * Error de solape de rangos de vigencia de una entidad. Se pasa como argumento el nombre de la entidad.
+     */
+    E00009,
+    /**
+     * Error de subservicio en estado inválido para realizar una acción. Se pasa como argumento el estado del
+     * subservicio.
+     */
+    E00011,
+    /**
+     * Error de valor no perteneciente a una lista de valores válidos. Se pasa como argumento el nombre del
+     * campo y la lista de valores válidos.
+     */
+    E00012,
+    /**
+     * Error de operacion no permitida. Por ejemplo, finalizar un atraque que no puede ser finalizado, o
+     * cancelar un proceso batch en curso...
+     */
+    E00013,
+    /** Error de contraseña incorrecta. */
     E00014,
+    /** Error de privilegios insuficientes. */
+    E00015,
 
     /** The cdms_numero. */
-    cdms_numero, /** The cdms_tm. */
-    cdms_tm, /** The cdms_teus. */
-    cdms_teus, /** The cdms_ca. */
-    cdms_ca, /** The cdms_va. */
-    cdms_va, /** The cdms_embarcado. */
-    cdms_embarcado, /** The cdms_desembarcado. */
-    cdms_desembarcado, /** The cdms_transito. */
-    cdms_transito, /** The cdms_transbordo. */
+    cdms_numero,
+    /** The cdms_tm. */
+    cdms_tm,
+    /** The cdms_teus. */
+    cdms_teus,
+    /** The cdms_ca. */
+    cdms_ca,
+    /** The cdms_va. */
+    cdms_va,
+    /** The cdms_embarcado. */
+    cdms_embarcado,
+    /** The cdms_desembarcado. */
+    cdms_desembarcado,
+    /** The cdms_transito. */
+    cdms_transito,
+    /** The cdms_transbordo. */
     cdms_transbordo, /** The cdms_ gl. */
     cdms_GL, /** The cdms_ glpetr. */
     cdms_GLPETR, /** The cdms_ glgasn. */

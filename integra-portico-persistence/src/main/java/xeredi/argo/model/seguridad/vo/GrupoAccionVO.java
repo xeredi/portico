@@ -9,10 +9,17 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public final class GrupoAccionVO {
 
     /** The grpo id. */
-    private final Long grpoId;
+    private Long grpoId;
 
     /** The accn id. */
-    private final Long accnId;
+    private Long accnId;
+
+    /**
+     * Instantiates a new grupo accion vo.
+     */
+    public GrupoAccionVO() {
+        super();
+    }
 
     /**
      * Instantiates a new grupo accion vo.
@@ -46,6 +53,16 @@ public final class GrupoAccionVO {
     }
 
     /**
+     * Sets the grpo id.
+     *
+     * @param value
+     *            the new grpo id
+     */
+    public void setGrpoId(Long value) {
+        this.grpoId = value;
+    }
+
+    /**
      * Gets the accn id.
      *
      * @return the accn id
@@ -54,4 +71,13 @@ public final class GrupoAccionVO {
         return accnId;
     }
 
+    /**
+     * Sets the accn id.
+     *
+     * @param value
+     *            the new accn id
+     */
+    public void setAccnId(Long value) {
+        this.accnId = value;
+    }
 }

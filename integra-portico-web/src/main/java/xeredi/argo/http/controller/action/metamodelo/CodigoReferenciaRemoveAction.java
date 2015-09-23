@@ -4,6 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.CodigoReferenciaBO;
 import xeredi.argo.model.metamodelo.vo.CodigoReferenciaVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -26,5 +27,13 @@ public final class CodigoReferenciaRemoveAction extends CrudRemoveAction<CodigoR
         final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
         cdrfBO.delete(model);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.cdrf;
     }
 }

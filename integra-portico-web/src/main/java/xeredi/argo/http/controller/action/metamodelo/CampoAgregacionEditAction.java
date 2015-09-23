@@ -7,6 +7,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -54,5 +55,13 @@ public final class CampoAgregacionEditAction extends CrudEditAction<CampoAgregac
      */
     public List<EntidadTipoDatoVO> getEntdList() {
         return entdList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.cmag;
     }
 }

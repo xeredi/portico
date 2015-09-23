@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.seguridad;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.seguridad.bo.AccionBO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.AccionVO;
 
 import com.google.common.base.Preconditions;
@@ -25,5 +26,13 @@ public final class AccionRemoveAction extends CrudRemoveAction<AccionVO> {
         final AccionBO accnBO = new AccionBO();
 
         accnBO.delete(model);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.accn;
     }
 }

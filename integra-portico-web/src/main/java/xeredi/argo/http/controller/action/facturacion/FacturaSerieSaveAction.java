@@ -6,6 +6,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.FacturaSerieBO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -52,5 +53,13 @@ public final class FacturaSerieSaveAction extends CrudSaveAction<FacturaSerieVO>
         }
 
         FieldValidator.validateRequired(this, MessageI18nKey.fcsr_numeroUltimo, model.getNumeroUltimo());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.fcsr;
     }
 }

@@ -5,6 +5,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoParametroBO;
 import xeredi.argo.model.metamodelo.vo.TipoParametroCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -23,5 +24,13 @@ public final class TipoParametroListAction extends GridListAction<TipoParametroC
         final TipoParametroBO entiBO = new TipoParametroBO();
 
         resultList = entiBO.selectList(model, getOffset(), limit);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tppr;
     }
 }

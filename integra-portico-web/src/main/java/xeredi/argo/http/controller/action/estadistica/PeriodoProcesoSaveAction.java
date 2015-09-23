@@ -16,6 +16,7 @@ import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.argo.model.proceso.batch.estadistica.ProcesoCargaOppe;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -90,4 +91,11 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<PeriodoProces
         sobreescribir = value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.pepr;
+    }
 }

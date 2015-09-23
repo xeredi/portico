@@ -6,6 +6,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.EntidadEntidadBO;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -54,5 +55,13 @@ public final class EntidadEntidadSaveAction extends CrudSaveAction<EntidadEntida
         }
 
         FieldValidator.validateRequired(this, MessageI18nKey.enen_orden, model.getOrden());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.enen;
     }
 }

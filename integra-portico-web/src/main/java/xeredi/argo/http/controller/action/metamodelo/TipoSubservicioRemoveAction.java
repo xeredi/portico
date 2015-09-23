@@ -4,6 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -26,6 +27,14 @@ public final class TipoSubservicioRemoveAction extends CrudRemoveAction<TipoSubs
         final TipoSubservicioBO entiBO = new TipoSubservicioBO();
 
         entiBO.delete(model);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tpss;
     }
 
 }

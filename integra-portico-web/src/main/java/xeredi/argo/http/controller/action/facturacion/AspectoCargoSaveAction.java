@@ -8,6 +8,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.AspectoCargoBO;
 import xeredi.argo.model.facturacion.vo.AspectoCargoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -59,5 +60,13 @@ public final class AspectoCargoSaveAction extends CrudSaveAction<AspectoCargoVO>
         if (!hasErrors()) {
             FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.ascr;
     }
 }

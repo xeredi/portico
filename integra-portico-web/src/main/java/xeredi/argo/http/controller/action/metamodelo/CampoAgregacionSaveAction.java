@@ -6,6 +6,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -59,5 +60,13 @@ public final class CampoAgregacionSaveAction extends CrudSaveAction<CampoAgregac
 
         FieldValidator.validateRequired(this, MessageI18nKey.cmag_nombre, model.getNombre());
         FieldValidator.validateRequired(this, MessageI18nKey.cmag_agregar, model.getAgregar());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.cmag;
     }
 }

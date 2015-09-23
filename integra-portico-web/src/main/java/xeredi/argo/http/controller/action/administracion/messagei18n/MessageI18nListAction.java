@@ -7,6 +7,7 @@ import java.util.Map;
 import xeredi.argo.http.controller.action.comun.ListAction;
 import xeredi.argo.model.comun.bo.MessageBO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -60,5 +61,13 @@ public final class MessageI18nListAction extends ListAction<MessageI18nKey> {
      */
     public Map<MessageI18nKey, Map<String, String>> getKeyMap() {
         return keyMap;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.m18n;
     }
 }

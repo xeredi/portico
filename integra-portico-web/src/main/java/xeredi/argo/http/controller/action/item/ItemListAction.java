@@ -5,6 +5,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
 import xeredi.argo.model.item.vo.ItemVO;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -20,7 +21,7 @@ import com.google.common.base.Preconditions;
  *            the element type
  */
 public abstract class ItemListAction<C extends ItemCriterioVO, I extends ItemVO, E extends AbstractEntidadDetailVO>
-extends GridListAction<C, I> {
+        extends GridListAction<C, I> implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1634381107882001806L;
@@ -59,4 +60,19 @@ extends GridListAction<C, I> {
         return enti;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Long getEntiId() {
+        return model.getEntiId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final AccionPrefix getAccnPrefix() {
+        return AccionPrefix.item;
+    }
 }

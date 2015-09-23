@@ -10,6 +10,7 @@ import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ProcesoItemVO;
 import xeredi.argo.model.proceso.vo.ProcesoParametroVO;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -97,5 +98,13 @@ public final class ProcesoDetailAction extends CrudDetailAction<ProcesoVO> {
      */
     public Map<String, ProcesoParametroVO> getPrpmMap() {
         return prpmMap;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.prbt;
     }
 }

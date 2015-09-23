@@ -15,6 +15,7 @@ import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -84,5 +85,13 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
      */
     public List<CargoVO> getCrgoList() {
         return crgoList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.ascr;
     }
 }

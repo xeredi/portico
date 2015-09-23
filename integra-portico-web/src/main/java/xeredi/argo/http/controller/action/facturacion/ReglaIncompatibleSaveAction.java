@@ -6,6 +6,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ReglaIncompatibleBO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -57,5 +58,13 @@ public final class ReglaIncompatibleSaveAction extends CrudSaveAction<ReglaIncom
         }
 
         FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.rgin;
     }
 }

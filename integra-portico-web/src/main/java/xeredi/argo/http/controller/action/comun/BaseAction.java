@@ -9,14 +9,14 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
-import com.opensymphony.xwork2.ActionSupport;
-
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.exception.InternalErrorException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.proxy.PorticoResourceBundle;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -73,12 +73,8 @@ public abstract class BaseAction extends ActionSupport {
         try {
             doExecute();
         } catch (final ApplicationException ex) {
-            LOG.error(ex, ex);
-
             throw ex;
         } catch (final Throwable ex) {
-            LOG.fatal(ex, ex);
-
             throw new InternalErrorException(ex);
         }
 

@@ -11,6 +11,7 @@ import xeredi.argo.model.comun.vo.I18nPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.CodigoReferenciaBO;
 import xeredi.argo.model.metamodelo.vo.CodigoReferenciaVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 /**
  * Edición de un Código de Referencia.
@@ -55,5 +56,13 @@ public final class CodigoReferenciaEditAction extends CrudEditAction<CodigoRefer
      */
     public Map<String, I18nVO> getI18nMap() {
         return i18nMap;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.cdrf;
     }
 }

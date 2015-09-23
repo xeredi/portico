@@ -4,6 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.FacturaSerieBO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -26,5 +27,13 @@ public final class FacturaSerieRemoveAction extends CrudRemoveAction<FacturaSeri
         final FacturaSerieBO fcsrBO = new FacturaSerieBO();
 
         fcsrBO.delete(model);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.fcsr;
     }
 }

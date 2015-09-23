@@ -10,6 +10,7 @@ import xeredi.argo.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -68,5 +69,13 @@ public final class EntidadEntidadEditAction extends CrudEditAction<EntidadEntida
      */
     public List<TipoSubservicioVO> getTpssList() {
         return tpssList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.enen;
     }
 }

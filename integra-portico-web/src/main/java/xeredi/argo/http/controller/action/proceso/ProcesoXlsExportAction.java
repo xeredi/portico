@@ -10,6 +10,7 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.report.ProcesoXls;
 import xeredi.argo.model.proceso.vo.ProcesoCriterioVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -42,5 +43,13 @@ public final class ProcesoXlsExportAction extends GridXlsExportAction<ProcesoCri
     @Override
     public String getFilename() {
         return MessageI18nKey.prbt.name();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.prbt;
     }
 }

@@ -6,6 +6,7 @@ import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,5 +27,13 @@ public final class ProcesoCancelarAction extends CrudRemoveAction<ProcesoVO> {
         final ProcesoBO prbtBO = new ProcesoBO();
 
         prbtBO.cancelar(model);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.prbt;
     }
 }

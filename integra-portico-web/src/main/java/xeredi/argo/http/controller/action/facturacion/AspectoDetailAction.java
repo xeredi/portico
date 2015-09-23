@@ -16,6 +16,7 @@ import xeredi.argo.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoCargoVO;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -75,5 +76,13 @@ public final class AspectoDetailAction extends CrudDetailAction<AspectoVO> {
      */
     public List<AspectoCargoVO> getAscrList() {
         return ascrList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.aspc;
     }
 }

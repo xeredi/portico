@@ -17,6 +17,7 @@ import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
 import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -100,5 +101,13 @@ public final class EntidadTipoDatoEditAction extends CrudEditAction<EntidadTipoD
      */
     public List<LabelValueVO> getTpdtList() {
         return tpdtList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.entd;
     }
 }

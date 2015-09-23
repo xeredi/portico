@@ -10,6 +10,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -51,5 +52,13 @@ public final class IndexAction extends ListAction<LabelValueVO> {
      */
     public Map<Long, List<LabelValueVO>> getTpssMap() {
         return tpssMap;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.item;
     }
 }

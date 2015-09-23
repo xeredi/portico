@@ -8,6 +8,7 @@ import xeredi.argo.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -46,6 +47,14 @@ public final class TipoParametroDetailAction extends EntidadDetailAction<TipoPar
      */
     public List<TipoSubparametroVO> getSubentiList() {
         return subentiList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tppr;
     }
 
 }

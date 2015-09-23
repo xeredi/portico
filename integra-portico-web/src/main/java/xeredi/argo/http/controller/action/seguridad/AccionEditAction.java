@@ -56,4 +56,12 @@ public final class AccionEditAction extends CrudEditAction<AccionVO> {
     public AccionPrefix[] getPrefixList() {
         return prefixList;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.accn;
+    }
 }

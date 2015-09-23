@@ -6,6 +6,8 @@ angular.module("seguridad_service", [ "crud_service" ])
 
 .factory("GrupoService", GrupoService)
 
+.factory("GrupoAccionService", GrupoAccionService)
+
 ;
 
 function UsuarioService($http, $q, CrudService) {
@@ -60,6 +62,12 @@ function AccionService($http, $q, CrudService) {
 
 function GrupoService($http, $q, CrudService) {
     var service = CrudService.create("seguridad/grupo");
+
+    return service;
+}
+
+function GrupoAccionService($http, $q, CrudService) {
+    var service = CrudService.create("seguridad/grupo-accion");
 
     return service;
 }

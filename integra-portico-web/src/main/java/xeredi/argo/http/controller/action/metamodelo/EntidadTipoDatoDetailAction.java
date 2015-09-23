@@ -11,6 +11,7 @@ import xeredi.argo.model.comun.vo.I18nPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -44,5 +45,13 @@ public final class EntidadTipoDatoDetailAction extends CrudDetailAction<EntidadT
      */
     public Map<String, I18nVO> getI18nMap() {
         return i18nMap;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.entd;
     }
 }

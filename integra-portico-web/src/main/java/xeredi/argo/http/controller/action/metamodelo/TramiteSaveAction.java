@@ -11,6 +11,7 @@ import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -77,5 +78,13 @@ public final class TramiteSaveAction extends CrudSaveAction<TramiteVO> {
      */
     public void setI18nMap(final Map<String, I18nVO> value) {
         i18nMap = value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.trmt;
     }
 }

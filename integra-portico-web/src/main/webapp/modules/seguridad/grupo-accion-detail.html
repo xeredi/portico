@@ -1,0 +1,33 @@
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <button data-ng-click="vm.remove()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+        </button>
+    </div>
+</div>
+
+<fieldset>
+    <legend translate="grpo"></legend>
+
+    <div class="row">
+        <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+            <label translate="accn_prefix"></label>
+            <p class="form-control-static" ng-bind="vm.grpo.nombre"></p>
+        </div>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend translate="accn"></legend>
+
+    <div class="row">
+        <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+            <label translate="accn_prefix"></label>
+            <p class="form-control-static" ng-bind="vm.accn.prefix"></p>
+        </div>
+        <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+            <label translate="accn_codigo"></label>
+            <p class="form-control-static" ng-bind="vm.accn.codigo"></p>
+        </div>
+    </div>
+</fieldset>

@@ -5,6 +5,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 /**
  * The Class TipoDatoListAction.
@@ -22,5 +23,13 @@ public final class TipoDatoListAction extends GridListAction<TipoDatoCriterioVO,
         final TipoDatoBO tpdtBO = new TipoDatoBO();
 
         resultList = tpdtBO.selectList(model, getOffset(), limit);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tpdt;
     }
 }

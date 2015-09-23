@@ -6,6 +6,7 @@ import xeredi.argo.model.proceso.vo.ProcesoCriterioVO;
 import xeredi.argo.model.proceso.vo.ProcesoEstado;
 import xeredi.argo.model.proceso.vo.ProcesoModulo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -68,5 +69,13 @@ public final class ProcesoFilterAction extends GridFilterAction<ProcesoCriterioV
      */
     public ProcesoEstado[] getProcesoEstados() {
         return procesoEstados;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.prbt;
     }
 }

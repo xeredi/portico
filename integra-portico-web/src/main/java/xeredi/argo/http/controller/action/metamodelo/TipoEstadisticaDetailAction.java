@@ -8,6 +8,7 @@ import xeredi.argo.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionCriterioVO;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -46,5 +47,13 @@ public final class TipoEstadisticaDetailAction extends EntidadDetailAction<TipoE
      */
     public List<CampoAgregacionVO> getCmagList() {
         return cmagList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tpes;
     }
 }

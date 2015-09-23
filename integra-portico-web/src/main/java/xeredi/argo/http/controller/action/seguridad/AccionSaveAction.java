@@ -5,6 +5,7 @@ import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.seguridad.bo.AccionBO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.AccionVO;
 
 import com.google.common.base.Preconditions;
@@ -48,5 +49,13 @@ public final class AccionSaveAction extends CrudSaveAction<AccionVO> {
 
         FieldValidator.validateRequired(this, MessageI18nKey.accn_codigo, model.getCodigo());
         FieldValidator.validateRequired(this, MessageI18nKey.accn_prefix, model.getPrefix());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.accn;
     }
 }

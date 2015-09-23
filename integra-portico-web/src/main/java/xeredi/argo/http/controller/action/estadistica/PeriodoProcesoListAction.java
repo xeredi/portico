@@ -5,6 +5,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -23,5 +24,13 @@ public final class PeriodoProcesoListAction extends GridListAction<PeriodoProces
         final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
         resultList = peprBO.selectList(model, getOffset(), limit);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.pepr;
     }
 }

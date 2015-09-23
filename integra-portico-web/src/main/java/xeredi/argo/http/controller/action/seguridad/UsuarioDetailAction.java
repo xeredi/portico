@@ -6,6 +6,7 @@ import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.seguridad.bo.GrupoBO;
 import xeredi.argo.model.seguridad.bo.UsuarioBO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
 import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
@@ -55,5 +56,13 @@ public final class UsuarioDetailAction extends CrudDetailAction<UsuarioVO> {
      */
     public List<GrupoVO> getGrpoList() {
         return grpoList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.usro;
     }
 }

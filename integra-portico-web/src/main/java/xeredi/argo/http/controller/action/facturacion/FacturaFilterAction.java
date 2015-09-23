@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.facturacion;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.vo.FacturaCriterioVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -27,5 +28,13 @@ public final class FacturaFilterAction extends GridFilterAction<FacturaCriterioV
     @Override
     public void doLoadDependencies() throws ApplicationException {
         // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.fctr;
     }
 }

@@ -10,6 +10,7 @@ import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -71,6 +72,14 @@ public final class UsuarioFilterAction extends GridFilterAction<UsuarioCriterioV
      */
     public List<PuertoVO> getPrtoList() {
         return prtoList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.usro;
     }
 
 }

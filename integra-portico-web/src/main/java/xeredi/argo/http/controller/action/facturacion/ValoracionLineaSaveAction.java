@@ -9,6 +9,7 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -65,5 +66,13 @@ public final class ValoracionLineaSaveAction extends CrudSaveAction<ValoracionLi
                 }
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.vlrl;
     }
 }

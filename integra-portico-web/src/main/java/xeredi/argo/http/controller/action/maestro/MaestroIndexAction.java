@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.maestro;
 
 import xeredi.argo.http.controller.action.comun.ListAction;
 import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -20,5 +21,13 @@ public final class MaestroIndexAction extends ListAction<LabelValueVO> {
     @Override
     public void doList() {
         resultList = TipoParametroProxy.selectLabelValues();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.item;
     }
 }

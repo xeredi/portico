@@ -8,6 +8,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
 import xeredi.argo.model.metamodelo.vo.TipoHtml;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 /**
  * The Class TipoDatoFilterAction.
@@ -58,5 +59,13 @@ public final class TipoDatoFilterAction extends GridFilterAction<TipoDatoCriteri
      */
     public TipoHtml[] getTphtList() {
         return tphtList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tpdt;
     }
 }

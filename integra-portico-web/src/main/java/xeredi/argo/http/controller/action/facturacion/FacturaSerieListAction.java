@@ -5,6 +5,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.FacturaSerieBO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -23,5 +24,13 @@ public final class FacturaSerieListAction extends GridListAction<FacturaSerieCri
         final FacturaSerieBO fcsrBO = new FacturaSerieBO();
 
         resultList = fcsrBO.selectList(model, getOffset(), limit);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.fcsr;
     }
 }

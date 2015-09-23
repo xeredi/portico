@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.servicio.manifiesto;
 
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.servicio.bo.manifiesto.BlBO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 import xeredi.argo.model.servicio.vo.manifiesto.ResumenTotalesVO;
@@ -42,5 +43,13 @@ public final class BlTotalDetailAction extends CrudDetailAction<SubservicioVO> {
      */
     public ResumenTotalesVO getResumen() {
         return resumen;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.item;
     }
 }

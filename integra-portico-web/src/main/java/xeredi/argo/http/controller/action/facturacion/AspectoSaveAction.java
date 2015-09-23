@@ -11,6 +11,7 @@ import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -126,5 +127,13 @@ public final class AspectoSaveAction extends CrudSaveAction<AspectoVO> {
      */
     public void setI18nMap(final Map<String, I18nVO> value) {
         i18nMap = value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.aspc;
     }
 }

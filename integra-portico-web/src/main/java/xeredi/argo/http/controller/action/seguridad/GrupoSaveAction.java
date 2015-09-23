@@ -5,6 +5,7 @@ import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.seguridad.bo.GrupoBO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
 
 import com.google.common.base.Preconditions;
@@ -47,6 +48,14 @@ public final class GrupoSaveAction extends CrudSaveAction<GrupoVO> {
         }
 
         FieldValidator.validateRequired(this, MessageI18nKey.grpo_nombre, model.getNombre());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.grpo;
     }
 
 }

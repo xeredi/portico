@@ -20,7 +20,7 @@ import com.google.common.base.Preconditions;
  */
 @Result(name = "success", type = "stream", params = { "contentType", "application/xls", "inputName", "stream",
         "contentDisposition", "filename=${filename}.xls" })
-public abstract class GridXlsExportAction<C extends BaseCriterioVO> extends BaseAction {
+public abstract class GridXlsExportAction<C extends BaseCriterioVO> extends BaseAction implements ProtectedAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2203318775060986047L;
@@ -81,6 +81,14 @@ public abstract class GridXlsExportAction<C extends BaseCriterioVO> extends Base
      */
     public final InputStream getStream() {
         return stream;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final String getAccnCodigo() {
+        return "xls_export";
     }
 
 }

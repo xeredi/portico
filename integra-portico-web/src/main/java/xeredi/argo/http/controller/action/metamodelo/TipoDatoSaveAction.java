@@ -10,6 +10,7 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -74,5 +75,13 @@ public final class TipoDatoSaveAction extends CrudSaveAction<TipoDatoVO> {
      */
     public void setI18nMap(final Map<String, I18nVO> value) {
         i18nMap = value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tpdt;
     }
 }

@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.vo.TipoParametroCriterioVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -27,5 +28,13 @@ public final class TipoParametroFilterAction extends GridFilterAction<TipoParame
     @Override
     public void doLoadDependencies() throws ApplicationException {
         // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.tppr;
     }
 }

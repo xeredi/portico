@@ -13,6 +13,7 @@ import xeredi.argo.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -77,5 +78,13 @@ public final class ReglaIncompatibleEditAction extends CrudEditAction<ReglaIncom
      */
     public List<ReglaVO> getRgla2List() {
         return rgla2List;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.rgin;
     }
 }

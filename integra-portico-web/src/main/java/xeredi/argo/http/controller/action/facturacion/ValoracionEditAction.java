@@ -13,6 +13,7 @@ import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
@@ -100,5 +101,13 @@ public final class ValoracionEditAction extends CrudEditAction<ValoracionVO> {
      */
     public TipoDatoVO getTpdtCodExencion() {
         return tpdtCodExencion;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.vlrc;
     }
 }
