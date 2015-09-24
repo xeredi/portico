@@ -77,6 +77,9 @@ GRANT EXECUTE ON daysBetween TO portico\
 
 CREATE PROCEDURE eraseTpsp(entiId NUMBER) IS
 BEGIN
+	DELETE FROM tbl_accion_entidad_acen
+	WHERE acen_enti_pk = entiId
+	;
 	DELETE FROM tbl_subparametro_dato_spdt
 	WHERE
 	    EXISTS (
@@ -182,6 +185,10 @@ END;
 
 CREATE PROCEDURE eraseTppr(entiId NUMBER) IS
 BEGIN
+	DELETE FROM tbl_accion_entidad_acen
+	WHERE acen_enti_pk = entiId
+	;
+
 	DELETE FROM tbl_parametro_dato_prdt
 	WHERE EXISTS (
 	    SELECT 1 FROM tbl_parametro_version_prvr
@@ -318,6 +325,9 @@ END;
 
 CREATE PROCEDURE eraseTpss(entiId NUMBER) IS
 BEGIN
+	DELETE FROM tbl_accion_entidad_acen
+	WHERE acen_enti_pk = entiId
+	;
 	DELETE FROM tbl_item_trmt_dato_ittd
 	WHERE
 		EXISTS (
@@ -481,6 +491,9 @@ END;
 
 CREATE PROCEDURE eraseTpsr(entiId NUMBER) IS
 BEGIN
+	DELETE FROM tbl_accion_entidad_acen
+	WHERE acen_enti_pk = entiId
+	;
 	DELETE FROM tbl_item_trmt_dato_ittd
 	WHERE
 		EXISTS (
@@ -622,6 +635,9 @@ END;
 
 CREATE PROCEDURE eraseTpes(entiId NUMBER) IS
 BEGIN
+	DELETE FROM tbl_accion_entidad_acen
+	WHERE acen_enti_pk = entiId
+	;
 	DELETE FROM tbl_estadistica_dato_esdt
 	WHERE
 	    EXISTS (

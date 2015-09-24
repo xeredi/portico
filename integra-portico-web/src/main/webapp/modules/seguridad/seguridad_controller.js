@@ -8,15 +8,17 @@ angular.module("seguridad_controller", [ "seguridad_service" ])
 
 .controller("AccionEditController", AccionEditController)
 
+.controller("AccionEntidadGridController", AccionEntidadGridController)
+
+.controller("AccionEntidadDetailController", AccionEntidadDetailController)
+
+.controller("AccionEntidadEditController", AccionEntidadEditController)
+
 .controller("GrupoGridController", GrupoGridController)
 
 .controller("GrupoDetailController", GrupoDetailController)
 
 .controller("GrupoEditController", GrupoEditController)
-
-.controller("GrupoAccionDetailController", GrupoAccionDetailController)
-
-.controller("GrupoAccionEditController", GrupoAccionEditController)
 
 .controller("UsuarioGridController", UsuarioGridController)
 
@@ -64,18 +66,34 @@ function config($stateProvider) {
 		}
 	})
 
-	.state("grupo-accion-detail", {
-		url : "/seguridad/grupo-accion/detail/:grpoId/:accnId",
-		templateUrl : "modules/seguridad/grupo-accion-detail.html",
-		controller : "GrupoAccionDetailController as vm",
+	.state("accion-entidad-grid", {
+		url : "/seguridad/accion-entidad/grid?page&searchCriteria&limit",
+		templateUrl : "modules/seguridad/accion-entidad-grid.html",
+		controller : "AccionEntidadGridController as vm",
+		reloadOnSearch : false
 	})
 
-	.state("grupo-accion-create", {
-		url : "/seguridad/grupo-accion/create?:grpoId&:accnId",
-		templateUrl : "modules/seguridad/grupo-accion-edit.html",
-		controller : "GrupoAccionEditController as vm",
+	.state("accion-entidad-detail", {
+		url : "/seguridad/accion-entidad/detail/:id",
+		templateUrl : "modules/seguridad/accion-entidad-detail.html",
+		controller : "AccionEntidadDetailController as vm",
+	})
+
+	.state("accion-entidad-create", {
+		url : "/seguridad/accion-entidad/create",
+		templateUrl : "modules/seguridad/accion-entidad-edit.html",
+		controller : "AccionEntidadEditController as vm",
 		data : {
 			accion : 'create'
+		}
+	})
+
+	.state("accion-entidad-edit", {
+		url : "/seguridad/accion-entidad/edit/:id",
+		templateUrl : "modules/seguridad/accion-entidad-edit.html",
+		controller : "AccionEntidadEditController as vm",
+		data : {
+			accion : 'edit'
 		}
 	})
 
@@ -227,6 +245,7 @@ function AccionEditController($state, $stateParams, pageTitleService,
 
 	vm.save = save;
 	vm.cancel = cancel;
+	vm.updateGrupos = updateGrupos;
 
 	function save() {
 		AccionService.save(vm.accion, vm.model).then(
@@ -240,6 +259,24 @@ function AccionEditController($state, $stateParams, pageTitleService,
 		window.history.back();
 	}
 
+	function updateGrupos($event, grpoId) {
+		var checkbox = $event.target;
+
+		if (!vm.model) {
+			vm.model = {};
+		}
+
+		if (!vm.model.grpoIds) {
+			vm.model.grpoIds = [];
+		}
+
+		if (checkbox.checked) {
+			vm.model.grpoIds.push(grpoId);
+		} else {
+			vm.model.grpoIds.splice(vm.model.grpoIds.indexOf(grpoId), 1);
+		}
+	}
+
 	vm.accion = $state.current.data.accion;
 	vm.model = {
 		id : $stateParams.id
@@ -249,50 +286,92 @@ function AccionEditController($state, $stateParams, pageTitleService,
 		vm.model = data.model;
 
 		vm.prefixList = data.prefixList;
+		vm.grpoList = data.grpoList;
 	});
 
 	pageTitleService.setTitle("accn", "page_" + vm.accion);
 }
 
-function GrupoAccionDetailController($stateParams, pageTitleService,
-		GrupoAccionService) {
+function AccionEntidadGridController($state, $stateParams, $modal,
+		pageTitleService, AccionEntidadService) {
+	var vm = this;
+
+	vm.filter = filter;
+	vm.resetFilter = resetFilter;
+	vm.search = search;
+	vm.pageChanged = pageChanged;
+
+	function filter() {
+		AccionEntidadService.filter(vm.searchCriteria).then(function(data) {
+			vm.entiList = data.entiList;
+			vm.grpoList = data.grpoList;
+		});
+	}
+
+	function resetFilter() {
+		vm.searchCriteria = {};
+	}
+
+	function search(page) {
+		AccionEntidadService.listPage(vm.searchCriteria, page, vm.limit).then(
+				function(data) {
+					vm.page = data.resultList.page;
+					vm.limit = data.resultList.limit;
+					vm.resultList = data.resultList;
+				});
+	}
+
+	function pageChanged() {
+		search(vm.page);
+	}
+
+	vm.searchCriteria = $stateParams.searchCriteria ? angular
+			.fromJson($stateParams.searchCriteria) : {};
+	vm.limit = $stateParams.limit;
+
+	search($stateParams.page ? $stateParams.page : 1);
+
+	pageTitleService.setTitle("acen", "page_grid");
+}
+
+function AccionEntidadDetailController($stateParams, pageTitleService,
+		AccionEntidadService) {
 	var vm = this;
 
 	vm.remove = remove;
 
 	function remove() {
-		GrupoAccionService.remove(vm.model).then(function(data) {
+		AccionEntidadService.remove(vm.model).then(function(data) {
 			window.history.back();
 		});
 	}
 
 	vm.model = {
-		grpoId : $stateParams.grpoId,
-		accnId : $stateParams.accnId
+		id : $stateParams.id
 	};
 
-	GrupoAccionService.detail(vm.model).then(function(data) {
+	AccionEntidadService.detail(vm.model).then(function(data) {
 		vm.model = data.model;
 
-		vm.grpo = data.grpo;
-		vm.accn = data.accn;
+		vm.grpoList = data.grpoList;
 	});
 
-	pageTitleService.setTitle("grac", "page_detail");
+	pageTitleService.setTitle("acen", "page_detail");
 }
 
-function GrupoAccionEditController($state, $stateParams, pageTitleService,
-		GrupoAccionService) {
+function AccionEntidadEditController($state, $stateParams, pageTitleService,
+		AccionEntidadService) {
 	var vm = this;
 
 	vm.save = save;
 	vm.cancel = cancel;
+	vm.updateGrupos = updateGrupos;
 
 	function save() {
-		GrupoAccionService.save(vm.accion, vm.model).then(
+		AccionEntidadService.save(vm.accion, vm.model).then(
 				function(data) {
-					GrupoAccionService.redirectAfterSave(vm.accion, data.model,
-							"grupo-accion-detail");
+					AccionEntidadService.redirectAfterSave(vm.accion,
+							data.model, "accion-entidad-detail");
 				});
 	}
 
@@ -300,20 +379,39 @@ function GrupoAccionEditController($state, $stateParams, pageTitleService,
 		window.history.back();
 	}
 
-	vm.accion = $state.current.data.accion;
-	vm.model = {
-		grpoId : $stateParams.grpoId,
-		accnId : $stateParams.accnId
+	function updateGrupos($event, grpoId) {
+		var checkbox = $event.target;
+
+		if (!vm.model) {
+			vm.model = {};
+		}
+
+		if (!vm.model.grpoIds) {
+			vm.model.grpoIds = [];
+		}
+
+		if (checkbox.checked) {
+			vm.model.grpoIds.push(grpoId);
+		} else {
+			vm.model.grpoIds.splice(vm.model.grpoIds.indexOf(grpoId), 1);
+		}
 	}
 
-	GrupoAccionService.edit(vm.accion, vm.model).then(function(data) {
+	vm.accion = $state.current.data.accion;
+	vm.model = {
+		id : $stateParams.id
+	}
+
+	AccionEntidadService.edit(vm.accion, vm.model).then(function(data) {
 		vm.model = data.model;
 
-		vm.grpoList = data.grpoList;
 		vm.accnList = data.accnList;
+		vm.entiList = data.entiList;
+
+		vm.grpoList = data.grpoList;
 	});
 
-	pageTitleService.setTitle("grac", "page_" + vm.accion);
+	pageTitleService.setTitle("acen", "page_" + vm.accion);
 }
 
 function GrupoGridController($state, $stateParams, $modal, pageTitleService,
@@ -387,6 +485,7 @@ function GrupoEditController($state, $stateParams, pageTitleService,
 
 	vm.save = save;
 	vm.cancel = cancel;
+	vm.updateAcciones = updateAcciones;
 
 	function save() {
 		GrupoService.save(vm.accion, vm.model).then(
@@ -396,6 +495,23 @@ function GrupoEditController($state, $stateParams, pageTitleService,
 				});
 	}
 
+	function updateAcciones($event, accnId) {
+		var checkbox = $event.target;
+
+		if (!vm.model) {
+			vm.model = {};
+		}
+
+		if (!vm.model.accnIds) {
+			vm.model.accnIds = [];
+		}
+
+		if (checkbox.checked) {
+			vm.model.accnIds.push(accnId);
+		} else {
+			vm.model.accnIds.splice(vm.model.accnIds.indexOf(accnId), 1);
+		}
+	}
 	function cancel() {
 		window.history.back();
 	}

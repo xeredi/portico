@@ -42,6 +42,11 @@
         <include refid="SelectWhere" />
     </select>
 
+    <select id="selectList" parameterType="GrupoAccionCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
     <insert id="insert" parameterType="GrupoAccionVO">
         <![CDATA[
         INSERT INTO tbl_grupo_accion_grac (grac_grpo_pk, grac_accn_pk)

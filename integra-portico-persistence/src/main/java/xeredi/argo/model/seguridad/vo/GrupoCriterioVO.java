@@ -17,6 +17,9 @@ public final class GrupoCriterioVO extends BaseCriterioVO {
     /** The accn id. */
     private Long accnId;
 
+    /** The acen id. */
+    private Long acenId;
+
     /** The nombre. */
     private String nombre;
 
@@ -94,4 +97,22 @@ public final class GrupoCriterioVO extends BaseCriterioVO {
 	public void setNombre(String value) {
 		this.nombre = value;
 	}
+
+    /**
+     * Gets the acen id.
+     *
+     * @return the acen id
+     */
+    public Long getAcenId() {
+        return acenId;
+    }
+
+    /**
+     * Sets the acen id.
+     *
+     * @param value the new acen id
+     */
+    public void setAcenId(Long value) {
+        this.acenId = value;
+    }
 }

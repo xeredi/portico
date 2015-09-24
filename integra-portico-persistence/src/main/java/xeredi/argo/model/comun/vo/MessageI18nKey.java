@@ -7,40 +7,74 @@ package xeredi.argo.model.comun.vo;
 public enum MessageI18nKey {
 
     /** The app_nombre. */
-    app_nombre, /** The menu. */
-    menu, /** The error list. */
-    errorList, /** The filtro. */
-    filtro, /** The filtro_limit. */
-    filtro_limit, /** The grid_count. */
-    grid_count, /** The format_date. */
-    format_date, /** The format_datetime. */
-    format_datetime, /** The format_true. */
-    format_true, /** The format_false. */
-    format_false, /** The format_1. */
-    format_1, /** The format_0. */
-    format_0, /** The btn_acceso. */
-    btn_acceso, /** The btn_buscar. */
-    btn_buscar, /** The btn_volver. */
-    btn_volver, /** The btn_aceptar. */
-    btn_aceptar, /** The btn_cancelar. */
-    btn_cancelar, /** The btn_crear. */
-    btn_crear, /** The btn_editar. */
-    btn_editar, /** The btn_guardar. */
-    btn_guardar, /** The btn_borrar. */
-    btn_borrar, /** The btn_duplicar. */
-    btn_duplicar, /** The btn_filtrar. */
-    btn_filtrar, /** The btn_exportar. */
-    btn_exportar, /** The btn_imprimir. */
-    btn_imprimir, /** The btn_recargar. */
-    btn_recargar, /** The btn_valorar. */
-    btn_valorar, /** The btn_valoraciones. */
-    btn_valoraciones, /** The btn_facturar. */
-    btn_facturar, /** The btn_facturas. */
-    btn_facturas, /** The btn_cargar. */
-    btn_cargar, /** The btn_start. */
-    btn_start, /** The btn_pause. */
-    btn_pause, /** The btn_shutdown. */
-    btn_shutdown, /** The btn_shutdown clean. */
+    app_nombre,
+    /** The menu. */
+    menu,
+    /** The error list. */
+    errorList,
+    /** The filtro. */
+    filtro,
+    /** The filtro_limit. */
+    filtro_limit,
+    /** The grid_count. */
+    grid_count,
+    /** The format_date. */
+    format_date,
+    /** The format_datetime. */
+    format_datetime,
+    /** The format_true. */
+    format_true,
+    /** The format_false. */
+    format_false,
+    /** The format_1. */
+    format_1,
+    /** The format_0. */
+    format_0,
+    /** The btn_acceso. */
+    btn_acceso,
+    /** The btn_buscar. */
+    btn_buscar,
+    /** The btn_volver. */
+    btn_volver,
+    /** The btn_aceptar. */
+    btn_aceptar,
+    /** The btn_cancelar. */
+    btn_cancelar,
+    /** The btn_crear. */
+    btn_crear,
+    /** The btn_editar. */
+    btn_editar,
+    /** The btn_guardar. */
+    btn_guardar,
+    /** The btn_borrar. */
+    btn_borrar,
+    /** The btn_duplicar. */
+    btn_duplicar,
+    /** The btn_filtrar. */
+    btn_filtrar,
+    /** The btn_exportar. */
+    btn_exportar,
+    /** The btn_imprimir. */
+    btn_imprimir,
+    /** The btn_recargar. */
+    btn_recargar,
+    /** The btn_valorar. */
+    btn_valorar,
+    /** The btn_valoraciones. */
+    btn_valoraciones,
+    /** The btn_facturar. */
+    btn_facturar,
+    /** The btn_facturas. */
+    btn_facturas,
+    /** The btn_cargar. */
+    btn_cargar,
+    /** The btn_start. */
+    btn_start,
+    /** The btn_pause. */
+    btn_pause,
+    /** The btn_shutdown. */
+    btn_shutdown,
+    /** The btn_shutdown clean. */
     btn_shutdownClean,
 
     /** The sec_facturacion. */
@@ -70,11 +104,20 @@ public enum MessageI18nKey {
     usro_nombre, /** The grpo. */
     grpo, /** The grpo list. */
     grpoList, /** The grpo_nombre. */
-    grpo_nombre, /** The accn. */
-    accn, /** The accn_codigo. */
-    accn_codigo, /** The accn_nombre. */
-    accn_prefix, /** The accn list. */
-    accnList, /** The grac. */
+    grpo_nombre,
+    /** The accn. */
+    accn,
+    /** The accn_codigo. */
+    accn_codigo,
+    /** The accn_nombre. */
+    accn_prefix,
+    /** The accn list. */
+    accnList,
+    /** The acen. */
+    acen,
+    /** The acen list. */
+    acenList,
+    /** The grac. */
     grac, /** The usgr. */
     usgr, /** The sprt. */
     sprt, /** The sprt list. */
@@ -207,15 +250,26 @@ public enum MessageI18nKey {
     trtd_obligatorio,
 
     /** The page_acceso. */
-    page_acceso, /** The page_home. */
-    page_home, /** The page_item_grid. */
-    page_grid, /** The page_item_detail. */
-    page_detail, /** The page_item_create. */
-    page_create, /** The page_item_duplicate. */
-    page_duplicate, /** The page_item_edit. */
-    page_edit, /** The i18n_text. */
-    i18n_text, /** The i18n_text_lang. */
-    i18n_text_lang, /** The prmt. */
+    page_acceso,
+    /** The page_home. */
+    page_home,
+    /** The page_item_grid. */
+    page_grid,
+    /** The page_item_detail. */
+    page_detail,
+    /** The page_item_create. */
+    page_create,
+    /** The page_item_duplicate. */
+    page_duplicate,
+    /** The page_item_edit. */
+    page_edit,
+    /** The i18n_text. */
+    i18n_text,
+    /** The i18n_text_lang. */
+    i18n_text_lang,
+    /** The item. */
+    item,
+    /** The prmt. */
     prmt, /** The prmt list. */
     prmtList, /** The prmt_parametro. */
     prmt_parametro, /** The prmt_lat. */
@@ -262,6 +316,8 @@ public enum MessageI18nKey {
     prbt_erroresCnt, /** The prbt_alertas cnt. */
     prbt_alertasCnt, /** The prbt_mensajes cnt. */
     prbt_mensajesCnt, /** The prmn list. */
+    prmn,
+    /** The prmn list. */
     prmnList, /** The prmn_nivel. */
     prmn_nivel, /** The prmn_codigo. */
     prmn_codigo, /** The prmn_mensaje. */
@@ -273,6 +329,8 @@ public enum MessageI18nKey {
     prarEntList, /** The prar sal list. */
     prarSalList, /** The prar nombre. */
     prar_nombre, /** The prit list. */
+    prit,
+    /** The prit list. */
     pritList, /** The prit ent list. */
     pritEntList, /** The prit sal list. */
     pritSalList, /** The prit_nombre. */

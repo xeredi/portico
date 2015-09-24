@@ -1,11 +1,16 @@
 package xeredi.argo.http.controller.action.seguridad;
 
+import java.util.List;
+
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.seguridad.bo.AccionBO;
+import xeredi.argo.model.seguridad.bo.GrupoBO;
 import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.AccionVO;
+import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
+import xeredi.argo.model.seguridad.vo.GrupoVO;
 
 import com.google.common.base.Preconditions;
 
@@ -20,6 +25,8 @@ public final class AccionEditAction extends CrudEditAction<AccionVO> {
 
     /** The prefix list. */
     private AccionPrefix[] prefixList;
+
+    private List<GrupoVO> grpoList;
 
     /**
      * {@inheritDoc}
@@ -46,6 +53,19 @@ public final class AccionEditAction extends CrudEditAction<AccionVO> {
     @Override
     public void doLoadDependencies() throws ApplicationException {
         prefixList = AccionPrefix.values();
+
+        final GrupoBO grpoBO = new GrupoBO();
+        final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
+
+        grpoList = grpoBO.selectList(grpoCriterio);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.accn;
     }
 
     /**
@@ -57,11 +77,7 @@ public final class AccionEditAction extends CrudEditAction<AccionVO> {
         return prefixList;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.accn;
+    public List<GrupoVO> getGrpoList() {
+        return grpoList;
     }
 }

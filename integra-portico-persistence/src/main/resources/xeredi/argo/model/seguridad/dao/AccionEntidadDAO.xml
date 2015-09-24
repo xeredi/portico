@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.seguridad.dao.AccionEntidadDAO">
+    <resultMap type="AccionEntidadVO" id="ResultMap">
+        <id column="acen_pk" />
+
+        <result column="acen_pk" property="id" />
+
+        <association property="accn" javaType="AccionVO">
+            <result column="acen_accn_pk" property="id" />
+            <result column="accn_prefix" property="prefix" />
+            <result column="accn_codigo" property="codigo" />
+        </association>
+
+        <association property="enti" javaType="EntidadVO">
+            <result column="acen_enti_pk" property="id" />
+            <result column="enti_nombre" property="nombre" />
+        </association>
+    </resultMap>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+        acen_pk, acen_enti_pk, acen_accn_pk
+        , accn_prefix, accn_codigo
+    ]]>
+        <if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'enti'
+                    AND i18n_ext_pk = acen_enti_pk
+                    AND i18n_lang = #{idioma}
+            ) AS enti_nombre
+        ]]>
+        </if>
+    <![CDATA[
+    FROM
+        tbl_accion_entidad_acen
+        INNER JOIN tbl_accion_accn ON
+            accn_pk = acen_accn_pk
+    ]]>
+    </sql>
+
+    <sql id="SelectCountPrefix">
+    <![CDATA[
+    SELECT
+        COUNT(1)
+    FROM
+        tbl_accion_entidad_acen
+        INNER JOIN tbl_accion_accn ON
+            accn_pk = acen_accn_pk
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND acen_pk = #{id}
+            </if>
+            <if test="entiId != null">
+                AND acen_enti_pk = #{entiId}
+            </if>
+            <if test="grpoId != null">
+            <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_grupo_accion_entidad_grae
+                    WHERE
+                        grae_acen_pk = acen_pk
+                        AND grae_grpo_pk = #{grpoId}
+                )
+            ]]>
+            </if>
+            <if test="usroId != null">
+            <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_grupo_accion_entidad_grae
+                    WHERE
+                        grae_acen_pk = acen_pk
+                        AND EXISTS (
+                            SELECT 1
+                            FROM
+                                tbl_usuario_grupo_usgr
+                            WHERE
+                                usgr_grpo_pk = grae_grpo_pk
+                                AND usgr_usro_pk = #{usroId}
+                        )
+                )
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <select id="count" parameterType="AccionEntidadCriterioVO" resultType="Integer">
+        <include refid="SelectCountPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="selectList" parameterType="AccionEntidadCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY acen_enti_pk, accn_prefix, accn_codigo
+    </select>
+
+    <select id="selectObject" parameterType="AccionEntidadCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="exists" parameterType="AccionEntidadVO" resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_accion_entidad_acen
+        WHERE acen_enti_pk = #{enti.id}
+            AND acen_accn_pk = #{accn.id}
+        ]]>
+    </select>
+
+    <select id="existsCriterio" parameterType="AccionEntidadCriterioVO" resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_accion_entidad_acen
+        ]]>
+        <include refid="SelectWhere" />
+    </select>
+
+    <insert id="insert" parameterType="AccionEntidadVO">
+        <![CDATA[
+        INSERT INTO tbl_accion_entidad_acen (acen_pk, acen_accn_pk, acen_enti_pk)
+        VALUES (#{id}, #{accn.id}, #{enti.id})
+        ]]>
+    </insert>
+
+    <update id="update" parameterType="AccionEntidadVO">
+        <![CDATA[
+        UPDATE tbl_accion_entidad_acen SET
+            acen_accn_pk = #{accn.id}
+            , acen_enti_pk = #{enti.id}
+        WHERE acen_pk = #{id}
+        ]]>
+    </update>
+
+    <delete id="delete" parameterType="AccionEntidadVO">
+        <![CDATA[
+        DELETE FROM tbl_accion_entidad_acen
+        WHERE
+            acen_pk = #{id}
+        ]]>
+    </delete>
+</mapper>

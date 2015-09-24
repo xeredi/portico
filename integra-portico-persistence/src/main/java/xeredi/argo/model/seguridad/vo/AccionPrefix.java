@@ -38,6 +38,8 @@ public enum AccionPrefix {
     trtd,
     /** The accn. */
     accn,
+    /** The acen. */
+    acen,
     /** The grpo. */
     grpo,
     /** The usro. */
