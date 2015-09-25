@@ -15,7 +15,7 @@
 
 <title ng-bind="'ARGO - ' + title"></title>
 </head>
-<body>
+<body ng-controller="MainController as mc">
     <header class="navbar navbar-default navbar-fixed-top">
         <nav class="collapse navbar-collapse" role="navigation">
             <ul class="nav navbar-nav">
@@ -79,7 +79,8 @@
         src="http://cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.1.6/angular-google-maps.min.js"></script>
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/angular-spinner/0.6.2/angular-spinner.min.js"></script>
-
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.2.2/angular-local-storage.min.js"></script>
 
     <script type="text/javascript" src="static/filesaver/FileSaver.min.js"></script>
     <script type="text/javascript" src="app.js"></script>

@@ -47,6 +47,15 @@ public final class AccionVO {
     }
 
     /**
+     * Gets the path.
+     *
+     * @return the path
+     */
+    public String getPath() {
+        return prefix == null ? null : prefix.name() + '-' + codigo;
+    }
+
+    /**
      * Gets the etiqueta.
      *
      * @return the etiqueta

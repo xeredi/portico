@@ -464,15 +464,22 @@ function UsuarioEditController($state, $stateParams, pageTitleService,
 	pageTitleService.setTitle("usro", "page_" + vm.accion);
 }
 
-function UsuarioAccesoController($state, pageTitleService, UsuarioService) {
+function UsuarioAccesoController($state, localStorageService, pageTitleService,
+		UsuarioService) {
 	var vm = this;
 
 	vm.acceso = acceso;
 
 	function acceso() {
-		UsuarioService.acceso(vm.model).then(function(data) {
-			$state.go("home");
-		});
+		UsuarioService.acceso(vm.model).then(
+				function(data) {
+					localStorageService.set("accnPaths",
+							data.resultadoLogin.accnPaths);
+
+					console.log(localStorageService.get("accnPaths"));
+
+					$state.go("home");
+				});
 	}
 
 	pageTitleService.setTitle("usro", "page_acceso");

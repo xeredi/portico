@@ -37,8 +37,10 @@
         <span class="list-group-item active" translate="sec_usro"></span>
     </div>
     <div class="list-group col-sm-6 col-md-8 col-lg-9">
-        <a class="col-md-6 col-lg-4 list-group-item" ui-sref="accion-grid" translate="accnList"></a> <a
+        <a ng-if="mc.hasAccnPath('accn-list')" class="col-md-6 col-lg-4 list-group-item" ui-sref="accion-grid"
+            translate="accnList"></a> <a ng-if="mc.hasAccnPath('grpo-list')"
             class="col-md-6 col-lg-4 list-group-item" ui-sref="grupo-grid" translate="grpoList"></a><a
-            class="col-md-6 col-lg-4 list-group-item" ui-sref="usuario-grid" translate="usroList"></a>
+            ng-if="mc.hasAccnPath('usro-list')" class="col-md-6 col-lg-4 list-group-item"
+            ui-sref="usuario-grid" translate="usroList"></a>
     </div>
 </div>

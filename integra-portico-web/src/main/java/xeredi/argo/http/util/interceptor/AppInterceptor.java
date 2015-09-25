@@ -50,13 +50,13 @@ public final class AppInterceptor extends AbstractInterceptor {
                             final Long entiId = ((ProtectedItemAction) action).getEntiId();
 
                             if (SessionManager.hasPermission(prefix, codigo, entiId)) {
-                                action.setAccionesUsuario(SessionManager.selectActions(prefix, entiId));
+                                // action.setAccionesUsuario(SessionManager.selectActions(prefix, entiId));
                             } else {
                                 action.addActionError(MessageI18nKey.E00015);
                             }
                         } else {
                             if (SessionManager.hasPermission(prefix, codigo)) {
-                                action.setAccionesUsuario(SessionManager.selectActions(prefix));
+                                // action.setAccionesUsuario(SessionManager.selectActions(prefix));
                             } else {
                                 action.addActionError(MessageI18nKey.E00015);
                             }

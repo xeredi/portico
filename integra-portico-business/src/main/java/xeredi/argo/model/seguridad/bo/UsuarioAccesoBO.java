@@ -66,7 +66,7 @@ public final class UsuarioAccesoBO {
             final Set<String> paths = new HashSet<>();
 
             for (final AccionVO accn : accnDAO.selectList(accnCriterio)) {
-                paths.add(accn.getCodigo());
+                paths.add(accn.getPath());
             }
 
             return new ResultadoLoginVO(usro.getId(), usro.getNombre(), usro.getSprt(), usro.getPrto(), paths);

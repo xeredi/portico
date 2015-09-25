@@ -1,9 +1,8 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a ng-if="accionesUsuario.indexOf('edit') >= 0" class="btn btn-default" ui-sref="grupo-edit(vm.model)"><i
+        <a ng-if="mc.hasAccnPath('grpo-edit')" class="btn btn-default" ui-sref="grupo-edit(vm.model)"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
-        <button ng-if="accionesUsuario.indexOf('remove') >= 0" data-ng-click="vm.remove()"
-            class="btn btn-default">
+        <button ng-if="mc.hasAccnPath('grpo-remove')" data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
         </button>
     </div>
@@ -18,7 +17,7 @@
     </div>
 </fieldset>
 
-<fieldset>
+<fieldset ng-if="mc.hasAccnPath('accn-list')">
     <legend translate="accnList"></legend>
 
     <div class="row" ng-repeat="prefix in vm.prefixList | orderBy: prefix track by $index">
@@ -33,7 +32,7 @@
     </div>
 </fieldset>
 
-<fieldset>
+<fieldset ng-if="mc.hasAccnPath('acen-list')">
     <legend translate="acenList"></legend>
 
     <div class="row" ng-repeat="entiId in vm.entiList track by $index">

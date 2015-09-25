@@ -6,15 +6,15 @@ angular
 						"ui.bootstrap.tabs", "ui.bootstrap.pagination",
 						"ui.bootstrap.dropdown", "ui.bootstrap.typeahead",
 						"pascalprecht.translate", "angularSpinner",
-						"uiGmapgoogle-maps", "i18n", "crud_service",
-						"administracion", "administracion_service",
-						"administracion_controller", "metamodelo_service",
-						"metamodelo_controller", "facturacion",
-						"facturacion_service", "facturacion_controller",
-						"item_service", "item_controller", "maestro",
-						"maestro_service", "maestro_controller", "servicio",
-						"estadistica", "proceso", "seguridad_service",
-						"seguridad_controller" ])
+						"uiGmapgoogle-maps", "LocalStorageModule", "i18n",
+						"crud_service", "administracion",
+						"administracion_service", "administracion_controller",
+						"metamodelo_service", "metamodelo_controller",
+						"facturacion", "facturacion_service",
+						"facturacion_controller", "item_service",
+						"item_controller", "maestro", "maestro_service",
+						"maestro_controller", "servicio", "estadistica",
+						"proceso", "seguridad_service", "seguridad_controller" ])
 
 		.config([ "$stateProvider", function($stateProvider) {
 			$stateProvider
@@ -62,13 +62,6 @@ angular
 				container : 'body'
 			});
 		})
-		/*
-		 * .config(function($typeaheadProvider) {
-		 * angular.extend($typeaheadProvider.defaults, { trigger : 'focus',
-		 * minLength : 1, limit : 5, delay : { show : 250, hide : 100 } }); })
-		 * .config(function($tabProvider) {
-		 * angular.extend($tabProvider.defaults, { navClass : 'nav-pills' }); })
-		 */
 
 		.config(function($modalProvider) {
 			angular.extend($modalProvider.defaults, {
@@ -81,6 +74,10 @@ angular
 				animation : 'am-flip-x',
 				navClass : 'nav-pills'
 			});
+		})
+
+		.config(function(localStorageServiceProvider) {
+			localStorageServiceProvider.setPrefix('argo');
 		})
 
 		.config(
@@ -188,9 +185,23 @@ angular
 
 		.factory('pageTitleService', pageTitleService)
 
+		.controller("MainController", MainController)
+
 		.controller("HomeController", HomeController)
 
 ;
+
+function MainController(localStorageService) {
+	// console.log("MainController");
+	var vm = this;
+
+	vm.hasAccnPath = hasAccnPath;
+
+	function hasAccnPath(accnPath) {
+		// console.log("hasAccnPath");
+		return localStorageService.get("accnPaths").indexOf(accnPath) > 0;
+	}
+}
 
 function HomeController($http, pageTitleService) {
 	$http.post("index.action").success(function(data) {

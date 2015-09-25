@@ -139,12 +139,14 @@ public final class SessionManager {
      * @throws ApplicationException
      *             the application exception
      */
-    public static void login(final String login, final String password) throws ApplicationException {
+    public static ResultadoLoginVO login(final String login, final String password) throws ApplicationException {
         final UsuarioAccesoBO usacBO = new UsuarioAccesoBO();
 
         final ResultadoLoginVO resultadoLogin = usacBO.acceso(login, password);
 
         getSession().put(ParamNames.loginResult.name(), resultadoLogin);
+
+        return resultadoLogin;
     }
 
     /**

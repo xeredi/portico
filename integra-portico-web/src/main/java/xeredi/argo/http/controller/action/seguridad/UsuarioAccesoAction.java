@@ -5,6 +5,7 @@ import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.seguridad.bo.ResultadoLoginVO;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
 
 import com.opensymphony.xwork2.ModelDriven;
@@ -21,6 +22,9 @@ public final class UsuarioAccesoAction extends BaseAction implements ModelDriven
     /** The model. */
     private UsuarioVO model;
 
+    /** The resultado login. */
+    private ResultadoLoginVO resultadoLogin;
+
     /**
      * {@inheritDoc}
      */
@@ -34,7 +38,7 @@ public final class UsuarioAccesoAction extends BaseAction implements ModelDriven
         FieldValidator.validateRequired(this, MessageI18nKey.usro_contrasenia, model.getContrasenia());
 
         if (!hasErrors()) {
-            SessionManager.login(model.getLogin(), model.getContrasenia());
+            resultadoLogin = SessionManager.login(model.getLogin(), model.getContrasenia());
         }
     }
 
@@ -54,5 +58,14 @@ public final class UsuarioAccesoAction extends BaseAction implements ModelDriven
      */
     public void setModel(final UsuarioVO value) {
         model = value;
+    }
+
+    /**
+     * Gets the resultado login.
+     *
+     * @return the resultado login
+     */
+    public ResultadoLoginVO getResultadoLogin() {
+        return resultadoLogin;
     }
 }
