@@ -17,6 +17,9 @@ public final class AccionCriterioVO extends BaseCriterioVO {
     /** The codigo. */
     private String codigo;
 
+    /** The enti id. */
+    private Long entiId;
+
     /** The grpo id. */
     private Long grpoId;
 
@@ -116,5 +119,24 @@ public final class AccionCriterioVO extends BaseCriterioVO {
      */
     public void setPrefix(AccionPrefix value) {
         this.prefix = value;
+    }
+
+    /**
+     * Gets the enti id.
+     *
+     * @return the enti id
+     */
+    public Long getEntiId() {
+        return entiId;
+    }
+
+    /**
+     * Sets the enti id.
+     *
+     * @param value
+     *            the new enti id
+     */
+    public void setEntiId(Long value) {
+        this.entiId = value;
     }
 }

@@ -39,7 +39,7 @@ public final class TipoParametroEditAction extends EntidadEditAction<TipoParamet
      * {@inheritDoc}
      */
     @Override
-    public void doLoadDependencies() throws ApplicationException {
+    public void doSpecificLoadDependencies() throws ApplicationException {
         final TipoDatoBO tpdtBO = new TipoDatoBO();
         final TipoDatoCriterioVO tpdtCriterio = new TipoDatoCriterioVO();
 

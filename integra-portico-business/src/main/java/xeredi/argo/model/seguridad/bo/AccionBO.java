@@ -20,6 +20,7 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.seguridad.dao.AccionDAO;
 import xeredi.argo.model.seguridad.dao.GrupoAccionDAO;
 import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.AccionVO;
 import xeredi.argo.model.seguridad.vo.GrupoAccionCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoAccionVO;
@@ -143,7 +144,8 @@ public final class AccionBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<AccionVO> selectList(final @NonNull AccionCriterioVO accnCriterio, final int offset, final int limit) {
+    public PaginatedList<AccionVO> selectList(final @NonNull AccionCriterioVO accnCriterio, final int offset,
+            final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AccionDAO accnDAO = session.getMapper(AccionDAO.class);
             final int count = accnDAO.count(accnCriterio);
@@ -203,6 +205,58 @@ public final class AccionBO {
             accn.setGrpoIds(grpoIds);
 
             return accn;
+        }
+    }
+
+    /**
+     * Exists.
+     *
+     * @param prefix
+     *            the prefix
+     * @param codigo
+     *            the codigo
+     * @param usroId
+     *            the usro id
+     * @return true, if successful
+     */
+    public boolean exists(final @NonNull AccionPrefix prefix, final @NonNull String codigo, final @NonNull Long usroId) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AccionDAO accnDAO = session.getMapper(AccionDAO.class);
+            final AccionCriterioVO accnCriterio = new AccionCriterioVO();
+
+            accnCriterio.setPrefix(prefix);
+            accnCriterio.setCodigo(codigo);
+            accnCriterio.setUsroId(usroId);
+
+            return accnDAO.count(accnCriterio) == 1;
+        }
+    }
+
+    /**
+     * Exists.
+     *
+     * @param prefix
+     *            the prefix
+     * @param codigo
+     *            the codigo
+     * @param entiId
+     *            the enti id
+     * @param usroId
+     *            the usro id
+     * @return true, if successful
+     */
+    public boolean exists(final @NonNull AccionPrefix prefix, final @NonNull String codigo, final @NonNull Long entiId,
+            final @NonNull Long usroId) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AccionDAO accnDAO = session.getMapper(AccionDAO.class);
+            final AccionCriterioVO accnCriterio = new AccionCriterioVO();
+
+            accnCriterio.setPrefix(prefix);
+            accnCriterio.setCodigo(codigo);
+            accnCriterio.setEntiId(entiId);
+            accnCriterio.setUsroId(usroId);
+
+            return accnDAO.count(accnCriterio) == 1;
         }
     }
 

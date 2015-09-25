@@ -8,10 +8,13 @@ import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.I18nPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
+import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.bo.EntidadAccionBO;
 import xeredi.argo.model.metamodelo.bo.EntidadAccionGridBO;
 import xeredi.argo.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 import xeredi.argo.model.metamodelo.vo.EntidadAccionCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadAccionGridCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadAccionGridVO;
@@ -50,6 +53,9 @@ public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetai
 
     /** The enag list. */
     protected List<EntidadAccionGridVO> enagList;
+
+    /** The acen list. */
+    protected List<AccionEntidadVO> acenList;
 
     /**
      * {@inheritDoc}
@@ -93,6 +99,13 @@ public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetai
         enagCriterio.setIdioma(getIdioma());
 
         enagList = enagBO.selectList(enagCriterio);
+
+        final AccionEntidadBO acenBO = new AccionEntidadBO();
+        final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
+
+        acenCriterio.setEntiId(model.getId());
+
+        acenList = acenBO.selectList(acenCriterio);
     }
 
     /**
@@ -146,5 +159,14 @@ public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetai
      */
     public final List<EntidadAccionGridVO> getEnagList() {
         return enagList;
+    }
+
+    /**
+     * Gets the acen list.
+     *
+     * @return the acen list
+     */
+    public final List<AccionEntidadVO> getAcenList() {
+        return acenList;
     }
 }

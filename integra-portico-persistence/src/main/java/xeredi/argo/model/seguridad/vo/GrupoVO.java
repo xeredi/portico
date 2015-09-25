@@ -1,5 +1,6 @@
 package xeredi.argo.model.seguridad.vo;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -18,6 +19,19 @@ public final class GrupoVO {
 
     /** The accn ids. */
     private Set<Long> accnIds;
+
+    /** The acen ids. */
+    private Set<Long> acenIds;
+
+    /**
+     * Instantiates a new grupo vo.
+     */
+    public GrupoVO() {
+        super();
+
+        accnIds = new HashSet<>();
+        acenIds = new HashSet<>();
+    }
 
     /**
      * {@inheritDoc}
@@ -77,9 +91,29 @@ public final class GrupoVO {
     /**
      * Sets the accn ids.
      *
-     * @param value the new accn ids
+     * @param value
+     *            the new accn ids
      */
     public void setAccnIds(Set<Long> value) {
         this.accnIds = value;
+    }
+
+    /**
+     * Gets the acen ids.
+     *
+     * @return the acen ids
+     */
+    public Set<Long> getAcenIds() {
+        return acenIds;
+    }
+
+    /**
+     * Sets the acen ids.
+     *
+     * @param value
+     *            the new acen ids
+     */
+    public void setAcenIds(Set<Long> value) {
+        this.acenIds = value;
     }
 }

@@ -1,8 +1,10 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ui-sref="accion-edit(vm.model)"><i class="glyphicon glyphicon-edit"></i>
-            <span translate="btn_editar"></span></a>
-        <button data-ng-click="vm.remove()" class="btn btn-default">
+        <a ng-if="accionesUsuario.indexOf('edit') >= 0" class="btn btn-default"
+            ui-sref="accion-edit(vm.model)"><i class="glyphicon glyphicon-edit"></i> <span
+            translate="btn_editar"></span></a>
+        <button ng-if="accionesUsuario.indexOf('remove') >= 0" data-ng-click="vm.remove()"
+            class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
         </button>
     </div>
@@ -17,6 +19,18 @@
         <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
             <label translate="accn_codigo"></label>
             <p class="form-control-static" ng-bind="vm.model.codigo"></p>
+        </div>
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+            <label translate="accn_core"></label>
+            <p class="form-control-static">
+                <i class="glyphicon glyphicon-{{(vm.model.core ? 'ok' : 'remove')}}"></i>
+            </p>
+        </div>
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+            <label translate="accn_multiple"></label>
+            <p class="form-control-static">
+                <i class="glyphicon glyphicon-{{(vm.model.multiple ? 'ok' : 'remove')}}"></i>
+            </p>
         </div>
     </div>
 </fieldset>

@@ -1,8 +1,9 @@
-package xeredi.argo.model.seguridad.vo;
+package xeredi.argo.model.metamodelo.vo;
 
+import java.util.HashSet;
 import java.util.Set;
 
-import xeredi.argo.model.metamodelo.vo.EntidadVO;
+import xeredi.argo.model.seguridad.vo.AccionVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -16,10 +17,19 @@ public final class AccionEntidadVO {
     private AccionVO accn;
 
     /** The enti id. */
-    private EntidadVO enti;
+    private Long entiId;
 
     /** The grpo ids. */
     private Set<Long> grpoIds;
+
+    /**
+     * Instantiates a new accion entidad vo.
+     */
+    public AccionEntidadVO() {
+        super();
+
+        grpoIds = new HashSet<>();
+    }
 
     /**
      * Gets the id.
@@ -52,28 +62,29 @@ public final class AccionEntidadVO {
     /**
      * Sets the accn.
      *
-     * @param value the new accn
+     * @param value
+     *            the new accn
      */
     public void setAccn(AccionVO value) {
         this.accn = value;
     }
 
     /**
-     * Gets the enti.
+     * Gets the enti id.
      *
-     * @return the enti
+     * @return the enti id
      */
-    public EntidadVO getEnti() {
-        return enti;
+    public Long getEntiId() {
+        return entiId;
     }
 
     /**
-     * Sets the enti.
+     * Sets the enti id.
      *
-     * @param value the new enti
+     * @param value the new enti id
      */
-    public void setEnti(EntidadVO value) {
-        this.enti = value;
+    public void setEntiId(Long value) {
+        this.entiId = value;
     }
 
     /**
@@ -88,7 +99,8 @@ public final class AccionEntidadVO {
     /**
      * Sets the grpo ids.
      *
-     * @param value the new grpo ids
+     * @param value
+     *            the new grpo ids
      */
     public void setGrpoIds(Set<Long> value) {
         this.grpoIds = value;

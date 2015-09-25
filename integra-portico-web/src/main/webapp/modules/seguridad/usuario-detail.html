@@ -1,8 +1,10 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ui-sref="usuario-edit(vm.model)"><i
-            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
-        <button data-ng-click="vm.remove()" class="btn btn-default">
+        <a ng-if="accionesUsuario.indexOf('edit') >= 0" class="btn btn-default"
+            ui-sref="usuario-edit(vm.model)"><i class="glyphicon glyphicon-edit"></i> <span
+            translate="btn_editar"></span></a>
+        <button ng-if="accionesUsuario.indexOf('remove') >= 0" data-ng-click="vm.remove()"
+            class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
         </button>
     </div>

@@ -41,7 +41,14 @@ public abstract class EntidadEditAction<T extends EntidadVO> extends CrudEditAct
         }
 
         doSpecificEdit();
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void doLoadDependencies() throws ApplicationException {
+        doSpecificLoadDependencies();
     }
 
     /**
@@ -51,6 +58,14 @@ public abstract class EntidadEditAction<T extends EntidadVO> extends CrudEditAct
      *             the application exception
      */
     public abstract void doSpecificEdit() throws ApplicationException;
+
+    /**
+     * Do specific load dependencies.
+     *
+     * @throws ApplicationException
+     *             the application exception
+     */
+    public abstract void doSpecificLoadDependencies() throws ApplicationException;
 
     /**
      * Gets the i18n map.

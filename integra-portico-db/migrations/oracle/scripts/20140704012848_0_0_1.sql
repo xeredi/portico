@@ -2118,6 +2118,8 @@ CREATE TABLE tbl_accion_accn (
 	accn_pk NUMBER(19) NOT NULL
 	, accn_prefix VARCHAR2(4) NOT NULL
 	, accn_codigo VARCHAR2(100) NOT NULL
+	, accn_core INT NOT NULL
+	, accn_multiple INT NOT NULL
 
 	, CONSTRAINT pk_accn PRIMARY KEY (accn_pk)
 

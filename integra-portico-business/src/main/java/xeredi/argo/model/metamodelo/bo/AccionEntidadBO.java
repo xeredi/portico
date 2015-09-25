@@ -1,4 +1,4 @@
-package xeredi.argo.model.seguridad.bo;
+package xeredi.argo.model.metamodelo.bo;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,10 +15,10 @@ import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.seguridad.dao.AccionEntidadDAO;
+import xeredi.argo.model.metamodelo.dao.AccionEntidadDAO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 import xeredi.argo.model.seguridad.dao.GrupoAccionEntidadDAO;
-import xeredi.argo.model.seguridad.vo.AccionEntidadCriterioVO;
-import xeredi.argo.model.seguridad.vo.AccionEntidadVO;
 import xeredi.argo.model.seguridad.vo.GrupoAccionEntidadCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoAccionEntidadVO;
 import xeredi.util.mybatis.SqlMapperLocator;

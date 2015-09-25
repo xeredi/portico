@@ -1,5 +1,6 @@
 package xeredi.argo.model.seguridad.vo;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -19,8 +20,23 @@ public final class AccionVO {
     /** The codigo. */
     private String codigo;
 
+    /** The core. */
+    private Boolean core;
+
+    /** The multiple. */
+    private Boolean multiple;
+
     /** The grpo ids. */
     private Set<Long> grpoIds;
+
+    /**
+     * Instantiates a new accion vo.
+     */
+    public AccionVO() {
+        super();
+
+        grpoIds = new HashSet<>();
+    }
 
     /**
      * {@inheritDoc}
@@ -106,9 +122,48 @@ public final class AccionVO {
     }
 
     /**
+     * Gets the core.
+     *
+     * @return the core
+     */
+    public Boolean getCore() {
+        return core;
+    }
+
+    /**
+     * Sets the core.
+     *
+     * @param value
+     *            the new core
+     */
+    public void setCore(Boolean value) {
+        this.core = value;
+    }
+
+    /**
+     * Gets the multiple.
+     *
+     * @return the multiple
+     */
+    public Boolean getMultiple() {
+        return multiple;
+    }
+
+    /**
+     * Sets the multiple.
+     *
+     * @param value
+     *            the new multiple
+     */
+    public void setMultiple(Boolean value) {
+        this.multiple = value;
+    }
+
+    /**
      * Sets the grpo ids.
      *
-     * @param value the new grpo ids
+     * @param value
+     *            the new grpo ids
      */
     public void setGrpoIds(Set<Long> value) {
         this.grpoIds = value;

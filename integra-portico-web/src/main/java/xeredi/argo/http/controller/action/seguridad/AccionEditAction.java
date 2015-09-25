@@ -26,6 +26,7 @@ public final class AccionEditAction extends CrudEditAction<AccionVO> {
     /** The prefix list. */
     private AccionPrefix[] prefixList;
 
+    /** The grpo list. */
     private List<GrupoVO> grpoList;
 
     /**
@@ -77,6 +78,11 @@ public final class AccionEditAction extends CrudEditAction<AccionVO> {
         return prefixList;
     }
 
+    /**
+     * Gets the grpo list.
+     *
+     * @return the grpo list
+     */
     public List<GrupoVO> getGrpoList() {
         return grpoList;
     }

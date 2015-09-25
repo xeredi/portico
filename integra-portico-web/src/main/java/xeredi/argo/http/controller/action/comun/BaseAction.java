@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.comun;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
@@ -37,10 +38,14 @@ public abstract class BaseAction extends ActionSupport {
      */
     public static enum ACCION_EDICION {
         /** The alta. */
-        create, /** The modificar. */
-        edit, /** The duplicar. */
-        duplicate, /** The duplicate_version. */
-        duplicate_version, /** The load. */
+        create,
+        /** The modificar. */
+        edit,
+        /** The duplicar. */
+        duplicate,
+        /** The duplicate_version. */
+        duplicate_version,
+        /** The load. */
         load;
     }
 
@@ -56,6 +61,9 @@ public abstract class BaseAction extends ActionSupport {
 
     /** The response code. */
     private String responseCode;
+
+    /** The acciones usuario. */
+    private Set<String> accionesUsuario;
 
     /**
      * {@inheritDoc}
@@ -176,5 +184,23 @@ public abstract class BaseAction extends ActionSupport {
      */
     public final void setResponseCode(final String value) {
         responseCode = value;
+    }
+
+    /**
+     * Gets the acciones usuario.
+     *
+     * @return the acciones usuario
+     */
+    public final Set<String> getAccionesUsuario() {
+        return accionesUsuario;
+    }
+
+    /**
+     * Sets the acciones usuario.
+     *
+     * @param value the new acciones usuario
+     */
+    public final void setAccionesUsuario(final Set<String> value) {
+        this.accionesUsuario = value;
     }
 }

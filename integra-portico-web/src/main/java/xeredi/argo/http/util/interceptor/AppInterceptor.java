@@ -2,7 +2,6 @@ package xeredi.argo.http.util.interceptor;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.struts2.ServletActionContext;
 
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.http.controller.action.comun.ProtectedAction;
@@ -11,6 +10,7 @@ import xeredi.argo.http.controller.action.seguridad.UsuarioAccesoAction;
 import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -41,28 +41,31 @@ public final class AppInterceptor extends AbstractInterceptor {
             if (action instanceof UsuarioAccesoAction) {
                 result = invocation.invoke();
             } else {
-                if (action instanceof ProtectedAction) {
-                    if (action instanceof ProtectedItemAction) {
-                        if (LOG.isDebugEnabled()) {
-                            LOG.debug("Accion de item - entiId: " + ((ProtectedItemAction) action).getEntiId()
-                                    + ", accnPrefix: " + ((ProtectedItemAction) action).getAccnPrefix()
-                                    + ", accnCodigo: " + ((ProtectedItemAction) action).getAccnCodigo());
-                        }
-                    } else {
-                        if (LOG.isDebugEnabled()) {
-                            LOG.debug("Accion - accnPrefix: " + ((ProtectedAction) action).getAccnPrefix()
-                                    + ", accnCodigo: " + ((ProtectedAction) action).getAccnCodigo());
+                if (SessionManager.isAuthenticated(action)) {
+                    if (action instanceof ProtectedAction) {
+                        final AccionPrefix prefix = ((ProtectedAction) action).getAccnPrefix();
+                        final String codigo = ((ProtectedAction) action).getAccnCodigo();
+
+                        if (action instanceof ProtectedItemAction) {
+                            final Long entiId = ((ProtectedItemAction) action).getEntiId();
+
+                            if (SessionManager.hasPermission(prefix, codigo, entiId)) {
+                                action.setAccionesUsuario(SessionManager.selectActions(prefix, entiId));
+                            } else {
+                                action.addActionError(MessageI18nKey.E00015);
+                            }
+                        } else {
+                            if (SessionManager.hasPermission(prefix, codigo)) {
+                                action.setAccionesUsuario(SessionManager.selectActions(prefix));
+                            } else {
+                                action.addActionError(MessageI18nKey.E00015);
+                            }
                         }
                     }
-                }
 
-                if (SessionManager.isAuthenticated(action)) {
-                    final String requestURI = ServletActionContext.getRequest().getRequestURI().replace("/web", "")
-                            .replace(".action", "");
-
-                    LOG.info("RequestURI: " + requestURI);
-
-                    result = invocation.invoke();
+                    if (!action.hasErrors()) {
+                        result = invocation.invoke();
+                    }
                 } else {
                     result = Action.LOGIN;
                 }

@@ -91,51 +91,54 @@
     </div>
 </fieldset>
 
-<legend ng-bind="'Subentidades'"></legend>
+<fieldset>
+    <legend translate="tpspList"></legend>
 
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a class="btn btn-default" ui-sref="tipo-subparametro-create({tpprId: vm.model.id})"><i
-            class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" ui-sref="tipo-subparametro-create({tpprId: vm.model.id})"><i
+                class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
+        </div>
     </div>
-</div>
 
-<table ng-if="vm.subentiList" class="table-bordered table-condensed table-hover table-nonfluid">
-    <thead>
-        <tr>
-            <th class="buttonLinks" nowrap="nowrap" />
-            <th translate="enti_codigo"></th>
-            <th translate="enti_nombre"></th>
-            <th translate="enti_cmdAlta"></th>
-            <th translate="enti_cmdBaja"></th>
-            <th translate="enti_cmdEdicion"></th>
-            <th translate="enti_cmdDuplicado"></th>
-            <th translate="enti_maxGrid"></th>
-            <th translate="tppr"></th>
-            <th translate="enti_classpath"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="subenti in vm.subentiList track by subenti.id">
-            <td><a ui-sref="tipo-subparametro-detail(subenti)"><i class="glyphicon glyphicon-search"></i></a></td>
-            <td ng-bind="subenti.codigo"></td>
-            <td ng-bind="subenti.nombre"></td>
-            <td><i class="glyphicon glyphicon-{{(subenti.cmdAlta ? 'ok' : 'remove')}}"></i></td>
-            <td><i class="glyphicon glyphicon-{{(subenti.cmdBaja ? 'ok' : 'remove')}}"></i></td>
-            <td><i class="glyphicon glyphicon-{{(subenti.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
-            <td><i class="glyphicon glyphicon-{{(subenti.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
-            <td class="number" ng-bind="(subenti.maxGrid | number:0)"></td>
-            <td ng-bind="subenti.tpprAsociado.nombre"></td>
-            <td ng-bind="subenti.classpath"></td>
-        </tr>
-    </tbody>
-</table>
+    <table ng-if="vm.subentiList" class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th translate="enti_codigo"></th>
+                <th translate="enti_nombre"></th>
+                <th translate="enti_cmdAlta"></th>
+                <th translate="enti_cmdBaja"></th>
+                <th translate="enti_cmdEdicion"></th>
+                <th translate="enti_cmdDuplicado"></th>
+                <th translate="enti_maxGrid"></th>
+                <th translate="tppr"></th>
+                <th translate="enti_classpath"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="subenti in vm.subentiList track by subenti.id">
+                <td><a ui-sref="tipo-subparametro-detail(subenti)"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
+                <td ng-bind="subenti.codigo"></td>
+                <td ng-bind="subenti.nombre"></td>
+                <td><i class="glyphicon glyphicon-{{(subenti.cmdAlta ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(subenti.cmdBaja ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(subenti.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(subenti.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
+                <td class="number" ng-bind="(subenti.maxGrid | number:0)"></td>
+                <td ng-bind="subenti.tpprAsociado.nombre"></td>
+                <td ng-bind="subenti.classpath"></td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>
+</tab> <tab select="vm.tabSelected('accnList')" active="vm.tabActive['accnList']"> <tab-heading
+    ng-bind="'accnList' | translate"></tab-heading>
+<div ng-include="'modules/metamodelo/fragment/accion-entidad-grid-content.html'"></div>
+<div ng-include="'modules/metamodelo/fragment/entidad-accion-grid-grid-content.html'"></div>
 </tab> <tab select="vm.tabSelected('entdList')" active="vm.tabActive['entdList']"> <tab-heading
     ng-bind="'entdList' | translate"></tab-heading>
 <div ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
 <div ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
-</tab> <tab select="vm.tabSelected('accnList')" active="vm.tabActive['accnList']"> <tab-heading
-    ng-bind="'accnList' | translate"></tab-heading>
-<div ng-include="'modules/metamodelo/fragment/entidad-accion-grid-content.html'"></div>
-<div ng-include="'modules/metamodelo/fragment/entidad-accion-grid-grid-content.html'"></div>
-</tab></tabset>
+</tab> </tabset>

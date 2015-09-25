@@ -105,18 +105,18 @@ public final class TipoParametroBO {
     public TipoParametroVO select(final Long id, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoParametroDAO tpprDAO = session.getMapper(TipoParametroDAO.class);
-            final TipoParametroCriterioVO entiCriterioVO = new TipoParametroCriterioVO();
+            final TipoParametroCriterioVO entiCriterio = new TipoParametroCriterioVO();
 
-            entiCriterioVO.setId(id);
-            entiCriterioVO.setIdioma(idioma);
+            entiCriterio.setId(id);
+            entiCriterio.setIdioma(idioma);
 
-            final TipoParametroVO entiVO = tpprDAO.selectObject(entiCriterioVO);
+            final TipoParametroVO enti = tpprDAO.selectObject(entiCriterio);
 
-            if (entiVO == null) {
+            if (enti == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.tppr, id);
             }
 
-            return entiVO;
+            return enti;
         }
     }
 

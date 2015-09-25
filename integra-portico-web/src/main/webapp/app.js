@@ -149,6 +149,10 @@ angular
 														}
 													}
 
+													if (response.data.accionesUsuario) {
+														$rootScope.accionesUsuario = response.data.accionesUsuario;
+													}
+
 													if (response.data.actionErrors
 															&& response.data.actionErrors.length > 0) {
 														$rootScope.actionErrors = response.data.actionErrors;

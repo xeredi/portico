@@ -13,13 +13,19 @@ import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.metamodelo.dao.AccionEntidadDAO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 import xeredi.argo.model.seguridad.dao.AccionDAO;
 import xeredi.argo.model.seguridad.dao.GrupoAccionDAO;
+import xeredi.argo.model.seguridad.dao.GrupoAccionEntidadDAO;
 import xeredi.argo.model.seguridad.dao.GrupoDAO;
 import xeredi.argo.model.seguridad.dao.UsuarioGrupoDAO;
 import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
 import xeredi.argo.model.seguridad.vo.AccionVO;
 import xeredi.argo.model.seguridad.vo.GrupoAccionCriterioVO;
+import xeredi.argo.model.seguridad.vo.GrupoAccionEntidadCriterioVO;
+import xeredi.argo.model.seguridad.vo.GrupoAccionEntidadVO;
 import xeredi.argo.model.seguridad.vo.GrupoAccionVO;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
@@ -63,6 +69,16 @@ public final class GrupoBO {
                 }
             }
 
+            if (grpo.getAcenIds() != null) {
+                final GrupoAccionEntidadDAO graeDAO = session.getMapper(GrupoAccionEntidadDAO.class);
+
+                for (final Long acenId : grpo.getAcenIds()) {
+                    final GrupoAccionEntidadVO grae = new GrupoAccionEntidadVO(grpo.getId(), acenId);
+
+                    graeDAO.insert(grae);
+                }
+            }
+
             session.commit();
         }
     }
@@ -90,11 +106,26 @@ public final class GrupoBO {
 
             gracDAO.deleteList(gracCriterio);
 
+            final GrupoAccionEntidadDAO graeDAO = session.getMapper(GrupoAccionEntidadDAO.class);
+            final GrupoAccionEntidadCriterioVO graeCriterio = new GrupoAccionEntidadCriterioVO();
+
+            graeCriterio.setGrpoId(grpo.getId());
+
+            graeDAO.deleteList(graeCriterio);
+
             if (grpo.getAccnIds() != null) {
                 for (final Long accnId : grpo.getAccnIds()) {
                     final GrupoAccionVO grac = new GrupoAccionVO(grpo.getId(), accnId);
 
                     gracDAO.insert(grac);
+                }
+            }
+
+            if (grpo.getAcenIds() != null) {
+                for (final Long acenId : grpo.getAcenIds()) {
+                    final GrupoAccionEntidadVO grae = new GrupoAccionEntidadVO(grpo.getId(), acenId);
+
+                    graeDAO.insert(grae);
                 }
             }
 
@@ -124,6 +155,13 @@ public final class GrupoBO {
             gracCriterio.setGrpoId(grpo.getId());
 
             gracDAO.deleteList(gracCriterio);
+
+            final GrupoAccionEntidadDAO graeDAO = session.getMapper(GrupoAccionEntidadDAO.class);
+            final GrupoAccionEntidadCriterioVO graeCriterio = new GrupoAccionEntidadCriterioVO();
+
+            graeCriterio.setGrpoId(grpo.getId());
+
+            graeDAO.deleteList(graeCriterio);
 
             final UsuarioGrupoDAO usgrDAO = session.getMapper(UsuarioGrupoDAO.class);
             final UsuarioGrupoCriterioVO usgrCriterio = new UsuarioGrupoCriterioVO();
@@ -205,6 +243,18 @@ public final class GrupoBO {
             }
 
             grpo.setAccnIds(accnIds);
+
+            final Set<Long> acenIds = new HashSet<Long>();
+            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
+            final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
+
+            acenCriterio.setGrpoId(grpo.getId());
+
+            for (final AccionEntidadVO acen : acenDAO.selectList(acenCriterio)) {
+                acenIds.add(acen.getId());
+            }
+
+            grpo.setAcenIds(acenIds);
 
             return grpo;
         }

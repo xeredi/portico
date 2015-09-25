@@ -3,10 +3,11 @@ package xeredi.argo.model.metamodelo.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
-import lombok.NonNull;
 import xeredi.argo.model.metamodelo.dao.EntidadDAO;
 import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
@@ -62,7 +63,7 @@ public final class EntidadBO {
      *            the enti criterio vo
      * @return the list
      */
-    public List<LabelValueVO> selectLabelValues(final EntidadCriterioVO entiCriterio) {
+    public List<LabelValueVO> selectLabelValues(final @NonNull EntidadCriterioVO entiCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();
@@ -74,5 +75,4 @@ public final class EntidadBO {
             return list;
         }
     }
-
 }

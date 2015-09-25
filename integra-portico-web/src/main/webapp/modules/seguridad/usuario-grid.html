@@ -6,11 +6,12 @@
     </div>
 
     <div class="btn-group">
-        <a class="btn btn-default" ui-sref="usuario-create"><i class="glyphicon glyphicon-file"></i> <span
-            translate="btn_crear"></span> </a>
+        <a ng-if="accionesUsuario.indexOf('create') >= 0" class="btn btn-default" ui-sref="usuario-create"><i
+            class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a>
 
-        <button class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template="modules/seguridad/usuario-filter-content.html" bs-modal="modal">
+        <button ng-if="accionesUsuario.indexOf('list') >= 0" class="btn btn-default"
+            data-ng-click="vm.filter('lg')" data-template="modules/seguridad/usuario-filter-content.html"
+            bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
         </button>
     </div>
@@ -32,7 +33,8 @@
         </thead>
         <tbody>
             <tr ng-repeat="usro in vm.resultList.list track by usro.id">
-                <td><a ui-sref="usuario-detail(usro)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ng-if="accionesUsuario.indexOf('detail') >= 0" ui-sref="usuario-detail(usro)"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap" ng-bind="usro.login"></td>
                 <td nowrap="nowrap" ng-bind="usro.nombre"></td>
                 <td nowrap="nowrap" ng-bind="usro.sprt.etiqueta"></td>

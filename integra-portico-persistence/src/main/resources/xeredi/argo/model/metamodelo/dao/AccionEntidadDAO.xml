@@ -2,21 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="xeredi.argo.model.seguridad.dao.AccionEntidadDAO">
+<mapper namespace="xeredi.argo.model.metamodelo.dao.AccionEntidadDAO">
     <resultMap type="AccionEntidadVO" id="ResultMap">
         <id column="acen_pk" />
 
         <result column="acen_pk" property="id" />
+        <result column="acen_enti_pk" property="entiId" />
 
         <association property="accn" javaType="AccionVO">
             <result column="acen_accn_pk" property="id" />
             <result column="accn_prefix" property="prefix" />
             <result column="accn_codigo" property="codigo" />
-        </association>
-
-        <association property="enti" javaType="EntidadVO">
-            <result column="acen_enti_pk" property="id" />
-            <result column="enti_nombre" property="nombre" />
+            <result column="accn_core" property="core" />
+            <result column="accn_multiple" property="multiple" />
         </association>
     </resultMap>
 
@@ -24,19 +22,7 @@
     <![CDATA[
     SELECT
         acen_pk, acen_enti_pk, acen_accn_pk
-        , accn_prefix, accn_codigo
-    ]]>
-        <if test="idioma != null">
-        <![CDATA[
-            , (
-                SELECT i18n_text FROM tbl_i18n_i18n
-                WHERE i18n_pref = 'enti'
-                    AND i18n_ext_pk = acen_enti_pk
-                    AND i18n_lang = #{idioma}
-            ) AS enti_nombre
-        ]]>
-        </if>
-    <![CDATA[
+        , accn_prefix, accn_codigo, accn_core, accn_multiple
     FROM
         tbl_accion_entidad_acen
         INNER JOIN tbl_accion_accn ON
@@ -115,7 +101,7 @@
         <![CDATA[
         SELECT COUNT(1)
         FROM tbl_accion_entidad_acen
-        WHERE acen_enti_pk = #{enti.id}
+        WHERE acen_enti_pk = #{entiId}
             AND acen_accn_pk = #{accn.id}
         ]]>
     </select>
@@ -131,7 +117,7 @@
     <insert id="insert" parameterType="AccionEntidadVO">
         <![CDATA[
         INSERT INTO tbl_accion_entidad_acen (acen_pk, acen_accn_pk, acen_enti_pk)
-        VALUES (#{id}, #{accn.id}, #{enti.id})
+        VALUES (#{id}, #{accn.id}, #{entiId})
         ]]>
     </insert>
 
@@ -139,7 +125,7 @@
         <![CDATA[
         UPDATE tbl_accion_entidad_acen SET
             acen_accn_pk = #{accn.id}
-            , acen_enti_pk = #{enti.id}
+            , acen_enti_pk = #{entiId}
         WHERE acen_pk = #{id}
         ]]>
     </update>

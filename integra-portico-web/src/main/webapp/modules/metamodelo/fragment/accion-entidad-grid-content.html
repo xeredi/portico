@@ -1,0 +1,27 @@
+<fieldset>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" ui-sref="accion-entidad-create({entiId: vm.model.id})"><i
+                class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
+        </div>
+    </div>
+
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th translate="accn_codigo"></th>
+                <th translate="accn_core"></th>
+                <th translate="accn_multiple"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="acen in vm.acenList track by acen.id">
+                <td><a ui-sref="accion-entidad-detail(acen)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td ng-bind="acen.accn.codigo"></td>
+                <td><i class="glyphicon glyphicon-{{(acen.accn.core ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{(acen.accn.multiple ? 'ok' : 'remove')}}"></i></td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>

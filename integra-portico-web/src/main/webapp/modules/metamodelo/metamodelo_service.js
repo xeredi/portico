@@ -4,6 +4,8 @@ angular.module("metamodelo_service", [ "crud_service" ])
 
 .factory("CodigoReferenciaService", CodigoReferenciaService)
 
+.factory("AccionEntidadService", AccionEntidadService)
+
 .factory("EntidadAccionService", EntidadAccionService)
 
 .factory("EntidadAccionGridService", EntidadAccionGridService)
@@ -38,6 +40,10 @@ function TipoDatoService($http, $q, CrudService) {
 
 function CodigoReferenciaService($http, $q, CrudService) {
     return CrudService.create("metamodelo/codigo-referencia");
+}
+
+function AccionEntidadService($http, $q, CrudService) {
+    return CrudService.create("metamodelo/accion-entidad");
 }
 
 function EntidadAccionService($http, $q, CrudService) {

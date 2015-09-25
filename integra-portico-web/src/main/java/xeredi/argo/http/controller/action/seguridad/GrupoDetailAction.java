@@ -7,6 +7,10 @@ import java.util.Map;
 
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
+import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.seguridad.bo.AccionBO;
 import xeredi.argo.model.seguridad.bo.GrupoBO;
 import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
@@ -31,6 +35,12 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 
     /** The accn map. */
     private Map<AccionPrefix, List<AccionVO>> accnMap;
+
+    /** The enti list. */
+    private List<Long> entiList;
+
+    /** The acen map. */
+    private Map<Long, List<AccionEntidadVO>> acenMap;
 
     /**
      * {@inheritDoc}
@@ -64,6 +74,26 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 
             accnMap.get(accn.getPrefix()).add(accn);
         }
+
+        final AccionEntidadBO acenBO = new AccionEntidadBO();
+        final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
+
+        acenCriterio.setGrpoId(model.getId());
+        acenCriterio.setIdioma(getIdioma());
+
+        final List<AccionEntidadVO> acenList = acenBO.selectList(acenCriterio);
+
+        entiList = new ArrayList<>();
+        acenMap = new HashMap<>();
+
+        for (final AccionEntidadVO acen : acenList) {
+            if (!acenMap.containsKey(acen.getEntiId())) {
+                entiList.add(acen.getEntiId());
+                acenMap.put(acen.getEntiId(), new ArrayList<AccionEntidadVO>());
+            }
+
+            acenMap.get(acen.getEntiId()).add(acen);
+        }
     }
 
     /**
@@ -82,6 +112,24 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
      */
     public Map<AccionPrefix, List<AccionVO>> getAccnMap() {
         return accnMap;
+    }
+
+    /**
+     * Gets the enti list.
+     *
+     * @return the enti list
+     */
+    public List<Long> getEntiList() {
+        return entiList;
+    }
+
+    /**
+     * Gets the acen map.
+     *
+     * @return the acen map
+     */
+    public Map<Long, List<AccionEntidadVO>> getAcenMap() {
+        return acenMap;
     }
 
     /**

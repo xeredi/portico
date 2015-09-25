@@ -30,7 +30,7 @@ public final class TipoEstadisticaEditAction extends EntidadEditAction<TipoEstad
      * {@inheritDoc}
      */
     @Override
-    public void doLoadDependencies() throws ApplicationException {
+    public void doSpecificLoadDependencies() throws ApplicationException {
         // noop
     }
 

@@ -1,13 +1,13 @@
-package xeredi.argo.http.controller.action.seguridad;
+package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.seguridad.bo.AccionEntidadBO;
+import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 import xeredi.argo.model.seguridad.bo.GrupoBO;
-import xeredi.argo.model.seguridad.vo.AccionEntidadCriterioVO;
-import xeredi.argo.model.seguridad.vo.AccionEntidadVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoVO;

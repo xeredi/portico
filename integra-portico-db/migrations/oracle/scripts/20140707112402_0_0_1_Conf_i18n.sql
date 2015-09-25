@@ -12,123 +12,155 @@ INSERT INTO tbl_superpuerto_sprt (sprt_pk, sprt_codigo) VALUES (36000, '80')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('sprt', 36000, 'es', 'Baleares')\
 
 -- Acciones
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2000, 'tpdt', 'list')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2001, 'tpdt', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2002, 'tpdt', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2003, 'tpdt', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2004, 'tpdt', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2000, 'tpdt', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2001, 'tpdt', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2002, 'tpdt', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2003, 'tpdt', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2004, 'tpdt', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2020, 'tpsr', 'list')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2021, 'tpsr', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2022, 'tpsr', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2023, 'tpsr', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2024, 'tpsr', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2020, 'tpsr', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2021, 'tpsr', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2022, 'tpsr', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2023, 'tpsr', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2024, 'tpsr', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2041, 'tpss', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2042, 'tpss', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2043, 'tpss', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2044, 'tpss', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2041, 'tpss', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2042, 'tpss', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2043, 'tpss', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2044, 'tpss', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2060, 'tppr', 'list')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2061, 'tppr', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2062, 'tppr', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2063, 'tppr', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2064, 'tppr', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2060, 'tppr', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2061, 'tppr', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2062, 'tppr', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2063, 'tppr', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2064, 'tppr', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2081, 'tpsp', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2082, 'tpsp', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2083, 'tpsp', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2084, 'tpsp', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2081, 'tpsp', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2082, 'tpsp', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2083, 'tpsp', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2084, 'tpsp', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2100, 'tpes', 'list')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2101, 'tpes', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2102, 'tpes', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2103, 'tpes', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2104, 'tpes', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2100, 'tpes', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2101, 'tpes', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2102, 'tpes', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2103, 'tpes', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2104, 'tpes', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2120, 'item', 'list')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2121, 'item', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2122, 'item', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2123, 'item', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2124, 'item', 'remove')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2125, 'item', 'duplicate')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2126, 'item', 'print')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2127, 'item', 'xls_export')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2128, 'item', 'index')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2120, 'item', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2121, 'item', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2122, 'item', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2123, 'item', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2124, 'item', 'remove', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2125, 'item', 'duplicate', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2126, 'item', 'print', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2127, 'item', 'xls_export', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2128, 'item', 'index', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2141, 'cdrf', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2142, 'cdrf', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2143, 'cdrf', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2144, 'cdrf', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2141, 'cdrf', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2142, 'cdrf', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2143, 'cdrf', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2144, 'cdrf', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2160, 'usro', 'list')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2161, 'usro', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2162, 'usro', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2163, 'usro', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2164, 'usro', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2160, 'usro', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2161, 'usro', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2162, 'usro', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2163, 'usro', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2164, 'usro', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2180, 'accn', 'list')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2181, 'accn', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2182, 'accn', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2183, 'accn', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2184, 'accn', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2180, 'accn', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2181, 'accn', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2182, 'accn', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2183, 'accn', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2184, 'accn', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2200, 'acen', 'list')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2201, 'acen', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2202, 'acen', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2203, 'acen', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2204, 'acen', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2200, 'acen', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2201, 'acen', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2202, 'acen', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2203, 'acen', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2204, 'acen', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2220, 'grpo', 'list')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2221, 'grpo', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2222, 'grpo', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2223, 'grpo', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2224, 'grpo', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2220, 'grpo', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2221, 'grpo', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2222, 'grpo', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2223, 'grpo', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2224, 'grpo', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2240, 'crgo', 'list')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2241, 'crgo', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2242, 'crgo', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2243, 'crgo', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2244, 'crgo', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2240, 'crgo', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2241, 'crgo', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2242, 'crgo', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2243, 'crgo', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2244, 'crgo', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2261, 'rgla', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2262, 'rgla', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2263, 'rgla', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2264, 'rgla', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2261, 'rgla', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2262, 'rgla', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2263, 'rgla', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2264, 'rgla', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2281, 'rgin', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2282, 'rgin', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2283, 'rgin', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2284, 'rgin', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2281, 'rgin', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2282, 'rgin', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2283, 'rgin', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2284, 'rgin', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2300, 'aspc', 'list')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2301, 'aspc', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2302, 'aspc', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2303, 'aspc', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2304, 'aspc', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2300, 'aspc', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2301, 'aspc', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2302, 'aspc', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2303, 'aspc', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2304, 'aspc', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2321, 'ascr', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2322, 'ascr', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2323, 'ascr', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2324, 'ascr', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2321, 'ascr', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2322, 'ascr', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2323, 'ascr', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2324, 'ascr', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2340, 'vlrc', 'list')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2341, 'vlrc', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2342, 'vlrc', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2343, 'vlrc', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2344, 'vlrc', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2340, 'vlrc', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2341, 'vlrc', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2342, 'vlrc', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2343, 'vlrc', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2344, 'vlrc', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2360, 'vlrl', 'list')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2361, 'vlrl', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2362, 'vlrl', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2363, 'vlrl', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2364, 'vlrl', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2360, 'vlrl', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2361, 'vlrl', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2362, 'vlrl', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2363, 'vlrl', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2364, 'vlrl', 'remove', 1, 0)\
 
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2380, 'vlrd', 'list')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2381, 'vlrd', 'detail')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2382, 'vlrd', 'create')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2383, 'vlrd', 'edit')\
-INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo) VALUES (2384, 'vlrd', 'remove')\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2380, 'vlrd', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2381, 'vlrd', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2382, 'vlrd', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2383, 'vlrd', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2384, 'vlrd', 'remove', 1, 0)\
+
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2401, 'engd', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2402, 'engd', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2403, 'engd', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2404, 'engd', 'remove', 1, 0)\
+
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2421, 'entd', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2422, 'entd', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2423, 'entd', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2424, 'entd', 'remove', 1, 0)\
+
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2441, 'trmt', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2442, 'trmt', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2443, 'trmt', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2444, 'trmt', 'remove', 1, 0)\
+
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2461, 'trtd', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2462, 'trtd', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2463, 'trtd', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2464, 'trtd', 'remove', 1, 0)\
+
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2480, 'sprt', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2481, 'sprt', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2482, 'sprt', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2483, 'sprt', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2484, 'sprt', 'remove', 1, 0)\
+
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2500, 'prto', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2501, 'prto', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2502, 'prto', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2503, 'prto', 'edit', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2504, 'prto', 'remove', 1, 0)\
 
 
 -- Grupos
@@ -343,6 +375,10 @@ INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'accn_codigo')
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'accn_codigo', 'Código')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'accn_prefix')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'accn_prefix', 'Prefijo')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'accn_core')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'accn_core', 'Core?')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'accn_multiple')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'accn_multiple', 'Múltiple?')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'acen')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'acen', 'Acción de Entidad')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'acenList')\

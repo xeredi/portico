@@ -1,18 +1,18 @@
-package xeredi.argo.http.controller.action.seguridad;
+package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.bo.EntidadBO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.seguridad.bo.AccionBO;
-import xeredi.argo.model.seguridad.bo.AccionEntidadBO;
 import xeredi.argo.model.seguridad.bo.GrupoBO;
 import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
-import xeredi.argo.model.seguridad.vo.AccionEntidadCriterioVO;
-import xeredi.argo.model.seguridad.vo.AccionEntidadVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.AccionVO;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
@@ -52,7 +52,7 @@ public final class AccionEntidadEditAction extends CrudEditAction<AccionEntidadV
     @Override
     public void doEdit() throws ApplicationException {
         if (accion == ACCION_EDICION.create) {
-            model = new AccionEntidadVO();
+            Preconditions.checkNotNull(model.getEntiId());
         } else {
             Preconditions.checkNotNull(model.getId());
 

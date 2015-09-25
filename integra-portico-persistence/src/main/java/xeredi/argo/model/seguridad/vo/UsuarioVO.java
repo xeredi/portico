@@ -1,5 +1,6 @@
 package xeredi.argo.model.seguridad.vo;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -33,6 +34,15 @@ public final class UsuarioVO {
 
     /** The grpo ids. */
     private Set<Long> grpoIds;
+
+    /**
+     * Instantiates a new usuario vo.
+     */
+    public UsuarioVO() {
+        super();
+
+        grpoIds = new HashSet<>();
+    }
 
     /**
      * {@inheritDoc}

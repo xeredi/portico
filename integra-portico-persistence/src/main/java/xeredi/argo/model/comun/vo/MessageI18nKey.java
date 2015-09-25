@@ -111,6 +111,10 @@ public enum MessageI18nKey {
     accn_codigo,
     /** The accn_nombre. */
     accn_prefix,
+    /** The accn_core. */
+    accn_core,
+    /** The accn_multiple. */
+    accn_multiple,
     /** The accn list. */
     accnList,
     /** The acen. */

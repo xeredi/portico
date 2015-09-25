@@ -1,4 +1,4 @@
-package xeredi.argo.model.seguridad.vo;
+package xeredi.argo.model.metamodelo.vo;
 
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
 
