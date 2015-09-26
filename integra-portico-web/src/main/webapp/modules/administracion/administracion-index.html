@@ -3,12 +3,14 @@
         <span class="list-group-item active" ng-bind="'sec_metamodelo' | translate | uppercase"></span>
     </div>
     <div class="list-group col-sm-6 col-md-8 col-lg-9">
-        <a class="col-md-6 col-lg-4 list-group-item" ui-sref="tipo-servicio-grid"
-            ng-bind="'tpsrList' | translate | uppercase"></a> <a class="col-md-6 col-lg-4 list-group-item"
-            ui-sref="tipo-parametro-grid" translate="tpprList"></a> <a
+        <a ng-if="mc.hasAccnPath('tpsr-list')" class="col-md-6 col-lg-4 list-group-item"
+            ui-sref="tipo-servicio-grid" ng-bind="'tpsrList' | translate | uppercase"></a> <a
+            ng-if="mc.hasAccnPath('tppr-list')" class="col-md-6 col-lg-4 list-group-item"
+            ui-sref="tipo-parametro-grid" translate="tpprList"></a> <a ng-if="mc.hasAccnPath('tpes-list')"
             class="col-md-6 col-lg-4 list-group-item" ui-sref="tipo-estadistica-grid" translate="tpesList"></a>
-        <a class="col-md-6 col-lg-4 list-group-item" ui-sref="tipo-dato-grid" translate="tpdtList"></a><a
-            class="col-md-6 col-lg-4 list-group-item" ng-href="#/servicio/srsc/grid" translate="srscList"></a><a
+        <a ng-if="mc.hasAccnPath('tpdt-list')" class="col-md-6 col-lg-4 list-group-item"
+            ui-sref="tipo-dato-grid" translate="tpdtList"></a><a class="col-md-6 col-lg-4 list-group-item"
+            ng-href="#/servicio/srsc/grid" translate="srscList"></a><a
             class="col-md-6 col-lg-4 list-group-item" ng-href="#/administracion/metamodelo/reload"
             translate="menu_metamodelo_reload"></a>
     </div>
@@ -20,7 +22,8 @@
     <div class="list-group col-sm-6 col-md-8 col-lg-9">
         <a class="col-md-6 col-lg-4 list-group-item" ui-sref="configuration-grid" translate="confList"></a> <a
             class="col-md-6 col-lg-4 list-group-item" ui-sref="messagei18n-grid" translate="m18nList"></a><a
-            class="col-md-6 col-lg-4 list-group-item" ui-sref="superpuerto-grid" translate="sprtList"></a><a
+            ng-if="mc.hasAccnPath('sprt-list')" class="col-md-6 col-lg-4 list-group-item"
+            ui-sref="superpuerto-grid" translate="sprtList"></a><a ng-if="mc.hasAccnPath('prto-list')"
             class="col-md-6 col-lg-4 list-group-item" ui-sref="puerto-grid" translate="prtoList"></a>
     </div>
 </div>

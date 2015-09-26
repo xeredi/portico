@@ -1,18 +1,13 @@
 package xeredi.argo.http.controller.session;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
-import lombok.NonNull;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.seguridad.bo.AccionBO;
 import xeredi.argo.model.seguridad.bo.ResultadoLoginVO;
 import xeredi.argo.model.seguridad.bo.UsuarioAccesoBO;
-import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
-import xeredi.argo.model.seguridad.vo.AccionVO;
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -83,53 +78,6 @@ public final class SessionManager {
     }
 
     /**
-     * Select actions.
-     *
-     * @param prefix
-     *            the prefix
-     * @return the sets the
-     */
-    public static Set<String> selectActions(final @NonNull AccionPrefix prefix) {
-        final AccionBO accnBO = new AccionBO();
-        final AccionCriterioVO accnCriterio = new AccionCriterioVO();
-        final Set<String> acciones = new HashSet<>();
-
-        accnCriterio.setPrefix(prefix);
-        accnCriterio.setUsroId(getResultadoLogin().getUsroId());
-
-        for (final AccionVO accn : accnBO.selectList(accnCriterio)) {
-            acciones.add(accn.getCodigo());
-        }
-
-        return acciones;
-    }
-
-    /**
-     * Select actions.
-     *
-     * @param prefix
-     *            the prefix
-     * @param entiId
-     *            the enti id
-     * @return the sets the
-     */
-    public static Set<String> selectActions(final @NonNull AccionPrefix prefix, final @NonNull Long entiId) {
-        final AccionBO accnBO = new AccionBO();
-        final AccionCriterioVO accnCriterio = new AccionCriterioVO();
-        final Set<String> acciones = new HashSet<>();
-
-        accnCriterio.setPrefix(prefix);
-        accnCriterio.setEntiId(entiId);
-        accnCriterio.setUsroId(getResultadoLogin().getUsroId());
-
-        for (final AccionVO accn : accnBO.selectList(accnCriterio)) {
-            acciones.add(accn.getCodigo());
-        }
-
-        return acciones;
-    }
-
-    /**
      * Login.
      *
      * @param login
@@ -166,14 +114,5 @@ public final class SessionManager {
      */
     private static Map<String, Object> getSession() {
         return ActionContext.getContext().getSession();
-    }
-
-    /**
-     * Gets the resultado login.
-     *
-     * @return the resultado login
-     */
-    private static ResultadoLoginVO getResultadoLogin() {
-        return (ResultadoLoginVO) getSession().get(ParamNames.loginResult.name());
     }
 }

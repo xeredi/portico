@@ -8,7 +8,7 @@
     </properties>
 
     <body>
-        <section name="Metamodelo">
+        <section name="Usuarios (Seguridad)">
             <p>En esta parte de la aplicación se definen:
             </p>
 
@@ -36,6 +36,21 @@
                     que un usuario podrá realizar todas las acciones del grupo o grupos a los que pertenezca.
                 </dd>
             </dl>
+        </section>
+
+        <a name="accn"></a>
+        <section name="Acciones">
+
+        </section>
+
+        <a name="grpo"></a>
+        <section name="Grupos">
+
+        </section>
+
+        <a name="usro"></a>
+        <section name="Usuarios">
+
         </section>
     </body>
 </document>

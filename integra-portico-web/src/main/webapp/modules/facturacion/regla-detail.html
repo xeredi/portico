@@ -1,8 +1,8 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ui-sref="regla-edit(vm.model)"><i class="glyphicon glyphicon-edit"></i>
-            <span translate>btn_editar</span></a>
-        <button data-ng-click="vm.remove()" class="btn btn-default">
+        <a ng-if="mc.hasAccnPath('rgla-edit')" class="btn btn-default" ui-sref="regla-edit(vm.model)"><i
+            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+        <button ng-if="mc.hasAccnPath('rgla-remove')" data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
@@ -167,12 +167,12 @@
     </div>
 </div>
 
-<div>
+<fieldset ng-if="mc.hasAccnPath('rgin-list')">
     <legend ng-bind="'Reglas Incompatibles'"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default"
+            <a ng-if="mc.hasAccnPath('rgin-create')" class="btn btn-default"
                 ui-sref="regla-incompatible-create({rgla1Id: vm.model.id, fref: vm.model.fref})"><i
                 class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
@@ -203,4 +203,4 @@
             </tbody>
         </table>
     </div>
-</div>
+</fieldset>

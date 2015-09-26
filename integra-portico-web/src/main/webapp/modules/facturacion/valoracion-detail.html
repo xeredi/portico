@@ -4,9 +4,11 @@
             <div class="btn-group">
                 <a class="btn btn-default" ng-href="#/facturacion/fcdr/edit/{{vm.model.id}}"><i
                     class="glyphicon glyphicon-euro"></i> <span translate="btn_facturar"></span></a> <a
-                    class="btn btn-default" ng-href="#/facturacion/vlrc/edit/edit/{{vm.model.id}}"><i
+                    ng-if="mc.hasAccnPath('vlrc-edit')" class="btn btn-default"
+                    ng-href="#/facturacion/vlrc/edit/edit/{{vm.model.id}}"><i
                     class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
-                <button data-ng-click="vm.remove()" class="btn btn-default">
+                <button ng-if="mc.hasAccnPath('vlrc-remove')" data-ng-click="vm.remove()"
+                    class="btn btn-default">
                     <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
                 </button>
             </div>

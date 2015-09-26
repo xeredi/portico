@@ -1,8 +1,8 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ui-sref="tipo-dato-edit(vm.model)"><i class="glyphicon glyphicon-edit"></i>
-            <span translate>btn_editar</span></a>
-        <button data-ng-click="vm.remove()" class="btn btn-default">
+        <a ng-if="mc.hasAccnPath('tpdt-edit')" class="btn btn-default" ui-sref="tipo-dato-edit(vm.model)"><i
+            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+        <button ng-if="mc.hasAccnPath('tpdt-remove')" data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
@@ -40,12 +40,13 @@
     <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
 </fieldset>
 
-<div ng-if="vm.model.tipoElemento == 'CR'">
+<fieldset ng-if="mc.hasAccnPath('cdrf-list') && vm.model.tipoElemento == 'CR'">
     <legend ng-bind="'Valores de Codigo de Referencia'"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ui-sref="codigo-referencia-create({tpdtId: vm.model.id})"><i
+            <a ng-if="mc.hasAccnPath('cdrf-create')" class="btn btn-default"
+                ui-sref="codigo-referencia-create({tpdtId: vm.model.id})"><i
                 class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>
@@ -68,4 +69,4 @@
             </tr>
         </tbody>
     </table>
-</div>
+</fieldset>

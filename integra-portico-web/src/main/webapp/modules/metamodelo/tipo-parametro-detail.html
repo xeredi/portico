@@ -2,9 +2,9 @@
     ng-bind="'enti' | translate"></tab-heading>
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ui-sref="tipo-parametro-edit(vm.model)"><i
+        <a ng-if="mc.hasAccnPath('tppr-edit')" class="btn btn-default" ui-sref="tipo-parametro-edit(vm.model)"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
-        <button data-ng-click="vm.remove()" class="btn btn-default">
+        <button ng-if="mc.hasAccnPath('tppr-remove')" data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
         </button>
     </div>
@@ -91,12 +91,13 @@
     </div>
 </fieldset>
 
-<fieldset>
+<fieldset ng-if="mc.hasAccnPath('tpsp-list')">
     <legend translate="tpspList"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ui-sref="tipo-subparametro-create({tpprId: vm.model.id})"><i
+            <a ng-if="mc.hasAccnPath('tpsp-create')" class="btn btn-default"
+                ui-sref="tipo-subparametro-create({tpprId: vm.model.id})"><i
                 class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>
     </div>
@@ -135,10 +136,13 @@
 </fieldset>
 </tab> <tab select="vm.tabSelected('accnList')" active="vm.tabActive['accnList']"> <tab-heading
     ng-bind="'accnList' | translate"></tab-heading>
-<div ng-include="'modules/metamodelo/fragment/accion-entidad-grid-content.html'"></div>
+<div ng-if="mc.hasAccnPath('acen-list')"
+    ng-include="'modules/metamodelo/fragment/accion-entidad-grid-content.html'"></div>
 <div ng-include="'modules/metamodelo/fragment/entidad-accion-grid-grid-content.html'"></div>
 </tab> <tab select="vm.tabSelected('entdList')" active="vm.tabActive['entdList']"> <tab-heading
     ng-bind="'entdList' | translate"></tab-heading>
-<div ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
-<div ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
+<div ng-if="mc.hasAccnPath('engd-list')"
+    ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
+<div ng-if="mc.hasAccnPath('entd-list')"
+    ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
 </tab> </tabset>

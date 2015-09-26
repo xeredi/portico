@@ -14,21 +14,21 @@
 
             <dl>
                 <dt>
-                    <a href="#Autoridades_Portuarias">Autoridades Portuarias</a>
+                    <a href="#sec_autp">Autoridades Portuarias</a>
                 </dt>
                 <dd>
                     Gestión de las Autoridades Portuarias disponibles en la aplicación.
                 </dd>
 
                 <dt>
-                    <a href="#Puertos">Puertos</a>
+                    <a href="#sec_prto">Puertos</a>
                 </dt>
                 <dd>
                     Gestión de los Puertos disponibles en la aplicación.
                 </dd>
 
                 <dt>
-                    Parámetros de Configuración
+                    <a href="#sec_conf">Parámetros de Configuración</a>
                 </dt>
                 <dd>
                     Gestión de los valores de los parámetros de configuración de la aplicación.
@@ -43,6 +43,7 @@
             </dl>
         </section>
 
+        <a name="sec_autp"></a>
         <section name="Autoridades Portuarias">
             <p>Gestión de las Autoridades Portuarias disponibles en el sistema.</p>
 
@@ -67,6 +68,7 @@
             </subsection>
         </section>
 
+        <a name="sec_prto"></a>
         <section name="Puertos">
             <p>Gestión de los puertos disponibles en el sistema.</p>
 
@@ -91,6 +93,7 @@
             </subsection>
         </section>
 
+        <a name="sec_conf"></a>
         <section name="Parámetros de Configuración">
             <p>Gestión de los valores de los parámetros de configuración del sistema.</p>
 

@@ -476,8 +476,6 @@ function UsuarioAccesoController($state, localStorageService, pageTitleService,
 					localStorageService.set("accnPaths",
 							data.resultadoLogin.accnPaths);
 
-					console.log(localStorageService.get("accnPaths"));
-
 					$state.go("home");
 				});
 	}

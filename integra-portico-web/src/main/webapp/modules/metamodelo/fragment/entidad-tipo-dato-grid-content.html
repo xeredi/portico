@@ -1,9 +1,10 @@
-<fieldset>
+<fieldset ng-if="mc.hasAccnPath('entd-list')">
     <legend translate="entdList"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ui-sref="entidad-tipo-dato-create({entiId: vm.model.id})"><i
+            <a ng-if="mc.hasAccnPath('entd-create')" class="btn btn-default"
+                ui-sref="entidad-tipo-dato-create({entiId: vm.model.id})"><i
                 class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>
     </div>

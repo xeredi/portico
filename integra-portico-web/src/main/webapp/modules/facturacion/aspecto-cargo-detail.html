@@ -1,9 +1,9 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ui-sref="aspecto-cargo-edit(vm.model)"><i
+        <a ng-if="mc.hasAccnPath('ascr-edit')" class="btn btn-default" ui-sref="aspecto-cargo-edit(vm.model)"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
-        <button data-ng-click="vm.remove()" class="btn btn-default">
+        <button ng-if="mc.hasAccnPath('ascr-remove')" data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
         </button>
     </div>

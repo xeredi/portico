@@ -1,10 +1,11 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ui-sref="aspecto-edit(vm.model)"><i class="glyphicon glyphicon-edit"></i>
-            <span translate="btn_editar"></span></a> <a class="btn btn-default"
+        <a ng-if="mc.hasAccnPath('aspc-edit')" class="btn btn-default" ui-sref="aspecto-edit(vm.model)"><i
+            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a> <a
+            ng-if="mc.hasAccnPath('aspc-duplicate')" class="btn btn-default"
             ui-sref="aspecto-duplicate(vm.model)"><i class="glyphicon glyphicon-tags"></i> <span
             translate="btn_duplicar"></span></a>
-        <button data-ng-click="vm.remove()" class="btn btn-default">
+        <button ng-if="mc.hasAccnPath('aspc-remove')" data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
         </button>
     </div>
@@ -194,12 +195,12 @@
     </div>
 </fieldset>
 
-<fieldset>
+<fieldset ng-if="mc.hasAccnPath('ascr-list')">
     <legend translate="ascrList"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default"
+            <a ng-if="mc.hasAccnPath('ascr-create')" class="btn btn-default"
                 ui-sref="aspecto-cargo-create({aspcId: vm.model.id, fref: vm.model.fref})"><i
                 class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>

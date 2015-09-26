@@ -1,11 +1,14 @@
 
 <div class="list-group col-sm-4 col-md-3">
-    <a ui-sref="valoracion-grid" class="list-group-item" ng-bind="'vlrcList' | translate | uppercase"></a> <a
+    <a ng-if="mc.hasAccnPath('vlrc-list')" ui-sref="valoracion-grid" class="list-group-item"
+        ng-bind="'vlrcList' | translate | uppercase"></a> <a ng-if="mc.hasAccnPath('fctr-list')"
         ng-href="#/facturacion/fctr/grid" class="list-group-item" ng-bind="'fctrList' | translate | uppercase"></a>
 </div>
 
 <div class="list-group col-sm-4 col-md-3">
-    <a ui-sref="cargo-grid" class="list-group-item" ng-bind="'crgoList' | translate | uppercase"></a> <a
+    <a ng-if="mc.hasAccnPath('crgo-list')" ui-sref="cargo-grid" class="list-group-item"
+        ng-bind="'crgoList' | translate | uppercase"></a> <a ng-if="mc.hasAccnPath('aspc-list')"
         ui-sref="aspecto-grid" class="list-group-item" ng-bind="'aspcList' | translate | uppercase"></a><a
-        ui-sref="factura-serie-grid" class="list-group-item" ng-bind="'fcsrList' | translate | uppercase"></a>
+        ng-if="mc.hasAccnPath('fcsr-list')" ui-sref="factura-serie-grid" class="list-group-item"
+        ng-bind="'fcsrList' | translate | uppercase"></a>
 </div>

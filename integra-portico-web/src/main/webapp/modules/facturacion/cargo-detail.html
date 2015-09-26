@@ -1,9 +1,9 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ui-sref="cargo-edit(vm.model)"><i class="glyphicon glyphicon-edit"></i>
-            <span translate>btn_editar</span></a>
-        <button data-ng-click="vm.remove()" class="btn btn-default">
+        <a ng-if="mc.hasAccnPath('crgo-edit')" class="btn btn-default" ui-sref="cargo-edit(vm.model)"><i
+            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+        <button ng-if="mc.hasAccnPath('crgo-remove')" data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
@@ -58,43 +58,46 @@
     <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
 </fieldset>
 
-<legend ng-bind="'Reglas'"></legend>
+<fieldset ng-if="mc.hasAccnPath('rgla-list')">
+    <legend ng-bind="'Reglas'"></legend>
 
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a class="btn btn-default" ui-sref="regla-create({crgoId: vm.model.id, fref: vm.model.fref})"><i
-            class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a ng-if="mc.hasAccnPath('rgla-create')" class=" btn
+                btn-default" ui-sref="regla-create({crgoId: vm.model.id, fref: vm.model.fref})"><i
+                class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+        </div>
     </div>
-</div>
 
-<div class="table-responsive">
-    <table class="table-bordered table-condensed table-hover table-nonfluid">
-        <thead>
-            <tr>
-                <th />
-                <th translate>rgla_codigo</th>
-                <th translate>rgla_tipo</th>
-                <th translate>enti</th>
-                <th translate>fini</th>
-                <th translate>ffin</th>
-                <th translate>rgla_orden</th>
-                <th translate>rgla_valorBase</th>
-                <th translate>rgla_formula</th>
-            </tr>
-        </thead>
+    <div class="table-responsive">
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th />
+                    <th translate>rgla_codigo</th>
+                    <th translate>rgla_tipo</th>
+                    <th translate>enti</th>
+                    <th translate>fini</th>
+                    <th translate>ffin</th>
+                    <th translate>rgla_orden</th>
+                    <th translate>rgla_valorBase</th>
+                    <th translate>rgla_formula</th>
+                </tr>
+            </thead>
 
-        <tbody>
-            <tr ng-repeat="rgla in vm.rglaList track by $index">
-                <td><a ui-sref="regla-detail(rgla)"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="rgla.codigo"></td>
-                <td ng-bind="rgla.tipo"></td>
-                <td ng-bind="('enti_' + rgla.enti.id | translate)"></td>
-                <td ng-bind="(rgla.version.fini | date: dateFormat)"></td>
-                <td ng-bind="(rgla.version.ffin | date: dateFormat)"></td>
-                <td class="number" ng-bind="rgla.version.orden"></td>
-                <td class="number" ng-bind="(rgla.version.valorBase | number:4)"></td>
-                <td ng-bind="rgla.version.formula"></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+            <tbody>
+                <tr ng-repeat="rgla in vm.rglaList track by $index">
+                    <td><a ui-sref="regla-detail(rgla)"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td ng-bind="rgla.codigo"></td>
+                    <td ng-bind="rgla.tipo"></td>
+                    <td ng-bind="('enti_' + rgla.enti.id | translate)"></td>
+                    <td ng-bind="(rgla.version.fini | date: dateFormat)"></td>
+                    <td ng-bind="(rgla.version.ffin | date: dateFormat)"></td>
+                    <td class="number" ng-bind="rgla.version.orden"></td>
+                    <td class="number" ng-bind="(rgla.version.valorBase | number:4)"></td>
+                    <td ng-bind="rgla.version.formula"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>

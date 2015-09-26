@@ -1,8 +1,9 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ui-sref="entidad-tipo-dato-edit(vm.model)"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
-        <button data-ng-click="vm.remove()" class="btn btn-default">
+        <a ng-if="mc.hasAccnPath('entd-edit')" class="btn btn-default"
+            ui-sref="entidad-tipo-dato-edit(vm.model)"><i class="glyphicon glyphicon-edit"></i> <span
+            translate>btn_editar</span></a>
+        <button ng-if="mc.hasAccnPath('entd-remove')" data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
