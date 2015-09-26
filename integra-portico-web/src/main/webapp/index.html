@@ -22,22 +22,29 @@
                 <li><a ng-href="#/" class="brand" ng-bind="title"></a></li>
                 <li><span ng-bind="requestTimeMs"></span></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul ng-if="mc.hasAccnPath('secc-menu')" class="nav navbar-nav navbar-right">
                 <div class="dropdown">
                     <li class="btn-group" dropdown is-open="status.isopen"><a
                         class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled"
                         translate="menu"></a>
                         <ul class="dropdown-menu" role="menu">
                             <li role="presentation" class="divider"></li>
-                            <li><a ui-sref="home" translate="page_home"></a></li>
+                            <li><a ng-if="mc.hasAccnPath('secc-inicio')" ui-sref="home"
+                                translate="page_home"></a></li>
                             <li role="presentation" class="divider"></li>
-                            <li><a ng-href="#/servicio" translate="srvcList"></a></li>
-                            <li><a ng-href="#/estadistica/pepr/grid" translate="estdList"></a></li>
-                            <li><a ui-sref="maestro-index" translate="prmtList"></a></li>
-                            <li><a ui-sref="facturacion-index" translate="sec_facturacion"></a></li>
-                            <li><a ng-href="#/proceso/prbt/grid" translate="prbtList"></a></li>
+                            <li><a ng-if="mc.hasAccnPath('secc-servicios')" ng-href="#/servicio"
+                                translate="srvcList"></a></li>
+                            <li><a ng-if="mc.hasAccnPath('secc-estadisticas')"
+                                ng-href="#/estadistica/pepr/grid" translate="estdList"></a></li>
+                            <li><a ng-if="mc.hasAccnPath('secc-maestros')" ui-sref="maestro-index"
+                                translate="prmtList"></a></li>
+                            <li><a ng-if="mc.hasAccnPath('secc-facturacion')" ui-sref="facturacion-index"
+                                translate="sec_facturacion"></a></li>
+                            <li><a ng-if="mc.hasAccnPath('secc-procesos')" ng-href="#/proceso/prbt/grid"
+                                translate="prbtList"></a></li>
                             <li role="presentation" class="divider"></li>
-                            <li><a ui-sref="administracion-index" translate="sec_administracion"></a></li>
+                            <li><a ng-if="mc.hasAccnPath('secc-administracion')"
+                                ui-sref="administracion-index" translate="sec_administracion"></a></li>
                             <li role="presentation" class="divider"></li>
                             <li><a ui-sref="usuario-salir" translate="usro_salir"></a></li>
                         </ul></li>
@@ -64,7 +71,7 @@
     <script type="text/javascript"
         src="http://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.4.6/angular-locale_es-es.min.js"></script>
     <script type="text/javascript"
-        src="http://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.7.2/angular-translate.min.js"></script>
+        src="http://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.8.0/angular-translate.min.js"></script>
     <script type="text/javascript"
         src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script>
     <script type="text/javascript"

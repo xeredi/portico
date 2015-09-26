@@ -483,8 +483,10 @@ function UsuarioAccesoController($state, localStorageService, pageTitleService,
 	pageTitleService.setTitle("usro", "page_acceso");
 }
 
-function UsuarioSalirController($state, UsuarioService) {
+function UsuarioSalirController($state, localStorageService, UsuarioService) {
 	UsuarioService.salir().then(function(data) {
+		localStorageService.remove("accnPaths");
+
 		$state.go("home");
 	});
 }

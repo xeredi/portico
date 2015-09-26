@@ -93,6 +93,8 @@ public enum AccionPrefix {
     prmn,
     /** The cdms. */
     cdms,
+    /** The secc. */
+    secc,
 
     ;
 }

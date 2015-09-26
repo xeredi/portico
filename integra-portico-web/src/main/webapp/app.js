@@ -198,8 +198,13 @@ function MainController(localStorageService) {
 	vm.hasAccnPath = hasAccnPath;
 
 	function hasAccnPath(accnPath) {
-		// console.log("hasAccnPath");
-		return localStorageService.get("accnPaths").indexOf(accnPath) > 0;
+		var value = localStorageService.get("accnPaths")
+				&& localStorageService.get("accnPaths").indexOf(accnPath) >= 0;
+
+		// console.log("hasAccnPath - path: " + accnPath + ", value: " + value
+		// + ", " + localStorageService.get("accnPaths"));
+
+		return value;
 	}
 }
 
