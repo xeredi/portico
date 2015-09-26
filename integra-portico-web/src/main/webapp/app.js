@@ -76,6 +76,10 @@ angular
 			});
 		})
 
+		.config(function($translateProvider) {
+			$translateProvider.useSanitizeValueStrategy('escape');
+		})
+
 		.config(function(localStorageServiceProvider) {
 			localStorageServiceProvider.setPrefix('argo');
 		})

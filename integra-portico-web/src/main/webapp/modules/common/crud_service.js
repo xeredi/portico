@@ -17,7 +17,7 @@ function CrudService($http, $q, $state) {
         }
 
         function index() {
-            console.log('index');
+            // console.log('index');
 
             return $http.post(_uri + "-index.action")
                 .then(success)
@@ -36,7 +36,7 @@ function CrudService($http, $q, $state) {
         }
 
         function list(searchCriteria) {
-            console.log('list');
+            // console.log('list');
 
             return $http.post(_uri + "-list.action", {model: searchCriteria})
                 .then(success)
@@ -64,7 +64,7 @@ function CrudService($http, $q, $state) {
         }
 
         function listPage(searchCriteria, page, limit) {
-            console.log('list page');
+            // console.log('list page');
 
             return $http.post(_uri + "-list.action", {model: searchCriteria, page: page, limit: limit})
                 .then(success)
@@ -94,7 +94,7 @@ function CrudService($http, $q, $state) {
         }
 
         function typeahead(searchCriteria) {
-            console.log('typeahead');
+            // console.log('typeahead');
 
             return $http.post(_uri + "-typeahead.action", {model: searchCriteria})
                 .then(success)
@@ -113,7 +113,7 @@ function CrudService($http, $q, $state) {
         }
 
         function xlsExport(searchCriteria, filename) {
-            console.log('xls export');
+            // console.log('xls export');
 
             return $http.post(_uri + "-xls-export.action", {criterio: searchCriteria}, {
                 responseType : 'arraybuffer'
@@ -142,7 +142,7 @@ function CrudService($http, $q, $state) {
         }
 
         function filter(searchCriteria) {
-            console.log('filter');
+            // console.log('filter');
 
             return $http.post(_uri + "-filter.action", {model: searchCriteria})
                 .then(success)
@@ -161,7 +161,7 @@ function CrudService($http, $q, $state) {
         }
 
         function detail(id) {
-            console.log('detail');
+            // console.log('detail');
 
             return $http.post(_uri + "-detail.action", {model: id})
                 .then(success)
@@ -180,7 +180,7 @@ function CrudService($http, $q, $state) {
         }
 
         function pdfExport(id, filename) {
-            console.log('Pdf export');
+            // console.log('Pdf export');
 
             return $http.post(_uri + "-pdf-export.action", {model: id}, {
                 responseType : 'arraybuffer'
@@ -209,7 +209,7 @@ function CrudService($http, $q, $state) {
         }
 
         function remove(item) {
-            console.log('remove');
+            // console.log('remove');
 
             if (confirm("Are you sure?")) {
                 return $http.post(_uri + "-remove.action", {model: item})
@@ -230,7 +230,7 @@ function CrudService($http, $q, $state) {
         }
 
         function edit(accion, id) {
-            console.log('edit');
+            // console.log('edit');
 
             return $http.post(_uri + "-edit.action", {model: id, accion : accion})
                 .then(success)
@@ -249,7 +249,7 @@ function CrudService($http, $q, $state) {
         }
 
         function save(accion, item) {
-            console.log('save');
+            // console.log('save');
 
             return $http.post(_uri + "-save.action", {model: item, accion : accion})
                 .then(success)
@@ -268,7 +268,7 @@ function CrudService($http, $q, $state) {
         }
 
         function saveI18n(accion, item, i18nMap) {
-            console.log('save i18n');
+            // console.log('save i18n');
 
             return $http.post(_uri + "-save.action", {model: item, i18nMap: i18nMap, accion : accion})
                 .then(success)
@@ -295,7 +295,7 @@ function CrudService($http, $q, $state) {
         }
 
         function tabSelected(tab) {
-            console.log('tabSelected');
+            // console.log('tabSelected');
 
             $state.go('.', {
                 tab : tab
