@@ -3,26 +3,26 @@
         <div class="row">
             <div class="col-sm-1 col-md-1 form-group-sm">
                 <label translate>srsc_anno</label> <input ng-if="vm.accion != 'edit'" type="text"
-                    ng-model="vm.srsc.anno" class="form-control number" />
+                    ng-model="vm.model.anno" class="form-control number" />
                 <p ng-if="vm.accion == 'edit'" class="form-control-static number"
-                    ng-bind="vm.srsc.anno | number:0"></p>
+                    ng-bind="vm.model.anno | number:0"></p>
             </div>
             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
-                <label translate>tpsr</label> <select ng-if="vm.accion != 'edit'" ng-model="vm.srsc.tpsr.id"
+                <label translate>tpsr</label> <select ng-if="vm.accion != 'edit'" ng-model="vm.model.tpsr.id"
                     ng-options="tpsr.id as tpsr.nombre for tpsr in vm.tpsrList" class="form-control">
                     <option />
                 </select>
-                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.srsc.tpsr.nombre"></p>
+                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.model.tpsr.nombre"></p>
             </div>
             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
-                <label translate>prto</label> <select ng-if="vm.accion != 'edit'" ng-model="vm.srsc.prto.id"
+                <label translate>prto</label> <select ng-if="vm.accion != 'edit'" ng-model="vm.model.prto.id"
                     ng-options="prto.id as prto.etiqueta for prto in vm.prtoList" class="form-control">
                     <option />
                 </select>
-                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.srsc.prto.etiqueta"></p>
+                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.model.prto.etiqueta"></p>
             </div>
             <div class="col-sm-1 col-md-1 form-group-sm">
-                <label translate>srsc_ultimo_numero</label> <input type="text" ng-model="vm.srsc.ultimoNumero"
+                <label translate>srsc_ultimo_numero</label> <input type="text" ng-model="vm.model.ultimoNumero"
                     class="form-control number" />
             </div>
     </fieldset>

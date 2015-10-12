@@ -24,8 +24,8 @@
             </ul>
             <ul ng-if="mc.hasAccnPath('secc-menu')" class="nav navbar-nav navbar-right">
                 <div class="dropdown">
-                    <li class="btn-group" dropdown is-open="status.isopen"><a
-                        class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled"
+                    <li class="btn-group" uib-dropdown is-open="status.isopen"><a
+                        class="btn btn-primary dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled"
                         translate="menu"></a>
                         <ul class="dropdown-menu" role="menu">
                             <li role="presentation" class="divider"></li>
@@ -65,15 +65,15 @@
         <div ui-view class="container-fluid"></div>
     </div>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
     <script type="text/javascript"
-        src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-route.min.js"></script>
+        src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.min.js"></script>
     <script type="text/javascript"
-        src="http://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.4.6/angular-locale_es-es.min.js"></script>
+        src="http://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.4.7/angular-locale_es-es.min.js"></script>
     <script type="text/javascript"
-        src="http://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.8.0/angular-translate.min.js"></script>
+        src="http://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.8.1/angular-translate.min.js"></script>
     <script type="text/javascript"
-        src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script>
+        src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.0/ui-bootstrap-tpls.min.js"></script>
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
@@ -104,6 +104,8 @@
     <script type="text/javascript" src="modules/entidad/maestro/maestro_service.js"></script>
     <script type="text/javascript" src="modules/entidad/maestro/maestro_controller.js"></script>
     <script type="text/javascript" src="modules/entidad/servicio/servicio.js"></script>
+    <script type="text/javascript" src="modules/entidad/servicio/servicio_service.js"></script>
+    <script type="text/javascript" src="modules/entidad/servicio/servicio_controller.js"></script>
     <script type="text/javascript" src="modules/entidad/estadistica/estadistica.js"></script>
     <script type="text/javascript" src="modules/facturacion/facturacion.js"></script>
     <script type="text/javascript" src="modules/facturacion/facturacion_service.js"></script>

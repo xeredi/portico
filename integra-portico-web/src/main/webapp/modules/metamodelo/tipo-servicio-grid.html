@@ -1,13 +1,13 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <pagination total-items="vm.resultList.count" items-per-page="vm.resultList.limit" ng-model="vm.page"
-            ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-            next-text="&rsaquo;&rsaquo;"></pagination>
+        <uib-pagination total-items="vm.resultList.count" items-per-page="vm.resultList.limit"
+            ng-model="vm.page" ng-change="vm.pageChanged()" class="pagination" max-size="1"
+            previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"> </pagination>
     </div>
 
     <div class="btn-group">
-        <a class="btn btn-default" ui-sref="tipo-servicio-create"><i
-            class="glyphicon glyphicon-file"></i><span translate="btn_crear"></span> </a>
+        <a class="btn btn-default" ui-sref="tipo-servicio-create"><i class="glyphicon glyphicon-file"></i><span
+            translate="btn_crear"></span> </a>
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
             data-template="modules/metamodelo/tipo-servicio-filter-content.html" bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>

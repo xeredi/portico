@@ -9,8 +9,8 @@
             ui-sref="tipo-parametro-grid" translate="tpprList"></a> <a ng-if="mc.hasAccnPath('tpes-list')"
             class="col-md-6 col-lg-4 list-group-item" ui-sref="tipo-estadistica-grid" translate="tpesList"></a>
         <a ng-if="mc.hasAccnPath('tpdt-list')" class="col-md-6 col-lg-4 list-group-item"
-            ui-sref="tipo-dato-grid" translate="tpdtList"></a><a class="col-md-6 col-lg-4 list-group-item"
-            ng-href="#/servicio/srsc/grid" translate="srscList"></a><a
+            ui-sref="tipo-dato-grid" translate="tpdtList"></a><a ng-if="mc.hasAccnPath('srsc-list')"
+            class="col-md-6 col-lg-4 list-group-item" ui-sref="servicio-secuencia-grid" translate="srscList"></a><a
             class="col-md-6 col-lg-4 list-group-item" ng-href="#/administracion/metamodelo/reload"
             translate="menu_metamodelo_reload"></a>
     </div>
