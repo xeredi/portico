@@ -43,7 +43,7 @@
                                 <label>{{'enti_' + entiHijaId | translate}}</label><input
                                     ng-controller="PrmtLupaController" type="text" autocomplete="off"
                                     ng-model="vm.searchCriteria.sprmMap[entiHijaId].prmtAsociado"
-                                    typeahead="prmt as prmt.etiqueta for prmt in getLabelValuesSprm(entiHijaId, $viewValue, vm.searchCriteria.fechaVigencia)"
+                                    uib-typeahead="prmt as prmt.etiqueta for prmt in getLabelValuesSprm(entiHijaId, $viewValue, vm.searchCriteria.fechaVigencia)"
                                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                             </div>
                         </div>

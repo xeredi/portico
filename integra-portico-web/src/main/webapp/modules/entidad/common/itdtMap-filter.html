@@ -37,11 +37,11 @@
             ng-disabled="vm.enti.entdMap[tpdtId].tpdt.enti.puerto && vm.prtoId == null"
             ng-controller="PrmtLupaController" type="text" autocomplete="off"
             ng-model="vm.searchCriteria.itdtMap[tpdtId].prmt"
-            typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue, vm.prtoId, fechaVigencia)"
+            uib-typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue, vm.prtoId, fechaVigencia)"
             typeahead-editable="false" typeahead-wait-ms="250" class="form-control"> <input
             ng-switch-when="SR" ng-controller="SrvcLupaController" type="text" autocomplete="off"
             ng-model="vm.searchCriteria.itdtMap[tpdtId].srvc"
-            typeahead="srvc as srvc.etiqueta for srvc in search(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
+            uib-typeahead="srvc as srvc.etiqueta for srvc in search(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
             typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
     </div>
 </div>

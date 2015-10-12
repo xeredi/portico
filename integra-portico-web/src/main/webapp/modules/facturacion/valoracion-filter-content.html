@@ -24,27 +24,27 @@
                             <div class="col-sm-3 col-md-2 form-group-sm" ng-show="vm.searchCriteria.tpsrId">
                                 <label translate="srvc"></label> <input type="text" autocomplete="off"
                                     ng-model="vm.searchCriteria.srvc" ng-controller="SrvcLupaController"
-                                    typeahead="srvc as srvc.etiqueta for srvc in search(vm.searchCriteria.tpsrId, $viewValue)"
+                                    uib-typeahead="srvc as srvc.etiqueta for srvc in search(vm.searchCriteria.tpsrId, $viewValue)"
                                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                             </div>
                             <div class="col-sm-3 col-md-2 form-group-sm" ng-show="vm.searchCriteria.tpsrId">
                                 <label translate="aspc"></label> <input type="text" autocomplete="off"
                                     ng-model="vm.searchCriteria.aspc"
                                     ng-controller="AspectoTypeaheadController as ta"
-                                    typeahead="item as item.etiqueta for item in ta.search(vm.searchCriteria.tpsrId, $viewValue)"
+                                    uib-typeahead="item as item.etiqueta for item in ta.search(vm.searchCriteria.tpsrId, $viewValue)"
                                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                             </div>
                             <div class="col-sm-3 col-md-2 form-group-sm" ng-show="vm.searchCriteria.tpsrId">
                                 <label translate="crgo"></label> <input type="text" autocomplete="off"
                                     ng-model="vm.searchCriteria.crgo"
                                     ng-controller="CargoTypeaheadController as ta"
-                                    typeahead="item as item.etiqueta for item in ta.searchTpsr(vm.searchCriteria.tpsrId, $viewValue)"
+                                    uib-typeahead="item as item.etiqueta for item in ta.searchTpsr(vm.searchCriteria.tpsrId, $viewValue)"
                                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                             </div>
                             <div class="col-sm-4 col-md-3 form-group-sm">
                                 <label translate="vlrc_pagador"></label> <input type="text" autocomplete="off"
                                     ng-model="vm.searchCriteria.pagador" ng-controller="PrmtLupaController"
-                                    typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(20010, $viewValue)"
+                                    uib-typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(20010, $viewValue)"
                                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                             </div>
                             <div class="col-sm-4 col-md-3 form-group-sm">

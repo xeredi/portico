@@ -1,4 +1,4 @@
-<tabset type="pills"> <tab select="vm.tabSelected(null)"> <tab-heading
+<uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)"> <tab-heading
     ng-bind="'enti' | translate"></tab-heading>
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
@@ -168,15 +168,15 @@
         </tbody>
     </table>
 </fieldset>
-</tab> <tab select="vm.tabSelected('entdList')" active="vm.tabActive['entdList']"> <tab-heading
+</uib-tab> <uib-tab select="vm.tabSelected('entdList')" active="vm.tabActive['entdList']"> <tab-heading
     ng-bind="'entdList' | translate"></tab-heading>
 <div ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
 <div ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
-</tab> <tab select="vm.tabSelected('accnList')" active="vm.tabActive['accnList']"> <tab-heading
+</uib-tab> <uib-tab select="vm.tabSelected('accnList')" active="vm.tabActive['accnList']"> <tab-heading
     ng-bind="'accnList' | translate"></tab-heading>
 <div ng-include="'modules/metamodelo/fragment/entidad-accion-grid-content.html'"></div>
 <div ng-include="'modules/metamodelo/fragment/entidad-accion-grid-grid-content.html'"></div>
-</tab> <tab ng-if="vm.model.tpdtEstado.id" select="vm.tabSelected('trmtList')" active="vm.tabActive['trmtList']">
+</uib-tab> <uib-tab ng-if="vm.model.tpdtEstado.id" select="vm.tabSelected('trmtList')" active="vm.tabActive['trmtList']">
 <tab-heading ng-bind="'trmtList' | translate"></tab-heading>
 <div ng-include="'modules/metamodelo/fragment/tramite-grid-content.html'"></div>
-</tab></tabset>
+</uib-tab></uib-tabset>
