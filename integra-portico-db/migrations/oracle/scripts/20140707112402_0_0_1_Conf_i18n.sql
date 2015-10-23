@@ -216,6 +216,12 @@ INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_
 INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2666, 'secc', 'administracion', 1, 0)\
 INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2667, 'secc', 'menu', 1, 0)\
 
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2680, 'pepr', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2681, 'pepr', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2682, 'pepr', 'create', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2684, 'pepr', 'remove', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2690, 'pepr', 'load', 1, 0)\
+
 
 -- Grupos
 INSERT INTO tbl_grupo_grpo (grpo_pk, grpo_nombre) VALUES (4000, 'Administradores')\

@@ -5,15 +5,16 @@
     <parent>
         <groupId>integra-portico</groupId>
         <artifactId>pom</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1</version>
         <relativePath>../integra-portico-pom</relativePath>
     </parent>
     <name>Procesos Batch</name>
+
     <dependencies>
         <dependency>
             <groupId>integra-portico</groupId>
             <artifactId>business</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>commons-configuration</groupId>

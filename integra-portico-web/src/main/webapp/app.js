@@ -14,8 +14,9 @@ angular
 						"facturacion_controller", "item_service",
 						"item_controller", "maestro", "maestro_service",
 						"maestro_controller", "servicio", "servicio_service",
-						"servicio_controller", "estadistica", "proceso",
-						"seguridad_service", "seguridad_controller" ])
+						"servicio_controller", "estadistica",
+						"estadistica_service", "estadistica_controller",
+						"proceso", "seguridad_service", "seguridad_controller" ])
 
 		.config([ "$stateProvider", function($stateProvider) {
 			$stateProvider

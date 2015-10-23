@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>integra-portico</groupId>
 		<artifactId>pom</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 		<relativePath>../integra-portico-pom</relativePath>
 	</parent>
 
@@ -13,17 +13,17 @@
 		<dependency>
 			<groupId>integra-portico</groupId>
 			<artifactId>web</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>integra-portico</groupId>
 			<artifactId>jobs</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>integra-portico</groupId>
 			<artifactId>db</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>

@@ -35,7 +35,7 @@
                             <li><a ng-if="mc.hasAccnPath('secc-servicios')" ng-href="#/servicio"
                                 translate="srvcList"></a></li>
                             <li><a ng-if="mc.hasAccnPath('secc-estadisticas')"
-                                ng-href="#/estadistica/pepr/grid" translate="estdList"></a></li>
+                                ui-sref="periodo-proceso-grid" translate="estdList"></a></li>
                             <li><a ng-if="mc.hasAccnPath('secc-maestros')" ui-sref="maestro-index"
                                 translate="prmtList"></a></li>
                             <li><a ng-if="mc.hasAccnPath('secc-facturacion')" ui-sref="facturacion-index"
@@ -73,14 +73,14 @@
     <script type="text/javascript"
         src="http://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.8.1/angular-translate.min.js"></script>
     <script type="text/javascript"
-        src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.1/ui-bootstrap-tpls.min.js"></script>
+        src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.2/ui-bootstrap-tpls.min.js"></script>
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
     <script type="text/javascript"
-        src="http://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.2/angular-strap.min.js"></script>
+        src="http://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.3/angular-strap.min.js"></script>
     <script type="text/javascript"
-        src="http://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.2/angular-strap.tpl.min.js"></script>
+        src="http://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.3/angular-strap.tpl.min.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
     <script type="text/javascript"
         src="http://cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.1.6/angular-google-maps.min.js"></script>
@@ -107,6 +107,8 @@
     <script type="text/javascript" src="modules/entidad/servicio/servicio_service.js"></script>
     <script type="text/javascript" src="modules/entidad/servicio/servicio_controller.js"></script>
     <script type="text/javascript" src="modules/entidad/estadistica/estadistica.js"></script>
+    <script type="text/javascript" src="modules/entidad/estadistica/estadistica_service.js"></script>
+    <script type="text/javascript" src="modules/entidad/estadistica/estadistica_controller.js"></script>
     <script type="text/javascript" src="modules/facturacion/facturacion.js"></script>
     <script type="text/javascript" src="modules/facturacion/facturacion_service.js"></script>
     <script type="text/javascript" src="modules/facturacion/facturacion_controller.js"></script>

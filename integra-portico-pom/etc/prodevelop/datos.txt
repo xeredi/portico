@@ -7,6 +7,14 @@ VPN
 	vpn.puertos.es
 	jrey_prodevelop / X25veh53
 
+Maquima Weblogic
+	integraman01desa.puertos.es
+	IP: 172.20.22.91
+	Usuario: externos
+	Password: 3xt3rn4lsupport
+
+
+
 Doc Ténnica
 	integramandesa.puertos.es
 		DocumentacionTecnica.zip
