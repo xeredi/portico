@@ -28,9 +28,11 @@ public final class AperakTest {
      *             Signals that an I/O exception has occurred.
      */
     private void parse(final String filename) throws IOException {
-        System.out.println(filename);
+        final String filepath = System.getProperty("user.home") + "/proyectos/test/argo/edifact" + filename;
 
-        try (final InputStream is = new FileInputStream(filename)) {
+        System.out.println(filepath);
+
+        try (final InputStream is = new FileInputStream(filepath)) {
             final ANTLRInputStream input = new ANTLRInputStream(is);
             final AperakD14bLexer lexer = new AperakD14bLexer(input);
             final CommonTokenStream tokens = new CommonTokenStream(lexer);
