@@ -15,14 +15,14 @@
     <distributionManagement>
         <site>
             <id>project-site</id>
-            <url>file:${user.home}/proyectos/deploy/site/${groupId}/${artifactId}</url>
+            <url>file:${user.home}/proyectos/deploy/site/${project.groupId}/${project.artifactId}</url>
         </site>
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:http://xp-dev.com/svn/xeredi/xeredi-util</connection>
-        <developerConnection>scm:svn:http://xp-dev.com/svn/xeredi/xeredi-util</developerConnection>
-        <url>scm:svn:http://xp-dev.com/svn/xeredi/xeredi-util</url>
+        <connection>scm:svn:http://xp-dev.com/svn/${project.groupId}/${project.artifactId}</connection>
+        <developerConnection>scm:svn:http://xp-dev.com/svn/${project.groupId}/${project.artifactId}</developerConnection>
+        <url>scm:svn:http://xp-dev.com/svn/${project.groupId}/${project.artifactId}</url>
     </scm>
 
 

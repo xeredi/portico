@@ -91,19 +91,19 @@
     <distributionManagement>
         <site>
             <id>project-site</id>
-            <url>file:${user.home}/proyectos/deploy/site/${groupId}/${artifactId}</url>
+            <url>file:${user.home}/proyectos/deploy/site/${project.groupId}/${project.artifactId}</url>
         </site>
     </distributionManagement>
 
     <issueManagement>
         <system>Trac</system>
-        <url>http://xp-dev.com/trac/xeredi</url>
+        <url>http://xp-dev.com/trac/${project.groupId}</url>
     </issueManagement>
 
     <scm>
-        <connection>scm:svn:http://xp-dev.com/svn/xeredi/xeredi-integra-pom</connection>
-        <developerConnection>scm:svn:http://xp-dev.com/svn/xeredi/xeredi-integra-pom</developerConnection>
-        <url>scm:svn:http://xp-dev.com/svn/xeredi/xeredi-integra-pom</url>
+        <connection>scm:svn:http://xp-dev.com/svn/${project.groupId}/${project.artifactId}</connection>
+        <developerConnection>scm:svn:http://xp-dev.com/svn/${project.groupId}/${project.artifactId}</developerConnection>
+        <url>scm:svn:http://xp-dev.com/svn/${project.groupId}/${project.artifactId}</url>
     </scm>
 
     <developers>

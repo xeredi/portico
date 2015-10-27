@@ -10,7 +10,7 @@
     <distributionManagement>
         <site>
             <id>project-site</id>
-            <url>file:${user.home}/proyectos/deploy/site/${groupId}/${artifactId}</url>
+            <url>file:${user.home}/proyectos/deploy/site/${project.groupId}/${project.artifactId}</url>
         </site>
     </distributionManagement>
 
