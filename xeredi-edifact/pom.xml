@@ -7,6 +7,13 @@
     <name>xeredi-edifact</name>
     <packaging>jar</packaging>
 
+    <distributionManagement>
+        <site>
+            <id>project-site</id>
+            <url>file:${user.home}/proyectos/deploy/site/${groupId}/${artifactId}</url>
+        </site>
+    </distributionManagement>
+
     <build>
         <resources>
             <resource>
