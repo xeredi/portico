@@ -1,28 +1,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>test</artifactId>
+	<artifactId>argo-test</artifactId>
 	<parent>
-		<groupId>integra-portico</groupId>
-		<artifactId>pom</artifactId>
+		<groupId>argo</groupId>
+		<artifactId>argo-pom</artifactId>
 		<version>0.0.1</version>
 		<relativePath>../integra-portico-pom</relativePath>
 	</parent>
 
 	<dependencies>
 		<dependency>
-			<groupId>integra-portico</groupId>
-			<artifactId>web</artifactId>
+			<groupId>argo</groupId>
+			<artifactId>argo-web</artifactId>
 			<version>0.0.1</version>
 		</dependency>
 		<dependency>
-			<groupId>integra-portico</groupId>
-			<artifactId>jobs</artifactId>
+			<groupId>argo</groupId>
+			<artifactId>argo-jobs</artifactId>
 			<version>0.0.1</version>
 		</dependency>
 		<dependency>
-			<groupId>integra-portico</groupId>
-			<artifactId>db</artifactId>
+			<groupId>argo</groupId>
+			<artifactId>argo-db</artifactId>
 			<version>0.0.1</version>
 		</dependency>
 		<dependency>

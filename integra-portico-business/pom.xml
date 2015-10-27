@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>business</artifactId>
+    <artifactId>argo-business</artifactId>
 
     <parent>
-        <groupId>integra-portico</groupId>
-        <artifactId>pom</artifactId>
+        <groupId>argo</groupId>
+        <artifactId>argo-pom</artifactId>
         <version>0.0.1</version>
         <relativePath>../integra-portico-pom</relativePath>
     </parent>
@@ -45,8 +45,8 @@
             <version>0.0.1</version>
         </dependency>
         <dependency>
-            <groupId>integra-portico</groupId>
-            <artifactId>persistence</artifactId>
+            <groupId>argo</groupId>
+            <artifactId>argo-persistence</artifactId>
             <version>0.0.1</version>
         </dependency>
         <dependency>
