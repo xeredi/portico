@@ -3,8 +3,8 @@ package xeredi.integra.http.page.metamodelo;
 import org.openqa.selenium.WebDriver;
 import org.seleniumhq.selenium.fluent.FluentWebDriver;
 
-import xeredi.integra.model.metamodelo.vo.TipoDato;
-import xeredi.integra.test.comun.FluentPage;
+import xeredi.argo.model.metamodelo.vo.TipoDato;
+import xeredi.argo.test.comun.FluentPage;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -131,8 +131,8 @@ public final class EntidadTipoDatoEditPage extends FluentPage {
      *            the obligatorio
      * @return the entidad tipo dato edit page
      */
-    public EntidadTipoDatoEditPage setObligatorio(final String obligatorio) {
-        selectValue("vm.entd.obligatorio", "boolean:" + obligatorio);
+    public EntidadTipoDatoEditPage setObligatorio(final Boolean value) {
+        selectValue("vm.entd.obligatorio", value);
 
         return this;
     }
@@ -144,8 +144,8 @@ public final class EntidadTipoDatoEditPage extends FluentPage {
      *            the gridable
      * @return the entidad tipo dato edit page
      */
-    public EntidadTipoDatoEditPage setGridable(final String gridable) {
-        selectValue("vm.entd.gridable", "boolean:" + gridable);
+    public EntidadTipoDatoEditPage setGridable(final Boolean value) {
+        selectValue("vm.entd.gridable", value);
 
         return this;
     }
@@ -157,8 +157,8 @@ public final class EntidadTipoDatoEditPage extends FluentPage {
      *            the filtrable
      * @return the entidad tipo dato edit page
      */
-    public EntidadTipoDatoEditPage setFiltrable(final String filtrable) {
-        selectValue("vm.entd.filtrable", "boolean:" + filtrable);
+    public EntidadTipoDatoEditPage setFiltrable(final Boolean value) {
+        selectValue("vm.entd.filtrable", value);
 
         return this;
     }

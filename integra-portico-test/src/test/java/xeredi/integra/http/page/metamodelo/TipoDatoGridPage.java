@@ -1,91 +1,50 @@
 package xeredi.integra.http.page.metamodelo;
 
-import org.openqa.selenium.WebDriver;
-import org.seleniumhq.selenium.fluent.FluentWebDriver;
-
-import xeredi.integra.model.metamodelo.vo.TipoElemento;
-import xeredi.integra.model.metamodelo.vo.TipoHtml;
-import xeredi.integra.test.comun.FluentPage;
+import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
+import xeredi.integra.http.page.BaseFluentPage;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoDatoGridPage.
  */
-public final class TipoDatoGridPage extends FluentPage {
+public final class TipoDatoGridPage extends BaseFluentPage {
 
     /**
-     * Instantiates a new tipo dato grid page.
-     *
-     * @param webDriver
-     *            the web driver
-     * @param fluentWebDriver
-     *            the fluent web driver
+     * {@inheritDoc}
      */
-    public TipoDatoGridPage(final WebDriver webDriver, final FluentWebDriver fluentWebDriver) {
-        super(webDriver, fluentWebDriver);
+    @Override
+    public String getUrl() {
+        return "http://127.0.0.1:8080/web/#/metamodelo/tpdt/grid";
     }
 
     /**
-     * Goto page.
-     *
-     * @return the tipo dato grid page
+     * {@inheritDoc}
      */
-    public TipoDatoGridPage gotoPage() {
-        linkHref("#/metamodelo/tpdt/grid").click();
-
-        return this;
+    @Override
+    public void isAt() {
+        super.isAt();
     }
 
-    /**
-     * Sets the criterio codigo.
-     *
-     * @param codigo
-     *            the codigo
-     * @return the tipo dato grid page
-     */
-    public TipoDatoGridPage setCriterioCodigo(final String codigo) {
-        setInput("vm.tpdtCriterio.codigo", codigo);
-
-        return this;
+    public void setTpdtCriterio(final TipoDatoCriterioVO criterio) {
+        if (criterio.getCodigo() != null) {
+            fill("input[ng-model='vm.tpdtCriterio.codigo']").with(criterio.getCodigo());
+        }
+        if (criterio.getNombre() != null) {
+            fill("input[ng-model='vm.tpdtCriterio.nombre']").with(criterio.getNombre());
+        }
+        if (criterio.getTipoElemento() != null) {
+            fillSelect("select[ng-model='vm.tpdtCriterio.tipoElemento']", criterio.getTipoElemento().name());
+        }
+        if (criterio.getTpht() != null) {
+            fillSelect("select[ng-model='vm.tpdtCriterio.tpht']", criterio.getTpht().name());
+        }
     }
 
-    /**
-     * Sets the criterio nombre.
-     *
-     * @param nombre
-     *            the nombre
-     * @return the tipo dato grid page
-     */
-    public TipoDatoGridPage setCriterioNombre(final String nombre) {
-        setInput("vm.tpdtCriterio.nombre", nombre);
-
-        return this;
+    public void gotoDetail() {
+        click("a[ng-href*='#/metamodelo/tpdt/detail']");
     }
 
-    /**
-     * Sets the criterio tpel.
-     *
-     * @param tpel
-     *            the tpel
-     * @return the tipo dato grid page
-     */
-    public TipoDatoGridPage setCriterioTpel(final TipoElemento tpel) {
-        selectValue("vm.tpdtCriterio.tpel", "string:" + tpel.name());
-
-        return this;
+    public void gotoCreate() {
+        click("a[ng-href*='#/metamodelo/tpdt/edit/create']");
     }
-
-    /**
-     * Sets the criterio tpht.
-     *
-     * @param tpht
-     *            the tpht
-     * @return the tipo dato grid page
-     */
-    public TipoDatoGridPage setCriterioTpht(final TipoHtml tpht) {
-        selectValue("vm.tpdtCriterio.tpht", "string:" + tpht.name());
-
-        return this;
-    }
-
 }

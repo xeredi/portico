@@ -1,9 +1,6 @@
 package xeredi.integra.http.page.seguridad;
 
-import org.openqa.selenium.WebDriver;
-import org.seleniumhq.selenium.fluent.FluentWebDriver;
-
-import xeredi.integra.test.comun.FluentPage;
+import org.fluentlenium.core.FluentPage;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -12,62 +9,43 @@ import xeredi.integra.test.comun.FluentPage;
 public final class UsuarioAccesoPage extends FluentPage {
 
     /**
-     * Instantiates a new usuario acceso page.
-     *
-     * @param awebDriver
-     *            the aweb driver
-     * @param afluentWebDriver
-     *            the afluent web driver
+     * {@inheritDoc}
      */
-    public UsuarioAccesoPage(final WebDriver awebDriver, final FluentWebDriver afluentWebDriver) {
-        super(awebDriver, afluentWebDriver);
+    @Override
+    public String getUrl() {
+        return "http://127.0.0.1:8080/web";
     }
 
     /**
-     * Goto page.
-     *
-     * @return the usuario acceso page
+     * {@inheritDoc}
      */
-    public final UsuarioAccesoPage gotoPage() {
-        webDriver.get("http://127.0.0.1:8080/web");
+    @Override
+    public void isAt() {
+        super.isAt();
+    }
+
+    public UsuarioAccesoPage setUsuario(final String value) {
+        fill("input[ng-model='vm.usro.login']").with(value);
 
         return this;
     }
 
-    /**
-     * Sets the usuario.
-     *
-     * @param login
-     *            the login
-     * @return the usuario acceso page
-     */
-    public UsuarioAccesoPage setUsuario(final String login) {
-        setInput("vm.usro.login", login);
+    public UsuarioAccesoPage setContrasenia(final String value) {
+        fill("input[ng-model='vm.usro.contrasenia']").with(value);
 
         return this;
     }
 
-    /**
-     * Sets the contrasenia.
-     *
-     * @param contrasenia
-     *            the contrasenia
-     * @return the usuario acceso page
-     */
-    public UsuarioAccesoPage setContrasenia(final String contrasenia) {
-        setInput("vm.usro.contrasenia", contrasenia);
+    public UsuarioAccesoPage loginSuccessful() {
+        click("button[data-ng-click='vm.acceso()']");
 
         return this;
     }
 
-    /**
-     * Click acceso.
-     *
-     * @return the usuario acceso page
-     */
-    public final UsuarioAccesoPage clickAcceso() {
-        button("vm.acceso()").click();
+    public UsuarioAccesoPage loginFailure() {
+        click("button[data-ng-click='vm.acceso()']");
 
         return this;
     }
+
 }

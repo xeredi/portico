@@ -12,7 +12,7 @@
                 <p ng-if="!(vm.accion == 'create' || vm.accion == 'duplicate')" class="form-control-static"
                     ng-bind="vm.item.prmtAsociado.prto.etiqueta"></p>
             </div>
-            <div class="col-sm-4 col-md-2 col-md-2 form-group-sm">
+            <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
                 <label ng-bind="'enti_' + vm.enti.enti.tpprAsociado.id | translate"></label> <input
                     ng-if="vm.accion != 'edit'" ng-controller="PrmtLupaController" type="text"
                     autocomplete="off" ng-model="vm.item.prmtAsociado"

@@ -9,13 +9,13 @@ import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.maestro.bo.ParametroBOFactory;
-import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
-import xeredi.integra.model.maestro.vo.ParametroVO;
-import xeredi.integra.model.metamodelo.vo.Entidad;
-import xeredi.integra.test.comun.AngularJsTest;
+import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.maestro.bo.ParametroBO;
+import xeredi.argo.model.maestro.bo.ParametroBOFactory;
+import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
+import xeredi.argo.model.maestro.vo.ParametroVO;
+import xeredi.argo.model.metamodelo.vo.Entidad;
+import xeredi.argo.test.comun.AngularJsTest;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -41,17 +41,17 @@
         <dependency>
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-core</artifactId>
-            <version>2.3.24.1</version>
+            <version>${struts2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-convention-plugin</artifactId>
-            <version>2.3.24.1</version>
+            <version>${struts2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-json-plugin</artifactId>
-            <version>2.3.24.1</version>
+            <version>${struts2.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -67,22 +67,22 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>angularjs</artifactId>
-            <version>1.4.7</version>
+            <version>${angularjs.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>3.3.5</version>
+            <version>${bootstrap.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>angular-translate</artifactId>
-            <version>2.7.2</version>
+            <version>${angular-translate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>angular-ui-bootstrap</artifactId>
-            <version>0.14.3</version>
+            <version>${angular-ui-bootstrap.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
@@ -97,7 +97,7 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>angular-strap</artifactId>
-            <version>2.3.4</version>
+            <version>${angular-strap.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
@@ -107,17 +107,17 @@
         <dependency>
             <groupId>org.webjars.bower</groupId>
             <artifactId>angular-spinner</artifactId>
-            <version>0.7.0</version>
+            <version>${angular-spinner.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars.bower</groupId>
             <artifactId>angular-local-storage</artifactId>
-            <version>0.2.3</version>
+            <version>${angular-local-storage.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>angular-google-maps</artifactId>
-            <version>2.1.1</version>
+            <version>${angular-google-maps.version}</version>
         </dependency>
     </dependencies>
 </project>

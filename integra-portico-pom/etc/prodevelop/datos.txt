@@ -35,12 +35,43 @@ OTR (incidencias)
 	jrey_prodevelop / X25veh53
 	rcorreas_prodevelop / KalaXok290
 
+Oracle
+		Servidor : zipi.puertos.es
+		Oracle sid=desaint1
+		Puerto: 1521
+
+		Servidor : zape.puertos.es
+		Oracle Sid=desaint2
+		Puerto: 1521
+
+		Schemas integra :
+		Usuario INTEGRA (password temporal1)
+		Usuario INTEGRA_AUDITORIA(password temporal2)
+		Usuario ISCHEDULER.(password temporal3)
 
 puertos
 	alicante
 		Patricia Fernandez	649775106
+		 Jose Angel Bellido Macho [jabellido@puertoalicante.com] 		Facturacion
+		965 130 095
 
+	malaga
+		Fernando Arjona Villén
+		Responsable de Sistemas de Información y Comunicaciones
+		Tel: 34 952 125 000  Ext. 2250 | Fax: 34 952 125 002
+		farjona@puertomalaga.com
 
+		andres - facturacion
+
+	marin
+		Benjamin
+		986855200
+
+	huelva
+		Manuel alarcón -> Sistemas
+		959 49 31 00
+		
+		Juanjo melero
 
 prodevelop
 	xrey@prodevelop.es / prodevelop

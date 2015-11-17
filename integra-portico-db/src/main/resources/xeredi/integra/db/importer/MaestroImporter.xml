@@ -621,6 +621,28 @@
 	]]>
 	</sql>
 
+    <sql id="CONVENIO" tempImp="false">
+    <![CDATA[
+        SELECT
+            maes.conv_codigo
+            , temp.conv_fecha_inicio_convenio
+            , temp.conv_fecha_fin_convenio
+            , temp.conv_empresa
+            , temp.conv_codigo_edi
+            , (SELECT i18n.conv_nombre
+                FROM iesc_convenioi18n_conv i18n
+                WHERE i18n.conv_id = maes.conv_id
+                    AND i18n.conv_idioma = ?
+                    AND ? BETWEEN conv_fecha_creacion AND COALESCE(conv_fecha_fin, ?)
+            ) AS i18n_nombre
+        FROM
+            iesc_convenio_conv maes
+            INNER JOIN iesc_conveniotemp_conv temp ON
+                temp.conv_id = maes.conv_id
+        ORDER BY maes.conv_es_activo DESC, temp.conv_fecha_inicio_convenio DESC
+    ]]>
+    </sql>
+
 	<sql id="MARCA_VEHICULO" tempImp="false">
 	<![CDATA[
 		SELECT MAES.vmar_codigo, MAES.vmar_marca
@@ -1297,6 +1319,7 @@
 	]]>
 	</sql>
 
+<!--
 	<sql id="AUTORIDAD_PORTUARIA" tempImp="false">
 	<![CDATA[
 		SELECT
@@ -1322,10 +1345,10 @@
 		    IGEN_AUTORIDAD_PORT_AUTP MAES
 		WHERE
 		    (MAES.AUTP_DEPENDENCIA_AUTP_ID IS NULL OR MAES.AUTP_DEPENDENCIA_AUTP_ID <= MAES.AUTP_ID)
-        order by MAES.AUTP_ES_ACTIVO desc
-
+        order by MAES.AUTP_ID, MAES.AUTP_ES_ACTIVO desc
 	]]>
 	</sql>
+-->
 
 	<sql id="RECINTO_ADUANERO" tempImp="false">
 	<![CDATA[
@@ -1349,6 +1372,7 @@
 	]]>
 	</sql>
 
+<!--
 	<sql id="SUBPUERTO" tempImp="false">
     <![CDATA[
         SELECT
@@ -1380,6 +1404,7 @@
         order by MAES.SUBP_es_activo desc
     ]]>
 	</sql>
+ -->
 
 	<sql id="ZONA_DEPOSITO" tempImp="true">
     <![CDATA[
@@ -1896,7 +1921,8 @@
                     SELECT 1 FROM ISUM_CONTADORPUNTORED_CPSU
                     WHERE CPSU_COSU_ID = COSU_ID
                         AND CPSU_PRSU_ID = PRSU_ID
-                        and sysdate between CPSU_FECHA_INICIO AND COALESCE(CPSU_FECHA_FINAL, SYSDATE)
+                        AND sysdate between CPSU_FECHA_INICIO AND COALESCE(CPSU_FECHA_FINAL, SYSDATE)
+                        AND cpsu_es_activo = 1
                 )
             ) AS CONTADOR_COD
             , (
@@ -2054,12 +2080,13 @@
 	    FROM
 			IESC_BUQUE_BUQU MAES
 			JOIN IESC_BUQUEtemp_BUQU TEMP ON
-				TEMP.BUqu_CODIGO_imo = MAES.BUqu_CODIGO_imo
+				TEMP.BUqu_buque_id = MAES.BUqu_buque_id
 		order by MAES.BUQU_es_activo desc
 	]]>
 	</sql>
 
 
+<!--
 	<sql id="BUQUE_CAPACIDAD" tempImp="false">
     <![CDATA[
         select
@@ -2077,11 +2104,13 @@
                 RESS.RESS_ID = maes.CABU_RESIDUO_SUBTIPO_ID
     ]]>
 	</sql>
+ -->
 
 	<sql id="BUQUE_CERTIFICADO" tempImp="false">
     <![CDATA[
         select
-            maes.CERB_BUQU_ID
+            (SELECT buqu_codigo_imo FROM iesc_buque_buqu
+                WHERE buqu_buque_id = maes.cerb_buque_id) AS imo
             , (select CERT_codigo
               from IESC_CERTIFICADOTIPO_CERT
               where cert_id = CERB_CERT_ID) as cert
@@ -2094,7 +2123,8 @@
 	<sql id="BUQUE_CONVENIO" tempImp="false">
     <![CDATA[
         select
-            maes.BUCO_CODIGO_IMO
+            (SELECT buqu_codigo_imo FROM iesc_buque_buqu
+                WHERE buqu_buque_id = maes.buco_buque_id) AS imo
             , (select conv_codigo
                 from IESC_CONVENIO_CONV
                 where conv_id = maes.BUCO_CONV_ID) as conv
@@ -2103,11 +2133,12 @@
         from IESC_BUQUECONVENIO_BUCO maes
     ]]>
 	</sql>
-
+<!--
 	<sql id="BUQUE_SUBPUERTO" tempImp="false">
     <![CDATA[
         select
-            maes.BUSP_CODIGO_IMO
+            (SELECT buqu_codigo_imo FROM iesc_buque_buqu
+                WHERE buqu_buque_id = maes.busp_buque_id) AS imo
             , (select subp_codigo
               from IGEN_SUBPUERTO_SUBP
               where subp_id = BUSP_SUBP_ID) as subp
@@ -2122,24 +2153,27 @@
             IESC_BUQUESUBPUERTO_BUSP maes
     ]]>
 	</sql>
+ -->
 
 	<sql id="BUQUE_TRAFICO" tempImp="false">
     <![CDATA[
         select
-            maes.TRBU_BUQU_ID
+            (SELECT buqu_codigo_imo FROM iesc_buque_buqu
+                WHERE buqu_buque_id = maes.trbu_buque_id) AS imo
             , (select subp_codigo
-              from IGEN_SUBPUERTO_SUBP
-              where subp_id = TRAF_SUBP_ID) ||
-              traf_codigo as traf
-            , maes.TRBU_FECHA_INICIO
-            , maes.TRBU_FECHA_FIN
-            , coalesce(maes.TRBU_NUMERO_PUERTOS, 0)
-        from IESC_TRAFICOBUQUE_TRBU maes
-            join IESC_TRAFICO_TRAF on
-                traf_id = TRBU_TRAF_ID
+              FROM igen_subpuerto_subp
+              WHERE subp_id = traf_subp_id) ||
+              traf_codigo AS traf
+            , maes.trbu_fecha_inicio
+            , maes.trbu_fecha_fin
+            , coalesce(maes.trbu_numero_puertos, 0)
+        FROM iesc_traficobuque_trbu maes
+            JOIN iesc_trafico_traf ON
+                traf_id = trbu_traf_id
     ]]>
 	</sql>
 
+<!--
 	<sql id="ORGANIZACION_SUBPUERTO" tempImp="false">
     <![CDATA[
         SELECT
@@ -2166,6 +2200,7 @@
                 and DIRN_orga_ID = orsp_organizacion_ID
     ]]>
 	</sql>
+ -->
 
 	<sql id="ORGANIZACION_TIPO" tempImp="false">
     <![CDATA[

@@ -5,12 +5,12 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import xeredi.integra.model.comun.bo.PuertoBO;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.vo.PuertoCriterioVO;
-import xeredi.integra.model.comun.vo.PuertoVO;
-import xeredi.integra.model.metamodelo.vo.Entidad;
-import xeredi.integra.test.comun.AngularJsTest;
+import xeredi.argo.model.comun.bo.PuertoBO;
+import xeredi.argo.model.comun.exception.InstanceNotFoundException;
+import xeredi.argo.model.comun.vo.PuertoCriterioVO;
+import xeredi.argo.model.comun.vo.PuertoVO;
+import xeredi.argo.model.metamodelo.vo.Entidad;
+import xeredi.argo.test.comun.AngularJsTest;
 
 // TODO: Auto-generated Javadoc
 /**

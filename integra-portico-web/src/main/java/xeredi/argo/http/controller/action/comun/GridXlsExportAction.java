@@ -88,7 +88,7 @@ public abstract class GridXlsExportAction<C extends BaseCriterioVO> extends Base
      */
     @Override
     public final String getAccnCodigo() {
-        return "xls_export";
+        return "list";
     }
 
 }

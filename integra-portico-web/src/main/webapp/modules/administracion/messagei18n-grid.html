@@ -24,7 +24,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="key in vm.keyList | filter:m18nSearch">
-                <td><a ui-sref="messagei18n-detail(vm.keyMap[key])"><i
+                <td><a ui-sref="messagei18n-detail(key)"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="::key"></td>
                 <td ng-repeat="language in vm.availableLanguages" ng-bind="vm.keyMap[key][language]"></td>

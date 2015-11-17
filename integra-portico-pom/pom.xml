@@ -119,6 +119,16 @@
         <!-- Build -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <changes.component>portico</changes.component>
+
+        <struts2.version>2.3.24.1</struts2.version>
+        <angularjs.version>1.4.7</angularjs.version>
+        <bootstrap.version>3.3.5</bootstrap.version>
+        <angular-ui-bootstrap.version>0.14.3</angular-ui-bootstrap.version>
+        <angular-translate.version>2.7.2</angular-translate.version>
+        <angular-strap.version>2.3.4</angular-strap.version>
+        <angular-spinner.version>0.7.0</angular-spinner.version>
+        <angular-google-maps.version>2.1.1</angular-google-maps.version>
+        <angular-local-storage.version>0.2.3</angular-local-storage.version>
     </properties>
 
     <build>

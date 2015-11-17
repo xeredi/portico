@@ -154,8 +154,8 @@ public final class MaestroImporterBO {
 
                 for (final MaestroNodoVO maestroVO : maestrosList) {
                     final AbstractEntidadDetailVO entiDetail = EntidadProxy.select(maestroVO.getEntidad().getId());
-                    final String entiName = bundle
-                            .getString(I18nPrefix.enti.name() + "_" + entiDetail.getEnti().getId());
+                    final String entiName = bundle.getString(I18nPrefix.enti.name() + "_"
+                            + entiDetail.getEnti().getId());
 
                     switch (entiDetail.getEnti().getTipo()) {
                     case P:
@@ -163,8 +163,7 @@ public final class MaestroImporterBO {
                             LOG.info("Importacion del maestro: " + entiName);
                         }
 
-                        importTipoParametro(con, maestroVO.getEntidad(), maestroVO.isTempImp(),
-                                maestroVO.getSqlQuery());
+                        importTipoParametro(con, maestroVO.getEntidad(), maestroVO.isTempImp(), maestroVO.getSqlQuery());
 
                         break;
 
@@ -349,8 +348,8 @@ public final class MaestroImporterBO {
         final TipoSubparametroDetailVO tpspDetail = TipoSubparametroProxy.select(entidad.getId());
         final TipoParametroDetailVO tpprPadreDetail = TipoParametroProxy.select(tpspDetail.getEnti().getTpprId());
         final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + tpspDetail.getEnti().getId());
-        final String entiAsociadaName = bundle
-                .getString(I18nPrefix.enti.name() + "_" + tpspDetail.getEnti().getTpprAsociado().getId());
+        final String entiAsociadaName = bundle.getString(I18nPrefix.enti.name() + "_"
+                + tpspDetail.getEnti().getTpprAsociado().getId());
         final String entiPadreName = bundle.getString(I18nPrefix.enti.name() + "_" + tpprPadreDetail.getEnti().getId());
 
         if (tpspDetail.getEntiPadresList() == null || tpspDetail.getEntiPadresList().isEmpty()) {
@@ -382,8 +381,17 @@ public final class MaestroImporterBO {
                 final String parametro = rs.getString(i++);
                 final String parametroAsociado = rs.getString(i++);
                 final Long prmtId = tpprPrmtMap.get(tpspDetail.getEnti().getTpprId()).get(parametro);
-                final Long prmtAsociadoId = tpprPrmtMap.get(tpspDetail.getEnti().getTpprAsociado().getId())
-                        .get(parametroAsociado);
+                final Long prmtAsociadoId = tpprPrmtMap.get(tpspDetail.getEnti().getTpprAsociado().getId()).get(
+                        parametroAsociado);
+
+                if (prmtId == null) {
+                    LOG.error("No encontrado parametro: " + parametro + " para la entidad: " + entiPadreName);
+                }
+
+                if (prmtAsociadoId == null) {
+                    LOG.error("No encontrado parametro: " + parametroAsociado + " para la entidad: " + entiAsociadaName);
+                }
+
                 final ParametroVO prmtAsociadoVO = new ParametroVO();
 
                 prmtAsociadoVO.setId(prmtAsociadoId);
@@ -411,15 +419,6 @@ public final class MaestroImporterBO {
 
                         sprmVO.getItdtMap().put(entd.getTpdt().getId(), itdt);
                     }
-                }
-
-                if (prmtId == null) {
-                    LOG.error("No encontrado parametro: " + parametro + " para la entidad: " + entiPadreName);
-                }
-
-                if (prmtAsociadoId == null) {
-                    LOG.error(
-                            "No encontrado parametro: " + parametroAsociado + " para la entidad: " + entiAsociadaName);
                 }
 
                 // TODO i18n
@@ -452,63 +451,74 @@ public final class MaestroImporterBO {
      */
     private ItemDatoVO getItdt(final Object value, final EntidadTipoDatoVO entdVO, final String nombreEntidad)
             throws SQLException {
-        if (value == null && entdVO.getObligatorio()) {
-            throw new Error("Campo obligatorio no encontrado para el dato: " + entdVO.getTpdt().getNombre() + " ("
-                    + entdVO.getEtiqueta() + ") de la entidad: " + nombreEntidad);
-        }
-
         final ItemDatoVO itdtVO = new ItemDatoVO();
 
-        itdtVO.setTpdtId(entdVO.getTpdt().getId());
-
-        if (value != null) {
-            switch (entdVO.getTpdt().getTipoElemento()) {
-            case BO:
-                itdtVO.setCantidadEntera(((BigDecimal) value).longValue());
-
-                break;
-            case ND:
-                itdtVO.setCantidadDecimal(((BigDecimal) value).doubleValue());
-
-                break;
-            case NE:
-                itdtVO.setCantidadEntera(((BigDecimal) value).longValue());
-
-                break;
-            case PR:
-                final Long prmtId = tpprPrmtMap.get(entdVO.getTpdt().getEnti().getId()).get(value);
-
-                if (prmtId == null) {
-                    final String message = "Parametro no encontrado para el codigo: " + value + " en el tipo de dato: "
-                            + entdVO.getTpdt().getNombre() + " de la entidad: " + nombreEntidad;
-
-                    LOG.warn(message);
-                }
-
-                final ParametroVO prmtVO = new ParametroVO();
-
-                prmtVO.setId(prmtId);
-                itdtVO.setPrmt(prmtVO);
-
-                break;
-            case CR:
-            case TX:
-                itdtVO.setCadena((String) value);
-
-                break;
-            case FE:
-            case FH:
-                if (value instanceof TIMESTAMP) {
-                    itdtVO.setFecha(((TIMESTAMP) value).dateValue());
-                } else {
-                    itdtVO.setFecha((Date) value);
-                }
-
-                break;
-
-            default:
-                throw new Error("TipoElemento no encontrado: " + entdVO.getTpdt().getTipoElemento());
+        try {
+            if (value == null && entdVO.getObligatorio()) {
+                throw new Error("Campo obligatorio no encontrado para el dato: " + entdVO.getTpdt().getCodigo() + " ("
+                        + entdVO.getEtiqueta() + ") de la entidad: " + nombreEntidad);
             }
+
+            itdtVO.setTpdtId(entdVO.getTpdt().getId());
+
+            if (value != null) {
+                switch (entdVO.getTpdt().getTipoElemento()) {
+                case BO:
+                    itdtVO.setCantidadEntera(((BigDecimal) value).longValue());
+
+                    break;
+                case ND:
+                    itdtVO.setCantidadDecimal(((BigDecimal) value).doubleValue());
+
+                    break;
+                case NE:
+                    itdtVO.setCantidadEntera(((BigDecimal) value).longValue());
+
+                    break;
+                case PR:
+                    final Long prmtId = tpprPrmtMap.get(entdVO.getTpdt().getEnti().getId()).get(value);
+
+                    if (prmtId == null) {
+                        final String message = "Parametro no encontrado para el codigo: " + value
+                                + " en el tipo de dato: " + entdVO.getTpdt().getCodigo() + " de la entidad: "
+                                + nombreEntidad;
+
+                        LOG.warn(message);
+                    }
+
+                    final ParametroVO prmtVO = new ParametroVO();
+
+                    prmtVO.setId(prmtId);
+                    itdtVO.setPrmt(prmtVO);
+
+                    break;
+                case CR:
+                case TX:
+                    itdtVO.setCadena((String) value);
+
+                    break;
+                case FE:
+                case FH:
+                    if (value instanceof TIMESTAMP) {
+                        itdtVO.setFecha(((TIMESTAMP) value).dateValue());
+                    } else {
+                        itdtVO.setFecha((Date) value);
+                    }
+
+                    break;
+
+                default:
+                    throw new Error("TipoElemento no encontrado: " + entdVO.getTpdt().getTipoElemento());
+                }
+            }
+        } catch (final Throwable ex) {
+            LOG.fatal("Error leyendo itdt");
+            LOG.fatal("Entidad: " + nombreEntidad);
+            LOG.fatal("Tipo de Dato: " + entdVO.getTpdt().getCodigo());
+            LOG.fatal("Valor: " + value);
+            LOG.fatal(ex.getMessage(), ex);
+
+            throw ex;
         }
 
         return itdtVO;
@@ -526,8 +536,8 @@ public final class MaestroImporterBO {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private void parseXml(final List<MaestroNodoVO> amaestrosList)
-            throws ParserConfigurationException, SAXException, IOException {
+    private void parseXml(final List<MaestroNodoVO> amaestrosList) throws ParserConfigurationException, SAXException,
+            IOException {
         LOG.info("Lectura del Archivo XML de consultas de Maestros");
 
         final SAXParserFactory factory = SAXParserFactory.newInstance();

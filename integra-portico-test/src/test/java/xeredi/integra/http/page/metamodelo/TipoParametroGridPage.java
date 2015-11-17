@@ -3,7 +3,7 @@ package xeredi.integra.http.page.metamodelo;
 import org.openqa.selenium.WebDriver;
 import org.seleniumhq.selenium.fluent.FluentWebDriver;
 
-import xeredi.integra.test.comun.FluentPage;
+import xeredi.argo.test.comun.FluentPage;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -1069,44 +1069,10 @@ INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, e
 	, enti_puerto, enti_codigo) VALUES (20001, 'P', 1, 1, 1, 1, 0, 'TIPO_ACTIVIDAD')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20001, 'Tipo de Actividad')\
 	INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_ACTIVIDAD'), 1, 0, NULL)\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49000, 20001
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'list'))\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49001, 20001
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'detail'))\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49002, 20001
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'create'))\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49003, 20001
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'edit'))\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49004, 20001
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'remove'))\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49005, 20001
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'duplicate'))\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49006, 20001
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'print'))\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49007, 20001
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'xls_export'))\
-
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
 	, enti_puerto, enti_codigo) VALUES (20002, 'P', 1, 1, 1, 1, 0, 'TIPO_ACTIVIDAD_EDI')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20002, 'Tipo de Actividad EDI')\
 	INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_ACTIVIDAD_EDI'), 1, 0, NULL)\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49020, 20002
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'list'))\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49021, 20002
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'detail'))\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49022, 20002
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'create'))\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49023, 20002
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'edit'))\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49024, 20002
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'remove'))\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49025, 20002
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'duplicate'))\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49026, 20002
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'print'))\
-	INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk) VALUES (49027, 20002
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'xls_export'))\
-
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
 	, enti_puerto, enti_codigo) VALUES (20003, 'P', 1, 1, 1, 1, 0, 'ACUERDO')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20003, 'Acuerdo')\
@@ -1580,7 +1546,43 @@ INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, e
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20121, 'Embarcación Dep. Aut.')\
 	INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('EMBARCACION_DEP_AUT'), 0, 0, 41021)\
 
-
+-- Permisos
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    49000 + (tppr_pk - 20000) * 20 + 0 AS acen_pk
+    , tppr_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'list') AS acen_accn_pk
+FROM tbl_tipo_parametro_tppr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    49000 + (tppr_pk - 20000) * 20 + 1 AS acen_pk
+    , tppr_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'detail') AS acen_accn_pk
+FROM tbl_tipo_parametro_tppr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    49000 + (tppr_pk - 20000) * 20 + 2 AS acen_pk
+    , tppr_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'create') AS acen_accn_pk
+FROM tbl_tipo_parametro_tppr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    49000 + (tppr_pk - 20000) * 20 + 3 AS acen_pk
+    , tppr_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'edit') AS acen_accn_pk
+FROM tbl_tipo_parametro_tppr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    49000 + (tppr_pk - 20000) * 20 + 4 AS acen_pk
+    , tppr_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'remove') AS acen_accn_pk
+FROM tbl_tipo_parametro_tppr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    49000 + (tppr_pk - 20000) * 20 + 5 AS acen_pk
+    , tppr_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'duplicate') AS acen_accn_pk
+FROM tbl_tipo_parametro_tppr\
 
 
 
@@ -1655,6 +1657,44 @@ INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES 
 INSERT INTO tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24016, 20118, 20114, 0, 0)\
 	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20118, 24016, 2)\
 
+
+-- Permisos
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    54000 + (tpsp_pk - 24000) * 20 + 0 AS acen_pk
+    , tpsp_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'list') AS acen_accn_pk
+FROM tbl_tipo_subparametro_tpsp\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    54000 + (tpsp_pk - 24000) * 20 + 1 AS acen_pk
+    , tpsp_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'detail') AS acen_accn_pk
+FROM tbl_tipo_subparametro_tpsp\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    54000 + (tpsp_pk - 24000) * 20 + 2 AS acen_pk
+    , tpsp_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'create') AS acen_accn_pk
+FROM tbl_tipo_subparametro_tpsp\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    54000 + (tpsp_pk - 24000) * 20 + 3 AS acen_pk
+    , tpsp_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'edit') AS acen_accn_pk
+FROM tbl_tipo_subparametro_tpsp\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    54000 + (tpsp_pk - 24000) * 20 + 4 AS acen_pk
+    , tpsp_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'remove') AS acen_accn_pk
+FROM tbl_tipo_subparametro_tpsp\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    54000 + (tpsp_pk - 24000) * 20 + 5 AS acen_pk
+    , tpsp_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'duplicate') AS acen_accn_pk
+FROM tbl_tipo_subparametro_tpsp\
 
 
 

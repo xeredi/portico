@@ -1,115 +1,42 @@
 package xeredi.integra.http.page.metamodelo;
 
-import org.openqa.selenium.WebDriver;
-import org.seleniumhq.selenium.fluent.FluentWebDriver;
-
-import xeredi.integra.model.metamodelo.vo.Entidad;
-import xeredi.integra.model.metamodelo.vo.TipoElemento;
-import xeredi.integra.model.metamodelo.vo.TipoHtml;
-import xeredi.integra.test.comun.FluentPage;
+import xeredi.argo.model.metamodelo.vo.EntidadVO;
+import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
+import xeredi.argo.model.metamodelo.vo.TipoElemento;
+import xeredi.argo.model.metamodelo.vo.TipoHtml;
+import xeredi.integra.http.page.BaseFluentPage;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoDatoEditPage.
  */
-public final class TipoDatoEditPage extends FluentPage {
+public final class TipoDatoEditPage extends BaseFluentPage {
 
-    /**
-     * Instantiates a new tipo dato edit page.
-     *
-     * @param webDriver
-     *            the web driver
-     * @param fluentWebDriver
-     *            the fluent web driver
-     */
-    public TipoDatoEditPage(final WebDriver webDriver, final FluentWebDriver fluentWebDriver) {
-        super(webDriver, fluentWebDriver);
+    public void setTpdtCreate(final TipoDatoVO tpdt) {
+        setCodigo(tpdt.getCodigo());
+        // setNombre(tpdt.getNombre());
+        setTipoElemento(tpdt.getTipoElemento());
+        setTpht(tpdt.getTpht());
+        setEnti(tpdt.getEnti());
     }
 
-    /**
-     * Goto create page.
-     *
-     * @return the tipo dato edit page
-     */
-    public TipoDatoEditPage gotoCreatePage() {
-        linkHref("#/metamodelo/tpdt/edit/create").click();
-
-        return this;
+    public void setCodigo(final String value) {
+        fill("input[ng-model='vm.tpdt.codigo']").with(value);
     }
 
-    /**
-     * Goto edit page.
-     *
-     * @return the tipo dato edit page
-     */
-    public TipoDatoEditPage gotoEditPage() {
-        linkHref("#/metamodelo/tpdt/edit/edit").click();
-
-        return this;
+    public void setNombre(final String value) {
+        fill("input[ng-model='vm.tpdt.nombre']").with(value);
     }
 
-    /**
-     * Sets the codigo.
-     *
-     * @param codigo
-     *            the codigo
-     * @return the tipo dato edit page
-     */
-    public TipoDatoEditPage setCodigo(final String codigo) {
-        setInput("vm.tpdt.codigo", codigo);
-
-        return this;
+    public void setTipoElemento(final TipoElemento tpel) {
+        fillSelect("select[ng-model='vm.tpdt.tipoElemento']", tpel.name());
     }
 
-    /**
-     * Sets the nombre.
-     *
-     * @param nombre
-     *            the nombre
-     * @return the tipo dato edit page
-     */
-    public TipoDatoEditPage setNombre(final String nombre) {
-        setInput("vm.tpdt.nombre", nombre);
-
-        return this;
+    public void setTpht(final TipoHtml tpht) {
+        fillSelect("select[ng-model='vm.tpdt.tpht']", tpht.name());
     }
 
-    /**
-     * Sets the tpel.
-     *
-     * @param tpel
-     *            the tpel
-     * @return the tipo dato edit page
-     */
-    public TipoDatoEditPage setTpel(final TipoElemento tpel) {
-        selectValue("vm.tpdt.tipoElemento", "string:" + tpel.name());
-
-        return this;
-    }
-
-    /**
-     * Sets the tpht.
-     *
-     * @param tpht
-     *            the tpht
-     * @return the tipo dato edit page
-     */
-    public TipoDatoEditPage setTpht(final TipoHtml tpht) {
-        selectValue("vm.tpdt.tpht", "string:" + tpht.name());
-
-        return this;
-    }
-
-    /**
-     * Sets the enti.
-     *
-     * @param enti
-     *            the enti
-     * @return the tipo dato edit page
-     */
-    public TipoDatoEditPage setEnti(final Entidad enti) {
-        selectValue("vm.tpdt.enti.id", "number:" + enti.getId());
-
-        return this;
+    public void setEnti(final EntidadVO enti) {
+        fillSelect("select[ng-model='vm.tpdt.enti.id']", enti.getId());
     }
 }

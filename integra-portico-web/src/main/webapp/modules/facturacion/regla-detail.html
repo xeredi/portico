@@ -28,9 +28,9 @@
         <div class="col-md-2 form-group-sm">
             <label translate>enti</label>
             <p class="form-control-static" ng-switch="vm.model.enti.tipo">
-                <a ng-switch-when="T" ui-sref="tiposervicio-detail(vm.model.enti)"
+                <a ng-switch-when="T" ui-sref="tipo-servicio-detail(vm.model.enti)"
                     ng-bind="('enti_' + vm.model.enti.id | translate)"></a> <a ng-switch-when="S"
-                    ui-sref="tiposubservicio-detail(vm.model.enti)"
+                    ui-sref="tipo-subservicio-detail(vm.model.enti)"
                     ng-bind="('enti_' + vm.model.enti.id | translate)"></a>
             </p>
         </div>
