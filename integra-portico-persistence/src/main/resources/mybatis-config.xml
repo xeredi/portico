@@ -8,7 +8,7 @@
 
     <settings>
         <setting name="logImpl" value="${db.logImpl}" />
-        <setting name="proxyFactory" value="CGLIB" />
+        <setting name="proxyFactory" value="${db.proxyFactory}" />
         <setting name="jdbcTypeForNull" value="NULL" />
     </settings>
 
@@ -26,7 +26,7 @@
     <environments default="local">
         <environment id="local">
             <transactionManager type="JDBC">
-                <property name="DataSource" value="DBCP" />
+                <property name="DataSource" value="${db.dataSource}" />
                 <property name="JDBC.Driver" value="${db.dataSource.driver}" />
                 <property name="JDBC.ConnectionURL" value="${db.dataSource.url}" />
                 <property name="JDBC.Username" value="${db.dataSource.username}" />

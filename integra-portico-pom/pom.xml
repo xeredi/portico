@@ -30,7 +30,7 @@
         <commons-dbutils.version>1.6</commons-dbutils.version>
         <schemacrawler.version>12.03.01</schemacrawler.version>
 
-        <slf4j.version>1.7.9</slf4j.version>
+        <slf4j.version>1.7.13</slf4j.version>
         <commons-logging.version>1.2</commons-logging.version>
         <log4j.version>1.2.17</log4j.version>
         <junit.version>4.12</junit.version>
@@ -42,17 +42,18 @@
         <commons-pool.version>1.6</commons-pool.version>
         <commons-configuration.version>1.10</commons-configuration.version>
         <cglib.version>2.2.2</cglib.version>
+        <javassist.version>3.20.0-GA</javassist.version>
         <lombok.version>1.16.6</lombok.version>
 
-        <poi.version>3.12</poi.version>
+        <poi.version>3.13</poi.version>
         <dynamicreports.version>4.0.1</dynamicreports.version>
         <guava.version>18.0</guava.version>
         <commons-io.version>2.4</commons-io.version>
-        <commons-compress.version>1.9</commons-compress.version>
+        <commons-compress.version>1.10</commons-compress.version>
         <antlr4-runtime.version>4.5.1-1</antlr4-runtime.version>
         <xdocreport.version>1.0.5</xdocreport.version>
 
-        <quartz.version>2.2.1</quartz.version>
+        <quartz.version>2.2.2</quartz.version>
 
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
         <struts2.version>2.3.24.1</struts2.version>
