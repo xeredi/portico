@@ -8,6 +8,69 @@
     <packaging>pom</packaging>
     <name>Integra (2.0)</name>
 
+
+    <properties>
+        <!-- Build -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <changes.component>portico</changes.component>
+
+        <!-- Modules versions -->
+        <xeredi-util.version>0.0.1</xeredi-util.version>
+        <edifact.version>0.0.1</edifact.version>
+
+        <argo-pom.version>0.0.1</argo-pom.version>
+        <argo-persistence.version>0.0.1</argo-persistence.version>
+        <argo-business.version>0.0.1</argo-business.version>
+        <argo-jobs.version>0.0.1</argo-jobs.version>
+
+        <!-- Libraries versions -->
+        <postgresql.version>9.4-1205-jdbc42</postgresql.version>
+        <oracle.version>12.1</oracle.version>
+        <sqlserver.version>1.3.1</sqlserver.version>
+        <commons-dbutils.version>1.6</commons-dbutils.version>
+        <schemacrawler.version>12.03.01</schemacrawler.version>
+
+        <slf4j.version>1.7.9</slf4j.version>
+        <commons-logging.version>1.2</commons-logging.version>
+        <log4j.version>1.2.17</log4j.version>
+        <junit.version>4.12</junit.version>
+        <umlgraph.version>5.6.6</umlgraph.version>
+
+        <commons-lang3.version>3.4</commons-lang3.version>
+        <mybatis.version>3.3.0</mybatis.version>
+        <commons-dbcp.version>1.4</commons-dbcp.version>
+        <commons-pool.version>1.6</commons-pool.version>
+        <commons-configuration.version>1.10</commons-configuration.version>
+        <cglib.version>2.2.2</cglib.version>
+        <lombok.version>1.16.6</lombok.version>
+
+        <poi.version>3.12</poi.version>
+        <dynamicreports.version>4.0.1</dynamicreports.version>
+        <guava.version>18.0</guava.version>
+        <commons-io.version>2.4</commons-io.version>
+        <commons-compress.version>1.9</commons-compress.version>
+        <antlr4-runtime.version>4.5.1-1</antlr4-runtime.version>
+        <xdocreport.version>1.0.5</xdocreport.version>
+
+        <quartz.version>2.2.1</quartz.version>
+
+        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+        <struts2.version>2.3.24.1</struts2.version>
+        <jackson.version>2.6.1</jackson.version>
+        <commons-validator.version>1.4.1</commons-validator.version>
+        <angularjs.version>1.4.7</angularjs.version>
+        <bootstrap.version>3.3.5</bootstrap.version>
+        <angular-ui-bootstrap.version>0.14.3</angular-ui-bootstrap.version>
+        <angular-translate.version>2.7.2</angular-translate.version>
+        <angular-strap.version>2.3.4</angular-strap.version>
+        <angular-spinner.version>0.7.0</angular-spinner.version>
+        <angular-google-maps.version>2.1.1</angular-google-maps.version>
+        <angular-local-storage.version>0.2.3</angular-local-storage.version>
+        <lodash.version>3.10.1</lodash.version>
+        <angular-ui-router.version>0.2.15</angular-ui-router.version>
+        <spin-js.version>2.1.0</spin-js.version>
+    </properties>
+
     <profiles>
         <profile>
             <id>postgresql</id>
@@ -26,7 +89,7 @@
                 <dependency>
                     <groupId>org.postgresql</groupId>
                     <artifactId>postgresql</artifactId>
-                    <version>9.4-1201-jdbc41</version>
+                    <version>${postgresql.version}</version>
                 </dependency>
             </dependencies>
         </profile>
@@ -44,7 +107,7 @@
                 <dependency>
                     <groupId>com.oracle</groupId>
                     <artifactId>jdbc</artifactId>
-                    <version>11.2</version>
+                    <version>${oracle.version}</version>
                 </dependency>
             </dependencies>
         </profile>
@@ -62,7 +125,7 @@
                 <dependency>
                     <groupId>net.sourceforge.jtds</groupId>
                     <artifactId>jtds</artifactId>
-                    <version>1.3.1</version>
+                    <version>${sqlserver.version}</version>
                 </dependency>
                 <!-- <dependency> <groupId>com.microsoft.sqlserver</groupId> <artifactId>jdbc</artifactId> <version>4.0</version>
                     </dependency> -->
@@ -115,27 +178,10 @@
         </developer>
     </developers>
 
-    <properties>
-        <!-- Build -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <changes.component>portico</changes.component>
-
-        <struts2.version>2.3.24.1</struts2.version>
-        <angularjs.version>1.4.7</angularjs.version>
-        <bootstrap.version>3.3.5</bootstrap.version>
-        <angular-ui-bootstrap.version>0.14.3</angular-ui-bootstrap.version>
-        <angular-translate.version>2.7.2</angular-translate.version>
-        <angular-strap.version>2.3.4</angular-strap.version>
-        <angular-spinner.version>0.7.0</angular-spinner.version>
-        <angular-google-maps.version>2.1.1</angular-google-maps.version>
-        <angular-local-storage.version>0.2.3</angular-local-storage.version>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.4</version>
                 <inherited>false</inherited>
                 <configuration>
                     <siteDirectory>${project.basedir}/src/site</siteDirectory>
@@ -261,12 +307,12 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.9</version>
+            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
+            <version>${commons-logging.version}</version>
         </dependency>
         <!-- <dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-api</artifactId> <version>2.0.1</version>
             </dependency> <dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-core</artifactId> <version>2.0.1</version>
@@ -274,12 +320,12 @@
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.umlgraph</groupId>
             <artifactId>umlgraph</artifactId>
-            <version>5.6.6</version>
+            <version>${umlgraph.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>sun.jdk</groupId>
@@ -290,7 +336,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

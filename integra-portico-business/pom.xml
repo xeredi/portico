@@ -42,57 +42,52 @@
         <dependency>
             <groupId>xeredi</groupId>
             <artifactId>edifact</artifactId>
-            <version>0.0.1</version>
+            <version>${edifact.version}</version>
         </dependency>
         <dependency>
             <groupId>argo</groupId>
             <artifactId>argo-persistence</artifactId>
-            <version>0.0.1</version>
+            <version>${argo-persistence.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
-            <version>3.12</version>
+            <version>${poi.version}</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.dynamicreports</groupId>
             <artifactId>dynamicreports-core</artifactId>
-            <version>4.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.lowagie</groupId>
-            <artifactId>itext</artifactId>
-            <version>2.1.7</version>
+            <version>${dynamicreports.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>18.0</version>
+            <version>${guava.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.4</version>
+            <version>${commons-io.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
-            <version>1.9</version>
+            <version>${commons-compress.version}</version>
         </dependency>
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
-            <version>4.5.1-1</version>
+            <version>${antlr4-runtime.version}</version>
         </dependency>
         <dependency>
             <groupId>fr.opensagres.xdocreport</groupId>
             <artifactId>fr.opensagres.xdocreport.document.docx</artifactId>
-            <version>1.0.5</version>
+            <version>${xdocreport.version}</version>
         </dependency>
         <dependency>
             <groupId>fr.opensagres.xdocreport</groupId>
             <artifactId>fr.opensagres.xdocreport.template.velocity</artifactId>
-            <version>1.0.5</version>
+            <version>${xdocreport.version}</version>
         </dependency>
     </dependencies>
 </project>
