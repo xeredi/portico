@@ -108,7 +108,8 @@
         , esca.esca_manifiesto_notif_practico
         , esca.esca_fecha_entrada
         , esca.esca_fecha_salida
-        , esca.esca_buqu_id
+        , (SELECT buqu_codigo_imo FROM iesc_buque_buqu
+                WHERE buqu_buque_id = esca.esca_buque_id) AS imo
         , (
             SELECT buqt_codigo
             FROM igen_buquetipo_buqt
@@ -1082,11 +1083,17 @@
 
 	  , MABL.MABL_BL_TRANSITO
 	FROM IMAN_BL_MABL MABL
-	    join ICOM_SERVICIO_SERV on
-	        SERV_ID = MABL_MANI_ID
-	        AND SERV_FECHA_BAJA IS NULL
+        inner join ICOM_SERVICIO_SERV serv ON
+            serv.serv_id = mabl.mabl_mani_id
 	WHERE
-	  MABL.MABL_ES_ACTIVO = 1
+ 	    MABL.MABL_ES_ACTIVO = 1
+        AND serv.SERV_FECHA_BAJA IS NULL
+        AND EXISTS (
+            SELECT 1
+            FROM iman_consignatario_maco
+            WHERE maco_ID = MABL.MABL_consignatario_ID
+                AND maco_es_activo = 1
+        )
     ]]>
     </sql>
 
@@ -1171,11 +1178,18 @@
 	FROM IMAN_PARTIDA_PART PART
 	    JOIN IMAN_BL_MABL ON
 	        MABL_ID = PART_MABL_ID
-	        AND MABL_ES_ACTIVO = 1
 	    JOIN ICOM_SERVICIO_SERV SERV ON
 	        SERV_ID = MABL_MANI_ID
-	        and serv_fecha_baja is null
-	where part_es_activo = 1
+	where
+        part_es_activo = 1
+	    AND MABL_ES_ACTIVO = 1
+        and serv_fecha_baja is null
+        AND EXISTS (
+            SELECT 1
+            FROM iman_consignatario_maco
+            WHERE maco_ID = MABL_consignatario_ID
+                AND maco_es_activo = 1
+        )
     ]]>
     </sql>
 
@@ -1214,11 +1228,17 @@
 	FROM IMAN_EQUIPAMIENTO_EQUI EQUI
 	    JOIN IMAN_BL_MABL MABL ON
 	        MABL_ID = EQUI_MABL_ID
-	        AND MABL_ES_ACTIVO = 1
 	    JOIN ICOM_SERVICIO_SERV SERV ON
 	        SERV_ID = MABL_MANI_ID
-	        and SERV_FECHA_BAJA is null
 	where equi_es_activo = 1
+        AND MABL_ES_ACTIVO = 1
+        and serv_fecha_baja is null
+        AND EXISTS (
+            SELECT 1
+            FROM iman_consignatario_maco
+            WHERE maco_ID = MABL_consignatario_ID
+                AND maco_es_activo = 1
+        )
     ]]>
     </sql>
 
@@ -1236,17 +1256,23 @@
 	FROM IMAN_PARTIDAEQUIP_PAEQ PAEQ
 	    JOIN IMAN_PARTIDA_PART PART ON
 	        PART_ID = PAEQ_PART_ID
-	        AND PART_ES_ACTIVO = 1
 	    JOIN IMAN_EQUIPAMIENTO_EQUI EQUI ON
 	        EQUI_ID = PAEQ_EQUI_ID
-	        AND EQUI_ES_ACTIVO = 1
 	    JOIN IMAN_BL_MABL MABL ON
 	        MABL_ID = PART_MABL_ID
-	        AND MABL_ES_ACTIVO = 1
 	    JOIN ICOM_SERVICIO_SERV SERV ON
 	        SERV_ID = MABL_MANI_ID
-	        and SERV_FECHA_BAJA is null
 	where PAEQ_es_activo = 1
+        and SERV_FECHA_BAJA is null
+        AND MABL_ES_ACTIVO = 1
+        AND EQUI_ES_ACTIVO = 1
+        AND PART_ES_ACTIVO = 1
+        AND EXISTS (
+            SELECT 1
+            FROM iman_consignatario_maco
+            WHERE maco_ID = MABL_consignatario_ID
+                AND maco_es_activo = 1
+        )
     ]]>
     </sql>
 
@@ -1263,14 +1289,21 @@
 	FROM IMAN_PRECINTOEQUIP_PREQ PREQ
 	    JOIN IMAN_EQUIPAMIENTO_EQUI EQUI ON
 	        EQUI_ID = PREQ_EQUI_ID
-	        AND EQUI_ES_ACTIVO = 1
 	    JOIN IMAN_BL_MABL MABL ON
 	        MABL_ID = EQUI_MABL_ID
-	        AND MABL_ES_ACTIVO = 1
 	    JOIN ICOM_SERVICIO_SERV SERV ON
 	        SERV_ID = MABL_MANI_ID
-	        AND SERV_FECHA_BAJA IS NULL
-	where PREQ_es_activo = 1
+	where
+        PREQ_es_activo = 1
+        AND SERV_FECHA_BAJA IS NULL
+        AND MABL_ES_ACTIVO = 1
+        AND EQUI_ES_ACTIVO = 1
+        AND EXISTS (
+            SELECT 1
+            FROM iman_consignatario_maco
+            WHERE maco_ID = MABL_consignatario_ID
+                AND maco_es_activo = 1
+        )
     ]]>
     </sql>
 
@@ -1292,14 +1325,21 @@
 	FROM IMAN_PARTIDAIM_PAIM PAIM
 	    JOIN IMAN_PARTIDA_PART PART ON
 	        PART_ID = PAIM_PART_ID
-	        AND PART_ES_ACTIVO = 1
 	    JOIN IMAN_BL_MABL MABL ON
 	        MABL_ID = PART_MABL_ID
-	        AND MABL_ES_ACTIVO = 1
 	    JOIN ICOM_SERVICIO_SERV SERV ON
 	        SERV_ID = MABL_MANI_ID
-	        AND SERV_FECHA_BAJA IS NULL
-	where paim_es_activo = 1
+	where
+        paim_es_activo = 1
+        AND SERV_FECHA_BAJA IS NULL
+        AND MABL_ES_ACTIVO = 1
+        AND PART_ES_ACTIVO = 1
+        AND EXISTS (
+            SELECT 1
+            FROM iman_consignatario_maco
+            WHERE maco_ID = MABL_consignatario_ID
+                AND maco_es_activo = 1
+        )
     ]]>
     </sql>
 
@@ -1320,14 +1360,21 @@
 	FROM IMAN_PARTIDAMMPP_PAMP PAMP
 	    JOIN IMAN_PARTIDA_PART PART ON
 	        PART_ID = PAMP_PART_ID
-	        AND PART_ES_ACTIVO = 1
 	    JOIN IMAN_BL_MABL MABL ON
 	        MABL_ID = PART_MABL_ID
-	        AND MABL_ES_ACTIVO = 1
 	    JOIN ICOM_SERVICIO_SERV SERV ON
 	        SERV_ID = MABL_MANI_ID
-	        AND SERV_FECHA_BAJA IS NULL
-	where PAMP_es_activo = 1
+	where
+        PAMP_es_activo = 1
+        AND SERV_FECHA_BAJA IS NULL
+        AND MABL_ES_ACTIVO = 1
+        AND PART_ES_ACTIVO = 1
+        AND EXISTS (
+            SELECT 1
+            FROM iman_consignatario_maco
+            WHERE maco_ID = MABL_consignatario_ID
+                AND maco_es_activo = 1
+        )
     ]]>
     </sql>
 </importer>

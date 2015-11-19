@@ -13,7 +13,7 @@
                                 <label translate="srvc"></label> <input ng-controller="SrvcLupaController"
                                     type="text" autocomplete="off" ng-model="vm.itemCriterio.srvc"
                                     ng-selected="vm.prtoId = vm.itemCriterio.srvc.prto.id"
-                                    typeahead="srvc as srvc.etiqueta for srvc in search(vm.enti.enti.tpsrId, $viewValue)"
+                                    uib-typeahead="srvc as srvc.etiqueta for srvc in search(vm.enti.enti.tpsrId, $viewValue)"
                                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                             </div>
                             <div class="col-sm-1 form-group-sm">

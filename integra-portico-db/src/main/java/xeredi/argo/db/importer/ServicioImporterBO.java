@@ -191,8 +191,8 @@ public final class ServicioImporterBO {
 
             if (entd.getTpdt().getEnti() != null && !tpprPrmtMap.containsKey(entd.getTpdt().getEnti().getId())) {
                 if (LOG.isDebugEnabled()) {
-                    final String tpprName = bundle
-                            .getString(I18nPrefix.enti.name() + "_" + entd.getTpdt().getEnti().getId());
+                    final String tpprName = bundle.getString(I18nPrefix.enti.name() + "_"
+                            + entd.getTpdt().getEnti().getId());
 
                     LOG.debug("Busqueda de los parametros del maestro " + tpprName);
                 }
@@ -313,8 +313,8 @@ public final class ServicioImporterBO {
 
                             if (rs.wasNull() && entd.getObligatorio()
                                     && entd.getTpdt().getTipoElemento() != TipoElemento.BO) {
-                                final String tpdtName = bundle
-                                        .getString(I18nPrefix.tpdt.name() + "_" + entd.getTpdt().getId());
+                                final String tpdtName = bundle.getString(I18nPrefix.tpdt.name() + "_"
+                                        + entd.getTpdt().getId());
 
                                 throw new Error("Campo obligatorio no encontrado para el dato: " + tpdtName
                                         + " de la entidad: " + entiName);
@@ -396,11 +396,11 @@ public final class ServicioImporterBO {
                                     final Long padrePorticoId = entiMap.get(entdId).get(padreIntegraId);
 
                                     if (padrePorticoId == null) {
-                                        final String entiPadreName = bundle
-                                                .getString(I18nPrefix.enti.name() + "_" + entdId);
+                                        final String entiPadreName = bundle.getString(I18nPrefix.enti.name() + "_"
+                                                + entdId);
 
-                                        LOG.error("No se encuentra el subservicio " + padreIntegraId + " de la entidad "
-                                                + entiPadreName);
+                                        LOG.error("No se encuentra el subservicio " + padreIntegraId
+                                                + " de la entidad " + entiPadreName);
 
                                         hasErrors = true;
                                     } else {
@@ -419,8 +419,8 @@ public final class ServicioImporterBO {
 
                                 if (rs.wasNull() && entd.getObligatorio()
                                         && entd.getTpdt().getTipoElemento() != TipoElemento.BO) {
-                                    final String tpdtName = bundle
-                                            .getString(I18nPrefix.tpdt.name() + "_" + entd.getTpdt().getId());
+                                    final String tpdtName = bundle.getString(I18nPrefix.tpdt.name() + "_"
+                                            + entd.getTpdt().getId());
 
                                     throw new Error("Campo obligatorio no encontrado para el dato: " + tpdtName
                                             + " de la entidad: " + entiName);
@@ -471,83 +471,96 @@ public final class ServicioImporterBO {
 
         itdtVO.setTpdtId(entdVO.getTpdt().getId());
 
-        if (value == null) {
-            if (entdVO.getTpdt().getTipoElemento() == TipoElemento.BO) {
-                itdtVO.setCantidadEntera(0L);
+        try {
+            if (value == null) {
+                if (entdVO.getTpdt().getTipoElemento() == TipoElemento.BO) {
+                    itdtVO.setCantidadEntera(0L);
+                }
+            } else {
+                switch (entdVO.getTpdt().getTipoElemento()) {
+                case BO:
+                    itdtVO.setCantidadEntera(((BigDecimal) value).longValue());
+
+                    break;
+                case ND:
+                    itdtVO.setCantidadDecimal(((BigDecimal) value).doubleValue());
+
+                    break;
+                case NE:
+                    itdtVO.setCantidadEntera(((BigDecimal) value).longValue());
+
+                    break;
+                case PR:
+                    final Long prmtId = tpprPrmtMap.get(entdVO.getTpdt().getEnti().getId()).get(
+                            value.toString().toUpperCase());
+
+                    if (prmtId == null) {
+                        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_"
+                                + entdVO.getTpdt().getEnti().getId());
+                        final String tpdtName = bundle.getString(I18nPrefix.tpdt.name() + "_"
+                                + entdVO.getTpdt().getId());
+
+                        final String errorMessage = "Parametro no encontrado para el codigo: " + value
+                                + " en el tipo de dato: " + tpdtName + " del maestro: " + entiName;
+
+                        throw new Error(errorMessage);
+                    }
+
+                    final ParametroVO prmtVO = new ParametroVO();
+
+                    prmtVO.setId(prmtId);
+                    itdtVO.setPrmt(prmtVO);
+
+                    break;
+                case SR:
+                    final Long srvcId = entiMap.get(entdVO.getTpdt().getEnti().getId()).get(
+                            Long.valueOf(value.toString()));
+
+                    if (srvcId == null) {
+                        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_"
+                                + entdVO.getTpdt().getEnti().getId());
+                        final String tpdtName = bundle.getString(I18nPrefix.tpdt.name() + "_"
+                                + entdVO.getTpdt().getId());
+
+                        final String errorMessage = "Servicio no encontrado para el id: " + value
+                                + " en el tipo de dato: " + tpdtName + " del tipo de servicio: " + entiName;
+
+                        throw new Error(errorMessage);
+                    }
+
+                    final ServicioVO srvcVO = new ServicioVO();
+
+                    srvcVO.setId(srvcId);
+                    itdtVO.setSrvc(srvcVO);
+
+                    break;
+                case CR:
+                case TX:
+                    itdtVO.setCadena((String) value);
+
+                    break;
+                case FE:
+                case FH:
+                    if (value instanceof TIMESTAMP) {
+                        itdtVO.setFecha(((TIMESTAMP) value).dateValue());
+                    } else {
+                        itdtVO.setFecha((Date) value);
+                    }
+
+                    break;
+
+                default:
+                    throw new Error("TipoElemento no encontrado: " + entdVO.getTpdt().getTipoElemento());
+                }
             }
-        } else {
-            switch (entdVO.getTpdt().getTipoElemento()) {
-            case BO:
-                itdtVO.setCantidadEntera(((BigDecimal) value).longValue());
+        } catch (final Throwable ex) {
+            LOG.fatal("Error leyendo itdt");
+            LOG.fatal("Entidad: " + entdVO.getEntiId());
+            LOG.fatal("Tipo de Dato: " + entdVO.getTpdt().getCodigo());
+            LOG.fatal("Valor: " + value);
+            LOG.fatal(ex.getMessage(), ex);
 
-                break;
-            case ND:
-                itdtVO.setCantidadDecimal(((BigDecimal) value).doubleValue());
-
-                break;
-            case NE:
-                itdtVO.setCantidadEntera(((BigDecimal) value).longValue());
-
-                break;
-            case PR:
-                final Long prmtId = tpprPrmtMap.get(entdVO.getTpdt().getEnti().getId())
-                        .get(value.toString().toUpperCase());
-
-                if (prmtId == null) {
-                    final String entiName = bundle
-                            .getString(I18nPrefix.enti.name() + "_" + entdVO.getTpdt().getEnti().getId());
-                    final String tpdtName = bundle.getString(I18nPrefix.tpdt.name() + "_" + entdVO.getTpdt().getId());
-
-                    final String errorMessage = "Parametro no encontrado para el codigo: " + value
-                            + " en el tipo de dato: " + tpdtName + " del maestro: " + entiName;
-
-                    throw new Error(errorMessage);
-                }
-
-                final ParametroVO prmtVO = new ParametroVO();
-
-                prmtVO.setId(prmtId);
-                itdtVO.setPrmt(prmtVO);
-
-                break;
-            case SR:
-                final Long srvcId = entiMap.get(entdVO.getTpdt().getEnti().getId()).get(Long.valueOf(value.toString()));
-
-                if (srvcId == null) {
-                    final String entiName = bundle
-                            .getString(I18nPrefix.enti.name() + "_" + entdVO.getTpdt().getEnti().getId());
-                    final String tpdtName = bundle.getString(I18nPrefix.tpdt.name() + "_" + entdVO.getTpdt().getId());
-
-                    final String errorMessage = "Servicio no encontrado para el id: " + value + " en el tipo de dato: "
-                            + tpdtName + " del tipo de servicio: " + entiName;
-
-                    throw new Error(errorMessage);
-                }
-
-                final ServicioVO srvcVO = new ServicioVO();
-
-                srvcVO.setId(srvcId);
-                itdtVO.setSrvc(srvcVO);
-
-                break;
-            case CR:
-            case TX:
-                itdtVO.setCadena((String) value);
-
-                break;
-            case FE:
-            case FH:
-                if (value instanceof TIMESTAMP) {
-                    itdtVO.setFecha(((TIMESTAMP) value).dateValue());
-                } else {
-                    itdtVO.setFecha((Date) value);
-                }
-
-                break;
-
-            default:
-                throw new Error("TipoElemento no encontrado: " + entdVO.getTpdt().getTipoElemento());
-            }
+            throw ex;
         }
 
         return itdtVO;

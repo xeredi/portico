@@ -1861,6 +1861,83 @@ INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable
 
 
 
+-- Permisos
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 0 AS acen_pk
+    , tpsr_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'list') AS acen_accn_pk
+FROM tbl_tipo_servicio_tpsr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 1 AS acen_pk
+    , tpsr_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'detail') AS acen_accn_pk
+FROM tbl_tipo_servicio_tpsr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 2 AS acen_pk
+    , tpsr_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'create') AS acen_accn_pk
+FROM tbl_tipo_servicio_tpsr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 3 AS acen_pk
+    , tpsr_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'edit') AS acen_accn_pk
+FROM tbl_tipo_servicio_tpsr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 4 AS acen_pk
+    , tpsr_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'remove') AS acen_accn_pk
+FROM tbl_tipo_servicio_tpsr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 5 AS acen_pk
+    , tpsr_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'duplicate') AS acen_accn_pk
+FROM tbl_tipo_servicio_tpsr\
+
+
+
+
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 0 AS acen_pk
+    , tpss_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'list') AS acen_accn_pk
+FROM tbl_tipo_subservicio_tpss\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 1 AS acen_pk
+    , tpss_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'detail') AS acen_accn_pk
+FROM tbl_tipo_subservicio_tpss\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 2 AS acen_pk
+    , tpss_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'create') AS acen_accn_pk
+FROM tbl_tipo_subservicio_tpss\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 3 AS acen_pk
+    , tpss_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'edit') AS acen_accn_pk
+FROM tbl_tipo_subservicio_tpss\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 4 AS acen_pk
+    , tpss_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'remove') AS acen_accn_pk
+FROM tbl_tipo_subservicio_tpss\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 5 AS acen_pk
+    , tpss_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'duplicate') AS acen_accn_pk
+FROM tbl_tipo_subservicio_tpss\
 
 
 

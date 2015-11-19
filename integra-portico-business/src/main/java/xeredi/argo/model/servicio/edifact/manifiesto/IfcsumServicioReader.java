@@ -267,7 +267,7 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
         ssrvList.add(blActual);
         addSsss(macoActual, blActual);
 
-        blActual.addItdt(TipoDato.ENTERO_01.getId(), parseLong(ctx.f1490()));
+        blActual.addItdt(TipoDato.CADENA_06.getId(), ctx.f1490().getText());
         blActual.addItdt(TipoDato.CADENA_01.getId(), ctx.c503().f1004().getText());
 
         switch (ctx.c503().f1373().getText()) {

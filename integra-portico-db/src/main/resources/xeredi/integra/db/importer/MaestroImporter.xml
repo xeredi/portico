@@ -1319,7 +1319,6 @@
 	]]>
 	</sql>
 
-<!--
 	<sql id="AUTORIDAD_PORTUARIA" tempImp="false">
 	<![CDATA[
 		SELECT
@@ -1348,7 +1347,6 @@
         order by MAES.AUTP_ID, MAES.AUTP_ES_ACTIVO desc
 	]]>
 	</sql>
--->
 
 	<sql id="RECINTO_ADUANERO" tempImp="false">
 	<![CDATA[
@@ -1372,7 +1370,6 @@
 	]]>
 	</sql>
 
-<!--
 	<sql id="SUBPUERTO" tempImp="false">
     <![CDATA[
         SELECT
@@ -1404,7 +1401,6 @@
         order by MAES.SUBP_es_activo desc
     ]]>
 	</sql>
- -->
 
 	<sql id="ZONA_DEPOSITO" tempImp="true">
     <![CDATA[
@@ -2133,7 +2129,7 @@
         from IESC_BUQUECONVENIO_BUCO maes
     ]]>
 	</sql>
-<!--
+
 	<sql id="BUQUE_SUBPUERTO" tempImp="false">
     <![CDATA[
         select
@@ -2153,7 +2149,6 @@
             IESC_BUQUESUBPUERTO_BUSP maes
     ]]>
 	</sql>
- -->
 
 	<sql id="BUQUE_TRAFICO" tempImp="false">
     <![CDATA[
@@ -2173,7 +2168,6 @@
     ]]>
 	</sql>
 
-<!--
 	<sql id="ORGANIZACION_SUBPUERTO" tempImp="false">
     <![CDATA[
         SELECT
@@ -2200,7 +2194,6 @@
                 and DIRN_orga_ID = orsp_organizacion_ID
     ]]>
 	</sql>
- -->
 
 	<sql id="ORGANIZACION_TIPO" tempImp="false">
     <![CDATA[
