@@ -8,7 +8,6 @@
     <packaging>pom</packaging>
     <name>Integra (2.0)</name>
 
-
     <properties>
         <!-- Build -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -74,34 +73,15 @@
 
     <profiles>
         <profile>
-            <id>postgresql</id>
+            <id>local</id>
 
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
 
             <properties>
-                <profile-id>postgresql</profile-id>
-                <database-vendor>postgresql</database-vendor>
-                <server-vendor>jetty</server-vendor>
-            </properties>
-
-            <dependencies>
-                <dependency>
-                    <groupId>org.postgresql</groupId>
-                    <artifactId>postgresql</artifactId>
-                    <version>${postgresql.version}</version>
-                </dependency>
-            </dependencies>
-        </profile>
-
-        <profile>
-            <id>oracle</id>
-
-            <properties>
-                <profile-id>oracle</profile-id>
+                <profile-id>local</profile-id>
                 <database-vendor>oracle</database-vendor>
-                <server-vendor>jetty</server-vendor>
             </properties>
 
             <dependencies>
@@ -114,22 +94,36 @@
         </profile>
 
         <profile>
-            <id>sqlserver</id>
+            <id>local-postgresql</id>
 
             <properties>
-                <profile-id>sqlserver</profile-id>
-                <database-vendor>sqlserver</database-vendor>
-                <server-vendor>jetty</server-vendor>
+                <profile-id>local-postgresql</profile-id>
+                <database-vendor>postgresql</database-vendor>
             </properties>
 
             <dependencies>
                 <dependency>
-                    <groupId>net.sourceforge.jtds</groupId>
-                    <artifactId>jtds</artifactId>
-                    <version>${sqlserver.version}</version>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>${postgresql.version}</version>
                 </dependency>
-                <!-- <dependency> <groupId>com.microsoft.sqlserver</groupId> <artifactId>jdbc</artifactId> <version>4.0</version>
-                    </dependency> -->
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>alicante</id>
+
+            <properties>
+                <profile-id>alicante</profile-id>
+                <database-vendor>oracle</database-vendor>
+            </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>com.oracle</groupId>
+                    <artifactId>jdbc</artifactId>
+                    <version>${oracle.version}</version>
+                </dependency>
             </dependencies>
         </profile>
     </profiles>

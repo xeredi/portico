@@ -15,6 +15,48 @@
     <build>
         <plugins>
             <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <id>copy-sql</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/migrations/${database-vendor}/scripts</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/sql/common</directory>
+                                </resource>
+                                <resource>
+                                    <directory>src/main/sql/vendor/${database-vendor}</directory>
+                                </resource>
+                                <resource>
+                                    <directory>src/main/sql/profile/${profile-id}</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-conf</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/migrations/${database-vendor}/environments</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/migrations/${profile-id}</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>com.agilejava.docbkx</groupId>
                 <artifactId>docbkx-maven-plugin</artifactId>
                 <version>2.0.15</version>
@@ -30,7 +72,7 @@
                 <artifactId>migrations-maven-plugin</artifactId>
                 <version>1.1.2</version>
                 <configuration>
-                    <repository>migrations/${database-vendor}</repository>
+                    <repository>target/migrations/${database-vendor}</repository>
                     <environment>${profile-id}</environment>
                     <upSteps>1</upSteps>
                 </configuration>
@@ -58,24 +100,10 @@
                 <databaseType>pgsql</databaseType> <database>test</database> <schema>public</schema> <host>localhost</host> <user>test</user>
                 <password>test</password> <port>5432</port> </configuration> <dependencies> <dependency> <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId> <version>9.3-1101-jdbc41</version> </dependency> </dependencies> </plugin> -->
-<!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <configuration>
-                    <reportPlugins>
-                        <plugin>
-                            <groupId>org.mybatis.maven</groupId>
-                            <artifactId>migrations-maven-plugin</artifactId>
-                            <version>1.1.2</version>
-                            <configuration>
-                                <repository>migrations/${database-vendor}</repository>
-                            </configuration>
-                        </plugin>
-                    </reportPlugins>
-                </configuration>
-            </plugin>
- -->
+            <!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-site-plugin</artifactId>
+                <configuration> <reportPlugins> <plugin> <groupId>org.mybatis.maven</groupId> <artifactId>migrations-maven-plugin</artifactId>
+                <version>1.1.2</version> <configuration> <repository>migrations/${database-vendor}</repository> </configuration>
+                </plugin> </reportPlugins> </configuration> </plugin> -->
         </plugins>
     </build>
 

@@ -17,7 +17,7 @@
                 <directory>src/main/resources</directory>
             </resource>
             <resource>
-                <directory>resources/${profile-id}</directory>
+                <directory>resources/${database-vendor}</directory>
             </resource>
         </resources>
     </build>
