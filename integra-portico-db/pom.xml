@@ -16,7 +16,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.7</version>
+                <version>${maven-resources-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>copy-sql</id>
@@ -57,20 +57,9 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>com.agilejava.docbkx</groupId>
-                <artifactId>docbkx-maven-plugin</artifactId>
-                <version>2.0.15</version>
-                <configuration>
-                    <goals>
-                        <goal>generate-pdf</goal>
-                    </goals>
-                    <foCustomization>src/docbkx/pdf.xsl</foCustomization>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.mybatis.maven</groupId>
                 <artifactId>migrations-maven-plugin</artifactId>
-                <version>1.1.2</version>
+                <version>${migrations-maven-plugin.version}</version>
                 <configuration>
                     <repository>target/migrations/${database-vendor}</repository>
                     <environment>${profile-id}</environment>
