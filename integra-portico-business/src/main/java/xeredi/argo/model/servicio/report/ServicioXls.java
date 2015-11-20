@@ -109,7 +109,7 @@ public final class ServicioXls extends BaseXls {
 
                 for (final Long tpdtId : tpsrDetail.getEntdList()) {
                     final EntidadTipoDatoVO entd = tpsrDetail.getEntdMap().get(tpdtId);
-                    final ItemDatoVO itdt = srvcVO.getItdtMap().get(entd.getTpdt().getId());
+                    final ItemDatoVO itdt = srvcVO.getItdtMap().get(tpdtId);
 
                     setCellValue(row, j, entd, itdt);
 

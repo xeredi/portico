@@ -77,9 +77,13 @@ public abstract class BaseAction extends ActionSupport {
         try {
             doExecute();
         } catch (final ApplicationException ex) {
-            throw ex;
+            LOG.error(ex, ex);
+
+            addActionError(MessageI18nKey.E00000, ex.getMessage());
         } catch (final Throwable ex) {
-            throw new InternalErrorException(ex);
+            LOG.fatal(ex, ex);
+
+            addActionError(MessageI18nKey.E00000, ex.getMessage());
         }
 
         return SUCCESS;

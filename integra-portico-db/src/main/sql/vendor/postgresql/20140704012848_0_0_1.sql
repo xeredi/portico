@@ -775,6 +775,7 @@ CREATE TABLE tbl_subservicio_ssrv (
 )\
 
 CREATE INDEX ix_ssrv_srvc_pk ON tbl_subservicio_ssrv (ssrv_srvc_pk)\
+CREATE INDEX ix_ssrv_tpss_pk ON tbl_subservicio_ssrv (ssrv_tpss_pk)\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_subservicio_ssrv TO portico\
 

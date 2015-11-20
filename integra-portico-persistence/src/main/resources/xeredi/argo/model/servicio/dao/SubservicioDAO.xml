@@ -117,7 +117,7 @@
             </if>
         </if>
 
-        <foreach collection="itdtMap" item="itdt">
+        <foreach collection="itdtMap" index="key" item="itdt">
             <if
                 test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadEntera != null or itdt.cantidadDecimal != null or (itdt.cadena != null and !itdt.cadena.empty)">
                 <![CDATA[

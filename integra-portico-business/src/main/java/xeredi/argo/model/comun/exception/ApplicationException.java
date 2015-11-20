@@ -21,8 +21,6 @@ public abstract class ApplicationException extends Exception {
      */
     public ApplicationException(final String message) {
         super(message);
-
-        Preconditions.checkNotNull(message);
     }
 
     /**

@@ -3,59 +3,58 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.argo.model.servicio.dao.ServicioDatoDAO">
-	<resultMap type="ItemDatoVO" id="ResultMap">
-		<id column="srdt_srvc_pk" property="itemId" />
-		<id column="srdt_tpdt_pk" property="tpdtId" />
-		<result column="srdt_nentero" property="cantidadEntera" />
-		<result column="srdt_ndecimal" property="cantidadDecimal" />
-		<result column="srdt_fecha" property="fecha" />
-		<result column="srdt_cadena" property="cadena" />
+    <resultMap type="ItemDatoVO" id="ResultMap">
+        <id column="srdt_srvc_pk" property="itemId" />
+        <id column="srdt_tpdt_pk" property="tpdtId" />
+        <result column="srdt_nentero" property="cantidadEntera" />
+        <result column="srdt_ndecimal" property="cantidadDecimal" />
+        <result column="srdt_fecha" property="fecha" />
+        <result column="srdt_cadena" property="cadena" />
 
-		<association property="prmt" javaType="ParametroVO">
-			<result column="srdt_prmt_pk" property="id" />
-			<result column="prmt_parametro" property="parametro" />
-			<result column="p18n_texto" property="texto" />
-		</association>
+        <association property="prmt" javaType="ParametroVO">
+            <result column="srdt_prmt_pk" property="id" />
+            <result column="prmt_parametro" property="parametro" />
+            <result column="p18n_texto" property="texto" />
+        </association>
 
-		<association property="srvc" javaType="ServicioVO">
-			<result column="srdt_srvc_dep_pk" property="id" />
-			<result column="srvc_anno" property="anno" />
-			<result column="srvc_numero" property="numero" />
+        <association property="srvc" javaType="ServicioVO">
+            <result column="srdt_srvc_dep_pk" property="id" />
+            <result column="srvc_anno" property="anno" />
+            <result column="srvc_numero" property="numero" />
 
-			<association property="prto" javaType="PuertoVO">
-				<result column="prto_codigo" property="codigo" />
-			</association>
-		</association>
-	</resultMap>
+            <association property="prto" javaType="PuertoVO">
+                <result column="prto_codigo" property="codigo" />
+            </association>
+        </association>
+    </resultMap>
 
 
-	<sql id="SelectWhere">
-		<where>
-			<if test="id != null">
-				AND srdt_srvc_pk = #{id}
-			</if>
-			<if test="ids != null">
-				AND srdt_srvc_pk = ANY
-				<foreach collection="ids" item="item" open="(" close=")"
-					separator=",">#{item}
-				</foreach>
-			</if>
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND srdt_srvc_pk = #{id}
+            </if>
+            <if test="ids != null">
+                AND srdt_srvc_pk = ANY
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+                </foreach>
+            </if>
 
-			<if test="id == null and ids == null">
+            <if test="id == null and ids == null">
 	        <![CDATA[
-			    AND EXISTS (
-			        SELECT tbl_servicio_srvc ON
+			    AND srdt_srvc_pk = ANY (
+			        SELECT srvc_pk
+                    FROM tbl_servicio_srvc
     	    ]]>
-				<where>
-					<include
-						refid="xeredi.argo.model.servicio.dao.ServicioDAO.SelectWhere" />
-				</where>
+                <where>
+                    <include refid="xeredi.argo.model.servicio.dao.ServicioDAO.SelectWhere" />
+                </where>
 	        <![CDATA[
 			    )
     	    ]]>
-			</if>
+            </if>
 
-			<if test="soloDatosGrid">
+            <if test="soloDatosGrid">
 	        <![CDATA[
 			    AND EXISTS (
 			        SELECT 1 FROM tbl_entidad_tipo_dato_entd
@@ -64,12 +63,11 @@
 			            AND entd_enti_pk = #{entiId} AND entd_gridable = 1
 			    )
     	    ]]>
-			</if>
-		</where>
-	</sql>
+            </if>
+        </where>
+    </sql>
 
-	<select id="selectList" parameterType="ServicioCriterioVO"
-		resultMap="ResultMap">
+    <select id="selectList" parameterType="ServicioCriterioVO" resultMap="ResultMap">
     <![CDATA[
 		SELECT srdt_srvc_pk, srdt_tpdt_pk, srdt_nentero, srdt_ndecimal, srdt_fecha, srdt_cadena, srdt_prmt_pk, srdt_srvc_dep_pk
 		    , prmt_parametro, prmt_prto_pk
@@ -79,7 +77,7 @@
 		        SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk
 		    ) AS prto_codigo
         ]]>
-		<if test="idioma != null">
+        <if test="idioma != null">
         <![CDATA[
 		    , (
 		        CASE
@@ -133,7 +131,7 @@
 		        END
 		    ) AS p18n_texto
         ]]>
-		</if>
+        </if>
     <![CDATA[
 		FROM
 		    tbl_servicio_dato_srdt
@@ -142,23 +140,10 @@
 		    LEFT JOIN tbl_servicio_srvc ON
 		        srvc_pk = srdt_srvc_dep_pk
     ]]>
-		<where>
-			<if test="id == null and ids == null">
-				<include refid="xeredi.argo.model.servicio.dao.ServicioDAO.SelectWhere" />
-			</if>
-			<if test="id != null">
-				AND srdt_srvc_pk = #{id}
-			</if>
-			<if test="ids != null">
-				AND srdt_srvc_pk = ANY
-				<foreach collection="ids" item="item" open="(" close=")"
-					separator=",">#{item}
-				</foreach>
-			</if>
-		</where>
-	</select>
+        <include refid="SelectWhere" />
+    </select>
 
-	<insert id="insert" parameterType="ItemDatoVO">
+    <insert id="insert" parameterType="ItemDatoVO">
         <![CDATA[
         INSERT INTO tbl_servicio_dato_srdt (
             srdt_srvc_pk, srdt_tpdt_pk, srdt_nentero, srdt_ndecimal
@@ -168,9 +153,9 @@
             , #{fecha}, #{prmt.id}, #{cadena}, #{srvc.id}
         )
         ]]>
-	</insert>
+    </insert>
 
-	<update id="update" parameterType="ItemDatoVO">
+    <update id="update" parameterType="ItemDatoVO">
         <![CDATA[
         UPDATE tbl_servicio_dato_srdt SET
             srdt_nentero = #{cantidadEntera}
@@ -183,10 +168,10 @@
         	srdt_srvc_pk = #{itemId}
         	AND srdt_tpdt_pk = #{tpdtId}
         ]]>
-	</update>
+    </update>
 
-	<delete id="deleteList" parameterType="ServicioCriterioVO">
-		DELETE FROM tbl_servicio_dato_srdt
-		<include refid="SelectWhere" />
-	</delete>
+    <delete id="deleteList" parameterType="ServicioCriterioVO">
+        DELETE FROM tbl_servicio_dato_srdt
+        <include refid="SelectWhere" />
+    </delete>
 </mapper>

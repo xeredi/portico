@@ -3,11 +3,10 @@
     ng-bind="'enti_' + vm.enti.enti.id | translate"></tab-heading>
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/servicio/srvc/edit/edit/{{vm.enti.enti.id}}/{{vm.item.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span> </a> <a
-            class="btn btn-default"
-            ng-href="#/servicio/srvc/edit/duplicate/{{vm.enti.enti.id}}/{{vm.item.id}}"><i
-            class="glyphicon glyphicon-tags"></i> <span translate="btn_duplicar"></span> </a>
+        <a class="btn btn-default" ui-sref="servicio-edit(vm.item)"><i class="glyphicon glyphicon-edit"></i>
+            <span translate="btn_editar"></span> </a> <a class="btn btn-default"
+            ui-sref="servicio-duplicate(vm.item)"><i class="glyphicon glyphicon-tags"></i> <span
+            translate="btn_duplicar"></span> </a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
         </button>

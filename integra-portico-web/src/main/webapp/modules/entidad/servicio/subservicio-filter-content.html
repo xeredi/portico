@@ -11,20 +11,20 @@
                         <div class="row">
                             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
                                 <label translate="srvc"></label> <input ng-controller="SrvcLupaController"
-                                    type="text" autocomplete="off" ng-model="vm.itemCriterio.srvc"
-                                    ng-selected="vm.prtoId = vm.itemCriterio.srvc.prto.id"
+                                    type="text" autocomplete="off" ng-model="vm.searchCriteria.srvc"
+                                    ng-selected="vm.prtoId = vm.searchCriteria.srvc.prto.id"
                                     uib-typeahead="srvc as srvc.etiqueta for srvc in search(vm.enti.enti.tpsrId, $viewValue)"
                                     typeahead-editable="false" typeahead-wait-ms="250" class="form-control">
                             </div>
                             <div class="col-sm-1 form-group-sm">
                                 <label translate="ssrv_numero"></label> <input type="text"
-                                    ng-model="vm.itemCriterio.numero" class="form-control" />
+                                    ng-model="vm.searchCriteria.numero" class="form-control" />
                             </div>
 
                             <div ng-if="vm.enti.enti.tpdtEstado"
                                 class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
                                 <label translate="ssrv_estado"></label> <select
-                                    ng-model="vm.itemCriterio.estado"
+                                    ng-model="vm.searchCriteria.estado"
                                     ng-options="cdrf.valor as (('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.enti.enti.tpdtEstado.cdrfList"
                                     class="form-control">
                                     <option />
@@ -33,7 +33,7 @@
 
                             <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm pull-right">
                                 <label translate="filtro_limit"></label> <select
-                                    ng-model="vm.itemCriterio.limit"
+                                    ng-model="vm.searchCriteria.limit"
                                     ng-options="limitValue for limitValue in vm.limits" class="form-control">
                                     <option />
                                 </select>
@@ -46,12 +46,12 @@
                                 <div>
                                     <div class="col-sm-8 form-group">
                                         <input type="text" class="form-control"
-                                            ng-model="vm.itemCriterio.finiMin" data-container=".modal-body"
+                                            ng-model="vm.searchCriteria.finiMin" data-container=".modal-body"
                                             bs-datepicker />
                                     </div>
                                     <div class="col-sm-4 form-group">
                                         <input type="text" class="form-control"
-                                            ng-model="vm.itemCriterio.finiMin" bs-timepicker />
+                                            ng-model="vm.searchCriteria.finiMin" bs-timepicker />
                                     </div>
                                 </div>
                             </div>
@@ -60,12 +60,12 @@
                                 <div>
                                     <div class="col-sm-8 form-group">
                                         <input type="text" class="form-control"
-                                            ng-model="vm.itemCriterio.finiMax" data-container=".modal-body"
+                                            ng-model="vm.searchCriteria.finiMax" data-container=".modal-body"
                                             bs-datepicker />
                                     </div>
                                     <div class="col-sm-4 form-group">
                                         <input type="text" class="form-control"
-                                            ng-model="vm.itemCriterio.finiMax" bs-timepicker />
+                                            ng-model="vm.searchCriteria.finiMax" bs-timepicker />
                                     </div>
                                 </div>
                             </div>
@@ -77,12 +77,12 @@
                                 <div>
                                     <div class="col-sm-8 form-group">
                                         <input type="text" class="form-control"
-                                            ng-model="vm.itemCriterio.ffinMin" data-container=".modal-body"
+                                            ng-model="vm.searchCriteria.ffinMin" data-container=".modal-body"
                                             bs-datepicker />
                                     </div>
                                     <div class="col-sm-4 form-group">
                                         <input type="text" class="form-control"
-                                            ng-model="vm.itemCriterio.ffinMin" bs-timepicker />
+                                            ng-model="vm.searchCriteria.ffinMin" bs-timepicker />
                                     </div>
                                 </div>
                             </div>
@@ -91,12 +91,12 @@
                                 <div>
                                     <div class="col-sm-8 form-group">
                                         <input type="text" class="form-control"
-                                            ng-model="vm.itemCriterio.ffinMax" data-container=".modal-body"
+                                            ng-model="vm.searchCriteria.ffinMax" data-container=".modal-body"
                                             bs-datepicker />
                                     </div>
                                     <div class="col-sm-4 form-group">
                                         <input type="text" class="form-control"
-                                            ng-model="vm.itemCriterio.ffinMax" bs-timepicker />
+                                            ng-model="vm.searchCriteria.ffinMax" bs-timepicker />
                                     </div>
                                 </div>
                             </div>

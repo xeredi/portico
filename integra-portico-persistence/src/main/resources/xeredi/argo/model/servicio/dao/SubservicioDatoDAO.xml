@@ -35,11 +35,9 @@
 
 			<if test="id == null and ids == null">
 	        <![CDATA[
-			    AND EXISTS (
-			        SELECT 1
+			    AND ssdt_ssrv_pk = ANY (
+			        SELECT ssrv_pk
 			        FROM tbl_subservicio_ssrv
-			        	INNER JOIN tbl_servicio_srvc ON
-			        		srvc_pk = ssrv_srvc_pk
     	    ]]>
 				<where>
 					<include

@@ -295,10 +295,19 @@ function CrudService($http, $q, $state) {
         }
 
         function tabSelected(tab) {
-            // console.log('tabSelected');
-
             $state.go('.', {
                 tab : tab
+            }, {
+                notify : false,
+                reload : false,
+                location : 'replace',
+                inherit : true
+            });
+        }
+
+        function pageMapChanged(pageMap) {
+            $state.go('.', {
+            	pageMap : JSON.stringify(pageMap)
             }, {
                 notify : false,
                 reload : false,
@@ -322,6 +331,7 @@ function CrudService($http, $q, $state) {
             , saveI18n: saveI18n
             , redirectAfterSave: redirectAfterSave
             , tabSelected: tabSelected
+            , pageMapChanged: pageMapChanged
             , setUri: setUri
             , getUri: getUri
         };
