@@ -134,15 +134,15 @@
         </tbody>
     </table>
 </fieldset>
-</uib-tab> <uib-tab select="vm.tabSelected('accnList')" active="vm.tabActive['accnList']"> <tab-heading
-    ng-bind="'accnList' | translate"></tab-heading>
-<div ng-if="mc.hasAccnPath('acen-list')"
-    ng-include="'modules/metamodelo/fragment/accion-entidad-grid-content.html'"></div>
-<div ng-include="'modules/metamodelo/fragment/entidad-accion-grid-grid-content.html'"></div>
 </uib-tab> <uib-tab select="vm.tabSelected('entdList')" active="vm.tabActive['entdList']"> <tab-heading
     ng-bind="'entdList' | translate"></tab-heading>
 <div ng-if="mc.hasAccnPath('engd-list')"
     ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
 <div ng-if="mc.hasAccnPath('entd-list')"
     ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
-</uib-tab> </uib-tabset>
+</uib-tab> <uib-tab select="vm.tabSelected('accnList')" active="vm.tabActive['accnList']"> <tab-heading
+    ng-bind="'accnList' | translate"></tab-heading>
+<div ng-if="mc.hasAccnPath('acen-list')"
+    ng-include="'modules/metamodelo/fragment/accion-entidad-grid-content.html'"></div>
+<div ng-include="'modules/metamodelo/fragment/entidad-accion-grid-grid-content.html'"></div>
+</uib-tab></uib-tabset>
