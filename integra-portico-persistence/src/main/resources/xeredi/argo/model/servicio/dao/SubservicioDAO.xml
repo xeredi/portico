@@ -16,6 +16,7 @@
             <id column="srvc_pk" property="id" />
             <result column="srvc_anno" property="anno" />
             <result column="srvc_numero" property="numero" />
+            <result column="srvc_tpsr_pk" property="entiId" />
 
             <association property="prto" javaType="PuertoVO">
                 <result column="srvc_subp_pk" property="id" />
@@ -28,7 +29,7 @@
     <![CDATA[
 		SELECT
 			ssrv_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado
-			, srvc_fref , srvc_pk, srvc_anno, srvc_numero, srvc_subp_pk
+			, srvc_fref , srvc_pk, srvc_anno, srvc_numero, srvc_subp_pk, srvc_tpsr_pk
 			, (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk) AS prto_codigo
 		FROM
 			tbl_subservicio_ssrv ssrv

@@ -26,6 +26,7 @@
 
         <antlr4-maven-plugin.version>4.5.1-1</antlr4-maven-plugin.version>
         <migrations-maven-plugin.version>1.1.2</migrations-maven-plugin.version>
+        <maven-schemaspy-plugin.version>1.0.3</maven-schemaspy-plugin.version>
 
         <!-- Modules versions -->
         <xeredi-util.version>0.0.1</xeredi-util.version>
@@ -96,6 +97,14 @@
             <properties>
                 <profile-id>local</profile-id>
                 <database-vendor>oracle</database-vendor>
+
+                <schemaspy.databaseType>orathin</schemaspy.databaseType>
+                <schemaspy.database>orcl</schemaspy.database>
+                <schemaspy.host>localhost</schemaspy.host>
+                <schemaspy.port>1521</schemaspy.port>
+                <schemaspy.schema>PORTICOADM</schemaspy.schema>
+                <schemaspy.user>porticoadm</schemaspy.user>
+                <schemaspy.password>portico</schemaspy.password>
             </properties>
 
             <dependencies>
@@ -350,6 +359,13 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>Wakaleo Repository</id>
+            <url>http://www.wakaleo.com/maven/repos/</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>
 <!-- <doclet.version>5.6.6</doclet.version> <doclet.additionalparam> -inferrel -inferdep -quiet -hide java.* -hide
     xeredi.util.* -hide org.* -hide com.* -qualify -postfixpackage -nodefontsize 9 -nodefontpackagesize 8 -useimports

@@ -17,7 +17,7 @@ import xeredi.util.applicationobjects.LabelValueVO;
 /**
  * The Class TipoServicioListadoAction.
  */
-public final class IndexAction extends ListAction<LabelValueVO> {
+public final class ServicioIndexAction extends ListAction<LabelValueVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5523514529976849793L;

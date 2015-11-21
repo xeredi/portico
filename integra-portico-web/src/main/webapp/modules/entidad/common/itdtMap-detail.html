@@ -30,7 +30,7 @@
         </p>
         <p class="form-control-static" ng-switch-when="SR">
             <a
-                ng-href="#/servicio/srvc/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.item.itdtMap[tpdtId].srvc.id}}"
+                ui-sref="servicio-detail({entiId: vm.enti.entdMap[tpdtId].tpdt.enti.id, id: vm.item.itdtMap[tpdtId].srvc.id})"
                 ng-bind="vm.item.itdtMap[tpdtId].srvc.etiqueta"></a>
         </p>
     </div>

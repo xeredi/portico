@@ -1,5 +1,5 @@
 
-<tabset type="pills"> <tab select="vm.tabSelected(null)"> <tab-heading
+<uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)"> <tab-heading
     ng-bind="'enti_' + vm.enti.enti.id | translate"></tab-heading>
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
@@ -74,7 +74,7 @@
 
     <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
 </fieldset>
-</tab> <tab active="vm.tabActive[-1]" select="vm.tabSelected(-1)" ng-if="vm.arinList.length"> <tab-heading
+</uib-tab> <uib-tab active="vm.tabActive[-1]" select="vm.tabSelected(-1)" ng-if="vm.arinList.length"> <tab-heading
     translate="archList"></tab-heading>
 <div class="table-responsive">
     <table class="table-bordered table-condensed table-hover table-nonfluid">
@@ -99,19 +99,19 @@
         </tbody>
     </table>
 </div>
-</tab> <tab active="vm.tabActive[-2]" select="vm.tabSelected(-2)" ng-if="vm.ittrList.length"> <tab-heading
+</uib-tab> <uib-tab active="vm.tabActive[-2]" select="vm.tabSelected(-2)" ng-if="vm.ittrList.length"> <tab-heading
     ng-bind="('trmtList' | translate)"></tab-heading>
 <div ng-include="'modules/entidad/common/item-tramite-grid-content.html'"></div>
-</tab> <tab ng-repeat="entiHijaId in vm.enti.entiHijasList track by entiHijaId" active="vm.tabActive[entiHijaId]"
+</uib-tab> <uib-tab ng-repeat="entiHijaId in vm.enti.entiHijasList track by entiHijaId" active="vm.tabActive[entiHijaId]"
     select="vm.tabSelected(entiHijaId)"> <tab-heading ng-bind="('enti_' + entiHijaId | translate)"></tab-heading>
 <div ng-if="vm.itemHijosMap[entiHijaId]">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <pagination ng-show="vm.itemHijosMap[entiHijaId].count > 0"
+            <uib-pagination ng-show="vm.itemHijosMap[entiHijaId].count > 0"
                 total-items="vm.itemHijosMap[entiHijaId].count"
                 items-per-page="vm.itemHijosMap[entiHijaId].limit" ng-model="vm.pageMap[entiHijaId]"
                 ng-change="vm.pageChanged(entiHijaId)" class="pagination" max-size="1"
-                previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></pagination>
+                previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></uib-pagination>
         </div>
 
         <div class="btn-group">
@@ -140,7 +140,7 @@
 
             <tbody>
                 <tr ng-repeat="itemHijo in vm.itemHijosMap[entiHijaId].list track by itemHijo.id">
-                    <td><a ng-href="#/servicio/ssrv/detail/{{entiHijaId}}/{{itemHijo.id}}"><span
+                    <td><a ui-sref="subservicio-detail(itemHijo)"><span
                             class="glyphicon glyphicon-search"></span></a></td>
 
                     <td ng-bind="itemHijo.numero" class="number"></td>
@@ -173,4 +173,4 @@
         </table>
     </div>
 </div>
-</tab> </tabset>
+</uib-tab> </uib-tabset>

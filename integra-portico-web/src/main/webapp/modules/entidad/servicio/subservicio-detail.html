@@ -1,4 +1,4 @@
-<tabset type="pills"> <tab select="vm.tabSelected(null)"> <tab-heading
+<uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)"> <tab-heading
     ng-bind="'enti_' + vm.enti.enti.id | translate"></tab-heading>
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
@@ -28,8 +28,7 @@
         <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
             <label translate="srvc"></label>
             <p class="form-control-static">
-                <a ng-href="#/servicio/srvc/detail/{{vm.enti.enti.tpsrId}}/{{vm.item.srvc.id}}"
-                    ng-bind="vm.item.srvc.etiqueta"></a>
+                <a ui-sref="servicio-detail(vm.item.srvc)" ng-bind="vm.item.srvc.etiqueta"></a>
             </p>
         </div>
         <div class="col-sm-1 col-md-1 form-group-sm">
@@ -57,7 +56,7 @@
             ng-if="(entiId != vm.enti.enti.tpsrId)" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
             <label ng-bind="('enti_' + entiId | translate)"></label>
             <p class="form-control-static">
-                <a ng-href="#/servicio/ssrv/detail/{{entiId}}/{{vm.itemPadresMap[entiId].value}}">{{vm.itemPadresMap[entiId].label}}</a>
+                <a ui-sref="subservicio-detail({entiId: entiId, id: vm.itemPadresMap[entiId].value})">{{vm.itemPadresMap[entiId].label}}</a>
             </p>
         </div>
     </div>
@@ -65,19 +64,19 @@
     <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
 </fieldset>
 
-</tab> <tab active="vm.tabActive[-2]" select="vm.tabSelected(-2)" ng-if="vm.ittrList.length"> <tab-heading
+</uib-tab> <uib-tab active="vm.tabActive[-2]" select="vm.tabSelected(-2)" ng-if="vm.ittrList.length"> <tab-heading
     ng-bind="('trmtList' | translate)"></tab-heading>
 <div ng-include="'modules/entidad/common/item-tramite-grid-content.html'"></div>
-</tab> <tab ng-repeat="entiHijaId in vm.enti.entiHijasList track by $index" active="vm.tabActive[entiHijaId]"
+</uib-tab> <uib-tab ng-repeat="entiHijaId in vm.enti.entiHijasList track by $index" active="vm.tabActive[entiHijaId]"
     select="vm.tabSelected(entiHijaId)"> <tab-heading ng-bind="('enti_' + entiHijaId | translate)"></tab-heading>
 <div ng-if="vm.itemHijosMap[entiHijaId]">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <pagination ng-show="vm.itemHijosMap[entiHijaId].count > 0"
+            <uib-pagination ng-show="vm.itemHijosMap[entiHijaId].count > 0"
                 total-items="vm.itemHijosMap[entiHijaId].count"
                 items-per-page="vm.itemHijosMap[entiHijaId].limit" ng-model="vm.pageMap[entiHijaId]"
                 ng-change="vm.pageChanged(entiHijaId)" class="pagination" max-size="1"
-                previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></pagination>
+                previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></uib-pagination>
         </div>
 
         <div class="btn-group">
@@ -108,7 +107,7 @@
 
             <tbody>
                 <tr ng-repeat="itemHijo in vm.itemHijosMap[entiHijaId].list track by $index">
-                    <td><a ng-href="#/servicio/ssrv/detail/{{entiHijaId}}/{{itemHijo.id}}"><i
+                    <td><a ui-sref="subservicio-detail({entiId: itemHijo.entiId, id: itemHijo.id})"><i
                             class="glyphicon glyphicon-search"></i></a></td>
 
                     <td ng-bind="itemHijo.numero" class="number"></td>
@@ -142,4 +141,4 @@
         </table>
     </div>
 </div>
-</tab></tabset>
+</uib-tab></uib-tabset>

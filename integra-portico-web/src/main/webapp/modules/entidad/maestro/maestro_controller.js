@@ -256,11 +256,8 @@ function ParametroEditController($state, $stateParams, pageTitleService,
 	function save() {
 		ParametroService.saveI18n(vm.accion, vm.item, vm.i18nMap).then(
 				function(data) {
-					vm.accion == 'edit' ? setTimeout(function() {
-						window.history.back();
-					}, 0) : $state.go("parametro-detail", data.model, {
-						location : 'replace'
-					});
+					ParametroService.redirectAfterSave(vm.accion, data.model,
+							"parametro-detail");
 				});
 	}
 
@@ -327,20 +324,18 @@ function SubparametroEditController($state, $stateParams, pageTitleService,
 	vm.cancel = cancel;
 
 	function save() {
-		SubparametroService.save(vm.accion, vm.item).then(function(data) {
-			vm.accion == 'edit' ? setTimeout(function() {
-				window.history.back();
-			}, 0) : $state.go("subparametro-detail", data.model, {
-				location : 'replace'
-			});
-		});
+		SubparametroService.save(vm.accion, vm.item).then(
+				function(data) {
+					SubparametroService.redirectAfterSave(vm.accion,
+							data.model, "subparametro-detail");
+				});
 	}
 
 	function cancel() {
 		window.history.back();
 	}
 
-    vm.accion = $state.current.data.accion;
+	vm.accion = $state.current.data.accion;
 	vm.item = {
 		id : $stateParams.id,
 		prmtId : $stateParams.prmtId,

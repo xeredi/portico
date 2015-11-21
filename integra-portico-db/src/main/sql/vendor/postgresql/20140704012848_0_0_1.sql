@@ -700,6 +700,8 @@ CREATE TABLE tbl_servicio_srvc
 		REFERENCES tbl_puerto_prto (prto_pk)
 )\
 
+CREATE INDEX ix_srvc_tpsr_pk ON tbl_servicio_srvc (srvc_tpsr_pk)\
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_srvc TO portico\
 
 COMMENT ON TABLE tbl_servicio_srvc IS 'Servicios de la aplicacion'\

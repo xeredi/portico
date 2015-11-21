@@ -85,15 +85,52 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <!-- <plugin> <groupId>xeredi</groupId> <artifactId>maven-schemaspy-plugin</artifactId> <configuration>
-                <databaseType>pgsql</databaseType> <database>test</database> <schema>public</schema> <host>localhost</host> <user>test</user>
-                <password>test</password> <port>5432</port> </configuration> <dependencies> <dependency> <groupId>org.postgresql</groupId>
-                <artifactId>postgresql</artifactId> <version>9.3-1101-jdbc41</version> </dependency> </dependencies> </plugin> -->
+            <plugin>
+                <groupId>com.wakaleo.schemaspy</groupId>
+                <artifactId>maven-schemaspy-plugin</artifactId>
+                <version>${maven-schemaspy-plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.oracle</groupId>
+                        <artifactId>jdbc</artifactId>
+                        <version>${oracle.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
             <!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-site-plugin</artifactId>
                 <configuration> <reportPlugins> <plugin> <groupId>org.mybatis.maven</groupId> <artifactId>migrations-maven-plugin</artifactId>
                 <version>1.1.2</version> <configuration> <repository>migrations/${database-vendor}</repository> </configuration>
                 </plugin> </reportPlugins> </configuration> </plugin> -->
         </plugins>
+
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${maven-site-plugin.version}</version>
+                    <configuration>
+                        <reportPlugins>
+                            <plugin>
+                                <groupId>com.wakaleo.schemaspy</groupId>
+                                <artifactId>maven-schemaspy-plugin</artifactId>
+                                <version>${maven-schemaspy-plugin.version}</version>
+                                <configuration>
+                                    <databaseType>${schemaspy.databaseType}</databaseType>
+                                    <database>${schemaspy.database}</database>
+                                    <host>${schemaspy.host}</host>
+                                    <port>${schemaspy.port}</port>
+                                    <schema>${schemaspy.schema}</schema>
+                                    <user>${schemaspy.user}</user>
+                                    <password>${schemaspy.password}</password>
+                                </configuration>
+                            </plugin>
+                        </reportPlugins>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <dependencies>
@@ -124,10 +161,4 @@
         </dependency>
     </dependencies>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>Wakaleo Repository</id>
-            <url>http://www.wakaleo.com/maven/repos/</url>
-        </pluginRepository>
-    </pluginRepositories>
 </project>
