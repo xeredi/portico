@@ -9,28 +9,25 @@
                 <form>
                     <fieldset>
                         <div class="row">
-                            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                                <label translate>tpdt_codigo</label> <input type="text"
+                            <div class="col-sm-2 col-md-1 form-group-sm">
+                                <label translate>crgo_codigo</label> <input type="text"
                                     ng-model="vm.searchCriteria.codigo" class="form-control" />
                             </div>
-                            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                                <label translate>tpdt_nombre</label> <input type="text"
-                                    ng-model="vm.searchCriteria.nombre" class="form-control" maxlength="50" />
+                            <div class="col-sm-2 col-md-2 form-group-sm">
+                                <label translate>crgo_codigoNormalizado</label> <input type="text"
+                                    ng-model="vm.searchCriteria.codigoNormalizado" class="form-control" />
                             </div>
-                            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                                <label translate>tpdt_tpel</label> <select
-                                    ng-model="vm.searchCriteria.tipoElemento"
-                                    ng-options="tpel as ('ElementoTipo_' + tpel | translate) for tpel in vm.tpelList"
+                            <div class="col-sm-3 col-md-2 form-group-sm">
+                                <label translate>tpsr</label> <select ng-model="vm.searchCriteria.tpsrId"
+                                    ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in ::vm.tpsrList"
                                     class="form-control">
                                     <option />
                                 </select>
                             </div>
-                            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                                <label translate>tpdt_tpht</label> <select ng-model="vm.searchCriteria.tpht"
-                                    ng-options="tpht as ('HtmlTipo_' + tpht | translate) for tpht in vm.tphtList"
-                                    class="form-control">
-                                    <option />
-                                </select>
+                            <div class="col-sm-2 col-md-2 form-group-sm">
+                                <label translate>crgo_fechaVigencia</label><input type="text"
+                                    class="form-control" data-container=".modal-body"
+                                    ng-model="vm.searchCriteria.fechaVigencia" bs-datepicker />
                             </div>
                         </div>
                     </fieldset>

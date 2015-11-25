@@ -2,9 +2,6 @@ angular.module("servicio", [])
 
 .config(config)
 
-// ----------------- MENU PRINCIPAL --------------------------
-.controller("ServicioController", ServicioController)
-
 // ----------- SERVICIOS ------------------
 .controller("SrvcGridController", SrvcGridController)
 
@@ -35,12 +32,6 @@ angular.module("servicio", [])
 
 function config($routeProvider) {
 	$routeProvider
-
-			.when("/servicio", {
-				title : 'servicio_main',
-				templateUrl : "modules/entidad/servicio/servicio.html",
-				controller : "ServicioController as vm"
-			})
 
 			.when("/servicio/srvc/grid/:entiId", {
 				templateUrl : "modules/entidad/servicio/srvc-grid.html",
@@ -105,21 +96,6 @@ function config($routeProvider) {
 					})
 
 	;
-}
-
-function ServicioController($http, pageTitleService) {
-	var vm = this;
-
-	initialize();
-
-	function initialize() {
-		$http.post("servicio/index.action").success(function(data) {
-			vm.tpsrList = data.resultList;
-			vm.tpssMap = data.tpssMap;
-		});
-
-		pageTitleService.setTitle("srvcList", "page_home");
-	}
 }
 
 function SrvcGridController($http, $location, $routeParams, $modal,

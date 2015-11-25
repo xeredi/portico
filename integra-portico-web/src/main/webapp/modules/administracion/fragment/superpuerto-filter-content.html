@@ -9,9 +9,9 @@
                 <form>
                     <fieldset>
                         <div class="row">
-                            <div class="col-sm-2 col-md-1 form-group-sm">
-                                <label translate="fcsr_anio"></label> <input type="text"
-                                    ng-model="vm.searchCriteria.anio" class="form-control" />
+                            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+                                <label translate="sprt_codigo"></label> <input type="text"
+                                    ng-model="vm.searchCriteria.codigo" class="form-control" />
                             </div>
                         </div>
                     </fieldset>
@@ -23,6 +23,9 @@
                 </button>
                 <button class="btn btn-default" data-ng-click="$hide()">
                     <i class="glyphicon glyphicon-remove"></i><span translate="btn_cancelar"></span>
+                </button>
+                <button class="btn btn-default" data-ng-click="vm.resetFilter()">
+                    <i class="glyphicon glyphicon-erase"></i> <span translate="btn_reset"></span>
                 </button>
             </div>
         </div>

@@ -7,7 +7,7 @@
 
     <div class="btn-group">
         <button ng-if="mc.hasAccnPath('grpo-list')" class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template="modules/seguridad/grupo-filter-content.html" bs-modal="modal">
+            data-template-url="modules/seguridad/fragment/grupo-filter-content.html" bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
         </button>
         <a ng-if="mc.hasAccnPath('grpo-create')" class="btn btn-default" ui-sref="grupo-create"><i

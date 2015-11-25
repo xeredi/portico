@@ -6,7 +6,7 @@
     </div>
     <div class="btn-group">
         <button ng-if="mc.hasAccnPath('aspc-list')" class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template="modules/facturacion/aspecto-filter-content.html" bs-modal="modal">
+            data-template-url="modules/facturacion/fragment/aspecto-filter-content.html" bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
         </button>
         <a ng-if="mc.hasAccnPath('aspc-create')" class="btn btn-default" ui-sref="aspecto-create"><i
