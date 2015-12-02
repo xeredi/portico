@@ -27,7 +27,11 @@ booleanExpr
 		| '='
 		| '<>'
 	) se2 = scalarExpr
-//	| se1 = numericExpr in = 'IN' '(' scalarList ')'
+	| se1 = scalarExpr in =
+	(
+		'IN'
+		| 'NOT IN'
+	) scalarList
 	| lp = '(' be1 = booleanExpr rp = ')'
 	| fn = 'escalaEsAvituallamiento' '()'
 	| fn = 'escalaEsBuqueBaseEnPuerto' '()'
@@ -45,19 +49,20 @@ scalarExpr
 	| fn = 'escalaUdsGt' '()'
 	| fn = 'escalaValorContador' '(' fnArg1 = STRING ')'
 ;
-/*
+
 scalarList
 :
-	scalarList = scalar (',' scalar)*
+	lp = '(' scalar
+	(
+		',' scalar
+	)* rp = ')'
 ;
 
 scalar
 :
-	val = NUMBER
-	| val = TEXT
-	| ne1 = numericExpr
-	;
-*/
+	NUMBER
+	| STRING
+;
 
 NUMBER
 :
@@ -66,13 +71,6 @@ NUMBER
 		. [0-9]+
 	)?
 ;
-
-/*
-TEXT
-:
-	[a-zA-Z0-9-+_]+
-;
-*/
 
 STRING
 :

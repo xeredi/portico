@@ -53,12 +53,12 @@
         <div class="row">
             <div class="col-md-6 form-group-sm">
                 <label translate>rgla_condicion</label>
-                <textarea class="form-control" rows="7" ng-model="vm.model.version.condicion"
-                    ng-bind="vm.model.version.condicion"></textarea>
+                <textarea class="form-control" rows="7" spellcheck="false"
+                    ng-model="vm.model.version.condicion" ng-bind="vm.model.version.condicion"></textarea>
             </div>
             <div class="col-md-6 form-group-sm">
                 <label translate>rgla_formula</label>
-                <textarea class="form-control" rows="7" ng-model="vm.model.version.formula"
+                <textarea class="form-control" rows="7" spellcheck="false" ng-model="vm.model.version.formula"
                     ng-bind="vm.model.version.formula"></textarea>
             </div>
         </div>
@@ -66,22 +66,22 @@
         <div ng-if="vm.model.tipo == 'T'" class="row">
             <div class="col-md-6 form-group-sm">
                 <label translate>rgla_pathImpuesto</label> <input type="text"
-                    ng-model="vm.model.version.pathImpuesto" class="form-control" />
+                    ng-model="vm.model.version.pathImpuesto" class="form-control" spellcheck="false" />
             </div>
             <div class="col-md-6 form-group-sm">
                 <label translate>rgla_pathPagador</label> <input type="text"
-                    ng-model="vm.model.version.pathPagador" class="form-control" />
+                    ng-model="vm.model.version.pathPagador" class="form-control" spellcheck="false" />
             </div>
         </div>
 
         <div ng-if="vm.model.tipo == 'T'" class="row">
             <div class="col-md-6 form-group-sm">
                 <label translate>rgla_pathEsSujPasivo</label> <input type="text"
-                    ng-model="vm.model.version.pathEsSujPasivo" class="form-control" />
+                    ng-model="vm.model.version.pathEsSujPasivo" class="form-control" spellcheck="false" />
             </div>
             <div class="col-md-6 form-group-sm">
                 <label translate>rgla_pathCodExen</label> <input type="text"
-                    ng-model="vm.model.version.pathCodExen" class="form-control" />
+                    ng-model="vm.model.version.pathCodExen" class="form-control" spellcheck="false" />
             </div>
         </div>
     </fieldset>
@@ -102,32 +102,38 @@
                     <tr>
                         <td>info1</td>
                         <td><input type="text" ng-model="vm.model.version.etiqInfo1" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.model.version.pathInfo1" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathInfo1" class="form-control"
+                            spellcheck="false" /></td>
                     </tr>
                     <tr>
                         <td>info2</td>
                         <td><input type="text" ng-model="vm.model.version.etiqInfo2" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.model.version.pathInfo2" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathInfo2" class="form-control"
+                            spellcheck="false" /></td>
                     </tr>
                     <tr>
                         <td>info3</td>
                         <td><input type="text" ng-model="vm.model.version.etiqInfo3" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.model.version.pathInfo3" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathInfo3" class="form-control"
+                            spellcheck="false" /></td>
                     </tr>
                     <tr>
                         <td>info4</td>
                         <td><input type="text" ng-model="vm.model.version.etiqInfo4" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.model.version.pathInfo4" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathInfo4" class="form-control"
+                            spellcheck="false" /></td>
                     </tr>
                     <tr>
                         <td>info5</td>
                         <td><input type="text" ng-model="vm.model.version.etiqInfo5" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.model.version.pathInfo5" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathInfo5" class="form-control"
+                            spellcheck="false" /></td>
                     </tr>
                     <tr>
                         <td>info6</td>
                         <td><input type="text" ng-model="vm.model.version.etiqInfo6" class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.model.version.pathInfo6" class="form-control" /></td>
+                        <td><input type="text" ng-model="vm.model.version.pathInfo6" class="form-control"
+                            spellcheck="false" /></td>
                     </tr>
                 </tbody>
             </table>
@@ -153,42 +159,42 @@
                         <td><input type="text" ng-model="vm.model.version.etiqCuant1"
                             class="form-control" /></td>
                         <td><input type="text" ng-model="vm.model.version.pathCuant1"
-                            class="form-control" /></td>
+                            class="form-control" spellcheck="false" /></td>
                     </tr>
                     <tr>
                         <td>cuant2</td>
                         <td><input type="text" ng-model="vm.model.version.etiqCuant2"
                             class="form-control" /></td>
                         <td><input type="text" ng-model="vm.model.version.pathCuant2"
-                            class="form-control" /></td>
+                            class="form-control" spellcheck="false" /></td>
                     </tr>
                     <tr>
                         <td>cuant3</td>
                         <td><input type="text" ng-model="vm.model.version.etiqCuant3"
                             class="form-control" /></td>
                         <td><input type="text" ng-model="vm.model.version.pathCuant3"
-                            class="form-control" /></td>
+                            class="form-control" spellcheck="false" /></td>
                     </tr>
                     <tr>
                         <td>cuant4</td>
                         <td><input type="text" ng-model="vm.model.version.etiqCuant4"
                             class="form-control" /></td>
                         <td><input type="text" ng-model="vm.model.version.pathCuant4"
-                            class="form-control" /></td>
+                            class="form-control" spellcheck="false" /></td>
                     </tr>
                     <tr>
                         <td>cuant5</td>
                         <td><input type="text" ng-model="vm.model.version.etiqCuant5"
                             class="form-control" /></td>
                         <td><input type="text" ng-model="vm.model.version.pathCuant5"
-                            class="form-control" /></td>
+                            class="form-control" spellcheck="false" /></td>
                     </tr>
                     <tr>
                         <td>cuant6</td>
                         <td><input type="text" ng-model="vm.model.version.etiqCuant6"
                             class="form-control" /></td>
                         <td><input type="text" ng-model="vm.model.version.pathCuant6"
-                            class="form-control" /></td>
+                            class="form-control" spellcheck="false" /></td>
                     </tr>
                 </tbody>
             </table>

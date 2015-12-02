@@ -1,5 +1,7 @@
 angular.module("servicio_service", [ "crud_service" ])
 
+.factory("ValoradorService", ValoradorService)
+
 .factory("ServicioSecuenciaService", ServicioSecuenciaService)
 
 .factory("ServicioService", ServicioService)
@@ -8,14 +10,18 @@ angular.module("servicio_service", [ "crud_service" ])
 
 ;
 
+function ValoradorService($http, $q, CrudService) {
+	return CrudService.create("servicio/valorador");
+}
+
 function ServicioSecuenciaService($http, $q, CrudService) {
-    return CrudService.create("servicio/servicio-secuencia");
+	return CrudService.create("servicio/servicio-secuencia");
 }
 
 function ServicioService($http, $q, CrudService) {
-    return CrudService.create("servicio/servicio");
+	return CrudService.create("servicio/servicio");
 }
 
 function SubservicioService($http, $q, CrudService) {
-    return CrudService.create("servicio/subservicio");
+	return CrudService.create("servicio/subservicio");
 }

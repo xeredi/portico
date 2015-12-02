@@ -1,5 +1,5 @@
 <div>
-    <tabset type="pills"> <tab> <tab-heading ng-bind="::('prbt' | translate)"></tab-heading>
+    <uib-tabset type="pills"> <uib-tab> <tab-heading ng-bind="::('prbt' | translate)"></tab-heading>
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <button class="btn btn-default" ng-click="vm.cancel()">
@@ -12,48 +12,48 @@
         <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                 <label translate="prbt_modulo"></label>
-                <p class="form-control-static" ng-bind="('ProcesoModulo_' + vm.prbt.modulo | translate)"></p>
+                <p class="form-control-static" ng-bind="('ProcesoModulo_' + vm.model.modulo | translate)"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                 <label translate="prbt_tipo"></label>
-                <p class="form-control-static" ng-bind="('ProcesoTipo_' + vm.prbt.tipo | translate)"></p>
+                <p class="form-control-static" ng-bind="('ProcesoTipo_' + vm.model.tipo | translate)"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                 <label translate="prbt_estado"></label>
-                <p class="form-control-static" ng-bind="('ProcesoEstado_' + vm.prbt.estado | translate)"></p>
+                <p class="form-control-static" ng-bind="('ProcesoEstado_' + vm.model.estado | translate)"></p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                 <label translate="prbt_falta"></label>
-                <p class="form-control-static" ng-bind="::(vm.prbt.falta | date: datetimeFormat)"></p>
+                <p class="form-control-static" ng-bind="::(vm.model.falta | date: datetimeFormat)"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                 <label translate="fini"></label>
-                <p class="form-control-static" ng-bind="::(vm.prbt.finicio | date: datetimeFormat)"></p>
+                <p class="form-control-static" ng-bind="::(vm.model.finicio | date: datetimeFormat)"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                 <label translate="ffin"></label>
-                <p class="form-control-static" ng-bind="::(vm.prbt.ffin | date: datetimeFormat)"></p>
+                <p class="form-control-static" ng-bind="::(vm.model.ffin | date: datetimeFormat)"></p>
             </div>
             <div class="col-sm-2 col-md-2 form-group-sm">
                 <label translate="prbt_duracion"></label>
-                <p class="form-control-static number" ng-bind="::(vm.prbt.duracion | number:0)"></p>
+                <p class="form-control-static number" ng-bind="::(vm.model.duracion | number:0)"></p>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                 <label translate="prbt_erroresCnt"></label>
-                <p class="form-control-static number" ng-bind="::(vm.prbt.erroresCnt | number:0)"></p>
+                <p class="form-control-static number" ng-bind="::(vm.model.erroresCnt | number:0)"></p>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                 <label translate="prbt_alertasCnt"></label>
-                <p class="form-control-static number" ng-bind="::(vm.prbt.alertasCnt | number:0)"></p>
+                <p class="form-control-static number" ng-bind="::(vm.model.alertasCnt | number:0)"></p>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                 <label translate="prbt_mensajesCnt"></label>
-                <p class="form-control-static number" ng-bind="::(vm.prbt.mensajesCnt | number:0)"></p>
+                <p class="form-control-static number" ng-bind="::(vm.model.mensajesCnt | number:0)"></p>
             </div>
         </div>
     </fieldset>
@@ -118,13 +118,13 @@
                     <tbody>
                         <tr ng-repeat="prit in ::vm.pritEntradaList track by $index">
                             <td ng-switch="::prit.tipo"><a ng-switch-when="srvc"
-                                ng-href="#/servicio/srvc/detail/{{::prit.entiId}}/{{::prit.itemId}}"><span
+                                ui-sref="servicio-detail({entiId: prit.entiId, id: prit.itemId})"><span
                                     class="glyphicon glyphicon-search"></span></a><a ng-switch-when="ssrv"
-                                ng-href="#/servicio/ssrv/detail/{{::prit.entiId}}/{{::prit.itemId}}"><span
+                                ui-sref="subservicio-detail({entiId: prit.entiId, id: prit.itemId})"><span
                                     class="glyphicon glyphicon-search"></span></a><a ng-switch-when="pepr"
                                 ng-href="#/estadistica/pepr/detail/{{::prit.itemId}}"><span
                                     class="glyphicon glyphicon-search"></span></a><a ng-switch-when="vlrc"
-                                ng-href="#/facturacion/vlrc/detail/{{::prit.itemId}}"><span
+                                ui-sref="valoracion-detail({id: prit.itemId})"><span
                                     class="glyphicon glyphicon-search"></span></a></td>
                             <td ng-switch on="prit.tipo"><span ng-switch-when="srvc"
                                 ng-bind="::('enti_' + prit.entiId | translate)"></span><span
@@ -152,8 +152,8 @@
                     </thead>
 
                     <tbody>
-                        <tr ng-repeat="arin in ::vm.arinSalidaList track by $index">
-                            <td><a ng-click="vm.download(::arin.id, ::arin.nombre)"> <span
+                        <tr ng-repeat="arin in vm.arinSalidaList track by $index">
+                            <td><a ng-click="vm.download(arin.id, arin.nombre)"> <span
                                     class="glyphicon glyphicon-save" aria-hidden="true"></span>
                             </a></td>
                             <td ng-bind="::arin.nombre"></td>
@@ -177,13 +177,13 @@
                     <tbody>
                         <tr ng-repeat="prit in ::vm.pritSalidaList track by $index">
                             <td ng-switch="::prit.tipo"><a ng-switch-when="srvc"
-                                ng-href="#/servicio/srvc/detail/{{::prit.entiId}}/{{::prit.itemId}}"><span
+                                ui-sref="servicio-detail({entiId: prit.entiId, id: prit.itemId})"><span
                                     class="glyphicon glyphicon-search"></span></a><a ng-switch-when="ssrv"
-                                ng-href="#/servicio/ssrv/detail/{{::prit.entiId}}/{{::prit.itemId}}"><span
+                                ui-sref="subservicio-detail({entiId: prit.entiId, id: prit.itemId})"><span
                                     class="glyphicon glyphicon-search"></span></a><a ng-switch-when="pepr"
                                 ng-href="#/estadistica/pepr/detail/{{::prit.itemId}}"><span
                                     class="glyphicon glyphicon-search"></span></a><a ng-switch-when="vlrc"
-                                ng-href="#/facturacion/vlrc/detail/{{::prit.itemId}}"><span
+                                ui-sref="valoracion-detail({id: prit.itemId})"><span
                                     class="glyphicon glyphicon-search"></span></a></td>
                             <td ng-switch on="prit.tipo"><span ng-switch-when="srvc"
                                 ng-bind="::('enti_' + prit.entiId | translate)"></span><span
@@ -197,7 +197,7 @@
         </div>
     </div>
 
-    </tab> <tab ng-if="vm.prmnList.list.length"> <tab-heading ng-bind="::('prmnList' | translate)"></tab-heading>
+    </uib-tab> <uib-tab ng-if="vm.prmnList.list.length"> <tab-heading ng-bind="::('prmnList' | translate)"></tab-heading>
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <pagination total-items="vm.prmnList.count" items-per-page="vm.prmnList.limit" ng-model="vm.page"
@@ -223,5 +223,5 @@
             </tr>
         </tbody>
     </table>
-    </tab> </tabset>
+    </uib-tab> </uib-tabset>
 </div>

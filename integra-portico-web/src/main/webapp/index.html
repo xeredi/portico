@@ -6,9 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel='stylesheet' type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
+    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel='stylesheet' type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.5/slate/bootstrap.min.css">
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/slate/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="app.css" />
 <!--
  -->
@@ -40,7 +40,7 @@
                                 translate="prmtList"></a></li>
                             <li><a ng-if="mc.hasAccnPath('secc-facturacion')" ui-sref="facturacion-index"
                                 translate="sec_facturacion"></a></li>
-                            <li><a ng-if="mc.hasAccnPath('secc-procesos')" ng-href="#/proceso/prbt/grid"
+                            <li><a ng-if="mc.hasAccnPath('secc-procesos')" ui-sref="proceso-grid"
                                 translate="prbtList"></a></li>
                             <li role="presentation" class="divider"></li>
                             <li><a ng-if="mc.hasAccnPath('secc-administracion')"
@@ -85,7 +85,7 @@
     <script type="text/javascript"
         src="http://cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.1.6/angular-google-maps.min.js"></script>
     <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/angular-spinner/0.7.0/angular-spinner.min.js"></script>
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-spinner/0.8.0/angular-spinner.min.js"></script>
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.2.2/angular-local-storage.min.js"></script>
 
@@ -113,6 +113,8 @@
     <script type="text/javascript" src="modules/facturacion/facturacion_service.js"></script>
     <script type="text/javascript" src="modules/facturacion/facturacion_controller.js"></script>
     <script type="text/javascript" src="modules/proceso/proceso.js"></script>
+    <script type="text/javascript" src="modules/proceso/proceso_service.js"></script>
+    <script type="text/javascript" src="modules/proceso/proceso_controller.js"></script>
     <script type="text/javascript" src="modules/seguridad/seguridad_service.js"></script>
     <script type="text/javascript" src="modules/seguridad/seguridad_controller.js"></script>
 </body>

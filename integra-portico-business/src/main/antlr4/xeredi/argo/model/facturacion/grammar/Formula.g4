@@ -18,6 +18,10 @@ aritmethicExpr
 	| opArit1 = '-' ae1 = aritmethicExpr
 	| pt = path
 	| fn = 'COALESCE' '(' ae1 = aritmethicExpr ',' ae2 = aritmethicExpr ')'
+	| fn = 'DECODE' '(' ae1 = aritmethicExpr
+	(
+		',' aritmethicExpr ',' aritmethicExpr
+	)+ ',' ae2 = aritmethicExpr ')'
 	| fn = 'escalaNumeroPuertosBuque' '()'
 	| fn = 'atraqueUdsGt' '()'
 	| fn = 'escalaUdsGt' '()'

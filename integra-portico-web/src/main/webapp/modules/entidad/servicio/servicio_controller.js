@@ -2,6 +2,8 @@ angular.module("servicio_controller", [])
 
 .config(config)
 
+.controller("ValoradorEditController", ValoradorEditController)
+
 .controller("ServicioSecuenciaGridController", ServicioSecuenciaGridController)
 
 .controller("ServicioSecuenciaDetailController",
@@ -27,6 +29,15 @@ angular.module("servicio_controller", [])
 
 function config($stateProvider) {
 	$stateProvider
+
+			.state("valorador-create", {
+				url : "/servicio/valorador/create/:entiId/:id",
+				templateUrl : "modules/entidad/servicio/valorador-edit.html",
+				controller : "ValoradorEditController as vm",
+				data : {
+					accion : 'create'
+				}
+			})
 
 			.state(
 					"servicio-secuencia-grid",
@@ -160,6 +171,45 @@ function config($stateProvider) {
 			})
 
 	;
+}
+
+function ValoradorEditController($state, $stateParams, pageTitleService,
+		ValoradorService) {
+	var vm = this;
+
+	vm.save = save;
+	vm.cancel = cancel;
+
+	function save() {
+		ValoradorService.save(vm.accion, vm.model).then(
+				function(data) {
+					ValoradorService.redirectAfterSave(vm.accion,
+							data.model.prbt, "proceso-batch-detail");
+				});
+	}
+
+	function cancel() {
+		window.history.back();
+	}
+
+	vm.accion = $state.current.data.accion;
+	vm.model = {
+		srvc : {
+			entiId : $stateParams.entiId,
+			id : $stateParams.id
+		}
+	}
+
+	ValoradorService.edit(vm.accion, vm.model).then(function(data) {
+		vm.model = data.model;
+		vm.srvc = data.srvc;
+		vm.fliq = data.fliq;
+		vm.crgoList = data.crgoList;
+
+		vm.crgoList = data.crgoList;
+	});
+
+	pageTitleService.setTitle("vldr", "page_" + vm.accion);
 }
 
 function ServicioSecuenciaGridController($state, $stateParams, $modal,

@@ -1,13 +1,13 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <pagination total-items="vm.prbtList.count" items-per-page="vm.prbtList.limit" ng-model="vm.page"
-            ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-            next-text="&rsaquo;&rsaquo;"></pagination>
+        <uib-pagination total-items="vm.resultList.count" items-per-page="vm.resultList.limit"
+            ng-model="vm.page" ng-change="vm.pageChanged()" class="pagination" max-size="1"
+            previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></uib-pagination>
     </div>
 
     <div class="btn-group">
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template-url="modules/proceso/prbt-filter-content.html" bs-modal="modal">
+            data-template-url="modules/proceso/fragment/proceso-filter-content.html" bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
         </button>
     </div>
@@ -21,7 +21,7 @@
 
 <div class="table-responsive">
     <span class="label label-default" translate="grid_count"
-        translate-value-count="{{vm.prbtList.count | number:0}}"></span>
+        translate-value-count="{{vm.resultList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
@@ -40,9 +40,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="prbt in vm.prbtList.list track by prbt.id">
-                <td><a ng-href="#/proceso/prbt/detail/{{::prbt.id}}"><i
-                        class="glyphicon glyphicon-search"></i></a></td>
+            <tr ng-repeat="prbt in vm.resultList.list track by prbt.id">
+                <td><a ui-sref="proceso-detail(prbt)"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="::('ProcesoModulo_' + prbt.modulo | translate)"></td>
                 <td ng-bind="::('ProcesoTipo_' + prbt.tipo | translate)"></td>
                 <td ng-bind="::('ProcesoEstado_' + prbt.estado | translate)"></td>

@@ -96,5 +96,7 @@ public enum AccionPrefix {
     /** The secc. */
     secc,
 
+    vldr,
+
     ;
 }

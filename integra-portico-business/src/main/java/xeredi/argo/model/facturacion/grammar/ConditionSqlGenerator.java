@@ -9,7 +9,9 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import xeredi.argo.model.facturacion.grammar.ConditionParser.BooleanExprContext;
 import xeredi.argo.model.facturacion.grammar.ConditionParser.PathContext;
 import xeredi.argo.model.facturacion.grammar.ConditionParser.PathElementContext;
+import xeredi.argo.model.facturacion.grammar.ConditionParser.ScalarContext;
 import xeredi.argo.model.facturacion.grammar.ConditionParser.ScalarExprContext;
+import xeredi.argo.model.facturacion.grammar.ConditionParser.ScalarListContext;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
 import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
@@ -28,292 +30,295 @@ import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
  */
 public final class ConditionSqlGenerator extends ConditionBaseVisitor {
 
-	/** The Constant DATE_FORMAT. */
-	private static final DateFormat DATE_FORMAT = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm");
+    /** The Constant DATE_FORMAT. */
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-	/** The contexto vo. */
-	private final transient ReglaVO reglaVO;
+    /** The contexto vo. */
+    private final transient ReglaVO reglaVO;
 
-	/**
-	 * The Constructor.
-	 *
-	 * @param areglaVO
-	 *            the aregla vo
-	 */
-	public ConditionSqlGenerator(final ReglaVO areglaVO) {
-		super();
-		reglaVO = areglaVO;
-	}
+    /**
+     * The Constructor.
+     *
+     * @param areglaVO
+     *            the aregla vo
+     */
+    public ConditionSqlGenerator(final ReglaVO areglaVO) {
+        super();
+        reglaVO = areglaVO;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String visitScalarExpr(final ScalarExprContext ctx) {
-		if (ctx == null) {
-			return "";
-		}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String visitScalarExpr(final ScalarExprContext ctx) {
+        if (ctx == null) {
+            return "";
+        }
 
-		if (ctx.nmb != null) {
-			return ctx.nmb.getText();
-		}
+        if (ctx.nmb != null) {
+            return ctx.nmb.getText();
+        }
 
-		if (ctx.str != null) {
-			return ctx.str.getText();
-		}
+        if (ctx.str != null) {
+            return ctx.str.getText();
+        }
 
-		if (ctx.fn != null) {
-			if ("COALESCE".equals(ctx.fn.getText())) {
-				return " COALESCE(" + visitScalarExpr(ctx.ne1) + ", "
-						+ visitScalarExpr(ctx.ne2) + ")";
-			}
-			if ("escalaNumeroPuertosBuque".equals(ctx.fn.getText())) {
-				return " portico.escalaNumeroPuertosBuque(itemId, item.fref)";
-			}
-			if ("atraqueUdsGt".equals(ctx.fn.getText())) {
-				return " portico.atraqueUdsGt(itemId, item.fref)";
-			}
-			if ("escalaUdsGt".equals(ctx.fn.getText())) {
-				return " portico.escalaUdsGt(itemId, item.fref)";
-			}
-			if ("escalaValorContador".equals(ctx.fn.getText())) {
-				return " portico.escalaValorContador(itemId, item.fref, "
-						+ ctx.fnArg1.getText() + ")";
-			}
+        if (ctx.fn != null) {
+            if ("COALESCE".equals(ctx.fn.getText())) {
+                return " COALESCE(" + visitScalarExpr(ctx.ne1) + ", " + visitScalarExpr(ctx.ne2) + ")";
+            }
+            if ("escalaNumeroPuertosBuque".equals(ctx.fn.getText())) {
+                return " portico.escalaNumeroPuertosBuque(itemId, item.fref)";
+            }
+            if ("atraqueUdsGt".equals(ctx.fn.getText())) {
+                return " portico.atraqueUdsGt(itemId, item.fref)";
+            }
+            if ("escalaUdsGt".equals(ctx.fn.getText())) {
+                return " portico.escalaUdsGt(itemId, item.fref)";
+            }
+            if ("escalaValorContador".equals(ctx.fn.getText())) {
+                return " portico.escalaValorContador(itemId, item.fref, " + ctx.fnArg1.getText() + ")";
+            }
 
-			throw new Error("Funcion '" + ctx.fn.getText()
-					+ "' no implementada!");
-		}
+            throw new Error("Funcion '" + ctx.fn.getText() + "' no implementada!");
+        }
 
-		if (ctx.pt != null) {
-			return visitPath(ctx.pt);
-		}
+        if (ctx.pt != null) {
+            return visitPath(ctx.pt);
+        }
 
-		throw new Error("Expresion Numerica no implementada!: " + ctx);
-	}
+        throw new Error("Expresion Numerica no implementada!: " + ctx);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String visitBooleanExpr(final BooleanExprContext ctx) {
-		if (ctx.lp != null) {
-			return ctx.lp.getText() + visitBooleanExpr(ctx.be1)
-					+ ctx.rp.getText();
-		}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String visitBooleanExpr(final BooleanExprContext ctx) {
+        if (ctx.lp != null) {
+            return ctx.lp.getText() + visitBooleanExpr(ctx.be1) + ctx.rp.getText();
+        }
 
-		if (ctx.opLogic1 != null) {
-			return ctx.opLogic1.getText() + ' ' + visitBooleanExpr(ctx.be1);
-		}
+        if (ctx.opLogic1 != null) {
+            return ctx.opLogic1.getText() + ' ' + visitBooleanExpr(ctx.be1);
+        }
 
-		if (ctx.opLogic2 != null) {
-			return visitBooleanExpr(ctx.be1) + ' ' + ctx.opLogic2.getText()
-					+ ' ' + visitBooleanExpr(ctx.be2);
-		}
+        if (ctx.opLogic2 != null) {
+            return visitBooleanExpr(ctx.be1) + ' ' + ctx.opLogic2.getText() + ' ' + visitBooleanExpr(ctx.be2);
+        }
 
-		if (ctx.opComp != null) {
-			return visitScalarExpr(ctx.se1) + ' ' + ctx.opComp.getText() + ' '
-					+ visitScalarExpr(ctx.se2);
-		}
+        if (ctx.opComp != null) {
+            return visitScalarExpr(ctx.se1) + ' ' + ctx.opComp.getText() + ' ' + visitScalarExpr(ctx.se2);
+        }
 
-		if (ctx.bool != null) {
-			return ctx.bool.getText();
-		}
+        if (ctx.in != null) {
+            return visitScalarExpr(ctx.se1) + ' ' + ctx.in.getText() + ' ' + visitScalarList(ctx.scalarList());
+        }
 
-		if (ctx.fn != null) {
-			if ("escalaEsAvituallamiento".equals(ctx.fn.getText())) {
-				return "portico.escalaEsAvituallamiento(itemId, item.fref)";
-			}
-			if ("escalaEsBuqueBaseEnPuerto".equals(ctx.fn.getText())) {
-				return "portico.escalaEsBuqueBaseEnPuerto(itemId, item.fref)";
-			}
-			if ("escalaEsBuqueCertificado".equals(ctx.fn.getText())) {
-				return "portico.escalaEsBuqueCertificado(itemId, item.fref, "
-						+ ctx.fnArg1.getText() + ")";
-			}
+        if (ctx.bool != null) {
+            return ctx.bool.getText();
+        }
 
-			throw new Error("Funcion '" + ctx.fn.getText()
-					+ "' no implementada!");
-		}
+        if (ctx.fn != null) {
+            if ("escalaEsAvituallamiento".equals(ctx.fn.getText())) {
+                return "portico.escalaEsAvituallamiento(itemId, item.fref)";
+            }
+            if ("escalaEsBuqueBaseEnPuerto".equals(ctx.fn.getText())) {
+                return "portico.escalaEsBuqueBaseEnPuerto(itemId, item.fref)";
+            }
+            if ("escalaEsBuqueCertificado".equals(ctx.fn.getText())) {
+                return "portico.escalaEsBuqueCertificado(itemId, item.fref, " + ctx.fnArg1.getText() + ")";
+            }
 
-		throw new Error("Expresion Booleana no implementada!: " + ctx);
-	}
+            throw new Error("Funcion '" + ctx.fn.getText() + "' no implementada!");
+        }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String visitPath(final PathContext ctx) {
-		String sqlPath = "";
+        throw new Error("Expresion Booleana no implementada!: " + ctx);
+    }
 
-		final AbstractEntidadDetailVO entiDetalleBase = EntidadProxy
-				.select(reglaVO.getEnti().getId());
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String visitScalarList(ScalarListContext ctx) {
+        String sql = ctx.lp.getText();
 
-		AbstractEntidadDetailVO entiDetalleElem = entiDetalleBase;
+        final Iterator<ScalarContext> iterator = ctx.scalar().iterator();
 
-		boolean isFirst = true;
-		boolean isLast = false;
+        while (iterator.hasNext()) {
+            sql += iterator.next().getText();
 
-		final Iterator<ParseTree> parseTreeIterator = ctx.children.iterator();
+            if (iterator.hasNext()) {
+                sql += ", ";
+            }
+        }
 
-		while (parseTreeIterator.hasNext()) {
-			final ParseTree parseTree = parseTreeIterator.next();
+        sql += ctx.rp.getText();
 
-			if (!parseTreeIterator.hasNext()) {
-				isLast = true;
-			}
+        return sql;
+    }
 
-			if (parseTree instanceof PathElementContext) {
-				final PathElementContext pathElementCtx = (PathElementContext) parseTree
-						.getPayload();
-				String sqlElement = "";
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String visitPath(final PathContext ctx) {
+        String sqlPath = "";
 
-				if (pathElementCtx.service != null) {
-					if (entiDetalleElem.getEnti().getTipo() != TipoEntidad.S) {
-						throw new Error(
-								"Solo se puede llegar al servicio desde un subservicio");
-					}
+        final AbstractEntidadDetailVO entiDetalleBase = EntidadProxy.select(reglaVO.getEnti().getId());
 
-					final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy
-							.select(entiDetalleElem.getEnti().getId());
+        AbstractEntidadDetailVO entiDetalleElem = entiDetalleBase;
 
-					entiDetalleElem = TipoServicioProxy.select(tpssDetail
-							.getEnti().getTpsrId());
+        boolean isFirst = true;
+        boolean isLast = false;
 
-					sqlElement += "SELECT srvc_pk FROM tbl_servicio_srvc WHERE srvc_pk = ";
-					sqlElement += isFirst ? "item.ssrv_srvc_pk" : "#{any}";
-				}
+        final Iterator<ParseTree> parseTreeIterator = ctx.children.iterator();
 
-				if (pathElementCtx.parent != null) {
-					if (entiDetalleElem.getEnti().getTipo() != TipoEntidad.S) {
-						throw new Error(
-								"Solo se puede llegar al padre desde un subservicio");
-					}
+        while (parseTreeIterator.hasNext()) {
+            final ParseTree parseTree = parseTreeIterator.next();
 
-					final Entidad entidad = Entidad.valueOf(pathElementCtx.arg
-							.getText());
+            if (!parseTreeIterator.hasNext()) {
+                isLast = true;
+            }
 
-					entiDetalleElem = EntidadProxy.select(entidad.getId());
+            if (parseTree instanceof PathElementContext) {
+                final PathElementContext pathElementCtx = (PathElementContext) parseTree.getPayload();
+                String sqlElement = "";
 
-					sqlElement += "SELECT ssss_ssrvp_pk FROM tbl_subserv_subserv_ssss WHERE EXISTS (SELECT 1 FROM tbl_subservicio_ssrv WHERE ssrv_pk = ssss_ssrvp_pk AND ssrv_tpss_pk = "
-							+ entiDetalleElem.getEnti().getId()
-							+ ") AND ssss_ssrvh_pk = ";
-					sqlElement += isFirst ? "item.ssrv_pk" : "(#{any})";
-				}
+                if (pathElementCtx.service != null) {
+                    if (entiDetalleElem.getEnti().getTipo() != TipoEntidad.S) {
+                        throw new Error("Solo se puede llegar al servicio desde un subservicio");
+                    }
 
-				if (pathElementCtx.data != null) {
-					final TipoDato tipoDato = TipoDato
-							.valueOf(pathElementCtx.arg.getText());
+                    final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(entiDetalleElem.getEnti()
+                            .getId());
 
-					EntidadTipoDatoVO entd = null;
+                    entiDetalleElem = TipoServicioProxy.select(tpssDetail.getEnti().getTpsrId());
 
-					for (final Long tpdtId : entiDetalleElem.getEntdList()) {
-						final EntidadTipoDatoVO vo = entiDetalleElem
-								.getEntdMap().get(tpdtId);
+                    sqlElement += "SELECT srvc_pk FROM tbl_servicio_srvc WHERE srvc_pk = ";
+                    sqlElement += isFirst ? "item.ssrv_srvc_pk" : "#{any}";
+                }
 
-						if (vo.getTpdt().getId() == tipoDato.getId()) {
-							entd = vo;
-						}
-					}
+                if (pathElementCtx.parent != null) {
+                    if (entiDetalleElem.getEnti().getTipo() != TipoEntidad.S) {
+                        throw new Error("Solo se puede llegar al padre desde un subservicio");
+                    }
 
-					if (entd == null) {
-						throw new Error("Dato no encontrado: " + tipoDato);
-					}
+                    final Entidad entidad = Entidad.valueOf(pathElementCtx.arg.getText());
 
-					String field = "";
+                    entiDetalleElem = EntidadProxy.select(entidad.getId());
 
-					switch (entiDetalleElem.getEnti().getTipo()) {
-					case P:
-						field = "prdt_";
-						break;
-					case T:
-						field = "srdt_";
-						break;
-					case S:
-						field = "ssdt_";
-						break;
-					default:
-						throw new Error("Tipo de entidad no soportado");
-					}
+                    sqlElement += "SELECT ssss_ssrvp_pk FROM tbl_subserv_subserv_ssss WHERE EXISTS (SELECT 1 FROM tbl_subservicio_ssrv WHERE ssrv_pk = ssss_ssrvp_pk AND ssrv_tpss_pk = "
+                            + entiDetalleElem.getEnti().getId() + ") AND ssss_ssrvh_pk = ";
+                    sqlElement += isFirst ? "item.ssrv_pk" : "(#{any})";
+                }
 
-					switch (entd.getTpdt().getTipoElemento()) {
-					case BO:
-					case NE:
-						field += " SELECT " + field + "nentero FROM ";
-						break;
-					case ND:
-						field += " SELECT " + field + "ndecimal FROM ";
-						break;
-					case CR:
-					case TX:
-						field += " SELECT " + field + "cadena FROM ";
-						break;
-					case FE:
-					case FH:
-						field += " SELECT " + field + "fecha FROM ";
-						break;
-					case PR:
-						field = isLast ? " SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = ( SELECT "
-								+ field + "prmt_pk FROM "
-								: " SELECT " + field + "prmt_pk FROM ";
-						break;
-					case SR:
-						field += " SELECT " + field + "srvc_dep_pk FROM ";
-						break;
+                if (pathElementCtx.data != null) {
+                    final TipoDato tipoDato = TipoDato.valueOf(pathElementCtx.arg.getText());
 
-					default:
-						throw new Error("Tipo de dato no soportado");
-					}
+                    EntidadTipoDatoVO entd = null;
 
-					switch (entiDetalleElem.getEnti().getTipo()) {
-					case P:
-						sqlElement += " tbl_parametro_dato_prdt WHERE prdt_tpdt_pk = "
-								+ entd.getTpdt().getId()
-								+ " AND prdt_prvr_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE item.fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, item.fref) AND prvr_prmt_pk = ANY(#{any}) )";
-						break;
-					case T:
-						sqlElement += " tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = "
-								+ entd.getTpdt().getId()
-								+ " AND srdt_srvc_pk = ";
-						sqlElement += isFirst ? entiDetalleBase.getEnti()
-								.getTipo() == TipoEntidad.T ? "item.srvc_pk"
-								: "item.ssrv_srvc_pk" : "(#{any})";
-						break;
-					case S:
-						sqlElement += " tbl_subservicio_dato_ssdt WHERE ssdt_tpdt_pk = "
-								+ entd.getTpdt().getId()
-								+ " AND ssdt_ssrv_pk = ";
-						sqlElement += isFirst ? "item.ssrv_pk" : "(#{any})";
+                    for (final Long tpdtId : entiDetalleElem.getEntdList()) {
+                        final EntidadTipoDatoVO vo = entiDetalleElem.getEntdMap().get(tpdtId);
 
-						break;
-					default:
-						throw new Error("Tipo de entidad no soportado");
-					}
+                        if (vo.getTpdt().getId() == tipoDato.getId()) {
+                            entd = vo;
+                        }
+                    }
 
-					if (entd.getTpdt().getTipoElemento() == TipoElemento.PR
-							&& isLast) {
-						sqlElement += ")";
-					}
-				}
+                    if (entd == null) {
+                        throw new Error("Dato no encontrado: " + tipoDato);
+                    }
 
-				if (!sqlElement.isEmpty()) {
-					final int posAny = sqlElement.lastIndexOf("#{any}");
+                    String field = "";
 
-					if (posAny > 0) {
-						sqlElement = sqlElement.replace("#{any}", sqlPath);
-					} else {
-						sqlElement += sqlPath;
-					}
+                    switch (entiDetalleElem.getEnti().getTipo()) {
+                    case P:
+                        field = "prdt_";
+                        break;
+                    case T:
+                        field = "srdt_";
+                        break;
+                    case S:
+                        field = "ssdt_";
+                        break;
+                    default:
+                        throw new Error("Tipo de entidad no soportado");
+                    }
 
-					sqlPath = sqlElement;
-				}
+                    switch (entd.getTpdt().getTipoElemento()) {
+                    case BO:
+                    case NE:
+                        field += " SELECT " + field + "nentero FROM ";
+                        break;
+                    case ND:
+                        field += " SELECT " + field + "ndecimal FROM ";
+                        break;
+                    case CR:
+                    case TX:
+                        field += " SELECT " + field + "cadena FROM ";
+                        break;
+                    case FE:
+                    case FH:
+                        field += " SELECT " + field + "fecha FROM ";
+                        break;
+                    case PR:
+                        field = isLast ? " SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = ( SELECT " + field
+                                + "prmt_pk FROM " : " SELECT " + field + "prmt_pk FROM ";
+                        break;
+                    case SR:
+                        field += " SELECT " + field + "srvc_dep_pk FROM ";
+                        break;
 
-				isFirst = false;
-			}
-		}
+                    default:
+                        throw new Error("Tipo de dato no soportado");
+                    }
 
-		return "(" + sqlPath + ")";
-	}
+                    switch (entiDetalleElem.getEnti().getTipo()) {
+                    case P:
+                        sqlElement += " tbl_parametro_dato_prdt WHERE prdt_tpdt_pk = "
+                                + entd.getTpdt().getId()
+                                + " AND prdt_prvr_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE item.fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, item.fref) AND prvr_prmt_pk = ANY(#{any}) )";
+                        break;
+                    case T:
+                        sqlElement += " tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = " + entd.getTpdt().getId()
+                                + " AND srdt_srvc_pk = ";
+                        sqlElement += isFirst ? entiDetalleBase.getEnti().getTipo() == TipoEntidad.T ? "item.srvc_pk"
+                                : "item.ssrv_srvc_pk" : "(#{any})";
+                        break;
+                    case S:
+                        sqlElement += " tbl_subservicio_dato_ssdt WHERE ssdt_tpdt_pk = " + entd.getTpdt().getId()
+                                + " AND ssdt_ssrv_pk = ";
+                        sqlElement += isFirst ? "item.ssrv_pk" : "(#{any})";
+
+                        break;
+                    default:
+                        throw new Error("Tipo de entidad no soportado");
+                    }
+
+                    if (entd.getTpdt().getTipoElemento() == TipoElemento.PR && isLast) {
+                        sqlElement += ")";
+                    }
+                }
+
+                if (!sqlElement.isEmpty()) {
+                    final int posAny = sqlElement.lastIndexOf("#{any}");
+
+                    if (posAny > 0) {
+                        sqlElement = sqlElement.replace("#{any}", sqlPath);
+                    } else {
+                        sqlElement += sqlPath;
+                    }
+
+                    sqlPath = sqlElement;
+                }
+
+                isFirst = false;
+            }
+        }
+
+        return "(" + sqlPath + ")";
+    }
 
 }

@@ -208,6 +208,33 @@ function CrudService($http, $q, $state) {
             }
         }
 
+        function fileExport(id, filename) {
+            // console.log('File export');
+
+            return $http.post(_uri + "-file-export.action", {model: id}, {
+                responseType : 'arraybuffer'
+            })
+                .then(success)
+                .catch(fail);
+
+            function success(response) {
+                var file = new Blob([ response.data ]);
+
+                setTimeout(function() {
+                    saveAs(file, filename);
+                }, 0);
+
+                return response.data;
+            }
+
+            function fail(error) {
+                var msg = 'File export failed. ' + error.data;
+                console.log(msg);
+
+                return $q.reject(msg);
+            }
+        }
+
         function remove(item) {
             // console.log('remove');
 
@@ -325,6 +352,7 @@ function CrudService($http, $q, $state) {
             , filter: filter
             , detail: detail
             , pdfExport: pdfExport
+            , fileExport: fileExport
             , remove: remove
             , edit: edit
             , save: save

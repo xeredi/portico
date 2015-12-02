@@ -234,6 +234,12 @@ INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_
 INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2711, 'm18n', 'detail', 1, 0)\
 INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2713, 'm18n', 'edit', 1, 0)\
 
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2740, 'vldr', 'create', 1, 0)\
+
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2760, 'prbt', 'list', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2761, 'prbt', 'detail', 1, 0)\
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2764, 'prbt', 'remove', 1, 0)\
+
 
 -- Grupos
 INSERT INTO tbl_grupo_grpo (grpo_pk, grpo_nombre) VALUES (4000, 'Administradores')\
@@ -1328,7 +1334,7 @@ INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (1, 'E00013')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (1, 'E00014')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00014', 'E00014 - Contraseña Incorrecta')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (1, 'E00015')\
-	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00015', 'E00015 - Privilegios insuficientes')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00015', 'E00015 - Privilegios insuficientes ({0}:{1})')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'cdms_numero')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'cdms_numero', 'Nº')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'cdms_tm')\
