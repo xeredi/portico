@@ -2,11 +2,14 @@ package xeredi.argo.model.facturacion.grammar;
 
 import java.util.Iterator;
 
+import lombok.NonNull;
+
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import xeredi.argo.model.facturacion.grammar.FormulaParser.AritmethicExprContext;
-import xeredi.argo.model.facturacion.grammar.FormulaParser.PathContext;
-import xeredi.argo.model.facturacion.grammar.FormulaParser.PathElementContext;
+import xeredi.argo.model.facturacion.grammar.FormulaParser.DecodeBranchContext;
+import xeredi.argo.model.facturacion.grammar.FormulaParser.NumericValueContext;
+import xeredi.argo.model.facturacion.grammar.FormulaParser.PropertyContext;
+import xeredi.argo.model.facturacion.grammar.FormulaParser.PropertyElementContext;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
 import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
@@ -42,21 +45,44 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
      * {@inheritDoc}
      */
     @Override
-    public String visitAritmethicExpr(final AritmethicExprContext ctx) {
-        if (ctx.nmb != null) {
-            return ctx.nmb.getText();
+    public String visitNumericValue(final @NonNull NumericValueContext ctx) {
+        if (ctx.cte != null) {
+            return ctx.cte.getText();
         }
 
         if (ctx.lp != null) {
-            return ctx.lp.getText() + visitAritmethicExpr(ctx.ae1) + ctx.rp.getText();
+            return ctx.lp.getText() + visitNumericValue(ctx.n1) + ctx.rp.getText();
         }
+
+        if (ctx.arithmeticOp != null) {
+            return visitNumericValue(ctx.n1) + ctx.arithmeticOp.getText() + visitNumericValue(ctx.n2);
+        }
+
+        // if (ctx.minus != null) {
+        // return ctx.minus.getText() + visitNumericValue(ctx.n2);
+        // }
 
         if (ctx.fn != null) {
             switch (ctx.fn.getText()) {
             case "COALESCE":
-                return " COALESCE(" + visitAritmethicExpr(ctx.ae1) + ", " + visitAritmethicExpr(ctx.ae2) + ")";
+                return " COALESCE(" + visitNumericValue(ctx.n1) + ", " + visitNumericValue(ctx.n2) + ")";
             case "DECODE":
-                throw new Error("Funcion '" + ctx.fn.getText() + "' no implementada!");
+                String sqlCase = " CASE " + visitNumericValue(ctx.n1);
+
+                for (final ParseTree tree : ctx.children) {
+                    if (tree instanceof DecodeBranchContext) {
+                        final DecodeBranchContext decodeBranchContext = (DecodeBranchContext) tree;
+
+                        sqlCase += " WHEN " + visitNumericValue(decodeBranchContext.n1) + " THEN "
+                                + visitNumericValue(decodeBranchContext.n2);
+                    }
+                }
+
+                if (ctx.n2 != null) {
+                    sqlCase += " ELSE " + visitNumericValue(ctx.n2) + " END";
+                }
+
+                return sqlCase;
             case "escalaNumeroPuertosBuque":
                 return " portico.escalaNumeroPuertosBuque(itemId, item.fref)";
             case "escalaUdsGt":
@@ -64,23 +90,15 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
             case "atraqueUdsGt":
                 return " portico.atraqueUdsGt(itemId, item.fref)";
             case "escalaValorContador":
-                return " portico.escalaValorContador(itemId, item.fref, " + ctx.fnArg1.getText() + ")";
+                return " portico.escalaValorContador(itemId, item.fref, " + ctx.cntName.getText() + ")";
 
             default:
                 throw new Error("Funcion '" + ctx.fn.getText() + "' no implementada!");
             }
         }
 
-        if (ctx.pt != null) {
-            return visitPath(ctx.pt);
-        }
-
-        if (ctx.opArit1 != null) {
-            return ctx.opArit1.getText() + ' ' + visitAritmethicExpr(ctx.ae1);
-        }
-
-        if (ctx.opArit2 != null) {
-            return visitAritmethicExpr(ctx.ae1) + ' ' + ctx.opArit2.getText() + ' ' + visitAritmethicExpr(ctx.ae2);
+        if (ctx.prop != null) {
+            return visitProperty(ctx.prop);
         }
 
         throw new Error("Expresion Aritmetica no implementada!: " + ctx);
@@ -90,7 +108,7 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
      * {@inheritDoc}
      */
     @Override
-    public String visitPath(final PathContext ctx) {
+    public String visitProperty(final PropertyContext ctx) {
         String sqlPath = "";
 
         final AbstractEntidadDetailVO entiDetailBase = EntidadProxy.select(reglaVO.getEnti().getId());
@@ -109,8 +127,8 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
                 isLast = true;
             }
 
-            if (parseTree instanceof PathElementContext) {
-                final PathElementContext pathElementCtx = (PathElementContext) parseTree.getPayload();
+            if (parseTree instanceof PropertyElementContext) {
+                final PropertyElementContext pathElementCtx = (PropertyElementContext) parseTree.getPayload();
                 String sqlElement = "";
 
                 if (pathElementCtx.service != null) {

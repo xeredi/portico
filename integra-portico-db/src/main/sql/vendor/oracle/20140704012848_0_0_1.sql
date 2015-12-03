@@ -1149,7 +1149,7 @@ CREATE TABLE tbl_proceso_mensaje_prmn (
 	prmn_prbt_pk NUMBER(19) NOT NULL
 	, prmn_nivel char(1) NOT NULL
 	, prmn_codigo VARCHAR2(5) NOT NULL
-	, prmn_mensaje VARCHAR2(300)
+	, prmn_mensaje VARCHAR2(4000)
 
 	, CONSTRAINT fk_prmn_prbt_pk FOREIGN KEY (prmn_prbt_pk)
 		REFERENCES tbl_proceso_batch_prbt (prbt_pk)

@@ -63,7 +63,6 @@ public final class PathTest {
         final String message = "Testing: " + expression;
 
         System.out.println(message);
-        LOG.info(message);
 
         final ANTLRInputStream input = new ANTLRInputStream(expression);
         final PathLexer lexer = new PathLexer(input);
@@ -74,7 +73,9 @@ public final class PathTest {
         final PathSqlGenerator extractor = new PathSqlGenerator(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()),
                 generateLabel);
 
-        LOG.info(extractor.visit(tree));
+        extractor.visit(tree);
+
+        System.out.println("resultado: " + extractor.getSql());
     }
 
 }

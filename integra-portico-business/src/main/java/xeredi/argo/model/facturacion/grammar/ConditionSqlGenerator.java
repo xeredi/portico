@@ -4,14 +4,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 
+import lombok.NonNull;
+
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import xeredi.argo.model.facturacion.grammar.ConditionParser.BooleanExprContext;
-import xeredi.argo.model.facturacion.grammar.ConditionParser.PathContext;
-import xeredi.argo.model.facturacion.grammar.ConditionParser.PathElementContext;
-import xeredi.argo.model.facturacion.grammar.ConditionParser.ScalarContext;
-import xeredi.argo.model.facturacion.grammar.ConditionParser.ScalarExprContext;
-import xeredi.argo.model.facturacion.grammar.ConditionParser.ScalarListContext;
+import xeredi.argo.model.facturacion.grammar.ConditionParser.ConditionContext;
+import xeredi.argo.model.facturacion.grammar.ConditionParser.NumericValueContext;
+import xeredi.argo.model.facturacion.grammar.ConditionParser.PropertyContext;
+import xeredi.argo.model.facturacion.grammar.ConditionParser.PropertyElementContext;
+import xeredi.argo.model.facturacion.grammar.ConditionParser.TextValueContext;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
 import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
@@ -51,41 +52,35 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
      * {@inheritDoc}
      */
     @Override
-    public String visitScalarExpr(final ScalarExprContext ctx) {
-        if (ctx == null) {
-            return "";
+    public String visitCondition(final @NonNull ConditionContext ctx) {
+        if (ctx.bool != null) {
+            return ctx.bool.getText();
         }
 
-        if (ctx.nmb != null) {
-            return ctx.nmb.getText();
+        if (ctx.lp != null) {
+            return ctx.lp.getText() + visitCondition(ctx.cond1) + ctx.rp.getText();
         }
 
-        if (ctx.str != null) {
-            return ctx.str.getText();
+        if (ctx.unaryBool != null) {
+            return ctx.unaryBool.getText() + ' ' + visitCondition(ctx.cond1);
         }
 
-        if (ctx.fn != null) {
-            if ("COALESCE".equals(ctx.fn.getText())) {
-                return " COALESCE(" + visitScalarExpr(ctx.ne1) + ", " + visitScalarExpr(ctx.ne2) + ")";
-            }
-            if ("escalaNumeroPuertosBuque".equals(ctx.fn.getText())) {
-                return " portico.escalaNumeroPuertosBuque(itemId, item.fref)";
-            }
-            if ("atraqueUdsGt".equals(ctx.fn.getText())) {
-                return " portico.atraqueUdsGt(itemId, item.fref)";
-            }
-            if ("escalaUdsGt".equals(ctx.fn.getText())) {
-                return " portico.escalaUdsGt(itemId, item.fref)";
-            }
-            if ("escalaValorContador".equals(ctx.fn.getText())) {
-                return " portico.escalaValorContador(itemId, item.fref, " + ctx.fnArg1.getText() + ")";
-            }
-
-            throw new Error("Funcion '" + ctx.fn.getText() + "' no implementada!");
+        if (ctx.binaryBool != null) {
+            return visitCondition(ctx.cond1) + ' ' + ctx.binaryBool.getText() + ' ' + visitCondition(ctx.cond2);
         }
 
-        if (ctx.pt != null) {
-            return visitPath(ctx.pt);
+        if (ctx.relatOp != null) {
+            return visitValue(ctx.value1).toString() + ' ' + ctx.relatOp.getText() + ' '
+                    + visitValue(ctx.value2).toString();
+        }
+
+        if (ctx.likeOp != null) {
+            return visitTextValue(ctx.text1).toString() + ' ' + ctx.likeOp.getText() + ' '
+                    + visitTextValue(ctx.text2).toString();
+        }
+
+        if (ctx.inOp != null) {
+            return visitValue(ctx.value1).toString() + ' ' + ctx.inOp.getText() + ' ' + ctx.cteList.getText();
         }
 
         throw new Error("Expresion Numerica no implementada!: " + ctx);
@@ -95,75 +90,83 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
      * {@inheritDoc}
      */
     @Override
-    public String visitBooleanExpr(final BooleanExprContext ctx) {
+    public String visitNumericValue(final NumericValueContext ctx) {
+        if (ctx.cte != null) {
+            return ctx.cte.getText();
+        }
+
         if (ctx.lp != null) {
-            return ctx.lp.getText() + visitBooleanExpr(ctx.be1) + ctx.rp.getText();
+            return ctx.lp.getText() + visitNumericValue(ctx.n1) + ctx.rp.getText();
         }
 
-        if (ctx.opLogic1 != null) {
-            return ctx.opLogic1.getText() + ' ' + visitBooleanExpr(ctx.be1);
+        if (ctx.arithmeticOp != null) {
+            return visitNumericValue(ctx.n1) + ctx.arithmeticOp.getText() + visitNumericValue(ctx.n2);
         }
 
-        if (ctx.opLogic2 != null) {
-            return visitBooleanExpr(ctx.be1) + ' ' + ctx.opLogic2.getText() + ' ' + visitBooleanExpr(ctx.be2);
+//        if (ctx.minus != null) {
+//            return ctx.minus.getText() + visitNumericValue(ctx.n2);
+//        }
+
+        if (ctx.fn != null) {
+            switch (ctx.fn.getText()) {
+            case "COALESCE":
+                return " COALESCE(" + visitNumericValue(ctx.n1) + ", " + visitNumericValue(ctx.n2) + ")";
+            case "DECODE":
+                throw new Error("Funcion '" + ctx.fn.getText() + "' no implementada!");
+            case "escalaNumeroPuertosBuque":
+                return " portico.escalaNumeroPuertosBuque(itemId, item.fref)";
+            case "escalaUdsGt":
+                return " portico.escalaUdsGt(itemId, item.fref)";
+            case "atraqueUdsGt":
+                return " portico.atraqueUdsGt(itemId, item.fref)";
+            case "escalaValorContador":
+                return " portico.escalaValorContador(itemId, item.fref, " + ctx.cntName.getText() + ")";
+
+            default:
+                throw new Error("Funcion '" + ctx.fn.getText() + "' no implementada!");
+            }
         }
 
-        if (ctx.opComp != null) {
-            return visitScalarExpr(ctx.se1) + ' ' + ctx.opComp.getText() + ' ' + visitScalarExpr(ctx.se2);
+        if (ctx.prop != null) {
+            return visitProperty(ctx.prop);
         }
 
-        if (ctx.in != null) {
-            return visitScalarExpr(ctx.se1) + ' ' + ctx.in.getText() + ' ' + visitScalarList(ctx.scalarList());
+        throw new Error("Expresion Numerica no implementada!: " + ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String visitTextValue(final TextValueContext ctx) {
+        if (ctx.cte != null) {
+            return ctx.cte.getText();
         }
 
-        if (ctx.bool != null) {
-            return ctx.bool.getText();
+        if (ctx.prop != null) {
+            return visitProperty(ctx.prop);
         }
 
         if (ctx.fn != null) {
-            if ("escalaEsAvituallamiento".equals(ctx.fn.getText())) {
-                return "portico.escalaEsAvituallamiento(itemId, item.fref)";
-            }
-            if ("escalaEsBuqueBaseEnPuerto".equals(ctx.fn.getText())) {
-                return "portico.escalaEsBuqueBaseEnPuerto(itemId, item.fref)";
-            }
-            if ("escalaEsBuqueCertificado".equals(ctx.fn.getText())) {
-                return "portico.escalaEsBuqueCertificado(itemId, item.fref, " + ctx.fnArg1.getText() + ")";
-            }
+            switch (ctx.fn.getText()) {
+            case "COALESCE":
+                return " COALESCE(" + visitTextValue(ctx.t1) + ", " + visitTextValue(ctx.t2) + ")";
+            case "DECODE":
+                throw new Error("Funcion '" + ctx.fn.getText() + "' no implementada!");
 
-            throw new Error("Funcion '" + ctx.fn.getText() + "' no implementada!");
+            default:
+                throw new Error("Funcion '" + ctx.fn.getText() + "' no implementada!");
+            }
         }
 
-        throw new Error("Expresion Booleana no implementada!: " + ctx);
+        throw new Error("Expresion de Texto no implementada!: " + ctx);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String visitScalarList(ScalarListContext ctx) {
-        String sql = ctx.lp.getText();
-
-        final Iterator<ScalarContext> iterator = ctx.scalar().iterator();
-
-        while (iterator.hasNext()) {
-            sql += iterator.next().getText();
-
-            if (iterator.hasNext()) {
-                sql += ", ";
-            }
-        }
-
-        sql += ctx.rp.getText();
-
-        return sql;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String visitPath(final PathContext ctx) {
+    public String visitProperty(final PropertyContext ctx) {
         String sqlPath = "";
 
         final AbstractEntidadDetailVO entiDetalleBase = EntidadProxy.select(reglaVO.getEnti().getId());
@@ -182,8 +185,8 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
                 isLast = true;
             }
 
-            if (parseTree instanceof PathElementContext) {
-                final PathElementContext pathElementCtx = (PathElementContext) parseTree.getPayload();
+            if (parseTree instanceof PropertyElementContext) {
+                final PropertyElementContext pathElementCtx = (PropertyElementContext) parseTree.getPayload();
                 String sqlElement = "";
 
                 if (pathElementCtx.service != null) {
@@ -250,36 +253,37 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
                     switch (entd.getTpdt().getTipoElemento()) {
                     case BO:
                     case NE:
-                        field += " SELECT " + field + "nentero FROM ";
+                        field += "nentero";
                         break;
                     case ND:
-                        field += " SELECT " + field + "ndecimal FROM ";
+                        field += "ndecimal";
                         break;
                     case CR:
                     case TX:
-                        field += " SELECT " + field + "cadena FROM ";
+                        field += "cadena";
                         break;
                     case FE:
                     case FH:
-                        field += " SELECT " + field + "fecha FROM ";
+                        field += "fecha";
                         break;
                     case PR:
-                        field = isLast ? " SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = ( SELECT " + field
-                                + "prmt_pk FROM " : " SELECT " + field + "prmt_pk FROM ";
+                        field += "prmt_pk";
                         break;
                     case SR:
-                        field += " SELECT " + field + "srvc_dep_pk FROM ";
+                        field += "srvc_dep_pk";
                         break;
 
                     default:
                         throw new Error("Tipo de dato no soportado");
                     }
 
+                    sqlElement += " SELECT " + field + " FROM ";
+
                     switch (entiDetalleElem.getEnti().getTipo()) {
                     case P:
                         sqlElement += " tbl_parametro_dato_prdt WHERE prdt_tpdt_pk = "
                                 + entd.getTpdt().getId()
-                                + " AND prdt_prvr_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE item.fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, item.fref) AND prvr_prmt_pk = ANY(#{any}) )";
+                                + " AND prdt_prvr_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE item.fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, item.fref) AND prvr_prmt_pk = ANY(#{any})) ";
                         break;
                     case T:
                         sqlElement += " tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = " + entd.getTpdt().getId()
@@ -298,7 +302,7 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
                     }
 
                     if (entd.getTpdt().getTipoElemento() == TipoElemento.PR && isLast) {
-                        sqlElement += ")";
+                    //    sqlElement += ")";
                     }
                 }
 

@@ -4,8 +4,8 @@ import java.util.Iterator;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import xeredi.argo.model.facturacion.grammar.PathParser.PathContext;
-import xeredi.argo.model.facturacion.grammar.PathParser.PathElementContext;
+import xeredi.argo.model.facturacion.grammar.PathParser.PropertyContext;
+import xeredi.argo.model.facturacion.grammar.PathParser.PropertyElementContext;
 import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
@@ -61,7 +61,7 @@ public final class PathSqlGenerator extends PathBaseVisitor {
      * {@inheritDoc}
      */
     @Override
-    public Object visitPath(final PathContext ctx) {
+    public Object visitProperty(final PropertyContext ctx) {
         sql.setLength(0);
 
         entiDetailTmp = entiDetailBase;
@@ -89,7 +89,7 @@ public final class PathSqlGenerator extends PathBaseVisitor {
      * {@inheritDoc}
      */
     @Override
-    public Object visitPathElement(final PathElementContext ctx) {
+    public Object visitPropertyElement(final PropertyElementContext ctx) {
         Preconditions.checkNotNull(entiDetailTmp);
 
         final AbstractEntidadDetailVO entiDetail = EntidadProxy.select(entiDetailTmp.getEnti().getId());
@@ -291,5 +291,9 @@ public final class PathSqlGenerator extends PathBaseVisitor {
         sql.append(sqlElement);
 
         return null;
+    }
+
+    public StringBuffer getSql() {
+        return sql;
     }
 }

@@ -79,11 +79,11 @@ function ProcesoDetailController($stateParams, pageTitleService,
 		ProcesoService, ProcesoMensajeService) {
 	var vm = this;
 
-	vm.remove = remove;
+	vm.cancel = cancel;
 	vm.download = download;
 	vm.pageChanged = pageChanged;
 
-	function remove() {
+	function cancel() {
 		ProcesoService.remove(vm.model).then(function(data) {
 			window.history.back();
 		});
@@ -102,7 +102,7 @@ function ProcesoDetailController($stateParams, pageTitleService,
 
 	function search(page) {
 		ProcesoMensajeService.listPage({
-			prbtId : $stateParams.prbtId
+			prbtId : vm.model.id
 		}, page).then(function(data) {
 			vm.prmnList = data.resultList;
 			vm.page = data.resultList.page;
@@ -128,78 +128,4 @@ function ProcesoDetailController($stateParams, pageTitleService,
 	});
 
 	pageTitleService.setTitle("prbt", "page_detail");
-}
-
-function PrbtDetailController($http, $location, $routeParams, pageTitleService) {
-	var vm = this;
-
-	vm.cancel = cancel;
-	vm.download = download;
-	vm.pageChanged = pageChanged;
-
-	initialize();
-
-	function initialize() {
-		$http.post("proceso/proceso-detail.action", {
-			model : {
-				id : $routeParams.prbtId
-			}
-		}).success(function(data) {
-			vm.prbt = data.model;
-			vm.arinEntradaList = data.arinEntradaList;
-			vm.arinSalidaList = data.arinSalidaList;
-			vm.pritEntradaList = data.pritEntradaList;
-			vm.pritSalidaList = data.pritSalidaList;
-			vm.prpmMap = data.prpmMap;
-
-			search($routeParams.page ? $routeParams.page : 1);
-		});
-
-		pageTitleService.setTitle("prbt", "page_detail");
-	}
-
-	function cancel() {
-		$http.post("proceso/proceso-cancelar.action", {
-			model : vm.prbt
-		}).success(function(data) {
-			window.history.back();
-		});
-	}
-
-	function download(archId, archNombre) {
-		$http.post('proceso/proceso-archivo-zip-export.action', {
-			model : {
-				prbtId : vm.prbt.id,
-				archId : archId
-			}
-		}, {
-			responseType : 'arraybuffer'
-		}).success(function(data) {
-			var file = new Blob([ data ]);
-
-			setTimeout(function() {
-				saveAs(file, archNombre);
-			}, 0);
-		});
-	}
-
-	function pageChanged() {
-		search(vm.page);
-	}
-
-	function search(page) {
-		$http.post("proceso/proceso-mensaje-list.action", {
-			model : {
-				prbtId : $routeParams.prbtId
-			},
-			page : page
-		}).success(function(data) {
-			vm.prmnList = data.resultList;
-			vm.page = data.resultList.page;
-
-			$location.search({
-				page : vm.page
-			}).replace();
-		});
-	}
 }

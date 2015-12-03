@@ -39,6 +39,7 @@ public final class FormulaTest {
         test("dato(MERCANCIA) + 1");
         test("servicio.dato(TIPO_MANIF) * 5");
         test("padre(BL).dato(TIPO_OP_BL) / 5");
+        test("2.95 * DECODE(dato(ENTERO_01), NULL, 1, 0, 1, dato(ENTERO_01))");
     }
 
     /**

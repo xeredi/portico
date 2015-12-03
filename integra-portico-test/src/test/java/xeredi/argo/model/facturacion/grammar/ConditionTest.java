@@ -37,8 +37,8 @@ public final class ConditionTest {
         test("(true AND false) OR (NOT true)");
         test("(true OR false) AND (5 > 4)");
         test("NOT (COALESCE(3, 5) > 4)");
-        test("escalaEsAvituallamiento() AND (5 > 4)");
-        test("escalaEsBuqueCertificado('PEPE') AND (escalaNumeroPuertosBuque() > escalaValorContador('PEPITO'))");
+        test("(atraqueUdsGt() > 4) AND (5 > 4)");
+        test("(atraqueUdsGt() = 2) AND (escalaUdsGt() > escalaValorContador('PEPITO'))");
         test("dato(MERCANCIA) = 5");
         test("servicio.dato(TIPO_MANIF) = 5");
         test("padre(BL).dato(TIPO_OP_BL) = 5");

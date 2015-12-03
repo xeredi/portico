@@ -12,7 +12,7 @@ import xeredi.argo.model.seguridad.vo.AccionPrefix;
 /**
  * The Class ProcesoCancelarAction.
  */
-public final class ProcesoCancelarAction extends CrudRemoveAction<ProcesoVO> {
+public final class ProcesoRemoveAction extends CrudRemoveAction<ProcesoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3995570668859920070L;

@@ -1074,7 +1074,7 @@ CREATE TABLE tbl_proceso_mensaje_prmn (
 	prmn_prbt_pk BIGINT NOT NULL
 	, prmn_nivel char(1) NOT NULL
 	, prmn_codigo VARCHAR(5) NOT NULL
-	, prmn_mensaje VARCHAR(300)
+	, prmn_mensaje VARCHAR(4000)
 
 	, CONSTRAINT fk_prmn_prbt_pk FOREIGN KEY (prmn_prbt_pk)
 		REFERENCES tbl_proceso_batch_prbt (prbt_pk)
