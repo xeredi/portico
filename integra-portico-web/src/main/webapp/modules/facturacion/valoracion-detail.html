@@ -1,297 +1,281 @@
-<div bs-tabs ng-model="vm.tab" ng-change="vm.tabSelected()">
-    <div title="{{'vlrc' | translate}}" name="vlrc" bs-pane>
-        <div class="btn-toolbar" role="toolbar">
-            <div class="btn-group">
-                <a class="btn btn-default" ng-href="#/facturacion/fcdr/edit/{{vm.model.id}}"><i
-                    class="glyphicon glyphicon-euro"></i> <span translate="btn_facturar"></span></a> <a
-                    ng-if="mc.hasAccnPath('vlrc-edit')" class="btn btn-default"
-                    ng-href="#/facturacion/vlrc/edit/edit/{{vm.model.id}}"><i
-                    class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
-                <button ng-if="mc.hasAccnPath('vlrc-remove')" data-ng-click="vm.remove()"
-                    class="btn btn-default">
-                    <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
-                </button>
-            </div>
-
-            <div class="btn-group">
-                <button data-ng-click="vm.print()" class="btn btn-default">
-                    <i class="glyphicon glyphicon-print"></i> <span translate="btn_imprimir"></span>
-                </button>
-            </div>
-        </div>
-
-        <fieldset>
-            <div class="row">
-                <div class="col-md-2 col-lg-1 form-group-sm">
-                    <label translate="vlrc_id"></label>
-                    <p class="form-control-static" ng-bind="vm.model.id"></p>
-                </div>
-                <div class="col-md-2 form-group-sm">
-                    <label translate="tpsr"></label>
-                    <p class="form-control-static">
-                        <a ui-sref="tiposervicio-detail({id: vm.model.srvc.entiId})"
-                            ng-bind="'enti_' + vm.model.srvc.entiId | translate"></a>
-                    </p>
-                </div>
-                <div class="col-md-2 col-lg-1 form-group-sm">
-                    <label translate="srvc"></label>
-                    <p class="form-control-static">
-                        <a ng-href="#/servicio/srvc/detail/{{vm.model.srvc.entiId}}/{{vm.model.srvc.id}}"
-                            ng-bind="vm.model.srvc.etiqueta"></a>
-                    </p>
-                </div>
-                <div class="col-md-3 form-group-sm">
-                    <label translate="aspc"></label>
-                    <p class="form-control-static">
-                        <a ui-sref="aspecto-detail(vm.model.aspc)" ng-bind="vm.model.aspc.etiqueta"></a>
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-1 form-group-sm">
-                    <label translate="vlrc_importe"></label>
-                    <p class="form-control-static number">
-                        <span ng-bind="vm.model.importe | number:2"></span> &euro;
-                    </p>
-                </div>
-                <div class="col-md-1 form-group-sm">
-                    <label translate="vlrc_impuesto"></label>
-                    <p class="form-control-static number">
-                        <span ng-bind="vm.model.impuesto | number:2"></span> &euro;</i>
-                    </p>
-                </div>
-                <div class="col-md-2 form-group-sm">
-                    <label translate="vlrc_codExencion"></label>
-                    <p class="form-control-static"
-                        ng-bind="'cdrf_' + vm.tpdtCodExencion.id + '_' + vm.model.codExencion | translate"></p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3 form-group-sm">
-                    <label translate="vlrc_pagador"></label>
-                    <p class="form-control-static">
-                        <a ui-sref="parametro-detail(vm.model.pagador)" ng-bind="vm.model.pagador.etiqueta"></a>
-                    </p>
-                </div>
-                <div class="col-md-2 col-lg-1 form-group-sm">
-                    <label translate="vlrc_sujPasivo"></label>
-                    <p class="form-control-static">
-                        <i class="glyphicon glyphicon-{{vm.model.sujPasivo ? 'ok' : 'remove'}}"></i>
-                    </p>
-                </div>
-                <div class="col-md-2 form-group-sm">
-                    <label translate="vlrc_falta"></label>
-                    <p class="form-control-static"
-                        ng-bind="vm.model.falta | date: ('format_datetime' | translate)"></p>
-                </div>
-                <div class="col-md-2 form-group-sm">
-                    <label translate="vlrc_fliq"></label>
-                    <p class="form-control-static" ng-bind="vm.model.fliq | date: ('format_date' | translate)"></p>
-                </div>
-                <div class="col-md-2 form-group-sm">
-                    <label translate="fref"></label>
-                    <p class="form-control-static"
-                        ng-bind="vm.model.fref | date: ('format_datetime' | translate)"></p>
-                </div>
-                <div class="col-md-2 form-group-sm" ng-if="vm.model.fini">
-                    <label translate="fini"></label>
-                    <p class="form-control-static"
-                        ng-bind="vm.model.fini | date: ('format_datetime' | translate)"></p>
-                </div>
-                <div class="col-md-2 form-group-sm" ng-if="vm.model.ffin">
-                    <label translate="ffin"></label>
-                    <p class="form-control-static"
-                        ng-bind="vm.model.ffin | date: ('format_datetime' | translate)"></p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div ng-if="vm.model.aspc.version.cetiqInfo1" class="col-md-4 form-group-sm">
-                    <label ng-bind="vm.model.aspc.version.cetiqInfo1"></label>
-                    <p class="form-control-static" ng-bind="vm.model.info1"></p>
-                </div>
-                <div ng-if="vm.model.aspc.version.cetiqInfo2" class="col-md-4 form-group-sm">
-                    <label ng-bind="vm.model.aspc.version.cetiqInfo2"></label>
-                    <p class="form-control-static" ng-bind="vm.model.info2"></p>
-                </div>
-                <div ng-if="vm.model.aspc.version.cetiqInfo3" class="col-md-4 form-group-sm">
-                    <label ng-bind="vm.model.aspc.version.cetiqInfo3"></label>
-                    <p class="form-control-static" ng-bind="vm.model.info3"></p>
-                </div>
-                <div ng-if="vm.model.aspc.version.cetiqInfo4" class="col-md-4 form-group-sm">
-                    <label ng-bind="vm.model.aspc.version.cetiqInfo4"></label>
-                    <p class="form-control-static" ng-bind="vm.model.info4"></p>
-                </div>
-                <div ng-if="vm.model.aspc.version.cetiqInfo5" class="col-md-4 form-group-sm">
-                    <label ng-bind="vm.model.aspc.version.cetiqInfo5"></label>
-                    <p class="form-control-static" ng-bind="vm.model.info5"></p>
-                </div>
-                <div ng-if="vm.model.aspc.version.cetiqInfo6" class="col-md-4 form-group-sm">
-                    <label ng-bind="vm.model.aspc.version.cetiqInfo6"></label>
-                    <p class="form-control-static" ng-bind="vm.model.info6"></p>
-                </div>
-            </div>
-        </fieldset>
-
-        <div class="row">
-            <fieldset class="col-md-6 col-lg-5 col-xl-4">
-                <legend translate="vlrgList"></legend>
-
-                <table class="table-bordered table-condensed table-hover">
-                    <thead>
-                        <tr>
-                            <th translate="crgo"></th>
-                            <th translate="vlrg_importe"></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr ng-repeat="vlrg in vm.vlrgList track by $index">
-                            <td><a ui-sref="cargo-detail(vlrg.crgo)" ng-bind="vlrg.crgo.etiqueta"></a></td>
-                            <td nowrap="nowrap" class="number">{{vlrg.importe | number:2}} &euro;</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </fieldset>
-
-            <fieldset class="col-md-6 col-lg-4 col-xl-3">
-                <legend translate="vlriList"></legend>
-
-                <table class="table-bordered table-condensed table-hover">
-                    <thead>
-                        <tr>
-                            <th translate="vlri_impuesto"></th>
-                            <th translate="vlri_porcentaje"></th>
-                            <th translate="vlri_importe_base"></th>
-                            <th translate="vlri_importe_impuesto"></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr ng-repeat="vlri in vm.vlriList track by $index">
-                            <td><a ui-sref="parametro-detail(vlri.impuesto)"
-                                ng-bind="vlri.impuesto.etiqueta"></a></td>
-                            <td class="number" ng-bind="vlri.porcentaje | number:2"></td>
-                            <td nowrap="nowrap" class="number">{{vlri.importeBase | number:2}} &euro;</td>
-                            <td nowrap="nowrap" class="number">{{vlri.importeImpuesto | number:2}} &euro;</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </fieldset>
-        </div>
+<uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)"> <tab-heading
+    ng-bind="'vlrc' | translate"></tab-heading>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <a class="btn btn-default" ng-href="#/facturacion/fcdr/edit/{{vm.model.id}}"><i
+            class="glyphicon glyphicon-euro"></i> <span translate="btn_facturar"></span></a> <a
+            ng-if="mc.hasAccnPath('vlrc-edit')" class="btn btn-default"
+            ng-href="#/facturacion/vlrc/edit/edit/{{vm.model.id}}"><i class="glyphicon glyphicon-edit"></i>
+            <span translate="btn_editar"></span></a>
+        <button ng-if="mc.hasAccnPath('vlrc-remove')" data-ng-click="vm.remove()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+        </button>
     </div>
-    <div title="{{'vlrlList' | translate}}" name="vlrlList" bs-pane>
-        <div class="btn-toolbar" role="toolbar">
-            <div class="btn-group">
-                <pagination total-items="vm.vlrlList.count" items-per-page="vm.vlrlList.limit"
-                    ng-model="vm.page" ng-change="vm.pageChanged()" class="pagination" max-size="1"
-                    previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></pagination>
-            </div>
 
-            <div class="btn-group">
-                <a class="btn btn-default" ng-href="#/facturacion/vlrl/edit/create/{{vm.model.id}}"><i
-                    class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a>
-            </div>
-        </div>
-
-        <div class="table-responsive">
-            <span class="label label-default" translate="grid_count"
-                translate-value-count="{{vm.vlrlList.count | number:0}}"></span>
-
-            <table class="table-bordered table-condensed table-hover table-nonfluid">
-                <thead>
-                    <tr>
-                        <th />
-                        <th translate="enti"></th>
-                        <th translate="crgo"></th>
-                        <th translate="rgla"></th>
-                        <th translate="rgla_tipo"></th>
-                        <th translate="rgla_valorBase"></th>
-                        <th translate="vlrl_importeBase"></th>
-                        <th translate="vlrl_importe"></th>
-                        <th translate="vlrl_vlrdCount"></th>
-                        <th translate="vlrl_impuesto"></th>
-                        <th translate="ssrv"></th>
-                        <th translate="fini"></th>
-                        <th translate="ffin"></th>
-
-                        <th ng-if="vm.aspc.version.lgrpInfo1" translate="vlrl_info1"></th>
-                        <th ng-if="vm.aspc.version.lgrpInfo2" translate="vlrl_info2"></th>
-                        <th ng-if="vm.aspc.version.lgrpInfo3" translate="vlrl_info3"></th>
-                        <th ng-if="vm.aspc.version.lgrpInfo4" translate="vlrl_info4"></th>
-                        <th ng-if="vm.aspc.version.lgrpInfo5" translate="vlrl_info5"></th>
-                        <th ng-if="vm.aspc.version.lgrpInfo6" translate="vlrl_info6"></th>
-
-                        <th translate="vlrl_cuant1" colspan="2"></th>
-                        <th translate="vlrl_cuant2" colspan="2"></th>
-                        <th translate="vlrl_cuant3" colspan="2"></th>
-                        <th translate="vlrl_cuant4" colspan="2"></th>
-                        <th translate="vlrl_cuant5" colspan="2"></th>
-                        <th translate="vlrl_cuant6" colspan="2"></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr ng-repeat="vlrl in vm.vlrlList.list track by $index">
-                        <td><a ng-href="#/facturacion/vlrl/detail/{{vlrl.vlrcId}}/{{vlrl.id}}"><i
-                                class="glyphicon glyphicon-search"></i></a></td>
-                        <td nowrap="nowrap" translate="{{'enti_' + vlrl.rgla.enti.id}}"></td>
-                        <td nowrap="nowrap" ng-bind="vlrl.rgla.crgo.codigo"></td>
-                        <td nowrap="nowrap" ng-bind="vlrl.rgla.codigo"></td>
-                        <td ng-bind="vlrl.rgla.tipo" bs-tooltip
-                            data-title="{{'ReglaTipo_' + vlrl.rgla.tipo | translate}}"></td>
-                        <td nowrap="nowrap" ng-bind="vlrl.rgla.version.valorBase | number:4" class="number"></td>
-                        <td nowrap="nowrap" class="number"><span ng-if="vlrl.rgla.tipo != 'T'">{{vlrl.importeBase
-                                | number:2}} &euro;</span></td>
-                        <td nowrap="nowrap" class="number">{{vlrl.importe | number:2}} &euro;</td>
-                        <td class="number" ng-bind="vlrl.vlrdCount"></td>
-                        <td ng-bind="vlrl.impuesto.parametro" bs-tooltip
-                            data-title="{{vlrl.impuesto.etiqueta}}"></td>
-                        <td ng-bind="vlrl.ssrv.numero"></td>
-                        <td ng-bind="vlrl.fini | date:'short'"></td>
-                        <td ng-bind="vlrl.ffin | date:'short'"></td>
-
-                        <td ng-if="vm.aspc.version.lgrpInfo1" nowrap="nowrap"><span
-                            ng-if="vlrl.rgla.tipo == 'T' && vlrl.info1">{{vlrl.rgla.version.etiqInfo1}}:
-                                {{vlrl.info1}}</span></td>
-                        <td ng-if="vm.aspc.version.lgrpInfo2" nowrap="nowrap"><span
-                            ng-if="vlrl.rgla.tipo == 'T' && vlrl.info2">{{vlrl.rgla.version.etiqInfo2}}:
-                                {{vlrl.info2}}</span></td>
-                        <td ng-if="vm.aspc.version.lgrpInfo3" nowrap="nowrap"><span
-                            ng-if="vlrl.rgla.tipo == 'T' && vlrl.info3">{{vlrl.rgla.version.etiqInfo3}}:
-                                {{vlrl.info3}}</span></td>
-                        <td ng-if="vm.aspc.version.lgrpInfo4" nowrap="nowrap"><span
-                            ng-if="vlrl.rgla.tipo == 'T' && vlrl.info4">{{vlrl.rgla.version.etiqInfo4}}:
-                                {{vlrl.info4}}</span></td>
-                        <td ng-if="vm.aspc.version.lgrpInfo5" nowrap="nowrap"><span
-                            ng-if="vlrl.rgla.tipo == 'T' && vlrl.info5">{{vlrl.rgla.version.etiqInfo5}}:
-                                {{vlrl.info5}}</span></td>
-                        <td ng-if="vm.aspc.version.lgrpInfo6" nowrap="nowrap"><span
-                            ng-if="vlrl.rgla.tipo == 'T' && vlrl.info6">{{vlrl.rgla.version.etiqInfo6}}:
-                                {{vlrl.info6}}</span></td>
-
-                        <td nowrap="nowrap"><span ng-if="vlrl.cuant1"
-                            ng-bind="vlrl.rgla.version.etiqCuant1"></span></td>
-                        <td><span ng-if="vlrl.cuant1" class="number" ng-bind="vlrl.cuant1 | number:2"></span></td>
-                        <td nowrap="nowrap"><span ng-if="vlrl.cuant2"
-                            ng-bind="vlrl.rgla.version.etiqCuant2"></span></td>
-                        <td><span ng-if="vlrl.cuant2" class="number" ng-bind="vlrl.cuant2 | number:2"></span></td>
-                        <td nowrap="nowrap"><span ng-if="vlrl.cuant3"
-                            ng-bind="vlrl.rgla.version.etiqCuant3"></span></td>
-                        <td><span ng-if="vlrl.cuant3" class="number" ng-bind="vlrl.cuant3 | number:2"></span></td>
-                        <td nowrap="nowrap"><span ng-if="vlrl.cuant4"
-                            ng-bind="vlrl.rgla.version.etiqCuant4"></span></td>
-                        <td><span ng-if="vlrl.cuant4" class="number" ng-bind="vlrl.cuant4 | number:2"></span></td>
-                        <td nowrap="nowrap"><span ng-if="vlrl.cuant5"
-                            ng-bind="vlrl.rgla.version.etiqCuant5"></span></td>
-                        <td><span ng-if="vlrl.cuant5" class="number" ng-bind="vlrl.cuant5 | number:2"></span></td>
-                        <td nowrap="nowrap"><span ng-if="vlrl.cuant6"
-                            ng-bind="vlrl.rgla.version.etiqCuant6"></span></td>
-                        <td><span ng-if="vlrl.cuant6" class="number" ng-bind="vlrl.cuant6 | number:2"></span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="btn-group">
+        <button data-ng-click="vm.print()" class="btn btn-default">
+            <i class="glyphicon glyphicon-print"></i> <span translate="btn_imprimir"></span>
+        </button>
     </div>
 </div>
+
+<fieldset>
+    <div class="row">
+        <div class="col-md-2 col-lg-1 form-group-sm">
+            <label translate="vlrc_id"></label>
+            <p class="form-control-static" ng-bind="vm.model.id"></p>
+        </div>
+        <div class="col-md-2 form-group-sm">
+            <label translate="tpsr"></label>
+            <p class="form-control-static">
+                <a ui-sref="tipo-servicio-detail({id: vm.model.srvc.entiId})"
+                    ng-bind="'enti_' + vm.model.srvc.entiId | translate"></a>
+            </p>
+        </div>
+        <div class="col-md-2 col-lg-1 form-group-sm">
+            <label translate="srvc"></label>
+            <p class="form-control-static">
+                <a ui-sref="servicio-detail(vm.model.srvc)" ng-bind="vm.model.srvc.etiqueta"></a>
+            </p>
+        </div>
+        <div class="col-md-3 form-group-sm">
+            <label translate="aspc"></label>
+            <p class="form-control-static">
+                <a ui-sref="aspecto-detail(vm.model.aspc)" ng-bind="vm.model.aspc.etiqueta"></a>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 form-group-sm">
+            <label translate="vlrc_importe"></label>
+            <p class="form-control-static number">
+                <span ng-bind="vm.model.importe | number:2"></span> &euro;
+            </p>
+        </div>
+        <div class="col-md-1 form-group-sm">
+            <label translate="vlrc_impuesto"></label>
+            <p class="form-control-static number">
+                <span ng-bind="vm.model.impuesto | number:2"></span> &euro;</i>
+            </p>
+        </div>
+        <div class="col-md-2 form-group-sm">
+            <label translate="vlrc_codExencion"></label>
+            <p class="form-control-static"
+                ng-bind="'cdrf_' + vm.tpdtCodExencion.id + '_' + vm.model.codExencion | translate"></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 form-group-sm">
+            <label translate="vlrc_pagador"></label>
+            <p class="form-control-static">
+                <a ui-sref="parametro-detail(vm.model.pagador)" ng-bind="vm.model.pagador.etiqueta"></a>
+            </p>
+        </div>
+        <div class="col-md-2 col-lg-1 form-group-sm">
+            <label translate="vlrc_sujPasivo"></label>
+            <p class="form-control-static">
+                <i class="glyphicon glyphicon-{{vm.model.sujPasivo ? 'ok' : 'remove'}}"></i>
+            </p>
+        </div>
+        <div class="col-md-2 form-group-sm">
+            <label translate="vlrc_falta"></label>
+            <p class="form-control-static" ng-bind="vm.model.falta | date: ('format_datetime' | translate)"></p>
+        </div>
+        <div class="col-md-2 form-group-sm">
+            <label translate="vlrc_fliq"></label>
+            <p class="form-control-static" ng-bind="vm.model.fliq | date: ('format_date' | translate)"></p>
+        </div>
+        <div class="col-md-2 form-group-sm">
+            <label translate="fref"></label>
+            <p class="form-control-static" ng-bind="vm.model.fref | date: ('format_datetime' | translate)"></p>
+        </div>
+        <div class="col-md-2 form-group-sm" ng-if="vm.model.fini">
+            <label translate="fini"></label>
+            <p class="form-control-static" ng-bind="vm.model.fini | date: ('format_datetime' | translate)"></p>
+        </div>
+        <div class="col-md-2 form-group-sm" ng-if="vm.model.ffin">
+            <label translate="ffin"></label>
+            <p class="form-control-static" ng-bind="vm.model.ffin | date: ('format_datetime' | translate)"></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div ng-if="vm.model.aspc.version.cetiqInfo1" class="col-md-4 form-group-sm">
+            <label ng-bind="vm.model.aspc.version.cetiqInfo1"></label>
+            <p class="form-control-static" ng-bind="vm.model.info1"></p>
+        </div>
+        <div ng-if="vm.model.aspc.version.cetiqInfo2" class="col-md-4 form-group-sm">
+            <label ng-bind="vm.model.aspc.version.cetiqInfo2"></label>
+            <p class="form-control-static" ng-bind="vm.model.info2"></p>
+        </div>
+        <div ng-if="vm.model.aspc.version.cetiqInfo3" class="col-md-4 form-group-sm">
+            <label ng-bind="vm.model.aspc.version.cetiqInfo3"></label>
+            <p class="form-control-static" ng-bind="vm.model.info3"></p>
+        </div>
+        <div ng-if="vm.model.aspc.version.cetiqInfo4" class="col-md-4 form-group-sm">
+            <label ng-bind="vm.model.aspc.version.cetiqInfo4"></label>
+            <p class="form-control-static" ng-bind="vm.model.info4"></p>
+        </div>
+        <div ng-if="vm.model.aspc.version.cetiqInfo5" class="col-md-4 form-group-sm">
+            <label ng-bind="vm.model.aspc.version.cetiqInfo5"></label>
+            <p class="form-control-static" ng-bind="vm.model.info5"></p>
+        </div>
+        <div ng-if="vm.model.aspc.version.cetiqInfo6" class="col-md-4 form-group-sm">
+            <label ng-bind="vm.model.aspc.version.cetiqInfo6"></label>
+            <p class="form-control-static" ng-bind="vm.model.info6"></p>
+        </div>
+    </div>
+</fieldset>
+
+<div class="row">
+    <fieldset class="col-md-6 col-lg-5 col-xl-4">
+        <legend translate="vlrgList"></legend>
+
+        <table class="table-bordered table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th translate="crgo"></th>
+                    <th translate="vlrg_importe"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="vlrg in vm.vlrgList track by $index">
+                    <td><a ui-sref="cargo-detail(vlrg.crgo)" ng-bind="vlrg.crgo.etiqueta"></a></td>
+                    <td nowrap="nowrap" class="number">{{vlrg.importe | number:2}} &euro;</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+    <fieldset class="col-md-6 col-lg-4 col-xl-3">
+        <legend translate="vlriList"></legend>
+
+        <table class="table-bordered table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th translate="vlri_impuesto"></th>
+                    <th translate="vlri_porcentaje"></th>
+                    <th translate="vlri_importe_base"></th>
+                    <th translate="vlri_importe_impuesto"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="vlri in vm.vlriList track by $index">
+                    <td><a ui-sref="parametro-detail(vlri.impuesto)" ng-bind="vlri.impuesto.etiqueta"></a></td>
+                    <td class="number" ng-bind="vlri.porcentaje | number:2"></td>
+                    <td nowrap="nowrap" class="number">{{vlri.importeBase | number:2}} &euro;</td>
+                    <td nowrap="nowrap" class="number">{{vlri.importeImpuesto | number:2}} &euro;</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</div>
+</uib-tab> <uib-tab active="vm.tabActive['vlrlList']" select="vm.tabSelected('vlrlList')"> <tab-heading
+    ng-bind="('vlrlList' | translate)"></tab-heading>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <uib-pagination total-items="vm.vlrlList.count" items-per-page="vm.vlrlList.limit" ng-model="vm.page"
+            ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+            next-text="&rsaquo;&rsaquo;"></uib-pagination>
+    </div>
+
+    <div class="btn-group">
+        <a class="btn btn-default" ng-href="#/facturacion/vlrl/edit/create/{{vm.model.id}}"><i
+            class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <span class="label label-default" translate="grid_count"
+        translate-value-count="{{vm.vlrlList.count | number:0}}"></span>
+
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th />
+                <th translate="enti"></th>
+                <th translate="crgo"></th>
+                <th translate="rgla"></th>
+                <th translate="rgla_tipo"></th>
+                <th translate="rgla_valorBase"></th>
+                <th translate="vlrl_importeBase"></th>
+                <th translate="vlrl_importe"></th>
+                <th translate="vlrl_vlrdCount"></th>
+                <th translate="vlrl_impuesto"></th>
+                <th translate="ssrv"></th>
+                <th translate="fini"></th>
+                <th translate="ffin"></th>
+
+                <th ng-if="vm.aspc.version.lgrpInfo1" translate="vlrl_info1"></th>
+                <th ng-if="vm.aspc.version.lgrpInfo2" translate="vlrl_info2"></th>
+                <th ng-if="vm.aspc.version.lgrpInfo3" translate="vlrl_info3"></th>
+                <th ng-if="vm.aspc.version.lgrpInfo4" translate="vlrl_info4"></th>
+                <th ng-if="vm.aspc.version.lgrpInfo5" translate="vlrl_info5"></th>
+                <th ng-if="vm.aspc.version.lgrpInfo6" translate="vlrl_info6"></th>
+
+                <th translate="vlrl_cuant1" colspan="2"></th>
+                <th translate="vlrl_cuant2" colspan="2"></th>
+                <th translate="vlrl_cuant3" colspan="2"></th>
+                <th translate="vlrl_cuant4" colspan="2"></th>
+                <th translate="vlrl_cuant5" colspan="2"></th>
+                <th translate="vlrl_cuant6" colspan="2"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="vlrl in vm.vlrlList.list track by $index">
+                <td><a ui-sref="valoracion-linea-detail(vlrl)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td nowrap="nowrap" translate="{{'enti_' + vlrl.rgla.enti.id}}"></td>
+                <td nowrap="nowrap" ng-bind="vlrl.rgla.crgo.codigo"></td>
+                <td nowrap="nowrap" ng-bind="vlrl.rgla.codigo"></td>
+                <td ng-bind="vlrl.rgla.tipo" bs-tooltip
+                    data-title="{{'ReglaTipo_' + vlrl.rgla.tipo | translate}}"></td>
+                <td nowrap="nowrap" ng-bind="vlrl.rgla.version.valorBase | number:4" class="number"></td>
+                <td nowrap="nowrap" class="number"><span ng-if="vlrl.rgla.tipo != 'T'">{{vlrl.importeBase
+                        | number:2}} &euro;</span></td>
+                <td nowrap="nowrap" class="number">{{vlrl.importe | number:2}} &euro;</td>
+                <td class="number" ng-bind="vlrl.vlrdCount"></td>
+                <td ng-bind="vlrl.impuesto.parametro" bs-tooltip data-title="{{vlrl.impuesto.etiqueta}}"></td>
+                <td ng-bind="vlrl.ssrv.numero"></td>
+                <td ng-bind="vlrl.fini | date:'short'"></td>
+                <td ng-bind="vlrl.ffin | date:'short'"></td>
+
+                <td ng-if="vm.aspc.version.lgrpInfo1" nowrap="nowrap"><span
+                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info1">{{vlrl.rgla.version.etiqInfo1}}:
+                        {{vlrl.info1}}</span></td>
+                <td ng-if="vm.aspc.version.lgrpInfo2" nowrap="nowrap"><span
+                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info2">{{vlrl.rgla.version.etiqInfo2}}:
+                        {{vlrl.info2}}</span></td>
+                <td ng-if="vm.aspc.version.lgrpInfo3" nowrap="nowrap"><span
+                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info3">{{vlrl.rgla.version.etiqInfo3}}:
+                        {{vlrl.info3}}</span></td>
+                <td ng-if="vm.aspc.version.lgrpInfo4" nowrap="nowrap"><span
+                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info4">{{vlrl.rgla.version.etiqInfo4}}:
+                        {{vlrl.info4}}</span></td>
+                <td ng-if="vm.aspc.version.lgrpInfo5" nowrap="nowrap"><span
+                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info5">{{vlrl.rgla.version.etiqInfo5}}:
+                        {{vlrl.info5}}</span></td>
+                <td ng-if="vm.aspc.version.lgrpInfo6" nowrap="nowrap"><span
+                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info6">{{vlrl.rgla.version.etiqInfo6}}:
+                        {{vlrl.info6}}</span></td>
+
+                <td nowrap="nowrap"><span ng-if="vlrl.cuant1" ng-bind="vlrl.rgla.version.etiqCuant1"></span></td>
+                <td><span ng-if="vlrl.cuant1" class="number" ng-bind="vlrl.cuant1 | number:2"></span></td>
+                <td nowrap="nowrap"><span ng-if="vlrl.cuant2" ng-bind="vlrl.rgla.version.etiqCuant2"></span></td>
+                <td><span ng-if="vlrl.cuant2" class="number" ng-bind="vlrl.cuant2 | number:2"></span></td>
+                <td nowrap="nowrap"><span ng-if="vlrl.cuant3" ng-bind="vlrl.rgla.version.etiqCuant3"></span></td>
+                <td><span ng-if="vlrl.cuant3" class="number" ng-bind="vlrl.cuant3 | number:2"></span></td>
+                <td nowrap="nowrap"><span ng-if="vlrl.cuant4" ng-bind="vlrl.rgla.version.etiqCuant4"></span></td>
+                <td><span ng-if="vlrl.cuant4" class="number" ng-bind="vlrl.cuant4 | number:2"></span></td>
+                <td nowrap="nowrap"><span ng-if="vlrl.cuant5" ng-bind="vlrl.rgla.version.etiqCuant5"></span></td>
+                <td><span ng-if="vlrl.cuant5" class="number" ng-bind="vlrl.cuant5 | number:2"></span></td>
+                <td nowrap="nowrap"><span ng-if="vlrl.cuant6" ng-bind="vlrl.rgla.version.etiqCuant6"></span></td>
+                <td><span ng-if="vlrl.cuant6" class="number" ng-bind="vlrl.cuant6 | number:2"></span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</uib-tab></uib-tabset>

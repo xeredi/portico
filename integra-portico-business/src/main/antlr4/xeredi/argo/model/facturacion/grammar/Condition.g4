@@ -19,6 +19,11 @@ condition
 		'IN'
 		| 'NOT IN'
 	) cteList = constantList
+	| value1 = value nullOp =
+	(
+		'IS NULL'
+		| 'IS NOT NULL'
+	)
 ;
 
 constantList

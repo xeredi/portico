@@ -265,7 +265,8 @@
                 )
                 AND vlrt_srvc_pk = #{srvc.id}
                 AND vlrt_prbt_pk = #{prbt.id}
-            ORDER BY vlrt_prbt_pk, vlrt_srvc_pk, vlrt_pagador_prmt_pk, vlrt_es_suj_pasivo, vlrt_cod_exen
+            ORDER BY
+                vlrt_prbt_pk, vlrt_srvc_pk, vlrt_pagador_prmt_pk, vlrt_es_suj_pasivo, vlrt_cod_exen
                 , ssrv_tpss_pk
     ]]>
 
@@ -281,3 +282,5 @@
 	</select>
 
 </mapper>
+
+<!-- regla_tipo_orden, rglv_orden -->

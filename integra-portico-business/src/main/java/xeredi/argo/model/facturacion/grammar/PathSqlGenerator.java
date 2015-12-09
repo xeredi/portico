@@ -95,8 +95,6 @@ public final class PathSqlGenerator extends PathBaseVisitor {
         final AbstractEntidadDetailVO entiDetail = EntidadProxy.select(entiDetailTmp.getEnti().getId());
         final StringBuilder sqlElement = new StringBuilder();
 
-        System.out.println("enti: " + entiDetail.getEnti().getCodigo());
-
         if (ctx.ELEMENT_SERVICE() != null) {
             if (entiDetail.getEnti().getTipo() != TipoEntidad.S) {
                 throw new Error("Solo se puede llegar al servicio desde un subservicio");

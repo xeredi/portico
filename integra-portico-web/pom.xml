@@ -12,12 +12,12 @@
     <name>Web</name>
 
     <properties>
-        <war.warName>${artifactId}</war.warName>
+        <war.warName>${project.artifactId}</war.warName>
     </properties>
 
     <build>
         <directory>target/${profile-id}</directory>
-        <finalName>${artifactId}</finalName>
+        <finalName>${project.artifactId}</finalName>
     </build>
 
     <dependencies>

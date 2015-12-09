@@ -83,6 +83,10 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
             return visitValue(ctx.value1).toString() + ' ' + ctx.inOp.getText() + ' ' + ctx.cteList.getText();
         }
 
+        if (ctx.nullOp != null) {
+            return visitValue(ctx.value1).toString() + ' ' + ctx.nullOp.getText();
+        }
+
         throw new Error("Expresion Numerica no implementada!: " + ctx);
     }
 
@@ -278,7 +282,7 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
                     }
 
                     if (entd.getTpdt().getTipoElemento() == TipoElemento.PR && isLast) {
-                        sqlElement += " SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = ANY (";
+                        sqlElement += " SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = (";
                     }
 
                     switch (entiDetalleElem.getEnti().getTipo()) {
