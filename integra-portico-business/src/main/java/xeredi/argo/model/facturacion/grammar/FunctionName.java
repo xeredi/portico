@@ -1,0 +1,16 @@
+package xeredi.argo.model.facturacion.grammar;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Enum FunctionName.
+ */
+public enum FunctionName {
+    /** The concat. */
+    CONCAT,
+    /** The decode. */
+    DECODE,
+    /** The coalesce. */
+    COALESCE,
+    /** The acumulado teus. */
+    acumuladoTeus;
+}

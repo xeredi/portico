@@ -8,15 +8,15 @@
         <id column="prvr_pk" />
 
         <result column="vlrc_pk" property="vlrcId" />
-        <result column="vlrl_impuesto_porcentaje" property="porcentaje" />
-        <result column="vlri_importe" property="importeBase" />
+        <result column="vlri_porcentaje" property="porcentaje" />
+        <result column="vlri_importe_base" property="importeBase" />
         <result column="vlri_importe_impuesto" property="importeImpuesto" />
 
         <association property="impuesto" javaType="ParametroVO">
-            <result column="vlrl_impuesto_prmt_pk" property="id" />
-            <result column="vlrl_impuesto_prmt" property="parametro" />
-            <result column="vlrl_impuesto_tppr_pk" property="entiId" />
-            <result column="vlrl_impuesto_descripcion" property="texto" />
+            <result column="vlri_prmt_pk" property="id" />
+            <result column="vlri_prmt_parametro" property="parametro" />
+            <result column="vlri_tppr_pk" property="entiId" />
+            <result column="vlri_descripcion" property="texto" />
             <result column="vlrc_fref" property="fref" />
 
             <association property="version" javaType="ParametroVersionVO">
@@ -27,11 +27,15 @@
 
     <select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
     <![CDATA[
-		SELECT
-		    vlrc_pk, vlrc_fref, prvr_pk, vlrl_impuesto_prmt_pk, vlrl_impuesto_porcentaje, vlri_importe
-		    , vlrl_impuesto_porcentaje * vlri_importe / 100 AS vlri_importe_impuesto
-		    , prmt_parametro AS vlrl_impuesto_prmt
-		    , prmt_tppr_pk AS vlrl_impuesto_tppr_pk
+        SELECT
+            vlrc_pk, vlrc_fref
+            , prmt_pk AS vlri_prmt_pk
+            , prmt_parametro AS vlri_prmt_parametro
+            , prmt_tppr_pk AS vlri_prmt_tppr_pk
+            , prvr_pk AS vlri_prvr_pk
+            , vlri_porcentaje
+            , SUM(vlri_importe_base) AS vlri_importe_base
+            , SUM(vlri_importe_base) * vlri_porcentaje / 100 AS vlri_importe_impuesto
     ]]>
         <if test="idioma != null">
 	    <![CDATA[
@@ -42,29 +46,38 @@
 		            i18n_pref = 'prvr'
 		            AND i18n_lang = #{idioma}
 		            AND i18n_ext_pk = prvr_pk
-		    ) AS vlrl_impuesto_descripcion
+		    ) AS vlri_descripcion
 	    ]]>
         </if>
     <![CDATA[
-		FROM (
-		    SELECT
-		        vlrc_pk, vlrc_fref, vlrl_impuesto_prmt_pk, prvr_pk, SUM(vlrd_importe) AS vlri_importe
-		        , (
-		            SELECT prdt_ndecimal
-		            FROM tbl_parametro_dato_prdt
-		            WHERE
-		                prdt_prvr_pk = prvr_pk
-		                AND prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
-		        ) AS vlrl_impuesto_porcentaje
-		    FROM
-		        tbl_valoracion_vlrc
-		        INNER JOIN tbl_valoracion_lin_vlrl ON
-		            vlrl_vlrc_pk = vlrc_pk
-		        INNER JOIN tbl_valoracion_det_vlrd ON
-		            vlrd_vlrl_pk = vlrl_pk
-		        LEFT JOIN tbl_parametro_version_prvr ON
-		            prvr_prmt_pk = vlrl_impuesto_prmt_pk
-		            AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
+        FROM (
+            SELECT
+                vlrc_pk, vlrc_fref
+                , prmt_pk, prmt_parametro, prmt_tppr_pk
+                , prvr_pk
+                , (
+                    SELECT prdt_ndecimal
+                    FROM tbl_parametro_dato_prdt
+                    WHERE
+                        prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
+                        AND prdt_prvr_pk = prvr_pk
+                ) AS vlri_porcentaje
+                , (
+                    SELECT SUM(vlrd_importe)
+                    FROM tbl_valoracion_det_vlrd
+                    WHERE vlrd_vlrl_pk = vlrl.vlrl_pk
+                ) AS vlri_importe_base
+            FROM
+                tbl_valoracion_vlrc
+                INNER JOIN tbl_valoracion_lin_vlrl vlrl ON
+                    vlrl.vlrl_vlrc_pk = vlrc_pk
+                INNER JOIN tbl_valoracion_lin_vlrl vlrlPadre ON
+                    vlrlPadre.vlrl_pk = vlrl.vlrl_padre_pk
+                INNER JOIN tbl_parametro_prmt ON
+                    prmt_pk = vlrlPadre.vlrl_impuesto_prmt_pk
+                LEFT JOIN tbl_parametro_version_prvr ON
+                    prvr_prmt_pk = vlrlPadre.vlrl_impuesto_prmt_pk
+                    AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
     ]]>
         <where>
             <if test="id != null">
@@ -77,10 +90,11 @@
             </if>
         </where>
     <![CDATA[
-		    GROUP BY vlrc_pk, prvr_pk, vlrc_fref, vlrl_impuesto_prmt_pk
-		) sql
-			INNER JOIN tbl_parametro_prmt ON
-		        prmt_pk = vlrl_impuesto_prmt_pk
+        )
+        GROUP BY
+            vlrc_pk, vlrc_fref
+            , prmt_pk, prmt_parametro, prmt_tppr_pk
+            , prvr_pk, vlri_porcentaje
     ]]>
     </select>
 </mapper>

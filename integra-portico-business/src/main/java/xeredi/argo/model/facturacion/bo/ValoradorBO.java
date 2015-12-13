@@ -24,7 +24,6 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.dao.AspectoDAO;
 import xeredi.argo.model.facturacion.dao.CargoDAO;
 import xeredi.argo.model.facturacion.dao.ReglaDAO;
-import xeredi.argo.model.facturacion.dao.ServicioCargoDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionAgregadaDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionDetalleDAO;
@@ -47,7 +46,6 @@ import xeredi.argo.model.facturacion.vo.CargoVO;
 import xeredi.argo.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
-import xeredi.argo.model.facturacion.vo.ServicioCargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionAgregadaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaAgregadaVO;
@@ -108,7 +106,7 @@ public class ValoradorBO {
         Preconditions.checkNotNull(crgoIds);
         Preconditions.checkNotNull(fechaLiquidacion);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.SIMPLE)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
             final ValoradorContextoDAO contextoDAO = session.getMapper(ValoradorContextoDAO.class);
@@ -232,7 +230,6 @@ public class ValoradorBO {
         final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
         final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
         final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
-        final ServicioCargoDAO srcrDAO = session.getMapper(ServicioCargoDAO.class);
 
         final IgBO igBO = new IgBO();
 
@@ -275,13 +272,13 @@ public class ValoradorBO {
 
                 vlrl.getVlrl().setPadreId(vlrlPadreId);
 
-                LOG.debug("vlrl: " + vlrl.getVlrl());
+                // LOG.debug("vlrl: " + vlrl.getVlrl());
 
                 for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
                     Preconditions.checkNotNull(vlrd.getId());
                     Preconditions.checkNotNull(vlrd.getPadreId());
 
-                    LOG.debug("vlrd: " + vlrd);
+                    // LOG.debug("vlrd: " + vlrd);
 
                     final Long vlrtId = vlrd.getId();
                     final Long vlrtPadreId = vlrd.getPadreId();
@@ -318,10 +315,6 @@ public class ValoradorBO {
         }
 
         if (!vlrcIds.isEmpty()) {
-            final ServicioCargoCriterioVO srcrCriterio = new ServicioCargoCriterioVO();
-
-            srcrCriterio.setVlrcIds(vlrcIds);
-            srcrDAO.insertMarcarValorado(srcrCriterio);
             vlrtDAO.deleteList(vldrContexto);
         }
     }
@@ -579,12 +572,12 @@ public class ValoradorBO {
         rgla.getVersion().setPathInfo5Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathInfo5(), true));
         rgla.getVersion().setPathInfo6Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathInfo6(), true));
 
-        rgla.getVersion().setPathCuant1Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathCuant1(), false));
-        rgla.getVersion().setPathCuant2Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathCuant2(), false));
-        rgla.getVersion().setPathCuant3Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathCuant3(), false));
-        rgla.getVersion().setPathCuant4Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathCuant4(), false));
-        rgla.getVersion().setPathCuant5Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathCuant5(), false));
-        rgla.getVersion().setPathCuant6Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathCuant6(), false));
+        rgla.getVersion().setPathCuant1Sql(generateSqlFormula(rgla, rgla.getVersion().getPathCuant1()));
+        rgla.getVersion().setPathCuant2Sql(generateSqlFormula(rgla, rgla.getVersion().getPathCuant2()));
+        rgla.getVersion().setPathCuant3Sql(generateSqlFormula(rgla, rgla.getVersion().getPathCuant3()));
+        rgla.getVersion().setPathCuant4Sql(generateSqlFormula(rgla, rgla.getVersion().getPathCuant4()));
+        rgla.getVersion().setPathCuant5Sql(generateSqlFormula(rgla, rgla.getVersion().getPathCuant5()));
+        rgla.getVersion().setPathCuant6Sql(generateSqlFormula(rgla, rgla.getVersion().getPathCuant6()));
 
         rgla.getVersion().setCondicionSql(generateSqlCondition(rgla, rgla.getVersion().getCondicion()));
         rgla.getVersion().setFormulaSql(generateSqlFormula(rgla, rgla.getVersion().getFormula()));

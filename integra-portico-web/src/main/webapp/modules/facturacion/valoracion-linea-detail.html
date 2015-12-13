@@ -176,7 +176,7 @@
 
             <tbody>
                 <tr ng-repeat="vlrl in vm.vlrlHijosList track by $index">
-                    <td><a ng-href="#/facturacion/vlrl/detail/{{vlrl.vlrcId}}/{{vlrl.id}}"><i
+                    <td><a ui-sref="valoracion-linea-detail(vlrl)"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td nowrap="nowrap" ng-bind="vlrl.rgla.codigo"></td>
                     <td nowrap="nowrap" ng-bind="vlrl.rgla.tipo"></td>

@@ -2,45 +2,27 @@ grammar facturacion_common;
 
 value
 :
-	numericValue
-	| textValue
-;
-
-numericValue
-:
-	cte = NUMBER
+	cte = constant
 	| prop = property
-	| lp = '(' n1 = numericValue rp = ')'
-	| n1 = numericValue arithmeticOp = ARITHMETIC_OP n2 = numericValue
-	| fn = 'COALESCE' '(' n1 = numericValue ',' n2 = numericValue ')'
-	| fn = 'DECODE' '(' n1 = numericValue decodeBranch+ ',' n2 = numericValue ')'
-	| fn = 'escalaNumeroPuertosBuque' '()'
-	| fn = 'atraqueUdsGt' '()'
-	| fn = 'escalaUdsGt' '()'
-	| fn = 'escalaValorContador' '(' cntName = STRING ')'
-	/* 	| (minus = MINUS)? cte = NUMBER*/
+	| lp = '(' v1 = value rp = ')'
+	| v1 = value arithmeticOp = ARITHMETIC_OP v2 = value
+	| fn = 'COALESCE' '(' v1 = value ',' v2 = value ')'
+	| fn = 'CONCAT' '(' v1 = value ',' v2 = value ')'
+	| fn = 'DECODE' '(' v1 = value decodeBranch* ',' v2 = value ')'
+	| fn = 'acumuladoTeus' '(' v1 = value ',' v2 = value ',' v3 = value ')'
 ;
 
 decodeBranch
 :
-	',' n1 = numericValue ',' n2 = numericValue
-;
-
-textValue
-:
-	cte = STRING
-	| prop = property
-	| fn = 'COALESCE' '(' t1 = textValue ',' t2 = textValue ')'
-	| fn = 'DECODE' '(' t1 = textValue
-	(
-		',' textValue ',' textValue
-	)+ ',' t2 = textValue ')'
+	',' v1 = value ',' v2 = value
 ;
 
 constant
 :
 	NUMBER
 	| STRING
+	| BOOLEAN
+	| NULL
 ;
 
 property
@@ -54,13 +36,25 @@ property
 propertyElement
 :
 	parent = ELEMENT_PARENT '(' arg = ID ')'
+	| son = ELEMENT_SON '(' arg = ID ')'
 	| data = ELEMENT_DATA '(' arg = ID ')'
+	| attribute = ELEMENT_ATTRIBUTE '(' arg = ID ')'
 	| service = ELEMENT_SERVICE
 ;
 
 ELEMENT_PARENT
 :
 	'padre'
+;
+
+ELEMENT_SON
+:
+	'hijo'
+;
+
+ELEMENT_ATTRIBUTE
+:
+	'atributo'
 ;
 
 ELEMENT_DATA
@@ -102,7 +96,6 @@ NUMBER
 	(
 		. [0-9]+
 	)?
-	| NULL
 ;
 
 NULL
@@ -127,8 +120,10 @@ STRING
 		| '+'
 		| '-'
 		| '_'
+		| '%'
+		| '&'
+		| ' '
 	)+ '\''
-	| NULL
 ;
 
 ID

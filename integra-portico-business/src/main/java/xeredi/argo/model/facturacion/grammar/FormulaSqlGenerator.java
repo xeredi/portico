@@ -7,9 +7,9 @@ import lombok.NonNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import xeredi.argo.model.facturacion.grammar.FormulaParser.DecodeBranchContext;
-import xeredi.argo.model.facturacion.grammar.FormulaParser.NumericValueContext;
 import xeredi.argo.model.facturacion.grammar.FormulaParser.PropertyContext;
 import xeredi.argo.model.facturacion.grammar.FormulaParser.PropertyElementContext;
+import xeredi.argo.model.facturacion.grammar.FormulaParser.ValueContext;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
 import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
@@ -45,17 +45,21 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
      * {@inheritDoc}
      */
     @Override
-    public String visitNumericValue(final @NonNull NumericValueContext ctx) {
+    public String visitValue(final @NonNull ValueContext ctx) {
         if (ctx.cte != null) {
             return ctx.cte.getText();
         }
 
         if (ctx.lp != null) {
-            return ctx.lp.getText() + visitNumericValue(ctx.n1) + ctx.rp.getText();
+            return ctx.lp.getText() + visitValue(ctx.v1) + ctx.rp.getText();
         }
 
         if (ctx.arithmeticOp != null) {
-            return visitNumericValue(ctx.n1) + ctx.arithmeticOp.getText() + visitNumericValue(ctx.n2);
+            return visitValue(ctx.v1) + ctx.arithmeticOp.getText() + visitValue(ctx.v2);
+        }
+
+        if (ctx.prop != null) {
+            return visitProperty(ctx.prop);
         }
 
         // if (ctx.minus != null) {
@@ -63,45 +67,42 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
         // }
 
         if (ctx.fn != null) {
-            switch (ctx.fn.getText()) {
-            case "COALESCE":
-                return " COALESCE(" + visitNumericValue(ctx.n1) + ", " + visitNumericValue(ctx.n2) + ")";
-            case "DECODE":
-                String sqlCase = " CASE " + visitNumericValue(ctx.n1);
+            final FunctionName functionName = FunctionName.valueOf(ctx.fn.getText());
+
+            switch (functionName) {
+            case CONCAT:
+                return " CONCAT(" + visitValue(ctx.v1) + ", " + visitValue(ctx.v2) + ")";
+            case COALESCE:
+                return " COALESCE(" + visitValue(ctx.v1) + ", " + visitValue(ctx.v2) + ")";
+            case DECODE:
+                String sqlCase = " CASE " + visitValue(ctx.v1);
 
                 for (final ParseTree tree : ctx.children) {
                     if (tree instanceof DecodeBranchContext) {
                         final DecodeBranchContext decodeBranchContext = (DecodeBranchContext) tree;
 
-                        sqlCase += " WHEN " + visitNumericValue(decodeBranchContext.n1) + " THEN "
-                                + visitNumericValue(decodeBranchContext.n2);
+                        sqlCase += " WHEN " + visitValue(decodeBranchContext.v1) + " THEN "
+                                + visitValue(decodeBranchContext.v2);
                     }
                 }
 
-                if (ctx.n2 != null) {
-                    sqlCase += " ELSE " + visitNumericValue(ctx.n2) + " END";
+                if (ctx.v2 != null) {
+                    sqlCase += " ELSE " + visitValue(ctx.v2);
                 }
 
+                sqlCase += " END";
+
                 return sqlCase;
-            case "escalaNumeroPuertosBuque":
-                return " portico.escalaNumeroPuertosBuque(itemId, item.fref)";
-            case "escalaUdsGt":
-                return " portico.escalaUdsGt(itemId, item.fref)";
-            case "atraqueUdsGt":
-                return " portico.atraqueUdsGt(itemId, item.fref)";
-            case "escalaValorContador":
-                return " portico.escalaValorContador(itemId, item.fref, " + ctx.cntName.getText() + ")";
+            case acumuladoTeus:
+                return " portico.acumuladoTeus(" + visitValue(ctx.v1) + ", " + visitValue(ctx.v2) + ", "
+                        + visitValue(ctx.v3) + ")";
 
             default:
-                throw new Error("Funcion '" + ctx.fn.getText() + "' no implementada!");
+                throw new Error("Funcion '" + functionName.name() + "' no implementada!");
             }
         }
 
-        if (ctx.prop != null) {
-            return visitProperty(ctx.prop);
-        }
-
-        throw new Error("Expresion Aritmetica no implementada!: " + ctx);
+        throw new Error("Valor No implementado!: " + ctx.getText());
     }
 
     /**

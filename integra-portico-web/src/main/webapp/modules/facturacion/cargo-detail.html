@@ -64,7 +64,8 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a ng-if="mc.hasAccnPath('rgla-create')" class=" btn
-                btn-default" ui-sref="regla-create({crgoId: vm.model.id, fref: vm.model.fref})"><i
+                btn-default"
+                ui-sref="regla-create({crgoId: vm.model.id, fref: vm.model.fref})"><i
                 class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>
@@ -82,6 +83,7 @@
                     <th translate>rgla_orden</th>
                     <th translate>rgla_valorBase</th>
                     <th translate>rgla_formula</th>
+                    <th translate>rgla_condicion</th>
                 </tr>
             </thead>
 
@@ -95,7 +97,8 @@
                     <td ng-bind="(rgla.version.ffin | date: dateFormat)"></td>
                     <td class="number" ng-bind="rgla.version.orden"></td>
                     <td class="number" ng-bind="(rgla.version.valorBase | number:4)"></td>
-                    <td ng-bind="rgla.version.formula"></td>
+                    <td><span ng-bind="rgla.version.formula"></span></td>
+                    <td><span ng-bind="rgla.version.condicion"></span></td>
                 </tr>
             </tbody>
         </table>

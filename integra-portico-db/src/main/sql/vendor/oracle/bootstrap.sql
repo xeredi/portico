@@ -49,3 +49,6 @@ GRANT
 TO porticoadm WITH ADMIN OPTION;
 
 GRANT CONNECT TO portico;
+
+-- DROP USER portico CASCADE;
+-- DROP USER porticoadm CASCADE;

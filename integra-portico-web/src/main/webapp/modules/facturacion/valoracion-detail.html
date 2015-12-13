@@ -228,8 +228,9 @@
         <tbody>
             <tr ng-repeat="vlrl in vm.vlrlList.list track by $index">
                 <td><a ui-sref="valoracion-linea-detail(vlrl)"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td nowrap="nowrap" translate="{{'enti_' + vlrl.rgla.enti.id}}"></td>
-                <td nowrap="nowrap" ng-bind="vlrl.rgla.crgo.codigo"></td>
+                <td nowrap="nowrap"><span ng-if="vlrl.rgla.tipo == 'T'"
+                    ng-bind="'enti_' + vlrl.rgla.enti.id | translate"></span></td>
+                <td nowrap="nowrap"><span ng-if="vlrl.rgla.tipo == 'T'" ng-bind="vlrl.rgla.crgo.codigo"></span></td>
                 <td nowrap="nowrap" ng-bind="vlrl.rgla.codigo"></td>
                 <td ng-bind="vlrl.rgla.tipo" bs-tooltip
                     data-title="{{'ReglaTipo_' + vlrl.rgla.tipo | translate}}"></td>
@@ -237,7 +238,7 @@
                 <td nowrap="nowrap" class="number"><span ng-if="vlrl.rgla.tipo != 'T'">{{vlrl.importeBase
                         | number:2}} &euro;</span></td>
                 <td nowrap="nowrap" class="number">{{vlrl.importe | number:2}} &euro;</td>
-                <td class="number" ng-bind="vlrl.vlrdCount"></td>
+                <td class="number" ng-bind="vlrl.vlrdCount | number"></td>
                 <td ng-bind="vlrl.impuesto.parametro" bs-tooltip data-title="{{vlrl.impuesto.etiqueta}}"></td>
                 <td ng-bind="vlrl.ssrv.numero"></td>
                 <td ng-bind="vlrl.fini | date:'short'"></td>

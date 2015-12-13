@@ -1519,12 +1519,51 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_serie_fcsr TO portico\
 
 
 
+-- tbl_factura_fctr
+CREATE TABLE tbl_factura_fctr (
+	fctr_pk NUMBER(19) NOT NULL
+	, fctr_aspc_pk NUMBER(19) NOT NULL
+	, fctr_pagador_prmt_pk NUMBER(19) NOT NULL
+	, fctr_fcsr_pk NUMBER(19) NOT NULL
+	, fctr_numero INT NOT NULL
+	, fctr_fref TIMESTAMP NOT NULL
+	, fctr_falta TIMESTAMP NOT NULL
+	, fctr_fini TIMESTAMP
+	, fctr_ffin TIMESTAMP
+	, fctr_estado CHAR(2) NOT NULL
+	, fctr_es_suj_pasivo INT NOT NULL
+	, fctr_info1 VARCHAR2(100)
+	, fctr_info2 VARCHAR2(100)
+	, fctr_info3 VARCHAR2(100)
+	, fctr_info4 VARCHAR2(100)
+	, fctr_info5 VARCHAR2(100)
+	, fctr_info6 VARCHAR2(100)
+
+	, CONSTRAINT pk_fctr PRIMARY KEY (fctr_pk)
+
+	, CONSTRAINT fk_fctr_aspc_pk FOREIGN KEY (fctr_aspc_pk)
+		REFERENCES tbl_aspecto_aspc (aspc_pk)
+	, CONSTRAINT fk_fctr_pagador_prmt_pk FOREIGN KEY (fctr_pagador_prmt_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_fctr_fcsr_pk FOREIGN KEY (fctr_fcsr_pk)
+		REFERENCES tbl_factura_serie_fcsr (fcsr_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_factura_fctr FOR porticoadm.tbl_factura_fctr\
+
+CREATE INDEX ix_fctr_aspc_pk ON tbl_factura_fctr (fctr_aspc_pk)\
+CREATE INDEX ix_fctr_pagador_prmt_pk ON tbl_factura_fctr (fctr_pagador_prmt_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_fctr TO portico\
+
+
 -- tbl_valoracion_vlrc
 CREATE TABLE tbl_valoracion_vlrc (
 	vlrc_pk NUMBER(19) NOT NULL
 	, vlrc_srvc_pk NUMBER(19) NOT NULL
 	, vlrc_aspc_pk NUMBER(19) NOT NULL
 	, vlrc_pagador_prmt_pk NUMBER(19) NOT NULL
+	, vlrc_fctr_pk NUMBER(19)
 	, vlrc_fref TIMESTAMP NOT NULL
 	, vlrc_fliq TIMESTAMP NOT NULL
 	, vlrc_falta TIMESTAMP NOT NULL
@@ -1548,6 +1587,8 @@ CREATE TABLE tbl_valoracion_vlrc (
 		REFERENCES tbl_aspecto_aspc (aspc_pk)
 	, CONSTRAINT fk_vlrc_pagador_prmt_pk FOREIGN KEY (vlrc_pagador_prmt_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_vlrc_fctr_pk FOREIGN KEY (vlrc_fctr_pk)
+		REFERENCES tbl_factura_fctr (fctr_pk)
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_valoracion_vlrc FOR porticoadm.tbl_valoracion_vlrc\
@@ -1715,200 +1756,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_tmp_vlrt TO portico\
 
 
 
--- tbl_factura_fctr
-CREATE TABLE tbl_factura_fctr (
-	fctr_pk NUMBER(19) NOT NULL
-	, fctr_aspc_pk NUMBER(19) NOT NULL
-	, fctr_pagador_prmt_pk NUMBER(19) NOT NULL
-	, fctr_fcsr_pk NUMBER(19) NOT NULL
-	, fctr_numero INT NOT NULL
-	, fctr_fref TIMESTAMP NOT NULL
-	, fctr_falta TIMESTAMP NOT NULL
-	, fctr_fini TIMESTAMP
-	, fctr_ffin TIMESTAMP
-	, fctr_estado CHAR(2) NOT NULL
-	, fctr_es_suj_pasivo INT NOT NULL
-	, fctr_info1 VARCHAR2(100)
-	, fctr_info2 VARCHAR2(100)
-	, fctr_info3 VARCHAR2(100)
-	, fctr_info4 VARCHAR2(100)
-	, fctr_info5 VARCHAR2(100)
-	, fctr_info6 VARCHAR2(100)
-
-	, CONSTRAINT pk_fctr PRIMARY KEY (fctr_pk)
-
-	, CONSTRAINT fk_fctr_aspc_pk FOREIGN KEY (fctr_aspc_pk)
-		REFERENCES tbl_aspecto_aspc (aspc_pk)
-	, CONSTRAINT fk_fctr_pagador_prmt_pk FOREIGN KEY (fctr_pagador_prmt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
-	, CONSTRAINT fk_fctr_fcsr_pk FOREIGN KEY (fctr_fcsr_pk)
-		REFERENCES tbl_factura_serie_fcsr (fcsr_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_factura_fctr FOR porticoadm.tbl_factura_fctr\
-
-CREATE INDEX ix_fctr_aspc_pk ON tbl_factura_fctr (fctr_aspc_pk)\
-CREATE INDEX ix_fctr_pagador_prmt_pk ON tbl_factura_fctr (fctr_pagador_prmt_pk)\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_fctr TO portico\
 
 
 
--- tbl_factura_srv_fcts
-CREATE TABLE tbl_factura_srv_fcts (
-	fcts_pk NUMBER(19) NOT NULL
-	, fcts_fctr_pk NUMBER(19) NOT NULL
-	, fcts_srvc_pk NUMBER(19) NOT NULL
-	, fcts_aspc_pk NUMBER(19) NOT NULL
-	, fcts_cod_exen CHAR(1) NOT NULL
-	, fcts_fref TIMESTAMP NOT NULL
-	, fcts_fini TIMESTAMP
-	, fcts_ffin TIMESTAMP
-
-	, CONSTRAINT pk_fcts PRIMARY KEY (fcts_pk)
-
-	, CONSTRAINT fk_fcts_fctr_pk FOREIGN KEY (fcts_fctr_pk)
-		REFERENCES tbl_factura_fctr (fctr_pk)
-	, CONSTRAINT fk_fcts_srvc_pk FOREIGN KEY (fcts_srvc_pk)
-		REFERENCES tbl_servicio_srvc (srvc_pk)
-	, CONSTRAINT fk_fcts_aspc_pk FOREIGN KEY (fcts_aspc_pk)
-		REFERENCES tbl_aspecto_aspc (aspc_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_factura_srv_fcts FOR porticoadm.tbl_factura_srv_fcts\
-
-CREATE INDEX ix_fcts_fctr_pk ON tbl_factura_srv_fcts (fcts_fctr_pk)\
-CREATE INDEX ix_fcts_srvc_pk ON tbl_factura_srv_fcts (fcts_srvc_pk)\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_srv_fcts TO portico\
-
-
-
--- tbl_factura_lin_fctl
-CREATE TABLE tbl_factura_lin_fctl (
-	fctl_pk NUMBER(19) NOT NULL
-	, fctl_padre_pk NUMBER(19) NOT NULL
-	, fctl_fctr_pk NUMBER(19) NOT NULL
-	, fctl_fcts_pk NUMBER(19) NOT NULL
-	, fctl_rgla_pk NUMBER(19) NOT NULL
-	, fctl_impuesto_prmt_pk NUMBER(19) NOT NULL
-	, fctl_ssrv_pk NUMBER(19)
-	, fctl_fini TIMESTAMP
-	, fctl_ffin TIMESTAMP
-
-	, fctl_cuant1 DOUBLE PRECISION
-	, fctl_cuant2 DOUBLE PRECISION
-	, fctl_cuant3 DOUBLE PRECISION
-	, fctl_cuant4 DOUBLE PRECISION
-	, fctl_cuant5 DOUBLE PRECISION
-	, fctl_cuant6 DOUBLE PRECISION
-
-	, fctl_info1 VARCHAR2(100)
-	, fctl_info2 VARCHAR2(100)
-	, fctl_info3 VARCHAR2(100)
-	, fctl_info4 VARCHAR2(100)
-	, fctl_info5 VARCHAR2(100)
-	, fctl_info6 VARCHAR2(100)
-
-	, CONSTRAINT pk_fctl PRIMARY KEY (fctl_pk)
-
-	, CONSTRAINT fk_fctl_padre_pk FOREIGN KEY (fctl_padre_pk)
-		REFERENCES tbl_factura_lin_fctl (fctl_pk)
-	, CONSTRAINT fk_fctl_fctr_pk FOREIGN KEY (fctl_fctr_pk)
-		REFERENCES tbl_factura_fctr (fctr_pk)
-	, CONSTRAINT fk_fctl_fcts_pk FOREIGN KEY (fctl_fcts_pk)
-		REFERENCES tbl_factura_srv_fcts (fcts_pk)
-	, CONSTRAINT fk_fctl_rgla_pk FOREIGN KEY (fctl_rgla_pk)
-		REFERENCES tbl_regla_rgla (rgla_pk)
-	, CONSTRAINT fk_fctl_impuesto_prmt_pk FOREIGN KEY (fctl_impuesto_prmt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
-	, CONSTRAINT fk_fctl_ssrv_pk FOREIGN KEY (fctl_ssrv_pk)
-		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_factura_lin_fctl FOR porticoadm.tbl_factura_lin_fctl\
-
-CREATE INDEX ix_fctl_padre_pk ON tbl_factura_lin_fctl (fctl_padre_pk)\
-CREATE INDEX ix_fctl_fctr_pk ON tbl_factura_lin_fctl (fctl_fctr_pk)\
-CREATE INDEX ix_fctl_fcts_pk ON tbl_factura_lin_fctl (fctl_fcts_pk)\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_lin_fctl TO portico\
-
-
-
--- tbl_factura_det_fctd
-CREATE TABLE tbl_factura_det_fctd (
-	fctd_pk NUMBER(19) NOT NULL
-	, fctd_fctr_pk NUMBER(19) NOT NULL
-	, fctd_fctl_pk NUMBER(19) NOT NULL
-	, fctd_importe_base NUMERIC(10, 2) NOT NULL
-	, fctd_importe NUMERIC(10, 2) NOT NULL
-	, fctd_ssrv_pk NUMBER(19)
-	, fctd_fini TIMESTAMP
-	, fctd_ffin TIMESTAMP
-
-	, fctd_cuant1 DOUBLE PRECISION
-	, fctd_cuant2 DOUBLE PRECISION
-	, fctd_cuant3 DOUBLE PRECISION
-	, fctd_cuant4 DOUBLE PRECISION
-	, fctd_cuant5 DOUBLE PRECISION
-	, fctd_cuant6 DOUBLE PRECISION
-
-	, fctd_info1 VARCHAR2(100)
-	, fctd_info2 VARCHAR2(100)
-	, fctd_info3 VARCHAR2(100)
-	, fctd_info4 VARCHAR2(100)
-	, fctd_info5 VARCHAR2(100)
-	, fctd_info6 VARCHAR2(100)
-
-	, CONSTRAINT pk_fctd PRIMARY KEY (fctd_pk)
-
-	, CONSTRAINT fk_fctd_fctr_pk FOREIGN KEY (fctd_fctr_pk)
-		REFERENCES tbl_factura_fctr (fctr_pk)
-	, CONSTRAINT fk_fctd_fctl_pk FOREIGN KEY (fctd_fctl_pk)
-		REFERENCES tbl_factura_lin_fctl (fctl_pk)
-	, CONSTRAINT fk_fctd_ssrv_pk FOREIGN KEY (fctd_ssrv_pk)
-		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_factura_det_fctd FOR porticoadm.tbl_factura_det_fctd\
-
-CREATE INDEX ix_fctd_fctr_pk ON tbl_factura_det_fctd (fctd_fctr_pk)\
-CREATE INDEX ix_fctd_fctl_pk ON tbl_factura_det_fctd (fctd_fctl_pk)\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_det_fctd TO portico\
-
-
-
--- tbl_servicio_cargo_srcr
-CREATE TABLE tbl_servicio_cargo_srcr (
-	srcr_srvc_pk NUMBER(19) NOT NULL
-	, srcr_ssrv_pk NUMBER(19)
-	, srcr_crgo_pk NUMBER(19) NOT NULL
-	, srcr_fini TIMESTAMP
-	, srcr_ffin TIMESTAMP
-	, srcr_vlrc_pk NUMBER(19)
-	, srcr_fctr_pk NUMBER(19)
-
-	, CONSTRAINT fk_srcr_srvc_pk FOREIGN KEY (srcr_srvc_pk)
-		REFERENCES tbl_servicio_srvc (srvc_pk)
-	, CONSTRAINT fk_srcr_ssrv_pk FOREIGN KEY (srcr_ssrv_pk)
-		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
-	, CONSTRAINT fk_srcr_crgo_pk FOREIGN KEY (srcr_crgo_pk)
-		REFERENCES tbl_cargo_crgo (crgo_pk)
-	, CONSTRAINT fk_srcr_vlrc_pk FOREIGN KEY (srcr_vlrc_pk)
-		REFERENCES tbl_valoracion_vlrc (vlrc_pk)
-	, CONSTRAINT fk_srcr_fctr_pk FOREIGN KEY (srcr_fctr_pk)
-		REFERENCES tbl_factura_fctr (fctr_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_servicio_cargo_srcr FOR porticoadm.tbl_servicio_cargo_srcr\
-
-CREATE INDEX ix_srcr_srvc_pk ON tbl_servicio_cargo_srcr (srcr_srvc_pk)\
-CREATE INDEX ix_srcr_vlrc_pk ON tbl_servicio_cargo_srcr (srcr_vlrc_pk)\
-CREATE INDEX ix_srcr_fctr_pk ON tbl_servicio_cargo_srcr (srcr_fctr_pk)\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_cargo_srcr TO portico\
 
 
 
@@ -2373,15 +2223,11 @@ DROP TABLE tbl_message_mesg\
 DROP TABLE tbl_configuration_conf\
 DROP TABLE tbl_cuadro_trim_cdtr\
 DROP TABLE tbl_estadistica_trim_estr\
-DROP TABLE tbl_servicio_cargo_srcr\
-DROP TABLE tbl_factura_det_fctd\
-DROP TABLE tbl_factura_lin_fctl\
-DROP TABLE tbl_factura_srv_fcts\
-DROP TABLE tbl_factura_fctr\
 DROP TABLE tbl_valoracion_tmp_vlrt\
 DROP TABLE tbl_valoracion_det_vlrd\
 DROP TABLE tbl_valoracion_lin_vlrl\
 DROP TABLE tbl_valoracion_vlrc\
+DROP TABLE tbl_factura_fctr\
 DROP TABLE tbl_factura_serie_fcsr\
 DROP TABLE tbl_aspecto_cargo_version_ascv\
 DROP TABLE tbl_aspecto_cargo_ascr\

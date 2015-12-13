@@ -21,7 +21,6 @@ import xeredi.argo.model.facturacion.dao.FacturaDetalleDAO;
 import xeredi.argo.model.facturacion.dao.FacturaLineaDAO;
 import xeredi.argo.model.facturacion.dao.FacturaSerieDAO;
 import xeredi.argo.model.facturacion.dao.FacturaServicioDAO;
-import xeredi.argo.model.facturacion.dao.ServicioCargoDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionDetalleDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionLineaDAO;
@@ -36,7 +35,6 @@ import xeredi.argo.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
 import xeredi.argo.model.facturacion.vo.FacturaServicioVO;
 import xeredi.argo.model.facturacion.vo.FacturadorContextoVO;
-import xeredi.argo.model.facturacion.vo.ServicioCargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
@@ -103,7 +101,6 @@ public class FacturadorBO {
             final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-            final ServicioCargoDAO srcrDAO = session.getMapper(ServicioCargoDAO.class);
 
             final FacturadorContextoVO contextoVO = new FacturadorContextoVO();
 
@@ -295,12 +292,6 @@ public class FacturadorBO {
 
             LOG.info("Marcar como facturado en servicio_cargo");
             // FIXME Marcar como facturado en servicio_cargo
-
-            final ServicioCargoCriterioVO srcrCriterioVO = new ServicioCargoCriterioVO();
-
-            srcrCriterioVO.setVlrcIds(vlrcIds);
-
-            srcrDAO.deleteValoracion(srcrCriterioVO);
 
             LOG.info("Borrado de Valoraciones");
             vlrdDAO.deleteList(vlrdCriterioVO);

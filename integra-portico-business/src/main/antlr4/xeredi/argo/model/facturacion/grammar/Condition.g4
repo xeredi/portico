@@ -12,18 +12,27 @@ condition
 		'AND'
 		| 'OR'
 	) cond2 = condition
-	| value1 = value relatOp = RELATIONAL_OP value2 = value
-	| text1 = textValue likeOp = 'LIKE' text2 = textValue
-	| value1 = value inOp =
+	| v1 = value relatOp = RELATIONAL_OP v2 = value
+	| v1 = value likeOp =
+	(
+		'LIKE'
+		| 'NOT LIKE'
+	) v2 = value
+	| v1 = value inOp =
 	(
 		'IN'
 		| 'NOT IN'
 	) cteList = constantList
-	| value1 = value nullOp =
+	| v1 = value nullOp =
 	(
 		'IS NULL'
 		| 'IS NOT NULL'
 	)
+	| v1 = value betweenOp =
+	(
+		'BETWEEN'
+		| 'NOT BETWEEN'
+	) v2 = value 'AND' v3 = value
 ;
 
 constantList

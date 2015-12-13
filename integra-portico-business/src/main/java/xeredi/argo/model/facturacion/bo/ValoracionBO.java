@@ -9,14 +9,11 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import com.google.common.base.Preconditions;
-
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.dao.AspectoDAO;
 import xeredi.argo.model.facturacion.dao.ReglaDAO;
-import xeredi.argo.model.facturacion.dao.ServicioCargoDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionCargoDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionDetalleDAO;
@@ -27,7 +24,6 @@ import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
-import xeredi.argo.model.facturacion.vo.ServicioCargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleCriterioVO;
@@ -42,6 +38,8 @@ import xeredi.argo.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -118,7 +116,6 @@ public class ValoracionBO {
         Preconditions.checkArgument(!ids.isEmpty());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final ServicioCargoDAO srcrDAO = session.getMapper(ServicioCargoDAO.class);
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
             final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
@@ -126,14 +123,10 @@ public class ValoracionBO {
             final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
             final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
             final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();
-            final ServicioCargoCriterioVO srcrCriterioVO = new ServicioCargoCriterioVO();
 
-            srcrCriterioVO.setVlrcIds(ids);
             vlrcCriterioVO.setIds(ids);
             vlrlCriterioVO.setVlrc(vlrcCriterioVO);
             vlrdCriterioVO.setVlrl(vlrlCriterioVO);
-
-            srcrDAO.deleteValoracion(srcrCriterioVO);
 
             vlrdDAO.deleteList(vlrdCriterioVO);
             vlrlDAO.deleteList(vlrlCriterioVO);
