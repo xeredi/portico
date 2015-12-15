@@ -161,6 +161,8 @@ public enum Entidad {
     TIPO_PRESTADOR_SERVICIO(20105L), /** The tipo residuo. */
     TIPO_RESIDUO(20088L), /** The tipo servicio trafico. */
     TIPO_SERVICIO_TRAFICO(20087L), /** The tipo suministro. */
+    TIPO_SERV_TIPO_TRAF(24020L),
+    /** The tipo suministro. */
     TIPO_SUMINISTRO(20024L), /** The tipo superficie. */
     TIPO_SUPERFICIE(20020L), /** The tipo superficie bien. */
     TIPO_SUPERFICIE_BIEN(20073L), /** The tipo usuario. */
@@ -172,7 +174,7 @@ public enum Entidad {
     ZONA_COSTERA_EEE(20013L), /** The zona deposito. */
     ZONA_DEPOSITO(20111L), /** The zona pesca. */
     ZONA_PESCA(20030L), /** The zona portuaria. */
-    ZONA_PORTUARIA(20072L),;
+    ZONA_PORTUARIA(20072L), ;
 
     /** The id. */
     private final long id;

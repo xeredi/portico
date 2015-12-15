@@ -13,8 +13,8 @@
         <result column="vlri_importe_impuesto" property="importeImpuesto" />
 
         <association property="impuesto" javaType="ParametroVO">
-            <result column="vlri_prmt_pk" property="id" />
-            <result column="vlri_prmt_parametro" property="parametro" />
+            <result column="vlri_pk" property="id" />
+            <result column="vlri_parametro" property="parametro" />
             <result column="vlri_tppr_pk" property="entiId" />
             <result column="vlri_descripcion" property="texto" />
             <result column="vlrc_fref" property="fref" />
@@ -29,9 +29,9 @@
     <![CDATA[
         SELECT
             vlrc_pk, vlrc_fref
-            , prmt_pk AS vlri_prmt_pk
-            , prmt_parametro AS vlri_prmt_parametro
-            , prmt_tppr_pk AS vlri_prmt_tppr_pk
+            , prmt_pk AS vlri_pk
+            , prmt_parametro AS vlri_parametro
+            , prmt_tppr_pk AS vlri_tppr_pk
             , prvr_pk AS vlri_prvr_pk
             , vlri_porcentaje
             , SUM(vlri_importe_base) AS vlri_importe_base

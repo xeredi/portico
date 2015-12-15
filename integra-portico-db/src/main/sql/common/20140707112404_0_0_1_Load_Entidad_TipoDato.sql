@@ -1657,6 +1657,13 @@ INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES 
 INSERT INTO tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24016, 20118, 20114, 0, 0)\
 	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20118, 24016, 2)\
 
+-- Servicio de Trafico
+-- Trafico
+INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (24020, 'B', 1, 1, 1, 1, 'TIPO_SERV_TIPO_TRAF')\
+INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 24020, 'Tráfico')\
+INSERT INTO tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24020, 20087, 20086, 0, 1)\
+	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20087, 24020, 1)\
+
 
 -- Permisos
 INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
@@ -2280,6 +2287,7 @@ BEGIN
 	eraseTpsp(24014);
 	eraseTpsp(24015);
 	eraseTpsp(24016);
+	eraseTpsp(24020);
 
 	/* FIXME Super chapu mercancia-UC dependencia circular */
 	DELETE FROM tbl_parametro_dato_prdt

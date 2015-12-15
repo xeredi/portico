@@ -12,5 +12,9 @@ public enum FunctionName {
     /** The coalesce. */
     COALESCE,
     /** The acumulado teus. */
-    acumuladoTeus;
+    acumuladoTeus,
+    /** The valor servicio. */
+    valorServicio,
+
+    ;
 }

@@ -16,6 +16,12 @@ public enum Attribute {
     ANNO,
     /** The numero. */
     NUMERO,
+    /** The subp pk. */
+    SUBP_PK,
+    /** The srvc pk. */
+    SRVC_PK,
+    /** The pk. */
+    PK,
     /** The estado. */
     ESTADO;
 }

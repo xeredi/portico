@@ -128,3 +128,67 @@ GRANT EXECUTE ON acumuladoTeus TO portico;
 
 SELECT portico.acumuladoTeus('0062', '01012015', SYSDATE) AS teus2 
 FROM dual;
+
+
+
+
+
+
+DROP FUNCTION valorServicio;
+
+CREATE FUNCTION valorServicio(tipoServTraf VARCHAR, blId INTEGER) RETURN VARCHAR RESULT_CACHE IS
+	resultValue VARCHAR(100);
+BEGIN
+SELECT spdt_cadena INTO resultValue
+FROM tbl_subparametro_dato_spdt
+WHERE
+    spdt_tpdt_pk = portico.getTipoDato('CADENA_01')
+    AND spdt_spvr_pk = (
+        SELECT spvr_pk
+        FROM tbl_subparametro_version_spvr
+        WHERE 
+            spvr_sprm_pk = (
+                SELECT sprm_pk
+                FROM tbl_subparametro_sprm
+                WHERE 
+                    sprm_tpsp_pk = portico.getEntidad('TIPO_SERV_TIPO_TRAF')
+                    AND sprm_prmt_pk = (
+                        SELECT prmt_pk FROM tbl_parametro_prmt
+                        WHERE prmt_tppr_pk = portico.getEntidad('TIPO_SERVICIO_TRAFICO')
+                            AND prmt_parametro = tipoServTraf
+                    )
+                    AND sprm_prmt_dep_pk = (
+                        SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
+                        WHERE ssdt_tpdt_pk = portico.getTipoDato('SERV_TRAF')
+                            AND ssdt_ssrv_pk = blId
+                    )
+            )
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_servicio_srvc
+                WHERE 
+                    srvc_pk = (
+                        SELECT ssrv_srvc_pk 
+                        FROM tbl_subservicio_ssrv
+                        WHERE ssrv_pk = blId
+                    )
+                    AND srvc_fref BETWEEN spvr_fini AND COALESCE(spvr_ffin, srvc_fref)
+            )
+    );
+    
+    RETURN resultValue;
+END;
+
+CREATE OR REPLACE SYNONYM portico.valorServicio FOR porticoadm.valorServicio;
+GRANT EXECUTE ON valorServicio TO portico;
+
+SELECT valorServicio('RE', 1088304) FROM DUAL;
+
+
+
+
+SELECT ssrv_srvc_pk, COUNT(1)
+FROM tbl_subservicio_ssrv
+HAVING COUNT(1) > 5000
+GROUP BY ssrv_srvc_pk
+;

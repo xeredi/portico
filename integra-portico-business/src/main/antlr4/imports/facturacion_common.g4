@@ -10,6 +10,7 @@ value
 	| fn = 'CONCAT' '(' v1 = value ',' v2 = value ')'
 	| fn = 'DECODE' '(' v1 = value decodeBranch* ',' v2 = value ')'
 	| fn = 'acumuladoTeus' '(' v1 = value ',' v2 = value ',' v3 = value ')'
+	| fn = 'valorServicio' '(' v1 = value ',' v2 = value ')'
 ;
 
 decodeBranch

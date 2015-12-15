@@ -124,6 +124,8 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
             case acumuladoTeus:
                 return " portico.acumuladoTeus(" + visitValue(ctx.v1) + ", " + visitValue(ctx.v2) + ", "
                         + visitValue(ctx.v3) + ")";
+            case valorServicio:
+                return " portico.valorServicio(" + visitValue(ctx.v1) + ", " + visitValue(ctx.v2) + ")";
 
             default:
                 throw new Error("Funcion '" + functionName.name() + "' no implementada!");

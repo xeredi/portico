@@ -166,7 +166,7 @@
             CASE
                 WHEN rgla_tipo = 'C'
                 THEN importe_base * (valor_base - 1)
-                WHEN rgla_tipo = 'B'
+                WHEN rgla_tipo = 'D'
                 THEN importe_base * (- valor_base) / 100
                 ELSE 0
             END
@@ -411,7 +411,7 @@
             CASE
                 WHEN rgla_tipo = 'C'
                 THEN importe_base * (valor_base - 1)
-                WHEN rgla_tipo = 'B'
+                WHEN rgla_tipo = 'D'
                 THEN importe_base * (- valor_base) / 100
                 ELSE 0
             END

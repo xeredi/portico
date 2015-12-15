@@ -40,6 +40,7 @@
                 <th translate="vlrc_fliq"></th>
                 <th translate="fini"></th>
                 <th translate="ffin"></th>
+                <th translate="falta"></th>
                 <th translate="vlrc_codExencion"></th>
 
                 <th translate="vlrc_info1"></th>
@@ -62,9 +63,10 @@
                 <td><i class="glyphicon glyphicon-{{(item.sujPasivo ? 'ok' : 'remove')}}"></i></td>
                 <td nowrap="nowrap" class="number">{{(item.importe | number:2)}} &euro;</td>
                 <td nowrap="nowrap" class="number">{{(item.impuesto | number:2)}} &euro;</td>
-                <td ng-bind="(item.fliq | date: dateFormat)"></td>
-                <td ng-bind="(item.fini | date: datetimeFormat)"></td>
-                <td ng-bind="(item.ffin | date: datetimeFormat)"></td>
+                <td nowrap="nowrap" ng-bind="(item.fliq | date: dateFormat)"></td>
+                <td nowrap="nowrap" ng-bind="(item.fini | date: datetimeFormat)"></td>
+                <td nowrap="nowrap" ng-bind="(item.ffin | date: datetimeFormat)"></td>
+                <td nowrap="nowrap" ng-bind="(item.falta | date: datetimeFormat)"></td>
                 <td ng-bind="item.codExencion" bs-tooltip
                     data-title="{{('cdrf_' + vm.tpdtCodExencion.id + '_' + item.codExencion | translate)}}"></td>
 
