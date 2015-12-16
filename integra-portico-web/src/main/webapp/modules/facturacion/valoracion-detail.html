@@ -203,6 +203,7 @@
                 <th translate="rgla_valorBase"></th>
                 <th translate="vlrl_importeBase"></th>
                 <th translate="vlrl_importe"></th>
+                <th translate="vlrl_subtotal"></th>
                 <th translate="vlrl_vlrdCount"></th>
                 <th translate="vlrl_impuesto"></th>
                 <th translate="ssrv"></th>
@@ -238,6 +239,8 @@
                 <td nowrap="nowrap" class="number"><span ng-if="vlrl.rgla.tipo != 'T'">{{vlrl.importeBase
                         | number:2}} &euro;</span></td>
                 <td nowrap="nowrap" class="number">{{vlrl.importe | number:2}} &euro;</td>
+                <td nowrap="nowrap" class="number"><span ng-if="vlrl.rgla.tipo == 'T'">{{vlrl.subtotal
+                        | number:2}} &euro;</span></td>
                 <td class="number" ng-bind="vlrl.vlrdCount | number"></td>
                 <td ng-bind="vlrl.impuesto.parametro" bs-tooltip data-title="{{vlrl.impuesto.etiqueta}}"></td>
                 <td ng-bind="vlrl.ssrv.numero"></td>

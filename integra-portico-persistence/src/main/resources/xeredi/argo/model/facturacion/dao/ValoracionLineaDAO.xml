@@ -16,6 +16,7 @@
 
 		<result column="vlrl_importe_base" property="importeBase" />
 		<result column="vlrl_importe" property="importe" />
+        <result column="vlrl_subtotal" property="subtotal" />
 		<result column="vlrl_vlrd_count" property="vlrdCount" />
 
 		<result column="vlrl_info1" property="info1" />
@@ -139,6 +140,21 @@
 		    , COALESCE((SELECT SUM(vlrd_importe_base) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk), 0) AS vlrl_importe_base
 		    , COALESCE((SELECT SUM(vlrd_importe) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk), 0) AS vlrl_importe
 		    , COALESCE((SELECT COUNT(1) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk), 0) AS vlrl_vlrd_count
+            , (CASE
+                WHEN rgla_tipo = 'T'
+                THEN (
+                    SELECT SUM(vlrd_importe) FROM tbl_valoracion_det_vlrd
+                    WHERE
+                        EXISTS (
+                            SELECT 1 FROM tbl_valoracion_lin_vlrl aux
+                            WHERE
+                                aux.vlrl_pk = vlrd_vlrl_pk
+                                AND aux.vlrl_vlrc_pk = vlrl.vlrl_vlrc_pk
+                                AND aux.vlrl_padre_pk = vlrl.vlrl_pk
+                        )
+                )
+                ELSE NULL
+            END) AS vlrl_subtotal
 
 		    , vlrc_fref AS vlrl_fref
 		    , vlrc_srvc_pk
@@ -239,7 +255,7 @@
 				vlrc_pk = vlrl_vlrc_pk
 			INNER JOIN tbl_regla_rgla ON
 				rgla_pk = vlrl_rgla_pk
-			INNER JOIN tbl_parametro_prmt ON
+			LEFT JOIN tbl_parametro_prmt ON
 				prmt_pk = vlrl_impuesto_prmt_pk
 			LEFT JOIN tbl_regla_version_rglv ON
 				rglv_rgla_pk = vlrl_rgla_pk

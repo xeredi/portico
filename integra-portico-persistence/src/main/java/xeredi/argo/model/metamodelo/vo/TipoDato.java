@@ -119,7 +119,7 @@ public enum TipoDato {
     BUQUE(45010L), /** The buque pesca. */
     BUQUE_PESCA(45105L), /** The comprador pesca. */
     COMPRADOR_PESCA(45220L), /** The conc cuad mes. */
-    CONC_CUAD_MES(43560L), /** The EMBARCACION_DEP. */
+    CONC_CUAD_MES(43560L), DESC_ADIC(45360L), /** The EMBARCACION_DEP. */
     EMBARCACION_DEP(45470L), /** The familia pesca. */
     ESPECIE_PESCA(45215L), /** The familia pesca. */
     FAM_PESCA(45090L), /** The grupo arancelario. */
@@ -255,7 +255,7 @@ public enum TipoDato {
     // Tipos de Servicio
     /** The manifiesto. */
     MANIFIESTO(47000L), /** The escala. */
-    ESCALA(47001L),;
+    ESCALA(47001L), ;
 
     /** The id. */
     private final long id;

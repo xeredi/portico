@@ -34,6 +34,9 @@ public final class ValoracionLineaVO {
     /** The importe. */
     private Double importe;
 
+    /** The subtotal. */
+    private Double subtotal;
+
     /** The vlrd count. */
     private Integer vlrdCount;
 
@@ -569,5 +572,24 @@ public final class ValoracionLineaVO {
      */
     public void setSrvcId(final Long value) {
         srvcId = value;
+    }
+
+    /**
+     * Gets the subtotal.
+     *
+     * @return the subtotal
+     */
+    public Double getSubtotal() {
+        return subtotal;
+    }
+
+    /**
+     * Sets the subtotal.
+     *
+     * @param value
+     *            the new subtotal
+     */
+    public void setSubtotal(Double value) {
+        this.subtotal = value;
     }
 }
