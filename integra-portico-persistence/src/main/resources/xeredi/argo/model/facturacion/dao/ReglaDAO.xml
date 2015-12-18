@@ -85,6 +85,11 @@
 		    ) AS enti_tipo
 
             , #{fechaVigencia} AS rgla_fref
+            , CASE rgla_tipo
+                WHEN 'T' THEN 1
+                WHEN 'C' THEN 2
+                WHEN 'D' THEN 3
+            END AS rgla_tipo_prioridad
 		FROM
 		    tbl_regla_rgla
 		    INNER JOIN tbl_regla_version_rglv ON
@@ -175,7 +180,7 @@
     <select id="selectList" parameterType="ReglaCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
-        ORDER BY rgla_crgo_pk, rgla_enti_pk, rgla_tipo, rglv_orden
+        ORDER BY rgla_crgo_pk, rgla_enti_pk, rgla_tipo_prioridad, rglv_orden
     </select>
 
     <select id="selectObject" parameterType="ReglaCriterioVO" resultMap="ResultMap">

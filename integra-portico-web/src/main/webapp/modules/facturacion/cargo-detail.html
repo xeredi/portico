@@ -91,7 +91,7 @@
                 <tr ng-repeat="rgla in vm.rglaList track by $index">
                     <td><a ui-sref="regla-detail(rgla)"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td ng-bind="rgla.codigo"></td>
-                    <td ng-bind="rgla.tipo"></td>
+                    <td ng-bind="rgla.tipo" bs-tooltip data-title="{{'ReglaTipo_' + rgla.tipo | translate}}"></td>
                     <td ng-bind="('enti_' + rgla.enti.id | translate)"></td>
                     <td ng-bind="(rgla.version.fini | date: dateFormat)"></td>
                     <td ng-bind="(rgla.version.ffin | date: dateFormat)"></td>

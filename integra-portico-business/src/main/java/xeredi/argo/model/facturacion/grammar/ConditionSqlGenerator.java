@@ -80,6 +80,11 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
             return visitValue(ctx.v1).toString() + ' ' + ctx.inOp.getText() + ' ' + ctx.cteList.getText();
         }
 
+        if (ctx.allAnyOp != null) {
+            return visitValue(ctx.v1).toString() + ' ' + ctx.relatOp.getText() + ' ' + ctx.allAnyOp.getText() + ' '
+                    + ctx.cteList.getText();
+        }
+
         if (ctx.nullOp != null) {
             return visitValue(ctx.v1).toString() + ' ' + ctx.nullOp.getText();
         }

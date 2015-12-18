@@ -105,9 +105,9 @@ public final class PathSqlGenerator extends PathBaseVisitor {
             entiDetailTmp = EntidadProxy.select(tpssDetail.getEnti().getTpsrId());
 
             sqlElement
-            .append("SELECT ")
-            .append(lastPathElement && generateLabel ? "CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero)))"
-                    : "srvc_pk").append(" FROM tbl_servicio_srvc WHERE srvc_pk = ");
+                    .append("SELECT ")
+                    .append(lastPathElement && generateLabel ? "CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero)))"
+                            : "srvc_pk").append(" FROM tbl_servicio_srvc WHERE srvc_pk = ");
             sqlElement.append(firstPathElement ? "item.ssrv_srvc_pk" : "#{any}");
         }
         if (ctx.ELEMENT_PARENT() != null) {
@@ -118,8 +118,8 @@ public final class PathSqlGenerator extends PathBaseVisitor {
             entiDetailTmp = EntidadProxy.select(Entidad.valueOf(ctx.ID().getText()).getId());
 
             sqlElement
-            .append("SELECT ssss_ssrvp_pk FROM tbl_subserv_subserv_ssss WHERE EXISTS (SELECT 1 FROM tbl_subservicio_ssrv WHERE ssrv_pk = ssss_ssrvp_pk AND ssrv_tpss_pk = portico.getEntidad('"
-                    + ctx.ID().getText() + "')) AND ssss_ssrvh_pk = ");
+                    .append("SELECT ssss_ssrvp_pk FROM tbl_subserv_subserv_ssss WHERE EXISTS (SELECT 1 FROM tbl_subservicio_ssrv WHERE ssrv_pk = ssss_ssrvp_pk AND ssrv_tpss_pk = portico.getEntidad('"
+                            + ctx.ID().getText() + "')) AND ssss_ssrvh_pk = ");
             sqlElement.append(firstPathElement ? "item.ssrv_pk" : "(#{any})");
         }
         if (ctx.ELEMENT_DATA() != null) {
@@ -143,46 +143,75 @@ public final class PathSqlGenerator extends PathBaseVisitor {
 
             Preconditions.checkNotNull(entd);
 
+            String fieldPrefix = null;
+
             switch (entiDetailTmp.getEnti().getTipo()) {
             case T:
-                sqlElement.append("SELECT ");
+                fieldPrefix = "srdt_";
 
-                switch (entd.getTpdt().getTipoElemento()) {
-                case BO:
-                case NE:
-                    sqlElement.append("srdt_nentero");
+                break;
+            case S:
+                fieldPrefix = "ssdt_";
 
-                    break;
-                case ND:
-                    sqlElement.append("srdt_ndecimal");
+                break;
+            case P:
+                fieldPrefix = "prdt_";
 
-                    break;
-                case FE:
-                case FH:
-                    sqlElement.append("srdt_fecha");
+                break;
+            default:
+                throw new Error("Entidad '" + entiDetailTmp.getEnti().getTipo() + "' no valida");
+            }
 
-                    break;
-                case TX:
-                case CR:
-                    sqlElement.append("srdt_cadena");
+            sqlElement.append("SELECT ");
 
-                    break;
-                case PR:
-                    sqlElement
-                    .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE((SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = srdt_prmt_pk)"
-                            : "srdt_prmt_pk");
+            switch (entd.getTpdt().getTipoElemento()) {
+            case BO:
+            case NE:
+                sqlElement.append(fieldPrefix).append("nentero");
 
-                    break;
-                case SR:
-                    sqlElement
-                    .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero))) FROM tbl_servicio_srvc WHERE srvc_pk = srdt_srvc_dep_pk)"
-                            : "srdt_srvc_dep_pk");
+                break;
+            case ND:
+                sqlElement.append(fieldPrefix).append("ndecimal");
 
-                    break;
-                default:
-                    throw new Error("Tipo de dato '" + entd.getTpdt().getTipoElemento() + "' no valido");
-                }
+                break;
+            case FE:
+            case FH:
+                sqlElement.append(fieldPrefix).append("fecha");
 
+                break;
+            case TX:
+                sqlElement.append(fieldPrefix).append("cadena");
+
+                break;
+            case CR:
+                sqlElement
+                        .append(lastPathElement && generateLabel ? "(SELECT CONCAT(cdrf_valor, CONCAT(' - ', i18n_text))"
+                                + " FROM tbl_codigo_ref_cdrf INNER JOIN tbl_i18n_i18n ON i18n_ext_pk = cdrf_pk"
+                                + " WHERE i18n_pref = 'cdrf' AND i18n_lang = 'es' AND cdrf_tpdt_pk = "
+                                + entd.getTpdt().getId() + " AND cdrf_valor = " + fieldPrefix + "cadena)"
+                                : fieldPrefix + "cadena");
+
+                break;
+            case PR:
+                sqlElement
+                        .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE((SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = "
+                                + fieldPrefix + "prmt_pk)"
+                                : fieldPrefix + "prmt_pk");
+
+                break;
+            case SR:
+                sqlElement
+                        .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero))) FROM tbl_servicio_srvc WHERE srvc_pk = "
+                                + fieldPrefix + "srvc_dep_pk)"
+                                : fieldPrefix + "srvc_dep_pk");
+
+                break;
+            default:
+                throw new Error("Tipo de dato '" + entd.getTpdt().getTipoElemento() + "' no valido");
+            }
+
+            switch (entiDetailTmp.getEnti().getTipo()) {
+            case T:
                 sqlElement.append(" FROM tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = portico.getTipoDato('"
                         + ctx.ID().getText() + "') AND srdt_srvc_pk = ");
                 sqlElement
@@ -191,80 +220,16 @@ public final class PathSqlGenerator extends PathBaseVisitor {
 
                 break;
             case S:
-                sqlElement.append("SELECT ");
-
-                switch (entd.getTpdt().getTipoElemento()) {
-                case BO:
-                case NE:
-                    sqlElement.append("ssdt_nentero");
-
-                    break;
-                case ND:
-                    sqlElement.append("ssdt_ndecimal");
-
-                    break;
-                case FE:
-                case FH:
-                    sqlElement.append("ssdt_fecha");
-
-                    break;
-                case TX:
-                case CR:
-                    sqlElement.append("ssdt_cadena");
-
-                    break;
-                case PR:
-                    sqlElement
-                    .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE((SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = ssdt_prmt_pk)"
-                            : "ssdt_prmt_pk");
-
-                    break;
-                default:
-                    throw new Error("Tipo de dato '" + entd.getTpdt().getTipoElemento() + "' no valido");
-                }
-
                 sqlElement.append(" FROM tbl_subservicio_dato_ssdt WHERE ssdt_tpdt_pk = portico.getTipoDato('"
                         + ctx.ID().getText() + "') AND ssdt_ssrv_pk = ");
                 sqlElement.append(firstPathElement ? "item.ssrv_pk" : "(#{any})");
 
                 break;
             case P:
-                sqlElement.append("SELECT ");
-
-                switch (entd.getTpdt().getTipoElemento()) {
-                case BO:
-                case NE:
-                    sqlElement.append("prdt_nentero");
-
-                    break;
-                case ND:
-                    sqlElement.append("prdt_ndecimal");
-
-                    break;
-                case FE:
-                case FH:
-                    sqlElement.append("prdt_fecha");
-
-                    break;
-                case TX:
-                case CR:
-                    sqlElement.append("prdt_cadena");
-
-                    break;
-                case PR:
-                    sqlElement
-                    .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE((SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = prdt_prmt_pk)"
-                            : "prdt_prmt_pk");
-
-                    break;
-                default:
-                    throw new Error("Tipo de dato '" + entd.getTpdt().getTipoElemento() + "' no valido");
-                }
-
                 sqlElement
-                .append(" FROM tbl_parametro_dato_prdt WHERE prdt_tpdt_pk = portico.getTipoDato('"
-                        + ctx.ID().getText()
-                        + "') AND prdt_prvr_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE item.fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, item.fref) AND prvr_prmt_pk = ANY(#{any}) )");
+                        .append(" FROM tbl_parametro_dato_prdt WHERE prdt_tpdt_pk = portico.getTipoDato('"
+                                + ctx.ID().getText()
+                                + "') AND prdt_prvr_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE item.fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, item.fref) AND prvr_prmt_pk = ANY(#{any}) )");
 
                 break;
             default:

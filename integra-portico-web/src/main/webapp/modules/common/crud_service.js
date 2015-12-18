@@ -314,11 +314,11 @@ function CrudService($http, $q, $state) {
         }
 
         function redirectAfterSave(accion, item, detailStateName) {
-            accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go(detailStateName, item, {
-                location : 'replace'
-            });
+        	accion == 'edit' ? setTimeout(function() {
+        		window.history.back();
+        	}, 0) : $state.go(detailStateName, item, {
+        		location : 'replace'
+        	});
         }
 
         function tabSelected(tab) {

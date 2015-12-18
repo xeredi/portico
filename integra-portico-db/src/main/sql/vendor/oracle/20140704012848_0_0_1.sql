@@ -1636,6 +1636,8 @@ CREATE TABLE tbl_valoracion_lin_vlrl (
 CREATE OR REPLACE SYNONYM portico.tbl_valoracion_lin_vlrl FOR porticoadm.tbl_valoracion_lin_vlrl\
 
 CREATE INDEX ix_vlrl_vlrc_pk ON tbl_valoracion_lin_vlrl (vlrl_vlrc_pk)\
+CREATE INDEX ix_vlrl_padre_pk ON tbl_valoracion_lin_vlrl (vlrl_padre_pk)\
+CREATE INDEX ix_vlrl_ssrv_pk ON tbl_valoracion_lin_vlrl (vlrl_ssrv_pk)\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_lin_vlrl TO portico\
 
@@ -1684,6 +1686,8 @@ CREATE OR REPLACE SYNONYM portico.tbl_valoracion_det_vlrd FOR porticoadm.tbl_val
 
 CREATE INDEX ix_vlrd_vlrc_pk ON tbl_valoracion_det_vlrd (vlrd_vlrc_pk)\
 CREATE INDEX ix_vlrd_vlrl_pk ON tbl_valoracion_det_vlrd (vlrd_vlrl_pk)\
+CREATE INDEX ix_vlrd_padre_pk ON tbl_valoracion_det_vlrd (vlrd_padre_pk)\
+CREATE INDEX ix_vlrd_ssrv_pk ON tbl_valoracion_det_vlrd (vlrd_ssrv_pk)\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_det_vlrd TO portico\
 

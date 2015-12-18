@@ -23,6 +23,11 @@ condition
 		'IN'
 		| 'NOT IN'
 	) cteList = constantList
+	| v1 = value relatOp = RELATIONAL_OP allAnyOp =
+	(
+		'ALL'
+		| 'ANY'
+	) cteList = constantList
 	| v1 = value nullOp =
 	(
 		'IS NULL'

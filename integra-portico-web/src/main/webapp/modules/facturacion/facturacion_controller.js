@@ -361,6 +361,8 @@ function CargoEditController($state, $stateParams, pageTitleService,
 	function save() {
 		CargoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
 				function(data) {
+					data.model.fref = data.model.version.fini;
+
 					CargoService.redirectAfterSave(vm.accion, data.model,
 							"cargo-detail");
 				});
@@ -474,6 +476,8 @@ function ReglaEditController($state, $stateParams, pageTitleService,
 	function save() {
 		ReglaService.save(vm.accion, vm.model).then(
 				function(data) {
+					data.model.fref = data.model.version.fini;
+
 					ReglaService.redirectAfterSave(vm.accion, data.model,
 							"regla-detail");
 				});
