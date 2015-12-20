@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.NonNull;
+
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -30,31 +32,25 @@ import xeredi.argo.model.facturacion.dao.ValoracionDetalleDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionLineaDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionTemporalDAO;
 import xeredi.argo.model.facturacion.dao.ValoradorContextoDAO;
-import xeredi.argo.model.facturacion.grammar.ConditionLexer;
-import xeredi.argo.model.facturacion.grammar.ConditionParser;
-import xeredi.argo.model.facturacion.grammar.ConditionSqlGenerator;
-import xeredi.argo.model.facturacion.grammar.FormulaLexer;
-import xeredi.argo.model.facturacion.grammar.FormulaParser;
-import xeredi.argo.model.facturacion.grammar.FormulaSqlGenerator;
-import xeredi.argo.model.facturacion.grammar.PathLexer;
-import xeredi.argo.model.facturacion.grammar.PathParser;
-import xeredi.argo.model.facturacion.grammar.PathSqlGenerator;
+import xeredi.argo.model.facturacion.grammar.ExpressionLexer;
+import xeredi.argo.model.facturacion.grammar.ExpressionParser;
+import xeredi.argo.model.facturacion.grammar.ExpressionSqlGenerator;
+import xeredi.argo.model.facturacion.grammar.PathType;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
+import xeredi.argo.model.facturacion.vo.AspectoVersionVO;
 import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 import xeredi.argo.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
+import xeredi.argo.model.facturacion.vo.ReglaVersionVO;
 import xeredi.argo.model.facturacion.vo.ValoracionAgregadaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaAgregadaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionTemporalVO;
 import xeredi.argo.model.facturacion.vo.ValoradorContextoVO;
-import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
-import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.servicio.dao.ServicioDAO;
 import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
@@ -556,31 +552,35 @@ public class ValoradorBO {
      * @param rgla
      *            the rgla
      */
-    private void generateSql(final ReglaVO rgla) {
-        final AbstractEntidadDetailVO entiDetail = EntidadProxy.select(rgla.getEnti().getId());
+    private void generateSql(final @NonNull ReglaVO rgla) {
+        Preconditions.checkNotNull(rgla.getEnti());
+        Preconditions.checkNotNull(rgla.getEnti().getId());
+        Preconditions.checkNotNull(rgla.getVersion());
 
-        rgla.getVersion().setPathImpuestoSql(generateSqlPath(entiDetail, rgla.getVersion().getPathImpuesto(), false));
-        rgla.getVersion().setPathPagadorSql(generateSqlPath(entiDetail, rgla.getVersion().getPathPagador(), false));
-        rgla.getVersion().setPathEsSujPasivoSql(
-                generateSqlPath(entiDetail, rgla.getVersion().getPathEsSujPasivo(), false));
-        rgla.getVersion().setPathCodExenSql(generateSqlPath(entiDetail, rgla.getVersion().getPathCodExen(), false));
+        final Long entiId = rgla.getEnti().getId();
+        final ReglaVersionVO rglv = rgla.getVersion();
 
-        rgla.getVersion().setPathInfo1Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathInfo1(), true));
-        rgla.getVersion().setPathInfo2Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathInfo2(), true));
-        rgla.getVersion().setPathInfo3Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathInfo3(), true));
-        rgla.getVersion().setPathInfo4Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathInfo4(), true));
-        rgla.getVersion().setPathInfo5Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathInfo5(), true));
-        rgla.getVersion().setPathInfo6Sql(generateSqlPath(entiDetail, rgla.getVersion().getPathInfo6(), true));
+        rglv.setPathImpuestoSql(generateSqlExpression(entiId, rglv.getPathImpuesto(), PathType.ID));
+        rglv.setPathPagadorSql(generateSqlExpression(entiId, rglv.getPathPagador(), PathType.ID));
+        rglv.setPathEsSujPasivoSql(generateSqlExpression(entiId, rglv.getPathEsSujPasivo(), PathType.ID));
+        rglv.setPathCodExenSql(generateSqlExpression(entiId, rglv.getPathCodExen(), PathType.ID));
 
-        rgla.getVersion().setPathCuant1Sql(generateSqlFormula(rgla, rgla.getVersion().getPathCuant1()));
-        rgla.getVersion().setPathCuant2Sql(generateSqlFormula(rgla, rgla.getVersion().getPathCuant2()));
-        rgla.getVersion().setPathCuant3Sql(generateSqlFormula(rgla, rgla.getVersion().getPathCuant3()));
-        rgla.getVersion().setPathCuant4Sql(generateSqlFormula(rgla, rgla.getVersion().getPathCuant4()));
-        rgla.getVersion().setPathCuant5Sql(generateSqlFormula(rgla, rgla.getVersion().getPathCuant5()));
-        rgla.getVersion().setPathCuant6Sql(generateSqlFormula(rgla, rgla.getVersion().getPathCuant6()));
+        rglv.setPathInfo1Sql(generateSqlExpression(entiId, rglv.getPathInfo1(), PathType.LABEL));
+        rglv.setPathInfo2Sql(generateSqlExpression(entiId, rglv.getPathInfo2(), PathType.LABEL));
+        rglv.setPathInfo3Sql(generateSqlExpression(entiId, rglv.getPathInfo3(), PathType.LABEL));
+        rglv.setPathInfo4Sql(generateSqlExpression(entiId, rglv.getPathInfo4(), PathType.LABEL));
+        rglv.setPathInfo5Sql(generateSqlExpression(entiId, rglv.getPathInfo5(), PathType.LABEL));
+        rglv.setPathInfo6Sql(generateSqlExpression(entiId, rglv.getPathInfo6(), PathType.LABEL));
 
-        rgla.getVersion().setCondicionSql(generateSqlCondition(rgla, rgla.getVersion().getCondicion()));
-        rgla.getVersion().setFormulaSql(generateSqlFormula(rgla, rgla.getVersion().getFormula()));
+        rglv.setPathCuant1Sql(generateSqlExpression(entiId, rglv.getPathCuant1(), PathType.ID));
+        rglv.setPathCuant2Sql(generateSqlExpression(entiId, rglv.getPathCuant2(), PathType.ID));
+        rglv.setPathCuant3Sql(generateSqlExpression(entiId, rglv.getPathCuant3(), PathType.ID));
+        rglv.setPathCuant4Sql(generateSqlExpression(entiId, rglv.getPathCuant4(), PathType.ID));
+        rglv.setPathCuant5Sql(generateSqlExpression(entiId, rglv.getPathCuant5(), PathType.ID));
+        rglv.setPathCuant6Sql(generateSqlExpression(entiId, rglv.getPathCuant6(), PathType.ID));
+
+        rglv.setCondicionSql(generateSqlExpression(entiId, rglv.getCondicion(), PathType.CODE));
+        rglv.setFormulaSql(generateSqlExpression(entiId, rglv.getFormula(), PathType.ID));
     }
 
     /**
@@ -589,92 +589,47 @@ public class ValoradorBO {
      * @param aspc
      *            the aspc
      */
-    private void generateSql(final AspectoVO aspc) {
-        final TipoServicioDetailVO tpsrDetail = TipoServicioProxy.select(aspc.getTpsr().getId());
+    private void generateSql(final @NonNull AspectoVO aspc) {
+        Preconditions.checkNotNull(aspc.getTpsr());
+        Preconditions.checkNotNull(aspc.getTpsr().getId());
+        Preconditions.checkNotNull(aspc.getVersion());
 
-        aspc.getVersion().setCpathInfo1Sql(generateSqlPath(tpsrDetail, aspc.getVersion().getCpathInfo1(), true));
-        aspc.getVersion().setCpathInfo2Sql(generateSqlPath(tpsrDetail, aspc.getVersion().getCpathInfo2(), true));
-        aspc.getVersion().setCpathInfo3Sql(generateSqlPath(tpsrDetail, aspc.getVersion().getCpathInfo3(), true));
-        aspc.getVersion().setCpathInfo4Sql(generateSqlPath(tpsrDetail, aspc.getVersion().getCpathInfo4(), true));
-        aspc.getVersion().setCpathInfo5Sql(generateSqlPath(tpsrDetail, aspc.getVersion().getCpathInfo5(), true));
-        aspc.getVersion().setCpathInfo6Sql(generateSqlPath(tpsrDetail, aspc.getVersion().getCpathInfo6(), true));
+        final AspectoVersionVO aspv = aspc.getVersion();
+        final Long entiId = aspc.getTpsr().getId();
+
+        aspv.setCpathInfo1Sql(generateSqlExpression(entiId, aspv.getCpathInfo1(), PathType.LABEL));
+        aspv.setCpathInfo2Sql(generateSqlExpression(entiId, aspv.getCpathInfo2(), PathType.LABEL));
+        aspv.setCpathInfo3Sql(generateSqlExpression(entiId, aspv.getCpathInfo3(), PathType.LABEL));
+        aspv.setCpathInfo4Sql(generateSqlExpression(entiId, aspv.getCpathInfo4(), PathType.LABEL));
+        aspv.setCpathInfo5Sql(generateSqlExpression(entiId, aspv.getCpathInfo5(), PathType.LABEL));
+        aspv.setCpathInfo6Sql(generateSqlExpression(entiId, aspv.getCpathInfo6(), PathType.LABEL));
     }
 
     /**
-     * Generate sql path.
+     * Generate sql expression.
      *
-     * @param entidadDetail
-     *            the entidad detail
+     * @param entiId
+     *            the enti id
      * @param expression
      *            the expression
      * @param generateLabel
      *            the generate label
      * @return the string
      */
-    private String generateSqlPath(final AbstractEntidadDetailVO entidadDetail, final String expression,
-            final boolean generateLabel) {
+    private String generateSqlExpression(final @NonNull Long entiId, final String expression,
+            final PathType pathType) {
         if (expression == null || expression.isEmpty()) {
             return null;
         }
 
-        final PathSqlGenerator pathSqlGenerator = new PathSqlGenerator(entidadDetail, generateLabel);
+        final ExpressionSqlGenerator sqlGenerator = new ExpressionSqlGenerator(entiId, pathType);
 
         final ANTLRInputStream input = new ANTLRInputStream(expression);
-        final PathLexer lexer = new PathLexer(input);
+        final ExpressionLexer lexer = new ExpressionLexer(input);
         final CommonTokenStream tokens = new CommonTokenStream(lexer);
-        final PathParser parser = new PathParser(tokens);
-        final ParseTree tree = parser.value();
+        final ExpressionParser parser = new ExpressionParser(tokens);
+        final ParseTree tree = parser.expression();
 
-        return pathSqlGenerator.visit(tree).toString();
-    }
-
-    /**
-     * Generate sql condition.
-     *
-     * @param regla
-     *            the regla
-     * @param expression
-     *            the expression
-     * @return the string
-     */
-    private String generateSqlCondition(final ReglaVO regla, final String expression) {
-        if (expression == null || expression.isEmpty()) {
-            return null;
-        }
-
-        final ConditionSqlGenerator conditionSqlGenerator = new ConditionSqlGenerator(regla);
-
-        final ANTLRInputStream input = new ANTLRInputStream(expression);
-        final ConditionLexer lexer = new ConditionLexer(input);
-        final CommonTokenStream tokens = new CommonTokenStream(lexer);
-        final ConditionParser parser = new ConditionParser(tokens);
-        final ParseTree tree = parser.condition();
-
-        return conditionSqlGenerator.visit(tree).toString();
-    }
-
-    /**
-     * Generate sql formula.
-     *
-     * @param regla
-     *            the regla
-     * @param expression
-     *            the expression
-     * @return the string
-     */
-    private String generateSqlFormula(final ReglaVO regla, final String expression) {
-        if (expression == null || expression.isEmpty()) {
-            return null;
-        }
-
-        final FormulaSqlGenerator formulaSqlGenerator = new FormulaSqlGenerator(regla);
-
-        final ANTLRInputStream input = new ANTLRInputStream(expression);
-        final FormulaLexer lexer = new FormulaLexer(input);
-        final CommonTokenStream tokens = new CommonTokenStream(lexer);
-        final FormulaParser parser = new FormulaParser(tokens);
-        final ParseTree tree = parser.formula();
-
-        return formulaSqlGenerator.visit(tree).toString();
+        return sqlGenerator.visit(tree).toString();
     }
 }

@@ -11,6 +11,8 @@ public enum FunctionName {
     DECODE,
     /** The coalesce. */
     COALESCE,
+    /** The round. */
+    ROUND,
     /** The acumulado teus. */
     acumuladoTeus,
     /** The valor servicio. */

@@ -129,10 +129,10 @@ GRANT EXECUTE ON acumuladoTeus TO portico;
 SELECT * FROM tbl_subservicio_ssrv
 WHERE ssrv_tpss_pk = portico.getEntidad('PARTIDA')
     AND ssrv_srvc_pk = 1079216
-    AND portico.acumuladoTeus('0062', '01012015', SYSDATE) > 2000
+    AND portico.acumuladoTeus('0062', '01012015', TO_DATE('10102015', 'DDMMYYYY')) > 500
 ;
 
-SELECT portico.acumuladoTeus('0062', '01012015', SYSDATE) AS teus2 
+SELECT portico.acumuladoTeus('0062', '01012015', TO_DATE('10102015', 'DDMMYYYY')) AS teus2 
 FROM dual;
 
 
