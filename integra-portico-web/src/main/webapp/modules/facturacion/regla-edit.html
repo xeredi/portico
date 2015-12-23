@@ -50,6 +50,8 @@
             </div>
         </div>
 
+        <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
+
         <div class="row">
             <div class="col-md-6 form-group-sm">
                 <label translate>rgla_condicion</label>
@@ -58,8 +60,8 @@
             </div>
             <div class="col-md-6 form-group-sm">
                 <label translate>rgla_formula</label>
-                <textarea class="form-control" rows="12" spellcheck="false" ng-model="vm.model.version.formula"
-                    ng-bind="vm.model.version.formula"></textarea>
+                <textarea class="form-control" rows="12" spellcheck="false"
+                    ng-model="vm.model.version.formula" ng-bind="vm.model.version.formula"></textarea>
             </div>
         </div>
 

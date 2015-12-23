@@ -56,6 +56,8 @@
             <result column="rglv_etiq_cuant4" property="etiqCuant4" />
             <result column="rglv_etiq_cuant5" property="etiqCuant5" />
             <result column="rglv_etiq_cuant6" property="etiqCuant6" />
+
+            <result column="rglv_nombre" property="nombre" />
         </association>
 
         <association property="crgo" javaType="CargoVO">
@@ -90,6 +92,18 @@
                 WHEN 'C' THEN 2
                 WHEN 'D' THEN 3
             END AS rgla_tipo_prioridad
+    ]]>
+        <if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'rglv'
+                    AND i18n_ext_pk = rglv_pk
+                    AND i18n_lang = #{idioma}
+            ) AS rglv_nombre
+        ]]>
+        </if>
+    <![CDATA[
 		FROM
 		    tbl_regla_rgla
 		    INNER JOIN tbl_regla_version_rglv ON

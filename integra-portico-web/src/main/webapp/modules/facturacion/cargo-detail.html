@@ -75,15 +75,16 @@
             <thead>
                 <tr>
                     <th />
-                    <th translate>rgla_codigo</th>
-                    <th translate>rgla_tipo</th>
-                    <th translate>enti</th>
-                    <th translate>fini</th>
-                    <th translate>ffin</th>
-                    <th translate>rgla_orden</th>
-                    <th translate>rgla_valorBase</th>
-                    <th translate>rgla_formula</th>
-                    <th translate>rgla_condicion</th>
+                    <th translate="rgla_codigo"></th>
+                    <th translate="rgla_nombre"></th>
+                    <th translate="rgla_tipo"></th>
+                    <th translate="enti"></th>
+                    <th translate="fini"></th>
+                    <th translate="ffin"></th>
+                    <th translate="rgla_orden"></th>
+                    <th translate="rgla_valorBase"></th>
+                    <th translate="rgla_formula"></th>
+                    <th translate="rgla_condicion"></th>
                 </tr>
             </thead>
 
@@ -91,6 +92,7 @@
                 <tr ng-repeat="rgla in vm.rglaList track by $index">
                     <td><a ui-sref="regla-detail(rgla)"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td ng-bind="rgla.codigo"></td>
+                    <td nowrap="nowrap" ng-bind="rgla.version.nombre"></td>
                     <td ng-bind="rgla.tipo" bs-tooltip data-title="{{'ReglaTipo_' + rgla.tipo | translate}}"></td>
                     <td ng-bind="('enti_' + rgla.enti.id | translate)"></td>
                     <td ng-bind="(rgla.version.fini | date: dateFormat)"></td>

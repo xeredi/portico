@@ -157,6 +157,9 @@ public final class ReglaVersionVO extends VersionVO {
     /** The path cuant6 sql. */
     private String pathCuant6Sql;
 
+    /** The nombre. */
+    private String nombre;
+
     /**
      * Gets the condicion.
      *
@@ -1105,5 +1108,24 @@ public final class ReglaVersionVO extends VersionVO {
      */
     public void setValorBase(final Double value) {
         valorBase = value;
+    }
+
+    /**
+     * Gets the nombre.
+     *
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * Sets the nombre.
+     *
+     * @param value
+     *            the new nombre
+     */
+    public void setNombre(String value) {
+        this.nombre = value;
     }
 }

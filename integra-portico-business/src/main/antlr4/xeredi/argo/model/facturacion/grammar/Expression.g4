@@ -68,6 +68,11 @@ formula
 	| fn = 'ROUND' '(' f1 = formula ',' n1 = NUMBER_CONSTANT ')'
 	| fn = 'CONCAT' '(' f1 = formula ',' f2 = formula ')'
 	| fn = 'DECODE' '(' f1 = formula decodeBranch* ',' f2 = formula ')'
+	| fn =
+	(
+		'GREATEST'
+		| 'LEAST'
+	) '(' fList = formulaList ')'
 	| fn = 'acumuladoTeus' '(' f1 = formula ',' f2 = formula ',' f3 = formula ')'
 	| fn = 'valorServicio' '(' f1 = formula ',' f2 = formula ')'
 ;
@@ -83,6 +88,14 @@ constantList
 	(
 		',' constant
 	)* rp = ')'
+;
+
+formulaList
+:
+	header = formula
+	(
+		',' tail = formula
+	)*
 ;
 
 property

@@ -2,6 +2,7 @@ package xeredi.argo.model.facturacion.bo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import lombok.NonNull;
 
@@ -9,9 +10,12 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
+import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.dao.ReglaDAO;
 import xeredi.argo.model.facturacion.vo.ReglaCriterioVO;
@@ -37,8 +41,8 @@ public class ReglaBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<ReglaVO> selectList(final ReglaCriterioVO rglaCriterioVO, final int offset, final int limit) {
-        Preconditions.checkNotNull(rglaCriterioVO);
+    public PaginatedList<ReglaVO> selectList(final @NonNull ReglaCriterioVO rglaCriterioVO, final int offset,
+            final int limit) {
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
 
@@ -62,9 +66,7 @@ public class ReglaBO {
      *            the rgla criterio vo
      * @return the list
      */
-    public List<ReglaVO> selectList(final ReglaCriterioVO rglaCriterioVO) {
-        Preconditions.checkNotNull(rglaCriterioVO);
-
+    public List<ReglaVO> selectList(final @NonNull ReglaCriterioVO rglaCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
 
@@ -81,9 +83,7 @@ public class ReglaBO {
      *            the limit
      * @return the list
      */
-    public List<ReglaVO> selectList(final ReglaCriterioVO rglaCriterio, final int limit) {
-        Preconditions.checkNotNull(rglaCriterio);
-
+    public List<ReglaVO> selectList(final @NonNull ReglaCriterioVO rglaCriterio, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
 
@@ -99,8 +99,7 @@ public class ReglaBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void insert(final ReglaVO rgla) throws OverlapException {
-        Preconditions.checkNotNull(rgla);
+    public void insert(final @NonNull ReglaVO rgla, final Map<String, I18nVO> i18nMap) throws OverlapException {
         Preconditions.checkNotNull(rgla.getVersion());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
@@ -123,6 +122,8 @@ public class ReglaBO {
 
             rglaDAO.insertVersion(rgla);
 
+            I18nBO.insertMap(session, I18nPrefix.rglv, rgla.getVersion().getId(), i18nMap);
+
             session.commit();
         }
     }
@@ -137,8 +138,8 @@ public class ReglaBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void update(final ReglaVO rgla) throws InstanceNotFoundException, OverlapException {
-        Preconditions.checkNotNull(rgla);
+    public void update(final @NonNull ReglaVO rgla, final Map<String, I18nVO> i18nMap)
+            throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(rgla.getVersion());
         Preconditions.checkNotNull(rgla.getVersion().getId());
 
@@ -155,6 +156,8 @@ public class ReglaBO {
                 throw new InstanceNotFoundException(MessageI18nKey.rgla, rgla);
             }
 
+            I18nBO.updateMap(session, I18nPrefix.rglv, rgla.getVersion().getId(), i18nMap);
+
             session.commit();
         }
     }
@@ -162,8 +165,10 @@ public class ReglaBO {
     /**
      * Delete.
      *
-     * @param rgla the rgla
-     * @throws InstanceNotFoundException             the instance not found exception
+     * @param rgla
+     *            the rgla
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     public void delete(final @NonNull ReglaVO rgla) throws InstanceNotFoundException {
         Preconditions.checkNotNull(rgla.getVersion());
@@ -176,6 +181,8 @@ public class ReglaBO {
             if (updated == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.rgla, rgla);
             }
+
+            I18nBO.deleteMap(session, I18nPrefix.rglv, rgla.getVersion().getId());
 
             session.commit();
         }
@@ -190,7 +197,7 @@ public class ReglaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ReglaVO selectObject(final ReglaCriterioVO rglaCriterio) throws InstanceNotFoundException {
+    public ReglaVO selectObject(final @NonNull ReglaCriterioVO rglaCriterio) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
             final ReglaVO rgla = rglaDAO.selectObject(rglaCriterio);

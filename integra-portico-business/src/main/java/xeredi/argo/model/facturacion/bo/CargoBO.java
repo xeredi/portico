@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -40,9 +42,8 @@ public class CargoBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<CargoVO> selectList(final CargoCriterioVO crgoCriterioVO, final int offset, final int limit) {
-        Preconditions.checkNotNull(crgoCriterioVO);
-
+    public PaginatedList<CargoVO> selectList(final @NonNull CargoCriterioVO crgoCriterioVO, final int offset,
+            final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
             final int count = crgoDAO.count(crgoCriterioVO);
@@ -65,9 +66,7 @@ public class CargoBO {
      *            the limit
      * @return the list
      */
-    public List<CargoVO> selectList(final CargoCriterioVO crgoCriterio, final int limit) {
-        Preconditions.checkNotNull(crgoCriterio);
-
+    public List<CargoVO> selectList(final @NonNull CargoCriterioVO crgoCriterio, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
 
@@ -82,9 +81,7 @@ public class CargoBO {
      *            the crgo criterio vo
      * @return the list
      */
-    public List<CargoVO> selectList(final CargoCriterioVO crgoCriterioVO) {
-        Preconditions.checkNotNull(crgoCriterioVO);
-
+    public List<CargoVO> selectList(final @NonNull CargoCriterioVO crgoCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
 
@@ -95,11 +92,13 @@ public class CargoBO {
     /**
      * Select.
      *
-     * @param crgoCriterio the crgo criterio
+     * @param crgoCriterio
+     *            the crgo criterio
      * @return the cargo vo
-     * @throws InstanceNotFoundException             the instance not found exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public CargoVO selectObject(final CargoCriterioVO crgoCriterio) throws InstanceNotFoundException {
+    public CargoVO selectObject(final @NonNull CargoCriterioVO crgoCriterio) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
             final CargoVO crgo = crgoDAO.selectObject(crgoCriterio);
@@ -122,8 +121,7 @@ public class CargoBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void insert(final CargoVO crgo, final Map<String, I18nVO> i18nMap) throws OverlapException {
-        Preconditions.checkNotNull(crgo);
+    public void insert(final @NonNull CargoVO crgo, final Map<String, I18nVO> i18nMap) throws OverlapException {
         Preconditions.checkNotNull(crgo.getVersion());
         Preconditions.checkNotNull(crgo.getVersion().getFini());
         Preconditions.checkNotNull(crgo.getTpsr());
@@ -167,9 +165,8 @@ public class CargoBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void update(final CargoVO crgo, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException,
+    public void update(final @NonNull CargoVO crgo, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException,
             OverlapException {
-        Preconditions.checkNotNull(crgo);
         Preconditions.checkNotNull(crgo.getVersion());
         Preconditions.checkNotNull(crgo.getVersion().getId());
 
@@ -195,11 +192,12 @@ public class CargoBO {
     /**
      * Delete.
      *
-     * @param crgo the crgo
-     * @throws InstanceNotFoundException             the instance not found exception
+     * @param crgo
+     *            the crgo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public void delete(final CargoVO crgo) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(crgo);
+    public void delete(final @NonNull CargoVO crgo) throws InstanceNotFoundException {
         Preconditions.checkNotNull(crgo.getVersion());
         Preconditions.checkNotNull(crgo.getVersion().getId());
 

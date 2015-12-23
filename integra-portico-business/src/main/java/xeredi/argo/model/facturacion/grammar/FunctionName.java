@@ -13,6 +13,10 @@ public enum FunctionName {
     COALESCE,
     /** The round. */
     ROUND,
+    /** The greatest. */
+    GREATEST,
+    /** The least. */
+    LEAST,
     /** The acumulado teus. */
     acumuladoTeus,
     /** The valor servicio. */

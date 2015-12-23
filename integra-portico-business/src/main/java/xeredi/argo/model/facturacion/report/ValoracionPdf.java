@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import lombok.NonNull;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
@@ -27,9 +28,8 @@ import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
+import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -46,7 +46,7 @@ public final class ValoracionPdf extends BasePdf {
      * @param alocale
      *            the alocale
      */
-    public ValoracionPdf(final Locale alocale) {
+    public ValoracionPdf(final @NonNull Locale alocale) {
         super(alocale);
 
         bundle = PorticoResourceBundle.getBundle(locale);
@@ -68,25 +68,21 @@ public final class ValoracionPdf extends BasePdf {
      * @throws InternalErrorException
      *             the internal error exception
      */
-    public void imprimir(final ValoracionVO vlrc, final List<ValoracionCargoVO> vlrgList,
-            final List<ValoracionImpuestoVO> vlriList, final List<ValoracionLineaVO> vlrlList, final OutputStream stream)
+    public void imprimir(final @NonNull ValoracionVO vlrc, final @NonNull TipoDatoVO tpdtCodExencion,
+            final @NonNull List<ValoracionCargoVO> vlrgList, final @NonNull List<ValoracionImpuestoVO> vlriList,
+            final @NonNull List<ValoracionLineaVO> vlrlList, final @NonNull OutputStream stream)
             throws InternalErrorException {
-        Preconditions.checkNotNull(vlrc);
-        Preconditions.checkNotNull(vlrgList);
-        Preconditions.checkNotNull(vlriList);
-        Preconditions.checkNotNull(vlrlList);
-        Preconditions.checkNotNull(stream);
-
         try {
             final JasperReportBuilder report = DynamicReports.report();
 
-            report.setPageFormat(PageType.A4, PageOrientation.PORTRAIT);
+            report.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE);
             report.pageFooter(DynamicReports.cmp.pageXslashY());
 
             report.addTitle(DynamicReports.cmp.text(bundle.getString(MessageI18nKey.vlrc.name())).setStyle(
                     PdfConstants.H1_STYLE));
 
-            report.addTitle(DynamicReports.cmp.subreport(getSubreportVlrc(vlrc)), DynamicReports.cmp.verticalGap(20));
+            report.addTitle(DynamicReports.cmp.subreport(getSubreportVlrc(vlrc, tpdtCodExencion)),
+                    DynamicReports.cmp.verticalGap(20));
             report.addTitle(DynamicReports.cmp.subreport(getSubreportPagador(vlrc.getPagador())),
                     DynamicReports.cmp.verticalGap(20));
             report.addTitle(DynamicReports.cmp.subreport(getSubreportVlrgList(vlrgList)),
@@ -109,9 +105,8 @@ public final class ValoracionPdf extends BasePdf {
      *            the vlrc
      * @return the subreport vlrc
      */
-    private JasperReportBuilder getSubreportVlrc(final ValoracionVO vlrc) {
-        Preconditions.checkNotNull(vlrc);
-
+    private JasperReportBuilder getSubreportVlrc(final @NonNull ValoracionVO vlrc,
+            final @NonNull TipoDatoVO tpdtCodExencion) {
         final JasperReportBuilder report = DynamicReports.report();
 
         final List<List<PdfCell>> listCells = new ArrayList<>();
@@ -125,6 +120,8 @@ public final class ValoracionPdf extends BasePdf {
                     .getEtiqueta(), 3, TipoElemento.TX));
             rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_fliq.name()), formatDate(vlrc.getFliq()), 1,
                     TipoElemento.FH));
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.aspc.name()), vlrc.getAspc().getEtiqueta(), 3,
+                    TipoElemento.TX));
 
             listCells.add(rowCells);
         }
@@ -136,6 +133,56 @@ public final class ValoracionPdf extends BasePdf {
                     .getImporte()), 1, TipoElemento.ND));
             rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_impuesto.name()), formatCurrency(vlrc
                     .getImpuesto()), 1, TipoElemento.ND));
+            rowCells.add(new PdfCell(bundle.getString("tpdt_" + tpdtCodExencion.getId()), bundle.getString("cdrf_"
+                    + tpdtCodExencion.getId() + "_" + vlrc.getCodExencion()), 2, TipoElemento.TX));
+
+            listCells.add(rowCells);
+        }
+
+        {
+            final List<PdfCell> rowCells = new ArrayList<>();
+
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_pagador.name()), vlrc.getPagador()
+                    .getEtiqueta(), 3, TipoElemento.TX));
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_sujPasivo.name()), vlrc.getSujPasivo() ? "1"
+                    : "0", 1, TipoElemento.BO));
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_falta.name()),
+                    formatDatetime(vlrc.getFalta()), 2, TipoElemento.FH));
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_fliq.name()), formatDate(vlrc.getFliq()), 1,
+                    TipoElemento.FE));
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.fref.name()), formatDatetime(vlrc.getFref()), 2,
+                    TipoElemento.FH));
+
+            listCells.add(rowCells);
+        }
+
+        {
+            final List<PdfCell> rowCells = new ArrayList<>();
+
+            if (vlrc.getAspc().getVersion().getCetiqInfo1() != null) {
+                rowCells.add(new PdfCell(vlrc.getAspc().getVersion().getCetiqInfo1(), vlrc.getInfo1(), 4,
+                        TipoElemento.TX));
+            }
+            if (vlrc.getAspc().getVersion().getCetiqInfo2() != null) {
+                rowCells.add(new PdfCell(vlrc.getAspc().getVersion().getCetiqInfo2(), vlrc.getInfo2(), 4,
+                        TipoElemento.TX));
+            }
+            if (vlrc.getAspc().getVersion().getCetiqInfo3() != null) {
+                rowCells.add(new PdfCell(vlrc.getAspc().getVersion().getCetiqInfo3(), vlrc.getInfo3(), 4,
+                        TipoElemento.TX));
+            }
+            if (vlrc.getAspc().getVersion().getCetiqInfo4() != null) {
+                rowCells.add(new PdfCell(vlrc.getAspc().getVersion().getCetiqInfo4(), vlrc.getInfo4(), 4,
+                        TipoElemento.TX));
+            }
+            if (vlrc.getAspc().getVersion().getCetiqInfo5() != null) {
+                rowCells.add(new PdfCell(vlrc.getAspc().getVersion().getCetiqInfo5(), vlrc.getInfo5(), 4,
+                        TipoElemento.TX));
+            }
+            if (vlrc.getAspc().getVersion().getCetiqInfo6() != null) {
+                rowCells.add(new PdfCell(vlrc.getAspc().getVersion().getCetiqInfo6(), vlrc.getInfo6(), 4,
+                        TipoElemento.TX));
+            }
 
             listCells.add(rowCells);
         }
@@ -152,9 +199,7 @@ public final class ValoracionPdf extends BasePdf {
      *            the pagador
      * @return the subreport
      */
-    private JasperReportBuilder getSubreportPagador(final ParametroVO pagador) {
-        Preconditions.checkNotNull(pagador);
-
+    private JasperReportBuilder getSubreportPagador(final @NonNull ParametroVO pagador) {
         final JasperReportBuilder report = DynamicReports.report();
 
         report.addTitle(DynamicReports.cmp.text(bundle.getString(MessageI18nKey.vlrc_pagador.name())).setStyle(
@@ -183,9 +228,7 @@ public final class ValoracionPdf extends BasePdf {
      *            the vlrg list
      * @return the subreport vlrg list
      */
-    private JasperReportBuilder getSubreportVlrgList(final List<ValoracionCargoVO> vlrgList) {
-        Preconditions.checkNotNull(vlrgList);
-
+    private JasperReportBuilder getSubreportVlrgList(final @NonNull List<ValoracionCargoVO> vlrgList) {
         final JasperReportBuilder report = DynamicReports.report();
 
         final TextColumnBuilder<String> cargoCol = DynamicReports.col.column(
@@ -219,9 +262,7 @@ public final class ValoracionPdf extends BasePdf {
      *            the vlri list
      * @return the subreport vlri list
      */
-    private JasperReportBuilder getSubreportVlriList(final List<ValoracionImpuestoVO> vlriList) {
-        Preconditions.checkNotNull(vlriList);
-
+    private JasperReportBuilder getSubreportVlriList(final @NonNull List<ValoracionImpuestoVO> vlriList) {
         final JasperReportBuilder report = DynamicReports.report();
 
         final TextColumnBuilder<String> impuestoCol = DynamicReports.col.column(
@@ -264,9 +305,7 @@ public final class ValoracionPdf extends BasePdf {
      *            the vlrl list
      * @return the subreport vlrl list
      */
-    private JasperReportBuilder getSubreportVlrlList(final List<ValoracionLineaVO> vlrlList) {
-        Preconditions.checkNotNull(vlrlList);
-
+    private JasperReportBuilder getSubreportVlrlList(final @NonNull List<ValoracionLineaVO> vlrlList) {
         ValoracionLineaVO vlrlPrecio = null;
 
         for (final ValoracionLineaVO vlrl : vlrlList) {

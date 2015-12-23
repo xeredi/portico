@@ -13,7 +13,7 @@
     </div>
 
     <div class="btn-group">
-        <button data-ng-click="vm.print()" class="btn btn-default">
+        <button data-ng-click="vm.pdfExport()" class="btn btn-default">
             <i class="glyphicon glyphicon-print"></i> <span translate="btn_imprimir"></span>
         </button>
     </div>
@@ -238,27 +238,27 @@
                 <td>
                     <table>
                         <tr ng-if="vm.aspc.version.lgrpInfo1 && vlrl.rgla.tipo == 'T' && vlrl.info1">
-                            <td nowrap="nowrap">{{vlrl.rgla.version.etiqInfo1}}:&nbsp;</td>
+                            <td nowrap="nowrap"><strong>{{vlrl.rgla.version.etiqInfo1}}&nbsp;:</strong>&nbsp;</td>
                             <td ng-bind="vlrl.info1" nowrap="nowrap"></td>
                         </tr>
                         <tr ng-if="vm.aspc.version.lgrpInfo2 && vlrl.rgla.tipo == 'T' && vlrl.info2">
-                            <td nowrap="nowrap">{{vlrl.rgla.version.etiqInfo2}}:&nbsp;</td>
+                            <td nowrap="nowrap"><strong>{{vlrl.rgla.version.etiqInfo2}}&nbsp;:</strong>&nbsp;</td>
                             <td ng-bind="vlrl.info2" nowrap="nowrap"></td>
                         </tr>
                         <tr ng-if="vm.aspc.version.lgrpInfo3 && vlrl.rgla.tipo == 'T' && vlrl.info3">
-                            <td nowrap="nowrap">{{vlrl.rgla.version.etiqInfo3}}:&nbsp;</td>
+                            <td nowrap="nowrap"><strong>{{vlrl.rgla.version.etiqInfo3}}&nbsp;:</strong>&nbsp;</td>
                             <td ng-bind="vlrl.info3" nowrap="nowrap"></td>
                         </tr>
                         <tr ng-if="vm.aspc.version.lgrpInfo4 && vlrl.rgla.tipo == 'T' && vlrl.info4">
-                            <td nowrap="nowrap">{{vlrl.rgla.version.etiqInfo4}}:&nbsp;</td>
+                            <td nowrap="nowrap"><strong>{{vlrl.rgla.version.etiqInfo4}}&nbsp;:</strong>&nbsp;</td>
                             <td ng-bind="vlrl.info4" nowrap="nowrap"></td>
                         </tr>
                         <tr ng-if="vm.aspc.version.lgrpInfo5 && vlrl.rgla.tipo == 'T' && vlrl.info5">
-                            <td nowrap="nowrap">{{vlrl.rgla.version.etiqInfo5}}:&nbsp;</td>
+                            <td nowrap="nowrap"><strong>{{vlrl.rgla.version.etiqInfo5}}&nbsp;:</strong>&nbsp;</td>
                             <td ng-bind="vlrl.info5" nowrap="nowrap"></td>
                         </tr>
                         <tr ng-if="vm.aspc.version.lgrpInfo6 && vlrl.rgla.tipo == 'T' && vlrl.info6">
-                            <td nowrap="nowrap">{{vlrl.rgla.version.etiqInfo6}}:&nbsp;</td>
+                            <td nowrap="nowrap"><strong>{{vlrl.rgla.version.etiqInfo6}}&nbsp;:</strong>&nbsp;</td>
                             <td ng-bind="vlrl.info6" nowrap="nowrap"></td>
                         </tr>
                     </table>
@@ -267,7 +267,8 @@
                 <td ng-if="vlrl.rgla.tipo == 'T'" nowrap="nowrap">
                     <table width="100%">
                         <tr>
-                            <td><b><span ng-if="vlrl.cuant1" ng-bind="vlrl.rgla.version.etiqCuant1"></span></b><br /></td>
+                            <td><strong><span ng-if="vlrl.cuant1"
+                                    ng-bind="vlrl.rgla.version.etiqCuant1"></span></strong><br /></td>
                         </tr>
                         <tr>
                             <td><span ng-if="vlrl.cuant1" class="number" ng-bind="vlrl.cuant1 | number:2"></span></td>
@@ -280,7 +281,8 @@
                 <td ng-if="vlrl.rgla.tipo == 'T'" nowrap="nowrap">
                     <table width="100%">
                         <tr>
-                            <td><b><span ng-if="vlrl.cuant2" ng-bind="vlrl.rgla.version.etiqCuant2"></span></b><br /></td>
+                            <td><strong><span ng-if="vlrl.cuant2"
+                                    ng-bind="vlrl.rgla.version.etiqCuant2"></span></strong><br /></td>
                         </tr>
                         <tr>
                             <td><span ng-if="vlrl.cuant2" class="number" ng-bind="vlrl.cuant2 | number:2"></span></td>
@@ -293,7 +295,8 @@
                 <td ng-if="vlrl.rgla.tipo == 'T'" nowrap="nowrap">
                     <table width="100%">
                         <tr>
-                            <td><b><span ng-if="vlrl.cuant3" ng-bind="vlrl.rgla.version.etiqCuant3"></span></b><br /></td>
+                            <td><strong><span ng-if="vlrl.cuant3"
+                                    ng-bind="vlrl.rgla.version.etiqCuant3"></span></strong><br /></td>
                         </tr>
                         <tr>
                             <td><span ng-if="vlrl.cuant3" class="number" ng-bind="vlrl.cuant3 | number:2"></span></td>
@@ -306,7 +309,8 @@
                 <td ng-if="vlrl.rgla.tipo == 'T'" nowrap="nowrap">
                     <table width="100%">
                         <tr>
-                            <td><b><span ng-if="vlrl.cuant4" ng-bind="vlrl.rgla.version.etiqCuant4"></span></b><br /></td>
+                            <td><strong><span ng-if="vlrl.cuant4"
+                                    ng-bind="vlrl.rgla.version.etiqCuant4"></span></strong><br /></td>
                         </tr>
                         <tr>
                             <td><span ng-if="vlrl.cuant4" class="number" ng-bind="vlrl.cuant4 | number:2"></span></td>
@@ -319,7 +323,8 @@
                 <td ng-if="vlrl.rgla.tipo == 'T'" nowrap="nowrap">
                     <table width="100%">
                         <tr>
-                            <td><b><span ng-if="vlrl.cuant5" ng-bind="vlrl.rgla.version.etiqCuant5"></span></b><br /></td>
+                            <td><strong><span ng-if="vlrl.cuant5"
+                                    ng-bind="vlrl.rgla.version.etiqCuant5"></span></strong><br /></td>
                         </tr>
                         <tr>
                             <td><span ng-if="vlrl.cuant5" class="number" ng-bind="vlrl.cuant5 | number:2"></span></td>
@@ -332,7 +337,8 @@
                 <td ng-if="vlrl.rgla.tipo == 'T'" nowrap="nowrap">
                     <table width="100%">
                         <tr>
-                            <td><b><span ng-if="vlrl.cuant6" ng-bind="vlrl.rgla.version.etiqCuant6"></span></b><br /></td>
+                            <td><strong><span ng-if="vlrl.cuant6"
+                                    ng-bind="vlrl.rgla.version.etiqCuant6"></span></strong><br /></td>
                         </tr>
                         <tr>
                             <td><span ng-if="vlrl.cuant6" class="number" ng-bind="vlrl.cuant6 | number:2"></span></td>

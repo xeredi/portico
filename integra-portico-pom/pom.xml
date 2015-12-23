@@ -61,7 +61,7 @@
 
         <poi.version>3.13</poi.version>
         <dynamicreports.version>4.0.2</dynamicreports.version>
-        <guava.version>18.0</guava.version>
+        <guava.version>19.0</guava.version>
         <commons-io.version>2.4</commons-io.version>
         <commons-compress.version>1.10</commons-compress.version>
         <antlr4-runtime.version>4.5.1-1</antlr4-runtime.version>

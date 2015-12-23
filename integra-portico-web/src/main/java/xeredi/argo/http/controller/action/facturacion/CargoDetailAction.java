@@ -51,12 +51,13 @@ public final class CargoDetailAction extends CrudDetailAction<CargoVO> {
         i18nMap = I18nBO.selectMap(I18nPrefix.crgv, model.getVersion().getId());
 
         final ReglaBO rglaBO = new ReglaBO();
-        final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
+        final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
 
-        rglaCriterioVO.setCrgoId(model.getId());
-        rglaCriterioVO.setFechaVigencia(model.getFref());
+        rglaCriterio.setCrgoId(model.getId());
+        rglaCriterio.setFechaVigencia(model.getFref());
+        rglaCriterio.setIdioma(getIdioma());
 
-        rglaList = rglaBO.selectList(rglaCriterioVO);
+        rglaList = rglaBO.selectList(rglaCriterio);
     }
 
     /**

@@ -488,8 +488,8 @@ CREATE TABLE tbl_parametro_dato_prdt (
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )\
 
-CREATE INDEX ix_prdt_prmt_pk ON tbl_parametro_dato_prdt (prdt_prmt_pk, prdt_tpdt_pk, prdt_prvr_pk)\
-CREATE INDEX ix_prdt_cadena ON tbl_parametro_dato_prdt (prdt_cadena, prdt_tpdt_pk, prdt_prvr_pk)\
+CREATE INDEX ix_prdt_prmt_pk ON tbl_parametro_dato_prdt (prdt_prmt_pk, prdt_tpdt_pk)\
+CREATE INDEX ix_prdt_cadena ON tbl_parametro_dato_prdt (prdt_tpdt_pk, prdt_cadena)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_parametro_dato_prdt FOR porticoadm.tbl_parametro_dato_prdt\
 
@@ -615,6 +615,9 @@ CREATE TABLE tbl_subparametro_dato_spdt (
 	, CONSTRAINT fk_spdt_prmt_pk FOREIGN KEY (spdt_prmt_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )\
+
+CREATE INDEX ix_spdt_prmt_pk ON tbl_subparametro_dato_spdt (spdt_prmt_pk, spdt_tpdt_pk)\
+CREATE INDEX ix_spdt_cadena ON tbl_subparametro_dato_spdt (spdt_tpdt_pk, spdt_cadena)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_subparametro_dato_spdt FOR porticoadm.tbl_subparametro_dato_spdt\
 
@@ -792,8 +795,8 @@ CREATE TABLE tbl_servicio_dato_srdt (
 		REFERENCES tbl_servicio_srvc (srvc_pk)
 )\
 
-CREATE INDEX ix_srdt_prmt_pk ON tbl_servicio_dato_srdt (srdt_prmt_pk, srdt_tpdt_pk, srdt_srvc_pk)\
-CREATE INDEX ix_srdt_cadena ON tbl_servicio_dato_srdt (srdt_cadena, srdt_tpdt_pk, srdt_srvc_pk)\
+CREATE INDEX ix_srdt_prmt_pk ON tbl_servicio_dato_srdt (srdt_prmt_pk, srdt_tpdt_pk)\
+CREATE INDEX ix_srdt_cadena ON tbl_servicio_dato_srdt (srdt_tpdt_pk, srdt_cadena)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_servicio_dato_srdt FOR porticoadm.tbl_servicio_dato_srdt\
 
@@ -867,8 +870,8 @@ CREATE TABLE tbl_subservicio_dato_ssdt (
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )\
 
-CREATE INDEX ix_ssdt_prmt_pk ON tbl_subservicio_dato_ssdt (ssdt_prmt_pk, ssdt_tpdt_pk, ssdt_ssrv_pk)\
-CREATE INDEX ix_ssdt_cadena ON tbl_subservicio_dato_ssdt (ssdt_cadena, ssdt_tpdt_pk, ssdt_ssrv_pk)\
+CREATE INDEX ix_ssdt_prmt_pk ON tbl_subservicio_dato_ssdt (ssdt_prmt_pk, ssdt_tpdt_pk)\
+CREATE INDEX ix_ssdt_cadena ON tbl_subservicio_dato_ssdt (ssdt_tpdt_pk, ssdt_cadena)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_subservicio_dato_ssdt FOR porticoadm.tbl_subservicio_dato_ssdt\
 

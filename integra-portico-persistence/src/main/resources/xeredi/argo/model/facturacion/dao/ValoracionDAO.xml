@@ -115,19 +115,31 @@
 		        ), 0
 		    ) AS vlrc_importe
             , (
-                SELECT SUM(vlrd_importe * prdt_ndecimal) / 100
-                FROM tbl_valoracion_det_vlrd
-                    INNER JOIN tbl_valoracion_lin_vlrl vlrl ON
-                        vlrl_pk = vlrd_vlrl_pk
-                    INNER JOIN tbl_valoracion_lin_vlrl vlri ON
-                        vlri.vlrl_pk = vlrl.vlrl_padre_pk
-                    INNER JOIN tbl_parametro_version_prvr ON
-                        prvr_prmt_pk = vlri.vlrl_impuesto_prmt_pk
-                    INNER JOIN tbl_parametro_dato_prdt ON
-                        prdt_prvr_pk = prvr_pk
-                        AND prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
-                WHERE vlrd_vlrc_pk = vlrc_pk
-                    AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
+                SELECT
+                    SUM(
+                        (
+                            SELECT SUM(vlrd_importe)
+                            FROM tbl_valoracion_det_vlrd
+                            WHERE vlrd_vlrl_pk = vlrl_pk
+                        ) * (
+                            SELECT prdt_ndecimal
+                            FROM tbl_parametro_dato_prdt
+                            WHERE prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
+                                AND prdt_prvr_pk = (
+                                    SELECT prvr_pk FROM tbl_parametro_version_prvr
+                                    WHERE
+                                        prvr_prmt_pk = (
+                                            SELECT vlrl_impuesto_prmt_pk
+                                            FROM tbl_valoracion_lin_vlrl aux
+                                            WHERE aux.vlrl_pk = vlrl.vlrl_padre_pk
+                                        )
+                                        AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
+                                )
+                        )
+                    )
+                FROM tbl_valoracion_lin_vlrl vlrl
+                WHERE
+                    vlrl_vlrc_pk = vlrc_pk
             ) AS vlrc_importe_impuesto
         ]]>
         <if test="idioma != null">

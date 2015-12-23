@@ -16,6 +16,9 @@ import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
+import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
+import xeredi.argo.model.metamodelo.vo.TipoDato;
+import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 
 import com.google.common.base.Preconditions;
 
@@ -53,10 +56,12 @@ public final class ValoracionPdfExportAction extends CrudFileExportAction<Valora
 
         final List<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrlCriterio);
 
+        final TipoDatoVO tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
+
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             final ValoracionPdf vlrcPdf = new ValoracionPdf(getLocale());
 
-            vlrcPdf.imprimir(model, vlrgList, vlriList, vlrlList, baos);
+            vlrcPdf.imprimir(model, tpdtCodExencion, vlrgList, vlriList, vlrlList, baos);
 
             stream = new ByteArrayInputStream(baos.toByteArray());
         }

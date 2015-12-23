@@ -2,11 +2,15 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.base.Preconditions;
 
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
+import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.facturacion.bo.CargoBO;
 import xeredi.argo.model.facturacion.bo.ReglaBO;
 import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
@@ -28,6 +32,9 @@ import xeredi.util.applicationobjects.LabelValueVO;
 public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7473288340314527092L;
+
+    /** The i18n map. */
+    private Map<String, I18nVO> i18nMap;
 
     /** The enti facturable list. */
     private List<LabelValueVO> entiFacturableList;
@@ -65,6 +72,7 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
             rglaCriterio.setFechaVigencia(model.getFref());
 
             model = rglaBO.selectObject(rglaCriterio);
+            i18nMap = I18nBO.selectMap(I18nPrefix.rglv, model.getVersion().getId());
         }
     }
 
@@ -102,6 +110,15 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
 
             entiFacturableList.addAll(tpssBO.selectLabelValues(tpssCriterioVO));
         }
+    }
+
+    /**
+     * Gets the i18n map.
+     *
+     * @return the i18n map
+     */
+    public Map<String, I18nVO> getI18nMap() {
+        return i18nMap;
     }
 
     /**

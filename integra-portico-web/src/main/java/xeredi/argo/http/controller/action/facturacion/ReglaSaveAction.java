@@ -1,10 +1,13 @@
 package xeredi.argo.http.controller.action.facturacion;
 
+import java.util.Map;
+
 import org.apache.commons.validator.GenericValidator;
 
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ReglaBO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
@@ -22,6 +25,9 @@ public final class ReglaSaveAction extends CrudSaveAction<ReglaVO> {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1378188997796757435L;
 
+    /** The i18n map. */
+    private Map<String, I18nVO> i18nMap;
+
     /**
      * {@inheritDoc}
      */
@@ -31,11 +37,11 @@ public final class ReglaSaveAction extends CrudSaveAction<ReglaVO> {
 
         switch (accion) {
         case create:
-            rglaBO.insert(model);
+            rglaBO.insert(model, i18nMap);
 
             break;
         case edit:
-            rglaBO.update(model);
+            rglaBO.update(model, i18nMap);
 
             break;
         default:
@@ -64,6 +70,8 @@ public final class ReglaSaveAction extends CrudSaveAction<ReglaVO> {
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_condicion, model.getVersion().getCondicion());
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_formula, model.getVersion().getFormula());
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_valorBase, model.getVersion().getValorBase());
+
+        FieldValidator.validateI18n(this, i18nMap);
 
         if (ReglaTipo.T == model.getTipo()) {
             FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathImpuesto, model.getVersion()
@@ -165,5 +173,15 @@ public final class ReglaSaveAction extends CrudSaveAction<ReglaVO> {
     @Override
     public AccionPrefix getAccnPrefix() {
         return AccionPrefix.rgla;
+    }
+
+    /**
+     * Sets the i18n map.
+     *
+     * @param i18nMap
+     *            the i18n map
+     */
+    public void setI18nMap(Map<String, I18nVO> i18nMap) {
+        this.i18nMap = i18nMap;
     }
 }

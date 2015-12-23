@@ -145,12 +145,10 @@
                 THEN (
                     SELECT SUM(vlrd_importe) FROM tbl_valoracion_det_vlrd
                     WHERE
-                        EXISTS (
-                            SELECT 1 FROM tbl_valoracion_lin_vlrl aux
+                        vlrd_vlrl_pk = ANY (
+                            SELECT vlrl_pk FROM tbl_valoracion_lin_vlrl aux
                             WHERE
-                                aux.vlrl_pk = vlrd_vlrl_pk
-                                AND aux.vlrl_vlrc_pk = vlrl.vlrl_vlrc_pk
-                                AND aux.vlrl_padre_pk = vlrl.vlrl_pk
+                                aux.vlrl_padre_pk = vlrl.vlrl_pk
                         )
                 )
                 ELSE NULL

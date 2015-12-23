@@ -30,6 +30,8 @@ public enum I18nPrefix {
     aspv,
     /** The crgv. */
     crgv,
+    /** The rglv. */
+    rglv,
     /** The prvr. */
     prvr, ;
 }
