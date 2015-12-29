@@ -344,51 +344,20 @@
     ]]>
 		</if>
     <![CDATA[
-            AND (
-                (
-                    rgla_tipo = 'T'
-                    AND NOT EXISTS (
-                        SELECT 1
-                        FROM tbl_valoracion_vlrc
-                        WHERE
-                            vlrc_srvc_pk = srvc_pk
-                            AND EXISTS (
-                                SELECT 1 FROM tbl_valoracion_lin_vlrl
-                                WHERE vlrl_pk = vlrl_vlrc_pk
-                                    AND vlrl_rgla_pk = rgla_pk
-                                    AND (
-                                        vlrl_ssrv_pk = ssrv_pk
-                                        OR EXISTS (
-                                            SELECT 1 FROM tbl_valoracion_det_vlrd
-                                            WHERE vlrd_vlrl_pk = vlrl_pk
-                                                AND vlrd_ssrv_pk = ssrv_pk
-                                        )
-                                    )
-                            )
-                    )
-                    /* TODO Ojo lo de temporalidad */
-                )
-                OR (
-                    rgla_tipo IN ('C', 'D')
+            AND rgla_tipo = 'T'
+
+            AND NOT EXISTS (
+                SELECT 1
+                FROM tbl_valoracion_det_vlrd
+                WHERE vlrd_ssrv_pk = ssrv_pk
                     AND EXISTS (
                         SELECT 1
-                        FROM
-                            tbl_valoracion_tmp_vlrt
-                        WHERE
-                            vlrt_prbt_pk = #{prbt.id}
-                            AND vlrt_srvc_pk = srvc_pk
-                            AND vlrt_ssrv_pk = ssrv_pk
-                            AND vlrt_crgo_pk = rgla_crgo_pk
-                            AND vlrt_rgla_pk = ANY(
-                                SELECT rgla_pk
-                                FROM tbl_regla_rgla
-                                WHERE
-                                    rgla_crgo_pk = vlrt_crgo_pk
-                                    AND rgla_tipo = 'T'
-                            )
+                        FROM tbl_valoracion_lin_vlrl
+                        WHERE vlrl_pk = vlrd_vlrl_pk
+                            AND vlrl_rgla_pk = #{rgla.id}
                     )
-                )
             )
+            /* FIXME Ojo con los servicios temporales */
 
             AND ssrv_srvc_pk = #{srvc.id}
     ) item

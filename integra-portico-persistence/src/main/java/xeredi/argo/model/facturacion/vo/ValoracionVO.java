@@ -52,6 +52,9 @@ public final class ValoracionVO {
     /** The cod exencion. */
     private String codExencion;
 
+    /** The fctr. */
+    private FacturaVO fctr;
+
     /** The info1. */
     private String info1;
 
@@ -93,8 +96,8 @@ public final class ValoracionVO {
      * @param value
      *            the id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -112,8 +115,8 @@ public final class ValoracionVO {
      * @param value
      *            the srvc
      */
-    public void setSrvc(ServicioVO value) {
-        this.srvc = value;
+    public void setSrvc(final ServicioVO value) {
+        srvc = value;
     }
 
     /**
@@ -131,8 +134,8 @@ public final class ValoracionVO {
      * @param value
      *            the aspc
      */
-    public void setAspc(AspectoVO value) {
-        this.aspc = value;
+    public void setAspc(final AspectoVO value) {
+        aspc = value;
     }
 
     /**
@@ -150,8 +153,8 @@ public final class ValoracionVO {
      * @param value
      *            the pagador
      */
-    public void setPagador(ParametroVO value) {
-        this.pagador = value;
+    public void setPagador(final ParametroVO value) {
+        pagador = value;
     }
 
     /**
@@ -169,8 +172,8 @@ public final class ValoracionVO {
      * @param value
      *            the fref
      */
-    public void setFref(Date value) {
-        this.fref = value;
+    public void setFref(final Date value) {
+        fref = value;
     }
 
     /**
@@ -188,8 +191,8 @@ public final class ValoracionVO {
      * @param value
      *            the falta
      */
-    public void setFalta(Date value) {
-        this.falta = value;
+    public void setFalta(final Date value) {
+        falta = value;
     }
 
     /**
@@ -207,8 +210,8 @@ public final class ValoracionVO {
      * @param value
      *            the fini
      */
-    public void setFini(Date value) {
-        this.fini = value;
+    public void setFini(final Date value) {
+        fini = value;
     }
 
     /**
@@ -226,8 +229,8 @@ public final class ValoracionVO {
      * @param value
      *            the ffin
      */
-    public void setFfin(Date value) {
-        this.ffin = value;
+    public void setFfin(final Date value) {
+        ffin = value;
     }
 
     /**
@@ -245,8 +248,8 @@ public final class ValoracionVO {
      * @param value
      *            the importe
      */
-    public void setImporte(Double value) {
-        this.importe = value;
+    public void setImporte(final Double value) {
+        importe = value;
     }
 
     /**
@@ -264,8 +267,8 @@ public final class ValoracionVO {
      * @param value
      *            the suj pasivo
      */
-    public void setSujPasivo(Boolean value) {
-        this.sujPasivo = value;
+    public void setSujPasivo(final Boolean value) {
+        sujPasivo = value;
     }
 
     /**
@@ -283,8 +286,8 @@ public final class ValoracionVO {
      * @param value
      *            the cod exencion
      */
-    public void setCodExencion(String value) {
-        this.codExencion = value;
+    public void setCodExencion(final String value) {
+        codExencion = value;
     }
 
     /**
@@ -302,8 +305,8 @@ public final class ValoracionVO {
      * @param value
      *            the info1
      */
-    public void setInfo1(String value) {
-        this.info1 = value;
+    public void setInfo1(final String value) {
+        info1 = value;
     }
 
     /**
@@ -321,8 +324,8 @@ public final class ValoracionVO {
      * @param value
      *            the info2
      */
-    public void setInfo2(String value) {
-        this.info2 = value;
+    public void setInfo2(final String value) {
+        info2 = value;
     }
 
     /**
@@ -340,8 +343,8 @@ public final class ValoracionVO {
      * @param value
      *            the info3
      */
-    public void setInfo3(String value) {
-        this.info3 = value;
+    public void setInfo3(final String value) {
+        info3 = value;
     }
 
     /**
@@ -359,8 +362,8 @@ public final class ValoracionVO {
      * @param value
      *            the info4
      */
-    public void setInfo4(String value) {
-        this.info4 = value;
+    public void setInfo4(final String value) {
+        info4 = value;
     }
 
     /**
@@ -378,8 +381,8 @@ public final class ValoracionVO {
      * @param value
      *            the info5
      */
-    public void setInfo5(String value) {
-        this.info5 = value;
+    public void setInfo5(final String value) {
+        info5 = value;
     }
 
     /**
@@ -397,8 +400,8 @@ public final class ValoracionVO {
      * @param value
      *            the info6
      */
-    public void setInfo6(String value) {
-        this.info6 = value;
+    public void setInfo6(final String value) {
+        info6 = value;
     }
 
     /**
@@ -416,8 +419,8 @@ public final class ValoracionVO {
      * @param value
      *            the new fliq
      */
-    public void setFliq(Date value) {
-        this.fliq = value;
+    public void setFliq(final Date value) {
+        fliq = value;
     }
 
     /**
@@ -435,8 +438,27 @@ public final class ValoracionVO {
      * @param value
      *            the new impuesto
      */
-    public void setImpuesto(Double value) {
-        this.impuesto = value;
+    public void setImpuesto(final Double value) {
+        impuesto = value;
+    }
+
+    /**
+     * Gets the fctr.
+     *
+     * @return the fctr
+     */
+    public FacturaVO getFctr() {
+        return fctr;
+    }
+
+    /**
+     * Sets the fctr.
+     *
+     * @param value
+     *            the new fctr
+     */
+    public void setFctr(final FacturaVO value) {
+        fctr = value;
     }
 
 }

@@ -1,115 +1,82 @@
 package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import com.google.common.base.Preconditions;
-
-import xeredi.argo.http.controller.action.comun.BaseAction;
+import xeredi.argo.http.controller.action.comun.CrudEditAction;
+import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.AspectoBO;
+import xeredi.argo.model.comun.vo.PuertoCriterioVO;
+import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.facturacion.bo.FacturaSerieBO;
-import xeredi.argo.model.facturacion.bo.ValoracionBO;
-import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
-import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
-import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
-import xeredi.argo.model.facturacion.vo.ValoracionVO;
+import xeredi.argo.model.facturacion.vo.FacturadorVO;
+import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.util.applicationobjects.LabelValueVO;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturadorEditAction.
  */
-public final class FacturadorEditAction extends BaseAction {
+public final class FacturadorEditAction extends CrudEditAction<FacturadorVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1389260062489112937L;
 
-    /** The vlrc. */
-    private ValoracionVO vlrc;
-
-    /** The ffac. */
-    private Date ffac;
-
-    /** The aspc list. */
-    private List<AspectoVO> aspcList;
-
     /** The fcsr list. */
     private List<FacturaSerieVO> fcsrList;
+
+    /** The tpsr list. */
+    private List<LabelValueVO> tpsrList;
+
+    /** The prto list. */
+    private List<PuertoVO> prtoList;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void doExecute() throws ApplicationException {
-        Preconditions.checkNotNull(vlrc);
-        Preconditions.checkNotNull(vlrc.getId());
+    public AccionPrefix getAccnPrefix() {
+        return AccionPrefix.fcdr;
+    }
 
-        final ValoracionBO vlrcBO = new ValoracionBO();
-        final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void doEdit() throws ApplicationException {
+        Preconditions.checkNotNull(model);
 
-        vlrcCriterio.setId(vlrc.getId());
-        vlrcCriterio.setIdioma(getIdioma());
+        model.setFecha(Calendar.getInstance());
+    }
 
-        vlrc = vlrcBO.selectObject(vlrcCriterio);
-        ffac = vlrc.getFref();
-
-        final AspectoBO aspcBO = new AspectoBO();
-        final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
-
-        aspcCriterio.setFechaVigencia(vlrc.getFref());
-        aspcCriterio.setIdioma(getIdioma());
-        aspcCriterio.setTpsrId(vlrc.getSrvc().getEntiId());
-
-        aspcList = aspcBO.selectList(aspcCriterio);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void doLoadDependencies() throws ApplicationException {
+        Preconditions.checkNotNull(model);
+        Preconditions.checkNotNull(model.getFecha());
 
         final FacturaSerieBO fcsrBO = new FacturaSerieBO();
         final FacturaSerieCriterioVO fcsrCriterio = new FacturaSerieCriterioVO();
-        final Calendar calendar = Calendar.getInstance();
 
-        calendar.setTime(ffac);
-        fcsrCriterio.setAnio(calendar.get(Calendar.YEAR));
+        fcsrCriterio.setAnio(model.getFecha().get(Calendar.YEAR));
 
         fcsrList = fcsrBO.selectList(fcsrCriterio);
-    }
 
-    /**
-     * Gets the vlrc.
-     *
-     * @return the vlrc
-     */
-    public ValoracionVO getVlrc() {
-        return vlrc;
-    }
+        tpsrList = TipoServicioProxy.selectLabelValues();
 
-    /**
-     * Sets the vlrc.
-     *
-     * @param value
-     *            the new vlrc
-     */
-    public void setVlrc(final ValoracionVO value) {
-        vlrc = value;
-    }
+        final PuertoBO prtoBO = new PuertoBO();
+        final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-    /**
-     * Gets the ffac.
-     *
-     * @return the ffac
-     */
-    public Date getFfac() {
-        return ffac;
-    }
+        prtoCriterio.setIdioma(getIdioma());
 
-    /**
-     * Gets the aspc list.
-     *
-     * @return the aspc list
-     */
-    public List<AspectoVO> getAspcList() {
-        return aspcList;
+        prtoList = prtoBO.selectList(prtoCriterio);
     }
 
     /**
@@ -119,5 +86,23 @@ public final class FacturadorEditAction extends BaseAction {
      */
     public List<FacturaSerieVO> getFcsrList() {
         return fcsrList;
+    }
+
+    /**
+     * Gets the tpsr list.
+     *
+     * @return the tpsr list
+     */
+    public List<LabelValueVO> getTpsrList() {
+        return tpsrList;
+    }
+
+    /**
+     * Gets the prto list.
+     *
+     * @return the prto list
+     */
+    public List<PuertoVO> getPrtoList() {
+        return prtoList;
     }
 }

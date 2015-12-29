@@ -9,4 +9,12 @@ import xeredi.argo.model.facturacion.vo.ValoracionVO;
  * DAO de acceso a las valoraciones de la aplicacion.
  */
 public interface ValoracionDAO extends CrudDAO<ValoracionVO, ValoracionCriterioVO> {
+
+    /**
+     * Update fctr.
+     *
+     * @param vlrc the vlrc
+     * @return the int
+     */
+    int updateFctr(final ValoracionVO vlrc);
 }

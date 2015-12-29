@@ -3,7 +3,10 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.List;
 
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
+import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.PuertoCriterioVO;
+import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
@@ -27,6 +30,9 @@ public final class ValoracionFilterAction extends GridFilterAction<ValoracionCri
     /** The tpsr list. */
     private List<LabelValueVO> tpsrList;
 
+    /** The prto list. */
+    private List<PuertoVO> prtoList;
+
     /**
      * {@inheritDoc}
      */
@@ -40,6 +46,12 @@ public final class ValoracionFilterAction extends GridFilterAction<ValoracionCri
      */
     @Override
     public void doLoadDependencies() throws ApplicationException {
+        final PuertoBO prtoBO = new PuertoBO();
+        final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+
+        prtoCriterio.setIdioma(getIdioma());
+
+        prtoList = prtoBO.selectList(prtoCriterio);
         tpsrList = TipoServicioProxy.selectLabelValues();
         tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
     }
@@ -60,6 +72,15 @@ public final class ValoracionFilterAction extends GridFilterAction<ValoracionCri
      */
     public List<LabelValueVO> getTpsrList() {
         return tpsrList;
+    }
+
+    /**
+     * Gets the prto list.
+     *
+     * @return the prto list
+     */
+    public List<PuertoVO> getPrtoList() {
+        return prtoList;
     }
 
     /**

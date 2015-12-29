@@ -1525,7 +1525,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_serie_fcsr TO portico\
 -- tbl_factura_fctr
 CREATE TABLE tbl_factura_fctr (
 	fctr_pk NUMBER(19) NOT NULL
-	, fctr_aspc_pk NUMBER(19) NOT NULL
 	, fctr_pagador_prmt_pk NUMBER(19) NOT NULL
 	, fctr_fcsr_pk NUMBER(19) NOT NULL
 	, fctr_numero INT NOT NULL
@@ -1535,17 +1534,9 @@ CREATE TABLE tbl_factura_fctr (
 	, fctr_ffin TIMESTAMP
 	, fctr_estado CHAR(2) NOT NULL
 	, fctr_es_suj_pasivo INT NOT NULL
-	, fctr_info1 VARCHAR2(100)
-	, fctr_info2 VARCHAR2(100)
-	, fctr_info3 VARCHAR2(100)
-	, fctr_info4 VARCHAR2(100)
-	, fctr_info5 VARCHAR2(100)
-	, fctr_info6 VARCHAR2(100)
 
 	, CONSTRAINT pk_fctr PRIMARY KEY (fctr_pk)
 
-	, CONSTRAINT fk_fctr_aspc_pk FOREIGN KEY (fctr_aspc_pk)
-		REFERENCES tbl_aspecto_aspc (aspc_pk)
 	, CONSTRAINT fk_fctr_pagador_prmt_pk FOREIGN KEY (fctr_pagador_prmt_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 	, CONSTRAINT fk_fctr_fcsr_pk FOREIGN KEY (fctr_fcsr_pk)

@@ -73,6 +73,8 @@ public enum AccionPrefix {
     vlrl,
     /** The vlrd. */
     vlrd,
+    /** The fcdr. */
+    fcdr,
     /** The fcsr. */
     fcsr,
     /** The prto. */
@@ -96,6 +98,7 @@ public enum AccionPrefix {
     /** The secc. */
     secc,
 
+    /** The vldr. */
     vldr,
 
     ;

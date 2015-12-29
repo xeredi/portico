@@ -242,6 +242,8 @@ INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_
 
 INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2780, 'prmn', 'list', 1, 0)\
 
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2792, 'fcdr', 'create', 1, 0)\
+
 
 -- Grupos
 INSERT INTO tbl_grupo_grpo (grpo_pk, grpo_nombre) VALUES (4000, 'Administradores')\
@@ -1505,6 +1507,11 @@ INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (1, 'atra_cambiarM
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (1, 'atra_autorizarFPrevio')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'atra_autorizarFPrevio', 'Autorizar Fondeo Previo Atraque')\
 
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vldr')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vldr', 'Valorador')\
+
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fcdr')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fcdr', 'Facturador')\
 
 
 

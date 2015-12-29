@@ -561,7 +561,9 @@ public enum MessageI18nKey {
     fctl_cuant5, /** The fctl_cuant6. */
     fctl_cuant6, /** The fctd. */
     fctd, /** The fctd list. */
-    fctdList, /** The conf. */
+    fctdList,
+    /** The fcdr_fecha. */
+    fcdr_fecha, /** The conf. */
     conf, /** The conf list. */
     confList, /** The conf_key. */
     conf_key, /** The conf_value type. */
@@ -571,7 +573,7 @@ public enum MessageI18nKey {
     m18nList, /** The m18n. */
     m18n, /** The m18n_key. */
     m18n_key, /** The schr. */
-    schr,
+    schr, vldr, fcdr,
 
     /** Error no controlado. Se pasa como argumento el mensaje de la excepcion. */
     E00000,

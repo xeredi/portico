@@ -21,6 +21,9 @@ public final class ValoracionCriterioVO extends BaseCriterioVO {
     /** The tpsr id. */
     private Long tpsrId;
 
+    /** The prto id. */
+    private Long prtoId;
+
     /** The srvc id. */
     private ServicioVO srvc;
 
@@ -32,6 +35,9 @@ public final class ValoracionCriterioVO extends BaseCriterioVO {
 
     /** The crgo. */
     private CargoVO crgo;
+
+    /** The fctr. */
+    private FacturaVO fctr;
 
     /** The cod exencion. */
     private String codExencion;
@@ -188,4 +194,41 @@ public final class ValoracionCriterioVO extends BaseCriterioVO {
         codExencion = value;
     }
 
+    /**
+     * Gets the fctr.
+     *
+     * @return the fctr
+     */
+    public FacturaVO getFctr() {
+        return fctr;
+    }
+
+    /**
+     * Sets the fctr.
+     *
+     * @param value
+     *            the new fctr
+     */
+    public void setFctr(final FacturaVO value) {
+        fctr = value;
+    }
+
+    /**
+     * Gets the prto id.
+     *
+     * @return the prto id
+     */
+    public Long getPrtoId() {
+        return prtoId;
+    }
+
+    /**
+     * Sets the prto id.
+     *
+     * @param value
+     *            the new prto id
+     */
+    public void setPrtoId(final Long value) {
+        prtoId = value;
+    }
 }

@@ -3,12 +3,9 @@ package xeredi.argo.proceso.facturacion;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import xeredi.argo.model.facturacion.bo.FacturadorBO;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
-import xeredi.argo.model.proceso.vo.ProcesoItemVO;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.proceso.ProcesoTemplate;
 
@@ -18,14 +15,25 @@ import xeredi.argo.proceso.ProcesoTemplate;
  */
 public final class ProcesoFacturador extends ProcesoTemplate {
 
-    /** The Constant FFAC_PARAM. */
-    public static final String FFAC_PARAM = "ffac";
-
-    /** The Constant ASPCID_PARAM. */
-    public static final String ASPCID_PARAM = "aspcId";
-
-    /** The Constant FCSRID_PARAM. */
-    public static final String FCSRID_PARAM = "fcsrId";
+    /**
+     * The Enum Params.
+     */
+    public enum Params {
+        /** The ffac. */
+        ffac,
+        /** The fcsr. */
+        fcsr,
+        /** The pagador. */
+        pagador,
+        /** The prto. */
+        prto,
+        /** The tpsr. */
+        tpsr,
+        /** The srvc. */
+        srvc,
+        /** The vlrc. */
+        vlrc
+    }
 
     /**
      * {@inheritDoc}
@@ -44,31 +52,19 @@ public final class ProcesoFacturador extends ProcesoTemplate {
 
         try {
             Date ffac = null;
-            Long aspcId = null;
             Long fcsrId = null;
 
-            if (prpmMap.containsKey(FFAC_PARAM)) {
-                ffac = new SimpleDateFormat("dd/MM/yyyy").parse(prpmMap.get(FFAC_PARAM).getValor());
+            if (prpmMap.containsKey(Params.ffac.name())) {
+                ffac = new SimpleDateFormat("dd/MM/yyyy").parse(prpmMap.get(Params.ffac.name()).getValor());
             }
-            if (prpmMap.containsKey(ASPCID_PARAM)) {
-                aspcId = Long.parseLong(prpmMap.get(ASPCID_PARAM).getValor());
-            }
-            if (prpmMap.containsKey(FCSRID_PARAM)) {
-                fcsrId = Long.parseLong(prpmMap.get(FCSRID_PARAM).getValor());
+            if (prpmMap.containsKey(Params.fcsr.name())) {
+                fcsrId = Long.parseLong(prpmMap.get(Params.fcsr.name()).getValor());
             }
 
-            final Set<Long> vlrcIds = new HashSet<>();
-
-            for (final ProcesoItemVO pritEntrada : pritEntradaList) {
-                vlrcIds.add(pritEntrada.getItemId());
-            }
-
-            if (!vlrcIds.isEmpty()) {
-                try {
-                    fctrBO.facturarValoraciones(vlrcIds, aspcId, fcsrId, ffac);
-                } catch (final Exception ex) {
-                    addError(MensajeCodigo.G_000, ex.getMessage());
-                }
+            try {
+                fctrBO.facturarValoraciones(vlrcIds, aspcId, fcsrId, ffac);
+            } catch (final Exception ex) {
+                addError(MensajeCodigo.G_000, ex.getMessage());
             }
         } catch (final ParseException ex) {
             throw new Error(ex);

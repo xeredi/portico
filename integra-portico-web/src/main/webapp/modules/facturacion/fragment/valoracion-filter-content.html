@@ -21,6 +21,13 @@
                                     <option />
                                 </select>
                             </div>
+                            <div class="col-sm-3 col-md-2 form-group-sm">
+                                <label translate="prto"></label> <select ng-model="vm.searchCriteria.prtoId"
+                                    ng-options="item.id as item.etiqueta for item in vm.prtoList"
+                                    class="form-control">
+                                    <option />
+                                </select>
+                            </div>
                             <div class="col-sm-3 col-md-2 form-group-sm" ng-show="vm.searchCriteria.tpsrId">
                                 <label translate="srvc"></label> <input type="text" autocomplete="off"
                                     ng-model="vm.searchCriteria.srvc" ng-controller="SrvcLupaController"

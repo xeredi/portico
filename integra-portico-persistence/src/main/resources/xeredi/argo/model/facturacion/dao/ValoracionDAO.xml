@@ -185,6 +185,9 @@
             <if test="tpsrId != null">
                 AND srvc_tpsr_pk = #{tpsrId}
             </if>
+            <if test="prtoId != null">
+                AND srvc_subp_pk = #{prtoId}
+            </if>
             <if test="codExencion != null">
                 AND vlrc_cod_exen = #{codExencion}
             </if>

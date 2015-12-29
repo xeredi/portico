@@ -53,6 +53,8 @@ angular.module("facturacion_controller", [])
 .controller("ValoracionDetalleDetailController",
         ValoracionDetalleDetailController)
 
+.controller("FacturadorEditController", FacturadorEditController)
+
 ;
 
 function config($stateProvider) {
@@ -267,6 +269,15 @@ function config($stateProvider) {
         url : "/facturacion/valoracion-detalle/detail/:vlrcId/:vlrlId/:id",
         templateUrl : "modules/facturacion/valoracion-detalle-detail.html",
         controller : "ValoracionDetalleDetailController as vm"
+    })
+
+    .state("facturador-create", {
+        url : "/facturacion/facturador/create",
+        templateUrl : "modules/facturacion/facturador-edit.html",
+        controller : "FacturadorEditController as vm",
+        data : {
+            accion : 'create'
+        }
     })
 
     ;
@@ -893,6 +904,7 @@ function ValoracionGridController($state, $stateParams, $modal,
     function filter() {
         ValoracionService.filter(vm.searchCriteria).then(function(data) {
             vm.tpsrList = data.tpsrList;
+            vm.prtoList = data.prtoList;
         });
     }
 
@@ -1088,4 +1100,37 @@ function ValoracionDetalleDetailController($stateParams, pageTitleService,
     });
 
     pageTitleService.setTitle("vlrd", "page_detail");
+}
+
+function FacturadorEditController($state, $stateParams, pageTitleService,
+        FacturadorService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        FacturadorService.save(vm.accion, vm.model).then(function(data) {
+            FacturadorService.redirectAfterSave(vm.accion, {
+                id : data.model.prbtId
+            }, "proceso-detail");
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.accion = $state.current.data.accion;
+    vm.model = {}
+
+    FacturadorService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
+
+        vm.fcsrList = data.fcsrList;
+        vm.tpsrList = data.tpsrList;
+        vm.prtoList = data.prtoList;
+    });
+
+    pageTitleService.setTitle("fcdr", "page_" + vm.accion);
 }
