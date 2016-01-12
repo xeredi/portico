@@ -33,6 +33,9 @@ import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
+import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
+import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
+import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
 
@@ -75,10 +78,10 @@ public final class ValoracionPdf extends BasePdf {
      * @throws InternalErrorException
      *             the internal error exception
      */
-    public void imprimir(final @NonNull ValoracionVO vlrc, final @NonNull TipoDatoVO tpdtCodExencion,
-            final @NonNull List<ValoracionCargoVO> vlrgList, final @NonNull List<ValoracionImpuestoVO> vlriList,
-            final @NonNull List<ValoracionLineaVO> vlrlList, final @NonNull OutputStream stream)
-                    throws InternalErrorException {
+    public void imprimir(final @NonNull ValoracionVO vlrc, final @NonNull ParametroVO pagador,
+            final @NonNull TipoDatoVO tpdtCodExencion, final @NonNull List<ValoracionCargoVO> vlrgList,
+            final @NonNull List<ValoracionImpuestoVO> vlriList, final @NonNull List<ValoracionLineaVO> vlrlList,
+            final @NonNull OutputStream stream) throws InternalErrorException {
         try {
             final JasperReportBuilder report = DynamicReports.report();
 
@@ -106,13 +109,13 @@ public final class ValoracionPdf extends BasePdf {
 
                     list.add(
                             DynamicReports.cmp.subreport(getSubreportVlrl(vlrlPrecio, vlrlMap.get(vlrlPrecio.getId()))),
-                            DynamicReports.cmp.verticalGap(15));
+                            DynamicReports.cmp.verticalGap(17));
                 }
 
                 report.title(
                         DynamicReports.cmp.text(bundle.getString(MessageI18nKey.vlrc.name())).setStyle(
                                 PdfConstants.H1_STYLE), getSubreportVlrc(vlrc, tpdtCodExencion),
-                                DynamicReports.cmp.verticalGap(20), getSubreportPagador(vlrc.getPagador()),
+                                DynamicReports.cmp.verticalGap(20), getSubreportPagador(pagador, vlrc),
                                 DynamicReports.cmp.verticalGap(20),
                                 DynamicReports.cmp.subreport(getSubreportVlrgList(vlrgList)),
                                 DynamicReports.cmp.verticalGap(20),
@@ -121,7 +124,8 @@ public final class ValoracionPdf extends BasePdf {
                                 .setTitleSplitType(SplitType.PREVENT)
                                 .summary(
                                         DynamicReports.cmp.text(bundle.getString(MessageI18nKey.vlrlList.name())).setStyle(
-                                                PdfConstants.H2_STYLE), list).setSummarySplitType(SplitType.PREVENT);
+                                                PdfConstants.H2_STYLE), list).setSummarySplitType(SplitType.PREVENT)
+                                                .setSummaryWithPageHeaderAndFooter(true);
             }
 
             report.toPdf(stream);
@@ -150,10 +154,12 @@ public final class ValoracionPdf extends BasePdf {
                     TipoElemento.TX));
             rowCells.add(new PdfCell(bundle.getString("enti_" + vlrc.getSrvc().getEntiId()), vlrc.getSrvc()
                     .getEtiqueta(), 3, TipoElemento.TX));
-            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_fliq.name()), formatDate(vlrc.getFliq()), 1,
-                    TipoElemento.FH));
             rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.aspc.name()), vlrc.getAspc().getEtiqueta(), 3,
                     TipoElemento.TX));
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_fliq.name()), formatDate(vlrc.getFliq()), 1,
+                    TipoElemento.FH));
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.fref.name()), formatDatetime(vlrc.getFref()), 2,
+                    TipoElemento.FH));
 
             listCells.add(rowCells);
         }
@@ -167,23 +173,6 @@ public final class ValoracionPdf extends BasePdf {
                     .getImpuesto()), 1, TipoElemento.ND));
             rowCells.add(new PdfCell(bundle.getString("tpdt_" + tpdtCodExencion.getId()), bundle.getString("cdrf_"
                     + tpdtCodExencion.getId() + "_" + vlrc.getCodExencion()), 2, TipoElemento.TX));
-
-            listCells.add(rowCells);
-        }
-
-        {
-            final List<PdfCell> rowCells = new ArrayList<>();
-
-            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_pagador.name()), vlrc.getPagador()
-                    .getEtiqueta(), 3, TipoElemento.TX));
-            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_sujPasivo.name()), vlrc.getSujPasivo() ? "1"
-                    : "0", 1, TipoElemento.BO));
-            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_falta.name()),
-                    formatDatetime(vlrc.getFalta()), 2, TipoElemento.FH));
-            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_fliq.name()), formatDate(vlrc.getFliq()), 1,
-                    TipoElemento.FE));
-            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.fref.name()), formatDatetime(vlrc.getFref()), 2,
-                    TipoElemento.FH));
 
             listCells.add(rowCells);
         }
@@ -229,14 +218,54 @@ public final class ValoracionPdf extends BasePdf {
      *            the pagador
      * @return the subreport
      */
-    private ComponentBuilder<?, ?> getSubreportPagador(final @NonNull ParametroVO pagador) {
+    private ComponentBuilder<?, ?> getSubreportPagador(final @NonNull ParametroVO pagador,
+            final @NonNull ValoracionVO vlrc) {
+        final AbstractEntidadDetailVO entiPagador = EntidadProxy.select(pagador.getEntiId());
         final List<List<PdfCell>> listCells = new ArrayList<>();
 
         {
             final List<PdfCell> rowCells = new ArrayList<>();
 
-            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.prmn_codigo.name()), String.valueOf(pagador
-                    .getParametro()), 1, TipoElemento.TX));
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.prmn_codigo.name()), pagador.getParametro(), 1,
+                    TipoElemento.TX));
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrc_sujPasivo.name()), bundle.getString("format_"
+                    + vlrc.getSujPasivo()), 1, TipoElemento.BO));
+            rowCells.add(new PdfCell(pagador.getItdtCadena(TipoDato.TIPO_DOCUMENTO.getId()), pagador
+                    .getItdtCadena(TipoDato.CADENA_02.getId()), 1, TipoElemento.TX));
+            rowCells.add(new PdfCell(bundle.getString("entd_"
+                    + entiPagador.getEntdMap().get(TipoDato.CADENA_01.getId()).getId()), pagador
+                    .getItdtCadena(TipoDato.CADENA_01.getId()), 3, TipoElemento.TX));
+            rowCells.add(new PdfCell(bundle.getString("entd_"
+                    + entiPagador.getEntdMap().get(TipoDato.CADENA_07.getId()).getId()), pagador
+                    .getItdtCadena(TipoDato.CADENA_07.getId()), 1, TipoElemento.TX));
+            rowCells.add(new PdfCell(bundle.getString("entd_"
+                    + entiPagador.getEntdMap().get(TipoDato.CADENA_08.getId()).getId()), pagador
+                    .getItdtCadena(TipoDato.CADENA_08.getId()), 1, TipoElemento.TX));
+            rowCells.add(new PdfCell(bundle.getString("entd_"
+                    + entiPagador.getEntdMap().get(TipoDato.CADENA_09.getId()).getId()), pagador
+                    .getItdtCadena(TipoDato.CADENA_09.getId()), 1, TipoElemento.TX));
+            rowCells.add(new PdfCell(bundle.getString("entd_"
+                    + entiPagador.getEntdMap().get(TipoDato.CADENA_10.getId()).getId()), pagador
+                    .getItdtCadena(TipoDato.CADENA_10.getId()), 3, TipoElemento.TX));
+
+            listCells.add(rowCells);
+        }
+
+        {
+            final List<PdfCell> rowCells = new ArrayList<>();
+
+            rowCells.add(new PdfCell(bundle.getString("entd_"
+                    + entiPagador.getEntdMap().get(TipoDato.CADENA_04.getId()).getId()), pagador
+                    .getItdtCadena(TipoDato.CADENA_04.getId()), 6, TipoElemento.TX));
+            rowCells.add(new PdfCell(bundle.getString("entd_"
+                    + entiPagador.getEntdMap().get(TipoDato.CADENA_05.getId()).getId()), pagador
+                    .getItdtCadena(TipoDato.CADENA_05.getId()), 1, TipoElemento.TX));
+
+            if (pagador.getItdtPrmt(TipoDato.UNLOCODE.getId()) != null) {
+                rowCells.add(new PdfCell(bundle.getString("entd_"
+                        + entiPagador.getEntdMap().get(TipoDato.UNLOCODE.getId()).getId()), pagador.getItdtPrmt(
+                                TipoDato.UNLOCODE.getId()).getEtiqueta(), 4, TipoElemento.PR));
+            }
 
             listCells.add(rowCells);
         }

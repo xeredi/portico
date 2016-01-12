@@ -365,10 +365,6 @@
             <id>Wakaleo Repository</id>
             <url>http://www.wakaleo.com/maven/repos/</url>
         </pluginRepository>
-        <pluginRepository>
-            <id>Dynamic Jasper</id>
-            <url>http://nexus.fdvs.com.ar/content/groups/public/</url>
-        </pluginRepository>
     </pluginRepositories>
 </project>
 <!-- <doclet.version>5.6.6</doclet.version> <doclet.additionalparam> -inferrel -inferdep -quiet -hide java.* -hide

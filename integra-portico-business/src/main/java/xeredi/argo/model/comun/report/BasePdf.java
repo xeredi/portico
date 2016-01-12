@@ -13,7 +13,7 @@ import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
-import net.sf.dynamicreports.report.constant.HorizontalAlignment;
+import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
 import xeredi.argo.model.comun.proxy.PorticoResourceBundle;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
@@ -168,7 +168,7 @@ public abstract class BasePdf {
                 .setFixedWidth(pdfCell.getWidth()).setStyle(PdfConstants.VALUE_STYLE);
 
         if (pdfCell.getTpel() == TipoElemento.ND || pdfCell.getTpel() == TipoElemento.NE) {
-            data.setHorizontalAlignment(HorizontalAlignment.RIGHT);
+            data.setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT);
         }
 
         return data;
