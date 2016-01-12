@@ -61,6 +61,7 @@
 
         <poi.version>3.13</poi.version>
         <dynamicreports.version>4.0.2</dynamicreports.version>
+        <DynamicJasper.version>5.0.2</DynamicJasper.version>
         <guava.version>19.0</guava.version>
         <commons-io.version>2.4</commons-io.version>
         <commons-compress.version>1.10</commons-compress.version>
@@ -363,6 +364,10 @@
         <pluginRepository>
             <id>Wakaleo Repository</id>
             <url>http://www.wakaleo.com/maven/repos/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>Dynamic Jasper</id>
+            <url>http://nexus.fdvs.com.ar/content/groups/public/</url>
         </pluginRepository>
     </pluginRepositories>
 </project>

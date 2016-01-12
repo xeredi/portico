@@ -59,6 +59,13 @@
             <artifactId>dynamicreports-core</artifactId>
             <version>${dynamicreports.version}</version>
         </dependency>
+<!--
+        <dependency>
+            <groupId>ar.com.fdvs</groupId>
+            <artifactId>DynamicJasper</artifactId>
+            <version>${DynamicJasper.version}</version>
+        </dependency>
+ -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>

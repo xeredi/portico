@@ -3,17 +3,22 @@ package xeredi.argo.model.facturacion.report;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import lombok.NonNull;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
-import net.sf.dynamicreports.report.builder.group.CustomGroupBuilder;
+import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
+import net.sf.dynamicreports.report.builder.component.MultiPageListBuilder;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
+import net.sf.dynamicreports.report.constant.SplitType;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
 import xeredi.argo.model.comun.exception.InternalErrorException;
@@ -57,6 +62,8 @@ public final class ValoracionPdf extends BasePdf {
      *
      * @param vlrc
      *            the vlrc
+     * @param tpdtCodExencion
+     *            the tpdt cod exencion
      * @param vlrgList
      *            the vlrg list
      * @param vlriList
@@ -71,26 +78,51 @@ public final class ValoracionPdf extends BasePdf {
     public void imprimir(final @NonNull ValoracionVO vlrc, final @NonNull TipoDatoVO tpdtCodExencion,
             final @NonNull List<ValoracionCargoVO> vlrgList, final @NonNull List<ValoracionImpuestoVO> vlriList,
             final @NonNull List<ValoracionLineaVO> vlrlList, final @NonNull OutputStream stream)
-            throws InternalErrorException {
+                    throws InternalErrorException {
         try {
             final JasperReportBuilder report = DynamicReports.report();
 
             report.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE);
             report.pageFooter(DynamicReports.cmp.pageXslashY());
 
-            report.addTitle(DynamicReports.cmp.text(bundle.getString(MessageI18nKey.vlrc.name())).setStyle(
-                    PdfConstants.H1_STYLE));
+            {
+                final List<ValoracionLineaVO> vlrlPrecioList = new ArrayList<>();
+                final Map<Long, List<ValoracionLineaVO>> vlrlMap = new HashMap<>();
 
-            report.addTitle(DynamicReports.cmp.subreport(getSubreportVlrc(vlrc, tpdtCodExencion)),
-                    DynamicReports.cmp.verticalGap(20));
-            report.addTitle(DynamicReports.cmp.subreport(getSubreportPagador(vlrc.getPagador())),
-                    DynamicReports.cmp.verticalGap(20));
-            report.addTitle(DynamicReports.cmp.subreport(getSubreportVlrgList(vlrgList)),
-                    DynamicReports.cmp.verticalGap(20));
-            report.addTitle(DynamicReports.cmp.subreport(getSubreportVlriList(vlriList)),
-                    DynamicReports.cmp.verticalGap(20));
-            report.addTitle(DynamicReports.cmp.subreport(getSubreportVlrlList(vlrlList)),
-                    DynamicReports.cmp.verticalGap(20));
+                for (final ValoracionLineaVO vlrl : vlrlList) {
+                    if (vlrl.getRgla().getTipo() == ReglaTipo.T) {
+                        vlrlPrecioList.add(vlrl);
+                        vlrlMap.put(vlrl.getId(), new ArrayList<ValoracionLineaVO>());
+                    } else {
+                        vlrlMap.get(vlrl.getPadreId()).add(vlrl);
+                    }
+                }
+
+                final Iterator<ValoracionLineaVO> vlrlPrecioIterator = vlrlPrecioList.iterator();
+                final MultiPageListBuilder list = DynamicReports.cmp.multiPageList();
+
+                while (vlrlPrecioIterator.hasNext()) {
+                    final ValoracionLineaVO vlrlPrecio = vlrlPrecioIterator.next();
+
+                    list.add(
+                            DynamicReports.cmp.subreport(getSubreportVlrl(vlrlPrecio, vlrlMap.get(vlrlPrecio.getId()))),
+                            DynamicReports.cmp.verticalGap(15));
+                }
+
+                report.title(
+                        DynamicReports.cmp.text(bundle.getString(MessageI18nKey.vlrc.name())).setStyle(
+                                PdfConstants.H1_STYLE), getSubreportVlrc(vlrc, tpdtCodExencion),
+                                DynamicReports.cmp.verticalGap(20), getSubreportPagador(vlrc.getPagador()),
+                                DynamicReports.cmp.verticalGap(20),
+                                DynamicReports.cmp.subreport(getSubreportVlrgList(vlrgList)),
+                                DynamicReports.cmp.verticalGap(20),
+                                DynamicReports.cmp.subreport(getSubreportVlriList(vlriList)),
+                                DynamicReports.cmp.verticalGap(20))
+                                .setTitleSplitType(SplitType.PREVENT)
+                                .summary(
+                                        DynamicReports.cmp.text(bundle.getString(MessageI18nKey.vlrlList.name())).setStyle(
+                                                PdfConstants.H2_STYLE), list).setSummarySplitType(SplitType.PREVENT);
+            }
 
             report.toPdf(stream);
         } catch (final DRException ex) {
@@ -103,12 +135,12 @@ public final class ValoracionPdf extends BasePdf {
      *
      * @param vlrc
      *            the vlrc
+     * @param tpdtCodExencion
+     *            the tpdt cod exencion
      * @return the subreport vlrc
      */
-    private JasperReportBuilder getSubreportVlrc(final @NonNull ValoracionVO vlrc,
+    private ComponentBuilder<?, ?> getSubreportVlrc(final @NonNull ValoracionVO vlrc,
             final @NonNull TipoDatoVO tpdtCodExencion) {
-        final JasperReportBuilder report = DynamicReports.report();
-
         final List<List<PdfCell>> listCells = new ArrayList<>();
 
         {
@@ -187,9 +219,7 @@ public final class ValoracionPdf extends BasePdf {
             listCells.add(rowCells);
         }
 
-        report.addTitle(getForm(listCells));
-
-        return report;
+        return getForm(bundle.getString(MessageI18nKey.vlrc.name()), listCells);
     }
 
     /**
@@ -199,12 +229,7 @@ public final class ValoracionPdf extends BasePdf {
      *            the pagador
      * @return the subreport
      */
-    private JasperReportBuilder getSubreportPagador(final @NonNull ParametroVO pagador) {
-        final JasperReportBuilder report = DynamicReports.report();
-
-        report.addTitle(DynamicReports.cmp.text(bundle.getString(MessageI18nKey.vlrc_pagador.name())).setStyle(
-                PdfConstants.H2_STYLE));
-
+    private ComponentBuilder<?, ?> getSubreportPagador(final @NonNull ParametroVO pagador) {
         final List<List<PdfCell>> listCells = new ArrayList<>();
 
         {
@@ -216,9 +241,7 @@ public final class ValoracionPdf extends BasePdf {
             listCells.add(rowCells);
         }
 
-        report.addTitle(getForm(listCells));
-
-        return report;
+        return getForm(bundle.getString(MessageI18nKey.vlrc_pagador.name()), listCells);
     }
 
     /**
@@ -238,7 +261,7 @@ public final class ValoracionPdf extends BasePdf {
                 bundle.getString(MessageI18nKey.vlrg_importe.name()), MessageI18nKey.vlrg_importe.name(),
                 DynamicReports.type.bigDecimalType()).setWidth(2);
 
-        report.addTitle(DynamicReports.cmp.text(bundle.getString(MessageI18nKey.vlrgList.name())).setStyle(
+        report.title(DynamicReports.cmp.text(bundle.getString(MessageI18nKey.vlrgList.name())).setStyle(
                 PdfConstants.H2_STYLE));
         report.columns(cargoCol, importeCol);
         report.setColumnTitleStyle(PdfConstants.TH_STYLE);
@@ -278,7 +301,7 @@ public final class ValoracionPdf extends BasePdf {
                 bundle.getString(MessageI18nKey.vlri_importe_impuesto.name()),
                 MessageI18nKey.vlri_importe_impuesto.name(), DynamicReports.type.bigDecimalType()).setWidth(2);
 
-        report.addTitle(DynamicReports.cmp.text(bundle.getString(MessageI18nKey.vlriList.name())).setStyle(
+        report.title(DynamicReports.cmp.text(bundle.getString(MessageI18nKey.vlriList.name())).setStyle(
                 PdfConstants.H2_STYLE));
         report.columns(impuestoCol, porcentajeCol, importeBaseCol, importeImpuestoCol);
         report.setColumnTitleStyle(PdfConstants.TH_STYLE);
@@ -299,55 +322,117 @@ public final class ValoracionPdf extends BasePdf {
     }
 
     /**
-     * Gets the subreport vlrl list.
+     * Gets the subreport vlrl info.
      *
-     * @param vlrlList
-     *            the vlrl list
-     * @return the subreport vlrl list
+     * @param vlrlPrecio
+     *            the vlrl precio
+     * @return the subreport vlrl info
      */
-    private JasperReportBuilder getSubreportVlrlList(final @NonNull List<ValoracionLineaVO> vlrlList) {
-        ValoracionLineaVO vlrlPrecio = null;
+    private ComponentBuilder<?, ?> getSubreportVlrlInfo(final @NonNull ValoracionLineaVO vlrlPrecio) {
+        final List<List<PdfCell>> listCells = new ArrayList<>();
 
-        for (final ValoracionLineaVO vlrl : vlrlList) {
-            if (vlrl.getRgla().getTipo() == ReglaTipo.T) {
-                vlrlPrecio = vlrl;
+        {
+            final List<PdfCell> rowCells = new ArrayList<>();
+
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.crgo.name()), vlrlPrecio.getRgla().getCrgo()
+                    .getEtiqueta(), 4, TipoElemento.TX));
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.enti.name()), bundle.getString("enti_"
+                    + vlrlPrecio.getRgla().getEnti().getId()), 4, TipoElemento.TX));
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrl_subtotal.name()), formatCurrency(vlrlPrecio
+                    .getSubtotal()), 2, TipoElemento.ND));
+            rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.vlrl_impuesto.name()), vlrlPrecio.getImpuesto()
+                    .getEtiqueta(), 2, TipoElemento.TX));
+
+            listCells.add(rowCells);
+        }
+
+        {
+            final List<PdfCell> rowCells = new ArrayList<>();
+
+            if (vlrlPrecio.getRgla().getVersion().getEtiqInfo1() != null) {
+                rowCells.add(new PdfCell(vlrlPrecio.getRgla().getVersion().getEtiqInfo1(), vlrlPrecio.getInfo1(), 4,
+                        TipoElemento.TX));
+            }
+            if (vlrlPrecio.getRgla().getVersion().getEtiqInfo2() != null) {
+                rowCells.add(new PdfCell(vlrlPrecio.getRgla().getVersion().getEtiqInfo2(), vlrlPrecio.getInfo2(), 4,
+                        TipoElemento.TX));
+            }
+            if (vlrlPrecio.getRgla().getVersion().getEtiqInfo3() != null) {
+                rowCells.add(new PdfCell(vlrlPrecio.getRgla().getVersion().getEtiqInfo3(), vlrlPrecio.getInfo3(), 4,
+                        TipoElemento.TX));
             }
 
-            if (vlrlPrecio == null) {
-                throw new Error("La primera linea ha de ser un precio");
+            if (!rowCells.isEmpty()) {
+                listCells.add(rowCells);
             }
         }
 
-        final JasperReportBuilder report = DynamicReports.report();
+        {
+            final List<PdfCell> rowCells = new ArrayList<>();
 
-        final CustomGroupBuilder vlrlPadreGroup = DynamicReports.grp.group("vlrlPadreId", String.class)
-                .headerWithSubtotal();
+            if (vlrlPrecio.getRgla().getVersion().getEtiqInfo4() != null) {
+                rowCells.add(new PdfCell(vlrlPrecio.getRgla().getVersion().getEtiqInfo4(), vlrlPrecio.getInfo4(), 4,
+                        TipoElemento.TX));
+            }
+            if (vlrlPrecio.getRgla().getVersion().getEtiqInfo5() != null) {
+                rowCells.add(new PdfCell(vlrlPrecio.getRgla().getVersion().getEtiqInfo5(), vlrlPrecio.getInfo5(), 4,
+                        TipoElemento.TX));
+            }
+            if (vlrlPrecio.getRgla().getVersion().getEtiqInfo6() != null) {
+                rowCells.add(new PdfCell(vlrlPrecio.getRgla().getVersion().getEtiqInfo6(), vlrlPrecio.getInfo6(), 4,
+                        TipoElemento.TX));
+            }
+
+            if (!rowCells.isEmpty()) {
+                listCells.add(rowCells);
+            }
+        }
+
+        return getForm(listCells);
+    }
+
+    /**
+     * Gets the subreport vlrl.
+     *
+     * @param vlrlPrecio
+     *            the vlrl precio
+     * @param vlrlList
+     *            the vlrl list
+     * @return the subreport vlrl
+     */
+    private JasperReportBuilder getSubreportVlrl(final @NonNull ValoracionLineaVO vlrlPrecio,
+            final @NonNull List<ValoracionLineaVO> vlrlList) {
+        final JasperReportBuilder report = DynamicReports.report();
 
         final TextColumnBuilder<String> rglaCol = DynamicReports.col.column(
                 bundle.getString(MessageI18nKey.rgla.name()), MessageI18nKey.rgla.name(),
-                DynamicReports.type.stringType()).setWidth(2);
+                DynamicReports.type.stringType()).setWidth(3);
 
-        final TextColumnBuilder<Double> cuant1Col = DynamicReports.col
-                .column(vlrlPrecio.getRgla().getVersion().getEtiqCuant1() == null ? bundle.getString(MessageI18nKey.rgla
-                        .name())
-                        : vlrlPrecio.getRgla().getVersion().getEtiqCuant1(), MessageI18nKey.vlrl_cuant1.name(),
-                        DynamicReports.type.doubleType()).setWidth(1);
+        final TextColumnBuilder<Double> cuant1Col = DynamicReports.col.column(
+                vlrlPrecio.getRgla().getVersion().getEtiqCuant1() == null ? "" : vlrlPrecio.getRgla().getVersion()
+                        .getEtiqCuant1(), MessageI18nKey.vlrl_cuant1.name(), DynamicReports.type.doubleType())
+                        .setWidth(1);
         final TextColumnBuilder<Double> cuant2Col = DynamicReports.col.column(
                 vlrlPrecio.getRgla().getVersion().getEtiqCuant2() == null ? "" : vlrlPrecio.getRgla().getVersion()
                         .getEtiqCuant2(), MessageI18nKey.vlrl_cuant2.name(), DynamicReports.type.doubleType())
-                .setWidth(1);
+                        .setWidth(1);
         final TextColumnBuilder<Double> cuant3Col = DynamicReports.col.column(
-                bundle.getString(MessageI18nKey.vlrl_cuant3.name()), MessageI18nKey.vlrl_cuant3.name(),
-                DynamicReports.type.doubleType()).setWidth(1);
+                vlrlPrecio.getRgla().getVersion().getEtiqCuant3() == null ? "" : vlrlPrecio.getRgla().getVersion()
+                        .getEtiqCuant3(), MessageI18nKey.vlrl_cuant3.name(), DynamicReports.type.doubleType())
+                        .setWidth(1);
         final TextColumnBuilder<Double> cuant4Col = DynamicReports.col.column(
-                bundle.getString(MessageI18nKey.vlrl_cuant4.name()), MessageI18nKey.vlrl_cuant4.name(),
-                DynamicReports.type.doubleType()).setWidth(1);
+                vlrlPrecio.getRgla().getVersion().getEtiqCuant4() == null ? "" : vlrlPrecio.getRgla().getVersion()
+                        .getEtiqCuant4(), MessageI18nKey.vlrl_cuant4.name(), DynamicReports.type.doubleType())
+                        .setWidth(1);
         final TextColumnBuilder<Double> cuant5Col = DynamicReports.col.column(
-                bundle.getString(MessageI18nKey.vlrl_cuant5.name()), MessageI18nKey.vlrl_cuant5.name(),
-                DynamicReports.type.doubleType()).setWidth(1);
+                vlrlPrecio.getRgla().getVersion().getEtiqCuant5() == null ? "" : vlrlPrecio.getRgla().getVersion()
+                        .getEtiqCuant5(), MessageI18nKey.vlrl_cuant5.name(), DynamicReports.type.doubleType())
+                        .setWidth(1);
         final TextColumnBuilder<Double> cuant6Col = DynamicReports.col.column(
-                bundle.getString(MessageI18nKey.vlrl_cuant6.name()), MessageI18nKey.vlrl_cuant6.name(),
-                DynamicReports.type.doubleType()).setWidth(1);
+                vlrlPrecio.getRgla().getVersion().getEtiqCuant6() == null ? "" : vlrlPrecio.getRgla().getVersion()
+                        .getEtiqCuant6(), MessageI18nKey.vlrl_cuant6.name(), DynamicReports.type.doubleType())
+                        .setWidth(1);
+
         final TextColumnBuilder<BigDecimal> importeBaseCol = DynamicReports.col.column(
                 bundle.getString(MessageI18nKey.vlrl_importeBase.name()), MessageI18nKey.vlrl_importeBase.name(),
                 DynamicReports.type.bigDecimalType()).setWidth(1);
@@ -355,33 +440,31 @@ public final class ValoracionPdf extends BasePdf {
                 bundle.getString(MessageI18nKey.vlrl_importe.name()), MessageI18nKey.vlrl_importe.name(),
                 DynamicReports.type.bigDecimalType()).setWidth(1);
 
-        report.addTitle(DynamicReports.cmp.text(bundle.getString(MessageI18nKey.vlrlList.name())).setStyle(
-                PdfConstants.H2_STYLE));
-        report.groupBy(vlrlPadreGroup);
-        report.subtotalsAtGroupHeader(vlrlPadreGroup, DynamicReports.sbt.sum(importeCol)).setSubtotalStyle(
-                DynamicReports.stl.style().bold());
-
+        report.title(getSubreportVlrlInfo(vlrlPrecio));
         report.columns(rglaCol, cuant1Col, cuant2Col, cuant3Col, cuant4Col, cuant5Col, cuant6Col, importeBaseCol,
                 importeCol);
+
         report.setColumnTitleStyle(PdfConstants.TH_STYLE);
         report.setColumnStyle(PdfConstants.TD_STYLE);
 
-        final DRDataSource dataSource = new DRDataSource("vlrlPadreId", MessageI18nKey.rgla.name(),
-                MessageI18nKey.vlrl_cuant1.name(), MessageI18nKey.vlrl_cuant2.name(),
-                MessageI18nKey.vlrl_cuant3.name(), MessageI18nKey.vlrl_cuant4.name(),
-                MessageI18nKey.vlrl_cuant5.name(), MessageI18nKey.vlrl_cuant6.name(),
-                MessageI18nKey.vlrl_importeBase.name(), MessageI18nKey.vlrl_importe.name());
+        final DRDataSource dataSource = new DRDataSource(MessageI18nKey.rgla.name(), MessageI18nKey.vlrl_cuant1.name(),
+                MessageI18nKey.vlrl_cuant2.name(), MessageI18nKey.vlrl_cuant3.name(),
+                MessageI18nKey.vlrl_cuant4.name(), MessageI18nKey.vlrl_cuant5.name(),
+                MessageI18nKey.vlrl_cuant6.name(), MessageI18nKey.vlrl_importeBase.name(),
+                MessageI18nKey.vlrl_importe.name());
+
+        dataSource.add(vlrlPrecio.getRgla().getTipo().name() + " - " + vlrlPrecio.getRgla().getTexto(),
+                vlrlPrecio.getCuant1(), vlrlPrecio.getCuant2(), vlrlPrecio.getCuant3(), vlrlPrecio.getCuant4(),
+                vlrlPrecio.getCuant5(), vlrlPrecio.getCuant6(), null, new BigDecimal(vlrlPrecio.getImporte()));
 
         for (final ValoracionLineaVO vlrl : vlrlList) {
-            dataSource.add(vlrl.getPadreId().toString(), vlrl.getRgla().getTipo().name() + " - "
-                    + vlrl.getRgla().getCodigo(), vlrl.getCuant1(), vlrl.getCuant2(), vlrl.getCuant3(), vlrl
-                    .getCuant4(), vlrl.getCuant5(), vlrl.getCuant6(), vlrl.getRgla().getTipo() == ReglaTipo.T ? null
-                    : new BigDecimal(vlrl.getImporteBase()), new BigDecimal(vlrl.getImporte()));
+            dataSource.add(vlrl.getRgla().getTipo().name() + " - " + vlrl.getRgla().getTexto(), vlrl.getCuant1(),
+                    vlrl.getCuant2(), vlrl.getCuant3(), vlrl.getCuant4(), vlrl.getCuant5(), vlrl.getCuant6(),
+                    new BigDecimal(vlrl.getImporteBase()), new BigDecimal(vlrl.getImporte()));
         }
 
         report.setDataSource(dataSource);
 
         return report;
     }
-
 }

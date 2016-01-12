@@ -219,8 +219,8 @@
                 <td><a ui-sref="valoracion-linea-detail(vlrl)"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap"><span ng-if="vlrl.rgla.tipo == 'T'"
                     ng-bind="'enti_' + vlrl.rgla.enti.id | translate"></span></td>
-                <td nowrap="nowrap"><span ng-if="vlrl.rgla.tipo == 'T'" ng-bind="vlrl.rgla.crgo.codigo"></span></td>
-                <td nowrap="nowrap" ng-bind="vlrl.rgla.codigo"></td>
+                <td nowrap="nowrap"><span ng-if="vlrl.rgla.tipo == 'T'" ng-bind="vlrl.rgla.crgo.etiqueta"></span></td>
+                <td ng-bind="vlrl.rgla.texto" bs-tooltip data-title="{{vlrl.rgla.codigo}}"></td>
                 <td ng-bind="vlrl.rgla.tipo" bs-tooltip
                     data-title="{{'ReglaTipo_' + vlrl.rgla.tipo | translate}}"></td>
                 <td nowrap="nowrap" ng-bind="vlrl.rgla.version.valorBase | number:4" class="number"></td>

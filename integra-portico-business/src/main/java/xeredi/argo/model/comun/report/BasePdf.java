@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import lombok.NonNull;
 import net.sf.dynamicreports.report.builder.DynamicReports;
+import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalAlignment;
@@ -105,11 +107,11 @@ public abstract class BasePdf {
     /**
      * Gets the form.
      *
-     * @param listCells
-     *            the list cells
+     * @param title the title
+     * @param listCells            the list cells
      * @return the form
      */
-    public final HorizontalListBuilder getForm(final List<List<PdfCell>> listCells) {
+    public final ComponentBuilder<?, ?> getForm(final String title, final @NonNull List<List<PdfCell>> listCells) {
         final HorizontalListBuilder list = DynamicReports.cmp.horizontalList();
 
         for (final List<PdfCell> row : listCells) {
@@ -126,7 +128,18 @@ public abstract class BasePdf {
             list.newRow();
         }
 
-        return list;
+        return title == null ? DynamicReports.cmp.verticalList(list) : DynamicReports.cmp.verticalList(
+                DynamicReports.cmp.text(title), list);
+    }
+
+    /**
+     * Gets the form.
+     *
+     * @param listCells the list cells
+     * @return the form
+     */
+    public final ComponentBuilder<?, ?> getForm(final @NonNull List<List<PdfCell>> listCells) {
+        return getForm(null, listCells);
     }
 
     /**

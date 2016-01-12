@@ -34,6 +34,9 @@ public final class ReglaVO implements Versionable<ReglaVersionVO> {
     /** The fref. */
     private Date fref;
 
+    /** The texto. */
+    private String texto;
+
     /**
      * Instantiates a new regla vo.
      */
@@ -49,6 +52,25 @@ public final class ReglaVO implements Versionable<ReglaVersionVO> {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    /**
+     * Gets the etiqueta.
+     *
+     * @return the etiqueta
+     */
+    public String getEtiqueta() {
+        final StringBuffer buffer = new StringBuffer();
+
+        if (codigo != null) {
+            buffer.append(codigo);
+        }
+
+        if (texto != null) {
+            buffer.append(" - ").append(texto);
+        }
+
+        return buffer.length() == 0 ? null : buffer.toString();
     }
 
     /**
@@ -171,13 +193,29 @@ public final class ReglaVO implements Versionable<ReglaVersionVO> {
     }
 
     /**
-     * Sets the fref.
-     *
-     * @param value
-     *            the new fref
+     * {@inheritDoc}
      */
+    @Override
     public void setFref(final Date value) {
         fref = value;
+    }
+
+    /**
+     * Gets the texto.
+     *
+     * @return the texto
+     */
+    public String getTexto() {
+        return texto;
+    }
+
+    /**
+     * Sets the texto.
+     *
+     * @param value the new texto
+     */
+    public void setTexto(final String value) {
+        texto = value;
     }
 
 }

@@ -1131,6 +1131,8 @@ INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrl_impuesto
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrl_impuesto', 'Impuesto')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrl_vlrdCount')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrl_vlrdCount', 'Nº Detalles')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrl_subtotal')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrl_subtotal', 'Subtotal')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrl_info1')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrl_info1', 'Info. 1')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrl_info2')\

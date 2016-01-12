@@ -10,6 +10,7 @@
         <result column="rgla_tipo" property="tipo" />
 
         <result column="rgla_fref" property="fref" />
+        <result column="rgla_texto" property="texto" />
 
         <association property="enti" javaType="EntidadVO">
             <result column="rgla_enti_pk" property="id" />
@@ -56,8 +57,6 @@
             <result column="rglv_etiq_cuant4" property="etiqCuant4" />
             <result column="rglv_etiq_cuant5" property="etiqCuant5" />
             <result column="rglv_etiq_cuant6" property="etiqCuant6" />
-
-            <result column="rglv_nombre" property="nombre" />
         </association>
 
         <association property="crgo" javaType="CargoVO">
@@ -100,7 +99,7 @@
                 WHERE i18n_pref = 'rglv'
                     AND i18n_ext_pk = rglv_pk
                     AND i18n_lang = #{idioma}
-            ) AS rglv_nombre
+            ) AS rgla_texto
         ]]>
         </if>
     <![CDATA[

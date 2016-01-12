@@ -35,20 +35,22 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
     /**
      * Instantiates a new expression sql generator.
      *
-     * @param entiId the enti id
-     * @param apathType the apath type
+     * @param entiId
+     *            the enti id
+     * @param apathType
+     *            the apath type
      */
-    public ExpressionSqlGenerator(final Long entiId, PathType apathType) {
+    public ExpressionSqlGenerator(final Long entiId, final PathType apathType) {
         super();
-        this.entiDetailBase = EntidadProxy.select(entiId);
-        this.pathType = apathType;
+        entiDetailBase = EntidadProxy.select(entiId);
+        pathType = apathType;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String visitCondition(ConditionContext ctx) {
+    public String visitCondition(final ConditionContext ctx) {
         if (ctx.lp != null) {
             return ctx.lp.getText() + visitCondition(ctx.c1) + ctx.rp.getText();
         }
@@ -90,7 +92,7 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
      * {@inheritDoc}
      */
     @Override
-    public String visitFormula(FormulaContext ctx) {
+    public String visitFormula(final FormulaContext ctx) {
         if (ctx.cte != null) {
             return ctx.cte.getText();
         }
@@ -142,7 +144,7 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
                 return sqlCase;
             case acumuladoTeus:
                 return " portico.acumuladoTeus(" + visitFormula(ctx.f1) + ", " + visitFormula(ctx.f2) + ", "
-                        + visitFormula(ctx.f3) + ")";
+                + visitFormula(ctx.f3) + ")";
             case valorServicio:
                 return " portico.valorServicio(" + visitFormula(ctx.f1) + ", " + visitFormula(ctx.f2) + ")";
 
@@ -158,7 +160,7 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
      * {@inheritDoc}
      */
     @Override
-    public String visitProperty(PropertyContext ctx) {
+    public String visitProperty(final PropertyContext ctx) {
         String sqlPath = "";
 
         AbstractEntidadDetailVO entiDetailElem = entiDetailBase;
@@ -192,7 +194,7 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
                     sqlElement += "SELECT "
                             + (isLast && pathType == PathType.LABEL ? "CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero)))"
                                     : "srvc_pk") + " FROM tbl_servicio_srvc WHERE srvc_pk = ";
-                    sqlElement += (isFirst ? "item.ssrv_srvc_pk" : "#{any}");
+                    sqlElement += isFirst ? "item.ssrv_srvc_pk" : "#{any}";
                 }
                 if (pathElementCtx.parent != null) {
                     if (entiDetailElem.getEnti().getTipo() != TipoEntidad.S) {
@@ -212,7 +214,7 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
                     switch (entiDetailElem.getEnti().getTipo()) {
                     case P:
                         sqlElement += " SELECT prmt_" + attribute.name()
-                                + " FROM tbl_parametro_prmt WHERE prmt_pk = (#{any})";
+                        + " FROM tbl_parametro_prmt WHERE prmt_pk = (#{any})";
                         break;
                     case T:
                         sqlElement += " SELECT srvc_" + attribute.name() + " FROM tbl_servicio_srvc WHERE srvc_pk = ";
@@ -223,7 +225,7 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
                         break;
                     case S:
                         sqlElement += " SELECT ssrv_" + attribute.name()
-                                + " FROM tbl_subservicio_ssrv WHERE ssrv_pk = ";
+                        + " FROM tbl_subservicio_ssrv WHERE ssrv_pk = ";
 
                         sqlElement += isFirst ? "item.ssrv_pk" : "(#{any})";
 
@@ -294,11 +296,11 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
 
                         break;
                     case CR:
-                        sqlElement += (isLast && pathType == PathType.LABEL ? "(SELECT CONCAT(cdrf_valor, CONCAT(' - ', i18n_text))"
+                        sqlElement += isLast && pathType == PathType.LABEL ? "(SELECT CONCAT(cdrf_valor, CONCAT(' - ', i18n_text))"
                                 + " FROM tbl_codigo_ref_cdrf INNER JOIN tbl_i18n_i18n ON i18n_ext_pk = cdrf_pk"
                                 + " WHERE i18n_pref = 'cdrf' AND i18n_lang = 'es' AND cdrf_tpdt_pk = "
                                 + entd.getTpdt().getId() + " AND cdrf_valor = " + fieldPrefix + "cadena)"
-                                : fieldPrefix + "cadena");
+                                : fieldPrefix + "cadena";
 
                         break;
                     case PR:
@@ -314,10 +316,22 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
 
                                 break;
                             case LABEL:
-                                sqlElement += "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE("
-                                        + "(SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = ("
-                                        + "SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!'))"
-                                        + " FROM tbl_parametro_prmt WHERE prmt_pk = " + fieldPrefix + "prmt_pk)";
+                                sqlElement += "(SELECT CONCAT("
+                                        + "         CONCAT(prmt_parametro, ' - ')"
+                                        + "         , COALESCE ("
+                                        + "             (SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_ext_pk = prvr_pk AND i18n_pref = 'prvr' AND i18n_lang = 'es')"
+                                        + "             , (SELECT prdt_cadena FROM tbl_parametro_dato_prdt WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = ("
+                                        + "                 SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr WHERE tppr_pk = prmt_tppr_pk)))) AS prmt_etiqueta"
+                                        + " FROM tbl_parametro_prmt INNER JOIN tbl_parametro_version_prvr ON prvr_prmt_pk = prmt_pk"
+                                        + " WHERE fref BETWEEN prvr_fini AND COALESCE (prvr_ffin, fref)"
+                                        + "     AND prmt_pk = " + fieldPrefix + "prmt_pk)";
+
+                                // "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE("
+                                // +
+                                // "(SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = ("
+                                // +
+                                // "SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!'))"
+                                // + " FROM tbl_parametro_prmt WHERE prmt_pk = " + fieldPrefix + "prmt_pk)";
 
                                 break;
 
@@ -330,9 +344,9 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
 
                         break;
                     case SR:
-                        sqlElement += (isLast && pathType == PathType.LABEL ? "(SELECT CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero))) FROM tbl_servicio_srvc WHERE srvc_pk = "
+                        sqlElement += isLast && pathType == PathType.LABEL ? "(SELECT CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero))) FROM tbl_servicio_srvc WHERE srvc_pk = "
                                 + fieldPrefix + "srvc_dep_pk)"
-                                : fieldPrefix + "srvc_dep_pk");
+                                : fieldPrefix + "srvc_dep_pk";
 
                         break;
                     default:
@@ -343,14 +357,14 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
                     case T:
                         sqlElement += " FROM tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = portico.getTipoDato('"
                                 + pathElementCtx.ID().getText() + "') AND srdt_srvc_pk = ";
-                        sqlElement += (isFirst ? entiDetailBase.getEnti().getTipo() == TipoEntidad.T ? "item.srvc_pk"
-                                : "item.ssrv_srvc_pk" : "(#{any})");
+                        sqlElement += isFirst ? entiDetailBase.getEnti().getTipo() == TipoEntidad.T ? "item.srvc_pk"
+                                : "item.ssrv_srvc_pk" : "(#{any})";
 
                         break;
                     case S:
                         sqlElement += " FROM tbl_subservicio_dato_ssdt WHERE ssdt_tpdt_pk = portico.getTipoDato('"
                                 + pathElementCtx.ID().getText() + "') AND ssdt_ssrv_pk = ";
-                        sqlElement += (isFirst ? "item.ssrv_pk" : "(#{any})");
+                        sqlElement += isFirst ? "item.ssrv_pk" : "(#{any})";
 
                         break;
                     case P:

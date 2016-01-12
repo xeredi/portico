@@ -479,7 +479,7 @@ public enum MessageI18nKey {
     vlrl_importeBase, /** The vlrl_importe. */
     vlrl_importe, /** The vlrl_impuesto. */
     vlrl_impuesto, /** The vlrl_vlrd count. */
-    vlrl_vlrdCount, /** The vlrl_info1. */
+    vlrl_vlrdCount, vlrl_subtotal, /** The vlrl_info1. */
     vlrl_info1, /** The vlrl_info2. */
     vlrl_info2, /** The vlrl_info3. */
     vlrl_info3, /** The vlrl_info4. */

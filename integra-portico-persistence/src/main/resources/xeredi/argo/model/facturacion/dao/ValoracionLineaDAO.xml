@@ -42,6 +42,7 @@
 			<result column="vlrl_rgla_pk" property="id" />
 			<result column="rgla_codigo" property="codigo" />
 			<result column="rgla_tipo" property="tipo" />
+            <result column="rgla_texto" property="texto" />
 
 			<association property="enti" javaType="EntidadVO">
 				<result column="rgla_enti_pk" property="id" />
@@ -189,6 +190,12 @@
 		                    AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
 		            )
 		    ) AS p18n_texto
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'rglv'
+                    AND i18n_ext_pk = rglv_pk
+                    AND i18n_lang = #{idioma}
+            ) AS rgla_texto
 	    ]]>
 		</if>
     <![CDATA[
