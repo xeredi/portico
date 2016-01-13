@@ -7,11 +7,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import lombok.NonNull;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
-import net.sf.dynamicreports.report.builder.component.Components;
+import net.sf.dynamicreports.report.builder.component.MultiPageListBuilder;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
+import net.sf.dynamicreports.report.constant.SplitType;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -30,8 +32,6 @@ import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -72,28 +72,65 @@ public final class ParametroPdf extends BasePdf {
      * @throws ApplicationException
      *             the ApplicationException
      */
-    public void imprimir(final ParametroVO item, final TipoParametroDetailVO entiDetail,
+    public void imprimir(final @NonNull ParametroVO item, final @NonNull TipoParametroDetailVO entiDetail,
             final Map<Long, TipoSubparametroDetailVO> entiHijasMap, final Map<Long, List<SubparametroVO>> itemHijosMap,
             final Map<String, I18nVO> i18nMap, final OutputStream stream) throws ApplicationException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(entiDetail);
-
         try {
-            final String tpprLabel = bundle.getString("enti_" + entiDetail.getEnti().getId());
-            final String prmtFiniLabel = bundle.getString(MessageI18nKey.fini.name());
-            final String prmtFfinLabel = bundle.getString(MessageI18nKey.ffin.name());
-            final String prmtLatLabel = bundle.getString(MessageI18nKey.prmt_lat.name());
-            final String prmtLonLabel = bundle.getString(MessageI18nKey.prmt_lon.name());
-
             final JasperReportBuilder report = DynamicReports.report();
 
             report.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE);
-            report.addTitle(DynamicReports.cmp.text(tpprLabel).setStyle(PdfConstants.H1_STYLE));
+            report.pageFooter(DynamicReports.cmp.pageXslashY());
+            report.setTitleSplitType(SplitType.PREVENT);
+            report.setSummarySplitType(SplitType.PREVENT);
+            report.setSummaryWithPageHeaderAndFooter(true);
 
+            final MultiPageListBuilder entiHijasList = DynamicReports.cmp.multiPageList();
+
+            if (entiDetail.getEntiHijasList() != null) {
+                for (final Long entiId : entiDetail.getEntiHijasList()) {
+                    if (!itemHijosMap.get(entiId).isEmpty()) {
+                        entiHijasList.add(
+                                DynamicReports.cmp.verticalGap(17),
+                                DynamicReports.cmp.subreport(getSubreport(entiHijasMap.get(entiId),
+                                        itemHijosMap.get(entiId))));
+                    }
+                }
+            }
+
+            report.title(DynamicReports.cmp.subreport(getSubreport(entiDetail, item, i18nMap))).summary(entiHijasList);
+
+            report.toPdf(stream);
+        } catch (final DRException ex) {
+            throw new InternalErrorException(ex);
+        }
+    }
+
+    /**
+     * Gets the subreport.
+     *
+     * @param entiVO
+     *            the enti vo
+     * @param prmtVO
+     *            the prmt vo
+     * @param engdId
+     *            the engd id
+     * @return the subreport
+     */
+    private JasperReportBuilder getSubreport(final TipoParametroDetailVO entiDetail, final ParametroVO item,
+            final Map<String, I18nVO> i18nMap) {
+        final String tpprLabel = bundle.getString("enti_" + entiDetail.getEnti().getId());
+        final String prmtFiniLabel = bundle.getString(MessageI18nKey.fini.name());
+        final String prmtFfinLabel = bundle.getString(MessageI18nKey.ffin.name());
+        final String prmtLatLabel = bundle.getString(MessageI18nKey.prmt_lat.name());
+        final String prmtLonLabel = bundle.getString(MessageI18nKey.prmt_lon.name());
+
+        final JasperReportBuilder report = DynamicReports.report();
+
+        {
             final List<List<PdfCell>> listCells = new ArrayList<>();
-
             List<PdfCell> rowCells = new ArrayList<>();
-            int accWidth = 0;
+
+            final int accWidth = 0;
 
             if (entiDetail.getEnti().isPuerto()) {
                 rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.prto.name()), item.getPrto().getEtiqueta(), 2,
@@ -121,13 +158,18 @@ public final class ParametroPdf extends BasePdf {
                 }
             }
 
-            report.addTitle(getForm(listCells));
-            listCells.clear();
+            report.title(DynamicReports.cmp.text(tpprLabel).setStyle(PdfConstants.H1_STYLE), getForm(listCells));
+        }
 
+        final MultiPageListBuilder engdList = DynamicReports.cmp.multiPageList();
+
+        {
             if (entiDetail.getEngdList() != null) {
                 for (final EntidadGrupoDatoVO engd : entiDetail.getEngdList()) {
-                    rowCells = new ArrayList<>();
-                    accWidth = 0;
+                    final List<List<PdfCell>> listCells = new ArrayList<>();
+                    List<PdfCell> rowCells = new ArrayList<>();
+
+                    int accWidth = 0;
 
                     if (entiDetail.getEntdList() != null) {
                         for (final Long tpdtId : entiDetail.getEntdList()) {
@@ -155,40 +197,16 @@ public final class ParametroPdf extends BasePdf {
                         listCells.add(rowCells);
                     }
 
-                    report.addTitle(getForm(listCells), Components.pageBreak());
-                    listCells.clear();
+                    final String engdLabel = bundle.getString("engd_" + engd.getId());
+
+                    engdList.add(DynamicReports.cmp.verticalGap(17), getForm(engdLabel, listCells));
                 }
             }
-
-            if (entiDetail.getEntiHijasList() != null) {
-                for (final Long entiId : entiDetail.getEntiHijasList()) {
-                    if (!itemHijosMap.get(entiId).isEmpty()) {
-                        report.addTitle(DynamicReports.cmp.subreport(getSubreport(entiHijasMap.get(entiId),
-                                itemHijosMap.get(entiId))));
-                    }
-                }
-            }
-
-            report.toPdf(stream);
-        } catch (final DRException ex) {
-            throw new InternalErrorException(ex);
         }
-    }
 
-    /**
-     * Gets the subreport.
-     *
-     * @param entiVO
-     *            the enti vo
-     * @param prmtVO
-     *            the prmt vo
-     * @param engdId
-     *            the engd id
-     * @return the subreport
-     */
-    private JasperReportBuilder getSubreport(final TipoParametroDetailVO entiVO, final ParametroVO prmtVO,
-            final Long engdId) {
-        return null;
+        report.summary(engdList);
+
+        return report;
     }
 
     /**
@@ -200,11 +218,8 @@ public final class ParametroPdf extends BasePdf {
      *            the item list
      * @return the data source
      */
-    private JasperReportBuilder getSubreport(final TipoSubparametroDetailVO entiDetail,
-            final List<SubparametroVO> itemList) {
-        Preconditions.checkNotNull(entiDetail);
-        Preconditions.checkNotNull(itemList);
-
+    private JasperReportBuilder getSubreport(final @NonNull TipoSubparametroDetailVO entiDetail,
+            final @NonNull List<SubparametroVO> itemList) {
         final String tpspLabel = bundle.getString("enti_" + entiDetail.getEnti().getId());
         final String tpprAsociadoLabel = bundle.getString("enti_" + entiDetail.getEnti().getTpprAsociado().getId());
         final String sprmFiniLabel = bundle.getString(MessageI18nKey.fini.name());
