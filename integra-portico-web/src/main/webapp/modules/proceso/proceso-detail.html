@@ -1,5 +1,5 @@
 <div>
-    <uib-tabset type="pills"> <uib-tab> <tab-heading ng-bind="::('prbt' | translate)"></tab-heading>
+    <uib-tabset type="pills"> <uib-tab heading="{{'prbt' | translate}}">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <button class="btn btn-default" ng-click="vm.cancel()">
@@ -197,12 +197,12 @@
         </div>
     </div>
 
-    </uib-tab> <uib-tab ng-if="vm.prmnList.list.length"> <tab-heading ng-bind="::('prmnList' | translate)"></tab-heading>
+    </uib-tab> <uib-tab ng-if="vm.prmnList.list.length" heading="{{'prmnList' | translate}}">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <uib-pagination total-items="vm.prmnList.count" items-per-page="vm.prmnList.limit" ng-model="vm.page"
-                ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-                next-text="&rsaquo;&rsaquo;"></uib-pagination>
+            <uib-pagination total-items="vm.prmnList.count" items-per-page="vm.prmnList.limit"
+                ng-model="vm.page" ng-change="vm.pageChanged()" class="pagination" max-size="1"
+                previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></uib-pagination>
         </div>
     </div>
 

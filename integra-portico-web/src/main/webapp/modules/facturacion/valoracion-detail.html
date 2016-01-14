@@ -1,5 +1,4 @@
-<uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)"> <tab-heading
-    ng-bind="'vlrc' | translate"></tab-heading>
+<uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)" heading="{{'vlrc' | translate}}">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/facturacion/fcdr/edit/{{vm.model.id}}"><i
@@ -173,8 +172,8 @@
         </table>
     </fieldset>
 </div>
-</uib-tab> <uib-tab active="vm.tabActive['vlrlList']" select="vm.tabSelected('vlrlList')"> <tab-heading
-    ng-bind="('vlrlList' | translate)"></tab-heading>
+</uib-tab> <uib-tab active="vm.tabActive['vlrlList']" select="vm.tabSelected('vlrlList')"
+    heading="{{'vlrlList' | translate}}">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <uib-pagination total-items="vm.vlrlList.count" items-per-page="vm.vlrlList.limit" ng-model="vm.page"

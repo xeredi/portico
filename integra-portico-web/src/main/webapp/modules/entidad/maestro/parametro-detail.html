@@ -1,5 +1,5 @@
-<uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)"> <tab-heading
-    ng-bind="'enti_' + vm.enti.enti.id | translate"></tab-heading>
+<uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)"
+    heading="{{'enti_' + vm.enti.enti.id | translate}}">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ui-sref="parametro-edit(vm.item)"><i class="glyphicon glyphicon-edit"></i>
@@ -62,7 +62,7 @@
 </fieldset>
 
 </uib-tab> <uib-tab ng-repeat="entiHijaId in vm.enti.entiHijasList track by $index" active="vm.tabActive[entiHijaId]"
-    select="vm.tabSelected(entiHijaId)"> <tab-heading ng-bind="('enti_' + entiHijaId | translate)"></tab-heading>
+    select="vm.tabSelected(entiHijaId)" heading="{{'enti_' + entiHijaId | translate}}">
 <div ng-if="vm.itemHijosMap[entiHijaId]">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">

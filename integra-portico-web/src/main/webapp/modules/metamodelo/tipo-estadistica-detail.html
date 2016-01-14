@@ -1,5 +1,4 @@
-<uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)"> <tab-heading
-    ng-bind="'enti' | translate"></tab-heading>
+<uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)" heading="{{'enti' | translate}}">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a ng-if="mc.hasAccnPath('tpes-edit')" class="btn btn-default"
@@ -30,8 +29,8 @@
 
     <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
 </fieldset>
-</uib-tab> <uib-tab select="vm.tabSelected('entdList')" active="vm.tabActive['entdList']"> <tab-heading
-    ng-bind="'entdList' | translate"></tab-heading>
+</uib-tab> <uib-tab select="vm.tabSelected('entdList')" active="vm.tabActive['entdList']"
+    heading="{{'entdList' | translate}}">
 <div ng-if="mc.hasAccnPath('engd-list')"
     ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
 <div ng-if="mc.hasAccnPath('entd-list')"

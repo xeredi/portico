@@ -1,6 +1,6 @@
 
-<uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)"> <tab-heading
-    ng-bind="'enti_' + vm.enti.enti.id | translate"></tab-heading>
+<uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)"
+    heading="{{'enti_' + vm.enti.enti.id | translate}}">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ui-sref="servicio-edit(vm.item)"><i class="glyphicon glyphicon-edit"></i>
@@ -73,8 +73,8 @@
 
     <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
 </fieldset>
-</uib-tab> <uib-tab active="vm.tabActive[-1]" select="vm.tabSelected(-1)" ng-if="vm.arinList.length"> <tab-heading
-    translate="archList"></tab-heading>
+</uib-tab> <uib-tab active="vm.tabActive[-1]" select="vm.tabSelected(-1)" ng-if="vm.arinList.length"
+    heading="{{'archList' | translate}}">
 <div class="table-responsive">
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
@@ -98,12 +98,12 @@
         </tbody>
     </table>
 </div>
-</uib-tab> <uib-tab active="vm.tabActive[-2]" select="vm.tabSelected(-2)" ng-if="vm.ittrList.length"> <tab-heading
-    ng-bind="('trmtList' | translate)"></tab-heading>
+</uib-tab> <uib-tab active="vm.tabActive[-2]" select="vm.tabSelected(-2)" ng-if="vm.ittrList.length"
+    heading="{{'trmtList' | translate}}">
 <div ng-include="'modules/entidad/common/item-tramite-grid-content.html'"></div>
 </uib-tab> <uib-tab ng-repeat="entiHijaId in vm.enti.entiHijasList track by entiHijaId"
-    active="vm.tabActive[entiHijaId]" select="vm.tabSelected(entiHijaId)"> <tab-heading
-    ng-bind="('enti_' + entiHijaId | translate)"></tab-heading>
+    active="vm.tabActive[entiHijaId]" select="vm.tabSelected(entiHijaId)"
+    heading="{{'enti_' + entiHijaId | translate}}">
 <div ng-if="vm.itemHijosMap[entiHijaId]">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">

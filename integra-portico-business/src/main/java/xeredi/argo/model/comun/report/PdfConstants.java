@@ -20,18 +20,20 @@ public final class PdfConstants {
     /** The Constant labelStyle. */
     public static final StyleBuilder LABEL_STYLE = DynamicReports.stl.style().setFontSize(9)
             .setBorder(DynamicReports.stl.pen1Point().setLineColor(Color.WHITE)).setBackgroundColor(Color.LIGHT_GRAY)
-            .setPadding(3);
+            .setTopPadding(3).setBottomPadding(3).setLeftPadding(5).setRightPadding(5);
 
     /** The Constant VALUE_STYLE. */
-    public static final StyleBuilder VALUE_STYLE = DynamicReports.stl.style().setFontSize(9).setPadding(3);
+    public static final StyleBuilder VALUE_STYLE = DynamicReports.stl.style().setFontSize(9).setTopPadding(3)
+            .setBottomPadding(3).setLeftPadding(5).setRightPadding(5);
 
     /** The Constant TH_STYLE. */
     public static final StyleBuilder TH_STYLE = DynamicReports.stl.style().setFontSize(9)
             .setBorder(DynamicReports.stl.pen1Point().setLineColor(Color.WHITE)).setBackgroundColor(Color.LIGHT_GRAY)
-            .setPadding(2);
+            .setTopPadding(2).setBottomPadding(2).setLeftPadding(4).setRightPadding(4);
 
     /** The Constant TD_STYLE. */
-    public static final StyleBuilder TD_STYLE = DynamicReports.stl.style().setFontSize(9).setPadding(2);
+    public static final StyleBuilder TD_STYLE = DynamicReports.stl.style().setFontSize(9).setTopPadding(2)
+            .setBottomPadding(2).setLeftPadding(4).setRightPadding(4);
 
     /** The Constant H1_STYLE. */
     public static final StyleBuilder H1_STYLE = DynamicReports.stl.style().setFontSize(14).setTopPadding(10)
