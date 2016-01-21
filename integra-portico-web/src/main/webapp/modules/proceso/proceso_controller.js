@@ -8,17 +8,16 @@ angular.module("proceso_controller", [ "proceso_service" ])
 
 ;
 
-function config($stateProvider) {
-	$stateProvider
+function config($routeProvider) {
+	$routeProvider
 
-	.state("proceso-grid", {
-		url : "/proceso/proceso/grid?page&searchCriteria&limit",
+	.when("/proceso/proceso/grid", {
 		templateUrl : "modules/proceso/proceso-grid.html",
 		controller : "ProcesoGridController as vm",
 		reloadOnSearch : false
 	})
 
-	.state("proceso-detail", {
+	.when("/proceso/proceso/detail/:id", {
 		url : "/proceso/proceso/detail/:id",
 		templateUrl : "modules/proceso/proceso-detail.html",
 		controller : "ProcesoDetailController as vm",
@@ -27,7 +26,7 @@ function config($stateProvider) {
 	;
 }
 
-function ProcesoGridController($state, $stateParams, $modal, pageTitleService,
+function ProcesoGridController($route, $routeParams, $modal, pageTitleService,
 		ProcesoService) {
 	var vm = this;
 
@@ -66,16 +65,16 @@ function ProcesoGridController($state, $stateParams, $modal, pageTitleService,
 		ProcesoService.xlsExport(vm.searchCriteria, 'prbt');
 	}
 
-	vm.searchCriteria = $stateParams.searchCriteria ? angular
-			.fromJson($stateParams.searchCriteria) : {};
-	vm.limit = $stateParams.limit;
+	vm.searchCriteria = $routeParams.searchCriteria ? angular
+			.fromJson($routeParams.searchCriteria) : {};
+	vm.limit = $routeParams.limit;
 
-	search($stateParams.page ? $stateParams.page : 1);
+	search($routeParams.page ? $routeParams.page : 1);
 
 	pageTitleService.setTitle("prbt", "page_grid");
 }
 
-function ProcesoDetailController($stateParams, pageTitleService,
+function ProcesoDetailController($routeParams, pageTitleService,
 		ProcesoService, ProcesoMensajeService) {
 	var vm = this;
 
@@ -111,11 +110,11 @@ function ProcesoDetailController($stateParams, pageTitleService,
 		});
 	}
 
-	vm.model = {
-		id : $stateParams.id
+	vm.search = {
+		id : $routeParams.id
 	};
 
-	ProcesoService.detail(vm.model).then(function(data) {
+	ProcesoService.detail(vm.search).then(function(data) {
 		vm.model = data.model;
 
 		vm.arinEntradaList = data.arinEntradaList;
@@ -124,7 +123,7 @@ function ProcesoDetailController($stateParams, pageTitleService,
 		vm.pritSalidaList = data.pritSalidaList;
 		vm.prpmMap = data.prpmMap;
 
-		search($stateParams.page ? $stateParams.page : 1);
+		search($routeParams.page ? $routeParams.page : 1);
 	});
 
 	pageTitleService.setTitle("prbt", "page_detail");

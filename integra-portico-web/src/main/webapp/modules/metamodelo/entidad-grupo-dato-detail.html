@@ -1,25 +1,27 @@
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a ng-if="mc.hasAccnPath('engd-edit')" class="btn btn-default"
-            ui-sref="entidad-grupo-dato-edit(vm.model)"><i class="glyphicon glyphicon-edit"></i> <span
-            translate>btn_editar</span></a>
-        <button ng-if="mc.hasAccnPath('engd-remove')" data-ng-click="vm.remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
-        </button>
+<div ng-if="vm.model">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a ng-if="mc.hasAccnPath('engd-edit')" class="btn btn-default"
+                ng-href="#/metamodelo/entidad-grupo-dato/edit/edit/{{vm.model.entiId}}/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+            <button ng-if="mc.hasAccnPath('engd-remove')" data-ng-click="vm.remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            </button>
+        </div>
     </div>
+
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                <label translate>engd_etiqueta</label>
+                <p class="form-control-static" ng-bind="vm.model.etiqueta"></p>
+            </div>
+            <div class="col-sm-1 col-md-1 col-lg-1 form-group-sm">
+                <label translate>engd_numero</label>
+                <p class="form-control-static number" ng-bind="vm.model.numero"></p>
+            </div>
+        </div>
+
+        <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+    </fieldset>
 </div>
-
-<fieldset>
-    <div class="row">
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-            <label translate>engd_etiqueta</label>
-            <p class="form-control-static" ng-bind="vm.model.etiqueta"></p>
-        </div>
-        <div class="col-sm-1 col-md-1 col-lg-1 form-group-sm">
-            <label translate>engd_numero</label>
-            <p class="form-control-static number" ng-bind="vm.model.numero"></p>
-        </div>
-    </div>
-
-    <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
-</fieldset>

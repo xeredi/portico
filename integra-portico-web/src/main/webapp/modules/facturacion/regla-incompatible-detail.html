@@ -1,30 +1,34 @@
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a ng-if="mc.hasAccnPath('rgin-edit')" class="btn btn-default"
-            ui-sref="regla-incompatible-edit(vm.model)"><i class="glyphicon glyphicon-edit"></i> <span
-            translate>btn_editar</span></a>
-        <button ng-if="mc.hasAccnPath('rgin-remove')" data-ng-click="vm.remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
-        </button>
+<div ng-if="vm.model">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a ng-if="mc.hasAccnPath('rgin-edit')" class="btn btn-default"
+                ng-href="#/facturacion/regla-incompatible/edit/edit/{{vm.model.rgla1Id}}/{{vm.model.fref}}/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+            <button ng-if="mc.hasAccnPath('rgin-remove')" data-ng-click="vm.remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            </button>
+        </div>
     </div>
-</div>
 
-<fieldset>
-    <div class="row">
-        <div class="col-md-2 form-group-sm">
-            <label translate>rgin_rgla2</label>
-            <p class="form-control-static">
-                <a ui-sref="regla-detail({id: vm.model.rgla2.id, fref: vm.model.fref})"
-                    ng-bind="vm.model.rgla2.codigo"></a>
-            </p>
+    <fieldset>
+        <div class="row">
+            <div class="col-md-2 form-group-sm">
+                <label translate>rgin_rgla2</label>
+                <p class="form-control-static">
+                    <a ng-href="#/facturacion/regla/detail/{{vm.model.rgla2.id}}/{{vm.model.fref}}"
+                        ng-bind="vm.model.rgla2.codigo"></a>
+                </p>
+            </div>
+            <div class="col-md-1 form-group-sm">
+                <label translate>fini</label>
+                <p class="form-control-static"
+                    ng-bind="vm.model.version.fini | date: ('format_date' | translate)"></p>
+            </div>
+            <div class="col-md-1 form-group-sm">
+                <label translate>ffin</label>
+                <p class="form-control-static"
+                    ng-bind="vm.model.version.ffin | date: ('format_date' | translate)"></p>
+            </div>
         </div>
-        <div class="col-md-1 form-group-sm">
-            <label translate>fini</label>
-            <p class="form-control-static" ng-bind="vm.model.version.fini | date: ('format_date' | translate)"></p>
-        </div>
-        <div class="col-md-1 form-group-sm">
-            <label translate>ffin</label>
-            <p class="form-control-static" ng-bind="vm.model.version.ffin | date: ('format_date' | translate)"></p>
-        </div>
-    </div>
-</fieldset>
+    </fieldset>
+</div>

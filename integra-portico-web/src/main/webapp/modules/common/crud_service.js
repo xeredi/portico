@@ -4,7 +4,7 @@ angular.module("crud_service", [])
 
 ;
 
-function CrudService($http, $q, $state) {
+function CrudService($http, $q, $location) {
     function Crud() {
         var _uri;
 
@@ -43,14 +43,9 @@ function CrudService($http, $q, $state) {
                 .catch(fail);
 
             function success(response) {
-                $state.go('.', {
+                $location.search({
                     searchCriteria : JSON.stringify(searchCriteria)
-                }, {
-                    notify : false,
-                    reload : false,
-                    location : 'replace',
-                    inherit : true
-                });
+                }).replace();
 
                 return response.data;
             }
@@ -71,16 +66,11 @@ function CrudService($http, $q, $state) {
                 .catch(fail);
 
             function success(response) {
-                $state.go('.', {
+                $location.search({
                     page : page,
                     limit : limit,
                     searchCriteria : JSON.stringify(searchCriteria)
-                }, {
-                    notify : false,
-                    reload : false,
-                    location : 'replace',
-                    inherit : true
-                });
+                }).replace();
 
                 return response.data;
             }
@@ -322,25 +312,15 @@ function CrudService($http, $q, $state) {
         }
 
         function tabSelected(tab) {
-            $state.go('.', {
+            $location.search({
                 tab : tab
-            }, {
-                notify : false,
-                reload : false,
-                location : 'replace',
-                inherit : true
-            });
+            }).replace();
         }
 
         function pageMapChanged(pageMap) {
-            $state.go('.', {
-            	pageMap : JSON.stringify(pageMap)
-            }, {
-                notify : false,
-                reload : false,
-                location : 'replace',
-                inherit : true
-            });
+            $location.search({
+                pageMap : JSON.stringify(pageMap)
+            }).replace();
         }
 
         return {

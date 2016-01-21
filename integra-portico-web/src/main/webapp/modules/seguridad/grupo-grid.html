@@ -10,7 +10,7 @@
             data-template-url="modules/seguridad/fragment/grupo-filter-content.html" bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
         </button>
-        <a ng-if="mc.hasAccnPath('grpo-create')" class="btn btn-default" ui-sref="grupo-create"><i
+        <a ng-if="mc.hasAccnPath('grpo-create')" class="btn btn-default" ng-href="#/seguridad/grupo/edit/create"><i
             class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a>
     </div>
 </div>
@@ -28,7 +28,8 @@
         </thead>
         <tbody>
             <tr ng-repeat="grpo in vm.resultList.list track by grpo.id">
-                <td><a ui-sref="grupo-detail(grpo)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ng-href="#/seguridad/grupo/detail/{{grpo.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap" ng-bind="grpo.nombre"></td>
             </tr>
         </tbody>

@@ -25,12 +25,12 @@
         <p class="form-control-static" ng-switch-when="TX" ng-bind="vm.item.itdtMap[tpdtId].cadena"></p>
         <p class="form-control-static" ng-switch-when="PR">
             <a
-                ui-sref="parametro-detail({entiId: vm.enti.entdMap[tpdtId].tpdt.enti.id, id: vm.item.itdtMap[tpdtId].prmt.id, fref: vm.item.fref})"
+                ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.item.itdtMap[tpdtId].prmt.id}}/{{vm.item.fref}}"
                 ng-bind="vm.item.itdtMap[tpdtId].prmt.etiqueta"></a>
         </p>
         <p class="form-control-static" ng-switch-when="SR">
             <a
-                ui-sref="servicio-detail({entiId: vm.enti.entdMap[tpdtId].tpdt.enti.id, id: vm.item.itdtMap[tpdtId].srvc.id})"
+                ng-href="#/servicio/servicio/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.item.itdtMap[tpdtId].srvc.id}}"
                 ng-bind="vm.item.itdtMap[tpdtId].srvc.etiqueta"></a>
         </p>
     </div>

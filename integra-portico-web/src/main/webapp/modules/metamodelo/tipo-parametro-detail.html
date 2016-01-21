@@ -1,147 +1,152 @@
-<uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)" heading="{{'enti' | translate}}">
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a ng-if="mc.hasAccnPath('tppr-edit')" class="btn btn-default" ui-sref="tipo-parametro-edit(vm.model)"><i
-            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
-        <button ng-if="mc.hasAccnPath('tppr-remove')" data-ng-click="vm.remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
-        </button>
-    </div>
-</div>
-
-<fieldset>
-    <div class="row">
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-            <label translate="enti_codigo"></label>
-            <p class="form-control-static" ng-bind="vm.model.codigo"></p>
-        </div>
-        <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-            <label translate="enti_tipo"></label>
-            <p class="form-control-static" bs-tooltip
-                data-title="{{('EntidadTipo_' + vm.model.tipo | translate)}}" ng-bind="vm.model.tipo"></p>
-        </div>
-        <div class="col-sm-3 col-md-2 form-group-sm">
-            <label translate="enti_maxGrid"></label>
-            <p class="form-control-static number" ng-bind="(vm.model.maxGrid | number:0)"></p>
-        </div>
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-            <label translate="enti_tpdtNombre"></label>
-            <p class="form-control-static">
-                <a ui-sref="tipo-dato-detail(vm.model.tpdtNombre)" ng-bind="vm.model.tpdtNombre.nombre"></a>
-            </p>
-        </div>
-    </div>
-
-    <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
-
-    <div class="row">
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate="enti_cmdAlta"></label>
-            <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.model.cmdAlta ? 'ok' : 'remove')}}"></i>
-            </p>
-        </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate="enti_cmdBaja"></label>
-            <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.model.cmdBaja ? 'ok' : 'remove')}}"></i>
-            </p>
-        </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate="enti_cmdEdicion"></label>
-            <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.model.cmdEdicion ? 'ok' : 'remove')}}"></i>
-            </p>
-        </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate="enti_cmdDuplicado"></label>
-            <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.model.cmdDuplicado ? 'ok' : 'remove')}}"></i>
-            </p>
-        </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate="enti_gis"></label>
-            <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.model.gis ? 'ok' : 'remove')}}"></i>
-            </p>
-        </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate="enti_puerto"></label>
-            <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.model.puerto ? 'ok' : 'remove')}}"></i>
-            </p>
-        </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate="enti_i18n"></label>
-            <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.model.i18n ? 'ok' : 'remove')}}"></i>
-            </p>
-        </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate="enti_tempExp"></label>
-            <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.model.tempExp ? 'ok' : 'remove')}}"></i>
-            </p>
-        </div>
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-            <label translate="enti_classpath"></label>
-            <p class="form-control-static" ng-bind="vm.model.classpath"></p>
-        </div>
-    </div>
-</fieldset>
-
-<fieldset ng-if="mc.hasAccnPath('tpsp-list')">
-    <legend translate="tpspList"></legend>
-
+<div ng-if="vm.model">
+    <uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)"
+        heading="{{'enti' | translate}}">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a ng-if="mc.hasAccnPath('tpsp-create')" class="btn btn-default"
-                ui-sref="tipo-subparametro-create({tpprId: vm.model.id})"><i
-                class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
+            <a ng-if="mc.hasAccnPath('tppr-edit')" class="btn btn-default"
+                ng-href="#/metamodelo/tipo-parametro/edit/edit/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
+            <button ng-if="mc.hasAccnPath('tppr-remove')" data-ng-click="vm.remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+            </button>
         </div>
     </div>
 
-    <table ng-if="vm.subentiList" class="table-bordered table-condensed table-hover table-nonfluid">
-        <thead>
-            <tr>
-                <th class="buttonLinks" nowrap="nowrap" />
-                <th translate="enti_codigo"></th>
-                <th translate="enti_nombre"></th>
-                <th translate="enti_cmdAlta"></th>
-                <th translate="enti_cmdBaja"></th>
-                <th translate="enti_cmdEdicion"></th>
-                <th translate="enti_cmdDuplicado"></th>
-                <th translate="enti_maxGrid"></th>
-                <th translate="tppr"></th>
-                <th translate="enti_classpath"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="subenti in vm.subentiList track by subenti.id">
-                <td><a ui-sref="tipo-subparametro-detail(subenti)"><i
-                        class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="subenti.codigo"></td>
-                <td ng-bind="subenti.nombre"></td>
-                <td><i class="glyphicon glyphicon-{{(subenti.cmdAlta ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{(subenti.cmdBaja ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{(subenti.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{(subenti.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
-                <td class="number" ng-bind="(subenti.maxGrid | number:0)"></td>
-                <td ng-bind="subenti.tpprAsociado.nombre"></td>
-                <td ng-bind="subenti.classpath"></td>
-            </tr>
-        </tbody>
-    </table>
-</fieldset>
-</uib-tab> <uib-tab select="vm.tabSelected('entdList')" active="vm.tabActive['entdList']"
-    heading="{{'entdList' | translate}}">
-<div ng-if="mc.hasAccnPath('engd-list')"
-    ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
-<div ng-if="mc.hasAccnPath('entd-list')"
-    ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
-</uib-tab> <uib-tab select="vm.tabSelected('accnList')" active="vm.tabActive['accnList']"
-    heading="{{'accnList' | translate}}">
-<div ng-if="mc.hasAccnPath('acen-list')"
-    ng-include="'modules/metamodelo/fragment/accion-entidad-grid-content.html'"></div>
-<div ng-include="'modules/metamodelo/fragment/entidad-accion-grid-grid-content.html'"></div>
-</uib-tab></uib-tabset>
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                <label translate="enti_codigo"></label>
+                <p class="form-control-static" ng-bind="vm.model.codigo"></p>
+            </div>
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+                <label translate="enti_tipo"></label>
+                <p class="form-control-static" bs-tooltip
+                    data-title="{{('EntidadTipo_' + vm.model.tipo | translate)}}" ng-bind="vm.model.tipo"></p>
+            </div>
+            <div class="col-sm-3 col-md-2 form-group-sm">
+                <label translate="enti_maxGrid"></label>
+                <p class="form-control-static number" ng-bind="(vm.model.maxGrid | number:0)"></p>
+            </div>
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                <label translate="enti_tpdtNombre"></label>
+                <p class="form-control-static">
+                    <a ng-href="#/metamodelo/tipo-dato/detail/{{vm.model.tpdtNombre.id}}"
+                        ng-bind="vm.model.tpdtNombre.nombre"></a>
+                </p>
+            </div>
+        </div>
+
+        <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+
+        <div class="row">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                <label translate="enti_cmdAlta"></label>
+                <p class="form-control-static">
+                    <i class="glyphicon glyphicon-{{(vm.model.cmdAlta ? 'ok' : 'remove')}}"></i>
+                </p>
+            </div>
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                <label translate="enti_cmdBaja"></label>
+                <p class="form-control-static">
+                    <i class="glyphicon glyphicon-{{(vm.model.cmdBaja ? 'ok' : 'remove')}}"></i>
+                </p>
+            </div>
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                <label translate="enti_cmdEdicion"></label>
+                <p class="form-control-static">
+                    <i class="glyphicon glyphicon-{{(vm.model.cmdEdicion ? 'ok' : 'remove')}}"></i>
+                </p>
+            </div>
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                <label translate="enti_cmdDuplicado"></label>
+                <p class="form-control-static">
+                    <i class="glyphicon glyphicon-{{(vm.model.cmdDuplicado ? 'ok' : 'remove')}}"></i>
+                </p>
+            </div>
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                <label translate="enti_gis"></label>
+                <p class="form-control-static">
+                    <i class="glyphicon glyphicon-{{(vm.model.gis ? 'ok' : 'remove')}}"></i>
+                </p>
+            </div>
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                <label translate="enti_puerto"></label>
+                <p class="form-control-static">
+                    <i class="glyphicon glyphicon-{{(vm.model.puerto ? 'ok' : 'remove')}}"></i>
+                </p>
+            </div>
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                <label translate="enti_i18n"></label>
+                <p class="form-control-static">
+                    <i class="glyphicon glyphicon-{{(vm.model.i18n ? 'ok' : 'remove')}}"></i>
+                </p>
+            </div>
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                <label translate="enti_tempExp"></label>
+                <p class="form-control-static">
+                    <i class="glyphicon glyphicon-{{(vm.model.tempExp ? 'ok' : 'remove')}}"></i>
+                </p>
+            </div>
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                <label translate="enti_classpath"></label>
+                <p class="form-control-static" ng-bind="vm.model.classpath"></p>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset ng-if="mc.hasAccnPath('tpsp-list')">
+        <legend translate="tpspList"></legend>
+
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a ng-if="mc.hasAccnPath('tpsp-create')" class="btn btn-default"
+                    ng-href="#/metamodelo/tipo-subparametro/edit/create/{{vm.model.id}}"><i
+                    class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
+            </div>
+        </div>
+
+        <table ng-if="vm.subentiList" class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th translate="enti_codigo"></th>
+                    <th translate="enti_nombre"></th>
+                    <th translate="enti_cmdAlta"></th>
+                    <th translate="enti_cmdBaja"></th>
+                    <th translate="enti_cmdEdicion"></th>
+                    <th translate="enti_cmdDuplicado"></th>
+                    <th translate="enti_maxGrid"></th>
+                    <th translate="tppr"></th>
+                    <th translate="enti_classpath"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="subenti in vm.subentiList track by subenti.id">
+                    <td><a ng-href="#/metamodelo/tipo-subparametro/detail/{{subenti.id}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
+                    <td ng-bind="subenti.codigo"></td>
+                    <td ng-bind="subenti.nombre"></td>
+                    <td><i class="glyphicon glyphicon-{{(subenti.cmdAlta ? 'ok' : 'remove')}}"></i></td>
+                    <td><i class="glyphicon glyphicon-{{(subenti.cmdBaja ? 'ok' : 'remove')}}"></i></td>
+                    <td><i class="glyphicon glyphicon-{{(subenti.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
+                    <td><i class="glyphicon glyphicon-{{(subenti.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
+                    <td class="number" ng-bind="(subenti.maxGrid | number:0)"></td>
+                    <td ng-bind="subenti.tpprAsociado.nombre"></td>
+                    <td ng-bind="subenti.classpath"></td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    </uib-tab> <uib-tab select="vm.tabSelected('entdList')" active="vm.tabActive['entdList']"
+        heading="{{'entdList' | translate}}">
+    <div ng-if="mc.hasAccnPath('engd-list')"
+        ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
+    <div ng-if="mc.hasAccnPath('entd-list')"
+        ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
+    </uib-tab> <uib-tab select="vm.tabSelected('accnList')" active="vm.tabActive['accnList']"
+        heading="{{'accnList' | translate}}">
+    <div ng-if="mc.hasAccnPath('acen-list')"
+        ng-include="'modules/metamodelo/fragment/accion-entidad-grid-content.html'"></div>
+    <div ng-include="'modules/metamodelo/fragment/entidad-accion-grid-grid-content.html'"></div>
+    </uib-tab></uib-tabset>
+</div>

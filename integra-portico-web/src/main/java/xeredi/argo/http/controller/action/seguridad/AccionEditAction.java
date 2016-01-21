@@ -6,7 +6,6 @@ import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.seguridad.bo.AccionBO;
 import xeredi.argo.model.seguridad.bo.GrupoBO;
-import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.AccionVO;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
@@ -40,11 +39,8 @@ public final class AccionEditAction extends CrudEditAction<AccionVO> {
             Preconditions.checkNotNull(model.getId());
 
             final AccionBO accnBO = new AccionBO();
-            final AccionCriterioVO accnCriterio = new AccionCriterioVO();
 
-            accnCriterio.setId(model.getId());
-
-            model = accnBO.selectObject(accnCriterio);
+            model = accnBO.select(model.getId());
         }
     }
 

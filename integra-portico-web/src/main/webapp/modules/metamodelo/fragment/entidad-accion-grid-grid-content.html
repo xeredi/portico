@@ -4,8 +4,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default"
-                ui-sref="entidad-accion-grid-create({entiId: vm.model.id})"><i
+            <a class="btn btn-default" ng-href="#/metamodelo/entidad-accion-grid/edit/create/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>
     </div>
@@ -21,7 +20,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="enag in vm.enagList track by enag.id">
-                <td><a ui-sref="entidad-accion-grid-detail(enag)"><i
+                <td><a ng-href="#/metamodelo/entidad-accion-grid/detail/{{enag.entiId}}/{{enag.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="enag.path"></td>
                 <td ng-bind="enag.etiqueta"></td>

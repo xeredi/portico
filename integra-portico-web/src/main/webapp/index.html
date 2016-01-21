@@ -29,24 +29,24 @@
                         translate="menu"></a>
                         <ul class="dropdown-menu" role="menu">
                             <li role="presentation" class="divider"></li>
-                            <li><a ng-if="mc.hasAccnPath('secc-inicio')" ui-sref="home"
+                            <li><a ng-if="mc.hasAccnPath('secc-inicio')" ng-href="#/"
                                 translate="page_home"></a></li>
                             <li role="presentation" class="divider"></li>
-                            <li><a ng-if="mc.hasAccnPath('secc-servicios')" ui-sref="servicio-index"
+                            <li><a ng-if="mc.hasAccnPath('secc-servicios')" ng-href="#/servicio"
                                 translate="srvcList"></a></li>
                             <li><a ng-if="mc.hasAccnPath('secc-estadisticas')"
-                                ui-sref="periodo-proceso-grid" translate="estdList"></a></li>
-                            <li><a ng-if="mc.hasAccnPath('secc-maestros')" ui-sref="maestro-index"
+                                ng-href="#/estadistica/periodo-proceso/grid" translate="estdList"></a></li>
+                            <li><a ng-if="mc.hasAccnPath('secc-maestros')" ng-href="#/maestro"
                                 translate="prmtList"></a></li>
-                            <li><a ng-if="mc.hasAccnPath('secc-facturacion')" ui-sref="facturacion-index"
+                            <li><a ng-if="mc.hasAccnPath('secc-facturacion')" ng-href="#/facturacion"
                                 translate="sec_facturacion"></a></li>
-                            <li><a ng-if="mc.hasAccnPath('secc-procesos')" ui-sref="proceso-grid"
-                                translate="prbtList"></a></li>
+                            <li><a ng-if="mc.hasAccnPath('secc-procesos')"
+                                ng-href="#/proceso/proceso/grid" translate="prbtList"></a></li>
                             <li role="presentation" class="divider"></li>
                             <li><a ng-if="mc.hasAccnPath('secc-administracion')"
-                                ui-sref="administracion-index" translate="sec_administracion"></a></li>
+                                ng-href="#/administracion" translate="sec_administracion"></a></li>
                             <li role="presentation" class="divider"></li>
-                            <li><a ui-sref="usuario-salir" translate="usro_salir"></a></li>
+                            <li><a ng-href="#/seguridad/usuario/salir" translate="usro_salir"></a></li>
                         </ul></li>
                 </div>
             </ul>
@@ -65,23 +65,24 @@
         <div ui-view class="container-fluid"></div>
     </div>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular.min.js"></script>
     <script type="text/javascript"
-        src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular-route.min.js"></script>
+        src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.1/angular.min.js"></script>
     <script type="text/javascript"
-        src="http://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.0-rc.0/angular-locale_es-es.min.js"></script>
+        src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.1/angular-route.min.js"></script>
+    <script type="text/javascript"
+        src="http://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.0-rc.1/angular-locale_es-es.min.js"></script>
     <script type="text/javascript"
         src="http://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.8.1/angular-translate.min.js"></script>
     <script type="text/javascript"
-        src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+        src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.0.3/ui-bootstrap-tpls.min.js"></script>
     <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+        src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
     <script type="text/javascript"
-        src="http://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.6/angular-strap.min.js"></script>
+        src="http://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.7/angular-strap.min.js"></script>
     <script type="text/javascript"
-        src="http://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.6/angular-strap.tpl.min.js"></script>
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+        src="http://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.7/angular-strap.tpl.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.0/lodash.min.js"></script>
     <script type="text/javascript"
         src="http://cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.1.6/angular-google-maps.min.js"></script>
     <script type="text/javascript"

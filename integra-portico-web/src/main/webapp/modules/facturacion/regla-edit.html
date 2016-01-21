@@ -26,9 +26,11 @@
                     <option />
                 </select>
                 <p ng-switch-when="edit" class="form-control-static">
-                    <a ng-if="vm.model.enti.tipo == 'T'" ui-sref="tiposervicio-detail(vm.model.enti)"
+                    <a ng-if="vm.model.enti.tipo == 'T'"
+                        ng-href="#/metamodelo/tipo-servicio/detail/{{vm.model.enti.id}}"
                         ng-bind="'enti_' + vm.model.enti.id | translate"></a> <a
-                        ng-if="vm.model.enti.tipo == 'S'" ui-sref="tiposubservicio-detail(vm.model.enti)"
+                        ng-if="vm.model.enti.tipo == 'S'"
+                        ng-href="#/metamodelo/tipo-subservicio/detail/{{vm.model.enti.id}}"
                         ng-bind="'enti_' + vm.model.enti.id | translate"></a>
                 </p>
             </div>

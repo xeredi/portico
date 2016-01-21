@@ -41,7 +41,8 @@
         </thead>
         <tbody>
             <tr ng-repeat="prbt in vm.resultList.list track by prbt.id">
-                <td><a ui-sref="proceso-detail(prbt)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ng-href="#/proceso/proceso/detail/{{prbt.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="::('ProcesoModulo_' + prbt.modulo | translate)"></td>
                 <td ng-bind="::('ProcesoTipo_' + prbt.tipo | translate)"></td>
                 <td ng-bind="::('ProcesoEstado_' + prbt.estado | translate)"></td>

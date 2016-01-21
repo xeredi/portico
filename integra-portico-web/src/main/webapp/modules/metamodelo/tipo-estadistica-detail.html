@@ -1,68 +1,72 @@
-<uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)" heading="{{'enti' | translate}}">
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a ng-if="mc.hasAccnPath('tpes-edit')" class="btn btn-default"
-            ui-sref="tipo-estadistica-edit(vm.model)"><i class="glyphicon glyphicon-edit"></i> <span
-            translate>btn_editar</span></a>
-        <button ng-if="mc.hasAccnPath('tpes-remove')" data-ng-click="vm.remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
-        </button>
-    </div>
-</div>
-
-<fieldset>
-    <div class="row">
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-            <label translate>enti_codigo</label>
-            <p class="form-control-static" ng-bind="vm.model.codigo"></p>
-        </div>
-        <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-            <label translate>enti_tipo</label>
-            <p class="form-control-static" bs-tooltip
-                data-title="{{('EntidadTipo_' + vm.model.tipo | translate)}}" ng-bind="vm.model.tipo"></p>
-        </div>
-        <div class="col-sm-3 col-md-2 form-group-sm">
-            <label translate>enti_maxGrid</label>
-            <p class="form-control-static number" ng-bind="(vm.model.maxGrid | number:0)"></p>
-        </div>
-    </div>
-
-    <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
-</fieldset>
-</uib-tab> <uib-tab select="vm.tabSelected('entdList')" active="vm.tabActive['entdList']"
-    heading="{{'entdList' | translate}}">
-<div ng-if="mc.hasAccnPath('engd-list')"
-    ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
-<div ng-if="mc.hasAccnPath('entd-list')"
-    ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
-
-<fieldset ng-if="mc.hasAccnPath('cmag-list')">
-    <legend translate="cmagList"></legend>
-
+<div ng-if="vm.model">
+    <uib-tabset type="pills"> <uib-tab select="vm.tabSelected(null)"
+        heading="{{'enti' | translate}}">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a ng-if="mc.hasAccnPath('cmag-create')" class="btn btn-default"
-                ui-sref="campo-agregacion-create({tpesId: vm.model.id})"><i
-                class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+            <a ng-if="mc.hasAccnPath('tpes-edit')" class="btn btn-default"
+                ng-href="#/metamodelo/tipo-estadistica/edit/edit/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+            <button ng-if="mc.hasAccnPath('tpes-remove')" data-ng-click="vm.remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            </button>
         </div>
     </div>
 
-    <table class="table-bordered table-condensed table-hover table-nonfluid">
-        <thead>
-            <tr>
-                <th class="buttonLinks" nowrap="nowrap" />
-                <th translate>cmag_nombre</th>
-                <th translate>cmag_agregar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="cmag in vm.cmagList track by $index">
-                <td><a ui-sref="campo-agregacion-detail({tpesId: cmag.tpesId, entdId: cmag.entd.id})"><i
-                        class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="cmag.nombre"></td>
-                <td><i class="glyphicon glyphicon-{{(cmag.agregar ? 'ok' : 'remove')}}"></i></td>
-            </tr>
-        </tbody>
-    </table>
-</fieldset>
-</uib-tab></uib-tabset>
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                <label translate>enti_codigo</label>
+                <p class="form-control-static" ng-bind="vm.model.codigo"></p>
+            </div>
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+                <label translate>enti_tipo</label>
+                <p class="form-control-static" bs-tooltip
+                    data-title="{{('EntidadTipo_' + vm.model.tipo | translate)}}" ng-bind="vm.model.tipo"></p>
+            </div>
+            <div class="col-sm-3 col-md-2 form-group-sm">
+                <label translate>enti_maxGrid</label>
+                <p class="form-control-static number" ng-bind="(vm.model.maxGrid | number:0)"></p>
+            </div>
+        </div>
+
+        <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+    </fieldset>
+    </uib-tab> <uib-tab select="vm.tabSelected('entdList')" active="vm.tabActive['entdList']"
+        heading="{{'entdList' | translate}}">
+    <div ng-if="mc.hasAccnPath('engd-list')"
+        ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
+    <div ng-if="mc.hasAccnPath('entd-list')"
+        ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
+
+    <fieldset ng-if="mc.hasAccnPath('cmag-list')">
+        <legend translate="cmagList"></legend>
+
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a ng-if="mc.hasAccnPath('cmag-create')" class="btn btn-default"
+                    ng-href="#/metamodelo/campo-agregacion/edit/create/{{vm.model.id}}"><i
+                    class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+            </div>
+        </div>
+
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th translate>cmag_nombre</th>
+                    <th translate>cmag_agregar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="cmag in vm.cmagList track by $index">
+                    <td><a
+                        ng-href="#/metamodelo/campo-agregacion/detail/{{cmag.tpesId}}/{{cmag.entd.id}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
+                    <td ng-bind="cmag.nombre"></td>
+                    <td><i class="glyphicon glyphicon-{{(cmag.agregar ? 'ok' : 'remove')}}"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    </uib-tab></uib-tabset>
+</div>

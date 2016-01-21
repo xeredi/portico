@@ -9,148 +9,131 @@ angular.module("estadistica_controller", [])
 
 .controller("PeriodoProcesoEditController", PeriodoProcesoEditController)
 
-function config($stateProvider) {
-	$stateProvider
+function config($routeProvider) {
+    $routeProvider
 
-			.state(
-					"periodo-proceso-grid",
-					{
-						url : "/estadistica/periodo-proceso/grid?page&searchCriteria&limit",
-						templateUrl : "modules/entidad/estadistica/periodo-proceso-grid.html",
-						controller : "PeriodoProcesoGridController as vm",
-						reloadOnSearch : false
-					})
+            .when(
+                    "/estadistica/periodo-proceso/grid",
+                    {
+                        templateUrl : "modules/entidad/estadistica/periodo-proceso-grid.html",
+                        controller : "PeriodoProcesoGridController as vm",
+                        reloadOnSearch : false
+                    })
 
-			.state(
-					"periodo-proceso-detail",
-					{
-						url : "/estadistica/periodo-proceso/detail/:id",
-						templateUrl : "modules/entidad/estadistica/periodo-proceso-detail.html",
-						controller : "PeriodoProcesoDetailController as vm",
-					})
+            .when(
+                    "/estadistica/periodo-proceso/detail/:id",
+                    {
+                        templateUrl : "modules/entidad/estadistica/periodo-proceso-detail.html",
+                        controller : "PeriodoProcesoDetailController as vm",
+                    })
 
-			.state(
-					"periodo-proceso-create",
-					{
-						url : "/estadistica/periodo-proceso/create",
-						templateUrl : "modules/entidad/estadistica/periodo-proceso-edit.html",
-						controller : "PeriodoProcesoEditController as vm",
-						data : {
-							accion : 'create'
-						}
-					})
+            .when(
+                    "/estadistica/periodo-proceso/edit/:accion",
+                    {
+                        templateUrl : "modules/entidad/estadistica/periodo-proceso-edit.html",
+                        controller : "PeriodoProcesoEditController as vm",
+                    })
 
-			.state(
-					"periodo-proceso-load",
-					{
-						url : "/estadistica/periodo-proceso/load",
-						templateUrl : "modules/entidad/estadistica/periodo-proceso-edit.html",
-						controller : "PeriodoProcesoEditController as vm",
-						data : {
-							accion : 'load'
-						}
-					})
-
-	;
+    ;
 }
 
-function PeriodoProcesoGridController($state, $stateParams, $modal,
-		pageTitleService, PeriodoProcesoService) {
-	var vm = this;
+function PeriodoProcesoGridController($route, $routeParams, $modal,
+        pageTitleService, PeriodoProcesoService) {
+    var vm = this;
 
-	vm.filter = filter;
-	vm.resetFilter = resetFilter;
-	vm.search = search;
-	vm.pageChanged = pageChanged;
+    vm.filter = filter;
+    vm.resetFilter = resetFilter;
+    vm.search = search;
+    vm.pageChanged = pageChanged;
 
-	function filter() {
-		PeriodoProcesoService.filter(vm.searchCriteria).then(function(data) {
-			vm.tphtList = data.tphtList;
-			vm.tpelList = data.tpelList;
-		});
-	}
+    function filter() {
+        PeriodoProcesoService.filter(vm.searchCriteria).then(function(data) {
+            vm.tphtList = data.tphtList;
+            vm.tpelList = data.tpelList;
+        });
+    }
 
-	function resetFilter() {
-		vm.searchCriteria = {};
-	}
+    function resetFilter() {
+        vm.searchCriteria = {};
+    }
 
-	function search(page) {
-		PeriodoProcesoService.listPage(vm.searchCriteria, page, vm.limit).then(
-				function(data) {
-					vm.page = data.resultList.page;
-					vm.limit = data.resultList.limit;
-					vm.resultList = data.resultList;
-				});
-	}
+    function search(page) {
+        PeriodoProcesoService.listPage(vm.searchCriteria, page, vm.limit).then(
+                function(data) {
+                    vm.page = data.resultList.page;
+                    vm.limit = data.resultList.limit;
+                    vm.resultList = data.resultList;
+                });
+    }
 
-	function pageChanged() {
-		search(vm.page);
-	}
+    function pageChanged() {
+        search(vm.page);
+    }
 
-	vm.searchCriteria = $stateParams.searchCriteria ? angular
-			.fromJson($stateParams.searchCriteria) : {};
-	vm.limit = $stateParams.limit;
+    vm.searchCriteria = $routeParams.searchCriteria ? angular
+            .fromJson($routeParams.searchCriteria) : {};
+    vm.limit = $routeParams.limit;
 
-	search($stateParams.page ? $stateParams.page : 1);
+    search($routeParams.page ? $routeParams.page : 1);
 
-	pageTitleService.setTitle("pepr", "page_grid");
+    pageTitleService.setTitle("pepr", "page_grid");
 }
 
-function PeriodoProcesoDetailController($stateParams, pageTitleService,
-		PeriodoProcesoService) {
-	var vm = this;
+function PeriodoProcesoDetailController($routeParams, pageTitleService,
+        PeriodoProcesoService) {
+    var vm = this;
 
-	vm.remove = remove;
+    vm.remove = remove;
 
-	function remove() {
-		PeriodoProcesoService.remove(vm.model).then(function(data) {
-			window.history.back();
-		});
-	}
+    function remove() {
+        PeriodoProcesoService.remove(vm.model).then(function(data) {
+            window.history.back();
+        });
+    }
 
-	vm.model = {
-		id : $stateParams.id
-	};
+    vm.search = {
+        id : $routeParams.id
+    };
 
-	PeriodoProcesoService.detail(vm.model).then(function(data) {
-		vm.model = data.model;
-	});
+    PeriodoProcesoService.detail(vm.search).then(function(data) {
+        vm.model = data.model;
+    });
 
-	pageTitleService.setTitle("pepr", "page_detail");
+    pageTitleService.setTitle("pepr", "page_detail");
 }
 
-function PeriodoProcesoEditController($state, $stateParams, pageTitleService,
-		PeriodoProcesoService) {
-	var vm = this;
+function PeriodoProcesoEditController($route, $routeParams, pageTitleService,
+        PeriodoProcesoService) {
+    var vm = this;
 
-	vm.save = save;
-	vm.cancel = cancel;
+    vm.save = save;
+    vm.cancel = cancel;
 
-	function save() {
-		PeriodoProcesoService.save(vm.accion, vm.model).then(
-				function(data) {
-					PeriodoProcesoService.redirectAfterSave(vm.accion,
-							data.model, "periodo-proceso-detail");
-				});
-	}
+    function save() {
+        PeriodoProcesoService.save(vm.accion, vm.model).then(
+                function(data) {
+                    PeriodoProcesoService.redirectAfterSave(vm.accion,
+                            data.model, "periodo-proceso-detail");
+                });
+    }
 
-	function cancel() {
-		window.history.back();
-	}
+    function cancel() {
+        window.history.back();
+    }
 
-	vm.accion = $state.current.data.accion;
-	vm.model = {
-		id : $stateParams.id
-	}
+    vm.accion = $routeParams.accion;
+    vm.model = {
+        id : $routeParams.id
+    }
 
-	PeriodoProcesoService.edit(vm.accion, vm.model).then(function(data) {
-		vm.model = data.model;
+    PeriodoProcesoService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
 
-		vm.tphtList = data.tphtList;
-		vm.tpelList = data.tpelList;
-		vm.entiTpprList = data.tpprList;
-		vm.entiTpsrList = data.tpsrList;
-	});
+        vm.tphtList = data.tphtList;
+        vm.tpelList = data.tpelList;
+        vm.entiTpprList = data.tpprList;
+        vm.entiTpsrList = data.tpsrList;
+    });
 
-	pageTitleService.setTitle("pepr", "page_" + vm.accion);
+    pageTitleService.setTitle("pepr", "page_" + vm.accion);
 }

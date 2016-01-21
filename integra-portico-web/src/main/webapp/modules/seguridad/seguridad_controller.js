@@ -26,467 +26,422 @@ angular.module("seguridad_controller", [ "seguridad_service" ])
 
 ;
 
-function config($stateProvider) {
-	$stateProvider
+function config($routeProvider) {
+    $routeProvider
 
-	.state("accion-grid", {
-		url : "/seguridad/accion/grid?page&searchCriteria&limit",
-		templateUrl : "modules/seguridad/accion-grid.html",
-		controller : "AccionGridController as vm",
-		reloadOnSearch : false
-	})
+    .when("/seguridad/accion/grid", {
+        templateUrl : "modules/seguridad/accion-grid.html",
+        controller : "AccionGridController as vm",
+        reloadOnSearch : false
+    })
 
-	.state("accion-detail", {
-		url : "/seguridad/accion/detail/:id",
-		templateUrl : "modules/seguridad/accion-detail.html",
-		controller : "AccionDetailController as vm",
-	})
+    .when("/seguridad/accion/detail/:id", {
+        templateUrl : "modules/seguridad/accion-detail.html",
+        controller : "AccionDetailController as vm",
+    })
 
-	.state("accion-create", {
-		url : "/seguridad/accion/create",
-		templateUrl : "modules/seguridad/accion-edit.html",
-		controller : "AccionEditController as vm",
-		data : {
-			accion : 'create'
-		}
-	})
+    .when("/seguridad/accion/edit/:accion/:id?", {
+        templateUrl : "modules/seguridad/accion-edit.html",
+        controller : "AccionEditController as vm",
+    })
 
-	.state("accion-edit", {
-		url : "/seguridad/accion/edit/:id",
-		templateUrl : "modules/seguridad/accion-edit.html",
-		controller : "AccionEditController as vm",
-		data : {
-			accion : 'edit'
-		}
-	})
+    .when("/seguridad/grupo/grid", {
+        templateUrl : "modules/seguridad/grupo-grid.html",
+        controller : "GrupoGridController as vm",
+        reloadOnSearch : false
+    })
 
-	.state("grupo-grid", {
-		url : "/seguridad/grupo/grid?page&searchCriteria&limit",
-		templateUrl : "modules/seguridad/grupo-grid.html",
-		controller : "GrupoGridController as vm",
-		reloadOnSearch : false
-	})
+    .when("/seguridad/grupo/detail/:id", {
+        templateUrl : "modules/seguridad/grupo-detail.html",
+        controller : "GrupoDetailController as vm",
+    })
 
-	.state("grupo-detail", {
-		url : "/seguridad/grupo/detail/:id",
-		templateUrl : "modules/seguridad/grupo-detail.html",
-		controller : "GrupoDetailController as vm",
-	})
+    .when("/seguridad/grupo/edit/:accion/:id?", {
+        templateUrl : "modules/seguridad/grupo-edit.html",
+        controller : "GrupoEditController as vm",
+    })
 
-	.state("grupo-create", {
-		url : "/seguridad/grupo/create",
-		templateUrl : "modules/seguridad/grupo-edit.html",
-		controller : "GrupoEditController as vm",
-		data : {
-			accion : 'create'
-		}
-	})
+    .when("/seguridad/usuario/grid", {
+        templateUrl : "modules/seguridad/usuario-grid.html",
+        controller : "UsuarioGridController as vm",
+        reloadOnSearch : false
+    })
 
-	.state("grupo-edit", {
-		url : "/seguridad/grupo/edit/:id",
-		templateUrl : "modules/seguridad/grupo-edit.html",
-		controller : "GrupoEditController as vm",
-		data : {
-			accion : 'edit'
-		}
-	})
+    .when("/seguridad/usuario/detail/:id", {
+        templateUrl : "modules/seguridad/usuario-detail.html",
+        controller : "UsuarioDetailController as vm",
+    })
 
-	.state("usuario-grid", {
-		url : "/seguridad/usuario/grid?page&searchCriteria&limit",
-		templateUrl : "modules/seguridad/usuario-grid.html",
-		controller : "UsuarioGridController as vm",
-		reloadOnSearch : false
-	})
+    .when("/seguridad/usuario/edit/:accion/:id?", {
+        templateUrl : "modules/seguridad/usuario-edit.html",
+        controller : "UsuarioEditController as vm",
+    })
 
-	.state("usuario-detail", {
-		url : "/seguridad/usuario/detail/:id",
-		templateUrl : "modules/seguridad/usuario-detail.html",
-		controller : "UsuarioDetailController as vm",
-	})
+    .when("/seguridad/usuario/acceso", {
+        templateUrl : "modules/seguridad/usuario-acceso.html",
+        controller : "UsuarioAccesoController as vm",
+    })
 
-	.state("usuario-create", {
-		url : "/seguridad/usuario/create",
-		templateUrl : "modules/seguridad/usuario-edit.html",
-		controller : "UsuarioEditController as vm",
-		data : {
-			accion : 'create'
-		}
-	})
+    .when("/seguridad/usuario/salir", {
+        controller : "UsuarioSalirController as vm",
+    })
 
-	.state("usuario-edit", {
-		url : "/seguridad/usuario/edit/:id",
-		templateUrl : "modules/seguridad/usuario-edit.html",
-		controller : "UsuarioEditController as vm",
-		data : {
-			accion : 'edit'
-		}
-	})
-
-	.state("usuario-acceso", {
-		url : "/seguridad/usuario/acceso",
-		templateUrl : "modules/seguridad/usuario-acceso.html",
-		controller : "UsuarioAccesoController as vm",
-	})
-
-	.state("usuario-salir", {
-		url : "/seguridad/usuario/salir",
-		controller : "UsuarioSalirController as vm",
-	})
-
-	;
+    ;
 }
 
-function AccionGridController($state, $stateParams, $modal, pageTitleService,
-		AccionService) {
-	var vm = this;
+function AccionGridController($route, $routeParams, $modal, pageTitleService,
+        AccionService) {
+    var vm = this;
 
-	vm.filter = filter;
-	vm.resetFilter = resetFilter;
-	vm.search = search;
-	vm.pageChanged = pageChanged;
+    vm.filter = filter;
+    vm.resetFilter = resetFilter;
+    vm.search = search;
+    vm.pageChanged = pageChanged;
 
-	function filter() {
-		AccionService.filter(vm.searchCriteria).then(function(data) {
-			vm.prefixList = data.prefixList;
-			vm.grpoList = data.grpoList;
-		});
-	}
+    function filter() {
+        AccionService.filter(vm.searchCriteria).then(function(data) {
+            vm.prefixList = data.prefixList;
+            vm.grpoList = data.grpoList;
+        });
+    }
 
-	function resetFilter() {
-		vm.searchCriteria = {};
-	}
+    function resetFilter() {
+        vm.searchCriteria = {};
+    }
 
-	function search(page) {
-		AccionService.listPage(vm.searchCriteria, page, vm.limit).then(
-				function(data) {
-					vm.page = data.resultList.page;
-					vm.limit = data.resultList.limit;
-					vm.resultList = data.resultList;
-				});
-	}
+    function search(page) {
+        AccionService.listPage(vm.searchCriteria, page, vm.limit).then(
+                function(data) {
+                    vm.page = data.resultList.page;
+                    vm.limit = data.resultList.limit;
+                    vm.resultList = data.resultList;
+                });
+    }
 
-	function pageChanged() {
-		search(vm.page);
-	}
+    function pageChanged() {
+        search(vm.page);
+    }
 
-	vm.searchCriteria = $stateParams.searchCriteria ? angular
-			.fromJson($stateParams.searchCriteria) : {};
-	vm.limit = $stateParams.limit;
+    vm.searchCriteria = $routeParams.searchCriteria ? angular
+            .fromJson($routeParams.searchCriteria) : {};
+    vm.limit = $routeParams.limit;
 
-	search($stateParams.page ? $stateParams.page : 1);
+    search($routeParams.page ? $routeParams.page : 1);
 
-	pageTitleService.setTitle("accn", "page_grid");
+    pageTitleService.setTitle("accn", "page_grid");
 }
 
-function AccionDetailController($stateParams, pageTitleService, AccionService) {
-	var vm = this;
+function AccionDetailController($routeParams, pageTitleService, AccionService) {
+    var vm = this;
 
-	vm.remove = remove;
+    vm.remove = remove;
 
-	function remove() {
-		AccionService.remove(vm.model).then(function(data) {
-			window.history.back();
-		});
-	}
+    function remove() {
+        AccionService.remove(vm.model).then(function(data) {
+            window.history.back();
+        });
+    }
 
-	vm.model = {
-		id : $stateParams.id
-	};
+    vm.search = {
+        id : $routeParams.id
+    };
 
-	AccionService.detail(vm.model).then(function(data) {
-		vm.model = data.model;
+    AccionService.detail(vm.search).then(function(data) {
+        vm.model = data.model;
 
-		vm.grpoList = data.grpoList;
-	});
+        vm.grpoList = data.grpoList;
+    });
 
-	pageTitleService.setTitle("accn", "page_detail");
+    pageTitleService.setTitle("accn", "page_detail");
 }
 
-function AccionEditController($state, $stateParams, pageTitleService,
-		AccionService) {
-	var vm = this;
+function AccionEditController($route, $routeParams, pageTitleService,
+        AccionService) {
+    var vm = this;
 
-	vm.save = save;
-	vm.cancel = cancel;
-	vm.updateGrupos = updateGrupos;
+    vm.save = save;
+    vm.cancel = cancel;
+    vm.updateGrupos = updateGrupos;
 
-	function save() {
-		AccionService.save(vm.accion, vm.model).then(
-				function(data) {
-					AccionService.redirectAfterSave(vm.accion, data.model,
-							"accion-detail");
-				});
-	}
+    function save() {
+        AccionService.save(vm.accion, vm.model).then(
+                function(data) {
+                    AccionService.redirectAfterSave(vm.accion, data.model,
+                            "accion-detail");
+                });
+    }
 
-	function cancel() {
-		window.history.back();
-	}
+    function cancel() {
+        window.history.back();
+    }
 
-	function updateGrupos($event, grpoId) {
-		$event.target.checked ? vm.model.grpoIds.push(grpoId)
-				: vm.model.grpoIds.splice(vm.model.grpoIds.indexOf(grpoId), 1);
-	}
+    function updateGrupos($event, grpoId) {
+        $event.target.checked ? vm.model.grpoIds.push(grpoId)
+                : vm.model.grpoIds.splice(vm.model.grpoIds.indexOf(grpoId), 1);
+    }
 
-	vm.accion = $state.current.data.accion;
-	vm.model = {
-		id : $stateParams.id
-	}
+    vm.accion = $routeParams.accion;
+    vm.model = {
+        id : $routeParams.id
+    }
 
-	AccionService.edit(vm.accion, vm.model).then(function(data) {
-		vm.model = data.model;
+    AccionService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
 
-		vm.prefixList = data.prefixList;
-		vm.grpoList = data.grpoList;
-	});
+        vm.prefixList = data.prefixList;
+        vm.grpoList = data.grpoList;
+    });
 
-	pageTitleService.setTitle("accn", "page_" + vm.accion);
+    pageTitleService.setTitle("accn", "page_" + vm.accion);
 }
 
-function GrupoGridController($state, $stateParams, $modal, pageTitleService,
-		GrupoService) {
-	var vm = this;
+function GrupoGridController($route, $routeParams, $modal, pageTitleService,
+        GrupoService) {
+    var vm = this;
 
-	vm.filter = filter;
-	vm.resetFilter = resetFilter;
-	vm.search = search;
-	vm.pageChanged = pageChanged;
+    vm.filter = filter;
+    vm.resetFilter = resetFilter;
+    vm.search = search;
+    vm.pageChanged = pageChanged;
 
-	function filter() {
-		GrupoService.filter(vm.searchCriteria).then(function(data) {
-		});
-	}
+    function filter() {
+        GrupoService.filter(vm.searchCriteria).then(function(data) {
+        });
+    }
 
-	function resetFilter() {
-		vm.searchCriteria = {};
-	}
+    function resetFilter() {
+        vm.searchCriteria = {};
+    }
 
-	function search(page) {
-		GrupoService.listPage(vm.searchCriteria, page, vm.limit).then(
-				function(data) {
-					vm.page = data.resultList.page;
-					vm.limit = data.resultList.limit;
-					vm.resultList = data.resultList;
-				});
-	}
+    function search(page) {
+        GrupoService.listPage(vm.searchCriteria, page, vm.limit).then(
+                function(data) {
+                    vm.page = data.resultList.page;
+                    vm.limit = data.resultList.limit;
+                    vm.resultList = data.resultList;
+                });
+    }
 
-	function pageChanged() {
-		search(vm.page);
-	}
+    function pageChanged() {
+        search(vm.page);
+    }
 
-	vm.searchCriteria = $stateParams.searchCriteria ? angular
-			.fromJson($stateParams.searchCriteria) : {};
-	vm.limit = $stateParams.limit;
+    vm.searchCriteria = $routeParams.searchCriteria ? angular
+            .fromJson($routeParams.searchCriteria) : {};
+    vm.limit = $routeParams.limit;
 
-	search($stateParams.page ? $stateParams.page : 1);
+    search($routeParams.page ? $routeParams.page : 1);
 
-	pageTitleService.setTitle("grpo", "page_grid");
+    pageTitleService.setTitle("grpo", "page_grid");
 }
 
-function GrupoDetailController($stateParams, pageTitleService, GrupoService) {
-	var vm = this;
+function GrupoDetailController($routeParams, pageTitleService, GrupoService) {
+    var vm = this;
 
-	vm.remove = remove;
+    vm.remove = remove;
 
-	function remove() {
-		GrupoService.remove(vm.model).then(function(data) {
-			window.history.back();
-		});
-	}
+    function remove() {
+        GrupoService.remove(vm.model).then(function(data) {
+            window.history.back();
+        });
+    }
 
-	vm.model = {
-		id : $stateParams.id
-	};
+    vm.search = {
+        id : $routeParams.id
+    };
 
-	GrupoService.detail(vm.model).then(function(data) {
-		vm.model = data.model;
+    GrupoService.detail(vm.search).then(function(data) {
+        vm.model = data.model;
 
-		vm.prefixList = data.prefixList;
-		vm.accnMap = data.accnMap;
-		vm.entiList = data.entiList;
-		vm.acenMap = data.acenMap;
-	});
+        vm.prefixList = data.prefixList;
+        vm.accnMap = data.accnMap;
+        vm.entiList = data.entiList;
+        vm.acenMap = data.acenMap;
+    });
 
-	pageTitleService.setTitle("grpo", "page_detail");
+    pageTitleService.setTitle("grpo", "page_detail");
 }
 
-function GrupoEditController($state, $stateParams, pageTitleService,
-		GrupoService) {
-	var vm = this;
+function GrupoEditController($route, $routeParams, pageTitleService,
+        GrupoService) {
+    var vm = this;
 
-	vm.save = save;
-	vm.cancel = cancel;
-	vm.updateAcciones = updateAcciones;
-	vm.updateAccionesEntidad = updateAccionesEntidad;
+    vm.save = save;
+    vm.cancel = cancel;
+    vm.updateAcciones = updateAcciones;
+    vm.updateAccionesEntidad = updateAccionesEntidad;
 
-	function save() {
-		GrupoService.save(vm.accion, vm.model).then(
-				function(data) {
-					GrupoService.redirectAfterSave(vm.accion, data.model,
-							"grupo-detail");
-				});
-	}
+    function save() {
+        GrupoService.save(vm.accion, vm.model).then(
+                function(data) {
+                    GrupoService.redirectAfterSave(vm.accion, data.model,
+                            "grupo-detail");
+                });
+    }
 
-	function cancel() {
-		window.history.back();
-	}
+    function cancel() {
+        window.history.back();
+    }
 
-	function updateAcciones($event, accnId) {
-		$event.target.checked ? vm.model.accnIds.push(accnId)
-				: vm.model.accnIds.splice(vm.model.accnIds.indexOf(accnId), 1);
-	}
+    function updateAcciones($event, accnId) {
+        $event.target.checked ? vm.model.accnIds.push(accnId)
+                : vm.model.accnIds.splice(vm.model.accnIds.indexOf(accnId), 1);
+    }
 
-	function updateAccionesEntidad($event, acenId) {
-		$event.target.checked ? vm.model.acenIds.push(acenId)
-				: vm.model.acenIds.splice(vm.model.acenIds.indexOf(acenId), 1);
-	}
+    function updateAccionesEntidad($event, acenId) {
+        $event.target.checked ? vm.model.acenIds.push(acenId)
+                : vm.model.acenIds.splice(vm.model.acenIds.indexOf(acenId), 1);
+    }
 
-	vm.accion = $state.current.data.accion;
-	vm.model = {
-		id : $stateParams.id
-	}
+    vm.accion = $routeParams.accion;
+    vm.model = {
+        id : $routeParams.id
+    }
 
-	GrupoService.edit(vm.accion, vm.model).then(function(data) {
-		vm.model = data.model;
+    GrupoService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
 
-		vm.prefixList = data.prefixList;
-		vm.accnMap = data.accnMap;
-		vm.entiList = data.entiList;
-		vm.acenMap = data.acenMap;
-	});
+        vm.prefixList = data.prefixList;
+        vm.accnMap = data.accnMap;
+        vm.entiList = data.entiList;
+        vm.acenMap = data.acenMap;
+    });
 
-	pageTitleService.setTitle("grpo", "page_" + vm.accion);
+    pageTitleService.setTitle("grpo", "page_" + vm.accion);
 }
 
-function UsuarioGridController($state, $stateParams, $modal, pageTitleService,
-		UsuarioService) {
-	var vm = this;
+function UsuarioGridController($route, $routeParams, $modal, pageTitleService,
+        UsuarioService) {
+    var vm = this;
 
-	vm.filter = filter;
-	vm.resetFilter = resetFilter;
-	vm.search = search;
-	vm.pageChanged = pageChanged;
+    vm.filter = filter;
+    vm.resetFilter = resetFilter;
+    vm.search = search;
+    vm.pageChanged = pageChanged;
 
-	function filter() {
-		UsuarioService.filter(vm.searchCriteria).then(function(data) {
-			vm.sprtList = data.sprtList;
-			vm.prtoList = data.prtoList;
-		});
-	}
+    function filter() {
+        UsuarioService.filter(vm.searchCriteria).then(function(data) {
+            vm.sprtList = data.sprtList;
+            vm.prtoList = data.prtoList;
+        });
+    }
 
-	function resetFilter() {
-		vm.searchCriteria = {};
-	}
+    function resetFilter() {
+        vm.searchCriteria = {};
+    }
 
-	function search(page) {
-		UsuarioService.listPage(vm.searchCriteria, page, vm.limit).then(
-				function(data) {
-					vm.page = data.resultList.page;
-					vm.limit = data.resultList.limit;
-					vm.resultList = data.resultList;
-				});
-	}
+    function search(page) {
+        UsuarioService.listPage(vm.searchCriteria, page, vm.limit).then(
+                function(data) {
+                    vm.page = data.resultList.page;
+                    vm.limit = data.resultList.limit;
+                    vm.resultList = data.resultList;
+                });
+    }
 
-	function pageChanged() {
-		search(vm.page);
-	}
+    function pageChanged() {
+        search(vm.page);
+    }
 
-	vm.searchCriteria = $stateParams.searchCriteria ? angular
-			.fromJson($stateParams.searchCriteria) : {};
-	vm.limit = $stateParams.limit;
+    vm.searchCriteria = $routeParams.searchCriteria ? angular
+            .fromJson($routeParams.searchCriteria) : {};
+    vm.limit = $routeParams.limit;
 
-	search($stateParams.page ? $stateParams.page : 1);
+    search($routeParams.page ? $routeParams.page : 1);
 
-	pageTitleService.setTitle("usro", "page_grid");
+    pageTitleService.setTitle("usro", "page_grid");
 }
 
-function UsuarioDetailController($stateParams, pageTitleService, UsuarioService) {
-	var vm = this;
+function UsuarioDetailController($routeParams, pageTitleService, UsuarioService) {
+    var vm = this;
 
-	vm.remove = remove;
+    vm.remove = remove;
 
-	function remove() {
-		UsuarioService.remove(vm.model).then(function(data) {
-			window.history.back();
-		});
-	}
+    function remove() {
+        UsuarioService.remove(vm.model).then(function(data) {
+            window.history.back();
+        });
+    }
 
-	vm.model = {
-		id : $stateParams.id
-	};
+    vm.search = {
+        id : $routeParams.id
+    };
 
-	UsuarioService.detail(vm.model).then(function(data) {
-		vm.model = data.model;
+    UsuarioService.detail(vm.search).then(function(data) {
+        vm.model = data.model;
 
-		vm.grpoList = data.grpoList;
-	});
+        vm.grpoList = data.grpoList;
+    });
 
-	pageTitleService.setTitle("usro", "page_detail");
+    pageTitleService.setTitle("usro", "page_detail");
 }
 
-function UsuarioEditController($state, $stateParams, pageTitleService,
-		UsuarioService) {
-	var vm = this;
+function UsuarioEditController($route, $routeParams, pageTitleService,
+        UsuarioService) {
+    var vm = this;
 
-	vm.save = save;
-	vm.cancel = cancel;
-	vm.updateGrupos = updateGrupos;
+    vm.save = save;
+    vm.cancel = cancel;
+    vm.updateGrupos = updateGrupos;
 
-	function save() {
-		UsuarioService.save(vm.accion, vm.model).then(
-				function(data) {
-					UsuarioService.redirectAfterSave(vm.accion, data.model,
-							"usuario-detail");
-				});
-	}
+    function save() {
+        UsuarioService.save(vm.accion, vm.model).then(
+                function(data) {
+                    UsuarioService.redirectAfterSave(vm.accion, data.model,
+                            "usuario-detail");
+                });
+    }
 
-	function cancel() {
-		window.history.back();
-	}
+    function cancel() {
+        window.history.back();
+    }
 
-	function updateGrupos($event, grpoId) {
-		$event.target.checked ? vm.model.grpoIds.push(grpoId)
-				: vm.model.grpoIds.splice(vm.model.grpoIds.indexOf(grpoId), 1);
-	}
+    function updateGrupos($event, grpoId) {
+        $event.target.checked ? vm.model.grpoIds.push(grpoId)
+                : vm.model.grpoIds.splice(vm.model.grpoIds.indexOf(grpoId), 1);
+    }
 
-	vm.accion = $state.current.data.accion;
-	vm.model = {
-		id : $stateParams.id
-	}
+    vm.accion = $routeParams.accion;
+    vm.model = {
+        id : $routeParams.id
+    }
 
-	UsuarioService.edit(vm.accion, vm.model).then(function(data) {
-		vm.model = data.model;
-		vm.grpoList = data.grpoList;
+    UsuarioService.edit(vm.accion, vm.model).then(function(data) {
+        vm.model = data.model;
+        vm.grpoList = data.grpoList;
 
-		vm.sprtList = data.sprtList;
-		vm.prtoList = data.prtoList;
-	});
+        vm.sprtList = data.sprtList;
+        vm.prtoList = data.prtoList;
+    });
 
-	pageTitleService.setTitle("usro", "page_" + vm.accion);
+    pageTitleService.setTitle("usro", "page_" + vm.accion);
 }
 
-function UsuarioAccesoController($state, localStorageService, pageTitleService,
-		UsuarioService) {
-	var vm = this;
+function UsuarioAccesoController($location, localStorageService,
+        pageTitleService, UsuarioService) {
+    var vm = this;
 
-	vm.acceso = acceso;
+    vm.acceso = acceso;
 
-	function acceso() {
-		UsuarioService.acceso(vm.model).then(
-				function(data) {
-					localStorageService.set("accnPaths",
-							data.resultadoLogin.accnPaths);
+    function acceso() {
+        UsuarioService.acceso(vm.model).then(
+                function(data) {
+                    localStorageService.set("accnPaths",
+                            data.resultadoLogin.accnPaths);
 
-					$state.go("home");
-				});
-	}
+                    $location.path("/");
+                });
+    }
 
-	pageTitleService.setTitle("usro", "page_acceso");
+    pageTitleService.setTitle("usro", "page_acceso");
 }
 
-function UsuarioSalirController($state, localStorageService, UsuarioService) {
-	UsuarioService.salir().then(function(data) {
-		localStorageService.remove("accnPaths");
+function UsuarioSalirController($location, localStorageService, UsuarioService) {
+    alert("Salir");
 
-		$state.go("home");
-	});
+    UsuarioService.salir().then(function(data) {
+        localStorageService.remove("accnPaths");
+
+        $location.path("/seguridad/usuario/acceso").replace();
+    });
 }

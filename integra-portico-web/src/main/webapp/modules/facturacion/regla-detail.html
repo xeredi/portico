@@ -1,210 +1,213 @@
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a ng-if="mc.hasAccnPath('rgla-edit')" class="btn btn-default" ui-sref="regla-edit(vm.model)"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
-        <button ng-if="mc.hasAccnPath('rgla-remove')" data-ng-click="vm.remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
-        </button>
-    </div>
-</div>
-
-<fieldset>
-    <div class="row">
-        <div class="col-md-2 form-group-sm">
-            <label translate>crgo</label>
-            <p class="form-control-static">
-                <a ui-sref="cargo-detail({id: vm.model.crgo.id, fref: vm.model.fref})"
-                    ng-bind="vm.model.crgo.etiqueta"></a>
-            </p>
-        </div>
-        <div class="col-md-1 form-group-sm">
-            <label translate>rgla_codigo</label>
-            <p class="form-control-static" ng-bind="vm.model.codigo"></p>
-        </div>
-        <div class="col-md-1 form-group-sm">
-            <label translate>rgla_tipo</label>
-            <p class="form-control-static" ng-bind="'ReglaTipo_' + vm.model.tipo | translate"></p>
-        </div>
-        <div class="col-md-2 form-group-sm">
-            <label translate>enti</label>
-            <p class="form-control-static" ng-switch="vm.model.enti.tipo">
-                <a ng-switch-when="T" ui-sref="tipo-servicio-detail(vm.model.enti)"
-                    ng-bind="('enti_' + vm.model.enti.id | translate)"></a> <a ng-switch-when="S"
-                    ui-sref="tipo-subservicio-detail(vm.model.enti)"
-                    ng-bind="('enti_' + vm.model.enti.id | translate)"></a>
-            </p>
-        </div>
-        <div class="col-md-1 form-group-sm">
-            <label translate>fini</label>
-            <p class="form-control-static" ng-bind="(vm.model.version.fini | date: dateFormat)"></p>
-        </div>
-        <div class="col-md-1 form-group-sm">
-            <label translate>ffin</label>
-            <p class="form-control-static" ng-bind="(vm.model.version.ffin | date: dateFormat)"></p>
-        </div>
-        <div class="col-md-1 form-group-sm">
-            <label translate>rgla_orden</label>
-            <p class="form-control-static number" ng-bind="vm.model.version.orden"></p>
-        </div>
-        <div class="col-md-1 form-group-sm">
-            <label translate>rgla_valorBase</label>
-            <p class="form-control-static number" ng-bind="(vm.model.version.valorBase | number:4)"></p>
-        </div>
-    </div>
-
-    <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
-
-    <div class="row">
-        <div class="col-md-6 form-group-sm">
-            <label translate>rgla_condicion</label>
-            <textarea class="form-control" rows="12" ng-bind="vm.model.version.condicion" readonly="readonly"
-                spellcheck="false"></textarea>
-        </div>
-        <div class="col-md-6 form-group-sm">
-            <label translate>rgla_formula</label>
-            <textarea class="form-control" rows="12" ng-bind="vm.model.version.formula" readonly="readonly"
-                spellcheck="false"></textarea>
-        </div>
-    </div>
-
-    <div ng-if="vm.model.tipo == 'T'" class="row">
-        <div class="col-md-6 form-group-sm">
-            <label translate>rgla_pathImpuesto</label>
-            <p class="form-control-static" ng-bind="vm.model.version.pathImpuesto"></p>
-        </div>
-        <div class="col-md-6 form-group-sm">
-            <label translate>rgla_pathPagador</label>
-            <p class="form-control-static" ng-bind="vm.model.version.pathPagador"></p>
-        </div>
-    </div>
-
-    <div ng-if="vm.model.tipo == 'T'" class="row">
-        <div class="col-md-6 form-group-sm">
-            <label translate>rgla_pathEsSujPasivo</label>
-            <p class="form-control-static" ng-bind="vm.model.version.pathEsSujPasivo"></p>
-        </div>
-        <div class="col-md-6 form-group-sm">
-            <label translate>rgla_pathCodExen</label>
-            <p class="form-control-static" ng-bind="vm.model.version.pathCodExen"></p>
-        </div>
-    </div>
-    </div>
-</fieldset>
-
-<div ng-if="vm.model.tipo == 'T'">
-    <legend>{{'Datos Variables'}}</legend>
-
-    <div class="table-responsive">
-        <table class="table-bordered table-condensed table-hover table-nonfluid">
-            <thead>
-                <tr>
-                    <th>Campo</th>
-                    <th>Etiqueta</th>
-                    <th>Ruta</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-if="vm.model.version.pathInfo1 != null">
-                    <td>Info 1</td>
-                    <td ng-bind="vm.model.version.etiqInfo1"></td>
-                    <td ng-bind="vm.model.version.pathInfo1"></td>
-                </tr>
-                <tr ng-if="vm.model.version.pathInfo2 != null">
-                    <td>Info 2</td>
-                    <td ng-bind="vm.model.version.etiqInfo2"></td>
-                    <td ng-bind="vm.model.version.pathInfo2"></td>
-                </tr>
-                <tr ng-if="vm.model.version.pathInfo3 != null">
-                    <td>Info 3</td>
-                    <td ng-bind="vm.model.version.etiqInfo3"></td>
-                    <td ng-bind="vm.model.version.pathInfo3"></td>
-                </tr>
-                <tr ng-if="vm.model.version.pathInfo4 != null">
-                    <td>Info 4</td>
-                    <td ng-bind="vm.model.version.etiqInfo4"></td>
-                    <td ng-bind="vm.model.version.pathInfo4"></td>
-                </tr>
-                <tr ng-if="vm.model.version.pathInfo5 != null">
-                    <td>Info 5</td>
-                    <td ng-bind="vm.model.version.etiqInfo5"></td>
-                    <td ng-bind="vm.model.version.pathInfo5"></td>
-                </tr>
-                <tr ng-if="vm.model.version.pathInfo6 != null">
-                    <td>Info 6</td>
-                    <td ng-bind="vm.model.version.etiqInfo6"></td>
-                    <td ng-bind="vm.model.version.pathInfo6"></td>
-                </tr>
-
-                <tr ng-if="vm.model.version.pathCuant1 != null">
-                    <td>Cuant 1</td>
-                    <td ng-bind="vm.model.version.etiqCuant1"></td>
-                    <td ng-bind="vm.model.version.pathCuant1"></td>
-                </tr>
-                <tr ng-if="vm.model.version.pathCuant2 != null">
-                    <td>Cuant 2</td>
-                    <td ng-bind="vm.model.version.etiqCuant2"></td>
-                    <td ng-bind="vm.model.version.pathCuant2"></td>
-                </tr>
-                <tr ng-if="vm.model.version.pathCuant3 != null">
-                    <td>Cuant 3</td>
-                    <td ng-bind="vm.model.version.etiqCuant3"></td>
-                    <td ng-bind="vm.model.version.pathCuant3"></td>
-                </tr>
-                <tr ng-if="vm.model.version.pathCuant4 != null">
-                    <td>Cuant 4</td>
-                    <td ng-bind="vm.model.version.etiqCuant4"></td>
-                    <td ng-bind="vm.model.version.pathCuant4"></td>
-                </tr>
-                <tr ng-if="vm.model.version.pathCuant5 != null">
-                    <td>Cuant 5</td>
-                    <td ng-bind="vm.model.version.etiqCuant5"></td>
-                    <td ng-bind="vm.model.version.pathCuant5"></td>
-                </tr>
-                <tr ng-if="vm.model.version.pathCuant6 != null">
-                    <td>Cuant 6</td>
-                    <td ng-bind="vm.model.version.etiqCuant6"></td>
-                    <td ng-bind="vm.model.version.pathCuant6"></td>
-                </tr>
-            </tbody>
-
-        </table>
-    </div>
-</div>
-
-<fieldset ng-if="mc.hasAccnPath('rgin-list')">
-    <legend ng-bind="'Reglas Incompatibles'"></legend>
-
+<div ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a ng-if="mc.hasAccnPath('rgin-create')" class="btn btn-default"
-                ui-sref="regla-incompatible-create({rgla1Id: vm.model.id, fref: vm.model.fref})"><i
-                class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+            <a ng-if="mc.hasAccnPath('rgla-edit')" class="btn btn-default"
+                ng-href="#/facturacion/regla/edit/edit/{{vm.model.crgo.id}}/{{vm.model.fref}}/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+            <button ng-if="mc.hasAccnPath('rgla-remove')" data-ng-click="vm.remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            </button>
         </div>
     </div>
 
-    <div class="table-responsive">
-        <table ng-if="vm.rginList" class="table-bordered table-condensed table-hover table-nonfluid">
-            <thead>
-                <tr>
-                    <th />
-                    <th translate>rgla_codigo</th>
-                    <th translate>rgla_tipo</th>
-                    <th translate>enti</th>
-                    <th translate>fini</th>
-                    <th translate>ffin</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="rgin in vm.rginList track by rgin.id">
-                    <td><a ui-sref="regla-incompatible-detail(rgin)"><i
-                            class="glyphicon glyphicon-search"></i></a></td>
-                    <td ng-bind="rgin.rgla2.codigo"></td>
-                    <td ng-bind="rgin.rgla2.tipo"></td>
-                    <td ng-bind="('enti_' + rgin.rgla2.enti.id | translate)"></td>
-                    <td ng-bind="(rgin.version.fini | date: dateFormat)"></td>
-                    <td ng-bind="(rgin.version.ffin | date: dateFormat)"></td>
-                </tr>
-            </tbody>
-        </table>
+    <fieldset>
+        <div class="row">
+            <div class="col-md-2 form-group-sm">
+                <label translate>crgo</label>
+                <p class="form-control-static">
+                    <a ng-href="#/facturacion/cargo/detail/{{vm.model.crgo.id}}/{{vm.model.fref}}"
+                        ng-bind="vm.model.crgo.etiqueta"></a>
+                </p>
+            </div>
+            <div class="col-md-1 form-group-sm">
+                <label translate>rgla_codigo</label>
+                <p class="form-control-static" ng-bind="vm.model.codigo"></p>
+            </div>
+            <div class="col-md-1 form-group-sm">
+                <label translate>rgla_tipo</label>
+                <p class="form-control-static" ng-bind="'ReglaTipo_' + vm.model.tipo | translate"></p>
+            </div>
+            <div class="col-md-2 form-group-sm">
+                <label translate>enti</label>
+                <p class="form-control-static" ng-switch="vm.model.enti.tipo">
+                    <a ng-switch-when="T" ng-href="#/metamodelo/tipo-servicio/detail/{{vm.model.enti.id}}"
+                        ng-bind="('enti_' + vm.model.enti.id | translate)"></a> <a ng-switch-when="S"
+                        ng-href="#/metamodelo/tipo-subservicio/detail/{{vm.model.enti.id}}"
+                        ng-bind="('enti_' + vm.model.enti.id | translate)"></a>
+                </p>
+            </div>
+            <div class="col-md-1 form-group-sm">
+                <label translate>fini</label>
+                <p class="form-control-static" ng-bind="(vm.model.version.fini | date: dateFormat)"></p>
+            </div>
+            <div class="col-md-1 form-group-sm">
+                <label translate>ffin</label>
+                <p class="form-control-static" ng-bind="(vm.model.version.ffin | date: dateFormat)"></p>
+            </div>
+            <div class="col-md-1 form-group-sm">
+                <label translate>rgla_orden</label>
+                <p class="form-control-static number" ng-bind="vm.model.version.orden"></p>
+            </div>
+            <div class="col-md-1 form-group-sm">
+                <label translate>rgla_valorBase</label>
+                <p class="form-control-static number" ng-bind="(vm.model.version.valorBase | number:4)"></p>
+            </div>
+        </div>
+
+        <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+
+        <div class="row">
+            <div class="col-md-6 form-group-sm">
+                <label translate>rgla_condicion</label>
+                <textarea class="form-control" rows="12" ng-bind="vm.model.version.condicion"
+                    readonly="readonly" spellcheck="false"></textarea>
+            </div>
+            <div class="col-md-6 form-group-sm">
+                <label translate>rgla_formula</label>
+                <textarea class="form-control" rows="12" ng-bind="vm.model.version.formula"
+                    readonly="readonly" spellcheck="false"></textarea>
+            </div>
+        </div>
+
+        <div ng-if="vm.model.tipo == 'T'" class="row">
+            <div class="col-md-6 form-group-sm">
+                <label translate>rgla_pathImpuesto</label>
+                <p class="form-control-static" ng-bind="vm.model.version.pathImpuesto"></p>
+            </div>
+            <div class="col-md-6 form-group-sm">
+                <label translate>rgla_pathPagador</label>
+                <p class="form-control-static" ng-bind="vm.model.version.pathPagador"></p>
+            </div>
+        </div>
+
+        <div ng-if="vm.model.tipo == 'T'" class="row">
+            <div class="col-md-6 form-group-sm">
+                <label translate>rgla_pathEsSujPasivo</label>
+                <p class="form-control-static" ng-bind="vm.model.version.pathEsSujPasivo"></p>
+            </div>
+            <div class="col-md-6 form-group-sm">
+                <label translate>rgla_pathCodExen</label>
+                <p class="form-control-static" ng-bind="vm.model.version.pathCodExen"></p>
+            </div>
+        </div>
+    </fieldset>
+
+    <div ng-if="vm.model.tipo == 'T'">
+        <legend>{{'Datos Variables'}}</legend>
+
+        <div class="table-responsive">
+            <table class="table-bordered table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th>Campo</th>
+                        <th>Etiqueta</th>
+                        <th>Ruta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-if="vm.model.version.pathInfo1 != null">
+                        <td>Info 1</td>
+                        <td ng-bind="vm.model.version.etiqInfo1"></td>
+                        <td ng-bind="vm.model.version.pathInfo1"></td>
+                    </tr>
+                    <tr ng-if="vm.model.version.pathInfo2 != null">
+                        <td>Info 2</td>
+                        <td ng-bind="vm.model.version.etiqInfo2"></td>
+                        <td ng-bind="vm.model.version.pathInfo2"></td>
+                    </tr>
+                    <tr ng-if="vm.model.version.pathInfo3 != null">
+                        <td>Info 3</td>
+                        <td ng-bind="vm.model.version.etiqInfo3"></td>
+                        <td ng-bind="vm.model.version.pathInfo3"></td>
+                    </tr>
+                    <tr ng-if="vm.model.version.pathInfo4 != null">
+                        <td>Info 4</td>
+                        <td ng-bind="vm.model.version.etiqInfo4"></td>
+                        <td ng-bind="vm.model.version.pathInfo4"></td>
+                    </tr>
+                    <tr ng-if="vm.model.version.pathInfo5 != null">
+                        <td>Info 5</td>
+                        <td ng-bind="vm.model.version.etiqInfo5"></td>
+                        <td ng-bind="vm.model.version.pathInfo5"></td>
+                    </tr>
+                    <tr ng-if="vm.model.version.pathInfo6 != null">
+                        <td>Info 6</td>
+                        <td ng-bind="vm.model.version.etiqInfo6"></td>
+                        <td ng-bind="vm.model.version.pathInfo6"></td>
+                    </tr>
+
+                    <tr ng-if="vm.model.version.pathCuant1 != null">
+                        <td>Cuant 1</td>
+                        <td ng-bind="vm.model.version.etiqCuant1"></td>
+                        <td ng-bind="vm.model.version.pathCuant1"></td>
+                    </tr>
+                    <tr ng-if="vm.model.version.pathCuant2 != null">
+                        <td>Cuant 2</td>
+                        <td ng-bind="vm.model.version.etiqCuant2"></td>
+                        <td ng-bind="vm.model.version.pathCuant2"></td>
+                    </tr>
+                    <tr ng-if="vm.model.version.pathCuant3 != null">
+                        <td>Cuant 3</td>
+                        <td ng-bind="vm.model.version.etiqCuant3"></td>
+                        <td ng-bind="vm.model.version.pathCuant3"></td>
+                    </tr>
+                    <tr ng-if="vm.model.version.pathCuant4 != null">
+                        <td>Cuant 4</td>
+                        <td ng-bind="vm.model.version.etiqCuant4"></td>
+                        <td ng-bind="vm.model.version.pathCuant4"></td>
+                    </tr>
+                    <tr ng-if="vm.model.version.pathCuant5 != null">
+                        <td>Cuant 5</td>
+                        <td ng-bind="vm.model.version.etiqCuant5"></td>
+                        <td ng-bind="vm.model.version.pathCuant5"></td>
+                    </tr>
+                    <tr ng-if="vm.model.version.pathCuant6 != null">
+                        <td>Cuant 6</td>
+                        <td ng-bind="vm.model.version.etiqCuant6"></td>
+                        <td ng-bind="vm.model.version.pathCuant6"></td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
     </div>
-</fieldset>
+
+    <fieldset ng-if="mc.hasAccnPath('rgin-list')">
+        <legend ng-bind="'Reglas Incompatibles'"></legend>
+
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a ng-if="mc.hasAccnPath('rgin-create')" class="btn btn-default"
+                    ng-href="#/facturacion/regla-incompatible/edit/create/{{vm.model.id}}/{{vm.model.fref}}"><i
+                    class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table ng-if="vm.rginList" class="table-bordered table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th />
+                        <th translate>rgla_codigo</th>
+                        <th translate>rgla_tipo</th>
+                        <th translate>enti</th>
+                        <th translate>fini</th>
+                        <th translate>ffin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="rgin in vm.rginList track by rgin.id">
+                        <td><a
+                            ng-href="#/facturacion/regla-incompatible/detail/{{rgin.id}}/{{rgin.fref}}"><i
+                                class="glyphicon glyphicon-search"></i></a></td>
+                        <td ng-bind="rgin.rgla2.codigo"></td>
+                        <td ng-bind="rgin.rgla2.tipo"></td>
+                        <td ng-bind="('enti_' + rgin.rgla2.enti.id | translate)"></td>
+                        <td ng-bind="(rgin.version.fini | date: dateFormat)"></td>
+                        <td ng-bind="(rgin.version.ffin | date: dateFormat)"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+</div>

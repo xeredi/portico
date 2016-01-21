@@ -12,8 +12,8 @@
         </button>
         <a class="btn btn-default" ng-href="#/facturacion/vlrc/edit/create"><i
             class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a> <a
-            class="btn btn-default" ui-sref="facturador-create"><i class="glyphicon glyphicon-search"></i>
-            <span translate="fcdr"></span></a>
+            class="btn btn-default" ng-href="#/facturacion/facturador/create"><i
+            class="glyphicon glyphicon-search"></i> <span translate="fcdr"></span></a>
     </div>
 
     <div class="btn-group">
@@ -56,7 +56,8 @@
 
         <tbody>
             <tr ng-repeat="item in vm.resultList.list track by item.id">
-                <td><a ui-sref="valoracion-detail(item)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ng-href="#/facturacion/valoracion/detail/{{item.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="item.id"></td>
                 <td nowrap="nowrap" ng-bind="('enti_' + item.srvc.entiId | translate)"></td>
                 <td ng-bind="item.srvc.etiqueta"></td>

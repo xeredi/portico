@@ -65,6 +65,10 @@ public final class ValoracionPdfExportAction extends CrudFileExportAction<Valora
         final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.ORGANIZACION.getId());
         final ParametroVO pagador = prmtBO.select(model.getPagador().getId(), getIdioma(), model.getFref());
 
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Impresion Valoracion");
+        }
+
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             final ValoracionPdf vlrcPdf = new ValoracionPdf(getLocale());
 

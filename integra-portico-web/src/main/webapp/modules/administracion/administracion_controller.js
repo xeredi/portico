@@ -30,87 +30,74 @@ angular.module("administracion_controller", [])
 
 ;
 
-function config($stateProvider) {
-    $stateProvider
+function config($routeProvider) {
+    $routeProvider
 
-    .state("administracion-index", {
-        url : "/administracion",
+    .when("/administracion", {
         templateUrl : "modules/administracion/administracion-index.html",
         controller : "AdministracionIndexController as vm"
     })
 
-    .state("superpuerto-grid", {
-        url : "/administracion/puerto/superpuerto/grid?page&searchCriteria&limit",
+    .when("/administracion/puerto/superpuerto/grid", {
         templateUrl : "modules/administracion/superpuerto-grid.html",
         controller : "SuperpuertoGridController as vm",
         reloadOnSearch : false
     })
 
-    .state("superpuerto-detail", {
-        url : "/administracion/puerto/superpuerto/detail/:id",
+    .when("/administracion/puerto/superpuerto/detail/:id", {
         templateUrl : "modules/administracion/superpuerto-detail.html",
         controller : "SuperpuertoDetailController as vm",
     })
 
-    .state("superpuerto-edit", {
-        url : "/administracion/puerto/superpuerto/edit/:accion?id",
+    .when("/administracion/puerto/superpuerto/edit/:accion/:id?", {
         templateUrl : "modules/administracion/superpuerto-edit.html",
         controller : "SuperpuertoEditController as vm",
     })
 
-    .state("puerto-grid", {
-        url : "/administracion/puerto/puerto/grid?page&searchCriteria&limit",
+    .when("/administracion/puerto/puerto/grid", {
         templateUrl : "modules/administracion/puerto-grid.html",
         controller : "PuertoGridController as vm",
         reloadOnSearch : false
     })
 
-    .state("puerto-detail", {
-        url : "/administracion/puerto/puerto/detail/:id",
+    .when("/administracion/puerto/puerto/detail/:id", {
         templateUrl : "modules/administracion/puerto-detail.html",
         controller : "PuertoDetailController as vm",
     })
 
-    .state("puerto-edit", {
-        url : "/administracion/puerto/puerto/edit/:accion?id",
+    .when("/administracion/puerto/puerto/edit/:accion/:id?", {
         templateUrl : "modules/administracion/puerto-edit.html",
         controller : "PuertoEditController as vm",
     })
 
-    .state("configuration-grid", {
-        url : "/administracion/configuration/configuration/grid",
+    .when("/administracion/configuration/configuration/grid", {
         templateUrl : "modules/administracion/configuration-grid.html",
         controller : "ConfigurationGridController as vm",
         reloadOnSearch : false
     })
 
-    .state("configuration-detail", {
-        url : "/administracion/configuration/configuration/detail/:key",
+    .when("/administracion/configuration/configuration/detail/:key", {
         templateUrl : "modules/administracion/configuration-detail.html",
         controller : "ConfigurationDetailController as vm",
     })
 
-    .state("configuration-edit", {
-        url : "/administracion/configuration/configuration/edit/:accion?key",
+    .when("/administracion/configuration/configuration/edit/:accion/:key?", {
         templateUrl : "modules/administracion/configuration-edit.html",
         controller : "ConfigurationEditController as vm",
     })
 
-    .state("messagei18n-grid", {
-        url : "/administracion/messagei18n/messagei18n/grid",
+    .when("/administracion/messagei18n/messagei18n/grid", {
         templateUrl : "modules/administracion/messagei18n-grid.html",
         controller : "MessageI18nGridController as vm",
         reloadOnSearch : false
     })
 
-    .state("messagei18n-detail", {
-        url : "/administracion/messagei18n/messagei18n/detail/:key",
+    .when("/administracion/messagei18n/messagei18n/detail/:key", {
         templateUrl : "modules/administracion/messagei18n-detail.html",
         controller : "MessageI18nDetailController as vm",
     })
 
-    .state("messagei18n-edit", {
-        url : "/administracion/messagei18n/messagei18n/edit/:accion?key",
+    .when("/administracion/messagei18n/messagei18n/edit/:accion/:key", {
         templateUrl : "modules/administracion/messagei18n-edit.html",
         controller : "MessageI18nEditController as vm",
     })
@@ -118,7 +105,8 @@ function config($stateProvider) {
     ;
 }
 
-function AdministracionIndexController($stateParams, pageTitleService, AdministracionService) {
+function AdministracionIndexController($routeParams, pageTitleService,
+        AdministracionService) {
     var vm = this;
 
     AdministracionService.index().then(function(data) {
@@ -127,7 +115,8 @@ function AdministracionIndexController($stateParams, pageTitleService, Administr
     pageTitleService.setTitle("sec_administracion", "page_home");
 }
 
-function SuperpuertoGridController($state, $stateParams, $modal, pageTitleService, SuperpuertoService) {
+function SuperpuertoGridController($route, $routeParams, $modal,
+        pageTitleService, SuperpuertoService) {
     var vm = this;
 
     vm.filter = filter;
@@ -145,26 +134,29 @@ function SuperpuertoGridController($state, $stateParams, $modal, pageTitleServic
     }
 
     function search(page) {
-        SuperpuertoService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
-            vm.page = data.resultList.page;
-            vm.limit = data.resultList.limit;
-            vm.sprtList = data.resultList;
-        });
+        SuperpuertoService.listPage(vm.searchCriteria, page, vm.limit).then(
+                function(data) {
+                    vm.page = data.resultList.page;
+                    vm.limit = data.resultList.limit;
+                    vm.sprtList = data.resultList;
+                });
     }
 
     function pageChanged() {
         search(vm.page);
     }
 
-    vm.searchCriteria = $stateParams.searchCriteria ? angular.fromJson($stateParams.searchCriteria) : {};
-    vm.limit = $stateParams.limit;
+    vm.searchCriteria = $routeParams.searchCriteria ? angular
+            .fromJson($routeParams.searchCriteria) : {};
+    vm.limit = $routeParams.limit;
 
-    search($stateParams.page ? $stateParams.page : 1);
+    search($routeParams.page ? $routeParams.page : 1);
 
     pageTitleService.setTitle("sprt", "page_grid");
 }
 
-function SuperpuertoDetailController($stateParams, pageTitleService, SuperpuertoService) {
+function SuperpuertoDetailController($routeParams, pageTitleService,
+        SuperpuertoService) {
     var vm = this;
 
     vm.remove = remove;
@@ -175,49 +167,54 @@ function SuperpuertoDetailController($stateParams, pageTitleService, Superpuerto
         });
     }
 
-    SuperpuertoService.detail({
-        id : $stateParams.id
-    }).then(function(data) {
-        vm.sprt = data.model;
+    vm.search = {
+        id : $routeParams.id
+    };
+
+    SuperpuertoService.detail(vm.search).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
 
     pageTitleService.setTitle("sprt", "page_detail");
 }
 
-function SuperpuertoEditController($state, $stateParams, pageTitleService, SuperpuertoService) {
+function SuperpuertoEditController($route, $routeParams, pageTitleService,
+        SuperpuertoService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
     function save() {
-        SuperpuertoService.saveI18n(vm.accion, vm.sprt, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("superpuerto-detail", data.model, {
-                location : 'replace'
-            });
-        });
+        SuperpuertoService.saveI18n(vm.accion, vm.sprt, vm.i18nMap).then(
+                function(data) {
+                    SuperpuertoService.redirectAfterSave(vm.accion, data.model,
+                            "superpuerto-detail");
+                });
     }
 
     function cancel() {
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
+    vm.accion = $routeParams.accion;
 
-    SuperpuertoService.edit($stateParams.accion, {
-        id : $stateParams.id
-    }).then(function(data) {
-        vm.sprt = data.model;
-        vm.i18nMap = data.i18nMap;
-    });
+    vm.search = {
+        id : $routeParams.id
+    };
+
+    SuperpuertoService.edit($routeParams.accion, vm.search).then(
+            function(data) {
+                vm.model = data.model;
+                vm.i18nMap = data.i18nMap;
+            });
 
     pageTitleService.setTitle("sprt", "page_" + vm.accion);
 }
 
-function PuertoGridController($state, $stateParams, $modal, pageTitleService, PuertoService) {
+function PuertoGridController($route, $routeParams, $modal, pageTitleService,
+        PuertoService) {
     var vm = this;
 
     vm.filter = filter;
@@ -236,26 +233,28 @@ function PuertoGridController($state, $stateParams, $modal, pageTitleService, Pu
     }
 
     function search(page) {
-        PuertoService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
-            vm.page = data.resultList.page;
-            vm.limit = data.resultList.limit;
-            vm.prtoList = data.resultList;
-        });
+        PuertoService.listPage(vm.searchCriteria, page, vm.limit).then(
+                function(data) {
+                    vm.page = data.resultList.page;
+                    vm.limit = data.resultList.limit;
+                    vm.prtoList = data.resultList;
+                });
     }
 
     function pageChanged() {
         search(vm.page);
     }
 
-    vm.searchCriteria = $stateParams.searchCriteria ? angular.fromJson($stateParams.searchCriteria) : {};
-    vm.limit = $stateParams.limit;
+    vm.searchCriteria = $routeParams.searchCriteria ? angular
+            .fromJson($routeParams.searchCriteria) : {};
+    vm.limit = $routeParams.limit;
 
-    search($stateParams.page ? $stateParams.page : 1);
+    search($routeParams.page ? $routeParams.page : 1);
 
     pageTitleService.setTitle("prto", "page_grid");
 }
 
-function PuertoDetailController($stateParams, pageTitleService, PuertoService) {
+function PuertoDetailController($routeParams, pageTitleService, PuertoService) {
     var vm = this;
 
     vm.remove = remove;
@@ -266,40 +265,41 @@ function PuertoDetailController($stateParams, pageTitleService, PuertoService) {
         });
     }
 
-    PuertoService.detail({
-        id : $stateParams.id
-    }).then(function(data) {
-        vm.prto = data.model;
+    vm.search = {
+        id : $routeParams.id
+    };
+
+    PuertoService.detail(vm.search).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
 
     pageTitleService.setTitle("prto", "page_detail");
 }
 
-function PuertoEditController($state, $stateParams, pageTitleService, PuertoService) {
+function PuertoEditController($route, $routeParams, pageTitleService,
+        PuertoService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
     function save() {
-        PuertoService.saveI18n(vm.accion, vm.prto, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("puerto-detail", data.model, {
-                location : 'replace'
-            });
-        });
+        PuertoService.saveI18n(vm.accion, vm.prto, vm.i18nMap).then(
+                function(data) {
+                    PuertoService.redirectAfterSave(vm.accion, data.model,
+                            "puerto-detail");
+                });
     }
 
     function cancel() {
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
+    vm.accion = $routeParams.accion;
 
-    PuertoService.edit($stateParams.accion, {
-        id : $stateParams.id
+    PuertoService.edit($routeParams.accion, {
+        id : $routeParams.id
     }).then(function(data) {
         vm.prto = data.model;
         vm.i18nMap = data.i18nMap;
@@ -310,7 +310,8 @@ function PuertoEditController($state, $stateParams, pageTitleService, PuertoServ
     pageTitleService.setTitle("prto", "page_" + vm.accion);
 }
 
-function ConfigurationGridController($state, $stateParams, $modal, pageTitleService, ConfigurationService) {
+function ConfigurationGridController($route, $routeParams, $modal,
+        pageTitleService, ConfigurationService) {
     var vm = this;
 
     vm.search = search;
@@ -331,42 +332,44 @@ function ConfigurationGridController($state, $stateParams, $modal, pageTitleServ
     pageTitleService.setTitle("conf", "page_grid");
 }
 
-function ConfigurationDetailController($stateParams, pageTitleService, ConfigurationService) {
+function ConfigurationDetailController($routeParams, pageTitleService,
+        ConfigurationService) {
     var vm = this;
 
-    ConfigurationService.detail({
-        key : $stateParams.key
-    }).then(function(data) {
-        vm.conf = data.model;
+    vm.search = {
+        key : $routeParams.key
+    };
+
+    ConfigurationService.detail(vm.search).then(function(data) {
+        vm.model = data.model;
     });
 
     pageTitleService.setTitle("conf", "page_detail");
 }
 
-function ConfigurationEditController($state, $stateParams, pageTitleService, ConfigurationService) {
+function ConfigurationEditController($route, $routeParams, pageTitleService,
+        ConfigurationService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
     function save() {
-        ConfigurationService.save(vm.accion, vm.conf).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("configuration-detail", data.model, {
-                location : 'replace'
-            });
-        });
+        ConfigurationService.save(vm.accion, vm.conf).then(
+                function(data) {
+                    ConfigurationService.redirectAfterSave(vm.accion,
+                            data.model, "configuration-detail");
+                });
     }
 
     function cancel() {
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
+    vm.accion = $routeParams.accion;
 
-    ConfigurationService.edit($stateParams.accion, {
-        key : $stateParams.key
+    ConfigurationService.edit($routeParams.accion, {
+        key : $routeParams.key
     }).then(function(data) {
         vm.conf = data.model;
     });
@@ -374,7 +377,8 @@ function ConfigurationEditController($state, $stateParams, pageTitleService, Con
     pageTitleService.setTitle("conf", "page_" + vm.accion);
 }
 
-function MessageI18nGridController($state, $stateParams, $modal, pageTitleService, MessageI18nService) {
+function MessageI18nGridController($route, $routeParams, $modal,
+        pageTitleService, MessageI18nService) {
     var vm = this;
 
     vm.search = search;
@@ -397,12 +401,11 @@ function MessageI18nGridController($state, $stateParams, $modal, pageTitleServic
     pageTitleService.setTitle("m18n", "page_grid");
 }
 
-function MessageI18nDetailController($stateParams, pageTitleService, MessageI18nService) {
+function MessageI18nDetailController($routeParams, pageTitleService,
+        MessageI18nService) {
     var vm = this;
 
-    MessageI18nService.detail({
-        key : $stateParams.key
-    }).then(function(data) {
+    MessageI18nService.detail($routeParams.key).then(function(data) {
         vm.key = data.model;
         vm.i18nMap = data.i18nMap;
 
@@ -412,30 +415,29 @@ function MessageI18nDetailController($stateParams, pageTitleService, MessageI18n
     pageTitleService.setTitle("m18n", "page_detail");
 }
 
-function MessageI18nEditController($state, $stateParams, pageTitleService, MessageI18nService) {
+function MessageI18nEditController($route, $routeParams, pageTitleService,
+        MessageI18nService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
     function save() {
-        MessageI18nService.saveI18n(vm.accion, vm.key, vm.i18nMap).then(function(data) {
-            vm.accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $state.go("messagei18n-detail", data.model, {
-                location : 'replace'
-            });
-        });
+        MessageI18nService.saveI18n(vm.accion, vm.key, vm.i18nMap).then(
+                function(data) {
+                    MessageI18nService.redirectAfterSave(vm.accion, data.model,
+                            "messagei18n-detail");
+                });
     }
 
     function cancel() {
         window.history.back();
     }
 
-    vm.accion = $stateParams.accion;
+    vm.accion = $routeParams.accion;
 
-    MessageI18nService.edit($stateParams.accion, {
-        key : $stateParams.key
+    MessageI18nService.edit($routeParams.accion, {
+        key : $routeParams.key
     }).then(function(data) {
         vm.key = data.model;
         vm.i18nMap = data.i18nMap;

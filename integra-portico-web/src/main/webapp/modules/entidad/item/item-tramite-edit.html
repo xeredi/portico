@@ -74,7 +74,7 @@
                         ng-bind="'cdrf_' + tpdtId + '_' + vm.model.ittdMap[tpdtId].ocadena | translate"></span>
                         <span ng-switch-when="TX" ng-bind="vm.model.ittdMap[tpdtId].ocadena"></span> <a
                         ng-switch-when="PR"
-                        ui-sref="parametro-detail({id: vm.model.ittdMap[tpdtId].oprmt.id, entiId: vm.enti.entdMap[tpdtId].tpdt.enti.id, fref: vm.item.fref})"
+                        ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].oprmt.id}}/{{vm.item.fref}}"
                         ng-bind="vm.model.ittdMap[tpdtId].oprmt.etiqueta"></a> <a ng-switch-when="SR"
                         ng-href="#/servicio/srvc/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].osrvc.id}}"
                         ng-bind="vm.model.ittdMap[tpdtId].osrvc.etiqueta"></a></td>

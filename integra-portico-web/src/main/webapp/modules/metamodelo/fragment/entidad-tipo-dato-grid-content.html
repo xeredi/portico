@@ -4,7 +4,7 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a ng-if="mc.hasAccnPath('entd-create')" class="btn btn-default"
-                ui-sref="entidad-tipo-dato-create({entiId: vm.model.id})"><i
+                ng-href="#/metamodelo/entidad-tipo-dato/edit/create/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>
     </div>
@@ -31,7 +31,8 @@
         </thead>
         <tbody>
             <tr ng-repeat="entd in vm.entdList track by entd.id">
-                <td><a ui-sref="entidad-tipo-dato-detail(entd)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ng-href="#/metamodelo/entidad-tipo-dato/detail/{{entd.entiId}}/{{entd.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="entd.grupo" class="number"></td>
                 <td ng-bind="entd.fila" class="number"></td>
                 <td ng-bind="entd.orden" class="number"></td>

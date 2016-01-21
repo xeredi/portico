@@ -2,8 +2,8 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a ng-if="mc.hasAccnPath('trmt-create')" class="btn btn-default"
-                ui-sref="tramite-create({entiId: vm.model.id})"><i class="glyphicon glyphicon-file"></i> <span
-                translate="btn_crear"></span></a>
+                ng-href="#/metamodelo/tramite/edit/create/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
         </div>
     </div>
 
@@ -18,7 +18,8 @@
         </thead>
         <tbody>
             <tr ng-repeat="trmt in vm.trmtList track by trmt.id">
-                <td><a ui-sref="tramite-detail(trmt)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ng-href="#/metamodelo/tramite/detail/{{trmt.entiId}}/{{trmt.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap" ng-bind="trmt.etiqueta"></td>
                 <td>{{trmt.estadoOrig}} - {{trmt.estadoOrigTexto}}</td>
                 <td>{{trmt.estadoDest}} - {{trmt.estadoDestTexto}}</td>

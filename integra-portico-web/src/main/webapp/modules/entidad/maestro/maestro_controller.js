@@ -16,343 +16,295 @@ angular.module("maestro_controller", [])
 
 ;
 
-function config($stateProvider) {
-	$stateProvider
+function config($routeProvider) {
+    $routeProvider
 
-	.state("maestro-index", {
-		url : "/maestro",
-		templateUrl : "modules/entidad/maestro/maestro-index.html",
-		controller : "MaestroIndexController as vm"
-	})
+    .when("/maestro", {
+        templateUrl : "modules/entidad/maestro/maestro-index.html",
+        controller : "MaestroIndexController as vm"
+    })
 
-	.state("parametro-grid", {
-		url : "/maestro/parametro/grid/:entiId?page&searchCriteria&limit",
-		templateUrl : "modules/entidad/maestro/parametro-grid.html",
-		controller : "ParametroGridController as vm",
-		reloadOnSearch : false
-	})
+    .when("/maestro/parametro/grid/:entiId", {
+        templateUrl : "modules/entidad/maestro/parametro-grid.html",
+        controller : "ParametroGridController as vm",
+        reloadOnSearch : false
+    })
 
-	.state("parametro-detail", {
-		url : "/maestro/parametro/detail/:entiId/:id?fref&tab",
-		templateUrl : "modules/entidad/maestro/parametro-detail.html",
-		controller : "ParametroDetailController as vm",
-		reloadOnSearch : false
-	})
+    .when("/maestro/parametro/detail/:entiId/:id/:fref?", {
+        templateUrl : "modules/entidad/maestro/parametro-detail.html",
+        controller : "ParametroDetailController as vm",
+        reloadOnSearch : false
+    })
 
-	.state("parametro-create", {
-		url : "/maestro/parametro/create/:entiId?fref",
-		templateUrl : "modules/entidad/maestro/parametro-edit.html",
-		controller : "ParametroEditController as vm",
-		data : {
-			accion : 'create'
-		}
-	})
+    .when("/maestro/parametro/edit/:accion/:entiId/:id?/:fref?", {
+        templateUrl : "modules/entidad/maestro/parametro-edit.html",
+        controller : "ParametroEditController as vm",
+    })
 
-	.state("parametro-edit", {
-		url : "/maestro/parametro/edit/:entiId/:id?fref",
-		templateUrl : "modules/entidad/maestro/parametro-edit.html",
-		controller : "ParametroEditController as vm",
-		data : {
-			accion : 'edit'
-		}
-	})
+    .when("/maestro/subparametro/detail/:entiId/:id/:fref?", {
+        templateUrl : "modules/entidad/maestro/subparametro-detail.html",
+        controller : "SubparametroDetailController as vm",
+        reloadOnSearch : false,
+    })
 
-	.state("parametro-duplicate", {
-		url : "/maestro/parametro/duplicate/:entiId/:id?fref",
-		templateUrl : "modules/entidad/maestro/parametro-edit.html",
-		controller : "ParametroEditController as vm",
-		data : {
-			accion : 'duplicate'
-		}
-	})
+    .when("/maestro/subparametro/edit/:accion/:entiId/:prmtId/:id?/:fref?", {
+        templateUrl : "modules/entidad/maestro/subparametro-edit.html",
+        controller : "SubparametroEditController as vm",
+    })
 
-	.state("subparametro-detail", {
-		url : "/maestro/subparametro/detail/:entiId/:id?fref",
-		templateUrl : "modules/entidad/maestro/subparametro-detail.html",
-		controller : "SubparametroDetailController as vm",
-	})
-
-	.state("subparametro-create", {
-		url : "/maestro/subparametro/create/:entiId/:prmtId?fref",
-		templateUrl : "modules/entidad/maestro/subparametro-edit.html",
-		controller : "SubparametroEditController as vm",
-		data : {
-			accion : 'create'
-		}
-	})
-
-	.state("subparametro-edit", {
-		url : "/maestro/subparametro/edit/:entiId/:prmtId/:id?fref",
-		templateUrl : "modules/entidad/maestro/subparametro-edit.html",
-		controller : "SubparametroEditController as vm",
-		data : {
-			accion : 'edit'
-		}
-	})
-
-	.state("subparametro-duplicate", {
-		url : "/maestro/subparametro/duplicate/:entiId/:prmtId/:id?fref",
-		templateUrl : "modules/entidad/maestro/subparametro-edit.html",
-		controller : "SubparametroEditController as vm",
-		data : {
-			accion : 'duplicate'
-		}
-	})
-
-	;
+    ;
 }
 
 function MaestroIndexController($translate, pageTitleService, MaestroService) {
-	var vm = this;
+    var vm = this;
 
-	MaestroService.index().then(function(data) {
-		vm.tpprList = data.resultList.map(function(tppr) {
-			$translate('enti_' + tppr.value).then(function(translation) {
-				tppr.label = translation.toUpperCase();
-			});
+    MaestroService.index().then(function(data) {
+        vm.tpprList = data.resultList.map(function(tppr) {
+            $translate('enti_' + tppr.value).then(function(translation) {
+                tppr.label = translation.toUpperCase();
+            });
 
-			return tppr;
-		});
-	});
+            return tppr;
+        });
+    });
 
-	pageTitleService.setTitle("prmtList", "page_home");
+    pageTitleService.setTitle("prmtList", "page_home");
 }
 
-function ParametroGridController($state, $stateParams, $modal,
-		pageTitleService, ParametroService) {
-	var vm = this;
+function ParametroGridController($route, $routeParams, $modal,
+        pageTitleService, ParametroService) {
+    var vm = this;
 
-	vm.filter = filter;
-	vm.resetFilter = resetFilter;
-	vm.search = search;
-	vm.pageChanged = pageChanged;
-	vm.xlsExport = xlsExport;
+    vm.filter = filter;
+    vm.resetFilter = resetFilter;
+    vm.search = search;
+    vm.pageChanged = pageChanged;
+    vm.xlsExport = xlsExport;
 
-	function filter() {
-		ParametroService.filter(vm.searchCriteria).then(function(data) {
-			vm.labelValuesMap = data.labelValuesMap;
-			vm.limits = data.limits;
-			vm.prtoList = data.prtoList;
-		});
-	}
+    function filter() {
+        ParametroService.filter(vm.searchCriteria).then(function(data) {
+            vm.labelValuesMap = data.labelValuesMap;
+            vm.limits = data.limits;
+            vm.prtoList = data.prtoList;
+        });
+    }
 
-	function resetFilter() {
-		vm.searchCriteria = {};
-	}
+    function resetFilter() {
+        vm.searchCriteria = {};
+    }
 
-	function search(page) {
-		vm.searchCriteria.entiId = $stateParams.entiId;
-		vm.limit = $stateParams.limit;
+    function search(page) {
+        vm.searchCriteria.entiId = $routeParams.entiId;
+        vm.limit = $routeParams.limit;
 
-		ParametroService.listPage(vm.searchCriteria, page, vm.limit).then(
-				function(data) {
-					vm.page = data.resultList.page;
-					vm.limit = data.resultList.limit;
-					vm.itemList = data.resultList;
+        ParametroService.listPage(vm.searchCriteria, page, vm.limit).then(
+                function(data) {
+                    vm.page = data.resultList.page;
+                    vm.limit = data.resultList.limit;
+                    vm.itemList = data.resultList;
+                    vm.searchCriteria = data.model;
+                    vm.enti = data.enti;
+                });
+    }
 
-					vm.enti = data.enti;
-					vm.searchCriteria = data.model;
-				});
-	}
+    function pageChanged() {
+        search(vm.page);
+    }
 
-	function pageChanged() {
-		search(vm.page);
-	}
+    function xlsExport() {
+        ParametroService.xlsExport(vm.searchCriteria, 'prmt_'
+                + vm.searchCriteria.entiId);
+    }
 
-	function xlsExport() {
-		ParametroService.xlsExport(vm.searchCriteria, 'prmt_'
-				+ vm.searchCriteria.entiId);
-	}
+    vm.searchCriteria = $routeParams.searchCriteria ? angular
+            .fromJson($routeParams.searchCriteria) : {};
 
-	vm.searchCriteria = $stateParams.searchCriteria ? angular
-			.fromJson($stateParams.searchCriteria) : {};
+    search($routeParams.page ? $routeParams.page : 1);
 
-	search($stateParams.page ? $stateParams.page : 1);
-
-	pageTitleService.setTitleEnti($stateParams.entiId, "page_grid");
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }
 
-function ParametroDetailController($stateParams, pageTitleService,
-		ParametroService, SubparametroService) {
-	var vm = this;
+function ParametroDetailController($routeParams, pageTitleService,
+        ParametroService, SubparametroService) {
+    var vm = this;
 
-	vm.remove = remove;
-	vm.pdfExport = pdfExport;
-	vm.tabSelected = tabSelected;
+    vm.remove = remove;
+    vm.pdfExport = pdfExport;
+    vm.tabSelected = tabSelected;
 
-	function remove() {
-		ParametroService.remove(vm.item).then(function(data) {
-			window.history.back();
-		});
-	}
+    function remove() {
+        ParametroService.remove(vm.item).then(function(data) {
+            window.history.back();
+        });
+    }
 
-	function pdfExport() {
-		ParametroService.pdfExport(vm.item, 'prmt_' + vm.item.entiId + '_'
-				+ vm.item.id);
-	}
+    function pdfExport() {
+        ParametroService.pdfExport(vm.item, 'prmt_' + vm.item.entiId + '_'
+                + vm.item.id);
+    }
 
-	function tabSelected(tabNo) {
-		ParametroService.tabSelected(tabNo);
-	}
+    function tabSelected(tabNo) {
+        ParametroService.tabSelected(tabNo);
+    }
 
-	vm.tabActive = {};
+    vm.tabActive = {};
 
-	if ($stateParams.tab) {
-		vm.tabActive[$stateParams.tab] = true;
-	}
+    if ($routeParams.tab) {
+        vm.tabActive[$routeParams.tab] = true;
+    }
 
-	vm.item = {
-		id : $stateParams.id,
-		entiId : $stateParams.entiId,
-		fref : $stateParams.fref ? $stateParams.fref : new Date()
-	};
+    vm.search = {
+        id : $routeParams.id,
+        entiId : $routeParams.entiId,
+        fref : $routeParams.fref ? $routeParams.fref : new Date()
+    };
 
-	ParametroService
-			.detail(vm.item)
-			.then(
-					function(data) {
-						vm.item = data.model;
-						vm.i18nMap = data.i18nMap;
+    ParametroService
+            .detail(vm.search)
+            .then(
+                    function(data) {
+                        vm.item = data.model;
+                        vm.i18nMap = data.i18nMap;
 
-						if (data.model.prto) {
-							vm.prtoId = data.model.prto.id;
-						}
+                        if (data.model.prto) {
+                            vm.prtoId = data.model.prto.id;
+                        }
 
-						vm.enti = data.enti;
+                        vm.enti = data.enti;
 
-						vm.itemHijosMap = {};
-						vm.entiHijasMap = {};
+                        vm.itemHijosMap = {};
+                        vm.entiHijasMap = {};
 
-						if (data.enti && vm.enti.entiHijasList) {
-							for (i = 0; i < vm.enti.entiHijasList.length; i++) {
-								var sprmSearchCriteria = {
-									prmt : {
-										id : vm.item.id
-									},
-									entiId : vm.enti.entiHijasList[i],
-									fechaVigencia : vm.item.fref
-								};
+                        if (data.enti && vm.enti.entiHijasList) {
+                            for (i = 0; i < vm.enti.entiHijasList.length; i++) {
+                                var sprmSearchCriteria = {
+                                    prmt : {
+                                        id : vm.item.id
+                                    },
+                                    entiId : vm.enti.entiHijasList[i],
+                                    fechaVigencia : vm.item.fref
+                                };
 
-								SubparametroService
-										.listPage(sprmSearchCriteria)
-										.then(
-												function(data) {
-													vm.entiHijasMap[data.enti.enti.id] = data.enti;
-													vm.itemHijosMap[data.enti.enti.id] = data.resultList;
-												});
-							}
-						}
-					});
+                                SubparametroService
+                                        .listPage(sprmSearchCriteria)
+                                        .then(
+                                                function(data) {
+                                                    vm.entiHijasMap[data.enti.enti.id] = data.enti;
+                                                    vm.itemHijosMap[data.enti.enti.id] = data.resultList;
+                                                });
+                            }
+                        }
+                    });
 
-	pageTitleService.setTitleEnti($stateParams.entiId, "page_detail");
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
-function ParametroEditController($state, $stateParams, pageTitleService,
-		ParametroService) {
-	var vm = this;
+function ParametroEditController($route, $routeParams, pageTitleService,
+        ParametroService) {
+    var vm = this;
 
-	vm.save = save;
-	vm.cancel = cancel;
+    vm.save = save;
+    vm.cancel = cancel;
 
-	function save() {
-		ParametroService.saveI18n(vm.accion, vm.item, vm.i18nMap).then(
-				function(data) {
-					ParametroService.redirectAfterSave(vm.accion, data.model,
-							"parametro-detail");
-				});
-	}
+    function save() {
+        ParametroService.saveI18n(vm.accion, vm.item, vm.i18nMap).then(
+                function(data) {
+                    ParametroService.redirectAfterSave(vm.accion, data.model,
+                            "parametro-detail");
+                });
+    }
 
-	function cancel() {
-		window.history.back();
-	}
+    function cancel() {
+        window.history.back();
+    }
 
-	vm.accion = $state.current.data.accion;
-	vm.item = {
-		id : $stateParams.id,
-		entiId : $stateParams.entiId,
-		fref : $stateParams.fref ? $stateParams.fref : new Date()
-	};
+    vm.accion = $routeParams.accion;
+    vm.item = {
+        id : $routeParams.id,
+        entiId : $routeParams.entiId,
+        fref : $routeParams.fref ? $routeParams.fref : new Date()
+    };
 
-	ParametroService.edit(vm.accion, vm.item).then(function(data) {
-		vm.item = data.model;
-		vm.i18nMap = data.i18nMap;
-		vm.enti = data.enti;
+    ParametroService.edit(vm.accion, vm.item).then(function(data) {
+        vm.item = data.model;
+        vm.i18nMap = data.i18nMap;
+        vm.enti = data.enti;
 
-		if (data.model.prto) {
-			vm.prtoId = data.model.prto.id;
-		}
+        if (data.model.prto) {
+            vm.prtoId = data.model.prto.id;
+        }
 
-		vm.labelValuesMap = data.labelValuesMap;
-		vm.prtoList = data.prtoList;
-	});
+        vm.labelValuesMap = data.labelValuesMap;
+        vm.prtoList = data.prtoList;
+    });
 
-	pageTitleService.setTitleEnti($stateParams.entiId, "page_" + vm.accion);
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);
 }
 
-function SubparametroDetailController($stateParams, pageTitleService,
-		SubparametroService) {
-	var vm = this;
+function SubparametroDetailController($routeParams, pageTitleService,
+        SubparametroService) {
+    var vm = this;
 
-	vm.remove = remove;
+    vm.remove = remove;
 
-	function remove() {
-		SubparametroService.remove(vm.item).then(function(data) {
-			window.history.back();
-		});
-	}
+    function remove() {
+        SubparametroService.remove(vm.item).then(function(data) {
+            window.history.back();
+        });
+    }
 
-	vm.item = {
-		id : $stateParams.id,
-		entiId : $stateParams.entiId,
-		fref : $stateParams.fref ? $stateParams.fref : new Date()
-	};
+    vm.search = {
+        id : $routeParams.id,
+        entiId : $routeParams.entiId,
+        fref : $routeParams.fref ? $routeParams.fref : new Date()
+    };
 
-	SubparametroService.detail(vm.item).then(function(data) {
-		vm.item = data.model;
-		vm.enti = data.enti;
+    SubparametroService.detail(vm.search).then(function(data) {
+        vm.item = data.model;
+        vm.enti = data.enti;
 
-		vm.prtoId = data.prtoId;
-	});
+        vm.prtoId = data.prtoId;
+    });
 
-	pageTitleService.setTitleEnti($stateParams.entiId, "page_detail");
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
-function SubparametroEditController($state, $stateParams, pageTitleService,
-		SubparametroService) {
-	var vm = this;
+function SubparametroEditController($route, $routeParams, pageTitleService,
+        SubparametroService) {
+    var vm = this;
 
-	vm.save = save;
-	vm.cancel = cancel;
+    vm.save = save;
+    vm.cancel = cancel;
 
-	function save() {
-		SubparametroService.save(vm.accion, vm.item).then(
-				function(data) {
-					SubparametroService.redirectAfterSave(vm.accion,
-							data.model, "subparametro-detail");
-				});
-	}
+    function save() {
+        SubparametroService.save(vm.accion, vm.item).then(
+                function(data) {
+                    SubparametroService.redirectAfterSave(vm.accion,
+                            data.model, "subparametro-detail");
+                });
+    }
 
-	function cancel() {
-		window.history.back();
-	}
+    function cancel() {
+        window.history.back();
+    }
 
-	vm.accion = $state.current.data.accion;
-	vm.item = {
-		id : $stateParams.id,
-		prmtId : $stateParams.prmtId,
-		entiId : $stateParams.entiId,
-		fref : $stateParams.fref
-	};
+    vm.accion = $routeParams.accion;
+    vm.item = {
+        id : $routeParams.id,
+        prmtId : $routeParams.prmtId,
+        entiId : $routeParams.entiId,
+        fref : $routeParams.fref
+    };
 
-	SubparametroService.edit(vm.accion, vm.item).then(function(data) {
-		vm.item = data.model;
-		vm.enti = data.enti;
+    SubparametroService.edit(vm.accion, vm.item).then(function(data) {
+        vm.item = data.model;
+        vm.enti = data.enti;
 
-		vm.prtoId = data.model.prtoId;
+        vm.prtoId = data.model.prtoId;
 
-		vm.labelValuesMap = data.labelValuesMap;
-		vm.prtoList = data.prtoList;
-	});
+        vm.labelValuesMap = data.labelValuesMap;
+        vm.prtoList = data.prtoList;
+    });
 
-	pageTitleService.setTitleEnti($stateParams.entiId, "page_" + vm.accion);
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);
 }

@@ -12,7 +12,8 @@
 
         <tbody>
             <tr ng-repeat="ittr in vm.ittrList track by $index">
-                <td><a ui-sref="item-tramite-detail(ittr)"> <span class="glyphicon glyphicon-search"></span>
+                <td><a ng-href="#/item/item-tramite/detail/{{ittr.trmt.entiId}}/{{ittr.id}}"> <span
+                        class="glyphicon glyphicon-search"></span>
                 </a></td>
                 <td ng-bind="(ittr.fecha | date: ('format_datetime' | translate))"></td>
                 <td ng-bind="('trmt_' + ittr.trmt.id | translate)"></td>

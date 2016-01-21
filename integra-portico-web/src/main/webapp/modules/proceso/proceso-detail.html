@@ -1,4 +1,4 @@
-<div>
+<div ng-if="vm.model">
     <uib-tabset type="pills"> <uib-tab heading="{{'prbt' | translate}}">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
@@ -118,13 +118,13 @@
                     <tbody>
                         <tr ng-repeat="prit in ::vm.pritEntradaList track by $index">
                             <td ng-switch="::prit.tipo"><a ng-switch-when="srvc"
-                                ui-sref="servicio-detail({entiId: prit.entiId, id: prit.itemId})"><span
+                                ng-href="#/servicio/servicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
                                     class="glyphicon glyphicon-search"></span></a><a ng-switch-when="ssrv"
-                                ui-sref="subservicio-detail({entiId: prit.entiId, id: prit.itemId})"><span
+                                ng-href="#/servicio/subservicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
                                     class="glyphicon glyphicon-search"></span></a><a ng-switch-when="pepr"
                                 ng-href="#/estadistica/pepr/detail/{{::prit.itemId}}"><span
                                     class="glyphicon glyphicon-search"></span></a><a ng-switch-when="vlrc"
-                                ui-sref="valoracion-detail({id: prit.itemId})"><span
+                                ng-href="#/facturacion/valoracion/detail/{{prit.itemId}}"><span
                                     class="glyphicon glyphicon-search"></span></a></td>
                             <td ng-switch on="prit.tipo"><span ng-switch-when="srvc"
                                 ng-bind="::('enti_' + prit.entiId | translate)"></span><span
@@ -177,13 +177,13 @@
                     <tbody>
                         <tr ng-repeat="prit in ::vm.pritSalidaList track by $index">
                             <td ng-switch="::prit.tipo"><a ng-switch-when="srvc"
-                                ui-sref="servicio-detail({entiId: prit.entiId, id: prit.itemId})"><span
+                                ng-href="#/servicio/servicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
                                     class="glyphicon glyphicon-search"></span></a><a ng-switch-when="ssrv"
-                                ui-sref="subservicio-detail({entiId: prit.entiId, id: prit.itemId})"><span
+                                ng-href="#/servicio/subservicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
                                     class="glyphicon glyphicon-search"></span></a><a ng-switch-when="pepr"
                                 ng-href="#/estadistica/pepr/detail/{{::prit.itemId}}"><span
                                     class="glyphicon glyphicon-search"></span></a><a ng-switch-when="vlrc"
-                                ui-sref="valoracion-detail({id: prit.itemId})"><span
+                                ng-href="#/facturacion/valoracion/detail/{{prit.itemId}}"><span
                                     class="glyphicon glyphicon-search"></span></a></td>
                             <td ng-switch on="prit.tipo"><span ng-switch-when="srvc"
                                 ng-bind="::('enti_' + prit.entiId | translate)"></span><span

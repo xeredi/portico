@@ -40,7 +40,8 @@
         </thead>
         <tbody>
             <tr ng-repeat="item in vm.itemList.list track by item.id">
-                <td><a ui-sref="subservicio-detail(item)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ng-href="#/servicio/subservicio/detail/{{item.entiId}}/{{item.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="::item.srvc.etiqueta" nowrap="nowrap"></td>
                 <td ng-bind="::item.numero" class="number"></td>
                 <td ng-if="::vm.enti.enti.tpdtEstado" nowrap="nowrap" bs-tooltip

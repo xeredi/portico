@@ -10,7 +10,7 @@
             data-template-url="modules/entidad/servicio/servicio-filter-content.html" bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
         </button>
-        <a class="btn btn-default" ui-sref="servicio-create({entiId: vm.enti.enti.id})"><i
+        <a class="btn btn-default" ng-href="#/servicio/servicio/edit/create/{{vm.enti.enti.id}}"><i
             class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a>
     </div>
 
@@ -46,7 +46,8 @@
         </thead>
         <tbody>
             <tr ng-repeat="item in vm.itemList.list track by item.id">
-                <td><a ui-sref="servicio-detail(item)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ng-href="#/servicio/servicio/detail/{{item.entiId}}/{{item.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="::item.etiqueta" nowrap="nowrap"></td>
                 <td ng-if="::vm.enti.enti.tpdtEstado" nowrap="nowrap" bs-tooltip
                     data-title="{{::('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + item.estado | translate)}}"

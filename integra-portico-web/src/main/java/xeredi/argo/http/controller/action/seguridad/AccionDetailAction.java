@@ -6,7 +6,6 @@ import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.seguridad.bo.AccionBO;
 import xeredi.argo.model.seguridad.bo.GrupoBO;
-import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.AccionVO;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
@@ -34,11 +33,8 @@ public final class AccionDetailAction extends CrudDetailAction<AccionVO> {
         Preconditions.checkNotNull(model.getId());
 
         final AccionBO accnBO = new AccionBO();
-        final AccionCriterioVO accnCriterioVO = new AccionCriterioVO();
 
-        accnCriterioVO.setId(model.getId());
-
-        model = accnBO.selectObject(accnCriterioVO);
+        model = accnBO.select(model.getId());
 
         final GrupoBO grpoBO = new GrupoBO();
         final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();

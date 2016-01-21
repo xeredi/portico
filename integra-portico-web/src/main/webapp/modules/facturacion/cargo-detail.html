@@ -1,108 +1,112 @@
-
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a ng-if="mc.hasAccnPath('crgo-edit')" class="btn btn-default" ui-sref="cargo-edit(vm.model)"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
-        <button ng-if="mc.hasAccnPath('crgo-remove')" data-ng-click="vm.remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
-        </button>
-    </div>
-</div>
-
-<fieldset>
-    <div class="row">
-        <div class="col-sm-3 col-md-2 form-group-sm">
-            <label translate>tpsr</label>
-            <p class="form-control-static">
-                <a ui-sref="tipo-servicio-detail(vm.model.tpsr)"
-                    ng-bind="'enti_' + vm.model.tpsr.id | translate"></a>
-            </p>
-        </div>
-        <div class="col-sm-2 col-md-1 form-group-sm">
-            <label translate>crgo_codigo</label>
-            <p class="form-control-static" ng-bind="vm.model.codigo"></p>
-        </div>
-        <div class="col-sm-2 col-md-2 form-group-sm">
-            <label translate>crgo_codigoNormalizado</label>
-            <p class="form-control-static" ng-bind="vm.model.version.codigoNormalizado"></p>
-        </div>
-        <div class="col-sm-2 col-md-1 form-group-sm">
-            <label translate>crgo_tipo</label>
-            <p class="form-control-static" ng-bind="'CargoTipo_' + vm.model.version.tipo | translate"></p>
-        </div>
-        <div class="col-sm-1 col-md-1 form-group-sm">
-            <label translate>crgo_principal</label>
-            <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.model.version.principal ? 'ok' : 'remove')}}"></i>
-            </p>
-        </div>
-        <div class="col-sm-1 col-md-1 form-group-sm">
-            <label translate>crgo_temporal</label>
-            <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.model.version.temporal ? 'ok' : 'remove')}}"></i>
-            </p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-2 col-md-1 form-group-sm">
-            <label translate>fini</label>
-            <p class="form-control-static" ng-bind="(vm.model.version.fini | date: dateFormat)"></p>
-        </div>
-        <div class="col-sm-2 col-md-1 form-group-sm">
-            <label translate>ffin</label>
-            <p class="form-control-static" ng-bind="(vm.model.version.ffin | date: dateFormat)"></p>
-        </div>
-    </div>
-
-    <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
-</fieldset>
-
-<fieldset ng-if="mc.hasAccnPath('rgla-list')">
-    <legend ng-bind="'Reglas'"></legend>
-
+<div ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a ng-if="mc.hasAccnPath('rgla-create')" class=" btn
-                btn-default"
-                ui-sref="regla-create({crgoId: vm.model.id, fref: vm.model.fref})"><i
-                class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+            <a ng-if="mc.hasAccnPath('crgo-edit')" class="btn btn-default"
+                ng-href="#/facturacion/cargo/edit/edit/{{vm.model.id}}/{{vm.model.fref}}"><i
+                class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+            <button ng-if="mc.hasAccnPath('crgo-remove')" data-ng-click="vm.remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            </button>
         </div>
     </div>
 
-    <div class="table-responsive">
-        <table class="table-bordered table-condensed table-hover table-nonfluid">
-            <thead>
-                <tr>
-                    <th />
-                    <th translate="rgla_codigo"></th>
-                    <th translate="rgla_nombre"></th>
-                    <th translate="rgla_tipo"></th>
-                    <th translate="enti"></th>
-                    <th translate="fini"></th>
-                    <th translate="ffin"></th>
-                    <th translate="rgla_orden"></th>
-                    <th translate="rgla_valorBase"></th>
-                    <th translate="rgla_formula"></th>
-                    <th translate="rgla_condicion"></th>
-                </tr>
-            </thead>
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-3 col-md-2 form-group-sm">
+                <label translate>tpsr</label>
+                <p class="form-control-static">
+                    <a ng-href="#/metamodelo/tipo-servicio/detail/{{vm.model.tpsr.id}}"
+                        ng-bind="'enti_' + vm.model.tpsr.id | translate"></a>
+                </p>
+            </div>
+            <div class="col-sm-2 col-md-1 form-group-sm">
+                <label translate>crgo_codigo</label>
+                <p class="form-control-static" ng-bind="vm.model.codigo"></p>
+            </div>
+            <div class="col-sm-2 col-md-2 form-group-sm">
+                <label translate>crgo_codigoNormalizado</label>
+                <p class="form-control-static" ng-bind="vm.model.version.codigoNormalizado"></p>
+            </div>
+            <div class="col-sm-2 col-md-1 form-group-sm">
+                <label translate>crgo_tipo</label>
+                <p class="form-control-static" ng-bind="'CargoTipo_' + vm.model.version.tipo | translate"></p>
+            </div>
+            <div class="col-sm-1 col-md-1 form-group-sm">
+                <label translate>crgo_principal</label>
+                <p class="form-control-static">
+                    <i class="glyphicon glyphicon-{{(vm.model.version.principal ? 'ok' : 'remove')}}"></i>
+                </p>
+            </div>
+            <div class="col-sm-1 col-md-1 form-group-sm">
+                <label translate>crgo_temporal</label>
+                <p class="form-control-static">
+                    <i class="glyphicon glyphicon-{{(vm.model.version.temporal ? 'ok' : 'remove')}}"></i>
+                </p>
+            </div>
+        </div>
 
-            <tbody>
-                <tr ng-repeat="rgla in vm.rglaList track by $index">
-                    <td><a ui-sref="regla-detail(rgla)"><i class="glyphicon glyphicon-search"></i></a></td>
-                    <td ng-bind="rgla.codigo"></td>
-                    <td nowrap="nowrap" ng-bind="rgla.texto"></td>
-                    <td ng-bind="rgla.tipo" bs-tooltip data-title="{{'ReglaTipo_' + rgla.tipo | translate}}"></td>
-                    <td ng-bind="('enti_' + rgla.enti.id | translate)"></td>
-                    <td ng-bind="(rgla.version.fini | date: dateFormat)"></td>
-                    <td ng-bind="(rgla.version.ffin | date: dateFormat)"></td>
-                    <td class="number" ng-bind="rgla.version.orden"></td>
-                    <td class="number" ng-bind="(rgla.version.valorBase | number:4)"></td>
-                    <td><span ng-bind="rgla.version.formula"></span></td>
-                    <td><span ng-bind="rgla.version.condicion"></span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</fieldset>
+        <div class="row">
+            <div class="col-sm-2 col-md-1 form-group-sm">
+                <label translate>fini</label>
+                <p class="form-control-static" ng-bind="(vm.model.version.fini | date: dateFormat)"></p>
+            </div>
+            <div class="col-sm-2 col-md-1 form-group-sm">
+                <label translate>ffin</label>
+                <p class="form-control-static" ng-bind="(vm.model.version.ffin | date: dateFormat)"></p>
+            </div>
+        </div>
+
+        <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+    </fieldset>
+
+    <fieldset ng-if="mc.hasAccnPath('rgla-list')">
+        <legend ng-bind="'Reglas'"></legend>
+
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a ng-if="mc.hasAccnPath('rgla-create')" class=" btn
+                btn-default"
+                    ng-href="#/facturacion/regla/edit/create/{{vm.model.id}}/{{vm.model.fref}}"><i
+                    class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table-bordered table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th />
+                        <th translate="rgla_codigo"></th>
+                        <th translate="rgla_nombre"></th>
+                        <th translate="rgla_tipo"></th>
+                        <th translate="enti"></th>
+                        <th translate="fini"></th>
+                        <th translate="ffin"></th>
+                        <th translate="rgla_orden"></th>
+                        <th translate="rgla_valorBase"></th>
+                        <th translate="rgla_formula"></th>
+                        <th translate="rgla_condicion"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="rgla in vm.rglaList track by $index">
+                        <td><a ng-href="#/facturacion/regla/detail/{{rgla.id}}/{{rgla.fref}}"><i
+                                class="glyphicon glyphicon-search"></i></a></td>
+                        <td ng-bind="rgla.codigo"></td>
+                        <td nowrap="nowrap" ng-bind="rgla.texto"></td>
+                        <td ng-bind="rgla.tipo" bs-tooltip
+                            data-title="{{'ReglaTipo_' + rgla.tipo | translate}}"></td>
+                        <td ng-bind="('enti_' + rgla.enti.id | translate)"></td>
+                        <td ng-bind="(rgla.version.fini | date: dateFormat)"></td>
+                        <td ng-bind="(rgla.version.ffin | date: dateFormat)"></td>
+                        <td class="number" ng-bind="rgla.version.orden"></td>
+                        <td class="number" ng-bind="(rgla.version.valorBase | number:4)"></td>
+                        <td><span ng-bind="rgla.version.formula"></span></td>
+                        <td><span ng-bind="rgla.version.condicion"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+</div>

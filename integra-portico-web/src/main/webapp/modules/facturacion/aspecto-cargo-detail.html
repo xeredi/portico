@@ -1,30 +1,32 @@
-
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a ng-if="mc.hasAccnPath('ascr-edit')" class="btn btn-default" ui-sref="aspecto-cargo-edit(vm.model)"><i
-            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
-        <button ng-if="mc.hasAccnPath('ascr-remove')" data-ng-click="vm.remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
-        </button>
+<div ng-if="vm.model">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a ng-if="mc.hasAccnPath('ascr-edit')" class="btn btn-default"
+                ng-href="#/facturacion/aspecto-cargo/edit/edit/{{vm.model.aspcId}}/{{vm.model.fref}}/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
+            <button ng-if="mc.hasAccnPath('ascr-remove')" data-ng-click="vm.remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+            </button>
+        </div>
     </div>
+
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                <label translate="crgo"></label>
+                <p class="form-control-static">
+                    <a ng-href="#/facturacion/cargo/detail/{{vm.model.crgo.id}}/{{vm.model.fref}}"
+                        ng-bind="vm.model.crgo.etiqueta"></a>
+                </p>
+            </div>
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                <label translate="fini"></label>
+                <p class="form-control-static" ng-bind="(vm.model.version.fini | date: dateFormat)"></p>
+            </div>
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                <label translate="ffin"></label>
+                <p class="form-control-static" ng-bind="(vm.model.version.ffin | date: dateFormat)"></p>
+            </div>
+        </div>
+    </fieldset>
 </div>
-
-<fieldset>
-    <div class="row">
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-            <label translate="crgo"></label>
-            <p class="form-control-static">
-                <a ui-sref="cargo-detail({id: vm.model.crgo.id, fref: vm.model.fref})"
-                    ng-bind="vm.model.crgo.etiqueta"></a>
-            </p>
-        </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate="fini"></label>
-            <p class="form-control-static" ng-bind="(vm.model.version.fini | date: dateFormat)"></p>
-        </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-            <label translate="ffin"></label>
-            <p class="form-control-static" ng-bind="(vm.model.version.ffin | date: dateFormat)"></p>
-        </div>
-    </div>
-</fieldset>

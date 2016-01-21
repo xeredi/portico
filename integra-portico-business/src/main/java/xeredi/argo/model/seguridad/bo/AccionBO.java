@@ -11,8 +11,6 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import com.google.common.base.Preconditions;
-
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
@@ -26,6 +24,8 @@ import xeredi.argo.model.seguridad.vo.GrupoAccionCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoAccionVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -177,19 +177,23 @@ public final class AccionBO {
     /**
      * Select object.
      *
-     * @param accnCriterio
-     *            the accn criterio
+     * @param id
+     *            the id
      * @return the accion vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public AccionVO selectObject(final @NonNull AccionCriterioVO accnCriterio) throws InstanceNotFoundException {
+    public AccionVO select(final @NonNull Long id) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AccionDAO accnDAO = session.getMapper(AccionDAO.class);
+            final AccionCriterioVO accnCriterio = new AccionCriterioVO();
+
+            accnCriterio.setId(id);
+
             final AccionVO accn = accnDAO.selectObject(accnCriterio);
 
             if (accn == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.accn, accnCriterio);
+                throw new InstanceNotFoundException(MessageI18nKey.accn, id);
             }
 
             final GrupoAccionDAO gracDAO = session.getMapper(GrupoAccionDAO.class);
