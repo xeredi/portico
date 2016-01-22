@@ -1,216 +1,66 @@
-
-<form role="form">
-    <fieldset>
-        <div class="row">
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" ng-switch="::vm.accion">
-                <label translate="tpsr"></label> <select ng-switch-when="create" ng-model="vm.model.tpsr.id"
-                    ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in ::vm.tpsrList"
-                    class="form-control">
-                    <option />
-                </select>
-                <p ng-switch-when="edit" class="form-control-static"
-                    ng-bind="'enti_' + vm.model.tpsr.id | translate"></p>
-                <p ng-switch-when="duplicate" class="form-control-static"
-                    ng-bind="'enti_' + vm.model.tpsr.id | translate"></p>
-            </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm" ng-switch="::vm.accion">
-                <label translate>aspc_codigo</label> <input ng-switch-when="create" type="text"
-                    ng-model="vm.model.codigo" class="form-control" /><input ng-switch-when="duplicate"
-                    type="text" ng-model="vm.model.codigo" class="form-control" />
-                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.codigo"></p>
-            </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>fini</label><input type="text" class="form-control"
-                    ng-model="vm.model.version.fini" data-max-date="{{vm.model.version.ffin}}" bs-datepicker />
-            </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>ffin</label><input type="text" class="form-control"
-                    ng-model="vm.model.version.ffin" data-min-date="{{vm.model.version.fini}}" bs-datepicker />
-            </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>aspc_prioridad</label> <input type="text"
-                    ng-model="vm.model.version.prioridad" class="form-control number" />
-            </div>
-        </div>
-
-        <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
-    </fieldset>
-
-    <fieldset>
-        <legend ng-bind="'Elementos de Cabecera'"></legend>
-
-        <div class="col-sm-12 form-group-sm">
-            <table class="table-condensed table-nonfluid">
-                <thead>
-                    <tr>
-                        <th class="col-sm-1" />
-                        <th class="col-sm-4 col-md-3 col-lg-2" translate>aspc_cetiqInfo</th>
-                        <th class="col-sm-6 col-md-7 col-lg-8" translate>aspc_cpathInfo</th>
-                        <th class="col-sm-1" translate>aspc_cgrpInfo</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td>info1</td>
-                        <td><input type="text" ng-model="vm.model.version.cetiqInfo1"
-                            class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.model.version.cpathInfo1"
-                            class="form-control" /></td>
-                        <td><select ng-model="vm.model.version.cgrpInfo1"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>info2</td>
-                        <td><input type="text" ng-model="vm.model.version.cetiqInfo2"
-                            class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.model.version.cpathInfo2"
-                            class="form-control" /></td>
-                        <td><select ng-model="vm.model.version.cgrpInfo2"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>info3</td>
-                        <td><input type="text" ng-model="vm.model.version.cetiqInfo3"
-                            class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.model.version.cpathInfo3"
-                            class="form-control" /></td>
-                        <td><select ng-model="vm.model.version.cgrpInfo3"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>info4</td>
-                        <td><input type="text" ng-model="vm.model.version.cetiqInfo4"
-                            class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.model.version.cpathInfo4"
-                            class="form-control" /></td>
-                        <td><select ng-model="vm.model.version.cgrpInfo4"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>info5</td>
-                        <td><input type="text" ng-model="vm.model.version.cetiqInfo5"
-                            class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.model.version.cpathInfo5"
-                            class="form-control" /></td>
-                        <td><select ng-model="vm.model.version.cgrpInfo5"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>info6</td>
-                        <td><input type="text" ng-model="vm.model.version.cetiqInfo6"
-                            class="form-control" /></td>
-                        <td><input type="text" ng-model="vm.model.version.cpathInfo6"
-                            class="form-control" /></td>
-                        <td><select ng-model="vm.model.version.cgrpInfo6"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </fieldset>
-
-    <div class="col-sm-6 col-md-4 form-group-sm">
+<div ng-if="vm.model">
+    <form role="form">
         <fieldset>
-            <legend ng-bind="'Elementos Cuantitativos de Linea'"></legend>
+            <div class="row">
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" ng-switch="::vm.accion">
+                    <label translate="tpsr"></label> <select ng-switch-when="create"
+                        ng-model="vm.model.tpsr.id"
+                        ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in ::vm.tpsrList"
+                        class="form-control">
+                        <option />
+                    </select>
+                    <p ng-switch-when="edit" class="form-control-static"
+                        ng-bind="'enti_' + vm.model.tpsr.id | translate"></p>
+                    <p ng-switch-when="duplicate" class="form-control-static"
+                        ng-bind="'enti_' + vm.model.tpsr.id | translate"></p>
+                </div>
+                <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm" ng-switch="::vm.accion">
+                    <label translate>aspc_codigo</label> <input ng-switch-when="create" type="text"
+                        ng-model="vm.model.codigo" class="form-control" /><input ng-switch-when="duplicate"
+                        type="text" ng-model="vm.model.codigo" class="form-control" />
+                    <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.codigo"></p>
+                </div>
+                <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                    <label translate>fini</label><input type="text" class="form-control"
+                        ng-model="vm.model.version.fini" data-max-date="{{vm.model.version.ffin}}"
+                        bs-datepicker />
+                </div>
+                <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                    <label translate>ffin</label><input type="text" class="form-control"
+                        ng-model="vm.model.version.ffin" data-min-date="{{vm.model.version.fini}}"
+                        bs-datepicker />
+                </div>
+                <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
+                    <label translate>aspc_prioridad</label> <input type="text"
+                        ng-model="vm.model.version.prioridad" class="form-control number" />
+                </div>
+            </div>
 
-            <table class="table-condensed table-nonfluid">
-                <thead>
-                    <tr>
-                        <th />
-                        <th translate>aspc_lsumCuant</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td>cuant1</td>
-                        <td><select ng-model="vm.model.version.lsumCuant1"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>cuant2</td>
-                        <td><select ng-model="vm.model.version.lsumCuant2"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>cuant3</td>
-                        <td><select ng-model="vm.model.version.lsumCuant3"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>cuant4</td>
-                        <td><select ng-model="vm.model.version.lsumCuant4"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>cuant5</td>
-                        <td><select ng-model="vm.model.version.lsumCuant5"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>cuant6</td>
-                        <td><select ng-model="vm.model.version.lsumCuant6"
-                            ng-options="item as ('format_' + item | translate) for item in [true , false]"
-                            class="form-control">
-                                <option />
-                        </select></td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
         </fieldset>
-    </div>
 
-    <fieldset>
-        <div class="col-sm-6 col-md-4 form-group-sm">
-            <fieldset>
-                <legend ng-bind="'Elementos Informativos de Linea'"></legend>
+        <fieldset>
+            <legend ng-bind="'Elementos de Cabecera'"></legend>
 
+            <div class="col-sm-12 form-group-sm">
                 <table class="table-condensed table-nonfluid">
                     <thead>
                         <tr>
-                            <th />
-                            <th translate>aspc_lgrpInfo</th>
+                            <th class="col-sm-1" />
+                            <th class="col-sm-4 col-md-3 col-lg-2" translate>aspc_cetiqInfo</th>
+                            <th class="col-sm-6 col-md-7 col-lg-8" translate>aspc_cpathInfo</th>
+                            <th class="col-sm-1" translate>aspc_cgrpInfo</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <tr>
                             <td>info1</td>
-                            <td><select ng-model="vm.model.version.lgrpInfo1"
+                            <td><input type="text" ng-model="vm.model.version.cetiqInfo1"
+                                class="form-control" /></td>
+                            <td><input type="text" ng-model="vm.model.version.cpathInfo1"
+                                class="form-control" /></td>
+                            <td><select ng-model="vm.model.version.cgrpInfo1"
                                 ng-options="item as ('format_' + item | translate) for item in [true , false]"
                                 class="form-control">
                                     <option />
@@ -218,7 +68,11 @@
                         </tr>
                         <tr>
                             <td>info2</td>
-                            <td><select ng-model="vm.model.version.lgrpInfo2"
+                            <td><input type="text" ng-model="vm.model.version.cetiqInfo2"
+                                class="form-control" /></td>
+                            <td><input type="text" ng-model="vm.model.version.cpathInfo2"
+                                class="form-control" /></td>
+                            <td><select ng-model="vm.model.version.cgrpInfo2"
                                 ng-options="item as ('format_' + item | translate) for item in [true , false]"
                                 class="form-control">
                                     <option />
@@ -226,7 +80,11 @@
                         </tr>
                         <tr>
                             <td>info3</td>
-                            <td><select ng-model="vm.model.version.lgrpInfo3"
+                            <td><input type="text" ng-model="vm.model.version.cetiqInfo3"
+                                class="form-control" /></td>
+                            <td><input type="text" ng-model="vm.model.version.cpathInfo3"
+                                class="form-control" /></td>
+                            <td><select ng-model="vm.model.version.cgrpInfo3"
                                 ng-options="item as ('format_' + item | translate) for item in [true , false]"
                                 class="form-control">
                                     <option />
@@ -234,7 +92,11 @@
                         </tr>
                         <tr>
                             <td>info4</td>
-                            <td><select ng-model="vm.model.version.lgrpInfo4"
+                            <td><input type="text" ng-model="vm.model.version.cetiqInfo4"
+                                class="form-control" /></td>
+                            <td><input type="text" ng-model="vm.model.version.cpathInfo4"
+                                class="form-control" /></td>
+                            <td><select ng-model="vm.model.version.cgrpInfo4"
                                 ng-options="item as ('format_' + item | translate) for item in [true , false]"
                                 class="form-control">
                                     <option />
@@ -242,7 +104,11 @@
                         </tr>
                         <tr>
                             <td>info5</td>
-                            <td><select ng-model="vm.model.version.lgrpInfo5"
+                            <td><input type="text" ng-model="vm.model.version.cetiqInfo5"
+                                class="form-control" /></td>
+                            <td><input type="text" ng-model="vm.model.version.cpathInfo5"
+                                class="form-control" /></td>
+                            <td><select ng-model="vm.model.version.cgrpInfo5"
                                 ng-options="item as ('format_' + item | translate) for item in [true , false]"
                                 class="form-control">
                                     <option />
@@ -250,7 +116,77 @@
                         </tr>
                         <tr>
                             <td>info6</td>
-                            <td><select ng-model="vm.model.version.lgrpInfo6"
+                            <td><input type="text" ng-model="vm.model.version.cetiqInfo6"
+                                class="form-control" /></td>
+                            <td><input type="text" ng-model="vm.model.version.cpathInfo6"
+                                class="form-control" /></td>
+                            <td><select ng-model="vm.model.version.cgrpInfo6"
+                                ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                class="form-control">
+                                    <option />
+                            </select></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </fieldset>
+
+        <div class="col-sm-6 col-md-4 form-group-sm">
+            <fieldset>
+                <legend ng-bind="'Elementos Cuantitativos de Linea'"></legend>
+
+                <table class="table-condensed table-nonfluid">
+                    <thead>
+                        <tr>
+                            <th />
+                            <th translate>aspc_lsumCuant</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>cuant1</td>
+                            <td><select ng-model="vm.model.version.lsumCuant1"
+                                ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                class="form-control">
+                                    <option />
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>cuant2</td>
+                            <td><select ng-model="vm.model.version.lsumCuant2"
+                                ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                class="form-control">
+                                    <option />
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>cuant3</td>
+                            <td><select ng-model="vm.model.version.lsumCuant3"
+                                ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                class="form-control">
+                                    <option />
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>cuant4</td>
+                            <td><select ng-model="vm.model.version.lsumCuant4"
+                                ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                class="form-control">
+                                    <option />
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>cuant5</td>
+                            <td><select ng-model="vm.model.version.lsumCuant5"
+                                ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                class="form-control">
+                                    <option />
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>cuant6</td>
+                            <td><select ng-model="vm.model.version.lsumCuant6"
                                 ng-options="item as ('format_' + item | translate) for item in [true , false]"
                                 class="form-control">
                                     <option />
@@ -260,14 +196,82 @@
                 </table>
             </fieldset>
         </div>
-    </fieldset>
 
-    <div class="btn-group">
-        <button data-ng-click="vm.save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
-        </button>
-        <button data-ng-click="vm.cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
-        </button>
-    </div>
-</form>
+        <fieldset>
+            <div class="col-sm-6 col-md-4 form-group-sm">
+                <fieldset>
+                    <legend ng-bind="'Elementos Informativos de Linea'"></legend>
+
+                    <table class="table-condensed table-nonfluid">
+                        <thead>
+                            <tr>
+                                <th />
+                                <th translate>aspc_lgrpInfo</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>info1</td>
+                                <td><select ng-model="vm.model.version.lgrpInfo1"
+                                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                    class="form-control">
+                                        <option />
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td>info2</td>
+                                <td><select ng-model="vm.model.version.lgrpInfo2"
+                                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                    class="form-control">
+                                        <option />
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td>info3</td>
+                                <td><select ng-model="vm.model.version.lgrpInfo3"
+                                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                    class="form-control">
+                                        <option />
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td>info4</td>
+                                <td><select ng-model="vm.model.version.lgrpInfo4"
+                                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                    class="form-control">
+                                        <option />
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td>info5</td>
+                                <td><select ng-model="vm.model.version.lgrpInfo5"
+                                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                    class="form-control">
+                                        <option />
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td>info6</td>
+                                <td><select ng-model="vm.model.version.lgrpInfo6"
+                                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                    class="form-control">
+                                        <option />
+                                </select></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button data-ng-click="vm.save()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+            </button>
+            <button data-ng-click="vm.cancel()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+            </button>
+        </div>
+    </form>
+</div>

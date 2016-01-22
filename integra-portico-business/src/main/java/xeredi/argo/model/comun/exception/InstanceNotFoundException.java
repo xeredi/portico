@@ -26,7 +26,7 @@ public final class InstanceNotFoundException extends ModelException {
      * @param aobjId
      *            the aobj id
      */
-    public InstanceNotFoundException(final MessageI18nKey aclassName, final Object aobjId) {
+    public InstanceNotFoundException(final MessageI18nKey aclassName, final Object... aobjId) {
         super("Instancia no encontrada", aclassName, aobjId);
     }
 
@@ -38,7 +38,7 @@ public final class InstanceNotFoundException extends ModelException {
      * @param aobjId
      *            the aobj id
      */
-    public InstanceNotFoundException(final Long aclassId, final Object aobjId) {
+    public InstanceNotFoundException(final Long aclassId, final Object... aobjId) {
         super("Instancia no encontrada", aclassId, aobjId);
     }
 

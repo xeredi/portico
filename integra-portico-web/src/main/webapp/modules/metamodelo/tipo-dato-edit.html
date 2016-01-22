@@ -1,48 +1,50 @@
-<form role="form">
-    <fieldset>
-        <div class="row">
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm" ng-switch="vm.accion">
-                <label translate="tpdt_codigo"></label> <input ng-switch-when="create" type="text"
-                    ng-model="vm.model.codigo" class="form-control" />
-                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.codigo"></p>
+<div ng-if="vm.model">
+    <form role="form">
+        <fieldset>
+            <div class="row">
+                <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm" ng-switch="vm.accion">
+                    <label translate="tpdt_codigo"></label> <input ng-switch-when="create" type="text"
+                        ng-model="vm.model.codigo" class="form-control" />
+                    <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.codigo"></p>
+                </div>
+                <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
+                    <label translate="tpdt_tpht"></label> <select ng-model="vm.model.tpht"
+                        ng-options="cdrf as ('HtmlTipo_' + cdrf | translate) for cdrf in vm.tphtList"
+                        class="form-control">
+                        <option />
+                    </select>
+                </div>
+                <div class="col-sm-2 col-md-2 col-lg-2 form-group-sm">
+                    <label translate="tpdt_tpel"></label> <select ng-model="vm.model.tipoElemento"
+                        ng-options="cdrf as ('ElementoTipo_' + cdrf | translate) for cdrf in vm.tpelList"
+                        class="form-control">
+                        <option />
+                    </select>
+                </div>
+                <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm" ng-show="vm.model.tipoElemento == 'PR'">
+                    <label translate="tppr"></label> <select ng-model="vm.model.enti.id"
+                        ng-options="enti.id as enti.nombre for enti in vm.entiTpprList" class="form-control">
+                        <option />
+                    </select>
+                </div>
+                <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm" ng-show="vm.model.tipoElemento == 'SR'">
+                    <label translate="tpsr"></label> <select ng-model="vm.model.enti.id"
+                        ng-options="enti.id as enti.nombre for enti in vm.entiTpsrList" class="form-control">
+                        <option />
+                    </select>
+                </div>
             </div>
-            <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
-                <label translate="tpdt_tpht"></label> <select ng-model="vm.model.tpht"
-                    ng-options="cdrf as ('HtmlTipo_' + cdrf | translate) for cdrf in vm.tphtList"
-                    class="form-control">
-                    <option />
-                </select>
-            </div>
-            <div class="col-sm-2 col-md-2 col-lg-2 form-group-sm">
-                <label translate="tpdt_tpel"></label> <select ng-model="vm.model.tipoElemento"
-                    ng-options="cdrf as ('ElementoTipo_' + cdrf | translate) for cdrf in vm.tpelList"
-                    class="form-control">
-                    <option />
-                </select>
-            </div>
-            <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm" ng-show="vm.model.tipoElemento == 'PR'">
-                <label translate="tppr"></label> <select ng-model="vm.model.enti.id"
-                    ng-options="enti.id as enti.nombre for enti in vm.entiTpprList" class="form-control">
-                    <option />
-                </select>
-            </div>
-            <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm" ng-show="vm.model.tipoElemento == 'SR'">
-                <label translate="tpsr"></label> <select ng-model="vm.model.enti.id"
-                    ng-options="enti.id as enti.nombre for enti in vm.entiTpsrList" class="form-control">
-                    <option />
-                </select>
-            </div>
+
+            <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button data-ng-click="vm.save()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
+            </button>
+            <button data-ng-click="vm.cancel()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
+            </button>
         </div>
-
-        <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
-    </fieldset>
-
-    <div class="btn-group">
-        <button data-ng-click="vm.save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
-        </button>
-        <button data-ng-click="vm.cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
-        </button>
-    </div>
-</form>
+    </form>
+</div>

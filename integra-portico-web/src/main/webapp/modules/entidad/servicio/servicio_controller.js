@@ -159,7 +159,7 @@ function ValoradorEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("vldr", "page_" + vm.accion);
 }
 
-function ServicioSecuenciaGridController($route, $routeParams, $modal,
+function ServicioSecuenciaGridController($route, $routeParams,
         pageTitleService, ServicioSecuenciaService) {
     var vm = this;
 
@@ -252,7 +252,7 @@ function ServicioSecuenciaEditController($route, $routeParams,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         prto : {
             id : $routeParams.prtoId
         },
@@ -262,7 +262,7 @@ function ServicioSecuenciaEditController($route, $routeParams,
         anno : $routeParams.anno
     }
 
-    ServicioSecuenciaService.edit(vm.accion, vm.model).then(function(data) {
+    ServicioSecuenciaService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
 
         vm.prtoList = data.prtoList;
@@ -284,7 +284,7 @@ function ServicioIndexController($translate, pageTitleService, ServicioService) 
     pageTitleService.setTitle("srvcList", "page_home");
 }
 
-function ServicioGridController($route, $routeParams, $modal, pageTitleService,
+function ServicioGridController($route, $routeParams, pageTitleService,
         ServicioService) {
     var vm = this;
 
@@ -342,8 +342,8 @@ function ServicioGridController($route, $routeParams, $modal, pageTitleService,
     pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }
 
-function ServicioDetailController($route, $routeParams, $modal,
-        pageTitleService, ServicioService, SubservicioService) {
+function ServicioDetailController($route, $routeParams, pageTitleService,
+        ServicioService, SubservicioService) {
     var vm = this;
 
     vm.remove = remove;
@@ -422,7 +422,7 @@ function ServicioDetailController($route, $routeParams, $modal,
     pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
-function ServicioEditController($route, $routeParams, $modal, pageTitleService,
+function ServicioEditController($route, $routeParams, pageTitleService,
         ServicioService) {
     var vm = this;
 
@@ -442,12 +442,12 @@ function ServicioEditController($route, $routeParams, $modal, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.item = {
+    vm.search = {
         id : $routeParams.id,
         entiId : $routeParams.entiId
     };
 
-    ServicioService.edit(vm.accion, vm.item).then(function(data) {
+    ServicioService.edit(vm.accion, vm.search).then(function(data) {
         vm.item = data.model;
         vm.enti = data.enti;
 
@@ -464,8 +464,8 @@ function ServicioEditController($route, $routeParams, $modal, pageTitleService,
     pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);
 }
 
-function SubservicioGridController($route, $routeParams, $modal,
-        pageTitleService, SubservicioService) {
+function SubservicioGridController($route, $routeParams, pageTitleService,
+        SubservicioService) {
     var vm = this;
 
     vm.filter = filter;
@@ -518,8 +518,8 @@ function SubservicioGridController($route, $routeParams, $modal,
     pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }
 
-function SubservicioDetailController($route, $routeParams, $modal,
-        pageTitleService, SubservicioService) {
+function SubservicioDetailController($route, $routeParams, pageTitleService,
+        SubservicioService) {
     var vm = this;
 
     vm.remove = remove;
@@ -591,6 +591,6 @@ function SubservicioDetailController($route, $routeParams, $modal,
     pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
-function SubservicioEditController($route, $routeParams, $modal,
-        pageTitleService, SubservicioService) {
+function SubservicioEditController($route, $routeParams, pageTitleService,
+        SubservicioService) {
 }

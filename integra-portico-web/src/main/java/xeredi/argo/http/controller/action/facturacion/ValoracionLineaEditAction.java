@@ -8,7 +8,6 @@ import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
-import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
@@ -50,11 +49,7 @@ public final class ValoracionLineaEditAction extends CrudEditAction<ValoracionLi
 
         switch (accion) {
         case create:
-            final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
-
-            vlrcCriterio.setId(model.getVlrcId());
-
-            final ValoracionVO vlrc = vlrcBO.selectObject(vlrcCriterio);
+            final ValoracionVO vlrc = vlrcBO.select(model.getVlrcId(), getIdioma());
 
             model.setFref(vlrc.getFref());
 

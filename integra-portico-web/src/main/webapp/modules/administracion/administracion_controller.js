@@ -115,8 +115,8 @@ function AdministracionIndexController($routeParams, pageTitleService,
     pageTitleService.setTitle("sec_administracion", "page_home");
 }
 
-function SuperpuertoGridController($route, $routeParams, $modal,
-        pageTitleService, SuperpuertoService) {
+function SuperpuertoGridController($route, $routeParams, pageTitleService,
+        SuperpuertoService) {
     var vm = this;
 
     vm.filter = filter;
@@ -213,7 +213,7 @@ function SuperpuertoEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("sprt", "page_" + vm.accion);
 }
 
-function PuertoGridController($route, $routeParams, $modal, pageTitleService,
+function PuertoGridController($route, $routeParams, pageTitleService,
         PuertoService) {
     var vm = this;
 
@@ -298,10 +298,12 @@ function PuertoEditController($route, $routeParams, pageTitleService,
 
     vm.accion = $routeParams.accion;
 
-    PuertoService.edit($routeParams.accion, {
+    vm.search = {
         id : $routeParams.id
-    }).then(function(data) {
-        vm.prto = data.model;
+    };
+
+    PuertoService.edit($routeParams.accion, vm.search).then(function(data) {
+        vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
         vm.sprtList = data.sprtList;
@@ -310,8 +312,8 @@ function PuertoEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("prto", "page_" + vm.accion);
 }
 
-function ConfigurationGridController($route, $routeParams, $modal,
-        pageTitleService, ConfigurationService) {
+function ConfigurationGridController($route, $routeParams, pageTitleService,
+        ConfigurationService) {
     var vm = this;
 
     vm.search = search;
@@ -368,17 +370,20 @@ function ConfigurationEditController($route, $routeParams, pageTitleService,
 
     vm.accion = $routeParams.accion;
 
-    ConfigurationService.edit($routeParams.accion, {
+    vm.search = {
         key : $routeParams.key
-    }).then(function(data) {
-        vm.conf = data.model;
-    });
+    };
+
+    ConfigurationService.edit($routeParams.accion, vm.search).then(
+            function(data) {
+                vm.model = data.model;
+            });
 
     pageTitleService.setTitle("conf", "page_" + vm.accion);
 }
 
-function MessageI18nGridController($route, $routeParams, $modal,
-        pageTitleService, MessageI18nService) {
+function MessageI18nGridController($route, $routeParams, pageTitleService,
+        MessageI18nService) {
     var vm = this;
 
     vm.search = search;
@@ -436,14 +441,17 @@ function MessageI18nEditController($route, $routeParams, pageTitleService,
 
     vm.accion = $routeParams.accion;
 
-    MessageI18nService.edit($routeParams.accion, {
+    vm.search = {
         key : $routeParams.key
-    }).then(function(data) {
-        vm.key = data.model;
-        vm.i18nMap = data.i18nMap;
+    };
 
-        vm.availableLanguages = data.availableLanguages;
-    });
+    MessageI18nService.edit($routeParams.accion, vm.search).then(
+            function(data) {
+                vm.key = data.model;
+                vm.i18nMap = data.i18nMap;
+
+                vm.availableLanguages = data.availableLanguages;
+            });
 
     pageTitleService.setTitle("m18n", "page_" + vm.accion);
 }

@@ -3,8 +3,6 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
-
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -14,9 +12,10 @@ import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.AspectoCargoBO;
 import xeredi.argo.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoCargoVO;
-import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -41,13 +40,8 @@ public final class AspectoDetailAction extends CrudDetailAction<AspectoVO> {
         Preconditions.checkNotNull(model.getId());
 
         final AspectoBO aspcBO = new AspectoBO();
-        final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
-        aspcCriterio.setId(model.getId());
-        aspcCriterio.setIdioma(idioma);
-        aspcCriterio.setFechaVigencia(model.getFref());
-
-        model = aspcBO.selectObject(aspcCriterio);
+        model = aspcBO.select(model.getId(), model.getFref(), getIdioma());
         i18nMap = I18nBO.selectMap(I18nPrefix.aspv, model.getVersion().getId());
 
         final AspectoCargoBO ascrBO = new AspectoCargoBO();

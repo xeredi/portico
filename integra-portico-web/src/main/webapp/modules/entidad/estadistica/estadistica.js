@@ -50,7 +50,7 @@ function config($routeProvider) {
     });
 }
 
-function PeprGridController($http, $location, $routeParams, $modal, pageTitleService) {
+function PeprGridController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.search = search;
@@ -60,7 +60,8 @@ function PeprGridController($http, $location, $routeParams, $modal, pageTitleSer
     initialize();
 
     function initialize() {
-        vm.peprCriterio = $routeParams.peprCriterio ? angular.fromJson($routeParams.peprCriterio) : {};
+        vm.peprCriterio = $routeParams.peprCriterio ? angular
+                .fromJson($routeParams.peprCriterio) : {};
 
         search($routeParams.page ? $routeParams.page : 1);
 
@@ -201,7 +202,7 @@ function CdmsDetailController($http, $routeParams, pageTitleService) {
     }
 }
 
-function EstdGridController($http, $location, $routeParams, $modal, pageTitleService) {
+function EstdGridController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.search = search;
@@ -212,7 +213,8 @@ function EstdGridController($http, $location, $routeParams, $modal, pageTitleSer
     initialize();
 
     function initialize() {
-        vm.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
+        vm.itemCriterio = $routeParams.itemCriterio ? angular
+                .fromJson($routeParams.itemCriterio) : {};
         vm.itemCriterio.entiId = $routeParams.entiId;
         vm.itemCriterio.pepr = {};
         vm.itemCriterio.pepr.id = $routeParams.peprId;

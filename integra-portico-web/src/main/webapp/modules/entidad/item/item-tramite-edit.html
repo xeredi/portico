@@ -1,132 +1,136 @@
-<form role="form">
-    <fieldset>
-        <div class="row">
-            <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
-                <label ng-bind="'enti_' + vm.item.entiId | translate"></label>
-                <p class="form-control-static" ng-bind="vm.item.etiqueta"></p>
+<div ng-if="vm.item">
+    <form role="form">
+        <fieldset>
+            <div class="row">
+                <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
+                    <label ng-bind="'enti_' + vm.item.entiId | translate"></label>
+                    <p class="form-control-static" ng-bind="vm.item.etiqueta"></p>
+                </div>
+                <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
+                    <label translate="trmt"></label>
+                    <p class="form-control-static" ng-bind="'trmt_' + vm.trmt.trmt.id | translate"></p>
+                </div>
             </div>
-            <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
-                <label translate="trmt"></label>
-                <p class="form-control-static" ng-bind="'trmt_' + vm.trmt.trmt.id | translate"></p>
-            </div>
+        </fieldset>
+
+        <fieldset>
+            <table class="table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <td class="col-sm-4 col-md-3 col-lg-2 col-xl-1"></td>
+                        <td class="col-sm-4 col-md-4 col-xl-3"></td>
+                        <td class="col-sm-4 col-md-4 col-xl-3"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th><span translate="item_estado"></span></th>
+                        <td><span
+                            ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + vm.trmt.trmt.estadoOrig | translate"></span></td>
+                        <td><span
+                            ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + vm.trmt.trmt.estadoDest | translate"></span></td>
+                    </tr>
+
+                    <tr ng-if="vm.enti.enti.temporal">
+                        <th><span translate="fini"></span></th>
+                        <td><span ng-bind="vm.model.oitemFini | date: ('format_datetime' | translate)"></span></td>
+                        <td class="form-group-sm">
+                            <div class="col-sm-8 col-md-6 col-lg-4 form-group">
+                                <input type="text" class="form-control" ng-model="vm.model.ditemFini"
+                                    bs-datepicker />
+                            </div>
+                            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                                <input type="text" class="form-control" ng-model="vm.model.ditemFini"
+                                    bs-timepicker />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="vm.enti.enti.temporal">
+                        <th><span translate="ffin"></span></th>
+                        <td><span ng-bind="vm.model.oitemFfin | date: ('format_datetime' | translate)"></span></td>
+                        <td class="form-group-sm">
+                            <div class="col-sm-8 col-md-6 col-lg-4 form-group">
+                                <input type="text" class="form-control" ng-model="vm.model.ditemFfin"
+                                    bs-datepicker />
+                            </div>
+                            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                                <input type="text" class="form-control" ng-model="vm.model.ditemFfin"
+                                    bs-timepicker />
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr ng-repeat="tpdtId in vm.trmt.tpdtList">
+                        <th ng-bind="'entd_' + vm.trmt.trtdMap[tpdtId].entd.id | translate">EO {{tpdtId}}</th>
+                        <td ng-switch on="vm.trmt.trtdMap[tpdtId].entd.tpdt.tipoElemento"><i
+                            ng-switch-when="BO"
+                            class="glyphicon glyphicon-{{vm.model.ittdMap[tpdtId].dnentero ? 'ok' : 'remove'}}"></i>
+                            <span ng-switch-when="ND" ng-bind="vm.model.ittdMap[tpdtId].ondecimal | number:2"></span>
+                            <span ng-switch-when="NE" ng-bind="vm.model.ittdMap[tpdtId].onentero"></span> <span
+                            ng-switch-when="FE"
+                            ng-bind="vm.model.ittdMap[tpdtId].ofecha | date: ('format_date' | translate)"></span>
+                            <span ng-switch-when="FH"
+                            ng-bind="vm.model.ittdMap[tpdtId].ofecha | date: ('format_datetime' | translate)"></span>
+                            <span ng-switch-when="CR" ng-if="vm.model.ittdMap[tpdtId].ocadena"
+                            ng-bind="'cdrf_' + tpdtId + '_' + vm.model.ittdMap[tpdtId].ocadena | translate"></span>
+                            <span ng-switch-when="TX" ng-bind="vm.model.ittdMap[tpdtId].ocadena"></span> <a
+                            ng-switch-when="PR"
+                            ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].oprmt.id}}/{{vm.item.fref}}"
+                            ng-bind="vm.model.ittdMap[tpdtId].oprmt.etiqueta"></a> <a ng-switch-when="SR"
+                            ng-href="#/servicio/srvc/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].osrvc.id}}"
+                            ng-bind="vm.model.ittdMap[tpdtId].osrvc.etiqueta"></a></td>
+                        <td ng-switch on="vm.trmt.trtdMap[tpdtId].entd.tpdt.tipoElemento"
+                            class="form-group-sm"><select ng-switch-when="BO"
+                            ng-model="vm.model.ittdMap[tpdtId].dnentero"
+                            ng-options="item as ('format_' + item | translate) for item in [1 , 0]"
+                            class="form-control">
+                                <option />
+                        </select> <input ng-switch-when="ND" type="text" ng-model="vm.model.ittdMap[tpdtId].dndecimal"
+                            class="form-control" /> <input ng-switch-when="NE" type="text"
+                            ng-model="vm.model.ittdMap[tpdtId].dnentero" ng-pattern="/^\d+$/"
+                            class="form-control" /> <input ng-switch-when="FE" type="text"
+                            class="form-control" ng-model="vm.model.ittdMap[tpdtId].dfecha" bs-datepicker />
+                            <div ng-switch-when="FH">
+                                <input type="text" class="form-control"
+                                    ng-model="vm.model.ittdMap[tpdtId].dfecha" bs-datepicker /><input
+                                    type="text" class="form-control"
+                                    ng-model="vm.model.ittdMap[tpdtId].dfecha" bs-timepicker />
+                            </div> <select ng-switch-when="CR" ng-model="vm.model.ittdMap[tpdtId].dcadena"
+                            ng-options="cdrf.valor as ('cdrf_' + tpdtId + '_' + cdrf.valor | translate) for cdrf in vm.enti.entdMap[tpdtId].tpdt.cdrfList"
+                            class="form-control">
+                                <option />
+                        </select> <input ng-switch-when="TX" ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'T'"
+                            type="text" ng-model="vm.model.ittdMap[tpdtId].dcadena" class="form-control" /> <textarea
+                                ng-switch-when="TX" ng-if="vm.trmt.trtdMap[tpdtId].entd.tpdt.tpht == 'TA'"
+                                rows="4" ng-model="vm.model.ittdMap[tpdtId].dcadena" class="form-control"
+                                ng-bind="vm.model.ittdMap[tpdtId].dcadena"></textarea> <select
+                            ng-switch-when="PR" ng-if="vm.trmt.trtdMap[tpdtId].entd.tpdt.tpht == 'S'"
+                            ng-model="vm.model.ittdMap[tpdtId].dprmt.id"
+                            ng-options="labelValue.value as labelValue.label for labelValue in vm.labelValuesMap[vm.trmt.trtdMap[tpdtId].entd.tpdt.enti.id]"
+                            class="form-control">
+                                <option />
+                        </select> <input ng-switch-when="PR" ng-if="vm.trmt.trtdMap[tpdtId].entd.tpdt.tpht == 'F'"
+                            ng-disabled="vm.trmt.trtdMap[tpdtId].entd.tpdt.enti.puerto && vm.prtoId == null"
+                            class="form-control" ng-controller="PrmtLupaController" type="text"
+                            autocomplete="off" ng-model="vm.model.ittdMap[tpdtId].dprmt"
+                            typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.trmt.trtdMap[tpdtId].entd.tpdt.enti.id, $viewValue, vm.prtoId, vm.item.fref)"
+                            typeahead-editable="false" typeahead-wait-ms="250" class="form-control"> <input
+                            ng-switch-when="SR" class="form-control" ng-controller="SrvcLupaController"
+                            type="text" autocomplete="off" ng-model="vm.model.ittdMap[tpdtId].dsrvc"
+                            typeahead="srvc as srvc.etiqueta for srvc in search(vm.trmt.trtdMap[tpdtId].entd.tpdt.enti.id, $viewValue)"
+                            typeahead-editable="false" typeahead-wait-ms="250" class="form-control"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+
+        <div class="btn-group">
+            <button data-ng-click="vm.save()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
+            </button>
+            <button data-ng-click="vm.cancel()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
+            </button>
         </div>
-    </fieldset>
-
-    <fieldset>
-        <table class="table-condensed table-hover">
-            <thead>
-                <tr>
-                    <td class="col-sm-4 col-md-3 col-lg-2 col-xl-1"></td>
-                    <td class="col-sm-4 col-md-4 col-xl-3"></td>
-                    <td class="col-sm-4 col-md-4 col-xl-3"></td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th><span translate="item_estado"></span></th>
-                    <td><span
-                        ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + vm.trmt.trmt.estadoOrig | translate"></span></td>
-                    <td><span
-                        ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + vm.trmt.trmt.estadoDest | translate"></span></td>
-                </tr>
-
-                <tr ng-if="vm.enti.enti.temporal">
-                    <th><span translate="fini"></span></th>
-                    <td><span ng-bind="vm.model.oitemFini | date: ('format_datetime' | translate)"></span></td>
-                    <td class="form-group-sm">
-                        <div class="col-sm-8 col-md-6 col-lg-4 form-group">
-                            <input type="text" class="form-control" ng-model="vm.model.ditemFini"
-                                bs-datepicker />
-                        </div>
-                        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                            <input type="text" class="form-control" ng-model="vm.model.ditemFini"
-                                bs-timepicker />
-                        </div>
-                    </td>
-                </tr>
-                <tr ng-if="vm.enti.enti.temporal">
-                    <th><span translate="ffin"></span></th>
-                    <td><span ng-bind="vm.model.oitemFfin | date: ('format_datetime' | translate)"></span></td>
-                    <td class="form-group-sm">
-                        <div class="col-sm-8 col-md-6 col-lg-4 form-group">
-                            <input type="text" class="form-control" ng-model="vm.model.ditemFfin"
-                                bs-datepicker />
-                        </div>
-                        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                            <input type="text" class="form-control" ng-model="vm.model.ditemFfin"
-                                bs-timepicker />
-                        </div>
-                    </td>
-                </tr>
-
-                <tr ng-repeat="tpdtId in vm.trmt.tpdtList">
-                    <th ng-bind="'entd_' + vm.trmt.trtdMap[tpdtId].entd.id | translate">EO {{tpdtId}}</th>
-                    <td ng-switch on="vm.trmt.trtdMap[tpdtId].entd.tpdt.tipoElemento"><i
-                        ng-switch-when="BO"
-                        class="glyphicon glyphicon-{{vm.model.ittdMap[tpdtId].dnentero ? 'ok' : 'remove'}}"></i>
-                        <span ng-switch-when="ND" ng-bind="vm.model.ittdMap[tpdtId].ondecimal | number:2"></span>
-                        <span ng-switch-when="NE" ng-bind="vm.model.ittdMap[tpdtId].onentero"></span> <span
-                        ng-switch-when="FE"
-                        ng-bind="vm.model.ittdMap[tpdtId].ofecha | date: ('format_date' | translate)"></span>
-                        <span ng-switch-when="FH"
-                        ng-bind="vm.model.ittdMap[tpdtId].ofecha | date: ('format_datetime' | translate)"></span>
-                        <span ng-switch-when="CR" ng-if="vm.model.ittdMap[tpdtId].ocadena"
-                        ng-bind="'cdrf_' + tpdtId + '_' + vm.model.ittdMap[tpdtId].ocadena | translate"></span>
-                        <span ng-switch-when="TX" ng-bind="vm.model.ittdMap[tpdtId].ocadena"></span> <a
-                        ng-switch-when="PR"
-                        ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].oprmt.id}}/{{vm.item.fref}}"
-                        ng-bind="vm.model.ittdMap[tpdtId].oprmt.etiqueta"></a> <a ng-switch-when="SR"
-                        ng-href="#/servicio/srvc/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].osrvc.id}}"
-                        ng-bind="vm.model.ittdMap[tpdtId].osrvc.etiqueta"></a></td>
-                    <td ng-switch on="vm.trmt.trtdMap[tpdtId].entd.tpdt.tipoElemento" class="form-group-sm"><select
-                        ng-switch-when="BO" ng-model="vm.model.ittdMap[tpdtId].dnentero"
-                        ng-options="item as ('format_' + item | translate) for item in [1 , 0]"
-                        class="form-control">
-                            <option />
-                    </select> <input ng-switch-when="ND" type="text" ng-model="vm.model.ittdMap[tpdtId].dndecimal"
-                        class="form-control" /> <input ng-switch-when="NE" type="text"
-                        ng-model="vm.model.ittdMap[tpdtId].dnentero" ng-pattern="/^\d+$/" class="form-control" />
-                        <input ng-switch-when="FE" type="text" class="form-control"
-                        ng-model="vm.model.ittdMap[tpdtId].dfecha" bs-datepicker />
-                        <div ng-switch-when="FH">
-                            <input type="text" class="form-control" ng-model="vm.model.ittdMap[tpdtId].dfecha"
-                                bs-datepicker /><input type="text" class="form-control"
-                                ng-model="vm.model.ittdMap[tpdtId].dfecha" bs-timepicker />
-                        </div> <select ng-switch-when="CR" ng-model="vm.model.ittdMap[tpdtId].dcadena"
-                        ng-options="cdrf.valor as ('cdrf_' + tpdtId + '_' + cdrf.valor | translate) for cdrf in vm.enti.entdMap[tpdtId].tpdt.cdrfList"
-                        class="form-control">
-                            <option />
-                    </select> <input ng-switch-when="TX" ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text"
-                        ng-model="vm.model.ittdMap[tpdtId].dcadena" class="form-control" /> <textarea
-                            ng-switch-when="TX" ng-if="vm.trmt.trtdMap[tpdtId].entd.tpdt.tpht == 'TA'"
-                            rows="4" ng-model="vm.model.ittdMap[tpdtId].dcadena" class="form-control"
-                            ng-bind="vm.model.ittdMap[tpdtId].dcadena"></textarea> <select ng-switch-when="PR"
-                        ng-if="vm.trmt.trtdMap[tpdtId].entd.tpdt.tpht == 'S'"
-                        ng-model="vm.model.ittdMap[tpdtId].dprmt.id"
-                        ng-options="labelValue.value as labelValue.label for labelValue in vm.labelValuesMap[vm.trmt.trtdMap[tpdtId].entd.tpdt.enti.id]"
-                        class="form-control">
-                            <option />
-                    </select> <input ng-switch-when="PR" ng-if="vm.trmt.trtdMap[tpdtId].entd.tpdt.tpht == 'F'"
-                        ng-disabled="vm.trmt.trtdMap[tpdtId].entd.tpdt.enti.puerto && vm.prtoId == null"
-                        class="form-control" ng-controller="PrmtLupaController" type="text" autocomplete="off"
-                        ng-model="vm.model.ittdMap[tpdtId].dprmt"
-                        typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.trmt.trtdMap[tpdtId].entd.tpdt.enti.id, $viewValue, vm.prtoId, vm.item.fref)"
-                        typeahead-editable="false" typeahead-wait-ms="250" class="form-control"> <input
-                        ng-switch-when="SR" class="form-control" ng-controller="SrvcLupaController"
-                        type="text" autocomplete="off" ng-model="vm.model.ittdMap[tpdtId].dsrvc"
-                        typeahead="srvc as srvc.etiqueta for srvc in search(vm.trmt.trtdMap[tpdtId].entd.tpdt.enti.id, $viewValue)"
-                        typeahead-editable="false" typeahead-wait-ms="250" class="form-control"></td>
-                </tr>
-            </tbody>
-        </table>
-    </fieldset>
-
-    <div class="btn-group">
-        <button data-ng-click="vm.save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
-        </button>
-        <button data-ng-click="vm.cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
-        </button>
-    </div>
-</form>
+    </form>
+</div>

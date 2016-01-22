@@ -43,18 +43,16 @@ public final class ValoracionPdfExportAction extends CrudFileExportAction<Valora
         Preconditions.checkNotNull(model.getId());
 
         final ValoracionBO vlrcBO = new ValoracionBO();
+
+        model = vlrcBO.select(model.getId(), getIdioma());
+
+        final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(model.getId(), getIdioma());
+        final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(model.getId(), getIdioma());
+
+        final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
         final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
         vlrcCriterio.setId(model.getId());
-        vlrcCriterio.setIdioma(idioma);
-
-        model = vlrcBO.selectObject(vlrcCriterio);
-
-        final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(vlrcCriterio);
-        final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(vlrcCriterio);
-
-        final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
-
         vlrlCriterio.setVlrc(vlrcCriterio);
         vlrlCriterio.setIdioma(getIdioma());
 

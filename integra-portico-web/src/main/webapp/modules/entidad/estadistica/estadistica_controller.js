@@ -37,8 +37,8 @@ function config($routeProvider) {
     ;
 }
 
-function PeriodoProcesoGridController($route, $routeParams, $modal,
-        pageTitleService, PeriodoProcesoService) {
+function PeriodoProcesoGridController($route, $routeParams, pageTitleService,
+        PeriodoProcesoService) {
     var vm = this;
 
     vm.filter = filter;
@@ -122,11 +122,11 @@ function PeriodoProcesoEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         id : $routeParams.id
     }
 
-    PeriodoProcesoService.edit(vm.accion, vm.model).then(function(data) {
+    PeriodoProcesoService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
 
         vm.tphtList = data.tphtList;

@@ -6,7 +6,6 @@ import java.util.List;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
-import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
@@ -53,12 +52,8 @@ public final class ValoracionEditAction extends CrudEditAction<ValoracionVO> {
             Preconditions.checkNotNull(model.getId());
 
             final ValoracionBO vlrcBO = new ValoracionBO();
-            final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
-            vlrcCriterio.setId(model.getId());
-            vlrcCriterio.setIdioma(getIdioma());
-
-            model = vlrcBO.selectObject(vlrcCriterio);
+            model = vlrcBO.select(model.getId(), getIdioma());
 
             break;
         default:

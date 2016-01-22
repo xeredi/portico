@@ -1,8 +1,11 @@
 package xeredi.argo.model.facturacion.bo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import lombok.NonNull;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
@@ -112,6 +115,26 @@ public final class AspectoBO {
 
             if (aspc == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.aspc, aspcCriterio);
+            }
+
+            return aspc;
+        }
+    }
+
+    public AspectoVO select(final @NonNull Long id, final @NonNull Date fref, final String idioma)
+            throws InstanceNotFoundException {
+        final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
+
+        aspcCriterio.setId(id);
+        aspcCriterio.setFechaVigencia(fref);
+        aspcCriterio.setIdioma(idioma);
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
+            final AspectoVO aspc = aspcDAO.selectObject(aspcCriterio);
+
+            if (aspc == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.aspc, id, fref);
             }
 
             return aspc;

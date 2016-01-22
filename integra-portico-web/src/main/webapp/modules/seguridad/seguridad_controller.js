@@ -89,7 +89,7 @@ function config($routeProvider) {
     ;
 }
 
-function AccionGridController($route, $routeParams, $modal, pageTitleService,
+function AccionGridController($route, $routeParams, pageTitleService,
         AccionService) {
     var vm = this;
 
@@ -181,11 +181,11 @@ function AccionEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         id : $routeParams.id
     }
 
-    AccionService.edit(vm.accion, vm.model).then(function(data) {
+    AccionService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
 
         vm.prefixList = data.prefixList;
@@ -195,7 +195,7 @@ function AccionEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("accn", "page_" + vm.accion);
 }
 
-function GrupoGridController($route, $routeParams, $modal, pageTitleService,
+function GrupoGridController($route, $routeParams, pageTitleService,
         GrupoService) {
     var vm = this;
 
@@ -294,11 +294,11 @@ function GrupoEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         id : $routeParams.id
     }
 
-    GrupoService.edit(vm.accion, vm.model).then(function(data) {
+    GrupoService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
 
         vm.prefixList = data.prefixList;
@@ -310,7 +310,7 @@ function GrupoEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("grpo", "page_" + vm.accion);
 }
 
-function UsuarioGridController($route, $routeParams, $modal, pageTitleService,
+function UsuarioGridController($route, $routeParams, pageTitleService,
         UsuarioService) {
     var vm = this;
 
@@ -402,11 +402,11 @@ function UsuarioEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         id : $routeParams.id
     }
 
-    UsuarioService.edit(vm.accion, vm.model).then(function(data) {
+    UsuarioService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.grpoList = data.grpoList;
 

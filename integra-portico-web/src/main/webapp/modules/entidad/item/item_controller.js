@@ -75,7 +75,7 @@ function ItemTramiteEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         itemId : $routeParams.itemId,
         trmt : {
             id : $routeParams.trmtId,
@@ -83,7 +83,7 @@ function ItemTramiteEditController($route, $routeParams, pageTitleService,
         }
     }
 
-    ItemTramiteService.edit(vm.accion, vm.model).then(function(data) {
+    ItemTramiteService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.item = data.item;
         vm.enti = data.enti;

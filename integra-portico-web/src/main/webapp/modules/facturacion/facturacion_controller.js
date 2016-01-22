@@ -170,7 +170,7 @@ function config($routeProvider) {
         controller : "ValoracionDetalleDetailController as vm"
     })
 
-    .when("/facturacion/facturador/create", {
+    .when("/facturacion/facturador/edit/:accion", {
         templateUrl : "modules/facturacion/facturador-edit.html",
         controller : "FacturadorEditController as vm",
         data : {
@@ -182,8 +182,8 @@ function config($routeProvider) {
 }
 
 // -------------------- Inicio Facturacion ------------------
-function FacturacionIndexController($route, $routeParams, $modal,
-        pageTitleService, FacturacionService) {
+function FacturacionIndexController($route, $routeParams, pageTitleService,
+        FacturacionService) {
     var vm = this;
 
     FacturacionService.index().then(function(data) {
@@ -193,7 +193,7 @@ function FacturacionIndexController($route, $routeParams, $modal,
 }
 
 // -------------------- Parametrizacion ------------------
-function CargoGridController($route, $routeParams, $modal, pageTitleService,
+function CargoGridController($route, $routeParams, pageTitleService,
         CargoService) {
     var vm = this;
 
@@ -282,12 +282,12 @@ function CargoEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         id : $routeParams.id,
         fref : $routeParams.fref
     }
 
-    CargoService.edit(vm.accion, vm.model).then(function(data) {
+    CargoService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
@@ -398,7 +398,7 @@ function ReglaEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         crgo : {
             id : $routeParams.crgoId
         },
@@ -406,7 +406,7 @@ function ReglaEditController($route, $routeParams, pageTitleService,
         fref : $routeParams.fref
     }
 
-    ReglaService.edit(vm.accion, vm.model).then(function(data) {
+    ReglaService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
@@ -496,13 +496,13 @@ function ReglaIncompatibleEditController($route, $routeParams,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         rgla1Id : $routeParams.rgla1Id,
         id : $routeParams.id,
         fref : $routeParams.fref
     }
 
-    ReglaIncompatibleService.edit(vm.accion, vm.model).then(function(data) {
+    ReglaIncompatibleService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
 
         vm.rgla2List = data.rgla2List;
@@ -511,7 +511,7 @@ function ReglaIncompatibleEditController($route, $routeParams,
     pageTitleService.setTitle("rgin", "page_" + vm.accion);
 }
 
-function AspectoGridController($route, $routeParams, $modal, pageTitleService,
+function AspectoGridController($route, $routeParams, pageTitleService,
         AspectoService) {
     var vm = this;
 
@@ -598,12 +598,12 @@ function AspectoEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         id : $routeParams.id,
         fref : $routeParams.fref
     }
 
-    AspectoService.edit(vm.accion, vm.model).then(function(data) {
+    AspectoService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
@@ -677,13 +677,13 @@ function AspectoCargoEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         aspcId : $routeParams.aspcId,
         id : $routeParams.id,
         fref : $routeParams.fref
     }
 
-    AspectoCargoService.edit(vm.accion, vm.model).then(function(data) {
+    AspectoCargoService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
 
         vm.crgoList = data.crgoList;
@@ -692,8 +692,8 @@ function AspectoCargoEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("ascr", "page_" + vm.accion);
 }
 
-function FacturaSerieGridController($route, $routeParams, $modal,
-        pageTitleService, FacturaSerieService) {
+function FacturaSerieGridController($route, $routeParams, pageTitleService,
+        FacturaSerieService) {
     var vm = this;
 
     vm.filter = filter;
@@ -777,12 +777,12 @@ function FacturaSerieEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         id : $routeParams.id,
         fref : $routeParams.fref
     }
 
-    FacturaSerieService.edit(vm.accion, vm.model).then(function(data) {
+    FacturaSerieService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
     });
 
@@ -790,8 +790,8 @@ function FacturaSerieEditController($route, $routeParams, pageTitleService,
 }
 
 // -------------------- Gestion ------------------
-function ValoracionGridController($route, $routeParams, $modal,
-        pageTitleService, ValoracionService) {
+function ValoracionGridController($route, $routeParams, pageTitleService,
+        ValoracionService) {
     var vm = this;
 
     vm.filter = filter;
@@ -1020,9 +1020,9 @@ function FacturadorEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {}
+    vm.search = {}
 
-    FacturadorService.edit(vm.accion, vm.model).then(function(data) {
+    FacturadorService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
 
         vm.fcsrList = data.fcsrList;

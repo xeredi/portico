@@ -1,60 +1,62 @@
-<form role="form">
-    <fieldset>
-        <div class="row">
-            <div class="col-sm-3 col-md-2 form-group-sm">
-                <label translate>prto</label> <select ng-if="vm.accion != 'edit'" ng-model="vm.item.prto.id"
-                    ng-change="vm.prtoId = vm.item.prto.id"
-                    ng-options="prto.id as prto.etiqueta for prto in vm.prtoList" class="form-control">
-                    <option />
-                </select>
-                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.prto.etiqueta"></p>
-            </div>
-            <div class="col-sm-1 col-md-1 form-group-sm">
-                <label translate>srvc_anno</label> <input ng-if="vm.accion != 'edit'" type="text"
-                    ng-model="vm.item.anno" class="form-control" />
-                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.anno"></p>
-            </div>
-            <div class="col-sm-1 col-md-1 form-group-sm">
-                <label translate>srvc_numero</label> <input ng-if="vm.accion != 'edit'" type="text"
-                    ng-model="vm.item.numero" class="form-control" />
-                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.numero"></p>
+<div ng-if="vm.item">
+    <form role="form">
+        <fieldset>
+            <div class="row">
+                <div class="col-sm-3 col-md-2 form-group-sm">
+                    <label translate>prto</label> <select ng-if="vm.accion != 'edit'"
+                        ng-model="vm.item.prto.id" ng-change="vm.prtoId = vm.item.prto.id"
+                        ng-options="prto.id as prto.etiqueta for prto in vm.prtoList" class="form-control">
+                        <option />
+                    </select>
+                    <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.prto.etiqueta"></p>
+                </div>
+                <div class="col-sm-1 col-md-1 form-group-sm">
+                    <label translate>srvc_anno</label> <input ng-if="vm.accion != 'edit'" type="text"
+                        ng-model="vm.item.anno" class="form-control" />
+                    <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.anno"></p>
+                </div>
+                <div class="col-sm-1 col-md-1 form-group-sm">
+                    <label translate>srvc_numero</label> <input ng-if="vm.accion != 'edit'" type="text"
+                        ng-model="vm.item.numero" class="form-control" />
+                    <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.numero"></p>
+                </div>
+
+                <div ng-if="vm.enti.enti.tpdtEstado" class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
+                    <label translate>srvc_estado</label> <select ng-if="vm.accion != 'edit'"
+                        ng-model="vm.item.estado"
+                        ng-options="cdrf.valor as (('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.enti.enti.tpdtEstado.cdrfList"
+                        class="form-control">
+                        <option />
+                    </select>
+                    <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.estado"></p>
+                </div>
+
+                <div ng-if="!vm.enti.enti.temporal" class="col-sm-2 col-md-1 form-group-sm">
+                    <label translate>fref</label><input type="text" class="form-control"
+                        ng-model="vm.item.fref" bs-datepicker />
+                </div>
+
+                <div ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-1 form-group-sm">
+                    <label translate>fini</label><input type="text" class="form-control"
+                        ng-model="vm.item.fini" data-max-date="{{vm.item.ffin}}" bs-datepicker />
+                </div>
+
+                <div ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-1 form-group-sm">
+                    <label translate>ffin</label><input type="text" class="form-control"
+                        ng-model="vm.item.ffin" data-min-date="{{vm.item.fini}}" bs-datepicker />
+                </div>
             </div>
 
-            <div ng-if="vm.enti.enti.tpdtEstado" class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                <label translate>srvc_estado</label> <select ng-if="vm.accion != 'edit'"
-                    ng-model="vm.item.estado"
-                    ng-options="cdrf.valor as (('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.enti.enti.tpdtEstado.cdrfList"
-                    class="form-control">
-                    <option />
-                </select>
-                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.estado"></p>
-            </div>
+            <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
+        </fieldset>
 
-            <div ng-if="!vm.enti.enti.temporal" class="col-sm-2 col-md-1 form-group-sm">
-                <label translate>fref</label><input type="text" class="form-control" ng-model="vm.item.fref"
-                    bs-datepicker />
-            </div>
-
-            <div ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-1 form-group-sm">
-                <label translate>fini</label><input type="text" class="form-control" ng-model="vm.item.fini"
-                    data-max-date="{{vm.item.ffin}}" bs-datepicker />
-            </div>
-
-            <div ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-1 form-group-sm">
-                <label translate>ffin</label><input type="text" class="form-control" ng-model="vm.item.ffin"
-                    data-min-date="{{vm.item.fini}}" bs-datepicker />
-            </div>
+        <div class="btn-group">
+            <button data-ng-click="vm.save()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+            </button>
+            <button data-ng-click="vm.cancel()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+            </button>
         </div>
-
-        <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
-    </fieldset>
-
-    <div class="btn-group">
-        <button data-ng-click="vm.save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
-        </button>
-        <button data-ng-click="vm.cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
-        </button>
-    </div>
-</form>
+    </form>
+</div>

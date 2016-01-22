@@ -277,7 +277,7 @@ function config($routeProvider) {
     ;
 }
 
-function TipoDatoGridController($route, $routeParams, $modal, pageTitleService,
+function TipoDatoGridController($route, $routeParams, pageTitleService,
         TipoDatoService) {
     var vm = this;
 
@@ -363,11 +363,11 @@ function TipoDatoEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         id : $routeParams.id
     }
 
-    TipoDatoService.edit(vm.accion, vm.model).then(function(data) {
+    TipoDatoService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
@@ -424,12 +424,12 @@ function CodigoReferenciaEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         tpdtId : $routeParams.tpdtId,
         id : $routeParams.id
     }
 
-    CodigoReferenciaService.edit(vm.accion, vm.model).then(function(data) {
+    CodigoReferenciaService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
@@ -437,8 +437,8 @@ function CodigoReferenciaEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("cdrf", "page_" + vm.accion);
 }
 
-function TipoParametroGridController($route, $routeParams, $modal,
-        pageTitleService, TipoParametroService) {
+function TipoParametroGridController($route, $routeParams, pageTitleService,
+        TipoParametroService) {
     var vm = this;
 
     vm.filter = filter;
@@ -538,11 +538,11 @@ function TipoParametroEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         id : $routeParams.id
     }
 
-    TipoParametroService.edit(vm.accion, vm.model).then(function(data) {
+    TipoParametroService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
@@ -611,12 +611,12 @@ function TipoSubparametroEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         tpprId : $routeParams.tpprId,
         id : $routeParams.id
     }
 
-    TipoSubparametroService.edit(vm.accion, vm.model).then(function(data) {
+    TipoSubparametroService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
@@ -626,8 +626,8 @@ function TipoSubparametroEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("tpsp", "page_" + vm.accion);
 }
 
-function TipoServicioGridController($route, $routeParams, $modal,
-        pageTitleService, TipoServicioService) {
+function TipoServicioGridController($route, $routeParams, pageTitleService,
+        TipoServicioService) {
     var vm = this;
 
     vm.filter = filter;
@@ -728,11 +728,11 @@ function TipoServicioEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         id : $routeParams.id
     }
 
-    TipoServicioService.edit(vm.accion, vm.model).then(function(data) {
+    TipoServicioService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
@@ -804,12 +804,12 @@ function TipoSubservicioEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         tpsrId : $routeParams.tpsrId,
         id : $routeParams.id
     }
 
-    TipoSubservicioService.edit(vm.accion, vm.model).then(function(data) {
+    TipoSubservicioService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
@@ -819,8 +819,8 @@ function TipoSubservicioEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("tpss", "page_" + vm.accion);
 }
 
-function TipoEstadisticaGridController($route, $routeParams, $modal,
-        pageTitleService, TipoEstadisticaService) {
+function TipoEstadisticaGridController($route, $routeParams, pageTitleService,
+        TipoEstadisticaService) {
     var vm = this;
 
     vm.filter = filter;
@@ -920,11 +920,11 @@ function TipoEstadisticaEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         id : $routeParams.id
     }
 
-    TipoEstadisticaService.edit(vm.accion, vm.model).then(function(data) {
+    TipoEstadisticaService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
@@ -978,14 +978,14 @@ function CampoAgregacionEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         tpesId : $routeParams.tpesId,
         entd : {
             id : $routeParams.entdId
         }
     }
 
-    CampoAgregacionService.edit(vm.accion, vm.model).then(function(data) {
+    CampoAgregacionService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
     });
 
@@ -1036,12 +1036,12 @@ function EntidadTipoDatoEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         entiId : $routeParams.entiId,
         id : $routeParams.id
     }
 
-    EntidadTipoDatoService.edit(vm.accion, vm.model).then(function(data) {
+    EntidadTipoDatoService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
@@ -1096,12 +1096,12 @@ function EntidadGrupoDatoEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         entiId : $routeParams.entiId,
         id : $routeParams.id
     }
 
-    EntidadGrupoDatoService.edit(vm.accion, vm.model).then(function(data) {
+    EntidadGrupoDatoService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
@@ -1155,12 +1155,12 @@ function TramiteEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         entiId : $routeParams.entiId,
         id : $routeParams.id
     }
 
-    TramiteService.edit(vm.accion, vm.model).then(function(data) {
+    TramiteService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
@@ -1218,7 +1218,7 @@ function TramiteTipoDatoEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         trmtId : $routeParams.trmtId,
         entd : {
             tpdt : {
@@ -1227,7 +1227,7 @@ function TramiteTipoDatoEditController($route, $routeParams, pageTitleService,
         }
     }
 
-    TramiteTipoDatoService.edit(vm.accion, vm.model).then(function(data) {
+    TramiteTipoDatoService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
 
         vm.entdList = data.entdList;
@@ -1287,16 +1287,15 @@ function AccionEntidadEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         id : $routeParams.id,
         entiId : $routeParams.entiId
     }
 
-    AccionEntidadService.edit(vm.accion, vm.model).then(function(data) {
+    AccionEntidadService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
 
         vm.accnList = data.accnList;
-
         vm.grpoList = data.grpoList;
     });
 
@@ -1347,12 +1346,12 @@ function EntidadAccionEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         entiId : $routeParams.entiId,
         id : $routeParams.id
     }
 
-    EntidadAccionService.edit(vm.accion, vm.model).then(function(data) {
+    EntidadAccionService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });
@@ -1406,12 +1405,12 @@ function EntidadAccionGridEditController($route, $routeParams,
     }
 
     vm.accion = $routeParams.accion;
-    vm.model = {
+    vm.search = {
         entiId : $routeParams.entiId,
         id : $routeParams.id
     }
 
-    EntidadAccionGridService.edit(vm.accion, vm.model).then(function(data) {
+    EntidadAccionGridService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
     });

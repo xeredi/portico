@@ -1,5 +1,9 @@
 package xeredi.argo.model.comun.exception;
 
+import java.util.Arrays;
+import java.util.Iterator;
+
+import lombok.NonNull;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 
 import com.google.common.base.Preconditions;
@@ -29,14 +33,28 @@ public abstract class ModelException extends ApplicationException {
      * @param aobjId
      *            the aobj id
      */
-    public ModelException(final String message, final MessageI18nKey aclassName, final Object aobjId) {
-        super(message + " de la clase '" + aclassName + " con identificador :" + aobjId);
-
-        Preconditions.checkNotNull(message);
-        Preconditions.checkNotNull(aclassName);
+    public ModelException(final @NonNull String message, final @NonNull MessageI18nKey aclassName,
+            final Object... aobjId) {
+        super(message + " de la clase '" + aclassName + "' con identificador: " + aobjId);
 
         className = aclassName.name();
-        objId = aobjId;
+
+        if (aobjId != null) {
+            final StringBuilder builder = new StringBuilder();
+            final Iterator<Object> iterator = Arrays.asList(aobjId).iterator();
+
+            while (iterator.hasNext()) {
+                builder.append(iterator.next());
+
+                if (iterator.hasNext()) {
+                    builder.append(", ");
+                }
+            }
+
+            objId = builder;
+        } else {
+            objId = null;
+        }
     }
 
     /**
@@ -50,7 +68,7 @@ public abstract class ModelException extends ApplicationException {
      *            the aobj id
      */
     public ModelException(final String message, final Long aclassId, final Object aobjId) {
-        super(message + " de la clase '" + "enti_" + aclassId + " con identificador :" + aobjId);
+        super(message + " de la clase '" + "enti_" + aclassId + "' con identificador: " + aobjId);
 
         Preconditions.checkNotNull(message);
         Preconditions.checkNotNull(aclassId);

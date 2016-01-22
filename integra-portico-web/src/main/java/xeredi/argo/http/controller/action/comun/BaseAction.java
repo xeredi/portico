@@ -10,7 +10,6 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.exception.InternalErrorException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.proxy.PorticoResourceBundle;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
@@ -79,7 +78,7 @@ public abstract class BaseAction extends ActionSupport {
         } catch (final ApplicationException ex) {
             LOG.error(ex, ex);
 
-            addActionError(MessageI18nKey.E00000, ex.getMessage());
+            addActionError(MessageI18nKey.E00000, ex.getMessage(getLocale()));
         } catch (final Throwable ex) {
             LOG.fatal(ex, ex);
 
@@ -182,7 +181,7 @@ public abstract class BaseAction extends ActionSupport {
      * @param key
      *            the new response code
      */
-    public void setResponseCode(String key) {
-        this.responseCode = key;
+    public void setResponseCode(final String key) {
+        responseCode = key;
     }
 }

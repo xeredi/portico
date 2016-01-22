@@ -1,31 +1,33 @@
-<form name="editForm" novalidate role="form">
-    <fieldset>
-        <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
+<div ng-if="vm.model">
+    <form name="editForm" novalidate role="form">
+        <fieldset>
+            <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
 
-        <div class="row">
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate="trmt_estado_orig"></label> <select ng-model="vm.model.estadoOrig"
-                    ng-options="cdrf.valor as (('cdrf_' + vm.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.tpdtEstado.cdrfList"
-                    class="form-control">
-                    <option />
-                </select>
+            <div class="row">
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                    <label translate="trmt_estado_orig"></label> <select ng-model="vm.model.estadoOrig"
+                        ng-options="cdrf.valor as (('cdrf_' + vm.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.tpdtEstado.cdrfList"
+                        class="form-control">
+                        <option />
+                    </select>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                    <label translate="trmt_estado_dest"></label> <select ng-model="vm.model.estadoDest"
+                        ng-options="cdrf.valor as (('cdrf_' + vm.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.tpdtEstado.cdrfList"
+                        class="form-control">
+                        <option />
+                    </select>
+                </div>
             </div>
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate="trmt_estado_dest"></label> <select ng-model="vm.model.estadoDest"
-                    ng-options="cdrf.valor as (('cdrf_' + vm.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.tpdtEstado.cdrfList"
-                    class="form-control">
-                    <option />
-                </select>
-            </div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button data-ng-click="vm.save()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
+            </button>
+            <button data-ng-click="vm.cancel()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
+            </button>
         </div>
-    </fieldset>
-
-    <div class="btn-group">
-        <button data-ng-click="vm.save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
-        </button>
-        <button data-ng-click="vm.cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
-        </button>
-    </div>
-</form>
+    </form>
+</div>

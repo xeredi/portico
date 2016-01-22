@@ -71,8 +71,8 @@ function MaestroIndexController($translate, pageTitleService, MaestroService) {
     pageTitleService.setTitle("prmtList", "page_home");
 }
 
-function ParametroGridController($route, $routeParams, $modal,
-        pageTitleService, ParametroService) {
+function ParametroGridController($route, $routeParams, pageTitleService,
+        ParametroService) {
     var vm = this;
 
     vm.filter = filter;
@@ -219,13 +219,13 @@ function ParametroEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.item = {
+    vm.search = {
         id : $routeParams.id,
         entiId : $routeParams.entiId,
         fref : $routeParams.fref ? $routeParams.fref : new Date()
     };
 
-    ParametroService.edit(vm.accion, vm.item).then(function(data) {
+    ParametroService.edit(vm.accion, vm.search).then(function(data) {
         vm.item = data.model;
         vm.i18nMap = data.i18nMap;
         vm.enti = data.enti;
@@ -289,14 +289,14 @@ function SubparametroEditController($route, $routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.item = {
+    vm.search = {
         id : $routeParams.id,
         prmtId : $routeParams.prmtId,
         entiId : $routeParams.entiId,
         fref : $routeParams.fref
     };
 
-    SubparametroService.edit(vm.accion, vm.item).then(function(data) {
+    SubparametroService.edit(vm.accion, vm.search).then(function(data) {
         vm.item = data.model;
         vm.enti = data.enti;
 

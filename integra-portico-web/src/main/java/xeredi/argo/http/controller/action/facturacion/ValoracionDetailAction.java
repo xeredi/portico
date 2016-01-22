@@ -9,7 +9,6 @@ import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCargoVO;
-import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
@@ -48,14 +47,10 @@ public final class ValoracionDetailAction extends CrudDetailAction<ValoracionVO>
         Preconditions.checkNotNull(model.getId());
 
         final ValoracionBO vlrcBO = new ValoracionBO();
-        final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
-        vlrcCriterio.setId(model.getId());
-        vlrcCriterio.setIdioma(getIdioma());
-
-        model = vlrcBO.selectObject(vlrcCriterio);
-        vlriList = vlrcBO.selectVlriList(vlrcCriterio);
-        vlrgList = vlrcBO.selectVlrgList(vlrcCriterio);
+        model = vlrcBO.select(model.getId(), getIdioma());
+        vlriList = vlrcBO.selectVlriList(model.getId(), getIdioma());
+        vlrgList = vlrcBO.selectVlrgList(model.getId(), getIdioma());
         tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
 
         final AspectoBO aspcBO = new AspectoBO();

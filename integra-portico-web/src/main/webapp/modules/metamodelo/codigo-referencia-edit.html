@@ -1,26 +1,28 @@
-<form novalidate role="form">
-    <fieldset>
-        <div class="row">
-            <div class="col-md-3 form-group-sm" ng-switch="vm.accion">
-                <label translate="cdrf_valor"></label> <input ng-switch-when="create" type="text"
-                    ng-model="vm.model.valor" class="form-control" />
-                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.valor"></p>
+<div ng-if="vm.model">
+    <form novalidate role="form">
+        <fieldset>
+            <div class="row">
+                <div class="col-md-3 form-group-sm" ng-switch="vm.accion">
+                    <label translate="cdrf_valor"></label> <input ng-switch-when="create" type="text"
+                        ng-model="vm.model.valor" class="form-control" />
+                    <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.valor"></p>
+                </div>
+                <div class="col-md-1 form-group-sm">
+                    <label translate="cdrf_orden"></label> <input type="text" ng-model="vm.model.orden"
+                        class="form-control number" />
+                </div>
             </div>
-            <div class="col-md-1 form-group-sm">
-                <label translate="cdrf_orden"></label> <input type="text" ng-model="vm.model.orden"
-                    class="form-control number" />
-            </div>
+
+            <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button data-ng-click="vm.save()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
+            </button>
+            <button data-ng-click="vm.cancel()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
+            </button>
         </div>
-
-        <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
-    </fieldset>
-
-    <div class="btn-group">
-        <button data-ng-click="vm.save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
-        </button>
-        <button data-ng-click="vm.cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
-        </button>
-    </div>
-</form>
+    </form>
+</div>
