@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.Map;
 
+import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -23,6 +24,7 @@ public final class EntidadAccionSaveAction extends CrudSaveAction<EntidadAccionV
     private static final long serialVersionUID = -5020791075508829152L;
 
     /** The cdri map. */
+    @Setter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -61,16 +63,6 @@ public final class EntidadAccionSaveAction extends CrudSaveAction<EntidadAccionV
 
         FieldValidator.validateRequired(this, MessageI18nKey.enac_orden, model.getOrden());
         FieldValidator.validateI18n(this, i18nMap);
-    }
-
-    /**
-     * Sets the i18n map.
-     *
-     * @param value
-     *            the value
-     */
-    public void setI18nMap(final Map<String, I18nVO> value) {
-        i18nMap = value;
     }
 
     /**

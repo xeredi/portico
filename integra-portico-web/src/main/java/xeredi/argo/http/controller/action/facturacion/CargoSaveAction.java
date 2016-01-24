@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.Map;
 
+import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -23,6 +24,7 @@ public final class CargoSaveAction extends CrudSaveAction<CargoVO> {
     private static final long serialVersionUID = -4637124394309482562L;
 
     /** The i18n map. */
+    @Setter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -64,16 +66,6 @@ public final class CargoSaveAction extends CrudSaveAction<CargoVO> {
         FieldValidator.validateRequired(this, MessageI18nKey.crgo_temporal, model.getVersion().getTemporal());
         FieldValidator.validateRequired(this, MessageI18nKey.crgo_principal, model.getVersion().getPrincipal());
         FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
-    }
-
-    /**
-     * Sets the i18n map.
-     *
-     * @param value
-     *            the value
-     */
-    public void setI18nMap(final Map<String, I18nVO> value) {
-        i18nMap = value;
     }
 
     /**

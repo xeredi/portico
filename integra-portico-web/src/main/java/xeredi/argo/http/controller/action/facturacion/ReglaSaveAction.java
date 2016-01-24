@@ -2,6 +2,8 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.Map;
 
+import lombok.Setter;
+
 import org.apache.commons.validator.GenericValidator;
 
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
@@ -26,6 +28,7 @@ public final class ReglaSaveAction extends CrudSaveAction<ReglaVO> {
     private static final long serialVersionUID = -1378188997796757435L;
 
     /** The i18n map. */
+    @Setter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -173,15 +176,5 @@ public final class ReglaSaveAction extends CrudSaveAction<ReglaVO> {
     @Override
     public AccionPrefix getAccnPrefix() {
         return AccionPrefix.rgla;
-    }
-
-    /**
-     * Sets the i18n map.
-     *
-     * @param i18nMap
-     *            the i18n map
-     */
-    public void setI18nMap(Map<String, I18nVO> i18nMap) {
-        this.i18nMap = i18nMap;
     }
 }

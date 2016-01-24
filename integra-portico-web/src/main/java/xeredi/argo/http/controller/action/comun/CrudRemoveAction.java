@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.comun;
 
+import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.Versionable;
 
@@ -18,6 +19,7 @@ public abstract class CrudRemoveAction<T> extends BaseAction implements Protecte
     private static final long serialVersionUID = 8487722303118008776L;
 
     /** The model. */
+    @Setter
     protected T model;
 
     /**
@@ -42,16 +44,6 @@ public abstract class CrudRemoveAction<T> extends BaseAction implements Protecte
      *             the application exception
      */
     public abstract void doRemove() throws ApplicationException;
-
-    /**
-     * Sets the model.
-     *
-     * @param value
-     *            the new model
-     */
-    public final void setModel(final T value) {
-        this.model = value;
-    }
 
     /**
      * {@inheritDoc}

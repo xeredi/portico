@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
@@ -30,12 +31,15 @@ public final class ValoracionLineaEditAction extends CrudEditAction<ValoracionLi
     private static final long serialVersionUID = -1498921008270553150L;
 
     /** The vlrl padre. */
+    @Getter
     private ValoracionLineaVO vlrlPadre;
 
     /** The aspc. */
+    @Getter
     private AspectoVO aspc;
 
     /** The impuesto list. */
+    @Getter
     private List<ParametroVO> impuestoList;
 
     /**
@@ -107,33 +111,6 @@ public final class ValoracionLineaEditAction extends CrudEditAction<ValoracionLi
         final ParametroBO prmtBO = ParametroBOFactory.newInstance(prmtCriterio.getEntiId());
 
         impuestoList = prmtBO.selectList(prmtCriterio);
-    }
-
-    /**
-     * Gets the impuesto list.
-     *
-     * @return the impuesto list
-     */
-    public List<ParametroVO> getImpuestoList() {
-        return impuestoList;
-    }
-
-    /**
-     * Gets the vlrl padre.
-     *
-     * @return the vlrl padre
-     */
-    public ValoracionLineaVO getVlrlPadre() {
-        return vlrlPadre;
-    }
-
-    /**
-     * Gets the aspc.
-     *
-     * @return the aspc
-     */
-    public AspectoVO getAspc() {
-        return aspc;
     }
 
     /**

@@ -183,8 +183,10 @@ public final class UsuarioBO {
     /**
      * Select object.
      *
-     * @param usroCriterio
-     *            the usro criterio
+     * @param id
+     *            the id
+     * @param idioma
+     *            the idioma
      * @return the usuario vo
      * @throws InstanceNotFoundException
      *             the instance not found exception

@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.administracion.puerto;
 
 import java.util.Map;
 
+import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.bo.PuertoBO;
@@ -23,6 +24,7 @@ public final class PuertoSaveAction extends CrudSaveAction<PuertoVO> {
     private static final long serialVersionUID = -5154698578823186211L;
 
     /** The i18n map. */
+    @Setter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -63,16 +65,6 @@ public final class PuertoSaveAction extends CrudSaveAction<PuertoVO> {
         FieldValidator.validateRequired(this, MessageI18nKey.sprt, model.getSprt());
 
         FieldValidator.validateI18n(this, i18nMap);
-    }
-
-    /**
-     * Sets the i18n map.
-     *
-     * @param value
-     *            the value
-     */
-    public final void setI18nMap(final Map<String, I18nVO> value) {
-        i18nMap = value;
     }
 
     /**

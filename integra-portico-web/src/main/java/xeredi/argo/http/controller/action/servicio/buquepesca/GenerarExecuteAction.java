@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -26,6 +27,7 @@ public final class GenerarExecuteAction extends BaseAction {
     private static final long serialVersionUID = -4956601131901400553L;
 
     /** The model. */
+    @Setter
     private ServicioCriterioVO model;
 
     /**
@@ -45,15 +47,5 @@ public final class GenerarExecuteAction extends BaseAction {
 
             prbtBO.crear(ProcesoTipo.SBUP_CREACION, parametroMap, null, null, null);
         }
-    }
-
-    /**
-     * Sets the model.
-     *
-     * @param value
-     *            the new model
-     */
-    public void setModel(final ServicioCriterioVO value) {
-        model = value;
     }
 }

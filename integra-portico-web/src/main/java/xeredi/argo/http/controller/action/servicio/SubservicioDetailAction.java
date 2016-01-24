@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.bo.ItemTramiteBO;
@@ -29,9 +30,11 @@ public final class SubservicioDetailAction extends ItemDetailAction<SubservicioV
     private static final long serialVersionUID = -2847090432750136391L;
 
     /** The item padres map. */
+    @Getter
     private Map<Long, LabelValueVO> itemPadresMap;
 
     /** The sstr list. */
+    @Getter
     private List<ItemTramiteVO> ittrList;
 
     /**
@@ -70,23 +73,5 @@ public final class SubservicioDetailAction extends ItemDetailAction<SubservicioV
 
             ittrList = ittrBO.selectList(ittrCriterio);
         }
-    }
-
-    /**
-     * Gets the item padres map.
-     *
-     * @return the item padres map
-     */
-    public Map<Long, LabelValueVO> getItemPadresMap() {
-        return itemPadresMap;
-    }
-
-    /**
-     * Gets the sstr list.
-     *
-     * @return the sstr list
-     */
-    public List<ItemTramiteVO> getIttrList() {
-        return ittrList;
     }
 }

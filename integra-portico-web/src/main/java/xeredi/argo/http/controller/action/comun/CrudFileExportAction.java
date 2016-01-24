@@ -3,6 +3,9 @@ package xeredi.argo.http.controller.action.comun;
 import java.io.IOException;
 import java.io.InputStream;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -72,9 +75,11 @@ public abstract class CrudFileExportAction<M> extends BaseAction {
     };
 
     /** The model. */
+    @Setter
     protected M model;
 
     /** The stream. */
+    @Getter
     protected InputStream stream;
 
     /**
@@ -112,23 +117,4 @@ public abstract class CrudFileExportAction<M> extends BaseAction {
      * @return the content type
      */
     public abstract ContentType getContentType();
-
-    /**
-     * Gets the stream.
-     *
-     * @return the stream
-     */
-    public final InputStream getStream() {
-        return stream;
-    }
-
-    /**
-     * Sets the model.
-     *
-     * @param value
-     *            the new model
-     */
-    public final void setModel(final M value) {
-        this.model = value;
-    }
 }

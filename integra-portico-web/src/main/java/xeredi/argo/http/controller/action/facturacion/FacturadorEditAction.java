@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.Calendar;
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -28,12 +29,15 @@ public final class FacturadorEditAction extends CrudEditAction<FacturadorVO> {
     private static final long serialVersionUID = -1389260062489112937L;
 
     /** The fcsr list. */
+    @Getter
     private List<FacturaSerieVO> fcsrList;
 
     /** The tpsr list. */
+    @Getter
     private List<LabelValueVO> tpsrList;
 
     /** The prto list. */
+    @Getter
     private List<PuertoVO> prtoList;
 
     /**
@@ -77,32 +81,5 @@ public final class FacturadorEditAction extends CrudEditAction<FacturadorVO> {
         prtoCriterio.setIdioma(getIdioma());
 
         prtoList = prtoBO.selectList(prtoCriterio);
-    }
-
-    /**
-     * Gets the fcsr list.
-     *
-     * @return the fcsr list
-     */
-    public List<FacturaSerieVO> getFcsrList() {
-        return fcsrList;
-    }
-
-    /**
-     * Gets the tpsr list.
-     *
-     * @return the tpsr list
-     */
-    public List<LabelValueVO> getTpsrList() {
-        return tpsrList;
-    }
-
-    /**
-     * Gets the prto list.
-     *
-     * @return the prto list
-     */
-    public List<PuertoVO> getPrtoList() {
-        return prtoList;
     }
 }

@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -23,6 +24,7 @@ public final class CodigoReferenciaDetailAction extends CrudDetailAction<CodigoR
     private static final long serialVersionUID = 2272224842467117453L;
 
     /** The cdri map. */
+    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -36,15 +38,6 @@ public final class CodigoReferenciaDetailAction extends CrudDetailAction<CodigoR
 
         model = cdrfBO.select(model.getId(), idioma);
         i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, model.getId());
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
     }
 
     /**

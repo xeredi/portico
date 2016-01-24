@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemFilterAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -25,6 +26,7 @@ public final class EstadisticaFilterAction extends ItemFilterAction<EstadisticaC
     private static final long serialVersionUID = -7668343371684180192L;
 
     /** The prto list. */
+    @Getter
     private List<PuertoVO> prtoList;
 
     /**
@@ -61,14 +63,5 @@ public final class EstadisticaFilterAction extends ItemFilterAction<EstadisticaC
     public Date getFechaVigencia() {
         // FIXME Devolver fecha de referencia del periodo de proceso
         return Calendar.getInstance().getTime();
-    }
-
-    /**
-     * Gets the prto list.
-     *
-     * @return the prto list
-     */
-    public List<PuertoVO> getPrtoList() {
-        return prtoList;
     }
 }

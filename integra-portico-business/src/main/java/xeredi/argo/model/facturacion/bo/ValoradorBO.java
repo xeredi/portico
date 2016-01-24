@@ -612,12 +612,11 @@ public class ValoradorBO {
      *            the enti id
      * @param expression
      *            the expression
-     * @param generateLabel
-     *            the generate label
+     * @param pathType
+     *            the path type
      * @return the string
      */
-    private String generateSqlExpression(final @NonNull Long entiId, final String expression,
-            final PathType pathType) {
+    private String generateSqlExpression(final @NonNull Long entiId, final String expression, final PathType pathType) {
         if (expression == null || expression.isEmpty()) {
             return null;
         }

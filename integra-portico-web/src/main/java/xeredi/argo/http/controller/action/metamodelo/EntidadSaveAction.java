@@ -2,14 +2,15 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -24,6 +25,7 @@ public abstract class EntidadSaveAction<T extends EntidadVO> extends CrudSaveAct
     private static final long serialVersionUID = 6795337588003242186L;
 
     /** The i18n map. */
+    @Setter
     protected Map<String, I18nVO> i18nMap;
 
     /**
@@ -59,14 +61,4 @@ public abstract class EntidadSaveAction<T extends EntidadVO> extends CrudSaveAct
      *             the application exception
      */
     public abstract void doSpecificValidate() throws ApplicationException;
-
-    /**
-     * Sets the i18n map.
-     *
-     * @param value
-     *            the value
-     */
-    public final void setI18nMap(final Map<String, I18nVO> value) {
-        this.i18nMap = value;
-    }
 }

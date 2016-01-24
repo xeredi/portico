@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -20,6 +19,8 @@ import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadTipoDatoEditAction.
@@ -30,12 +31,15 @@ public final class EntidadTipoDatoEditAction extends CrudEditAction<EntidadTipoD
     private static final long serialVersionUID = 3500048499586562595L;
 
     /** The i18n map. */
+    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /** The engd list. */
+    @Getter
     private final List<LabelValueVO> engdList = new ArrayList<>();
 
     /** The tpdt list. */
+    @Getter
     private final List<LabelValueVO> tpdtList = new ArrayList<>();
 
     /**
@@ -74,33 +78,6 @@ public final class EntidadTipoDatoEditAction extends CrudEditAction<EntidadTipoD
         tpdtCriterioVO.setIdioma(getIdioma());
 
         tpdtList.addAll(tpdtBO.selectLabelValues(tpdtCriterioVO));
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
-    }
-
-    /**
-     * Gets the engd list.
-     *
-     * @return the engd list
-     */
-    public List<LabelValueVO> getEngdList() {
-        return engdList;
-    }
-
-    /**
-     * Gets the tpdt list.
-     *
-     * @return the tpdt list
-     */
-    public List<LabelValueVO> getTpdtList() {
-        return tpdtList;
     }
 
     /**

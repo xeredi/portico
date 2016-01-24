@@ -3,8 +3,7 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -18,6 +17,8 @@ import xeredi.argo.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class CargoDetailAction.
@@ -28,9 +29,11 @@ public final class CargoDetailAction extends CrudDetailAction<CargoVO> {
     private static final long serialVersionUID = 731400411604425450L;
 
     /** The i18n map. */
+    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /** The rgla list. */
+    @Getter
     private List<ReglaVO> rglaList;
 
     /**
@@ -58,24 +61,6 @@ public final class CargoDetailAction extends CrudDetailAction<CargoVO> {
         rglaCriterio.setIdioma(getIdioma());
 
         rglaList = rglaBO.selectList(rglaCriterio);
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
-    }
-
-    /**
-     * Gets the rgla list.
-     *
-     * @return the rgla list
-     */
-    public List<ReglaVO> getRglaList() {
-        return rglaList;
     }
 
     /**

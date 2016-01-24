@@ -3,7 +3,10 @@ package xeredi.argo.http.controller.action.comun;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -23,6 +26,7 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 @ParentPackage("default")
 @Result(type = "json", params = { "excludeNullProperties", "true", "ignoreHierarchy", "false", "enableGZIP", "true" })
+@ToString
 public abstract class BaseAction extends ActionSupport {
 
     /** The Constant serialVersionUID. */
@@ -47,26 +51,22 @@ public abstract class BaseAction extends ActionSupport {
         load;
     }
 
-    /** The idioma. */
-    protected final String idioma = ConfigurationProxy.getString(ConfigurationKey.language_default);
-
-    /** The available languages. */
-    protected final String[] availableLanguages = ConfigurationProxy
-            .getStringArray(ConfigurationKey.language_available);
-
     /** The bundle. */
     private final ResourceBundle bundle = PorticoResourceBundle.getBundle(getLocale());
 
-    /** The response code. */
-    protected String responseCode;
+    /** The idioma. */
+    @Getter
+    protected final String idioma = ConfigurationProxy.getString(ConfigurationKey.language_default);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
+    /** The available languages. */
+    @Getter
+    protected final String[] availableLanguages = ConfigurationProxy
+    .getStringArray(ConfigurationKey.language_available);
+
+    /** The response code. */
+    @Getter
+    @Setter
+    protected String responseCode;
 
     /**
      * {@inheritDoc}
@@ -98,15 +98,6 @@ public abstract class BaseAction extends ActionSupport {
 
     // get / set
     /**
-     * Gets the idioma.
-     *
-     * @return the idioma
-     */
-    public final String getIdioma() {
-        return idioma;
-    }
-
-    /**
      * Gets the sprt id.
      *
      * @return the sprt id
@@ -114,15 +105,6 @@ public abstract class BaseAction extends ActionSupport {
     public final Long getSprtId() {
         // FIXME !!!
         return 36000L;
-    }
-
-    /**
-     * Gets the available languages.
-     *
-     * @return the available languages
-     */
-    public final String[] getAvailableLanguages() {
-        return availableLanguages;
     }
 
     /**
@@ -164,24 +146,5 @@ public abstract class BaseAction extends ActionSupport {
     @Override
     public final String getText(final String key) {
         return bundle.getString(key);
-    }
-
-    /**
-     * Gets the response code.
-     *
-     * @return the response code
-     */
-    public final String getResponseCode() {
-        return responseCode;
-    }
-
-    /**
-     * Sets the response code.
-     *
-     * @param key
-     *            the new response code
-     */
-    public void setResponseCode(final String key) {
-        responseCode = key;
     }
 }

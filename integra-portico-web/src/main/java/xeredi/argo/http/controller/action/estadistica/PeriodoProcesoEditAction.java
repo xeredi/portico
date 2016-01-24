@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.estadistica;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -20,6 +21,7 @@ public final class PeriodoProcesoEditAction extends CrudEditAction<PeriodoProces
     private static final long serialVersionUID = -505923029249050738L;
 
     /** The sprt list. */
+    @Getter
     private List<SuperpuertoVO> sprtList;
 
     /**
@@ -41,15 +43,6 @@ public final class PeriodoProcesoEditAction extends CrudEditAction<PeriodoProces
         sprtCriterioVO.setIdioma(getIdioma());
 
         sprtList = sprtBO.selectList(sprtCriterioVO);
-    }
-
-    /**
-     * Gets the sprt list.
-     *
-     * @return the sprt list
-     */
-    public List<SuperpuertoVO> getSprtList() {
-        return sprtList;
     }
 
     /**

@@ -3,6 +3,9 @@ package xeredi.argo.http.controller.action.comun;
 import java.io.IOException;
 import java.io.InputStream;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -26,9 +29,11 @@ public abstract class GridXlsExportAction<C extends BaseCriterioVO> extends Base
     private static final long serialVersionUID = 2203318775060986047L;
 
     /** The criterio. */
+    @Setter
     protected C criterio;
 
     /** The stream. */
+    @Getter
     protected InputStream stream;
 
     /**
@@ -63,25 +68,6 @@ public abstract class GridXlsExportAction<C extends BaseCriterioVO> extends Base
      * @return the filename
      */
     public abstract String getFilename();
-
-    /**
-     * Sets the criterio.
-     *
-     * @param value
-     *            the new criterio
-     */
-    public final void setCriterio(final C value) {
-        this.criterio = value;
-    }
-
-    /**
-     * Gets the stream.
-     *
-     * @return the stream
-     */
-    public final InputStream getStream() {
-        return stream;
-    }
 
     /**
      * {@inheritDoc}

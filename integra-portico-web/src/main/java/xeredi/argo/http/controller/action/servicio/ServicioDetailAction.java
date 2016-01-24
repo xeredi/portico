@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.servicio;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemDetailAction;
 import xeredi.argo.model.comun.bo.ArchivoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -26,9 +27,11 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
     private static final long serialVersionUID = -8504526234230863854L;
 
     /** The arin list. */
+    @Getter
     private List<ArchivoInfoVO> arinList;
 
     /** The srtr list. */
+    @Getter
     private List<ItemTramiteVO> ittrList;
 
     /**
@@ -58,23 +61,5 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
 
             ittrList = ittrBO.selectList(ittrCriterio);
         }
-    }
-
-    /**
-     * Gets the arin list.
-     *
-     * @return the arin list
-     */
-    public List<ArchivoInfoVO> getArinList() {
-        return arinList;
-    }
-
-    /**
-     * Gets the srtr list.
-     *
-     * @return the srtr list
-     */
-    public List<ItemTramiteVO> getIttrList() {
-        return ittrList;
     }
 }

@@ -1,7 +1,6 @@
 package xeredi.argo.http.controller.action.facturacion;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -13,6 +12,8 @@ import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionDetalleSaveAction.
@@ -23,6 +24,7 @@ public final class ValoracionDetalleSaveAction extends CrudSaveAction<Valoracion
     private static final long serialVersionUID = 1354136282476244950L;
 
     /** The vlrl. */
+    @Setter
     private ValoracionLineaVO vlrl;
 
     /**
@@ -77,16 +79,6 @@ public final class ValoracionDetalleSaveAction extends CrudSaveAction<Valoracion
 
         FieldValidator.validateRequired(this, MessageI18nKey.vlrd_importe, model.getImporte());
 
-    }
-
-    /**
-     * Sets the vlrl.
-     *
-     * @param value
-     *            the new vlrl
-     */
-    public void setVlrl(final ValoracionLineaVO value) {
-        vlrl = value;
     }
 
     /**

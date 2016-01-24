@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.ListAction;
 import xeredi.argo.model.comun.bo.MessageBO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -19,6 +20,7 @@ public final class MessageI18nListAction extends ListAction<MessageI18nKey> {
     private static final long serialVersionUID = 9186179634462884228L;
 
     /** The key map. */
+    @Getter
     private Map<MessageI18nKey, Map<String, String>> keyMap;
 
     /**
@@ -54,15 +56,6 @@ public final class MessageI18nListAction extends ListAction<MessageI18nKey> {
     // }
 
     // get / set
-    /**
-     * Gets the key map.
-     *
-     * @return the key map
-     */
-    public Map<MessageI18nKey, Map<String, String>> getKeyMap() {
-        return keyMap;
-    }
-
     /**
      * {@inheritDoc}
      */

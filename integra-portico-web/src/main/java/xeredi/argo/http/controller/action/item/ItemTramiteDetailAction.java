@@ -1,7 +1,6 @@
 package xeredi.argo.http.controller.action.item;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.bo.ItemTramiteBO;
@@ -24,6 +23,8 @@ import xeredi.argo.model.servicio.bo.SubservicioBOFactory;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ItemTramiteDetailAction.
@@ -34,12 +35,15 @@ public final class ItemTramiteDetailAction extends CrudDetailAction<ItemTramiteV
     private static final long serialVersionUID = -2680320980030804227L;
 
     /** The trmt. */
+    @Getter
     protected TramiteDetailVO trmt;
 
     /** The enti. */
+    @Getter
     protected AbstractEntidadDetailVO enti;
 
     /** The item. */
+    @Getter
     protected ItemVO item;
 
     /**
@@ -81,33 +85,6 @@ public final class ItemTramiteDetailAction extends CrudDetailAction<ItemTramiteV
         default:
             throw new Error("Invalid entity type: " + tipoEntidad);
         }
-    }
-
-    /**
-     * Gets the trmt.
-     *
-     * @return the trmt
-     */
-    public TramiteDetailVO getTrmt() {
-        return trmt;
-    }
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public AbstractEntidadDetailVO getEnti() {
-        return enti;
-    }
-
-    /**
-     * Gets the item.
-     *
-     * @return the item
-     */
-    public ItemVO getItem() {
-        return item;
     }
 
     /**

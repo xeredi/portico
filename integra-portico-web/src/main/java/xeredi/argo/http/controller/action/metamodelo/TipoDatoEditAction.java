@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -32,18 +33,23 @@ public final class TipoDatoEditAction extends CrudEditAction<TipoDatoVO> {
     private static final long serialVersionUID = 6202167642910897080L;
 
     /** The i18n map. */
+    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /** The tpht list. */
+    @Getter
     private TipoHtml[] tphtList;
 
     /** The tpel list. */
+    @Getter
     private TipoElemento[] tpelList;
 
     /** The tppr list. */
+    @Getter
     private List<TipoParametroVO> tpprList;
 
     /** The tpsr list. */
+    @Getter
     private List<TipoServicioVO> tpsrList;
 
     /**
@@ -84,51 +90,6 @@ public final class TipoDatoEditAction extends CrudEditAction<TipoDatoVO> {
         tpsrCriterio.setIdioma(idioma);
 
         tpsrList = tpsrBO.selectList(tpsrCriterio);
-    }
-
-    /**
-     * Gets the tpht list.
-     *
-     * @return the tpht list
-     */
-    public TipoHtml[] getTphtList() {
-        return tphtList;
-    }
-
-    /**
-     * Gets the tpel list.
-     *
-     * @return the tpel list
-     */
-    public TipoElemento[] getTpelList() {
-        return tpelList;
-    }
-
-    /**
-     * Gets the tppr list.
-     *
-     * @return the tppr list
-     */
-    public List<TipoParametroVO> getTpprList() {
-        return tpprList;
-    }
-
-    /**
-     * Gets the tpsr list.
-     *
-     * @return the tpsr list
-     */
-    public List<TipoServicioVO> getTpsrList() {
-        return tpsrList;
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
     }
 
     /**

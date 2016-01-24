@@ -2,8 +2,7 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.List;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
@@ -17,6 +16,8 @@ import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoCargoEditAction.
@@ -27,6 +28,7 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
     private static final long serialVersionUID = 1292421221150084862L;
 
     /** The crgo list. */
+    @Getter
     private List<CargoVO> crgoList;
 
     /**
@@ -76,15 +78,6 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
 
             crgoList = crgoBO.selectList(crgoCriterio);
         }
-    }
-
-    /**
-     * Gets the crgo list.
-     *
-     * @return the crgo list
-     */
-    public List<CargoVO> getCrgoList() {
-        return crgoList;
     }
 
     /**

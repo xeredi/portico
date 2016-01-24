@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.administracion.puerto;
 
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
@@ -21,6 +22,7 @@ public final class SuperpuertoEditAction extends CrudEditAction<SuperpuertoVO> {
     private static final long serialVersionUID = -2952897387558260349L;
 
     /** The i18n map. */
+    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -42,15 +44,6 @@ public final class SuperpuertoEditAction extends CrudEditAction<SuperpuertoVO> {
     @Override
     public void doLoadDependencies() throws ApplicationException {
         // noop
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public final Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
     }
 
     /**

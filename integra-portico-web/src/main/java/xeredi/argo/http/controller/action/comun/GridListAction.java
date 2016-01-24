@@ -1,11 +1,13 @@
 package xeredi.argo.http.controller.action.comun;
 
-import com.google.common.base.Preconditions;
-import com.opensymphony.xwork2.ModelDriven;
-
+import lombok.Getter;
+import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
 import xeredi.util.pagination.PaginatedList;
+
+import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -17,7 +19,7 @@ import xeredi.util.pagination.PaginatedList;
  *            the generic type
  */
 public abstract class GridListAction<C extends BaseCriterioVO, R> extends BaseAction implements ModelDriven<C>,
-        ProtectedAction {
+ProtectedAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6646875422640202469L;
@@ -26,15 +28,21 @@ public abstract class GridListAction<C extends BaseCriterioVO, R> extends BaseAc
     public static final int ROWS_PER_PAGE_DEFAULT = 20;
 
     /** The model. */
+    @Getter
+    @Setter
     protected C model;
 
     /** The result list. */
+    @Getter
     protected PaginatedList<R> resultList;
 
     /** The page. */
+    @Getter
+    @Setter
     protected int page = PaginatedList.FIRST_PAGE;
 
     /** The limit. */
+    @Setter
     protected int limit = ROWS_PER_PAGE_DEFAULT;
 
     /**
@@ -56,62 +64,6 @@ public abstract class GridListAction<C extends BaseCriterioVO, R> extends BaseAc
      *             the application exception
      */
     public abstract void doList() throws ApplicationException;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final C getModel() {
-        return model;
-    }
-
-    /**
-     * Sets the model.
-     *
-     * @param value
-     *            the new model
-     */
-    public final void setModel(final C value) {
-        this.model = value;
-    }
-
-    /**
-     * Gets the result list.
-     *
-     * @return the result list
-     */
-    public final PaginatedList<R> getResultList() {
-        return resultList;
-    }
-
-    /**
-     * Gets the page.
-     *
-     * @return the page
-     */
-    public final int getPage() {
-        return page;
-    }
-
-    /**
-     * Sets the page.
-     *
-     * @param value
-     *            the new page
-     */
-    public final void setPage(final int value) {
-        page = value;
-    }
-
-    /**
-     * Sets the limit.
-     *
-     * @param value
-     *            the new limit
-     */
-    public final void setLimit(final int value) {
-        limit = value;
-    }
 
     /**
      * Gets the offset.

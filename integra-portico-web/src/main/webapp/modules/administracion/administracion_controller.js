@@ -187,7 +187,7 @@ function SuperpuertoEditController($route, $routeParams, pageTitleService,
     vm.cancel = cancel;
 
     function save() {
-        SuperpuertoService.saveI18n(vm.accion, vm.sprt, vm.i18nMap).then(
+        SuperpuertoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
                     SuperpuertoService.redirectAfterSave(vm.accion, data.model,
                             "superpuerto-detail");
@@ -285,7 +285,7 @@ function PuertoEditController($route, $routeParams, pageTitleService,
     vm.cancel = cancel;
 
     function save() {
-        PuertoService.saveI18n(vm.accion, vm.prto, vm.i18nMap).then(
+        PuertoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
                     PuertoService.redirectAfterSave(vm.accion, data.model,
                             "puerto-detail");

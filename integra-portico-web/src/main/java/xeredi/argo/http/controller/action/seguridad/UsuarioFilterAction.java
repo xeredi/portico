@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.seguridad;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
@@ -23,9 +24,11 @@ public final class UsuarioFilterAction extends GridFilterAction<UsuarioCriterioV
     private static final long serialVersionUID = -6193819984435577729L;
 
     /** The sprt list. */
+    @Getter
     private List<SuperpuertoVO> sprtList;
 
     /** The prto list. */
+    @Getter
     private List<PuertoVO> prtoList;
 
     /**
@@ -57,29 +60,10 @@ public final class UsuarioFilterAction extends GridFilterAction<UsuarioCriterioV
     }
 
     /**
-     * Gets the sprt list.
-     *
-     * @return the sprt list
-     */
-    public List<SuperpuertoVO> getSprtList() {
-        return sprtList;
-    }
-
-    /**
-     * Gets the prto list.
-     *
-     * @return the prto list
-     */
-    public List<PuertoVO> getPrtoList() {
-        return prtoList;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public AccionPrefix getAccnPrefix() {
         return AccionPrefix.usro;
     }
-
 }

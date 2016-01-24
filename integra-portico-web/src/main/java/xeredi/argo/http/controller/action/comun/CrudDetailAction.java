@@ -1,10 +1,12 @@
 package xeredi.argo.http.controller.action.comun;
 
-import com.google.common.base.Preconditions;
-import com.opensymphony.xwork2.ModelDriven;
-
+import lombok.Getter;
+import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.Versionable;
+
+import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -19,6 +21,8 @@ public abstract class CrudDetailAction<T> extends BaseAction implements ModelDri
     private static final long serialVersionUID = 4674010824776069801L;
 
     /** The model. */
+    @Getter
+    @Setter
     protected T model;
 
     /**
@@ -42,24 +46,6 @@ public abstract class CrudDetailAction<T> extends BaseAction implements ModelDri
      *             the application exception
      */
     public abstract void doDetail() throws ApplicationException;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final T getModel() {
-        return model;
-    }
-
-    /**
-     * Sets the model.
-     *
-     * @param value
-     *            the new model
-     */
-    public final void setModel(final T value) {
-        this.model = value;
-    }
 
     /**
      * {@inheritDoc}

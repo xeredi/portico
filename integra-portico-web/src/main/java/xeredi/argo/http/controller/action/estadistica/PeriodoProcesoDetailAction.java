@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.estadistica;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.estadistica.bo.PeriodoProcesoBO;
@@ -22,6 +23,7 @@ public final class PeriodoProcesoDetailAction extends CrudDetailAction<PeriodoPr
     private static final long serialVersionUID = -4868698080267704484L;
 
     /** The tpes list. */
+    @Getter
     private List<LabelValueVO> tpesList;
 
     /**
@@ -35,15 +37,6 @@ public final class PeriodoProcesoDetailAction extends CrudDetailAction<PeriodoPr
 
         model = peprBO.select(model.getId());
         tpesList = TipoEstadisticaProxy.selectLabelValues();
-    }
-
-    /**
-     * Gets the tpes list.
-     *
-     * @return the tpes list
-     */
-    public List<LabelValueVO> getTpesList() {
-        return tpesList;
     }
 
     /**

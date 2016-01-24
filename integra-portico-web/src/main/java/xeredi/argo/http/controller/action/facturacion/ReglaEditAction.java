@@ -4,8 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -25,6 +24,8 @@ import xeredi.argo.model.metamodelo.vo.TipoSubservicioCriterioVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReglaEditAction.
@@ -34,12 +35,15 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
     private static final long serialVersionUID = -7473288340314527092L;
 
     /** The i18n map. */
+    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /** The enti facturable list. */
+    @Getter
     private List<LabelValueVO> entiFacturableList;
 
     /** The tipos. */
+    @Getter
     private ReglaTipo[] tipos;
 
     /**
@@ -110,33 +114,6 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
 
             entiFacturableList.addAll(tpssBO.selectLabelValues(tpssCriterioVO));
         }
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
-    }
-
-    /**
-     * Gets the enti facturable list.
-     *
-     * @return the enti facturable list
-     */
-    public List<LabelValueVO> getEntiFacturableList() {
-        return entiFacturableList;
-    }
-
-    /**
-     * Gets the tipos.
-     *
-     * @return the tipos
-     */
-    public ReglaTipo[] getTipos() {
-        return tipos;
     }
 
     /**

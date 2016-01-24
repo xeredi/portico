@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.facturacion;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
@@ -23,12 +24,15 @@ public final class ValoracionDetalleEditAction extends CrudEditAction<Valoracion
     private static final long serialVersionUID = 2216528521567482950L;
 
     /** The vlrl. */
+    @Getter
     private ValoracionLineaVO vlrl;
 
     /** The vlrl padre. */
+    @Getter
     private ValoracionLineaVO vlrlPadre;
 
     /** The aspc. */
+    @Getter
     private AspectoVO aspc;
 
     /**
@@ -80,33 +84,6 @@ public final class ValoracionDetalleEditAction extends CrudEditAction<Valoracion
     @Override
     public void doLoadDependencies() throws ApplicationException {
         // noop
-    }
-
-    /**
-     * Gets the vlrl.
-     *
-     * @return the vlrl
-     */
-    public ValoracionLineaVO getVlrl() {
-        return vlrl;
-    }
-
-    /**
-     * Gets the vlrl padre.
-     *
-     * @return the vlrl padre
-     */
-    public ValoracionLineaVO getVlrlPadre() {
-        return vlrlPadre;
-    }
-
-    /**
-     * Gets the aspc.
-     *
-     * @return the aspc
-     */
-    public AspectoVO getAspc() {
-        return aspc;
     }
 
     /**

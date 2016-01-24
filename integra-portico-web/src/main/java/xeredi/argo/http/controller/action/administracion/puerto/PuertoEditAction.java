@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.administracion.puerto;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.bo.PuertoBO;
@@ -27,9 +28,11 @@ public final class PuertoEditAction extends CrudEditAction<PuertoVO> {
     private static final long serialVersionUID = -2800418654791205407L;
 
     /** The i18n map. */
+    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /** The sprt list. */
+    @Getter
     private List<SuperpuertoVO> sprtList;
 
     /**
@@ -58,24 +61,6 @@ public final class PuertoEditAction extends CrudEditAction<PuertoVO> {
         sprtCriterio.setIdioma(idioma);
 
         sprtList = sprtBO.selectList(sprtCriterio);
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public final Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
-    }
-
-    /**
-     * Gets the sprt list.
-     *
-     * @return the sprt list
-     */
-    public final List<SuperpuertoVO> getSprtList() {
-        return sprtList;
     }
 
     /**

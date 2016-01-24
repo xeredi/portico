@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.ListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
@@ -23,6 +24,7 @@ public final class ServicioIndexAction extends ListAction<LabelValueVO> {
     private static final long serialVersionUID = -5523514529976849793L;
 
     /** {@link Map} de tipos de subservicio indexados por id de tipo de servicio. */
+    @Getter
     private Map<Long, List<LabelValueVO>> tpssMap;
 
     /**
@@ -44,16 +46,6 @@ public final class ServicioIndexAction extends ListAction<LabelValueVO> {
     }
 
     // get/set
-
-    /**
-     * Gets the tpss map.
-     *
-     * @return the tpss map
-     */
-    public Map<Long, List<LabelValueVO>> getTpssMap() {
-        return tpssMap;
-    }
-
     /**
      * {@inheritDoc}
      */

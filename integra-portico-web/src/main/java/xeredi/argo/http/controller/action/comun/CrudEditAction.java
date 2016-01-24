@@ -2,11 +2,13 @@ package xeredi.argo.http.controller.action.comun;
 
 import java.util.Calendar;
 
-import com.google.common.base.Preconditions;
-import com.opensymphony.xwork2.ModelDriven;
-
+import lombok.Getter;
+import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.Versionable;
+
+import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -21,9 +23,12 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
     private static final long serialVersionUID = 7147721554331909672L;
 
     /** The accion. */
+    @Setter
     protected ACCION_EDICION accion;
 
     /** The model. */
+    @Getter
+    @Setter
     protected T model;
 
     /**
@@ -66,34 +71,6 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
      *             the application exception
      */
     public abstract void doLoadDependencies() throws ApplicationException;
-
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public final void setAccion(final ACCION_EDICION value) {
-        this.accion = value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final T getModel() {
-        return model;
-    }
-
-    /**
-     * Sets the model.
-     *
-     * @param value
-     *            the new model
-     */
-    public final void setModel(final T value) {
-        this.model = value;
-    }
 
     /**
      * {@inheritDoc}

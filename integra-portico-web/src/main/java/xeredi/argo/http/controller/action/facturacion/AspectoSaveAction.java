@@ -2,6 +2,8 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.Map;
 
+import lombok.Setter;
+
 import org.apache.commons.validator.GenericValidator;
 
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
@@ -25,6 +27,7 @@ public final class AspectoSaveAction extends CrudSaveAction<AspectoVO> {
     private static final long serialVersionUID = 5347828326827355006L;
 
     /** The i18n map. */
+    @Setter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -117,16 +120,6 @@ public final class AspectoSaveAction extends CrudSaveAction<AspectoVO> {
             FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo6, model.getVersion().getCpathInfo6());
             FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo6, model.getVersion().getCgrpInfo6());
         }
-    }
-
-    /**
-     * Sets the i18n map.
-     *
-     * @param value
-     *            the value
-     */
-    public void setI18nMap(final Map<String, I18nVO> value) {
-        i18nMap = value;
     }
 
     /**

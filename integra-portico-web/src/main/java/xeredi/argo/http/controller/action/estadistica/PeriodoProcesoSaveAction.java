@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
@@ -28,6 +29,7 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<PeriodoProces
     private static final long serialVersionUID = 230657854894847117L;
 
     /** The sobreescribir. */
+    @Setter
     private Boolean sobreescribir;
 
     /**
@@ -49,7 +51,7 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<PeriodoProces
         switch (accion) {
         case load:
             final String foldername = ConfigurationProxy
-                    .getString(ConfigurationKey.estadistica_files_oppe_entrada_home);
+            .getString(ConfigurationKey.estadistica_files_oppe_entrada_home);
             final String filepath = foldername + "/" + model.getFilename() + ".zip";
             final File file = new File(filepath);
 
@@ -79,16 +81,6 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<PeriodoProces
         FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, model.getAnio());
         FieldValidator.validateRequired(this, MessageI18nKey.pepr_mes, model.getMes());
         FieldValidator.validateRequired(this, MessageI18nKey.pepr_sobreescribir, sobreescribir);
-    }
-
-    /**
-     * Sets the sobreescribir.
-     *
-     * @param value
-     *            the new sobreescribir
-     */
-    public void setSobreescribir(final Boolean value) {
-        sobreescribir = value;
     }
 
     /**

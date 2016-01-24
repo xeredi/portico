@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
@@ -21,6 +22,7 @@ public final class TipoServicioEditAction extends EntidadEditAction<TipoServicio
     private static final long serialVersionUID = -7056943059440927593L;
 
     /** The tpdt estado list. */
+    @Getter
     private List<LabelValueVO> tpdtEstadoList;
 
     /**
@@ -49,15 +51,6 @@ public final class TipoServicioEditAction extends EntidadEditAction<TipoServicio
         tpdtCriterio.setIdioma(idioma);
 
         tpdtEstadoList = tpdtBO.selectLabelValues(tpdtCriterio);
-    }
-
-    /**
-     * Gets the tpdt estado list.
-     *
-     * @return the tpdt estado list
-     */
-    public List<LabelValueVO> getTpdtEstadoList() {
-        return tpdtEstadoList;
     }
 
     /**

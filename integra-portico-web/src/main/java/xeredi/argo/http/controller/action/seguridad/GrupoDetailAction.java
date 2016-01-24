@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
@@ -29,15 +30,19 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
     private static final long serialVersionUID = -1779406545837488228L;
 
     /** The prefix list. */
+    @Getter
     private List<AccionPrefix> prefixList;
 
     /** The accn map. */
+    @Getter
     private Map<AccionPrefix, List<AccionVO>> accnMap;
 
     /** The enti list. */
+    @Getter
     private List<Long> entiList;
 
     /** The acen map. */
+    @Getter
     private Map<Long, List<AccionEntidadVO>> acenMap;
 
     /**
@@ -89,42 +94,6 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 
             acenMap.get(acen.getEntiId()).add(acen);
         }
-    }
-
-    /**
-     * Gets the prefix list.
-     *
-     * @return the prefix list
-     */
-    public List<AccionPrefix> getPrefixList() {
-        return prefixList;
-    }
-
-    /**
-     * Gets the accn map.
-     *
-     * @return the accn map
-     */
-    public Map<AccionPrefix, List<AccionVO>> getAccnMap() {
-        return accnMap;
-    }
-
-    /**
-     * Gets the enti list.
-     *
-     * @return the enti list
-     */
-    public List<Long> getEntiList() {
-        return entiList;
-    }
-
-    /**
-     * Gets the acen map.
-     *
-     * @return the acen map
-     */
-    public Map<Long, List<AccionEntidadVO>> getAcenMap() {
-        return acenMap;
     }
 
     /**

@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.EntidadEntidadBO;
@@ -24,6 +25,7 @@ public final class EntidadEntidadEditAction extends CrudEditAction<EntidadEntida
     private static final long serialVersionUID = 9070801193229242374L;
 
     /** The tppr list. */
+    @Getter
     private List<TipoSubservicioVO> tpssList;
 
     /**
@@ -60,15 +62,6 @@ public final class EntidadEntidadEditAction extends CrudEditAction<EntidadEntida
         tpssCriterio.setTpsrId(model.getEntiPadreId());
 
         tpssList = tpssBO.selectList(tpssCriterio);
-    }
-
-    /**
-     * Gets the tpss list.
-     *
-     * @return the tpss list
-     */
-    public List<TipoSubservicioVO> getTpssList() {
-        return tpssList;
     }
 
     /**

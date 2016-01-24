@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.item;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.vo.ItemVO;
@@ -17,12 +18,14 @@ import com.google.common.base.Preconditions;
  * @param <E>
  *            the element type
  */
-public abstract class ItemDetailAction<I extends ItemVO, E extends AbstractEntidadDetailVO> extends CrudDetailAction<I> implements ProtectedItemAction {
+public abstract class ItemDetailAction<I extends ItemVO, E extends AbstractEntidadDetailVO> extends CrudDetailAction<I>
+        implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5159354861110927934L;
 
     /** The enti. */
+    @Getter
     protected E enti;
 
     /**
@@ -44,15 +47,6 @@ public abstract class ItemDetailAction<I extends ItemVO, E extends AbstractEntid
      *             the application exception
      */
     public abstract void doSpecificDetail() throws ApplicationException;
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public final E getEnti() {
-        return enti;
-    }
 
     /**
      * {@inheritDoc}

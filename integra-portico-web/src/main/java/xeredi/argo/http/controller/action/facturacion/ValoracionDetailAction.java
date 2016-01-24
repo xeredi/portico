@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
@@ -28,15 +29,19 @@ public final class ValoracionDetailAction extends CrudDetailAction<ValoracionVO>
     private static final long serialVersionUID = 8955027989386166332L;
 
     /** The aspc. */
+    @Getter
     private AspectoVO aspc;
 
     /** The vlrg list. */
+    @Getter
     private List<ValoracionCargoVO> vlrgList;
 
     /** The vlri list. */
+    @Getter
     private List<ValoracionImpuestoVO> vlriList;
 
     /** The tpdt cod exencion. */
+    @Getter
     private TipoDatoVO tpdtCodExencion;
 
     /**
@@ -60,42 +65,6 @@ public final class ValoracionDetailAction extends CrudDetailAction<ValoracionVO>
         aspcCriterio.setFechaVigencia(model.getFref());
 
         aspc = aspcBO.selectObject(aspcCriterio);
-    }
-
-    /**
-     * Gets the aspc.
-     *
-     * @return the aspc
-     */
-    public AspectoVO getAspc() {
-        return aspc;
-    }
-
-    /**
-     * Gets the vlrg list.
-     *
-     * @return the vlrg list
-     */
-    public List<ValoracionCargoVO> getVlrgList() {
-        return vlrgList;
-    }
-
-    /**
-     * Gets the vlri list.
-     *
-     * @return the vlri list
-     */
-    public List<ValoracionImpuestoVO> getVlriList() {
-        return vlriList;
-    }
-
-    /**
-     * Gets the tpdt cod exencion.
-     *
-     * @return the tpdt cod exencion
-     */
-    public TipoDatoVO getTpdtCodExencion() {
-        return tpdtCodExencion;
     }
 
     /**

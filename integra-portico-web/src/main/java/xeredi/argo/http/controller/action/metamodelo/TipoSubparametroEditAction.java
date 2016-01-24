@@ -2,8 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.EntidadBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubparametroBO;
@@ -12,6 +11,8 @@ import xeredi.argo.model.metamodelo.vo.TipoEntidad;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -22,6 +23,7 @@ public final class TipoSubparametroEditAction extends EntidadEditAction<TipoSubp
     private static final long serialVersionUID = -7770071461552035741L;
 
     /** The tppr list. */
+    @Getter
     private List<LabelValueVO> tpprList;
 
     /**
@@ -52,15 +54,6 @@ public final class TipoSubparametroEditAction extends EntidadEditAction<TipoSubp
         entiCriterioVO.setIdioma(idioma);
 
         tpprList = entiBO.selectLabelValues(entiCriterioVO);
-    }
-
-    /**
-     * Gets the tppr list.
-     *
-     * @return the tppr list
-     */
-    public List<LabelValueVO> getTpprList() {
-        return tpprList;
     }
 
     /**

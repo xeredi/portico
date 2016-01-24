@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.comun;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 
 // TODO: Auto-generated Javadoc
@@ -17,6 +18,7 @@ public abstract class ListAction<R> extends BaseAction implements ProtectedActio
     private static final long serialVersionUID = -6821401412110909190L;
 
     /** The result list. */
+    @Getter
     protected List<R> resultList;
 
     /**
@@ -34,15 +36,6 @@ public abstract class ListAction<R> extends BaseAction implements ProtectedActio
      *             the application exception
      */
     public abstract void doList() throws ApplicationException;
-
-    /**
-     * Gets the result list.
-     *
-     * @return the result list
-     */
-    public final List<R> getResultList() {
-        return resultList;
-    }
 
     /**
      * {@inheritDoc}

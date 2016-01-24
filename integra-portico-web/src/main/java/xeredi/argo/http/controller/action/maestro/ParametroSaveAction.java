@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.maestro;
 
 import java.util.Map;
 
+import lombok.Setter;
 import xeredi.argo.http.controller.action.item.ItemSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -23,6 +24,7 @@ public final class ParametroSaveAction extends ItemSaveAction<ParametroVO> {
     private static final long serialVersionUID = 8612808873765455744L;
 
     /** The p18n map. */
+    @Setter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -87,15 +89,5 @@ public final class ParametroSaveAction extends ItemSaveAction<ParametroVO> {
         default:
             throw new Error("Accion no valida: " + accion);
         }
-    }
-
-    /**
-     * Sets the i18n map.
-     *
-     * @param value
-     *            the value
-     */
-    public void setI18nMap(final Map<String, I18nVO> value) {
-        i18nMap = value;
     }
 }

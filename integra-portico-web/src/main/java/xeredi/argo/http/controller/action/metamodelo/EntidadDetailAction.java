@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -40,21 +41,27 @@ public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetai
     private static final long serialVersionUID = -2541307413836565323L;
 
     /** The i18n map. */
+    @Getter
     protected Map<String, I18nVO> i18nMap;
 
     /** The entd list. */
+    @Getter
     protected List<EntidadTipoDatoVO> entdList;
 
     /** The engd list. */
+    @Getter
     protected List<EntidadGrupoDatoVO> engdList;
 
     /** The enac list. */
+    @Getter
     protected List<EntidadAccionVO> enacList;
 
     /** The enag list. */
+    @Getter
     protected List<EntidadAccionGridVO> enagList;
 
     /** The acen list. */
+    @Getter
     protected List<AccionEntidadVO> acenList;
 
     /**
@@ -115,58 +122,4 @@ public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetai
      *             the application exception
      */
     public abstract void doSpecificDetail() throws ApplicationException;
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public final Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
-    }
-
-    /**
-     * Gets the entd list.
-     *
-     * @return the entd list
-     */
-    public final List<EntidadTipoDatoVO> getEntdList() {
-        return entdList;
-    }
-
-    /**
-     * Gets the engd list.
-     *
-     * @return the engd list
-     */
-    public final List<EntidadGrupoDatoVO> getEngdList() {
-        return engdList;
-    }
-
-    /**
-     * Gets the enac list.
-     *
-     * @return the enac list
-     */
-    public final List<EntidadAccionVO> getEnacList() {
-        return enacList;
-    }
-
-    /**
-     * Gets the enag list.
-     *
-     * @return the enag list
-     */
-    public final List<EntidadAccionGridVO> getEnagList() {
-        return enagList;
-    }
-
-    /**
-     * Gets the acen list.
-     *
-     * @return the acen list
-     */
-    public final List<AccionEntidadVO> getAcenList() {
-        return acenList;
-    }
 }

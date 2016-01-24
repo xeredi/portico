@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.servicio;
 import java.util.Calendar;
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemEditAction;
 import xeredi.argo.http.util.FieldFiller;
 import xeredi.argo.model.comun.bo.PuertoBO;
@@ -27,6 +28,7 @@ public final class ServicioEditAction extends ItemEditAction<ServicioVO, TipoSer
     private static final long serialVersionUID = -8810469278894148887L;
 
     /** The prto list. */
+    @Getter
     private List<PuertoVO> prtoList;
 
     /**
@@ -77,14 +79,5 @@ public final class ServicioEditAction extends ItemEditAction<ServicioVO, TipoSer
         prtoCriterio.setIdioma(getIdioma());
 
         prtoList = prtoBO.selectList(prtoCriterio);
-    }
-
-    /**
-     * Gets the prto list.
-     *
-     * @return the prto list
-     */
-    public List<PuertoVO> getPrtoList() {
-        return prtoList;
     }
 }

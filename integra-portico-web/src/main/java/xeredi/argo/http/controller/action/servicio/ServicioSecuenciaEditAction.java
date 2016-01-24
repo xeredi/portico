@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.servicio;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -27,9 +28,11 @@ public final class ServicioSecuenciaEditAction extends CrudEditAction<ServicioSe
     private static final long serialVersionUID = 7265649887754786022L;
 
     /** The prto list. */
+    @Getter
     private List<PuertoVO> prtoList;
 
     /** The tpsr list. */
+    @Getter
     private List<TipoServicioVO> tpsrList;
 
     /**
@@ -75,24 +78,6 @@ public final class ServicioSecuenciaEditAction extends CrudEditAction<ServicioSe
         tpsrCriterio.setIdioma(getIdioma());
 
         tpsrList = tpsrBO.selectList(tpsrCriterio);
-    }
-
-    /**
-     * Gets the prto list.
-     *
-     * @return the prto list
-     */
-    public List<PuertoVO> getPrtoList() {
-        return prtoList;
-    }
-
-    /**
-     * Gets the tpsr list.
-     *
-     * @return the tpsr list
-     */
-    public List<TipoServicioVO> getTpsrList() {
-        return tpsrList;
     }
 
     /**

@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.servicio.manifiesto;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
@@ -19,6 +20,7 @@ public final class ManifiestoTotalDetailAction extends CrudDetailAction<Servicio
     private static final long serialVersionUID = -3964457625490510954L;
 
     /** The resumen. */
+    @Getter
     private ResumenTotalesVO resumen;
 
     /**
@@ -32,15 +34,6 @@ public final class ManifiestoTotalDetailAction extends CrudDetailAction<Servicio
 
         model = maniBO.select(model.getId(), idioma);
         resumen = maniBO.selectResumen(model.getId());
-    }
-
-    /**
-     * Gets the resumen.
-     *
-     * @return the resumen
-     */
-    public ResumenTotalesVO getResumen() {
-        return resumen;
     }
 
     /**

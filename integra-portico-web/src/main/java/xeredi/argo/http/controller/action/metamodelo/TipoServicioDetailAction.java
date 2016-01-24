@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.EntidadBO;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
@@ -26,12 +27,15 @@ public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServ
     private static final long serialVersionUID = 3574420037025529065L;
 
     /** The tpss list. */
+    @Getter
     private List<TipoSubservicioVO> subentiList;
 
     /** The enti hijas list. */
+    @Getter
     private List<EntidadVO> entiHijasList;
 
     /** The trmt list. */
+    @Getter
     private List<TramiteVO> trmtList;
 
     /**
@@ -68,33 +72,6 @@ public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServ
         trmtCriterio.setIdioma(idioma);
 
         trmtList = trmtBO.selectList(trmtCriterio);
-    }
-
-    /**
-     * Gets the subenti list.
-     *
-     * @return the subenti list
-     */
-    public List<TipoSubservicioVO> getSubentiList() {
-        return subentiList;
-    }
-
-    /**
-     * Gets the enti hijas list.
-     *
-     * @return the enti hijas list
-     */
-    public List<EntidadVO> getEntiHijasList() {
-        return entiHijasList;
-    }
-
-    /**
-     * Gets the trmt list.
-     *
-     * @return the trmt list
-     */
-    public List<TramiteVO> getTrmtList() {
-        return trmtList;
     }
 
     /**

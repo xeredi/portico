@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
 import xeredi.argo.model.metamodelo.bo.TipoParametroBO;
@@ -21,6 +22,7 @@ public final class TipoParametroEditAction extends EntidadEditAction<TipoParamet
     private static final long serialVersionUID = 8635600431187631918L;
 
     /** The tpdt nombre list. */
+    @Getter
     private List<LabelValueVO> tpdtNombreList;
 
     /**
@@ -47,15 +49,6 @@ public final class TipoParametroEditAction extends EntidadEditAction<TipoParamet
         tpdtCriterio.setIdioma(idioma);
 
         tpdtNombreList = tpdtBO.selectLabelValues(tpdtCriterio);
-    }
-
-    /**
-     * Gets the tpdt nombre list.
-     *
-     * @return the tpdt nombre list
-     */
-    public List<LabelValueVO> getTpdtNombreList() {
-        return tpdtNombreList;
     }
 
     /**

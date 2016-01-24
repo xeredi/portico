@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.estadistica;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -20,6 +21,7 @@ public final class PeriodoProcesoFilterAction extends GridFilterAction<PeriodoPr
     private static final long serialVersionUID = 4100651934689033353L;
 
     /** The subps. */
+    @Getter
     private List<SuperpuertoVO> sprtList;
 
     /**
@@ -41,15 +43,6 @@ public final class PeriodoProcesoFilterAction extends GridFilterAction<PeriodoPr
         sprtCriterio.setIdioma(idioma);
 
         sprtList = sprtBO.selectList(sprtCriterio);
-    }
-
-    /**
-     * Gets the sprt list.
-     *
-     * @return the sprt list
-     */
-    public List<SuperpuertoVO> getSprtList() {
-        return sprtList;
     }
 
     /**

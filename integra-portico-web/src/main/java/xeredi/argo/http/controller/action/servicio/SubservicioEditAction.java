@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
@@ -28,6 +29,7 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
     private static final long serialVersionUID = -3286199992331373729L;
 
     /** The item padres map. */
+    @Getter
     private Map<Long, LabelValueVO> itemPadresMap;
 
     /**
@@ -109,14 +111,5 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
     @Override
     public void doLoadSpecificDependencies() throws ApplicationException {
         // noop
-    }
-
-    /**
-     * Gets the item padres map.
-     *
-     * @return the item padres map
-     */
-    public Map<Long, LabelValueVO> getItemPadresMap() {
-        return itemPadresMap;
     }
 }

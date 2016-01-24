@@ -53,10 +53,8 @@ public class FacturadorBO {
     /**
      * Facturar valoraciones.
      *
-     * @param vlrcIds
-     *            the vlrc ids
-     * @param aspcId
-     *            the aspc id
+     * @param vgrpCriterio
+     *            the vgrp criterio
      * @param fcsrId
      *            the fcsr id
      * @param fechaFacturacion

@@ -219,8 +219,8 @@ public final class GrupoBO {
     /**
      * Select object.
      *
-     * @param grpoCriterio
-     *            the grpo criterio
+     * @param id
+     *            the id
      * @return the grupo vo
      * @throws InstanceNotFoundException
      *             the instance not found exception

@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.maestro;
 
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemDetailAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -23,6 +24,7 @@ public final class ParametroDetailAction extends ItemDetailAction<ParametroVO, T
     private static final long serialVersionUID = 6639690925171727021L;
 
     /** The i18n map. */
+    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -39,14 +41,5 @@ public final class ParametroDetailAction extends ItemDetailAction<ParametroVO, T
         if (enti.getEnti().isI18n()) {
             i18nMap = I18nBO.selectMap(I18nPrefix.prvr, model.getVersion().getId());
         }
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
     }
 }

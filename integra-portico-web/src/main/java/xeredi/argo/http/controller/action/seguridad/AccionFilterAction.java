@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.seguridad;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.seguridad.bo.GrupoBO;
@@ -20,9 +21,11 @@ public final class AccionFilterAction extends GridFilterAction<AccionCriterioVO>
     private static final long serialVersionUID = 1741238545886942803L;
 
     /** The prefix list. */
+    @Getter
     private AccionPrefix[] prefixList;
 
     /** The grpo list. */
+    @Getter
     private List<GrupoVO> grpoList;
 
     /**
@@ -44,24 +47,6 @@ public final class AccionFilterAction extends GridFilterAction<AccionCriterioVO>
         final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
 
         grpoList = grpoBO.selectList(grpoCriterio);
-    }
-
-    /**
-     * Gets the prefix list.
-     *
-     * @return the prefix list
-     */
-    public AccionPrefix[] getPrefixList() {
-        return prefixList;
-    }
-
-    /**
-     * Gets the grpo list.
-     *
-     * @return the grpo list
-     */
-    public List<GrupoVO> getGrpoList() {
-        return grpoList;
     }
 
     /**

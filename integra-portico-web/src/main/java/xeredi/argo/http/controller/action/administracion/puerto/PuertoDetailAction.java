@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.administracion.puerto;
 
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.bo.PuertoBO;
@@ -23,6 +24,7 @@ public final class PuertoDetailAction extends CrudDetailAction<PuertoVO> {
     private static final long serialVersionUID = -8390167251326279336L;
 
     /** The i18n map. */
+    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -36,15 +38,6 @@ public final class PuertoDetailAction extends CrudDetailAction<PuertoVO> {
 
         model = prtoBO.select(model.getId(), idioma);
         i18nMap = I18nBO.selectMap(I18nPrefix.prto, model.getId());
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public final Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
     }
 
     /**

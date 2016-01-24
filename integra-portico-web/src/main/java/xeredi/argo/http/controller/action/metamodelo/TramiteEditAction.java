@@ -2,8 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -21,6 +20,8 @@ import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class TramiteEditAction.
@@ -31,9 +32,11 @@ public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
     private static final long serialVersionUID = 5189072539193429710L;
 
     /** The i18n map. */
+    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /** The enti. */
+    @Getter
     private TipoDatoVO tpdtEstado;
 
     /**
@@ -93,24 +96,6 @@ public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
         default:
             throw new Error("Invalid Entity Type: " + enti.getTipo().name());
         }
-    }
-
-    /**
-     * Gets the tpdt estado.
-     *
-     * @return the tpdt estado
-     */
-    public TipoDatoVO getTpdtEstado() {
-        return tpdtEstado;
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
     }
 
     /**

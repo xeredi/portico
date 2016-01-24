@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -27,9 +28,11 @@ public final class AspectoDetailAction extends CrudDetailAction<AspectoVO> {
     private static final long serialVersionUID = -1363256002707100032L;
 
     /** The i18n map. */
+    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /** The ascr list. */
+    @Getter
     private List<AspectoCargoVO> ascrList;
 
     /**
@@ -52,24 +55,6 @@ public final class AspectoDetailAction extends CrudDetailAction<AspectoVO> {
         ascrCriterio.setIdioma(idioma);
 
         ascrList = ascrBO.selectList(ascrCriterio);
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
-    }
-
-    /**
-     * Gets the ascr list.
-     *
-     * @return the ascr list
-     */
-    public List<AspectoCargoVO> getAscrList() {
-        return ascrList;
     }
 
     /**

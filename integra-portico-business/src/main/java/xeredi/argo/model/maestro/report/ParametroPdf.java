@@ -108,12 +108,12 @@ public final class ParametroPdf extends BasePdf {
     /**
      * Gets the subreport.
      *
-     * @param entiVO
-     *            the enti vo
-     * @param prmtVO
-     *            the prmt vo
-     * @param engdId
-     *            the engd id
+     * @param entiDetail
+     *            the enti detail
+     * @param item
+     *            the item
+     * @param i18nMap
+     *            the i18n map
      * @return the subreport
      */
     private JasperReportBuilder getSubreport(final TipoParametroDetailVO entiDetail, final ParametroVO item,

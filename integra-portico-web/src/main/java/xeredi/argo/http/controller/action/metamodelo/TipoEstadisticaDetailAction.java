@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
 import xeredi.argo.model.metamodelo.bo.TipoEstadisticaBO;
@@ -20,6 +21,7 @@ public final class TipoEstadisticaDetailAction extends EntidadDetailAction<TipoE
     private static final long serialVersionUID = 8074035967447249323L;
 
     /** The cmag list. */
+    @Getter
     private List<CampoAgregacionVO> cmagList;
 
     /**
@@ -38,15 +40,6 @@ public final class TipoEstadisticaDetailAction extends EntidadDetailAction<TipoE
         cmagCriterio.setIdioma(idioma);
 
         cmagList = cmagBO.selectList(cmagCriterio);
-    }
-
-    /**
-     * Gets the cmag list.
-     *
-     * @return the cmag list
-     */
-    public List<CampoAgregacionVO> getCmagList() {
-        return cmagList;
     }
 
     /**

@@ -2,8 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
@@ -12,6 +11,8 @@ import xeredi.argo.model.metamodelo.vo.TipoElemento;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -23,6 +24,7 @@ public final class TipoSubservicioEditAction extends EntidadEditAction<TipoSubse
     private static final long serialVersionUID = 5529476683109631764L;
 
     /** The tpdt estado list. */
+    @Getter
     private List<LabelValueVO> tpdtEstadoList;
 
     /**
@@ -51,15 +53,6 @@ public final class TipoSubservicioEditAction extends EntidadEditAction<TipoSubse
         tpdtCriterio.setIdioma(idioma);
 
         tpdtEstadoList = tpdtBO.selectLabelValues(tpdtCriterio);
-    }
-
-    /**
-     * Gets the tpdt estado list.
-     *
-     * @return the tpdt estado list
-     */
-    public List<LabelValueVO> getTpdtEstadoList() {
-        return tpdtEstadoList;
     }
 
     /**

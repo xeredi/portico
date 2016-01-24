@@ -65,6 +65,8 @@ public final class ValoracionPdf extends BasePdf {
      *
      * @param vlrc
      *            the vlrc
+     * @param pagador
+     *            the pagador
      * @param tpdtCodExencion
      *            the tpdt cod exencion
      * @param vlrgList
@@ -216,6 +218,8 @@ public final class ValoracionPdf extends BasePdf {
      *
      * @param pagador
      *            the pagador
+     * @param vlrc
+     *            the vlrc
      * @return the subreport
      */
     private ComponentBuilder<?, ?> getSubreportPagador(final @NonNull ParametroVO pagador,

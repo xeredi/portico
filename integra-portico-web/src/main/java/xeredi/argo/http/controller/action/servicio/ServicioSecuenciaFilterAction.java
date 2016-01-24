@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.servicio;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -23,9 +24,11 @@ public final class ServicioSecuenciaFilterAction extends GridFilterAction<Servic
     private static final long serialVersionUID = 6314175196167234783L;
 
     /** The tpsr list. */
+    @Getter
     private List<TipoServicioVO> tpsrList;
 
     /** The prto list. */
+    @Getter
     private List<PuertoVO> prtoList;
 
     /**
@@ -55,24 +58,6 @@ public final class ServicioSecuenciaFilterAction extends GridFilterAction<Servic
         tpsrCriterio.setIdioma(getIdioma());
 
         tpsrList = tpsrBO.selectList(tpsrCriterio);
-    }
-
-    /**
-     * Gets the tpsr list.
-     *
-     * @return the tpsr list
-     */
-    public List<TipoServicioVO> getTpsrList() {
-        return tpsrList;
-    }
-
-    /**
-     * Gets the prto list.
-     *
-     * @return the prto list
-     */
-    public List<PuertoVO> getPrtoList() {
-        return prtoList;
     }
 
     /**

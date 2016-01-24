@@ -2,6 +2,8 @@ package xeredi.argo.http.controller.action.item;
 
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.gis.vo.MapVO;
@@ -29,15 +31,19 @@ extends BaseAction {
     private static final long serialVersionUID = 5802281348269531835L;
 
     /** The criterio. */
+    @Setter
     protected C criterio;
 
     /** The item list. */
+    @Getter
     protected Map<Long, I> itemMap;
 
     /** The enti map. */
+    @Getter
     protected Map<Long, E> entiMap;
 
     /** The mapinfo. */
+    @Getter
     protected MapVO map;
 
     /**
@@ -57,41 +63,4 @@ extends BaseAction {
      *             the application exception
      */
     protected abstract void doList() throws ApplicationException;
-
-    /**
-     * Gets the item map.
-     *
-     * @return the item map
-     */
-    public final Map<Long, I> getItemMap() {
-        return itemMap;
-    }
-
-    /**
-     * Sets the criterio.
-     *
-     * @param value
-     *            the new criterio
-     */
-    public final void setCriterio(final C value) {
-        this.criterio = value;
-    }
-
-    /**
-     * Gets the enti map.
-     *
-     * @return the enti map
-     */
-    public final Map<Long, E> getEntiMap() {
-        return entiMap;
-    }
-
-    /**
-     * Gets the mapinfo.
-     *
-     * @return the mapinfo
-     */
-    public final MapVO getMap() {
-        return map;
-    }
 }

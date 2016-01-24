@@ -3,8 +3,7 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -18,6 +17,8 @@ import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class CargoEditAction.
@@ -28,12 +29,15 @@ public final class CargoEditAction extends CrudEditAction<CargoVO> {
     private static final long serialVersionUID = -7135315858700353650L;
 
     /** The i18n map. */
+    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /** The tpsr list. */
+    @Getter
     private List<LabelValueVO> tpsrList;
 
     /** The tipos. */
+    @Getter
     private CargoTipo[] tipos;
 
     /**
@@ -66,33 +70,6 @@ public final class CargoEditAction extends CrudEditAction<CargoVO> {
         }
 
         tipos = CargoTipo.values();
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
-    }
-
-    /**
-     * Gets the tpsr list.
-     *
-     * @return the tpsr list
-     */
-    public List<LabelValueVO> getTpsrList() {
-        return tpsrList;
-    }
-
-    /**
-     * Gets the tipos.
-     *
-     * @return the tipos
-     */
-    public CargoTipo[] getTipos() {
-        return tipos;
     }
 
     /**

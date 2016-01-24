@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.item;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
@@ -21,12 +22,13 @@ import com.google.common.base.Preconditions;
  *            the element type
  */
 public abstract class ItemListAction<C extends ItemCriterioVO, I extends ItemVO, E extends AbstractEntidadDetailVO>
-        extends GridListAction<C, I> implements ProtectedItemAction {
+extends GridListAction<C, I> implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1634381107882001806L;
 
     /** The enti. */
+    @Getter
     protected E enti;
 
     /**
@@ -50,15 +52,6 @@ public abstract class ItemListAction<C extends ItemCriterioVO, I extends ItemVO,
      *             the application exception
      */
     public abstract void doSpecificList() throws ApplicationException;
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public final E getEnti() {
-        return enti;
-    }
 
     /**
      * {@inheritDoc}

@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.administracion.messagei18n;
 
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.bo.MessageBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -19,6 +20,7 @@ public final class MessageI18nDetailAction extends CrudDetailAction<MessageI18nK
     private static final long serialVersionUID = 111777223068179652L;
 
     /** The i18n map. */
+    @Getter
     private Map<String, MessageI18nVO> i18nMap;
 
     /**
@@ -29,15 +31,6 @@ public final class MessageI18nDetailAction extends CrudDetailAction<MessageI18nK
         final MessageBO bo = new MessageBO();
 
         i18nMap = bo.selectKeyMap(model);
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public Map<String, MessageI18nVO> getI18nMap() {
-        return i18nMap;
     }
 
     /**

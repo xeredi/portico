@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.administracion.messagei18n;
 
 import java.util.Map;
 
+import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.model.comun.bo.MessageBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -19,6 +20,7 @@ public final class MessageI18nSaveAction extends CrudSaveAction<MessageI18nKey> 
     private static final long serialVersionUID = 3331358676066653527L;
 
     /** The i18n map. */
+    @Setter
     private Map<String, MessageI18nVO> i18nMap;
 
     /**
@@ -37,16 +39,6 @@ public final class MessageI18nSaveAction extends CrudSaveAction<MessageI18nKey> 
     @Override
     public void doValidate() throws ApplicationException {
         // FIXME Validate
-    }
-
-    /**
-     * Sets the i18n map.
-     *
-     * @param value
-     *            the value
-     */
-    public void setI18nMap(final Map<String, MessageI18nVO> value) {
-        i18nMap = value;
     }
 
     /**

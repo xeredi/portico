@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
@@ -21,6 +22,7 @@ public final class CampoAgregacionEditAction extends CrudEditAction<CampoAgregac
     private static final long serialVersionUID = 6163643952983909955L;
 
     /** The entd list. */
+    @Getter
     private List<EntidadTipoDatoVO> entdList;
 
     /**
@@ -46,15 +48,6 @@ public final class CampoAgregacionEditAction extends CrudEditAction<CampoAgregac
     @Override
     public void doLoadDependencies() throws ApplicationException {
         // FIXME Hay que cargar dependencias??
-    }
-
-    /**
-     * Gets the entd list.
-     *
-     * @return the entd list
-     */
-    public List<EntidadTipoDatoVO> getEntdList() {
-        return entdList;
     }
 
     /**

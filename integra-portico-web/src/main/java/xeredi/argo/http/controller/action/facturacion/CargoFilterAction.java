@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
@@ -19,6 +20,7 @@ public final class CargoFilterAction extends GridFilterAction<CargoCriterioVO> {
     private static final long serialVersionUID = 4024940532231620563L;
 
     /** The tpsr list. */
+    @Getter
     private List<LabelValueVO> tpsrList;
 
     /**
@@ -35,15 +37,6 @@ public final class CargoFilterAction extends GridFilterAction<CargoCriterioVO> {
     @Override
     public void doLoadDependencies() throws ApplicationException {
         tpsrList = TipoServicioProxy.selectLabelValues();
-    }
-
-    /**
-     * Gets the tpsr list.
-     *
-     * @return the tpsr list
-     */
-    public List<LabelValueVO> getTpsrList() {
-        return tpsrList;
     }
 
     /**

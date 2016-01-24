@@ -84,6 +84,7 @@ public final class SessionManager {
      *            the login
      * @param password
      *            the password
+     * @return the resultado login vo
      * @throws ApplicationException
      *             the application exception
      */

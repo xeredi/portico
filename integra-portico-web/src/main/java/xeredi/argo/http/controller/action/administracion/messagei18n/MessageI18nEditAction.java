@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.administracion.messagei18n;
 
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.MessageBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -19,6 +20,7 @@ public final class MessageI18nEditAction extends CrudEditAction<MessageI18nKey> 
     private static final long serialVersionUID = 4609134906730381113L;
 
     /** The i18n map. */
+    @Getter
     private Map<String, MessageI18nVO> i18nMap;
 
     /**
@@ -37,15 +39,6 @@ public final class MessageI18nEditAction extends CrudEditAction<MessageI18nKey> 
     @Override
     public void doLoadDependencies() throws ApplicationException {
         // noop
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public Map<String, MessageI18nVO> getI18nMap() {
-        return i18nMap;
     }
 
     /**

@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
@@ -27,12 +28,15 @@ public final class ValoracionEditAction extends CrudEditAction<ValoracionVO> {
     private static final long serialVersionUID = -5032238434151606002L;
 
     /** The tpsr list. */
+    @Getter
     private List<LabelValueVO> tpsrList;
 
     /** The pagador enti id. */
+    @Getter
     private Long pagadorEntiId;
 
     /** The tpdt cod exencion. */
+    @Getter
     private TipoDatoVO tpdtCodExencion;
 
     /**
@@ -69,33 +73,6 @@ public final class ValoracionEditAction extends CrudEditAction<ValoracionVO> {
         tpsrList = TipoServicioProxy.selectLabelValues();
         pagadorEntiId = Entidad.ORGANIZACION.getId();
         tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
-    }
-
-    /**
-     * Gets the tpsr list.
-     *
-     * @return the tpsr list
-     */
-    public List<LabelValueVO> getTpsrList() {
-        return tpsrList;
-    }
-
-    /**
-     * Gets the pagador enti id.
-     *
-     * @return the pagador enti id
-     */
-    public Long getPagadorEntiId() {
-        return pagadorEntiId;
-    }
-
-    /**
-     * Gets the tpdt cod exencion.
-     *
-     * @return the tpdt cod exencion
-     */
-    public TipoDatoVO getTpdtCodExencion() {
-        return tpdtCodExencion;
     }
 
     /**

@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.facturacion;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
@@ -20,6 +21,7 @@ public final class ValoracionListAction extends GridListAction<ValoracionCriteri
     private static final long serialVersionUID = -3608142356966434674L;
 
     /** The tpdt cod exencion. */
+    @Getter
     private TipoDatoVO tpdtCodExencion;
 
     /**
@@ -31,15 +33,6 @@ public final class ValoracionListAction extends GridListAction<ValoracionCriteri
 
         resultList = vlrcBO.selectList(model, getOffset(), limit);
         tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
-    }
-
-    /**
-     * Gets the tpdt cod exencion.
-     *
-     * @return the tpdt cod exencion
-     */
-    public TipoDatoVO getTpdtCodExencion() {
-        return tpdtCodExencion;
     }
 
     /**

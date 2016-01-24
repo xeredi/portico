@@ -96,6 +96,8 @@ public class ReglaBO {
      *
      * @param rgla
      *            the rgla
+     * @param i18nMap
+     *            the i18n map
      * @throws OverlapException
      *             the overlap exception
      */
@@ -133,6 +135,8 @@ public class ReglaBO {
      *
      * @param rgla
      *            the rgla
+     * @param i18nMap
+     *            the i18n map
      * @throws InstanceNotFoundException
      *             the instance not found exception
      * @throws OverlapException

@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.estadistica;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.estadistica.bo.CuadroMesBO;
@@ -23,6 +24,7 @@ public final class CuadroMesDetailAction extends CrudDetailAction<PeriodoProceso
     private static final long serialVersionUID = 6080323896171314975L;
 
     /** The cdms map. */
+    @Getter
     private Map<String, List<CuadroMesVO>> cdmsMap;
 
     // acciones web
@@ -42,16 +44,6 @@ public final class CuadroMesDetailAction extends CrudDetailAction<PeriodoProceso
     }
 
     // get / set
-
-    /**
-     * Gets the cdms map.
-     *
-     * @return the cdms map
-     */
-    public Map<String, List<CuadroMesVO>> getCdmsMap() {
-        return cdmsMap;
-    }
-
     /**
      * {@inheritDoc}
      */

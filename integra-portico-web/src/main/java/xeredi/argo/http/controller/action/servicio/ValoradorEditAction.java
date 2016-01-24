@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.servicio;
 import java.util.Calendar;
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.CargoBO;
@@ -23,6 +24,7 @@ public final class ValoradorEditAction extends CrudEditAction<ValoradorVO> {
     private static final long serialVersionUID = 7029860077578860054L;
 
     /** The crgo list. */
+    @Getter
     private List<CargoVO> crgoList;
 
     /**
@@ -60,14 +62,5 @@ public final class ValoradorEditAction extends CrudEditAction<ValoradorVO> {
     @Override
     public AccionPrefix getAccnPrefix() {
         return AccionPrefix.vldr;
-    }
-
-    /**
-     * Gets the crgo list.
-     *
-     * @return the crgo list
-     */
-    public List<CargoVO> getCrgoList() {
-        return crgoList;
     }
 }

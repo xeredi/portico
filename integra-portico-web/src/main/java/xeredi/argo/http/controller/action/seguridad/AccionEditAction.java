@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.seguridad;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.seguridad.bo.AccionBO;
@@ -23,9 +24,11 @@ public final class AccionEditAction extends CrudEditAction<AccionVO> {
     private static final long serialVersionUID = 3956096847895499243L;
 
     /** The prefix list. */
+    @Getter
     private AccionPrefix[] prefixList;
 
     /** The grpo list. */
+    @Getter
     private List<GrupoVO> grpoList;
 
     /**
@@ -63,23 +66,5 @@ public final class AccionEditAction extends CrudEditAction<AccionVO> {
     @Override
     public AccionPrefix getAccnPrefix() {
         return AccionPrefix.accn;
-    }
-
-    /**
-     * Gets the prefix list.
-     *
-     * @return the prefix list
-     */
-    public AccionPrefix[] getPrefixList() {
-        return prefixList;
-    }
-
-    /**
-     * Gets the grpo list.
-     *
-     * @return the grpo list
-     */
-    public List<GrupoVO> getGrpoList() {
-        return grpoList;
     }
 }

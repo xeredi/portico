@@ -5,8 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.vo.ItemDatoVO;
@@ -35,6 +34,8 @@ import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ItemTramiteEditAction.
@@ -45,18 +46,23 @@ public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> i
     private static final long serialVersionUID = 7371401403513787913L;
 
     /** The trmt. */
+    @Getter
     protected TramiteDetailVO trmt;
 
     /** The item. */
+    @Getter
     private ItemVO item;
 
     /** The enti. */
+    @Getter
     private AbstractEntidadDetailVO enti;
 
     /** The label values map. */
+    @Getter
     private HashMap<Long, List<LabelValueVO>> labelValuesMap;
 
     /** The prto id. */
+    @Getter
     private Long prtoId;
 
     /**
@@ -159,51 +165,6 @@ public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> i
 
             labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, model.getFref(), idioma));
         }
-    }
-
-    /**
-     * Gets the trmt.
-     *
-     * @return the trmt
-     */
-    public final TramiteDetailVO getTrmt() {
-        return trmt;
-    }
-
-    /**
-     * Gets the item.
-     *
-     * @return the item
-     */
-    public final ItemVO getItem() {
-        return item;
-    }
-
-    /**
-     * Gets the label values map.
-     *
-     * @return the label values map
-     */
-    public final HashMap<Long, List<LabelValueVO>> getLabelValuesMap() {
-        return labelValuesMap;
-    }
-
-    /**
-     * Gets the prto id.
-     *
-     * @return the prto id
-     */
-    public final Long getPrtoId() {
-        return prtoId;
-    }
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public AbstractEntidadDetailVO getEnti() {
-        return enti;
     }
 
     /**

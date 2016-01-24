@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
@@ -20,6 +19,8 @@ import xeredi.argo.model.metamodelo.vo.TipoHtml;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ItemFilterAction.
@@ -29,16 +30,18 @@ import xeredi.util.applicationobjects.LabelValueVO;
  * @param <E>
  *            the element type
  */
-public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends AbstractEntidadDetailVO>
-        extends GridFilterAction<C> implements ProtectedItemAction {
+public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends AbstractEntidadDetailVO> extends
+        GridFilterAction<C> implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8917073535249583222L;
 
     /** The enti. */
+    @Getter
     protected E enti;
 
     /** The label values map. */
+    @Getter
     protected Map<Long, List<LabelValueVO>> labelValuesMap;
 
     /**
@@ -104,24 +107,6 @@ public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends Abstr
      * @return the fecha vigencia
      */
     public abstract Date getFechaVigencia();
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public final E getEnti() {
-        return enti;
-    }
-
-    /**
-     * Gets the label values map.
-     *
-     * @return the label values map
-     */
-    public final Map<Long, List<LabelValueVO>> getLabelValuesMap() {
-        return labelValuesMap;
-    }
 
     /**
      * {@inheritDoc}

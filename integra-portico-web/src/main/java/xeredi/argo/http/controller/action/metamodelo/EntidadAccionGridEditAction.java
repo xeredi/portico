@@ -2,8 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -12,6 +11,8 @@ import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.EntidadAccionGridBO;
 import xeredi.argo.model.metamodelo.vo.EntidadAccionGridVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -23,6 +24,7 @@ public final class EntidadAccionGridEditAction extends CrudEditAction<EntidadAcc
     private static final long serialVersionUID = 5087374811626034724L;
 
     /** The cdri map. */
+    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -48,15 +50,6 @@ public final class EntidadAccionGridEditAction extends CrudEditAction<EntidadAcc
     @Override
     public void doLoadDependencies() throws ApplicationException {
         // noop
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
     }
 
     /**

@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.seguridad;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.seguridad.bo.AccionBO;
@@ -23,6 +24,7 @@ public final class AccionDetailAction extends CrudDetailAction<AccionVO> {
     private static final long serialVersionUID = -7336296287400722992L;
 
     /** The grpo list. */
+    @Getter
     private List<GrupoVO> grpoList;
 
     /**
@@ -42,15 +44,6 @@ public final class AccionDetailAction extends CrudDetailAction<AccionVO> {
         grpoCriterio.setAccnId(model.getId());
 
         grpoList = grpoBO.selectList(grpoCriterio);
-    }
-
-    /**
-     * Gets the grpo list.
-     *
-     * @return the grpo list
-     */
-    public List<GrupoVO> getGrpoList() {
-        return grpoList;
     }
 
     /**

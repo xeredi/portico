@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.seguridad;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
@@ -29,12 +30,15 @@ public final class UsuarioEditAction extends CrudEditAction<UsuarioVO> {
     private static final long serialVersionUID = -4943518127497768526L;
 
     /** The grpo list. */
+    @Getter
     private List<GrupoVO> grpoList;
 
     /** The sprt list. */
+    @Getter
     private List<SuperpuertoVO> sprtList;
 
     /** The prto list. */
+    @Getter
     private List<PuertoVO> prtoList;
 
     /**
@@ -79,38 +83,10 @@ public final class UsuarioEditAction extends CrudEditAction<UsuarioVO> {
     }
 
     /**
-     * Gets the grpo list.
-     *
-     * @return the grpo list
-     */
-    public List<GrupoVO> getGrpoList() {
-        return grpoList;
-    }
-
-    /**
-     * Gets the sprt list.
-     *
-     * @return the sprt list
-     */
-    public List<SuperpuertoVO> getSprtList() {
-        return sprtList;
-    }
-
-    /**
-     * Gets the prto list.
-     *
-     * @return the prto list
-     */
-    public List<PuertoVO> getPrtoList() {
-        return prtoList;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public AccionPrefix getAccnPrefix() {
         return AccionPrefix.usro;
     }
-
 }

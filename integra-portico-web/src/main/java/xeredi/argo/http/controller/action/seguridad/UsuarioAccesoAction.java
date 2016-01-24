@@ -1,5 +1,7 @@
 package xeredi.argo.http.controller.action.seguridad;
 
+import lombok.Getter;
+import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
@@ -20,9 +22,12 @@ public final class UsuarioAccesoAction extends BaseAction implements ModelDriven
     private static final long serialVersionUID = 1732425764567626359L;
 
     /** The model. */
+    @Getter
+    @Setter
     private UsuarioVO model;
 
     /** The resultado login. */
+    @Getter
     private ResultadoLoginVO resultadoLogin;
 
     /**
@@ -40,32 +45,5 @@ public final class UsuarioAccesoAction extends BaseAction implements ModelDriven
         if (!hasErrors()) {
             resultadoLogin = SessionManager.login(model.getLogin(), model.getContrasenia());
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public UsuarioVO getModel() {
-        return model;
-    }
-
-    /**
-     * Sets the model.
-     *
-     * @param value
-     *            the new model
-     */
-    public void setModel(final UsuarioVO value) {
-        model = value;
-    }
-
-    /**
-     * Gets the resultado login.
-     *
-     * @return the resultado login
-     */
-    public ResultadoLoginVO getResultadoLogin() {
-        return resultadoLogin;
     }
 }

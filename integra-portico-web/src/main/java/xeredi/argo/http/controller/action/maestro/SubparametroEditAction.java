@@ -2,8 +2,7 @@ package xeredi.argo.http.controller.action.maestro;
 
 import java.util.List;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemEditAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -18,6 +17,8 @@ import xeredi.argo.model.maestro.vo.SubparametroVO;
 import xeredi.argo.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class SubparametroEditAction.
@@ -28,6 +29,7 @@ public final class SubparametroEditAction extends ItemEditAction<SubparametroVO,
     private static final long serialVersionUID = -6767667432126657718L;
 
     /** The prto list. */
+    @Getter
     private List<PuertoVO> prtoList;
 
     /**
@@ -68,14 +70,5 @@ public final class SubparametroEditAction extends ItemEditAction<SubparametroVO,
 
             prtoList = prtoBO.selectList(prtoCriterio);
         }
-    }
-
-    /**
-     * Gets the prto list.
-     *
-     * @return the prto list
-     */
-    public List<PuertoVO> getPrtoList() {
-        return prtoList;
     }
 }

@@ -1,5 +1,7 @@
 package xeredi.argo.http.controller.action.comun;
 
+import lombok.Getter;
+import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
 
@@ -23,6 +25,8 @@ public abstract class GridFilterAction<C extends BaseCriterioVO> extends BaseAct
     public static final int[] VALID_ROWS_PER_PAGE = new int[] { 10, 20, 50, 100, 200, 500 };
 
     /** The model. */
+    @Getter
+    @Setter
     protected C model;
 
     /**
@@ -55,24 +59,6 @@ public abstract class GridFilterAction<C extends BaseCriterioVO> extends BaseAct
     public abstract void doLoadDependencies() throws ApplicationException;
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final C getModel() {
-        return model;
-    }
-
-    /**
-     * Sets the model.
-     *
-     * @param value
-     *            the new model
-     */
-    public final void setModel(final C value) {
-        this.model = value;
-    }
-
-    /**
      * Gets the limits.
      *
      * @return the limits
@@ -88,5 +74,4 @@ public abstract class GridFilterAction<C extends BaseCriterioVO> extends BaseAct
     public final String getAccnCodigo() {
         return "list";
     }
-
 }

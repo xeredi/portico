@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
@@ -30,12 +31,15 @@ public final class AccionEntidadEditAction extends CrudEditAction<AccionEntidadV
     private static final long serialVersionUID = -6298953902914627135L;
 
     /** The accn list. */
+    @Getter
     private List<AccionVO> accnList;
 
     /** The enti list. */
+    @Getter
     private List<EntidadVO> entiList;
 
     /** The grpo list. */
+    @Getter
     private List<GrupoVO> grpoList;
 
     /**
@@ -88,32 +92,5 @@ public final class AccionEntidadEditAction extends CrudEditAction<AccionEntidadV
         final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
 
         grpoList = grpoBO.selectList(grpoCriterio);
-    }
-
-    /**
-     * Gets the accn list.
-     *
-     * @return the accn list
-     */
-    public List<AccionVO> getAccnList() {
-        return accnList;
-    }
-
-    /**
-     * Gets the enti list.
-     *
-     * @return the enti list
-     */
-    public List<EntidadVO> getEntiList() {
-        return entiList;
-    }
-
-    /**
-     * Gets the grpo list.
-     *
-     * @return the grpo list
-     */
-    public List<GrupoVO> getGrpoList() {
-        return grpoList;
     }
 }

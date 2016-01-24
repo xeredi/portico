@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.Map;
 
+import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -23,6 +24,7 @@ public final class EntidadTipoDatoSaveAction extends CrudSaveAction<EntidadTipoD
     private static final long serialVersionUID = -6877738229315027201L;
 
     /** The i18n map. */
+    @Setter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -70,16 +72,6 @@ public final class EntidadTipoDatoSaveAction extends CrudSaveAction<EntidadTipoD
         FieldValidator.validateRequired(this, MessageI18nKey.entd_obligatorio, model.getObligatorio());
         FieldValidator.validateRequired(this, MessageI18nKey.entd_gridable, model.getGridable());
         FieldValidator.validateRequired(this, MessageI18nKey.entd_filtrable, model.getFiltrable());
-    }
-
-    /**
-     * Sets the i18n map.
-     *
-     * @param value
-     *            the value
-     */
-    public void setI18nMap(final Map<String, I18nVO> value) {
-        i18nMap = value;
     }
 
     /**

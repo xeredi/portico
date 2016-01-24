@@ -2,8 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
@@ -15,6 +14,8 @@ import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class TramiteTipoDatoEditAction.
@@ -25,6 +26,7 @@ public final class TramiteTipoDatoEditAction extends CrudEditAction<TramiteTipoD
     private static final long serialVersionUID = -7651037788650883305L;
 
     /** The entd list. */
+    @Getter
     private List<EntidadTipoDatoVO> entdList;
 
     /**
@@ -68,15 +70,6 @@ public final class TramiteTipoDatoEditAction extends CrudEditAction<TramiteTipoD
 
             entdList = entdBO.selectList(entdCriterio);
         }
-    }
-
-    /**
-     * Gets the entd list.
-     *
-     * @return the entd list
-     */
-    public List<EntidadTipoDatoVO> getEntdList() {
-        return entdList;
     }
 
     /**

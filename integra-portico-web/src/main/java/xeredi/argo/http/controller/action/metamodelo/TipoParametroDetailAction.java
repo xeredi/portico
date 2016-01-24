@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoParametroBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubparametroBO;
@@ -20,6 +21,7 @@ public final class TipoParametroDetailAction extends EntidadDetailAction<TipoPar
     private static final long serialVersionUID = 9182419626664730526L;
 
     /** The tpsp list. */
+    @Getter
     private List<TipoSubparametroVO> subentiList;
 
     /**
@@ -38,15 +40,6 @@ public final class TipoParametroDetailAction extends EntidadDetailAction<TipoPar
         tpspCriterio.setIdioma(idioma);
 
         subentiList = tpspBO.selectList(tpspCriterio);
-    }
-
-    /**
-     * Gets the subenti list.
-     *
-     * @return the subenti list
-     */
-    public List<TipoSubparametroVO> getSubentiList() {
-        return subentiList;
     }
 
     /**

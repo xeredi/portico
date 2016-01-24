@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemEditAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.bo.PuertoBO;
@@ -29,9 +30,11 @@ public final class ParametroEditAction extends ItemEditAction<ParametroVO, TipoP
     private static final long serialVersionUID = -8716069938226934369L;
 
     /** The i18n map. */
+    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /** The prto list. */
+    @Getter
     private List<PuertoVO> prtoList;
 
     /**
@@ -84,23 +87,5 @@ public final class ParametroEditAction extends ItemEditAction<ParametroVO, TipoP
 
             prtoList = prtoBO.selectList(prtoCriterio);
         }
-    }
-
-    /**
-     * Gets the i18n map.
-     *
-     * @return the i18n map
-     */
-    public Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
-    }
-
-    /**
-     * Gets the prto list.
-     *
-     * @return the prto list
-     */
-    public List<PuertoVO> getPrtoList() {
-        return prtoList;
     }
 }

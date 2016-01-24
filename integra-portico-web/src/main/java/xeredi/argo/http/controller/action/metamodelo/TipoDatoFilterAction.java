@@ -3,6 +3,7 @@
  */
 package xeredi.argo.http.controller.action.metamodelo;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
@@ -21,9 +22,11 @@ public final class TipoDatoFilterAction extends GridFilterAction<TipoDatoCriteri
     private static final long serialVersionUID = 1333107471340812199L;
 
     /** The tpht list. */
+    @Getter
     private TipoHtml[] tphtList;
 
     /** The tpel list. */
+    @Getter
     private TipoElemento[] tpelList;
 
     /**
@@ -41,24 +44,6 @@ public final class TipoDatoFilterAction extends GridFilterAction<TipoDatoCriteri
     public void doLoadDependencies() throws ApplicationException {
         tphtList = TipoHtml.values();
         tpelList = TipoElemento.values();
-    }
-
-    /**
-     * Gets the tpel list.
-     *
-     * @return the tpel list
-     */
-    public TipoElemento[] getTpelList() {
-        return tpelList;
-    }
-
-    /**
-     * Gets the tpht list.
-     *
-     * @return the tpht list
-     */
-    public TipoHtml[] getTphtList() {
-        return tphtList;
     }
 
     /**

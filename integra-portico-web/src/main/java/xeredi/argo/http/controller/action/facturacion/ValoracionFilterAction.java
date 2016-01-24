@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -25,12 +26,15 @@ public final class ValoracionFilterAction extends GridFilterAction<ValoracionCri
     private static final long serialVersionUID = 3391977535580636697L;
 
     /** The tpdt cod exencion. */
+    @Getter
     private TipoDatoVO tpdtCodExencion;
 
     /** The tpsr list. */
+    @Getter
     private List<LabelValueVO> tpsrList;
 
     /** The prto list. */
+    @Getter
     private List<PuertoVO> prtoList;
 
     /**
@@ -54,33 +58,6 @@ public final class ValoracionFilterAction extends GridFilterAction<ValoracionCri
         prtoList = prtoBO.selectList(prtoCriterio);
         tpsrList = TipoServicioProxy.selectLabelValues();
         tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
-    }
-
-    /**
-     * Gets the tpdt cod exencion.
-     *
-     * @return the tpdt cod exencion
-     */
-    public TipoDatoVO getTpdtCodExencion() {
-        return tpdtCodExencion;
-    }
-
-    /**
-     * Gets the tpsr list.
-     *
-     * @return the tpsr list
-     */
-    public List<LabelValueVO> getTpsrList() {
-        return tpsrList;
-    }
-
-    /**
-     * Gets the prto list.
-     *
-     * @return the prto list
-     */
-    public List<PuertoVO> getPrtoList() {
-        return prtoList;
     }
 
     /**

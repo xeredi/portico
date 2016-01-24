@@ -1,5 +1,7 @@
 package xeredi.argo.http.controller.action.comun;
 
+import lombok.Getter;
+import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.Versionable;
 
@@ -18,9 +20,12 @@ public abstract class CrudSaveAction<T> extends BaseAction implements ProtectedA
     private static final long serialVersionUID = 6571569363320765658L;
 
     /** The accion. */
+    @Setter
     protected ACCION_EDICION accion;
 
     /** The model. */
+    @Getter
+    @Setter
     protected T model;
 
     /**
@@ -61,35 +66,6 @@ public abstract class CrudSaveAction<T> extends BaseAction implements ProtectedA
      *             the application exception
      */
     public abstract void doValidate() throws ApplicationException;
-
-    /**
-     * Sets the accion.
-     *
-     * @param value
-     *            the new accion
-     */
-    public final void setAccion(final ACCION_EDICION value) {
-        this.accion = value;
-    }
-
-    /**
-     * Gets the model.
-     *
-     * @return the model
-     */
-    public T getModel() {
-        return model;
-    }
-
-    /**
-     * Sets the model.
-     *
-     * @param value
-     *            the new model
-     */
-    public final void setModel(final T value) {
-        this.model = value;
-    }
 
     /**
      * {@inheritDoc}

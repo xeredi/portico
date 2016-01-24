@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.List;
 
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
@@ -27,15 +28,19 @@ public final class ValoracionDetalleDetailAction extends CrudDetailAction<Valora
     private static final long serialVersionUID = 340743883680134402L;
 
     /** The vlrl. */
+    @Getter
     private ValoracionLineaVO vlrl;
 
     /** The vlrl padre. */
+    @Getter
     private ValoracionLineaVO vlrlPadre;
 
     /** The vlrd hijos list. */
+    @Getter
     private List<ValoracionDetalleVO> vlrdHijosList;
 
     /** The aspc. */
+    @Getter
     private AspectoVO aspc;
 
     /**
@@ -86,42 +91,6 @@ public final class ValoracionDetalleDetailAction extends CrudDetailAction<Valora
         aspcCriterio.setIdioma(getIdioma());
 
         aspc = aspcBO.selectObject(aspcCriterio);
-    }
-
-    /**
-     * Gets the vlrl.
-     *
-     * @return the vlrl
-     */
-    public ValoracionLineaVO getVlrl() {
-        return vlrl;
-    }
-
-    /**
-     * Gets the vlrl padre.
-     *
-     * @return the vlrl padre
-     */
-    public ValoracionLineaVO getVlrlPadre() {
-        return vlrlPadre;
-    }
-
-    /**
-     * Gets the vlrd hijos list.
-     *
-     * @return the vlrd hijos list
-     */
-    public List<ValoracionDetalleVO> getVlrdHijosList() {
-        return vlrdHijosList;
-    }
-
-    /**
-     * Gets the aspc.
-     *
-     * @return the aspc
-     */
-    public AspectoVO getAspc() {
-        return aspc;
     }
 
     /**

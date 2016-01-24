@@ -2,8 +2,7 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.List;
 
-import com.google.common.base.Preconditions;
-
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
@@ -16,6 +15,8 @@ import xeredi.argo.model.facturacion.vo.FacturaServicioVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturaDetailAction.
@@ -26,15 +27,19 @@ public final class FacturaDetailAction extends CrudDetailAction<FacturaVO> {
     private static final long serialVersionUID = 5987039917634891480L;
 
     /** The aspc. */
+    @Getter
     private AspectoVO aspc;
 
     /** The fcts list. */
+    @Getter
     private List<FacturaServicioVO> fctsList;
 
     /** The fcti list. */
+    @Getter
     private List<FacturaImpuestoVO> fctiList;
 
     /** The fctg list. */
+    @Getter
     private List<FacturaCargoVO> fctgList;
 
     /**
@@ -58,42 +63,6 @@ public final class FacturaDetailAction extends CrudDetailAction<FacturaVO> {
         aspcCriterio.setFechaVigencia(model.getFref());
 
         aspc = aspcBO.selectObject(aspcCriterio);
-    }
-
-    /**
-     * Gets the fcts list.
-     *
-     * @return the fcts list
-     */
-    public List<FacturaServicioVO> getFctsList() {
-        return fctsList;
-    }
-
-    /**
-     * Gets the fcti list.
-     *
-     * @return the fcti list
-     */
-    public List<FacturaImpuestoVO> getFctiList() {
-        return fctiList;
-    }
-
-    /**
-     * Gets the fctg list.
-     *
-     * @return the fctg list
-     */
-    public List<FacturaCargoVO> getFctgList() {
-        return fctgList;
-    }
-
-    /**
-     * Gets the aspc.
-     *
-     * @return the aspc
-     */
-    public AspectoVO getAspc() {
-        return aspc;
     }
 
     /**
