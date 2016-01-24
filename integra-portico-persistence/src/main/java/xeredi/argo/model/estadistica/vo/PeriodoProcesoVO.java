@@ -3,8 +3,9 @@ package xeredi.argo.model.estadistica.vo;
 import java.util.Calendar;
 import java.util.Date;
 
+import lombok.Data;
+
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
@@ -13,6 +14,7 @@ import xeredi.argo.model.comun.vo.SuperpuertoVO;
 /**
  * The Class PeriodoProcesoVO.
  */
+@Data
 public final class PeriodoProcesoVO {
 
     /** The id. */
@@ -41,14 +43,6 @@ public final class PeriodoProcesoVO {
 
     /** The arin. */
     private ArchivoInfoVO arin;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the filename.
@@ -108,53 +102,6 @@ public final class PeriodoProcesoVO {
     }
 
     /**
-     * Gets the id.
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Sets the id.
-     *
-     * @param value
-     *            the new id
-     */
-    public void setId(final Long value) {
-        id = value;
-    }
-
-    /**
-     * Gets the sprt.
-     *
-     * @return the sprt
-     */
-    public SuperpuertoVO getSprt() {
-        return sprt;
-    }
-
-    /**
-     * Sets the sprt.
-     *
-     * @param value
-     *            the new sprt
-     */
-    public void setSprt(final SuperpuertoVO value) {
-        sprt = value;
-    }
-
-    /**
-     * Gets the anio.
-     *
-     * @return the anio
-     */
-    public Integer getAnio() {
-        return anio;
-    }
-
-    /**
      * Sets the anio.
      *
      * @param value
@@ -164,15 +111,6 @@ public final class PeriodoProcesoVO {
         anio = value;
 
         recalcularDatos();
-    }
-
-    /**
-     * Gets the mes.
-     *
-     * @return the mes
-     */
-    public Integer getMes() {
-        return mes;
     }
 
     /**
@@ -186,100 +124,4 @@ public final class PeriodoProcesoVO {
 
         recalcularDatos();
     }
-
-    /**
-     * Gets the falta.
-     *
-     * @return the falta
-     */
-    public Date getFalta() {
-        return falta;
-    }
-
-    /**
-     * Sets the falta.
-     *
-     * @param value
-     *            the new falta
-     */
-    public void setFalta(final Date value) {
-        falta = value;
-    }
-
-    /**
-     * Gets the trimestre.
-     *
-     * @return the trimestre
-     */
-    public Integer getTrimestre() {
-        return trimestre;
-    }
-
-    /**
-     * Sets the trimestre.
-     *
-     * @param value
-     *            the new trimestre
-     */
-    public void setTrimestre(final Integer value) {
-        trimestre = value;
-    }
-
-    /**
-     * Gets the freferencia.
-     *
-     * @return the freferencia
-     */
-    public Date getFreferencia() {
-        return freferencia;
-    }
-
-    /**
-     * Sets the freferencia.
-     *
-     * @param value
-     *            the new freferencia
-     */
-    public void setFreferencia(final Date value) {
-        freferencia = value;
-    }
-
-    /**
-     * Checks if is cdms generado.
-     *
-     * @return true, if is cdms generado
-     */
-    public boolean isCdmsGenerado() {
-        return cdmsGenerado;
-    }
-
-    /**
-     * Sets the cdms generado.
-     *
-     * @param value
-     *            the new cdms generado
-     */
-    public void setCdmsGenerado(final boolean value) {
-        cdmsGenerado = value;
-    }
-
-    /**
-     * Gets the arin.
-     *
-     * @return the arin
-     */
-    public ArchivoInfoVO getArin() {
-        return arin;
-    }
-
-    /**
-     * Sets the arin.
-     *
-     * @param value
-     *            the new arin
-     */
-    public void setArin(final ArchivoInfoVO value) {
-        arin = value;
-    }
-
 }

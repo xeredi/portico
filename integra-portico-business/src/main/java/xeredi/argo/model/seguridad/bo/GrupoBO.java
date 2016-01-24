@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -223,13 +225,17 @@ public final class GrupoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public GrupoVO selectObject(final GrupoCriterioVO grpoCriterio) throws InstanceNotFoundException {
+    public GrupoVO select(final @NonNull Long id) throws InstanceNotFoundException {
+        final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
+
+        grpoCriterio.setId(id);
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
             final GrupoVO grpo = grpoDAO.selectObject(grpoCriterio);
 
             if (grpo == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.grpo, grpoCriterio);
+                throw new InstanceNotFoundException(MessageI18nKey.grpo, id);
             }
 
             final Set<Long> accnIds = new HashSet<Long>();

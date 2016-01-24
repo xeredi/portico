@@ -1,7 +1,8 @@
 package xeredi.argo.model.maestro.vo;
 
+import lombok.Data;
+
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.Versionable;
@@ -12,6 +13,7 @@ import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 /**
  * Datos de un parametro.
  */
+@Data
 public final class ParametroVO extends ItemVO implements Versionable<ParametroVersionVO> {
 
     /** Descripcion del parametro. */
@@ -38,20 +40,13 @@ public final class ParametroVO extends ItemVO implements Versionable<ParametroVe
     /**
      * Instantiates a new parametro vo.
      *
-     * @param entiDetail the enti detail
+     * @param entiDetail
+     *            the enti detail
      */
-    public ParametroVO(TipoParametroDetailVO entiDetail) {
-		super(entiDetail);
+    public ParametroVO(final TipoParametroDetailVO entiDetail) {
+        super(entiDetail);
 
         version = new ParametroVersionVO();
-	}
-
-	/**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
     }
 
     /**
@@ -100,34 +95,6 @@ public final class ParametroVO extends ItemVO implements Versionable<ParametroVe
     }
 
     /**
-     * Gets the texto.
-     *
-     * @return the texto
-     */
-    public String getTexto() {
-        return texto;
-    }
-
-    /**
-     * Sets the texto.
-     *
-     * @param value
-     *            the new texto
-     */
-    public void setTexto(final String value) {
-        texto = value;
-    }
-
-    /**
-     * Gets the descripcion.
-     *
-     * @return the descripcion
-     */
-    public String getParametro() {
-        return parametro;
-    }
-
-    /**
      * Sets the descripcion.
      *
      * @param value
@@ -137,40 +104,5 @@ public final class ParametroVO extends ItemVO implements Versionable<ParametroVe
         if (value != null) {
             parametro = value.trim().toUpperCase();
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ParametroVersionVO getVersion() {
-        return version;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setVersion(final ParametroVersionVO value) {
-        version = value;
-    }
-
-    /**
-     * Gets the prto.
-     *
-     * @return the prto
-     */
-    public PuertoVO getPrto() {
-        return prto;
-    }
-
-    /**
-     * Sets the prto.
-     *
-     * @param value
-     *            the new prto
-     */
-    public void setPrto(final PuertoVO value) {
-        prto = value;
     }
 }

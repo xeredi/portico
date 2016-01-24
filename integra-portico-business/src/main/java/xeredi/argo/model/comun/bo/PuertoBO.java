@@ -32,26 +32,26 @@ public final class PuertoBO {
     /**
      * Select.
      *
-     * @param prtoId
-     *            the prto id
+     * @param id
+     *            the id
      * @param idioma
      *            the idioma
      * @return the puerto vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public PuertoVO select(final @NonNull Long prtoId, final String idioma) throws InstanceNotFoundException {
+    public PuertoVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PuertoDAO prtoDAO = session.getMapper(PuertoDAO.class);
             final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-            prtoCriterio.setId(prtoId);
+            prtoCriterio.setId(id);
             prtoCriterio.setIdioma(idioma);
 
             final PuertoVO prto = prtoDAO.selectObject(prtoCriterio);
 
             if (prto == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.prto, prtoCriterio);
+                throw new InstanceNotFoundException(MessageI18nKey.prto, id);
             }
 
             return prto;

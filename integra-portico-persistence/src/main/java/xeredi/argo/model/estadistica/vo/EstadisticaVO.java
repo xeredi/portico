@@ -1,7 +1,6 @@
 package xeredi.argo.model.estadistica.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
+import lombok.Data;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.item.vo.ItemVO;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaDetailVO;
@@ -10,6 +9,7 @@ import xeredi.argo.model.metamodelo.vo.TipoEstadisticaDetailVO;
 /**
  * The Class EstadisticaVO.
  */
+@Data
 public final class EstadisticaVO extends ItemVO {
     /** The prpr id. */
     private PeriodoProcesoVO pepr;
@@ -38,55 +38,8 @@ public final class EstadisticaVO extends ItemVO {
      * {@inheritDoc}
      */
     @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getEtiqueta() {
         // FIXME Implementar
         return null;
     }
-
-    /**
-     * Gets the prto.
-     *
-     * @return the prto
-     */
-    public PuertoVO getPrto() {
-        return prto;
-    }
-
-    /**
-     * Sets the prto.
-     *
-     * @param value
-     *            the new prto
-     */
-    public void setPrto(final PuertoVO value) {
-        prto = value;
-    }
-
-    /**
-     * Gets the pepr.
-     *
-     * @return the pepr
-     */
-    public PeriodoProcesoVO getPepr() {
-        return pepr;
-    }
-
-    /**
-     * Sets the pepr.
-     *
-     * @param value
-     *            the new pepr
-     */
-    public void setPepr(final PeriodoProcesoVO value) {
-        pepr = value;
-    }
-
 }

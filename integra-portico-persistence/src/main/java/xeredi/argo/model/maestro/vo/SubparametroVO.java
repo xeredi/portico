@@ -1,7 +1,6 @@
 package xeredi.argo.model.maestro.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
+import lombok.Data;
 import xeredi.argo.model.comun.vo.Versionable;
 import xeredi.argo.model.item.vo.ItemVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
@@ -10,6 +9,7 @@ import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
 /**
  * The Class SubparametroVO.
  */
+@Data
 public final class SubparametroVO extends ItemVO implements Versionable<SubparametroVersionVO> {
 
     /** The prmt id. */
@@ -36,20 +36,13 @@ public final class SubparametroVO extends ItemVO implements Versionable<Subparam
     /**
      * Instantiates a new subparametro vo.
      *
-     * @param entiDetail the enti detail
+     * @param entiDetail
+     *            the enti detail
      */
-    public SubparametroVO(TipoSubparametroDetailVO entiDetail) {
-		super(entiDetail);
+    public SubparametroVO(final TipoSubparametroDetailVO entiDetail) {
+        super(entiDetail);
 
         version = new SubparametroVersionVO();
-	}
-
-	/**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
     }
 
     /**
@@ -58,78 +51,5 @@ public final class SubparametroVO extends ItemVO implements Versionable<Subparam
     @Override
     public String getEtiqueta() {
         return prmtAsociado == null ? null : prmtAsociado.getEtiqueta();
-    }
-
-    /**
-     * Gets the prmt id.
-     *
-     * @return the prmt id
-     */
-    public Long getPrmtId() {
-        return prmtId;
-    }
-
-    /**
-     * Sets the prmt id.
-     *
-     * @param value
-     *            the new prmt id
-     */
-    public void setPrmtId(final Long value) {
-        prmtId = value;
-    }
-
-    /**
-     * Gets the prmt asociado.
-     *
-     * @return the prmt asociado
-     */
-    public ParametroVO getPrmtAsociado() {
-        return prmtAsociado;
-    }
-
-    /**
-     * Sets the prmt asociado.
-     *
-     * @param value
-     *            the new prmt asociado
-     */
-    public void setPrmtAsociado(final ParametroVO value) {
-        prmtAsociado = value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public SubparametroVersionVO getVersion() {
-        return version;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setVersion(final SubparametroVersionVO value) {
-        version = value;
-    }
-
-    /**
-     * Gets the prto id.
-     *
-     * @return the prto id
-     */
-    public final Long getPrtoId() {
-        return prtoId;
-    }
-
-    /**
-     * Sets the prto id.
-     *
-     * @param value
-     *            the new prto id
-     */
-    public final void setPrtoId(final Long value) {
-        prtoId = value;
     }
 }

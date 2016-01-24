@@ -1,11 +1,12 @@
 package xeredi.argo.model.gis.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.Data;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class MarkerVO.
  */
+@Data
 public final class MarkerVO {
 
     /** The id. */
@@ -29,59 +30,5 @@ public final class MarkerVO {
         coords = new CoordsVO();
         options = new MarkerOptionsVO();
         windowOptions = new WindowOptionsVO();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the coords.
-     *
-     * @return the coords
-     */
-    public final CoordsVO getCoords() {
-        return coords;
-    }
-
-    /**
-     * Gets the id.
-     *
-     * @return the id
-     */
-    public final Long getId() {
-        return id;
-    }
-
-    /**
-     * Sets the id.
-     *
-     * @param value
-     *            the new id
-     */
-    public final void setId(final Long value) {
-        id = value;
-    }
-
-    /**
-     * Gets the options.
-     *
-     * @return the options
-     */
-    public final MarkerOptionsVO getOptions() {
-        return options;
-    }
-
-    /**
-     * Gets the window options.
-     *
-     * @return the window options
-     */
-    public final WindowOptionsVO getWindowOptions() {
-        return windowOptions;
     }
 }

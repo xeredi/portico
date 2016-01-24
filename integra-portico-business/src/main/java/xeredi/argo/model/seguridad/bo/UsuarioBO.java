@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -187,13 +189,18 @@ public final class UsuarioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public UsuarioVO selectObject(final UsuarioCriterioVO usroCriterio) throws InstanceNotFoundException {
+    public UsuarioVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+        final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
+
+        usroCriterio.setId(id);
+        usroCriterio.setIdioma(idioma);
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
             final UsuarioVO usro = usroDAO.selectObject(usroCriterio);
 
             if (usro == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.usro, usroCriterio);
+                throw new InstanceNotFoundException(MessageI18nKey.usro, id);
             }
 
             final Set<Long> grpoIds = new HashSet<Long>();

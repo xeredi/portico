@@ -1,11 +1,12 @@
 package xeredi.argo.model.seguridad.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.Data;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class UsuarioGrupoVO.
  */
+@Data
 public final class UsuarioGrupoVO {
 
     /** The usro id. */
@@ -27,31 +28,4 @@ public final class UsuarioGrupoVO {
         usroId = ausroId;
         grpoId = agrpoId;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the usro id.
-     *
-     * @return the usro id
-     */
-    public Long getUsroId() {
-        return usroId;
-    }
-
-    /**
-     * Gets the grpo id.
-     *
-     * @return the grpo id
-     */
-    public Long getGrpoId() {
-        return grpoId;
-    }
-
 }

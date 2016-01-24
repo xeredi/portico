@@ -1,11 +1,12 @@
 package xeredi.argo.model.metamodelo.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.Data;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TramiteVO.
  */
+@Data
 public final class TramiteVO {
 
     /** The id. */
@@ -28,145 +29,4 @@ public final class TramiteVO {
 
     /** The estado dest texto. */
     private String estadoDestTexto;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the id.
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Sets the id.
-     *
-     * @param value
-     *            the new id
-     */
-    public void setId(final Long value) {
-        id = value;
-    }
-
-    /**
-     * Gets the enti id.
-     *
-     * @return the enti id
-     */
-    public Long getEntiId() {
-        return entiId;
-    }
-
-    /**
-     * Sets the enti id.
-     *
-     * @param value
-     *            the new enti id
-     */
-    public void setEntiId(final Long value) {
-        entiId = value;
-    }
-
-    /**
-     * Gets the estado orig.
-     *
-     * @return the estado orig
-     */
-    public String getEstadoOrig() {
-        return estadoOrig;
-    }
-
-    /**
-     * Sets the estado orig.
-     *
-     * @param value
-     *            the new estado orig
-     */
-    public void setEstadoOrig(final String value) {
-        estadoOrig = value;
-    }
-
-    /**
-     * Gets the estado dest.
-     *
-     * @return the estado dest
-     */
-    public String getEstadoDest() {
-        return estadoDest;
-    }
-
-    /**
-     * Sets the estado dest.
-     *
-     * @param value
-     *            the new estado dest
-     */
-    public void setEstadoDest(final String value) {
-        estadoDest = value;
-    }
-
-    /**
-     * Gets the etiqueta.
-     *
-     * @return the etiqueta
-     */
-    public String getEtiqueta() {
-        return etiqueta;
-    }
-
-    /**
-     * Sets the etiqueta.
-     *
-     * @param value
-     *            the new etiqueta
-     */
-    public void setEtiqueta(final String value) {
-        etiqueta = value;
-    }
-
-    /**
-     * Gets the estado orig texto.
-     *
-     * @return the estado orig texto
-     */
-    public String getEstadoOrigTexto() {
-        return estadoOrigTexto;
-    }
-
-    /**
-     * Sets the estado orig texto.
-     *
-     * @param value
-     *            the new estado orig texto
-     */
-    public void setEstadoOrigTexto(final String value) {
-        estadoOrigTexto = value;
-    }
-
-    /**
-     * Gets the estado dest texto.
-     *
-     * @return the estado dest texto
-     */
-    public String getEstadoDestTexto() {
-        return estadoDestTexto;
-    }
-
-    /**
-     * Sets the estado dest texto.
-     *
-     * @param value
-     *            the new estado dest texto
-     */
-    public void setEstadoDestTexto(final String value) {
-        estadoDestTexto = value;
-    }
 }

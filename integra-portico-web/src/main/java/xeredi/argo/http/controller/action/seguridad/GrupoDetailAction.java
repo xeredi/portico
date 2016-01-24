@@ -10,13 +10,11 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
-import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.seguridad.bo.AccionBO;
 import xeredi.argo.model.seguridad.bo.GrupoBO;
 import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.AccionVO;
-import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
 
 import com.google.common.base.Preconditions;
@@ -50,11 +48,8 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
         Preconditions.checkNotNull(model.getId());
 
         final GrupoBO grpoBO = new GrupoBO();
-        final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
 
-        grpoCriterio.setId(model.getId());
-
-        model = grpoBO.selectObject(grpoCriterio);
+        model = grpoBO.select(model.getId());
 
         final AccionBO accnBO = new AccionBO();
         final AccionCriterioVO accnCriterio = new AccionCriterioVO();

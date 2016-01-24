@@ -51,7 +51,7 @@ public final class SuperpuertoBO {
             final SuperpuertoVO sprt = sprtDAO.selectObject(sprtCriterio);
 
             if (sprt == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.sprt, sprtCriterio);
+                throw new InstanceNotFoundException(MessageI18nKey.sprt, id);
             }
 
             return sprt;

@@ -2,8 +2,7 @@ package xeredi.argo.model.facturacion.vo;
 
 import java.util.Date;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
+import lombok.Data;
 import xeredi.argo.model.comun.vo.Versionable;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
 
@@ -11,6 +10,7 @@ import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
 /**
  * The Class CargoVO.
  */
+@Data
 public final class CargoVO implements Versionable<CargoVersionVO> {
 
     /** The ig. */
@@ -38,14 +38,6 @@ public final class CargoVO implements Versionable<CargoVersionVO> {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
      * Gets the etiqueta.
      *
      * @return the etiqueta
@@ -64,96 +56,5 @@ public final class CargoVO implements Versionable<CargoVersionVO> {
         }
 
         return buffer.toString();
-    }
-
-    /**
-     * Gets the ig.
-     *
-     * @return the ig
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Sets the ig.
-     *
-     * @param value
-     *            the ig
-     */
-    public void setId(final Long value) {
-        id = value;
-    }
-
-    /**
-     * Gets the codigo.
-     *
-     * @return the codigo
-     */
-    public String getCodigo() {
-        return codigo;
-    }
-
-    /**
-     * Sets the codigo.
-     *
-     * @param value
-     *            the codigo
-     */
-    public void setCodigo(final String value) {
-        codigo = value;
-    }
-
-    /**
-     * Gets the tpsr.
-     *
-     * @return the tpsr
-     */
-    public TipoServicioVO getTpsr() {
-        return tpsr;
-    }
-
-    /**
-     * Sets the tpsr.
-     *
-     * @param value
-     *            the tpsr
-     */
-    public void setTpsr(final TipoServicioVO value) {
-        tpsr = value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CargoVersionVO getVersion() {
-        return version;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setVersion(final CargoVersionVO value) {
-        version = value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getFref() {
-        return fref;
-    }
-
-    /**
-     * Sets the fref.
-     *
-     * @param value
-     *            the new fref
-     */
-    public void setFref(final Date value) {
-        fref = value;
     }
 }

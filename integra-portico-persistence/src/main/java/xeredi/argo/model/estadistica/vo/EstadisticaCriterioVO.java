@@ -1,5 +1,6 @@
 package xeredi.argo.model.estadistica.vo;
 
+import lombok.Data;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
 
@@ -7,6 +8,7 @@ import xeredi.argo.model.item.vo.ItemCriterioVO;
 /**
  * The Class EstadisticaCriterioVO.
  */
+@Data
 public final class EstadisticaCriterioVO extends ItemCriterioVO {
 
     /** The pepr id. */
@@ -14,42 +16,4 @@ public final class EstadisticaCriterioVO extends ItemCriterioVO {
 
     /** The subp id. */
     private PuertoCriterioVO prto;
-
-    /**
-     * Gets the pepr id.
-     *
-     * @return the pepr id
-     */
-    public PeriodoProcesoCriterioVO getPepr() {
-        return pepr;
-    }
-
-    /**
-     * Sets the pepr id.
-     *
-     * @param value
-     *            the new pepr id
-     */
-    public void setPepr(final PeriodoProcesoCriterioVO value) {
-        pepr = value;
-    }
-
-    /**
-     * Gets the prto.
-     *
-     * @return the prto
-     */
-    public PuertoCriterioVO getPrto() {
-        return prto;
-    }
-
-    /**
-     * Sets the prto.
-     *
-     * @param value
-     *            the new prto
-     */
-    public void setPrto(final PuertoCriterioVO value) {
-        prto = value;
-    }
 }

@@ -5,12 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.Data;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TramiteDetailVO.
  */
+@Data
 public final class TramiteDetailVO {
 
     /** The trmt. */
@@ -30,70 +31,5 @@ public final class TramiteDetailVO {
 
         trtdMap = new HashMap<Long, TramiteTipoDatoVO>();
         tpdtList = new ArrayList<Long>();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the trmt.
-     *
-     * @return the trmt
-     */
-    public TramiteVO getTrmt() {
-        return trmt;
-    }
-
-    /**
-     * Sets the trmt.
-     *
-     * @param value
-     *            the new trmt
-     */
-    public void setTrmt(final TramiteVO value) {
-        trmt = value;
-    }
-
-    /**
-     * Gets the trtd map.
-     *
-     * @return the trtd map
-     */
-    public Map<Long, TramiteTipoDatoVO> getTrtdMap() {
-        return trtdMap;
-    }
-
-    /**
-     * Sets the trtd map.
-     *
-     * @param value
-     *            the value
-     */
-    public void setTrtdMap(final Map<Long, TramiteTipoDatoVO> value) {
-        trtdMap = value;
-    }
-
-    /**
-     * Gets the tpdt list.
-     *
-     * @return the tpdt list
-     */
-    public List<Long> getTpdtList() {
-        return tpdtList;
-    }
-
-    /**
-     * Sets the tpdt list.
-     *
-     * @param value
-     *            the new tpdt list
-     */
-    public void setTpdtList(final List<Long> value) {
-        tpdtList = value;
     }
 }

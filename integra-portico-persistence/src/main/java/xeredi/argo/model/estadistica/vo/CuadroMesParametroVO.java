@@ -1,7 +1,6 @@
 package xeredi.argo.model.estadistica.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
+import lombok.Data;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 
@@ -9,6 +8,7 @@ import xeredi.argo.model.metamodelo.vo.TipoDato;
 /**
  * The Class CuadroMesParametroVO.
  */
+@Data
 public final class CuadroMesParametroVO {
 
     /** The pepr id. */
@@ -85,112 +85,5 @@ public final class CuadroMesParametroVO {
         opetParam = aopetParam;
         navtParam = anavtParam;
         campoAdicionalParam = acampoAdicionalParam;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the pepr id.
-     *
-     * @return the pepr id
-     */
-    public Long getPeprId() {
-        return peprId;
-    }
-
-    /**
-     * Gets the cocu.
-     *
-     * @return the cocu
-     */
-    public CuadroMesConcepto getCocu() {
-        return cocu;
-    }
-
-    /**
-     * Gets the opet.
-     *
-     * @return the opet
-     */
-    public String getOpet() {
-        return opet;
-    }
-
-    /**
-     * Gets the navt.
-     *
-     * @return the navt
-     */
-    public String getNavt() {
-        return navt;
-    }
-
-    /**
-     * Gets the pais.
-     *
-     * @return the pais
-     */
-    public String getPais() {
-        return pais;
-    }
-
-    /**
-     * Gets the tipo dato.
-     *
-     * @return the tipo dato
-     */
-    public TipoDato getTipoDato() {
-        return tipoDato;
-    }
-
-    /**
-     * Gets the opet param.
-     *
-     * @return the opet param
-     */
-    public String getOpetParam() {
-        return opetParam;
-    }
-
-    /**
-     * Gets the navt param.
-     *
-     * @return the navt param
-     */
-    public String getNavtParam() {
-        return navtParam;
-    }
-
-    /**
-     * Gets the campo adicional param.
-     *
-     * @return the campo adicional param
-     */
-    public String getCampoAdicionalParam() {
-        return campoAdicionalParam;
-    }
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public final Entidad getEnti() {
-        return enti;
-    }
-
-    /**
-     * Gets the orden.
-     *
-     * @return the orden
-     */
-    public final int getOrden() {
-        return orden;
     }
 }

@@ -2,12 +2,13 @@ package xeredi.argo.model.estadistica.vo;
 
 import java.util.Date;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.Data;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EstadisticaAgregadoCriterioVO.
  */
+@Data
 public final class EstadisticaAgregadoCriterioVO {
 
     /** The pepr id. */
@@ -40,40 +41,5 @@ public final class EstadisticaAgregadoCriterioVO {
         sprtId = asprtId;
         fini = afini;
         ffin = affin;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the finicio.
-     *
-     * @return the finicio
-     */
-    public Date getFini() {
-        return fini;
-    }
-
-    /**
-     * Gets the ffin.
-     *
-     * @return the ffin
-     */
-    public Date getFfin() {
-        return ffin;
-    }
-
-    /**
-     * Gets the pepr id.
-     *
-     * @return the pepr id
-     */
-    public Long getPeprId() {
-        return peprId;
     }
 }

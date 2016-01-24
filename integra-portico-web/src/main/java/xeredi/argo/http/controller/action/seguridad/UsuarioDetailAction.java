@@ -9,7 +9,6 @@ import xeredi.argo.model.seguridad.bo.UsuarioBO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
-import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
 
 import com.google.common.base.Preconditions;
@@ -34,12 +33,8 @@ public final class UsuarioDetailAction extends CrudDetailAction<UsuarioVO> {
         Preconditions.checkNotNull(model.getId());
 
         final UsuarioBO usroBO = new UsuarioBO();
-        final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
 
-        usroCriterio.setIdioma(getIdioma());
-        usroCriterio.setId(model.getId());
-
-        model = usroBO.selectObject(usroCriterio);
+        model = usroBO.select(model.getId(), getIdioma());
 
         final GrupoBO grpoBO = new GrupoBO();
         final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();

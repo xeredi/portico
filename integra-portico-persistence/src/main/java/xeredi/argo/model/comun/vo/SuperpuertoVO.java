@@ -1,11 +1,12 @@
 package xeredi.argo.model.comun.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.Data;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class SuperpuertoVO.
  */
+@Data
 public final class SuperpuertoVO {
 
     /** The id. */
@@ -16,14 +17,6 @@ public final class SuperpuertoVO {
 
     /** The nombre. */
     private String nombre;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the etiqueta.
@@ -41,62 +34,4 @@ public final class SuperpuertoVO {
 
         return buffer.toString();
     }
-
-    /**
-     * Gets the id.
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Sets the id.
-     *
-     * @param value
-     *            the new id
-     */
-    public void setId(final Long value) {
-        id = value;
-    }
-
-    /**
-     * Gets the codigo.
-     *
-     * @return the codigo
-     */
-    public String getCodigo() {
-        return codigo;
-    }
-
-    /**
-     * Sets the codigo.
-     *
-     * @param value
-     *            the new codigo
-     */
-    public void setCodigo(final String value) {
-        codigo = value;
-    }
-
-    /**
-     * Gets the nombre.
-     *
-     * @return the nombre
-     */
-    public String getNombre() {
-        return nombre;
-    }
-
-    /**
-     * Sets the nombre.
-     *
-     * @param value
-     *            the new nombre
-     */
-    public void setNombre(final String value) {
-        nombre = value;
-    }
-
 }

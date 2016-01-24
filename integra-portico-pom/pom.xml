@@ -228,8 +228,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
-                        <source>1.7</source>
-                        <target>1.7</target>
+                        <source>1.8</source>
+                        <target>1.8</target>
                         <debug>${maven-compiler-plugin.debug}</debug>
                         <optimize>${maven-compiler-plugin.optimize}</optimize>
                     </configuration>
@@ -268,11 +268,25 @@
                                     <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
                                 </configuration>
                             </plugin>
-                            <!-- <plugin> <artifactId>maven-javadoc-plugin</artifactId> <configuration> <source>1.7</source>
-                                <aggregate>true</aggregate> <quiet>true</quiet> <show>private</show> <linksource>true</linksource> <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
-                                <docletArtifact> <groupId>org.umlgraph</groupId> <artifactId>umlgraph</artifactId> <version>5.6.6</version> </docletArtifact>
-                                <additionalparam>-views -attributes -operations -constructors -visibility -inferrel -inferdep -hide (java.*|org.apache.*|com.*|net.sf.*)</additionalparam>
-                                <useStandardDocletOptions>true</useStandardDocletOptions> </configuration> </plugin> -->
+                            <plugin>
+                                <artifactId>maven-javadoc-plugin</artifactId>
+                                <configuration>
+                                    <source>1.8</source>
+                                    <aggregate>true</aggregate>
+                                    <quiet>true</quiet>
+                                    <show>private</show>
+                                    <linksource>true</linksource>
+                                    <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+                                    <docletArtifact>
+                                        <groupId>org.umlgraph</groupId>
+                                        <artifactId>umlgraph</artifactId>
+                                        <version>5.6.6</version>
+                                    </docletArtifact>
+                                    <additionalparam>-views -attributes -operations -constructors -visibility
+                                        -inferrel -inferdep -hide (java.*|org.apache.*|com.*|net.sf.*)</additionalparam>
+                                    <useStandardDocletOptions>true</useStandardDocletOptions>
+                                </configuration>
+                            </plugin>
                             <!-- <doclet>ydoc.doclets.YStandard</doclet> <docletPath>/tools/java/yworks-uml-doclet/lib/ydoc.jar:/tools/java/yworks-uml-doclet/resources</docletPath>
                                 <additionalparam>-umlautogen</additionalparam> -->
                             <plugin>

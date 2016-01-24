@@ -1,11 +1,12 @@
 package xeredi.argo.model.comun.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.Data;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class MessageI18nVO.
  */
+@Data
 public final class MessageI18nVO {
 
     /** The key. */
@@ -16,70 +17,4 @@ public final class MessageI18nVO {
 
     /** The value. */
     private String value;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the key.
-     *
-     * @return the key
-     */
-    public MessageI18nKey getKey() {
-        return key;
-    }
-
-    /**
-     * Sets the key.
-     *
-     * @param value
-     *            the new key
-     */
-    public void setKey(final MessageI18nKey value) {
-        key = value;
-    }
-
-    /**
-     * Gets the language.
-     *
-     * @return the language
-     */
-    public String getLanguage() {
-        return language;
-    }
-
-    /**
-     * Sets the language.
-     *
-     * @param value
-     *            the new language
-     */
-    public void setLanguage(final String value) {
-        language = value;
-    }
-
-    /**
-     * Gets the value.
-     *
-     * @return the value
-     */
-    public String getValue() {
-        return value;
-    }
-
-    /**
-     * Sets the value.
-     *
-     * @param value
-     *            the new value
-     */
-    public void setValue(final String value) {
-        this.value = value;
-    }
-
 }

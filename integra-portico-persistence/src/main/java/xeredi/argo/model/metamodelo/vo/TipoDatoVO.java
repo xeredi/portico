@@ -3,12 +3,13 @@ package xeredi.argo.model.metamodelo.vo;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.Data;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoDatoVO.
  */
+@Data
 public final class TipoDatoVO {
 
     /** The id. */
@@ -34,165 +35,4 @@ public final class TipoDatoVO {
 
     /** The cdrf code set. */
     private Set<String> cdrfCodeSet;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the id.
-     * 
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Sets the id.
-     * 
-     * @param value
-     *            the new id
-     */
-    public void setId(final Long value) {
-        id = value;
-    }
-
-    /**
-     * Gets the nombre.
-     * 
-     * @return the nombre
-     */
-    public String getNombre() {
-        return nombre;
-    }
-
-    /**
-     * Sets the nombre.
-     * 
-     * @param value
-     *            the new nombre
-     */
-    public void setNombre(final String value) {
-        nombre = value;
-    }
-
-    /**
-     * Gets the tpht.
-     * 
-     * @return the tpht
-     */
-    public TipoHtml getTpht() {
-        return tpht;
-    }
-
-    /**
-     * Sets the tpht.
-     * 
-     * @param value
-     *            the new tpht
-     */
-    public void setTpht(final TipoHtml value) {
-        tpht = value;
-    }
-
-    /**
-     * Gets the enti.
-     * 
-     * @return the enti
-     */
-    public EntidadVO getEnti() {
-        return enti;
-    }
-
-    /**
-     * Sets the enti.
-     * 
-     * @param value
-     *            the new enti
-     */
-    public void setEnti(final EntidadVO value) {
-        enti = value;
-    }
-
-    /**
-     * Gets the tipo elemento.
-     * 
-     * @return the tipo elemento
-     */
-    public TipoElemento getTipoElemento() {
-        return tipoElemento;
-    }
-
-    /**
-     * Sets the tipo elemento.
-     * 
-     * @param value
-     *            the new tipo elemento
-     */
-    public void setTipoElemento(final TipoElemento value) {
-        tipoElemento = value;
-    }
-
-    /**
-     * Gets the cr list.
-     * 
-     * @return the cr list
-     */
-    public List<CodigoReferenciaVO> getCdrfList() {
-        return cdrfList;
-    }
-
-    /**
-     * Sets the cr list.
-     * 
-     * @param value
-     *            the new cr list
-     */
-    public void setCdrfList(final List<CodigoReferenciaVO> value) {
-        cdrfList = value;
-    }
-
-    /**
-     * Gets the cdrf code set.
-     * 
-     * @return the cdrf code set
-     */
-    public Set<String> getCdrfCodeSet() {
-        return cdrfCodeSet;
-    }
-
-    /**
-     * Sets the cdrf code set.
-     * 
-     * @param value
-     *            the new cdrf code set
-     */
-    public void setCdrfCodeSet(final Set<String> value) {
-        cdrfCodeSet = value;
-    }
-
-    /**
-     * Gets the codigo.
-     * 
-     * @return the codigo
-     */
-    public String getCodigo() {
-        return codigo;
-    }
-
-    /**
-     * Sets the codigo.
-     * 
-     * @param value
-     *            the new codigo
-     */
-    public void setCodigo(final String value) {
-        codigo = value;
-    }
-
 }

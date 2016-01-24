@@ -1,11 +1,12 @@
 package xeredi.argo.model.gis.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.Data;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class MarkerCoordsVO.
  */
+@Data
 public final class CoordsVO {
 
     /** The latitude. */
@@ -13,50 +14,4 @@ public final class CoordsVO {
 
     /** The longitude. */
     private double longitude;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the latitude.
-     *
-     * @return the latitude
-     */
-    public final double getLatitude() {
-        return latitude;
-    }
-
-    /**
-     * Sets the latitude.
-     *
-     * @param value
-     *            the new latitude
-     */
-    public final void setLatitude(final double value) {
-        latitude = value;
-    }
-
-    /**
-     * Gets the longitude.
-     *
-     * @return the longitude
-     */
-    public final double getLongitude() {
-        return longitude;
-    }
-
-    /**
-     * Sets the longitude.
-     *
-     * @param value
-     *            the new longitude
-     */
-    public final void setLongitude(final double value) {
-        longitude = value;
-    }
 }

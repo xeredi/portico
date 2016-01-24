@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Data;
 import lombok.NonNull;
 import xeredi.argo.model.comun.vo.ItemEntidad;
 import xeredi.argo.model.maestro.vo.ParametroVO;
@@ -15,6 +16,7 @@ import xeredi.argo.model.servicio.vo.ServicioVO;
 /**
  * The Class ItemVO.
  */
+@Data
 public abstract class ItemVO implements ItemEntidad {
 
     /** The id. */
@@ -183,60 +185,6 @@ public abstract class ItemVO implements ItemEntidad {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final Long getId() {
-        return id;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void setId(final @NonNull Long value) {
-        id = value;
-    }
-
-    /**
-     * Gets the enti id.
-     *
-     * @return the enti id
-     */
-    public final Long getEntiId() {
-        return entiId;
-    }
-
-    /**
-     * Sets the enti id.
-     *
-     * @param value
-     *            the new enti id
-     */
-    public final void setEntiId(final @NonNull Long value) {
-        entiId = value;
-    }
-
-    /**
-     * Gets the itdt map.
-     *
-     * @return the itdt map
-     */
-    public final Map<Long, ItemDatoVO> getItdtMap() {
-        return itdtMap;
-    }
-
-    /**
-     * Sets the itdt map.
-     *
-     * @param value
-     *            the value
-     */
-    public final void setItdtMap(final Map<Long, ItemDatoVO> value) {
-        itdtMap = value;
-    }
-
-    /**
      * Gets the itdt fecha.
      *
      * @param tpdtId
@@ -311,24 +259,5 @@ public abstract class ItemVO implements ItemEntidad {
      */
     public final String getItdtCadena(final @NonNull Long tpdtId) {
         return itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCadena() : null;
-    }
-
-    /**
-     * Gets the fref.
-     *
-     * @return the fref
-     */
-    public final Date getFref() {
-        return fref;
-    }
-
-    /**
-     * Sets the fref.
-     *
-     * @param value
-     *            the new fref
-     */
-    public final void setFref(final Date value) {
-        fref = value;
     }
 }

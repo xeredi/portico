@@ -3,12 +3,13 @@ package xeredi.argo.model.metamodelo.vo;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.Data;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AbstractEntidadDetailVO.
  */
+@Data
 public abstract class AbstractEntidadDetailVO {
     /**
      * Lista de Grupos de Datos de la Entidad (Pestañas) ordenadas por orden de visualización.
@@ -43,188 +44,9 @@ public abstract class AbstractEntidadDetailVO {
     private List<TramiteVO> trmtList;
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
      * Gets the enti.
      *
      * @return the enti
      */
     public abstract EntidadVO getEnti();
-
-    /**
-     * Gets the engd list.
-     *
-     * @return the engd list
-     */
-    public final List<EntidadGrupoDatoVO> getEngdList() {
-        return engdList;
-    }
-
-    /**
-     * Sets the engd list.
-     *
-     * @param value
-     *            the new engd list
-     */
-    public final void setEngdList(final List<EntidadGrupoDatoVO> value) {
-        engdList = value;
-    }
-
-    /**
-     * Gets the enti padres list.
-     *
-     * @return the enti padres list
-     */
-    public final List<Long> getEntiPadresList() {
-        return entiPadresList;
-    }
-
-    /**
-     * Sets the enti padres list.
-     *
-     * @param value
-     *            the new enti padres list
-     */
-    public final void setEntiPadresList(final List<Long> value) {
-        entiPadresList = value;
-    }
-
-    /**
-     * Gets the enti hijas list.
-     *
-     * @return the enti hijas list
-     */
-    public final List<Long> getEntiHijasList() {
-        return entiHijasList;
-    }
-
-    /**
-     * Sets the enti hijas list.
-     *
-     * @param value
-     *            the new enti hijas list
-     */
-    public final void setEntiHijasList(final List<Long> value) {
-        entiHijasList = value;
-    }
-
-    /**
-     * Gets the enac list.
-     *
-     * @return the enac list
-     */
-    public final List<EntidadAccionVO> getEnacList() {
-        return enacList;
-    }
-
-    /**
-     * Sets the enac list.
-     *
-     * @param value
-     *            the new enac list
-     */
-    public final void setEnacList(final List<EntidadAccionVO> value) {
-        enacList = value;
-    }
-
-    /**
-     * Gets the enag list.
-     *
-     * @return the enag list
-     */
-    public final List<EntidadAccionGridVO> getEnagList() {
-        return enagList;
-    }
-
-    /**
-     * Sets the enag list.
-     *
-     * @param value
-     *            the new enag list
-     */
-    public final void setEnagList(final List<EntidadAccionGridVO> value) {
-        enagList = value;
-    }
-
-    /**
-     * Gets the entd list.
-     *
-     * @return the entd list
-     */
-    public List<Long> getEntdList() {
-        return entdList;
-    }
-
-    /**
-     * Sets the entd list.
-     *
-     * @param value
-     *            the new entd list
-     */
-    public void setEntdList(final List<Long> value) {
-        entdList = value;
-    }
-
-    /**
-     * Gets the entd map.
-     *
-     * @return the entd map
-     */
-    public Map<Long, EntidadTipoDatoVO> getEntdMap() {
-        return entdMap;
-    }
-
-    /**
-     * Sets the entd map.
-     *
-     * @param value
-     *            the value
-     */
-    public void setEntdMap(final Map<Long, EntidadTipoDatoVO> value) {
-        entdMap = value;
-    }
-
-    /**
-     * Gets the trmt list.
-     *
-     * @return the trmt list
-     */
-    public List<TramiteVO> getTrmtList() {
-        return trmtList;
-    }
-
-    /**
-     * Sets the trmt list.
-     *
-     * @param value
-     *            the new trmt list
-     */
-    public void setTrmtList(final List<TramiteVO> value) {
-        trmtList = value;
-    }
-
-    /**
-     * Gets the entd grid list.
-     *
-     * @return the entd grid list
-     */
-    public List<Long> getEntdGridList() {
-        return entdGridList;
-    }
-
-    /**
-     * Sets the entd grid list.
-     *
-     * @param value
-     *            the new entd grid list
-     */
-    public void setEntdGridList(final List<Long> value) {
-        entdGridList = value;
-    }
 }

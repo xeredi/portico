@@ -2,8 +2,7 @@ package xeredi.argo.model.facturacion.vo;
 
 import java.util.Date;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
+import lombok.Data;
 import xeredi.argo.model.comun.vo.Versionable;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 
@@ -11,6 +10,7 @@ import xeredi.argo.model.metamodelo.vo.EntidadVO;
 /**
  * The Class ReglaVO.
  */
+@Data
 public final class ReglaVO implements Versionable<ReglaVersionVO> {
 
     /** The id. */
@@ -47,14 +47,6 @@ public final class ReglaVO implements Versionable<ReglaVersionVO> {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
      * Gets the etiqueta.
      *
      * @return the etiqueta
@@ -72,150 +64,4 @@ public final class ReglaVO implements Versionable<ReglaVersionVO> {
 
         return buffer.length() == 0 ? null : buffer.toString();
     }
-
-    /**
-     * Gets the id.
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Sets the id.
-     *
-     * @param value
-     *            the id
-     */
-    public void setId(final Long value) {
-        id = value;
-    }
-
-    /**
-     * Gets the codigo.
-     *
-     * @return the codigo
-     */
-    public String getCodigo() {
-        return codigo;
-    }
-
-    /**
-     * Sets the codigo.
-     *
-     * @param value
-     *            the codigo
-     */
-    public void setCodigo(final String value) {
-        codigo = value;
-    }
-
-    /**
-     * Gets the crgo.
-     *
-     * @return the crgo
-     */
-    public CargoVO getCrgo() {
-        return crgo;
-    }
-
-    /**
-     * Sets the crgo.
-     *
-     * @param value
-     *            the crgo
-     */
-    public void setCrgo(final CargoVO value) {
-        crgo = value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ReglaVersionVO getVersion() {
-        return version;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setVersion(final ReglaVersionVO value) {
-        version = value;
-    }
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public EntidadVO getEnti() {
-        return enti;
-    }
-
-    /**
-     * Sets the enti.
-     *
-     * @param value
-     *            the enti
-     */
-    public void setEnti(final EntidadVO value) {
-        enti = value;
-    }
-
-    /**
-     * Gets the tipo.
-     *
-     * @return the tipo
-     */
-    public ReglaTipo getTipo() {
-        return tipo;
-    }
-
-    /**
-     * Sets the tipo.
-     *
-     * @param value
-     *            the tipo
-     */
-    public void setTipo(final ReglaTipo value) {
-        tipo = value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getFref() {
-        return fref;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setFref(final Date value) {
-        fref = value;
-    }
-
-    /**
-     * Gets the texto.
-     *
-     * @return the texto
-     */
-    public String getTexto() {
-        return texto;
-    }
-
-    /**
-     * Sets the texto.
-     *
-     * @param value the new texto
-     */
-    public void setTexto(final String value) {
-        texto = value;
-    }
-
 }
