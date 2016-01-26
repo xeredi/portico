@@ -86,6 +86,12 @@ public final class TipoParametroProxy {
 
         EntidadProxy.loadDependencies(TIPO_PARAMETRO_MAP);
 
+        for (final TipoParametroDetailVO tpprDetail : TIPO_PARAMETRO_MAP.values()) {
+            for (final Long tpspId : tpprDetail.getEntiHijasList()) {
+                tpprDetail.getSubentiList().add(TipoSubparametroProxy.select(tpspId).getEnti());
+            }
+        }
+
         LABEL_VALUE_LIST.addAll(tpprBO.selectLabelValues());
 
         LOG.info("Carga de tipos de parametro OK");

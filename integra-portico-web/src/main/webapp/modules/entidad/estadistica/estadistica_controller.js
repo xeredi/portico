@@ -48,8 +48,8 @@ function PeriodoProcesoGridController($route, $routeParams, pageTitleService,
 
     function filter() {
         PeriodoProcesoService.filter(vm.searchCriteria).then(function(data) {
-            vm.tphtList = data.tphtList;
-            vm.tpelList = data.tpelList;
+            vm.sprtList = data.sprtList;
+            vm.limits = data.limits;
         });
     }
 

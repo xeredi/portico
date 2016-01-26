@@ -1,42 +1,45 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <form role="form">
         <fieldset>
             <div class="row">
-                <div class="col-sm-3 col-md-2 form-group-sm" ng-switch="vm.accion">
-                    <label translate>tpsr</label> <select ng-switch-when="create" ng-model="vm.model.tpsr.id"
-                        ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in vm.tpsrList"
+                <div class="col-sm-3 col-md-2 form-group-sm" data-ng-switch="vm.accion">
+                    <label data-translate="tpsr"></label> <select data-ng-switch-when="create"
+                        data-ng-model="vm.model.tpsr.id"
+                        data-ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in vm.tpsrList"
                         class="form-control">
                         <option />
                     </select>
-                    <p ng-switch-when="edit" class="form-control-static"
-                        ng-bind="'enti_' + vm.model.tpsr.id | translate"></p>
+                    <p data-ng-switch-when="edit" class="form-control-static"
+                        data-ng-bind="'enti_' + vm.model.tpsr.id | translate"></p>
                 </div>
-                <div class="col-sm-2 col-md-1 form-group-sm" ng-switch="vm.accion">
-                    <label translate>crgo_codigo</label> <input ng-switch-when="create" type="text"
-                        ng-model="vm.model.codigo" class="form-control" />
-                    <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.codigo"></p>
+                <div class="col-sm-2 col-md-1 form-group-sm" data-ng-switch="vm.accion">
+                    <label data-translate="crgo_codigo"></label> <input data-ng-switch-when="create"
+                        type="text" data-ng-model="vm.model.codigo" class="form-control" />
+                    <p data-ng-switch-when="edit" class="form-control-static" data-ng-bind="vm.model.codigo"></p>
                 </div>
                 <div class="col-sm-2 col-md-2 form-group-sm">
-                    <label translate>crgo_codigoNormalizado</label> <input type="text"
-                        ng-model="vm.model.version.codigoNormalizado" class="form-control" />
+                    <label data-translate="crgo_codigoNormalizado"></label> <input type="text"
+                        data-ng-model="vm.model.version.codigoNormalizado" class="form-control" />
                 </div>
                 <div class="col-sm-2 col-md-1 form-group-sm">
-                    <label translate>crgo_tipo</label> <select ng-model="vm.model.version.tipo"
-                        ng-options="cdrf as ('CargoTipo_' + cdrf | translate) for cdrf in vm.tipos"
+                    <label data-translate="crgo_tipo"></label> <select data-ng-model="vm.model.version.tipo"
+                        data-ng-options="cdrf as ('CargoTipo_' + cdrf | translate) for cdrf in vm.tipos"
                         class="form-control">
                         <option />
                     </select>
                 </div>
                 <div class="col-sm-1 col-md-1 form-group-sm">
-                    <label translate>crgo_principal</label> <select ng-model="vm.model.version.principal"
-                        ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                    <label data-translate="crgo_principal"></label> <select
+                        data-ng-model="vm.model.version.principal"
+                        data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                         class="form-control">
                         <option />
                     </select>
                 </div>
                 <div class="col-sm-1 col-md-1 form-group-sm">
-                    <label translate>crgo_temporal</label> <select ng-model="vm.model.version.temporal"
-                        ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                    <label data-translate="crgo_temporal"></label> <select
+                        data-ng-model="vm.model.version.temporal"
+                        data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                         class="form-control">
                         <option />
                     </select>
@@ -45,26 +48,26 @@
 
             <div class="row">
                 <div class="col-sm-2 col-md-1 form-group-sm">
-                    <label translate>fini</label><input type="text" class="form-control"
-                        ng-model="vm.model.version.fini" data-max-date="{{vm.model.version.ffin}}"
-                        bs-datepicker />
+                    <label data-translate="fini"></label><input type="text" class="form-control"
+                        data-ng-model="vm.model.version.fini" data-max-date="{{vm.model.version.ffin}}"
+                        data-bs-datepicker />
                 </div>
                 <div class="col-sm-2 col-md-1 form-group-sm">
-                    <label translate>ffin</label><input type="text" class="form-control"
-                        ng-model="vm.model.version.ffin" data-min-date="{{vm.model.version.fini}}"
-                        bs-datepicker />
+                    <label data-translate="ffin"></label><input type="text" class="form-control"
+                        data-ng-model="vm.model.version.ffin" data-min-date="{{vm.model.version.fini}}"
+                        data-bs-datepicker />
                 </div>
             </div>
 
-            <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
+            <div class="row" data-ng-include="'modules/common/i18nMap-edit.html'"></div>
         </fieldset>
 
         <div class="btn-group">
             <button data-ng-click="vm.save()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+                <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
             </button>
             <button data-ng-click="vm.cancel()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
             </button>
         </div>
     </form>

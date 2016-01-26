@@ -1,53 +1,55 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <uib-pagination total-items="vm.resultList.count" items-per-page="vm.resultList.limit"
-            ng-model="vm.page" ng-change="vm.pageChanged()" class="pagination" max-size="1"
-            previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;" />
+        <div data-uib-pagination data-total-items="vm.resultList.count"
+            data-items-per-page="vm.resultList.limit" data-ng-model="vm.page"
+            data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
+            data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
     </div>
     <div class="btn-group">
-        <button ng-if="mc.hasAccnPath('crgo-list')" class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template-url="modules/facturacion/fragment/cargo-filter-content.html" bs-modal="modal">
-            <i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
+        <button data-ng-if="mc.hasAccnPath('crgo-list')" class="btn btn-default"
+            data-ng-click="vm.filter('lg')"
+            data-template-url="modules/facturacion/fragment/cargo-filter-content.html" data-bs-modal="modal">
+            <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
         </button>
-        <a ng-if="mc.hasAccnPath('crgo-create')" class="btn btn-default"
-            ng-href="#/facturacion/cargo/edit/create"><i class="glyphicon glyphicon-file"></i> <span
-            translate>btn_crear</span> </a>
+        <a data-ng-if="mc.hasAccnPath('crgo-create')" class="btn btn-default"
+            data-ng-href="#/facturacion/cargo/edit/create"><i class="glyphicon glyphicon-file"></i> <span
+            data-translate="btn_crear"></span> </a>
     </div>
 </div>
 
-<div ng-if="mc.hasAccnPath('crgo-list')" class="table-responsive">
-    <span class="label label-default" translate="grid_count"
-        translate-value-count="{{vm.resultList.count | number:0}}"></span>
+<div data-ng-if="mc.hasAccnPath('crgo-list')" class="table-responsive">
+    <span class="label label-default" data-translate="grid_count"
+        data-translate-value-count="{{vm.resultList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th class="codigo" nowrap="nowrap" translate>crgo_codigo</th>
-                <th translate>crgo_descripcion</th>
-                <th class="codigo" nowrap="nowrap" translate>crgo_codigoNormalizado</th>
-                <th translate>crgo_tipo</th>
-                <th translate>tpsr</th>
-                <th translate>crgo_principal</th>
-                <th translate>crgo_temporal</th>
-                <th translate>fini</th>
-                <th translate>ffin</th>
+                <th class="codigo" nowrap="nowrap" data-translate="crgo_codigo"></th>
+                <th data-translate="crgo_descripcion"></th>
+                <th class="codigo" nowrap="nowrap" data-translate="crgo_codigoNormalizado"></th>
+                <th data-translate="crgo_tipo"></th>
+                <th data-translate="tpsr"></th>
+                <th data-translate="crgo_principal"></th>
+                <th data-translate="crgo_temporal"></th>
+                <th data-translate="fini"></th>
+                <th data-translate="ffin"></th>
             </tr>
         </thead>
 
         <tbody>
-            <tr ng-repeat="crgo in vm.resultList.list track by $index">
-                <td><a ng-href="#/facturacion/cargo/detail/{{crgo.id}}/{{crgo.fref}}"><i
+            <tr data-ng-repeat="crgo in vm.resultList.list track by $index">
+                <td><a data-ng-href="#/facturacion/cargo/detail/{{crgo.id}}/{{crgo.fref}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="crgo.codigo"></td>
-                <td ng-bind="crgo.version.descripcion"></td>
-                <td ng-bind="crgo.version.codigoNormalizado"></td>
-                <td ng-bind="crgo.version.tipo"></td>
-                <td ng-bind="('enti_' + crgo.tpsr.id | translate)"></td>
+                <td data-ng-bind="crgo.codigo"></td>
+                <td data-ng-bind="crgo.version.descripcion"></td>
+                <td data-ng-bind="crgo.version.codigoNormalizado"></td>
+                <td data-ng-bind="crgo.version.tipo"></td>
+                <td data-ng-bind="('enti_' + crgo.tpsr.id | translate)"></td>
                 <td><i class="glyphicon glyphicon-{{(crgo.version.principal ? 'ok' : 'remove')}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{(crgo.version.temporal ? 'ok' : 'remove')}}"></i></td>
-                <td ng-bind="(crgo.version.fini | date: dateFormat)"></td>
-                <td ng-bind="(crgo.version.ffin | date: dateFormat)"></td>
+                <td data-ng-bind="(crgo.version.fini | date: dateFormat)"></td>
+                <td data-ng-bind="(crgo.version.ffin | date: dateFormat)"></td>
             </tr>
         </tbody>
     </table>

@@ -1,49 +1,54 @@
-<div ng-if="vm.item">
+<div data-ng-if="vm.item">
     <form role="form">
         <fieldset>
             <div class="row">
-                <div ng-if="vm.enti.enti.tpprAsociado.puerto" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                    <label translate="prto"></label> <select
-                        ng-if="vm.accion == 'create' || vm.accion == 'duplicate'"
-                        ng-model="vm.item.prmtAsociado.prto.id"
-                        ng-change="vm.prtoId = vm.item.prmtAsociado.prto.id"
-                        ng-options="prto.id as prto.etiqueta for prto in vm.prtoList" class="form-control">
+                <div data-ng-if="vm.enti.enti.tpprAsociado.puerto"
+                    class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+                    <label data-translate="prto"></label> <select
+                        data-ng-if="vm.accion == 'create' || vm.accion == 'duplicate'"
+                        data-ng-model="vm.item.prmtAsociado.prto.id"
+                        data-ng-change="vm.prtoId = vm.item.prmtAsociado.prto.id"
+                        data-ng-options="prto.id as prto.etiqueta for prto in vm.prtoList"
+                        class="form-control">
                         <option />
                     </select>
-                    <p ng-if="!(vm.accion == 'create' || vm.accion == 'duplicate')"
-                        class="form-control-static" ng-bind="vm.item.prmtAsociado.prto.etiqueta"></p>
+                    <p data-ng-if="!(vm.accion == 'create' || vm.accion == 'duplicate')"
+                        class="form-control-static" data-ng-bind="vm.item.prmtAsociado.prto.etiqueta"></p>
                 </div>
                 <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
-                    <label ng-bind="'enti_' + vm.enti.enti.tpprAsociado.id | translate"></label> <input
-                        ng-if="vm.accion != 'edit'" ng-controller="PrmtLupaController" type="text"
-                        autocomplete="off" ng-model="vm.item.prmtAsociado"
-                        uib-typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.enti.tpprAsociado.id, $viewValue, vm.prtoId, vm.item.fref)"
-                        typeahead-editable="false" typeahead-wait-ms="250" class="form-control"
-                        ng-disabled="vm.enti.enti.tpprAsociado.puerto && vm.prtoId == null">
-                    <p ng-if="vm.accion == 'edit'" class="form-control-static"
-                        ng-bind="vm.item.prmtAsociado.etiqueta"></p>
+                    <label data-ng-bind="'enti_' + vm.enti.enti.tpprAsociado.id | translate"></label> <input
+                        data-ng-if="vm.accion != 'edit'"
+                        data-ng-controller="ParametroTypeaheadController as ta" type="text" autocomplete="off"
+                        data-ng-model="vm.item.prmtAsociado"
+                        data-uib-typeahead="prmt as prmt.etiqueta for prmt in ta.getLabelValues(vm.enti.enti.tpprAsociado.id, $viewValue, vm.prtoId, vm.item.fref)"
+                        data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control"
+                        data-ng-disabled="vm.enti.enti.tpprAsociado.puerto && vm.prtoId == null">
+                    <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
+                        data-ng-bind="vm.item.prmtAsociado.etiqueta"></p>
                 </div>
 
                 <div class="col-sm-2 col-md-2 col-md-1 form-group-sm">
-                    <label translate="fini"></label> <input type="text" class="form-control"
-                        ng-model="vm.item.version.fini" data-max-date="{{vm.item.version.ffin}}" bs-datepicker />
+                    <label data-translate="fini"></label> <input type="text" class="form-control"
+                        data-ng-model="vm.item.version.fini" data-max-date="{{vm.item.version.ffin}}"
+                        data-bs-datepicker />
                 </div>
 
                 <div class="col-sm-2 col-md-2 col-md-1 form-group-sm">
-                    <label translate="ffin"></label> <input type="text" class="form-control"
-                        ng-model="vm.item.version.ffin" data-min-date="{{vm.item.version.fini}}" bs-datepicker />
+                    <label data-translate="ffin"></label> <input type="text" class="form-control"
+                        data-ng-model="vm.item.version.ffin" data-min-date="{{vm.item.version.fini}}"
+                        data-bs-datepicker />
                 </div>
             </div>
 
-            <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
+            <div data-ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
         </fieldset>
 
         <div class="btn-group">
             <button data-ng-click="vm.save()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+                <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
             </button>
             <button data-ng-click="vm.cancel()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
             </button>
         </div>
     </form>

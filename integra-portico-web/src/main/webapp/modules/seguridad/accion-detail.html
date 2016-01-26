@@ -1,11 +1,12 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a ng-if="mc.hasAccnPath('accn-edit')" class="btn btn-default"
-                ng-href="#/seguridad/accion/edit/edit/{{vm.model.id}}"><i class="glyphicon glyphicon-edit"></i>
-                <span translate="btn_editar"></span></a>
-            <button ng-if="mc.hasAccnPath('accn-remove')" data-ng-click="vm.remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+            <a data-ng-if="mc.hasAccnPath('accn-edit')" class="btn btn-default"
+                data-ng-href="#/seguridad/accion/edit/edit/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
+            <button data-ng-if="mc.hasAccnPath('accn-remove')" data-ng-click="vm.remove()"
+                class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
         </div>
     </div>
@@ -13,35 +14,35 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate="accn_prefix"></label>
-                <p class="form-control-static" ng-bind="vm.model.prefix | translate"></p>
+                <label data-translate="accn_prefix"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.prefix | translate"></p>
             </div>
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate="accn_codigo"></label>
-                <p class="form-control-static" ng-bind="vm.model.codigo"></p>
+                <label data-translate="accn_codigo"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.codigo"></p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate="accn_core"></label>
+                <label data-translate="accn_core"></label>
                 <p class="form-control-static">
-                    <i class="glyphicon glyphicon-{{(vm.model.core ? 'ok' : 'remove')}}"></i>
+                    <i class="glyphicon glyphicon-{{vm.model.core ? 'ok' : 'remove'}}"></i>
                 </p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate="accn_multiple"></label>
+                <label data-translate="accn_multiple"></label>
                 <p class="form-control-static">
-                    <i class="glyphicon glyphicon-{{(vm.model.multiple ? 'ok' : 'remove')}}"></i>
+                    <i class="glyphicon glyphicon-{{vm.model.multiple ? 'ok' : 'remove'}}"></i>
                 </p>
             </div>
         </div>
     </fieldset>
 
-    <fieldset ng-if="mc.hasAccnPath('grpo-list')">
-        <legend translate="grpoList"></legend>
+    <fieldset data-ng-if="mc.hasAccnPath('grpo-list')">
+        <legend data-translate="grpoList"></legend>
 
         <div class="list-group">
-            <a ng-href="#/seguridad/grupo/detail/{{grpo.id}}"
+            <a data-ng-href="#/seguridad/grupo/detail/{{grpo.id}}"
                 class="list-group-item col-sm-6 col-md-4 col-lg-3"
-                ng-repeat="grpo in vm.grpoList track by grpo.id" ng-bind="grpo.nombre"></a>
+                data-ng-repeat="grpo in vm.grpoList track by grpo.id" data-ng-bind="grpo.nombre"></a>
         </div>
     </fieldset>
 </div>

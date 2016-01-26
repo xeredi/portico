@@ -11,13 +11,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import com.google.common.base.Preconditions;
-
-import lombok.NonNull;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
@@ -41,6 +40,8 @@ import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -244,8 +245,8 @@ public class ParametroBO {
 
                     prmtCriterioVO.setId(prmtActual.getId());
                     sprmCriterioVO.setPrmt(prmtCriterioVO);
-                    sprmCriterioVO.setFechaVigencia(prmtActual.getVersion().getFfin() == null
-                            ? Calendar.getInstance().getTime() : prmtActual.getVersion().getFfin());
+                    sprmCriterioVO.setFechaVigencia(prmtActual.getVersion().getFfin() == null ? Calendar.getInstance()
+                            .getTime() : prmtActual.getVersion().getFfin());
 
                     final List<SubparametroVO> sprmList = sprmDAO.selectList(sprmCriterioVO);
                     final Map<Long, SubparametroVO> sprmMap = new HashMap<>();
@@ -333,8 +334,8 @@ public class ParametroBO {
      *             the instance not found exception
      */
     protected void duplicatePostOperations(final SqlSession session, final ParametroVO prmt,
-            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
-                    throws OverlapException, InstanceNotFoundException {
+            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap) throws OverlapException,
+            InstanceNotFoundException {
         // noop
     }
 
@@ -444,8 +445,8 @@ public class ParametroBO {
      *             the instance not found exception
      */
     protected void duplicateVersionPostOperations(final SqlSession session, final ParametroVO prmt,
-            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
-                    throws OverlapException, InstanceNotFoundException {
+            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap) throws OverlapException,
+            InstanceNotFoundException {
         // noop
     }
 
@@ -534,8 +535,8 @@ public class ParametroBO {
      *             the instance not found exception
      */
     protected void updatePostOperations(final SqlSession session, final ParametroVO prmt,
-            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
-                    throws OverlapException, InstanceNotFoundException {
+            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap) throws OverlapException,
+            InstanceNotFoundException {
         // noop
     }
 
@@ -849,23 +850,6 @@ public class ParametroBO {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
 
             return prmtDAO.selectList(criterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
-        }
-    }
-
-    /**
-     * Select typeahead sprm list.
-     *
-     * @param criterio
-     *            the criterio
-     * @param limit
-     *            the limit
-     * @return the list
-     */
-    public final List<ParametroVO> selectTypeaheadSprmList(final SubparametroCriterioVO criterio, final int limit) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
-
-            return prmtDAO.selectSprmList(criterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         }
     }
 

@@ -1,10 +1,10 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/facturacion/factura-serie/edit/edit/{{vm.model.id}}"><i
-                class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
+            <a class="btn btn-default" data-ng-href="#/facturacion/factura-serie/edit/edit/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
             <button data-ng-click="vm.remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
         </div>
     </div>
@@ -12,16 +12,16 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-1 form-group-sm">
-                <label translate="fcsr_serie"></label>
-                <p class="form-control-static" ng-bind="vm.model.serie"></p>
+                <label data-translate="fcsr_serie"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.serie"></p>
             </div>
             <div class="col-sm-1 form-group-sm">
-                <label translate="fcsr_anio"></label>
-                <p class="form-control-static" ng-bind="vm.model.anio"></p>
+                <label data-translate="fcsr_anio"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.anio"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
-                <label translate="fcsr_numeroUltimo"></label>
-                <p class="form-control-static number" ng-bind="vm.model.numeroUltimo"></p>
+                <label data-translate="fcsr_numeroUltimo"></label>
+                <p class="form-control-static number" data-ng-bind="vm.model.numeroUltimo"></p>
             </div>
         </div>
     </fieldset>

@@ -48,6 +48,8 @@ angular.module("facturacion_controller", [])
 
 .controller("ValoracionDetailController", ValoracionDetailController)
 
+.controller("ValoracionEditController", ValoracionEditController)
+
 .controller("ValoracionLineaDetailController", ValoracionLineaDetailController)
 
 .controller("ValoracionDetalleDetailController",
@@ -157,6 +159,11 @@ function config($routeProvider) {
         templateUrl : "modules/facturacion/valoracion-detail.html",
         controller : "ValoracionDetailController as vm",
         reloadOnSearch : false
+    })
+
+    .when("/facturacion/valoracion/edit/:accion/:id?", {
+        templateUrl : "modules/facturacion/valoracion-edit.html",
+        controller : "ValoracionEditController as vm"
     })
 
     .when("/facturacion/valoracion-linea/detail/:vlrcId/:id", {
@@ -903,6 +910,41 @@ function ValoracionDetailController($routeParams, pageTitleService,
     });
 
     pageTitleService.setTitle("vlrc", "page_detail");
+}
+
+function ValoracionEditController($route, $routeParams, pageTitleService,
+        ValoracionService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        ValoracionService.save(vm.accion, vm.model).then(
+                function(data) {
+                    ValoracionService.redirectAfterSave(vm.accion, data.model,
+                            "valoracion-detail");
+                });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.accion = $routeParams.accion;
+    vm.search = {
+        id : $routeParams.id
+    }
+
+    ValoracionService.edit(vm.accion, vm.search).then(function(data) {
+        vm.model = data.model;
+
+        vm.tpsrList = data.tpsrList;
+        vm.pagadorEntiId = data.pagadorEntiId;
+        vm.tpdtCodExencion = data.tpdtCodExencion;
+    });
+
+    pageTitleService.setTitle("vlrc", "page_" + vm.accion);
 }
 
 function ValoracionLineaDetailController($routeParams, pageTitleService,

@@ -1,15 +1,16 @@
 
 <div class="list-group col-sm-4 col-md-3">
-    <a ng-if="mc.hasAccnPath('vlrc-list')" ng-href="#/facturacion/valoracion/grid" class="list-group-item"
-        ng-bind="'vlrcList' | translate | uppercase"></a> <a ng-if="mc.hasAccnPath('fctr-list')"
-        ng-href="#/facturacion/fctr/grid" class="list-group-item" ng-bind="'fctrList' | translate | uppercase"></a>
+    <a data-ng-if="mc.hasAccnPath('vlrc-list')" data-ng-href="#/facturacion/valoracion/grid"
+        class="list-group-item" data-ng-bind="'vlrcList' | translate | uppercase"></a> <a
+        data-ng-if="mc.hasAccnPath('fctr-list')" data-ng-href="#/facturacion/fctr/grid"
+        class="list-group-item" data-ng-bind="'fctrList' | translate | uppercase"></a>
 </div>
 
 <div class="list-group col-sm-4 col-md-3">
-    <a ng-if="mc.hasAccnPath('crgo-list')" ng-href="#/facturacion/cargo/grid" class="list-group-item"
-        ng-bind="'crgoList' | translate | uppercase"></a> <a ng-if="mc.hasAccnPath('aspc-list')"
-        ng-href="#/facturacion/aspecto/grid" class="list-group-item"
-        ng-bind="'aspcList' | translate | uppercase"></a><a ng-if="mc.hasAccnPath('fcsr-list')"
-        ng-href="#/facturacion/factura-serie/grid" class="list-group-item"
-        ng-bind="'fcsrList' | translate | uppercase"></a>
+    <a data-ng-if="mc.hasAccnPath('crgo-list')" data-ng-href="#/facturacion/cargo/grid"
+        class="list-group-item" data-ng-bind="'crgoList' | translate | uppercase"></a> <a
+        data-ng-if="mc.hasAccnPath('aspc-list')" data-ng-href="#/facturacion/aspecto/grid"
+        class="list-group-item" data-ng-bind="'aspcList' | translate | uppercase"></a><a
+        data-ng-if="mc.hasAccnPath('fcsr-list')" data-ng-href="#/facturacion/factura-serie/grid"
+        class="list-group-item" data-ng-bind="'fcsrList' | translate | uppercase"></a>
 </div>

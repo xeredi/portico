@@ -1,11 +1,12 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a ng-if="mc.hasAccnPath('grpo-edit')" class="btn btn-default"
-                ng-href="#/seguridad/grupo/edit/edit/{{vm.model.id}}"><i class="glyphicon glyphicon-edit"></i>
-                <span translate="btn_editar"></span></a>
-            <button ng-if="mc.hasAccnPath('grpo-remove')" data-ng-click="vm.remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+            <a data-ng-if="mc.hasAccnPath('grpo-edit')" class="btn btn-default"
+                data-ng-href="#/seguridad/grupo/edit/edit/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
+            <button data-ng-if="mc.hasAccnPath('grpo-remove')" data-ng-click="vm.remove()"
+                class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
         </div>
     </div>
@@ -13,40 +14,40 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate="grpo_nombre"></label>
-                <p class="form-control-static" ng-bind="vm.model.nombre"></p>
+                <label data-translate="grpo_nombre"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.nombre"></p>
             </div>
         </div>
     </fieldset>
 
-    <fieldset ng-if="mc.hasAccnPath('accn-list')">
-        <legend translate="accnList"></legend>
+    <fieldset data-ng-if="mc.hasAccnPath('accn-list')">
+        <legend data-translate="accnList"></legend>
 
-        <div class="row" ng-repeat="prefix in vm.prefixList | orderBy: prefix track by $index">
+        <div class="row" data-ng-repeat="prefix in vm.prefixList | orderBy: prefix track by $index">
             <div class="col-sm-4 col-md-3 col-lg-2">
-                <p class="list-group-item active" ng-bind="prefix | translate"></p>
+                <p class="list-group-item active" data-ng-bind="prefix | translate"></p>
             </div>
             <div class="list-group col-sm-8 col-md-9 col-lg-10">
-                <a ng-href="#/seguridad/accion/detail/{{accn.id}}"
+                <a data-ng-href="#/seguridad/accion/detail/{{accn.id}}"
                     class="col-sm-4 col-md-3 col-lg-2 list-group-item"
-                    ng-repeat="accn in vm.accnMap[prefix] track by $index" class="list-group-item"
-                    ng-bind="accn.codigo"></a>
+                    data-ng-repeat="accn in vm.accnMap[prefix] track by $index" class="list-group-item"
+                    data-ng-bind="accn.codigo"></a>
             </div>
         </div>
     </fieldset>
 
-    <fieldset ng-if="mc.hasAccnPath('acen-list')">
-        <legend translate="acenList"></legend>
+    <fieldset data-ng-if="mc.hasAccnPath('acen-list')">
+        <legend data-translate="acenList"></legend>
 
-        <div class="row" ng-repeat="entiId in vm.entiList track by $index">
+        <div class="row" data-ng-repeat="entiId in vm.entiList track by $index">
             <div class="col-sm-4 col-md-3 col-lg-2">
-                <p class="list-group-item active" ng-bind="'enti_' + entiId | translate"></p>
+                <p class="list-group-item active" data-ng-bind="'enti_' + entiId | translate"></p>
             </div>
             <div class="list-group col-sm-8 col-md-9 col-lg-10">
-                <a ng-href="#/metamodelo/accion-entidad/detail/{{acen.entiId}}/{{acen.id}}"
+                <a data-ng-href="#/metamodelo/accion-entidad/detail/{{acen.entiId}}/{{acen.id}}"
                     class="col-sm-4 col-md-3 col-lg-2 list-group-item"
-                    ng-repeat="acen in vm.acenMap[entiId] track by $index" class="list-group-item"
-                    ng-bind="acen.accn.codigo"></a>
+                    data-ng-repeat="acen in vm.acenMap[entiId] track by $index" class="list-group-item"
+                    data-ng-bind="acen.accn.codigo"></a>
             </div>
         </div>
     </fieldset>

@@ -1,45 +1,46 @@
-<div ng-if="vm.item">
+<div data-ng-if="vm.item">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default"
-                ng-href="#/maestro/subparametro/edit/edit/{{vm.item.entiId}}/{{vm.item.prmtId}}/{{vm.item.id}}/{{vm.item.fref}}"><i
-                class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a> <a
+                data-ng-href="#/maestro/subparametro/edit/edit/{{vm.item.entiId}}/{{vm.item.prmtId}}/{{vm.item.id}}/{{vm.item.fref}}"><i
+                class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a> <a
                 class="btn btn-default"
-                ng-href="#/maestro/subparametro/edit/duplicate/{{vm.item.entiId}}/{{vm.item.prmtId}}/{{vm.item.id}}/{{vm.item.fref}}"><i
-                class="glyphicon glyphicon-tags"></i> <span translate="btn_duplicar"></span></a>
+                data-ng-href="#/maestro/subparametro/edit/duplicate/{{vm.item.entiId}}/{{vm.item.prmtId}}/{{vm.item.id}}/{{vm.item.fref}}"><i
+                class="glyphicon glyphicon-tags"></i> <span data-translate="btn_duplicar"></span></a>
             <button data-ng-click="vm.remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
         </div>
     </div>
 
     <fieldset>
         <div class="row">
-            <div ng-if="vm.enti.enti.tpprAsociado.puerto" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate="prto"></label>
-                <p class="form-control-static" ng-bind="vm.item.prmtAsociado.prto.etiqueta"></p>
+            <div data-ng-if="vm.enti.enti.tpprAsociado.puerto"
+                class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+                <label data-translate="prto"></label>
+                <p class="form-control-static" data-ng-bind="vm.item.prmtAsociado.prto.etiqueta"></p>
             </div>
 
             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
-                <label ng-bind="'enti_' + vm.enti.enti.tpprAsociado.id | translate"></label>
+                <label data-ng-bind="'enti_' + vm.enti.enti.tpprAsociado.id | translate"></label>
                 <p class="form-control-static">
                     <a
-                        ng-href="#/maestro/parametro/detail/{{vm.enti.enti.tpprAsociado.id}}/{{vm.item.prmtAsociado.id}}/{{vm.item.fref}}"
-                        ng-bind="vm.item.prmtAsociado.etiqueta"></a>
+                        data-ng-href="#/maestro/parametro/detail/{{vm.enti.enti.tpprAsociado.id}}/{{vm.item.prmtAsociado.id}}/{{vm.item.fref}}"
+                        data-ng-bind="vm.item.prmtAsociado.etiqueta"></a>
                 </p>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
-                <label translate="fini"></label>
+                <label data-translate="fini"></label>
                 <p class="form-control-static"
-                    ng-bind="vm.item.version.fini | date: ('format_date' | translate)"></p>
+                    data-ng-bind="vm.item.version.fini | date: ('format_date' | translate)"></p>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
-                <label translate="ffin"></label>
+                <label data-translate="ffin"></label>
                 <p class="form-control-static"
-                    ng-bind="vm.item.version.ffin | date: ('format_date' | translate)"></p>
+                    data-ng-bind="vm.item.version.ffin | date: ('format_date' | translate)"></p>
             </div>
         </div>
 
-        <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+        <div data-ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
     </fieldset>
 </div>

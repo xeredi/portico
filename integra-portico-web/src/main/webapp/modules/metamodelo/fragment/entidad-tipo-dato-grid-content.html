@@ -1,11 +1,11 @@
-<fieldset ng-if="mc.hasAccnPath('entd-list')">
-    <legend translate="entdList"></legend>
+<fieldset data-ng-if="mc.hasAccnPath('entd-list')">
+    <legend data-translate="entdList"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a ng-if="mc.hasAccnPath('entd-create')" class="btn btn-default"
-                ng-href="#/metamodelo/entidad-tipo-dato/edit/create/{{vm.model.id}}"><i
-                class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
+            <a data-ng-if="mc.hasAccnPath('entd-create')" class="btn btn-default"
+                data-ng-href="#/metamodelo/entidad-tipo-dato/edit/create/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
         </div>
     </div>
 
@@ -13,42 +13,42 @@
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th translate="entd_grupo"></th>
-                <th translate="entd_fila"></th>
-                <th translate="entd_orden"></th>
-                <th translate="entd_span"></th>
-                <th translate="entd_spanLg"></th>
-                <th translate="entd_etiqueta"></th>
-                <th translate="entd_obligatorio"></th>
-                <th translate="entd_gridable"></th>
-                <th translate="entd_filtrable"></th>
-                <th translate="tpdt"></th>
-                <th translate="tpdt_tpel"></th>
-                <th translate="tpdt_tpht"></th>
-                <th translate="enti"></th>
-                <th translate="entd_valorDefecto"></th>
+                <th data-translate="entd_grupo"></th>
+                <th data-translate="entd_fila"></th>
+                <th data-translate="entd_orden"></th>
+                <th data-translate="entd_span"></th>
+                <th data-translate="entd_spanLg"></th>
+                <th data-translate="entd_etiqueta"></th>
+                <th data-translate="entd_obligatorio"></th>
+                <th data-translate="entd_gridable"></th>
+                <th data-translate="entd_filtrable"></th>
+                <th data-translate="tpdt"></th>
+                <th data-translate="tpdt_tpel"></th>
+                <th data-translate="tpdt_tpht"></th>
+                <th data-translate="enti"></th>
+                <th data-translate="entd_valorDefecto"></th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="entd in vm.entdList track by entd.id">
-                <td><a ng-href="#/metamodelo/entidad-tipo-dato/detail/{{entd.entiId}}/{{entd.id}}"><i
+            <tr data-ng-repeat="entd in vm.entdList track by entd.id">
+                <td><a data-ng-href="#/metamodelo/entidad-tipo-dato/detail/{{entd.entiId}}/{{entd.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="entd.grupo" class="number"></td>
-                <td ng-bind="entd.fila" class="number"></td>
-                <td ng-bind="entd.orden" class="number"></td>
-                <td ng-bind="entd.span" class="number"></td>
-                <td ng-bind="entd.spanLg" class="number"></td>
-                <td nowrap="nowrap" ng-bind="entd.etiqueta"></td>
+                <td data-ng-bind="entd.grupo" class="number"></td>
+                <td data-ng-bind="entd.fila" class="number"></td>
+                <td data-ng-bind="entd.orden" class="number"></td>
+                <td data-ng-bind="entd.span" class="number"></td>
+                <td data-ng-bind="entd.spanLg" class="number"></td>
+                <td nowrap="nowrap" data-ng-bind="entd.etiqueta"></td>
                 <td><i class="glyphicon glyphicon-{{(entd.obligatorio ? 'ok' : 'remove')}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{(entd.gridable ? 'ok' : 'remove')}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{(entd.filtrable ? 'ok' : 'remove')}}"></i></td>
-                <td nowrap="nowrap" ng-bind="entd.tpdt.nombre"></td>
-                <td bs-tooltip data-title="{{('ElementoTipo_' + entd.tpdt.tipoElemento | translate)}}"
-                    ng-bind="entd.tpdt.tipoElemento"></td>
-                <td bs-tooltip data-title="{{('HtmlTipo_' + entd.tpdt.tpht | translate)}}"
-                    ng-bind="entd.tpdt.tpht"></td>
-                <td nowrap="nowrap" ng-bind="entd.tpdt.enti.nombre"></span></td>
-                <td nowrap="nowrap" ng-bind="entd.valorDefecto"></span></td>
+                <td nowrap="nowrap" data-ng-bind="entd.tpdt.nombre"></td>
+                <td data-bs-tooltip data-title="{{('ElementoTipo_' + entd.tpdt.tipoElemento | translate)}}"
+                    data-ng-bind="entd.tpdt.tipoElemento"></td>
+                <td data-bs-tooltip data-title="{{('HtmlTipo_' + entd.tpdt.tpht | translate)}}"
+                    data-ng-bind="entd.tpdt.tpht"></td>
+                <td nowrap="nowrap" data-ng-bind="entd.tpdt.enti.nombre"></td>
+                <td nowrap="nowrap" data-ng-bind="entd.valorDefecto"></td>
             </tr>
         </tbody>
     </table>

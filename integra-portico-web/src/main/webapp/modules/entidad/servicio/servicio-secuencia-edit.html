@@ -1,42 +1,45 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <form role="form">
         <fieldset>
             <div class="row">
                 <div class="col-sm-1 col-md-1 form-group-sm">
-                    <label translate>srsc_anno</label> <input ng-if="vm.accion != 'edit'" type="text"
-                        ng-model="vm.model.anno" class="form-control number" />
-                    <p ng-if="vm.accion == 'edit'" class="form-control-static number"
-                        ng-bind="vm.model.anno | number:0"></p>
+                    <label data-translate="srsc_anno"></label> <input data-ng-if="vm.accion != 'edit'"
+                        type="text" data-ng-model="vm.model.anno" class="form-control number" />
+                    <p data-ng-if="vm.accion == 'edit'" class="form-control-static number"
+                        data-ng-bind="vm.model.anno | number:0"></p>
                 </div>
                 <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
-                    <label translate>tpsr</label> <select ng-if="vm.accion != 'edit'"
-                        ng-model="vm.model.tpsr.id"
-                        ng-options="tpsr.id as tpsr.nombre for tpsr in vm.tpsrList" class="form-control">
+                    <label data-translate="tpsr"></label> <select data-ng-if="vm.accion != 'edit'"
+                        data-ng-model="vm.model.tpsr.id"
+                        data-ng-options="tpsr.id as tpsr.nombre for tpsr in vm.tpsrList" class="form-control">
                         <option />
                     </select>
-                    <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.model.tpsr.nombre"></p>
+                    <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
+                        data-ng-bind="vm.model.tpsr.nombre"></p>
                 </div>
                 <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
-                    <label translate>prto</label> <select ng-if="vm.accion != 'edit'"
-                        ng-model="vm.model.prto.id"
-                        ng-options="prto.id as prto.etiqueta for prto in vm.prtoList" class="form-control">
+                    <label data-translate="prto"></label> <select data-ng-if="vm.accion != 'edit'"
+                        data-ng-model="vm.model.prto.id"
+                        data-ng-options="prto.id as prto.etiqueta for prto in vm.prtoList"
+                        class="form-control">
                         <option />
                     </select>
-                    <p ng-if="vm.accion == 'edit'" class="form-control-static"
-                        ng-bind="vm.model.prto.etiqueta"></p>
+                    <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
+                        data-ng-bind="vm.model.prto.etiqueta"></p>
                 </div>
                 <div class="col-sm-1 col-md-1 form-group-sm">
-                    <label translate>srsc_ultimo_numero</label> <input type="text"
-                        ng-model="vm.model.ultimoNumero" class="form-control number" />
+                    <label data-translate="srsc_ultimo_numero"></label> <input type="text"
+                        data-ng-model="vm.model.ultimoNumero" class="form-control number" />
                 </div>
+            </div>
         </fieldset>
 
         <div class="btn-group">
             <button data-ng-click="vm.save()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+                <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
             </button>
             <button data-ng-click="vm.cancel()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
             </button>
         </div>
     </form>

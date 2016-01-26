@@ -1,99 +1,99 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
 <form name="editForm" novalidate role="form">
     <fieldset>
         <div class="row">
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" ng-switch="vm.accion">
-                <label translate>enti_codigo</label> <input ng-switch-when="create" type="text"
-                    ng-model="vm.model.codigo" class="form-control" />
-                <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.codigo"></p>
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" data-ng-switch="vm.accion">
+                <label data-translate="enti_codigo"></label> <input data-ng-switch-when="create" type="text"
+                    data-ng-model="vm.model.codigo" class="form-control" />
+                <p data-ng-switch-when="edit" class="form-control-static" data-ng-bind="vm.model.codigo"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                <label translate>enti_maxGrid</label> <input type="text" ng-model="vm.model.maxGrid"
+                <label data-translate="enti_maxGrid"></label> <input type="text" data-ng-model="vm.model.maxGrid"
                     class="form-control number" />
             </div>
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate>enti_tpdtNombre</label> <select ng-model="vm.model.tpdtNombre.id"
-                    ng-options="labelValue.value as labelValue.label for labelValue in vm.tpdtNombreList"
+                <label data-translate="enti_tpdtNombre"></label> <select data-ng-model="vm.model.tpdtNombre.id"
+                    data-ng-options="labelValue.value as labelValue.label for labelValue in vm.tpdtNombreList"
                     class="form-control">
                     <option />
                 </select>
             </div>
         </div>
 
-        <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
+        <div class="row" data-ng-include="'modules/common/i18nMap-edit.html'"></div>
 
         <div class="row">
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>enti_cmdAlta</label> <select ng-model="vm.model.cmdAlta"
-                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                <label data-translate="enti_cmdAlta"></label> <select data-ng-model="vm.model.cmdAlta"
+                    data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                     <option />
                 </select>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>enti_cmdBaja</label> <select ng-model="vm.model.cmdBaja"
-                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                <label data-translate="enti_cmdBaja"></label> <select data-ng-model="vm.model.cmdBaja"
+                    data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                     <option />
                 </select>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>enti_cmdEdicion</label> <select ng-model="vm.model.cmdEdicion"
-                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                <label data-translate="enti_cmdEdicion"></label> <select data-ng-model="vm.model.cmdEdicion"
+                    data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                     <option />
                 </select>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>enti_cmdDuplicado</label> <select ng-model="vm.model.cmdDuplicado"
-                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                <label data-translate="enti_cmdDuplicado"></label> <select data-ng-model="vm.model.cmdDuplicado"
+                    data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                     <option />
                 </select>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>enti_gis</label> <select ng-model="vm.model.gis"
-                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                <label data-translate="enti_gis"></label> <select data-ng-model="vm.model.gis"
+                    data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                     <option />
                 </select>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>enti_puerto</label> <select ng-model="vm.model.puerto"
-                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                <label data-translate="enti_puerto"></label> <select data-ng-model="vm.model.puerto"
+                    data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                     <option />
                 </select>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>enti_i18n</label> <select ng-model="vm.model.i18n"
-                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                <label data-translate="enti_i18n"></label> <select data-ng-model="vm.model.i18n"
+                    data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                     <option />
                 </select>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                <label translate>enti_tempExp</label> <select ng-model="vm.model.tempExp"
-                    ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                <label data-translate="enti_tempExp"></label> <select data-ng-model="vm.model.tempExp"
+                    data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control">
                     <option />
                 </select>
             </div>
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate>enti_classpath</label> <input type="text" ng-model="vm.model.classpath"
+                <label data-translate="enti_classpath"></label> <input type="text" data-ng-model="vm.model.classpath"
                     class="form-control" />
             </div>
         </div>
     </fieldset>
 
-    <div ng-include="'modules/metamodelo/fragment/accion-edit-content.html'"></div>
+    <div data-ng-include="'modules/metamodelo/fragment/accion-edit-content.html'"></div>
 
     <div class="btn-group">
         <button data-ng-click="vm.save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+            <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
         </button>
         <button data-ng-click="vm.cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
         </button>
     </div>
 </form>

@@ -1,12 +1,12 @@
 
-<fieldset ng-if="mc.hasAccnPath('engd-list')">
-    <legend translate="engdList"></legend>
+<fieldset data-ng-if="mc.hasAccnPath('engd-list')">
+    <legend data-translate="engdList"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a ng-if="mc.hasAccnPath('engd-create')" class="btn btn-default"
-                ng-href="#/metamodelo/entidad-grupo-dato/edit/create/{{vm.model.id}}"><i
-                class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
+            <a data-ng-if="mc.hasAccnPath('engd-create')" class="btn btn-default"
+                data-ng-href="#/metamodelo/entidad-grupo-dato/edit/create/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
         </div>
     </div>
 
@@ -14,16 +14,16 @@
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th translate="engd_etiqueta"></th>
-                <th translate="engd_numero"></th>
+                <th data-translate="engd_etiqueta"></th>
+                <th data-translate="engd_numero"></th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="engd in vm.engdList track by engd.id">
-                <td><a ng-href="#/metamodelo/entidad-grupo-dato/detail/{{engd.entiId}}/{{engd.id}}"><i
+            <tr data-ng-repeat="engd in vm.engdList track by engd.id">
+                <td><a data-ng-href="#/metamodelo/entidad-grupo-dato/detail/{{engd.entiId}}/{{engd.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="engd.etiqueta"></td>
-                <td ng-bind="engd.numero" class="number"></td>
+                <td data-ng-bind="engd.etiqueta"></td>
+                <td data-ng-bind="engd.numero" class="number"></td>
             </tr>
         </tbody>
     </table>

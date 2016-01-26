@@ -1,227 +1,260 @@
-<div ng-if="vm.model">
-    <uib-tabset type="pills"> <uib-tab heading="{{'prbt' | translate}}">
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <button class="btn btn-default" ng-click="vm.cancel()">
-                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
-            </button>
+<div data-ng-if="vm.model">
+    <div data-uib-tabset data-type="pills">
+        <div data-uib-tab data-heading="{{'prbt' | translate}}">
+            <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group">
+                    <button class="btn btn-default" data-ng-click="vm.cancel()">
+                        <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
+                    </button>
+                </div>
+            </div>
+
+            <fieldset>
+                <div class="row">
+                    <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+                        <label data-translate="prbt_modulo"></label>
+                        <p class="form-control-static"
+                            data-ng-bind="('ProcesoModulo_' + vm.model.modulo | translate)"></p>
+                    </div>
+                    <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+                        <label data-translate="prbt_tipo"></label>
+                        <p class="form-control-static"
+                            data-ng-bind="('ProcesoTipo_' + vm.model.tipo | translate)"></p>
+                    </div>
+                    <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+                        <label data-translate="prbt_estado"></label>
+                        <p class="form-control-static"
+                            data-ng-bind="('ProcesoEstado_' + vm.model.estado | translate)"></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+                        <label data-translate="prbt_falta"></label>
+                        <p class="form-control-static"
+                            data-ng-bind="::(vm.model.falta | date: datetimeFormat)"></p>
+                    </div>
+                    <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+                        <label data-translate="fini"></label>
+                        <p class="form-control-static"
+                            data-ng-bind="::(vm.model.finicio | date: datetimeFormat)"></p>
+                    </div>
+                    <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+                        <label data-translate="ffin"></label>
+                        <p class="form-control-static" data-ng-bind="::(vm.model.ffin | date: datetimeFormat)"></p>
+                    </div>
+                    <div class="col-sm-2 col-md-2 form-group-sm">
+                        <label data-translate="prbt_duracion"></label>
+                        <p class="form-control-static number" data-ng-bind="::(vm.model.duracion | number:0)"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
+                        <label data-translate="prbt_erroresCnt"></label>
+                        <p class="form-control-static number"
+                            data-ng-bind="::(vm.model.erroresCnt | number:0)"></p>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
+                        <label data-translate="prbt_alertasCnt"></label>
+                        <p class="form-control-static number"
+                            data-ng-bind="::(vm.model.alertasCnt | number:0)"></p>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
+                        <label data-translate="prbt_mensajesCnt"></label>
+                        <p class="form-control-static number"
+                            data-ng-bind="::(vm.model.mensajesCnt | number:0)"></p>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-5 col-lg-4">
+                    DATOS DE ENTRADA
+
+                    <div data-ng-if="vm.prpmMap">
+                        <fieldset>
+                            <legend data-translate="prpmList"></legend>
+                            <table class="table-bordered table-condensed table-hover table-nonfluid">
+                                <thead>
+                                    <tr>
+                                        <th data-translate="prpm_nombre"></th>
+                                        <th data-translate="prpm_valor"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr data-ng-repeat="(key, value) in ::vm.prpmMap track by key">
+                                        <td data-ng-bind="::key"></td>
+                                        <td data-ng-bind="::value.valor"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </div>
+                    <div data-ng-if="vm.arinEntradaList.length">
+                        <fieldset>
+                            <legend data-translate="archList"></legend>
+                            <table class="table-bordered table-condensed table-hover table-nonfluid">
+                                <thead>
+                                    <tr>
+                                        <th />
+                                        <th data-translate="arch_nombre"></th>
+                                        <th data-translate="arch_tamanio"></th>
+                                        <th data-translate="arch_falta"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr data-ng-repeat="arin in vm.arinEntradaList track by arin.id">
+                                        <td><a data-ng-click="vm.download(arin.id,arin.nombre)"> <span
+                                                class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                                        </a></td>
+                                        <td data-ng-bind="arin.nombre"></td>
+                                        <td data-ng-bind="(arin.tamanio | number:0)" class="number"></td>
+                                        <td data-ng-bind="(arin.falta | date: datetimeFormat)"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </div>
+                    <div data-ng-if="vm.pritEntradaList.length">
+                        <fieldset>
+                            <legend data-translate="pritList"></legend>
+                            <table class="table-bordered table-condensed table-hover table-nonfluid">
+                                <thead>
+                                    <tr>
+                                        <th />
+                                        <th data-translate="prit_tipo"></th>
+                                        <th data-translate="prit_nombre"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr data-ng-repeat="prit in ::vm.pritEntradaList track by $index">
+                                        <td data-ng-switch="::prit.tipo"><a data-ng-switch-when="srvc"
+                                            data-ng-href="#/servicio/servicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
+                                                class="glyphicon glyphicon-search"></span></a><a
+                                            data-ng-switch-when="ssrv"
+                                            data-ng-href="#/servicio/subservicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
+                                                class="glyphicon glyphicon-search"></span></a><a
+                                            data-ng-switch-when="pepr"
+                                            data-ng-href="#/estadistica/pepr/detail/{{::prit.itemId}}"><span
+                                                class="glyphicon glyphicon-search"></span></a><a
+                                            data-ng-switch-when="vlrc"
+                                            data-ng-href="#/facturacion/valoracion/detail/{{prit.itemId}}"><span
+                                                class="glyphicon glyphicon-search"></span></a></td>
+                                        <td data-ng-switch data-on="prit.tipo"><span
+                                            data-ng-switch-when="srvc"
+                                            data-ng-bind="::('enti_' + prit.entiId | translate)"></span><span
+                                            data-ng-switch-when="ssrv"
+                                            data-ng-bind="::('enti_' + prit.entiId | translate)"></span><span
+                                            data-ng-switch-default
+                                            data-ng-bind="::('ItemTipo_' + prit.tipo | translate)"></span></td>
+                                        <td data-ng-bind="::prit.etiqueta"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-5 col-lg-4">
+                    DATOS DE SALIDA
+
+                    <div data-ng-if="vm.arinSalidaList.length">
+                        <fieldset>
+                            <legend data-translate="archList"></legend>
+                            <table class="table-bordered table-condensed table-hover table-nonfluid">
+                                <thead>
+                                    <tr>
+                                        <th />
+                                        <th data-translate="arch_nombre"></th>
+                                        <th data-translate="arch_tamanio"></th>
+                                        <th data-translate="arch_falta"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr data-ng-repeat="arin in vm.arinSalidaList track by $index">
+                                        <td><a data-ng-click="vm.download(arin.id, arin.nombre)"> <span
+                                                class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                                        </a></td>
+                                        <td data-ng-bind="::arin.nombre"></td>
+                                        <td data-ng-bind="::(arin.tamanio | number:0)" class="number"></td>
+                                        <td data-ng-bind="::(arin.falta | date: datetimeFormat)"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </div>
+                    <div data-ng-if="vm.pritSalidaList.length">
+                        <fieldset>
+                            <legend data-translate="pritList"></legend>
+                            <table class="table-bordered table-condensed table-hover table-nonfluid">
+                                <thead>
+                                    <tr>
+                                        <th />
+                                        <th data-translate="prit_tipo"></th>
+                                        <th data-translate="prit_nombre"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr data-ng-repeat="prit in ::vm.pritSalidaList track by $index">
+                                        <td data-ng-switch="::prit.tipo"><a data-ng-switch-when="srvc"
+                                            data-ng-href="#/servicio/servicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
+                                                class="glyphicon glyphicon-search"></span></a><a
+                                            data-ng-switch-when="ssrv"
+                                            data-ng-href="#/servicio/subservicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
+                                                class="glyphicon glyphicon-search"></span></a><a
+                                            data-ng-switch-when="pepr"
+                                            data-ng-href="#/estadistica/pepr/detail/{{::prit.itemId}}"><span
+                                                class="glyphicon glyphicon-search"></span></a><a
+                                            data-ng-switch-when="vlrc"
+                                            data-ng-href="#/facturacion/valoracion/detail/{{prit.itemId}}"><span
+                                                class="glyphicon glyphicon-search"></span></a></td>
+                                        <td data-ng-switch data-on="prit.tipo"><span
+                                            data-ng-switch-when="srvc"
+                                            data-ng-bind="::('enti_' + prit.entiId | translate)"></span><span
+                                            data-ng-switch-when="ssrv"
+                                            data-ng-bind="::('enti_' + prit.entiId | translate)"></span><span
+                                            data-ng-switch-default
+                                            data-ng-bind="::('ItemTipo_' + prit.tipo | translate)"></span></td>
+                                        <td data-ng-bind="::prit.etiqueta"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-uib-tab data-ng-if="vm.prmnList.list.length" data-heading="{{'prmnList' | translate}}">
+            <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group">
+                    <div data-uib-pagination data-total-items="vm.prmnList.count"
+                        data-items-per-page="vm.prmnList.limit" data-ng-model="vm.page"
+                        data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
+                        data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
+                </div>
+            </div>
+
+            <table class="table-bordered table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th data-translate="prmn_nivel"></th>
+                        <th data-translate="prmn_codigo"></th>
+                        <th data-translate="prmn_mensaje"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr data-ng-repeat="prmn in vm.prmnList.list track by $index">
+                        <td data-ng-bind="('MensajeNivel_' + prmn.nivel | translate)" nowrap="nowrap"></td>
+                        <td data-ng-bind="prmn.codigo" nowrap="nowrap"></td>
+                        <td data-ng-bind="prmn.mensaje"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-
-    <fieldset>
-        <div class="row">
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate="prbt_modulo"></label>
-                <p class="form-control-static" ng-bind="('ProcesoModulo_' + vm.model.modulo | translate)"></p>
-            </div>
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate="prbt_tipo"></label>
-                <p class="form-control-static" ng-bind="('ProcesoTipo_' + vm.model.tipo | translate)"></p>
-            </div>
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate="prbt_estado"></label>
-                <p class="form-control-static" ng-bind="('ProcesoEstado_' + vm.model.estado | translate)"></p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate="prbt_falta"></label>
-                <p class="form-control-static" ng-bind="::(vm.model.falta | date: datetimeFormat)"></p>
-            </div>
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate="fini"></label>
-                <p class="form-control-static" ng-bind="::(vm.model.finicio | date: datetimeFormat)"></p>
-            </div>
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate="ffin"></label>
-                <p class="form-control-static" ng-bind="::(vm.model.ffin | date: datetimeFormat)"></p>
-            </div>
-            <div class="col-sm-2 col-md-2 form-group-sm">
-                <label translate="prbt_duracion"></label>
-                <p class="form-control-static number" ng-bind="::(vm.model.duracion | number:0)"></p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
-                <label translate="prbt_erroresCnt"></label>
-                <p class="form-control-static number" ng-bind="::(vm.model.erroresCnt | number:0)"></p>
-            </div>
-            <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
-                <label translate="prbt_alertasCnt"></label>
-                <p class="form-control-static number" ng-bind="::(vm.model.alertasCnt | number:0)"></p>
-            </div>
-            <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
-                <label translate="prbt_mensajesCnt"></label>
-                <p class="form-control-static number" ng-bind="::(vm.model.mensajesCnt | number:0)"></p>
-            </div>
-        </div>
-    </fieldset>
-
-    <div class="row">
-        <div class="col-sm-6 col-md-5 col-lg-4">
-            DATOS DE ENTRADA
-
-            <div ng-if="vm.prpmMap">
-                <legend translate="prpmList"></legend>
-                <table class="table-bordered table-condensed table-hover table-nonfluid">
-                    <thead>
-                        <tr>
-                            <th translate="prpm_nombre"></th>
-                            <th translate="prpm_valor"></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr ng-repeat="(key, value) in ::vm.prpmMap track by key">
-                            <td ng-bind="::key"></td>
-                            <td ng-bind="::value.valor"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div ng-if="vm.arinEntradaList.length">
-                <legend translate="archList"></legend>
-                <table class="table-bordered table-condensed table-hover table-nonfluid">
-                    <thead>
-                        <tr>
-                            <th />
-                            <th translate="arch_nombre"></th>
-                            <th translate="arch_tamanio"></th>
-                            <th translate="arch_falta"></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr ng-repeat="arin in vm.arinEntradaList track by arin.id">
-                            <td><a ng-click="vm.download(arin.id,arin.nombre)"> <span
-                                    class="glyphicon glyphicon-save" aria-hidden="true"></span>
-                            </a></td>
-                            <td ng-bind="arin.nombre"></td>
-                            <td ng-bind="(arin.tamanio | number:0)" class="number"></td>
-                            <td ng-bind="(arin.falta | date: datetimeFormat)"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div ng-if="vm.pritEntradaList.length">
-                <legend translate="pritList"></legend>
-                <table class="table-bordered table-condensed table-hover table-nonfluid">
-                    <thead>
-                        <tr>
-                            <th />
-                            <th translate="prit_tipo"></th>
-                            <th translate="prit_nombre"></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr ng-repeat="prit in ::vm.pritEntradaList track by $index">
-                            <td ng-switch="::prit.tipo"><a ng-switch-when="srvc"
-                                ng-href="#/servicio/servicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
-                                    class="glyphicon glyphicon-search"></span></a><a ng-switch-when="ssrv"
-                                ng-href="#/servicio/subservicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
-                                    class="glyphicon glyphicon-search"></span></a><a ng-switch-when="pepr"
-                                ng-href="#/estadistica/pepr/detail/{{::prit.itemId}}"><span
-                                    class="glyphicon glyphicon-search"></span></a><a ng-switch-when="vlrc"
-                                ng-href="#/facturacion/valoracion/detail/{{prit.itemId}}"><span
-                                    class="glyphicon glyphicon-search"></span></a></td>
-                            <td ng-switch on="prit.tipo"><span ng-switch-when="srvc"
-                                ng-bind="::('enti_' + prit.entiId | translate)"></span><span
-                                ng-switch-when="ssrv" ng-bind="::('enti_' + prit.entiId | translate)"></span><span
-                                ng-switch-default ng-bind="::('ItemTipo_' + prit.tipo | translate)"></span></td>
-                            <td ng-bind="::prit.etiqueta"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-5 col-lg-4">
-            DATOS DE SALIDA
-
-            <div ng-if="vm.arinSalidaList.length">
-                <legend translate="archList"></legend>
-                <table class="table-bordered table-condensed table-hover table-nonfluid">
-                    <thead>
-                        <tr>
-                            <th />
-                            <th translate="arch_nombre"></th>
-                            <th translate="arch_tamanio"></th>
-                            <th translate="arch_falta"></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr ng-repeat="arin in vm.arinSalidaList track by $index">
-                            <td><a ng-click="vm.download(arin.id, arin.nombre)"> <span
-                                    class="glyphicon glyphicon-save" aria-hidden="true"></span>
-                            </a></td>
-                            <td ng-bind="::arin.nombre"></td>
-                            <td ng-bind="::(arin.tamanio | number:0)" class="number"></td>
-                            <td ng-bind="::(arin.falta | date: datetimeFormat)"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div ng-if="vm.pritSalidaList.length">
-                <legend translate="pritList"></legend>
-                <table class="table-bordered table-condensed table-hover table-nonfluid">
-                    <thead>
-                        <tr>
-                            <th />
-                            <th translate="prit_tipo"></th>
-                            <th translate="prit_nombre"></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr ng-repeat="prit in ::vm.pritSalidaList track by $index">
-                            <td ng-switch="::prit.tipo"><a ng-switch-when="srvc"
-                                ng-href="#/servicio/servicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
-                                    class="glyphicon glyphicon-search"></span></a><a ng-switch-when="ssrv"
-                                ng-href="#/servicio/subservicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
-                                    class="glyphicon glyphicon-search"></span></a><a ng-switch-when="pepr"
-                                ng-href="#/estadistica/pepr/detail/{{::prit.itemId}}"><span
-                                    class="glyphicon glyphicon-search"></span></a><a ng-switch-when="vlrc"
-                                ng-href="#/facturacion/valoracion/detail/{{prit.itemId}}"><span
-                                    class="glyphicon glyphicon-search"></span></a></td>
-                            <td ng-switch on="prit.tipo"><span ng-switch-when="srvc"
-                                ng-bind="::('enti_' + prit.entiId | translate)"></span><span
-                                ng-switch-when="ssrv" ng-bind="::('enti_' + prit.entiId | translate)"></span><span
-                                ng-switch-default ng-bind="::('ItemTipo_' + prit.tipo | translate)"></span></td>
-                            <td ng-bind="::prit.etiqueta"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    </uib-tab> <uib-tab ng-if="vm.prmnList.list.length" heading="{{'prmnList' | translate}}">
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <uib-pagination total-items="vm.prmnList.count" items-per-page="vm.prmnList.limit"
-                ng-model="vm.page" ng-change="vm.pageChanged()" class="pagination" max-size="1"
-                previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></uib-pagination>
-        </div>
-    </div>
-
-    <table class="table-bordered table-condensed table-hover table-nonfluid">
-        <thead>
-            <tr>
-                <th translate="prmn_nivel"></th>
-                <th translate="prmn_codigo"></th>
-                <th translate="prmn_mensaje"></th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr ng-repeat="prmn in vm.prmnList.list track by $index">
-                <td ng-bind="('MensajeNivel_' + prmn.nivel | translate)" nowrap="nowrap"></td>
-                <td ng-bind="prmn.codigo" nowrap="nowrap"></td>
-                <td ng-bind="prmn.mensaje"></td>
-            </tr>
-        </tbody>
-    </table>
-    </uib-tab> </uib-tabset>
 </div>

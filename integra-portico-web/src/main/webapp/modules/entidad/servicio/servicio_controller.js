@@ -93,28 +93,9 @@ function config($routeProvider) {
                         reloadOnSearch : false,
                     })
 
-            .when("/servicio/subservicio/create/:entiId?srvcId", {
-                templateUrl : "modules/entidad/servicio/servicio-edit.html",
+            .when("/servicio/subservicio/edit/:accion/:entiId/:srvcId?/:id?", {
+                templateUrl : "modules/entidad/servicio/subservicio-edit.html",
                 controller : "SubservicioEditController as vm",
-                params : {
-                    accion : 'create'
-                }
-            })
-
-            .when("/servicio/subservicio/edit/:entiId/:id", {
-                templateUrl : "modules/entidad/subservicio/servicio-edit.html",
-                controller : "SubservicioEditController as vm",
-                params : {
-                    accion : 'edit'
-                }
-            })
-
-            .when("/servicio/subservicio/duplicate/:entiId/:id", {
-                templateUrl : "modules/entidad/subservicio/servicio-edit.html",
-                controller : "SubservicioEditController as vm",
-                params : {
-                    accion : 'duplicate'
-                }
             })
 
     ;
@@ -593,4 +574,41 @@ function SubservicioDetailController($route, $routeParams, pageTitleService,
 
 function SubservicioEditController($route, $routeParams, pageTitleService,
         SubservicioService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        SubservicioService.save(vm.accion, vm.item).then(
+                function(data) {
+                    SubservicioService.redirectAfterSave(vm.accion, data.model,
+                            "subservicio-detail");
+                });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.accion = $routeParams.accion;
+    vm.search = {
+        id : $routeParams.id,
+        entiId : $routeParams.entiId,
+        srvc : {
+            id : $routeParams.srvcId
+        }
+    };
+
+    SubservicioService.edit(vm.accion, vm.search).then(function(data) {
+        vm.fechaVigencia = data.fechaVigencia;
+        vm.item = data.model;
+        vm.itemPadresMap = data.itemPadresMap;
+        vm.labelValuesMap = data.labelValuesMap;
+
+        vm.enti = data.enti;
+        vm.superentiList = data.superentiList;
+    });
+
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);
 }

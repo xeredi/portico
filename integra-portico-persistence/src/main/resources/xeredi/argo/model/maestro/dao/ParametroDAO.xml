@@ -320,29 +320,6 @@
         </where>
     </select>
 
-    <select id="selectSprmList" parameterType="SubparametroCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <![CDATA[
-		WHERE
-		    EXISTS (
-		        SELECT 1
-		        FROM tbl_subparametro_sprm
-		        WHERE
-		            sprm_prmt_dep_pk = prmt_pk
-		            AND sprm_tpsp_pk = #{tpsp.id}
-		    )
-		    AND prmt_tppr_pk = (
-		        SELECT tpsp_tppr_dep_pk
-		        FROM
-		            tbl_tipo_subparametro_tpsp
-		        WHERE
-		            tpsp_pk = #{tpsp.id}
-		    )
-		    AND prmt_parametro LIKE #{textoBusqueda}
-		ORDER BY prmt_tppr_pk, prmt_parametro
-        ]]>
-    </select>
-
     <select id="selectId" parameterType="ParametroVO" resultType="Long">
         <![CDATA[
         SELECT prmt_pk

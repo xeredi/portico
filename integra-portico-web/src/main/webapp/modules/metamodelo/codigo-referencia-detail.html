@@ -1,11 +1,11 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a ng-if="mc.hasAccnPath('cdrf-edit')" class="btn btn-default"
-                ng-href="#/metamodelo/codigo-referencia/edit/edit/{{vm.model.tpdtId}}/{{vm.model.id}}"><i
-                class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
-            <button ng-if="mc.hasAccnPath('cdrf-remove')" data-ng-click="vm.remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+            <a data-ng-if="mc.hasAccnPath('cdrf-edit')" class="btn btn-default"
+                data-ng-href="#/metamodelo/codigo-referencia/edit/edit/{{vm.model.tpdtId}}/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
+            <button data-ng-if="mc.hasAccnPath('cdrf-remove')" data-ng-click="vm.remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
         </div>
     </div>
@@ -13,15 +13,15 @@
     <fieldset>
         <div class="row">
             <div class="col-md-2 form-group-sm">
-                <label translate="cdrf_valor"></label>
-                <p class="form-control-static" ng-bind="vm.model.valor"></p>
+                <label data-translate="cdrf_valor"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.valor"></p>
             </div>
             <div class="col-md-1 form-group-sm">
-                <label translate="cdrf_orden"></label>
-                <p class="form-control-static number" ng-bind="vm.model.orden"></p>
+                <label data-translate="cdrf_orden"></label>
+                <p class="form-control-static number" data-ng-bind="vm.model.orden"></p>
             </div>
         </div>
 
-        <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+        <div class="row" data-ng-include="'modules/common/i18nMap-detail.html'"></div>
     </fieldset>
 </div>

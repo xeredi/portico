@@ -9,8 +9,6 @@ angular.module("maestro", [])
 
 .controller("PrmtEditController", PrmtEditController)
 
-.controller('PrmtLupaController', PrmtLupaController)
-
 .controller("PrmtGisController", PrmtGisController)
 
 ;
@@ -310,48 +308,6 @@ function PrmtEditController($http, $location, $routeParams, pageTitleService) {
     function cancel() {
         window.history.back();
     }
-}
-
-function PrmtLupaController($http, $scope) {
-    $scope.getLabelValues = function(entiId, textoBusqueda, prtoId, fechaVigencia) {
-        if (textoBusqueda.length <= 0) {
-            return null;
-        }
-
-        return $http.post("maestro/parametro-typeahead.action", {
-            model : {
-                entiId : entiId,
-                textoBusqueda : textoBusqueda,
-                fechaVigencia : fechaVigencia,
-                prto : {
-                    id : prtoId
-                }
-            }
-        }).then(function(res) {
-            return res.data.resultList;
-        });
-    };
-
-    $scope.getLabelValuesSprm = function(entiId, textoBusqueda, fechaVigencia, prtoId) {
-        if (textoBusqueda.length <= 0) {
-            return null;
-        }
-
-        textoBusqueda += "%";
-
-        return $http.post("maestro/parametro-typeahead-sprm.action", {
-            model : {
-                tpsp : {
-                    id : entiId
-                },
-                textoBusqueda : textoBusqueda,
-                fechaVigencia : fechaVigencia,
-                prtoId : prtoId
-            }
-        }).then(function(res) {
-            return res.data.resultList;
-        });
-    };
 }
 
 function PrmtGisController($http, $location, $routeParams, pageTitleService, uiGmapGoogleMapApi) {

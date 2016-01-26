@@ -1,89 +1,92 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <uib-pagination total-items="vm.resultList.count" items-per-page="vm.resultList.limit"
-            ng-model="vm.page" ng-change="vm.pageChanged()" class="pagination" max-size="1"
-            previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;" />
+        <div data-uib-pagination data-total-items="vm.resultList.count"
+            data-items-per-page="vm.resultList.limit" data-ng-model="vm.page"
+            data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
+            data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
     </div>
     <div class="btn-group">
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template-url="modules/facturacion/fragment/valoracion-filter-content.html" bs-modal="modal">
-            <i class="glyphicon glyphicon-search"></i><span translate="btn_filtrar"></span>
+            data-template-url="modules/facturacion/fragment/valoracion-filter-content.html"
+            data-bs-modal="modal">
+            <i class="glyphicon glyphicon-search"></i><span data-translate="btn_filtrar"></span>
         </button>
-        <a class="btn btn-default" ng-href="#/facturacion/vlrc/edit/create"><i
-            class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a> <a
-            class="btn btn-default" ng-href="#/facturacion/facturador/edit/create"><i
-            class="glyphicon glyphicon-search"></i> <span translate="fcdr"></span></a>
+        <a class="btn btn-default" data-ng-href="#/facturacion/valoracion/edit/create"><i
+            class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span> </a> <a
+            class="btn btn-default" data-ng-href="#/facturacion/facturador/edit/create"><i
+            class="glyphicon glyphicon-search"></i> <span data-translate="fcdr"></span></a>
     </div>
 
     <div class="btn-group">
         <button data-ng-click="vm.xlsExport()" class="btn btn-default">
-            <i class="glyphicon glyphicon-download-alt"></i> <span translate="btn_exportar"></span>
+            <i class="glyphicon glyphicon-download-alt"></i> <span data-translate="btn_exportar"></span>
         </button>
     </div>
 </div>
 
 <div class="table-responsive">
-    <span class="label label-default" translate="grid_count"
-        translate-value-count="{{vm.resultList.count | number:0}}"></span>
+    <span class="label label-default" data-translate="grid_count"
+        data-translate-value-count="{{vm.resultList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th class="codigo" nowrap="nowrap" translate="vlrc_id"></th>
-                <th translate="tpsr"></th>
-                <th class="codigo" nowrap="nowrap" translate="srvc"></th>
-                <th translate="aspc"></th>
-                <th translate="vlrc_pagador"></th>
-                <th translate="vlrc_sujPasivo"></th>
-                <th translate="vlrc_importe"></th>
-                <th translate="vlrc_impuesto"></th>
-                <th translate="vlrc_fliq"></th>
-                <th translate="fini"></th>
-                <th translate="ffin"></th>
-                <th translate="falta"></th>
-                <th translate="vlrc_codExencion"></th>
+                <th class="codigo" nowrap="nowrap" data-translate="vlrc_id"></th>
+                <th data-translate="tpsr"></th>
+                <th class="codigo" nowrap="nowrap" data-translate="srvc"></th>
+                <th data-translate="aspc"></th>
+                <th data-translate="vlrc_pagador"></th>
+                <th data-translate="vlrc_sujPasivo"></th>
+                <th data-translate="vlrc_importe"></th>
+                <th data-translate="vlrc_impuesto"></th>
+                <th data-translate="vlrc_fliq"></th>
+                <th data-translate="fini"></th>
+                <th data-translate="ffin"></th>
+                <th data-translate="falta"></th>
+                <th data-translate="vlrc_codExencion"></th>
 
-                <th translate="vlrc_info1"></th>
-                <th translate="vlrc_info2"></th>
-                <th translate="vlrc_info3"></th>
-                <th translate="vlrc_info4"></th>
-                <th translate="vlrc_info5"></th>
-                <th translate="vlrc_info6"></th>
+                <th data-translate="vlrc_info1"></th>
+                <th data-translate="vlrc_info2"></th>
+                <th data-translate="vlrc_info3"></th>
+                <th data-translate="vlrc_info4"></th>
+                <th data-translate="vlrc_info5"></th>
+                <th data-translate="vlrc_info6"></th>
             </tr>
         </thead>
 
         <tbody>
-            <tr ng-repeat="item in vm.resultList.list track by item.id">
-                <td><a ng-href="#/facturacion/valoracion/detail/{{item.id}}"><i
+            <tr data-ng-repeat="item in vm.resultList.list track by item.id">
+                <td><a data-ng-href="#/facturacion/valoracion/detail/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="item.id"></td>
-                <td nowrap="nowrap" ng-bind="('enti_' + item.srvc.entiId | translate)"></td>
-                <td ng-bind="item.srvc.etiqueta"></td>
-                <td ng-bind="item.aspc.codigo" bs-tooltip data-title="{{item.aspc.etiqueta}}"></td>
-                <td ng-bind="item.pagador.parametro" bs-tooltip data-title="{{item.pagador.etiqueta}}"></td>
+                <td data-ng-bind="item.id"></td>
+                <td nowrap="nowrap" data-ng-bind="('enti_' + item.srvc.entiId | translate)"></td>
+                <td data-ng-bind="item.srvc.etiqueta"></td>
+                <td data-ng-bind="item.aspc.codigo" data-bs-tooltip data-title="{{item.aspc.etiqueta}}"></td>
+                <td data-ng-bind="item.pagador.parametro" data-bs-tooltip
+                    data-title="{{item.pagador.etiqueta}}"></td>
                 <td><i class="glyphicon glyphicon-{{(item.sujPasivo ? 'ok' : 'remove')}}"></i></td>
                 <td nowrap="nowrap" class="number">{{(item.importe | number:2)}} &euro;</td>
                 <td nowrap="nowrap" class="number">{{(item.impuesto | number:2)}} &euro;</td>
-                <td nowrap="nowrap" ng-bind="(item.fliq | date: dateFormat)"></td>
-                <td nowrap="nowrap" ng-bind="(item.fini | date: datetimeFormat)"></td>
-                <td nowrap="nowrap" ng-bind="(item.ffin | date: datetimeFormat)"></td>
-                <td nowrap="nowrap" ng-bind="(item.falta | date: datetimeFormat)"></td>
-                <td ng-bind="item.codExencion" bs-tooltip
+                <td nowrap="nowrap" data-ng-bind="(item.fliq | date: dateFormat)"></td>
+                <td nowrap="nowrap" data-ng-bind="(item.fini | date: datetimeFormat)"></td>
+                <td nowrap="nowrap" data-ng-bind="(item.ffin | date: datetimeFormat)"></td>
+                <td nowrap="nowrap" data-ng-bind="(item.falta | date: datetimeFormat)"></td>
+                <td data-ng-bind="item.codExencion" data-bs-tooltip
                     data-title="{{('cdrf_' + vm.tpdtCodExencion.id + '_' + item.codExencion | translate)}}"></td>
 
-                <td nowrap="nowrap"><span ng-if="item.info1">{{item.aspc.version.cetiqInfo1}}:
+                <td nowrap="nowrap"><span data-ng-if="item.info1">{{item.aspc.version.cetiqInfo1}}:
                         {{item.info1}}</span></td>
-                <td nowrap="nowrap"><span ng-if="item.info2">{{item.aspc.version.cetiqInfo2}}:
+                <td nowrap="nowrap"><span data-ng-if="item.info2">{{item.aspc.version.cetiqInfo2}}:
                         {{item.info2}}</span></td>
-                <td nowrap="nowrap"><span ng-if="item.info3">{{item.aspc.version.cetiqInfo3}}:
+                <td nowrap="nowrap"><span data-ng-if="item.info3">{{item.aspc.version.cetiqInfo3}}:
                         {{item.info3}}</span></td>
-                <td nowrap="nowrap"><span ng-if="item.info4">{{item.aspc.version.cetiqInfo4}}:
+                <td nowrap="nowrap"><span data-ng-if="item.info4">{{item.aspc.version.cetiqInfo4}}:
                         {{item.info4}}</span></td>
-                <td nowrap="nowrap"><span ng-if="item.info5">{{item.aspc.version.cetiqInfo5}}:
+                <td nowrap="nowrap"><span data-ng-if="item.info5">{{item.aspc.version.cetiqInfo5}}:
                         {{item.info5}}</span></td>
-                <td nowrap="nowrap"><span ng-if="item.info6">{{item.aspc.version.cetiqInfo6}}:
+                <td nowrap="nowrap"><span data-ng-if="item.info6">{{item.aspc.version.cetiqInfo6}}:
                         {{item.info6}}</span></td>
             </tr>
         </tbody>

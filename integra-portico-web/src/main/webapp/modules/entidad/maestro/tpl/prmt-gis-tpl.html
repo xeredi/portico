@@ -1,31 +1,30 @@
 <table class="table infowindow">
     <tbody>
         <tr>
-            <th>{{'enti_' + parameter.item.entiId | translate}}
-            </td>
-            <td><a style="color: black" ui-srf="parametro-detail(parameter.item)">{{parameter.item.etiqueta}}</a></td>
+            <th>{{'enti_' + parameter.item.entiId | translate}}</th>
+            <td><a style="color: black" ui-sref="parametro-detail(parameter.item)">{{parameter.item.etiqueta}}</a></td>
         </tr>
-        <tr ng-if="parameter.enti.enti.puerto">
-            <th>{{'prto' | translate}}
-            </td>
+        <tr data-ng-if="parameter.enti.enti.puerto">
+            <th>{{'prto' | translate}}</th>
             <td>{{parameter.item.prto.etiqueta}}</td>
         </tr>
-        <tr ng-repeat="tpdtId in parameter.enti.entdList" ng-if="parameter.enti.entdMap[tpdtId].gridable"
-            ng-switch on="parameter.enti.entdMap[tpdtId].tpdt.tipoElemento">
+        <tr data-ng-repeat="tpdtId in parameter.enti.entdList"
+            data-ng-if="parameter.enti.entdMap[tpdtId].gridable" data-ng-switch
+            data-on="parameter.enti.entdMap[tpdtId].tpdt.tipoElemento">
             <th>{{'entd_' + parameter.enti.entdMap[tpdtId].id | translate}}</th>
-            <td ng-switch-when="BO"><i
+            <td data-ng-switch-when="BO"><i
                 class="glyphicon glyphicon-{{parameter.item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></td>
-            <td ng-switch-when="ND">{{parameter.item.itdtMap[tpdtId].cantidadDecimal | number:2}}</td>
-            <td ng-switch-when="NE">{{parameter.item.itdtMap[tpdtId].cantidadEntera}}</td>
-            <td ng-switch-when="FE">{{parameter.item.itdtMap[tpdtId].fecha | date: ('format_date' |
+            <td data-ng-switch-when="ND">{{parameter.item.itdtMap[tpdtId].cantidadDecimal | number:2}}</td>
+            <td data-ng-switch-when="NE">{{parameter.item.itdtMap[tpdtId].cantidadEntera}}</td>
+            <td data-ng-switch-when="FE">{{parameter.item.itdtMap[tpdtId].fecha | date: ('format_date' |
                 translate)}}</td>
-            <td ng-switch-when="FH">{{parameter.item.itdtMap[tpdtId].fecha | date: ('format_datetime' |
-                translate)}}</td>
-            <td ng-switch-when="PR">{{parameter.item.itdtMap[tpdtId].prmt.etiqueta}}</td>
-            <td ng-switch-when="SR">{{parameter.item.itdtMap[tpdtId].srvc.etiqueta}}</td>
-            <td ng-switch-when="CR" ng-if="parameter.item.itdtMap[tpdtId].cadena"
-                ng-bind="'cdrf_' + tpdtId + '_' + parameter.item.itdtMap[tpdtId].cadena | translate"></td>
-            <td ng-switch-when="TX">{{parameter.item.itdtMap[tpdtId].cadena}}</td>
+            <td data-ng-switch-when="FH">{{parameter.item.itdtMap[tpdtId].fecha | date:
+                ('format_datetime' | translate)}}</td>
+            <td data-ng-switch-when="PR">{{parameter.item.itdtMap[tpdtId].prmt.etiqueta}}</td>
+            <td data-ng-switch-when="SR">{{parameter.item.itdtMap[tpdtId].srvc.etiqueta}}</td>
+            <td data-ng-switch-when="CR" data-ng-if="parameter.item.itdtMap[tpdtId].cadena"
+                data-ng-bind="'cdrf_' + tpdtId + '_' + parameter.item.itdtMap[tpdtId].cadena | translate"></td>
+            <td data-ng-switch-when="TX">{{parameter.item.itdtMap[tpdtId].cadena}}</td>
         </tr>
     </tbody>
 </table>

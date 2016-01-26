@@ -1,48 +1,49 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <uib-pagination total-items="vm.prtoList.count" items-per-page="vm.prtoList.limit" ng-model="vm.page"
-            ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-            next-text="&rsaquo;&rsaquo;" />
+        <div data-uib-pagination data-total-items="vm.prtoList.count" data-items-per-page="vm.prtoList.limit"
+            data-ng-model="vm.page" data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
+            data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
     </div>
 
     <div class="btn-group">
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template-url="modules/administracion/fragment/puerto-filter-content.html" bs-modal="modal">
-            <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
+            data-template-url="modules/administracion/fragment/puerto-filter-content.html"
+            data-bs-modal="modal">
+            <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
         </button>
-        <a class="btn btn-default" ng-href="#/administracion/puerto/puerto/edit/create"><i
-            class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
+        <a class="btn btn-default" data-ng-href="#/administracion/puerto/puerto/edit/create"><i
+            class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
     </div>
 </div>
 
 <div class="table-responsive">
-    <span class="label label-default" translate="grid_count"
-        translate-value-count="{{vm.prtoList.count | number:0}}"></span>
+    <span class="label label-default" data-translate="grid_count"
+        data-translate-value-count="{{vm.prtoList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th nowrap="nowrap" translate="prto_codigo"></th>
-                <th nowrap="nowrap" translate="prto_nombre"></th>
-                <th nowrap="nowrap" translate="prto_codigoCorto"></th>
-                <th nowrap="nowrap" translate="prto_codigoEdi"></th>
-                <th nowrap="nowrap" translate="prto_recAduanero"></th>
-                <th nowrap="nowrap" translate="prto_unlocode"></th>
-                <th nowrap="nowrap" translate="sprt"></th>
+                <th nowrap="nowrap" data-translate="prto_codigo"></th>
+                <th nowrap="nowrap" data-translate="prto_nombre"></th>
+                <th nowrap="nowrap" data-translate="prto_codigoCorto"></th>
+                <th nowrap="nowrap" data-translate="prto_codigoEdi"></th>
+                <th nowrap="nowrap" data-translate="prto_recAduanero"></th>
+                <th nowrap="nowrap" data-translate="prto_unlocode"></th>
+                <th nowrap="nowrap" data-translate="sprt"></th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in vm.prtoList.list track by $index">
-                <td><a ng-href="#/administracion/puerto/puerto/detail/{{item.id}}"><i
+            <tr data-ng-repeat="item in vm.prtoList.list track by $index">
+                <td><a data-ng-href="#/administracion/puerto/puerto/detail/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="item.codigo"></td>
-                <td ng-bind="item.nombre"></td>
-                <td ng-bind="item.codigoCorto"></td>
-                <td ng-bind="item.codigoEdi"></td>
-                <td ng-bind="item.recAduanero"></td>
-                <td ng-bind="item.unlocode"></td>
-                <td ng-bind="item.sprt.etiqueta"></td>
+                <td data-ng-bind="item.codigo"></td>
+                <td data-ng-bind="item.nombre"></td>
+                <td data-ng-bind="item.codigoCorto"></td>
+                <td data-ng-bind="item.codigoEdi"></td>
+                <td data-ng-bind="item.recAduanero"></td>
+                <td data-ng-bind="item.unlocode"></td>
+                <td data-ng-bind="item.sprt.etiqueta"></td>
             </tr>
         </tbody>
     </table>

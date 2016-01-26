@@ -2,32 +2,33 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <p class="modal-title" translate="filtro"></p>
+                <button type="button" class="close" data-ng-click="$hide()">&times;</button>
+                <p class="modal-title" data-translate="filtro"></p>
             </div>
             <div class="modal-body">
                 <form>
                     <fieldset>
                         <div class="row">
                             <div class="col-sm-2 col-md-1 form-group-sm">
-                                <label translate>crgo_codigo</label> <input type="text"
-                                    ng-model="vm.searchCriteria.codigo" class="form-control" />
+                                <label data-translate="crgo_codigo"></label> <input type="text"
+                                    data-ng-model="vm.searchCriteria.codigo" class="form-control" />
                             </div>
                             <div class="col-sm-2 col-md-2 form-group-sm">
-                                <label translate>crgo_codigoNormalizado</label> <input type="text"
-                                    ng-model="vm.searchCriteria.codigoNormalizado" class="form-control" />
+                                <label data-translate="crgo_codigoNormalizado"></label> <input type="text"
+                                    data-ng-model="vm.searchCriteria.codigoNormalizado" class="form-control" />
                             </div>
                             <div class="col-sm-3 col-md-2 form-group-sm">
-                                <label translate>tpsr</label> <select ng-model="vm.searchCriteria.tpsrId"
-                                    ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in ::vm.tpsrList"
+                                <label data-translate="tpsr"></label> <select
+                                    data-ng-model="vm.searchCriteria.tpsrId"
+                                    data-ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in ::vm.tpsrList"
                                     class="form-control">
                                     <option />
                                 </select>
                             </div>
                             <div class="col-sm-2 col-md-2 form-group-sm">
-                                <label translate>crgo_fechaVigencia</label><input type="text"
+                                <label data-translate="crgo_fechaVigencia"></label><input type="text"
                                     class="form-control" data-container=".modal-body"
-                                    ng-model="vm.searchCriteria.fechaVigencia" bs-datepicker />
+                                    data-ng-model="vm.searchCriteria.fechaVigencia" data-bs-datepicker />
                             </div>
                         </div>
                     </fieldset>
@@ -35,13 +36,13 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-ng-click="vm.search(1);$hide()">
-                    <i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
+                    <i class="glyphicon glyphicon-search"></i><span data-translate="btn_buscar"></span>
                 </button>
                 <button class="btn btn-default" data-ng-click="$hide()">
-                    <i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
+                    <i class="glyphicon glyphicon-remove"></i><span data-translate="btn_cancelar"></span>
                 </button>
                 <button class="btn btn-default" data-ng-click="vm.resetFilter()">
-                    <i class="glyphicon glyphicon-erase"></i> <span translate="btn_reset"></span>
+                    <i class="glyphicon glyphicon-erase"></i> <span data-translate="btn_reset"></span>
                 </button>
             </div>
         </div>

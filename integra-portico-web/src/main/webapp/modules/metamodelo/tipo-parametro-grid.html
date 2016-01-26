@@ -1,52 +1,54 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <uib-pagination total-items="vm.resultList.count" items-per-page="vm.resultList.limit"
-            ng-model="vm.page" ng-change="vm.pageChanged()" class="pagination" max-size="1"
-            previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"> </pagination>
+        <div data-uib-pagination data-total-items="vm.resultList.count"
+            data-items-per-page="vm.resultList.limit" data-ng-model="vm.page"
+            data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
+            data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
     </div>
 
     <div class="btn-group">
-        <button ng-if="mc.hasAccnPath('tppr-list')" class="btn btn-default" data-ng-click="vm.filter('lg')"
+        <button data-ng-if="mc.hasAccnPath('tppr-list')" class="btn btn-default"
+            data-ng-click="vm.filter('lg')"
             data-template-url="modules/metamodelo/fragment/tipo-parametro-filter-content.html"
-            bs-modal="modal">
-            <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
+            data-bs-modal="modal">
+            <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
         </button>
-        <a ng-if="mc.hasAccnPath('tppr-create')" class="btn btn-default"
-            ng-href="#/metamodelo/tipo-parametro/edit/create"><i class="glyphicon glyphicon-file"></i> <span
-            translate="btn_crear"></span> </a>
+        <a data-ng-if="mc.hasAccnPath('tppr-create')" class="btn btn-default"
+            data-ng-href="#/metamodelo/tipo-parametro/edit/create"><i class="glyphicon glyphicon-file"></i>
+            <span data-translate="btn_crear"></span> </a>
     </div>
 </div>
 
 <div class="table-responsive">
-    <span class="label label-default" translate="grid_count"
-        translate-value-count="{{(vm.resultList.count | number:0)}}"></span>
+    <span class="label label-default" data-translate="grid_count"
+        data-translate-value-count="{{(vm.resultList.count | number:0)}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th class="codigo" nowrap="nowrap" translate="enti_codigo"></th>
-                <th nowrap="nowrap" translate="enti_nombre"></th>
-                <th nowrap="nowrap" translate="enti_cmdAlta"></th>
-                <th nowrap="nowrap" translate="enti_cmdBaja"></th>
-                <th nowrap="nowrap" translate="enti_cmdEdicion"></th>
-                <th nowrap="nowrap" translate="enti_cmdDuplicado"></th>
-                <th nowrap="nowrap" translate="enti_gis"></th>
-                <th nowrap="nowrap" translate="enti_puerto"></th>
-                <th nowrap="nowrap" translate="enti_i18n"></th>
-                <th nowrap="nowrap" translate="enti_tempExp"></th>
-                <th nowrap="nowrap" translate="enti_maxGrid"></th>
-                <th nowrap="nowrap" translate="enti_tpdtNombre"></th>
-                <th nowrap="nowrap" translate="enti_classpath"></th>
+                <th class="codigo" nowrap="nowrap" data-translate="enti_codigo"></th>
+                <th nowrap="nowrap" data-translate="enti_nombre"></th>
+                <th nowrap="nowrap" data-translate="enti_cmdAlta"></th>
+                <th nowrap="nowrap" data-translate="enti_cmdBaja"></th>
+                <th nowrap="nowrap" data-translate="enti_cmdEdicion"></th>
+                <th nowrap="nowrap" data-translate="enti_cmdDuplicado"></th>
+                <th nowrap="nowrap" data-translate="enti_gis"></th>
+                <th nowrap="nowrap" data-translate="enti_puerto"></th>
+                <th nowrap="nowrap" data-translate="enti_i18n"></th>
+                <th nowrap="nowrap" data-translate="enti_tempExp"></th>
+                <th nowrap="nowrap" data-translate="enti_maxGrid"></th>
+                <th nowrap="nowrap" data-translate="enti_tpdtNombre"></th>
+                <th nowrap="nowrap" data-translate="enti_classpath"></th>
             </tr>
         </thead>
 
         <tbody>
-            <tr ng-repeat="enti in vm.resultList.list track by enti.id">
-                <td><a ng-href="#/metamodelo/tipo-parametro/detail/{{enti.id}}"><i
+            <tr data-ng-repeat="enti in vm.resultList.list track by enti.id">
+                <td><a data-ng-href="#/metamodelo/tipo-parametro/detail/{{enti.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="enti.codigo"></td>
-                <td ng-bind="enti.nombre"></td>
+                <td data-ng-bind="enti.codigo"></td>
+                <td data-ng-bind="enti.nombre"></td>
                 <td><i class="glyphicon glyphicon-{{(enti.cmdAlta ? 'ok' : 'remove')}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{(enti.cmdBaja ? 'ok' : 'remove')}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{(enti.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
@@ -55,10 +57,10 @@
                 <td><i class="glyphicon glyphicon-{{(enti.puerto ? 'ok' : 'remove')}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{(enti.i18n ? 'ok' : 'remove')}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{(enti.tempExp ? 'ok' : 'remove')}}"></i></td>
-                <td class="number" ng-bind="(enti.maxGrid | number:0)"></td>
-                <td><a ng-href="#/metamodelo/tipo-dato/detail/{{enti.tpdtNombre.id}}"
-                    ng-bind="enti.tpdtNombre.nombre"></a></td>
-                <td ng-bind="enti.classpath"></td>
+                <td class="number" data-ng-bind="(enti.maxGrid | number:0)"></td>
+                <td><a data-ng-href="#/metamodelo/tipo-dato/detail/{{enti.tpdtNombre.id}}"
+                    data-ng-bind="enti.tpdtNombre.nombre"></a></td>
+                <td data-ng-bind="enti.classpath"></td>
             </tr>
         </tbody>
     </table>

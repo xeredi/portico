@@ -2,14 +2,14 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <button class="btn btn-default" data-ng-click="vm.reload()">
-            <i class="glyphicon glyphicon-refresh"></i> <span translate>btn_reload</span>
+            <i class="glyphicon glyphicon-refresh"></i> <span data-translate="btn_reload"></span>
         </button>
     </div>
 </div>
 
 <fieldset>
     <div class="col-sm-6 col-md-4 col-lg-3 form-group-sm">
-        <input type="text" ng-model="confSearch" maxlength="50" class="form-control" />
+        <input type="text" data-ng-model="confSearch" maxlength="50" class="form-control" />
     </div>
 </fieldset>
 
@@ -18,20 +18,20 @@
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th class="codigo" nowrap="nowrap" translate="conf_key"></th>
-                <th class="codigo" nowrap="nowrap" translate="conf_valueType"></th>
-                <th class="codigo" nowrap="nowrap" translate="conf_defaultValue"></th>
-                <th class="codigo" nowrap="nowrap" translate="conf_value"></th>
+                <th class="codigo" nowrap="nowrap" data-translate="conf_key"></th>
+                <th class="codigo" nowrap="nowrap" data-translate="conf_valueType"></th>
+                <th class="codigo" nowrap="nowrap" data-translate="conf_defaultValue"></th>
+                <th class="codigo" nowrap="nowrap" data-translate="conf_value"></th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in (vm.confList | filter:confSearch) track by $index">
-                <td><a ng-href="#/administracion/configuration/configuration/detail/{{item.key}}"><i
+            <tr data-ng-repeat="item in (vm.confList | filter:confSearch) track by $index">
+                <td><a data-ng-href="#/administracion/configuration/configuration/detail/{{item.key}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td nowrap="nowrap" ng-bind="item.key"></td>
-                <td nowrap="nowrap" ng-bind="'ConfigurationValueType_' + item.valueType | translate"></td>
-                <td nowrap="nowrap" ng-bind="item.defaultValue"></td>
-                <td nowrap="nowrap" ng-bind="item.value"></td>
+                <td nowrap="nowrap" data-ng-bind="item.key"></td>
+                <td nowrap="nowrap" data-ng-bind="'ConfigurationValueType_' + item.valueType | translate"></td>
+                <td nowrap="nowrap" data-ng-bind="item.defaultValue"></td>
+                <td nowrap="nowrap" data-ng-bind="item.value"></td>
             </tr>
         </tbody>
     </table>

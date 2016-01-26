@@ -1,15 +1,15 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <form novalidate role="form">
         <fieldset>
             <div class="row">
-                <div class="col-md-3 form-group-sm" ng-switch="vm.accion">
-                    <label translate>cmag_nombre</label> <input ng-switch-when="create" type="text"
-                        ng-model="vm.model.nombre" class="form-control" />
-                    <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.nombre"></p>
+                <div class="col-md-3 form-group-sm" data-ng-switch="vm.accion">
+                    <label data-translate="cmag_nombre"></label> <input data-ng-switch-when="create" type="text"
+                        data-ng-model="vm.model.nombre" class="form-control" />
+                    <p data-ng-switch-when="edit" class="form-control-static" data-ng-bind="vm.model.nombre"></p>
                 </div>
                 <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                    <label translate>cmag_agregar</label> <select ng-model="vm.model.agregar"
-                        ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                    <label data-translate="cmag_agregar"></label> <select data-ng-model="vm.model.agregar"
+                        data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                         class="form-control">
                         <option />
                     </select>
@@ -19,10 +19,10 @@
 
         <div class="btn-group">
             <button data-ng-click="vm.save()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+                <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
             </button>
             <button data-ng-click="vm.cancel()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
             </button>
         </div>
     </form>

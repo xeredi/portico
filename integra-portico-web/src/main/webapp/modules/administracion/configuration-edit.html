@@ -1,35 +1,35 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <form role="form">
-        <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.model.key" />
+        <input type="hidden" data-ng-model="vm.accion" /><input type="hidden" data-ng-model="vm.model.key" />
 
         <fieldset>
             <div class="row">
                 <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                    <label translate>conf_valueType</label>
+                    <label data-translate="conf_valueType"></label>
                     <p class="form-control-static"
-                        ng-bind="'ConfigurationValueType_' + vm.model.valueType | translate"></p>
+                        data-ng-bind="'ConfigurationValueType_' + vm.model.valueType | translate"></p>
                 </div>
                 <div class="col-sm-9 col-md-8 col-lg-7 form-group-sm">
-                    <label translate>conf_key</label>
-                    <p class="form-control-static" ng-bind="vm.model.key"></p>
+                    <label data-translate="conf_key"></label>
+                    <p class="form-control-static" data-ng-bind="vm.model.key"></p>
                 </div>
                 <div class="col-sm-9 col-md-8 col-lg-7 form-group-sm">
-                    <label translate>conf_defaultValue</label>
-                    <p class="form-control-static" ng-bind="vm.model.defaultValue"></p>
+                    <label data-translate="conf_defaultValue"></label>
+                    <p class="form-control-static" data-ng-bind="vm.model.defaultValue"></p>
                 </div>
                 <div class="col-sm-9 col-md-8 col-lg-7 form-group-sm">
-                    <label translate>conf_value</label> <input type="text" class="form-control"
-                        ng-model="vm.model.value" />
+                    <label data-translate="conf_value"></label> <input type="text" class="form-control"
+                        data-ng-model="vm.model.value" />
                 </div>
             </div>
         </fieldset>
 
         <div class="btn-group">
             <button data-ng-click="vm.save()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+                <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
             </button>
             <button data-ng-click="vm.cancel()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
             </button>
         </div>
     </form>

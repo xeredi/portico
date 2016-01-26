@@ -1,60 +1,61 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <uib-pagination total-items="vm.resultList.count" items-per-page="vm.resultList.limit"
-            ng-model="vm.page" ng-change="vm.pageChanged()" class="pagination" max-size="1"
-            previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></uib-pagination>
+        <div data-uib-pagination data-total-items="vm.resultList.count"
+            data-items-per-page="vm.resultList.limit" data-ng-model="vm.page"
+            data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
+            data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
     </div>
 
     <div class="btn-group">
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template-url="modules/proceso/fragment/proceso-filter-content.html" bs-modal="modal">
-            <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
+            data-template-url="modules/proceso/fragment/proceso-filter-content.html" data-bs-modal="modal">
+            <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
         </button>
     </div>
 
     <div class="btn-group">
         <button data-ng-click="vm.xlsExport()" class="btn btn-default">
-            <i class="glyphicon glyphicon-download-alt"></i> <span translate="btn_exportar"></span>
+            <i class="glyphicon glyphicon-download-alt"></i> <span data-translate="btn_exportar"></span>
         </button>
     </div>
 </div>
 
 <div class="table-responsive">
-    <span class="label label-default" translate="grid_count"
-        translate-value-count="{{vm.resultList.count | number:0}}"></span>
+    <span class="label label-default" data-translate="grid_count"
+        data-translate-value-count="{{vm.resultList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th nowrap="nowrap" translate="prbt_modulo"></th>
-                <th nowrap="nowrap" translate="prbt_tipo"></th>
-                <th nowrap="nowrap" translate="prbt_estado"></th>
-                <th nowrap="nowrap" translate="prbt_falta"></th>
-                <th nowrap="nowrap" translate="fini"></th>
-                <th nowrap="nowrap" translate="ffin"></th>
-                <th nowrap="nowrap" translate="prbt_duracion"></th>
-                <th nowrap="nowrap" translate="prbt_erroresCnt"></th>
-                <th nowrap="nowrap" translate="prbt_alertasCnt"></th>
-                <th nowrap="nowrap" translate="prbt_mensajesCnt"></th>
+                <th nowrap="nowrap" data-translate="prbt_modulo"></th>
+                <th nowrap="nowrap" data-translate="prbt_tipo"></th>
+                <th nowrap="nowrap" data-translate="prbt_estado"></th>
+                <th nowrap="nowrap" data-translate="prbt_falta"></th>
+                <th nowrap="nowrap" data-translate="fini"></th>
+                <th nowrap="nowrap" data-translate="ffin"></th>
+                <th nowrap="nowrap" data-translate="prbt_duracion"></th>
+                <th nowrap="nowrap" data-translate="prbt_erroresCnt"></th>
+                <th nowrap="nowrap" data-translate="prbt_alertasCnt"></th>
+                <th nowrap="nowrap" data-translate="prbt_mensajesCnt"></th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="prbt in vm.resultList.list track by prbt.id">
-                <td><a ng-href="#/proceso/proceso/detail/{{prbt.id}}"><i
+            <tr data-ng-repeat="prbt in vm.resultList.list track by prbt.id">
+                <td><a data-ng-href="#/proceso/proceso/detail/{{prbt.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="::('ProcesoModulo_' + prbt.modulo | translate)"></td>
-                <td ng-bind="::('ProcesoTipo_' + prbt.tipo | translate)"></td>
-                <td ng-bind="::('ProcesoEstado_' + prbt.estado | translate)"></td>
-                <td ng-bind="::(prbt.falta | date: datetimeFormat)"></td>
-                <td ng-bind="::(prbt.finicio | date: datetimeFormat)"></td>
-                <td ng-bind="::(prbt.ffin | date: datetimeFormat)"></td>
-                <td class="number" ng-bind="::(prbt.duracion | number:0)"></td>
+                <td data-ng-bind="::('ProcesoModulo_' + prbt.modulo | translate)"></td>
+                <td data-ng-bind="::('ProcesoTipo_' + prbt.tipo | translate)"></td>
+                <td data-ng-bind="::('ProcesoEstado_' + prbt.estado | translate)"></td>
+                <td data-ng-bind="::(prbt.falta | date: datetimeFormat)"></td>
+                <td data-ng-bind="::(prbt.finicio | date: datetimeFormat)"></td>
+                <td data-ng-bind="::(prbt.ffin | date: datetimeFormat)"></td>
+                <td class="number" data-ng-bind="::(prbt.duracion | number:0)"></td>
                 <td class="number {{::(prbt.erroresCnt > 0 ? 'error' : '')}}"
-                    ng-bind="::(prbt.erroresCnt | number:0)"></td>
+                    data-ng-bind="::(prbt.erroresCnt | number:0)"></td>
                 <td class="number {{::(prbt.alertasCnt > 0 ? 'warning' : '')}}"
-                    ng-bind="::(prbt.alertasCnt | number:0)"></td>
-                <td class="number" ng-bind="::(prbt.mensajesCnt | number:0)"></td>
+                    data-ng-bind="::(prbt.alertasCnt | number:0)"></td>
+                <td class="number" data-ng-bind="::(prbt.mensajesCnt | number:0)"></td>
             </tr>
         </tbody>
     </table>

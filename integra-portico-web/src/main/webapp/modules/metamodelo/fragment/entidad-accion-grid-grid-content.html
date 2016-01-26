@@ -1,11 +1,11 @@
 
 <fieldset>
-    <legend translate="enagList"></legend>
+    <legend data-translate="enagList"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/metamodelo/entidad-accion-grid/edit/create/{{vm.model.id}}"><i
-                class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
+            <a class="btn btn-default" data-ng-href="#/metamodelo/entidad-accion-grid/edit/create/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
         </div>
     </div>
 
@@ -13,18 +13,18 @@
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th translate="enag_path"></th>
-                <th translate="enag_etiqueta"></th>
-                <th translate="enag_orden"></th>
+                <th data-translate="enag_path"></th>
+                <th data-translate="enag_etiqueta"></th>
+                <th data-translate="enag_orden"></th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="enag in vm.enagList track by enag.id">
-                <td><a ng-href="#/metamodelo/entidad-accion-grid/detail/{{enag.entiId}}/{{enag.id}}"><i
+            <tr data-ng-repeat="enag in vm.enagList track by enag.id">
+                <td><a data-ng-href="#/metamodelo/entidad-accion-grid/detail/{{enag.entiId}}/{{enag.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="enag.path"></td>
-                <td ng-bind="enag.etiqueta"></td>
-                <td ng-bind="enag.orden" class="number"></td>
+                <td data-ng-bind="enag.path"></td>
+                <td data-ng-bind="enag.etiqueta"></td>
+                <td data-ng-bind="enag.orden" class="number"></td>
             </tr>
         </tbody>
     </table>

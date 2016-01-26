@@ -1,11 +1,11 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default"
-                ng-href="#/servicio/servicio-secuencia/edit/edit/{{vm.model.tpsr.id}}/{{vm.model.prto.id}}/{{vm.model.anno}}"><i
-                class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span> </a>
+                data-ng-href="#/servicio/servicio-secuencia/edit/edit/{{vm.model.tpsr.id}}/{{vm.model.prto.id}}/{{vm.model.anno}}"><i
+                class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span> </a>
             <button data-ng-click="vm.remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
         </div>
     </div>
@@ -13,20 +13,20 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                <label translate="srsc_anno"></label>
-                <p class="form-control-static number" ng-bind="vm.model.anno | number:0"></p>
+                <label data-translate="srsc_anno"></label>
+                <p class="form-control-static number" data-ng-bind="vm.model.anno | number:0"></p>
             </div>
             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
-                <label translate="tpsr"></label>
-                <p class="form-control-static" ng-bind="vm.model.tpsr.nombre"></p>
+                <label data-translate="tpsr"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.tpsr.nombre"></p>
             </div>
             <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
-                <label translate="prto"></label>
-                <p class="form-control-static" ng-bind="vm.model.prto.nombre"></p>
+                <label data-translate="prto"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.prto.nombre"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                <label translate="srsc_ultimo_numero"></label>
-                <p class="form-control-static number" ng-bind="vm.model.ultimoNumero | number:0"></p>
+                <label data-translate="srsc_ultimo_numero"></label>
+                <p class="form-control-static number" data-ng-bind="vm.model.ultimoNumero | number:0"></p>
             </div>
         </div>
     </fieldset>

@@ -1,11 +1,12 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a ng-if="mc.hasAccnPath('crgo-edit')" class="btn btn-default"
-                ng-href="#/facturacion/cargo/edit/edit/{{vm.model.id}}/{{vm.model.fref}}"><i
-                class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
-            <button ng-if="mc.hasAccnPath('crgo-remove')" data-ng-click="vm.remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            <a data-ng-if="mc.hasAccnPath('crgo-edit')" class="btn btn-default"
+                data-ng-href="#/facturacion/cargo/edit/edit/{{vm.model.id}}/{{vm.model.fref}}"><i
+                class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
+            <button data-ng-if="mc.hasAccnPath('crgo-remove')" data-ng-click="vm.remove()"
+                class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
         </div>
     </div>
@@ -13,32 +14,32 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-3 col-md-2 form-group-sm">
-                <label translate>tpsr</label>
+                <label data-translate="tpsr"></label>
                 <p class="form-control-static">
-                    <a ng-href="#/metamodelo/tipo-servicio/detail/{{vm.model.tpsr.id}}"
-                        ng-bind="'enti_' + vm.model.tpsr.id | translate"></a>
+                    <a data-ng-href="#/metamodelo/tipo-servicio/detail/{{vm.model.tpsr.id}}"
+                        data-ng-bind="'enti_' + vm.model.tpsr.id | translate"></a>
                 </p>
             </div>
             <div class="col-sm-2 col-md-1 form-group-sm">
-                <label translate>crgo_codigo</label>
-                <p class="form-control-static" ng-bind="vm.model.codigo"></p>
+                <label data-translate="crgo_codigo"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.codigo"></p>
             </div>
             <div class="col-sm-2 col-md-2 form-group-sm">
-                <label translate>crgo_codigoNormalizado</label>
-                <p class="form-control-static" ng-bind="vm.model.version.codigoNormalizado"></p>
+                <label data-translate="crgo_codigoNormalizado"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.version.codigoNormalizado"></p>
             </div>
             <div class="col-sm-2 col-md-1 form-group-sm">
-                <label translate>crgo_tipo</label>
-                <p class="form-control-static" ng-bind="'CargoTipo_' + vm.model.version.tipo | translate"></p>
+                <label data-translate="crgo_tipo"></label>
+                <p class="form-control-static" data-ng-bind="'CargoTipo_' + vm.model.version.tipo | translate"></p>
             </div>
             <div class="col-sm-1 col-md-1 form-group-sm">
-                <label translate>crgo_principal</label>
+                <label data-translate="crgo_principal"></label>
                 <p class="form-control-static">
                     <i class="glyphicon glyphicon-{{(vm.model.version.principal ? 'ok' : 'remove')}}"></i>
                 </p>
             </div>
             <div class="col-sm-1 col-md-1 form-group-sm">
-                <label translate>crgo_temporal</label>
+                <label data-translate="crgo_temporal"></label>
                 <p class="form-control-static">
                     <i class="glyphicon glyphicon-{{(vm.model.version.temporal ? 'ok' : 'remove')}}"></i>
                 </p>
@@ -47,27 +48,26 @@
 
         <div class="row">
             <div class="col-sm-2 col-md-1 form-group-sm">
-                <label translate>fini</label>
-                <p class="form-control-static" ng-bind="(vm.model.version.fini | date: dateFormat)"></p>
+                <label data-translate="fini"></label>
+                <p class="form-control-static" data-ng-bind="(vm.model.version.fini | date: dateFormat)"></p>
             </div>
             <div class="col-sm-2 col-md-1 form-group-sm">
-                <label translate>ffin</label>
-                <p class="form-control-static" ng-bind="(vm.model.version.ffin | date: dateFormat)"></p>
+                <label data-translate="ffin"></label>
+                <p class="form-control-static" data-ng-bind="(vm.model.version.ffin | date: dateFormat)"></p>
             </div>
         </div>
 
-        <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+        <div class="row" data-ng-include="'modules/common/i18nMap-detail.html'"></div>
     </fieldset>
 
-    <fieldset ng-if="mc.hasAccnPath('rgla-list')">
-        <legend ng-bind="'Reglas'"></legend>
+    <fieldset data-ng-if="mc.hasAccnPath('rgla-list')">
+        <legend data-ng-bind="'Reglas'"></legend>
 
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
-                <a ng-if="mc.hasAccnPath('rgla-create')" class=" btn
-                btn-default"
-                    ng-href="#/facturacion/regla/edit/create/{{vm.model.id}}/{{vm.model.fref}}"><i
-                    class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+                <a data-ng-if="mc.hasAccnPath('rgla-create')" class="btn btn-default"
+                    data-ng-href="#/facturacion/regla/edit/create/{{vm.model.id}}/{{vm.model.fref}}"><i
+                    class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
             </div>
         </div>
 
@@ -76,34 +76,34 @@
                 <thead>
                     <tr>
                         <th />
-                        <th translate="rgla_codigo"></th>
-                        <th translate="rgla_nombre"></th>
-                        <th translate="rgla_tipo"></th>
-                        <th translate="enti"></th>
-                        <th translate="fini"></th>
-                        <th translate="ffin"></th>
-                        <th translate="rgla_orden"></th>
-                        <th translate="rgla_valorBase"></th>
-                        <th translate="rgla_formula"></th>
-                        <th translate="rgla_condicion"></th>
+                        <th data-translate="rgla_codigo"></th>
+                        <th data-translate="rgla_nombre"></th>
+                        <th data-translate="rgla_tipo"></th>
+                        <th data-translate="enti"></th>
+                        <th data-translate="fini"></th>
+                        <th data-translate="ffin"></th>
+                        <th data-translate="rgla_orden"></th>
+                        <th data-translate="rgla_valorBase"></th>
+                        <th data-translate="rgla_formula"></th>
+                        <th data-translate="rgla_condicion"></th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="rgla in vm.rglaList track by $index">
-                        <td><a ng-href="#/facturacion/regla/detail/{{rgla.id}}/{{rgla.fref}}"><i
+                    <tr data-ng-repeat="rgla in vm.rglaList track by $index">
+                        <td><a data-ng-href="#/facturacion/regla/detail/{{rgla.id}}/{{rgla.fref}}"><i
                                 class="glyphicon glyphicon-search"></i></a></td>
-                        <td ng-bind="rgla.codigo"></td>
-                        <td nowrap="nowrap" ng-bind="rgla.texto"></td>
-                        <td ng-bind="rgla.tipo" bs-tooltip
+                        <td data-ng-bind="rgla.codigo"></td>
+                        <td nowrap="nowrap" data-ng-bind="rgla.texto"></td>
+                        <td data-ng-bind="rgla.tipo" data-bs-tooltip
                             data-title="{{'ReglaTipo_' + rgla.tipo | translate}}"></td>
-                        <td ng-bind="('enti_' + rgla.enti.id | translate)"></td>
-                        <td ng-bind="(rgla.version.fini | date: dateFormat)"></td>
-                        <td ng-bind="(rgla.version.ffin | date: dateFormat)"></td>
-                        <td class="number" ng-bind="rgla.version.orden"></td>
-                        <td class="number" ng-bind="(rgla.version.valorBase | number:4)"></td>
-                        <td><span ng-bind="rgla.version.formula"></span></td>
-                        <td><span ng-bind="rgla.version.condicion"></span></td>
+                        <td data-ng-bind="('enti_' + rgla.enti.id | translate)"></td>
+                        <td data-ng-bind="(rgla.version.fini | date: dateFormat)"></td>
+                        <td data-ng-bind="(rgla.version.ffin | date: dateFormat)"></td>
+                        <td class="number" data-ng-bind="rgla.version.orden"></td>
+                        <td class="number" data-ng-bind="(rgla.version.valorBase | number:4)"></td>
+                        <td><span data-ng-bind="rgla.version.formula"></span></td>
+                        <td><span data-ng-bind="rgla.version.condicion"></span></td>
                     </tr>
                 </tbody>
             </table>

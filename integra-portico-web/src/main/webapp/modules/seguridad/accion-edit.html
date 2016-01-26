@@ -1,28 +1,28 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <form role="form">
         <fieldset>
             <div class="row">
                 <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
-                    <label translate="accn_prefix"></label> <select ng-model="vm.model.prefix"
-                        ng-options="prefix as (prefix | translate) for prefix in vm.prefixList"
+                    <label data-translate="accn_prefix"></label> <select data-ng-model="vm.model.prefix"
+                        data-ng-options="prefix as (prefix | translate) for prefix in vm.prefixList"
                         class="form-control">
                         <option />
                     </select>
                 </div>
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                    <label translate="accn_codigo"></label> <input type="text" ng-model="vm.model.codigo"
-                        class="form-control" />
+                    <label data-translate="accn_codigo"></label> <input type="text"
+                        data-ng-model="vm.model.codigo" class="form-control" />
                 </div>
                 <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                    <label translate="accn_core"></label> <select ng-model="vm.model.core"
-                        ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                    <label data-translate="accn_core"></label> <select data-ng-model="vm.model.core"
+                        data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                         class="form-control">
                         <option />
                     </select>
                 </div>
                 <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                    <label translate="accn_multiple"></label> <select ng-model="vm.model.multiple"
-                        ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                    <label data-translate="accn_multiple"></label> <select data-ng-model="vm.model.multiple"
+                        data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                         class="form-control">
                         <option />
                     </select>
@@ -31,13 +31,13 @@
         </fieldset>
 
         <fieldset>
-            <legend translate="grpoList"></legend>
+            <legend data-translate="grpoList"></legend>
 
             <div class="row">
-                <div class="checkbox" ng-repeat="grpo in vm.grpoList track by grpo.id">
-                    <label> <input type="checkbox" ng-click="vm.updateGrupos($event, grpo.id)"
-                        ng-checked="vm.model.grpoIds.indexOf(grpo.id) >= 0"> <span
-                        ng-bind="grpo.nombre"></span>
+                <div class="checkbox" data-ng-repeat="grpo in vm.grpoList track by grpo.id">
+                    <label> <input type="checkbox" data-ng-click="vm.updateGrupos($event, grpo.id)"
+                        data-ng-checked="vm.model.grpoIds.indexOf(grpo.id) >= 0"> <span
+                        data-ng-bind="grpo.nombre"></span>
                     </label>
                 </div>
             </div>
@@ -45,10 +45,10 @@
 
         <div class="btn-group">
             <button data-ng-click="vm.save()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
+                <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
             </button>
             <button data-ng-click="vm.cancel()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
             </button>
         </div>
     </form>

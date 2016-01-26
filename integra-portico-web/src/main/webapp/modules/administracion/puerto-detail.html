@@ -1,10 +1,10 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/administracion/puerto/puerto/edit/edit/{{vm.model.id}}"><i
-                class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
+            <a class="btn btn-default" data-ng-href="#/administracion/puerto/puerto/edit/edit/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
             <button data-ng-click="vm.remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
         </div>
     </div>
@@ -12,34 +12,34 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-2 col-lg-1 form-group-sm">
-                <label translate="prto_codigo"></label>
-                <p class="form-control-static" ng-bind="vm.model.codigo"></p>
+                <label data-translate="prto_codigo"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.codigo"></p>
             </div>
             <div class="col-sm-2 col-lg-1 form-group-sm">
-                <label translate="prto_codigoCorto"></label>
-                <p class="form-control-static" ng-bind="vm.model.codigoCorto"></p>
+                <label data-translate="prto_codigoCorto"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.codigoCorto"></p>
             </div>
             <div class="col-sm-2 col-lg-1 form-group-sm">
-                <label translate="prto_codigoEdi"></label>
-                <p class="form-control-static" ng-bind="vm.model.codigoEdi"></p>
+                <label data-translate="prto_codigoEdi"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.codigoEdi"></p>
             </div>
             <div class="col-sm-2 col-lg-1 form-group-sm">
-                <label translate="prto_recAduanero"></label>
-                <p class="form-control-static" ng-bind="vm.model.recAduanero"></p>
+                <label data-translate="prto_recAduanero"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.recAduanero"></p>
             </div>
             <div class="col-sm-2 col-lg-1 form-group-sm">
-                <label translate="prto_unlocode"></label>
-                <p class="form-control-static" ng-bind="vm.model.unlocode"></p>
+                <label data-translate="prto_unlocode"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.unlocode"></p>
             </div>
             <div class="col-sm-2 form-group-sm">
-                <label translate="sprt"></label>
+                <label data-translate="sprt"></label>
                 <p class="form-control-static">
-                    <a ng-href="#/administracion/puerto/superpuerto/detail/{{vm.model.sprt.id}}"
-                        ng-bind="vm.model.sprt.etiqueta"></a>
+                    <a data-ng-href="#/administracion/puerto/superpuerto/detail/{{vm.model.sprt.id}}"
+                        data-ng-bind="vm.model.sprt.etiqueta"></a>
                 </p>
             </div>
         </div>
 
-        <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+        <div class="row" data-ng-include="'modules/common/i18nMap-detail.html'"></div>
     </fieldset>
 </div>

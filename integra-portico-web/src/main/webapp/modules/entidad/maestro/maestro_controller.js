@@ -10,6 +10,8 @@ angular.module("maestro_controller", [])
 
 .controller("ParametroEditController", ParametroEditController)
 
+.controller("ParametroTypeaheadController", ParametroTypeaheadController)
+
 .controller("SubparametroDetailController", SubparametroDetailController)
 
 .controller("SubparametroEditController", SubparametroEditController)
@@ -239,6 +241,31 @@ function ParametroEditController($route, $routeParams, pageTitleService,
     });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);
+}
+
+function ParametroTypeaheadController(ParametroService) {
+    var vm = this;
+
+    vm.getLabelValues = getLabelValues;
+
+    function getLabelValues(entiId, textoBusqueda, prtoId, fechaVigencia) {
+        if (textoBusqueda.length <= 0) {
+            return null;
+        }
+
+        vm.search = {
+            entiId : entiId,
+            textoBusqueda : textoBusqueda,
+            fechaVigencia : fechaVigencia,
+            prto : {
+                id : prtoId
+            }
+        };
+
+        return ParametroService.typeahead(vm.search).then(function(data) {
+            return data.resultList;
+        });
+    }
 }
 
 function SubparametroDetailController($routeParams, pageTitleService,

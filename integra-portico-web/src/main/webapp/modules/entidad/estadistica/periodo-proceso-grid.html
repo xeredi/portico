@@ -1,45 +1,47 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <uib-pagination total-items="vm.peprList.count" items-per-page="vm.peprList.limit"
-            ng-model="vm.currentPage" ng-change="vm.pageChanged()" class="pagination" max-size="1"
-            previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;" />
+        <div data-uib-pagination data-total-items="vm.peprList.count" data-items-per-page="vm.peprList.limit"
+            data-ng-model="vm.currentPage" data-ng-change="vm.pageChanged()" class="pagination"
+            data-max-size="1" data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
     </div>
 
     <div class="btn-group">
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template-url="modules/entidad/estadistica/fragment/periodo-proceso-filter-content.html" bs-modal="modal">
-            <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
+            data-template-url="modules/entidad/estadistica/fragment/periodo-proceso-filter-content.html"
+            data-bs-modal="modal">
+            <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
         </button>
-        <a class="btn btn-default" ui-sref="periodo-proceso-load"><i class="glyphicon glyphicon-upload"></i>
-            <span translate="btn_cargar"></span></a> <a class="btn btn-default" ui-sref="periodo-proceso-create"><i
-            class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
+        <a class="btn btn-default" data-ng-href="#/estadistica/periodo-proceso/edit/load"><i
+            class="glyphicon glyphicon-upload"></i> <span data-translate="btn_cargar"></span></a> <a
+            class="btn btn-default" data-ng-href="#/estadistica/periodo-proceso/edit/create"><i
+            class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
     </div>
 </div>
 
 <div class="table-responsive">
-    <span class="label label-default" translate="grid_count"
-        translate-value-count="{{vm.peprList.count | number:0}}"></span>
+    <span class="label label-default" data-translate="grid_count"
+        data-translate-value-count="{{vm.peprList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th class="codigo" nowrap="nowrap" translate="sprt"></th>
-                <th translate="pepr_anio"></th>
-                <th translate="pepr_mes"></th>
-                <th translate="pepr_cdmsGenerado"></th>
-                <th translate="pepr_falta"></th>
+                <th class="codigo" nowrap="nowrap" data-translate="sprt"></th>
+                <th data-translate="pepr_anio"></th>
+                <th data-translate="pepr_mes"></th>
+                <th data-translate="pepr_cdmsGenerado"></th>
+                <th data-translate="pepr_falta"></th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in vm.peprList.list track by $index">
+            <tr data-ng-repeat="item in vm.peprList.list track by $index">
                 <td><a ui-sref="periodo-proceso-detail(item)"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="item.sprt.etiqueta"></td>
-                <td ng-bind="item.anio" class="number"></td>
-                <td ng-bind="item.mes" class="number"></td>
+                <td data-ng-bind="item.sprt.etiqueta"></td>
+                <td data-ng-bind="item.anio" class="number"></td>
+                <td data-ng-bind="item.mes" class="number"></td>
                 <td><i class="glyphicon glyphicon-{{item.cdmsGenerado ? 'ok' : 'remove'}}"></i></td>
-                <td ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
+                <td data-ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
             </tr>
         </tbody>
     </table>

@@ -1,34 +1,36 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <form role="form">
         <fieldset>
             <div class="row">
-                <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" ng-switch="vm.accion">
-                    <label translate="crgo"></label> <select ng-switch-when="create"
-                        ng-model="vm.model.crgo.id"
-                        ng-options="crgo.id as crgo.etiqueta for crgo in vm.crgoList" class="form-control">
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" data-ng-switch="vm.accion">
+                    <label data-translate="crgo"></label> <select data-ng-switch-when="create"
+                        data-ng-model="vm.model.crgo.id"
+                        data-ng-options="crgo.id as crgo.etiqueta for crgo in vm.crgoList"
+                        class="form-control">
                         <option />
                     </select>
-                    <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.crgo.etiqueta"></p>
+                    <p data-ng-switch-when="edit" class="form-control-static"
+                        data-ng-bind="vm.model.crgo.etiqueta"></p>
                 </div>
                 <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                    <label translate="fini"></label><input type="text" class="form-control"
-                        ng-model="vm.model.version.fini" data-max-date="{{vm.model.version.ffin}}"
-                        bs-datepicker />
+                    <label data-translate="fini"></label><input type="text" class="form-control"
+                        data-ng-model="vm.model.version.fini" data-max-date="{{vm.model.version.ffin}}"
+                        data-bs-datepicker />
                 </div>
                 <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                    <label translate="ffin"></label><input type="text" class="form-control"
-                        ng-model="vm.model.version.ffin" data-min-date="{{vm.model.version.fini}}"
-                        bs-datepicker />
+                    <label data-translate="ffin"></label><input type="text" class="form-control"
+                        data-ng-model="vm.model.version.ffin" data-min-date="{{vm.model.version.fini}}"
+                        data-bs-datepicker />
                 </div>
             </div>
         </fieldset>
 
         <div class="btn-group">
             <button data-ng-click="vm.save()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
+                <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
             </button>
             <button data-ng-click="vm.cancel()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
             </button>
         </div>
     </form>

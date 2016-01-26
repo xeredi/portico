@@ -2,31 +2,33 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <p class="modal-title" translate="filtro"></p>
+                <button type="button" class="close" data-ng-click="$hide()">&times;</button>
+                <p class="modal-title" data-translate="filtro"></p>
             </div>
             <div class="modal-body">
                 <form>
                     <fieldset>
                         <div class="row">
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                                <label translate="sprt"></label> <select ng-model="vm.peprCriterio.sprtId"
-                                    ng-options="sprt.id as sprt.etiqueta for sprt in vm.sprtList"
+                                <label data-translate="sprt"></label> <select
+                                    data-ng-model="vm.searchCriteria.sprtId"
+                                    data-ng-options="sprt.id as sprt.etiqueta for sprt in vm.sprtList"
                                     class="form-control">
                                     <option />
                                 </select>
                             </div>
                             <div class="col-sm-2 col-md-1 form-group-sm">
-                                <label translate="pepr_anio"></label> <input type="text"
-                                    ng-model="vm.peprCriterio.anio" class="form-control" />
+                                <label data-translate="pepr_anio"></label> <input type="text"
+                                    data-ng-model="vm.searchCriteria.anio" class="form-control" />
                             </div>
                             <div class="col-sm-2 col-md-1 form-group-sm">
-                                <label translate="pepr_mes"></label> <input type="text"
-                                    ng-model="vm.peprCriterio.mes" class="form-control" />
+                                <label data-translate="pepr_mes"></label> <input type="text"
+                                    data-ng-model="vm.searchCriteria.mes" class="form-control" />
                             </div>
                             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm pull-right">
-                                <label translate="filtro_limit"></label> <select ng-model="vm.limit"
-                                    ng-options="limitValue for limitValue in vm.limits" class="form-control">
+                                <label data-translate="filtro_limit"></label> <select data-ng-model="vm.limit"
+                                    data-ng-options="limitValue for limitValue in vm.limits"
+                                    class="form-control">
                                     <option />
                                 </select>
                             </div>
@@ -36,10 +38,10 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-ng-click="vm.search(1);$hide()">
-                    <i class="glyphicon glyphicon-search"></i><span translate="btn_buscar"></span>
+                    <i class="glyphicon glyphicon-search"></i><span data-translate="btn_buscar"></span>
                 </button>
                 <button class="btn btn-default" data-ng-click="$hide()">
-                    <i class="glyphicon glyphicon-remove"></i><span translate="btn_cancelar"></span>
+                    <i class="glyphicon glyphicon-remove"></i><span data-translate="btn_cancelar"></span>
                 </button>
             </div>
         </div>

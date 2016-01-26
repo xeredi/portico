@@ -1,57 +1,60 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <form novalidate role="form">
         <fieldset>
-            <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
+            <div class="row" data-ng-include="'modules/common/i18nMap-edit.html'"></div>
 
             <div class="row">
-                <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm" ng-switch="vm.accion">
-                    <label translate>tpdt</label> <select ng-switch-when="create" ng-model="vm.model.tpdt.id"
-                        ng-options="labelValue.value as labelValue.label for labelValue in vm.tpdtList"
+                <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm" data-ng-switch="vm.accion">
+                    <label data-translate="tpdt"></label> <select data-ng-switch-when="create"
+                        data-ng-model="vm.model.tpdt.id"
+                        data-ng-options="labelValue.value as labelValue.label for labelValue in vm.tpdtList"
                         class="form-control">
                         <option />
                     </select>
-                    <p ng-switch-when="edit" class="form-control-static" ng-bind="vm.model.tpdt.nombre"></p>
+                    <p data-ng-switch-when="edit" class="form-control-static"
+                        data-ng-bind="vm.model.tpdt.nombre"></p>
                 </div>
                 <div class="col-sm-3 col-md-2 form-group-sm">
-                    <label translate>entd_valorDefecto</label> <input type="text"
-                        ng-model="vm.model.valorDefecto" class="form-control" />
+                    <label data-translate="entd_valorDefecto"></label> <input type="text"
+                        data-ng-model="vm.model.valorDefecto" class="form-control" />
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                    <label translate>entd_grupo</label> <input type="text" ng-model="vm.model.grupo"
-                        class="form-control number" />
+                    <label data-translate="entd_grupo"></label> <input type="text"
+                        data-ng-model="vm.model.grupo" class="form-control number" />
                 </div>
                 <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                    <label translate>entd_fila</label> <input type="text" ng-model="vm.model.fila"
-                        class="form-control number" />
+                    <label data-translate="entd_fila"></label> <input type="text"
+                        data-ng-model="vm.model.fila" class="form-control number" />
                 </div>
                 <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                    <label translate>entd_orden</label> <input type="text" ng-model="vm.model.orden"
-                        class="form-control number" />
+                    <label data-translate="entd_orden"></label> <input type="text"
+                        data-ng-model="vm.model.orden" class="form-control number" />
                 </div>
                 <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                    <label translate>entd_span</label> <input type="text" ng-model="vm.model.span"
-                        class="form-control number" />
+                    <label data-translate="entd_span"></label> <input type="text"
+                        data-ng-model="vm.model.span" class="form-control number" />
                 </div>
                 <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                    <label translate>entd_obligatorio</label> <select ng-model="vm.model.obligatorio"
-                        ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                    <label data-translate="entd_obligatorio"></label> <select
+                        data-ng-model="vm.model.obligatorio"
+                        data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                         class="form-control">
                         <option />
                     </select>
                 </div>
                 <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                    <label translate>entd_gridable</label> <select ng-model="vm.model.gridable"
-                        ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                    <label data-translate="entd_gridable"></label> <select data-ng-model="vm.model.gridable"
+                        data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                         class="form-control">
                         <option />
                     </select>
                 </div>
                 <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
-                    <label translate>entd_filtrable</label> <select ng-model="vm.model.filtrable"
-                        ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                    <label data-translate="entd_filtrable"></label> <select data-ng-model="vm.model.filtrable"
+                        data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                         class="form-control">
                         <option />
                     </select>
@@ -61,10 +64,10 @@
 
         <div class="btn-group">
             <button data-ng-click="vm.save()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+                <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
             </button>
             <button data-ng-click="vm.cancel()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
             </button>
         </div>
     </form>

@@ -1,0 +1,139 @@
+<form role="form">
+    <fieldset>
+        <div class="row">
+            <div class="col-md-2 col-lg-1 form-group-sm">
+                <label data-translate="vlrc_id"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.id"></p>
+            </div>
+            <div class="col-md-4 col-lg-3 col-xl-2 form-group-sm">
+                <label data-translate="tpsr"></label> <select data-ng-if="vm.accion == 'create'"
+                    data-ng-model="vm.tpsrId"
+                    data-ng-options="tpsr.value as ('enti_' + tpsr.value | translate) for tpsr in vm.tpsrList"
+                    class="form-control">
+                    <option />
+                </select>
+                <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
+                    data-translate="{{'enti_' + vm.model.srvc.entiId}}"></p>
+            </div>
+            <div class="col-md-2 col-lg-1 form-group-sm" data-ng-if="vm.tpsrId">
+                <label data-translate="srvc"></label> <input type="text" data-ng-if="vm.accion == 'create'"
+                    autocomplete="off" data-ng-model="vm.model.srvc" data-ng-controller="SrvcLupaController"
+                    data-uib-typeahead="srvc as srvc.etiqueta for srvc in search(vm.tpsrId, $viewValue)"
+                    data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
+                <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
+                    data-ng-bind="vm.model.srvc.etiqueta"></p>
+            </div>
+            <div class="col-md-2 col-lg-1 form-group-sm">
+                <label data-translate="vlrc_fliq"></label> <input type="text" class="form-control"
+                    data-ng-model="vm.model.fliq" data-bs-datepicker />
+            </div>
+            <div class="col-md-2 col-lg-1 form-group-sm">
+                <label data-translate="fref"></label> <input data-ng-if="vm.accion == 'create'" type="text"
+                    class="form-control" data-ng-model="vm.model.fref" data-bs-datepicker />
+                <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
+                    data-ng-bind="vm.model.fref | date: ('format_date' | translate)"></p>
+            </div>
+            <div class="col-sm-3 col-md-2 form-group-sm" data-ng-if="vm.tpsrId">
+                <label data-translate="aspc"></label> <input type="text" autocomplete="off"
+                    data-ng-model="vm.model.aspc" data-ng-controller="AspectoTypeaheadController as ta"
+                    data-ng-if="vm.accion == 'create'"
+                    data-uib-typeahead="item as item.etiqueta for item in ta.search(vm.tpsrId, $viewValue)"
+                    data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control input">
+                <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
+                    data-ng-bind="vm.model.aspc.etiqueta"></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1 form-group-sm">
+                <label data-translate="vlrc_importe"></label>
+                <p class="form-control-static number">
+                    <span data-ng-bind="vm.model.importe | number:2"></span> &euro;
+                </p>
+            </div>
+            <div class="col-md-1 form-group-sm">
+                <label data-translate="vlrc_impuesto"></label>
+                <p class="form-control-static number">
+                    <span data-ng-bind="vm.model.impuesto | number:2"></span> &euro;
+                </p>
+            </div>
+            <div class="col-sm-4 col-md-3 form-group-sm">
+                <label data-translate="vlrc_codExencion"></label> <select data-ng-model="vm.model.codExencion"
+                    data-ng-options="cdrf.valor as ('cdrf_' + vm.tpdtCodExencion.id + '_' + cdrf.valor | translate) for cdrf in vm.tpdtCodExencion.cdrfList"
+                    class="form-control">
+                    <option />
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-xl-2 form-group-sm">
+                <label data-translate="vlrc_pagador"></label> <input type="text" autocomplete="off"
+                    data-ng-model="vm.model.pagador"
+                    data-ng-controller="ParametroTypeaheadController as prmtTa"
+                    data-uib-typeahead="prmt as prmt.etiqueta for prmt in prmtTa.getLabelValues(vm.pagadorEntiId, $viewValue, vm.model.srvc.prto.id, vm.model.fref)"
+                    data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
+            </div>
+            <div class="col-md-2 col-lg-1 form-group-sm">
+                <label data-translate="vlrc_sujPasivo"></label> <select data-ng-model="vm.model.sujPasivo"
+                    data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                    class="form-control">
+                    <option />
+                </select>
+            </div>
+            <div class="col-md-2 col-xl-1 form-group-sm">
+                <label data-translate="vlrc_falta"></label>
+                <p class="form-control-static"
+                    data-ng-bind="vm.model.falta | date: ('format_datetime' | translate)"></p>
+            </div>
+            <div class="col-md-2 col-xl-1 form-group-sm">
+                <label data-translate="fini"></label> <input data-ng-if="vm.accion == 'create'" type="text"
+                    class="form-control" data-ng-model="vm.model.fini" data-bs-datepicker />
+                <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
+                    data-ng-bind="vm.model.fini | date: ('format_date' | translate)"></p>
+            </div>
+            <div class="col-md-2 col-xl-1 form-group-sm">
+                <label data-translate="ffin"></label> <input data-ng-if="vm.accion == 'create'" type="text"
+                    class="form-control" data-ng-model="vm.model.ffin" data-bs-datepicker />
+                <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
+                    data-ng-bind="vm.model.ffin | date: ('format_date' | translate)"></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div data-ng-if="vm.model.aspc.version.cetiqInfo1" class="col-md-4 form-group-sm">
+                <label data-ng-bind="vm.model.aspc.version.cetiqInfo1"></label> <input type="text"
+                    data-ng-model="vm.model.info1" class="form-control" />
+            </div>
+            <div data-ng-if="vm.model.aspc.version.cetiqInfo2" class="col-md-4 form-group-sm">
+                <label data-ng-bind="vm.model.aspc.version.cetiqInfo2"></label> <input type="text"
+                    data-ng-model="vm.model.info2" class="form-control" />
+            </div>
+            <div data-ng-if="vm.model.aspc.version.cetiqInfo3" class="col-md-4 form-group-sm">
+                <label data-ng-bind="vm.model.aspc.version.cetiqInfo3"></label> <input type="text"
+                    data-ng-model="vm.model.info3" class="form-control" />
+            </div>
+            <div data-ng-if="vm.model.aspc.version.cetiqInfo4" class="col-md-4 form-group-sm">
+                <label data-ng-bind="vm.model.aspc.version.cetiqInfo4"></label> <input type="text"
+                    data-ng-model="vm.model.info4" class="form-control" />
+            </div>
+            <div data-ng-if="vm.model.aspc.version.cetiqInfo5" class="col-md-4 form-group-sm">
+                <label data-ng-bind="vm.model.aspc.version.cetiqInfo5"></label> <input type="text"
+                    data-ng-model="vm.model.info5" class="form-control" />
+            </div>
+            <div data-ng-if="vm.model.aspc.version.cetiqInfo6" class="col-md-4 form-group-sm">
+                <label data-ng-bind="vm.model.aspc.version.cetiqInfo6"></label> <input type="text"
+                    data-ng-model="vm.model.info6" class="form-control" />
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="btn-group">
+        <button data-ng-click="vm.save()" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
+        </button>
+        <button data-ng-click="vm.cancel()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
+        </button>
+    </div>
+</form>

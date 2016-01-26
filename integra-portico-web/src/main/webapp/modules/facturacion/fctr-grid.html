@@ -1,69 +1,69 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <pagination total-items="vm.fctrList.count" items-per-page="vm.fctrList.limit" ng-model="vm.page"
-            ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-            next-text="&rsaquo;&rsaquo;"></pagination>
+        <div data-uib-pagination data-total-items="vm.fctrList.count" data-items-per-page="vm.fctrList.limit"
+            data-ng-model="vm.page" data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
+            data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
     </div>
     <div class="btn-group">
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template-url="modules/facturacion/fragment/fctr-filter-content.html" bs-modal="modal">
-            <i class="glyphicon glyphicon-search"></i><span translate="btn_filtrar"></span>
+            data-template-url="modules/facturacion/fragment/fctr-filter-content.html" data-bs-modal="modal">
+            <i class="glyphicon glyphicon-search"></i><span data-translate="btn_filtrar"></span>
         </button>
     </div>
 </div>
 
 <div class="table-responsive">
-    <span class="label label-default" translate="grid_count"
-        translate-value-count="{{vm.fctrList.count | number:0}}"></span>
+    <span class="label label-default" data-translate="grid_count"
+        data-translate-value-count="{{vm.fctrList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th translate="fctr"></th>
-                <th translate="fctr_estado"></th>
-                <th translate="fctr_falta"></th>
-                <th translate="fref"></th>
-                <th translate="fini"></th>
-                <th translate="ffin"></th>
-                <th translate="fctr_pagador"></th>
-                <th translate="fctr_sujPasivo"></th>
-                <th translate="aspc"></th>
-                <th translate="tpsr"></th>
-                <th translate="fctr_importe"></th>
-                <th translate="fctr_impuesto"></th>
-                <th translate="fctr_info1"></th>
-                <th translate="fctr_info2"></th>
-                <th translate="fctr_info3"></th>
-                <th translate="fctr_info4"></th>
-                <th translate="fctr_info5"></th>
-                <th translate="fctr_info6"></th>
+                <th data-translate="fctr"></th>
+                <th data-translate="fctr_estado"></th>
+                <th data-translate="fctr_falta"></th>
+                <th data-translate="fref"></th>
+                <th data-translate="fini"></th>
+                <th data-translate="ffin"></th>
+                <th data-translate="fctr_pagador"></th>
+                <th data-translate="fctr_sujPasivo"></th>
+                <th data-translate="aspc"></th>
+                <th data-translate="tpsr"></th>
+                <th data-translate="fctr_importe"></th>
+                <th data-translate="fctr_impuesto"></th>
+                <th data-translate="fctr_info1"></th>
+                <th data-translate="fctr_info2"></th>
+                <th data-translate="fctr_info3"></th>
+                <th data-translate="fctr_info4"></th>
+                <th data-translate="fctr_info5"></th>
+                <th data-translate="fctr_info6"></th>
             </tr>
         </thead>
 
         <tbody>
-            <tr ng-repeat="item in vm.fctrList.list track by $index">
-                <td><a ng-href="#/facturacion/fctr/detail/{{item.id}}"><i
+            <tr data-ng-repeat="item in vm.fctrList.list track by $index">
+                <td><a data-ng-href="#/facturacion/fctr/detail/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="item.etiqueta"></td>
-                <td ng-bind="item.estado" bs-tooltip
+                <td data-ng-bind="item.etiqueta"></td>
+                <td data-ng-bind="item.estado" data-bs-tooltip
                     data-title="{{'FacturaEstado_' + item.estado | translate}}"></td>
-                <td nowrap="nowrap" ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
-                <td nowrap="nowrap" ng-bind="item.fref | date: ('format_date' | translate)"></td>
-                <td nowrap="nowrap" ng-bind="item.fini | date: ('format_datetime' | translate)"></td>
-                <td nowrap="nowrap" ng-bind="item.ffin | date: ('format_datetime' | translate)"></td>
-                <td nowrap="nowrap" ng-bind="item.pagador.etiqueta"></td>
+                <td nowrap="nowrap" data-ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
+                <td nowrap="nowrap" data-ng-bind="item.fref | date: ('format_date' | translate)"></td>
+                <td nowrap="nowrap" data-ng-bind="item.fini | date: ('format_datetime' | translate)"></td>
+                <td nowrap="nowrap" data-ng-bind="item.ffin | date: ('format_datetime' | translate)"></td>
+                <td nowrap="nowrap" data-ng-bind="item.pagador.etiqueta"></td>
                 <td><i class="glyphicon glyphicon-{{item.sujPasivo ? 'ok' : 'remove'}}"></i></td>
-                <td nowrap="nowrap" ng-bind="item.aspc.etiqueta"></td>
-                <td nowrap="nowrap" ng-bind="'enti_' + item.aspc.tpsr.id | translate"></td>
-                <td nowrap="nowrap" class="number" ng-bind="item.importe | number:2"></td>
-                <td nowrap="nowrap" class="number" ng-bind="item.impuesto | number:2"></td>
-                <td nowrap="nowrap"><span ng-bind="item.info1"></span></td>
-                <td nowrap="nowrap"><span ng-bind="item.info2"></span></td>
-                <td nowrap="nowrap"><span ng-bind="item.info3"></span></td>
-                <td nowrap="nowrap"><span ng-bind="item.info4"></span></td>
-                <td nowrap="nowrap"><span ng-bind="item.info5"></span></td>
-                <td nowrap="nowrap"><span ng-bind="item.info6"></span></td>
+                <td nowrap="nowrap" data-ng-bind="item.aspc.etiqueta"></td>
+                <td nowrap="nowrap" data-ng-bind="'enti_' + item.aspc.tpsr.id | translate"></td>
+                <td nowrap="nowrap" class="number" data-ng-bind="item.importe | number:2"></td>
+                <td nowrap="nowrap" class="number" data-ng-bind="item.impuesto | number:2"></td>
+                <td nowrap="nowrap"><span data-ng-bind="item.info1"></span></td>
+                <td nowrap="nowrap"><span data-ng-bind="item.info2"></span></td>
+                <td nowrap="nowrap"><span data-ng-bind="item.info3"></span></td>
+                <td nowrap="nowrap"><span data-ng-bind="item.info4"></span></td>
+                <td nowrap="nowrap"><span data-ng-bind="item.info5"></span></td>
+                <td nowrap="nowrap"><span data-ng-bind="item.info6"></span></td>
             </tr>
         </tbody>
     </table>

@@ -76,7 +76,7 @@
         <commons-validator.version>1.4.1</commons-validator.version>
         <angularjs.version>1.4.8</angularjs.version>
         <bootstrap.version>3.3.6</bootstrap.version>
-        <angular-ui-bootstrap.version>0.14.3</angular-ui-bootstrap.version>
+        <angular-ui-bootstrap.version>1.0.3</angular-ui-bootstrap.version>
         <angular-translate.version>2.7.2</angular-translate.version>
         <angular-strap.version>2.3.4</angular-strap.version>
         <angular-spinner.version>0.7.0</angular-spinner.version>

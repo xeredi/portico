@@ -1,31 +1,32 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <form enctype="multipart/form-data" method="post">
         <fieldset>
             <div class="row">
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                    <label translate="sprt"></label> <select ng-model="vm.pepr.sprt"
-                        ng-options="sprt as sprt.etiqueta for sprt in vm.sprtList" class="form-control">
+                    <label data-translate="sprt"></label> <select data-ng-model="vm.pepr.sprt"
+                        data-ng-options="sprt as sprt.etiqueta for sprt in vm.sprtList" class="form-control">
                         <option />
                     </select>
                 </div>
                 <div class="col-sm-2 col-md-1 form-group-sm">
-                    <label translate="pepr_anio"></label> <input type="text" ng-model="vm.pepr.anio"
+                    <label data-translate="pepr_anio"></label> <input type="text" data-ng-model="vm.pepr.anio"
                         class="form-control" />
                 </div>
                 <div class="col-sm-2 col-md-1 form-group-sm">
-                    <label translate="pepr_mes"></label> <input type="text" ng-model="vm.pepr.mes"
+                    <label data-translate="pepr_mes"></label> <input type="text" data-ng-model="vm.pepr.mes"
                         class="form-control" />
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-sm-6 col-md-4 form-group-sm" ng-if="vm.accion == 'load'">
-                    <label translate="pepr_file"></label> <input type="file" ng-file-select ng-model="vm.file"
-                        class="form-control" />
+                <div class="col-sm-6 col-md-4 form-group-sm" data-ng-if="vm.accion == 'load'">
+                    <label data-translate="pepr_file"></label> <input type="file" data-ng-file-select
+                        data-ng-model="vm.file" class="form-control" />
                 </div>
                 <div class="col-sm-1 form-group-sm">
-                    <label translate="pepr_sobreescribir"></label> <select ng-model="vm.sobreescribir"
-                        ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                    <label data-translate="pepr_sobreescribir"></label> <select
+                        data-ng-model="vm.sobreescribir"
+                        data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
                         class="form-control">
                         <option />
                     </select>
@@ -35,10 +36,10 @@
 
         <div class="btn-group">
             <button data-ng-click="vm.save()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
+                <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
             </button>
             <button data-ng-click="vm.cancel()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
             </button>
         </div>
     </form>

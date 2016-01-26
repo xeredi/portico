@@ -1,18 +1,18 @@
-<div ng-if="vm.model">
-    <fieldset ng-cloack>
+<div data-ng-if="vm.model">
+    <fieldset data-ng-cloack>
         <div class="row">
             <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
-                <label ng-bind="'enti_' + vm.trmt.trmt.entiId | translate"></label>
-                <p class="form-control-static" ng-bind="vm.item.etiqueta"></p>
+                <label data-ng-bind="'enti_' + vm.trmt.trmt.entiId | translate"></label>
+                <p class="form-control-static" data-ng-bind="vm.item.etiqueta"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
-                <label translate="trmt"></label>
-                <p class="form-control-static" ng-bind="'trmt_' + vm.trmt.trmt.id | translate"></p>
+                <label data-translate="trmt"></label>
+                <p class="form-control-static" data-ng-bind="'trmt_' + vm.trmt.trmt.id | translate"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
-                <label translate="falta"></label>
+                <label data-translate="falta"></label>
                 <p class="form-control-static"
-                    ng-bind="vm.model.fecha | date: ('format_datetime' | translate)"></p>
+                    data-ng-bind="vm.model.fecha | date: ('format_datetime' | translate)"></p>
             </div>
         </div>
 
@@ -26,61 +26,65 @@
             </thead>
             <tbody>
                 <tr>
-                    <th><span translate="ssrv_estado"></span></th>
+                    <th><span data-translate="ssrv_estado"></span></th>
                     <td><span
-                        ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + vm.trmt.trmt.estadoOrig | translate"></span></td>
+                        data-ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + vm.trmt.trmt.estadoOrig | translate"></span></td>
                     <td><span
-                        ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + vm.trmt.trmt.estadoDest | translate"></td>
+                        data-ng-bind="'cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + vm.trmt.trmt.estadoDest | translate"></span></td>
                 </tr>
-                <tr ng-if="vm.enti.enti.temporal">
-                    <th><span translate="fini"></span></th>
-                    <td><span ng-bind="vm.model.oitemFini | date: ('format_datetime' | translate)"></span></td>
-                    <td><span ng-bind="vm.model.ditemFini | date: ('format_datetime' | translate)"></span></td>
+                <tr data-ng-if="vm.enti.enti.temporal">
+                    <th><span data-translate="fini"></span></th>
+                    <td><span data-ng-bind="vm.model.oitemFini | date: ('format_datetime' | translate)"></span></td>
+                    <td><span data-ng-bind="vm.model.ditemFini | date: ('format_datetime' | translate)"></span></td>
                 </tr>
-                <tr ng-if="vm.enti.enti.temporal">
-                    <th><span translate="ffin"></span></th>
-                    <td><span ng-bind="vm.model.oitemFfin | date: ('format_datetime' | translate)"></span></td>
-                    <td><span ng-bind="vm.model.ditemFfin | date: ('format_datetime' | translate)"></span></td>
+                <tr data-ng-if="vm.enti.enti.temporal">
+                    <th><span data-translate="ffin"></span></th>
+                    <td><span data-ng-bind="vm.model.oitemFfin | date: ('format_datetime' | translate)"></span></td>
+                    <td><span data-ng-bind="vm.model.ditemFfin | date: ('format_datetime' | translate)"></span></td>
                 </tr>
-                <tr ng-repeat="tpdtId in vm.trmt.tpdtList">
-                    <th ng-bind="'entd_' + vm.trmt.trtdMap[tpdtId].entd.id | translate">EO {{tpdtId}}</th>
-                    <td ng-switch on="vm.trmt.trtdMap[tpdtId].entd.tpdt.tipoElemento"><i
-                        ng-switch-when="BO"
+                <tr data-ng-repeat="tpdtId in vm.trmt.tpdtList">
+                    <th data-ng-bind="'entd_' + vm.trmt.trtdMap[tpdtId].entd.id | translate">EO
+                        {{tpdtId}}</th>
+                    <td data-ng-switch data-on="vm.trmt.trtdMap[tpdtId].entd.tpdt.tipoElemento"><i
+                        data-ng-switch-when="BO"
                         class="glyphicon glyphicon-{{vm.model.ittdMap[tpdtId].onentero ? 'ok' : 'remove'}}"></i>
-                        <span ng-switch-when="ND" ng-bind="vm.model.ittdMap[tpdtId].ondecimal | number:2"></span>
-                        <span ng-switch-when="NE" ng-bind="vm.model.ittdMap[tpdtId].onentero"></span> <span
-                        ng-switch-when="FE"
-                        ng-bind="vm.model.ittdMap[tpdtId].ofecha | date: ('format_date' | translate)"></span>
-                        <span ng-switch-when="FH"
-                        ng-bind="vm.model.ittdMap[tpdtId].ofecha | date: ('format_datetime' | translate)"></span>
-                        <span ng-switch-when="CR" ng-if="vm.model.ittdMap[tpdtId].ocadena"
-                        ng-bind="'cdrf_' + tpdtId + '_' + vm.model.ittdMap[tpdtId].ocadena | translate"></span>
-                        <span ng-switch-when="TX" ng-bind="vm.model.ittdMap[tpdtId].ocadena"></span> <a
-                        ng-switch-when="PR"
-                        ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].oprmt.id}}/{{vm.item.fref}}"
-                        ng-bind="vm.model.ittdMap[tpdtId].oprmt.etiqueta"></a> <a ng-switch-when="SR"
-                        ng-href="#/servicio/servicio/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].osrvc.id}}"
-                        ng-bind="vm.model.ittdMap[tpdtId].osrvc.etiqueta"></a></td>
-                    <td ng-switch on="vm.trmt.trtdMap[tpdtId].entd.tpdt.tipoElemento" class="form-group-sm"><i
-                        ng-switch-when="BO"
+                        <span data-ng-switch-when="ND"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].ondecimal | number:2"></span> <span
+                        data-ng-switch-when="NE" data-ng-bind="vm.model.ittdMap[tpdtId].onentero"></span> <span
+                        data-ng-switch-when="FE"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].ofecha | date: ('format_date' | translate)"></span>
+                        <span data-ng-switch-when="FH"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].ofecha | date: ('format_datetime' | translate)"></span>
+                        <span data-ng-switch-when="CR" data-ng-if="vm.model.ittdMap[tpdtId].ocadena"
+                        data-ng-bind="'cdrf_' + tpdtId + '_' + vm.model.ittdMap[tpdtId].ocadena | translate"></span>
+                        <span data-ng-switch-when="TX" data-ng-bind="vm.model.ittdMap[tpdtId].ocadena"></span>
+                        <a data-ng-switch-when="PR"
+                        data-ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].oprmt.id}}/{{vm.item.fref}}"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].oprmt.etiqueta"></a> <a
+                        data-ng-switch-when="SR"
+                        data-ng-href="#/servicio/servicio/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].osrvc.id}}"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].osrvc.etiqueta"></a></td>
+                    <td data-ng-switch data-on="vm.trmt.trtdMap[tpdtId].entd.tpdt.tipoElemento"
+                        class="form-group-sm"><i data-ng-switch-when="BO"
                         class="glyphicon glyphicon-{{vm.model.ittdMap[tpdtId].dnentero ? 'ok' : 'remove'}}"></i>
-                        <span ng-switch-when="ND" ng-bind="vm.model.ittdMap[tpdtId].dndecimal | number:2"></span>
-                        <span ng-switch-when="NE" ng-bind="vm.model.ittdMap[tpdtId].dnentero"></span> <span
-                        ng-switch-when="FE"
-                        ng-bind="vm.model.ittdMap[tpdtId].dfecha | date: ('format_date' | translate)"></span>
-                        <span ng-switch-when="FH"
-                        ng-bind="vm.model.ittdMap[tpdtId].dfecha | date: ('format_datetime' | translate)"></span>
-                        <span ng-switch-when="CR" ng-if="vm.model.ittdMap[tpdtId].dcadena"
-                        ng-bind="'cdrf_' + tpdtId + '_' + vm.model.ittdMap[tpdtId].dcadena | translate"></span>
-                        <span ng-switch-when="TX" ng-bind="vm.model.ittdMap[tpdtId].dcadena"></span> <a
-                        ng-switch-when="PR"
-                        ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].dprmt.id}}/{{vm.item.fref}}"
-                        ng-bind="vm.model.ittdMap[tpdtId].dprmt.etiqueta"></a> <a ng-switch-when="SR"
-                        ng-href="#/servicio/servicio/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].dsrvc.id}}"
-                        ng-bind="vm.model.ittdMap[tpdtId].dsrvc.etiqueta"></a></td>
-                    </td>
+                        <span data-ng-switch-when="ND"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].dndecimal | number:2"></span> <span
+                        data-ng-switch-when="NE" data-ng-bind="vm.model.ittdMap[tpdtId].dnentero"></span> <span
+                        data-ng-switch-when="FE"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].dfecha | date: ('format_date' | translate)"></span>
+                        <span data-ng-switch-when="FH"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].dfecha | date: ('format_datetime' | translate)"></span>
+                        <span data-ng-switch-when="CR" data-ng-if="vm.model.ittdMap[tpdtId].dcadena"
+                        data-ng-bind="'cdrf_' + tpdtId + '_' + vm.model.ittdMap[tpdtId].dcadena | translate"></span>
+                        <span data-ng-switch-when="TX" data-ng-bind="vm.model.ittdMap[tpdtId].dcadena"></span>
+                        <a data-ng-switch-when="PR"
+                        data-ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].dprmt.id}}/{{vm.item.fref}}"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].dprmt.etiqueta"></a> <a
+                        data-ng-switch-when="SR"
+                        data-ng-href="#/servicio/servicio/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].dsrvc.id}}"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].dsrvc.etiqueta"></a></td>
                 </tr>
             </tbody>
         </table>
     </fieldset>
-    </span>
+</div>

@@ -1,11 +1,12 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a ng-if="mc.hasAccnPath('usro-edit')" class="btn btn-default"
-                ng-href="#/seguridad/usuario/edit/edit/{{vm.model.id}}"><i
-                class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
-            <button ng-if="mc.hasAccnPath('usro-remove')" data-ng-click="vm.remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+            <a data-ng-if="mc.hasAccnPath('usro-edit')" class="btn btn-default"
+                data-ng-href="#/seguridad/usuario/edit/edit/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
+            <button data-ng-if="mc.hasAccnPath('usro-remove')" data-ng-click="vm.remove()"
+                class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
         </div>
     </div>
@@ -13,31 +14,31 @@
     <fieldset>
         <div class="row">
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate="usro_login"></label>
-                <p class="form-control-static" ng-bind="vm.model.login"></p>
+                <label data-translate="usro_login"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.login"></p>
             </div>
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate="usro_nombre"></label>
-                <p class="form-control-static" ng-bind="vm.model.nombre"></p>
+                <label data-translate="usro_nombre"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.nombre"></p>
             </div>
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate="sprt"></label>
-                <p class="form-control-static" ng-bind="vm.model.sprt.etiqueta"></p>
+                <label data-translate="sprt"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.sprt.etiqueta"></p>
             </div>
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                <label translate="prto"></label>
-                <p class="form-control-static" ng-bind="vm.model.prto.etiqueta"></p>
+                <label data-translate="prto"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.prto.etiqueta"></p>
             </div>
         </div>
     </fieldset>
 
-    <fieldset ng-if="mc.hasAccnPath('grpo-list')">
-        <legend translate="grpoList"></legend>
+    <fieldset data-ng-if="mc.hasAccnPath('grpo-list')">
+        <legend data-translate="grpoList"></legend>
 
         <div class="list-group">
-            <a ng-href="#/seguridad/grupo/detail/{{grpo.id}}"
+            <a data-ng-href="#/seguridad/grupo/detail/{{grpo.id}}"
                 class="list-group-item col-sm-6 col-md-4 col-lg-3"
-                ng-repeat="grpo in vm.grpoList track by grpo.id" ng-bind="grpo.nombre"></a>
+                data-ng-repeat="grpo in vm.grpoList track by grpo.id" data-ng-bind="grpo.nombre"></a>
         </div>
     </fieldset>
 </div>

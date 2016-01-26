@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="integraApp" ng-cloak>
+<html data-ng-app="integraApp" data-ng-cloak>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,56 +13,56 @@
 <!--
  -->
 
-<title ng-bind="'ARGO - ' + title"></title>
+<title data-ng-bind="'ARGO - ' + title"></title>
 </head>
-<body ng-controller="MainController as mc">
+<body data-ng-controller="MainController as mc">
     <header class="navbar navbar-default navbar-fixed-top">
         <nav class="collapse navbar-collapse" role="navigation">
             <ul class="nav navbar-nav">
-                <li><a ng-href="#/" class="brand" ng-bind="title"></a></li>
-                <!-- li><span ng-bind="requestTimeMs"></span></li-->
+                <li><a data-ng-href="#/" class="brand" data-ng-bind="title"></a></li>
+                <!-- li><span data-ng-bind="requestTimeMs"></span></li-->
             </ul>
-            <ul ng-if="mc.hasAccnPath('secc-menu')" class="nav navbar-nav navbar-right">
+            <ul data-ng-if="mc.hasAccnPath('secc-menu')" class="nav navbar-nav navbar-right">
                 <div class="dropdown">
-                    <li class="btn-group" uib-dropdown is-open="status.isopen"><a
-                        class="btn btn-primary dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled"
-                        translate="menu"></a>
+                    <li class="btn-group" data-uib-dropdown data-is-open="status.isopen"><a
+                        class="btn btn-primary dropdown-toggle" data-uib-dropdown-toggle
+                        data-ng-disabled="disabled" data-translate="menu"></a>
                         <ul class="dropdown-menu" role="menu">
                             <li role="presentation" class="divider"></li>
-                            <li><a ng-if="mc.hasAccnPath('secc-inicio')" ng-href="#/"
-                                translate="page_home"></a></li>
+                            <li><a data-ng-if="mc.hasAccnPath('secc-inicio')" data-ng-href="#/"
+                                data-translate="page_home"></a></li>
                             <li role="presentation" class="divider"></li>
-                            <li><a ng-if="mc.hasAccnPath('secc-servicios')" ng-href="#/servicio"
-                                translate="srvcList"></a></li>
-                            <li><a ng-if="mc.hasAccnPath('secc-estadisticas')"
-                                ng-href="#/estadistica/periodo-proceso/grid" translate="estdList"></a></li>
-                            <li><a ng-if="mc.hasAccnPath('secc-maestros')" ng-href="#/maestro"
-                                translate="prmtList"></a></li>
-                            <li><a ng-if="mc.hasAccnPath('secc-facturacion')" ng-href="#/facturacion"
-                                translate="sec_facturacion"></a></li>
-                            <li><a ng-if="mc.hasAccnPath('secc-procesos')"
-                                ng-href="#/proceso/proceso/grid" translate="prbtList"></a></li>
+                            <li><a data-ng-if="mc.hasAccnPath('secc-servicios')"
+                                data-ng-href="#/servicio" data-translate="srvcList"></a></li>
+                            <li><a data-ng-if="mc.hasAccnPath('secc-estadisticas')"
+                                data-ng-href="#/estadistica/periodo-proceso/grid" data-translate="estdList"></a></li>
+                            <li><a data-ng-if="mc.hasAccnPath('secc-maestros')" data-ng-href="#/maestro"
+                                data-translate="prmtList"></a></li>
+                            <li><a data-ng-if="mc.hasAccnPath('secc-facturacion')"
+                                data-ng-href="#/facturacion" data-translate="sec_facturacion"></a></li>
+                            <li><a data-ng-if="mc.hasAccnPath('secc-procesos')"
+                                data-ng-href="#/proceso/proceso/grid" data-translate="prbtList"></a></li>
                             <li role="presentation" class="divider"></li>
-                            <li><a ng-if="mc.hasAccnPath('secc-administracion')"
-                                ng-href="#/administracion" translate="sec_administracion"></a></li>
+                            <li><a data-ng-if="mc.hasAccnPath('secc-administracion')"
+                                data-ng-href="#/administracion" data-translate="sec_administracion"></a></li>
                             <li role="presentation" class="divider"></li>
-                            <li><a ng-href="#/seguridad/usuario/salir" translate="usro_salir"></a></li>
+                            <li><a data-ng-href="#/seguridad/usuario/salir" data-translate="usro_salir"></a></li>
                         </ul></li>
                 </div>
             </ul>
         </nav>
     </header>
 
-    <div id="body-content" ng-cloack>
-        <div ng-cloak ng-if="actionErrors">
+    <div id="body-content" data-ng-cloack>
+        <div data-ng-cloak data-ng-if="actionErrors">
             <ul class="alert alert-danger" role="alert">
-                <span translate="errorList"></span>
-                <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+                <span data-translate="errorList"></span>
+                <li data-ng-repeat="error in actionErrors track by $index" data-ng-bind="error"></li>
             </ul>
         </div>
-        <span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner"></span>
-        <div ng-view class="container-fluid"></div>
-        <div ui-view class="container-fluid"></div>
+        <span data-us-spinner="{radius:30, width:8, length: 16}" data-spinner-key="spinner"></span>
+        <div data-ng-view class="container-fluid"></div>
+        <div data-ui-view class="container-fluid"></div>
     </div>
 
     <script type="text/javascript"
@@ -74,7 +74,7 @@
     <script type="text/javascript"
         src="http://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.8.1/angular-translate.min.js"></script>
     <script type="text/javascript"
-        src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.0/ui-bootstrap-tpls.min.js"></script>
+        src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.1/ui-bootstrap-tpls.min.js"></script>
     <script type="text/javascript"
         src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>

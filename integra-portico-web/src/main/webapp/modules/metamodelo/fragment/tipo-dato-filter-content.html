@@ -2,32 +2,32 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <p class="modal-title" translate="filtro"></p>
+                <button type="button" class="close" data-ng-click="$hide()">&times;</button>
+                <p class="modal-title" data-translate="filtro"></p>
             </div>
             <div class="modal-body">
                 <form>
                     <fieldset>
                         <div class="row">
                             <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                                <label translate>tpdt_codigo</label> <input type="text"
-                                    ng-model="vm.searchCriteria.codigo" class="form-control" />
+                                <label data-translate="tpdt_codigo"></label> <input type="text"
+                                    data-ng-model="vm.searchCriteria.codigo" class="form-control" />
                             </div>
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                                <label translate>tpdt_nombre</label> <input type="text"
-                                    ng-model="vm.searchCriteria.nombre" class="form-control" maxlength="50" />
+                                <label data-translate="tpdt_nombre"></label> <input type="text"
+                                    data-ng-model="vm.searchCriteria.nombre" class="form-control" maxlength="50" />
                             </div>
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                                <label translate>tpdt_tpel</label> <select
-                                    ng-model="vm.searchCriteria.tipoElemento"
-                                    ng-options="tpel as ('ElementoTipo_' + tpel | translate) for tpel in vm.tpelList"
+                                <label data-translate="tpdt_tpel"></label> <select
+                                    data-ng-model="vm.searchCriteria.tipoElemento"
+                                    data-ng-options="tpel as ('ElementoTipo_' + tpel | translate) for tpel in vm.tpelList"
                                     class="form-control">
                                     <option />
                                 </select>
                             </div>
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                                <label translate>tpdt_tpht</label> <select ng-model="vm.searchCriteria.tpht"
-                                    ng-options="tpht as ('HtmlTipo_' + tpht | translate) for tpht in vm.tphtList"
+                                <label data-translate="tpdt_tpht"></label> <select data-ng-model="vm.searchCriteria.tpht"
+                                    data-ng-options="tpht as ('HtmlTipo_' + tpht | translate) for tpht in vm.tphtList"
                                     class="form-control">
                                     <option />
                                 </select>
@@ -38,13 +38,13 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-ng-click="vm.search(1);$hide()">
-                    <i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
+                    <i class="glyphicon glyphicon-search"></i><span data-translate="btn_buscar"></span>
                 </button>
                 <button class="btn btn-default" data-ng-click="$hide()">
-                    <i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
+                    <i class="glyphicon glyphicon-remove"></i><span data-translate="btn_cancelar"></span>
                 </button>
                 <button class="btn btn-default" data-ng-click="vm.resetFilter()">
-                    <i class="glyphicon glyphicon-erase"></i> <span translate="btn_reset"></span>
+                    <i class="glyphicon glyphicon-erase"></i> <span data-translate="btn_reset"></span>
                 </button>
             </div>
         </div>

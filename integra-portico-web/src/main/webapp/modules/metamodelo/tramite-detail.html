@@ -1,67 +1,67 @@
-<div ng-if="vm.model">
+<div data-ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default"
-                ng-href="#/metamodelo/tramite/edit/edit/{{vm.model.entiId}}/{{vm.model.id}}"><i
-                class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
+                data-ng-href="#/metamodelo/tramite/edit/edit/{{vm.model.entiId}}/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
             <button data-ng-click="vm.remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
         </div>
     </div>
 
     <fieldset>
-        <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+        <div class="row" data-ng-include="'modules/common/i18nMap-detail.html'"></div>
 
         <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate="enti"></label>
-                <p class="form-control-static" ng-bind="vm.enti.nombre"></p>
+                <label data-translate="enti"></label>
+                <p class="form-control-static" data-ng-bind="vm.enti.nombre"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate="trmt_estado_orig"></label>
+                <label data-translate="trmt_estado_orig"></label>
                 <p class="form-control-static">{{vm.model.estadoOrig}} - {{vm.model.estadoOrigTexto}}</p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label translate="trmt_estado_dest"></label>
+                <label data-translate="trmt_estado_dest"></label>
                 <p class="form-control-static">{{vm.model.estadoDest}} - {{vm.model.estadoDestTexto}}</p>
             </div>
         </div>
     </fieldset>
 
     <fieldset>
-        <legend translate="trtdList"></legend>
+        <legend data-translate="trtdList"></legend>
 
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <a class="btn btn-default"
-                    ng-href="#/metamodelo/tramite-tipo-dato/edit/create/{{vm.model.id}}"><i
-                    class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span></a>
+                    data-ng-href="#/metamodelo/tramite-tipo-dato/edit/create/{{vm.model.id}}"><i
+                    class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
             </div>
         </div>
 
-        <table ng-if="vm.trtdList" class="table-bordered table-condensed table-hover table-nonfluid">
+        <table data-ng-if="vm.trtdList" class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
                 <tr>
                     <th nowrap="nowrap" class="buttonLinks" nowrap="nowrap" />
-                    <th nowrap="nowrap" translate="entd_etiqueta"></th>
-                    <th nowrap="nowrap" translate="trtd_obligatorio"></th>
-                    <th nowrap="nowrap" translate="tpdt"></th>
-                    <th nowrap="nowrap" translate="tpdt_tpel"></th>
-                    <th nowrap="nowrap" translate="tpdt_tpht"></th>
+                    <th nowrap="nowrap" data-translate="entd_etiqueta"></th>
+                    <th nowrap="nowrap" data-translate="trtd_obligatorio"></th>
+                    <th nowrap="nowrap" data-translate="tpdt"></th>
+                    <th nowrap="nowrap" data-translate="tpdt_tpel"></th>
+                    <th nowrap="nowrap" data-translate="tpdt_tpht"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="trtd in vm.trtdList track by $index">
+                <tr data-ng-repeat="trtd in vm.trtdList track by $index">
                     <td><a
-                        ng-href="#/metamodelo/tramite-tipo-dato/detail/{{trtd.trmtId}}/{{trtd.entd.tpdt.id}}"><i
+                        data-ng-href="#/metamodelo/tramite-tipo-dato/detail/{{trtd.trmtId}}/{{trtd.entd.tpdt.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
-                    <td ng-bind="trtd.entd.etiqueta"></td>
+                    <td data-ng-bind="trtd.entd.etiqueta"></td>
                     <td><i class="glyphicon glyphicon-{{(trtd.obligatorio ? 'ok' : 'remove')}}"></i></td>
-                    <td ng-bind="trtd.entd.tpdt.nombre"></td>
-                    <td ng-bind="trtd.entd.tpdt.tipoElemento" bs-tooltip
+                    <td data-ng-bind="trtd.entd.tpdt.nombre"></td>
+                    <td data-ng-bind="trtd.entd.tpdt.tipoElemento" data-bs-tooltip
                         data-title="{{('ElementoTipo_' + trtd.entd.tpdt.tipoElemento | translate)}}"></td>
-                    <td ng-bind="trtd.entd.tpdt.tpht" bs-tooltip
+                    <td data-ng-bind="trtd.entd.tpdt.tpht" data-bs-tooltip
                         data-title="{{('HtmlTipo_' + trtd.entd.tpdt.tpht | translate)}}"></td>
                 </tr>
             </tbody>
