@@ -34,12 +34,12 @@
     <span class="label label-default" data-translate="grid_count"
         data-translate-value-count="{{(vm.itemList.count | number:0)}}"></span>
 
-    <table class="table-bordered table-condensed table-hover table-nonfluid">
+    <table class="table-bordered table-condensed table-hover">
         <thead>
             <tr>
-                <th class="buttonLinks" nowrap="nowrap" />
-                <th data-ng-if="vm.enti.enti.puerto" class="codigo" nowrap="nowrap" data-translate="prto"></th>
-                <th class="codigo" nowrap="nowrap" data-translate="prmt_parametro"></th>
+                <th nowrap="nowrap" />
+                <th data-ng-if="vm.enti.enti.puerto" nowrap="nowrap" data-translate="prto"></th>
+                <th nowrap="nowrap" data-translate="prmt_parametro"></th>
                 <th data-ng-if="vm.enti.enti.i18n" data-translate="i18n_text"></th>
                 <th data-translate="fini"></th>
                 <th data-translate="ffin"></th>
@@ -54,8 +54,7 @@
                 <td><a
                     data-ng-href="#/maestro/parametro/detail/{{item.entiId}}/{{item.id}}/{{item.fref}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td data-ng-if="vm.enti.enti.puerto" class="codigo" nowrap="nowrap"
-                    data-ng-bind="item.prto.etiqueta"></td>
+                <td data-ng-if="vm.enti.enti.puerto" nowrap="nowrap" data-ng-bind="item.prto.etiqueta"></td>
                 <td nowrap="nowrap" data-ng-bind="item.parametro"></td>
                 <td nowrap="nowrap" data-ng-if="vm.enti.enti.i18n" data-ng-bind="item.texto"></td>
                 <td nowrap="nowrap" data-ng-bind="(item.version.fini | date: ('format_date' | translate))"></td>

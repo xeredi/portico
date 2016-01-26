@@ -31,11 +31,11 @@
     <span class="label label-default" data-translate="grid_count"
         data-translate-value-count="{{vm.itemList.count | number:0}}"></span>
 
-    <table class="table-bordered table-condensed table-hover table-nonfluid">
+    <table class="table-bordered table-condensed table-hover">
         <thead>
             <tr>
-                <th class="buttonLinks" nowrap="nowrap" />
-                <th class="codigo" nowrap="nowrap" data-translate="srvc"></th>
+                <th nowrap="nowrap" />
+                <th nowrap="nowrap" data-translate="srvc"></th>
                 <th data-ng-if="::vm.enti.enti.tpdtEstado" data-translate="srvc_estado"></th>
                 <th data-translate="srvc_falta"></th>
                 <th data-ng-if="!vm.enti.enti.temporal" data-translate="fref"></th>

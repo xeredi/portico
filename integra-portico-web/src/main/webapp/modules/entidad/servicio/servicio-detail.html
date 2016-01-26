@@ -86,7 +86,7 @@
         <div data-uib-tab data-active="vm.tabActive[-1]" data-select="vm.tabSelected(-1)"
             data-ng-if="vm.arinList.length" data-heading="{{'archList' | translate}}">
             <div class="table-responsive">
-                <table class="table-bordered table-condensed table-hover table-nonfluid">
+                <table class="table-bordered table-condensed table-hover">
                     <thead>
                         <tr>
                             <th />
@@ -137,17 +137,17 @@
                     <span class="label label-default" data-translate="grid_count"
                         data-translate-value-count="{{vm.itemHijosMap[entiHijaId].count | number:0}}"></span>
 
-                    <table class="table-bordered table-condensed table-hover table-nonfluid">
+                    <table class="table-bordered table-condensed table-hover">
                         <thead>
                             <tr>
-                                <th class="buttonLinks" />
+                                <th />
 
                                 <th data-translate="ssrv_numero"></th>
                                 <th data-ng-if="vm.entiHijasMap[entiHijaId].enti.tpdtEstado"
                                     data-translate="ssrv_estado"></th>
-                                <th data-ng-if="vm.entiHijasMap[entiHijaId].enti.temporal" class="date"
+                                <th data-ng-if="vm.entiHijasMap[entiHijaId].enti.temporal"
                                     data-translate="fini"></th>
-                                <th data-ng-if="vm.entiHijasMap[entiHijaId].enti.temporal" class="date"
+                                <th data-ng-if="vm.entiHijasMap[entiHijaId].enti.temporal"
                                     data-translate="ffin"></th>
 
                                 <th

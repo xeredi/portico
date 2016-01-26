@@ -5,13 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel='stylesheet' type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-<link rel='stylesheet' type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/slate/bootstrap.min.css">
+<link rel='stylesheet' type="text/css" href="webjars/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel='stylesheet' type="text/css" href="webjars/bootswatch-slate/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="app.css" />
-<!--
- -->
 
 <title data-ng-bind="'ARGO - ' + title"></title>
 </head>
@@ -22,8 +18,8 @@
                 <li><a data-ng-href="#/" class="brand" data-ng-bind="title"></a></li>
                 <!-- li><span data-ng-bind="requestTimeMs"></span></li-->
             </ul>
-            <ul data-ng-if="mc.hasAccnPath('secc-menu')" class="nav navbar-nav navbar-right">
-                <div class="dropdown">
+            <div data-ng-if="mc.hasAccnPath('secc-menu')" class="nav navbar-nav navbar-right">
+                <ul class="dropdown">
                     <li class="btn-group" data-uib-dropdown data-is-open="status.isopen"><a
                         class="btn btn-primary dropdown-toggle" data-uib-dropdown-toggle
                         data-ng-disabled="disabled" data-translate="menu"></a>
@@ -48,15 +44,15 @@
                             <li role="presentation" class="divider"></li>
                             <li><a data-ng-href="#/seguridad/usuario/salir" data-translate="usro_salir"></a></li>
                         </ul></li>
-                </div>
-            </ul>
+                </ul>
+            </div>
         </nav>
     </header>
 
     <div id="body-content" data-ng-cloack>
-        <div data-ng-cloak data-ng-if="actionErrors">
-            <ul class="alert alert-danger" role="alert">
-                <span data-translate="errorList"></span>
+        <div data-ng-cloak data-ng-if="actionErrors" class="alert alert-danger" role="alert">
+            <span data-translate="errorList"></span>
+            <ul>
                 <li data-ng-repeat="error in actionErrors track by $index" data-ng-bind="error"></li>
             </ul>
         </div>

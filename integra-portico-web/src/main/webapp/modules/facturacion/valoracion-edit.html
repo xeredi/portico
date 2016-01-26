@@ -38,7 +38,7 @@
                     data-ng-model="vm.model.aspc" data-ng-controller="AspectoTypeaheadController as ta"
                     data-ng-if="vm.accion == 'create'"
                     data-uib-typeahead="item as item.etiqueta for item in ta.search(vm.tpsrId, $viewValue)"
-                    data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control input">
+                    data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
                 <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
                     data-ng-bind="vm.model.aspc.etiqueta"></p>
             </div>
