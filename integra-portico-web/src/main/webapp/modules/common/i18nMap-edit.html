@@ -1,9 +1,9 @@
 <div class="col-sm-10 col-md-9 col-lg-8 form-group-sm">
-    <label data-translate="i18n_text_lang" data-translate-value-lang="{{::default_language}}"></label> <input
+    <label data-translate="i18n_text_lang" data-translate-value-lang="{{default_language}}"></label> <input
         type="text" data-ng-model="vm.i18nMap[default_language].text" class="form-control">
 </div>
-<div class="col-sm-10 col-md-9 col-lg-8 form-group-sm" data-ng-repeat="language in ::available_languages"
+<div class="col-sm-10 col-md-9 col-lg-8 form-group-sm" data-ng-repeat="language in available_languages"
     data-ng-if="language != default_language">
-    <label data-translate="i18n_text_lang" data-translate-value-lang="{{::language}}"></label> <input
+    <label data-translate="i18n_text_lang" data-translate-value-lang="{{language}}"></label> <input
         type="text" data-ng-model="vm.i18nMap[language].text" class="form-control">
 </div>

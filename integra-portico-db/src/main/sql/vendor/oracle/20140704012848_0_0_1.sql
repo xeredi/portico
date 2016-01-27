@@ -1017,8 +1017,8 @@ CREATE TABLE tbl_estadistica_dato_esdt (
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )\
 
-CREATE INDEX ix_esdt_prmt_pk ON tbl_estadistica_dato_esdt (esdt_prmt_pk, esdt_tpdt_pk, esdt_estd_pk)\
-CREATE INDEX ix_esdt_cadena ON tbl_estadistica_dato_esdt (esdt_cadena, esdt_tpdt_pk, esdt_estd_pk)\
+CREATE INDEX ix_esdt_prmt_pk ON tbl_estadistica_dato_esdt (esdt_prmt_pk, esdt_tpdt_pk)\
+CREATE INDEX ix_esdt_cadena ON tbl_estadistica_dato_esdt (esdt_tpdt_pk, esdt_cadena)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_estadistica_dato_esdt FOR porticoadm.tbl_estadistica_dato_esdt\
 

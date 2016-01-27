@@ -32,37 +32,37 @@
                     <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                         <label data-translate="prbt_falta"></label>
                         <p class="form-control-static"
-                            data-ng-bind="::(vm.model.falta | date: datetimeFormat)"></p>
+                            data-ng-bind="(vm.model.falta | date: datetimeFormat)"></p>
                     </div>
                     <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                         <label data-translate="fini"></label>
                         <p class="form-control-static"
-                            data-ng-bind="::(vm.model.finicio | date: datetimeFormat)"></p>
+                            data-ng-bind="(vm.model.finicio | date: datetimeFormat)"></p>
                     </div>
                     <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                         <label data-translate="ffin"></label>
-                        <p class="form-control-static" data-ng-bind="::(vm.model.ffin | date: datetimeFormat)"></p>
+                        <p class="form-control-static" data-ng-bind="(vm.model.ffin | date: datetimeFormat)"></p>
                     </div>
                     <div class="col-sm-2 col-md-2 form-group-sm">
                         <label data-translate="prbt_duracion"></label>
-                        <p class="form-control-static number" data-ng-bind="::(vm.model.duracion | number:0)"></p>
+                        <p class="form-control-static number" data-ng-bind="(vm.model.duracion | number:0)"></p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                         <label data-translate="prbt_erroresCnt"></label>
                         <p class="form-control-static number"
-                            data-ng-bind="::(vm.model.erroresCnt | number:0)"></p>
+                            data-ng-bind="(vm.model.erroresCnt | number:0)"></p>
                     </div>
                     <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                         <label data-translate="prbt_alertasCnt"></label>
                         <p class="form-control-static number"
-                            data-ng-bind="::(vm.model.alertasCnt | number:0)"></p>
+                            data-ng-bind="(vm.model.alertasCnt | number:0)"></p>
                     </div>
                     <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                         <label data-translate="prbt_mensajesCnt"></label>
                         <p class="form-control-static number"
-                            data-ng-bind="::(vm.model.mensajesCnt | number:0)"></p>
+                            data-ng-bind="(vm.model.mensajesCnt | number:0)"></p>
                     </div>
                 </div>
             </fieldset>
@@ -83,9 +83,9 @@
                                 </thead>
 
                                 <tbody>
-                                    <tr data-ng-repeat="(key, value) in ::vm.prpmMap track by key">
-                                        <td data-ng-bind="::key"></td>
-                                        <td data-ng-bind="::value.valor"></td>
+                                    <tr data-ng-repeat="(key, value) in vm.prpmMap track by $index">
+                                        <td data-ng-bind="key"></td>
+                                        <td data-ng-bind="value.valor"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -105,7 +105,7 @@
                                 </thead>
 
                                 <tbody>
-                                    <tr data-ng-repeat="arin in vm.arinEntradaList track by arin.id">
+                                    <tr data-ng-repeat="arin in vm.arinEntradaList track by $index">
                                         <td><a data-ng-click="vm.download(arin.id,arin.nombre)"> <span
                                                 class="glyphicon glyphicon-save" aria-hidden="true"></span>
                                         </a></td>
@@ -130,27 +130,27 @@
                                 </thead>
 
                                 <tbody>
-                                    <tr data-ng-repeat="prit in ::vm.pritEntradaList track by $index">
-                                        <td data-ng-switch="::prit.tipo"><a data-ng-switch-when="srvc"
+                                    <tr data-ng-repeat="prit in vm.pritEntradaList track by $index">
+                                        <td data-ng-switch="prit.tipo"><a data-ng-switch-when="srvc"
                                             data-ng-href="#/servicio/servicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a><a
                                             data-ng-switch-when="ssrv"
                                             data-ng-href="#/servicio/subservicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a><a
                                             data-ng-switch-when="pepr"
-                                            data-ng-href="#/estadistica/pepr/detail/{{::prit.itemId}}"><span
+                                            data-ng-href="#/estadistica/pepr/detail/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a><a
                                             data-ng-switch-when="vlrc"
                                             data-ng-href="#/facturacion/valoracion/detail/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a></td>
                                         <td data-ng-switch data-on="prit.tipo"><span
                                             data-ng-switch-when="srvc"
-                                            data-ng-bind="::('enti_' + prit.entiId | translate)"></span><span
+                                            data-ng-bind="('enti_' + prit.entiId | translate)"></span><span
                                             data-ng-switch-when="ssrv"
-                                            data-ng-bind="::('enti_' + prit.entiId | translate)"></span><span
+                                            data-ng-bind="('enti_' + prit.entiId | translate)"></span><span
                                             data-ng-switch-default
-                                            data-ng-bind="::('ItemTipo_' + prit.tipo | translate)"></span></td>
-                                        <td data-ng-bind="::prit.etiqueta"></td>
+                                            data-ng-bind="('ItemTipo_' + prit.tipo | translate)"></span></td>
+                                        <td data-ng-bind="prit.etiqueta"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -178,9 +178,9 @@
                                         <td><a data-ng-click="vm.download(arin.id, arin.nombre)"> <span
                                                 class="glyphicon glyphicon-save" aria-hidden="true"></span>
                                         </a></td>
-                                        <td data-ng-bind="::arin.nombre"></td>
-                                        <td data-ng-bind="::(arin.tamanio | number:0)" class="number"></td>
-                                        <td data-ng-bind="::(arin.falta | date: datetimeFormat)"></td>
+                                        <td data-ng-bind="arin.nombre"></td>
+                                        <td data-ng-bind="(arin.tamanio | number:0)" class="number"></td>
+                                        <td data-ng-bind="(arin.falta | date: datetimeFormat)"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -199,27 +199,27 @@
                                 </thead>
 
                                 <tbody>
-                                    <tr data-ng-repeat="prit in ::vm.pritSalidaList track by $index">
-                                        <td data-ng-switch="::prit.tipo"><a data-ng-switch-when="srvc"
+                                    <tr data-ng-repeat="prit in vm.pritSalidaList track by $index">
+                                        <td data-ng-switch="prit.tipo"><a data-ng-switch-when="srvc"
                                             data-ng-href="#/servicio/servicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a><a
                                             data-ng-switch-when="ssrv"
                                             data-ng-href="#/servicio/subservicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a><a
                                             data-ng-switch-when="pepr"
-                                            data-ng-href="#/estadistica/periodo-proceso/detail/{{::prit.itemId}}"><span
+                                            data-ng-href="#/estadistica/periodo-proceso/detail/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a><a
                                             data-ng-switch-when="vlrc"
                                             data-ng-href="#/facturacion/valoracion/detail/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a></td>
                                         <td data-ng-switch data-on="prit.tipo"><span
                                             data-ng-switch-when="srvc"
-                                            data-ng-bind="::('enti_' + prit.entiId | translate)"></span><span
+                                            data-ng-bind="('enti_' + prit.entiId | translate)"></span><span
                                             data-ng-switch-when="ssrv"
-                                            data-ng-bind="::('enti_' + prit.entiId | translate)"></span><span
+                                            data-ng-bind="('enti_' + prit.entiId | translate)"></span><span
                                             data-ng-switch-default
-                                            data-ng-bind="::('ItemTipo_' + prit.tipo | translate)"></span></td>
-                                        <td data-ng-bind="::prit.etiqueta"></td>
+                                            data-ng-bind="('ItemTipo_' + prit.tipo | translate)"></span></td>
+                                        <td data-ng-bind="prit.etiqueta"></td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -97,7 +97,7 @@
                     </thead>
 
                     <tbody>
-                        <tr data-ng-repeat="arin in vm.arinList track by arin.id">
+                        <tr data-ng-repeat="arin in vm.arinList track by $index">
                             <td><a data-ng-click="vm.download(arin.id, arin.nombre)"> <span
                                     class="glyphicon glyphicon-save"></span>
                             </a></td>
@@ -113,7 +113,7 @@
             data-ng-if="vm.ittrList.length" data-heading="{{'trmtList' | translate}}">
             <div data-ng-include="'modules/entidad/common/item-tramite-grid-content.html'"></div>
         </div>
-        <div data-uib-tab data-ng-repeat="entiHijaId in vm.enti.entiHijasList track by entiHijaId"
+        <div data-uib-tab data-ng-repeat="entiHijaId in vm.enti.entiHijasList track by $index"
             data-active="vm.tabActive[entiHijaId]" data-select="vm.tabSelected(entiHijaId)"
             data-heading="{{'enti_' + entiHijaId | translate}}">
             <div data-ng-if="vm.itemHijosMap[entiHijaId]">
@@ -151,14 +151,14 @@
                                     data-translate="ffin"></th>
 
                                 <th
-                                    data-ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdGridList track by tpdtId"
+                                    data-ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdGridList track by $index"
                                     data-ng-bind="('entd_' + vm.entiHijasMap[entiHijaId].entdMap[tpdtId].id | translate)"></th>
                             </tr>
                         </thead>
 
                         <tbody>
                             <tr
-                                data-ng-repeat="itemHijo in vm.itemHijosMap[entiHijaId].list track by itemHijo.id">
+                                data-ng-repeat="itemHijo in vm.itemHijosMap[entiHijaId].list track by $index">
                                 <td><a
                                     data-ng-href="#/servicio/subservicio/detail/{{itemHijo.entiId}}/{{itemHijo.id}}"><span
                                         class="glyphicon glyphicon-search"></span></a></td>
@@ -174,7 +174,7 @@
                                     data-ng-bind="(itemHijo.ffin | date: ('format_datetime' | translate))"></td>
 
                                 <td
-                                    data-ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdGridList track by tpdtId"
+                                    data-ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdGridList track by $index"
                                     data-ng-switch="vm.entiHijasMap[entiHijaId].entdMap[tpdtId].tpdt.tipoElemento"
                                     nowrap="nowrap"><span data-ng-switch-when="BO"
                                     class="glyphicon glyphicon-{{(itemHijo.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove')}}"></span>

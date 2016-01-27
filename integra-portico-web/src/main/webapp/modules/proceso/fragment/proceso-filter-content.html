@@ -12,7 +12,7 @@
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                                 <label data-translate="prbt_modulo"></label> <select
                                     data-ng-model="vm.searchCriteria.modulo"
-                                    data-ng-options="valor as ('ProcesoModulo_' + valor | translate) for valor in ::vm.procesoModulos"
+                                    data-ng-options="valor as ('ProcesoModulo_' + valor | translate) for valor in vm.procesoModulos"
                                     class="form-control">
                                     <option />
                                 </select>
@@ -20,7 +20,7 @@
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                                 <label data-translate="prbt_tipo"></label> <select
                                     data-ng-model="vm.searchCriteria.tipo"
-                                    data-ng-options="valor as ('ProcesoTipo_' + valor | translate) for valor in ::vm.procesoTipos"
+                                    data-ng-options="valor as ('ProcesoTipo_' + valor | translate) for valor in vm.procesoTipos"
                                     class="form-control">
                                     <option />
                                 </select>
@@ -28,7 +28,7 @@
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                                 <label data-translate="prbt_estado"></label> <select
                                     data-ng-model="vm.searchCriteria.estado"
-                                    data-ng-options="valor as ('ProcesoEstado_' + valor | translate) for valor in ::vm.procesoEstados"
+                                    data-ng-options="valor as ('ProcesoEstado_' + valor | translate) for valor in vm.procesoEstados"
                                     class="form-control">
                                     <option />
                                 </select>

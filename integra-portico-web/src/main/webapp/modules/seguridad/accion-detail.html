@@ -42,7 +42,7 @@
         <div class="list-group">
             <a data-ng-href="#/seguridad/grupo/detail/{{grpo.id}}"
                 class="list-group-item col-sm-6 col-md-4 col-lg-3"
-                data-ng-repeat="grpo in vm.grpoList track by grpo.id" data-ng-bind="grpo.nombre"></a>
+                data-ng-repeat="grpo in vm.grpoList track by $index" data-ng-bind="grpo.nombre"></a>
         </div>
     </fieldset>
 </div>

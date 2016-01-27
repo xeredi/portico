@@ -232,7 +232,7 @@
                 </thead>
 
                 <tbody>
-                    <tr data-ng-repeat="ascr in vm.ascrList track by ascr.id">
+                    <tr data-ng-repeat="ascr in vm.ascrList track by $index">
                         <td><a
                             data-ng-href="#/facturacion/aspecto-cargo/detail/{{ascr.id}}/{{ascr.fref}}"><i
                                 class="glyphicon glyphicon-search"></i></a></td>

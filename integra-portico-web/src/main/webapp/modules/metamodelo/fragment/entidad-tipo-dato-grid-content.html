@@ -30,7 +30,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr data-ng-repeat="entd in vm.entdList track by entd.id">
+            <tr data-ng-repeat="entd in vm.entdList track by $index">
                 <td><a data-ng-href="#/metamodelo/entidad-tipo-dato/detail/{{entd.entiId}}/{{entd.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="entd.grupo" class="number"></td>

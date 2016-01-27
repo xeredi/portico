@@ -57,7 +57,7 @@
         </thead>
 
         <tbody>
-            <tr data-ng-repeat="item in vm.resultList.list track by item.id">
+            <tr data-ng-repeat="item in vm.resultList.list track by $index">
                 <td><a data-ng-href="#/facturacion/valoracion/detail/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="item.id"></td>

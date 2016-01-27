@@ -16,7 +16,7 @@
                             <div class="col-sm-3 col-md-2 form-group-sm">
                                 <label data-translate="tpsr"></label> <select
                                     data-ng-model="vm.searchCriteria.tpsrId"
-                                    data-ng-options="item.value as (('enti_' + item.value) | translate) for item in ::vm.tpsrList"
+                                    data-ng-options="item.value as (('enti_' + item.value) | translate) for item in vm.tpsrList"
                                     data-ng-change="vm.searchCriteria.srvc = null; vm.searchCriteria.aspc = null; vm.searchCriteria.crgo = null"
                                     class="form-control">
                                     <option />
@@ -68,7 +68,7 @@
                             <div class="col-sm-4 col-md-3 form-group-sm">
                                 <label data-translate="vlrc_codExencion"></label> <select
                                     data-ng-model="vm.searchCriteria.codExencion"
-                                    data-ng-options="cdrf.valor as ('cdrf_' + vm.tpdtCodExencion.id + '_' + cdrf.valor | translate) for cdrf in ::vm.tpdtCodExencion.cdrfList"
+                                    data-ng-options="cdrf.valor as ('cdrf_' + vm.tpdtCodExencion.id + '_' + cdrf.valor | translate) for cdrf in vm.tpdtCodExencion.cdrfList"
                                     class="form-control">
                                     <option />
                                 </select>

@@ -9,6 +9,8 @@ angular.module("estadistica_controller", [])
 
 .controller("PeriodoProcesoEditController", PeriodoProcesoEditController)
 
+.controller("EstadisticaGridController", EstadisticaGridController)
+
 function config($routeProvider) {
     $routeProvider
 
@@ -32,6 +34,14 @@ function config($routeProvider) {
                     {
                         templateUrl : "modules/entidad/estadistica/periodo-proceso-edit.html",
                         controller : "PeriodoProcesoEditController as vm",
+                    })
+
+            .when(
+                    "/estadistica/estadistica/grid/:entiId/:peprId/:autpId",
+                    {
+                        templateUrl : "modules/entidad/estadistica/estadistica-grid.html",
+                        controller : "EstadisticaGridController as vm",
+                        reloadOnSearch : false
                     })
 
     ;
@@ -135,4 +145,60 @@ function PeriodoProcesoEditController($route, $routeParams, pageTitleService,
     });
 
     pageTitleService.setTitle("pepr", "page_" + vm.accion);
+}
+
+function EstadisticaGridController($route, $routeParams, pageTitleService,
+        EstadisticaService) {
+    var vm = this;
+
+    vm.filter = filter;
+    vm.resetFilter = resetFilter;
+    vm.search = search;
+    vm.pageChanged = pageChanged;
+    vm.xlsExport = xlsExport;
+
+    function filter() {
+        EstadisticaService.filter(vm.searchCriteria).then(function(data) {
+            vm.labelValuesMap = data.labelValuesMap;
+            vm.prtoList = data.prtoList;
+            vm.limits = data.limits;
+            vm.fechaVigencia = data.fechaVigencia;
+        });
+    }
+
+    function resetFilter() {
+        vm.searchCriteria = {};
+    }
+
+    function search(page) {
+        EstadisticaService.listPage(vm.searchCriteria, page, vm.limit).then(
+                function(data) {
+                    vm.page = data.resultList.page;
+                    vm.limit = data.resultList.limit;
+                    vm.itemList = data.resultList;
+                    vm.searchCriteria = data.model;
+                    vm.enti = data.enti;
+                });
+    }
+
+    function pageChanged() {
+        search(vm.page);
+    }
+
+    function xlsExport() {
+        EstadisticaService.xlsExport(vm.searchCriteria, 'estd_'
+                + vm.searchCriteria.entiId);
+    }
+
+    vm.searchCriteria = $routeParams.searchCriteria ? angular
+            .fromJson($routeParams.searchCriteria) : {};
+    vm.searchCriteria.entiId = $routeParams.entiId;
+    vm.searchCriteria.pepr = {};
+    vm.searchCriteria.pepr.id = $routeParams.peprId;
+    vm.searchCriteria.pepr.sprtId = $routeParams.autpId;
+    vm.limit = $routeParams.limit;
+
+    search($routeParams.page ? $routeParams.page : 1);
+
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }

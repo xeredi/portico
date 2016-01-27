@@ -199,7 +199,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-ng-repeat="rgin in vm.rginList track by rgin.id">
+                    <tr data-ng-repeat="rgin in vm.rginList track by $index">
                         <td><a
                             data-ng-href="#/facturacion/regla-incompatible/detail/{{rgin.id}}/{{rgin.fref}}"><i
                                 class="glyphicon glyphicon-search"></i></a></td>

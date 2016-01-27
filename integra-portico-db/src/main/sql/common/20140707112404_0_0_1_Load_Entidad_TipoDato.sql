@@ -1983,6 +1983,19 @@ INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, e
 	INSERT INTO tbl_tipo_estadistica_tpes(tpes_pk) VALUES (23007)\
 
 
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    66000 + (tpes_pk - 23000) * 20 + 0 AS acen_pk
+    , tpes_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'list') AS acen_accn_pk
+FROM tbl_tipo_estadistica_tpes\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+SELECT
+    66000 + (tpes_pk - 23000) * 20 + 1 AS acen_pk
+    , tpes_pk AS acen_enti_pk
+		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'detail') AS acen_accn_pk
+FROM tbl_tipo_estadistica_tpes\
+
 
 
 

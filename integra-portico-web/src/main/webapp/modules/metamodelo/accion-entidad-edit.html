@@ -16,7 +16,7 @@
             <legend data-translate="grpoList"></legend>
 
             <div class="row">
-                <div class="checkbox" data-ng-repeat="grpo in vm.grpoList track by grpo.id">
+                <div class="checkbox" data-ng-repeat="grpo in vm.grpoList track by $index">
                     <label> <input type="checkbox" data-ng-click="vm.updateGrupos($event, grpo.id)"
                         data-ng-checked="vm.model.grpoIds.indexOf(grpo.id) >= 0"> <span
                         data-ng-bind="grpo.nombre"></span>

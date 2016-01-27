@@ -35,7 +35,7 @@
         </thead>
 
         <tbody>
-            <tr data-ng-repeat="aspc in vm.resultList.list track by aspc.id">
+            <tr data-ng-repeat="aspc in vm.resultList.list track by $index">
                 <td><a data-ng-href="#/facturacion/aspecto/detail/{{aspc.id}}/{{aspc.fref}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="aspc.codigo"></td>

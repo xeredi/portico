@@ -13,7 +13,7 @@
                                 <label data-translate="prto"></label> <select
                                     data-ng-model="vm.searchCriteria.prto.id"
                                     data-ng-change="vm.prtoId = vm.searchCriteria.prto.id"
-                                    data-ng-options="prto.id as prto.etiqueta for prto in ::vm.prtoList"
+                                    data-ng-options="prto.id as prto.etiqueta for prto in vm.prtoList"
                                     class="form-control">
                                     <option />
                                 </select>
@@ -29,7 +29,7 @@
                             <div data-ng-if="vm.enti.enti.tpdtEstado" class="col-sm-3 col-md-2 form-group-sm">
                                 <label data-translate="srvc_estado"></label> <select
                                     data-ng-model="vm.searchCriteria.estado"
-                                    data-ng-options="cdrf.valor as (('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in ::vm.enti.enti.tpdtEstado.cdrfList"
+                                    data-ng-options="cdrf.valor as (('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.enti.enti.tpdtEstado.cdrfList"
                                     class="form-control">
                                     <option />
                                 </select>
@@ -37,7 +37,7 @@
                             <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm pull-right">
                                 <label data-translate="filtro_limit"></label> <select
                                     data-ng-model="vm.searchCriteria.limit"
-                                    data-ng-options="limitValue for limitValue in ::vm.limits"
+                                    data-ng-options="limitValue for limitValue in vm.limits"
                                     class="form-control number">
                                     <option />
                                 </select>

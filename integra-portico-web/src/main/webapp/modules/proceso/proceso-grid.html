@@ -41,21 +41,21 @@
             </tr>
         </thead>
         <tbody>
-            <tr data-ng-repeat="prbt in vm.resultList.list track by prbt.id">
+            <tr data-ng-repeat="prbt in vm.resultList.list track by $index">
                 <td><a data-ng-href="#/proceso/proceso/detail/{{prbt.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td data-ng-bind="::('ProcesoModulo_' + prbt.modulo | translate)"></td>
-                <td data-ng-bind="::('ProcesoTipo_' + prbt.tipo | translate)"></td>
-                <td data-ng-bind="::('ProcesoEstado_' + prbt.estado | translate)"></td>
-                <td data-ng-bind="::(prbt.falta | date: datetimeFormat)"></td>
-                <td data-ng-bind="::(prbt.finicio | date: datetimeFormat)"></td>
-                <td data-ng-bind="::(prbt.ffin | date: datetimeFormat)"></td>
-                <td class="number" data-ng-bind="::(prbt.duracion | number:0)"></td>
-                <td class="number {{::(prbt.erroresCnt > 0 ? 'error' : '')}}"
-                    data-ng-bind="::(prbt.erroresCnt | number:0)"></td>
-                <td class="number {{::(prbt.alertasCnt > 0 ? 'warning' : '')}}"
-                    data-ng-bind="::(prbt.alertasCnt | number:0)"></td>
-                <td class="number" data-ng-bind="::(prbt.mensajesCnt | number:0)"></td>
+                <td data-ng-bind="('ProcesoModulo_' + prbt.modulo | translate)"></td>
+                <td data-ng-bind="('ProcesoTipo_' + prbt.tipo | translate)"></td>
+                <td data-ng-bind="('ProcesoEstado_' + prbt.estado | translate)"></td>
+                <td data-ng-bind="(prbt.falta | date: datetimeFormat)"></td>
+                <td data-ng-bind="(prbt.finicio | date: datetimeFormat)"></td>
+                <td data-ng-bind="(prbt.ffin | date: datetimeFormat)"></td>
+                <td class="number" data-ng-bind="(prbt.duracion | number:0)"></td>
+                <td class="number {{(prbt.erroresCnt > 0 ? 'error' : '')}}"
+                    data-ng-bind="(prbt.erroresCnt | number:0)"></td>
+                <td class="number {{(prbt.alertasCnt > 0 ? 'warning' : '')}}"
+                    data-ng-bind="(prbt.alertasCnt | number:0)"></td>
+                <td class="number" data-ng-bind="(prbt.mensajesCnt | number:0)"></td>
             </tr>
         </tbody>
     </table>

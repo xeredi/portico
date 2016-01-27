@@ -6,25 +6,25 @@
                     <label data-translate="crgo"></label>
                     <p class="form-control-static" data-ng-bind="vm.model.crgo.etiqueta"></p>
                 </div>
-                <div class="col-md-1 form-group-sm" data-ng-switch="::vm.accion">
+                <div class="col-md-1 form-group-sm" data-ng-switch="vm.accion">
                     <label data-translate="rgla_codigo"></label> <input data-ng-switch-when="create"
                         type="text" data-ng-model="vm.model.codigo" class="form-control" />
                     <p data-ng-switch-when="edit" class="form-control-static" data-ng-bind="vm.model.codigo"></p>
                 </div>
-                <div class="col-md-2 form-group-sm" data-ng-switch="::vm.accion">
+                <div class="col-md-2 form-group-sm" data-ng-switch="vm.accion">
                     <label data-translate="rgla_tipo"></label> <select data-ng-switch-when="create"
                         data-ng-model="vm.model.tipo"
-                        data-ng-options="cdrf as ('ReglaTipo_' + cdrf | translate) for cdrf in ::vm.tipos"
+                        data-ng-options="cdrf as ('ReglaTipo_' + cdrf | translate) for cdrf in vm.tipos"
                         class="form-control">
                         <option />
                     </select>
                     <p data-ng-switch-when="edit" class="form-control-static"
                         data-ng-bind="'ReglaTipo_' + vm.model.tipo | translate"></p>
                 </div>
-                <div class="col-md-2 form-group-sm" data-ng-switch="::vm.accion">
+                <div class="col-md-2 form-group-sm" data-ng-switch="vm.accion">
                     <label data-translate="enti"></label> <select data-ng-switch-when="create"
                         data-ng-model="vm.model.enti.id"
-                        data-ng-options="item.value as item.label for item in ::vm.entiFacturableList"
+                        data-ng-options="item.value as item.label for item in vm.entiFacturableList"
                         class="form-control">
                         <option />
                     </select>

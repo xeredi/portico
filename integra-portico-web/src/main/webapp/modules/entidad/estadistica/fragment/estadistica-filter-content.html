@@ -11,8 +11,8 @@
                         <div class="row">
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                                 <label data-translate="prto"></label> <select
-                                    data-ng-model="vm.itemCriterio.prto.id"
-                                    data-ng-change="vm.prtoId = vm.itemCriterio.prto.id"
+                                    data-ng-model="vm.searchCriteria.prto.id"
+                                    data-ng-change="vm.prtoId = vm.searchCriteria.prto.id"
                                     data-ng-options="prto.id as prto.etiqueta for prto in vm.prtoList"
                                     class="form-control">
                                     <option />
@@ -20,7 +20,7 @@
                             </div>
                             <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm pull-right">
                                 <label data-translate="filtro_limit"></label> <select
-                                    data-ng-model="vm.itemCriterio.limit"
+                                    data-ng-model="vm.searchCriteria.limit"
                                     data-ng-options="limitValue for limitValue in vm.limits"
                                     class="form-control">
                                     <option />

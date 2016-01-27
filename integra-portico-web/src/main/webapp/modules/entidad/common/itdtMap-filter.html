@@ -1,5 +1,5 @@
 <div class="row">
-    <div data-ng-repeat="tpdtId in vm.enti.entdList track by tpdtId"
+    <div data-ng-repeat="tpdtId in vm.enti.entdList track by $index"
         data-ng-if="vm.enti.entdMap[tpdtId].filtrable" data-ng-switch
         data-on="vm.enti.entdMap[tpdtId].tpdt.tipoElemento"
         class="col-sm-{{vm.enti.entdMap[tpdtId].spanSm}} col-md-{{vm.enti.entdMap[tpdtId].span}} col-lg-{{vm.enti.entdMap[tpdtId].spanLg}} col-xl-{{vm.enti.entdMap[tpdtId].spanXl}} form-group-sm">

@@ -17,7 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr data-ng-repeat="acen in vm.acenList track by acen.id">
+            <tr data-ng-repeat="acen in vm.acenList track by $index">
                 <td><a data-ng-href="#/metamodelo/accion-entidad/detail/{{acen.entiId}}/{{acen.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="acen.accn.codigo"></td>

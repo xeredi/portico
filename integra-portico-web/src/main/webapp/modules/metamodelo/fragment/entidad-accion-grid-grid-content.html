@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr data-ng-repeat="enag in vm.enagList track by enag.id">
+            <tr data-ng-repeat="enag in vm.enagList track by $index">
                 <td><a data-ng-href="#/metamodelo/entidad-accion-grid/detail/{{enag.entiId}}/{{enag.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="enag.path"></td>

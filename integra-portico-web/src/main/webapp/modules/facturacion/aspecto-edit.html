@@ -2,10 +2,10 @@
     <form role="form">
         <fieldset>
             <div class="row">
-                <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" data-ng-switch="::vm.accion">
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm" data-ng-switch="vm.accion">
                     <label data-translate="tpsr"></label> <select data-ng-switch-when="create"
                         data-ng-model="vm.model.tpsr.id"
-                        data-ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in ::vm.tpsrList"
+                        data-ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in vm.tpsrList"
                         class="form-control">
                         <option />
                     </select>
@@ -14,7 +14,7 @@
                     <p data-ng-switch-when="duplicate" class="form-control-static"
                         data-ng-bind="'enti_' + vm.model.tpsr.id | translate"></p>
                 </div>
-                <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm" data-ng-switch="::vm.accion">
+                <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm" data-ng-switch="vm.accion">
                     <label data-translate="aspc_codigo"></label> <input data-ng-switch-when="create"
                         type="text" data-ng-model="vm.model.codigo" class="form-control" /><input
                         data-ng-switch-when="duplicate" type="text" data-ng-model="vm.model.codigo"

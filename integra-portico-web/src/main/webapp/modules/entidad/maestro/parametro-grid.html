@@ -45,12 +45,12 @@
                 <th data-translate="ffin"></th>
                 <th data-ng-if="vm.enti.enti.gis" data-translate="prmt_lat"></th>
                 <th data-ng-if="vm.enti.enti.gis" data-translate="prmt_lon"></th>
-                <th data-ng-repeat="tpdtId in vm.enti.entdGridList track by tpdtId"
+                <th data-ng-repeat="tpdtId in vm.enti.entdGridList track by $index"
                     data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></th>
             </tr>
         </thead>
         <tbody>
-            <tr data-ng-repeat="item in vm.itemList.list track by item.version.id">
+            <tr data-ng-repeat="item in vm.itemList.list track by $index">
                 <td><a
                     data-ng-href="#/maestro/parametro/detail/{{item.entiId}}/{{item.id}}/{{item.fref}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
@@ -64,7 +64,7 @@
                 <td nowrap="nowrap" class="number" data-ng-if="vm.enti.enti.gis"
                     data-ng-bind="(item.version.lon | number:8)"></td>
 
-                <td data-ng-repeat="tpdtId in vm.enti.entdGridList track by tpdtId" nowrap="nowrap"
+                <td data-ng-repeat="tpdtId in vm.enti.entdGridList track by $index" nowrap="nowrap"
                     data-ng-switch="vm.enti.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span
                     data-ng-switch-when="BO"><i
                         class="glyphicon glyphicon-{{(item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove')}}"></i></span>

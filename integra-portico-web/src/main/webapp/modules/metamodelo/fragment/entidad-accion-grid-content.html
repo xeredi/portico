@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr data-ng-repeat="enac in vm.enacList track by enac.id">
+            <tr data-ng-repeat="enac in vm.enacList track by $index">
                 <td><a data-ng-href="#/metamodelo/entidad-accion/detail/{{enac.entiId}}/{{enac.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="enac.path"></td>

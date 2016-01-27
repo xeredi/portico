@@ -26,7 +26,7 @@
             <tr data-ng-repeat="key in vm.keyList | filter:m18nSearch">
                 <td><a data-ng-href="#/administracion/messagei18n/messagei18n/detail/{{key}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td data-ng-bind="::key"></td>
+                <td data-ng-bind="key"></td>
                 <td data-ng-repeat="language in vm.availableLanguages" data-ng-bind="vm.keyMap[key][language]"></td>
             </tr>
         </tbody>

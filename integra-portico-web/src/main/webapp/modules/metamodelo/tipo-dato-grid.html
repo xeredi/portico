@@ -36,7 +36,7 @@
         </thead>
 
         <tbody>
-            <tr data-ng-repeat="tpdt in vm.resultList.list track by tpdt.id">
+            <tr data-ng-repeat="tpdt in vm.resultList.list track by $index">
                 <td><a data-ng-href="#/metamodelo/tipo-dato/detail/{{tpdt.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="tpdt.codigo"></td>

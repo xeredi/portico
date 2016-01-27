@@ -8,115 +8,112 @@
                     <label data-translate="srvc"></label>
                     <p class="form-control-static">
                         <a
-                            data-ng-href="#/servicio/srvc/detail/{{::vm.fctl.fcts.srvc.entiId}}/{{::vm.fctl.fcts.srvc.id}}"
-                            data-ng-bind="::vm.fctl.fcts.srvc.etiqueta"></a>
+                            data-ng-href="#/servicio/srvc/detail/{{vm.fctl.fcts.srvc.entiId}}/{{vm.fctl.fcts.srvc.id}}"
+                            data-ng-bind="vm.fctl.fcts.srvc.etiqueta"></a>
                     </p>
                 </div>
                 <div class="col-md-2 form-group-sm">
                     <label data-translate="enti"></label>
-                    <p class="form-control-static"
-                        data-ng-bind="::('enti_' + vm.fctl.rgla.enti.id | translate)"></p>
+                    <p class="form-control-static" data-ng-bind="('enti_' + vm.fctl.rgla.enti.id | translate)"></p>
                 </div>
-                <div class="col-md-2 col-lg-1 form-group-sm" data-ng-if="::vm.fctl.ssrv">
+                <div class="col-md-2 col-lg-1 form-group-sm" data-ng-if="vm.fctl.ssrv">
                     <label data-translate="ssrv_numero"></label>
                     <p class="form-control-static">
-                        <a
-                            data-ng-href="#/servicio/ssrv/detail/{{::vm.fctl.rgla.enti.id}}/{{::vm.fctl.ssrv.id}}"
-                            data-ng-bind="::vm.fctl.ssrv.numero"></a>
+                        <a data-ng-href="#/servicio/ssrv/detail/{{vm.fctl.rgla.enti.id}}/{{vm.fctl.ssrv.id}}"
+                            data-ng-bind="vm.fctl.ssrv.numero"></a>
                     </p>
                 </div>
-                <div class="col-md-2 col-xl-1 form-group-sm" data-ng-if="::vm.fctl.fini">
+                <div class="col-md-2 col-xl-1 form-group-sm" data-ng-if="vm.fctl.fini">
                     <label data-translate="fini"></label>
                     <p class="form-control-static"
-                        data-ng-bind="::(vm.fctl.fini | date: ('format_datetime' | translate))"></p>
+                        data-ng-bind="(vm.fctl.fini | date: ('format_datetime' | translate))"></p>
                 </div>
-                <div class="col-md-2 col-xl-1 form-group-sm" data-ng-if="::vm.fctl.ffin">
+                <div class="col-md-2 col-xl-1 form-group-sm" data-ng-if="vm.fctl.ffin">
                     <label data-translate="ffin"></label>
                     <p class="form-control-static"
-                        data-ng-bind="::(vm.fctl.ffin | date: ('format_datetime' | translate))"></p>
+                        data-ng-bind="(vm.fctl.ffin | date: ('format_datetime' | translate))"></p>
                 </div>
                 <div class="col-md-2 form-group-sm">
                     <label data-translate="rgla"></label>
                     <p class="form-control-static">
-                        <a
-                            data-ng-href="#/facturacion/rgla/detail/{{::vm.fctl.rgla.id}}/{{::vm.fctl.fcts.fref}}"
+                        <a data-ng-href="#/facturacion/rgla/detail/{{vm.fctl.rgla.id}}/{{vm.fctl.fcts.fref}}"
                             data-ng-bind="vm.fctl.rgla.codigo"></a>
                     </p>
                 </div>
                 <div class="col-sm-2 col-lg-1 form-group-sm">
                     <label data-translate="rgla_tipo"></label>
                     <p class="form-control-static"
-                        data-ng-bind="::('ReglaTipo_' + vm.fctl.rgla.tipo | translate)"></p>
+                        data-ng-bind="('ReglaTipo_' + vm.fctl.rgla.tipo | translate)"></p>
                 </div>
-                <div class="col-sm-2 col-lg-1 form-group-sm" data-ng-if="::(vm.fctl.rgla.tipo != 'T')">
+                <div class="col-sm-2 col-lg-1 form-group-sm" data-ng-if="(vm.fctl.rgla.tipo != 'T')">
                     <label data-translate="fctl_importeBase"></label>
-                    <p class="form-control-static number" data-ng-bind="::(vm.fctl.importeBase | number:2)"></p>
+                    <p class="form-control-static number" data-ng-bind="(vm.fctl.importeBase | number:2)"></p>
                 </div>
                 <div class="col-sm-2 col-lg-1 form-group-sm">
                     <label data-translate="fctl_importe"></label>
-                    <p class="form-control-static number" data-ng-bind="::(vm.fctl.importe | number:2)"></p>
+                    <p class="form-control-static number" data-ng-bind="(vm.fctl.importe | number:2)"></p>
                 </div>
                 <div class="col-sm-2 col-lg-1 form-group-sm">
                     <label data-translate="fctl_impuesto"></label>
                     <p class="form-control-static">
                         <a
-                            data-ng-href="#/maestro/prmt/detail/{{::vm.fctl.impuesto.entiId}}/{{::vm.fctl.impuesto.id}}/{{::vm.fctl.fcts.fref}}"
-                            data-ng-bind="::vm.fctl.impuesto.etiqueta"></a>
+                            data-ng-href="#/maestro/prmt/detail/{{vm.fctl.impuesto.entiId}}/{{vm.fctl.impuesto.id}}/{{vm.fctl.fcts.fref}}"
+                            data-ng-bind="vm.fctl.impuesto.etiqueta"></a>
                     </p>
                 </div>
             </div>
 
             <div class="row">
-                <div data-ng-if="::vm.fctl.rgla.version.etiqInfo1" class="col-md-4 form-group-sm">
-                    <label data-ng-bind="::vm.fctl.rgla.version.etiqInfo1"></label>
-                    <p class="form-control-static" data-ng-bind="::vm.fctl.info1"></p>
+                <div data-ng-if="vm.fctl.rgla.version.etiqInfo1" class="col-md-4 form-group-sm">
+                    <label data-ng-bind="vm.fctl.rgla.version.etiqInfo1"></label>
+                    <p class="form-control-static" data-ng-bind="vm.fctl.info1"></p>
                 </div>
-                <div data-ng-if="::vm.fctl.rgla.version.etiqInfo2" class="col-md-4 form-group-sm">
-                    <label data-ng-bind="::vm.fctl.rgla.version.etiqInfo2"></label>
-                    <p class="form-control-static" data-ng-bind="::vm.fctl.info2"></p>
+                <div data-ng-if="vm.fctl.rgla.version.etiqInfo2" class="col-md-4 form-group-sm">
+                    <label data-ng-bind="vm.fctl.rgla.version.etiqInfo2"></label>
+                    <p class="form-control-static" data-ng-bind="vm.fctl.info2"></p>
                 </div>
-                <div data-ng-if="::vm.fctl.rgla.version.etiqInfo3" class="col-md-4 form-group-sm">
-                    <label data-ng-bind="::vm.fctl.rgla.version.etiqInfo3"></label>
-                    <p class="form-control-static" data-ng-bind="::vm.fctl.info3"></p>
+                <div data-ng-if="vm.fctl.rgla.version.etiqInfo3" class="col-md-4 form-group-sm">
+                    <label data-ng-bind="vm.fctl.rgla.version.etiqInfo3"></label>
+                    <p class="form-control-static" data-ng-bind="vm.fctl.info3"></p>
                 </div>
-                <div data-ng-if="::vm.fctl.rgla.version.etiqInfo4" class="col-md-4 form-group-sm">
-                    <label data-ng-bind="::vm.fctl.rgla.version.etiqInfo4"></label>
-                    <p class="form-control-static" data-ng-bind="::vm.fctl.info4"></p>
+                <div data-ng-if="vm.fctl.rgla.version.etiqInfo4" class="col-md-4 form-group-sm">
+                    <label data-ng-bind="vm.fctl.rgla.version.etiqInfo4"></label>
+                    <p class="form-control-static" data-ng-bind="vm.fctl.info4"></p>
                 </div>
-                <div data-ng-if="::vm.fctl.rgla.version.etiqInfo5" class="col-md-4 form-group-sm">
-                    <label data-ng-bind="::vm.fctl.rgla.version.etiqInfo5"></label>
-                    <p class="form-control-static" data-ng-bind="::vm.fctl.info5"></p>
+                <div data-ng-if="vm.fctl.rgla.version.etiqInfo5" class="col-md-4 form-group-sm">
+                    <label data-ng-bind="vm.fctl.rgla.version.etiqInfo5"></label>
+                    <p class="form-control-static" data-ng-bind="vm.fctl.info5"></p>
                 </div>
-                <div data-ng-if="::vm.fctl.rgla.version.etiqInfo6" class="col-md-4 form-group-sm">
-                    <label data-ng-bind="::vm.fctl.rgla.version.etiqInfo6"></label>
-                    <p class="form-control-static" data-ng-bind="::vm.fctl.info6"></p>
+                <div data-ng-if="vm.fctl.rgla.version.etiqInfo6" class="col-md-4 form-group-sm">
+                    <label data-ng-bind="vm.fctl.rgla.version.etiqInfo6"></label>
+                    <p class="form-control-static" data-ng-bind="vm.fctl.info6"></p>
                 </div>
             </div>
 
             <div class="row">
-                <div data-ng-if="::vm.fctl.rgla.version.etiqCuant1" class="col-md-4 form-group-sm">
-                    <label data-ng-bind="::vm.fctl.rgla.version.etiqCuant1"></label>
-                    <p class="form-control-static" data-ng-bind="::(vm.fctl.cuant1 | number:2)"></p>
+                <div data-ng-if="vm.fctl.rgla.version.etiqCuant1" class="col-md-4 form-group-sm">
+                    <label data-ng-bind="vm.fctl.rgla.version.etiqCuant1"></label>
+                    <p class="form-control-static" data-ng-bind="(vm.fctl.cuant1 | number:2)"></p>
                 </div>
-                <div data-ng-if="::vm.fctl.rgla.version.etiqCuant2" class="col-md-4 form-group-sm">
-                    <label data-ng-bind="::vm.fctl.rgla.version.etiqCuant2"></label>
-                    <p class="form-control-static" data-ng-bind="::(vm.fctl.cuant2 | number:2)"></p>
+                <div data-ng-if="vm.fctl.rgla.version.etiqCuant2" class="col-md-4 form-group-sm">
+                    <label data-ng-bind="vm.fctl.rgla.version.etiqCuant2"></label>
+                    <p class="form-control-static" data-ng-bind="(vm.fctl.cuant2 | number:2)"></p>
                 </div>
-                <div data-ng-if="::vm.fctl.rgla.version.etiqCuant3" class="col-md-4 form-group-sm">
-                    <label data-ng-bind="::vm.fctl.rgla.version.etiqCuant3"></label>
-                    <p class="form-control-static" data-ng-bind="::(vm.fctl.cuant3 | number:2)"></p>
+                <div data-ng-if="vm.fctl.rgla.version.etiqCuant3" class="col-md-4 form-group-sm">
+                    <label data-ng-bind="vm.fctl.rgla.version.etiqCuant3"></label>
+                    <p class="form-control-static" data-ng-bind="(vm.fctl.cuant3 | number:2)"></p>
                 </div>
-                <div data-ng-if="::vm.fctl.rgla.version.etiqCuant4" class="col-md-4 form-group-sm">
-                    <label data-ng-bind="::vm.fctl.rgla.version.etiqCuant4"></label>
-                    <p class="form-control-static" data-ng-bind="::(vm.fctl.cuant4 | number:2)"></p>
+                <div data-ng-if="vm.fctl.rgla.version.etiqCuant4" class="col-md-4 form-group-sm">
+                    <label data-ng-bind="vm.fctl.rgla.version.etiqCuant4"></label>
+                    <p class="form-control-static" data-ng-bind="(vm.fctl.cuant4 | number:2)"></p>
                 </div>
-                <div data-ng-if="::vm.fctl.rgla.version.etiqCuant5" class="col-md-4 form-group-sm">
-                    <label data-ng-bind="::vm.fctl.rgla.version.etiqCuant5"></label>
-                    <p class="form-control-static" data-ng-bind="::(vm.fctl.cuant5 | number:2)"></p>
+                <div data-ng-if="vm.fctl.rgla.version.etiqCuant5" class="col-md-4 form-group-sm">
+                    <label data-ng-bind="vm.fctl.rgla.version.etiqCuant5"></label>
+                    <p class="form-control-static" data-ng-bind="(vm.fctl.cuant5 | number:2)"></p>
                 </div>
-                <div data-ng-if="::vm.fctl.rgla.version.etiqCuant6" class="col-md-4 form-group-sm">
-                    <label data-ng-bind="::vm.fctl.rgla.version.etiqCuant6"></label>
-                    <p class="form-control-static" data-ng-bind="::(vm.fctl.cuant6 | number:2)"></p>
+                <div data-ng-if="vm.fctl.rgla.version.etiqCuant6" class="col-md-4 form-group-sm">
+                    <label data-ng-bind="vm.fctl.rgla.version.etiqCuant6"></label>
+                    <p class="form-control-static" data-ng-bind="(vm.fctl.cuant6 | number:2)"></p>
                 </div>
             </div>
         </fieldset>
@@ -140,75 +137,75 @@
                     <tr>
                         <th />
                         <th data-translate="ssrv"></th>
-                        <th data-translate="fctd_importeBase" data-ng-if="::(vm.fctl.rgla.tipo != 'T')"></th>
+                        <th data-translate="fctd_importeBase" data-ng-if="(vm.fctl.rgla.tipo != 'T')"></th>
                         <th data-translate="fctd_importe"></th>
                         <th data-translate="fini"></th>
                         <th data-translate="ffin"></th>
 
-                        <th data-ng-if="::vm.fctl.rgla.version.etiqInfo1"
-                            data-ng-bind="::vm.fctl.rgla.version.etiqInfo1"></th>
-                        <th data-ng-if="::vm.fctl.rgla.version.etiqInfo2"
-                            data-ng-bind="::vm.fctl.rgla.version.etiqInfo2"></th>
-                        <th data-ng-if="::vm.fctl.rgla.version.etiqInfo3"
-                            data-ng-bind="::vm.fctl.rgla.version.etiqInfo3"></th>
-                        <th data-ng-if="::vm.fctl.rgla.version.etiqInfo4"
-                            data-ng-bind="::vm.fctl.rgla.version.etiqInfo4"></th>
-                        <th data-ng-if="::vm.fctl.rgla.version.etiqInfo5"
-                            data-ng-bind="::vm.fctl.rgla.version.etiqInfo5"></th>
-                        <th data-ng-if="::vm.fctl.rgla.version.etiqInfo6"
-                            data-ng-bind="::vm.fctl.rgla.version.etiqInfo6"></th>
+                        <th data-ng-if="vm.fctl.rgla.version.etiqInfo1"
+                            data-ng-bind="vm.fctl.rgla.version.etiqInfo1"></th>
+                        <th data-ng-if="vm.fctl.rgla.version.etiqInfo2"
+                            data-ng-bind="vm.fctl.rgla.version.etiqInfo2"></th>
+                        <th data-ng-if="vm.fctl.rgla.version.etiqInfo3"
+                            data-ng-bind="vm.fctl.rgla.version.etiqInfo3"></th>
+                        <th data-ng-if="vm.fctl.rgla.version.etiqInfo4"
+                            data-ng-bind="vm.fctl.rgla.version.etiqInfo4"></th>
+                        <th data-ng-if="vm.fctl.rgla.version.etiqInfo5"
+                            data-ng-bind="vm.fctl.rgla.version.etiqInfo5"></th>
+                        <th data-ng-if="vm.fctl.rgla.version.etiqInfo6"
+                            data-ng-bind="vm.fctl.rgla.version.etiqInfo6"></th>
 
-                        <th data-ng-if="::vm.fctl.rgla.version.etiqCuant1"
-                            data-ng-bind="::vm.fctl.rgla.version.etiqCuant1"></th>
-                        <th data-ng-if="::vm.fctl.rgla.version.etiqCuant2"
-                            data-ng-bind="::vm.fctl.rgla.version.etiqCuant2"></th>
-                        <th data-ng-if="::vm.fctl.rgla.version.etiqCuant3"
-                            data-ng-bind="::vm.fctl.rgla.version.etiqCuant3"></th>
-                        <th data-ng-if="::vm.fctl.rgla.version.etiqCuant4"
-                            data-ng-bind="::vm.fctl.rgla.version.etiqCuant4"></th>
-                        <th data-ng-if="::vm.fctl.rgla.version.etiqCuant5"
-                            data-ng-bind="::vm.fctl.rgla.version.etiqCuant5"></th>
-                        <th data-ng-if="::vm.fctl.rgla.version.etiqCuant6"
-                            data-ng-bind="::vm.fctl.rgla.version.etiqCuant6"></th>
+                        <th data-ng-if="vm.fctl.rgla.version.etiqCuant1"
+                            data-ng-bind="vm.fctl.rgla.version.etiqCuant1"></th>
+                        <th data-ng-if="vm.fctl.rgla.version.etiqCuant2"
+                            data-ng-bind="vm.fctl.rgla.version.etiqCuant2"></th>
+                        <th data-ng-if="vm.fctl.rgla.version.etiqCuant3"
+                            data-ng-bind="vm.fctl.rgla.version.etiqCuant3"></th>
+                        <th data-ng-if="vm.fctl.rgla.version.etiqCuant4"
+                            data-ng-bind="vm.fctl.rgla.version.etiqCuant4"></th>
+                        <th data-ng-if="vm.fctl.rgla.version.etiqCuant5"
+                            data-ng-bind="vm.fctl.rgla.version.etiqCuant5"></th>
+                        <th data-ng-if="vm.fctl.rgla.version.etiqCuant6"
+                            data-ng-bind="vm.fctl.rgla.version.etiqCuant6"></th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr data-ng-repeat="fctd in vm.fctdList.list track by $index">
-                        <td><a data-ng-href="#/facturacion/fctd/detail/{{::fctd.id}}"><i
+                        <td><a data-ng-href="#/facturacion/fctd/detail/{{fctd.id}}"><i
                                 class="glyphicon glyphicon-search"></i></a></td>
-                        <td nowrap="nowrap" data-ng-bind="::('enti_' + fctd.ssrv.entiId | translate)"></td>
-                        <td class="number" data-ng-if="::(vm.fctl.rgla.tipo != 'T')"
-                            data-ng-bind="::(fctd.importeBase | number:2)"></td>
-                        <td class="number" data-ng-bind="::(fctd.importe | number:2)"></td>
-                        <td data-ng-bind="::(fctd.fini | date:'short')"></td>
-                        <td data-ng-bind="::(fctd.ffin | date:'short')"></td>
+                        <td nowrap="nowrap" data-ng-bind="('enti_' + fctd.ssrv.entiId | translate)"></td>
+                        <td class="number" data-ng-if="(vm.fctl.rgla.tipo != 'T')"
+                            data-ng-bind="(fctd.importeBase | number:2)"></td>
+                        <td class="number" data-ng-bind="(fctd.importe | number:2)"></td>
+                        <td data-ng-bind="(fctd.fini | date:'short')"></td>
+                        <td data-ng-bind="(fctd.ffin | date:'short')"></td>
 
-                        <td nowrap="nowrap" data-ng-if="::vm.fctl.rgla.version.etiqInfo1"
-                            data-ng-bind="::fctd.info1"></td>
-                        <td nowrap="nowrap" data-ng-if="::vm.fctl.rgla.version.etiqInfo2"
-                            data-ng-bind="::fctd.info2"></td>
-                        <td nowrap="nowrap" data-ng-if="::vm.fctl.rgla.version.etiqInfo3"
-                            data-ng-bind="::fctd.info3"></td>
-                        <td nowrap="nowrap" data-ng-if="::vm.fctl.rgla.version.etiqInfo4"
-                            data-ng-bind="::fctd.info4"></td>
-                        <td nowrap="nowrap" data-ng-if="::vm.fctl.rgla.version.etiqInfo5"
-                            data-ng-bind="::fctd.info5"></td>
-                        <td nowrap="nowrap" data-ng-if="::vm.fctl.rgla.version.etiqInfo6"
-                            data-ng-bind="::fctd.info6"></td>
+                        <td nowrap="nowrap" data-ng-if="vm.fctl.rgla.version.etiqInfo1"
+                            data-ng-bind="fctd.info1"></td>
+                        <td nowrap="nowrap" data-ng-if="vm.fctl.rgla.version.etiqInfo2"
+                            data-ng-bind="fctd.info2"></td>
+                        <td nowrap="nowrap" data-ng-if="vm.fctl.rgla.version.etiqInfo3"
+                            data-ng-bind="fctd.info3"></td>
+                        <td nowrap="nowrap" data-ng-if="vm.fctl.rgla.version.etiqInfo4"
+                            data-ng-bind="fctd.info4"></td>
+                        <td nowrap="nowrap" data-ng-if="vm.fctl.rgla.version.etiqInfo5"
+                            data-ng-bind="fctd.info5"></td>
+                        <td nowrap="nowrap" data-ng-if="vm.fctl.rgla.version.etiqInfo6"
+                            data-ng-bind="fctd.info6"></td>
 
-                        <td nowrap="nowrap" data-ng-if="::vm.fctl.rgla.version.etiqCuant1"
-                            data-ng-bind="::fctd.cuant1"></td>
-                        <td nowrap="nowrap" data-ng-if="::vm.fctl.rgla.version.etiqCuant2"
-                            data-ng-bind="::fctd.cuant2"></td>
-                        <td nowrap="nowrap" data-ng-if="::vm.fctl.rgla.version.etiqCuant3"
-                            data-ng-bind="::fctd.cuant3"></td>
-                        <td nowrap="nowrap" data-ng-if="::vm.fctl.rgla.version.etiqCuant4"
-                            data-ng-bind="::fctd.cuant4"></td>
-                        <td nowrap="nowrap" data-ng-if="::vm.fctl.rgla.version.etiqCuant5"
-                            data-ng-bind="::fctd.cuant5"></td>
-                        <td nowrap="nowrap" data-ng-if="::vm.fctl.rgla.version.etiqCuant6"
-                            data-ng-bind="::fctd.cuant6"></td>
+                        <td nowrap="nowrap" data-ng-if="vm.fctl.rgla.version.etiqCuant1"
+                            data-ng-bind="fctd.cuant1"></td>
+                        <td nowrap="nowrap" data-ng-if="vm.fctl.rgla.version.etiqCuant2"
+                            data-ng-bind="fctd.cuant2"></td>
+                        <td nowrap="nowrap" data-ng-if="vm.fctl.rgla.version.etiqCuant3"
+                            data-ng-bind="fctd.cuant3"></td>
+                        <td nowrap="nowrap" data-ng-if="vm.fctl.rgla.version.etiqCuant4"
+                            data-ng-bind="fctd.cuant4"></td>
+                        <td nowrap="nowrap" data-ng-if="vm.fctl.rgla.version.etiqCuant5"
+                            data-ng-bind="fctd.cuant5"></td>
+                        <td nowrap="nowrap" data-ng-if="vm.fctl.rgla.version.etiqCuant6"
+                            data-ng-bind="fctd.cuant6"></td>
                     </tr>
                 </tbody>
             </table>

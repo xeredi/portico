@@ -34,7 +34,7 @@
         </thead>
 
         <tbody>
-            <tr data-ng-repeat="enti in vm.resultList.list track by enti.id">
+            <tr data-ng-repeat="enti in vm.resultList.list track by $index">
                 <td><a data-ng-href="#/metamodelo/tipo-estadistica/detail/{{enti.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="enti.codigo"></td>

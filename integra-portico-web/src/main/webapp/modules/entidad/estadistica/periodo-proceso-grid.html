@@ -1,7 +1,7 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <div data-uib-pagination data-total-items="vm.peprList.count" data-items-per-page="vm.peprList.limit"
+        <div data-uib-pagination data-total-items="vm.resultList.count" data-items-per-page="vm.resultList.limit"
             data-ng-model="vm.currentPage" data-ng-change="vm.pageChanged()" class="pagination"
             data-max-size="1" data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
     </div>
@@ -21,7 +21,7 @@
 
 <div class="table-responsive">
     <span class="label label-default" data-translate="grid_count"
-        data-translate-value-count="{{vm.peprList.count | number:0}}"></span>
+        data-translate-value-count="{{vm.resultList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover">
         <thead>
@@ -35,7 +35,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr data-ng-repeat="item in vm.peprList.list track by $index">
+            <tr data-ng-repeat="item in vm.resultList.list track by $index">
                 <td><a data-ng-href="#/estadistica/periodo-proceso/detail/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="item.sprt.etiqueta"></td>
