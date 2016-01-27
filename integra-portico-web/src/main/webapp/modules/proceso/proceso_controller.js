@@ -18,9 +18,9 @@ function config($routeProvider) {
     })
 
     .when("/proceso/proceso/detail/:id", {
-        url : "/proceso/proceso/detail/:id",
         templateUrl : "modules/proceso/proceso-detail.html",
         controller : "ProcesoDetailController as vm",
+        reloadOnSearch : false
     })
 
     ;

@@ -8,14 +8,14 @@ import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
-import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
+import xeredi.argo.model.estadistica.vo.ProcesoEstadisticaVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PeriodoProcesoEditAction.
  */
-public final class PeriodoProcesoEditAction extends CrudEditAction<PeriodoProcesoVO> {
+public final class PeriodoProcesoEditAction extends CrudEditAction<ProcesoEstadisticaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -505923029249050738L;
@@ -29,7 +29,7 @@ public final class PeriodoProcesoEditAction extends CrudEditAction<PeriodoProces
      */
     @Override
     public void doEdit() throws ApplicationException {
-        model = new PeriodoProcesoVO();
+        model = new ProcesoEstadisticaVO();
     }
 
     /**

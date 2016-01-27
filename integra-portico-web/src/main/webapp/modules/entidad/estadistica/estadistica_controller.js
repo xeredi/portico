@@ -97,6 +97,8 @@ function PeriodoProcesoDetailController($routeParams, pageTitleService,
 
     PeriodoProcesoService.detail(vm.search).then(function(data) {
         vm.model = data.model;
+
+        vm.tpesList = data.tpesList;
     });
 
     pageTitleService.setTitle("pepr", "page_detail");
@@ -129,10 +131,7 @@ function PeriodoProcesoEditController($route, $routeParams, pageTitleService,
     PeriodoProcesoService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
 
-        vm.tphtList = data.tphtList;
-        vm.tpelList = data.tpelList;
-        vm.entiTpprList = data.tpprList;
-        vm.entiTpsrList = data.tpsrList;
+        vm.sprtList = data.sprtList;
     });
 
     pageTitleService.setTitle("pepr", "page_" + vm.accion);

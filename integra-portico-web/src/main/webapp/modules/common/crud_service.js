@@ -312,15 +312,11 @@ function CrudService($http, $q, $location) {
         }
 
         function tabSelected(tab) {
-            $location.search({
-                tab : tab
-            }).replace();
+            $location.search('tab', tab).replace();
         }
 
         function pageMapChanged(pageMap) {
-            $location.search({
-                pageMap : JSON.stringify(pageMap)
-            }).replace();
+            $location.search('pageMap', JSON.stringify(pageMap)).replace();
         }
 
         return {

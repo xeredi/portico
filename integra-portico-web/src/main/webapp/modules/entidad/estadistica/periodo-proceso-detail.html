@@ -16,38 +16,38 @@
         <div class="row">
             <div class="col-sm-4 col-md-3 col-md-2 form-group-sm">
                 <label data-translate="sprt"></label>
-                <p class="form-control-static" data-ng-bind="vm.pepr.sprt.etiqueta"></p>
+                <p class="form-control-static" data-ng-bind="vm.model.sprt.etiqueta"></p>
             </div>
             <div class="col-sm-2 col-md-1 col-md-1 form-group-sm">
                 <label data-translate="pepr_anio"></label>
-                <p class="form-control-static number" data-ng-bind="vm.pepr.anio" class="number"></p>
+                <p class="form-control-static number" data-ng-bind="vm.model.anio" class="number"></p>
             </div>
             <div class="col-sm-2 col-md-1 col-md-1 form-group-sm">
                 <label data-translate="pepr_mes"></label>
-                <p class="form-control-static number" data-ng-bind="vm.pepr.mes"></p>
+                <p class="form-control-static number" data-ng-bind="vm.model.mes"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-md-1 form-group-sm">
                 <label data-translate="pepr_cdmsGenerado"></label>
                 <p class="form-control-static">
-                    <i class="glyphicon glyphicon-{{vm.pepr.cdmsGenerado ? 'ok' : 'remove'}}"></i>
+                    <i class="glyphicon glyphicon-{{vm.model.cdmsGenerado ? 'ok' : 'remove'}}"></i>
                 </p>
             </div>
             <div class="col-sm-2 col-md-2 form-group-sm">
                 <label data-translate="pepr_falta"></label>
                 <p class="form-control-static"
-                    data-ng-bind="vm.pepr.falta | date: ('format_datetime' | translate)"></p>
+                    data-ng-bind="vm.model.falta | date: ('format_datetime' | translate)"></p>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                 <label data-translate="pepr_arch"></label>
-                <p class="form-control-static" data-ng-bind="vm.pepr.arin.nombre"></p>
+                <p class="form-control-static" data-ng-bind="vm.model.arin.nombre"></p>
             </div>
         </div>
     </fieldset>
 
     <div class="list-group col-sm-4 col-md-3">
-        <a data-ng-href="#/estadistica/cdms/detail/{{vm.pepr.id}}" class="list-group-item"
+        <a data-ng-href="#/estadistica/cdms/detail/{{vm.model.id}}" class="list-group-item"
             data-ng-bind="'cdms' | translate | uppercase"></a> <a
-            data-ng-href="#/estadistica/estd/grid/{{enti.value}}/{{vm.pepr.id}}/{{vm.pepr.sprt.id}}"
+            data-ng-href="#/estadistica/estd/grid/{{enti.value}}/{{vm.model.id}}/{{vm.model.sprt.id}}"
             class="list-group-item" data-ng-repeat="enti in vm.tpesList track by $index"
             data-ng-bind="'enti_' + enti.value | translate | uppercase"></a>
     </div>

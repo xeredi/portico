@@ -36,7 +36,8 @@
         </thead>
         <tbody>
             <tr data-ng-repeat="item in vm.peprList.list track by $index">
-                <td><a ui-sref="periodo-proceso-detail(item)"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a data-ng-href="#/estadistica/periodo-proceso/detail/{{item.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="item.sprt.etiqueta"></td>
                 <td data-ng-bind="item.anio" class="number"></td>
                 <td data-ng-bind="item.mes" class="number"></td>
