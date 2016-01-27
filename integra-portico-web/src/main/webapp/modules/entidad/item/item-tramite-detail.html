@@ -42,7 +42,7 @@
                     <td><span data-ng-bind="vm.model.oitemFfin | date: ('format_datetime' | translate)"></span></td>
                     <td><span data-ng-bind="vm.model.ditemFfin | date: ('format_datetime' | translate)"></span></td>
                 </tr>
-                <tr data-ng-repeat="tpdtId in vm.trmt.tpdtList">
+                <tr data-ng-repeat="tpdtId in vm.trmt.tpdtList track by $index">
                     <th data-ng-bind="'entd_' + vm.trmt.trtdMap[tpdtId].entd.id | translate">EO
                         {{tpdtId}}</th>
                     <td data-ng-switch data-on="vm.trmt.trtdMap[tpdtId].entd.tpdt.tipoElemento"><i

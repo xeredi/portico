@@ -8,7 +8,7 @@
             <th>{{'prto' | translate}}</th>
             <td>{{parameter.item.prto.etiqueta}}</td>
         </tr>
-        <tr data-ng-repeat="tpdtId in parameter.enti.entdList"
+        <tr data-ng-repeat="tpdtId in parameter.enti.entdList track by $index"
             data-ng-if="parameter.enti.entdMap[tpdtId].gridable" data-ng-switch
             data-on="parameter.enti.entdMap[tpdtId].tpdt.tipoElemento">
             <th>{{'entd_' + parameter.enti.entdMap[tpdtId].id | translate}}</th>

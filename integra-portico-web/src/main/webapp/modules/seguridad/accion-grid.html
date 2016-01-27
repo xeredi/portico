@@ -1,42 +1,45 @@
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <div data-uib-pagination data-total-items="vm.resultList.count"
-            data-items-per-page="vm.resultList.limit" data-ng-model="vm.page"
-            data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
-            data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
+<div data-ng-if="vm.resultList">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <div data-uib-pagination data-total-items="vm.resultList.count"
+                data-items-per-page="vm.resultList.limit" data-ng-model="vm.page"
+                data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
+                data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
+        </div>
+
+        <div class="btn-group">
+            <button data-ng-if="mc.hasAccnPath('accn-list')" class="btn btn-default"
+                data-ng-click="vm.filter('lg')"
+                data-template-url="modules/seguridad/fragment/accion-filter-content.html"
+                data-bs-modal="modal">
+                <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
+            </button>
+            <a data-ng-if="mc.hasAccnPath('accn-create')" class="btn btn-default"
+                data-ng-href="#/seguridad/accion/edit/create"><i class="glyphicon glyphicon-file"></i> <span
+                data-translate="btn_crear"></span> </a>
+        </div>
     </div>
 
-    <div class="btn-group">
-        <button data-ng-if="mc.hasAccnPath('accn-list')" class="btn btn-default"
-            data-ng-click="vm.filter('lg')"
-            data-template-url="modules/seguridad/fragment/accion-filter-content.html" data-bs-modal="modal">
-            <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
-        </button>
-        <a data-ng-if="mc.hasAccnPath('accn-create')" class="btn btn-default"
-            data-ng-href="#/seguridad/accion/edit/create"><i class="glyphicon glyphicon-file"></i> <span
-            data-translate="btn_crear"></span> </a>
+    <div data-ng-if="mc.hasAccnPath('accn-list')" class="table-responsive">
+        <span class="label label-default" data-translate="grid_count"
+            data-translate-value-count="{{vm.resultList.count | number:0}}"></span>
+
+        <table class="table-bordered table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th nowrap="nowrap" />
+                    <th nowrap="nowrap" data-translate="accn_prefix"></th>
+                    <th nowrap="nowrap" data-translate="accn_codigo"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="accn in vm.resultList.list track by $index">
+                    <td><a data-ng-href="#/seguridad/accion/detail/{{accn.id}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
+                    <td nowrap="nowrap" data-ng-bind="accn.prefix | translate"></td>
+                    <td nowrap="nowrap" data-ng-bind="accn.codigo"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</div>
-
-<div data-ng-if="mc.hasAccnPath('accn-list')" class="table-responsive">
-    <span class="label label-default" data-translate="grid_count"
-        data-translate-value-count="{{vm.resultList.count | number:0}}"></span>
-
-    <table class="table-bordered table-condensed table-hover">
-        <thead>
-            <tr>
-                <th nowrap="nowrap" />
-                <th nowrap="nowrap" data-translate="accn_prefix"></th>
-                <th nowrap="nowrap" data-translate="accn_codigo"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr data-ng-repeat="accn in vm.resultList.list track by $index">
-                <td><a data-ng-href="#/seguridad/accion/detail/{{accn.id}}"><i
-                        class="glyphicon glyphicon-search"></i></a></td>
-                <td nowrap="nowrap" data-ng-bind="accn.prefix | translate"></td>
-                <td nowrap="nowrap" data-ng-bind="accn.codigo"></td>
-            </tr>
-        </tbody>
-    </table>
 </div>

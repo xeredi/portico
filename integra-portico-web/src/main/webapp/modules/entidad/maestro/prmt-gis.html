@@ -1,5 +1,5 @@
 <ui-gmap-google-map center="vm.map.center" bounds="vm.map.bounds" options="vm.map.options" zoom="vm.map.zoom">
-<ui-gmap-marker ng-repeat="marker in vm.map.markerList" coords="marker.coords" options="marker.options"
+<ui-gmap-marker ng-repeat="marker in vm.map.markerList track by $index" coords="marker.coords" options="marker.options"
     events="marker.events" idkey="marker.id" click="vm.onClick(marker)"> <ui-gmap-window
     options="marker.windowOptions" closeClick="vm.closeClick(marker)"
     templateUrl="'modules/entidad/maestro/tpl/prmt-gis-tpl.html'"
