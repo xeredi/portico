@@ -189,7 +189,7 @@ function config($routeProvider) {
 }
 
 // -------------------- Inicio Facturacion ------------------
-function FacturacionIndexController($route, $routeParams, pageTitleService,
+function FacturacionIndexController($routeParams, pageTitleService,
         FacturacionService) {
     var vm = this;
 
@@ -200,8 +200,7 @@ function FacturacionIndexController($route, $routeParams, pageTitleService,
 }
 
 // -------------------- Parametrizacion ------------------
-function CargoGridController($route, $routeParams, pageTitleService,
-        CargoService) {
+function CargoGridController($routeParams, pageTitleService, CargoService) {
     var vm = this;
 
     vm.filter = filter;
@@ -267,8 +266,7 @@ function CargoDetailController($routeParams, pageTitleService, CargoService) {
     pageTitleService.setTitle("crgo", "page_detail");
 }
 
-function CargoEditController($route, $routeParams, pageTitleService,
-        CargoService) {
+function CargoEditController($routeParams, pageTitleService, CargoService) {
     var vm = this;
 
     vm.save = save;
@@ -277,10 +275,9 @@ function CargoEditController($route, $routeParams, pageTitleService,
     function save() {
         CargoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
-                    data.model.fref = data.model.version.fini;
-
-                    CargoService.redirectAfterSave(vm.accion, data.model,
-                            "cargo-detail");
+                    CargoService.redirectAfterSave(vm.accion,
+                            '/facturacion/cargo/detail', [ data.model.id,
+                                    data.model.version.fini ]);
                 });
     }
 
@@ -383,8 +380,7 @@ function ReglaDetailController($routeParams, pageTitleService, ReglaService) {
     pageTitleService.setTitle("rgla", "page_detail");
 }
 
-function ReglaEditController($route, $routeParams, pageTitleService,
-        ReglaService) {
+function ReglaEditController($routeParams, pageTitleService, ReglaService) {
     var vm = this;
 
     vm.save = save;
@@ -393,10 +389,9 @@ function ReglaEditController($route, $routeParams, pageTitleService,
     function save() {
         ReglaService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
-                    data.model.fref = data.model.version.fini;
-
-                    ReglaService.redirectAfterSave(vm.accion, data.model,
-                            "regla-detail");
+                    ReglaService.redirectAfterSave(vm.accion,
+                            '/facturacion/regla/detail', [ data.model.id,
+                                    data.model.version.fini ]);
                 });
     }
 
@@ -483,8 +478,8 @@ function ReglaIncompatibleDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("rgin", "page_detail");
 }
 
-function ReglaIncompatibleEditController($route, $routeParams,
-        pageTitleService, ReglaIncompatibleService) {
+function ReglaIncompatibleEditController($routeParams, pageTitleService,
+        ReglaIncompatibleService) {
     var vm = this;
 
     vm.save = save;
@@ -494,7 +489,8 @@ function ReglaIncompatibleEditController($route, $routeParams,
         ReglaIncompatibleService.save(vm.accion, vm.model).then(
                 function(data) {
                     ReglaIncompatibleService.redirectAfterSave(vm.accion,
-                            data.model, "regla-incompatible-detail");
+                            '/facturacion/regla-incompatible/detail', [
+                                    data.model.id, data.model.version.fini ]);
                 });
     }
 
@@ -518,8 +514,7 @@ function ReglaIncompatibleEditController($route, $routeParams,
     pageTitleService.setTitle("rgin", "page_" + vm.accion);
 }
 
-function AspectoGridController($route, $routeParams, pageTitleService,
-        AspectoService) {
+function AspectoGridController($routeParams, pageTitleService, AspectoService) {
     var vm = this;
 
     vm.filter = filter;
@@ -585,8 +580,7 @@ function AspectoDetailController($routeParams, pageTitleService, AspectoService)
     pageTitleService.setTitle("aspc", "page_detail");
 }
 
-function AspectoEditController($route, $routeParams, pageTitleService,
-        AspectoService) {
+function AspectoEditController($routeParams, pageTitleService, AspectoService) {
     var vm = this;
 
     vm.save = save;
@@ -595,8 +589,9 @@ function AspectoEditController($route, $routeParams, pageTitleService,
     function save() {
         AspectoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
-                    AspectoService.redirectAfterSave(vm.accion, data.model,
-                            "aspecto-detail");
+                    AspectoService.redirectAfterSave(vm.accion,
+                            '/facturacion/aspecto/detail', [ data.model.id,
+                                    data.model.version.fini ]);
                 });
     }
 
@@ -664,7 +659,7 @@ function AspectoCargoDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("ascr", "page_detail");
 }
 
-function AspectoCargoEditController($route, $routeParams, pageTitleService,
+function AspectoCargoEditController($routeParams, pageTitleService,
         AspectoCargoService) {
     var vm = this;
 
@@ -675,7 +670,8 @@ function AspectoCargoEditController($route, $routeParams, pageTitleService,
         AspectoCargoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
                     AspectoCargoService.redirectAfterSave(vm.accion,
-                            data.model, "aspecto-cargo-detail");
+                            '/facturacion/aspecto-cargo/detail', [
+                                    data.model.id, data.model.version.fini ]);
                 });
     }
 
@@ -699,7 +695,7 @@ function AspectoCargoEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("ascr", "page_" + vm.accion);
 }
 
-function FacturaSerieGridController($route, $routeParams, pageTitleService,
+function FacturaSerieGridController($routeParams, pageTitleService,
         FacturaSerieService) {
     var vm = this;
 
@@ -764,7 +760,7 @@ function FacturaSerieDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("fcsr", "page_detail");
 }
 
-function FacturaSerieEditController($route, $routeParams, pageTitleService,
+function FacturaSerieEditController($routeParams, pageTitleService,
         FacturaSerieService) {
     var vm = this;
 
@@ -775,7 +771,8 @@ function FacturaSerieEditController($route, $routeParams, pageTitleService,
         FacturaSerieService.save(vm.accion, vm.model).then(
                 function(data) {
                     FacturaSerieService.redirectAfterSave(vm.accion,
-                            data.model, "factura-serie-detail");
+                            '/facturacion/factura-serie/detail',
+                            [ data.model.id ]);
                 });
     }
 
@@ -797,7 +794,7 @@ function FacturaSerieEditController($route, $routeParams, pageTitleService,
 }
 
 // -------------------- Gestion ------------------
-function ValoracionGridController($route, $routeParams, pageTitleService,
+function ValoracionGridController($routeParams, pageTitleService,
         ValoracionService) {
     var vm = this;
 
@@ -912,7 +909,7 @@ function ValoracionDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("vlrc", "page_detail");
 }
 
-function ValoracionEditController($route, $routeParams, pageTitleService,
+function ValoracionEditController($routeParams, pageTitleService,
         ValoracionService) {
     var vm = this;
 
@@ -922,8 +919,10 @@ function ValoracionEditController($route, $routeParams, pageTitleService,
     function save() {
         ValoracionService.save(vm.accion, vm.model).then(
                 function(data) {
-                    ValoracionService.redirectAfterSave(vm.accion, data.model,
-                            "valoracion-detail");
+                    ValoracionService
+                            .redirectAfterSave(vm.accion,
+                                    '/facturacion/valoracion/detail',
+                                    [ data.model.id ]);
                 });
     }
 
@@ -1042,7 +1041,7 @@ function ValoracionDetalleDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("vlrd", "page_detail");
 }
 
-function FacturadorEditController($route, $routeParams, pageTitleService,
+function FacturadorEditController($routeParams, pageTitleService,
         FacturadorService) {
     var vm = this;
 
@@ -1050,11 +1049,11 @@ function FacturadorEditController($route, $routeParams, pageTitleService,
     vm.cancel = cancel;
 
     function save() {
-        FacturadorService.save(vm.accion, vm.model).then(function(data) {
-            FacturadorService.redirectAfterSave(vm.accion, {
-                id : data.model.prbtId
-            }, "proceso-detail");
-        });
+        FacturadorService.save(vm.accion, vm.model).then(
+                function(data) {
+                    FacturadorService.redirectAfterSave(vm.accion,
+                            '/proceso/proceso/grid');
+                });
     }
 
     function cancel() {

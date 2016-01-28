@@ -4,7 +4,7 @@ import java.util.Map;
 
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
-import xeredi.argo.model.comun.bo.MessageBO;
+import xeredi.argo.model.comun.bo.MessageI18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.MessageI18nVO;
@@ -28,7 +28,7 @@ public final class MessageI18nDetailAction extends CrudDetailAction<MessageI18nK
      */
     @Override
     public void doDetail() throws ApplicationException {
-        final MessageBO bo = new MessageBO();
+        final MessageI18nBO bo = new MessageI18nBO();
 
         i18nMap = bo.selectKeyMap(model);
     }

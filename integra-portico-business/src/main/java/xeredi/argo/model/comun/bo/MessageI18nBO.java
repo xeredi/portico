@@ -26,7 +26,7 @@ import xeredi.util.mybatis.SqlMapperLocator;
 /**
  * The Class MessageBO.
  */
-public final class MessageBO {
+public final class MessageI18nBO {
 
     /**
      * Select keys.

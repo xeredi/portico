@@ -44,7 +44,7 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
         final List<Object[]> contentList = new ArrayList<>();
 
         final String defaultLanguage = ConfigurationProxy.getString(ConfigurationKey.language_default);
-        final MessageBO mesgBO = new MessageBO();
+        final MessageI18nBO mesgBO = new MessageI18nBO();
 
         final Map<MessageI18nKey, String> map = mesgBO.selectLocaleMap(locale);
 

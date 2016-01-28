@@ -302,13 +302,24 @@ function CrudService($http, $q, $location) {
                 return $q.reject(msg);
             }
         }
+/*
+ * function redirectAfterSave(accion, item, detailStateName) { accion == 'edit' ?
+ * setTimeout(function() { window.history.back(); }, 0) :
+ * $state.go(detailStateName, item, { location : 'replace' }); }
+ */
 
-        function redirectAfterSave(accion, item, detailStateName) {
-        	accion == 'edit' ? setTimeout(function() {
-        		window.history.back();
-        	}, 0) : $state.go(detailStateName, item, {
-        		location : 'replace'
-        	});
+        function redirectAfterSave(accion, url, urlParams) {
+            if (urlParams) {
+                for (i=0; i<urlParams.length; i++) {
+                    url += '/' + urlParams[i];
+                }
+            }
+
+            //alert(url);
+
+            accion == 'edit' ? setTimeout(function() {
+                window.history.back();
+            }, 0) : $location.path(url).replace();
         }
 
         function tabSelected(tab) {

@@ -89,8 +89,7 @@ function config($routeProvider) {
     ;
 }
 
-function AccionGridController($route, $routeParams, pageTitleService,
-        AccionService) {
+function AccionGridController($routeParams, pageTitleService, AccionService) {
     var vm = this;
 
     vm.filter = filter;
@@ -155,8 +154,7 @@ function AccionDetailController($routeParams, pageTitleService, AccionService) {
     pageTitleService.setTitle("accn", "page_detail");
 }
 
-function AccionEditController($route, $routeParams, pageTitleService,
-        AccionService) {
+function AccionEditController($routeParams, pageTitleService, AccionService) {
     var vm = this;
 
     vm.save = save;
@@ -166,8 +164,8 @@ function AccionEditController($route, $routeParams, pageTitleService,
     function save() {
         AccionService.save(vm.accion, vm.model).then(
                 function(data) {
-                    AccionService.redirectAfterSave(vm.accion, data.model,
-                            "accion-detail");
+                    AccionService.redirectAfterSave(vm.accion,
+                            '/seguridad/accion/detail', [ data.model.id ]);
                 });
     }
 
@@ -195,8 +193,7 @@ function AccionEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("accn", "page_" + vm.accion);
 }
 
-function GrupoGridController($route, $routeParams, pageTitleService,
-        GrupoService) {
+function GrupoGridController($routeParams, pageTitleService, GrupoService) {
     var vm = this;
 
     vm.filter = filter;
@@ -262,8 +259,7 @@ function GrupoDetailController($routeParams, pageTitleService, GrupoService) {
     pageTitleService.setTitle("grpo", "page_detail");
 }
 
-function GrupoEditController($route, $routeParams, pageTitleService,
-        GrupoService) {
+function GrupoEditController($routeParams, pageTitleService, GrupoService) {
     var vm = this;
 
     vm.save = save;
@@ -274,8 +270,8 @@ function GrupoEditController($route, $routeParams, pageTitleService,
     function save() {
         GrupoService.save(vm.accion, vm.model).then(
                 function(data) {
-                    GrupoService.redirectAfterSave(vm.accion, data.model,
-                            "grupo-detail");
+                    GrupoService.redirectAfterSave(vm.accion,
+                            '/seguridad/grupo/detail', [ data.model.id ]);
                 });
     }
 
@@ -310,8 +306,7 @@ function GrupoEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("grpo", "page_" + vm.accion);
 }
 
-function UsuarioGridController($route, $routeParams, pageTitleService,
-        UsuarioService) {
+function UsuarioGridController($routeParams, pageTitleService, UsuarioService) {
     var vm = this;
 
     vm.filter = filter;
@@ -376,8 +371,7 @@ function UsuarioDetailController($routeParams, pageTitleService, UsuarioService)
     pageTitleService.setTitle("usro", "page_detail");
 }
 
-function UsuarioEditController($route, $routeParams, pageTitleService,
-        UsuarioService) {
+function UsuarioEditController($routeParams, pageTitleService, UsuarioService) {
     var vm = this;
 
     vm.save = save;
@@ -387,8 +381,8 @@ function UsuarioEditController($route, $routeParams, pageTitleService,
     function save() {
         UsuarioService.save(vm.accion, vm.model).then(
                 function(data) {
-                    UsuarioService.redirectAfterSave(vm.accion, data.model,
-                            "usuario-detail");
+                    UsuarioService.redirectAfterSave(vm.accion,
+                            '/seguridad/usuario/detail', [ data.model.id ]);
                 });
     }
 

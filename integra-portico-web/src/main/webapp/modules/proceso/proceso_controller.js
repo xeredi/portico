@@ -26,8 +26,7 @@ function config($routeProvider) {
     ;
 }
 
-function ProcesoGridController($route, $routeParams, pageTitleService,
-        ProcesoService) {
+function ProcesoGridController($routeParams, pageTitleService, ProcesoService) {
     var vm = this;
 
     vm.filter = filter;

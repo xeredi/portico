@@ -115,7 +115,7 @@ function AdministracionIndexController($routeParams, pageTitleService,
     pageTitleService.setTitle("sec_administracion", "page_home");
 }
 
-function SuperpuertoGridController($route, $routeParams, pageTitleService,
+function SuperpuertoGridController($routeParams, pageTitleService,
         SuperpuertoService) {
     var vm = this;
 
@@ -162,7 +162,7 @@ function SuperpuertoDetailController($routeParams, pageTitleService,
     vm.remove = remove;
 
     function remove() {
-        SuperpuertoService.remove(vm.sprt).then(function(data) {
+        SuperpuertoService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
@@ -179,7 +179,7 @@ function SuperpuertoDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("sprt", "page_detail");
 }
 
-function SuperpuertoEditController($route, $routeParams, pageTitleService,
+function SuperpuertoEditController($routeParams, pageTitleService,
         SuperpuertoService) {
     var vm = this;
 
@@ -189,8 +189,9 @@ function SuperpuertoEditController($route, $routeParams, pageTitleService,
     function save() {
         SuperpuertoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
-                    SuperpuertoService.redirectAfterSave(vm.accion, data.model,
-                            "superpuerto-detail");
+                    SuperpuertoService.redirectAfterSave(vm.accion,
+                            '/administracion/puerto/superpuerto/detail',
+                            [ data.model.id ]);
                 });
     }
 
@@ -213,8 +214,7 @@ function SuperpuertoEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("sprt", "page_" + vm.accion);
 }
 
-function PuertoGridController($route, $routeParams, pageTitleService,
-        PuertoService) {
+function PuertoGridController($routeParams, pageTitleService, PuertoService) {
     var vm = this;
 
     vm.filter = filter;
@@ -260,7 +260,7 @@ function PuertoDetailController($routeParams, pageTitleService, PuertoService) {
     vm.remove = remove;
 
     function remove() {
-        PuertoService.remove(vm.prto).then(function(data) {
+        PuertoService.remove(vm.model).then(function(data) {
             window.history.back();
         });
     }
@@ -277,8 +277,7 @@ function PuertoDetailController($routeParams, pageTitleService, PuertoService) {
     pageTitleService.setTitle("prto", "page_detail");
 }
 
-function PuertoEditController($route, $routeParams, pageTitleService,
-        PuertoService) {
+function PuertoEditController($routeParams, pageTitleService, PuertoService) {
     var vm = this;
 
     vm.save = save;
@@ -287,8 +286,9 @@ function PuertoEditController($route, $routeParams, pageTitleService,
     function save() {
         PuertoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
-                    PuertoService.redirectAfterSave(vm.accion, data.model,
-                            "puerto-detail");
+                    PuertoService.redirectAfterSave(vm.accion,
+                            '/administracion/puerto/puerto/detail',
+                            [ data.model.id ]);
                 });
     }
 
@@ -312,7 +312,7 @@ function PuertoEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("prto", "page_" + vm.accion);
 }
 
-function ConfigurationGridController($route, $routeParams, pageTitleService,
+function ConfigurationGridController($routeParams, pageTitleService,
         ConfigurationService) {
     var vm = this;
 
@@ -349,7 +349,7 @@ function ConfigurationDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("conf", "page_detail");
 }
 
-function ConfigurationEditController($route, $routeParams, pageTitleService,
+function ConfigurationEditController($routeParams, pageTitleService,
         ConfigurationService) {
     var vm = this;
 
@@ -357,10 +357,11 @@ function ConfigurationEditController($route, $routeParams, pageTitleService,
     vm.cancel = cancel;
 
     function save() {
-        ConfigurationService.save(vm.accion, vm.conf).then(
+        ConfigurationService.save(vm.accion, vm.model).then(
                 function(data) {
                     ConfigurationService.redirectAfterSave(vm.accion,
-                            data.model, "configuration-detail");
+                            '/administracion/configuration/detail',
+                            [ data.model.key ]);
                 });
     }
 
@@ -374,15 +375,14 @@ function ConfigurationEditController($route, $routeParams, pageTitleService,
         key : $routeParams.key
     };
 
-    ConfigurationService.edit($routeParams.accion, vm.search).then(
-            function(data) {
-                vm.model = data.model;
-            });
+    ConfigurationService.edit(vm.accion, vm.search).then(function(data) {
+        vm.model = data.model;
+    });
 
     pageTitleService.setTitle("conf", "page_" + vm.accion);
 }
 
-function MessageI18nGridController($route, $routeParams, pageTitleService,
+function MessageI18nGridController($routeParams, pageTitleService,
         MessageI18nService) {
     var vm = this;
 
@@ -420,7 +420,7 @@ function MessageI18nDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("m18n", "page_detail");
 }
 
-function MessageI18nEditController($route, $routeParams, pageTitleService,
+function MessageI18nEditController($routeParams, pageTitleService,
         MessageI18nService) {
     var vm = this;
 
@@ -445,13 +445,12 @@ function MessageI18nEditController($route, $routeParams, pageTitleService,
         key : $routeParams.key
     };
 
-    MessageI18nService.edit($routeParams.accion, vm.search).then(
-            function(data) {
-                vm.key = data.model;
-                vm.i18nMap = data.i18nMap;
+    MessageI18nService.edit(vm.accion, vm.search).then(function(data) {
+        vm.key = data.model;
+        vm.i18nMap = data.i18nMap;
 
-                vm.availableLanguages = data.availableLanguages;
-            });
+        vm.availableLanguages = data.availableLanguages;
+    });
 
     pageTitleService.setTitle("m18n", "page_" + vm.accion);
 }

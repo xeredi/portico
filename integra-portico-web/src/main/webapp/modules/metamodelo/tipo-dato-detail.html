@@ -69,8 +69,7 @@
             </thead>
             <tbody>
                 <tr data-ng-repeat="cdrf in vm.model.cdrfList track by $index">
-                    <td><a
-                        data-ng-href="#/metamodelo/codigo-referencia/detail/{{cdrf.tpdtId}}/{{cdrf.id}}"><i
+                    <td><a data-ng-href="#/metamodelo/codigo-referencia/detail/{{cdrf.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="cdrf.valor"></td>
                     <td data-ng-bind="cdrf.texto"></td>

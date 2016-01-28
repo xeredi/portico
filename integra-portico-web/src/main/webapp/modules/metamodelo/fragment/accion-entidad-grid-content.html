@@ -18,7 +18,7 @@
         </thead>
         <tbody>
             <tr data-ng-repeat="acen in vm.acenList track by $index">
-                <td><a data-ng-href="#/metamodelo/accion-entidad/detail/{{acen.entiId}}/{{acen.id}}"><i
+                <td><a data-ng-href="#/metamodelo/accion-entidad/detail/{{acen.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="acen.accn.codigo"></td>
                 <td><i class="glyphicon glyphicon-{{(acen.accn.core ? 'ok' : 'remove')}}"></i></td>

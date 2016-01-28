@@ -41,7 +41,7 @@ public class I18nJs {
         final String webappInstallPath = ConfigurationProxy.getString(ConfigurationKey.webapp_install_path);
 
         final I18nBO i18nBO = new I18nBO();
-        final MessageBO mesgBO = new MessageBO();
+        final MessageI18nBO mesgBO = new MessageI18nBO();
 
         final Set<I18nPrefix> i18nPrefixSet = Sets.newHashSet(I18nPrefix.enti, I18nPrefix.engd, I18nPrefix.entd,
                 I18nPrefix.trmt, I18nPrefix.enac, I18nPrefix.enag, I18nPrefix.tpdt, I18nPrefix.cdrf);

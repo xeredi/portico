@@ -73,7 +73,7 @@ function MaestroIndexController($translate, pageTitleService, MaestroService) {
     pageTitleService.setTitle("prmtList", "page_home");
 }
 
-function ParametroGridController($route, $routeParams, pageTitleService,
+function ParametroGridController($routeParams, pageTitleService,
         ParametroService) {
     var vm = this;
 
@@ -201,7 +201,7 @@ function ParametroDetailController($routeParams, pageTitleService,
     pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
-function ParametroEditController($route, $routeParams, pageTitleService,
+function ParametroEditController($routeParams, pageTitleService,
         ParametroService) {
     var vm = this;
 
@@ -211,8 +211,9 @@ function ParametroEditController($route, $routeParams, pageTitleService,
     function save() {
         ParametroService.saveI18n(vm.accion, vm.item, vm.i18nMap).then(
                 function(data) {
-                    ParametroService.redirectAfterSave(vm.accion, data.model,
-                            "parametro-detail");
+                    ParametroService.redirectAfterSave(vm.accion,
+                            '/maestro/parametro/detail', [ data.model.entiId,
+                                    data.model.id, data.model.version.fini ]);
                 });
     }
 
@@ -296,7 +297,7 @@ function SubparametroDetailController($routeParams, pageTitleService,
     pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
-function SubparametroEditController($route, $routeParams, pageTitleService,
+function SubparametroEditController($routeParams, pageTitleService,
         SubparametroService) {
     var vm = this;
 
@@ -307,7 +308,9 @@ function SubparametroEditController($route, $routeParams, pageTitleService,
         SubparametroService.save(vm.accion, vm.item).then(
                 function(data) {
                     SubparametroService.redirectAfterSave(vm.accion,
-                            data.model, "subparametro-detail");
+                            '/maestro/subparametro/detail', [
+                                    data.model.entiId, data.model.id,
+                                    data.model.version.fini ]);
                 });
     }
 

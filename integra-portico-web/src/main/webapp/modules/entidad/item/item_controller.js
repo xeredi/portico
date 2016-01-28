@@ -55,7 +55,7 @@ function ItemTramiteDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("trmt", "page_detail");
 }
 
-function ItemTramiteEditController($route, $routeParams, pageTitleService,
+function ItemTramiteEditController($routeParams, pageTitleService,
         ItemTramiteService) {
     var vm = this;
 
@@ -65,8 +65,9 @@ function ItemTramiteEditController($route, $routeParams, pageTitleService,
     function save() {
         ItemTramiteService.save(vm.accion, vm.model).then(
                 function(data) {
-                    ItemTramiteService.redirectAfterSave(vm.accion, data.model,
-                            "item-tramite-detail");
+                    ItemTramiteService.redirectAfterSave(vm.accion,
+                            '/item/item-tramite/detail', [
+                                    data.model.trmt.entiId, data.model.id ]);
                 });
     }
 

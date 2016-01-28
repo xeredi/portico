@@ -105,7 +105,7 @@ function config($routeProvider) {
         controller : "TipoDatoEditController as vm",
     })
 
-    .when("/metamodelo/codigo-referencia/detail/:tpdtId/:id", {
+    .when("/metamodelo/codigo-referencia/detail/:id", {
         templateUrl : "modules/metamodelo/codigo-referencia-detail.html",
         controller : "CodigoReferenciaDetailController as vm",
     })
@@ -198,7 +198,7 @@ function config($routeProvider) {
         controller : "CampoAgregacionEditController as vm",
     })
 
-    .when("/metamodelo/entidad-grupo-dato/detail/:entiId/:id", {
+    .when("/metamodelo/entidad-grupo-dato/detail/:id", {
         templateUrl : "modules/metamodelo/entidad-grupo-dato-detail.html",
         controller : "EntidadGrupoDatoDetailController as vm",
     })
@@ -208,7 +208,7 @@ function config($routeProvider) {
         controller : "EntidadGrupoDatoEditController as vm",
     })
 
-    .when("/metamodelo/entidad-tipo-dato/detail/:entiId/:id", {
+    .when("/metamodelo/entidad-tipo-dato/detail/:id", {
         templateUrl : "modules/metamodelo/entidad-tipo-dato-detail.html",
         controller : "EntidadTipoDatoDetailController as vm",
     })
@@ -218,7 +218,7 @@ function config($routeProvider) {
         controller : "EntidadTipoDatoEditController as vm",
     })
 
-    .when("/metamodelo/tramite/detail/:entiId/:id", {
+    .when("/metamodelo/tramite/detail/:id", {
         templateUrl : "modules/metamodelo/tramite-detail.html",
         controller : "TramiteDetailController as vm",
     })
@@ -238,7 +238,7 @@ function config($routeProvider) {
         controller : "TramiteTipoDatoEditController as vm",
     })
 
-    .when("/metamodelo/accion-entidad/detail/:entiId/:id", {
+    .when("/metamodelo/accion-entidad/detail/:id", {
         templateUrl : "modules/metamodelo/accion-entidad-detail.html",
         controller : "AccionEntidadDetailController as vm",
     })
@@ -248,7 +248,7 @@ function config($routeProvider) {
         controller : "AccionEntidadEditController as vm",
     })
 
-    .when("/metamodelo/entidad-accion/detail/:entiId/:id", {
+    .when("/metamodelo/entidad-accion/detail/:id", {
         templateUrl : "modules/metamodelo/entidad-accion-detail.html",
         controller : "EntidadAccionDetailController as vm",
     })
@@ -277,8 +277,7 @@ function config($routeProvider) {
     ;
 }
 
-function TipoDatoGridController($route, $routeParams, pageTitleService,
-        TipoDatoService) {
+function TipoDatoGridController($routeParams, pageTitleService, TipoDatoService) {
     var vm = this;
 
     vm.filter = filter;
@@ -343,8 +342,7 @@ function TipoDatoDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("tpdt", "page_detail");
 }
 
-function TipoDatoEditController($route, $routeParams, pageTitleService,
-        TipoDatoService) {
+function TipoDatoEditController($routeParams, pageTitleService, TipoDatoService) {
     var vm = this;
 
     vm.save = save;
@@ -353,8 +351,8 @@ function TipoDatoEditController($route, $routeParams, pageTitleService,
     function save() {
         TipoDatoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
-                    TipoDatoService.redirectAfterSave(vm.accion, data.model,
-                            "tipo-dato-detail");
+                    TipoDatoService.redirectAfterSave(vm.accion,
+                            '/metamodelo/tipo-dato/detail', [ data.model.id ]);
                 });
     }
 
@@ -404,7 +402,7 @@ function CodigoReferenciaDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("cdrf", "page_detail");
 }
 
-function CodigoReferenciaEditController($route, $routeParams, pageTitleService,
+function CodigoReferenciaEditController($routeParams, pageTitleService,
         CodigoReferenciaService) {
     var vm = this;
 
@@ -415,7 +413,8 @@ function CodigoReferenciaEditController($route, $routeParams, pageTitleService,
         CodigoReferenciaService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
                     CodigoReferenciaService.redirectAfterSave(vm.accion,
-                            data.model, "codigo-referencia-detail");
+                            '/metamodelo/codigo-referencia/detail',
+                            [ data.model.id ]);
                 });
     }
 
@@ -437,7 +436,7 @@ function CodigoReferenciaEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("cdrf", "page_" + vm.accion);
 }
 
-function TipoParametroGridController($route, $routeParams, pageTitleService,
+function TipoParametroGridController($routeParams, pageTitleService,
         TipoParametroService) {
     var vm = this;
 
@@ -518,7 +517,7 @@ function TipoParametroDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("tppr", "page_detail");
 }
 
-function TipoParametroEditController($route, $routeParams, pageTitleService,
+function TipoParametroEditController($routeParams, pageTitleService,
         TipoParametroService) {
     var vm = this;
 
@@ -529,7 +528,8 @@ function TipoParametroEditController($route, $routeParams, pageTitleService,
         TipoParametroService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
                     TipoParametroService.redirectAfterSave(vm.accion,
-                            data.model, "tipo-parametro-detail");
+                            '/metamodelo/tipo-parametro/detail',
+                            [ data.model.id ]);
                 });
     }
 
@@ -591,7 +591,7 @@ function TipoSubparametroDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("tpsp", "page_detail");
 }
 
-function TipoSubparametroEditController($route, $routeParams, pageTitleService,
+function TipoSubparametroEditController($routeParams, pageTitleService,
         TipoSubparametroService) {
     var vm = this;
 
@@ -602,7 +602,8 @@ function TipoSubparametroEditController($route, $routeParams, pageTitleService,
         TipoSubparametroService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
                     TipoSubparametroService.redirectAfterSave(vm.accion,
-                            data.model, "tipo-subparametro-detail");
+                            '/metamodelo/tipo-subparametro/detail',
+                            [ data.model.id ]);
                 });
     }
 
@@ -626,7 +627,7 @@ function TipoSubparametroEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("tpsp", "page_" + vm.accion);
 }
 
-function TipoServicioGridController($route, $routeParams, pageTitleService,
+function TipoServicioGridController($routeParams, pageTitleService,
         TipoServicioService) {
     var vm = this;
 
@@ -708,7 +709,7 @@ function TipoServicioDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("tpsr", "page_detail");
 }
 
-function TipoServicioEditController($route, $routeParams, pageTitleService,
+function TipoServicioEditController($routeParams, pageTitleService,
         TipoServicioService) {
     var vm = this;
 
@@ -719,7 +720,8 @@ function TipoServicioEditController($route, $routeParams, pageTitleService,
         TipoServicioService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
                     TipoServicioService.redirectAfterSave(vm.accion,
-                            data.model, "tipo-servicio-detail");
+                            '/metamodelo/tipo-servicio/detail',
+                            [ data.model.id ]);
                 });
     }
 
@@ -784,7 +786,7 @@ function TipoSubservicioDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("tpss", "page_detail");
 }
 
-function TipoSubservicioEditController($route, $routeParams, pageTitleService,
+function TipoSubservicioEditController($routeParams, pageTitleService,
         TipoSubservicioService) {
     var vm = this;
 
@@ -795,7 +797,8 @@ function TipoSubservicioEditController($route, $routeParams, pageTitleService,
         TipoSubservicioService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
                     TipoSubservicioService.redirectAfterSave(vm.accion,
-                            data.model, "tipo-subservicio-detail");
+                            '/metamodelo/tipo-subservicio/detail',
+                            [ data.model.id ]);
                 });
     }
 
@@ -819,7 +822,7 @@ function TipoSubservicioEditController($route, $routeParams, pageTitleService,
     pageTitleService.setTitle("tpss", "page_" + vm.accion);
 }
 
-function TipoEstadisticaGridController($route, $routeParams, pageTitleService,
+function TipoEstadisticaGridController($routeParams, pageTitleService,
         TipoEstadisticaService) {
     var vm = this;
 
@@ -900,7 +903,7 @@ function TipoEstadisticaDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("tpes", "page_detail");
 }
 
-function TipoEstadisticaEditController($route, $routeParams, pageTitleService,
+function TipoEstadisticaEditController($routeParams, pageTitleService,
         TipoEstadisticaService) {
     var vm = this;
 
@@ -911,7 +914,8 @@ function TipoEstadisticaEditController($route, $routeParams, pageTitleService,
         TipoEstadisticaService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
                     TipoEstadisticaService.redirectAfterSave(vm.accion,
-                            data.model, "tipo-estadistica-detail");
+                            '/metamodelo/tipo-estadistica/detail',
+                            [ data.model.id ]);
                 });
     }
 
@@ -958,7 +962,7 @@ function CampoAgregacionDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("cmag", "page_detail");
 }
 
-function CampoAgregacionEditController($route, $routeParams, pageTitleService,
+function CampoAgregacionEditController($routeParams, pageTitleService,
         CampoAgregacionService) {
     var vm = this;
 
@@ -969,7 +973,8 @@ function CampoAgregacionEditController($route, $routeParams, pageTitleService,
         CampoAgregacionService.save(vm.accion, vm.model).then(
                 function(data) {
                     CampoAgregacionService.redirectAfterSave(vm.accion,
-                            data.model, "campo-agregacion-detail");
+                            '/metamodelo/campo-agregacion/detail', [
+                                    data.model.tpesId, data.model.entd.id ]);
                 });
     }
 
@@ -1016,7 +1021,7 @@ function EntidadTipoDatoDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("entd", "page_detail");
 }
 
-function EntidadTipoDatoEditController($route, $routeParams, pageTitleService,
+function EntidadTipoDatoEditController($routeParams, pageTitleService,
         EntidadTipoDatoService) {
     var vm = this;
 
@@ -1027,7 +1032,8 @@ function EntidadTipoDatoEditController($route, $routeParams, pageTitleService,
         EntidadTipoDatoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
                     EntidadTipoDatoService.redirectAfterSave(vm.accion,
-                            data.model, "entidad-tipo-dato-detail");
+                            '/metamodelo/entidad-tipo-dato/detail',
+                            [ data.model.id ]);
                 });
     }
 
@@ -1076,7 +1082,7 @@ function EntidadGrupoDatoDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("engd", "page_detail");
 }
 
-function EntidadGrupoDatoEditController($route, $routeParams, pageTitleService,
+function EntidadGrupoDatoEditController($routeParams, pageTitleService,
         EntidadGrupoDatoService) {
     var vm = this;
 
@@ -1087,7 +1093,8 @@ function EntidadGrupoDatoEditController($route, $routeParams, pageTitleService,
         EntidadGrupoDatoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
                     EntidadGrupoDatoService.redirectAfterSave(vm.accion,
-                            data.model, "entidad-grupo-dato-detail");
+                            '/metamodelo/entidad-grupo-dato/detail',
+                            [ data.model.id ]);
                 });
     }
 
@@ -1135,8 +1142,7 @@ function TramiteDetailController($routeParams, pageTitleService, TramiteService)
     pageTitleService.setTitle("trmt", "page_detail");
 }
 
-function TramiteEditController($route, $routeParams, pageTitleService,
-        TramiteService) {
+function TramiteEditController($routeParams, pageTitleService, TramiteService) {
     var vm = this;
 
     vm.save = save;
@@ -1145,8 +1151,8 @@ function TramiteEditController($route, $routeParams, pageTitleService,
     function save() {
         TramiteService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
-                    TramiteService.redirectAfterSave(vm.accion, data.model,
-                            "tramite-detail");
+                    TramiteService.redirectAfterSave(vm.accion,
+                            '/metamodelo/tramite/detail', [ data.model.id ]);
                 });
     }
 
@@ -1198,7 +1204,7 @@ function TramiteTipoDatoDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("trtd", "page_detail");
 }
 
-function TramiteTipoDatoEditController($route, $routeParams, pageTitleService,
+function TramiteTipoDatoEditController($routeParams, pageTitleService,
         TramiteTipoDatoService) {
     var vm = this;
 
@@ -1208,8 +1214,9 @@ function TramiteTipoDatoEditController($route, $routeParams, pageTitleService,
     function save() {
         TramiteTipoDatoService.save(vm.accion, vm.model).then(
                 function(data) {
-                    TramiteTipoDatoService.redirectAfterSave(vm.accion,
-                            data.model, "tramite-tipo-dato-detail");
+                    TramiteTipoDatpService.redirectAfterSave(vm.accion,
+                            '/metamodelo/tramiteTipoDato/detail',
+                            [ data.model.trmtId, data.model.entd.tpdt.id ]);
                 });
     }
 
@@ -1261,7 +1268,7 @@ function AccionEntidadDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("acen", "page_detail");
 }
 
-function AccionEntidadEditController($route, $routeParams, pageTitleService,
+function AccionEntidadEditController($routeParams, pageTitleService,
         AccionEntidadService) {
     var vm = this;
 
@@ -1273,7 +1280,8 @@ function AccionEntidadEditController($route, $routeParams, pageTitleService,
         AccionEntidadService.save(vm.accion, vm.model).then(
                 function(data) {
                     AccionEntidadService.redirectAfterSave(vm.accion,
-                            data.model, "accion-entidad-detail");
+                            '/metamodelo/accion-entidad/detail',
+                            [ data.model.id ]);
                 });
     }
 
@@ -1326,7 +1334,7 @@ function EntidadAccionDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("enac", "page_detail");
 }
 
-function EntidadAccionEditController($route, $routeParams, pageTitleService,
+function EntidadAccionEditController($routeParams, pageTitleService,
         EntidadAccionService) {
     var vm = this;
 
@@ -1337,7 +1345,8 @@ function EntidadAccionEditController($route, $routeParams, pageTitleService,
         EntidadAccionService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
                     EntidadAccionService.redirectAfterSave(vm.accion,
-                            data.model, "entidad-accion-detail");
+                            '/metamodelo/entidad-accion/detail',
+                            [ data.model.id ]);
                 });
     }
 
@@ -1383,8 +1392,8 @@ function EntidadAccionGridDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("enag", "page_detail");
 }
 
-function EntidadAccionGridEditController($route, $routeParams,
-        pageTitleService, EntidadAccionGridService) {
+function EntidadAccionGridEditController($routeParams, pageTitleService,
+        EntidadAccionGridService) {
     var vm = this;
 
     vm.save = save;
@@ -1395,8 +1404,9 @@ function EntidadAccionGridEditController($route, $routeParams,
                 .then(
                         function(data) {
                             EntidadAccionGridService.redirectAfterSave(
-                                    vm.accion, data.model,
-                                    "entidad-accion-grid-detail");
+                                    vm.accion,
+                                    '/metamodelo/entidad-accion-grid/detail',
+                                    [ data.model.id ]);
                         });
     }
 
@@ -1418,7 +1428,7 @@ function EntidadAccionGridEditController($route, $routeParams,
     pageTitleService.setTitle("enag", "page_" + vm.accion);
 }
 
-function EntidadEntidadEditController($route, $routeParams, pageTitleService,
+function EntidadEntidadEditController($routeParams, pageTitleService,
         EntidadEntidadService) {
     var vm = this;
 
@@ -1429,7 +1439,9 @@ function EntidadEntidadEditController($route, $routeParams, pageTitleService,
         EntidadEntidadService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
                     EntidadEntidadService.redirectAfterSave(vm.accion,
-                            data.model, "entidad-entidad-detail");
+                            '/metamodelo/entidad-entidad/detail', [
+                                    data.model.entiPadreId,
+                                    data.model.entiHijaId ]);
                 });
     }
 

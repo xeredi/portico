@@ -6,7 +6,7 @@ import java.util.Map;
 
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.ListAction;
-import xeredi.argo.model.comun.bo.MessageBO;
+import xeredi.argo.model.comun.bo.MessageI18nBO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
@@ -28,7 +28,7 @@ public final class MessageI18nListAction extends ListAction<MessageI18nKey> {
      */
     @Override
     public void doList() {
-        final MessageBO mesgBO = new MessageBO();
+        final MessageI18nBO mesgBO = new MessageI18nBO();
 
         resultList = mesgBO.selectKeys();
         keyMap = new HashMap<MessageI18nKey, Map<String, String>>();

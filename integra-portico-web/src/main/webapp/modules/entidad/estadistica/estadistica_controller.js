@@ -65,7 +65,7 @@ function config($routeProvider) {
     ;
 }
 
-function PeriodoProcesoGridController($route, $routeParams, pageTitleService,
+function PeriodoProcesoGridController($routeParams, pageTitleService,
         PeriodoProcesoService) {
     var vm = this;
 
@@ -137,7 +137,7 @@ function PeriodoProcesoDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("pepr", "page_detail");
 }
 
-function PeriodoProcesoEditController($route, $routeParams, pageTitleService,
+function PeriodoProcesoEditController($routeParams, pageTitleService,
         PeriodoProcesoService) {
     var vm = this;
 
@@ -148,8 +148,7 @@ function PeriodoProcesoEditController($route, $routeParams, pageTitleService,
         PeriodoProcesoService.save(vm.accion, vm.model).then(
                 function(data) {
                     PeriodoProcesoService.redirectAfterSave(vm.accion,
-                            data.model, "periodo-proceso-detail");
-                    // FIXME $location.path("/proceso/prbt/grid").replace();
+                            '/proceso/proceso/grid');
                 });
     }
 
@@ -187,7 +186,7 @@ function CuadroMesDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("cdms", "page_detail");
 }
 
-function EstadisticaGridController($route, $routeParams, pageTitleService,
+function EstadisticaGridController($routeParams, pageTitleService,
         EstadisticaService) {
     var vm = this;
 
