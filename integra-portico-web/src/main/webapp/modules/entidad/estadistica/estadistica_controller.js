@@ -9,7 +9,11 @@ angular.module("estadistica_controller", [])
 
 .controller("PeriodoProcesoEditController", PeriodoProcesoEditController)
 
+.controller("CuadroMesDetailController", CuadroMesDetailController)
+
 .controller("EstadisticaGridController", EstadisticaGridController)
+
+.controller("EstadisticaDetailController", EstadisticaDetailController)
 
 function config($routeProvider) {
     $routeProvider
@@ -30,10 +34,17 @@ function config($routeProvider) {
                     })
 
             .when(
-                    "/estadistica/periodo-proceso/edit/:accion",
+                    "/estadistica/periodo-proceso/edit/:accion/:id?",
                     {
                         templateUrl : "modules/entidad/estadistica/periodo-proceso-edit.html",
                         controller : "PeriodoProcesoEditController as vm",
+                    })
+
+            .when(
+                    "/estadistica/cuadro-mes/detail/:peprId",
+                    {
+                        templateUrl : "modules/entidad/estadistica/cuadro-mes-detail.html",
+                        controller : "CuadroMesDetailController as vm",
                     })
 
             .when(
@@ -42,6 +53,13 @@ function config($routeProvider) {
                         templateUrl : "modules/entidad/estadistica/estadistica-grid.html",
                         controller : "EstadisticaGridController as vm",
                         reloadOnSearch : false
+                    })
+
+            .when(
+                    "/estadistica/estadistica/detail/:entiId/:id",
+                    {
+                        templateUrl : "modules/entidad/estadistica/estadistica-detail.html",
+                        controller : "EstadisticaDetailController as vm"
                     })
 
     ;
@@ -94,11 +112,16 @@ function PeriodoProcesoDetailController($routeParams, pageTitleService,
     var vm = this;
 
     vm.remove = remove;
+    vm.fileExport = fileExport;
 
     function remove() {
         PeriodoProcesoService.remove(vm.model).then(function(data) {
             window.history.back();
         });
+    }
+
+    function fileExport() {
+        PeriodoProcesoService.fileExport(vm.model, vm.model.arin.nombre);
     }
 
     vm.search = {
@@ -126,6 +149,7 @@ function PeriodoProcesoEditController($route, $routeParams, pageTitleService,
                 function(data) {
                     PeriodoProcesoService.redirectAfterSave(vm.accion,
                             data.model, "periodo-proceso-detail");
+                    // FIXME $location.path("/proceso/prbt/grid").replace();
                 });
     }
 
@@ -145,6 +169,22 @@ function PeriodoProcesoEditController($route, $routeParams, pageTitleService,
     });
 
     pageTitleService.setTitle("pepr", "page_" + vm.accion);
+}
+
+function CuadroMesDetailController($routeParams, pageTitleService,
+        CuadroMesService) {
+    var vm = this;
+
+    vm.search = {
+        id : $routeParams.peprId
+    };
+
+    CuadroMesService.detail(vm.search).then(function(data) {
+        vm.pepr = data.model;
+        vm.cdmsMap = data.cdmsMap;
+    });
+
+    pageTitleService.setTitle("cdms", "page_detail");
 }
 
 function EstadisticaGridController($route, $routeParams, pageTitleService,
@@ -201,4 +241,21 @@ function EstadisticaGridController($route, $routeParams, pageTitleService,
     search($routeParams.page ? $routeParams.page : 1);
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
+}
+
+function EstadisticaDetailController($routeParams, pageTitleService,
+        EstadisticaService) {
+    var vm = this;
+
+    vm.search = {
+        id : $routeParams.id,
+        entiId : $routeParams.entiId
+    };
+
+    EstadisticaService.detail(vm.search).then(function(data) {
+        vm.item = data.model;
+        vm.enti = data.enti;
+    });
+
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }

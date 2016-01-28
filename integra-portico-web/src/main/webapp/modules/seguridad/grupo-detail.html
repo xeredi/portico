@@ -25,7 +25,7 @@
 
         <div class="row" data-ng-repeat="prefix in vm.prefixList | orderBy: prefix track by $index">
             <div class="col-sm-4 col-md-3 col-lg-2">
-                <p class="list-group-item active" data-ng-bind="prefix | translate"></p>
+                <p class="list-group-item active" data-translate="{{prefix}}"></p>
             </div>
             <div class="list-group col-sm-8 col-md-9 col-lg-10">
                 <a data-ng-href="#/seguridad/accion/detail/{{accn.id}}"
@@ -41,7 +41,7 @@
 
         <div class="row" data-ng-repeat="entiId in vm.entiList track by $index">
             <div class="col-sm-4 col-md-3 col-lg-2">
-                <p class="list-group-item active" data-ng-bind="'enti_' + entiId | translate"></p>
+                <p class="list-group-item active" data-translate="{{'enti_' + entiId}}"></p>
             </div>
             <div class="list-group col-sm-8 col-md-9 col-lg-10">
                 <a data-ng-href="#/metamodelo/accion-entidad/detail/{{acen.entiId}}/{{acen.id}}"

@@ -14,7 +14,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class PeriodoProcesoZipExportAction.
  */
-public final class PeriodoProcesoZipExportAction extends CrudFileExportAction<PeriodoProcesoVO> {
+public final class PeriodoProcesoFileExportAction extends CrudFileExportAction<PeriodoProcesoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -139099742146825401L;

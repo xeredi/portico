@@ -14,10 +14,10 @@ angular
                         "facturacion_controller", "item_service",
                         "item_controller", "maestro", "maestro_service",
                         "maestro_controller", "servicio", "servicio_service",
-                        "servicio_controller", "estadistica",
-                        "estadistica_service", "estadistica_controller",
-                        "proceso", "proceso_service", "proceso_controller",
-                        "seguridad_service", "seguridad_controller" ])
+                        "servicio_controller", "estadistica_service",
+                        "estadistica_controller", "proceso", "proceso_service",
+                        "proceso_controller", "seguridad_service",
+                        "seguridad_controller" ])
 
         .config([ "$routeProvider", function($routeProvider) {
             $routeProvider
