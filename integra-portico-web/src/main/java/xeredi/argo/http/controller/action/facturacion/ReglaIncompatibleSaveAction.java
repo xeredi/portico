@@ -7,6 +7,7 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ReglaIncompatibleBO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.util.DateUtil;
 
 import com.google.common.base.Preconditions;
 
@@ -25,6 +26,9 @@ public final class ReglaIncompatibleSaveAction extends CrudSaveAction<ReglaIncom
     @Override
     public void doSave() throws ApplicationException {
         final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
+
+        model.getVersion().setFini(DateUtil.resetTime(model.getVersion().getFini()));
+        model.getVersion().setFfin(DateUtil.resetTime(model.getVersion().getFfin()));
 
         switch (accion) {
         case create:

@@ -1,7 +1,5 @@
 package xeredi.argo.http.controller.action.maestro;
 
-import com.google.common.base.Preconditions;
-
 import xeredi.argo.http.controller.action.item.ItemSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -11,6 +9,9 @@ import xeredi.argo.model.maestro.bo.SubparametroBOFactory;
 import xeredi.argo.model.maestro.vo.SubparametroVO;
 import xeredi.argo.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
+import xeredi.argo.model.util.DateUtil;
+
+import com.google.common.base.Preconditions;
 
 /**
  * The Class SubparametroSaveAction.
@@ -55,6 +56,9 @@ public final class SubparametroSaveAction extends ItemSaveAction<SubparametroVO>
     public void doSave() throws ApplicationException {
         final SubparametroBO itemBO = SubparametroBOFactory.newInstance(model.getEntiId());
         final TipoSubparametroDetailVO enti = TipoSubparametroProxy.select(model.getEntiId());
+
+        model.getVersion().setFini(DateUtil.resetTime(model.getVersion().getFini()));
+        model.getVersion().setFfin(DateUtil.resetTime(model.getVersion().getFfin()));
 
         switch (accion) {
         case create:

@@ -13,6 +13,7 @@ import xeredi.argo.model.maestro.bo.ParametroBOFactory;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
+import xeredi.argo.model.util.DateUtil;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -68,6 +69,9 @@ public final class ParametroSaveAction extends ItemSaveAction<ParametroVO> {
     public void doSave() throws ApplicationException {
         final ParametroBO itemBO = ParametroBOFactory.newInstance(model.getEntiId());
         final TipoParametroDetailVO enti = TipoParametroProxy.select(model.getEntiId());
+
+        model.getVersion().setFini(DateUtil.resetTime(model.getVersion().getFini()));
+        model.getVersion().setFfin(DateUtil.resetTime(model.getVersion().getFfin()));
 
         switch (accion) {
         case create:

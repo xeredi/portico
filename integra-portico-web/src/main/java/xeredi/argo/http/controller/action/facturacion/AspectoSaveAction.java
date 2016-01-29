@@ -14,6 +14,7 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.util.DateUtil;
 
 import com.google.common.base.Preconditions;
 
@@ -36,6 +37,9 @@ public final class AspectoSaveAction extends CrudSaveAction<AspectoVO> {
     @Override
     public void doSave() throws ApplicationException {
         final AspectoBO aspcBO = new AspectoBO();
+
+        model.getVersion().setFini(DateUtil.resetTime(model.getVersion().getFini()));
+        model.getVersion().setFfin(DateUtil.resetTime(model.getVersion().getFfin()));
 
         switch (accion) {
         case create:

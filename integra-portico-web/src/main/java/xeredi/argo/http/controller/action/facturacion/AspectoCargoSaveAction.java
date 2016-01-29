@@ -1,7 +1,5 @@
 package xeredi.argo.http.controller.action.facturacion;
 
-import com.google.common.base.Preconditions;
-
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -9,6 +7,9 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.AspectoCargoBO;
 import xeredi.argo.model.facturacion.vo.AspectoCargoVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.util.DateUtil;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -25,6 +26,9 @@ public final class AspectoCargoSaveAction extends CrudSaveAction<AspectoCargoVO>
     @Override
     public void doSave() throws ApplicationException {
         final AspectoCargoBO ascrBO = new AspectoCargoBO();
+
+        model.getVersion().setFini(DateUtil.resetTime(model.getVersion().getFini()));
+        model.getVersion().setFfin(DateUtil.resetTime(model.getVersion().getFfin()));
 
         switch (accion) {
         case create:

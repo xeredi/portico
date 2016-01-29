@@ -15,6 +15,7 @@ import xeredi.argo.model.facturacion.bo.ReglaBO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.util.DateUtil;
 
 import com.google.common.base.Preconditions;
 
@@ -37,6 +38,9 @@ public final class ReglaSaveAction extends CrudSaveAction<ReglaVO> {
     @Override
     public void doSave() throws ApplicationException {
         final ReglaBO rglaBO = new ReglaBO();
+
+        model.getVersion().setFini(DateUtil.resetTime(model.getVersion().getFini()));
+        model.getVersion().setFfin(DateUtil.resetTime(model.getVersion().getFfin()));
 
         switch (accion) {
         case create:
