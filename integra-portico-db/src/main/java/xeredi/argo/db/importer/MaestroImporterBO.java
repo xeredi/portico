@@ -56,6 +56,7 @@ import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
+import xeredi.argo.model.util.DateUtil;
 import xeredi.util.exception.DuplicateInstanceException;
 
 // TODO: Auto-generated Javadoc
@@ -309,6 +310,9 @@ public final class MaestroImporterBO {
                 }
 
                 try {
+                    prmtVO.getVersion().setFini(DateUtil.resetTime(prmtVO.getVersion().getFini()));
+                    prmtVO.getVersion().setFfin(DateUtil.resetTime(prmtVO.getVersion().getFfin()));
+
                     prmtBO.insert(prmtVO, tpprDetail, i18nMap);
 
                     final String prmtKey = (prmtVO.getPrto() == null ? "" : prmtVO.getPrto().getCodigoCorto())
@@ -425,6 +429,9 @@ public final class MaestroImporterBO {
 
                 if (sprmVO.getPrmtId() != null && sprmVO.getPrmtAsociado().getId() != null) {
                     try {
+                        sprmVO.getVersion().setFini(DateUtil.resetTime(sprmVO.getVersion().getFini()));
+                        sprmVO.getVersion().setFfin(DateUtil.resetTime(sprmVO.getVersion().getFfin()));
+
                         sprmBO.insert(sprmVO, tpspDetail);
                     } catch (final OverlapException ex) {
                         LOG.info(entiName + " Solapado: " + sprmVO.getEtiqueta());
@@ -537,7 +544,7 @@ public final class MaestroImporterBO {
      *             Signals that an I/O exception has occurred.
      */
     private void parseXml(final List<MaestroNodoVO> amaestrosList) throws ParserConfigurationException, SAXException,
-            IOException {
+    IOException {
         LOG.info("Lectura del Archivo XML de consultas de Maestros");
 
         final SAXParserFactory factory = SAXParserFactory.newInstance();
