@@ -54,7 +54,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrc");
 
-                final ValoracionVO vlrc = vlrcBO.selectObject(vlrcCriterioVO);
+                final ValoracionVO vlrc = vlrcBO.select(vlrcId, "es");
 
                 Assert.assertNotNull(vlrc);
 
@@ -135,7 +135,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlriList");
 
-                final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(vlrcCriterioVO);
+                final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(vlrcId, "es");
 
                 for (final ValoracionImpuestoVO vlri : vlriList) {
                     LOG.info("vlri: " + vlri);
@@ -145,7 +145,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrgList");
 
-                final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(vlrcCriterioVO);
+                final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(vlrcId, "es");
 
                 for (final ValoracionCargoVO vlrg : vlrgList) {
                     LOG.info("vlrg: " + vlrg);

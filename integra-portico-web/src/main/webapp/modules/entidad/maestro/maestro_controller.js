@@ -97,7 +97,6 @@ function ParametroGridController($routeParams, pageTitleService,
 
     function search(page) {
         vm.searchCriteria.entiId = $routeParams.entiId;
-        vm.limit = $routeParams.limit;
 
         ParametroService.listPage(vm.searchCriteria, page, vm.limit).then(
                 function(data) {
@@ -120,6 +119,8 @@ function ParametroGridController($routeParams, pageTitleService,
 
     vm.searchCriteria = $routeParams.searchCriteria ? angular
             .fromJson($routeParams.searchCriteria) : {};
+
+    vm.limit = $routeParams.limit;
 
     search($routeParams.page ? $routeParams.page : 1);
 

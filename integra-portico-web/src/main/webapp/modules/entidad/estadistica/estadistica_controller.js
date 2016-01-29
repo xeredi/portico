@@ -206,7 +206,13 @@ function EstadisticaGridController($routeParams, pageTitleService,
     }
 
     function resetFilter() {
-        vm.searchCriteria = {};
+        vm.searchCriteria = {
+            entiId : $routeParams.entiId,
+            pepr : {
+                id : $routeParams.peprId,
+                sprtId : $routeParams.autpId
+            }
+        };
     }
 
     function search(page) {
@@ -230,11 +236,14 @@ function EstadisticaGridController($routeParams, pageTitleService,
     }
 
     vm.searchCriteria = $routeParams.searchCriteria ? angular
-            .fromJson($routeParams.searchCriteria) : {};
-    vm.searchCriteria.entiId = $routeParams.entiId;
-    vm.searchCriteria.pepr = {};
-    vm.searchCriteria.pepr.id = $routeParams.peprId;
-    vm.searchCriteria.pepr.sprtId = $routeParams.autpId;
+            .fromJson($routeParams.searchCriteria) : {
+        entiId : $routeParams.entiId,
+        pepr : {
+            id : $routeParams.peprId,
+            sprtId : $routeParams.autpId
+        }
+    };
+
     vm.limit = $routeParams.limit;
 
     search($routeParams.page ? $routeParams.page : 1);

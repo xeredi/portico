@@ -180,9 +180,6 @@ function config($routeProvider) {
     .when("/facturacion/facturador/edit/:accion", {
         templateUrl : "modules/facturacion/facturador-edit.html",
         controller : "FacturadorEditController as vm",
-        data : {
-            accion : 'create'
-        }
     })
 
     ;

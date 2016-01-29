@@ -288,6 +288,8 @@ function ServicioGridController($routeParams, pageTitleService, ServicioService)
     }
 
     function search(page) {
+        vm.searchCriteria.entiId = $routeParams.entiId;
+
         ServicioService.listPage(vm.searchCriteria, page, vm.limit).then(
                 function(data) {
                     vm.page = data.resultList.page;
@@ -310,10 +312,6 @@ function ServicioGridController($routeParams, pageTitleService, ServicioService)
 
     vm.searchCriteria = $routeParams.searchCriteria ? angular
             .fromJson($routeParams.searchCriteria) : {};
-
-    if ($routeParams.entiId) {
-        vm.searchCriteria.entiId = $routeParams.entiId;
-    }
 
     vm.limit = $routeParams.limit;
 
@@ -468,6 +466,8 @@ function SubservicioGridController($routeParams, pageTitleService,
     }
 
     function search(page) {
+        vm.searchCriteria.entiId = $routeParams.entiId;
+
         SubservicioService.listPage(vm.searchCriteria, page, vm.limit).then(
                 function(data) {
                     vm.page = data.resultList.page;
@@ -490,7 +490,6 @@ function SubservicioGridController($routeParams, pageTitleService,
 
     vm.searchCriteria = $routeParams.searchCriteria ? angular
             .fromJson($routeParams.searchCriteria) : {};
-    vm.searchCriteria.entiId = $routeParams.entiId;
     vm.limit = $routeParams.limit;
 
     search($routeParams.page ? $routeParams.page : 1);

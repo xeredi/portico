@@ -205,7 +205,7 @@ function SuperpuertoEditController($routeParams, pageTitleService,
         id : $routeParams.id
     };
 
-    SuperpuertoService.edit($routeParams.accion, vm.search).then(
+    SuperpuertoService.edit(vm.accion, vm.search).then(
             function(data) {
                 vm.model = data.model;
                 vm.i18nMap = data.i18nMap;
@@ -302,7 +302,7 @@ function PuertoEditController($routeParams, pageTitleService, PuertoService) {
         id : $routeParams.id
     };
 
-    PuertoService.edit($routeParams.accion, vm.search).then(function(data) {
+    PuertoService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 

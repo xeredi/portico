@@ -1,23 +1,22 @@
 angular
         .module(
                 "integraApp",
-                [ "ui.router", "ngRoute", "mgcrea.ngStrap",
-                        "mgcrea.ngStrap.aside", "ui.bootstrap.tpls",
-                        "ui.bootstrap.tabs", "ui.bootstrap.pagination",
-                        "ui.bootstrap.dropdown", "ui.bootstrap.typeahead",
-                        "pascalprecht.translate", "angularSpinner",
-                        "uiGmapgoogle-maps", "LocalStorageModule", "i18n",
-                        "crud_service", "administracion",
-                        "administracion_service", "administracion_controller",
-                        "metamodelo_service", "metamodelo_controller",
-                        "facturacion", "facturacion_service",
-                        "facturacion_controller", "item_service",
-                        "item_controller", "maestro", "maestro_service",
-                        "maestro_controller", "servicio", "servicio_service",
-                        "servicio_controller", "estadistica_service",
-                        "estadistica_controller", "proceso", "proceso_service",
-                        "proceso_controller", "seguridad_service",
-                        "seguridad_controller" ])
+                [ "ngRoute", "mgcrea.ngStrap", "mgcrea.ngStrap.aside",
+                        "ui.bootstrap.tpls", "ui.bootstrap.tabs",
+                        "ui.bootstrap.pagination", "ui.bootstrap.dropdown",
+                        "ui.bootstrap.typeahead", "pascalprecht.translate",
+                        "angularSpinner", "uiGmapgoogle-maps",
+                        "LocalStorageModule", "i18n", "crud_service",
+                        "administracion", "administracion_service",
+                        "administracion_controller", "metamodelo_service",
+                        "metamodelo_controller", "facturacion",
+                        "facturacion_service", "facturacion_controller",
+                        "item_service", "item_controller", "maestro",
+                        "maestro_service", "maestro_controller", "servicio",
+                        "servicio_service", "servicio_controller",
+                        "estadistica_service", "estadistica_controller",
+                        "proceso", "proceso_service", "proceso_controller",
+                        "seguridad_service", "seguridad_controller" ])
 
         .config([ "$routeProvider", function($routeProvider) {
             $routeProvider

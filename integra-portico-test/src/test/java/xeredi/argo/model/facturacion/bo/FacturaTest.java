@@ -47,7 +47,7 @@ public final class FacturaTest {
                 {
                     for (final FacturaVO fctr : fctrList.getList()) {
                         LOG.info("Busqueda de factura");
-                        Assert.assertNotNull(fctrBO.select(fctr.getId()));
+                        Assert.assertNotNull(fctrBO.select(fctr.getId(), "es"));
 
                         if (fctr.getEstado() == FacturaEstado.NO) {
                             LOG.info("Anulacion de factura");
@@ -56,36 +56,37 @@ public final class FacturaTest {
                         }
 
                         LOG.info("Busqueda de cargos de factura");
-                        final List<FacturaCargoVO> fctgList = fctrBO.selectFctgList(fctr.getId());
+                        final List<FacturaCargoVO> fctgList = fctrBO.selectFctgList(fctr.getId(), "es");
 
                         Assert.assertTrue(!fctgList.isEmpty());
 
                         LOG.info("Busqueda de servicios de factura");
-                        final List<FacturaServicioVO> fctsList = fctrBO.selectFctsList(fctr.getId());
+                        final List<FacturaServicioVO> fctsList = fctrBO.selectFctsList(fctr.getId(), "es");
 
                         Assert.assertTrue(!fctsList.isEmpty());
 
                         LOG.info("Busqueda de impuestos de factura");
-                        final List<FacturaImpuestoVO> fctiList = fctrBO.selectFctiList(fctr.getId());
+                        final List<FacturaImpuestoVO> fctiList = fctrBO.selectFctiList(fctr.getId(), "es");
 
                         Assert.assertTrue(!fctiList.isEmpty());
 
                         LOG.info("Busqueda de lineas de factura");
-                        final PaginatedList<FacturaLineaVO> fctlList = fctrBO.selectFctlList(fctr.getId(), 0, 20);
+                        final PaginatedList<FacturaLineaVO> fctlList = fctrBO.selectFctlList(fctr.getId(), "es", 0, 20);
 
                         Assert.assertTrue(!fctlList.getList().isEmpty());
 
                         for (final FacturaLineaVO fctl : fctlList.getList()) {
                             LOG.info("Busqueda de linea de factura");
-                            Assert.assertNotNull(fctrBO.selectFctl(fctl.getId()));
+                            Assert.assertNotNull(fctrBO.selectFctl(fctl.getId(), "es"));
 
                             LOG.info("Busqueda de detalles de factura de una linea, y detalles individuales");
-                            final PaginatedList<FacturaDetalleVO> fctdList = fctrBO.selectFctdList(fctl.getId(), 0, 20);
+                            final PaginatedList<FacturaDetalleVO> fctdList = fctrBO.selectFctdList(fctl.getId(), "es",
+                                    0, 20);
 
                             Assert.assertTrue(!fctdList.getList().isEmpty());
 
                             for (final FacturaDetalleVO fctd : fctdList.getList()) {
-                                Assert.assertNotNull(fctrBO.selectFctd(fctd.getId()));
+                                Assert.assertNotNull(fctrBO.selectFctd(fctd.getId(), "es"));
                             }
                         }
                     }
