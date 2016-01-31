@@ -3,6 +3,7 @@ package xeredi.argo.model.facturacion.vo;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
 import xeredi.argo.model.comun.vo.Typeahead;
 
@@ -11,6 +12,7 @@ import xeredi.argo.model.comun.vo.Typeahead;
  * The Class AspectoCriterioVO.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class AspectoCriterioVO extends BaseCriterioVO implements Typeahead {
 
     /** The texto busqueda. */

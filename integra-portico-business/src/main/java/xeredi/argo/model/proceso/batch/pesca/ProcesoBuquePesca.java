@@ -55,7 +55,7 @@ public final class ProcesoBuquePesca extends ProcesoTemplate {
             criterio.setFrefMax(ffin);
 
             for (final ServicioMaestroVO maestro : bo.selectGenerate(criterio)) {
-                final ServicioVO srvc = new ServicioVO(enti);
+                final ServicioVO srvc = enti.createItem();
 
                 try {
                     srvc.setPrto(maestro.getPrto());

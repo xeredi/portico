@@ -3,6 +3,7 @@ package xeredi.argo.model.facturacion.vo;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -10,6 +11,7 @@ import xeredi.argo.model.comun.vo.BaseCriterioVO;
  * The Class ReglaIncompatibleCriterioVO.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ReglaIncompatibleCriterioVO extends BaseCriterioVO {
 
     /** The fecha vigencia. */

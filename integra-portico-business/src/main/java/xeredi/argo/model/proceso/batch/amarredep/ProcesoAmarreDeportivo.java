@@ -55,7 +55,7 @@ public final class ProcesoAmarreDeportivo extends ProcesoTemplate {
             criterio.setFrefMax(ffin);
 
             for (final ServicioMaestroVO maestro : bo.selectGenerate(criterio)) {
-                final ServicioVO srvc = new ServicioVO(enti);
+                final ServicioVO srvc = enti.createItem();
 
                 try {
                     srvc.setPrto(maestro.getPrto());
@@ -78,10 +78,10 @@ public final class ProcesoAmarreDeportivo extends ProcesoTemplate {
 
                     final ParametroVO embarcacion = new ParametroVO();
 
-                    embarcacion.setId(
-                            Long.parseLong(maestro.getItdtMap().get(TipoDato.EMBARCACION_DEP.name()).toString()));
-                    embarcacion.setParametro(
-                            maestro.getItdtMap().get(TipoDato.EMBARCACION_DEP.name() + "_prmt").toString());
+                    embarcacion.setId(Long.parseLong(maestro.getItdtMap().get(TipoDato.EMBARCACION_DEP.name())
+                            .toString()));
+                    embarcacion.setParametro(maestro.getItdtMap().get(TipoDato.EMBARCACION_DEP.name() + "_prmt")
+                            .toString());
 
                     srvc.addItdt(TipoDato.EMBARCACION_DEP.getId(), embarcacion);
 

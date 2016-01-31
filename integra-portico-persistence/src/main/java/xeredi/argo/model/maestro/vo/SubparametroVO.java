@@ -1,15 +1,16 @@
 package xeredi.argo.model.maestro.vo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.vo.Versionable;
 import xeredi.argo.model.item.vo.ItemVO;
-import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class SubparametroVO.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class SubparametroVO extends ItemVO implements Versionable<SubparametroVersionVO> {
 
     /** The prmt id. */
@@ -19,31 +20,10 @@ public final class SubparametroVO extends ItemVO implements Versionable<Subparam
     private ParametroVO prmtAsociado;
 
     /** The spvr. */
-    private SubparametroVersionVO version;
+    private SubparametroVersionVO version = new SubparametroVersionVO();
 
     /** The prto id. */
     private Long prtoId;
-
-    /**
-     * Instantiates a new subparametro vo.
-     */
-    public SubparametroVO() {
-        super();
-
-        version = new SubparametroVersionVO();
-    }
-
-    /**
-     * Instantiates a new subparametro vo.
-     *
-     * @param entiDetail
-     *            the enti detail
-     */
-    public SubparametroVO(final TipoSubparametroDetailVO entiDetail) {
-        super(entiDetail);
-
-        version = new SubparametroVersionVO();
-    }
 
     /**
      * {@inheritDoc}

@@ -1,19 +1,20 @@
 package xeredi.argo.model.maestro.vo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.Versionable;
 import xeredi.argo.model.item.vo.ItemVO;
-import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * Datos de un parametro.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ParametroVO extends ItemVO implements Versionable<ParametroVersionVO> {
 
     /** Descripcion del parametro. */
@@ -23,31 +24,10 @@ public final class ParametroVO extends ItemVO implements Versionable<ParametroVe
     private PuertoVO prto;
 
     /** The prvr. */
-    private ParametroVersionVO version;
+    private ParametroVersionVO version = new ParametroVersionVO();
 
     /** The texto. */
     private String texto;
-
-    /**
-     * Instantiates a new parametro vo.
-     */
-    public ParametroVO() {
-        super();
-
-        version = new ParametroVersionVO();
-    }
-
-    /**
-     * Instantiates a new parametro vo.
-     *
-     * @param entiDetail
-     *            the enti detail
-     */
-    public ParametroVO(final TipoParametroDetailVO entiDetail) {
-        super(entiDetail);
-
-        version = new ParametroVersionVO();
-    }
 
     /**
      * Gets the etiqueta string buffer.

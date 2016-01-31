@@ -1,12 +1,14 @@
 package xeredi.argo.model.metamodelo.vo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoSubparametroVO.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class TipoSubparametroVO extends EntidadVO {
 
     /** The tppr. */

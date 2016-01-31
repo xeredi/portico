@@ -3,18 +3,19 @@ package xeredi.argo.model.servicio.vo;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import org.apache.commons.lang3.StringUtils;
 
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.item.vo.ItemVO;
-import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServicioVO.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ServicioVO extends ItemVO {
 
     /** The Constant NUMERO_LENGTH. */
@@ -43,25 +44,6 @@ public final class ServicioVO extends ItemVO {
 
     /** The estado. */
     private String estado;
-
-    /**
-     * Instantiates a new servicio vo.
-     */
-    public ServicioVO() {
-        super();
-    }
-
-    /**
-     * Instantiates a new servicio vo.
-     *
-     * @param entiDetail
-     *            the enti detail
-     */
-    public ServicioVO(final TipoServicioDetailVO entiDetail) {
-        super(entiDetail);
-
-        estado = entiDetail.getEnti().getEstadoDef();
-    }
 
     /**
      * Convert numero.

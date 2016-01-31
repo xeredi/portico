@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -17,6 +18,7 @@ import xeredi.argo.model.comun.vo.BaseCriterioVO;
  *
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public abstract class ItemCriterioVO extends BaseCriterioVO {
     /** The solo gridables. */
     private boolean soloDatosGrid;

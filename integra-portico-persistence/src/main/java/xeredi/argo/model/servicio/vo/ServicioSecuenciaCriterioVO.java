@@ -1,6 +1,7 @@
 package xeredi.argo.model.servicio.vo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -8,6 +9,7 @@ import xeredi.argo.model.comun.vo.BaseCriterioVO;
  * The Class ServicioSecuenciaCriterioVO.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ServicioSecuenciaCriterioVO extends BaseCriterioVO {
 
     /** The prto id. */

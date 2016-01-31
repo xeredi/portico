@@ -3,6 +3,7 @@ package xeredi.argo.model.facturacion.vo;
 import java.util.Set;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
@@ -12,6 +13,7 @@ import xeredi.argo.model.servicio.vo.ServicioVO;
  * The Class ValoracionCriterioVO.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ValoracionCriterioVO extends BaseCriterioVO {
 
     /** The id. */

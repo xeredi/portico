@@ -3,6 +3,7 @@ package xeredi.argo.model.servicio.vo;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
 
@@ -11,6 +12,7 @@ import xeredi.argo.model.item.vo.ItemCriterioVO;
  * The Class ServicioCriterioVO.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ServicioCriterioVO extends ItemCriterioVO {
 
     /** The subp id. */

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -11,6 +12,7 @@ import xeredi.argo.model.item.vo.ItemCriterioVO;
  * The Class SubservicioCriterioVO.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /** The padre id. */

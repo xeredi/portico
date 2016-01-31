@@ -1,6 +1,7 @@
 package xeredi.argo.model.servicio.vo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
 import xeredi.argo.model.item.vo.ItemTypeahead;
 
@@ -9,6 +10,7 @@ import xeredi.argo.model.item.vo.ItemTypeahead;
  * The Class ServicioLupaCriterioVO.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ServicioLupaCriterioVO extends BaseCriterioVO implements ItemTypeahead {
 
     /** The texto busqueda. */

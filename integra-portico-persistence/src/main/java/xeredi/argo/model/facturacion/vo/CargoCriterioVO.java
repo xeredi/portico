@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
 import xeredi.argo.model.comun.vo.Typeahead;
 
@@ -12,6 +13,7 @@ import xeredi.argo.model.comun.vo.Typeahead;
  * The Class CargoCriterioVO.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class CargoCriterioVO extends BaseCriterioVO implements Typeahead {
 
     /** The texto busqueda. */

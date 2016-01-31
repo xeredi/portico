@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.vo.Typeahead;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroCriterioVO;
@@ -13,6 +14,7 @@ import xeredi.argo.model.metamodelo.vo.TipoSubparametroCriterioVO;
  * The Class SubparametroCriterioVO.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class SubparametroCriterioVO extends ItemCriterioVO implements Typeahead {
 
     /** The texto busqueda. */

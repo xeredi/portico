@@ -167,7 +167,7 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
         elementoActual = ElementoActual.mani;
 
-        srvc = new ServicioVO(tpsrDetail);
+        srvc = tpsrDetail.createItem();
 
         srvc.setPrto(prto);
         srvc.setFref(escala.getFref());
@@ -219,10 +219,10 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
             final String nif = ctx.c082().f3039().getText().substring(2);
 
             if (!macoMap.containsKey(nif)) {
-                final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy
-                        .select(Entidad.MANIFIESTO_CONSIGNATARIO.getId());
+                final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(Entidad.MANIFIESTO_CONSIGNATARIO
+                        .getId());
 
-                macoActual = new SubservicioVO(tpssDetail);
+                macoActual = tpssDetail.createItem();
 
                 macoActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
                 macoActual.setNumero(contador++);
@@ -255,7 +255,7 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
         elementoActual = ElementoActual.mabl;
 
-        blActual = new SubservicioVO(tpssDetail);
+        blActual = tpssDetail.createItem();
 
         blActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
         blActual.setNumero(contador++);
@@ -300,7 +300,7 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
         elementoActual = ElementoActual.part;
 
-        partActual = new SubservicioVO(tpssDetail);
+        partActual = tpssDetail.createItem();
 
         partActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
         partActual.setNumero(contador++);
@@ -461,8 +461,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
             break;
         case "ZTC":
             final ParametroVO terminal = getMaestro(Entidad.TERMINAL, ctx.c506().f1154().getText());
-            final ParametroVO instalacionEspecial = getMaestro(Entidad.INSTALACION_ESPECIAL,
-                    ctx.c506().f1154().getText());
+            final ParametroVO instalacionEspecial = getMaestro(Entidad.INSTALACION_ESPECIAL, ctx.c506().f1154()
+                    .getText());
 
             if (terminal != null) {
                 switch (elementoActual) {
@@ -521,8 +521,7 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
             break;
         case "ZLS":
-            srvc.addItdt(TipoDato.SERV_TRAF.getId(),
-                    getMaestro(Entidad.SERVICIO_TRAFICO, ctx.c506().f1154().getText()));
+            srvc.addItdt(TipoDato.SERV_TRAF.getId(), getMaestro(Entidad.SERVICIO_TRAFICO, ctx.c506().f1154().getText()));
 
             // FIXME Como saber si es de Manifiesto, Bl, partida...
 
@@ -600,8 +599,10 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
             final String tipoOperacionBl = null;
 
             // FIXME Convertir en CR
-            blActual.addItdt(TipoDato.TIPO_OP_BL.getId(), calcularTipoOperacionBl(
-                    srvc.getItdt(TipoDato.TIPO_MANIF.getId()).getCadena(), modoTransporteEdi.getParametro()));
+            blActual.addItdt(
+                    TipoDato.TIPO_OP_BL.getId(),
+                    calcularTipoOperacionBl(srvc.getItdt(TipoDato.TIPO_MANIF.getId()).getCadena(),
+                            modoTransporteEdi.getParametro()));
 
             break;
         default:
@@ -644,7 +645,7 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
     public Object visitPci(final PciContext ctx) {
         final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(Entidad.PARTIDA_IM.getId());
 
-        paimActual = new SubservicioVO(tpssDetail);
+        paimActual = tpssDetail.createItem();
 
         paimActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
         paimActual.setNumero(contador++);
@@ -665,7 +666,7 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
     public Object visitDoc(final DocContext ctx) {
         final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(Entidad.PARTIDA_DOCUMENTO.getId());
 
-        padoActual = new SubservicioVO(tpssDetail);
+        padoActual = tpssDetail.createItem();
 
         padoActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
         padoActual.setNumero(contador++);
@@ -688,7 +689,7 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
     public Object visitSgp(final SgpContext ctx) {
         final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(Entidad.PARTIDA_EQUIPAMIENTO.getId());
 
-        paeqActual = new SubservicioVO(tpssDetail);
+        paeqActual = tpssDetail.createItem();
 
         paeqActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
         paeqActual.setNumero(contador++);
@@ -717,7 +718,7 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
     public Object visitDgs(final DgsContext ctx) {
         final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(Entidad.PARTIDA_MMPP.getId());
 
-        pampActual = new SubservicioVO(tpssDetail);
+        pampActual = tpssDetail.createItem();
 
         ssrvList.add(pampActual);
         addSsss(partActual, pampActual);
@@ -725,7 +726,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
         pampActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
         pampActual.setNumero(contador++);
 
-        pampActual.addItdt(TipoDato.MERC_PELIG.getId(),
+        pampActual.addItdt(
+                TipoDato.MERC_PELIG.getId(),
                 getMaestro(Entidad.MERCANCIAS_PELIGROSAS, ctx.c234().f7124().getText() + '-'
                         + ctx.c205().f8351().getText() + '-' + ctx.c205().f8092().getText()));
 
@@ -741,7 +743,7 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
         elementoActual = ElementoActual.equi;
 
-        equiActual = new SubservicioVO(tpssDetail);
+        equiActual = tpssDetail.createItem();
 
         equiActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
         equiActual.setNumero(contador++);
@@ -752,12 +754,12 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
         equiActual.addItdt(TipoDato.COD_EXEN.getId(), "0"); // FIXME Calcular
 
-        final ParametroVO tipoEquipamiento = getMaestro(Entidad.TIPO_EQUIPAMIENTO,
-                ctx.f8053().getText() + ctx.c224().f8155().getText());
+        final ParametroVO tipoEquipamiento = getMaestro(Entidad.TIPO_EQUIPAMIENTO, ctx.f8053().getText()
+                + ctx.c224().f8155().getText());
 
         equiActual.addItdt(TipoDato.TIPO_EQUI.getId(), tipoEquipamiento);
-        equiActual.addItdt(TipoDato.UNIDAD_CARGA.getId(),
-                tipoEquipamiento.getItdt(TipoDato.UNIDAD_CARGA.getId()).getPrmt());
+        equiActual.addItdt(TipoDato.UNIDAD_CARGA.getId(), tipoEquipamiento.getItdt(TipoDato.UNIDAD_CARGA.getId())
+                .getPrmt());
 
         final String matricula = ctx.c237().f8260().getText();
 
@@ -806,7 +808,7 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
     public Object visitSel(final SelContext ctx) {
         final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(Entidad.PRECINTO_EQUIPAMIENTO.getId());
 
-        preqActual = new SubservicioVO(tpssDetail);
+        preqActual = tpssDetail.createItem();
 
         preqActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
         preqActual.setNumero(contador++);
@@ -865,8 +867,7 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
      *            the modo transporte edi
      * @return the string
      */
-    private String calcularTipoOperacionBl(final @NonNull String tipoManifiesto,
-            final @NonNull String modoTransporteEdi) {
+    private String calcularTipoOperacionBl(final @NonNull String tipoManifiesto, final @NonNull String modoTransporteEdi) {
         switch (tipoManifiesto) {
         case "DE":
         case "CL":

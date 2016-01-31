@@ -1,6 +1,7 @@
 package xeredi.argo.model.facturacion.vo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.vo.VersionVO;
 
 // TODO: Auto-generated Javadoc
@@ -8,6 +9,7 @@ import xeredi.argo.model.comun.vo.VersionVO;
  * The Class CargoVersionVO.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class CargoVersionVO extends VersionVO {
     /** The codigo normalizado. */
     private String codigoNormalizado;

@@ -6,10 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.Data;
+import lombok.NonNull;
+import xeredi.argo.model.item.vo.ItemDatoVO;
+import xeredi.argo.model.item.vo.ItemVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AbstractEntidadDetailVO.
+ */
+
+/**
+ * Instantiates a new abstract entidad detail vo.
  */
 @Data
 public abstract class AbstractEntidadDetailVO {
@@ -51,4 +58,22 @@ public abstract class AbstractEntidadDetailVO {
      * @return the enti
      */
     public abstract EntidadVO getEnti();
+
+    /**
+     * Fill item.
+     *
+     * @param item
+     *            the item
+     */
+    protected final void fillItem(final @NonNull ItemVO item) {
+        item.setEntiId(getEnti().getId());
+
+        for (final EntidadTipoDatoVO entd : entdMap.values()) {
+            final ItemDatoVO itdt = new ItemDatoVO();
+
+            itdt.setTpdtId(entd.getTpdt().getId());
+
+            item.getItdtMap().put(itdt.getTpdtId(), itdt);
+        }
+    }
 }

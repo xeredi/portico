@@ -8,8 +8,6 @@ import lombok.Data;
 import lombok.NonNull;
 import xeredi.argo.model.comun.vo.ItemEntidad;
 import xeredi.argo.model.maestro.vo.ParametroVO;
-import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
-import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -29,36 +27,10 @@ public abstract class ItemVO implements ItemEntidad {
     private Date fref;
 
     /** The itdt map. */
-    private Map<Long, ItemDatoVO> itdtMap;
+    private Map<Long, ItemDatoVO> itdtMap = new HashMap<>();
 
-    /**
-     * Instantiates a new item vo.
-     */
     protected ItemVO() {
         super();
-
-        itdtMap = new HashMap<>();
-    }
-
-    /**
-     * Instantiates a new item vo.
-     *
-     * @param entiDetail
-     *            the enti detail
-     */
-    protected ItemVO(final @NonNull AbstractEntidadDetailVO entiDetail) {
-        super();
-
-        entiId = entiDetail.getEnti().getId();
-        itdtMap = new HashMap<>();
-
-        for (final EntidadTipoDatoVO entd : entiDetail.getEntdMap().values()) {
-            final ItemDatoVO itdt = new ItemDatoVO();
-
-            itdt.setTpdtId(entd.getTpdt().getId());
-
-            addItdt(itdt);
-        }
     }
 
     /**

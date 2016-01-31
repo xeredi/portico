@@ -5,12 +5,14 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoSubservicioVO.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class TipoSubservicioVO extends EntidadVO {
 
     /** The tpsr id. */

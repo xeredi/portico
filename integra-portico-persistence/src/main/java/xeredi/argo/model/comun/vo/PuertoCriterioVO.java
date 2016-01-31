@@ -3,12 +3,14 @@ package xeredi.argo.model.comun.vo;
 import java.util.Set;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PuertoCriterioVO.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class PuertoCriterioVO extends BaseCriterioVO {
 
     /** The id. */

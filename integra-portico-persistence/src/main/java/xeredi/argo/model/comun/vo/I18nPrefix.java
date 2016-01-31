@@ -33,5 +33,7 @@ public enum I18nPrefix {
     /** The rglv. */
     rglv,
     /** The prvr. */
-    prvr, ;
+    prvr,
+
+    ;
 }
