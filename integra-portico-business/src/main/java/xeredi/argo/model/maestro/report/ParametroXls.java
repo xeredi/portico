@@ -72,7 +72,7 @@ public final class ParametroXls extends BaseXls {
             final HSSFRow rowhead = sheet.createRow(rownum++);
             int i = 0;
 
-            if (entiDetail.getEnti().isPuerto()) {
+            if (entiDetail.getEnti().getPuerto()) {
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prto.name()));
             }
 
@@ -85,7 +85,7 @@ public final class ParametroXls extends BaseXls {
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.fini.name()));
             setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ffin.name()));
 
-            if (entiDetail.getEnti().isGis()) {
+            if (entiDetail.getEnti().getGis()) {
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prmt_lat.name()));
                 setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prmt_lon.name()));
             }
@@ -104,7 +104,7 @@ public final class ParametroXls extends BaseXls {
 
                 int j = 0;
 
-                if (entiDetail.getEnti().isPuerto()) {
+                if (entiDetail.getEnti().getPuerto()) {
                     setCellValue(row, j++, item.getPrto().getEtiqueta());
                 }
 
@@ -117,7 +117,7 @@ public final class ParametroXls extends BaseXls {
                 setCellValue(row, j++, item.getVersion().getFini());
                 setCellValue(row, j++, item.getVersion().getFfin());
 
-                if (entiDetail.getEnti().isGis()) {
+                if (entiDetail.getEnti().getGis()) {
                     setCellValue(row, j++, item.getVersion().getLat());
                     setCellValue(row, j++, item.getVersion().getLon());
                 }

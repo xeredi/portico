@@ -23,22 +23,22 @@ public class EntidadVO {
     private String nombre;
 
     /** The cmd alta. */
-    private boolean cmdAlta;
+    private Boolean cmdAlta;
 
     /** The cmd baja. */
-    private boolean cmdBaja;
+    private Boolean cmdBaja;
 
     /** The cmd edicion. */
-    private boolean cmdEdicion;
+    private Boolean cmdEdicion;
 
     /** The cmd duplicado. */
-    private boolean cmdDuplicado;
+    private Boolean cmdDuplicado;
 
     /** The gis. */
-    private boolean gis;
+    private Boolean gis;
 
     /** The subpuerto. */
-    private boolean puerto;
+    private Boolean puerto;
 
     /** The max grid. */
     private Integer maxGrid;

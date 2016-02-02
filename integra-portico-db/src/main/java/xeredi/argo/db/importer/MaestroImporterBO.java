@@ -249,7 +249,7 @@ public final class MaestroImporterBO {
                 prmtVO.setEntiId(tpprDetail.getEnti().getId());
                 prmtVO.setVersion(new ParametroVersionVO());
 
-                if (tpprDetail.getEnti().isPuerto()) {
+                if (tpprDetail.getEnti().getPuerto()) {
                     final String codigoPuerto = rs.getString(i++);
 
                     if (!prtoMap.containsKey(codigoPuerto)) {
@@ -544,7 +544,7 @@ public final class MaestroImporterBO {
      *             Signals that an I/O exception has occurred.
      */
     private void parseXml(final List<MaestroNodoVO> amaestrosList) throws ParserConfigurationException, SAXException,
-    IOException {
+            IOException {
         LOG.info("Lectura del Archivo XML de consultas de Maestros");
 
         final SAXParserFactory factory = SAXParserFactory.newInstance();

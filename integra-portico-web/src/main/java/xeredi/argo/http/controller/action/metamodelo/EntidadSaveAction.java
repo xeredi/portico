@@ -42,10 +42,10 @@ public abstract class EntidadSaveAction<T extends EntidadVO> extends CrudSaveAct
 
         FieldValidator.validateI18n(this, i18nMap);
 
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdAlta, model.isCmdAlta());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdBaja, model.isCmdBaja());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdEdicion, model.isCmdEdicion());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdDuplicado, model.isCmdDuplicado());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdAlta, model.getCmdAlta());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdBaja, model.getCmdBaja());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdEdicion, model.getCmdEdicion());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdDuplicado, model.getCmdDuplicado());
         FieldValidator.validateRequired(this, MessageI18nKey.enti_maxGrid, model.getMaxGrid());
 
         doSpecificValidate();

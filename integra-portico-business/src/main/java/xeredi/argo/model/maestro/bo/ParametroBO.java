@@ -255,7 +255,7 @@ public class ParametroBO {
                     for (final SubparametroVO sprmVO : sprmList) {
                         final TipoSubparametroDetailVO tpspDetail = TipoSubparametroProxy.select(sprmVO.getEntiId());
 
-                        if (tpspDetail.getEnti().isCmdDuplicado()) {
+                        if (tpspDetail.getEnti().getCmdDuplicado()) {
                             sprmMap.put(sprmVO.getVersion().getId(), sprmVO);
                             spvrIds.add(sprmVO.getVersion().getId());
                         }

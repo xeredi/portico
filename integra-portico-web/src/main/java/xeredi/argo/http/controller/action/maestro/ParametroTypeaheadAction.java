@@ -30,7 +30,7 @@ public final class ParametroTypeaheadAction extends ItemTypeaheadAction<Parametr
         final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
         final TipoParametroDetailVO entiDetail = TipoParametroProxy.select(model.getEntiId());
 
-        if (entiDetail.getEnti().isPuerto()) {
+        if (entiDetail.getEnti().getPuerto()) {
             Preconditions.checkNotNull(model.getPrto());
             Preconditions.checkNotNull(model.getPrto().getId());
         }

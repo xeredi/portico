@@ -132,7 +132,7 @@ public final class ParametroPdf extends BasePdf {
 
             final int accWidth = 0;
 
-            if (entiDetail.getEnti().isPuerto()) {
+            if (entiDetail.getEnti().getPuerto()) {
                 rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.prto.name()), item.getPrto().getEtiqueta(), 2,
                         TipoElemento.TX));
             }
@@ -142,7 +142,7 @@ public final class ParametroPdf extends BasePdf {
             rowCells.add(new PdfCell(prmtFiniLabel, formatDate(item.getVersion().getFini()), 1, TipoElemento.FE));
             rowCells.add(new PdfCell(prmtFfinLabel, formatDate(item.getVersion().getFfin()), 1, TipoElemento.FE));
 
-            if (entiDetail.getEnti().isGis()) {
+            if (entiDetail.getEnti().getGis()) {
                 rowCells.add(new PdfCell(prmtLatLabel, formatDouble(item.getVersion().getLat()), 1, TipoElemento.ND));
                 rowCells.add(new PdfCell(prmtLonLabel, formatDouble(item.getVersion().getLon()), 1, TipoElemento.ND));
             }

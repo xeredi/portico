@@ -50,7 +50,7 @@ public final class ParametroFilterAction extends ItemFilterAction<ParametroCrite
      */
     @Override
     public void doSpecificLoadDependencies() throws ApplicationException {
-        if (enti.getEnti().isPuerto()) {
+        if (enti.getEnti().getPuerto()) {
             final PuertoBO prtoBO = new PuertoBO();
             final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 

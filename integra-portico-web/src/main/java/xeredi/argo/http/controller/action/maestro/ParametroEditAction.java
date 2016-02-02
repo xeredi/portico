@@ -79,7 +79,7 @@ public final class ParametroEditAction extends ItemEditAction<ParametroVO, TipoP
      */
     @Override
     public void doLoadSpecificDependencies() throws ApplicationException {
-        if (enti.getEnti().isPuerto()) {
+        if (enti.getEnti().getPuerto()) {
             final PuertoBO prtoBO = new PuertoBO();
             final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 

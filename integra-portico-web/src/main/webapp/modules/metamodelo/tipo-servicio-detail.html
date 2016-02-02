@@ -100,8 +100,7 @@
                 </div>
             </fieldset>
 
-
-            <fieldset>
+            <fieldset data-ng-if="mc.hasAccnPath('tpss-list')">
                 <legend data-ng-bind="'Subentidades'"></legend>
 
                 <div class="btn-toolbar" role="toolbar">
@@ -152,7 +151,7 @@
                 </table>
             </fieldset>
 
-            <fieldset>
+            <fieldset data-ng-if="mc.hasAccnPath('enen-list')">
                 <legend data-ng-bind="'Entidades Hijas'"></legend>
 
                 <div class="btn-toolbar" role="toolbar">

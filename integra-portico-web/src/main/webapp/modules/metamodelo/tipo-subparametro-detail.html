@@ -85,14 +85,15 @@
             </fieldset>
         </div>
         <div data-uib-tab data-select="vm.tabSelected('entdList')" data-active="vm.tabActive['entdList']"
-            data-heading="{{'entdList' | translate}}">
+            data-heading="{{'entdList' | translate}}"
+            data-ng-if="mc.hasAccnPath('engd-list') || mc.hasAccnPath('entd-list')">
             <div data-ng-if="mc.hasAccnPath('engd-list')"
                 data-ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
             <div data-ng-if="mc.hasAccnPath('entd-list')"
                 data-ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
         </div>
         <div data-uib-tab data-select="vm.tabSelected('accnList')" data-active="vm.tabActive['accnList']"
-            data-heading="{{'accnList' | translate}}">
+            data-heading="{{'accnList' | translate}}" data-ng-if="mc.hasAccnPath('enag-list')">
             <div data-ng-if="mc.hasAccnPath('enag-list')"
                 data-ng-include="'modules/metamodelo/fragment/entidad-accion-grid-content.html'"></div>
         </div>

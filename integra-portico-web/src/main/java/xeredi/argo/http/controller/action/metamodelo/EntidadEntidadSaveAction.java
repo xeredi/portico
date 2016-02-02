@@ -50,6 +50,10 @@ public final class EntidadEntidadSaveAction extends CrudSaveAction<EntidadEntida
 
         if (accion == AccionCodigo.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.enen_entiHija, model.getEntiHija());
+
+            if (!hasErrors()) {
+                FieldValidator.validateRequired(this, MessageI18nKey.enen_entiHija, model.getEntiHija().getId());
+            }
         } else {
             Preconditions.checkNotNull(model.getEntiHija());
             Preconditions.checkNotNull(model.getEntiHija().getId());

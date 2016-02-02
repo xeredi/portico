@@ -62,7 +62,7 @@ public final class SubparametroEditAction extends ItemEditAction<SubparametroVO,
      */
     @Override
     public void doLoadSpecificDependencies() throws ApplicationException {
-        if (enti.getEnti().getTpprAsociado().isPuerto()) {
+        if (enti.getEnti().getTpprAsociado().getPuerto()) {
             final PuertoBO prtoBO = new PuertoBO();
             final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 

@@ -107,13 +107,13 @@
                 </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset data-ng-if="mc.hasAccnPath('enen-list')">
                 <legend data-ng-bind="'Entidades Hijas'"></legend>
 
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group">
-                        <a class="btn btn-default"
-                            data-ng-href="#/metamodelo/entidadentidad/edit/create/{{vm.model.id}}"><i
+                        <a class="btn btn-default" data-ng-if="mc.hasAccnPath('enen-create')"
+                            data-ng-href="#/metamodelo/entidad-entidad/edit/create/{{vm.model.id}}"><i
                             class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
                     </div>
                 </div>
@@ -147,7 +147,7 @@
                 </table>
             </fieldset>
 
-            <fieldset>
+            <fieldset data-ng-if="mc.hasAccnPath('enen-list')">
                 <legend data-ng-bind="'Entidades Padres'"></legend>
                 <table data-ng-if="vm.entiPadresList" class="table-bordered table-condensed table-hover">
                     <thead>

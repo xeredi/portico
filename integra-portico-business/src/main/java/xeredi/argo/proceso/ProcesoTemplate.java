@@ -14,8 +14,6 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.google.common.base.Preconditions;
-
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
@@ -39,6 +37,8 @@ import xeredi.argo.model.proceso.vo.ProcesoMensajeVO;
 import xeredi.argo.model.proceso.vo.ProcesoParametroVO;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -154,7 +154,7 @@ public abstract class ProcesoTemplate {
             maestroPrtoMap.put(entidad, new HashMap<Long, Map<String, ParametroVO>>());
 
             for (final ParametroVO prmt : prmtBO.selectList(prmtCriterio)) {
-                if (tpprDetail.getEnti().isPuerto()) {
+                if (tpprDetail.getEnti().getPuerto()) {
                     if (!maestroPrtoMap.get(entidad).containsKey(prmt.getPrto().getId())) {
                         maestroPrtoMap.get(entidad).put(prmt.getPrto().getId(), new HashMap<String, ParametroVO>());
                     }
