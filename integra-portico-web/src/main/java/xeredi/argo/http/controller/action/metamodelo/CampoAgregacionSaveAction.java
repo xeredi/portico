@@ -6,6 +6,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
@@ -47,7 +48,7 @@ public final class CampoAgregacionSaveAction extends CrudSaveAction<CampoAgregac
     public void doValidate() throws ApplicationException {
         Preconditions.checkNotNull(model.getTpesId());
 
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.entd, model.getEntd());
 
             if (!hasErrors()) {

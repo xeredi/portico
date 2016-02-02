@@ -7,6 +7,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.seguridad.bo.AccionBO;
 import xeredi.argo.model.seguridad.bo.ResultadoLoginVO;
 import xeredi.argo.model.seguridad.bo.UsuarioAccesoBO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -52,7 +53,7 @@ public final class SessionManager {
      *            the codigo
      * @return true, if successful
      */
-    public static boolean hasPermission(final AccionPrefix prefix, final String codigo) {
+    public static boolean hasPermission(final AccionPrefix prefix, final AccionCodigo codigo) {
         final AccionBO accnBO = new AccionBO();
 
         return accnBO.exists(prefix, codigo,
@@ -70,7 +71,7 @@ public final class SessionManager {
      *            the enti id
      * @return true, if successful
      */
-    public static boolean hasPermission(final AccionPrefix prefix, final String codigo, final Long entiId) {
+    public static boolean hasPermission(final AccionPrefix prefix, final AccionCodigo codigo, final Long entiId) {
         final AccionBO accnBO = new AccionBO();
 
         return accnBO.exists(prefix, codigo, entiId, ((ResultadoLoginVO) getSession()

@@ -14,6 +14,7 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ReglaBO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.util.DateUtil;
 
@@ -61,7 +62,7 @@ public final class ReglaSaveAction extends CrudSaveAction<ReglaVO> {
      */
     @Override
     public void doValidate() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             Preconditions.checkNotNull(model.getCrgo().getId());
 
             FieldValidator.validateRequired(this, MessageI18nKey.rgla_codigo, model.getCodigo());

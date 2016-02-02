@@ -10,6 +10,7 @@ import xeredi.argo.model.comun.vo.I18nPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
@@ -34,7 +35,7 @@ public final class EntidadGrupoDatoEditAction extends CrudEditAction<EntidadGrup
     public void doEdit() throws ApplicationException {
         Preconditions.checkNotNull(model.getEntiId());
 
-        if (accion != ACCION_EDICION.create) {
+        if (accion != AccionCodigo.create) {
             Preconditions.checkNotNull(model.getId());
 
             final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();

@@ -6,6 +6,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.FacturaSerieBO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
@@ -45,7 +46,7 @@ public final class FacturaSerieSaveAction extends CrudSaveAction<FacturaSerieVO>
      */
     @Override
     public void doValidate() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.fcsr_serie, model.getSerie());
             FieldValidator.validateRequired(this, MessageI18nKey.fcsr_anio, model.getAnio());
         } else {

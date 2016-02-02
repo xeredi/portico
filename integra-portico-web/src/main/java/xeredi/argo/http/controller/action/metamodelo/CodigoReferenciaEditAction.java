@@ -10,6 +10,7 @@ import xeredi.argo.model.comun.vo.I18nPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.CodigoReferenciaBO;
 import xeredi.argo.model.metamodelo.vo.CodigoReferenciaVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
@@ -31,7 +32,7 @@ public final class CodigoReferenciaEditAction extends CrudEditAction<CodigoRefer
      */
     @Override
     public void doEdit() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             Preconditions.checkNotNull(model.getTpdtId());
         } else {
             Preconditions.checkNotNull(model.getId());

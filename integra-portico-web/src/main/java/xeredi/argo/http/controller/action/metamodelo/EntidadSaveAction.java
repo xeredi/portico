@@ -9,6 +9,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 import com.google.common.base.Preconditions;
 
@@ -33,7 +34,7 @@ public abstract class EntidadSaveAction<T extends EntidadVO> extends CrudSaveAct
      */
     @Override
     public final void doValidate() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.enti_codigo, model.getCodigo());
         } else {
             Preconditions.checkNotNull(model.getId());

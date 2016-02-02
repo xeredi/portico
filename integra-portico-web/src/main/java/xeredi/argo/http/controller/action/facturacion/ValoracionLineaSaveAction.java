@@ -1,7 +1,5 @@
 package xeredi.argo.http.controller.action.facturacion;
 
-import com.google.common.base.Preconditions;
-
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -9,7 +7,10 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -48,7 +49,7 @@ public final class ValoracionLineaSaveAction extends CrudSaveAction<ValoracionLi
     public void doValidate() throws ApplicationException {
         Preconditions.checkNotNull(model.getVlrcId());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (accion == AccionCodigo.edit) {
             Preconditions.checkNotNull(model.getId());
             Preconditions.checkNotNull(model.getVlrcId());
         }

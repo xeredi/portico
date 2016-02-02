@@ -19,6 +19,7 @@ import xeredi.argo.model.seguridad.dao.AccionDAO;
 import xeredi.argo.model.seguridad.dao.GrupoDAO;
 import xeredi.argo.model.seguridad.dao.UsuarioDAO;
 import xeredi.argo.model.seguridad.dao.UsuarioGrupoDAO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
@@ -230,10 +231,8 @@ public final class UsuarioBO {
      *            the accn path
      * @return true, if successful
      */
-    public boolean tienePermiso(final UsuarioVO usro, final String accnPath) {
-        Preconditions.checkNotNull(usro);
+    public boolean tienePermiso(final @NonNull UsuarioVO usro, final @NonNull AccionCodigo accnPath) {
         Preconditions.checkNotNull(usro.getId());
-        Preconditions.checkNotNull(accnPath);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AccionDAO accnDAO = session.getMapper(AccionDAO.class);

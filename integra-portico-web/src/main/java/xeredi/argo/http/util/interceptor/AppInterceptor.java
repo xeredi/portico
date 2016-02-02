@@ -10,6 +10,7 @@ import xeredi.argo.http.controller.action.seguridad.UsuarioAccesoAction;
 import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.opensymphony.xwork2.Action;
@@ -44,7 +45,7 @@ public final class AppInterceptor extends AbstractInterceptor {
                 if (SessionManager.isAuthenticated(action)) {
                     if (action instanceof ProtectedAction) {
                         final AccionPrefix prefix = ((ProtectedAction) action).getAccnPrefix();
-                        final String codigo = ((ProtectedAction) action).getAccnCodigo();
+                        final AccionCodigo codigo = ((ProtectedAction) action).getAccion();
 
                         if (action instanceof ProtectedItemAction) {
                             final Long entiId = ((ProtectedItemAction) action).getEntiId();

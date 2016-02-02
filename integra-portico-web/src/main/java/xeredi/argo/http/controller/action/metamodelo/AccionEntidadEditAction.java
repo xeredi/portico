@@ -13,6 +13,7 @@ import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.seguridad.bo.AccionBO;
 import xeredi.argo.model.seguridad.bo.GrupoBO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.AccionVO;
@@ -55,7 +56,7 @@ public final class AccionEntidadEditAction extends CrudEditAction<AccionEntidadV
      */
     @Override
     public void doEdit() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             Preconditions.checkNotNull(model.getEntiId());
         } else {
             Preconditions.checkNotNull(model.getId());

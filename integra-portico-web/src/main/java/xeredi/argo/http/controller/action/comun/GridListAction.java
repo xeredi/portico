@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
@@ -19,7 +20,7 @@ import com.opensymphony.xwork2.ModelDriven;
  *            the generic type
  */
 public abstract class GridListAction<C extends BaseCriterioVO, R> extends BaseAction implements ModelDriven<C>,
-ProtectedAction {
+        ProtectedAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6646875422640202469L;
@@ -78,7 +79,7 @@ ProtectedAction {
      * {@inheritDoc}
      */
     @Override
-    public final String getAccnCodigo() {
-        return "list";
+    public final AccionCodigo getAccion() {
+        return AccionCodigo.list;
     }
 }

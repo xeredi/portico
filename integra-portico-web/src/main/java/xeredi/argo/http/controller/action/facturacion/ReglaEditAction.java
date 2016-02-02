@@ -21,6 +21,7 @@ import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioCriterioVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -51,7 +52,7 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
      */
     @Override
     public void doEdit() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             Preconditions.checkNotNull(model.getCrgo());
             Preconditions.checkNotNull(model.getCrgo().getId());
 
@@ -85,7 +86,7 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
      */
     @Override
     public void doLoadDependencies() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             tipos = ReglaTipo.values();
 
             final TipoServicioBO tpsrBO = new TipoServicioBO();

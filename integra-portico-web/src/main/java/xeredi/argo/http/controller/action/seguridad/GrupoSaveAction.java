@@ -5,6 +5,7 @@ import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.seguridad.bo.GrupoBO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
 
@@ -43,7 +44,7 @@ public final class GrupoSaveAction extends CrudSaveAction<GrupoVO> {
      */
     @Override
     public void doValidate() throws ApplicationException {
-        if (accion != ACCION_EDICION.create) {
+        if (accion != AccionCodigo.create) {
             Preconditions.checkNotNull(model.getId());
         }
 

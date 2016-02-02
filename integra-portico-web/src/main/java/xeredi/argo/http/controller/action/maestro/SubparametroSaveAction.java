@@ -9,6 +9,7 @@ import xeredi.argo.model.maestro.bo.SubparametroBOFactory;
 import xeredi.argo.model.maestro.vo.SubparametroVO;
 import xeredi.argo.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.util.DateUtil;
 
 import com.google.common.base.Preconditions;
@@ -28,12 +29,12 @@ public final class SubparametroSaveAction extends ItemSaveAction<SubparametroVO>
     public void doSpecificValidate() throws ApplicationException {
         final TipoSubparametroDetailVO enti = TipoSubparametroProxy.select(model.getEntiId());
 
-        if (accion != ACCION_EDICION.edit) {
+        if (accion != AccionCodigo.edit) {
             FieldValidator.validateRequired(this, getText("enti_" + enti.getEnti().getTpprAsociado().getId()),
                     model.getPrmtAsociado());
         }
 
-        if (accion != ACCION_EDICION.create) {
+        if (accion != AccionCodigo.create) {
             Preconditions.checkNotNull(model.getId());
             Preconditions.checkNotNull(model.getVersion());
             Preconditions.checkNotNull(model.getVersion().getId());

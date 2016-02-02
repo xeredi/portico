@@ -10,6 +10,7 @@ import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
@@ -55,7 +56,7 @@ public final class EntidadTipoDatoSaveAction extends CrudSaveAction<EntidadTipoD
     public void doValidate() throws ApplicationException {
         Preconditions.checkNotNull(model.getEntiId());
 
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.tpdt, model.getTpdt());
         } else {
             Preconditions.checkNotNull(model.getTpdt());

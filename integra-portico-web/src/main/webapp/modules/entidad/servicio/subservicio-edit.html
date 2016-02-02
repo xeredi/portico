@@ -1,70 +1,77 @@
-<form role="form">
-    <fieldset>
-        <div class="row">
-            <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                <label data-translate="srvc"></label> <input data-ng-if="vm.accion != 'edit'" type="text"
-                    autocomplete="off" data-ng-model="vm.item.srvc" data-ng-controller="SrvcLupaController"
-                    data-ng-selected="vm.prtoId = vm.item.srvc.prto.id"
-                    data-uib-typeahead="srvc as srvc.etiqueta for srvc in search(vm.enti.enti.tpsrId, $viewValue)"
-                    data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
-                <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
-                    data-ng-bind="vm.item.srvc.etiqueta"></p>
-                <!-- data-ng-change="vm.prtoId = vm.item.srvc.prto.id"  -->
-            </div>
-            <div class="col-sm-1 col-md-1 form-group-sm">
-                <label data-translate="ssrv_numero"></label> <input data-ng-if="vm.accion != 'edit'"
-                    type="text" data-ng-model="vm.item.numero" class="form-control" />
-                <p data-ng-if="vm.accion == 'edit'" class="form-control-static" data-ng-bind="vm.item.numero"></p>
-            </div>
-
-            <div data-ng-if="vm.enti.enti.tpdtEstado" class="col-sm-3 col-md-2 form-group-sm">
-                <label data-translate="ssrv_estado"></label> <select data-ng-if="vm.accion != 'edit'"
-                    data-ng-model="vm.item.estado"
-                    data-ng-options="cdrf.valor as (('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.enti.enti.tpdtEstado.cdrfList"
-                    class="form-control">
-                    <option />
-                </select>
-                <p data-ng-if="vm.accion == 'edit'" class="form-control-static" data-ng-bind="vm.item.estado"></p>
-            </div>
-
-            <div data-ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
-                <label data-translate="fini"></label><input type="text" class="form-control"
-                    data-ng-model="vm.item.fini" data-max-date="{{vm.item.ffin}}" data-bs-datepicker />
-            </div>
-
-            <div data-ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
-                <label data-translate="ffin"></label><input type="text" class="form-control"
-                    data-ng-model="vm.item.ffin" data-min-date="{{vm.item.fini}}" data-bs-datepicker />
-            </div>
-
-            <div data-ng-repeat="entiId in vm.enti.entiPadresList track by $index"
-                data-ng-if="entiId != vm.enti.enti.tpsrId" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                <label data-ng-bind="'enti_' + entiId | translate"></label>
-                <p class="form-control-static">
-                    <a data-ng-href="#/servicio/ssrv/detail/{{entiId}}/{{vm.itemPadresMap[entiId].value}}">{{vm.itemPadresMap[entiId].label}}</a>
-                </p>
-            </div>
-
-            <div data-ng-if="vm.item.srvc.id" data-ng-repeat="entiPadre in vm.superentiList track by $index"
-                class="col-md-2 form-group-sm">
-                <label data-ng-bind="entiPadre.nombre"></label>
-                <div class="input-group-sm" data-ng-controller="SsrvLupaController">
-                    <input type="text" autocomplete="off" data-ng-model="vm.itemPadresMap[entiPadre.id]"
-                        data-uib-typeahead="ssrv as ssrv.etiqueta for ssrv in search(entiPadre.id, vm.item.srvc.id, $viewValue)"
+<div data-ng-if="vm.item">
+    <form role="form">
+        <fieldset>
+            <div class="row">
+                <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
+                    <label data-translate="srvc"></label> <input data-ng-if="vm.accion != 'edit'" type="text"
+                        autocomplete="off" data-ng-model="vm.item.srvc"
+                        data-ng-controller="SrvcLupaController"
+                        data-ng-selected="vm.prtoId = vm.item.srvc.prto.id"
+                        data-uib-typeahead="srvc as srvc.etiqueta for srvc in search(vm.enti.enti.tpsrId, $viewValue)"
                         data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
+                    <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
+                        data-ng-bind="vm.item.srvc.etiqueta"></p>
+                    <!-- data-ng-change="vm.prtoId = vm.item.srvc.prto.id"  -->
+                </div>
+                <div class="col-sm-1 col-md-1 form-group-sm">
+                    <label data-translate="ssrv_numero"></label> <input data-ng-if="vm.accion != 'edit'"
+                        type="text" data-ng-model="vm.item.numero" class="form-control" />
+                    <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
+                        data-ng-bind="vm.item.numero"></p>
+                </div>
+
+                <div data-ng-if="vm.enti.enti.tpdtEstado" class="col-sm-3 col-md-2 form-group-sm">
+                    <label data-translate="ssrv_estado"></label> <select data-ng-if="vm.accion != 'edit'"
+                        data-ng-model="vm.item.estado"
+                        data-ng-options="cdrf.valor as (('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + cdrf.valor) | translate) for cdrf in vm.enti.enti.tpdtEstado.cdrfList"
+                        class="form-control">
+                        <option />
+                    </select>
+                    <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
+                        data-ng-bind="vm.item.estado"></p>
+                </div>
+
+                <div data-ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
+                    <label data-translate="fini"></label><input type="text" class="form-control"
+                        data-ng-model="vm.item.fini" data-max-date="{{vm.item.ffin}}" data-bs-datepicker />
+                </div>
+
+                <div data-ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
+                    <label data-translate="ffin"></label><input type="text" class="form-control"
+                        data-ng-model="vm.item.ffin" data-min-date="{{vm.item.fini}}" data-bs-datepicker />
+                </div>
+
+                <div data-ng-repeat="entiId in vm.enti.entiPadresList track by $index"
+                    data-ng-if="entiId != vm.enti.enti.tpsrId"
+                    class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+                    <label data-ng-bind="'enti_' + entiId | translate"></label>
+                    <p class="form-control-static">
+                        <a data-ng-href="#/servicio/ssrv/detail/{{entiId}}/{{vm.itemPadresMap[entiId].value}}">{{vm.itemPadresMap[entiId].label}}</a>
+                    </p>
+                </div>
+
+                <div data-ng-if="vm.item.srvc.id"
+                    data-ng-repeat="entiPadre in vm.superentiList track by $index"
+                    class="col-md-2 form-group-sm">
+                    <label data-ng-bind="entiPadre.nombre"></label>
+                    <div class="input-group-sm" data-ng-controller="SsrvLupaController">
+                        <input type="text" autocomplete="off" data-ng-model="vm.itemPadresMap[entiPadre.id]"
+                            data-uib-typeahead="ssrv as ssrv.etiqueta for ssrv in search(entiPadre.id, vm.item.srvc.id, $viewValue)"
+                            data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
+                    </div>
                 </div>
             </div>
+
+            <div data-ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button data-ng-click="vm.save()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
+            </button>
+            <button data-ng-click="vm.cancel()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
+            </button>
         </div>
-
-        <div data-ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
-    </fieldset>
-
-    <div class="btn-group">
-        <button data-ng-click="vm.save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
-        </button>
-        <button data-ng-click="vm.cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
-        </button>
-    </div>
-</form>
+    </form>
+</div>

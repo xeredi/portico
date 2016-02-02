@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.Versionable;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 import com.google.common.base.Preconditions;
 
@@ -20,8 +21,9 @@ public abstract class CrudSaveAction<T> extends BaseAction implements ProtectedA
     private static final long serialVersionUID = 6571569363320765658L;
 
     /** The accion. */
+    @Getter
     @Setter
-    protected ACCION_EDICION accion;
+    protected AccionCodigo accion;
 
     /** The model. */
     @Getter
@@ -39,7 +41,7 @@ public abstract class CrudSaveAction<T> extends BaseAction implements ProtectedA
         if (model instanceof Versionable<?>) {
             Preconditions.checkNotNull(((Versionable<?>) model).getVersion());
 
-            if (accion != ACCION_EDICION.create) {
+            if (accion != AccionCodigo.create) {
                 Preconditions.checkNotNull(((Versionable<?>) model).getVersion().getId());
             }
         }
@@ -66,12 +68,4 @@ public abstract class CrudSaveAction<T> extends BaseAction implements ProtectedA
      *             the application exception
      */
     public abstract void doValidate() throws ApplicationException;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final String getAccnCodigo() {
-        return accion.name();
-    }
 }

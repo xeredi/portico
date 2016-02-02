@@ -11,6 +11,7 @@ import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.servicio.bo.ServicioSecuenciaBO;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaCriterioVO;
@@ -40,7 +41,7 @@ public final class ServicioSecuenciaEditAction extends CrudEditAction<ServicioSe
      */
     @Override
     public void doEdit() throws ApplicationException {
-        if (accion == ACCION_EDICION.edit) {
+        if (accion == AccionCodigo.edit) {
             Preconditions.checkNotNull(model.getPrto());
             Preconditions.checkNotNull(model.getPrto().getId());
             Preconditions.checkNotNull(model.getTpsr());

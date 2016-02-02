@@ -9,6 +9,7 @@ import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -32,7 +33,7 @@ public final class TipoSubservicioEditAction extends EntidadEditAction<TipoSubse
      */
     @Override
     public void doSpecificEdit() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             Preconditions.checkNotNull(model.getTpsrId());
         } else {
             final TipoSubservicioBO tpssBO = new TipoSubservicioBO();

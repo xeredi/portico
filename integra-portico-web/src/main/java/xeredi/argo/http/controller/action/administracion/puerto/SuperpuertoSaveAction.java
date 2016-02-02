@@ -10,6 +10,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
@@ -53,7 +54,7 @@ public final class SuperpuertoSaveAction extends CrudSaveAction<SuperpuertoVO> {
      */
     @Override
     public void doValidate() throws ApplicationException {
-        if (accion == ACCION_EDICION.edit) {
+        if (accion == AccionCodigo.edit) {
             Preconditions.checkNotNull(model.getId());
         }
 

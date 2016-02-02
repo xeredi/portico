@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
@@ -19,7 +20,7 @@ public final class TipoEstadisticaEditAction extends EntidadEditAction<TipoEstad
      */
     @Override
     public void doSpecificEdit() throws ApplicationException {
-        if (accion == ACCION_EDICION.edit) {
+        if (accion == AccionCodigo.edit) {
             final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
             model = tpesBO.select(model.getId(), getIdioma());

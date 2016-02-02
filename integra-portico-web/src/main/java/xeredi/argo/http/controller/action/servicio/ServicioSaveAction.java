@@ -6,6 +6,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.servicio.bo.ServicioBO;
 import xeredi.argo.model.servicio.bo.ServicioBOFactory;
 import xeredi.argo.model.servicio.vo.ServicioVO;
@@ -28,7 +29,7 @@ public final class ServicioSaveAction extends ItemSaveAction<ServicioVO> {
     public void doSpecificValidate() throws ApplicationException {
         final TipoServicioDetailVO enti = TipoServicioProxy.select(model.getEntiId());
 
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.prto, model.getPrto());
             FieldValidator.validateRequired(this, MessageI18nKey.srvc_anno, model.getAnno());
             FieldValidator.validateRequired(this, MessageI18nKey.srvc_numero, model.getNumero());

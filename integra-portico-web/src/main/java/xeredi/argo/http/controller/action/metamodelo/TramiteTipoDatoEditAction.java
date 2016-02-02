@@ -12,6 +12,7 @@ import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
@@ -57,7 +58,7 @@ public final class TramiteTipoDatoEditAction extends CrudEditAction<TramiteTipoD
     public void doLoadDependencies() throws ApplicationException {
         Preconditions.checkNotNull(model.getTrmtId());
 
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             final TramiteBO trmtBO = new TramiteBO();
 
             final TramiteVO trmt = trmtBO.select(model.getTrmtId(), getIdioma());

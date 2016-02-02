@@ -11,6 +11,7 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
@@ -53,7 +54,7 @@ public final class TipoDatoSaveAction extends CrudSaveAction<TipoDatoVO> {
      */
     @Override
     public void doValidate() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.tpdt_codigo, model.getCodigo());
         } else {
             Preconditions.checkNotNull(model.getId());

@@ -6,8 +6,8 @@
         <a data-ng-href="#/servicio" class="list-group-item col-sm-6 col-md-3" data-translate="srvcList"></a>
     </h4>
     <h4>
-        <a data-ng-href="#/estadistica/periodo-proceso/grid" class="list-group-item col-sm-6 col-md-3"
-            data-translate="estdList"></a>
+        <a data-ng-if="mc.hasAccnPath('pepr-list')" data-ng-href="#/estadistica/periodo-proceso/grid"
+            class="list-group-item col-sm-6 col-md-3" data-translate="estdList"></a>
     </h4>
     <h4>
         <a data-ng-href="#/maestro" class="list-group-item col-sm-6 col-md-3" data-translate="prmtList"></a>

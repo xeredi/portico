@@ -12,9 +12,7 @@
             data-ng-if="mc.hasAccnPath('tpdt-list')" class="col-md-6 col-lg-4 list-group-item"
             data-ng-href="#/metamodelo/tipo-dato/grid" data-translate="tpdtList"></a><a
             data-ng-if="mc.hasAccnPath('srsc-list')" class="col-md-6 col-lg-4 list-group-item"
-            data-ng-href="#/servicio/servicio-secuencia/grid" data-translate="srscList"></a><a
-            class="col-md-6 col-lg-4 list-group-item" data-ng-href="#/administracion/metamodelo/reload"
-            data-translate="menu_metamodelo_reload"></a>
+            data-ng-href="#/servicio/servicio-secuencia/grid" data-translate="srscList"></a>
     </div>
 </div>
 <div class="row">
@@ -22,23 +20,14 @@
         <span class="list-group-item active" data-translate="sec_configuracion"></span>
     </div>
     <div class="list-group col-sm-6 col-md-8 col-lg-9">
-        <a class="col-md-6 col-lg-4 list-group-item"
+        <a data-ng-if="mc.hasAccnPath('conf-list')" class="col-md-6 col-lg-4 list-group-item"
             data-ng-href="#/administracion/configuration/configuration/grid" data-translate="confList"></a> <a
-            class="col-md-6 col-lg-4 list-group-item"
+            data-ng-if="mc.hasAccnPath('m18n-list')" class="col-md-6 col-lg-4 list-group-item"
             data-ng-href="#/administracion/messagei18n/messagei18n/grid" data-translate="m18nList"></a><a
             data-ng-if="mc.hasAccnPath('sprt-list')" class="col-md-6 col-lg-4 list-group-item"
             data-ng-href="#/administracion/puerto/superpuerto/grid" data-translate="sprtList"></a><a
             data-ng-if="mc.hasAccnPath('prto-list')" class="col-md-6 col-lg-4 list-group-item"
             data-ng-href="#/administracion/puerto/puerto/grid" data-translate="prtoList"></a>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-6 col-md-4 col-lg-3">
-        <span class="list-group-item active" data-translate="sec_job"></span>
-    </div>
-    <div class="list-group col-sm-6 col-md-8 col-lg-9">
-        <a class="col-md-6 col-lg-4 list-group-item" data-ng-href="#/administracion/schr/detail"
-            data-translate="schr"></a>
     </div>
 </div>
 <div class="row">

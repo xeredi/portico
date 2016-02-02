@@ -6,6 +6,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ReglaIncompatibleBO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.util.DateUtil;
 
@@ -52,7 +53,7 @@ public final class ReglaIncompatibleSaveAction extends CrudSaveAction<ReglaIncom
     public void doValidate() throws ApplicationException {
         Preconditions.checkNotNull(model.getRgla1Id());
 
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.rgin_rgla2, model.getRgla2());
         } else {
             Preconditions.checkNotNull(model.getId());

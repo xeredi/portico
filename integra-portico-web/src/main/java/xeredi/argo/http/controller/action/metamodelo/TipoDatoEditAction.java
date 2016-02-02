@@ -19,6 +19,7 @@ import xeredi.argo.model.metamodelo.vo.TipoParametroCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
@@ -57,7 +58,7 @@ public final class TipoDatoEditAction extends CrudEditAction<TipoDatoVO> {
      */
     @Override
     public void doEdit() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             model = new TipoDatoVO();
         } else {
             Preconditions.checkNotNull(model.getId());

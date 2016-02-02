@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 import com.google.common.base.Preconditions;
 import com.opensymphony.xwork2.ModelDriven;
@@ -16,7 +17,7 @@ import com.opensymphony.xwork2.ModelDriven;
  *            the generic type
  */
 public abstract class GridFilterAction<C extends BaseCriterioVO> extends BaseAction implements ModelDriven<C>,
-        ProtectedAction {
+ProtectedAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -777906795137481254L;
@@ -71,7 +72,7 @@ public abstract class GridFilterAction<C extends BaseCriterioVO> extends BaseAct
      * {@inheritDoc}
      */
     @Override
-    public final String getAccnCodigo() {
-        return "list";
+    public final AccionCodigo getAccion() {
+        return AccionCodigo.list;
     }
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.Versionable;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 import com.google.common.base.Preconditions;
 import com.opensymphony.xwork2.ModelDriven;
@@ -23,8 +24,9 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
     private static final long serialVersionUID = 7147721554331909672L;
 
     /** The accion. */
+    @Getter
     @Setter
-    protected ACCION_EDICION accion;
+    protected AccionCodigo accion;
 
     /** The model. */
     @Getter
@@ -39,7 +41,7 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(model);
 
-        if (accion == ACCION_EDICION.edit || accion == ACCION_EDICION.duplicate) {
+        if (accion == AccionCodigo.edit || accion == AccionCodigo.duplicate) {
             if (model instanceof Versionable<?>) {
                 Preconditions.checkNotNull(((Versionable<?>) model).getFref());
             }
@@ -71,12 +73,4 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
      *             the application exception
      */
     public abstract void doLoadDependencies() throws ApplicationException;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final String getAccnCodigo() {
-        return accion.name();
-    }
 }

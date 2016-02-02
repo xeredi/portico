@@ -14,6 +14,7 @@ import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
@@ -36,7 +37,7 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
      */
     @Override
     public void doEdit() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             Preconditions.checkNotNull(model.getAspcId());
         } else {
             Preconditions.checkNotNull(model.getId());
@@ -57,7 +58,7 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
      */
     @Override
     public void doLoadDependencies() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             Preconditions.checkNotNull(model.getAspcId());
 
             final AspectoBO aspcBO = new AspectoBO();

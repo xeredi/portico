@@ -10,6 +10,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.I18nPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 import com.google.common.base.Preconditions;
 
@@ -34,7 +35,7 @@ public abstract class EntidadEditAction<T extends EntidadVO> extends CrudEditAct
      */
     @Override
     public final void doEdit() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             i18nMap = new HashMap<String, I18nVO>();
         } else {
             Preconditions.checkNotNull(model.getId());

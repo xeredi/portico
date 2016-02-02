@@ -198,13 +198,19 @@ function MainController(localStorageService) {
     var vm = this;
 
     vm.hasAccnPath = hasAccnPath;
+    vm.hasAcenPath = hasAcenPath;
 
-    function hasAccnPath(accnPath) {
+    function hasAccnPath(path) {
         var value = localStorageService.get("accnPaths")
-                && localStorageService.get("accnPaths").indexOf(accnPath) >= 0;
+                && localStorageService.get("accnPaths").indexOf(path) >= 0;
 
-        // console.log("hasAccnPath - path: " + accnPath + ", value: " + value
-        // + ", " + localStorageService.get("accnPaths"));
+        return value;
+    }
+
+    function hasAcenPath(entiId, path) {
+        var value = localStorageService.get("acenPaths")
+                && localStorageService.get("acenPaths")[entiId]
+                && localStorageService.get("acenPaths")[entiId].indexOf(path) >= 0;
 
         return value;
     }

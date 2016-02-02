@@ -8,6 +8,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
@@ -32,7 +33,7 @@ public final class CampoAgregacionEditAction extends CrudEditAction<CampoAgregac
     public void doEdit() throws ApplicationException {
         Preconditions.checkNotNull(model.getTpesId());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (accion == AccionCodigo.edit) {
             Preconditions.checkNotNull(model.getEntd());
             Preconditions.checkNotNull(model.getEntd().getId());
 

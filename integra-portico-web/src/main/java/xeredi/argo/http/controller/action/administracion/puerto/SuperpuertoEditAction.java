@@ -10,6 +10,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.I18nPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
@@ -30,7 +31,7 @@ public final class SuperpuertoEditAction extends CrudEditAction<SuperpuertoVO> {
      */
     @Override
     public void doEdit() throws ApplicationException {
-        if (accion == ACCION_EDICION.edit) {
+        if (accion == AccionCodigo.edit) {
             final SuperpuertoBO sprtBO = new SuperpuertoBO();
 
             model = sprtBO.select(model.getId(), idioma);

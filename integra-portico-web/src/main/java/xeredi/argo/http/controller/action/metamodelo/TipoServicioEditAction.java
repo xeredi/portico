@@ -9,6 +9,7 @@ import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -30,7 +31,7 @@ public final class TipoServicioEditAction extends EntidadEditAction<TipoServicio
      */
     @Override
     public void doSpecificEdit() throws ApplicationException {
-        if (accion == ACCION_EDICION.edit) {
+        if (accion == AccionCodigo.edit) {
             final TipoServicioBO tpsrBO = new TipoServicioBO();
 
             model = tpsrBO.select(model.getId(), getIdioma());

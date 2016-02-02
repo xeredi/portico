@@ -15,6 +15,7 @@ import xeredi.argo.model.maestro.bo.ParametroBOFactory;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoHtml;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -30,7 +31,7 @@ import com.google.common.base.Preconditions;
  *            the element type
  */
 public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidadDetailVO> extends CrudEditAction<I>
-implements ProtectedItemAction {
+        implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4070230048819938799L;
@@ -51,7 +52,7 @@ implements ProtectedItemAction {
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getEntiId());
 
-        if (accion != ACCION_EDICION.create) {
+        if (accion != AccionCodigo.create) {
             Preconditions.checkNotNull(model.getId());
         }
 

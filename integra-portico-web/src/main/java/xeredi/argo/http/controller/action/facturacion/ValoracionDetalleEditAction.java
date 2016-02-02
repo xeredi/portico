@@ -10,6 +10,7 @@ import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
@@ -45,7 +46,7 @@ public final class ValoracionDetalleEditAction extends CrudEditAction<Valoracion
 
         final ValoracionBO vlrcBO = new ValoracionBO();
 
-        if (accion == ACCION_EDICION.edit) {
+        if (accion == AccionCodigo.edit) {
             Preconditions.checkNotNull(model.getId());
 
             model = vlrcBO.selectVlrd(model.getId());

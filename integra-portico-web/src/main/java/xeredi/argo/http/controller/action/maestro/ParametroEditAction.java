@@ -19,6 +19,7 @@ import xeredi.argo.model.maestro.bo.ParametroBOFactory;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -44,14 +45,14 @@ public final class ParametroEditAction extends ItemEditAction<ParametroVO, TipoP
     public void doSpecificEdit() throws ApplicationException {
         enti = TipoParametroProxy.select(model.getEntiId());
 
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             i18nMap = new HashMap<String, I18nVO>();
         } else {
             final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
 
             model = prmtBO.select(model.getId(), idioma, model.getFref());
 
-            if (accion == ACCION_EDICION.duplicate_version) {
+            if (accion == AccionCodigo.duplicate_version) {
                 if (model.getVersion().getFfin() != null) {
                     model.getVersion().setFini(model.getVersion().getFfin());
                     model.getVersion().setFfin(null);

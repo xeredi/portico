@@ -6,22 +6,24 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.Getter;
-import xeredi.argo.http.controller.action.comun.ListAction;
+import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoServicioListadoAction.
  */
-public final class ServicioIndexAction extends ListAction<LabelValueVO> {
+public final class ServicioIndexAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5523514529976849793L;
+
+    @Getter
+    private List<LabelValueVO> resultList;
 
     /** {@link Map} de tipos de subservicio indexados por id de tipo de servicio. */
     @Getter
@@ -31,7 +33,7 @@ public final class ServicioIndexAction extends ListAction<LabelValueVO> {
      * {@inheritDoc}
      */
     @Override
-    public void doList() throws ApplicationException {
+    public void doExecute() throws ApplicationException {
         resultList = TipoServicioProxy.selectLabelValues();
 
         tpssMap = new HashMap<>();
@@ -43,14 +45,5 @@ public final class ServicioIndexAction extends ListAction<LabelValueVO> {
 
             tpssMap.get(vo.getEnti().getTpsrId()).add(new LabelValueVO(vo.getEnti().getNombre(), vo.getEnti().getId()));
         }
-    }
-
-    // get/set
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.item;
     }
 }

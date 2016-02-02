@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.comun;
 
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 public interface ProtectedAction {
@@ -15,5 +16,5 @@ public interface ProtectedAction {
      *
      * @return the accn codigo
      */
-    String getAccnCodigo();
+    AccionCodigo getAccion();
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.Versionable;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 import com.google.common.base.Preconditions;
 import com.opensymphony.xwork2.ModelDriven;
@@ -51,7 +52,7 @@ public abstract class CrudDetailAction<T> extends BaseAction implements ModelDri
      * {@inheritDoc}
      */
     @Override
-    public final String getAccnCodigo() {
-        return "detail";
+    public final AccionCodigo getAccion() {
+        return AccionCodigo.detail;
     }
 }

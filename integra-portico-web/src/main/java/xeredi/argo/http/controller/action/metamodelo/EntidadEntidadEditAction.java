@@ -11,6 +11,7 @@ import xeredi.argo.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
@@ -35,7 +36,7 @@ public final class EntidadEntidadEditAction extends CrudEditAction<EntidadEntida
     public void doEdit() throws ApplicationException {
         Preconditions.checkNotNull(model.getEntiPadreId());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (accion == AccionCodigo.edit) {
             Preconditions.checkNotNull(model.getEntiHija());
             Preconditions.checkNotNull(model.getEntiHija().getId());
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -41,7 +42,7 @@ public abstract class ListAction<R> extends BaseAction implements ProtectedActio
      * {@inheritDoc}
      */
     @Override
-    public final String getAccnCodigo() {
-        return "list";
+    public final AccionCodigo getAccion() {
+        return AccionCodigo.list;
     }
 }

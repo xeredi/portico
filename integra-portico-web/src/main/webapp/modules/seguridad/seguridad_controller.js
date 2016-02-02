@@ -83,6 +83,7 @@ function config($routeProvider) {
     })
 
     .when("/seguridad/usuario/salir", {
+        templateUrl : "modules/seguridad/usuario-acceso.html",
         controller : "UsuarioSalirController as vm",
     })
 
@@ -422,6 +423,8 @@ function UsuarioAccesoController($location, localStorageService,
                 function(data) {
                     localStorageService.set("accnPaths",
                             data.resultadoLogin.accnPaths);
+                    localStorageService.set("acenPaths",
+                            data.resultadoLogin.acenPaths);
 
                     $location.path("/");
                 });
@@ -431,11 +434,10 @@ function UsuarioAccesoController($location, localStorageService,
 }
 
 function UsuarioSalirController($location, localStorageService, UsuarioService) {
-    alert("Salir");
-
     UsuarioService.salir().then(function(data) {
         localStorageService.remove("accnPaths");
+        localStorageService.remove("acenPaths");
 
-        $location.path("/seguridad/usuario/acceso").replace();
+        $location.path("/seguridad/usuario/acceso");
     });
 }

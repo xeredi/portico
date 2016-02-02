@@ -39,7 +39,7 @@
             <if test="prefix != null">
                 AND accn_prefix = #{prefix}
             </if>
-            <if test="codigo != null and !codigo.empty">
+            <if test="codigo != null">
                 AND accn_codigo LIKE #{codigo}
             </if>
             <if test="entiId != null">

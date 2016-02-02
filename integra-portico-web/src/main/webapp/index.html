@@ -20,29 +20,24 @@
                 <li><a data-ng-href="#/" class="brand" data-ng-bind="title"></a></li>
                 <!-- li><span data-ng-bind="requestTimeMs"></span></li-->
             </ul>
-            <div data-ng-if="mc.hasAccnPath('secc-menu')" class="nav navbar-nav navbar-right">
+            <div class="nav navbar-nav navbar-right">
                 <ul class="dropdown">
                     <li class="btn-group" data-uib-dropdown data-is-open="status.isopen"><a
                         class="btn btn-primary dropdown-toggle" data-uib-dropdown-toggle
                         data-ng-disabled="disabled" data-translate="menu"></a>
                         <ul class="dropdown-menu" role="menu">
                             <li role="presentation" class="divider"></li>
-                            <li><a data-ng-if="mc.hasAccnPath('secc-inicio')" data-ng-href="#/"
-                                data-translate="page_home"></a></li>
+                            <li><a data-ng-href="#/" data-translate="page_home"></a></li>
                             <li role="presentation" class="divider"></li>
-                            <li><a data-ng-if="mc.hasAccnPath('secc-servicios')"
-                                data-ng-href="#/servicio" data-translate="srvcList"></a></li>
-                            <li><a data-ng-if="mc.hasAccnPath('secc-estadisticas')"
+                            <li><a data-ng-href="#/servicio" data-translate="srvcList"></a></li>
+                            <li><a data-ng-if="mc.hasAccnPath('pepr-list')"
                                 data-ng-href="#/estadistica/periodo-proceso/grid" data-translate="estdList"></a></li>
-                            <li><a data-ng-if="mc.hasAccnPath('secc-maestros')" data-ng-href="#/maestro"
-                                data-translate="prmtList"></a></li>
-                            <li><a data-ng-if="mc.hasAccnPath('secc-facturacion')"
-                                data-ng-href="#/facturacion" data-translate="sec_facturacion"></a></li>
-                            <li><a data-ng-if="mc.hasAccnPath('secc-procesos')"
+                            <li><a data-ng-href="#/maestro" data-translate="prmtList"></a></li>
+                            <li><a data-ng-href="#/facturacion" data-translate="sec_facturacion"></a></li>
+                            <li><a data-ng-if="mc.hasAccnPath('prbt-list')"
                                 data-ng-href="#/proceso/proceso/grid" data-translate="prbtList"></a></li>
                             <li role="presentation" class="divider"></li>
-                            <li><a data-ng-if="mc.hasAccnPath('secc-administracion')"
-                                data-ng-href="#/administracion" data-translate="sec_administracion"></a></li>
+                            <li><a data-ng-href="#/administracion" data-translate="sec_administracion"></a></li>
                             <li role="presentation" class="divider"></li>
                             <li><a data-ng-href="#/seguridad/usuario/salir" data-translate="usro_salir"></a></li>
                         </ul></li>
@@ -71,7 +66,7 @@
     <script type="text/javascript"
         src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.8.1/angular-translate.min.js"></script>
     <script type="text/javascript"
-        src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.1/ui-bootstrap-tpls.min.js"></script>
+        src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.2/ui-bootstrap-tpls.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
     <script type="text/javascript"
         src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.7/angular-strap.min.js"></script>

@@ -3,6 +3,7 @@ package xeredi.argo.http.controller.action.comun;
 import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.Versionable;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 import com.google.common.base.Preconditions;
 
@@ -49,8 +50,8 @@ public abstract class CrudRemoveAction<T> extends BaseAction implements Protecte
      * {@inheritDoc}
      */
     @Override
-    public String getAccnCodigo() {
-        return "remove";
+    public AccionCodigo getAccion() {
+        return AccionCodigo.remove;
     }
 
 }

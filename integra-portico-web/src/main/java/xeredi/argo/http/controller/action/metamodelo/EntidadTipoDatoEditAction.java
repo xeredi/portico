@@ -16,6 +16,7 @@ import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
 import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -49,7 +50,7 @@ public final class EntidadTipoDatoEditAction extends CrudEditAction<EntidadTipoD
     public void doEdit() throws ApplicationException {
         Preconditions.checkNotNull(model.getEntiId());
 
-        if (accion == ACCION_EDICION.edit) {
+        if (accion == AccionCodigo.edit) {
             Preconditions.checkNotNull(model.getId());
 
             final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();

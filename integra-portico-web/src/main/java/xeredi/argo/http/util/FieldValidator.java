@@ -10,7 +10,6 @@ import lombok.NonNull;
 import org.apache.commons.validator.GenericValidator;
 
 import xeredi.argo.http.controller.action.comun.BaseAction;
-import xeredi.argo.http.controller.action.comun.BaseAction.ACCION_EDICION;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.I18nVO;
@@ -25,6 +24,7 @@ import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 import com.google.common.base.Preconditions;
 
@@ -187,12 +187,11 @@ public final class FieldValidator {
      * @param versionable
      *            the versionable
      */
-    public static void validateVersion(final @NonNull BaseAction action, final ACCION_EDICION accion,
-            final Versionable<?> versionable) {
-        Preconditions.checkNotNull(versionable);
+    public static void validateVersion(final @NonNull BaseAction action, final @NonNull AccionCodigo accion,
+            final @NonNull Versionable<?> versionable) {
         Preconditions.checkNotNull(versionable.getVersion());
 
-        if (accion != ACCION_EDICION.create) {
+        if (accion != AccionCodigo.create) {
             Preconditions.checkNotNull(versionable.getVersion().getId());
         }
 

@@ -13,6 +13,7 @@ import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -40,7 +41,7 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
      */
     @Override
     public void doEdit() throws ApplicationException {
-        if (accion != ACCION_EDICION.create) {
+        if (accion != AccionCodigo.create) {
             Preconditions.checkNotNull(model.getId());
 
             final AspectoBO aspcBO = new AspectoBO();
@@ -60,7 +61,7 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
      */
     @Override
     public void doLoadDependencies() throws ApplicationException {
-        if (accion == ACCION_EDICION.create) {
+        if (accion == AccionCodigo.create) {
             tpsrList = TipoServicioProxy.selectLabelValues();
         }
     }

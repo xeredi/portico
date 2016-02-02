@@ -1,6 +1,8 @@
 package xeredi.argo.model.seguridad.bo;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
@@ -8,6 +10,9 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.metamodelo.dao.AccionEntidadDAO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 import xeredi.argo.model.seguridad.dao.AccionDAO;
 import xeredi.argo.model.seguridad.dao.UsuarioDAO;
 import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
@@ -69,7 +74,22 @@ public final class UsuarioAccesoBO {
                 paths.add(accn.getPath());
             }
 
-            return new ResultadoLoginVO(usro.getId(), usro.getNombre(), usro.getSprt(), usro.getPrto(), paths);
+            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
+            final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
+
+            acenCriterio.setUsroId(usro.getId());
+
+            final Map<Long, Set<String>> acenMap = new HashMap<>();
+
+            for (final AccionEntidadVO acen : acenDAO.selectList(acenCriterio)) {
+                if (!acenMap.containsKey(acen.getEntiId())) {
+                    acenMap.put(acen.getEntiId(), new HashSet<>());
+                }
+
+                acenMap.get(acen.getEntiId()).add(acen.getAccn().getPath());
+            }
+
+            return new ResultadoLoginVO(usro.getId(), usro.getNombre(), usro.getSprt(), usro.getPrto(), paths, acenMap);
         }
     }
 }

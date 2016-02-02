@@ -10,6 +10,7 @@ import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.CargoBO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.util.DateUtil;
 
@@ -57,7 +58,7 @@ public final class CargoSaveAction extends CrudSaveAction<CargoVO> {
      */
     @Override
     public void doValidate() throws ApplicationException {
-        if (ACCION_EDICION.create == accion) {
+        if (AccionCodigo.create == accion) {
             FieldValidator.validateRequired(this, MessageI18nKey.crgo_codigo, model.getCodigo());
             FieldValidator.validateRequired(this, MessageI18nKey.tpsr, model.getTpsr());
         } else {

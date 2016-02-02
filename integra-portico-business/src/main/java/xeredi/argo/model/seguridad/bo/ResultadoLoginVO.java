@@ -1,7 +1,9 @@
 package xeredi.argo.model.seguridad.bo;
 
+import java.util.Map;
 import java.util.Set;
 
+import lombok.Data;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 
@@ -9,6 +11,13 @@ import xeredi.argo.model.comun.vo.SuperpuertoVO;
 /**
  * The Class ResultadoLoginVO.
  */
+
+/*
+ * (non-Javadoc)
+ * 
+ * @see java.lang.Object#toString()
+ */
+@Data
 public final class ResultadoLoginVO {
 
     /** The usro id. */
@@ -26,6 +35,9 @@ public final class ResultadoLoginVO {
     /** The accn paths. */
     private final Set<String> accnPaths;
 
+    /** The acen paths. */
+    private final Map<Long, Set<String>> acenPaths;
+
     /**
      * Instantiates a new resultado login vo.
      *
@@ -39,60 +51,17 @@ public final class ResultadoLoginVO {
      *            the aprto
      * @param aaccnPaths
      *            the aaccn paths
+     * @param aacenPaths
+     *            the aacen paths
      */
     public ResultadoLoginVO(final Long ausroId, final String anombre, final SuperpuertoVO asprt, final PuertoVO aprto,
-            final Set<String> aaccnPaths) {
+            final Set<String> aaccnPaths, final Map<Long, Set<String>> aacenPaths) {
         super();
         usroId = ausroId;
         nombre = anombre;
         sprt = asprt;
         prto = aprto;
         accnPaths = aaccnPaths;
+        acenPaths = aacenPaths;
     }
-
-    /**
-     * Gets the usro id.
-     *
-     * @return the usro id
-     */
-    public Long getUsroId() {
-        return usroId;
-    }
-
-    /**
-     * Gets the nombre.
-     *
-     * @return the nombre
-     */
-    public String getNombre() {
-        return nombre;
-    }
-
-    /**
-     * Gets the sprt.
-     *
-     * @return the sprt
-     */
-    public SuperpuertoVO getSprt() {
-        return sprt;
-    }
-
-    /**
-     * Gets the prto.
-     *
-     * @return the prto
-     */
-    public PuertoVO getPrto() {
-        return prto;
-    }
-
-    /**
-     * Gets the accn paths.
-     *
-     * @return the accn paths
-     */
-    public Set<String> getAccnPaths() {
-        return accnPaths;
-    }
-
 }

@@ -11,6 +11,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.exception.InternalErrorException;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
+import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 import com.google.common.base.Preconditions;
 
@@ -73,8 +74,8 @@ public abstract class GridXlsExportAction<C extends BaseCriterioVO> extends Base
      * {@inheritDoc}
      */
     @Override
-    public final String getAccnCodigo() {
-        return "list";
+    public final AccionCodigo getAccion() {
+        return AccionCodigo.list;
     }
 
 }
