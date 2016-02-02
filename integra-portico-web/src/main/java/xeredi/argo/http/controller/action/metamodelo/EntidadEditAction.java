@@ -36,7 +36,7 @@ public abstract class EntidadEditAction<T extends EntidadVO> extends CrudEditAct
     @Override
     public final void doEdit() throws ApplicationException {
         if (accion == AccionCodigo.create) {
-            i18nMap = new HashMap<String, I18nVO>();
+            i18nMap = new HashMap<>();
         } else {
             Preconditions.checkNotNull(model.getId());
 

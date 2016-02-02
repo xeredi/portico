@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +61,7 @@ public final class TipoDatoEditAction extends CrudEditAction<TipoDatoVO> {
     public void doEdit() throws ApplicationException {
         if (accion == AccionCodigo.create) {
             model = new TipoDatoVO();
+            i18nMap = new HashMap<>();
         } else {
             Preconditions.checkNotNull(model.getId());
 

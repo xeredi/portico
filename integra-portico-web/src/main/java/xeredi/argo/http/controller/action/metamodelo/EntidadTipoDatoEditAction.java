@@ -1,6 +1,7 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +51,9 @@ public final class EntidadTipoDatoEditAction extends CrudEditAction<EntidadTipoD
     public void doEdit() throws ApplicationException {
         Preconditions.checkNotNull(model.getEntiId());
 
-        if (accion == AccionCodigo.edit) {
+        if (accion == AccionCodigo.create) {
+            i18nMap = new HashMap<>();
+        } else {
             Preconditions.checkNotNull(model.getId());
 
             final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();

@@ -3,10 +3,11 @@
         <div data-uib-tab data-select="vm.tabSelected(null)" data-heading="{{'enti' | translate}}">
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
-                    <a class="btn btn-default"
+                    <a class="btn btn-default" data-ng-if="mc.hasAccnPath('tpsr-edit')"
                         data-ng-href="#/metamodelo/tipo-servicio/edit/edit/{{vm.model.id}}"><i
                         class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
-                    <button data-ng-click="vm.remove()" class="btn btn-default">
+                    <button data-ng-if="mc.hasAccnPath('tpsr-remove')" data-ng-click="vm.remove()"
+                        class="btn btn-default">
                         <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
                     </button>
                 </div>
@@ -105,14 +106,13 @@
 
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group">
-                        <a class="btn btn-default"
+                        <a class="btn btn-default" data-ng-if="mc.hasAccnPath('tpss-create')"
                             data-ng-href="#/metamodelo/tipo-subservicio/edit/create/{{vm.model.id}}"><i
                             class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
                     </div>
                 </div>
 
-                <table data-ng-if="vm.subentiList"
-                    class="table-bordered table-condensed table-hover">
+                <table data-ng-if="vm.subentiList" class="table-bordered table-condensed table-hover">
                     <thead>
                         <tr>
                             <th nowrap="nowrap" />
@@ -131,7 +131,8 @@
                     </thead>
                     <tbody>
                         <tr data-ng-repeat="subenti in vm.subentiList track by $index">
-                            <td><a data-ng-href="#/metamodelo/tipo-subservicio/detail/{{subenti.id}}"><i
+                            <td><a data-ng-if="mc.hasAccnPath('tpss-detail')"
+                                data-ng-href="#/metamodelo/tipo-subservicio/detail/{{subenti.id}}"><i
                                     class="glyphicon glyphicon-search"></i></a></td>
                             <td data-ng-bind="subenti.codigo"></td>
                             <td data-ng-bind="subenti.nombre"></td>
@@ -156,14 +157,13 @@
 
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group">
-                        <a class="btn btn-default"
+                        <a class="btn btn-default" data-ng-if="mc.hasAccnPath('enen-create')"
                             data-ng-href="#/metamodelo/entidad-entidad/edit/create/{{vm.model.id}}"><i
                             class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
                     </div>
                 </div>
 
-                <table data-ng-if="vm.entiHijasList"
-                    class="table-bordered table-condensed table-hover">
+                <table data-ng-if="vm.entiHijasList" class="table-bordered table-condensed table-hover">
                     <thead>
                         <tr>
                             <th nowrap="nowrap" />
@@ -173,7 +173,8 @@
                     </thead>
                     <tbody>
                         <tr data-ng-repeat="entiHija in vmvm.modeljasList">
-                            <td><a data-ng-href="#/metamodelo/tipo-subservicio/detail/{{entiHija.id}}"><i
+                            <td><a data-ng-if="mc.hasAccnPath('tpss-detail')"
+                                data-ng-href="#/metamodelo/tipo-subservicio/detail/{{entiHija.id}}"><i
                                     class="glyphicon glyphicon-search"></i></a></td>
                             <td data-ng-bind="entiHija.codigo"></td>
                             <td data-ng-bind="entiHija.nombre"></td>
@@ -182,19 +183,27 @@
                 </table>
             </fieldset>
         </div>
-        <div data-uib-tab data-select="vm.tabSelected('entdList')" data-active="vm.tabActive['entdList']"
+        <div data-ng-if="mc.hasAccnPath('engd-list') || mc.hasAccnPath('entd-list')" data-uib-tab
+            data-select="vm.tabSelected('entdList')" data-active="vm.tabActive['entdList']"
             data-heading="{{'entdList' | translate}}">
-            <div data-ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
-            <div data-ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
+            <div data-ng-if="mc.hasAccnPath('engd-list')"
+                data-ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
+            <div data-ng-if="mc.hasAccnPath('entd-list')"
+                data-ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
         </div>
-        <div data-uib-tab data-select="vm.tabSelected('accnList')" data-active="vm.tabActive['accnList']"
+        <div data-ng-if="mc.hasAccnPath('enag-list') || mc.hasAccnPath('enac-list')" data-uib-tab
+            data-select="vm.tabSelected('accnList')" data-active="vm.tabActive['accnList']"
             data-heading="{{'accnList' | translate}}">
-            <div data-ng-include="'modules/metamodelo/fragment/entidad-accion-grid-content.html'"></div>
-            <div data-ng-include="'modules/metamodelo/fragment/entidad-accion-grid-grid-content.html'"></div>
+            <div data-ng-if="mc.hasAccnPath('enac-list')"
+                data-ng-include="'modules/metamodelo/fragment/entidad-accion-grid-content.html'"></div>
+            <div data-ng-if="mc.hasAccnPath('enag-list')"
+                data-ng-include="'modules/metamodelo/fragment/entidad-accion-grid-grid-content.html'"></div>
         </div>
-        <div data-uib-tab data-ng-if="vm.model.tpdtEstado.id" data-select="vm.tabSelected('trmtList')"
-            data-active="vm.tabActive['trmtList']" data-heading="{{'trmtList' | translate}}">
-            <div data-ng-include="'modules/metamodelo/fragment/tramite-grid-content.html'"></div>
+        <div data-ng-if="mc.hasAccnPath('trmt-list')" data-uib-tab data-ng-if="vm.model.tpdtEstado.id"
+            data-select="vm.tabSelected('trmtList')" data-active="vm.tabActive['trmtList']"
+            data-heading="{{'trmtList' | translate}}">
+            <div data-ng-if="mc.hasAccnPath('trmt-list')"
+                data-ng-include="'modules/metamodelo/fragment/tramite-grid-content.html'"></div>
         </div>
     </div>
 </div>

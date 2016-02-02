@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import lombok.Getter;
@@ -49,6 +50,8 @@ public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
         switch (accion) {
         case create:
             Preconditions.checkNotNull(model.getEntiId());
+
+            i18nMap = new HashMap<>();
 
             break;
         case edit:

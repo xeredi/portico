@@ -45,7 +45,8 @@
 
             <tbody>
                 <tr data-ng-repeat="enti in vm.resultList.list track by $index">
-                    <td><a data-ng-href="#/metamodelo/tipo-servicio/detail/{{enti.id}}"><i
+                    <td><a data-ng-if="mc.hasAccnPath('tpsr-detail')"
+                        data-ng-href="#/metamodelo/tipo-servicio/detail/{{enti.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="enti.codigo"></td>
                     <td data-ng-bind="enti.nombre"></td>

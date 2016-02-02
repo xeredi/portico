@@ -31,7 +31,8 @@
         </thead>
         <tbody>
             <tr data-ng-repeat="entd in vm.entdList track by $index">
-                <td><a data-ng-href="#/metamodelo/entidad-tipo-dato/detail/{{entd.id}}"><i
+                <td><a data-ng-if="mc.hasAccnPath('entd-detail')"
+                    data-ng-href="#/metamodelo/entidad-tipo-dato/detail/{{entd.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="entd.grupo" class="number"></td>
                 <td data-ng-bind="entd.fila" class="number"></td>

@@ -3,10 +3,11 @@
         <div data-uib-tab data-select="vm.tabSelected(null)" data-heading="{{'enti' | translate}}">
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
-                    <a class="btn btn-default"
+                    <a class="btn btn-default" data-ng-if="mc.hasAccnPath('tpsp-edit')"
                         data-ng-href="#/metamodelo/tipo-subparametro/edit/edit/{{vm.model.tpprId}}/{{vm.model.id}}"><i
                         class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
-                    <button data-ng-click="vm.remove()" class="btn btn-default">
+                    <button data-ng-if="mc.hasAccnPath('tpsp-remove')" data-ng-click="vm.remove()"
+                        class="btn btn-default">
                         <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
                     </button>
                 </div>
@@ -85,12 +86,15 @@
         </div>
         <div data-uib-tab data-select="vm.tabSelected('entdList')" data-active="vm.tabActive['entdList']"
             data-heading="{{'entdList' | translate}}">
-            <div data-ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
-            <div data-ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
+            <div data-ng-if="mc.hasAccnPath('engd-list')"
+                data-ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
+            <div data-ng-if="mc.hasAccnPath('entd-list')"
+                data-ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
         </div>
         <div data-uib-tab data-select="vm.tabSelected('accnList')" data-active="vm.tabActive['accnList']"
             data-heading="{{'accnList' | translate}}">
-            <div data-ng-include="'modules/metamodelo/fragment/entidad-accion-grid-content.html'"></div>
+            <div data-ng-if="mc.hasAccnPath('enag-list')"
+                data-ng-include="'modules/metamodelo/fragment/entidad-accion-grid-content.html'"></div>
         </div>
     </div>
 </div>

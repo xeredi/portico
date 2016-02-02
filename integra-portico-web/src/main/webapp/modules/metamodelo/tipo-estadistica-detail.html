@@ -34,7 +34,9 @@
                 <div class="row" data-ng-include="'modules/common/i18nMap-detail.html'"></div>
             </fieldset>
         </div>
-        <div data-uib-tab data-select="vm.tabSelected('entdList')" data-active="vm.tabActive['entdList']"
+        <div
+            data-ng-if="mc.hasAccnPath('engd-list') || mc.hasAccnPath('entd-list') || mc.hasAccnPath('cmag-list')"
+            data-uib-tab data-select="vm.tabSelected('entdList')" data-active="vm.tabActive['entdList']"
             data-heading="{{'entdList' | translate}}">
             <div data-ng-if="mc.hasAccnPath('engd-list')"
                 data-ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
@@ -62,7 +64,7 @@
                     </thead>
                     <tbody>
                         <tr data-ng-repeat="cmag in vm.cmagList track by $index">
-                            <td><a
+                            <td><a data-ng-if="mc.hasAccnPath('cmag-detail')"
                                 data-ng-href="#/metamodelo/campo-agregacion/detail/{{cmag.tpesId}}/{{cmag.entd.id}}"><i
                                     class="glyphicon glyphicon-search"></i></a></td>
                             <td data-ng-bind="cmag.nombre"></td>

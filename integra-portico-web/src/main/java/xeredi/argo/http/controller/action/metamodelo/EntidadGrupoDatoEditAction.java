@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import lombok.Getter;
@@ -35,7 +36,9 @@ public final class EntidadGrupoDatoEditAction extends CrudEditAction<EntidadGrup
     public void doEdit() throws ApplicationException {
         Preconditions.checkNotNull(model.getEntiId());
 
-        if (accion != AccionCodigo.create) {
+        if (accion == AccionCodigo.create) {
+            i18nMap = new HashMap<>();
+        } else {
             Preconditions.checkNotNull(model.getId());
 
             final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();

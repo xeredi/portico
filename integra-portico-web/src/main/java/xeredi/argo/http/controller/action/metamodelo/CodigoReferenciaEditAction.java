@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import lombok.Getter;
@@ -34,6 +35,8 @@ public final class CodigoReferenciaEditAction extends CrudEditAction<CodigoRefer
     public void doEdit() throws ApplicationException {
         if (accion == AccionCodigo.create) {
             Preconditions.checkNotNull(model.getTpdtId());
+
+            i18nMap = new HashMap<>();
         } else {
             Preconditions.checkNotNull(model.getId());
 

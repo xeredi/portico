@@ -18,7 +18,8 @@
         </thead>
         <tbody>
             <tr data-ng-repeat="trmt in vm.trmtList track by $index">
-                <td><a data-ng-href="#/metamodelo/tramite/detail/{{trmt.id}}"><i
+                <td><a data-ng-if="mc.hasAccnPath('trmt-detail')"
+                    data-ng-href="#/metamodelo/tramite/detail/{{trmt.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap" data-ng-bind="trmt.etiqueta"></td>
                 <td>{{trmt.estadoOrig}} - {{trmt.estadoOrigTexto}}</td>
