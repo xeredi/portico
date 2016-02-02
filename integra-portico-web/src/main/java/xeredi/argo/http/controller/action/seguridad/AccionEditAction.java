@@ -28,6 +28,9 @@ public final class AccionEditAction extends CrudEditAction<AccionVO> {
     @Getter
     private AccionPrefix[] prefixList;
 
+    @Getter
+    private AccionCodigo[] codigoList;
+
     /** The grpo list. */
     @Getter
     private List<GrupoVO> grpoList;
@@ -54,6 +57,7 @@ public final class AccionEditAction extends CrudEditAction<AccionVO> {
     @Override
     public void doLoadDependencies() throws ApplicationException {
         prefixList = AccionPrefix.values();
+        codigoList = AccionCodigo.values();
 
         final GrupoBO grpoBO = new GrupoBO();
         final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();

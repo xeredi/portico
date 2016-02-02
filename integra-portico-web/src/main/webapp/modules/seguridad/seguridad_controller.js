@@ -188,6 +188,7 @@ function AccionEditController($routeParams, pageTitleService, AccionService) {
         vm.model = data.model;
 
         vm.prefixList = data.prefixList;
+        vm.codigoList = data.codigoList;
         vm.grpoList = data.grpoList;
     });
 

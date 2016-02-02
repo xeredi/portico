@@ -36,7 +36,8 @@
             </thead>
             <tbody>
                 <tr data-ng-repeat="usro in vm.resultList.list track by $index">
-                    <td><a data-ng-href="#/seguridad/usuario/detail/{{usro.id}}"><i
+                    <td><a data-ng-if="mc.hasAccnPath('usro-detail')"
+                        data-ng-href="#/seguridad/usuario/detail/{{usro.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td nowrap="nowrap" data-ng-bind="usro.login"></td>
                     <td nowrap="nowrap" data-ng-bind="usro.nombre"></td>
