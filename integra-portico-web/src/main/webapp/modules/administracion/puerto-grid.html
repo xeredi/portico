@@ -6,13 +6,15 @@
     </div>
 
     <div class="btn-group">
-        <button class="btn btn-default" data-ng-click="vm.filter('lg')"
+        <button data-ng-if="mc.hasAccnPath('prto-list')" class="btn btn-default"
+            data-ng-click="vm.filter('lg')"
             data-template-url="modules/administracion/fragment/puerto-filter-content.html"
             data-bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
         </button>
-        <a class="btn btn-default" data-ng-href="#/administracion/puerto/puerto/edit/create"><i
-            class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
+        <a class="btn btn-default" data-ng-if="mc.hasAccnPath('prto-create')"
+            data-ng-href="#/administracion/puerto/puerto/edit/create"><i class="glyphicon glyphicon-file"></i>
+            <span data-translate="btn_crear"></span></a>
     </div>
 </div>
 
@@ -35,7 +37,8 @@
         </thead>
         <tbody>
             <tr data-ng-repeat="item in vm.prtoList.list track by $index">
-                <td><a data-ng-href="#/administracion/puerto/puerto/detail/{{item.id}}"><i
+                <td><a data-ng-if="mc.hasAccnPath('prto-detail')"
+                    data-ng-href="#/administracion/puerto/puerto/detail/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="item.codigo"></td>
                 <td data-ng-bind="item.nombre"></td>

@@ -321,7 +321,7 @@ function ServicioGridController($routeParams, pageTitleService, ServicioService)
 }
 
 function ServicioDetailController($routeParams, pageTitleService,
-        localStorageService, ServicioService, SubservicioService) {
+        credentialService, ServicioService, SubservicioService) {
     var vm = this;
 
     vm.remove = remove;
@@ -349,8 +349,7 @@ function ServicioDetailController($routeParams, pageTitleService,
     }
 
     function findSublist(subentiId, page) {
-        if (localStorageService.get("acenPaths")[subentiId]
-                .indexOf("item-list") >= 0) {
+        if (credentialService.hasAcenPath(subentiId, "item-list")) {
             var ssrvSearchCriteria = {
                 srvc : {
                     id : vm.item.id
@@ -501,7 +500,7 @@ function SubservicioGridController($routeParams, pageTitleService,
 }
 
 function SubservicioDetailController($routeParams, pageTitleService,
-        SubservicioService) {
+        credentialService, SubservicioService) {
     var vm = this;
 
     vm.remove = remove;
@@ -523,19 +522,21 @@ function SubservicioDetailController($routeParams, pageTitleService,
     }
 
     function findSublist(subentiId, page) {
-        var ssrvSearchCriteria = {
-            entiId : subentiId,
-            padreId : vm.item.id
-        };
+        if (credentialService.hasAcenPath(subentiId, "item-list")) {
+            var ssrvSearchCriteria = {
+                entiId : subentiId,
+                padreId : vm.item.id
+            };
 
-        SubservicioService.listPage(ssrvSearchCriteria, page, vm.limit).then(
-                function(data) {
-                    vm.entiHijasMap[data.enti.enti.id] = data.enti;
-                    vm.itemHijosMap[data.enti.enti.id] = data.resultList;
-                    vm.pageMap[data.enti.enti.id] = data.resultList.page;
+            SubservicioService.listPage(ssrvSearchCriteria, page, vm.limit)
+                    .then(function(data) {
+                        vm.entiHijasMap[data.enti.enti.id] = data.enti;
+                        vm.itemHijosMap[data.enti.enti.id] = data.resultList;
+                        vm.pageMap[data.enti.enti.id] = data.resultList.page;
 
-                    SubservicioService.pageMapChanged(vm.pageMap);
-                });
+                        SubservicioService.pageMapChanged(vm.pageMap);
+                    });
+        }
     }
 
     vm.tabActive = {};

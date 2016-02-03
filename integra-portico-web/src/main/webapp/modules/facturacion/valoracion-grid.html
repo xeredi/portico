@@ -7,14 +7,16 @@
                 data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
         </div>
         <div class="btn-group">
-            <button class="btn btn-default" data-ng-click="vm.filter('lg')"
+            <button data-ng-if="mc.hasAccnPath('vlrc-list')" class="btn btn-default"
+                data-ng-click="vm.filter('lg')"
                 data-template-url="modules/facturacion/fragment/valoracion-filter-content.html"
                 data-bs-modal="modal">
                 <i class="glyphicon glyphicon-search"></i><span data-translate="btn_filtrar"></span>
             </button>
-            <a class="btn btn-default" data-ng-href="#/facturacion/valoracion/edit/create"><i
-                class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span> </a> <a
-                class="btn btn-default" data-ng-href="#/facturacion/facturador/edit/create"><i
+            <a class="btn btn-default" data-ng-if="mc.hasAccnPath('vlrc-create')"
+                data-ng-href="#/facturacion/valoracion/edit/create"><i class="glyphicon glyphicon-file"></i>
+                <span data-translate="btn_crear"></span> </a> <a class="btn btn-default"
+                data-ng-if="mc.hasAccnPath('fcdr-create')" data-ng-href="#/facturacion/facturador/edit/create"><i
                 class="glyphicon glyphicon-search"></i> <span data-translate="fcdr"></span></a>
         </div>
 
@@ -58,7 +60,8 @@
 
             <tbody>
                 <tr data-ng-repeat="item in vm.resultList.list track by $index">
-                    <td><a data-ng-href="#/facturacion/valoracion/detail/{{item.id}}"><i
+                    <td><a data-ng-if="mc.hasAccnPath('vlrc-detail')"
+                        data-ng-href="#/facturacion/valoracion/detail/{{item.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="item.id"></td>
                     <td nowrap="nowrap" data-ng-bind="('enti_' + item.srvc.entiId | translate)"></td>

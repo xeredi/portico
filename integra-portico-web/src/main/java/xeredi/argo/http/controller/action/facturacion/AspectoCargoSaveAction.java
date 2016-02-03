@@ -1,5 +1,7 @@
 package xeredi.argo.http.controller.action.facturacion;
 
+import java.util.Calendar;
+
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -27,9 +29,6 @@ public final class AspectoCargoSaveAction extends CrudSaveAction<AspectoCargoVO>
     @Override
     public void doSave() throws ApplicationException {
         final AspectoCargoBO ascrBO = new AspectoCargoBO();
-
-        model.getVersion().setFini(DateUtil.resetTime(model.getVersion().getFini()));
-        model.getVersion().setFfin(DateUtil.resetTime(model.getVersion().getFfin()));
 
         switch (accion) {
         case create:
@@ -60,11 +59,10 @@ public final class AspectoCargoSaveAction extends CrudSaveAction<AspectoCargoVO>
             Preconditions.checkNotNull(model.getVersion().getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion());
+        DateUtil.truncTime(model.getVersion().getFini(), Calendar.HOUR_OF_DAY);
+        DateUtil.truncTime(model.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
 
-        if (!hasErrors()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
-        }
+        FieldValidator.validateVersion(this, accion, model);
     }
 
     /**

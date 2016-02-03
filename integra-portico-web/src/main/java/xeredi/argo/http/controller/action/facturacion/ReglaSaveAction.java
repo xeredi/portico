@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.facturacion;
 
+import java.util.Calendar;
 import java.util.Map;
 
 import lombok.Setter;
@@ -40,9 +41,6 @@ public final class ReglaSaveAction extends CrudSaveAction<ReglaVO> {
     public void doSave() throws ApplicationException {
         final ReglaBO rglaBO = new ReglaBO();
 
-        model.getVersion().setFini(DateUtil.resetTime(model.getVersion().getFini()));
-        model.getVersion().setFfin(DateUtil.resetTime(model.getVersion().getFfin()));
-
         switch (accion) {
         case create:
             rglaBO.insert(model, i18nMap);
@@ -73,7 +71,12 @@ public final class ReglaSaveAction extends CrudSaveAction<ReglaVO> {
 
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_tipo, model.getTipo());
         FieldValidator.validateRequired(this, MessageI18nKey.enti, model.getEnti());
-        FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
+
+        DateUtil.truncTime(model.getVersion().getFini(), Calendar.HOUR_OF_DAY);
+        DateUtil.truncTime(model.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
+
+        FieldValidator.validateVersion(this, accion, model);
+
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_orden, model.getVersion().getOrden());
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_condicion, model.getVersion().getCondicion());
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_formula, model.getVersion().getFormula());

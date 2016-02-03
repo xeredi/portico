@@ -21,22 +21,47 @@ public final class DateUtil {
      *
      * @param date
      *            the date
-     * @return the date
+     * @param field
+     *            the field
      */
-    public static Date resetTime(final Date date) {
+    public static void truncTime(final Date date, final int field) {
         if (date != null) {
             final Calendar calendar = Calendar.getInstance();
 
             calendar.setTime(date);
-            calendar.set(Calendar.HOUR_OF_DAY, 0);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
 
-            return calendar.getTime();
+            switch (field) {
+            case Calendar.HOUR_OF_DAY:
+                calendar.set(Calendar.HOUR_OF_DAY, 0);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+
+                break;
+            case Calendar.MINUTE:
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+
+                break;
+            case Calendar.SECOND:
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+
+                break;
+            case Calendar.MILLISECOND:
+                calendar.set(Calendar.HOUR_OF_DAY, 0);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+
+                break;
+
+            default:
+                throw new Error("Tipo de hora no soportado: " + field);
+            }
+
+            date.setTime(calendar.getTime().getTime());
         }
-
-        return null;
     }
-
 }

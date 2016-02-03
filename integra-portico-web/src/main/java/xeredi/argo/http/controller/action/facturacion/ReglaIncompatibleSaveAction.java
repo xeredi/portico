@@ -1,5 +1,7 @@
 package xeredi.argo.http.controller.action.facturacion;
 
+import java.util.Calendar;
+
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -27,9 +29,6 @@ public final class ReglaIncompatibleSaveAction extends CrudSaveAction<ReglaIncom
     @Override
     public void doSave() throws ApplicationException {
         final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
-
-        model.getVersion().setFini(DateUtil.resetTime(model.getVersion().getFini()));
-        model.getVersion().setFfin(DateUtil.resetTime(model.getVersion().getFfin()));
 
         switch (accion) {
         case create:
@@ -62,7 +61,10 @@ public final class ReglaIncompatibleSaveAction extends CrudSaveAction<ReglaIncom
             Preconditions.checkNotNull(model.getRgla2().getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
+        DateUtil.truncTime(model.getVersion().getFini(), Calendar.HOUR_OF_DAY);
+        DateUtil.truncTime(model.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
+
+        FieldValidator.validateVersion(this, accion, model);
     }
 
     /**

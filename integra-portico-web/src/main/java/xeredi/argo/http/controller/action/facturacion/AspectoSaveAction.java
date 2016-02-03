@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.facturacion;
 
+import java.util.Calendar;
 import java.util.Map;
 
 import lombok.Setter;
@@ -39,9 +40,6 @@ public final class AspectoSaveAction extends CrudSaveAction<AspectoVO> {
     public void doSave() throws ApplicationException {
         final AspectoBO aspcBO = new AspectoBO();
 
-        model.getVersion().setFini(DateUtil.resetTime(model.getVersion().getFini()));
-        model.getVersion().setFfin(DateUtil.resetTime(model.getVersion().getFfin()));
-
         switch (accion) {
         case create:
             aspcBO.insert(model, i18nMap);
@@ -72,6 +70,9 @@ public final class AspectoSaveAction extends CrudSaveAction<AspectoVO> {
         } else {
             Preconditions.checkNotNull(model.getId());
         }
+
+        DateUtil.truncTime(model.getVersion().getFini(), Calendar.HOUR_OF_DAY);
+        DateUtil.truncTime(model.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
 
         FieldValidator.validateVersion(this, accion, model);
         FieldValidator.validateRequired(this, MessageI18nKey.aspc_prioridad, model.getVersion().getPrioridad());

@@ -51,7 +51,8 @@
             </thead>
             <tbody>
                 <tr data-ng-repeat="item in vm.itemList.list track by $index">
-                    <td><a data-ng-href="#/servicio/servicio/detail/{{item.entiId}}/{{item.id}}"><i
+                    <td><a data-ng-if="mc.hasAcenPath(vm.enti.enti.id, 'item-detail')"
+                        data-ng-href="#/servicio/servicio/detail/{{item.entiId}}/{{item.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="item.etiqueta" nowrap="nowrap"></td>
                     <td data-ng-if="vm.enti.enti.tpdtEstado" nowrap="nowrap" data-bs-tooltip

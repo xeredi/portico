@@ -200,7 +200,7 @@
                 </thead>
                 <tbody>
                     <tr data-ng-repeat="rgin in vm.rginList track by $index">
-                        <td><a
+                        <td><a data-ng-if="mc.hasAccnPath('rgin-detail')"
                             data-ng-href="#/facturacion/regla-incompatible/detail/{{rgin.id}}/{{rgin.fref}}"><i
                                 class="glyphicon glyphicon-search"></i></a></td>
                         <td data-ng-bind="rgin.rgla2.codigo"></td>

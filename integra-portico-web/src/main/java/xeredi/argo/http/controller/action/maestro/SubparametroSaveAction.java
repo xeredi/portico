@@ -1,9 +1,10 @@
 package xeredi.argo.http.controller.action.maestro;
 
+import java.util.Calendar;
+
 import xeredi.argo.http.controller.action.item.ItemSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.maestro.bo.SubparametroBO;
 import xeredi.argo.model.maestro.bo.SubparametroBOFactory;
 import xeredi.argo.model.maestro.vo.SubparametroVO;
@@ -40,12 +41,10 @@ public final class SubparametroSaveAction extends ItemSaveAction<SubparametroVO>
             Preconditions.checkNotNull(model.getVersion().getId());
         }
 
-        if (model.getVersion() == null) {
-            FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion());
-        } else {
-            FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
-            FieldValidator.validatePeriod(this, model.getVersion().getFini(), model.getVersion().getFfin());
-        }
+        DateUtil.truncTime(model.getVersion().getFini(), Calendar.HOUR_OF_DAY);
+        DateUtil.truncTime(model.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
+
+        FieldValidator.validateVersion(this, accion, model);
 
         FieldValidator.validateItem(this, enti, model);
     }
@@ -57,9 +56,6 @@ public final class SubparametroSaveAction extends ItemSaveAction<SubparametroVO>
     public void doSave() throws ApplicationException {
         final SubparametroBO itemBO = SubparametroBOFactory.newInstance(model.getEntiId());
         final TipoSubparametroDetailVO enti = TipoSubparametroProxy.select(model.getEntiId());
-
-        model.getVersion().setFini(DateUtil.resetTime(model.getVersion().getFini()));
-        model.getVersion().setFfin(DateUtil.resetTime(model.getVersion().getFfin()));
 
         switch (accion) {
         case create:

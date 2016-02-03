@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.facturacion;
 
+import java.util.Calendar;
 import java.util.Map;
 
 import lombok.Setter;
@@ -36,9 +37,6 @@ public final class CargoSaveAction extends CrudSaveAction<CargoVO> {
     public void doSave() throws ApplicationException {
         final CargoBO crgoBO = new CargoBO();
 
-        model.getVersion().setFini(DateUtil.resetTime(model.getVersion().getFini()));
-        model.getVersion().setFfin(DateUtil.resetTime(model.getVersion().getFfin()));
-
         switch (accion) {
         case create:
             crgoBO.insert(model, i18nMap);
@@ -66,11 +64,14 @@ public final class CargoSaveAction extends CrudSaveAction<CargoVO> {
         }
 
         FieldValidator.validateI18n(this, i18nMap);
-
         FieldValidator.validateRequired(this, MessageI18nKey.crgo_tipo, model.getVersion().getTipo());
         FieldValidator.validateRequired(this, MessageI18nKey.crgo_temporal, model.getVersion().getTemporal());
         FieldValidator.validateRequired(this, MessageI18nKey.crgo_principal, model.getVersion().getPrincipal());
-        FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
+
+        DateUtil.truncTime(model.getVersion().getFini(), Calendar.HOUR_OF_DAY);
+        DateUtil.truncTime(model.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
+
+        FieldValidator.validateVersion(this, accion, model);
     }
 
     /**

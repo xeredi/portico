@@ -6,7 +6,8 @@
             </button>
         </div>
         <div class="btn-group">
-            <button data-ng-click="vm.remove()" class="btn btn-default">
+            <button data-ng-if="mc.hasAccnPath('pepr-remove')" data-ng-click="vm.remove()"
+                class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
         </div>
@@ -45,8 +46,10 @@
     </fieldset>
 
     <div class="list-group col-sm-4 col-md-3">
-        <a data-ng-href="#/estadistica/cuadro-mes/detail/{{vm.model.id}}" class="list-group-item"
+        <a data-ng-if="mc.hasAccnPath('cdms-detail')"
+            data-ng-href="#/estadistica/cuadro-mes/detail/{{vm.model.id}}" class="list-group-item"
             data-ng-bind="'cdms' | translate | uppercase"></a> <a
+            data-ng-if="mc.hasAcenPath(enti.value, 'item-list')"
             data-ng-href="#/estadistica/estadistica/grid/{{enti.value}}/{{vm.model.id}}/{{vm.model.sprt.id}}"
             class="list-group-item" data-ng-repeat="enti in vm.tpesList track by $index"
             data-ng-bind="'enti_' + enti.value | translate | uppercase"></a>

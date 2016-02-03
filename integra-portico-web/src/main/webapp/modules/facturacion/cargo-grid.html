@@ -41,7 +41,8 @@
 
             <tbody>
                 <tr data-ng-repeat="crgo in vm.resultList.list track by $index">
-                    <td><a data-ng-href="#/facturacion/cargo/detail/{{crgo.id}}/{{crgo.fref}}"><i
+                    <td><a data-ng-if="mc.hasAccnPath('crgo-detail')"
+                        data-ng-href="#/facturacion/cargo/detail/{{crgo.id}}/{{crgo.fref}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="crgo.codigo"></td>
                     <td data-ng-bind="crgo.version.descripcion"></td>

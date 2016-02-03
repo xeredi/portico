@@ -187,18 +187,42 @@ angular
 
         .factory('pageTitleService', pageTitleService)
 
+        .factory('credentialService', credentialService)
+
         .controller("MainController", MainController)
 
         .controller("HomeController", HomeController)
 
 ;
 
-function MainController(localStorageService) {
+function MainController(credentialService) {
     // console.log("MainController");
     var vm = this;
 
     vm.hasAccnPath = hasAccnPath;
     vm.hasAcenPath = hasAcenPath;
+
+    function hasAccnPath(path) {
+        return credentialService.hasAccnPath(path);
+    }
+
+    function hasAcenPath(entiId, path) {
+        return credentialService.hasAcenPath(entiId, path);
+    }
+}
+
+function HomeController($http, pageTitleService) {
+    $http.post("index.action").success(function(data) {
+    });
+
+    pageTitleService.setTitle("page_home", "page_home");
+}
+
+function credentialService(localStorageService) {
+    return {
+        hasAccnPath : hasAccnPath,
+        hasAcenPath : hasAcenPath
+    };
 
     function hasAccnPath(path) {
         var value = localStorageService.get("accnPaths")
@@ -214,13 +238,6 @@ function MainController(localStorageService) {
 
         return value;
     }
-}
-
-function HomeController($http, pageTitleService) {
-    $http.post("index.action").success(function(data) {
-    });
-
-    pageTitleService.setTitle("page_home", "page_home");
 }
 
 function pageTitleService($rootScope, $translate) {

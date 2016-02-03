@@ -233,7 +233,7 @@
 
                 <tbody>
                     <tr data-ng-repeat="ascr in vm.ascrList track by $index">
-                        <td><a
+                        <td><a data-ng-if="mc.hasAccnPath('ascr-detail')"
                             data-ng-href="#/facturacion/aspecto-cargo/detail/{{ascr.id}}/{{ascr.fref}}"><i
                                 class="glyphicon glyphicon-search"></i></a></td>
                         <td data-ng-bind="ascr.crgo.etiqueta"></td>

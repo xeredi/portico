@@ -1,21 +1,25 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <div data-uib-pagination data-total-items="vm.resultList.count" data-items-per-page="vm.resultList.limit"
-            data-ng-model="vm.currentPage" data-ng-change="vm.pageChanged()" class="pagination"
-            data-max-size="1" data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
+        <div data-uib-pagination data-total-items="vm.resultList.count"
+            data-items-per-page="vm.resultList.limit" data-ng-model="vm.currentPage"
+            data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
+            data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
     </div>
 
     <div class="btn-group">
-        <button class="btn btn-default" data-ng-click="vm.filter('lg')"
+        <button class="btn btn-default" data-ng-if="mc.hasAccnPath('pepr-list')"
+            data-ng-click="vm.filter('lg')"
             data-template-url="modules/entidad/estadistica/fragment/periodo-proceso-filter-content.html"
             data-bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
         </button>
-        <a class="btn btn-default" data-ng-href="#/estadistica/periodo-proceso/edit/load"><i
-            class="glyphicon glyphicon-upload"></i> <span data-translate="btn_cargar"></span></a> <a
-            class="btn btn-default" data-ng-href="#/estadistica/periodo-proceso/edit/create"><i
-            class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
+        <a class="btn btn-default" data-ng-if="mc.hasAccnPath('pepr-load')"
+            data-ng-href="#/estadistica/periodo-proceso/edit/load"><i class="glyphicon glyphicon-upload"></i>
+            <span data-translate="btn_cargar"></span></a> <a class="btn btn-default"
+            data-ng-if="mc.hasAccnPath('pepr-create')"
+            data-ng-href="#/estadistica/periodo-proceso/edit/create"><i class="glyphicon glyphicon-file"></i>
+            <span data-translate="btn_crear"></span></a>
     </div>
 </div>
 
@@ -36,7 +40,8 @@
         </thead>
         <tbody>
             <tr data-ng-repeat="item in vm.resultList.list track by $index">
-                <td><a data-ng-href="#/estadistica/periodo-proceso/detail/{{item.id}}"><i
+                <td><a data-ng-if="mc.hasAccnPath('pepr-detail')"
+                    data-ng-href="#/estadistica/periodo-proceso/detail/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="item.sprt.etiqueta"></td>
                 <td data-ng-bind="item.anio" class="number"></td>

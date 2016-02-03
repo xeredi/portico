@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.maestro;
 
+import java.util.Calendar;
 import java.util.Map;
 
 import lombok.Setter;
@@ -44,7 +45,11 @@ public final class ParametroSaveAction extends ItemSaveAction<ParametroVO> {
         }
 
         FieldValidator.validateRequired(this, MessageI18nKey.prmt_parametro, model.getParametro());
-        FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion());
+
+        DateUtil.truncTime(model.getVersion().getFini(), Calendar.HOUR_OF_DAY);
+        DateUtil.truncTime(model.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
+
+        FieldValidator.validateVersion(this, accion, model);
 
         if (!hasErrors()) {
             FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
@@ -69,9 +74,6 @@ public final class ParametroSaveAction extends ItemSaveAction<ParametroVO> {
     public void doSave() throws ApplicationException {
         final ParametroBO itemBO = ParametroBOFactory.newInstance(model.getEntiId());
         final TipoParametroDetailVO enti = TipoParametroProxy.select(model.getEntiId());
-
-        model.getVersion().setFini(DateUtil.resetTime(model.getVersion().getFini()));
-        model.getVersion().setFfin(DateUtil.resetTime(model.getVersion().getFfin()));
 
         switch (accion) {
         case create:

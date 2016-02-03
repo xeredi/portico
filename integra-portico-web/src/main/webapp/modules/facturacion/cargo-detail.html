@@ -91,7 +91,8 @@
 
                 <tbody>
                     <tr data-ng-repeat="rgla in vm.rglaList track by $index">
-                        <td><a data-ng-href="#/facturacion/regla/detail/{{rgla.id}}/{{rgla.fref}}"><i
+                        <td><a data-ng-if="mc.hasAccnPath('rgla-detail')"
+                            data-ng-href="#/facturacion/regla/detail/{{rgla.id}}/{{rgla.fref}}"><i
                                 class="glyphicon glyphicon-search"></i></a></td>
                         <td data-ng-bind="rgla.codigo"></td>
                         <td nowrap="nowrap" data-ng-bind="rgla.texto"></td>

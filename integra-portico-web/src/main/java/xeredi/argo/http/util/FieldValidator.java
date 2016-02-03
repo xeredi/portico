@@ -153,7 +153,7 @@ public final class FieldValidator {
      *            the end date
      */
     public static void validatePeriod(final @NonNull BaseAction action, final Date startDate, final Date endDate) {
-        if (startDate != null && endDate != null && startDate.after(endDate)) {
+        if (startDate != null && endDate != null && !endDate.after(startDate)) {
             action.addActionError(MessageI18nKey.E00006);
         }
     }

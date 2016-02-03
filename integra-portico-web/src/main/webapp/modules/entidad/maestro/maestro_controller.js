@@ -128,7 +128,7 @@ function ParametroGridController($routeParams, pageTitleService,
 }
 
 function ParametroDetailController($routeParams, pageTitleService,
-        ParametroService, SubparametroService) {
+        credentialService, ParametroService, SubparametroService) {
     var vm = this;
 
     vm.remove = remove;
@@ -180,21 +180,24 @@ function ParametroDetailController($routeParams, pageTitleService,
 
                         if (data.enti && vm.enti.entiHijasList) {
                             for (i = 0; i < vm.enti.entiHijasList.length; i++) {
-                                var sprmSearchCriteria = {
-                                    prmt : {
-                                        id : vm.item.id
-                                    },
-                                    entiId : vm.enti.entiHijasList[i],
-                                    fechaVigencia : vm.item.fref
-                                };
+                                if (credentialService.hasAcenPath(
+                                        vm.enti.entiHijasList[i], "item-list")) {
+                                    var sprmSearchCriteria = {
+                                        prmt : {
+                                            id : vm.item.id
+                                        },
+                                        entiId : vm.enti.entiHijasList[i],
+                                        fechaVigencia : vm.item.fref
+                                    };
 
-                                SubparametroService
-                                        .listPage(sprmSearchCriteria)
-                                        .then(
-                                                function(data) {
-                                                    vm.entiHijasMap[data.enti.enti.id] = data.enti;
-                                                    vm.itemHijosMap[data.enti.enti.id] = data.resultList;
-                                                });
+                                    SubparametroService
+                                            .listPage(sprmSearchCriteria)
+                                            .then(
+                                                    function(data) {
+                                                        vm.entiHijasMap[data.enti.enti.id] = data.enti;
+                                                        vm.itemHijosMap[data.enti.enti.id] = data.resultList;
+                                                    });
+                                }
                             }
                         }
                     });
