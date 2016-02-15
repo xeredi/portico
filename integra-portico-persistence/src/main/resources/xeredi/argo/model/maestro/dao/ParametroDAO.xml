@@ -131,35 +131,6 @@
 		<![CDATA[
 			AND (
 				prmt_parametro LIKE #{textoBusqueda}
-
-		        OR (
-		            EXISTS (
-		                SELECT 1
-		                FROM tbl_parametro_dato_prdt
-		                WHERE prdt_prvr_pk = prvr_pk
-		                    AND prdt_tpdt_pk = (
-		                        SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr
-		                        WHERE tppr_pk = prmt_tppr_pk
-		                    )
-		                    AND prdt_cadena LIKE #{textoBusqueda}
-		            )
-		        )
-		]]>
-            <if test="idioma != null">
-	        <![CDATA[
-		        OR (
-		            EXISTS (
-		                SELECT 1
-		                FROM tbl_i18n_i18n
-		                WHERE i18n_ext_pk = prvr_pk
-		                    AND i18n_pref = 'prvr'
-		                    AND i18n_lang = #{idioma}
-		                    AND i18n_text LIKE #{textoBusqueda}
-		            )
-		        )
-	        ]]>
-            </if>
-		<![CDATA[
 			)
 		]]>
         </if>

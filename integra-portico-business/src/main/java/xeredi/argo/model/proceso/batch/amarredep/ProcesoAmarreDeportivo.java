@@ -46,7 +46,7 @@ public final class ProcesoAmarreDeportivo extends ProcesoTemplate {
     protected void ejecutarProceso() {
         final Date ffin = findDateParameter(params.ffin.name());
 
-        if (prmnList.isEmpty()) {
+        if (prbtData.getPrmnList().isEmpty()) {
             final TipoServicioDetailVO enti = TipoServicioProxy.select(Entidad.AMARRE_DEP_SRV.getId());
 
             final AmarreDeportivoServicioBO bo = new AmarreDeportivoServicioBO();

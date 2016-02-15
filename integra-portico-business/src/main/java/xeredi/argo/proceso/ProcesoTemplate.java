@@ -1,15 +1,17 @@
 package xeredi.argo.proceso;
 
-import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import lombok.Getter;
+import lombok.NonNull;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,7 +19,6 @@ import org.apache.commons.logging.LogFactory;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
-import xeredi.argo.model.comun.vo.ArchivoInfoVO;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.item.vo.ItemDatoCriterioVO;
@@ -32,9 +33,7 @@ import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
 import xeredi.argo.model.proceso.vo.MensajeNivel;
-import xeredi.argo.model.proceso.vo.ProcesoItemVO;
 import xeredi.argo.model.proceso.vo.ProcesoMensajeVO;
-import xeredi.argo.model.proceso.vo.ProcesoParametroVO;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
 
@@ -49,41 +48,11 @@ public abstract class ProcesoTemplate {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ProcesoTemplate.class);
 
+    private static final int BATCH_MAX_SIZE = 1000;
+
     /** The prbt vo. */
-    protected ProcesoVO prbt;
-
-    /** The prmn list. */
-    protected List<ProcesoMensajeVO> prmnList;
-
-    /** The prit entrada list. */
-    protected List<ProcesoItemVO> pritEntradaList;
-
-    /** The prit salida list. */
-    protected List<Long> itemSalidaList;
-
-    /** The arin salida list. */
-    protected File fileSalida;
-
-    /** The arin entrada list. */
-    protected List<ArchivoInfoVO> arinEntradaList;
-
-    /** The prpm map. */
-    protected Map<String, ProcesoParametroVO> prpmMap;
-
-    /** The codigo maestro map. */
-    protected final Map<Entidad, Set<String>> codigoMaestroMap = new HashMap<>();
-
-    /** The nif set. */
-    protected final Set<String> nifSet = new HashSet<>();
-
-    /** The maestro map. */
-    protected final Map<Entidad, Map<String, ParametroVO>> maestroMap = new HashMap<>();
-
-    /** The maestro prto map. */
-    protected final Map<Entidad, Map<Long, Map<String, ParametroVO>>> maestroPrtoMap = new HashMap<>();
-
-    /** The organizaciones map. */
-    protected final Map<String, ParametroVO> organizacionesMap = new HashMap<>();
+    @Getter
+    protected ProcesoData prbtData;
 
     /**
      * Procesar.
@@ -92,6 +61,7 @@ public abstract class ProcesoTemplate {
         prepararProcesos();
 
         final ProcesoBO prbtBO = new ProcesoBO();
+        ProcesoVO prbt = null;
 
         do {
             prbt = prbtBO.proteger(getProcesoTipo());
@@ -102,12 +72,12 @@ public abstract class ProcesoTemplate {
                 }
 
                 try {
-                    prmnList = new ArrayList<>();
-                    itemSalidaList = new ArrayList<>();
+                    prbtData = new ProcesoData();
 
-                    prpmMap = prbtBO.selectPrpmMap(prbt.getId());
-                    arinEntradaList = prbtBO.selectArinEntradaList(prbt.getId());
-                    pritEntradaList = prbtBO.selectPritEntradaList(prbt.getId());
+                    prbtData.setPrbt(prbt);
+                    prbtData.getPrpmMap().putAll(prbtBO.selectPrpmMap(prbt.getId()));
+                    prbtData.getArinEntradaList().addAll(prbtBO.selectArinEntradaList(prbt.getId()));
+                    prbtData.getPritEntradaList().addAll(prbtBO.selectPritEntradaList(prbt.getId()));
 
                     ejecutarProceso();
                 } catch (final Throwable ex) {
@@ -118,8 +88,8 @@ public abstract class ProcesoTemplate {
                 }
 
                 try {
-                    prbtBO.finalizar(prbt.getId(), prmnList, getProcesoTipo().getItemTipoSalida(), itemSalidaList,
-                            fileSalida);
+                    prbtBO.finalizar(prbt.getId(), prbtData.getPrmnList(), getProcesoTipo().getItemTipoSalida(),
+                            prbtData.getItemSalidaList(), prbtData.getFileSalida());
                 } catch (final InstanceNotFoundException ex) {
                     LOG.fatal("Proceso " + prbt.getId() + " no encontrado al tratar de finalizarlo. " + prbt);
                 } catch (final OperacionNoPermitidaException ex) {
@@ -140,28 +110,42 @@ public abstract class ProcesoTemplate {
             LOG.info("Busqueda de Maestros");
         }
 
-        for (final Entidad entidad : codigoMaestroMap.keySet()) {
+        for (final Entidad entidad : prbtData.getCodigoMaestroMap().keySet()) {
             final TipoParametroDetailVO tpprDetail = TipoParametroProxy.select(entidad.getId());
             final ParametroBO prmtBO = ParametroBOFactory.newInstance(entidad.getId());
-            final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
 
-            prmtCriterio.setEntiId(entidad.getId());
-            prmtCriterio.setParametros(codigoMaestroMap.get(entidad));
-            prmtCriterio.setFechaVigencia(fechaVigencia);
-            prmtCriterio.setIdioma(ConfigurationProxy.getString(ConfigurationKey.language_default));
+            prbtData.getMaestroMap().put(entidad, new HashMap<String, ParametroVO>());
+            prbtData.getMaestroPrtoMap().put(entidad, new HashMap<Long, Map<String, ParametroVO>>());
 
-            maestroMap.put(entidad, new HashMap<String, ParametroVO>());
-            maestroPrtoMap.put(entidad, new HashMap<Long, Map<String, ParametroVO>>());
+            final Set<String> batchPrmtSet = new HashSet<>();
+            final Iterator<String> prmtIterator = prbtData.getCodigoMaestroMap().get(entidad).iterator();
 
-            for (final ParametroVO prmt : prmtBO.selectList(prmtCriterio)) {
-                if (tpprDetail.getEnti().getPuerto()) {
-                    if (!maestroPrtoMap.get(entidad).containsKey(prmt.getPrto().getId())) {
-                        maestroPrtoMap.get(entidad).put(prmt.getPrto().getId(), new HashMap<String, ParametroVO>());
+            while (prmtIterator.hasNext()) {
+                batchPrmtSet.add(prmtIterator.next());
+
+                if (batchPrmtSet.size() == BATCH_MAX_SIZE || !prmtIterator.hasNext()) {
+                    final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
+
+                    prmtCriterio.setEntiId(entidad.getId());
+                    prmtCriterio.setParametros(batchPrmtSet);
+                    prmtCriterio.setFechaVigencia(fechaVigencia);
+                    prmtCriterio.setIdioma(ConfigurationProxy.getString(ConfigurationKey.language_default));
+
+                    for (final ParametroVO prmt : prmtBO.selectList(prmtCriterio)) {
+                        if (tpprDetail.getEnti().getPuerto()) {
+                            if (!prbtData.getMaestroPrtoMap().get(entidad).containsKey(prmt.getPrto().getId())) {
+                                prbtData.getMaestroPrtoMap().get(entidad)
+                                .put(prmt.getPrto().getId(), new HashMap<String, ParametroVO>());
+                            }
+
+                            prbtData.getMaestroPrtoMap().get(entidad).get(prmt.getPrto().getId())
+                            .put(prmt.getParametro(), prmt);
+                        } else {
+                            prbtData.getMaestroMap().get(entidad).put(prmt.getParametro(), prmt);
+                        }
                     }
 
-                    maestroPrtoMap.get(entidad).get(prmt.getPrto().getId()).put(prmt.getParametro(), prmt);
-                } else {
-                    maestroMap.get(entidad).put(prmt.getParametro(), prmt);
+                    batchPrmtSet.clear();
                 }
             }
         }
@@ -174,29 +158,41 @@ public abstract class ProcesoTemplate {
      *            the fecha vigencia
      */
     protected final void buscarOrganizaciones(final Date fechaVigencia) {
-        if (!nifSet.isEmpty()) {
+        if (!prbtData.getNifSet().isEmpty()) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Busqueda de Organizaciones");
             }
 
             final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.ORGANIZACION.getId());
-            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+            final Set<String> batchNifSet = new HashSet<>();
+            final Iterator<String> nifIterator = prbtData.getNifSet().iterator();
 
-            prmtCriterioVO.setItdtMap(new HashMap<Long, ItemDatoCriterioVO>());
-            prmtCriterioVO.setEntiId(Entidad.ORGANIZACION.getId());
-            prmtCriterioVO.setFechaVigencia(fechaVigencia);
+            while (nifIterator.hasNext()) {
+                batchNifSet.add(nifIterator.next());
 
-            final ItemDatoCriterioVO itdtCriterioVO = new ItemDatoCriterioVO();
+                if (batchNifSet.size() == BATCH_MAX_SIZE || !nifIterator.hasNext()) {
+                    final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
-            itdtCriterioVO.setTpdtId(TipoDato.CADENA_02.getId());
-            itdtCriterioVO.setCadenas(nifSet);
+                    prmtCriterioVO.setItdtMap(new HashMap<Long, ItemDatoCriterioVO>());
+                    prmtCriterioVO.setEntiId(Entidad.ORGANIZACION.getId());
+                    prmtCriterioVO.setFechaVigencia(fechaVigencia);
 
-            prmtCriterioVO.getItdtMap().put(TipoDato.CADENA_02.getId(), itdtCriterioVO);
+                    final ItemDatoCriterioVO itdtCriterioVO = new ItemDatoCriterioVO();
 
-            final List<ParametroVO> prmtList = prmtBO.selectList(prmtCriterioVO);
+                    itdtCriterioVO.setTpdtId(TipoDato.CADENA_02.getId());
+                    itdtCriterioVO.setCadenas(batchNifSet);
 
-            for (final ParametroVO prmtVO : prmtList) {
-                organizacionesMap.put(prmtVO.getItdtMap().get(TipoDato.CADENA_02.getId()).getCadena(), prmtVO);
+                    prmtCriterioVO.getItdtMap().put(TipoDato.CADENA_02.getId(), itdtCriterioVO);
+
+                    final List<ParametroVO> prmtList = prmtBO.selectList(prmtCriterioVO);
+
+                    for (final ParametroVO prmtVO : prmtList) {
+                        prbtData.getOrganizacionesMap().put(
+                                prmtVO.getItdtMap().get(TipoDato.CADENA_02.getId()).getCadena(), prmtVO);
+                    }
+
+                    batchNifSet.clear();
+                }
             }
         }
     }
@@ -209,13 +205,13 @@ public abstract class ProcesoTemplate {
      * @param codigo
      *            the codigo
      */
-    public final void addCodigoMaestro(final Entidad entidad, final String codigo) {
-        if (!codigoMaestroMap.containsKey(entidad)) {
-            codigoMaestroMap.put(entidad, new HashSet<String>());
+    public final void addCodigoMaestro(final @NonNull Entidad entidad, final String codigo) {
+        if (!prbtData.getCodigoMaestroMap().containsKey(entidad)) {
+            prbtData.getCodigoMaestroMap().put(entidad, new HashSet<String>());
         }
 
         if (codigo != null && !codigo.isEmpty()) {
-            codigoMaestroMap.get(entidad).add(codigo);
+            prbtData.getCodigoMaestroMap().get(entidad).add(codigo);
         }
     }
 
@@ -228,13 +224,13 @@ public abstract class ProcesoTemplate {
      *            the codigo
      * @return the parametro vo
      */
-    public final ParametroVO findMaestro(final Entidad entidad, final String codigo) {
+    public final ParametroVO findMaestro(final @NonNull Entidad entidad, final String codigo) {
         if (codigo == null || codigo.isEmpty()) {
             return null;
         }
 
-        if (maestroMap.containsKey(entidad)) {
-            return maestroMap.get(entidad).get(codigo);
+        if (prbtData.getMaestroMap().containsKey(entidad)) {
+            return prbtData.getMaestroMap().get(entidad).get(codigo);
         }
 
         return null;
@@ -259,8 +255,9 @@ public abstract class ProcesoTemplate {
             return null;
         }
 
-        if (maestroPrtoMap.containsKey(entidad) && maestroPrtoMap.get(entidad).containsKey(prto.getId())) {
-            return maestroPrtoMap.get(entidad).get(prto.getId()).get(codigo);
+        if (prbtData.getMaestroPrtoMap().containsKey(entidad)
+                && prbtData.getMaestroPrtoMap().get(entidad).containsKey(prto.getId())) {
+            return prbtData.getMaestroPrtoMap().get(entidad).get(prto.getId()).get(codigo);
         }
 
         return null;
@@ -275,13 +272,13 @@ public abstract class ProcesoTemplate {
      *            the codigo
      * @return true, if successful
      */
-    public final boolean existsMaestro(final Entidad entidad, final String codigo) {
+    public final boolean existsMaestro(final @NonNull Entidad entidad, final String codigo) {
         if (codigo == null || codigo.isEmpty()) {
             return false;
         }
 
-        if (maestroMap.containsKey(entidad)) {
-            return maestroMap.get(entidad).containsKey(codigo);
+        if (prbtData.getMaestroMap().containsKey(entidad)) {
+            return prbtData.getMaestroMap().get(entidad).containsKey(codigo);
         }
 
         return false;
@@ -299,7 +296,7 @@ public abstract class ProcesoTemplate {
             return null;
         }
 
-        return organizacionesMap.get(codigo);
+        return prbtData.getOrganizacionesMap().get(codigo);
     }
 
     /**
@@ -309,7 +306,7 @@ public abstract class ProcesoTemplate {
      *            the nif
      */
     public final void addNif(final String nif) {
-        nifSet.add(nif);
+        prbtData.getNifSet().add(nif);
     }
 
     /**
@@ -322,7 +319,8 @@ public abstract class ProcesoTemplate {
      * @param mensaje
      *            the mensaje
      */
-    private final void addMensaje(final MensajeCodigo codigo, final MensajeNivel nivel, final String mensaje) {
+    private final void addMensaje(final @NonNull MensajeCodigo codigo, final @NonNull MensajeNivel nivel,
+            final String mensaje) {
         final ProcesoMensajeVO prmnVO = new ProcesoMensajeVO();
 
         prmnVO.setCodigo(codigo);
@@ -332,7 +330,7 @@ public abstract class ProcesoTemplate {
             prmnVO.setMensaje(mensaje.length() < 250 ? mensaje : mensaje.substring(0, 250));
         }
 
-        prmnList.add(prmnVO);
+        prbtData.getPrmnList().add(prmnVO);
     }
 
     /**
@@ -343,7 +341,7 @@ public abstract class ProcesoTemplate {
      * @param mensaje
      *            the mensaje
      */
-    public final void addError(final MensajeCodigo codigo, final String mensaje) {
+    public final void addError(final @NonNull MensajeCodigo codigo, final String mensaje) {
         addMensaje(codigo, MensajeNivel.E, mensaje);
     }
 
@@ -355,7 +353,7 @@ public abstract class ProcesoTemplate {
      * @param mensaje
      *            the mensaje
      */
-    public final void addWarning(final MensajeCodigo codigo, final String mensaje) {
+    protected final void addWarning(final @NonNull MensajeCodigo codigo, final String mensaje) {
         addMensaje(codigo, MensajeNivel.W, mensaje);
     }
 
@@ -367,7 +365,7 @@ public abstract class ProcesoTemplate {
      * @param mensaje
      *            the mensaje
      */
-    public final void addInfo(final MensajeCodigo codigo, final String mensaje) {
+    protected final void addInfo(final @NonNull MensajeCodigo codigo, final String mensaje) {
         addMensaje(codigo, MensajeNivel.I, mensaje);
     }
 
@@ -403,8 +401,8 @@ public abstract class ProcesoTemplate {
      * @return the string
      */
     protected final String findStringParameter(final String paramName) {
-        if (prpmMap.containsKey(paramName)) {
-            final String parameterValue = prpmMap.get(paramName).getValor();
+        if (prbtData.getPrpmMap().containsKey(paramName)) {
+            final String parameterValue = prbtData.getPrpmMap().get(paramName).getValor();
 
             if (parameterValue == null || parameterValue.isEmpty()) {
                 addError(MensajeCodigo.G_012, paramName);
@@ -419,22 +417,13 @@ public abstract class ProcesoTemplate {
     }
 
     /**
-     * Gets the prbt.
-     *
-     * @return the prbt
-     */
-    public final ProcesoVO getPrbt() {
-        return prbt;
-    }
-
-    /**
      * Adds the prit salida.
      *
      * @param itemId
      *            the item id
      */
-    public final void addPritSalida(final Long itemId) {
-        itemSalidaList.add(itemId);
+    public final void addPritSalida(final @NonNull Long itemId) {
+        prbtData.getItemSalidaList().add(itemId);
     }
 
     /**

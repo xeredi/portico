@@ -184,6 +184,6 @@ public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> i
      */
     @Override
     public final AccionPrefix getAccnPrefix() {
-        return AccionPrefix.item;
+        return AccionPrefix.ittr;
     }
 }

@@ -9,9 +9,12 @@ import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.I18nPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
+import xeredi.argo.model.metamodelo.bo.AccionTramiteBO;
 import xeredi.argo.model.metamodelo.bo.EntidadBO;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
 import xeredi.argo.model.metamodelo.bo.TramiteTipoDatoBO;
+import xeredi.argo.model.metamodelo.vo.AccionTramiteCriterioVO;
+import xeredi.argo.model.metamodelo.vo.AccionTramiteVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
@@ -41,6 +44,10 @@ public final class TramiteDetailAction extends CrudDetailAction<TramiteVO> {
     @Getter
     private List<TramiteTipoDatoVO> trtdList;
 
+    /** The actr list. */
+    @Getter
+    private List<AccionTramiteVO> actrList;
+
     /**
      * {@inheritDoc}
      */
@@ -54,6 +61,10 @@ public final class TramiteDetailAction extends CrudDetailAction<TramiteVO> {
 
         i18nMap = I18nBO.selectMap(I18nPrefix.trmt, model.getId());
 
+        final EntidadBO entiBO = new EntidadBO();
+
+        enti = entiBO.select(model.getEntiId(), getIdioma());
+
         final TramiteTipoDatoBO trtdBO = new TramiteTipoDatoBO();
         final TramiteTipoDatoCriterioVO trtdCriterio = new TramiteTipoDatoCriterioVO();
 
@@ -62,9 +73,13 @@ public final class TramiteDetailAction extends CrudDetailAction<TramiteVO> {
 
         trtdList = trtdBO.selectList(trtdCriterio);
 
-        final EntidadBO entiBO = new EntidadBO();
+        final AccionTramiteBO actrBO = new AccionTramiteBO();
+        final AccionTramiteCriterioVO actrCriterio = new AccionTramiteCriterioVO();
 
-        enti = entiBO.select(model.getEntiId(), getIdioma());
+        actrCriterio.setTrmtId(model.getId());
+        actrCriterio.setIdioma(getIdioma());
+
+        actrList = actrBO.selectList(actrCriterio);
     }
 
     /**

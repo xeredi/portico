@@ -51,12 +51,12 @@
                 <div class="row">
                     <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                         <label data-translate="prbt_erroresCnt"></label>
-                        <p class="form-control-static number"
+                        <p class="form-control-static number  {{(vm.model.erroresCnt > 0 ? 'error' : '')}}"
                             data-ng-bind="(vm.model.erroresCnt | number:0)"></p>
                     </div>
                     <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                         <label data-translate="prbt_alertasCnt"></label>
-                        <p class="form-control-static number"
+                        <p class="form-control-static number  {{(vm.model.alertasCnt > 0 ? 'warning' : '')}}"
                             data-ng-bind="(vm.model.alertasCnt | number:0)"></p>
                     </div>
                     <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">

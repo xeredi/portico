@@ -843,7 +843,7 @@ public class ParametroBO {
      */
     public final List<ParametroVO> selectLupaList(final @NonNull ParametroCriterioVO criterio, final int limit) {
         if (criterio.getTextoBusqueda() != null) {
-            criterio.setTextoBusqueda('%' + criterio.getTextoBusqueda() + '%');
+            criterio.setTextoBusqueda(criterio.getTextoBusqueda() + '%');
         }
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

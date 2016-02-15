@@ -84,8 +84,8 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
      */
     @Override
     protected void ejecutarProceso() {
-        if (prmnList.isEmpty()) {
-            for (final ArchivoInfoVO arin : arinEntradaList) {
+        if (prbtData.getPrmnList().isEmpty()) {
+            for (final ArchivoInfoVO arin : prbtData.getArinEntradaList()) {
                 LOG.info("Importar: " + arin.getNombre());
 
                 final ArchivoBO flsrBO = new ArchivoBO();
@@ -96,15 +96,15 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
 
                     pescaFileImport.readMaestros(lines);
 
-                    if (prmnList.isEmpty()) {
+                    if (prbtData.getPrmnList().isEmpty()) {
                         buscarMaestros(pescaFileImport.getFechaReferencia());
                     }
 
-                    if (prmnList.isEmpty()) {
+                    if (prbtData.getPrmnList().isEmpty()) {
                         pescaFileImport.readFile(lines, arin.getNombre());
                     }
 
-                    if (prmnList.isEmpty()) {
+                    if (prbtData.getPrmnList().isEmpty()) {
                         final ManifiestoPescaBO srvcBO = new ManifiestoPescaBO();
 
                         try {
@@ -112,14 +112,10 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
 
                             srvcBO.insert(pescaFileImport.getSrvc(), pescaFileImport.getSsrvList(), null, arin.getId());
 
-                            itemSalidaList.add(pescaFileImport.getSrvc().getId());
+                            prbtData.getItemSalidaList().add(pescaFileImport.getSrvc().getId());
                         } catch (final DuplicateInstanceException ex) {
                             addError(MensajeCodigo.G_011, pescaFileImport.getSrvc().getEtiqueta());
                         }
-                    }
-
-                    if (LOG.isInfoEnabled()) {
-                        LOG.info(prmnList);
                     }
                 } catch (final IOException ex) {
                     LOG.error(ex, ex);

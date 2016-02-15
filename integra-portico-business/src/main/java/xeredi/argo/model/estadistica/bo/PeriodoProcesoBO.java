@@ -165,6 +165,22 @@ public class PeriodoProcesoBO {
     }
 
     /**
+     * Generar cuadro mensual.
+     *
+     * @param peprId
+     *            the pepr id
+     * @param removeIfExists
+     *            the remove if exists
+     */
+    public final void generarCuadroMensual(final @NonNull Long peprId, final boolean removeIfExists) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            generarCuadroMensual(session, peprId, removeIfExists);
+
+            session.commit();
+        }
+    }
+
+    /**
      * Delete.
      *
      * @param session
@@ -199,10 +215,31 @@ public class PeriodoProcesoBO {
             estdCriterio.setPepr(new PeriodoProcesoCriterioVO());
             estdCriterio.getPepr().setId(peprActualVO.getId());
 
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Borrado período de proceso: " + peprActualVO.getId());
+                LOG.debug("Desasociar servicios");
+            }
+
             srvcDAO.updatePeprDesasociar(peprActualVO.getId());
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Borrado esdt");
+            }
             esdtDAO.deleteList(estdCriterio);
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Borrado estd");
+            }
             estdDAO.deleteList(estdCriterio);
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Borrado cdms");
+            }
             cdmsDAO.deleteList(estdCriterio.getPepr());
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Borrado pepr");
+            }
             peprDAO.delete(peprActualVO);
         }
     }
@@ -863,7 +900,6 @@ public class PeriodoProcesoBO {
         if (LOG.isDebugEnabled()) {
             LOG.debug(CuadroMesConcepto.GSNIES);
         }
-
         cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
                 CuadroMesConcepto.GSNIES, orden++, TipoDato.DECIMAL_01, "E", "C", "ZZ", "E", "C%", "**************N"));
         cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,

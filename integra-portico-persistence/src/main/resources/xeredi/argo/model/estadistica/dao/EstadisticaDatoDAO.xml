@@ -3,27 +3,27 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.argo.model.estadistica.dao.EstadisticaDatoDAO">
-	<resultMap type="ItemDatoVO" id="ResultMap">
-		<id column="esdt_estd_pk" property="itemId" />
-		<id column="esdt_tpdt_pk" property="tpdtId" />
-		<result column="esdt_nentero" property="cantidadEntera" />
-		<result column="esdt_ndecimal" property="cantidadDecimal" />
-		<result column="esdt_cadena" property="cadena" />
+    <resultMap type="ItemDatoVO" id="ResultMap">
+        <id column="esdt_estd_pk" property="itemId" />
+        <id column="esdt_tpdt_pk" property="tpdtId" />
+        <result column="esdt_nentero" property="cantidadEntera" />
+        <result column="esdt_ndecimal" property="cantidadDecimal" />
+        <result column="esdt_cadena" property="cadena" />
 
-		<association property="prmt" javaType="ParametroVO">
-			<result column="esdt_prmt_pk" property="id" />
-			<result column="prmt_parametro" property="parametro" />
-			<result column="p18n_texto" property="texto" />
-		</association>
-	</resultMap>
+        <association property="prmt" javaType="ParametroVO">
+            <result column="esdt_prmt_pk" property="id" />
+            <result column="prmt_parametro" property="parametro" />
+            <result column="p18n_texto" property="texto" />
+        </association>
+    </resultMap>
 
-	<select id="selectList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
+    <select id="selectList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
     <![CDATA[
 		SELECT
 			esdt_estd_pk, esdt_tpdt_pk, esdt_nentero, esdt_ndecimal, esdt_prmt_pk, esdt_cadena
 			, prmt_parametro
     ]]>
-		<if test="idioma != null">
+        <if test="idioma != null">
         <![CDATA[
 			, (
 				CASE
@@ -70,31 +70,21 @@
 					FROM tbl_estadistica_estd
 					WHERE estd_pk = esdt_estd_pk
     ]]>
-		<if test="id == null and ids == null">
-			<include refid="xeredi.argo.model.estadistica.dao.EstadisticaDAO.SelectWhere" />
-		</if>
+        <if test="id == null and ids == null">
+            <include refid="xeredi.argo.model.estadistica.dao.EstadisticaDAO.SelectWhere" />
+        </if>
 
-		<if test="id != null">
-			AND estd_pk = #{id}
-		</if>
+        <if test="id != null">
+            AND estd_pk = #{id}
+        </if>
 
-		<if test="ids != null">
-			AND estd_pk IN
-			<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}</foreach>
-		</if>
+        <if test="ids != null">
+            AND estd_pk IN
+            <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}</foreach>
+        </if>
 
-		<!-- if test="soloDatosGrid">
-            <![CDATA[
-                AND EXISTS (
-                    SELECT 1
-                    FROM tbl_entidad_tipo_dato_entd
-                    WHERE
-                        entd_tpdt_pk = esdt_tpdt_pk
-                        AND entd_enti_pk = #{entiId}
-                        AND entd_gridable = 1
-                )
-            ]]>
-		</if -->
+        <!-- if test="soloDatosGrid"> <![CDATA[ AND EXISTS ( SELECT 1 FROM tbl_entidad_tipo_dato_entd WHERE entd_tpdt_pk
+            = esdt_tpdt_pk AND entd_enti_pk = #{entiId} AND entd_gridable = 1 ) ]]> </if -->
     <![CDATA[
         		)
 		) sql
@@ -107,26 +97,26 @@
 			LEFT JOIN tbl_tipo_parametro_tppr ON
 				tppr_pk = prmt_tppr_pk
     ]]>
-	</select>
+    </select>
 
-	<insert id="insert" parameterType="ItemDatoVO">
+    <insert id="insert" parameterType="ItemDatoVO">
         <![CDATA[
         INSERT INTO tbl_estadistica_dato_esdt (esdt_estd_pk, esdt_tpdt_pk, esdt_nentero, esdt_ndecimal, esdt_prmt_pk, esdt_cadena)
         VALUES (#{itemId}, #{tpdtId}, #{cantidadEntera}, #{cantidadDecimal}, #{prmt.id}, #{cadena})
         ]]>
-	</insert>
+    </insert>
 
-	<delete id="deleteList" parameterType="EstadisticaCriterioVO">
+    <delete id="deleteList" parameterType="EstadisticaCriterioVO">
         <![CDATA[
 		DELETE FROM tbl_estadistica_dato_esdt
 		WHERE
-			esdt_estd_pk = ANY (
-				SELECT estd_pk
+			EXISTS (
+				SELECT 1
 				FROM tbl_estadistica_estd
+                WHERE
+                    estd_pk = esdt_estd_pk
         ]]>
-		<where>
-			<include refid="xeredi.argo.model.estadistica.dao.EstadisticaDAO.SelectWhere" />
-		</where>
-			)
-	</delete>
+        <include refid="xeredi.argo.model.estadistica.dao.EstadisticaDAO.SelectWhere" />
+        )
+    </delete>
 </mapper>

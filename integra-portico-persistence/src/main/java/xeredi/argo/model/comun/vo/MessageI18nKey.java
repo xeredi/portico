@@ -479,7 +479,9 @@ public enum MessageI18nKey {
     vlrl_importeBase, /** The vlrl_importe. */
     vlrl_importe, /** The vlrl_impuesto. */
     vlrl_impuesto, /** The vlrl_vlrd count. */
-    vlrl_vlrdCount, vlrl_subtotal, /** The vlrl_info1. */
+    vlrl_vlrdCount,
+    /** The vlrl_subtotal. */
+    vlrl_subtotal, /** The vlrl_info1. */
     vlrl_info1, /** The vlrl_info2. */
     vlrl_info2, /** The vlrl_info3. */
     vlrl_info3, /** The vlrl_info4. */
@@ -573,7 +575,11 @@ public enum MessageI18nKey {
     m18nList, /** The m18n. */
     m18n, /** The m18n_key. */
     m18n_key, /** The schr. */
-    schr, vldr, fcdr,
+    schr,
+    /** The vldr. */
+    vldr,
+    /** The fcdr. */
+    fcdr,
 
     /** Error no controlado. Se pasa como argumento el mensaje de la excepcion. */
     E00000,
@@ -709,11 +715,18 @@ public enum MessageI18nKey {
     mani_resumen_numEquipamientosLlenos, /** The mani_resumen_num equipamientos vacios. */
     mani_resumen_numEquipamientosVacios, /** The mani_resumen_num partidas mercancia. */
     mani_resumen_numPartidasMercancia, /** The mani_resumen_peso partidas mercancia. */
-    mani_resumen_pesoPartidasMercancia, /** The mani_resumen_num partidas pasajeros. */
-    mani_resumen_numPartidasPasajeros, /** The mani_resumen_num pasajeros. */
-    mani_resumen_numPasajeros, /** The mani_resumen_num cruceristas. */
-    mani_resumen_numCruceristas, /** The mani_resumen_num vehiculos. */
+    mani_resumen_pesoPartidasMercancia,
+    /** The mani_resumen_num partidas pasajeros. */
+    mani_resumen_numPartidasPasajeros,
+    /** The mani_resumen_num pasajeros. */
+    mani_resumen_numPasajeros,
+    /** The mani_resumen_num cruceristas. */
+    mani_resumen_numCruceristas,
+    /** The mani_resumen_num vehiculos. */
     mani_resumen_numVehiculos,
+
+    /** The actr. */
+    actr,
 
     ;
 

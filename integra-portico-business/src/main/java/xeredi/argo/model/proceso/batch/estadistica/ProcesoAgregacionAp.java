@@ -61,15 +61,15 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
         Integer mes = null;
         Boolean sobreescribir = null;
 
-        if (prpmMap.containsKey(params.autp.name())) {
-            autpCodigo = prpmMap.get(params.autp.name()).getValor();
+        if (prbtData.getPrpmMap().containsKey(params.autp.name())) {
+            autpCodigo = prbtData.getPrpmMap().get(params.autp.name()).getValor();
         } else {
             addError(MensajeCodigo.G_012, params.autp.name());
         }
 
-        if (prpmMap.containsKey(params.anio.name())) {
+        if (prbtData.getPrpmMap().containsKey(params.anio.name())) {
             try {
-                anio = Integer.parseInt(prpmMap.get(params.anio.name()).getValor());
+                anio = Integer.parseInt(prbtData.getPrpmMap().get(params.anio.name()).getValor());
             } catch (final NumberFormatException ex) {
                 addError(MensajeCodigo.G_013, params.anio.name());
             }
@@ -77,9 +77,9 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
             addError(MensajeCodigo.G_012, params.anio.name());
         }
 
-        if (prpmMap.containsKey(params.mes.name())) {
+        if (prbtData.getPrpmMap().containsKey(params.mes.name())) {
             try {
-                mes = Integer.parseInt(prpmMap.get(params.mes.name()).getValor());
+                mes = Integer.parseInt(prbtData.getPrpmMap().get(params.mes.name()).getValor());
             } catch (final NumberFormatException ex) {
                 addError(MensajeCodigo.G_013, params.mes.name());
             }
@@ -87,9 +87,9 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
             addError(MensajeCodigo.G_012, params.mes.name());
         }
 
-        if (prpmMap.containsKey(params.sobreescribir.name())) {
+        if (prbtData.getPrpmMap().containsKey(params.sobreescribir.name())) {
             try {
-                sobreescribir = Boolean.parseBoolean(prpmMap.get(params.sobreescribir.name()).getValor());
+                sobreescribir = Boolean.parseBoolean(prbtData.getPrpmMap().get(params.sobreescribir.name()).getValor());
             } catch (final NumberFormatException ex) {
                 addError(MensajeCodigo.G_013, params.sobreescribir.name());
             }
@@ -97,7 +97,7 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
             addError(MensajeCodigo.G_012, params.sobreescribir.name());
         }
 
-        if (prmnList.isEmpty()) {
+        if (prbtData.getPrmnList().isEmpty()) {
             try {
                 // Comprobar que existe la AP
                 final SuperpuertoBO sprtBO = new SuperpuertoBO();
@@ -137,10 +137,12 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
                     try {
                         peprBO.agregarServicios(pepr, sobreescribir);
 
-                        itemSalidaList.add(pepr.getId());
+                        prbtData.getItemSalidaList().add(pepr.getId());
                     } catch (final DuplicateInstanceException ex) {
-                        addError(MensajeCodigo.E_001, "Periodo de Proceso: " + pepr.getSprt().getCodigo() + " "
-                                + pepr.getAnio() + " " + pepr.getMes());
+                        addError(
+                                MensajeCodigo.E_001,
+                                "Periodo de Proceso: " + pepr.getSprt().getCodigo() + " " + pepr.getAnio() + " "
+                                        + pepr.getMes());
                     } catch (final IOException ex) {
                         addError(MensajeCodigo.G_000, ex.getMessage());
                     }

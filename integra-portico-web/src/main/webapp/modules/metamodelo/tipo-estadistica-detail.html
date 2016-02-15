@@ -74,5 +74,13 @@
                 </table>
             </fieldset>
         </div>
+        <div data-ng-if="mc.hasAccnPath('acen-list') || mc.hasAccnPath('enag-list')" data-uib-tab
+            data-select="vm.tabSelected('accnList')" data-active="vm.tabActive['accnList']"
+            data-heading="{{'accnList' | translate}}">
+            <div data-ng-if="mc.hasAccnPath('acen-list')"
+                data-ng-include="'modules/metamodelo/fragment/accion-entidad-grid-content.html'"></div>
+            <div data-ng-if="mc.hasAccnPath('enag-list')"
+                data-ng-include="'modules/metamodelo/fragment/entidad-accion-grid-grid-content.html'"></div>
+        </div>
     </div>
 </div>

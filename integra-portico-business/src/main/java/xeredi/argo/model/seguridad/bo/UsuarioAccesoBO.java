@@ -11,8 +11,11 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.AccionEntidadDAO;
+import xeredi.argo.model.metamodelo.dao.AccionTramiteDAO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
+import xeredi.argo.model.metamodelo.vo.AccionTramiteCriterioVO;
+import xeredi.argo.model.metamodelo.vo.AccionTramiteVO;
 import xeredi.argo.model.seguridad.dao.AccionDAO;
 import xeredi.argo.model.seguridad.dao.UsuarioDAO;
 import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
@@ -63,23 +66,21 @@ public final class UsuarioAccesoBO {
                 throw new ContraseniaIncorrectaException(login);
             }
 
+            final Set<String> paths = new HashSet<>();
             final AccionDAO accnDAO = session.getMapper(AccionDAO.class);
             final AccionCriterioVO accnCriterio = new AccionCriterioVO();
 
             accnCriterio.setUsroId(usro.getId());
 
-            final Set<String> paths = new HashSet<>();
-
             for (final AccionVO accn : accnDAO.selectList(accnCriterio)) {
                 paths.add(accn.getPath());
             }
 
+            final Map<Long, Set<String>> acenMap = new HashMap<>();
             final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
             final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
 
             acenCriterio.setUsroId(usro.getId());
-
-            final Map<Long, Set<String>> acenMap = new HashMap<>();
 
             for (final AccionEntidadVO acen : acenDAO.selectList(acenCriterio)) {
                 if (!acenMap.containsKey(acen.getEntiId())) {
@@ -89,7 +90,22 @@ public final class UsuarioAccesoBO {
                 acenMap.get(acen.getEntiId()).add(acen.getAccn().getPath());
             }
 
-            return new ResultadoLoginVO(usro.getId(), usro.getNombre(), usro.getSprt(), usro.getPrto(), paths, acenMap);
+            final Map<Long, Set<String>> actrMap = new HashMap<>();
+            final AccionTramiteDAO actrDAO = session.getMapper(AccionTramiteDAO.class);
+            final AccionTramiteCriterioVO actrCriterio = new AccionTramiteCriterioVO();
+
+            actrCriterio.setUsroId(usro.getId());
+
+            for (final AccionTramiteVO actr : actrDAO.selectList(actrCriterio)) {
+                if (!actrMap.containsKey(actr.getTrmtId())) {
+                    actrMap.put(actr.getTrmtId(), new HashSet<>());
+                }
+
+                actrMap.get(actr.getTrmtId()).add(actr.getAccn().getPath());
+            }
+
+            return new ResultadoLoginVO(usro.getId(), usro.getNombre(), usro.getSprt(), usro.getPrto(), paths, acenMap,
+                    actrMap);
         }
     }
 }

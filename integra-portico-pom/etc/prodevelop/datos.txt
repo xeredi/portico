@@ -50,6 +50,9 @@ Oracle
 		Usuario ISCHEDULER.(password temporal3)
 
 puertos
+	PdE - Estadisticas
+		Oscar Souto 		915245579
+
 	alicante
 		Patricia Fernandez	649775106
 		 Jose Angel Bellido Macho [jabellido@puertoalicante.com] 		Facturacion

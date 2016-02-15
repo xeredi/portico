@@ -244,10 +244,10 @@ public final class MaestroImporterBO {
             while (rs.next()) {
                 i = 1;
 
-                final ParametroVO prmtVO = new ParametroVO();
+                final ParametroVO prmt = new ParametroVO();
 
-                prmtVO.setEntiId(tpprDetail.getEnti().getId());
-                prmtVO.setVersion(new ParametroVersionVO());
+                prmt.setEntiId(tpprDetail.getEnti().getId());
+                prmt.setVersion(new ParametroVersionVO());
 
                 if (tpprDetail.getEnti().getPuerto()) {
                     final String codigoPuerto = rs.getString(i++);
@@ -259,21 +259,21 @@ public final class MaestroImporterBO {
                         throw new Error(mensaje);
                     }
 
-                    prmtVO.setPrto(prtoMap.get(codigoPuerto));
+                    prmt.setPrto(prtoMap.get(codigoPuerto));
                 }
 
-                prmtVO.setParametro(rs.getString(i++));
+                prmt.setParametro(rs.getString(i++));
 
                 if (tpprDetail.getEnti().isTempExp()) {
-                    prmtVO.getVersion().setFini(rs.getDate(i++));
-                    prmtVO.getVersion().setFfin(rs.getDate(i++));
+                    prmt.getVersion().setFini(rs.getDate(i++));
+                    prmt.getVersion().setFfin(rs.getDate(i++));
                 } else {
-                    prmtVO.getVersion().setFini(fechaInicioReferencia);
+                    prmt.getVersion().setFini(fechaInicioReferencia);
                 }
 
                 // Creacion del parametro
                 if (tpprDetail.getEntdList() != null) {
-                    prmtVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
+                    prmt.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
                     for (final Long tpdtId : tpprDetail.getEntdList()) {
                         final EntidadTipoDatoVO entd = tpprDetail.getEntdMap().get(tpdtId);
@@ -285,7 +285,7 @@ public final class MaestroImporterBO {
 
                         final ItemDatoVO itdt = getItdt(value, entd, entiName);
 
-                        prmtVO.getItdtMap().put(entd.getTpdt().getId(), itdt);
+                        prmt.getItdtMap().put(entd.getTpdt().getId(), itdt);
                     }
                 }
 
@@ -300,7 +300,7 @@ public final class MaestroImporterBO {
                     i18nVO.setText(texto);
 
                     if (rs.wasNull()) {
-                        LOG.warn("Texto i18n NULO para el parametro: " + prmtVO.getParametro() + " del maestro: "
+                        LOG.warn("Texto i18n NULO para el parametro: " + prmt.getParametro() + " del maestro: "
                                 + entiName);
 
                         i18nVO.setText("Texto Generico");
@@ -310,17 +310,17 @@ public final class MaestroImporterBO {
                 }
 
                 try {
-                    prmtVO.getVersion().setFini(DateUtil.resetTime(prmtVO.getVersion().getFini()));
-                    prmtVO.getVersion().setFfin(DateUtil.resetTime(prmtVO.getVersion().getFfin()));
+                    DateUtil.truncTime(prmt.getVersion().getFini(), Calendar.HOUR_OF_DAY);
+                    DateUtil.truncTime(prmt.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
 
-                    prmtBO.insert(prmtVO, tpprDetail, i18nMap);
+                    prmtBO.insert(prmt, tpprDetail, i18nMap);
 
-                    final String prmtKey = (prmtVO.getPrto() == null ? "" : prmtVO.getPrto().getCodigoCorto())
-                            + prmtVO.getParametro();
+                    final String prmtKey = (prmt.getPrto() == null ? "" : prmt.getPrto().getCodigoCorto())
+                            + prmt.getParametro();
 
-                    tpprPrmtMap.get(prmtVO.getEntiId()).put(prmtKey, prmtVO.getId());
+                    tpprPrmtMap.get(prmt.getEntiId()).put(prmtKey, prmt.getId());
                 } catch (final OverlapException ex) {
-                    LOG.info(entiName + " Solapado: " + prmtVO.getEtiqueta());
+                    LOG.info(entiName + " Solapado: " + prmt.getEtiqueta());
                 }
             }
         } finally {
@@ -381,7 +381,7 @@ public final class MaestroImporterBO {
             while (rs.next()) {
                 i = 1;
 
-                final SubparametroVO sprmVO = new SubparametroVO();
+                final SubparametroVO sprm = new SubparametroVO();
                 final String parametro = rs.getString(i++);
                 final String parametroAsociado = rs.getString(i++);
                 final Long prmtId = tpprPrmtMap.get(tpspDetail.getEnti().getTpprId()).get(parametro);
@@ -399,42 +399,42 @@ public final class MaestroImporterBO {
                 final ParametroVO prmtAsociadoVO = new ParametroVO();
 
                 prmtAsociadoVO.setId(prmtAsociadoId);
-                sprmVO.setPrmtId(prmtId);
-                sprmVO.setPrmtAsociado(prmtAsociadoVO);
-                sprmVO.setEntiId(tpspDetail.getEnti().getId());
+                sprm.setPrmtId(prmtId);
+                sprm.setPrmtAsociado(prmtAsociadoVO);
+                sprm.setEntiId(tpspDetail.getEnti().getId());
 
-                sprmVO.setVersion(new SubparametroVersionVO());
+                sprm.setVersion(new SubparametroVersionVO());
 
                 if (tpspDetail.getEnti().isTempExp()) {
-                    sprmVO.getVersion().setFini(rs.getDate(i++));
-                    sprmVO.getVersion().setFfin(rs.getDate(i++));
+                    sprm.getVersion().setFini(rs.getDate(i++));
+                    sprm.getVersion().setFfin(rs.getDate(i++));
                 } else {
-                    sprmVO.getVersion().setFini(fechaInicioReferencia);
-                    sprmVO.getVersion().setFfin(null);
+                    sprm.getVersion().setFini(fechaInicioReferencia);
+                    sprm.getVersion().setFfin(null);
                 }
 
                 if (tpspDetail.getEntdList() != null) {
-                    sprmVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
+                    sprm.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
                     for (final Long tpdtId : tpspDetail.getEntdList()) {
                         final EntidadTipoDatoVO entd = tpspDetail.getEntdMap().get(tpdtId);
                         final Object value = rs.getObject(i++);
                         final ItemDatoVO itdt = getItdt(value, entd, entiName);
 
-                        sprmVO.getItdtMap().put(entd.getTpdt().getId(), itdt);
+                        sprm.getItdtMap().put(entd.getTpdt().getId(), itdt);
                     }
                 }
 
                 // TODO i18n
 
-                if (sprmVO.getPrmtId() != null && sprmVO.getPrmtAsociado().getId() != null) {
+                if (sprm.getPrmtId() != null && sprm.getPrmtAsociado().getId() != null) {
                     try {
-                        sprmVO.getVersion().setFini(DateUtil.resetTime(sprmVO.getVersion().getFini()));
-                        sprmVO.getVersion().setFfin(DateUtil.resetTime(sprmVO.getVersion().getFfin()));
+                        DateUtil.truncTime(sprm.getVersion().getFini(), Calendar.HOUR_OF_DAY);
+                        DateUtil.truncTime(sprm.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
 
-                        sprmBO.insert(sprmVO, tpspDetail);
+                        sprmBO.insert(sprm, tpspDetail);
                     } catch (final OverlapException ex) {
-                        LOG.info(entiName + " Solapado: " + sprmVO.getEtiqueta());
+                        LOG.info(entiName + " Solapado: " + sprm.getEtiqueta());
                     }
                 }
             }
@@ -493,10 +493,10 @@ public final class MaestroImporterBO {
                         LOG.warn(message);
                     }
 
-                    final ParametroVO prmtVO = new ParametroVO();
+                    final ParametroVO prmt = new ParametroVO();
 
-                    prmtVO.setId(prmtId);
-                    itdtVO.setPrmt(prmtVO);
+                    prmt.setId(prmtId);
+                    itdtVO.setPrmt(prmt);
 
                     break;
                 case CR:

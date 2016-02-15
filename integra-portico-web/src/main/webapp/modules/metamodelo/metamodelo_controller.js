@@ -68,6 +68,10 @@ angular.module("metamodelo_controller", [])
 
 .controller("TramiteTipoDatoEditController", TramiteTipoDatoEditController)
 
+.controller("AccionTramiteDetailController", AccionTramiteDetailController)
+
+.controller("AccionTramiteEditController", AccionTramiteEditController)
+
 .controller("AccionEntidadDetailController", AccionEntidadDetailController)
 
 .controller("AccionEntidadEditController", AccionEntidadEditController)
@@ -236,6 +240,16 @@ function config($routeProvider) {
     .when("/metamodelo/tramite-tipo-dato/edit/:accion/:trmtId/:tpdtId?", {
         templateUrl : "modules/metamodelo/tramite-tipo-dato-edit.html",
         controller : "TramiteTipoDatoEditController as vm",
+    })
+
+    .when("/metamodelo/accion-tramite/edit/:accion/:trmtId/:id?", {
+        templateUrl : "modules/metamodelo/accion-tramite-edit.html",
+        controller : "AccionTramiteEditController as vm",
+    })
+
+    .when("/metamodelo/accion-tramite/detail/:id", {
+        templateUrl : "modules/metamodelo/accion-tramite/-detail.html",
+        controller : "AccionTramiteDetailController as vm",
     })
 
     .when("/metamodelo/accion-entidad/detail/:id", {
@@ -586,6 +600,7 @@ function TipoSubparametroDetailController($routeParams, pageTitleService,
         vm.engdList = data.engdList;
         vm.enacList = data.enacList;
         vm.enagList = data.enagList;
+        vm.acenList = data.acenList;
     });
 
     pageTitleService.setTitle("tpsp", "page_detail");
@@ -704,6 +719,7 @@ function TipoServicioDetailController($routeParams, pageTitleService,
         vm.trmtList = data.trmtList;
         vm.enacList = data.enacList;
         vm.enagList = data.enagList;
+        vm.acenList = data.acenList;
     });
 
     pageTitleService.setTitle("tpsr", "page_detail");
@@ -781,6 +797,7 @@ function TipoSubservicioDetailController($routeParams, pageTitleService,
         vm.trmtList = data.trmtList;
         vm.enacList = data.enacList;
         vm.enagList = data.enagList;
+        vm.acenList = data.acenList;
     });
 
     pageTitleService.setTitle("tpss", "page_detail");
@@ -898,6 +915,7 @@ function TipoEstadisticaDetailController($routeParams, pageTitleService,
         vm.engdList = data.engdList;
         vm.enacList = data.enacList;
         vm.enagList = data.enagList;
+        vm.acenList = data.acenList;
     });
 
     pageTitleService.setTitle("tpes", "page_detail");
@@ -1135,8 +1153,9 @@ function TramiteDetailController($routeParams, pageTitleService, TramiteService)
         vm.model = data.model;
         vm.i18nMap = data.i18nMap;
 
-        vm.trtdList = data.trtdList;
         vm.enti = data.enti;
+        vm.trtdList = data.trtdList;
+        vm.actrList = data.actrList;
     });
 
     pageTitleService.setTitle("trmt", "page_detail");
@@ -1241,6 +1260,71 @@ function TramiteTipoDatoEditController($routeParams, pageTitleService,
     });
 
     pageTitleService.setTitle("trtd", "page_" + vm.accion);
+}
+
+function AccionTramiteDetailController($routeParams, pageTitleService,
+        AccionTramiteService) {
+    var vm = this;
+
+    vm.remove = remove;
+
+    function remove() {
+        AccionTramiteService.remove(vm.model).then(function(data) {
+            window.history.back();
+        });
+    }
+
+    vm.search = {
+        id : $routeParams.id
+    };
+
+    AccionTramiteService.detail(vm.search).then(function(data) {
+        vm.model = data.model;
+    });
+
+    pageTitleService.setTitle("actr", "page_detail");
+}
+
+function AccionTramiteEditController($routeParams, pageTitleService,
+        AccionTramiteService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+    vm.updateGrupos = updateGrupos;
+
+    function save() {
+        AccionTramiteService.save(vm.accion, vm.model).then(
+                function(data) {
+                    AccionTramiteService.redirectAfterSave(vm.accion,
+                            '/metamodelo/accion-tramite/detail',
+                            [ data.model.id ]);
+                });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    function updateGrupos($event, grpoId) {
+        $event.target.checked ? vm.model.grpoIds.push(grpoId)
+                : vm.model.grpoIds.splice(vm.model.grpoIds.indexOf(grpoId), 1);
+    }
+
+    vm.accion = $routeParams.accion;
+    vm.search = {
+        id : $routeParams.id,
+        trmtId : $routeParams.trmtId
+    }
+
+    AccionTramiteService.edit(vm.accion, vm.search).then(function(data) {
+        vm.model = data.model;
+
+        vm.accnList = data.accnList;
+        vm.grpoList = data.grpoList;
+    });
+
+    pageTitleService.setTitle("actr", "page_" + vm.accion);
 }
 
 function AccionEntidadDetailController($routeParams, pageTitleService,

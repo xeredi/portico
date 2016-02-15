@@ -104,6 +104,6 @@ public final class ItemTramiteDetailAction extends CrudDetailAction<ItemTramiteV
      */
     @Override
     public final AccionPrefix getAccnPrefix() {
-        return AccionPrefix.item;
+        return AccionPrefix.ittr;
     }
 }

@@ -82,7 +82,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
      */
     @Override
     protected void ejecutarProceso() {
-        for (final ArchivoInfoVO arin : arinEntradaList) {
+        for (final ArchivoInfoVO arin : prbtData.getArinEntradaList()) {
             LOG.info("Importar: " + arin.getNombre());
 
             final ArchivoBO flsrBO = new ArchivoBO();
@@ -92,13 +92,13 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                 final List<String> lines = IOUtils.readLines(stream);
                 final int primeraLinea = fileImport.findPrimeraLinea(lines);
 
-                if (prmnList.isEmpty()) {
+                if (prbtData.getPrmnList().isEmpty()) {
                     fileImport.validarSegmentos(lines, primeraLinea);
                 }
-                if (prmnList.isEmpty()) {
+                if (prbtData.getPrmnList().isEmpty()) {
                     fileImport.readMaestros(lines, primeraLinea);
                 }
-                if (prmnList.isEmpty()) {
+                if (prbtData.getPrmnList().isEmpty()) {
                     // FIXME Obtener la fecha de vigencia
                     final Date fechaVigencia = Calendar.getInstance().getTime();
 
@@ -107,10 +107,10 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
                     findEscala(fileImport, fechaVigencia);
                 }
-                if (prmnList.isEmpty()) {
+                if (prbtData.getPrmnList().isEmpty()) {
                     fileImport.readFile(lines, primeraLinea);
                 }
-                if (prmnList.isEmpty()) {
+                if (prbtData.getPrmnList().isEmpty()) {
                     final ManifiestoMensaje mensaje = fileImport.getMensaje();
                     final ManifiestoBO srvcBO = new ManifiestoBO();
 
@@ -124,7 +124,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                             srvcBO.insert(fileImport.getManifiestoVO(), fileImport.getSsrvList(),
                                     fileImport.getSsssList(), arin.getId());
 
-                            itemSalidaList.add(fileImport.getManifiestoVO().getId());
+                            prbtData.getItemSalidaList().add(fileImport.getManifiestoVO().getId());
                         } catch (final DuplicateInstanceException ex) {
                             throw new Error(ex);
                         }
@@ -180,7 +180,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
             try {
                 prto = prtoBO.selectObject(prtoCriterio);
 
-                if (prmnList.isEmpty()) {
+                if (prbtData.getPrmnList().isEmpty()) {
                     // Busqueda de la escala
                     final EscalaBO escaBO = new EscalaBO();
                     final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
@@ -198,9 +198,8 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                         try {
                             // Busqueda del buque de la escala
                             final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.BUQUE.getId());
-                            final ParametroVO buque = prmtBO.select(
-                                    escala.getItdtMap().get(TipoDato.BUQUE.getId()).getPrmt().getId(), null,
-                                    fechaVigencia);
+                            final ParametroVO buque = prmtBO.select(escala.getItdtMap().get(TipoDato.BUQUE.getId())
+                                    .getPrmt().getId(), null, fechaVigencia);
 
                             escala.getItdtMap().get(TipoDato.BUQUE.getId()).setPrmt(buque);
 

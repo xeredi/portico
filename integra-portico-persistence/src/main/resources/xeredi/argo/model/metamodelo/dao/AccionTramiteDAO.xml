@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.metamodelo.dao.AccionTramiteDAO">
+    <resultMap type="AccionTramiteVO" id="ResultMap">
+        <id column="actr_pk" />
+
+        <result column="actr_pk" property="id" />
+        <result column="actr_trmt_pk" property="trmtId" />
+
+        <association property="accn" javaType="AccionVO">
+            <result column="actr_accn_pk" property="id" />
+            <result column="accn_prefix" property="prefix" />
+            <result column="accn_codigo" property="codigo" />
+            <result column="accn_core" property="core" />
+            <result column="accn_multiple" property="multiple" />
+        </association>
+    </resultMap>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+        actr_pk, actr_trmt_pk, actr_accn_pk
+        , accn_prefix, accn_codigo, accn_core, accn_multiple
+    FROM
+        tbl_accion_tramite_actr
+        INNER JOIN tbl_accion_accn ON
+            accn_pk = actr_accn_pk
+    ]]>
+    </sql>
+
+    <sql id="SelectCountPrefix">
+    <![CDATA[
+    SELECT
+        COUNT(1)
+    FROM
+        tbl_accion_tramite_actr
+        INNER JOIN tbl_accion_accn ON
+            accn_pk = actr_accn_pk
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND actr_pk = #{id}
+            </if>
+            <if test="trmtId != null">
+                AND actr_trmt_pk = #{trmtId}
+            </if>
+            <if test="grpoId != null">
+            <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_grupo_accion_tramite_grat
+                    WHERE
+                        grat_actr_pk = actr_pk
+                        AND grat_grpo_pk = #{grpoId}
+                )
+            ]]>
+            </if>
+            <if test="usroId != null">
+            <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_grupo_accion_tramite_grat
+                    WHERE
+                        grat_actr_pk = actr_pk
+                        AND EXISTS (
+                            SELECT 1
+                            FROM
+                                tbl_usuario_grupo_usgr
+                            WHERE
+                                usgr_grpo_pk = grat_grpo_pk
+                                AND usgr_usro_pk = #{usroId}
+                        )
+                )
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <select id="count" parameterType="AccionTramiteCriterioVO" resultType="Integer">
+        <include refid="SelectCountPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="selectList" parameterType="AccionTramiteCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY actr_trmt_pk, accn_prefix, accn_codigo
+    </select>
+
+    <select id="selectObject" parameterType="AccionTramiteCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="exists" parameterType="AccionTramiteVO" resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_accion_tramite_actr
+        WHERE actr_enti_pk = #{entiId}
+            AND actr_accn_pk = #{accn.id}
+        ]]>
+    </select>
+
+    <select id="existsCriterio" parameterType="AccionTramiteCriterioVO" resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_accion_tramite_actr
+        ]]>
+        <include refid="SelectWhere" />
+    </select>
+
+    <insert id="insert" parameterType="AccionTramiteVO">
+        <![CDATA[
+        INSERT INTO tbl_accion_tramite_actr (actr_pk, actr_accn_pk, actr_trmt_pk)
+        VALUES (#{id}, #{accn.id}, #{trmtId})
+        ]]>
+    </insert>
+
+    <update id="update" parameterType="AccionTramiteVO">
+        <![CDATA[
+        UPDATE tbl_accion_tramite_actr SET
+            actr_accn_pk = #{accn.id}
+            , actr_trmt_pk = #{trmtId}
+        WHERE actr_pk = #{id}
+        ]]>
+    </update>
+
+    <delete id="delete" parameterType="AccionTramiteVO">
+        <![CDATA[
+        DELETE FROM tbl_accion_tramite_actr
+        WHERE
+            actr_pk = #{id}
+        ]]>
+    </delete>
+</mapper>

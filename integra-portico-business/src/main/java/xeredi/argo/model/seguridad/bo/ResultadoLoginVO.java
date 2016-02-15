@@ -4,12 +4,19 @@ import java.util.Map;
 import java.util.Set;
 
 import lombok.Data;
+import lombok.NonNull;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ResultadoLoginVO.
+ */
+
+/*
+ * (non-Javadoc)
+ * 
+ * @see java.lang.Object#toString()
  */
 
 /*
@@ -38,6 +45,9 @@ public final class ResultadoLoginVO {
     /** The acen paths. */
     private final Map<Long, Set<String>> acenPaths;
 
+    /** The actr paths. */
+    private final Map<Long, Set<String>> actrPaths;
+
     /**
      * Instantiates a new resultado login vo.
      *
@@ -53,9 +63,12 @@ public final class ResultadoLoginVO {
      *            the aaccn paths
      * @param aacenPaths
      *            the aacen paths
+     * @param aactrPaths
+     *            the aactr paths
      */
-    public ResultadoLoginVO(final Long ausroId, final String anombre, final SuperpuertoVO asprt, final PuertoVO aprto,
-            final Set<String> aaccnPaths, final Map<Long, Set<String>> aacenPaths) {
+    public ResultadoLoginVO(final @NonNull Long ausroId, final @NonNull String anombre, final SuperpuertoVO asprt,
+            final PuertoVO aprto, final Set<String> aaccnPaths, final Map<Long, Set<String>> aacenPaths,
+            final Map<Long, Set<String>> aactrPaths) {
         super();
         usroId = ausroId;
         nombre = anombre;
@@ -63,5 +76,6 @@ public final class ResultadoLoginVO {
         prto = aprto;
         accnPaths = aaccnPaths;
         acenPaths = aacenPaths;
+        actrPaths = aactrPaths;
     }
 }

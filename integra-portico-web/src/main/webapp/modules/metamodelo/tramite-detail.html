@@ -68,4 +68,37 @@
             </tbody>
         </table>
     </fieldset>
+
+    <fieldset data-ng-if="mc.hasAccnPath('actr-list')">
+        <legend data-translate="actrList"></legend>
+
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-default" data-ng-if="mc.hasAccnPath('actr-create')"
+                    data-ng-href="#/metamodelo/accion-tramite/edit/create/{{vm.model.id}}"><i
+                    class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
+            </div>
+        </div>
+
+        <table data-ng-if="vm.actrList" class="table-bordered table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th nowrap="nowrap" />
+                    <th data-translate="accn_codigo"></th>
+                    <th data-translate="accn_core"></th>
+                    <th data-translate="accn_multiple"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="actr in vm.actrList track by $index">
+                    <td><a data-ng-if="mc.hasAccnPath('actr-detail')"
+                        data-ng-href="#/metamodelo/accion-tramite/detail/{{actr.id}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
+                    <td data-ng-bind="actr.accn.codigo"></td>
+                    <td><i class="glyphicon glyphicon-{{(actr.accn.core ? 'ok' : 'remove')}}"></i></td>
+                    <td><i class="glyphicon glyphicon-{{(actr.accn.multiple ? 'ok' : 'remove')}}"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
 </div>

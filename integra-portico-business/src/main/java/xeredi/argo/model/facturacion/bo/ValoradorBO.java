@@ -132,7 +132,7 @@ public class ValoradorBO {
             }
 
             vldrContexto.setFliquidacion(fechaLiquidacion);
-            vldrContexto.setPrbt(proceso.getPrbt());
+            vldrContexto.setPrbt(proceso.getPrbtData().getPrbt());
             vldrContexto.setSrvc(srvc);
             vldrContexto.setTpsr(TipoServicioProxy.select(vldrContexto.getSrvc().getEntiId()).getEnti());
 

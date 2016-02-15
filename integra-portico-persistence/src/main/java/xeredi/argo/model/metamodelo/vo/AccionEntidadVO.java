@@ -22,14 +22,5 @@ public final class AccionEntidadVO {
     private Long entiId;
 
     /** The grpo ids. */
-    private Set<Long> grpoIds;
-
-    /**
-     * Instantiates a new accion entidad vo.
-     */
-    public AccionEntidadVO() {
-        super();
-
-        grpoIds = new HashSet<>();
-    }
+    private Set<Long> grpoIds = new HashSet<>();
 }

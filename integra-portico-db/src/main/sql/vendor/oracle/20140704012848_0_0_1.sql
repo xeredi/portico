@@ -173,6 +173,8 @@ CREATE TABLE tbl_usuario_grupo_usgr (
 
 CREATE OR REPLACE SYNONYM portico.tbl_usuario_grupo_usgr FOR porticoadm.tbl_usuario_grupo_usgr\
 
+CREATE INDEX ix_usgr_grpo_pk ON tbl_usuario_grupo_usgr (usgr_grpo_pk)\
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_usuario_grupo_usgr TO portico\
 
 COMMENT ON TABLE tbl_usuario_grupo_usgr IS 'Asociaciones de usuarios a grupos'\
@@ -231,6 +233,8 @@ CREATE TABLE tbl_entidad_entidad_enen (
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_entidad_entidad_enen FOR porticoadm.tbl_entidad_entidad_enen\
+
+CREATE INDEX ix_enen_entih_pk ON tbl_entidad_entidad_enen(enen_entih_pk)\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_entidad_entidad_enen TO portico\
 
@@ -556,7 +560,7 @@ CREATE TABLE tbl_subparametro_sprm (
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )\
 
-CREATE INDEX ix_sprm_prmt_dep_pk ON tbl_subparametro_sprm (sprm_prmt_dep_pk, sprm_tpsp_pk)\
+CREATE INDEX ix_sprm_prmt_dep_pk ON tbl_subparametro_sprm (sprm_prmt_dep_pk)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_subparametro_sprm FOR porticoadm.tbl_subparametro_sprm\
 
@@ -984,7 +988,7 @@ CREATE TABLE tbl_estadistica_estd (
 		REFERENCES tbl_puerto_prto (prto_pk)
 )\
 
-CREATE INDEX ix_estd_pepr_pk ON tbl_estadistica_estd (estd_tpes_pk, estd_pepr_pk)\
+CREATE INDEX ix_estd_pepr_pk ON tbl_estadistica_estd (estd_pepr_pk, estd_tpes_pk, estd_subp_pk)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_estadistica_estd FOR porticoadm.tbl_estadistica_estd\
 
@@ -1017,8 +1021,8 @@ CREATE TABLE tbl_estadistica_dato_esdt (
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )\
 
-CREATE INDEX ix_esdt_prmt_pk ON tbl_estadistica_dato_esdt (esdt_prmt_pk, esdt_tpdt_pk)\
-CREATE INDEX ix_esdt_cadena ON tbl_estadistica_dato_esdt (esdt_tpdt_pk, esdt_cadena)\
+CREATE INDEX ix_esdt_cadena ON tbl_estadistica_dato_esdt (esdt_tpdt_pk, esdt_cadena, esdt_estd_pk)\
+CREATE INDEX ix_esdt_prmt_pk ON tbl_estadistica_dato_esdt (esdt_prmt_pk, esdt_tpdt_pk, esdt_estd_pk)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_estadistica_dato_esdt FOR porticoadm.tbl_estadistica_dato_esdt\
 
@@ -1260,6 +1264,8 @@ CREATE TABLE tbl_cargo_dep_version_crdv (
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_cargo_dep_version_crdv FOR porticoadm.tbl_cargo_dep_version_crdv\
+
+CREATE INDEX ix_crdv_crdp_pk ON tbl_cargo_dep_version_crdv(crdv_crdp_pk)\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_cargo_dep_version_crdv TO portico\
 
@@ -2000,6 +2006,8 @@ CREATE TABLE tbl_accion_entidad_acen (
 
 CREATE OR REPLACE SYNONYM portico.tbl_accion_entidad_acen FOR tbl_accion_entidad_acen\
 
+CREATE INDEX ix_acen_enti_pk ON tbl_accion_entidad_acen(acen_enti_pk)\
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_accion_entidad_acen TO portico\
 
 
@@ -2019,6 +2027,8 @@ CREATE TABLE tbl_grupo_accion_grac (
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_grupo_accion_grac FOR tbl_grupo_accion_grac\
+
+CREATE INDEX ix_grac_accn_pk ON tbl_grupo_accion_grac(grac_accn_pk)\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_grupo_accion_grac TO portico\
 
@@ -2040,6 +2050,8 @@ CREATE TABLE tbl_grupo_accion_entidad_grae (
 
 CREATE OR REPLACE SYNONYM portico.tbl_grupo_accion_entidad_grae FOR tbl_grupo_accion_entidad_grae\
 
+CREATE INDEX ix_grae_acen_pk ON tbl_grupo_accion_entidad_grae(grae_acen_pk)\
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_grupo_accion_entidad_grae TO portico\
 
 
@@ -2060,6 +2072,53 @@ CREATE TABLE tbl_tramite_trmt (
 CREATE OR REPLACE SYNONYM portico.tbl_tramite_trmt FOR tbl_tramite_trmt\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_tramite_trmt TO portico\
+
+
+
+-- tbl_accion_tramite_actr
+CREATE TABLE tbl_accion_tramite_actr (
+	actr_pk NUMBER(19) NOT NULL
+	, actr_accn_pk NUMBER(19) NOT NULL
+	, actr_trmt_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_actr PRIMARY KEY (actr_pk)
+
+	, CONSTRAINT uk_actr UNIQUE (actr_accn_pk, actr_trmt_pk)
+
+	, CONSTRAINT fk_actr_accn_pk FOREIGN KEY (actr_accn_pk)
+		REFERENCES tbl_accion_accn (accn_pk)
+	, CONSTRAINT fk_actr_trmt_pk FOREIGN KEY (actr_trmt_pk)
+		REFERENCES tbl_tramite_trmt (trmt_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_accion_tramite_actr FOR tbl_accion_tramite_actr\
+
+CREATE INDEX ix_actr_trmt_pk ON tbl_accion_tramite_actr (actr_trmt_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_accion_tramite_actr TO portico\
+
+
+-- tbl_grupo_accion_tramite_grat
+CREATE TABLE tbl_grupo_accion_tramite_grat (
+	grat_grpo_pk NUMBER(19) NOT NULL
+	, grat_actr_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_grat PRIMARY KEY (grat_grpo_pk, grat_actr_pk)
+
+	, CONSTRAINT fk_grat_grpo_pk FOREIGN KEY (grat_grpo_pk)
+		REFERENCES tbl_grupo_grpo (grpo_pk)
+		ON DELETE CASCADE
+	, CONSTRAINT fk_grat_actr_pk FOREIGN KEY (grat_actr_pk)
+		REFERENCES tbl_accion_tramite_actr (actr_pk)
+		ON DELETE CASCADE
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_grupo_accion_tramite_grat FOR tbl_grupo_accion_tramite_grat\
+
+CREATE INDEX ix_grat_actr_pk ON tbl_grupo_accion_tramite_grat (grat_actr_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_grupo_accion_tramite_grat TO portico\
+
 
 
 -- tbl_tramite_tipo_dato_trtd
@@ -2097,6 +2156,8 @@ CREATE TABLE tbl_item_tramite_ittr (
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_item_tramite_ittr FOR tbl_item_tramite_ittr\
+
+CREATE INDEX ix_ittr_item_pk ON tbl_item_tramite_ittr(ittr_item_pk)\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_item_tramite_ittr TO portico\
 
@@ -2207,6 +2268,8 @@ DROP TABLE tbl_parametro_trmt_prtr\
 DROP TABLE tbl_item_trmt_dato_ittd\
 DROP TABLE tbl_item_tramite_ittr\
 DROP TABLE tbl_tramite_tipo_dato_trtd\
+DROP TABLE tbl_grupo_accion_tramite_grat\
+DROP TABLE tbl_accion_tramite_actr\
 DROP TABLE tbl_tramite_trmt\
 DROP TABLE tbl_grupo_accion_entidad_grae\
 DROP TABLE tbl_grupo_accion_grac\

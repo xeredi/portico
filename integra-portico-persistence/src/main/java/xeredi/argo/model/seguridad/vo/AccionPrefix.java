@@ -50,7 +50,8 @@ public enum AccionPrefix {
     srsc,
     /** The iten. */
     item,
-
+    /** The ittr. */
+    ittr,
     /** The crgo. */
     crgo,
     /** The rgla. */
@@ -97,9 +98,10 @@ public enum AccionPrefix {
     cdms,
     /** The secc. */
     secc,
-
     /** The vldr. */
     vldr,
+    /** The actr. */
+    actr,
 
     ;
 }

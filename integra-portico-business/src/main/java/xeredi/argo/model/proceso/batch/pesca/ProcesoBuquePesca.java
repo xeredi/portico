@@ -46,7 +46,7 @@ public final class ProcesoBuquePesca extends ProcesoTemplate {
     protected void ejecutarProceso() {
         final Date ffin = findDateParameter(params.ffin.name());
 
-        if (prmnList.isEmpty()) {
+        if (prbtData.getPrmnList().isEmpty()) {
             final TipoServicioDetailVO enti = TipoServicioProxy.select(Entidad.BUQUE_PESCA_SRV.getId());
 
             final BuquePescaServicioBO bo = new BuquePescaServicioBO();

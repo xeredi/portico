@@ -1,7 +1,5 @@
 package xeredi.argo.http.controller.action.item;
 
-import com.google.common.base.Preconditions;
-
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -20,6 +18,8 @@ import xeredi.argo.model.servicio.bo.ServicioBO;
 import xeredi.argo.model.servicio.bo.ServicioBOFactory;
 import xeredi.argo.model.servicio.bo.SubservicioBO;
 import xeredi.argo.model.servicio.bo.SubservicioBOFactory;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -116,6 +116,6 @@ public final class ItemTramiteSaveAction extends CrudSaveAction<ItemTramiteVO> i
      */
     @Override
     public final AccionPrefix getAccnPrefix() {
-        return AccionPrefix.item;
+        return AccionPrefix.ittr;
     }
 }

@@ -82,10 +82,11 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
         final Map<String, PuertoVO> prtoMap = new HashMap<>();
 
         // Lectura de los parametros de entrada
-        final String sprtCodigo = prpmMap.get(params.autp.name()).getValor();
-        final int anio = Integer.parseInt(prpmMap.get(params.anio.name()).getValor());
-        final int mes = Integer.parseInt(prpmMap.get(params.mes.name()).getValor());
-        final boolean sobreescribir = Boolean.parseBoolean(prpmMap.get(params.sobreescribir.name()).getValor());
+        final String sprtCodigo = prbtData.getPrpmMap().get(params.autp.name()).getValor();
+        final int anio = Integer.parseInt(prbtData.getPrpmMap().get(params.anio.name()).getValor());
+        final int mes = Integer.parseInt(prbtData.getPrpmMap().get(params.mes.name()).getValor());
+        final boolean sobreescribir = Boolean.parseBoolean(prbtData.getPrpmMap().get(params.sobreescribir.name())
+                .getValor());
 
         LOG.info("Carga estadisticas: " + sprtCodigo + ", " + anio + ", " + mes);
 
@@ -115,10 +116,10 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
             addError(MensajeCodigo.E_003, sprtCodigo);
         }
 
-        if (prmnList.isEmpty()) {
+        if (prbtData.getPrmnList().isEmpty()) {
             final ProcesoBO prbtBO = new ProcesoBO();
 
-            final List<ArchivoInfoVO> arinList = prbtBO.selectArinEntradaList(prbt.getId());
+            final List<ArchivoInfoVO> arinList = prbtBO.selectArinEntradaList(prbtData.getPrbt().getId());
 
             if (arinList.isEmpty()) {
                 addError(MensajeCodigo.G_000, EstadisticaFileType.zip.name());
@@ -130,7 +131,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                 try (final InputStream stream = flsrBO.selectStream(arin.getId())) {
                     final Map<EstadisticaFileType, List<String>> mapFiles = readFile(stream);
 
-                    if (prmnList.isEmpty()) {
+                    if (prbtData.getPrmnList().isEmpty()) {
                         isSigma = fileImport.verifyIsSigma(mapFiles.get(EstadisticaFileType.EPP));
 
                         fileImport.readMaestrosEPP(mapFiles.get(EstadisticaFileType.EPP));
@@ -142,11 +143,11 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                         fileImport.readMaestrosEMT(mapFiles.get(EstadisticaFileType.EMT));
                     }
 
-                    if (prmnList.isEmpty()) {
+                    if (prbtData.getPrmnList().isEmpty()) {
                         buscarMaestros(Calendar.getInstance().getTime());
                     }
 
-                    if (prmnList.isEmpty()) {
+                    if (prbtData.getPrmnList().isEmpty()) {
                         fileImport.readEPP(mapFiles.get(EstadisticaFileType.EPP));
                         fileImport.readEAP(mapFiles.get(EstadisticaFileType.EAP));
                         fileImport.readEAV(mapFiles.get(EstadisticaFileType.EAV));
@@ -165,7 +166,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
             }
         }
 
-        if (prmnList.isEmpty()) {
+        if (prbtData.getPrmnList().isEmpty()) {
             LOG.info("Guardar Datos");
 
             final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
@@ -173,15 +174,14 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
             try {
                 peprBO.cargarArchivo(pepr, prtoMap, fileImport.getEstdList(), sobreescribir);
 
-                itemSalidaList.add(pepr.getId());
+                prbtData.getItemSalidaList().add(pepr.getId());
             } catch (final DuplicateInstanceException ex) {
                 addError(MensajeCodigo.E_001, "Periodo de Proceso: " + pepr.getEtiqueta());
             }
         }
 
-        if (!prmnList.isEmpty()) {
-            LOG.error("Errores en la carga");
-            LOG.info(prmnList);
+        if (!prbtData.getPrmnList().isEmpty()) {
+            LOG.error("Errores en la carga: " + prbtData.getPrmnList().size());
         }
 
         LOG.info("Fin Proceso");

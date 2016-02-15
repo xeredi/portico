@@ -43,13 +43,13 @@ public final class ProcesoValorador extends ProcesoTemplate {
     protected void ejecutarProceso() {
         final ValoradorBO vldrBO = new ValoradorBO(this);
 
-        final String fliqString = prpmMap.get(FLIQ_PARAM).getValor();
+        final String fliqString = prbtData.getPrpmMap().get(FLIQ_PARAM).getValor();
 
         try {
             final Date fliq = new SimpleDateFormat("dd/MM/yyyy").parse(fliqString);
             final Set<Long> crgoIds = new HashSet<>();
 
-            final ProcesoParametroVO prpmCrgoIds = prpmMap.get(CARGOIDS_PARAM);
+            final ProcesoParametroVO prpmCrgoIds = prbtData.getPrpmMap().get(CARGOIDS_PARAM);
 
             if (prpmCrgoIds != null) {
                 final StringTokenizer tokenizer = new StringTokenizer(prpmCrgoIds.getValor());
@@ -59,7 +59,7 @@ public final class ProcesoValorador extends ProcesoTemplate {
                 }
             }
 
-            for (final ProcesoItemVO pritEntrada : pritEntradaList) {
+            for (final ProcesoItemVO pritEntrada : prbtData.getPritEntradaList()) {
                 try {
                     vldrBO.valorarServicio(pritEntrada.getItemId(), crgoIds, fliq);
                 } catch (final ModelException ex) {

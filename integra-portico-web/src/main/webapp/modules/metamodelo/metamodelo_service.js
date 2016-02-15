@@ -18,6 +18,8 @@ angular.module("metamodelo_service", [ "crud_service" ])
 
 .factory("TramiteService", TramiteService)
 
+.factory("AccionTramiteService", AccionTramiteService)
+
 .factory("TramiteTipoDatoService", TramiteTipoDatoService)
 
 .factory("TipoParametroService", TipoParametroService)
@@ -68,6 +70,10 @@ function EntidadTipoDatoService($http, $q, CrudService) {
 
 function TramiteService($http, $q, CrudService) {
     return CrudService.create("metamodelo/tramite");
+}
+
+function AccionTramiteService($http, $q, CrudService) {
+    return CrudService.create("metamodelo/accion-tramite");
 }
 
 function TramiteTipoDatoService($http, $q, CrudService) {
