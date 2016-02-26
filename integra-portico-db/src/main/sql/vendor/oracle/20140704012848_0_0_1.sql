@@ -1085,6 +1085,9 @@ CREATE TABLE tbl_proceso_batch_prbt (
 	, prbt_falta TIMESTAMP NOT NULL
 	, prbt_finicio TIMESTAMP
 	, prbt_ffin TIMESTAMP
+	, prbt_errores_cnt NUMBER(6) NOT NULL
+	, prbt_alertas_cnt NUMBER(6) NOT NULL
+	, prbt_mensajes_cnt NUMBER(6) NOT NULL
 
 	, CONSTRAINT pk_prbt PRIMARY KEY (prbt_pk)
 )\

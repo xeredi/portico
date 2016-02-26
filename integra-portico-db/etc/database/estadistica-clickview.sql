@@ -9,9 +9,37 @@ DROP TABLE tbl_c1;
 
 CREATE TABLE tbl_c1 AS 
 SELECT estd_pepr_pk, estd_subp_pk
+    , (
+        SELECT pepr_freferencia FROM tbl_periodo_proceso_pepr
+        WHERE pepr_pk = estd_pepr_pk
+    ) AS pepr_fref
+    , (SELECT esdt_cadena FROM tbl_estadistica_dato_esdt
+        WHERE esdt_estd_pk = estd_pk
+            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')) AS d1
     , (SELECT esdt_prmt_pk FROM tbl_estadistica_dato_esdt
         WHERE esdt_estd_pk = estd_pk
-            AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')) AS d1
+            AND esdt_tpdt_pk = portico.getTipoDato('UNLOCODE')) AS d2
+    , (SELECT esdt_prmt_pk FROM tbl_estadistica_dato_esdt
+        WHERE esdt_estd_pk = estd_pk
+            AND esdt_tpdt_pk = portico.getTipoDato('UNLOCODE_2')) AS d3
+    , (SELECT esdt_prmt_pk FROM tbl_estadistica_dato_esdt
+        WHERE esdt_estd_pk = estd_pk
+            AND esdt_tpdt_pk = portico.gettipodato('ALIN')) AS d4
+    , (SELECT esdt_prmt_pk FROM tbl_estadistica_dato_esdt
+        WHERE esdt_estd_pk = estd_pk
+            AND esdt_tpdt_pk = portico.gettipodato('UNLOCODE_3')) AS d5
+    , (SELECT esdt_prmt_pk FROM tbl_estadistica_dato_esdt
+        WHERE esdt_estd_pk = estd_pk
+            AND esdt_tpdt_pk = portico.gettipodato('UNLOCODE_4')) AS d6
+    , (SELECT esdt_prmt_pk FROM tbl_estadistica_dato_esdt
+        WHERE esdt_estd_pk = estd_pk
+            AND esdt_tpdt_pk = portico.getTipoDato('MERCANCIA')) AS d7
+    , (SELECT esdt_prmt_pk FROM tbl_estadistica_dato_esdt
+        WHERE esdt_estd_pk = estd_pk
+            AND esdt_tpdt_pk = portico.gettipodato('TIPO_NAV')) AS d8
+    , (SELECT esdt_prmt_pk FROM tbl_estadistica_dato_esdt
+        WHERE esdt_estd_pk = estd_pk
+            AND esdt_tpdt_pk = portico.gettipodato('UNIDAD_CARGA')) AS d9
     , (SELECT esdt_ndecimal FROM tbl_estadistica_dato_esdt
         WHERE esdt_estd_pk = estd_pk
             AND esdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')) AS a1
@@ -25,81 +53,48 @@ FROM tbl_estadistica_estd
 WHERE estd_tpes_pk = portico.getEntidad('MOVIMIENTO_MERCANCIA')
 ;
 
-CREATE INDEX ix_c1_estd_pepr_pk ON tbl_c1(estd_pepr_pk);
+CREATE INDEX ix_c1_estd_pepr_pk ON tbl_c1(estd_pepr_pk, estd_subp_pk);
 
 SELECT COUNT(1) FROM tbl_c1;
 
 SELECT * FROM tbl_c1;
 
-SELECT estd_subp_pk, d1, SUM(a1), SUM(a2), SUM(a3)
+SELECT estd_subp_pk
+    , d1
+    , d2
+    , sum(a1), sum(a2), sum(a3)
+    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = d2) AS d2_parametro
 FROM tbl_c1
 WHERE 
     EXISTS (
         SELECT 1
         FROM tbl_periodo_proceso_pepr
         WHERE 
-            pepr_pk = estd_pepr_pk
-            AND pepr_mes = 3 
+            1 = 1
+            AND EXISTS (
+                SELECT 1 FROM tbl_superpuerto_sprt
+                WHERE sprt_pk = pepr_autp_pk
+                    AND sprt_codigo = '63'
+            )
+/*
+*/
+            AND pepr_pk = estd_pepr_pk
+--            AND pepr_mes = 3 
             AND pepr_anio = 2015
     )
-GROUP BY estd_subp_pk, d1
-ORDER BY estd_subp_pk, d1
-;
-
-SELECT sprt_pk, prmt_pk AS d1
-    , (
-        SELECT SUM(esdt_ndecimal)
-        FROM tbl_estadistica_dato_esdt
-        WHERE esdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
-            AND EXISTS (
-                SELECT 1 FROM tbl_estadistica_estd
-                WHERE estd_pk = esdt_estd_pk
-                    AND estd_tpes_pk = portico.getEntidad('MOVIMIENTO_MERCANCIA')
-                    AND EXISTS (
-                        SELECT 1 FROM tbl_periodo_proceso_pepr
-                        WHERE pepr_pk = estd_pepr_pk
-                            AND pepr_autp_pk = sprt_pk
-                            AND pepr_anio = 2015
-                            AND pepr_mes = 3
-                    )
-            )
+    AND d1 LIKE 'DT'
+    AND EXISTS (
+        SELECT 1
+        FROM tbl_parametro_prmt
+        WHERE prmt_pk = d2
+            AND prmt_parametro LIKE 'ES%'
     )
-FROM 
-    tbl_superpuerto_sprt
-    , tbl_parametro_prmt
-WHERE 
-    prmt_tppr_pk = portico.getEntidad('UNIDAD_CARGA')
+GROUP BY estd_subp_pk, d1, d2
+ORDER BY estd_subp_pk, d1, d2
 ;
 
 
-SELECT estd_subp_pk, d1, SUM(a1)
-FROM (
-    SELECT estd_subp_pk
-        , (
-            SELECT esdt_prmt_pk
-            FROM tbl_estadistica_dato_esdt
-            WHERE esdt_estd_pk = estd_pk
-                AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
-        ) AS d1
-        , (
-            SELECT esdt_ndecimal
-            FROM tbl_estadistica_dato_esdt
-            WHERE esdt_estd_pk = estd_pk
-                AND esdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
-        ) AS a1
-    FROM tbl_estadistica_estd
-    WHERE 
-        EXISTS (
-            SELECT 1 FROM tbl_periodo_proceso_pepr
-            WHERE pepr_pk = estd_pepr_pk
-                AND pepr_anio = 2015
-                AND pepr_mes = 3
-                AND pepr_autp_pk = 
-        )
-        AND estd_tpes_pk = portico.getEntidad('MOVIMIENTO_MERCANCIA')
-) sql
-GROUP BY estd_subp_pk, d1
-;
+
 
 
 SELECT estd_subp_pk, d1, SUM(a1) AS a1
@@ -167,6 +162,5 @@ WHERE
 GROUP BY estd_subp_pk, d1
 ORDER BY estd_subp_pk, d1
 ;
-
 
 

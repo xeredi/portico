@@ -8,13 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import com.google.common.base.Preconditions;
-
-import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.dao.ArchivoDAO;
 import xeredi.argo.model.comun.dao.ArchivoInfoDAO;
@@ -45,6 +44,8 @@ import xeredi.argo.model.proceso.vo.ProcesoVO;
 import xeredi.argo.model.util.GzipUtil;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -164,8 +165,8 @@ public class ProcesoBO {
             prbtCriterioVO.setModulo(tipo.getModulo());
             prbtCriterioVO.setTipo(tipo);
 
-            final List<ProcesoVO> prbtList = prbtDAO.selectList(prbtCriterioVO,
-                    new RowBounds(RowBounds.NO_ROW_OFFSET, 1));
+            final List<ProcesoVO> prbtList = prbtDAO.selectList(prbtCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET,
+                    1));
 
             if (!prbtList.isEmpty()) {
                 final ProcesoVO prbtVO = prbtList.get(0);
@@ -199,8 +200,8 @@ public class ProcesoBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public final void finalizar(final Long prbtId, final List<ProcesoMensajeVO> prmnList, final ItemTipo itemSalidaTipo,
-            final List<Long> itemSalidaList, final File fileSalida)
+    public final void finalizar(final Long prbtId, final List<ProcesoMensajeVO> prmnList,
+            final ItemTipo itemSalidaTipo, final List<Long> itemSalidaList, final File fileSalida)
                     throws InstanceNotFoundException, OperacionNoPermitidaException {
         // Lectura del Archivo (si lo hay)
         byte[] buffer = null;
@@ -234,15 +235,32 @@ public class ProcesoBO {
                 throw new OperacionNoPermitidaException(MessageI18nKey.prbt, MessageI18nKey.prbt_finalizar, prbtId);
             }
 
-            prbtDAO.updateFinalizar(prbtId);
-
             if (prmnList != null) {
                 for (final ProcesoMensajeVO prmn : prmnList) {
+                    switch (prmn.getNivel()) {
+                    case E:
+                        prbt.setErroresCnt(prbt.getErroresCnt() + 1);
+
+                        break;
+                    case W:
+                        prbt.setAlertasCnt(prbt.getAlertasCnt() + 1);
+
+                        break;
+                    case I:
+                        prbt.setMensajesCnt(prbt.getMensajesCnt() + 1);
+
+                        break;
+                    default:
+                        throw new Error("MensajeNivel no válido: " + prmn.getNivel());
+                    }
+
                     prmn.setPrbtId(prbtId);
 
                     prmnDAO.insert(prmn);
                 }
             }
+
+            prbtDAO.updateFinalizar(prbt);
 
             if (itemSalidaList != null) {
                 for (final Long itemId : itemSalidaList) {
@@ -292,8 +310,8 @@ public class ProcesoBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public final void cancelar(final @NonNull ProcesoVO prbt)
-            throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public final void cancelar(final @NonNull ProcesoVO prbt) throws InstanceNotFoundException,
+    OperacionNoPermitidaException {
         Preconditions.checkNotNull(prbt.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

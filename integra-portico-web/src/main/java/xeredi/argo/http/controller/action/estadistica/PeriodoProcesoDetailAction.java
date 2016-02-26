@@ -35,7 +35,7 @@ public final class PeriodoProcesoDetailAction extends CrudDetailAction<PeriodoPr
 
         final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
-        model = peprBO.select(model.getId());
+        model = peprBO.select(model.getId(), getIdioma());
         tpesList = TipoEstadisticaProxy.selectLabelValues();
     }
 

@@ -48,9 +48,10 @@ public abstract class ProcesoTemplate {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ProcesoTemplate.class);
 
+    /** The Constant BATCH_MAX_SIZE. */
     private static final int BATCH_MAX_SIZE = 1000;
 
-    /** The prbt vo. */
+    /** The prbt data. */
     @Getter
     protected ProcesoData prbtData;
 
@@ -105,7 +106,7 @@ public abstract class ProcesoTemplate {
      * @param fechaVigencia
      *            the fecha vigencia
      */
-    protected final void buscarMaestros(final Date fechaVigencia) {
+    public final void buscarMaestros(final Date fechaVigencia) {
         if (LOG.isInfoEnabled()) {
             LOG.info("Busqueda de Maestros");
         }
@@ -135,11 +136,11 @@ public abstract class ProcesoTemplate {
                         if (tpprDetail.getEnti().getPuerto()) {
                             if (!prbtData.getMaestroPrtoMap().get(entidad).containsKey(prmt.getPrto().getId())) {
                                 prbtData.getMaestroPrtoMap().get(entidad)
-                                .put(prmt.getPrto().getId(), new HashMap<String, ParametroVO>());
+                                        .put(prmt.getPrto().getId(), new HashMap<String, ParametroVO>());
                             }
 
                             prbtData.getMaestroPrtoMap().get(entidad).get(prmt.getPrto().getId())
-                            .put(prmt.getParametro(), prmt);
+                                    .put(prmt.getParametro(), prmt);
                         } else {
                             prbtData.getMaestroMap().get(entidad).put(prmt.getParametro(), prmt);
                         }

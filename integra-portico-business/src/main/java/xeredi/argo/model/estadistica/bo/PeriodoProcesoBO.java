@@ -92,12 +92,14 @@ public class PeriodoProcesoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final PeriodoProcesoVO select(final @NonNull Long peprId) throws InstanceNotFoundException {
+    public final PeriodoProcesoVO select(final @NonNull Long peprId, final String idioma)
+            throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
             final PeriodoProcesoCriterioVO peprCriterio = new PeriodoProcesoCriterioVO();
 
             peprCriterio.setId(peprId);
+            peprCriterio.setIdioma(idioma);
 
             final PeriodoProcesoVO peprVO = peprDAO.selectObject(peprCriterio);
 

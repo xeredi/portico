@@ -26,15 +26,9 @@
         , prbt_falta
         , prbt_finicio
         , prbt_ffin
-        , (SELECT COUNT(1) FROM tbl_proceso_mensaje_prmn
-            WHERE prmn_prbt_pk = prbt_pk
-                AND prmn_nivel = 'E') AS prbt_errores_cnt
-        , (SELECT COUNT(1) FROM tbl_proceso_mensaje_prmn
-            WHERE prmn_prbt_pk = prbt_pk
-                AND prmn_nivel = 'W') AS prbt_alertas_cnt
-        , (SELECT COUNT(1) FROM tbl_proceso_mensaje_prmn
-            WHERE prmn_prbt_pk = prbt_pk
-                AND prmn_nivel = 'I') AS prbt_mensajes_cnt
+        , prbt_errores_cnt
+        , prbt_alertas_cnt
+        , prbt_mensajes_cnt
     FROM
         tbl_proceso_batch_prbt
     ]]>
@@ -97,8 +91,9 @@
 
 	<insert id="insert" parameterType="ProcesoVO">
         <![CDATA[
-        INSERT INTO tbl_proceso_batch_prbt(prbt_pk, prbt_modulo, prbt_tipo, prbt_estado, prbt_falta, prbt_finicio, prbt_ffin)
-        VALUES (#{id}, #{modulo}, #{tipo}, 'C', portico.getSysDatetime(), NULL, NULL)
+        INSERT INTO tbl_proceso_batch_prbt(prbt_pk, prbt_modulo, prbt_tipo, prbt_estado, prbt_falta, prbt_finicio, prbt_ffin
+            , prbt_errores_cnt, prbt_alertas_cnt, prbt_mensajes_cnt)
+        VALUES (#{id}, #{modulo}, #{tipo}, 'C', portico.getSysDatetime(), NULL, NULL, 0, 0, 0)
         ]]>
 	</insert>
 
@@ -114,13 +109,16 @@
         ]]>
 	</update>
 
-	<update id="updateFinalizar" parameterType="Long">
+	<update id="updateFinalizar" parameterType="ProcesoVO">
         <![CDATA[
         UPDATE tbl_proceso_batch_prbt SET
             prbt_estado = 'F'
             , prbt_ffin = portico.getSysDatetime()
+            , prbt_errores_cnt = #{erroresCnt}
+            , prbt_alertas_cnt = #{alertasCnt}
+            , prbt_mensajes_cnt = #{mensajesCnt}
         WHERE
-            prbt_pk = #{value}
+            prbt_pk = #{id}
             AND prbt_estado = 'E'
             AND prbt_ffin IS NULL
         ]]>

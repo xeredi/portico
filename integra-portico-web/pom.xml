@@ -96,11 +96,6 @@
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
-            <artifactId>angular-ui-router</artifactId>
-            <version>${angular-ui-router.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
             <artifactId>angular-strap</artifactId>
             <version>${angular-strap.version}</version>
         </dependency>

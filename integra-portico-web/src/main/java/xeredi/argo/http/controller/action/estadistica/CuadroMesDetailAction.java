@@ -39,7 +39,7 @@ public final class CuadroMesDetailAction extends CrudDetailAction<PeriodoProceso
         final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
         final CuadroMesBO cdmsBO = new CuadroMesBO();
 
-        model = peprBO.select(model.getId());
+        model = peprBO.select(model.getId(), getIdioma());
         cdmsMap = cdmsBO.selectMap(model.getId());
     }
 

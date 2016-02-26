@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import xeredi.argo.model.facturacion.bo.FacturadorBO;
+import xeredi.argo.model.facturacion.vo.ValoracionGrupoCriterioVO;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.proceso.ProcesoTemplate;
@@ -51,6 +52,8 @@ public final class ProcesoFacturador extends ProcesoTemplate {
         final FacturadorBO fctrBO = new FacturadorBO(this);
 
         try {
+            final ValoracionGrupoCriterioVO vgrpCriterio = new ValoracionGrupoCriterioVO();
+
             Date ffac = null;
             Long fcsrId = null;
 
@@ -63,7 +66,7 @@ public final class ProcesoFacturador extends ProcesoTemplate {
             }
 
             try {
-                fctrBO.facturarValoraciones(vlrcIds, aspcId, fcsrId, ffac);
+                fctrBO.facturarValoraciones(vgrpCriterio, fcsrId, ffac);
             } catch (final Exception ex) {
                 addError(MensajeCodigo.G_000, ex.getMessage());
             }

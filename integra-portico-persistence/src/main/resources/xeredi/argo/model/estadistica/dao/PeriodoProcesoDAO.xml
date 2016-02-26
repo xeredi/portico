@@ -3,28 +3,29 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.argo.model.estadistica.dao.PeriodoProcesoDAO">
-	<resultMap type="PeriodoProcesoVO" id="ResultMap">
-		<id column="pepr_pk" property="id" />
-		<result column="pepr_anio" property="anio" />
-		<result column="pepr_mes" property="mes" />
-		<result column="pepr_trimestre" property="trimestre" />
-		<result column="pepr_freferencia" property="freferencia" />
-		<result column="pepr_falta" property="falta" />
-		<result column="pepr_cdms_generado" property="cdmsGenerado" />
+    <resultMap type="PeriodoProcesoVO" id="ResultMap">
+        <id column="pepr_pk" property="id" />
+        <result column="pepr_anio" property="anio" />
+        <result column="pepr_mes" property="mes" />
+        <result column="pepr_trimestre" property="trimestre" />
+        <result column="pepr_freferencia" property="freferencia" />
+        <result column="pepr_falta" property="falta" />
+        <result column="pepr_cdms_generado" property="cdmsGenerado" />
 
-		<association property="sprt" javaType="SuperpuertoVO">
-			<id column="pepr_autp_pk" property="id" />
-			<result column="sprt_codigo" property="codigo" />
-		</association>
+        <association property="sprt" javaType="SuperpuertoVO">
+            <id column="pepr_autp_pk" property="id" />
+            <result column="sprt_codigo" property="codigo" />
+            <result column="sprt_nombre" property="nombre" />
+        </association>
 
-		<association property="arin" javaType="ArchivoInfoVO">
-			<id column="pepr_arch_pk" property="id" />
-			<id column="arch_nombre" property="nombre" />
-			<id column="arch_tamanio" property="tamanio" />
-		</association>
-	</resultMap>
+        <association property="arin" javaType="ArchivoInfoVO">
+            <id column="pepr_arch_pk" property="id" />
+            <id column="arch_nombre" property="nombre" />
+            <id column="arch_tamanio" property="tamanio" />
+        </association>
+    </resultMap>
 
-	<sql id="SelectPrefix">
+    <sql id="SelectPrefix">
     <![CDATA[
     SELECT
         pepr_pk, pepr_anio, pepr_mes, pepr_trimestre, pepr_freferencia, pepr_falta, pepr_autp_pk, pepr_arch_pk
@@ -47,60 +48,71 @@
                 ELSE 0
             END
         ) AS pepr_cdms_generado
+    ]]>
+        <if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text
+                FROM tbl_i18n_i18n
+                WHERE
+                    i18n_ext_pk = pepr_autp_pk
+                    AND i18n_lang = #{idioma}
+                    AND i18n_pref = 'sprt'
+            ) AS sprt_nombre
+        ]]>
+        </if>
+    <![CDATA[
     FROM tbl_periodo_proceso_pepr
         LEFT JOIN tbl_archivo_arch ON
             arch_pk = pepr_arch_pk
     ]]>
-	</sql>
+    </sql>
 
-	<sql id="SelectCountPrefix">
+    <sql id="SelectCountPrefix">
     <![CDATA[
     SELECT
         COUNT(1)
     FROM tbl_periodo_proceso_pepr
     ]]>
-	</sql>
+    </sql>
 
-	<sql id="SelectWhere">
-		<where>
-			<if test="id != null">
-				AND pepr_pk = #{id}
-			</if>
-			<if test="anio != null">
-				AND pepr_anio = #{anio}
-			</if>
-			<if test="mes != null">
-				AND pepr_mes = #{mes}
-			</if>
-			<if test="trimestre != null">
-				AND pepr_trimestre = #{trimestre}
-			</if>
-			<if test="sprtId != null">
-				AND pepr_autp_pk = #{sprtId}
-			</if>
-		</where>
-	</sql>
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND pepr_pk = #{id}
+            </if>
+            <if test="anio != null">
+                AND pepr_anio = #{anio}
+            </if>
+            <if test="mes != null">
+                AND pepr_mes = #{mes}
+            </if>
+            <if test="trimestre != null">
+                AND pepr_trimestre = #{trimestre}
+            </if>
+            <if test="sprtId != null">
+                AND pepr_autp_pk = #{sprtId}
+            </if>
+        </where>
+    </sql>
 
-	<select id="count" parameterType="PeriodoProcesoCriterioVO"
-		resultType="Integer">
-		<include refid="SelectCountPrefix" />
-		<include refid="SelectWhere" />
-	</select>
+    <select id="count" parameterType="PeriodoProcesoCriterioVO" resultType="Integer">
+        <include refid="SelectCountPrefix" />
+        <include refid="SelectWhere" />
+    </select>
 
-	<select id="selectList" parameterType="PeriodoProcesoCriterioVO"
-		resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-		ORDER BY pepr_autp_pk, pepr_anio DESC, pepr_mes DESC
-	</select>
+    <select id="selectList" parameterType="PeriodoProcesoCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY pepr_autp_pk, pepr_anio DESC, pepr_mes DESC
+    </select>
 
-	<select id="selectObject" parameterType="PeriodoProcesoCriterioVO"
-		resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-	</select>
+    <select id="selectObject" parameterType="PeriodoProcesoCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
 
-	<select id="exists" parameterType="PeriodoProcesoVO" resultType="Boolean">
+    <select id="exists" parameterType="PeriodoProcesoVO" resultType="Boolean">
         <![CDATA[
         SELECT COUNT(1)
         FROM tbl_periodo_proceso_pepr
@@ -108,19 +120,19 @@
             AND pepr_anio = #{anio}
             AND pepr_mes = #{mes}
         ]]>
-	</select>
+    </select>
 
-	<insert id="insert" parameterType="PeriodoProcesoVO">
+    <insert id="insert" parameterType="PeriodoProcesoVO">
         <![CDATA[
         INSERT INTO tbl_periodo_proceso_pepr(pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_trimestre, pepr_freferencia, pepr_falta, pepr_arch_pk)
         VALUES (#{id}, #{sprt.id}, #{anio}, #{mes}, #{trimestre}, #{freferencia}, #{falta}, #{arin.id})
         ]]>
-	</insert>
+    </insert>
 
-	<delete id="delete" parameterType="PeriodoProcesoVO">
+    <delete id="delete" parameterType="PeriodoProcesoVO">
         <![CDATA[
         DELETE FROM tbl_periodo_proceso_pepr
         WHERE pepr_pk = #{id}
         ]]>
-	</delete>
+    </delete>
 </mapper>

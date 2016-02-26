@@ -7,7 +7,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import lombok.Getter;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
@@ -35,17 +37,23 @@ public final class PescaFileImport {
     /** The Constant ESTADO_MANIFIESTO. */
     private static final String ESTADO_MANIFIESTO = "R";
 
+    /** The Constant DESTINO_PARTIDA. */
+    private static final String DESTINO_PARTIDA = "H";
+
     /** The Constant SUJ_PAS_SUST. */
     private static final Boolean SUJ_PAS_SUST = false;
 
     /** The srvc. */
-    private ServicioVO srvc;
+    @Getter
+    private Map<String, ServicioVO> srvcMap;
 
     /** The ssrv list. */
-    private List<SubservicioVO> ssrvList;
+    @Getter
+    private Map<String, List<SubservicioVO>> ssrvMap;
 
     /** The fecha referencia. */
-    private Date fechaReferencia;
+    @Getter
+    private Map<String, Date> fechaReferenciaMap;
 
     /** The prmn list. */
     private final ProcesoCargaPesca proceso;
@@ -72,14 +80,9 @@ public final class PescaFileImport {
      */
     public void readFile(final List<String> lines, final String filename) {
         // Generacion del servicio
-        final Calendar calendar = Calendar.getInstance();
-
-        srvc = new ServicioVO();
-        ssrvList = new ArrayList<SubservicioVO>();
-
-        srvc.setAnno(String.valueOf(calendar.get(Calendar.YEAR)));
-        srvc.setEntiId(Entidad.MANIFIESTO_PESCA.getId());
-        srvc.setItdtMap(new HashMap<Long, ItemDatoVO>());
+        srvcMap = new HashMap<>();
+        ssrvMap = new HashMap<>();
+        fechaReferenciaMap = new HashMap<>();
 
         Double pesoTotal = 0.0;
         Double importeTotal = 0.0;
@@ -91,16 +94,45 @@ public final class PescaFileImport {
         for (final String line : lines) {
             i++;
 
+            final String referencia = getTokenString(PescaKeyword.MAN_NumeroReferencia, line, i);
+            final Date fechaReferencia = getTokenDate(PescaKeyword.MAN_FechaRecepcion, line, i, DATE_FORMAT);
+
+            if (!srvcMap.containsKey(referencia)) {
+                pesoTotal = 0.0;
+                importeTotal = 0.0;
+
+                final Calendar calendar = Calendar.getInstance();
+
+                calendar.setTime(fechaReferencia);
+
+                final ServicioVO srvc = new ServicioVO();
+
+                srvc.setAnno(String.valueOf(calendar.get(Calendar.YEAR)));
+                srvc.setEntiId(Entidad.MANIFIESTO_PESCA.getId());
+                srvc.setItdtMap(new HashMap<Long, ItemDatoVO>());
+
+                srvcMap.put(referencia, srvc);
+                ssrvMap.put(referencia, new ArrayList<SubservicioVO>());
+                fechaReferenciaMap.put(referencia, fechaReferencia);
+
+                proceso.buscarMaestros(fechaReferencia);
+            }
+
+            final ServicioVO srvc = srvcMap.get(referencia);
+            final List<SubservicioVO> ssrvList = ssrvMap.get(referencia);
+
             srvc.setPrto(getTokenPrto(PescaKeyword.MAN_Subp, line, i));
             srvc.setEstado(ESTADO_MANIFIESTO);
             srvc.setFref(fechaReferencia);
+
+            final ParametroVO tiop = getTokenMaestro(PescaKeyword.MAN_TipoOperacion, line, i,
+                    Entidad.TIPO_OPERACION_PESCA);
 
             srvc.addItdt(TipoDato.BUQUE_PESCA.getId(),
                     getTokenMaestro(PescaKeyword.MAN_Buque, line, i, Entidad.BUQUE_PESCA));
             srvc.addItdt(TipoDato.ORGA.getId(),
                     getTokenMaestro(PescaKeyword.MAN_Vendedor, line, i, Entidad.ORGANIZACION));
-            srvc.addItdt(TipoDato.TIPO_OP_PESCA.getId(),
-                    getTokenMaestro(PescaKeyword.MAN_TipoOperacion, line, i, Entidad.TIPO_OPERACION_PESCA));
+            srvc.addItdt(TipoDato.TIPO_OP_PESCA.getId(), tiop);
             srvc.addItdt(TipoDato.ORGA_2.getId(),
                     getTokenMaestro(PescaKeyword.MAN_ClienteAdicional, line, i, Entidad.ORGANIZACION));
             srvc.addItdt(TipoDato.TIPO_MAN_PESCA.getId(),
@@ -113,11 +145,17 @@ public final class PescaFileImport {
                     getTokenMaestro(PescaKeyword.MAN_Zona, line, i, Entidad.ZONA_PESCA));
             srvc.addItdt(TipoDato.COD_EXEN.getId(),
                     getTokenCR(PescaKeyword.MAN_CodExencion, line, i, TipoDato.COD_EXEN));
-            srvc.addItdt(TipoDato.INDIC_VENTA.getId(),
-                    getTokenCR(PescaKeyword.MAN_IndicadorVenta, line, i, TipoDato.INDIC_VENTA));
+            srvc.addItdt(TipoDato.INDIC_VENTA.getId(), tiop.getItdtCadena(TipoDato.INDIC_VENTA.getId()));
+            srvc.addItdt(TipoDato.CADENA_01.getId(), referencia);
             srvc.addItdt(TipoDato.CADENA_02.getId(), filename);
             srvc.addItdt(TipoDato.TIPO_IVA.getId(), tipoIvaVO);
             srvc.addItdt(TipoDato.BOOLEANO_01.getId(), SUJ_PAS_SUST ? 1L : 0L);
+
+            pesoTotal += getTokenDouble(PescaKeyword.PAR_Peso, line, i);
+            importeTotal += getTokenDouble(PescaKeyword.PAR_Importe, line, i);
+
+            srvc.addItdt(TipoDato.DECIMAL_01.getId(), pesoTotal);
+            srvc.addItdt(TipoDato.DECIMAL_02.getId(), importeTotal);
 
             final SubservicioVO ssrv = new SubservicioVO();
 
@@ -125,9 +163,7 @@ public final class PescaFileImport {
             ssrv.setNumero(i);
             ssrv.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
-            pesoTotal += getTokenDouble(PescaKeyword.PAR_Peso, line, i);
-            importeTotal += getTokenDouble(PescaKeyword.PAR_Importe, line, i);
-
+            ssrv.addItdt(TipoDato.DEST_PART_PESCA.getId(), DESTINO_PARTIDA);
             ssrv.addItdt(TipoDato.COMPRADOR_PESCA.getId(),
                     getTokenMaestro(PescaKeyword.PAR_Comprador, line, i, Entidad.COMPRADOR_PESCA));
             ssrv.addItdt(TipoDato.ESPECIE_PESCA.getId(),
@@ -137,12 +173,11 @@ public final class PescaFileImport {
             ssrv.addItdt(TipoDato.DECIMAL_01.getId(), getTokenDouble(PescaKeyword.PAR_Cajas, line, i));
             ssrv.addItdt(TipoDato.DECIMAL_02.getId(), getTokenDouble(PescaKeyword.PAR_Peso, line, i));
             ssrv.addItdt(TipoDato.DECIMAL_04.getId(), getTokenDouble(PescaKeyword.PAR_Importe, line, i));
+            ssrv.addItdt(TipoDato.DECIMAL_03.getId(), getTokenDouble(PescaKeyword.PAR_Importe, line, i)
+                    / getTokenDouble(PescaKeyword.PAR_Peso, line, i));
 
             ssrvList.add(ssrv);
         }
-
-        srvc.addItdt(TipoDato.DECIMAL_01.getId(), pesoTotal);
-        srvc.addItdt(TipoDato.DECIMAL_01.getId(), importeTotal);
     }
 
     /**
@@ -156,8 +191,6 @@ public final class PescaFileImport {
 
         for (final String line : lines) {
             i++;
-
-            fechaReferencia = getTokenDate(PescaKeyword.MAN_FechaRecepcion, line, i, DATE_FORMAT);
 
             final String buque = getTokenString(PescaKeyword.MAN_Buque, line, i);
 
@@ -350,32 +383,4 @@ public final class PescaFileImport {
             return null;
         }
     }
-
-    /**
-     * Gets the srvc.
-     *
-     * @return the srvc
-     */
-    public ServicioVO getSrvc() {
-        return srvc;
-    }
-
-    /**
-     * Gets the ssrv list.
-     *
-     * @return the ssrv list
-     */
-    public List<SubservicioVO> getSsrvList() {
-        return ssrvList;
-    }
-
-    /**
-     * Gets the fecha referencia.
-     *
-     * @return the fecha referencia
-     */
-    public Date getFechaReferencia() {
-        return fechaReferencia;
-    }
-
 }

@@ -9,13 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import com.google.common.base.Preconditions;
-
-import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
@@ -49,6 +48,8 @@ import xeredi.argo.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -295,8 +296,8 @@ public class ServicioBO {
 
             if (ssssList != null) {
                 for (final SubservicioSubservicioVO ssssVO : ssssList) {
-                    ssssDAO.insert(new SubservicioSubservicioVO(ssrvDepsMap.get(ssssVO.getSsrvPadreId()),
-                            ssrvDepsMap.get(ssssVO.getSsrvHijoId())));
+                    ssssDAO.insert(new SubservicioSubservicioVO(ssrvDepsMap.get(ssssVO.getSsrvPadreId()), ssrvDepsMap
+                            .get(ssssVO.getSsrvHijoId())));
                 }
             }
 
@@ -330,6 +331,145 @@ public class ServicioBO {
     protected void insertPostOperations(final SqlSession session, final ServicioVO srvcVO,
             final List<SubservicioVO> ssrvList, final List<SubservicioSubservicioVO> ssssList) {
         // noop
+    }
+
+    /**
+     * Insert list.
+     *
+     * @param srvcMap
+     *            the srvc map
+     * @param ssrvMap
+     *            the ssrv map
+     * @param ssssMap
+     *            the ssss map
+     * @param archId
+     *            the arch id
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
+     */
+    public final void insertList(final @NonNull Map<String, ServicioVO> srvcMap,
+            final Map<String, List<SubservicioVO>> ssrvMap, final Map<String, List<SubservicioSubservicioVO>> ssssMap,
+            final Long archId) throws DuplicateInstanceException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+            final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
+            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+            final ServicioSecuenciaDAO srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
+            final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+            final ServicioArchivoDAO srarDAO = session.getMapper(ServicioArchivoDAO.class);
+
+            final Map<Long, Long> ssrvDepsMap = new HashMap<Long, Long>();
+
+            for (final String key : srvcMap.keySet()) {
+                final ServicioVO srvc = srvcMap.get(key);
+                final List<SubservicioVO> ssrvList = ssrvMap == null ? null : ssrvMap.get(key);
+                final List<SubservicioSubservicioVO> ssssList = ssssMap == null ? null : ssssMap.get(key);
+
+                final TipoServicioDetailVO tpsrDetail = TipoServicioProxy.select(srvc.getEntiId());
+
+                if (tpsrDetail.getEntdList() != null) {
+                    if (srvc.getItdtMap() == null) {
+                        srvc.setItdtMap(new HashMap<Long, ItemDatoVO>());
+                    }
+
+                    for (final Long tpdtId : tpsrDetail.getEntdList()) {
+                        if (!srvc.getItdtMap().containsKey(tpdtId)) {
+                            final ItemDatoVO itdt = new ItemDatoVO();
+
+                            itdt.setTpdtId(tpdtId);
+                            srvc.getItdtMap().put(tpdtId, itdt);
+                        }
+                    }
+                }
+
+                final IgBO igBO = new IgBO();
+
+                srscDAO.incrementarSecuencia(srvc);
+
+                final Integer secuencia = srscDAO.obtenerSecuencia(srvc);
+
+                if (secuencia == null) {
+                    throw new Error("No se encuentra secuencia para: " + srvc);
+                }
+
+                srvc.setNumero(ServicioVO.convertNumero(secuencia));
+
+                if (srvcDAO.exists(srvc)) {
+                    throw new DuplicateInstanceException(srvc.getEntiId(), srvc);
+                }
+
+                srvc.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                srvcDAO.insert(srvc);
+
+                if (srvc.getItdtMap() != null) {
+                    for (final ItemDatoVO itdtVO : srvc.getItdtMap().values()) {
+                        itdtVO.setItemId(srvc.getId());
+                        srdtDAO.insert(itdtVO);
+                    }
+                }
+
+                if (ssrvList != null) {
+                    for (final SubservicioVO ssrvVO : ssrvList) {
+                        final Long ssrvId = igBO.nextVal(IgBO.SQ_INTEGRA);
+
+                        if (ssrvVO.getId() != null) {
+                            ssrvDepsMap.put(ssrvVO.getId(), ssrvId);
+                        }
+
+                        ssrvVO.setId(ssrvId);
+                        ssrvVO.setSrvc(srvc);
+                        ssrvDAO.insert(ssrvVO);
+
+                        final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(ssrvVO.getEntiId());
+
+                        if (tpssDetail.getEntdList() != null) {
+                            if (ssrvVO.getItdtMap() == null) {
+                                ssrvVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
+                            }
+
+                            for (final Long tpdtId : tpsrDetail.getEntdList()) {
+                                if (!ssrvVO.getItdtMap().containsKey(tpdtId)) {
+                                    final ItemDatoVO itdt = new ItemDatoVO();
+
+                                    itdt.setTpdtId(tpdtId);
+                                    ssrvVO.getItdtMap().put(tpdtId, itdt);
+                                }
+                            }
+                        }
+                    }
+
+                    for (final SubservicioVO ssrvVO : ssrvList) {
+                        if (ssrvVO.getItdtMap() != null) {
+                            for (final ItemDatoVO itdtVO : ssrvVO.getItdtMap().values()) {
+                                itdtVO.setItemId(ssrvVO.getId());
+                                ssdtDAO.insert(itdtVO);
+                            }
+                        }
+                    }
+                }
+
+                if (ssssList != null) {
+                    for (final SubservicioSubservicioVO ssssVO : ssssList) {
+                        ssssDAO.insert(new SubservicioSubservicioVO(ssrvDepsMap.get(ssssVO.getSsrvPadreId()),
+                                ssrvDepsMap.get(ssssVO.getSsrvHijoId())));
+                    }
+                }
+
+                if (archId != null) {
+                    final ServicioArchivoVO srar = new ServicioArchivoVO();
+
+                    srar.setSrvcId(srvc.getId());
+                    srar.setArchId(archId);
+
+                    srarDAO.insert(srar);
+                }
+
+                insertPostOperations(session, srvc, ssrvList, ssssList);
+            }
+
+            session.commit();
+        }
     }
 
     /**
@@ -449,8 +589,8 @@ public class ServicioBO {
             }
 
             for (final SubservicioSubservicioVO ssssVO : ssssList) {
-                ssssDAO.insert(new SubservicioSubservicioVO(ssrvIds.get(ssssVO.getSsrvPadreId()),
-                        ssrvIds.get(ssssVO.getSsrvHijoId())));
+                ssssDAO.insert(new SubservicioSubservicioVO(ssrvIds.get(ssssVO.getSsrvPadreId()), ssrvIds.get(ssssVO
+                        .getSsrvHijoId())));
             }
 
             duplicatePostOperations(session, srvcVO);

@@ -29,7 +29,7 @@ public final class PeriodoProcesoFileExportAction extends CrudFileExportAction<P
         final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
         final ArchivoBO archBO = new ArchivoBO();
 
-        model = peprBO.select(model.getId());
+        model = peprBO.select(model.getId(), getIdioma());
         stream = archBO.selectStream(model.getArin().getId());
     }
 

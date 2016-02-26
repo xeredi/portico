@@ -26,6 +26,7 @@ import xeredi.argo.model.proceso.vo.MensajeCodigo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.model.servicio.bo.pesca.ManifiestoPescaBO;
 import xeredi.argo.model.servicio.io.pesca.PescaFileImport;
+import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.proceso.FiledateComparator;
 import xeredi.argo.proceso.ProcesoTemplate;
 
@@ -97,10 +98,6 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
                     pescaFileImport.readMaestros(lines);
 
                     if (prbtData.getPrmnList().isEmpty()) {
-                        buscarMaestros(pescaFileImport.getFechaReferencia());
-                    }
-
-                    if (prbtData.getPrmnList().isEmpty()) {
                         pescaFileImport.readFile(lines, arin.getNombre());
                     }
 
@@ -109,12 +106,14 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
 
                         try {
                             // FIXME Verificar si ya se ha cargado el archivo
+                            srvcBO.insertList(pescaFileImport.getSrvcMap(), pescaFileImport.getSsrvMap(), null,
+                                    arin.getId());
 
-                            srvcBO.insert(pescaFileImport.getSrvc(), pescaFileImport.getSsrvList(), null, arin.getId());
-
-                            prbtData.getItemSalidaList().add(pescaFileImport.getSrvc().getId());
+                            for (final ServicioVO srvc : pescaFileImport.getSrvcMap().values()) {
+                                prbtData.getItemSalidaList().add(srvc.getId());
+                            }
                         } catch (final DuplicateInstanceException ex) {
-                            addError(MensajeCodigo.G_011, pescaFileImport.getSrvc().getEtiqueta());
+                            addError(MensajeCodigo.G_011, ex.getMessage());
                         }
                     }
                 } catch (final IOException ex) {

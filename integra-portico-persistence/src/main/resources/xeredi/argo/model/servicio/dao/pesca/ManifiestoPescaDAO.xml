@@ -11,8 +11,8 @@
 					SELECT SUM(COALESCE(ssdt_ndecimal, 0))
 					FROM tbl_subservicio_dato_ssdt
 					WHERE
-						EXISTS (
-							SELECT 1
+						ssdt_ssrv_pk = ANY (
+                            SELECT ssrv_pk
 							FROM tbl_subservicio_ssrv
 							WHERE
 								ssrv_pk = ssdt_ssrv_pk
@@ -43,8 +43,8 @@
 					SELECT SUM(COALESCE(ssdt_ndecimal, 0))
 					FROM tbl_subservicio_dato_ssdt
 					WHERE
-						EXISTS (
-							SELECT 1
+						ssdt_ssrv_pk = ANY (
+                            SELECT ssrv_pk
 							FROM tbl_subservicio_ssrv
 							WHERE
 								ssrv_pk = ssdt_ssrv_pk

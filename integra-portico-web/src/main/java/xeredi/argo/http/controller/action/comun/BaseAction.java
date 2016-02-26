@@ -61,7 +61,7 @@ public abstract class BaseAction extends ActionSupport {
     /** The available languages. */
     @Getter
     protected final String[] availableLanguages = ConfigurationProxy
-    .getStringArray(ConfigurationKey.language_available);
+            .getStringArray(ConfigurationKey.language_available);
 
     /** The response code. */
     @Getter
@@ -104,7 +104,7 @@ public abstract class BaseAction extends ActionSupport {
      */
     public final Long getSprtId() {
         // FIXME !!!
-        return /* 36000L */15420069L;
+        return /* 36000L */16528006L;
     }
 
     /**
