@@ -5,7 +5,7 @@ angular
                         "ui.bootstrap.tpls", "ui.bootstrap.tabs",
                         "ui.bootstrap.pagination", "ui.bootstrap.dropdown",
                         "ui.bootstrap.typeahead", "pascalprecht.translate",
-                        "angularSpinner", "uiGmapgoogle-maps",
+                        "angularSpinner", "uiGmapgoogle-maps", "ngFileUpload",
                         "LocalStorageModule", "i18n", "crud_service",
                         "administracion", "administracion_service",
                         "administracion_controller", "metamodelo_service",

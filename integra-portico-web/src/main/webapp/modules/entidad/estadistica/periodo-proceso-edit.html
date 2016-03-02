@@ -13,15 +13,15 @@
                         data-ng-model="vm.model.pepr.anio" class="form-control" />
                 </div>
                 <div class="col-sm-2 col-md-1 form-group-sm">
-                    <label data-translate="pepr_mes"></label> <input type="text" data-ng-model="vm.model.pepr.mes"
-                        class="form-control" />
+                    <label data-translate="pepr_mes"></label> <input type="text"
+                        data-ng-model="vm.model.pepr.mes" class="form-control" />
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-6 col-md-4 form-group-sm" data-ng-if="vm.accion == 'load'">
-                    <label data-translate="pepr_file"></label> <input type="file" data-ng-file-select
-                        data-ng-model="vm.file" class="form-control" />
+                    <label data-translate="pepr_file"></label> <input type="file" data-ngf-select
+                        data-ng-model="vm.file" name="file" data-ngf-max-size="2MB" class="form-control">
                 </div>
                 <div class="col-sm-1 form-group-sm">
                     <label data-translate="pepr_sobreescribir"></label> <select

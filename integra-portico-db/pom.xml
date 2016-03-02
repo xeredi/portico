@@ -154,11 +154,6 @@
             <artifactId>jdbc</artifactId>
             <version>${oracle.version}</version>
         </dependency>
-        <dependency>
-            <groupId>us.fatehi</groupId>
-            <artifactId>schemacrawler</artifactId>
-            <version>${schemacrawler.version}</version>
-        </dependency>
     </dependencies>
 
 </project>
