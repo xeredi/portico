@@ -129,7 +129,7 @@ public class ProcesoBO {
                 arin.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
                 arin.setNombre(fileEntrada.getName());
                 arin.setSentido(ArchivoSentido.E);
-                arin.setTamanio((int) fileEntrada.length());
+                arin.setTamanio(fileEntrada.length());
                 arin.setFalta(Calendar.getInstance().getTime());
 
                 arch.setArin(arin);
@@ -283,7 +283,7 @@ public class ProcesoBO {
                 arin.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
                 arin.setNombre(fileSalida.getName());
                 arin.setSentido(ArchivoSentido.S);
-                arin.setTamanio((int) fileSalida.length());
+                arin.setTamanio(fileSalida.length());
                 arin.setFalta(Calendar.getInstance().getTime());
 
                 arch.setArin(arin);

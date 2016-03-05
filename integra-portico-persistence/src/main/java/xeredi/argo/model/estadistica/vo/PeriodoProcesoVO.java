@@ -39,7 +39,7 @@ public final class PeriodoProcesoVO {
     private Date falta;
 
     /** The cdms generado. */
-    private boolean cdmsGenerado;
+    private Boolean cdmsGenerado;
 
     /** The arin. */
     private ArchivoInfoVO arin;

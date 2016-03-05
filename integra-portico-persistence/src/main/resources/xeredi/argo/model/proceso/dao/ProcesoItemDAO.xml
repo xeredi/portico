@@ -107,6 +107,10 @@
 				)
 				WHEN 'vlrc' THEN
 					CONCAT('', prit_item_pk)
+                WHEN 'arch' THEN (
+                    SELECT arch_nombre FROM tbl_archivo_arch
+                    WHERE arch_pk = prit_item_pk
+                )
 	        END
 	    ) AS prit_etiqueta
     FROM

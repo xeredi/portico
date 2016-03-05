@@ -19,6 +19,8 @@ angular.module("servicio_controller", [])
 
 .controller("ServicioEditController", ServicioEditController)
 
+.controller("ServicioLoadController", ServicioLoadController)
+
 .controller("SubservicioGridController", SubservicioGridController)
 
 .controller("SubservicioDetailController", SubservicioDetailController)
@@ -77,6 +79,11 @@ function config($routeProvider) {
             .when("/servicio/servicio/edit/:accion/:entiId/:id?", {
                 templateUrl : "modules/entidad/servicio/servicio-edit.html",
                 controller : "ServicioEditController as vm"
+            })
+
+            .when("/servicio/servicio/load/:entiId", {
+                templateUrl : "modules/entidad/servicio/servicio-load.html",
+                controller : "ServicioLoadController as vm",
             })
 
             .when("/servicio/subservicio/grid/:entiId", {
@@ -442,6 +449,40 @@ function ServicioEditController($routeParams, pageTitleService, ServicioService)
     });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);
+}
+
+function ServicioLoadController($routeParams, pageTitleService, ServicioService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        ServicioService.fileUpload(vm.fileLoad).then(
+                function(data) {
+                    vm.model.archId = data.archId;
+
+                    ServicioService.load(vm.model).then(
+                            function(data) {
+                                ServicioService.redirectAfterSave(vm.accion,
+                                        '/proceso/proceso/grid');
+                            });
+                });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.model = {
+        entiId : $routeParams.entiId
+    };
+
+    ServicioService.loadPrepare(vm.model).then(function(data) {
+        vm.model = data.model;
+    });
+
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_loadfile");
 }
 
 function SubservicioGridController($routeParams, pageTitleService,

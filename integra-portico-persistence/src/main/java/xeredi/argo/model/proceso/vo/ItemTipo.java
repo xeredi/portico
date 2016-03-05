@@ -15,7 +15,9 @@ public enum ItemTipo {
     /** Factura. */
     fctr,
     /** Periodo de Proceso. */
-    pepr
+    pepr,
+    /** The arch. */
+    arch,
 
     ;
 }

@@ -18,7 +18,7 @@ public final class ArchivoInfoVO {
     private String nombre;
 
     /** The filesize. */
-    private Integer tamanio;
+    private Long tamanio;
 
     /** The sentido. */
     private ArchivoSentido sentido;

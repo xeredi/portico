@@ -4,11 +4,11 @@ import java.util.List;
 
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
+import xeredi.argo.http.view.estadistica.ProcesoEstadisticaVO;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
-import xeredi.argo.model.estadistica.vo.ProcesoEstadisticaVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc

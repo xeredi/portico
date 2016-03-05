@@ -1,7 +1,6 @@
-package xeredi.argo.model.estadistica.vo;
+package xeredi.argo.http.view.estadistica;
 
-import java.io.File;
-
+import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
 import lombok.Data;
 
 // TODO: Auto-generated Javadoc
@@ -10,12 +9,12 @@ import lombok.Data;
  */
 @Data
 public final class ProcesoEstadisticaVO {
-    /** The pepr. */
-    private PeriodoProcesoVO pepr = new PeriodoProcesoVO();
-
     /** The sobreescribir. */
     private Boolean sobreescribir;
 
-    /** The file. */
-    private File file;
+    /** The archId. */
+    private Long archId;
+
+    /** The pepr. */
+    private PeriodoProcesoVO pepr;
 }

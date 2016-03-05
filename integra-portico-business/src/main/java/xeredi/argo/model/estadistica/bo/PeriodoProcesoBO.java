@@ -520,7 +520,7 @@ public class PeriodoProcesoBO {
             arin.setNombre(pepr.getFilename() + ".zip");
             arin.setSentido(ArchivoSentido.S);
             arin.setFalta(Calendar.getInstance().getTime());
-            arin.setTamanio(buffer.length);
+            arin.setTamanio((long) buffer.length);
 
             arch.setArin(arin);
             arch.setArchivo(buffer);

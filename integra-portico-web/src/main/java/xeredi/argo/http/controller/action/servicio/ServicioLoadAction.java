@@ -1,0 +1,63 @@
+package xeredi.argo.http.controller.action.servicio;
+
+import java.io.IOException;
+import java.util.Arrays;
+
+import xeredi.argo.http.controller.action.comun.CrudLoadAction;
+import xeredi.argo.http.util.FieldValidator;
+import xeredi.argo.http.view.servicio.ProcesoServicioVO;
+import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.metamodelo.vo.Entidad;
+import xeredi.argo.model.proceso.bo.ProcesoBO;
+import xeredi.argo.model.proceso.vo.ItemTipo;
+import xeredi.argo.model.proceso.vo.ProcesoTipo;
+
+import com.google.common.base.Preconditions;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ServicioLoadAction.
+ */
+public final class ServicioLoadAction extends CrudLoadAction<ProcesoServicioVO> {
+
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = -1859425520777790834L;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void doLoad() throws ApplicationException, IOException {
+        Preconditions.checkNotNull(model);
+
+        FieldValidator.validateRequired(this, MessageI18nKey.tpsr, model.getEntiId());
+        FieldValidator.validateRequired(this, MessageI18nKey.arch, model.getArchId());
+
+        if (!hasErrors()) {
+            final ProcesoBO prbtBO = new ProcesoBO();
+            ProcesoTipo procesoTipo = null;
+
+            final Entidad entidad = Entidad.valueOf(model.getEntiId().toString());
+
+            switch (entidad) {
+            case MANIFIESTO:
+                procesoTipo = ProcesoTipo.MAN_CARGA;
+
+                break;
+            case ESCALA:
+                procesoTipo = ProcesoTipo.ESC_CARGA;
+
+                break;
+            case MANIFIESTO_PESCA:
+                procesoTipo = ProcesoTipo.PES_CARGA;
+
+                break;
+            default:
+                throw new Error("Tipo de proceso desconocido: " + procesoTipo);
+            }
+
+            prbtBO.crear(procesoTipo, null, ItemTipo.arch, Arrays.asList(model.getArchId()), null);
+        }
+    }
+}

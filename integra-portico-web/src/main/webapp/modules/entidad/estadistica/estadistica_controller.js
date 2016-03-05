@@ -9,6 +9,8 @@ angular.module("estadistica_controller", [])
 
 .controller("PeriodoProcesoEditController", PeriodoProcesoEditController)
 
+.controller("PeriodoProcesoLoadController", PeriodoProcesoLoadController)
+
 .controller("CuadroMesDetailController", CuadroMesDetailController)
 
 .controller("EstadisticaGridController", EstadisticaGridController)
@@ -38,6 +40,13 @@ function config($routeProvider) {
                     {
                         templateUrl : "modules/entidad/estadistica/periodo-proceso-edit.html",
                         controller : "PeriodoProcesoEditController as vm",
+                    })
+
+            .when(
+                    "/estadistica/periodo-proceso/load",
+                    {
+                        templateUrl : "modules/entidad/estadistica/periodo-proceso-load.html",
+                        controller : "PeriodoProcesoLoadController as vm",
                     })
 
             .when(
@@ -168,6 +177,37 @@ function PeriodoProcesoEditController($routeParams, pageTitleService,
     });
 
     pageTitleService.setTitle("pepr", "page_" + vm.accion);
+}
+
+function PeriodoProcesoLoadController($routeParams, pageTitleService,
+        PeriodoProcesoService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        PeriodoProcesoService.fileUpload(vm.fileLoad).then(
+                function(data) {
+                    vm.model.archId = data.archId;
+
+                    PeriodoProcesoService.load(vm.model).then(
+                            function(data) {
+                                PeriodoProcesoService.redirectAfterSave(
+                                        vm.accion, '/proceso/proceso/grid');
+                            });
+                });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    PeriodoProcesoService.loadPrepare().then(function(data) {
+        vm.model = data.model;
+    });
+
+    pageTitleService.setTitle("pepr", "page_loadfile");
 }
 
 function CuadroMesDetailController($routeParams, pageTitleService,

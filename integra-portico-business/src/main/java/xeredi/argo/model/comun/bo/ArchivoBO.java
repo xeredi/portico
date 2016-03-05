@@ -3,10 +3,11 @@ package xeredi.argo.model.comun.bo;
 import java.io.InputStream;
 import java.util.List;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
-import lombok.NonNull;
 import xeredi.argo.model.comun.dao.ArchivoDAO;
 import xeredi.argo.model.comun.dao.ArchivoInfoDAO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
@@ -17,11 +18,35 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.util.GzipUtil;
 import xeredi.util.mybatis.SqlMapperLocator;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class FileServiceBO.
  */
 public final class ArchivoBO {
+
+    /**
+     * Insert.
+     *
+     * @param arch
+     *            the arch
+     */
+    public void insert(final @NonNull ArchivoVO arch) {
+        Preconditions.checkNotNull(arch.getArin());
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
+            final IgBO igBO = new IgBO();
+
+            arch.getArin().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+
+            archDAO.insert(arch);
+
+            session.commit();
+        }
+    }
+
     /**
      * Select.
      *

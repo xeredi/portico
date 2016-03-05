@@ -4,7 +4,7 @@ angular.module("crud_service", [])
 
 ;
 
-function CrudService($http, $q, $location) {
+function CrudService($http, $q, $location, Upload) {
     function Crud() {
         var _uri;
 
@@ -302,11 +302,67 @@ function CrudService($http, $q, $location) {
                 return $q.reject(msg);
             }
         }
-/*
- * function redirectAfterSave(accion, item, detailStateName) { accion == 'edit' ?
- * setTimeout(function() { window.history.back(); }, 0) :
- * $state.go(detailStateName, item, { location : 'replace' }); }
- */
+
+        function loadPrepare(item) {
+            // console.log('loadPrepare');
+
+            return $http.post(_uri + "-load-prepare.action", {model: item})
+                .then(success)
+                .catch(fail);
+
+            function success(response) {
+                return response.data;
+            }
+
+            function fail(error) {
+                var msg = 'loadPrepare failed. ' + error.data;
+                console.log(msg);
+
+                return $q.reject(msg);
+            }
+        }
+
+        function load(item) {
+            // console.log('load');
+
+            return $http.post(_uri + "-load.action", {model: item})
+                .then(success)
+                .catch(fail);
+
+            function success(response) {
+                return response.data;
+            }
+
+            function fail(error) {
+                var msg = 'load failed. ' + error.data;
+                console.log(msg);
+
+                return $q.reject(msg);
+            }
+        }
+
+        function fileUpload(file) {
+            console.log('fileUpload');
+
+            return Upload.upload({
+                url: _uri + "-file-upload.action",
+                data: {uploadedFile: file}
+            })
+                .then(success)
+                .catch(fail);
+
+            function success(response) {
+                return response.data;
+            }
+
+            function fail(error) {
+                var msg = 'fileUpload failed. ' + error.data;
+
+                console.log(msg);
+
+                return $q.reject(msg);
+            }
+        }
 
         function redirectAfterSave(accion, url, urlParams) {
             if (urlParams) {
@@ -315,7 +371,7 @@ function CrudService($http, $q, $location) {
                 }
             }
 
-            //alert(url);
+            // alert(url);
 
             accion == 'edit' ? setTimeout(function() {
                 window.history.back();
@@ -345,6 +401,9 @@ function CrudService($http, $q, $location) {
             , save: save
             , saveI18n: saveI18n
             , redirectAfterSave: redirectAfterSave
+            , loadPrepare: loadPrepare
+            , load: load
+            , fileUpload: fileUpload
             , tabSelected: tabSelected
             , pageMapChanged: pageMapChanged
             , setUri: setUri

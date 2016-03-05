@@ -10,7 +10,7 @@ import lombok.Data;
 public final class ArchivoVO {
 
     /** The info. */
-    private ArchivoInfoVO arin;
+    private ArchivoInfoVO arin = new ArchivoInfoVO();
 
     /** The stream. */
     private byte[] archivo;

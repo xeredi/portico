@@ -1,60 +1,55 @@
 package xeredi.argo.http.controller.action.comun;
 
-import java.io.File;
 import java.io.IOException;
 
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.exception.InternalErrorException;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
- * The Class CrudFileUploadAction.
+ * The Class CrudLoadFileSaveAction.
  *
  * @param <M>
  *            the generic type
  */
-public abstract class CrudFileUploadAction<M> extends BaseAction {
+@Data
+@EqualsAndHashCode(callSuper = false)
+public abstract class CrudLoadAction<T> extends BaseAction {
 
-    /** serialVersionUID. */
-    private static final long serialVersionUID = -8802007256009670945L;
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = -7224167551778868909L;
 
     /** The model. */
-    @Setter
-    protected M model;
-
-    /** The file. */
-    @Setter
-    protected File file;
-
-    /** The contentType. */
-    @Setter
-    protected String contentType;
-
-    /** filename. */
-    @Setter
-    protected String filename;
+    protected T model;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public final void doExecute() throws ApplicationException {
+        Preconditions.checkNotNull(model);
+
         try {
-            doImport();
+            doLoad();
+        } catch (final ApplicationException ex) {
+            throw ex;
         } catch (final IOException ex) {
             throw new InternalErrorException(ex);
         }
     }
 
     /**
-     * Do Import.
+     * doLoad.
      *
      * @throws ApplicationException
      *             the application exception
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public abstract void doImport() throws ApplicationException, IOException;
+    protected abstract void doLoad() throws ApplicationException, IOException;
 
 }
