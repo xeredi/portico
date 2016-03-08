@@ -38,22 +38,13 @@ public final class ServicioLoadAction extends CrudLoadAction<ProcesoServicioVO> 
             final ProcesoBO prbtBO = new ProcesoBO();
             ProcesoTipo procesoTipo = null;
 
-            final Entidad entidad = Entidad.valueOf(model.getEntiId().toString());
-
-            switch (entidad) {
-            case MANIFIESTO:
+            if (model.getEntiId() == Entidad.MANIFIESTO.getId()) {
                 procesoTipo = ProcesoTipo.MAN_CARGA;
-
-                break;
-            case ESCALA:
+            } else if (model.getEntiId() == Entidad.ESCALA.getId()) {
                 procesoTipo = ProcesoTipo.ESC_CARGA;
-
-                break;
-            case MANIFIESTO_PESCA:
+            } else if (model.getEntiId() == Entidad.MANIFIESTO_PESCA.getId()) {
                 procesoTipo = ProcesoTipo.PES_CARGA;
-
-                break;
-            default:
+            } else {
                 throw new Error("Tipo de proceso desconocido: " + procesoTipo);
             }
 

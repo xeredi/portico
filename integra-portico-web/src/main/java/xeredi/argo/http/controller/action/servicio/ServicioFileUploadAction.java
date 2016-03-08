@@ -10,13 +10,13 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 public final class ServicioFileUploadAction extends FileUploadAction {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -2802980591334798026L;
+    private static final long serialVersionUID = 5966084385930259710L;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void doSpecificValidate() throws ApplicationException {
+    protected void doSpecificValidate() throws ApplicationException {
         // noop
     }
 }
