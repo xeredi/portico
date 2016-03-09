@@ -1,20 +1,25 @@
 package xeredi.argo.http.controller.action.estadistica;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.http.view.estadistica.ProcesoEstadisticaVO;
+import xeredi.argo.model.comun.bo.ArchivoBO;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
+import xeredi.argo.model.comun.vo.ArchivoSentido;
+import xeredi.argo.model.comun.vo.ArchivoVO;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 import xeredi.argo.model.proceso.batch.estadistica.ProcesoCargaOppe;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
+import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
@@ -46,15 +51,18 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<ProcesoEstadi
         switch (accion) {
         case load:
             final String foldername = ConfigurationProxy
-            .getString(ConfigurationKey.estadistica_files_oppe_entrada_home);
+                    .getString(ConfigurationKey.estadistica_files_oppe_entrada_home);
             final String filepath = foldername + "/" + model.getPepr().getFilename() + ".zip";
             final File file = new File(filepath);
+            final ArchivoBO archBO = new ArchivoBO();
 
-            prbtBO.crear(ProcesoTipo.EST_CARGA, parametroMap, null, null, file);
+            final ArchivoVO arch = archBO.create(file, ArchivoSentido.E);
+
+            prbtBO.crear(ProcesoTipo.EST_CARGA, parametroMap, ItemTipo.arch, Arrays.asList(arch.getArin().getId()));
 
             break;
         case create:
-            prbtBO.crear(ProcesoTipo.EST_CREACION, parametroMap, null, null, null);
+            prbtBO.crear(ProcesoTipo.EST_CREACION, parametroMap, null, null);
 
             break;
         default:

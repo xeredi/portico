@@ -40,7 +40,7 @@ public abstract class FileUploadAction extends BaseAction {
      * {@inheritDoc}
      */
     @Override
-    public void doExecute() throws ApplicationException {
+    public final void doExecute() throws ApplicationException {
         FieldValidator.validateRequired(this, MessageI18nKey.pepr_file, uploadedFile);
 
         if (!hasErrors()) {

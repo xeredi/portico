@@ -48,7 +48,7 @@ public final class ServicioLoadAction extends CrudLoadAction<ProcesoServicioVO> 
                 throw new Error("Tipo de proceso desconocido: " + procesoTipo);
             }
 
-            prbtBO.crear(procesoTipo, null, ItemTipo.arch, Arrays.asList(model.getArchId()), null);
+            prbtBO.crear(procesoTipo, null, ItemTipo.arch, Arrays.asList(model.getArchId()));
         }
     }
 }

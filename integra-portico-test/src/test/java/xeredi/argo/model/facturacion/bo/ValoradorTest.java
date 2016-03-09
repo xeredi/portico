@@ -46,16 +46,11 @@ public final class ValoradorTest {
             parametroMap.put("crgoIdList", crgoIds.toString());
             parametroMap.put("fliq", Calendar.getInstance().getTime().toString());
 
-            prbtBO.crear(ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc, Arrays.asList(new Long[] { 1825942L }),
-                    null);
-            prbtBO.crear(ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc, Arrays.asList(new Long[] { 1841379L }),
-                    null);
-            prbtBO.crear(ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc, Arrays.asList(new Long[] { 1825941L }),
-                    null);
-            prbtBO.crear(ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc, Arrays.asList(new Long[] { 1825943L }),
-                    null);
-            prbtBO.crear(ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc, Arrays.asList(new Long[] { 1825863L }),
-                    null);
+            prbtBO.crear(ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc, Arrays.asList(new Long[] { 1825942L }));
+            prbtBO.crear(ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc, Arrays.asList(new Long[] { 1841379L }));
+            prbtBO.crear(ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc, Arrays.asList(new Long[] { 1825941L }));
+            prbtBO.crear(ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc, Arrays.asList(new Long[] { 1825943L }));
+            prbtBO.crear(ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc, Arrays.asList(new Long[] { 1825863L }));
 
             final ProcesoValorador valorador = new ProcesoValorador();
 

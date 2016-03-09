@@ -2,7 +2,6 @@ package xeredi.argo.model.servicio.dao;
 
 import java.util.List;
 
-import xeredi.argo.model.proceso.vo.ProcesoArchivoVO;
 import xeredi.argo.model.servicio.vo.ServicioArchivoVO;
 
 // TODO: Auto-generated Javadoc
@@ -35,6 +34,6 @@ public interface ServicioArchivoDAO {
      *            the srvc id
      * @return the list
      */
-    List<ProcesoArchivoVO> selectList(final Long srvcId);
+    List<ServicioArchivoVO> selectList(final Long srvcId);
 
 }

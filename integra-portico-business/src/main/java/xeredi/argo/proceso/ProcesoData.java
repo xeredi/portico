@@ -36,9 +36,6 @@ public final class ProcesoData {
     /** The prit salida list. */
     private final List<Long> itemSalidaList = new ArrayList<>();
 
-    /** The arin entrada list. */
-    private final List<ArchivoInfoVO> arinEntradaList = new ArrayList<>();
-
     /** The prpm map. */
     private final Map<String, ProcesoParametroVO> prpmMap = new HashMap<>();
 
@@ -56,7 +53,4 @@ public final class ProcesoData {
 
     /** The organizaciones map. */
     private final Map<String, ParametroVO> organizacionesMap = new HashMap<>();
-
-    /** The arin salida list. */
-    private File fileSalida;
 }

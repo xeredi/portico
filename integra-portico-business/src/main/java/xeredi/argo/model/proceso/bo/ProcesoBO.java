@@ -1,9 +1,6 @@
 package xeredi.argo.model.proceso.bo;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,14 +12,12 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.argo.model.comun.bo.IgBO;
-import xeredi.argo.model.comun.dao.ArchivoDAO;
 import xeredi.argo.model.comun.dao.ArchivoInfoDAO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.argo.model.comun.vo.ArchivoCriterioVO;
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
 import xeredi.argo.model.comun.vo.ArchivoSentido;
-import xeredi.argo.model.comun.vo.ArchivoVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.proceso.dao.ProcesoArchivoDAO;
 import xeredi.argo.model.proceso.dao.ProcesoDAO;
@@ -31,7 +26,6 @@ import xeredi.argo.model.proceso.dao.ProcesoMensajeDAO;
 import xeredi.argo.model.proceso.dao.ProcesoParametroDAO;
 import xeredi.argo.model.proceso.vo.ItemSentido;
 import xeredi.argo.model.proceso.vo.ItemTipo;
-import xeredi.argo.model.proceso.vo.ProcesoArchivoVO;
 import xeredi.argo.model.proceso.vo.ProcesoCriterioVO;
 import xeredi.argo.model.proceso.vo.ProcesoEstado;
 import xeredi.argo.model.proceso.vo.ProcesoItemCriterioVO;
@@ -41,7 +35,6 @@ import xeredi.argo.model.proceso.vo.ProcesoMensajeVO;
 import xeredi.argo.model.proceso.vo.ProcesoParametroVO;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
-import xeredi.argo.model.util.GzipUtil;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -69,22 +62,11 @@ public class ProcesoBO {
      * @return the proceso vo
      */
     public final ProcesoVO crear(final ProcesoTipo tipo, final Map<String, String> parametroMap,
-            final ItemTipo itemEntradaTipo, final List<Long> itemEntradaList, final File fileEntrada) {
-        // Lectura del Archivo (si lo hay)
-        byte[] buffer = null;
-
-        try {
-            buffer = GzipUtil.compress(fileEntrada);
-        } catch (final IOException ex) {
-            throw new Error(ex);
-        }
-
+            final ItemTipo itemEntradaTipo, final List<Long> itemEntradaList) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
-            final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
             final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
             final ProcesoParametroDAO prpmDAO = session.getMapper(ProcesoParametroDAO.class);
-            final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
 
             final IgBO igBO = new IgBO();
             final ProcesoVO prbt = new ProcesoVO();
@@ -119,27 +101,6 @@ public class ProcesoBO {
 
                     pritDAO.insert(prit);
                 }
-            }
-
-            if (buffer != null) {
-                final ArchivoVO arch = new ArchivoVO();
-                final ArchivoInfoVO arin = new ArchivoInfoVO();
-                final ProcesoArchivoVO prar = new ProcesoArchivoVO();
-
-                arin.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-                arin.setNombre(fileEntrada.getName());
-                arin.setSentido(ArchivoSentido.E);
-                arin.setTamanio(fileEntrada.length());
-                arin.setFalta(Calendar.getInstance().getTime());
-
-                arch.setArin(arin);
-                arch.setArchivo(buffer);
-
-                prar.setPrbtId(prbt.getId());
-                prar.setArchId(arin.getId());
-
-                archDAO.insert(arch);
-                prarDAO.insert(prar);
             }
 
             session.commit();
@@ -193,33 +154,18 @@ public class ProcesoBO {
      *            the item salida tipo
      * @param itemSalidaList
      *            the item salida list
-     * @param fileSalida
-     *            the file salida
      * @throws InstanceNotFoundException
      *             the instance not found exception
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
     public final void finalizar(final Long prbtId, final List<ProcesoMensajeVO> prmnList,
-            final ItemTipo itemSalidaTipo, final List<Long> itemSalidaList, final File fileSalida)
+            final ItemTipo itemSalidaTipo, final List<Long> itemSalidaList)
                     throws InstanceNotFoundException, OperacionNoPermitidaException {
-        // Lectura del Archivo (si lo hay)
-        byte[] buffer = null;
-
-        try {
-            buffer = GzipUtil.compress(fileSalida);
-        } catch (final IOException ex) {
-            throw new Error(ex);
-        }
-
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
-            final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
             final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
             final ProcesoMensajeDAO prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
-            final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
-
-            final IgBO igBO = new IgBO();
 
             final ProcesoCriterioVO prbtCriterio = new ProcesoCriterioVO();
 
@@ -273,27 +219,6 @@ public class ProcesoBO {
 
                     pritDAO.insert(prit);
                 }
-            }
-
-            if (buffer != null) {
-                final ArchivoVO arch = new ArchivoVO();
-                final ArchivoInfoVO arin = new ArchivoInfoVO();
-                final ProcesoArchivoVO prar = new ProcesoArchivoVO();
-
-                arin.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-                arin.setNombre(fileSalida.getName());
-                arin.setSentido(ArchivoSentido.S);
-                arin.setTamanio(fileSalida.length());
-                arin.setFalta(Calendar.getInstance().getTime());
-
-                arch.setArin(arin);
-                arch.setArchivo(buffer);
-
-                prar.setPrbtId(prbt.getId());
-                prar.setArchId(arin.getId());
-
-                archDAO.insert(arch);
-                prarDAO.insert(prar);
             }
 
             session.commit();

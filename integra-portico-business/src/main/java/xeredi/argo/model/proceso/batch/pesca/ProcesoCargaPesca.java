@@ -14,15 +14,20 @@ import org.apache.commons.logging.LogFactory;
 
 import xeredi.argo.model.comun.bo.ArchivoBO;
 import xeredi.argo.model.comun.bo.PuertoBO;
+import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
+import xeredi.argo.model.comun.vo.ArchivoSentido;
+import xeredi.argo.model.comun.vo.ArchivoVO;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
+import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
+import xeredi.argo.model.proceso.vo.ProcesoItemVO;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.model.servicio.bo.pesca.ManifiestoPescaBO;
 import xeredi.argo.model.servicio.io.pesca.PescaFileImport;
@@ -50,6 +55,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
         final ProcesoBO prbtBO = new ProcesoBO();
         final PuertoBO prtoBO = new PuertoBO();
         final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+        final ArchivoBO archBO = new ArchivoBO();
 
         prtoMap = new HashMap<>();
 
@@ -70,9 +76,13 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
                         LOG.info("Crear proceso para archivo: " + file.getCanonicalPath());
                     }
 
-                    prbtBO.crear(ProcesoTipo.PES_CARGA, null, null, null, file);
+                    final ArchivoVO arch = archBO.create(file, ArchivoSentido.E);
+
+                    prbtBO.crear(ProcesoTipo.PES_CARGA, null, ItemTipo.arch, Arrays.asList(arch.getArin().getId()));
 
                     file.delete();
+                } catch (final ApplicationException ex) {
+                    LOG.fatal(ex, ex);
                 } catch (final IOException ex) {
                     LOG.fatal(ex, ex);
                 }
@@ -85,11 +95,12 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
      */
     @Override
     protected void ejecutarProceso() {
-        if (prbtData.getPrmnList().isEmpty()) {
-            for (final ArchivoInfoVO arin : prbtData.getArinEntradaList()) {
-                LOG.info("Importar: " + arin.getNombre());
-
+        for (final ProcesoItemVO prit : prbtData.getPritEntradaList()) {
+            try {
                 final ArchivoBO flsrBO = new ArchivoBO();
+                final ArchivoInfoVO arin = flsrBO.select(prit.getItemId());
+
+                LOG.info("Importar: " + arin.getNombre());
 
                 try (final InputStream stream = flsrBO.selectStream(arin.getId())) {
                     final List<String> lines = IOUtils.readLines(stream);
@@ -125,6 +136,10 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
 
                     addError(MensajeCodigo.G_000, "archivo: " + arin.getNombre() + ", error: " + ex.getMessage());
                 }
+            } catch (final InstanceNotFoundException ex) {
+                LOG.fatal(ex, ex);
+
+                addError(MensajeCodigo.G_000, "archivoId:" + prit.getItemId() + ", error:" + ex.getMessage());
             }
         }
     }

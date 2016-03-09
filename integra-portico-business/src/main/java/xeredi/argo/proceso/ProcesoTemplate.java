@@ -77,7 +77,6 @@ public abstract class ProcesoTemplate {
 
                     prbtData.setPrbt(prbt);
                     prbtData.getPrpmMap().putAll(prbtBO.selectPrpmMap(prbt.getId()));
-                    prbtData.getArinEntradaList().addAll(prbtBO.selectArinEntradaList(prbt.getId()));
                     prbtData.getPritEntradaList().addAll(prbtBO.selectPritEntradaList(prbt.getId()));
 
                     ejecutarProceso();
@@ -90,7 +89,7 @@ public abstract class ProcesoTemplate {
 
                 try {
                     prbtBO.finalizar(prbt.getId(), prbtData.getPrmnList(), getProcesoTipo().getItemTipoSalida(),
-                            prbtData.getItemSalidaList(), prbtData.getFileSalida());
+                            prbtData.getItemSalidaList());
                 } catch (final InstanceNotFoundException ex) {
                     LOG.fatal("Proceso " + prbt.getId() + " no encontrado al tratar de finalizarlo. " + prbt);
                 } catch (final OperacionNoPermitidaException ex) {

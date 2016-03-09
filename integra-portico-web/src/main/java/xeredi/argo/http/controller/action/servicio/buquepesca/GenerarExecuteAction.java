@@ -45,7 +45,7 @@ public final class GenerarExecuteAction extends BaseAction {
 
             parametroMap.put(ProcesoBuquePesca.params.ffin.name(), format.format(model.getFrefMax()));
 
-            prbtBO.crear(ProcesoTipo.SBUP_CREACION, parametroMap, null, null, null);
+            prbtBO.crear(ProcesoTipo.SBUP_CREACION, parametroMap, null, null);
         }
     }
 }

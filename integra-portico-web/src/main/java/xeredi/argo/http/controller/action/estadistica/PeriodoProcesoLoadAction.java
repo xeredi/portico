@@ -42,7 +42,7 @@ public final class PeriodoProcesoLoadAction extends CrudLoadAction<ProcesoEstadi
 
             parametroMap.put(ProcesoCargaOppe.params.sobreescribir.name(), model.getSobreescribir().toString());
 
-            prbtBO.crear(ProcesoTipo.EST_CARGA, parametroMap, ItemTipo.arch, Arrays.asList(model.getArchId()), null);
+            prbtBO.crear(ProcesoTipo.EST_CARGA, parametroMap, ItemTipo.arch, Arrays.asList(model.getArchId()));
         }
     }
 }

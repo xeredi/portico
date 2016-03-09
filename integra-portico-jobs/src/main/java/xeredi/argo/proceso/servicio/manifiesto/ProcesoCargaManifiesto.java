@@ -14,10 +14,13 @@ import org.apache.commons.logging.LogFactory;
 
 import xeredi.argo.model.comun.bo.ArchivoBO;
 import xeredi.argo.model.comun.bo.PuertoBO;
+import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
+import xeredi.argo.model.comun.vo.ArchivoSentido;
+import xeredi.argo.model.comun.vo.ArchivoVO;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
@@ -27,7 +30,9 @@ import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
+import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
+import xeredi.argo.model.proceso.vo.ProcesoItemVO;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.model.servicio.bo.escala.EscalaBO;
 import xeredi.argo.model.servicio.bo.manifiesto.ManifiestoBO;
@@ -53,6 +58,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
     @Override
     protected void prepararProcesos() {
         final ProcesoBO prbtBO = new ProcesoBO();
+        final ArchivoBO archBO = new ArchivoBO();
 
         final String folderPath = ConfigurationProxy.getString(ConfigurationKey.manifiesto_files_entrada_home);
         final File folder = new File(folderPath);
@@ -67,9 +73,13 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                         LOG.info("Crear proceso para archivo: " + file.getCanonicalPath());
                     }
 
-                    prbtBO.crear(ProcesoTipo.MAN_CARGA, null, null, null, file);
+                    final ArchivoVO arch = archBO.create(file, ArchivoSentido.E);
+
+                    prbtBO.crear(ProcesoTipo.MAN_CARGA, null, ItemTipo.arch, Arrays.asList(arch.getArin().getId()));
 
                     file.delete();
+                } catch (final ApplicationException ex) {
+                    LOG.fatal(ex, ex);
                 } catch (final IOException ex) {
                     LOG.fatal(ex, ex);
                 }
@@ -82,67 +92,74 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
      */
     @Override
     protected void ejecutarProceso() {
-        for (final ArchivoInfoVO arin : prbtData.getArinEntradaList()) {
-            LOG.info("Importar: " + arin.getNombre());
+        for (final ProcesoItemVO prit : prbtData.getPritEntradaList()) {
+            try {
+                final ArchivoBO flsrBO = new ArchivoBO();
+                final ArchivoInfoVO arin = flsrBO.select(prit.getItemId());
 
-            final ArchivoBO flsrBO = new ArchivoBO();
+                LOG.info("Importar: " + arin.getNombre());
 
-            try (final InputStream stream = flsrBO.selectStream(arin.getId())) {
-                final ManifiestoFileImport fileImport = new ManifiestoFileImport(this);
-                final List<String> lines = IOUtils.readLines(stream);
-                final int primeraLinea = fileImport.findPrimeraLinea(lines);
+                try (final InputStream stream = flsrBO.selectStream(arin.getId())) {
+                    final ManifiestoFileImport fileImport = new ManifiestoFileImport(this);
+                    final List<String> lines = IOUtils.readLines(stream);
+                    final int primeraLinea = fileImport.findPrimeraLinea(lines);
 
-                if (prbtData.getPrmnList().isEmpty()) {
-                    fileImport.validarSegmentos(lines, primeraLinea);
-                }
-                if (prbtData.getPrmnList().isEmpty()) {
-                    fileImport.readMaestros(lines, primeraLinea);
-                }
-                if (prbtData.getPrmnList().isEmpty()) {
-                    // FIXME Obtener la fecha de vigencia
-                    final Date fechaVigencia = Calendar.getInstance().getTime();
+                    if (prbtData.getPrmnList().isEmpty()) {
+                        fileImport.validarSegmentos(lines, primeraLinea);
+                    }
+                    if (prbtData.getPrmnList().isEmpty()) {
+                        fileImport.readMaestros(lines, primeraLinea);
+                    }
+                    if (prbtData.getPrmnList().isEmpty()) {
+                        // FIXME Obtener la fecha de vigencia
+                        final Date fechaVigencia = Calendar.getInstance().getTime();
 
-                    buscarMaestros(fechaVigencia);
-                    buscarOrganizaciones(fechaVigencia);
+                        buscarMaestros(fechaVigencia);
+                        buscarOrganizaciones(fechaVigencia);
 
-                    findEscala(fileImport, fechaVigencia);
-                }
-                if (prbtData.getPrmnList().isEmpty()) {
-                    fileImport.readFile(lines, primeraLinea);
-                }
-                if (prbtData.getPrmnList().isEmpty()) {
-                    final ManifiestoMensaje mensaje = fileImport.getMensaje();
-                    final ManifiestoBO srvcBO = new ManifiestoBO();
+                        findEscala(fileImport, fechaVigencia);
+                    }
+                    if (prbtData.getPrmnList().isEmpty()) {
+                        fileImport.readFile(lines, primeraLinea);
+                    }
+                    if (prbtData.getPrmnList().isEmpty()) {
+                        final ManifiestoMensaje mensaje = fileImport.getMensaje();
+                        final ManifiestoBO srvcBO = new ManifiestoBO();
 
-                    switch (mensaje) {
-                    case MANIFIESTO_ALTA:
-                        try {
-                            if (LOG.isDebugEnabled()) {
-                                LOG.debug("Alta de un nuevo manifiesto");
+                        switch (mensaje) {
+                        case MANIFIESTO_ALTA:
+                            try {
+                                if (LOG.isDebugEnabled()) {
+                                    LOG.debug("Alta de un nuevo manifiesto");
+                                }
+
+                                srvcBO.insert(fileImport.getManifiestoVO(), fileImport.getSsrvList(),
+                                        fileImport.getSsssList(), arin.getId());
+
+                                prbtData.getItemSalidaList().add(fileImport.getManifiestoVO().getId());
+                            } catch (final DuplicateInstanceException ex) {
+                                throw new Error(ex);
                             }
 
-                            srvcBO.insert(fileImport.getManifiestoVO(), fileImport.getSsrvList(),
-                                    fileImport.getSsssList(), arin.getId());
+                            break;
 
-                            prbtData.getItemSalidaList().add(fileImport.getManifiestoVO().getId());
-                        } catch (final DuplicateInstanceException ex) {
-                            throw new Error(ex);
+                        default:
+                            break;
                         }
-
-                        break;
-
-                    default:
-                        break;
                     }
+                } catch (final IOException ex) {
+                    LOG.error(ex, ex);
+
+                    addError(MensajeCodigo.G_010, "archivo:" + arin.getNombre() + ", error:" + ex.getMessage());
+                } catch (final InstanceNotFoundException ex) {
+                    LOG.error(ex, ex);
+
+                    addError(MensajeCodigo.G_000, "archivo:" + arin.getNombre() + ", error:" + ex.getMessage());
                 }
-            } catch (final IOException ex) {
-                LOG.error(ex, ex);
-
-                addError(MensajeCodigo.G_010, "archivo:" + arin.getNombre() + ", error:" + ex.getMessage());
             } catch (final InstanceNotFoundException ex) {
-                LOG.error(ex, ex);
+                LOG.fatal(ex, ex);
 
-                addError(MensajeCodigo.G_000, "archivo:" + arin.getNombre() + ", error:" + ex.getMessage());
+                addError(MensajeCodigo.G_000, "archivoId:" + prit.getItemId() + ", error:" + ex.getMessage());
             }
         }
     }

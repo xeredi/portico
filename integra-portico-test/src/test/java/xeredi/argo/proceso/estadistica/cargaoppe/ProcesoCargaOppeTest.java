@@ -1,5 +1,7 @@
 package xeredi.argo.proceso.estadistica.cargaoppe;
 
+import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,8 +9,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
+import xeredi.argo.model.comun.bo.ArchivoBO;
+import xeredi.argo.model.comun.vo.ArchivoSentido;
+import xeredi.argo.model.comun.vo.ArchivoVO;
 import xeredi.argo.model.proceso.batch.estadistica.ProcesoCargaOppe;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
+import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 
 // TODO: Auto-generated Javadoc
@@ -28,6 +34,7 @@ public final class ProcesoCargaOppeTest {
         LOG.info("Start test");
 
         try {
+            final ArchivoBO archBO = new ArchivoBO();
 
             final ProcesoCargaOppe cargaOppe = new ProcesoCargaOppe();
             final ProcesoBO prbtBO = new ProcesoBO();
@@ -35,23 +42,21 @@ public final class ProcesoCargaOppeTest {
             {
                 final Map<String, String> prpmMap = new HashMap<>();
 
-                prpmMap.put(ProcesoCargaOppe.params.autp.name(), "80");
-                prpmMap.put(ProcesoCargaOppe.params.anio.name(), "2013");
-                prpmMap.put(ProcesoCargaOppe.params.mes.name(), "04");
                 prpmMap.put(ProcesoCargaOppe.params.sobreescribir.name(), "true");
 
-                prbtBO.crear(ProcesoTipo.EST_CARGA, prpmMap, null, null, null);
+                final ArchivoVO arch = archBO.create(new File("80201304.zip"), ArchivoSentido.E);
+
+                prbtBO.crear(ProcesoTipo.EST_CARGA, prpmMap, ItemTipo.arch, Arrays.asList(arch.getArin().getId()));
             }
 
             {
                 final Map<String, String> prpmMap = new HashMap<>();
 
-                prpmMap.put(ProcesoCargaOppe.params.autp.name(), "80");
-                prpmMap.put(ProcesoCargaOppe.params.anio.name(), "2012");
-                prpmMap.put(ProcesoCargaOppe.params.mes.name(), "10");
                 prpmMap.put(ProcesoCargaOppe.params.sobreescribir.name(), "true");
 
-                prbtBO.crear(ProcesoTipo.EST_CARGA, prpmMap, null, null, null);
+                final ArchivoVO arch = archBO.create(new File("80201210.zip"), ArchivoSentido.E);
+
+                prbtBO.crear(ProcesoTipo.EST_CARGA, prpmMap, ItemTipo.arch, Arrays.asList(arch.getArin().getId()));
             }
 
             cargaOppe.procesar();

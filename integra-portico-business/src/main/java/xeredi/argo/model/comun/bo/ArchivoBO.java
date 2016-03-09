@@ -1,6 +1,9 @@
 package xeredi.argo.model.comun.bo;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.List;
 
 import lombok.NonNull;
@@ -10,9 +13,12 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.argo.model.comun.dao.ArchivoDAO;
 import xeredi.argo.model.comun.dao.ArchivoInfoDAO;
+import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
+import xeredi.argo.model.comun.exception.InternalErrorException;
 import xeredi.argo.model.comun.vo.ArchivoCriterioVO;
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
+import xeredi.argo.model.comun.vo.ArchivoSentido;
 import xeredi.argo.model.comun.vo.ArchivoVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.util.GzipUtil;
@@ -25,6 +31,46 @@ import com.google.common.base.Preconditions;
  * The Class FileServiceBO.
  */
 public final class ArchivoBO {
+
+    /**
+     * Creates the.
+     *
+     * @param file
+     *            the file
+     * @param sentido
+     *            the sentido
+     * @return the archivo vo
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
+    public ArchivoVO create(final @NonNull File file, final @NonNull ArchivoSentido sentido)
+            throws ApplicationException {
+        final ArchivoVO arch = new ArchivoVO();
+
+        try {
+            arch.setArchivo(GzipUtil.compress(file));
+            arch.getArin().setFalta(Calendar.getInstance().getTime());
+            arch.getArin().setNombre(file.getName());
+            arch.getArin().setTamanio(file.length());
+            arch.getArin().setSentido(sentido);
+        } catch (final IOException ex) {
+            throw new InternalErrorException(ex);
+        }
+
+        final IgBO igBO = new IgBO();
+
+        arch.getArin().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
+
+            archDAO.insert(arch);
+
+            session.commit();
+        }
+
+        return arch;
+    }
 
     /**
      * Insert.

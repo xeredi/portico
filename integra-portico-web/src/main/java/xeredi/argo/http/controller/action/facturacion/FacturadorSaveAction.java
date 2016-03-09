@@ -62,7 +62,7 @@ public final class FacturadorSaveAction extends CrudSaveAction<FacturadorVO> {
             parametroMap.put(ProcesoFacturador.Params.vlrc.name(), model.getVlrc().getId().toString());
         }
 
-        final ProcesoVO prbt = prbtBO.crear(ProcesoTipo.FACTURADOR, parametroMap, ItemTipo.vlrc, null, null);
+        final ProcesoVO prbt = prbtBO.crear(ProcesoTipo.FACTURADOR, parametroMap, ItemTipo.vlrc, null);
 
         model.setPrbtId(prbt.getId());
     }
