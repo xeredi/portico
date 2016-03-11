@@ -13,6 +13,7 @@ import xeredi.argo.model.facturacion.bo.FacturaSerieBO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
 import xeredi.argo.model.facturacion.vo.FacturadorVO;
+import xeredi.argo.model.facturacion.vo.ValoracionGrupoTipo;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -39,6 +40,9 @@ public final class FacturadorEditAction extends CrudEditAction<FacturadorVO> {
     /** The prto list. */
     @Getter
     private List<PuertoVO> prtoList;
+
+    @Getter
+    private ValoracionGrupoTipo[] grupoTipoList;
 
     /**
      * {@inheritDoc}
@@ -73,13 +77,17 @@ public final class FacturadorEditAction extends CrudEditAction<FacturadorVO> {
 
         fcsrList = fcsrBO.selectList(fcsrCriterio);
 
-        tpsrList = TipoServicioProxy.selectLabelValues();
+        grupoTipoList = ValoracionGrupoTipo.values();
 
-        final PuertoBO prtoBO = new PuertoBO();
-        final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+        if (model.getVlrcId() == null) {
+            tpsrList = TipoServicioProxy.selectLabelValues();
 
-        prtoCriterio.setIdioma(getIdioma());
+            final PuertoBO prtoBO = new PuertoBO();
+            final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-        prtoList = prtoBO.selectList(prtoCriterio);
+            prtoCriterio.setIdioma(getIdioma());
+
+            prtoList = prtoBO.selectList(prtoCriterio);
+        }
     }
 }

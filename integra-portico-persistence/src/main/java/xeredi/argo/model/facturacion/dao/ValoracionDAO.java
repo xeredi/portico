@@ -17,4 +17,12 @@ public interface ValoracionDAO extends CrudDAO<ValoracionVO, ValoracionCriterioV
      * @return the int
      */
     int updateFctr(final ValoracionVO vlrc);
+
+    /**
+     * Update importe.
+     *
+     * @param id the id
+     * @return the int
+     */
+    int updateImporte(final Long id);
 }

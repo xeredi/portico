@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import lombok.NonNull;
 
@@ -175,12 +176,26 @@ public class ServicioBO {
      *            the limit
      * @return the list
      */
-    public final List<ServicioVO> selectLupaList(final @NonNull ServicioLupaCriterioVO srvcLupaCriterioVO,
+    public final List<ServicioVO> selectTypeaheadList(final @NonNull ServicioLupaCriterioVO srvcTypeaheadCriterio,
             final int limit) {
+        Preconditions.checkNotNull(srvcTypeaheadCriterio.getTextoBusqueda());
+
+        final StringTokenizer tokenizer = new StringTokenizer(srvcTypeaheadCriterio.getTextoBusqueda(), "/");
+
+        srvcTypeaheadCriterio.setSubpuerto(tokenizer.nextToken().toUpperCase());
+
+        if (tokenizer.hasMoreTokens()) {
+            srvcTypeaheadCriterio.setAnno(tokenizer.nextToken() + "%");
+        }
+
+        if (tokenizer.hasMoreTokens()) {
+            srvcTypeaheadCriterio.setNumero(tokenizer.nextToken() + "%");
+        }
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
 
-            return srvcDAO.selectLupaList(srvcLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
+            return srvcDAO.selectLupaList(srvcTypeaheadCriterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         }
     }
 

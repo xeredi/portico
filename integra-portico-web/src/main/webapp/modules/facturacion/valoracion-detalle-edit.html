@@ -3,20 +3,20 @@
         <div class="row">
             <div class="col-md-2 col-lg-1 form-group-sm">
                 <label data-translate="vlrd_valorBase"></label> <input type="text"
-                    data-ng-model="vm.vlrd.valorBase" class="form-control number">
+                    data-ng-model="vm.model.valorBase" class="form-control number">
             </div>
             <div class="col-md-2 col-lg-1 form-group-sm" data-ng-if="vm.vlrl.rgla.tipo != 'T'">
                 <label data-translate="vlrd_importeBase"></label> <input type="text"
-                    data-ng-model="vm.vlrd.importeBase" class="form-control number">
+                    data-ng-model="vm.model.importeBase" class="form-control number">
             </div>
             <div class="col-md-2 col-lg-1 form-group-sm">
                 <label data-translate="vlrd_importe"></label> <input type="text"
-                    data-ng-model="vm.vlrd.importe" class="form-control number">
+                    data-ng-model="vm.model.importe" class="form-control number">
             </div>
             <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm"
                 data-ng-if="vm.vlrl.rgla.enti.tipo == 'S' && vm.aspc.version.agrupaDetalles">
                 <label data-ng-bind="'enti_' + vm.vlrl.rgla.enti.id | translate"></label> <input type="text"
-                    autocomplete="off" data-ng-model="vm.vlrd.ssrv" data-ng-controller="SsrvLupaController"
+                    autocomplete="off" data-ng-model="vm.model.ssrv" data-ng-controller="SsrvLupaController"
                     data-uib-typeahead="ssrv as ssrv.numero for ssrv in search(vm.vlrl.rgla.enti.id, vm.vlrl.srvcId, $viewValue, vm.vlrl.fref)"
                     data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
             </div>
@@ -41,11 +41,11 @@
  -->
             <div class="col-md-2 form-group-sm" data-ng-if="vlrl.rgla.crgo.version.temporal">
                 <label data-translate="vlrd_fini"></label> <input type="text" class="form-control"
-                    data-ng-model="vm.vlrd.fini" data-bs-datepicker />
+                    data-ng-model="vm.model.fini" data-bs-datepicker />
             </div>
             <div class="col-md-2 form-group-sm" data-ng-if="vlrl.rgla.crgo.version.temporal">
                 <label data-translate="vlrd_ffin"></label> <input type="text" class="form-control"
-                    data-ng-model="vm.vlrd.ffin" data-min-date="{{vm.vlrd.fini}}" data-bs-datepicker />
+                    data-ng-model="vm.model.ffin" data-min-date="{{vm.model.fini}}" data-bs-datepicker />
             </div>
         </div>
 
@@ -53,50 +53,77 @@
             <div data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo1" class="col-md-4 form-group-sm">
                 <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo1"></label> <input type="text"
                     data-ng-if="vm.vlrl.rgla.tipo == 'T' && !vm.aspc.version.lgrpInfo1"
-                    data-ng-model="vm.vlrd.info1" class="form-control">
+                    data-ng-model="vm.model.info1" class="form-control">
                 <p data-ng-if="vm.vlrl.rgla.tipo != 'T' || vm.aspc.version.lgrpInfo1"
                     class="form-control-static" data-ng-bind="vm.vlrlPadre.info1"></p>
             </div>
             <div data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo2" class="col-md-4 form-group-sm">
                 <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo2"></label> <input type="text"
                     data-ng-if="vm.vlrl.rgla.tipo == 'T' && !vm.aspc.version.lgrpInfo2"
-                    data-ng-model="vm.vlrd.info2" class="form-control">
+                    data-ng-model="vm.model.info2" class="form-control">
                 <p data-ng-if="vm.vlrl.rgla.tipo != 'T' || vm.aspc.version.lgrpInfo2"
                     class="form-control-static" data-ng-bind="vm.vlrlPadre.info2"></p>
             </div>
-
+            <div data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo3" class="col-md-4 form-group-sm">
+                <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo3"></label> <input type="text"
+                    data-ng-if="vm.vlrl.rgla.tipo == 'T' && !vm.aspc.version.lgrpInfo3"
+                    data-ng-model="vm.model.info3" class="form-control">
+                <p data-ng-if="vm.vlrl.rgla.tipo != 'T' || vm.aspc.version.lgrpInfo3"
+                    class="form-control-static" data-ng-bind="vm.vlrlPadre.info3"></p>
+            </div>
+            <div data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo4" class="col-md-4 form-group-sm">
+                <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo4"></label> <input type="text"
+                    data-ng-if="vm.vlrl.rgla.tipo == 'T' && !vm.aspc.version.lgrpInfo4"
+                    data-ng-model="vm.model.info4" class="form-control">
+                <p data-ng-if="vm.vlrl.rgla.tipo != 'T' || vm.aspc.version.lgrpInfo4"
+                    class="form-control-static" data-ng-bind="vm.vlrlPadre.info4"></p>
+            </div>
+            <div data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo5" class="col-md-4 form-group-sm">
+                <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo5"></label> <input type="text"
+                    data-ng-if="vm.vlrl.rgla.tipo == 'T' && !vm.aspc.version.lgrpInfo5"
+                    data-ng-model="vm.model.info5" class="form-control">
+                <p data-ng-if="vm.vlrl.rgla.tipo != 'T' || vm.aspc.version.lgrpInfo5"
+                    class="form-control-static" data-ng-bind="vm.vlrlPadre.info5"></p>
+            </div>
+            <div data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo6" class="col-md-4 form-group-sm">
+                <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo6"></label> <input type="text"
+                    data-ng-if="vm.vlrl.rgla.tipo == 'T' && !vm.aspc.version.lgrpInfo6"
+                    data-ng-model="vm.model.info6" class="form-control">
+                <p data-ng-if="vm.vlrl.rgla.tipo != 'T' || vm.aspc.version.lgrpInfo6"
+                    class="form-control-static" data-ng-bind="vm.vlrlPadre.info6"></p>
+            </div>
         </div>
 
         <div class="row">
             <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm"
                 data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant1">
                 <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant1"></label> <input type="text"
-                    class="form-control number" data-ng-model="vm.vlrd.cuant1">
+                    class="form-control number" data-ng-model="vm.model.cuant1">
             </div>
             <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm"
                 data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant2">
                 <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant2"></label> <input type="text"
-                    class="form-control number" data-ng-model="vm.vlrd.cuant2">
+                    class="form-control number" data-ng-model="vm.model.cuant2">
             </div>
             <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm"
                 data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant3">
                 <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant3"></label> <input type="text"
-                    class="form-control number" data-ng-model="vm.vlrd.cuant3">
+                    class="form-control number" data-ng-model="vm.model.cuant3">
             </div>
             <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm"
                 data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant4">
                 <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant4"></label> <input type="text"
-                    class="form-control number" data-ng-model="vm.vlrd.cuant4">
+                    class="form-control number" data-ng-model="vm.model.cuant4">
             </div>
             <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm"
                 data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant5">
                 <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant5"></label> <input type="text"
-                    class="form-control number" data-ng-model="vm.vlrd.cuant5">
+                    class="form-control number" data-ng-model="vm.model.cuant5">
             </div>
             <div class="col-md-3 col-lg-2 col-xl-1 form-group-sm"
                 data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant6">
                 <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant6"></label> <input type="text"
-                    class="form-control number" data-ng-model="vm.vlrd.cuant6">
+                    class="form-control number" data-ng-model="vm.model.cuant6">
             </div>
         </div>
     </fieldset>

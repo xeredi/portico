@@ -1,6 +1,7 @@
 package xeredi.argo.model.facturacion.bo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -66,7 +67,13 @@ public class CargoBO {
      *            the limit
      * @return the list
      */
-    public List<CargoVO> selectList(final @NonNull CargoCriterioVO crgoCriterio, final int limit) {
+    public List<CargoVO> selectTypeaheadList(final @NonNull CargoCriterioVO crgoCriterio, final int limit) {
+        crgoCriterio.setTextoBusqueda("%" + crgoCriterio.getTextoBusqueda() + "%");
+
+        if (crgoCriterio.getFechaVigencia() == null) {
+            crgoCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        }
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
 

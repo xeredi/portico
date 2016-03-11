@@ -46,7 +46,7 @@ public final class ValoradorSaveAction extends CrudSaveAction<ValoradorVO> {
         final List<Long> itemEntradaList = Arrays.asList(model.getSrvc().getId());
         final Map<String, String> parametroMap = new HashMap<>();
 
-        parametroMap.put(ProcesoValorador.FLIQ_PARAM, dateFormat.format(model.getFliq()));
+        parametroMap.put(ProcesoValorador.Params.fliq.name(), dateFormat.format(model.getFliq()));
 
         final ProcesoVO prbt = prbtBO.crear(ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc, itemEntradaList);
 

@@ -7,6 +7,7 @@ import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
+import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaCriterioVO;
@@ -49,10 +50,9 @@ public final class ValoracionLineaEditAction extends CrudEditAction<ValoracionLi
     public void doEdit() throws ApplicationException {
         Preconditions.checkNotNull(model.getVlrcId());
 
-        final ValoracionBO vlrcBO = new ValoracionBO();
-
         switch (accion) {
         case create:
+            final ValoracionBO vlrcBO = new ValoracionBO();
             final ValoracionVO vlrc = vlrcBO.select(model.getVlrcId(), getIdioma());
 
             model.setFref(vlrc.getFref());
@@ -61,13 +61,15 @@ public final class ValoracionLineaEditAction extends CrudEditAction<ValoracionLi
         case edit:
             Preconditions.checkNotNull(model.getId());
 
+            final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
+
             {
                 final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
                 vlrlCriterio.setId(model.getId());
                 vlrlCriterio.setIdioma(getIdioma());
 
-                model = vlrcBO.selectVlrlObject(vlrlCriterio);
+                model = vlrlBO.selectObject(vlrlCriterio);
             }
 
             if (model.getId() == model.getPadreId()) {
@@ -78,7 +80,7 @@ public final class ValoracionLineaEditAction extends CrudEditAction<ValoracionLi
                 vlrlCriterio.setId(model.getPadreId());
                 vlrlCriterio.setIdioma(getIdioma());
 
-                vlrlPadre = vlrcBO.selectVlrlObject(vlrlCriterio);
+                vlrlPadre = vlrlBO.selectObject(vlrlCriterio);
             }
 
             break;

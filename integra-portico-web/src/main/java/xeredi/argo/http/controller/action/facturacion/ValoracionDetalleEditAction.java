@@ -4,7 +4,8 @@ import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
-import xeredi.argo.model.facturacion.bo.ValoracionBO;
+import xeredi.argo.model.facturacion.bo.ValoracionDetalleBO;
+import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
@@ -44,20 +45,21 @@ public final class ValoracionDetalleEditAction extends CrudEditAction<Valoracion
         Preconditions.checkNotNull(model.getVlrcId());
         Preconditions.checkNotNull(model.getVlrlId());
 
-        final ValoracionBO vlrcBO = new ValoracionBO();
-
         if (accion == AccionCodigo.edit) {
             Preconditions.checkNotNull(model.getId());
 
-            model = vlrcBO.selectVlrd(model.getId());
+            final ValoracionDetalleBO vlrdBO = new ValoracionDetalleBO();
+
+            model = vlrdBO.select(model.getId(), getIdioma());
         }
 
+        final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
         final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
         vlrlCriterio.setId(model.getVlrlId());
         vlrlCriterio.setIdioma(idioma);
 
-        vlrl = vlrcBO.selectVlrlObject(vlrlCriterio);
+        vlrl = vlrlBO.selectObject(vlrlCriterio);
 
         if (vlrl.getId() == vlrl.getPadreId()) {
             vlrlPadre = vlrl;
@@ -67,7 +69,7 @@ public final class ValoracionDetalleEditAction extends CrudEditAction<Valoracion
             vlrlPadreCriterio.setId(vlrl.getPadreId());
             vlrlPadreCriterio.setIdioma(idioma);
 
-            vlrlPadre = vlrcBO.selectVlrlObject(vlrlPadreCriterio);
+            vlrlPadre = vlrlBO.selectObject(vlrlPadreCriterio);
         }
 
         final AspectoBO aspcBO = new AspectoBO();

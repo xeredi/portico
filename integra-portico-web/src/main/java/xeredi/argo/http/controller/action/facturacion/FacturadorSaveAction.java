@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,11 +59,12 @@ public final class FacturadorSaveAction extends CrudSaveAction<FacturadorVO> {
         if (model.getSrvc() != null && model.getSrvc().getId() != null) {
             parametroMap.put(ProcesoFacturador.Params.srvc.name(), model.getSrvc().getId().toString());
         }
-        if (model.getVlrc() != null && model.getVlrc().getId() != null) {
-            parametroMap.put(ProcesoFacturador.Params.vlrc.name(), model.getVlrc().getId().toString());
+        if (model.getGrupoTipo() != null) {
+            parametroMap.put(ProcesoFacturador.Params.grupoTipo.name(), model.getGrupoTipo().name());
         }
 
-        final ProcesoVO prbt = prbtBO.crear(ProcesoTipo.FACTURADOR, parametroMap, ItemTipo.vlrc, null);
+        final ProcesoVO prbt = prbtBO.crear(ProcesoTipo.FACTURADOR, parametroMap, ItemTipo.vlrc,
+                model.getVlrcId() == null ? null : Arrays.asList(model.getVlrcId()));
 
         model.setPrbtId(prbt.getId());
     }
@@ -73,8 +75,13 @@ public final class FacturadorSaveAction extends CrudSaveAction<FacturadorVO> {
     @Override
     public void doValidate() throws ApplicationException {
         FieldValidator.validateRequired(this, MessageI18nKey.fcsr, model.getFcsrId());
-        FieldValidator.validateRequired(this, MessageI18nKey.fcdr_fecha, model.getFecha());
+        FieldValidator.validateRequired(this, MessageI18nKey.fliq, model.getFecha());
 
-        // FIXME Validar que puerto, tipo de servicio, ... son correctos
+        if (model.getVlrcId() == null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.tpsr, model.getTpsrId());
+
+            // FIXME Cambiar fref por grupoTipo
+            FieldValidator.validateRequired(this, MessageI18nKey.fref, model.getGrupoTipo());
+        }
     }
 }

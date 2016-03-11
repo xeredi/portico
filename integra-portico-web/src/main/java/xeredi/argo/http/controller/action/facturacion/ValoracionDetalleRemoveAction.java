@@ -2,7 +2,7 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.ValoracionBO;
+import xeredi.argo.model.facturacion.bo.ValoracionDetalleBO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
@@ -25,9 +25,9 @@ public final class ValoracionDetalleRemoveAction extends CrudRemoveAction<Valora
         Preconditions.checkNotNull(model.getId());
         Preconditions.checkNotNull(model.getVlrlId());
 
-        final ValoracionBO vlrcBO = new ValoracionBO();
+        final ValoracionDetalleBO vlrdBO = new ValoracionDetalleBO();
 
-        vlrcBO.deleteVlrd(model);
+        vlrdBO.delete(model);
     }
 
     /**

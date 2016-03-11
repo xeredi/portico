@@ -89,7 +89,8 @@ public class FacturaBO {
 
             fctrCriterioVO.setId(fctrId);
             fctlCriterioVO.setFctr(fctrCriterioVO);
-            fctdCriterioVO.setFctl(fctlCriterioVO);
+
+            fctdCriterioVO.setFctrId(fctrId);
 
             final FacturaVO fctr = fctrDAO.selectObject(fctrCriterioVO);
 
@@ -181,16 +182,13 @@ public class FacturaBO {
      *
      * @param fctrId
      *            the fctr id
-     * @param fctsId
-     *            the fcts id
+     * @param vlrcId
+     *            the vlrc id
      * @param duplicarDatos
      *            the duplicar datos
      * @return the long
      */
-    public Long rectificar(final @NonNull Long fctrId, final @NonNull Long fctsId, final boolean duplicarDatos) {
-        Preconditions.checkNotNull(fctrId);
-        Preconditions.checkNotNull(fctsId);
-
+    public Long rectificar(final @NonNull Long fctrId, final @NonNull Long vlrcId, final boolean duplicarDatos) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
             final FacturaServicioDAO fctsDAO = session.getMapper(FacturaServicioDAO.class);
@@ -236,7 +234,8 @@ public class FacturaBO {
 
             fctrCriterioVO.setFcts(fctsCriterioVO);
             fctlCriterioVO.setFctr(fctrCriterioVO);
-            fctdCriterioVO.setFctl(fctlCriterioVO);
+
+            fctdCriterioVO.setVlrcId(vlrcId);
 
             // Creacion de la valoracion
             final IgBO igBO = new IgBO();
@@ -591,74 +590,6 @@ public class FacturaBO {
             }
 
             return fctl;
-        }
-    }
-
-    /**
-     * Select fctd list.
-     *
-     * @param fctlId
-     *            the fctl id
-     * @param idioma
-     *            the idioma
-     * @param offset
-     *            the offset
-     * @param limit
-     *            the limit
-     * @return the paginated list
-     */
-    public PaginatedList<FacturaDetalleVO> selectFctdList(final @NonNull Long fctlId, final String idioma,
-            final int offset, final int limit) {
-        Preconditions.checkArgument(offset >= 0);
-        Preconditions.checkArgument(limit > 0);
-
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final FacturaDetalleDAO fctdDAO = session.getMapper(FacturaDetalleDAO.class);
-            final FacturaDetalleCriterioVO fctdCriterio = new FacturaDetalleCriterioVO();
-            final FacturaLineaCriterioVO fctlCriterio = new FacturaLineaCriterioVO();
-
-            fctlCriterio.setId(fctlId);
-            fctdCriterio.setFctl(fctlCriterio);
-            fctdCriterio.setIdioma(idioma);
-
-            final int count = fctdDAO.count(fctdCriterio);
-            final List<FacturaDetalleVO> fctdList = new ArrayList<>();
-
-            if (count >= offset) {
-                fctdList.addAll(fctdDAO.selectList(fctdCriterio, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<FacturaDetalleVO>(fctdList, offset, limit, count);
-        }
-    }
-
-    /**
-     * Select fctd.
-     *
-     * @param fctdId
-     *            the fctd id
-     * @param idioma
-     *            the idioma
-     * @return the factura detalle vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public FacturaDetalleVO selectFctd(final @NonNull Long fctdId, final String idioma)
-            throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final FacturaDetalleDAO fctdDAO = session.getMapper(FacturaDetalleDAO.class);
-            final FacturaDetalleCriterioVO fctdCriterio = new FacturaDetalleCriterioVO();
-
-            fctdCriterio.setId(fctdId);
-            fctdCriterio.setIdioma(idioma);
-
-            final FacturaDetalleVO fctd = fctdDAO.selectObject(fctdCriterio);
-
-            if (fctd == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.fctd, fctdId);
-            }
-
-            return fctd;
         }
     }
 }

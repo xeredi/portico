@@ -3,8 +3,8 @@
         <fieldset>
             <div class="row">
                 <div class="col-sm-2 col-lg-1 form-group-sm">
-                    <label data-translate="fcdr_fecha"></label><input type="text"
-                        class="form-control input-sm" data-ng-model="vm.model.fecha" data-bs-datepicker />
+                    <label data-translate="vlrc_fliq"></label><input type="text" class="form-control input-sm"
+                        data-ng-model="vm.model.fecha" data-bs-datepicker />
                 </div>
                 <div class="col-sm-2 col-xl-1 form-group-sm">
                     <label data-translate="fcsr"></label> <select data-ng-model="vm.model.fcsrId"
@@ -12,16 +12,23 @@
                         <option />
                     </select>
                 </div>
-                <div class="col-sm-3 col-xl-2 form-group-sm">
+                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.model.vlrcId == null">
+                    <label data-translate="tpsr"></label> <select data-ng-model="vm.model.tpsrId"
+                        data-ng-options="tpsr.value as ('enti_' + tpsr.value | translate) for tpsr in vm.tpsrList"
+                        class="form-control">
+                        <option />
+                    </select>
+                </div>
+                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.model.vlrcId == null">
                     <label data-translate="prto"></label> <select data-ng-model="vm.model.prtoId"
                         data-ng-options="prto.id as prto.etiqueta for prto in vm.prtoList"
                         class="form-control">
                         <option />
                     </select>
                 </div>
-                <div class="col-sm-3 col-xl-2 form-group-sm">
-                    <label data-translate="tpsr"></label> <select data-ng-model="vm.model.tpsrId"
-                        data-ng-options="tpsr.value as ('enti_' + tpsr.value | translate) for tpsr in vm.tpsrList"
+                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm" ng-if="vm.model.vlrcId == null">
+                    <label data-translate="grupoTipo"></label> <select data-ng-model="vm.model.grupoTipo"
+                        data-ng-options="grupoTipo as ('ValoracionGrupoTipo_' + grupoTipo | translate) for grupoTipo in vm.grupoTipoList"
                         class="form-control">
                         <option />
                     </select>

@@ -7,9 +7,12 @@ import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
+import xeredi.argo.model.facturacion.bo.ValoracionCargoBO;
+import xeredi.argo.model.facturacion.bo.ValoracionImpuestoBO;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCargoVO;
+import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
@@ -54,8 +57,20 @@ public final class ValoracionDetailAction extends CrudDetailAction<ValoracionVO>
         final ValoracionBO vlrcBO = new ValoracionBO();
 
         model = vlrcBO.select(model.getId(), getIdioma());
-        vlriList = vlrcBO.selectVlriList(model.getId(), getIdioma());
-        vlrgList = vlrcBO.selectVlrgList(model.getId(), getIdioma());
+
+        final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
+
+        vlrcCriterio.setId(model.getId());
+        vlrcCriterio.setIdioma(getIdioma());
+
+        final ValoracionImpuestoBO vlriBO = new ValoracionImpuestoBO();
+
+        vlriList = vlriBO.selectList(vlrcCriterio);
+
+        final ValoracionCargoBO vlrgBO = new ValoracionCargoBO();
+
+        vlrgList = vlrgBO.selectList(vlrcCriterio);
+
         tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
 
         final AspectoBO aspcBO = new AspectoBO();
@@ -63,6 +78,7 @@ public final class ValoracionDetailAction extends CrudDetailAction<ValoracionVO>
 
         aspcCriterio.setId(model.getAspc().getId());
         aspcCriterio.setFechaVigencia(model.getFref());
+        aspcCriterio.setIdioma(getIdioma());
 
         aspc = aspcBO.selectObject(aspcCriterio);
     }

@@ -42,9 +42,9 @@
 		    <![CDATA[
 				AND EXISTS (
 					SELECT 1
-					FROM tbl_proceso_archivo_prar
-					WHERE prar_arch_pk = arch_pk
-						AND prar_prbt_pk = #{prbtId}
+					FROM tbl_proceso_item_prit
+					WHERE prit_item_pk = arch_pk
+						AND prit_prbt_pk = #{prbtId}
 				)
 		    ]]>
 			</if>

@@ -18,6 +18,9 @@ public final class ValoracionGrupoVO {
     /** The pagador. */
     private ParametroVO pagador;
 
+    /** The aspc. */
+    private AspectoVO aspc;
+
     /** The vlrc list. */
     private List<ValoracionVO> vlrcList;
 }

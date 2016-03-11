@@ -6,7 +6,7 @@ import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
-import xeredi.argo.model.facturacion.bo.ValoracionBO;
+import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
@@ -45,7 +45,7 @@ public final class ValoracionLineaDetailAction extends CrudDetailAction<Valoraci
         Preconditions.checkNotNull(model.getId());
         Preconditions.checkNotNull(model.getVlrcId());
 
-        final ValoracionBO vlrcBO = new ValoracionBO();
+        final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
 
         {
             final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
@@ -53,7 +53,7 @@ public final class ValoracionLineaDetailAction extends CrudDetailAction<Valoraci
             vlrlCriterio.setId(model.getId());
             vlrlCriterio.setIdioma(getIdioma());
 
-            model = vlrcBO.selectVlrlObject(vlrlCriterio);
+            model = vlrlBO.selectObject(vlrlCriterio);
         }
 
         // Busqueda de la linea padre
@@ -65,7 +65,7 @@ public final class ValoracionLineaDetailAction extends CrudDetailAction<Valoraci
             vlrlCriterio.setId(model.getPadreId());
             vlrlCriterio.setIdioma(getIdioma());
 
-            vlrlPadre = vlrcBO.selectVlrlObject(vlrlCriterio);
+            vlrlPadre = vlrlBO.selectObject(vlrlCriterio);
         }
 
         // Busqueda de las lineas hija (coef/bonif)
@@ -76,7 +76,7 @@ public final class ValoracionLineaDetailAction extends CrudDetailAction<Valoraci
             vlrlCriterio.setSoloHijos(true);
             vlrlCriterio.setIdioma(getIdioma());
 
-            vlrlHijosList = vlrcBO.selectVlrlList(vlrlCriterio);
+            vlrlHijosList = vlrlBO.selectList(vlrlCriterio);
         }
 
         final AspectoBO aspcBO = new AspectoBO();

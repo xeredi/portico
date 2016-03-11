@@ -59,9 +59,9 @@
         <commons-configuration.version>1.10</commons-configuration.version>
         <cglib.version>2.2.2</cglib.version>
         <javassist.version>3.20.0-GA</javassist.version>
-        <lombok.version>1.16.6</lombok.version>
+        <lombok.version>1.16.8</lombok.version>
 
-        <poi.version>3.13</poi.version>
+        <poi.version>3.14</poi.version>
         <dynamicreports.version>4.1.0</dynamicreports.version>
         <guava.version>19.0</guava.version>
         <commons-io.version>2.4</commons-io.version>

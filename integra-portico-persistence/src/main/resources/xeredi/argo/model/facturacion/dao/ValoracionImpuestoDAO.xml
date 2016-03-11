@@ -5,7 +5,7 @@
 <mapper namespace="xeredi.argo.model.facturacion.dao.ValoracionImpuestoDAO">
     <resultMap type="ValoracionImpuestoVO" id="ResultMap">
         <id column="vlrc_pk" />
-        <id column="prvr_pk" />
+        <id column="vlri_pk" />
 
         <result column="vlrc_pk" property="vlrcId" />
         <result column="vlri_porcentaje" property="porcentaje" />

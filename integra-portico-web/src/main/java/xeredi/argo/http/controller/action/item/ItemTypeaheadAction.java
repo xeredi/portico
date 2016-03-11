@@ -27,9 +27,6 @@ public abstract class ItemTypeaheadAction<C extends ItemTypeahead, R extends Ite
     @Override
     public final void doTypeahead() throws ApplicationException {
         Preconditions.checkNotNull(model.getEntiId());
-        Preconditions.checkNotNull(model.getTextoBusqueda());
-
-        model.setIdioma(idioma);
 
         doSpecificTypeahead();
     }

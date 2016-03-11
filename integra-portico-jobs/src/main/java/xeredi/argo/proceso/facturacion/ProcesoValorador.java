@@ -21,11 +21,15 @@ import xeredi.argo.proceso.ProcesoTemplate;
  */
 public final class ProcesoValorador extends ProcesoTemplate {
 
-    /** The Constant FLIQ_PARAM. */
-    public static final String FLIQ_PARAM = "fliq";
-
-    /** The Constant CARGOIDS_PARAM. */
-    public static final String CARGOIDS_PARAM = "crgoIds";
+    /**
+     * The Enum Params.
+     */
+    public enum Params {
+        /** The fliq. */
+        fliq,
+        /** The crgo. */
+        crgo
+    }
 
     /**
      * {@inheritDoc}
@@ -43,13 +47,13 @@ public final class ProcesoValorador extends ProcesoTemplate {
     protected void ejecutarProceso() {
         final ValoradorBO vldrBO = new ValoradorBO(this);
 
-        final String fliqString = prbtData.getPrpmMap().get(FLIQ_PARAM).getValor();
+        final String fliqString = prbtData.getPrpmMap().get(Params.fliq.name()).getValor();
 
         try {
             final Date fliq = new SimpleDateFormat("dd/MM/yyyy").parse(fliqString);
             final Set<Long> crgoIds = new HashSet<>();
 
-            final ProcesoParametroVO prpmCrgoIds = prbtData.getPrpmMap().get(CARGOIDS_PARAM);
+            final ProcesoParametroVO prpmCrgoIds = prbtData.getPrpmMap().get(Params.crgo.name());
 
             if (prpmCrgoIds != null) {
                 final StringTokenizer tokenizer = new StringTokenizer(prpmCrgoIds.getValor());

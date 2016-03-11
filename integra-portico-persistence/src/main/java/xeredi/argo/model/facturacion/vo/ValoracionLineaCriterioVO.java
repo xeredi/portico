@@ -13,7 +13,10 @@ import xeredi.argo.model.comun.vo.BaseCriterioVO;
 public final class ValoracionLineaCriterioVO extends BaseCriterioVO {
 
     /** The vlrc. */
-    private ValoracionCriterioVO vlrc;
+    private Long vlrcId;
+
+    /** The fctr id. */
+    private Long fctrId;
 
     /** The id. */
     private Long id;

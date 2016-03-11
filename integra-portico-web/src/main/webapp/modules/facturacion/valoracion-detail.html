@@ -3,9 +3,7 @@
         <div data-uib-tab data-select="vm.tabSelected(null)" data-heading="{{'vlrc' | translate}}">
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
-                    <a class="btn btn-default" data-ng-href="#/facturacion/fcdr/edit/{{vm.model.id}}"><i
-                        class="glyphicon glyphicon-euro"></i> <span data-translate="btn_facturar"></span></a> <a
-                        data-ng-if="mc.hasAccnPath('vlrc-edit')" class="btn btn-default"
+                    <a data-ng-if="mc.hasAccnPath('vlrc-edit')" class="btn btn-default"
                         data-ng-href="#/facturacion/valoracion/edit/edit/{{vm.model.id}}"><i
                         class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
                     <button data-ng-if="mc.hasAccnPath('vlrc-remove')" data-ng-click="vm.remove()"
@@ -18,6 +16,12 @@
                     <button data-ng-click="vm.pdfExport()" class="btn btn-default">
                         <i class="glyphicon glyphicon-print"></i> <span data-translate="btn_imprimir"></span>
                     </button>
+                </div>
+
+                <div class="btn-group">
+                    <a class="btn btn-default"
+                        data-ng-href="#/facturacion/facturador/edit/create/{{vm.model.id}}"><i
+                        class="glyphicon glyphicon-euro"></i> <span data-translate="btn_facturar"></span></a>
                 </div>
             </div>
 
@@ -203,7 +207,8 @@
                 </div>
 
                 <div class="btn-group">
-                    <a class="btn btn-default" data-ng-href="#/facturacion/vlrl/edit/create/{{vm.model.id}}"><i
+                    <a class="btn btn-default"
+                        data-ng-href="#/facturacion/valoracion-linea/edit/create/{{vm.model.id}}"><i
                         class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span> </a>
                 </div>
             </div>

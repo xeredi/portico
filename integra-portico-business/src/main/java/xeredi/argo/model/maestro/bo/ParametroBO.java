@@ -841,7 +841,7 @@ public class ParametroBO {
      *            the limit
      * @return the list
      */
-    public final List<ParametroVO> selectLupaList(final @NonNull ParametroCriterioVO criterio, final int limit) {
+    public final List<ParametroVO> selectTypeaheadList(final @NonNull ParametroCriterioVO criterio, final int limit) {
         if (criterio.getTextoBusqueda() != null) {
             criterio.setTextoBusqueda(criterio.getTextoBusqueda() + '%');
         }

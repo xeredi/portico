@@ -9,6 +9,9 @@ import xeredi.argo.http.controller.action.comun.CrudFileExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
+import xeredi.argo.model.facturacion.bo.ValoracionCargoBO;
+import xeredi.argo.model.facturacion.bo.ValoracionImpuestoBO;
+import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
 import xeredi.argo.model.facturacion.report.ValoracionPdf;
 import xeredi.argo.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
@@ -46,17 +49,23 @@ public final class ValoracionPdfExportAction extends CrudFileExportAction<Valora
 
         model = vlrcBO.select(model.getId(), getIdioma());
 
-        final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(model.getId(), getIdioma());
-        final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(model.getId(), getIdioma());
-
-        final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
         final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
         vlrcCriterio.setId(model.getId());
-        vlrlCriterio.setVlrc(vlrcCriterio);
+        vlrcCriterio.setIdioma(getIdioma());
+
+        final ValoracionCargoBO vlrgBO = new ValoracionCargoBO();
+        final List<ValoracionCargoVO> vlrgList = vlrgBO.selectList(vlrcCriterio);
+        final ValoracionImpuestoBO vlriBO = new ValoracionImpuestoBO();
+        final List<ValoracionImpuestoVO> vlriList = vlriBO.selectList(vlrcCriterio);
+
+        final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
+        final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
+
+        vlrlCriterio.setVlrcId(model.getId());
         vlrlCriterio.setIdioma(getIdioma());
 
-        final List<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrlCriterio);
+        final List<ValoracionLineaVO> vlrlList = vlrlBO.selectList(vlrlCriterio);
 
         final TipoDatoVO tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
 

@@ -22,6 +22,6 @@ public final class CargoTypeaheadAction extends TypeaheadAction<CargoCriterioVO,
     public void doTypeahead() throws ApplicationException {
         final CargoBO crgoBO = new CargoBO();
 
-        resultList = crgoBO.selectList(model, limit);
+        resultList = crgoBO.selectTypeaheadList(model, limit);
     }
 }

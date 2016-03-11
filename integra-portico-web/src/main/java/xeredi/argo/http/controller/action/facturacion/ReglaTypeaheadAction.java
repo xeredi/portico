@@ -22,6 +22,6 @@ public final class ReglaTypeaheadAction extends TypeaheadAction<ReglaCriterioVO,
     public void doTypeahead() throws ApplicationException {
         final ReglaBO rglaBO = new ReglaBO();
 
-        resultList = rglaBO.selectList(model, limit);
+        resultList = rglaBO.selectTypeaheadList(model, limit);
     }
 }

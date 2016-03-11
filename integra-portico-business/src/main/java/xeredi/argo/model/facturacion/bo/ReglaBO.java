@@ -1,6 +1,7 @@
 package xeredi.argo.model.facturacion.bo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -83,7 +84,13 @@ public class ReglaBO {
      *            the limit
      * @return the list
      */
-    public List<ReglaVO> selectList(final @NonNull ReglaCriterioVO rglaCriterio, final int limit) {
+    public List<ReglaVO> selectTypeaheadList(final @NonNull ReglaCriterioVO rglaCriterio, final int limit) {
+        rglaCriterio.setTextoBusqueda("%" + rglaCriterio.getTextoBusqueda() + "%");
+
+        if (rglaCriterio.getFechaVigencia() == null) {
+            rglaCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        }
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
 

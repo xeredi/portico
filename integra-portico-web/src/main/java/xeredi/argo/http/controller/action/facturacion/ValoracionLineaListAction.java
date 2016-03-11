@@ -2,7 +2,7 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.ValoracionBO;
+import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
@@ -23,12 +23,11 @@ public final class ValoracionLineaListAction extends GridListAction<ValoracionLi
      */
     @Override
     public void doList() throws ApplicationException {
-        Preconditions.checkNotNull(model.getVlrc());
-        Preconditions.checkNotNull(model.getVlrc().getId());
+        Preconditions.checkNotNull(model.getVlrcId());
 
-        final ValoracionBO vlrcBO = new ValoracionBO();
+        final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
 
-        resultList = vlrcBO.selectVlrlList(model, getOffset(), limit);
+        resultList = vlrlBO.selectList(model, getOffset(), limit);
     }
 
     /**

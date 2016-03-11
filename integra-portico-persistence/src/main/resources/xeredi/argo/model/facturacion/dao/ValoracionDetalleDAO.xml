@@ -129,30 +129,23 @@
 				AND vlrd_padre_pk <> vlrd_pk
 		    ]]>
 			</if>
-			<if test="vlrl != null">
-				<if test="vlrl.id != null">
-					AND vlrd_vlrl_pk = #{vlrl.id}
-				</if>
-				<if test="vlrl.vlrc != null">
-					<if test="vlrl.vlrc.id != null">
-						AND vlrd_vlrc_pk = #{vlrl.vlrc.id}
-					</if>
-					<if test="vlrl.vlrc.ids != null">
-						AND vlrd_vlrc_pk IN
-						<foreach collection="vlrl.vlrc.ids" item="item" open="(" close=")" separator=",">#{item}
-						</foreach>
-					</if>
-				</if>
+			<if test="vlrlId != null">
+				AND vlrd_vlrl_pk = #{vlrlId}
+			</if>
+			<if test="vlrcId != null">
+				AND vlrd_vlrc_pk = #{vlrcId}
 			</if>
 		</where>
 	</sql>
 
-	<select id="selectObject" parameterType="ValoracionDetalleCriterioVO" resultMap="ResultMap">
+	<select id="selectObject" parameterType="ValoracionDetalleCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 	</select>
 
-	<select id="count" parameterType="ValoracionDetalleCriterioVO" resultType="Integer">
+	<select id="count" parameterType="ValoracionDetalleCriterioVO"
+		resultType="Integer">
     <![CDATA[
         SELECT COUNT(1)
         FROM
@@ -163,7 +156,8 @@
 		<include refid="SelectWhere" />
 	</select>
 
-	<select id="selectList" parameterType="ValoracionDetalleCriterioVO" resultMap="ResultMap">
+	<select id="selectList" parameterType="ValoracionDetalleCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 		ORDER BY vlrd_vlrc_pk, vlrd_vlrl_pk, vlrd_pk

@@ -19,7 +19,6 @@ import xeredi.argo.model.comun.vo.ArchivoCriterioVO;
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
 import xeredi.argo.model.comun.vo.ArchivoSentido;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.proceso.dao.ProcesoArchivoDAO;
 import xeredi.argo.model.proceso.dao.ProcesoDAO;
 import xeredi.argo.model.proceso.dao.ProcesoItemDAO;
 import xeredi.argo.model.proceso.dao.ProcesoMensajeDAO;
@@ -261,10 +260,6 @@ public class ProcesoBO {
             prmnCriterio.setPrbtId(prbt.getId());
 
             prmnDAO.deleteList(prmnCriterio);
-
-            final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
-
-            prarDAO.deleteList(prbtCriterio);
 
             final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
             final ProcesoItemCriterioVO pritCriterio = new ProcesoItemCriterioVO();

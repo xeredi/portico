@@ -4,7 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.facturacion.bo.ValoracionBO;
+import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.seguridad.vo.AccionCodigo;
@@ -26,15 +26,15 @@ public final class ValoracionLineaSaveAction extends CrudSaveAction<ValoracionLi
      */
     @Override
     public void doSave() throws ApplicationException {
-        final ValoracionBO vlrcBO = new ValoracionBO();
+        final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
 
         switch (accion) {
         case create:
-            vlrcBO.insertVlrl(model);
+            vlrlBO.insert(model);
 
             break;
         case edit:
-            vlrcBO.updateVlrl(model);
+            vlrlBO.update(model);
 
             break;
         default:

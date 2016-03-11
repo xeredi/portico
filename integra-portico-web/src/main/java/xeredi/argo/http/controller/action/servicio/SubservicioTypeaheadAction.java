@@ -25,10 +25,8 @@ public final class SubservicioTypeaheadAction extends ItemTypeaheadAction<Subser
     public void doSpecificTypeahead() throws ApplicationException {
         Preconditions.checkNotNull(model.getSrvcId());
 
-        model.setNumero(Integer.valueOf(model.getTextoBusqueda()));
-
         final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId());
 
-        resultList = ssrvBO.selectLupaList(model, limit);
+        resultList = ssrvBO.selectTypeaheadList(model, limit);
     }
 }

@@ -4,8 +4,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import xeredi.argo.model.facturacion.bo.FacturadorBO;
 import xeredi.argo.model.facturacion.vo.ValoracionGrupoCriterioVO;
+import xeredi.argo.model.facturacion.vo.ValoracionGrupoTipo;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.proceso.ProcesoTemplate;
@@ -15,6 +19,9 @@ import xeredi.argo.proceso.ProcesoTemplate;
  * The Class ProcesoFacturador.
  */
 public final class ProcesoFacturador extends ProcesoTemplate {
+
+    /** The Constant LOG. */
+    private static final Log LOG = LogFactory.getLog(ProcesoFacturador.class);
 
     /**
      * The Enum Params.
@@ -33,7 +40,11 @@ public final class ProcesoFacturador extends ProcesoTemplate {
         /** The srvc. */
         srvc,
         /** The vlrc. */
-        vlrc
+        vlrc,
+
+        grupoTipo,
+
+        ;
     }
 
     /**
@@ -64,6 +75,20 @@ public final class ProcesoFacturador extends ProcesoTemplate {
             if (prbtData.getPrpmMap().containsKey(Params.fcsr.name())) {
                 fcsrId = Long.parseLong(prbtData.getPrpmMap().get(Params.fcsr.name()).getValor());
             }
+            if (prbtData.getPrpmMap().containsKey(Params.grupoTipo.name())) {
+                vgrpCriterio.setGrupoTipo(ValoracionGrupoTipo.valueOf(prbtData.getPrpmMap()
+                        .get(Params.grupoTipo.name()).getValor()));
+            } else {
+                vgrpCriterio.setGrupoTipo(ValoracionGrupoTipo.V);
+            }
+
+            if (!prbtData.getPritEntradaList().isEmpty()) {
+                vgrpCriterio.setVlrcId(prbtData.getPritEntradaList().get(0).getItemId());
+            }
+
+            LOG.info("fcsr: " + fcsrId);
+            LOG.info("ffac: " + ffac);
+            LOG.info("vgrpCriterio: " + vgrpCriterio);
 
             try {
                 fctrBO.facturarValoraciones(vgrpCriterio, fcsrId, ffac);

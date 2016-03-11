@@ -1543,6 +1543,13 @@ CREATE TABLE tbl_factura_fctr (
 	, fctr_ffin TIMESTAMP
 	, fctr_estado CHAR(2) NOT NULL
 	, fctr_es_suj_pasivo INT NOT NULL
+	, fctr_anulada_pk NUMBER(19)
+	, fctr_info1 VARCHAR2(100)
+	, fctr_info2 VARCHAR2(100)
+	, fctr_info3 VARCHAR2(100)
+	, fctr_info4 VARCHAR2(100)
+	, fctr_info5 VARCHAR2(100)
+	, fctr_info6 VARCHAR2(100)
 
 	, CONSTRAINT pk_fctr PRIMARY KEY (fctr_pk)
 
@@ -1550,6 +1557,8 @@ CREATE TABLE tbl_factura_fctr (
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 	, CONSTRAINT fk_fctr_fcsr_pk FOREIGN KEY (fctr_fcsr_pk)
 		REFERENCES tbl_factura_serie_fcsr (fcsr_pk)
+	, CONSTRAINT fk_fctr_anulada_pk FOREIGN KEY (fctr_anulada_pk)
+		REFERENCES tbl_factura_fctr (fctr_pk)
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_factura_fctr FOR porticoadm.tbl_factura_fctr\
@@ -1567,6 +1576,7 @@ CREATE TABLE tbl_valoracion_vlrc (
 	, vlrc_aspc_pk NUMBER(19) NOT NULL
 	, vlrc_pagador_prmt_pk NUMBER(19) NOT NULL
 	, vlrc_fctr_pk NUMBER(19)
+	, vlrc_fctr_rectificada_pk NUMBER(19)
 	, vlrc_fref TIMESTAMP NOT NULL
 	, vlrc_fliq TIMESTAMP NOT NULL
 	, vlrc_falta TIMESTAMP NOT NULL
@@ -1574,6 +1584,8 @@ CREATE TABLE tbl_valoracion_vlrc (
 	, vlrc_ffin TIMESTAMP
 	, vlrc_es_suj_pasivo INT NOT NULL
 	, vlrc_cod_exen CHAR(1) NOT NULL
+	, vlrc_importe NUMBER(10, 2)
+	, vlrc_impuesto NUMBER(10, 2)
 
 	, vlrc_info1 VARCHAR2(100)
 	, vlrc_info2 VARCHAR2(100)
@@ -1591,6 +1603,8 @@ CREATE TABLE tbl_valoracion_vlrc (
 	, CONSTRAINT fk_vlrc_pagador_prmt_pk FOREIGN KEY (vlrc_pagador_prmt_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 	, CONSTRAINT fk_vlrc_fctr_pk FOREIGN KEY (vlrc_fctr_pk)
+		REFERENCES tbl_factura_fctr (fctr_pk)
+	, CONSTRAINT fk_vlrc_fctr_rectificada_pk FOREIGN KEY (vlrc_fctr_rectificada_pk)
 		REFERENCES tbl_factura_fctr (fctr_pk)
 )\
 
@@ -1904,24 +1918,6 @@ GRANT SELECT, UPDATE ON tbl_campo_agregacion_cmag TO portico\
 
 
 
-
--- tbl_proceso_archivo_prar
-CREATE TABLE tbl_proceso_archivo_prar (
-	prar_prbt_pk NUMBER(19) NOT NULL
-	, prar_arch_pk NUMBER(19) NOT NULL
-
-	, CONSTRAINT pk_prar PRIMARY KEY (prar_prbt_pk, prar_arch_pk)
-
-	, CONSTRAINT fk_prar_prbt_pk FOREIGN KEY (prar_prbt_pk)
-		REFERENCES tbl_proceso_batch_prbt (prbt_pk)
-	, CONSTRAINT fk_prar_arch_pk FOREIGN KEY (prar_arch_pk)
-		REFERENCES tbl_archivo_arch (arch_pk)
-)
-\
-
-CREATE OR REPLACE SYNONYM portico.tbl_proceso_archivo_prar FOR tbl_proceso_archivo_prar\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_proceso_archivo_prar TO portico\
 
 -- tbl_servicio_archivo_srar
 CREATE TABLE tbl_servicio_archivo_srar (
@@ -2280,7 +2276,6 @@ DROP TABLE tbl_accion_entidad_acen\
 DROP TABLE tbl_accion_accn\
 DROP TABLE tbl_entidad_accgrid_enag\
 DROP TABLE tbl_servicio_archivo_srar\
-DROP TABLE tbl_proceso_archivo_prar\
 DROP TABLE tbl_campo_agregacion_cmag\
 DROP TABLE tbl_message_i18n_m18n\
 DROP TABLE tbl_message_mesg\

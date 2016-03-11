@@ -6,7 +6,8 @@ import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
-import xeredi.argo.model.facturacion.bo.ValoracionBO;
+import xeredi.argo.model.facturacion.bo.ValoracionDetalleBO;
+import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
@@ -52,26 +53,28 @@ public final class ValoracionDetalleDetailAction extends CrudDetailAction<Valora
         Preconditions.checkNotNull(model.getVlrlId());
         Preconditions.checkNotNull(model.getId());
 
-        final ValoracionBO vlrcBO = new ValoracionBO();
+        final ValoracionDetalleBO vlrdBO = new ValoracionDetalleBO();
 
-        model = vlrcBO.selectVlrd(model.getId());
+        model = vlrdBO.select(model.getId(), getIdioma());
 
         // Busqueda de lineas hijas (coef/bonif)
         if (model.getRgla().getTipo() == ReglaTipo.T) {
             final ValoracionDetalleCriterioVO vlrdCriterio = new ValoracionDetalleCriterioVO();
 
             vlrdCriterio.setPadreId(model.getId());
+            vlrdCriterio.setIdioma(idioma);
             vlrdCriterio.setSoloHijos(true);
 
-            vlrdHijosList = vlrcBO.selectVlrdList(vlrdCriterio);
+            vlrdHijosList = vlrdBO.selectList(vlrdCriterio);
         }
 
+        final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
         final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
         vlrlCriterio.setId(model.getVlrlId());
         vlrlCriterio.setIdioma(idioma);
 
-        vlrl = vlrcBO.selectVlrlObject(vlrlCriterio);
+        vlrl = vlrlBO.selectObject(vlrlCriterio);
 
         if (vlrl.getId() == vlrl.getPadreId()) {
             vlrlPadre = vlrl;
@@ -81,7 +84,7 @@ public final class ValoracionDetalleDetailAction extends CrudDetailAction<Valora
             vlrlPadreCriterio.setId(vlrl.getPadreId());
             vlrlPadreCriterio.setIdioma(idioma);
 
-            vlrlPadre = vlrcBO.selectVlrlObject(vlrlPadreCriterio);
+            vlrlPadre = vlrlBO.selectObject(vlrlPadreCriterio);
         }
 
         final AspectoBO aspcBO = new AspectoBO();

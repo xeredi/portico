@@ -26,12 +26,8 @@ public final class AspectoTypeaheadAction extends TypeaheadAction<AspectoCriteri
     public void doTypeahead() throws ApplicationException {
         Preconditions.checkNotNull(model.getTpsrId());
 
-        if (model.getFechaVigencia() == null) {
-            model.setFechaVigencia(Calendar.getInstance().getTime());
-        }
-
         final AspectoBO aspcBO = new AspectoBO();
 
-        resultList = aspcBO.selectList(model, limit);
+        resultList = aspcBO.selectTypeaheadList(model, limit);
     }
 }

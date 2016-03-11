@@ -15,7 +15,7 @@ import xeredi.argo.model.comun.vo.BaseCriterioVO;
 public final class FacturaLineaCriterioVO extends BaseCriterioVO {
 
     /** The fctr. */
-    private FacturaCriterioVO fctr;
+    private FacturaCriterioVO fctr = new FacturaCriterioVO();
 
     /** The id. */
     private Long id;

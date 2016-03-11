@@ -31,8 +31,7 @@
                 <div class="row">
                     <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                         <label data-translate="prbt_falta"></label>
-                        <p class="form-control-static"
-                            data-ng-bind="(vm.model.falta | date: datetimeFormat)"></p>
+                        <p class="form-control-static" data-ng-bind="(vm.model.falta | date: datetimeFormat)"></p>
                     </div>
                     <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                         <label data-translate="fini"></label>
@@ -61,8 +60,7 @@
                     </div>
                     <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
                         <label data-translate="prbt_mensajesCnt"></label>
-                        <p class="form-control-static number"
-                            data-ng-bind="(vm.model.mensajesCnt | number:0)"></p>
+                        <p class="form-control-static number" data-ng-bind="(vm.model.mensajesCnt | number:0)"></p>
                     </div>
                 </div>
             </fieldset>
@@ -84,7 +82,7 @@
 
                                 <tbody>
                                     <tr data-ng-repeat="(key, value) in vm.prpmMap track by $index">
-                                        <td data-ng-bind="key"></td>
+                                        <td data-ng-bind="key | translate"></td>
                                         <td data-ng-bind="value.valor"></td>
                                     </tr>
                                 </tbody>

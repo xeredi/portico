@@ -449,6 +449,10 @@ INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'ffin')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ffin', 'F. Fin')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fref')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fref', 'F. Referencia')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fliq')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fliq', 'F. Liquidación')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'ffac')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ffac', 'F. Facturación')\
 
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'usro')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'usro', 'Usuario')\

@@ -112,6 +112,10 @@
 
     <sql id="SelectWhere">
         <where>
+			<if test="textoBusqueda != null">
+				AND rgla_codigo LIKE #{textoBusqueda}
+			</if>
+
             <if test="fechaVigencia != null">
                 AND #{fechaVigencia} BETWEEN rglv_fini AND COALESCE(rglv_ffin, #{fechaVigencia})
             </if>

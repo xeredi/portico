@@ -16,7 +16,7 @@
 
 		<result column="vlrl_importe_base" property="importeBase" />
 		<result column="vlrl_importe" property="importe" />
-        <result column="vlrl_subtotal" property="subtotal" />
+		<result column="vlrl_subtotal" property="subtotal" />
 		<result column="vlrl_vlrd_count" property="vlrdCount" />
 
 		<result column="vlrl_info1" property="info1" />
@@ -42,7 +42,7 @@
 			<result column="vlrl_rgla_pk" property="id" />
 			<result column="rgla_codigo" property="codigo" />
 			<result column="rgla_tipo" property="tipo" />
-            <result column="rgla_texto" property="texto" />
+			<result column="rgla_texto" property="texto" />
 
 			<association property="enti" javaType="EntidadVO">
 				<result column="rgla_enti_pk" property="id" />
@@ -226,31 +226,27 @@
 				AND vlrl_padre_pk <> vlrl_pk
 		    ]]>
 			</if>
-			<if test="vlrc != null">
-				<if test="vlrc.id != null">
-					AND vlrl_vlrc_pk = #{vlrc.id}
-				</if>
-				<if test="vlrc.ids != null">
-					AND vlrl_vlrc_pk IN
-					<foreach collection="vlrc.ids" item="item" open="(" close=")" separator=",">#{item}
-					</foreach>
-				</if>
+			<if test="vlrcId != null">
+				AND vlrl_vlrc_pk = #{vlrcId}
 			</if>
 		</where>
 	</sql>
 
-	<select id="selectObject" parameterType="ValoracionLineaCriterioVO" resultMap="ResultMap">
+	<select id="selectObject" parameterType="ValoracionLineaCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 	</select>
 
-	<select id="selectList" parameterType="ValoracionLineaCriterioVO" resultMap="ResultMap">
+	<select id="selectList" parameterType="ValoracionLineaCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 		ORDER BY vlrl_vlrc_pk, vlrl_padre_pk, vlrl_pk
 	</select>
 
-	<select id="count" parameterType="ValoracionLineaCriterioVO" resultType="Integer">
+	<select id="count" parameterType="ValoracionLineaCriterioVO"
+		resultType="Integer">
     <![CDATA[
 		SELECT
 			COUNT(1)
@@ -277,7 +273,8 @@
     ]]>
 	</select>
 
-	<select id="isRglaValida" parameterType="ValoracionLineaVO" resultType="Boolean">
+	<select id="isRglaValida" parameterType="ValoracionLineaVO"
+		resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM tbl_regla_rgla

@@ -9,14 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.NonNull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Sets;
-
-import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
@@ -41,6 +39,9 @@ import xeredi.argo.model.servicio.vo.SubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
+
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Sets;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -163,12 +164,14 @@ public class SubservicioBO {
      *            the limit
      * @return the list
      */
-    public final List<SubservicioVO> selectLupaList(final @NonNull SubservicioLupaCriterioVO ssrvLupaCriterioVO,
+    public final List<SubservicioVO> selectTypeaheadList(final @NonNull SubservicioLupaCriterioVO ssrvTypeaheadCriterio,
             final int limit) {
+        ssrvTypeaheadCriterio.setNumero(Integer.valueOf(ssrvTypeaheadCriterio.getTextoBusqueda()));
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
 
-            return ssrvDAO.selectLupaList(ssrvLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
+            return ssrvDAO.selectLupaList(ssrvTypeaheadCriterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         }
     }
 

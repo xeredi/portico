@@ -308,6 +308,8 @@ public class ValoradorBO {
                     vlrdDAO.insert(vlrd);
                 }
             }
+
+            vlrcDAO.updateImporte(vlra.getVlrc().getId());
         }
 
         if (!vlrcIds.isEmpty()) {

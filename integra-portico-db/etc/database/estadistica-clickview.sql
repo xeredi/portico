@@ -60,10 +60,9 @@ SELECT COUNT(1) FROM tbl_c1;
 SELECT * FROM tbl_c1;
 
 SELECT estd_subp_pk
-    , d1
-    , d2
+    d5
     , sum(a1), sum(a2), sum(a3)
-    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = d2) AS d2_parametro
+    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = d5) AS d5_parametro
 FROM tbl_c1
 WHERE 
     EXISTS (
@@ -76,21 +75,22 @@ WHERE
                 WHERE sprt_pk = pepr_autp_pk
                     AND sprt_codigo = '63'
             )
-/*
-*/
             AND pepr_pk = estd_pepr_pk
 --            AND pepr_mes = 3 
             AND pepr_anio = 2015
     )
-    AND d1 LIKE 'DT'
+/*
+    AND d1 LIKE 'ET'
     AND EXISTS (
         SELECT 1
         FROM tbl_parametro_prmt
         WHERE prmt_pk = d2
             AND prmt_parametro LIKE 'ES%'
+            AND prmt_tppr_pk = portico.getEntidad('UNLOCODE')
     )
-GROUP BY estd_subp_pk, d1, d2
-ORDER BY estd_subp_pk, d1, d2
+*/
+GROUP BY estd_subp_pk, d5
+ORDER BY estd_subp_pk, d5
 ;
 
 

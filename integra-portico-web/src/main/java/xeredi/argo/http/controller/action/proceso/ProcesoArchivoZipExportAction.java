@@ -6,7 +6,7 @@ import xeredi.argo.http.controller.action.comun.CrudFileExportAction;
 import xeredi.argo.model.comun.bo.ArchivoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
-import xeredi.argo.model.proceso.vo.ProcesoArchivoVO;
+import xeredi.argo.model.proceso.vo.ProcesoItemVO;
 
 import com.google.common.base.Preconditions;
 
@@ -14,7 +14,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ProcesoArchivoZipExportAction.
  */
-public final class ProcesoArchivoZipExportAction extends CrudFileExportAction<ProcesoArchivoVO> {
+public final class ProcesoArchivoZipExportAction extends CrudFileExportAction<ProcesoItemVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1822556969160920692L;
@@ -27,12 +27,12 @@ public final class ProcesoArchivoZipExportAction extends CrudFileExportAction<Pr
      */
     @Override
     public void doExport() throws ApplicationException, IOException {
-        Preconditions.checkNotNull(model.getArchId());
+        Preconditions.checkNotNull(model.getItemId());
 
         final ArchivoBO archBO = new ArchivoBO();
 
-        arin = archBO.select(model.getArchId());
-        stream = archBO.selectStream(model.getArchId());
+        arin = archBO.select(model.getItemId());
+        stream = archBO.selectStream(model.getItemId());
     }
 
     /**

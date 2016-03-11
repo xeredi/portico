@@ -10,6 +10,10 @@ import xeredi.argo.model.servicio.vo.ServicioVO;
 /**
  * The Class FacturadorVO.
  */
+
+/**
+ * Instantiates a new facturador vo.
+ */
 @Data
 public final class FacturadorVO {
 
@@ -29,11 +33,14 @@ public final class FacturadorVO {
     private ServicioVO srvc;
 
     /** The vlrc. */
-    private ValoracionVO vlrc;
+    private Long vlrcId;
 
     /** The pagador. */
     private ParametroVO pagador;
 
     /** The prbt id. */
     private Long prbtId;
+
+    /** The grupo tipo. */
+    private ValoracionGrupoTipo grupoTipo;
 }

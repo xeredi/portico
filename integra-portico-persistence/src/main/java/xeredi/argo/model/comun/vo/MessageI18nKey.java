@@ -94,7 +94,7 @@ public enum MessageI18nKey {
     /** fini. */
     fini, /** ffin. */
     ffin, /** The fref. */
-    fref,
+    fref, fliq, ffac,
 
     /** The usro. */
     usro, /** The usro list. */

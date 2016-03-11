@@ -4,7 +4,7 @@
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
                     <a class="btn btn-default"
-                        data-ng-href="#/facturacion/vlrd/edit/edit/{{vm.model.vlrcId}}/{{vm.model.vlrlId}}/{{vm.model.id}}"><i
+                        data-ng-href="#/facturacion/valoracion-detalle/edit/edit/{{vm.model.vlrcId}}/{{vm.model.vlrlId}}/{{vm.model.id}}"><i
                         class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
                     <button data-ng-click="vm.remove()" class="btn btn-default">
                         <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
@@ -162,7 +162,7 @@
                         <tbody>
                             <tr data-ng-repeat="vlrd in vm.vlrdHijosList track by $index">
                                 <td><a
-                                    data-ng-href="#/facturacion/vlrd/detail/{{vlrd.vlrcId}}/{{vlrd.vlrlId}}/{{vlrd.id}}"><i
+                                    data-ng-href="#/facturacion/valoracion-detalle/detail/{{vlrd.vlrcId}}/{{vlrd.vlrlId}}/{{vlrd.id}}"><i
                                         class="glyphicon glyphicon-search"></i></a></td>
                                 <td nowrap="nowrap" data-ng-bind="vlrd.rgla.codigo"></td>
                                 <td nowrap="nowrap" data-ng-bind="vlrd.rgla.tipo"></td>

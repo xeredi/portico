@@ -64,7 +64,7 @@ public class FacturadorBO {
             final @NonNull Date fechaFacturacion) {
         LOG.info("Facturacion de las valoraciones: " + vgrpCriterio);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final FacturaSerieDAO fcsrDAO = session.getMapper(FacturaSerieDAO.class);
             final ValoracionGrupoDAO vgrpDAO = session.getMapper(ValoracionGrupoDAO.class);
             final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
@@ -98,6 +98,8 @@ public class FacturadorBO {
                     fctr.setFalta(Calendar.getInstance().getTime());
                     fctr.setFref(fechaFacturacion);
                     fctr.setFcsr(fcsr);
+                    fctr.setAspc(vgrp.getAspc());
+                    fctr.setPagador(vgrp.getPagador());
 
                     fctrDAO.insert(fctr);
 

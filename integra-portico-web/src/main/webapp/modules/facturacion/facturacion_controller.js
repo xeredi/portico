@@ -20,8 +20,7 @@ angular.module("facturacion_controller", [])
 
 .controller("ReglaTypeaheadController", ReglaTypeaheadController)
 
-.controller("ReglaIncompatibleDetailController",
-        ReglaIncompatibleDetailController)
+.controller("ReglaIncompatibleDetailController", ReglaIncompatibleDetailController)
 
 .controller("ReglaIncompatibleEditController", ReglaIncompatibleEditController)
 
@@ -52,8 +51,11 @@ angular.module("facturacion_controller", [])
 
 .controller("ValoracionLineaDetailController", ValoracionLineaDetailController)
 
-.controller("ValoracionDetalleDetailController",
-        ValoracionDetalleDetailController)
+.controller("ValoracionLineaEditController", ValoracionLineaEditController)
+
+.controller("ValoracionDetalleDetailController", ValoracionDetalleDetailController)
+
+.controller("ValoracionDetalleEditController", ValoracionDetalleEditController)
 
 .controller("FacturadorEditController", FacturadorEditController)
 
@@ -172,12 +174,22 @@ function config($routeProvider) {
         reloadOnSearch : false
     })
 
+    .when("/facturacion/valoracion-linea/edit/:accion/:vlrcId/:id?", {
+        templateUrl : "modules/facturacion/valoracion-linea-edit.html",
+        controller : "ValoracionLineaEditController as vm"
+    })
+
     .when("/facturacion/valoracion-detalle/detail/:vlrcId/:vlrlId/:id", {
         templateUrl : "modules/facturacion/valoracion-detalle-detail.html",
         controller : "ValoracionDetalleDetailController as vm"
     })
 
-    .when("/facturacion/facturador/edit/:accion", {
+    .when("/facturacion/valoracion-detalle/edit/:accion/:vlrcId/:vlrlId/:id?", {
+        templateUrl : "modules/facturacion/valoracion-detalle-edit.html",
+        controller : "ValoracionDetalleEditController as vm"
+    })
+
+    .when("/facturacion/facturador/edit/:accion/:vlrcId?", {
         templateUrl : "modules/facturacion/facturador-edit.html",
         controller : "FacturadorEditController as vm",
     })
@@ -186,8 +198,7 @@ function config($routeProvider) {
 }
 
 // -------------------- Inicio Facturacion ------------------
-function FacturacionIndexController($routeParams, pageTitleService,
-        FacturacionService) {
+function FacturacionIndexController($routeParams, pageTitleService, FacturacionService) {
     var vm = this;
 
     FacturacionService.index().then(function(data) {
@@ -216,20 +227,18 @@ function CargoGridController($routeParams, pageTitleService, CargoService) {
     }
 
     function search(page) {
-        CargoService.listPage(vm.searchCriteria, page, vm.limit).then(
-                function(data) {
-                    vm.page = data.resultList.page;
-                    vm.limit = data.resultList.limit;
-                    vm.resultList = data.resultList;
-                });
+        CargoService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
+            vm.page = data.resultList.page;
+            vm.limit = data.resultList.limit;
+            vm.resultList = data.resultList;
+        });
     }
 
     function pageChanged() {
         search(vm.page);
     }
 
-    vm.searchCriteria = $routeParams.searchCriteria ? angular
-            .fromJson($routeParams.searchCriteria) : {};
+    vm.searchCriteria = $routeParams.searchCriteria ? angular.fromJson($routeParams.searchCriteria) : {};
     vm.limit = $routeParams.limit;
 
     search($routeParams.page ? $routeParams.page : 1);
@@ -272,9 +281,8 @@ function CargoEditController($routeParams, pageTitleService, CargoService) {
     function save() {
         CargoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
-                    CargoService.redirectAfterSave(vm.accion,
-                            '/facturacion/cargo/detail', [ data.model.id,
-                                    data.model.version.fini ]);
+                    CargoService.redirectAfterSave(vm.accion, '/facturacion/cargo/detail', [ data.model.id,
+                            data.model.version.fini ]);
                 });
     }
 
@@ -386,9 +394,8 @@ function ReglaEditController($routeParams, pageTitleService, ReglaService) {
     function save() {
         ReglaService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
-                    ReglaService.redirectAfterSave(vm.accion,
-                            '/facturacion/regla/detail', [ data.model.id,
-                                    data.model.version.fini ]);
+                    ReglaService.redirectAfterSave(vm.accion, '/facturacion/regla/detail', [ data.model.id,
+                            data.model.version.fini ]);
                 });
     }
 
@@ -451,8 +458,7 @@ function ReglaTypeaheadController($scope, ReglaService) {
     }
 }
 
-function ReglaIncompatibleDetailController($routeParams, pageTitleService,
-        ReglaIncompatibleService) {
+function ReglaIncompatibleDetailController($routeParams, pageTitleService, ReglaIncompatibleService) {
     var vm = this;
 
     vm.remove = remove;
@@ -475,8 +481,7 @@ function ReglaIncompatibleDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("rgin", "page_detail");
 }
 
-function ReglaIncompatibleEditController($routeParams, pageTitleService,
-        ReglaIncompatibleService) {
+function ReglaIncompatibleEditController($routeParams, pageTitleService, ReglaIncompatibleService) {
     var vm = this;
 
     vm.save = save;
@@ -486,8 +491,8 @@ function ReglaIncompatibleEditController($routeParams, pageTitleService,
         ReglaIncompatibleService.save(vm.accion, vm.model).then(
                 function(data) {
                     ReglaIncompatibleService.redirectAfterSave(vm.accion,
-                            '/facturacion/regla-incompatible/detail', [
-                                    data.model.id, data.model.version.fini ]);
+                            '/facturacion/regla-incompatible/detail', [ data.model.id,
+                                    data.model.version.fini ]);
                 });
     }
 
@@ -530,20 +535,18 @@ function AspectoGridController($routeParams, pageTitleService, AspectoService) {
     }
 
     function search(page) {
-        AspectoService.listPage(vm.searchCriteria, page, vm.limit).then(
-                function(data) {
-                    vm.page = data.resultList.page;
-                    vm.limit = data.resultList.limit;
-                    vm.resultList = data.resultList;
-                });
+        AspectoService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
+            vm.page = data.resultList.page;
+            vm.limit = data.resultList.limit;
+            vm.resultList = data.resultList;
+        });
     }
 
     function pageChanged() {
         search(vm.page);
     }
 
-    vm.searchCriteria = $routeParams.searchCriteria ? angular
-            .fromJson($routeParams.searchCriteria) : {};
+    vm.searchCriteria = $routeParams.searchCriteria ? angular.fromJson($routeParams.searchCriteria) : {};
     vm.limit = $routeParams.limit;
 
     search($routeParams.page ? $routeParams.page : 1);
@@ -586,9 +589,8 @@ function AspectoEditController($routeParams, pageTitleService, AspectoService) {
     function save() {
         AspectoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
-                    AspectoService.redirectAfterSave(vm.accion,
-                            '/facturacion/aspecto/detail', [ data.model.id,
-                                    data.model.version.fini ]);
+                    AspectoService.redirectAfterSave(vm.accion, '/facturacion/aspecto/detail', [
+                            data.model.id, data.model.version.fini ]);
                 });
     }
 
@@ -632,8 +634,7 @@ function AspectoTypeaheadController($scope, AspectoService) {
     }
 }
 
-function AspectoCargoDetailController($routeParams, pageTitleService,
-        AspectoCargoService) {
+function AspectoCargoDetailController($routeParams, pageTitleService, AspectoCargoService) {
     var vm = this;
 
     vm.remove = remove;
@@ -656,8 +657,7 @@ function AspectoCargoDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("ascr", "page_detail");
 }
 
-function AspectoCargoEditController($routeParams, pageTitleService,
-        AspectoCargoService) {
+function AspectoCargoEditController($routeParams, pageTitleService, AspectoCargoService) {
     var vm = this;
 
     vm.save = save;
@@ -666,9 +666,8 @@ function AspectoCargoEditController($routeParams, pageTitleService,
     function save() {
         AspectoCargoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
                 function(data) {
-                    AspectoCargoService.redirectAfterSave(vm.accion,
-                            '/facturacion/aspecto-cargo/detail', [
-                                    data.model.id, data.model.version.fini ]);
+                    AspectoCargoService.redirectAfterSave(vm.accion, '/facturacion/aspecto-cargo/detail', [
+                            data.model.id, data.model.version.fini ]);
                 });
     }
 
@@ -692,8 +691,7 @@ function AspectoCargoEditController($routeParams, pageTitleService,
     pageTitleService.setTitle("ascr", "page_" + vm.accion);
 }
 
-function FacturaSerieGridController($routeParams, pageTitleService,
-        FacturaSerieService) {
+function FacturaSerieGridController($routeParams, pageTitleService, FacturaSerieService) {
     var vm = this;
 
     vm.filter = filter;
@@ -712,20 +710,18 @@ function FacturaSerieGridController($routeParams, pageTitleService,
     }
 
     function search(page) {
-        FacturaSerieService.listPage(vm.searchCriteria, page, vm.limit).then(
-                function(data) {
-                    vm.page = data.resultList.page;
-                    vm.limit = data.resultList.limit;
-                    vm.resultList = data.resultList;
-                });
+        FacturaSerieService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
+            vm.page = data.resultList.page;
+            vm.limit = data.resultList.limit;
+            vm.resultList = data.resultList;
+        });
     }
 
     function pageChanged() {
         search(vm.page);
     }
 
-    vm.searchCriteria = $routeParams.searchCriteria ? angular
-            .fromJson($routeParams.searchCriteria) : {};
+    vm.searchCriteria = $routeParams.searchCriteria ? angular.fromJson($routeParams.searchCriteria) : {};
     vm.limit = $routeParams.limit;
 
     search($routeParams.page ? $routeParams.page : 1);
@@ -733,8 +729,7 @@ function FacturaSerieGridController($routeParams, pageTitleService,
     pageTitleService.setTitle("fcsr", "page_grid");
 }
 
-function FacturaSerieDetailController($routeParams, pageTitleService,
-        FacturaSerieService) {
+function FacturaSerieDetailController($routeParams, pageTitleService, FacturaSerieService) {
     var vm = this;
 
     vm.remove = remove;
@@ -757,8 +752,7 @@ function FacturaSerieDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("fcsr", "page_detail");
 }
 
-function FacturaSerieEditController($routeParams, pageTitleService,
-        FacturaSerieService) {
+function FacturaSerieEditController($routeParams, pageTitleService, FacturaSerieService) {
     var vm = this;
 
     vm.save = save;
@@ -767,8 +761,7 @@ function FacturaSerieEditController($routeParams, pageTitleService,
     function save() {
         FacturaSerieService.save(vm.accion, vm.model).then(
                 function(data) {
-                    FacturaSerieService.redirectAfterSave(vm.accion,
-                            '/facturacion/factura-serie/detail',
+                    FacturaSerieService.redirectAfterSave(vm.accion, '/facturacion/factura-serie/detail',
                             [ data.model.id ]);
                 });
     }
@@ -791,8 +784,7 @@ function FacturaSerieEditController($routeParams, pageTitleService,
 }
 
 // -------------------- Gestion ------------------
-function ValoracionGridController($routeParams, pageTitleService,
-        ValoracionService) {
+function ValoracionGridController($routeParams, pageTitleService, ValoracionService) {
     var vm = this;
 
     vm.filter = filter;
@@ -812,22 +804,20 @@ function ValoracionGridController($routeParams, pageTitleService,
     }
 
     function search(page) {
-        ValoracionService.listPage(vm.searchCriteria, page, vm.limit).then(
-                function(data) {
-                    vm.page = data.resultList.page;
-                    vm.limit = data.resultList.limit;
-                    vm.resultList = data.resultList;
+        ValoracionService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
+            vm.page = data.resultList.page;
+            vm.limit = data.resultList.limit;
+            vm.resultList = data.resultList;
 
-                    vm.tpdtCodExencion = data.tpdtCodExencion;
-                });
+            vm.tpdtCodExencion = data.tpdtCodExencion;
+        });
     }
 
     function pageChanged() {
         search(vm.page);
     }
 
-    vm.searchCriteria = $routeParams.searchCriteria ? angular
-            .fromJson($routeParams.searchCriteria) : {};
+    vm.searchCriteria = $routeParams.searchCriteria ? angular.fromJson($routeParams.searchCriteria) : {};
     vm.limit = $routeParams.limit;
 
     search($routeParams.page ? $routeParams.page : 1);
@@ -835,8 +825,7 @@ function ValoracionGridController($routeParams, pageTitleService,
     pageTitleService.setTitle("vlrc", "page_grid");
 }
 
-function ValoracionDetailController($routeParams, pageTitleService,
-        ValoracionService, ValoracionLineaService) {
+function ValoracionDetailController($routeParams, pageTitleService, ValoracionService, ValoracionLineaService) {
     var vm = this;
 
     vm.pageChanged = pageChanged;
@@ -864,18 +853,15 @@ function ValoracionDetailController($routeParams, pageTitleService,
 
     function findVlrlList(page) {
         var searchCriteria = {
-            vlrc : {
-                id : vm.model.id
-            }
+            vlrcId : vm.model.id
         };
 
-        ValoracionLineaService.listPage(searchCriteria, page, vm.limit).then(
-                function(data) {
-                    vm.vlrlList = data.resultList;
-                    vm.pageMap['vlrlList'] = data.resultList.page;
+        ValoracionLineaService.listPage(searchCriteria, page, vm.limit).then(function(data) {
+            vm.vlrlList = data.resultList;
+            vm.pageMap['vlrlList'] = data.resultList.page;
 
-                    ValoracionService.pageMapChanged(vm.pageMap);
-                });
+            ValoracionService.pageMapChanged(vm.pageMap);
+        });
     }
 
     vm.tabActive = {};
@@ -884,8 +870,7 @@ function ValoracionDetailController($routeParams, pageTitleService,
         vm.tabActive[$routeParams.tab] = true;
     }
 
-    vm.pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap)
-            : {};
+    vm.pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap) : {};
 
     vm.search = {
         id : $routeParams.id
@@ -906,8 +891,7 @@ function ValoracionDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("vlrc", "page_detail");
 }
 
-function ValoracionEditController($routeParams, pageTitleService,
-        ValoracionService) {
+function ValoracionEditController($routeParams, pageTitleService, ValoracionService) {
     var vm = this;
 
     vm.save = save;
@@ -916,10 +900,8 @@ function ValoracionEditController($routeParams, pageTitleService,
     function save() {
         ValoracionService.save(vm.accion, vm.model).then(
                 function(data) {
-                    ValoracionService
-                            .redirectAfterSave(vm.accion,
-                                    '/facturacion/valoracion/detail',
-                                    [ data.model.id ]);
+                    ValoracionService.redirectAfterSave(vm.accion, '/facturacion/valoracion/detail',
+                            [ data.model.id ]);
                 });
     }
 
@@ -943,8 +925,8 @@ function ValoracionEditController($routeParams, pageTitleService,
     pageTitleService.setTitle("vlrc", "page_" + vm.accion);
 }
 
-function ValoracionLineaDetailController($routeParams, pageTitleService,
-        ValoracionLineaService, ValoracionDetalleService) {
+function ValoracionLineaDetailController($routeParams, pageTitleService, ValoracionLineaService,
+        ValoracionDetalleService) {
     var vm = this;
 
     vm.pageChanged = pageChanged;
@@ -967,18 +949,15 @@ function ValoracionLineaDetailController($routeParams, pageTitleService,
 
     function findVlrdList(page) {
         var searchCriteria = {
-            vlrl : {
-                id : vm.model.id
-            }
+            vlrlId : vm.model.id
         };
 
-        ValoracionDetalleService.listPage(searchCriteria, page, vm.limit).then(
-                function(data) {
-                    vm.vlrdList = data.resultList;
-                    vm.pageMap['vlrdList'] = data.resultList.page;
+        ValoracionDetalleService.listPage(searchCriteria, page, vm.limit).then(function(data) {
+            vm.vlrdList = data.resultList;
+            vm.pageMap['vlrdList'] = data.resultList.page;
 
-                    ValoracionLineaService.pageMapChanged(vm.pageMap);
-                });
+            ValoracionLineaService.pageMapChanged(vm.pageMap);
+        });
     }
 
     vm.tabActive = {};
@@ -987,8 +966,7 @@ function ValoracionLineaDetailController($routeParams, pageTitleService,
         vm.tabActive[$routeParams.tab] = true;
     }
 
-    vm.pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap)
-            : {};
+    vm.pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap) : {};
 
     vm.search = {
         id : $routeParams.id,
@@ -1008,8 +986,43 @@ function ValoracionLineaDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("vlrl", "page_detail");
 }
 
-function ValoracionDetalleDetailController($routeParams, pageTitleService,
-        ValoracionDetalleService) {
+function ValoracionLineaEditController($routeParams, pageTitleService, ValoracionLineaService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        ValoracionLineaService.save(vm.accion, vm.model).then(
+                function(data) {
+                    ValoracionLineaService.redirectAfterSave(vm.accion,
+                            '/facturacion/valoracion-linea/detail', [ data.model.id ]);
+                });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.accion = $routeParams.accion;
+    vm.search = {
+        vlrcId : $routeParams.vlrcId,
+        id : $routeParams.id
+    }
+
+    ValoracionLineaService.edit(vm.accion, vm.search).then(function(data) {
+        vm.model = data.model;
+
+        vm.aspc = data.aspc;
+        vm.vlrlPadre = data.vlrlPadre;
+
+        vm.impuestoList = data.impuestoList;
+    });
+
+    pageTitleService.setTitle("vlrl", "page_" + vm.accion);
+}
+
+function ValoracionDetalleDetailController($routeParams, pageTitleService, ValoracionDetalleService) {
     var vm = this;
 
     vm.remove = remove;
@@ -1038,18 +1051,17 @@ function ValoracionDetalleDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("vlrd", "page_detail");
 }
 
-function FacturadorEditController($routeParams, pageTitleService,
-        FacturadorService) {
+function ValoracionDetalleEditController($routeParams, pageTitleService, ValoracionDetalleService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
     function save() {
-        FacturadorService.save(vm.accion, vm.model).then(
+        ValoracionDetalleService.save(vm.accion, vm.model).then(
                 function(data) {
-                    FacturadorService.redirectAfterSave(vm.accion,
-                            '/proceso/proceso/grid');
+                    ValoracionDetalleService.redirectAfterSave(vm.accion,
+                            '/facturacion/valoracion-detalle/detail', [ data.model.id ]);
                 });
     }
 
@@ -1058,12 +1070,49 @@ function FacturadorEditController($routeParams, pageTitleService,
     }
 
     vm.accion = $routeParams.accion;
-    vm.search = {}
+    vm.search = {
+        vlrcId : $routeParams.vlrcId,
+        vlrlId : $routeParams.vlrlId,
+        id : $routeParams.id
+    }
+
+    ValoracionDetalleService.edit(vm.accion, vm.search).then(function(data) {
+        vm.model = data.model;
+
+        vm.aspc = data.aspc;
+        vm.vlrl = data.vlrl;
+        vm.vlrlPadre = data.vlrlPadre;
+    });
+
+    pageTitleService.setTitle("vlrd", "page_" + vm.accion);
+}
+
+function FacturadorEditController($routeParams, pageTitleService, FacturadorService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        FacturadorService.save(vm.accion, vm.model).then(function(data) {
+            FacturadorService.redirectAfterSave(vm.accion, '/proceso/proceso/grid');
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.accion = $routeParams.accion;
+    vm.search = {
+        vlrcId : $routeParams.vlrcId
+    }
 
     FacturadorService.edit(vm.accion, vm.search).then(function(data) {
         vm.model = data.model;
 
         vm.fcsrList = data.fcsrList;
+        vm.grupoTipoList = data.grupoTipoList;
         vm.tpsrList = data.tpsrList;
         vm.prtoList = data.prtoList;
     });
