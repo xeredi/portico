@@ -1543,6 +1543,8 @@ CREATE TABLE tbl_factura_fctr (
 	, fctr_ffin TIMESTAMP
 	, fctr_estado CHAR(2) NOT NULL
 	, fctr_es_suj_pasivo INT NOT NULL
+	, fctr_importe NUMBER(10, 2)
+	, fctr_impuesto NUMBER(10, 2)
 	, fctr_anulada_pk NUMBER(19)
 	, fctr_info1 VARCHAR2(100)
 	, fctr_info2 VARCHAR2(100)

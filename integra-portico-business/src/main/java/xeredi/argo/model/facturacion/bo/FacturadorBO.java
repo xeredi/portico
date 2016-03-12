@@ -92,6 +92,9 @@ public class FacturadorBO {
                 for (final ValoracionGrupoVO vgrp : vgrpList) {
                     final FacturaVO fctr = new FacturaVO();
 
+                    double importe = 0;
+                    double impuesto = 0;
+
                     fctr.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
                     fctr.setEstado(FacturaEstado.NO);
@@ -100,12 +103,25 @@ public class FacturadorBO {
                     fctr.setFcsr(fcsr);
                     fctr.setAspc(vgrp.getAspc());
                     fctr.setPagador(vgrp.getPagador());
-
-                    fctrDAO.insert(fctr);
+                    fctr.setSujPasivo(vgrp.getEsSujPasivo());
 
                     for (final ValoracionVO vlrc : vgrp.getVlrcList()) {
+                        importe += vlrc.getImporte();
+                        impuesto += vlrc.getImpuesto();
+
                         vlrc.setFctr(fctr);
                     }
+
+                    fctr.setImporte(importe);
+                    fctr.setImpuesto(impuesto);
+                    fctr.setNumero(fcsr.getNumeroUltimo());
+
+                    fcsr.setNumeroUltimo(fcsr.getNumeroUltimo() + 1);
+
+                    fctrDAO.insert(fctr);
+                    fcsrDAO.update(fcsr);
+
+                    procesoTemplate.getPrbtData().getItemSalidaList().add(fctr.getId());
                 }
 
                 LOG.info("Modificación de Valoraciones");

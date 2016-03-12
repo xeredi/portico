@@ -7,8 +7,10 @@
         <id column="vgrp_pk" />
         <id column="vlrc_pagador_prmt_pk" />
         <id column="vlrc_aspc_pk" />
+        <id column="vlrc_es_suj_pasivo" />
 
         <result column="vgrp_pk" property="vgrpId" />
+        <result column="vlrc_es_suj_pasivo" property="esSujPasivo" />
 
         <association property="pagador" javaType="ParametroVO">
             <result column="vlrc_pagador_prmt_pk" property="id" />
@@ -22,6 +24,8 @@
             <id column="vlrc_pk" />
 
             <result column="vlrc_pk" property="id" />
+            <result column="vlrc_importe" property="importe" />
+            <result column="vlrc_impuesto" property="impuesto" />
         </collection>
     </resultMap>
 
@@ -38,6 +42,9 @@
             , vlrc_pk
             , vlrc_pagador_prmt_pk
             , vlrc_aspc_pk
+            , vlrc_importe
+            , vlrc_impuesto
+            , vlrc_es_suj_pasivo
         FROM tbl_valoracion_vlrc
             INNER JOIN tbl_servicio_srvc ON
                 srvc_pk = vlrc_srvc_pk

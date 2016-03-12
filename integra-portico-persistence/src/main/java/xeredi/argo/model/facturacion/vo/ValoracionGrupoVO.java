@@ -15,6 +15,9 @@ public final class ValoracionGrupoVO {
     /** The grupo id. */
     private Long vgrpId;
 
+    /** The es suj pasivo. */
+    private Boolean esSujPasivo;
+
     /** The pagador. */
     private ParametroVO pagador;
 

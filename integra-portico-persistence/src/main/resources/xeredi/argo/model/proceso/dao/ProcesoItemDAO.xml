@@ -111,6 +111,19 @@
                     SELECT arch_nombre FROM tbl_archivo_arch
                     WHERE arch_pk = prit_item_pk
                 )
+                WHEN 'fctr' THEN (
+                    SELECT
+                    	CONCAT(
+                    		(
+                    			SELECT CONCAT(fcsr_serie, CONCAT('/', fcsr_anio))
+                    			FROM tbl_factura_serie_fcsr
+                    			WHERE fcsr_pk = fctr_fcsr_pk
+                    		)
+                    		, CONCAT('/', LPAD(fctr_numero, 5, '0'))
+                    	)
+                    FROM tbl_factura_fctr
+                    WHERE fctr_pk = prit_item_pk
+                )
 	        END
 	    ) AS prit_etiqueta
     FROM
