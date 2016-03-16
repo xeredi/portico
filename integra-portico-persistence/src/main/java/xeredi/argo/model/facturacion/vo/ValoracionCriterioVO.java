@@ -45,4 +45,7 @@ public final class ValoracionCriterioVO extends BaseCriterioVO {
 
     /** The cod exencion. */
     private String codExencion;
+
+    /** The pendiente facturar. */
+    private Boolean pendienteFacturar;
 }

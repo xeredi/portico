@@ -183,8 +183,8 @@ public final class FacturaPdf extends BasePdf {
     /**
      * Creates the servicios component.
      *
-     * @param fctsMap
-     *            the fcts map
+     * @param vlrcMap
+     *            the vlrc map
      * @return the component builder
      */
     private ComponentBuilder<?, ?> createServiciosComponent(final @NonNull Map<Long, ValoracionVO> vlrcMap) {
@@ -240,7 +240,7 @@ public final class FacturaPdf extends BasePdf {
      *
      * @param vlrl
      *            the vlrl
-     * @param fctlMods
+     * @param vlrlMods
      *            the vlrl mods
      * @return the component builder
      */

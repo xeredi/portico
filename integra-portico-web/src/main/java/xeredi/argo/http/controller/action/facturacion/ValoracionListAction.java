@@ -31,6 +31,8 @@ public final class ValoracionListAction extends GridListAction<ValoracionCriteri
     public void doList() throws ApplicationException {
         final ValoracionBO vlrcBO = new ValoracionBO();
 
+        model.setPendienteFacturar(true);
+
         resultList = vlrcBO.selectList(model, getOffset(), limit);
         tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
     }

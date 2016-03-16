@@ -66,10 +66,6 @@ public class FacturadorBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final FacturaSerieDAO fcsrDAO = session.getMapper(FacturaSerieDAO.class);
-            final ValoracionGrupoDAO vgrpDAO = session.getMapper(ValoracionGrupoDAO.class);
-            final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
-            final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
-
             final FacturaSerieCriterioVO fcsrCriterio = new FacturaSerieCriterioVO();
 
             fcsrCriterio.setId(fcsrId);
@@ -83,6 +79,7 @@ public class FacturadorBO {
             } else {
                 LOG.info("Busqueda de Facturas");
 
+                final ValoracionGrupoDAO vgrpDAO = session.getMapper(ValoracionGrupoDAO.class);
                 final List<ValoracionGrupoVO> vgrpList = vgrpDAO.selectList(vgrpCriterio);
 
                 final IgBO igBO = new IgBO();
@@ -90,6 +87,7 @@ public class FacturadorBO {
                 LOG.info("Inserción de Facturas");
 
                 for (final ValoracionGrupoVO vgrp : vgrpList) {
+                    final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
                     final FacturaVO fctr = new FacturaVO();
 
                     double importe = 0;
@@ -125,6 +123,8 @@ public class FacturadorBO {
                 }
 
                 LOG.info("Modificación de Valoraciones");
+
+                final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
 
                 for (final ValoracionGrupoVO vgrp : vgrpList) {
                     for (final ValoracionVO vlrc : vgrp.getVlrcList()) {

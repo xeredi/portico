@@ -65,6 +65,10 @@
 		<association property="fctr" javaType="FacturaVO">
 			<result property="id" column="vlrc_fctr_pk" />
 		</association>
+
+		<association property="fctrRectificada" javaType="FacturaVO">
+			<result property="id" column="vlrc_fctr_rectificada_pk" />
+		</association>
 	</resultMap>
 
 	<sql id="SelectPrefix">
@@ -74,7 +78,7 @@
 		    , vlrc_fliq, vlrc_falta, vlrc_fini, vlrc_ffin, vlrc_es_suj_pasivo, vlrc_cod_exen
 		    , vlrc_info1, vlrc_info2, vlrc_info3, vlrc_info4, vlrc_info5, vlrc_info6
 		    , vlrc_importe, vlrc_impuesto
-		    , vlrc_fctr_pk
+		    , vlrc_fctr_pk, vlrc_fctr_rectificada_pk
 
 		    , srvc_subp_pk, srvc_anno, srvc_numero, srvc_tpsr_pk
 
@@ -186,6 +190,9 @@
                 )
             ]]>
 			</if>
+			<if test="pendienteFacturar">
+				AND vlrc_fctr_pk IS NULL
+			</if>
 		</where>
 	</sql>
 
@@ -219,13 +226,17 @@
         INSERT INTO tbl_valoracion_vlrc (
             vlrc_pk, vlrc_srvc_pk, vlrc_aspc_pk, vlrc_pagador_prmt_pk
             , vlrc_fref, vlrc_fliq, vlrc_falta, vlrc_fini, vlrc_ffin
-            , vlrc_es_suj_pasivo, vlrc_cod_exen, vlrc_fctr_pk
+            , vlrc_es_suj_pasivo, vlrc_cod_exen
+            , vlrc_fctr_pk, vlrc_fctr_rectificada_pk
+            , vlrc_importe, vlrc_impuesto
             , vlrc_info1, vlrc_info2, vlrc_info3, vlrc_info4, vlrc_info5, vlrc_info6
         )
         VALUES (
             #{id}, #{srvc.id}, #{aspc.id}, #{pagador.id}
             , #{fref}, #{fliq}, #{falta}, #{fini}, #{ffin}
-            , #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}, #{codExencion}, #{fctr.id}
+            , #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}, #{codExencion}
+            , #{fctr.id}, #{fctrRectificada.id}
+            , #{importe}, #{impuesto}
             , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
         )
     ]]>

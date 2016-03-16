@@ -735,7 +735,7 @@ public enum MessageI18nKey {
     /** The fcan. */
     fcan, fcan_fecha, fcan_observaciones,
     /** The fcrc. */
-    fcrc,
+    fcrc, fcrc_duplicar,
 
     ;
 

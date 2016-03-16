@@ -1300,7 +1300,11 @@ function FacturaRectificacionEditController($routeParams, pageTitleService, Fact
     vm.cancel = cancel;
 
     function save() {
-        alert('implemetar!!!');
+        FacturaRectificacionService.save(vm.accion, vm.model).then(
+                function(data) {
+                    FacturaRectificacionService.redirectAfterSave(vm.accion,
+                            '/facturacion/valoracion/detail', [ data.model.vlrcRectificacionId ]);
+                });
     }
 
     function cancel() {
@@ -1313,7 +1317,9 @@ function FacturaRectificacionEditController($routeParams, pageTitleService, Fact
     }
 
     FacturaRectificacionService.edit(vm.accion, vm.search).then(function(data) {
-        alert('implemetar!!!');
+        vm.model = data.model;
+
+        vm.vlrcList = data.vlrcList;
     });
 
     pageTitleService.setTitle("fcrc", "page_" + vm.accion);

@@ -55,6 +55,9 @@ public final class ValoracionVO {
     /** The fctr. */
     private FacturaVO fctr;
 
+    /** The fctr rectificada. */
+    private FacturaVO fctrRectificada;
+
     /** The info1. */
     private String info1;
 

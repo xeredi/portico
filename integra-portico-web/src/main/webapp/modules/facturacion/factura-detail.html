@@ -14,11 +14,12 @@
             </div>
 
             <div class="btn-group">
-                <a class="btn btn-default" data-ng-href="#/facturacion/factura-anulacion/edit/{{vm.model.id}}"><i
-                    class="glyphicon glyphicon-remove"></i> <span data-translate="btn_anular"></span></a> <a
-                    class="btn btn-default"
-                    data-ng-href="#/facturacion/factura-rectificacion/edit/{{vm.model.id}}"><i
-                    class="glyphicon glyphicon-share-alt"></i> <span data-translate="btn_rectificar"></span></a>
+                <a class="btn btn-default" data-ng-href="#/facturacion/factura-anulacion/edit/{{vm.model.id}}"
+                    data-ng-if="vm.model.estado == 'NO'"><i class="glyphicon glyphicon-remove"></i> <span
+                    data-translate="btn_anular"></span></a> <a class="btn btn-default"
+                    data-ng-href="#/facturacion/factura-rectificacion/edit/{{vm.model.id}}"
+                    data-ng-if="vm.model.estado == 'NO'"><i class="glyphicon glyphicon-share-alt"></i> <span
+                    data-translate="btn_rectificar"></span></a>
             </div>
         </div>
 
@@ -27,6 +28,11 @@
                 <div class="col-md-2 form-group-sm">
                     <label data-translate="fctr"></label>
                     <p class="form-control-static" data-ng-bind="vm.model.etiqueta"></p>
+                </div>
+                <div class="col-md-2 form-group-sm">
+                    <label data-translate="fctr_estado"></label>
+                    <p class="form-control-static">{{vm.model.estado}} - {{'FacturaEstado_' +
+                        vm.model.estado | translate}}</p>
                 </div>
                 <div class="col-md-2 form-group-sm">
                     <label data-translate="tpsr"></label>

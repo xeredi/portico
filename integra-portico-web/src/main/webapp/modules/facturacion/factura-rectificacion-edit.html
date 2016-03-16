@@ -1,1 +1,30 @@
-factura-rectificar.html
+<div data-ng-if="vm.model">
+    <form role="form">
+        <fieldset>
+            <div class="row">
+                <div class="col-sm-2 col-xl-1 form-group-sm">
+                    <label data-translate="vlrc"></label> <select data-ng-model="vm.model.vlrcId"
+                        data-ng-options="vlrc.id as vlrc.id for vlrc in vm.vlrcList" class="form-control">
+                        <option />
+                    </select>
+                </div>
+                <div class="col-sm-2 col-lg-1 form-group-sm">
+                    <label data-translate="fcrc_duplicar"></label><select data-ng-model="vm.model.duplicar"
+                        data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                        class="form-control">
+                        <option />
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button data-ng-click="vm.save()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
+            </button>
+            <button data-ng-click="vm.cancel()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
+            </button>
+        </div>
+    </form>
+</div>

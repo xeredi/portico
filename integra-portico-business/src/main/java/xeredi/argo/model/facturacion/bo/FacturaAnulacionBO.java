@@ -53,7 +53,7 @@ public final class FacturaAnulacionBO {
         Preconditions.checkNotNull(fcan.getFecha());
         Preconditions.checkNotNull(fcan.getFcsrId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
             final FacturaSerieDAO fcsrDAO = session.getMapper(FacturaSerieDAO.class);
 

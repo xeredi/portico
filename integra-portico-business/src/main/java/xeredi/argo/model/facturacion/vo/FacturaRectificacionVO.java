@@ -17,4 +17,7 @@ public final class FacturaRectificacionVO {
 
     /** The duplicar. */
     private Boolean duplicar;
+
+    /** The vlrc rectificacion id. */
+    private Long vlrcRectificacionId;
 }

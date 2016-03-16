@@ -1530,6 +1530,8 @@ INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fcan')\
 
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fcrc')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fcrc', 'Rectificación')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fcrc_duplicar')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fcrc_duplicar', 'Duplicar Datos?')\
 
 
 
