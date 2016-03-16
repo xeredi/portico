@@ -74,8 +74,10 @@ public class ValoracionBO {
     /**
      * Delete.
      *
-     * @param ids
-     *            the ids
+     * @param id
+     *            the id
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     public void delete(final @NonNull Long id) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -156,6 +158,21 @@ public class ValoracionBO {
             }
 
             return new PaginatedList<ValoracionVO>(vlrcList, offset, limit, count);
+        }
+    }
+
+    /**
+     * Select list.
+     *
+     * @param vlrcCriterioVO
+     *            the vlrc criterio vo
+     * @return the list
+     */
+    public List<ValoracionVO> selectList(final @NonNull ValoracionCriterioVO vlrcCriterioVO) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
+
+            return vlrcDAO.selectList(vlrcCriterioVO);
         }
     }
 }

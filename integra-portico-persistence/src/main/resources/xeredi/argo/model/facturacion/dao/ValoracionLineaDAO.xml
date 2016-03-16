@@ -229,6 +229,13 @@
 			<if test="vlrcId != null">
 				AND vlrl_vlrc_pk = #{vlrcId}
 			</if>
+			<if test="fctrId != null">
+		    <![CDATA[
+				AND vlrl_vlrc_pk = ANY (
+					SELECT vlrc_pk FROM tbl_valoracion_vlrc WHERE vlrc_fctr_pk = #{fctrId}
+				)
+		    ]]>
+			</if>
 		</where>
 	</sql>
 

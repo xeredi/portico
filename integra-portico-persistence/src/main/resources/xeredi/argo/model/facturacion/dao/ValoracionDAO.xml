@@ -3,73 +3,78 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.argo.model.facturacion.dao.ValoracionDAO">
-    <resultMap type="ValoracionVO" id="ResultMap">
-        <id column="vlrc_pk" />
+	<resultMap type="ValoracionVO" id="ResultMap">
+		<id column="vlrc_pk" />
 
-        <result column="vlrc_pk" property="id" />
-        <result column="vlrc_fref" property="fref" />
-        <result column="vlrc_falta" property="falta" />
-        <result column="vlrc_fliq" property="fliq" />
-        <result column="vlrc_fini" property="fini" />
-        <result column="vlrc_ffin" property="ffin" />
-        <result column="vlrc_es_suj_pasivo" property="sujPasivo" />
-        <result column="vlrc_cod_exen" property="codExencion" />
+		<result column="vlrc_pk" property="id" />
+		<result column="vlrc_fref" property="fref" />
+		<result column="vlrc_falta" property="falta" />
+		<result column="vlrc_fliq" property="fliq" />
+		<result column="vlrc_fini" property="fini" />
+		<result column="vlrc_ffin" property="ffin" />
+		<result column="vlrc_es_suj_pasivo" property="sujPasivo" />
+		<result column="vlrc_cod_exen" property="codExencion" />
 
-        <result column="vlrc_importe" property="importe" />
-        <result column="vlrc_impuesto" property="impuesto" />
+		<result column="vlrc_importe" property="importe" />
+		<result column="vlrc_impuesto" property="impuesto" />
 
-        <result column="vlrc_info1" property="info1" />
-        <result column="vlrc_info2" property="info2" />
-        <result column="vlrc_info3" property="info3" />
-        <result column="vlrc_info4" property="info4" />
-        <result column="vlrc_info5" property="info5" />
-        <result column="vlrc_info6" property="info6" />
+		<result column="vlrc_info1" property="info1" />
+		<result column="vlrc_info2" property="info2" />
+		<result column="vlrc_info3" property="info3" />
+		<result column="vlrc_info4" property="info4" />
+		<result column="vlrc_info5" property="info5" />
+		<result column="vlrc_info6" property="info6" />
 
-        <association property="srvc" javaType="ServicioVO">
-            <result property="id" column="vlrc_srvc_pk" />
-            <result property="anno" column="srvc_anno" />
-            <result property="numero" column="srvc_numero" />
-            <result property="entiId" column="srvc_tpsr_pk" />
+		<association property="srvc" javaType="ServicioVO">
+			<result property="id" column="vlrc_srvc_pk" />
+			<result property="anno" column="srvc_anno" />
+			<result property="numero" column="srvc_numero" />
+			<result property="entiId" column="srvc_tpsr_pk" />
 
-            <association property="prto" javaType="PuertoVO">
-                <result property="id" column="srvc_subp_pk" />
-                <result property="codigo" column="prto_codigo" />
-            </association>
-        </association>
+			<association property="prto" javaType="PuertoVO">
+				<result property="id" column="srvc_subp_pk" />
+				<result property="codigo" column="prto_codigo" />
+			</association>
+		</association>
 
-        <association property="aspc" javaType="AspectoVO">
-            <result property="id" column="vlrc_aspc_pk" />
-            <result property="codigo" column="aspc_codigo" />
-            <result property="fref" column="vlrc_fref" />
+		<association property="aspc" javaType="AspectoVO">
+			<result property="id" column="vlrc_aspc_pk" />
+			<result property="codigo" column="aspc_codigo" />
+			<result property="fref" column="vlrc_fref" />
 
-            <association property="version" javaType="AspectoVersionVO">
-                <result property="descripcion" column="aspc_descripcion" />
+			<association property="version" javaType="AspectoVersionVO">
+				<result property="descripcion" column="aspc_descripcion" />
 
-                <result property="cetiqInfo1" column="aspv_cetiq_info1" />
-                <result property="cetiqInfo2" column="aspv_cetiq_info2" />
-                <result property="cetiqInfo3" column="aspv_cetiq_info3" />
-                <result property="cetiqInfo4" column="aspv_cetiq_info4" />
-                <result property="cetiqInfo5" column="aspv_cetiq_info5" />
-                <result property="cetiqInfo6" column="aspv_cetiq_info6" />
-            </association>
-        </association>
+				<result property="cetiqInfo1" column="aspv_cetiq_info1" />
+				<result property="cetiqInfo2" column="aspv_cetiq_info2" />
+				<result property="cetiqInfo3" column="aspv_cetiq_info3" />
+				<result property="cetiqInfo4" column="aspv_cetiq_info4" />
+				<result property="cetiqInfo5" column="aspv_cetiq_info5" />
+				<result property="cetiqInfo6" column="aspv_cetiq_info6" />
+			</association>
+		</association>
 
-        <association property="pagador" javaType="ParametroVO">
-            <result property="id" column="vlrc_pagador_prmt_pk" />
-            <result property="parametro" column="vlrc_pagador_prmt" />
-            <result property="entiId" column="vlrc_pagador_tppr_pk" />
-            <result property="texto" column="vlrc_pagador_texto" />
-            <result property="fref" column="vlrc_fref" />
-        </association>
-    </resultMap>
+		<association property="pagador" javaType="ParametroVO">
+			<result property="id" column="vlrc_pagador_prmt_pk" />
+			<result property="parametro" column="vlrc_pagador_prmt" />
+			<result property="entiId" column="vlrc_pagador_tppr_pk" />
+			<result property="texto" column="vlrc_pagador_texto" />
+			<result property="fref" column="vlrc_fref" />
+		</association>
 
-    <sql id="SelectPrefix">
+		<association property="fctr" javaType="FacturaVO">
+			<result property="id" column="vlrc_fctr_pk" />
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
     <![CDATA[
 		SELECT
 		    vlrc_pk, vlrc_srvc_pk, vlrc_aspc_pk, vlrc_pagador_prmt_pk, vlrc_fref
 		    , vlrc_fliq, vlrc_falta, vlrc_fini, vlrc_ffin, vlrc_es_suj_pasivo, vlrc_cod_exen
 		    , vlrc_info1, vlrc_info2, vlrc_info3, vlrc_info4, vlrc_info5, vlrc_info6
 		    , vlrc_importe, vlrc_impuesto
+		    , vlrc_fctr_pk
 
 		    , srvc_subp_pk, srvc_anno, srvc_numero, srvc_tpsr_pk
 
@@ -108,7 +113,7 @@
 		        WHERE prto_pk = srvc_subp_pk
 		    ) AS prto_codigo
         ]]>
-        <if test="idioma != null">
+		<if test="idioma != null">
         <![CDATA[
 			, (
 				SELECT i18n_text
@@ -119,7 +124,7 @@
 					AND i18n_lang = #{idioma}
 			) AS aspc_descripcion
         ]]>
-        </if>
+		</if>
     <![CDATA[
 		FROM
 		    tbl_valoracion_vlrc
@@ -131,39 +136,41 @@
 		    	aspv_aspc_pk = vlrc_aspc_pk
 	            AND vlrc_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, vlrc_fref)
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="SelectWhere">
-        <where>
-            <if test="id != null">
-                AND vlrc_pk = #{id}
-            </if>
-            <if test="ids != null">
-                AND vlrc_pk IN
-                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
-                </foreach>
-            </if>
-            <if test="srvc != null">
-                <if test="srvc.id != null">
-                    AND vlrc_srvc_pk = #{srvc.id}
-                </if>
-            </if>
-            <if test="tpsrId != null">
-                AND srvc_tpsr_pk = #{tpsrId}
-            </if>
-            <if test="prtoId != null">
-                AND srvc_subp_pk = #{prtoId}
-            </if>
-            <if test="codExencion != null">
-                AND vlrc_cod_exen = #{codExencion}
-            </if>
-            <if test="aspc != null and aspc.id != null">
-                AND vlrc_aspc_pk = #{aspc.id}
-            </if>
-            <if test="pagador != null and pagador.id != null">
-                AND vlrc_pagador_prmt_pk = #{pagador.id}
-            </if>
-            <if test="crgo != null and crgo.id != null">
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND vlrc_pk = #{id}
+			</if>
+			<if test="ids != null">
+				AND vlrc_pk IN
+				<foreach collection="ids" item="item" open="(" close=")"
+					separator=",">#{item}
+				</foreach>
+			</if>
+			<if test="srvc != null and srvc.id != null">
+				AND vlrc_srvc_pk = #{srvc.id}
+			</if>
+			<if test="fctr != null and fctr.id != null">
+				AND vlrc_fctr_pk = #{fctr.id}
+			</if>
+			<if test="tpsrId != null">
+				AND srvc_tpsr_pk = #{tpsrId}
+			</if>
+			<if test="prtoId != null">
+				AND srvc_subp_pk = #{prtoId}
+			</if>
+			<if test="codExencion != null">
+				AND vlrc_cod_exen = #{codExencion}
+			</if>
+			<if test="aspc != null and aspc.id != null">
+				AND vlrc_aspc_pk = #{aspc.id}
+			</if>
+			<if test="pagador != null and pagador.id != null">
+				AND vlrc_pagador_prmt_pk = #{pagador.id}
+			</if>
+			<if test="crgo != null and crgo.id != null">
             <![CDATA[
                 AND EXISTS (
                     SELECT 1
@@ -178,49 +185,53 @@
                         )
                 )
             ]]>
-            </if>
-        </where>
-    </sql>
+			</if>
+		</where>
+	</sql>
 
-    <select id="selectObject" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        WHERE vlrc_pk = #{id}
-    </select>
+	<select id="selectObject" parameterType="ValoracionCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		WHERE vlrc_pk = #{id}
+	</select>
 
-    <select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
-    </select>
+	<select id="selectList" parameterType="ValoracionCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
 
-    <select id="count" parameterType="ValoracionCriterioVO" resultType="Integer">
-        SELECT COUNT(1)
-        FROM
-        tbl_valoracion_vlrc
-        INNER JOIN tbl_servicio_srvc ON
-        srvc_pk = vlrc_srvc_pk
-        INNER JOIN tbl_parametro_prmt ON
-        prmt_pk = vlrc_pagador_prmt_pk
-        <include refid="SelectWhere" />
-    </select>
+	<select id="count" parameterType="ValoracionCriterioVO"
+		resultType="Integer">
+		SELECT COUNT(1)
+		FROM
+		tbl_valoracion_vlrc
+		INNER JOIN tbl_servicio_srvc ON
+		srvc_pk = vlrc_srvc_pk
+		INNER JOIN tbl_parametro_prmt ON
+		prmt_pk =
+		vlrc_pagador_prmt_pk
+		<include refid="SelectWhere" />
+	</select>
 
-    <insert id="insert" parameterType="ValoracionVO">
+	<insert id="insert" parameterType="ValoracionVO">
     <![CDATA[
         INSERT INTO tbl_valoracion_vlrc (
             vlrc_pk, vlrc_srvc_pk, vlrc_aspc_pk, vlrc_pagador_prmt_pk
             , vlrc_fref, vlrc_fliq, vlrc_falta, vlrc_fini, vlrc_ffin
-            , vlrc_es_suj_pasivo, vlrc_cod_exen
+            , vlrc_es_suj_pasivo, vlrc_cod_exen, vlrc_fctr_pk
             , vlrc_info1, vlrc_info2, vlrc_info3, vlrc_info4, vlrc_info5, vlrc_info6
         )
         VALUES (
             #{id}, #{srvc.id}, #{aspc.id}, #{pagador.id}
             , #{fref}, #{fliq}, #{falta}, #{fini}, #{ffin}
-            , #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}, #{codExencion}
+            , #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}, #{codExencion}, #{fctr.id}
             , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
         )
     ]]>
-    </insert>
+	</insert>
 
-    <update id="update" parameterType="ValoracionVO">
+	<update id="update" parameterType="ValoracionVO">
     <![CDATA[
         UPDATE tbl_valoracion_vlrc SET
             vlrc_pagador_prmt_pk = #{pagador.id}
@@ -234,17 +245,17 @@
             , vlrc_info6 = #{info6}
         WHERE vlrc_pk = #{id}
     ]]>
-    </update>
+	</update>
 
-    <update id="updateFctr" parameterType="ValoracionVO">
+	<update id="updateFctr" parameterType="ValoracionVO">
     <![CDATA[
         UPDATE tbl_valoracion_vlrc SET
             vlrc_fctr_pk = #{fctr.id}
         WHERE vlrc_pk = #{id}
     ]]>
-    </update>
+	</update>
 
-    <update id="updateImporte" parameterType="Long">
+	<update id="updateImporte" parameterType="Long">
     <![CDATA[
         UPDATE tbl_valoracion_vlrc SET
 		    vlrc_importe = COALESCE(
@@ -283,12 +294,12 @@
             )
         WHERE vlrc_pk = #{value}
     ]]>
-    </update>
+	</update>
 
-    <delete id="deleteList" parameterType="ValoracionCriterioVO">
+	<delete id="deleteList" parameterType="ValoracionCriterioVO">
     <![CDATA[
         DELETE FROM tbl_valoracion_vlrc
     ]]>
-        <include refid="SelectWhere" />
-    </delete>
+		<include refid="SelectWhere" />
+	</delete>
 </mapper>

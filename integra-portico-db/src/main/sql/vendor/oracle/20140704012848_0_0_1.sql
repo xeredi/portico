@@ -1615,6 +1615,7 @@ CREATE OR REPLACE SYNONYM portico.tbl_valoracion_vlrc FOR porticoadm.tbl_valorac
 CREATE INDEX ix_vlrc_srvc_pk ON tbl_valoracion_vlrc (vlrc_srvc_pk)\
 CREATE INDEX ix_vlrc_pagador_prmt_pk ON tbl_valoracion_vlrc (vlrc_pagador_prmt_pk)\
 CREATE INDEX ix_vlrc_aspc_pk ON tbl_valoracion_vlrc (vlrc_aspc_pk)\
+CREATE INDEX ix_vlrc_fctr_pk ON tbl_valoracion_vlrc (vlrc_fctr_pk)\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_vlrc TO portico\
 

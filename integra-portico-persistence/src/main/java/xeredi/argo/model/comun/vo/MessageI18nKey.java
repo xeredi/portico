@@ -94,7 +94,11 @@ public enum MessageI18nKey {
     /** fini. */
     fini, /** ffin. */
     ffin, /** The fref. */
-    fref, fliq, ffac,
+    fref,
+    /** The fliq. */
+    fliq,
+    /** The ffac. */
+    ffac,
 
     /** The usro. */
     usro, /** The usro list. */
@@ -727,6 +731,11 @@ public enum MessageI18nKey {
 
     /** The actr. */
     actr,
+
+    /** The fcan. */
+    fcan, fcan_fecha, fcan_observaciones,
+    /** The fcrc. */
+    fcrc,
 
     ;
 

@@ -247,6 +247,10 @@ INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_
 INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2843, 'actr', 'edit', 1, 0)\
 INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2844, 'actr', 'remove', 1, 0)\
 
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2862, 'fcan', 'create', 1, 0)\
+
+INSERT INTO tbl_accion_accn (accn_pk, accn_prefix, accn_codigo, accn_core, accn_multiple) VALUES (2882, 'fcrc', 'create', 1, 0)\
+
 -- Grupos
 INSERT INTO tbl_grupo_grpo (grpo_pk, grpo_nombre) VALUES (4000, 'Administradores')\
 INSERT INTO tbl_grupo_accion_grac (grac_grpo_pk, grac_accn_pk)
@@ -1520,6 +1524,12 @@ INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vldr')\
 
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fcdr')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fcdr', 'Facturador')\
+
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fcan')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fcan', 'Anulación')\
+
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fcrc')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fcrc', 'Rectificación')\
 
 
 

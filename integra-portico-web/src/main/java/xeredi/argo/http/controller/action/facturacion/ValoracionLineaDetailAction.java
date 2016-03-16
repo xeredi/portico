@@ -43,7 +43,6 @@ public final class ValoracionLineaDetailAction extends CrudDetailAction<Valoraci
     @Override
     public void doDetail() throws ApplicationException {
         Preconditions.checkNotNull(model.getId());
-        Preconditions.checkNotNull(model.getVlrcId());
 
         final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
 

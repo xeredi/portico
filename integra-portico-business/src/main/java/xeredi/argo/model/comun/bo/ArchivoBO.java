@@ -40,8 +40,8 @@ public final class ArchivoBO {
      * @param sentido
      *            the sentido
      * @return the archivo vo
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
+     * @throws ApplicationException
+     *             the application exception
      */
     public ArchivoVO create(final @NonNull File file, final @NonNull ArchivoSentido sentido)
             throws ApplicationException {

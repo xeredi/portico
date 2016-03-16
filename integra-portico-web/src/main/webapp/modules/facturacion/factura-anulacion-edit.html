@@ -1,0 +1,33 @@
+<div data-ng-if="vm.model">
+    <form role="form">
+        <fieldset>
+            <div class="row">
+                <div class="col-sm-2 col-lg-1 form-group-sm">
+                    <label data-translate="fcan_fecha"></label><input type="text"
+                        class="form-control input-sm" data-ng-model="vm.model.fecha" data-bs-datepicker />
+                </div>
+                <div class="col-sm-2 col-xl-1 form-group-sm">
+                    <label data-translate="fcsr"></label> <select data-ng-model="vm.model.fcsrId"
+                        data-ng-options="fcsr.id as fcsr.serie for fcsr in vm.fcsrList" class="form-control">
+                        <option />
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group-sm">
+                    <label data-translate="fcan_observaciones"></label>
+                    <textarea class="form-control" data-ng-model="vm.model.observaciones"></textarea>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button data-ng-click="vm.save()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
+            </button>
+            <button data-ng-click="vm.cancel()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
+            </button>
+        </div>
+    </form>
+</div>

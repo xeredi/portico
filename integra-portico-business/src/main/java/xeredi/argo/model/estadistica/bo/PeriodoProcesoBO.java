@@ -88,6 +88,8 @@ public class PeriodoProcesoBO {
      *
      * @param peprId
      *            the pepr id
+     * @param idioma
+     *            the idioma
      * @return the periodo proceso vo
      * @throws InstanceNotFoundException
      *             the instance not found exception

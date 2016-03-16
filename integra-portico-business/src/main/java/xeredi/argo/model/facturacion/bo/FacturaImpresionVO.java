@@ -3,20 +3,28 @@ package xeredi.argo.model.facturacion.bo;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Data;
+import lombok.NonNull;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import com.google.common.base.Preconditions;
-
-import xeredi.argo.model.facturacion.vo.FacturaCargoVO;
-import xeredi.argo.model.facturacion.vo.FacturaImpuestoVO;
-import xeredi.argo.model.facturacion.vo.FacturaLineaVO;
-import xeredi.argo.model.facturacion.vo.FacturaServicioVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
+import xeredi.argo.model.facturacion.vo.ValoracionCargoVO;
+import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
+import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
+import xeredi.argo.model.facturacion.vo.ValoracionVO;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturaImpresionVO.
  */
+
+/* (non-Javadoc)
+ * @see java.lang.Object#hashCode()
+ */
+@Data
 public final class FacturaImpresionVO {
 
     /** The Constant FILENAME_FORMAT. */
@@ -26,51 +34,41 @@ public final class FacturaImpresionVO {
     private final transient FacturaVO fctr;
 
     /** The fctg list. */
-    private final transient List<FacturaCargoVO> fctgList;
+    private final transient List<ValoracionCargoVO> vlrgList;
 
     /** The fcti list. */
-    private final transient List<FacturaImpuestoVO> fctiList;
+    private final transient List<ValoracionImpuestoVO> vlriList;
 
     /** The fctl list. */
-    private final transient List<FacturaLineaVO> fctlList;
+    private final transient List<ValoracionLineaVO> vlrlList;
 
     /** The fcts map. */
-    private final transient Map<Long, FacturaServicioVO> fctsMap;
+    private final transient Map<Long, ValoracionVO> vlrcMap;
 
     /**
      * The Constructor.
      *
-     * @param afctr
-     *            the afctr
-     * @param afctgList
-     *            the afctg list
-     * @param afctiList
-     *            the afcti list
-     * @param afctlList
-     *            the afctl list
-     * @param afctsMap
-     *            the afcts map
+     * @param afctr            the afctr
+     * @param avlrgList the avlrg list
+     * @param avlriList the avlri list
+     * @param avlrlList the avlrl list
+     * @param avlrcMap the avlrc map
      */
-    public FacturaImpresionVO(final FacturaVO afctr, final List<FacturaCargoVO> afctgList,
-            final List<FacturaImpuestoVO> afctiList, final List<FacturaLineaVO> afctlList,
-            final Map<Long, FacturaServicioVO> afctsMap) {
+    public FacturaImpresionVO(final @NonNull FacturaVO afctr, final @NonNull List<ValoracionCargoVO> avlrgList,
+            final @NonNull List<ValoracionImpuestoVO> avlriList, final @NonNull List<ValoracionLineaVO> avlrlList,
+            final @NonNull Map<Long, ValoracionVO> avlrcMap) {
         super();
 
-        Preconditions.checkNotNull(afctr);
-        Preconditions.checkNotNull(afctgList);
-        Preconditions.checkArgument(!afctgList.isEmpty());
-        Preconditions.checkNotNull(afctiList);
-        Preconditions.checkArgument(!afctiList.isEmpty());
-        Preconditions.checkNotNull(afctlList);
-        Preconditions.checkArgument(!afctlList.isEmpty());
-        Preconditions.checkNotNull(afctsMap);
-        Preconditions.checkArgument(!afctsMap.isEmpty());
+        Preconditions.checkArgument(!avlrgList.isEmpty());
+        Preconditions.checkArgument(!avlriList.isEmpty());
+        Preconditions.checkArgument(!avlrlList.isEmpty());
+        Preconditions.checkArgument(!avlrcMap.isEmpty());
 
         fctr = afctr;
-        fctgList = afctgList;
-        fctiList = afctiList;
-        fctlList = afctlList;
-        fctsMap = afctsMap;
+        vlrgList = avlrgList;
+        vlriList = avlriList;
+        vlrlList = avlrlList;
+        vlrcMap = avlrcMap;
     }
 
     /**
@@ -89,50 +87,4 @@ public final class FacturaImpresionVO {
     public String getFilename() {
         return fctr.getFcsr().getSerie() + "-" + fctr.getFcsr().getAnio() + "-" + fctr.getNumero();
     }
-
-    /**
-     * Gets the fctr.
-     *
-     * @return the fctr
-     */
-    public FacturaVO getFctr() {
-        return fctr;
-    }
-
-    /**
-     * Gets the fctg list.
-     *
-     * @return the fctg list
-     */
-    public List<FacturaCargoVO> getFctgList() {
-        return fctgList;
-    }
-
-    /**
-     * Gets the fcti list.
-     *
-     * @return the fcti list
-     */
-    public List<FacturaImpuestoVO> getFctiList() {
-        return fctiList;
-    }
-
-    /**
-     * Gets the fctl list.
-     *
-     * @return the fctl list
-     */
-    public List<FacturaLineaVO> getFctlList() {
-        return fctlList;
-    }
-
-    /**
-     * Gets the fcts map.
-     *
-     * @return the fcts map
-     */
-    public Map<Long, FacturaServicioVO> getFctsMap() {
-        return fctsMap;
-    }
-
 }

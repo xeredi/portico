@@ -22,9 +22,9 @@ angular.module("facturacion_service", [ "crud_service" ])
 
 .factory("FacturaService", FacturaService)
 
-.factory("FacturaLineaService", FacturaLineaService)
+.factory("FacturaAnulacionService", FacturaAnulacionService)
 
-.factory("FacturaDetalleService", FacturaDetalleService)
+.factory("FacturaRectificacionService", FacturaRectificacionService)
 
 .factory("ValoradorService", ValoradorService)
 
@@ -76,12 +76,12 @@ function FacturaService($http, $q, CrudService) {
     return CrudService.create("facturacion/factura");
 }
 
-function FacturaLineaService($http, $q, CrudService) {
-    return CrudService.create("facturacion/factura-linea");
+function FacturaAnulacionService($http, $q, CrudService) {
+    return CrudService.create("facturacion/factura-anulacion");
 }
 
-function FacturaDetalleService($http, $q, CrudService) {
-    return CrudService.create("facturacion/factura-detalle");
+function FacturaRectificacionService($http, $q, CrudService) {
+    return CrudService.create("facturacion/factura-rectificacion");
 }
 
 function ValoradorService($http, $q, CrudService) {

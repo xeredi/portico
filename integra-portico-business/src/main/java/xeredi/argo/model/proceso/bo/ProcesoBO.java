@@ -56,8 +56,6 @@ public class ProcesoBO {
      *            the item entrada tipo
      * @param itemEntradaList
      *            the item entrada list
-     * @param fileEntrada
-     *            the file entrada
      * @return the proceso vo
      */
     public final ProcesoVO crear(final ProcesoTipo tipo, final Map<String, String> parametroMap,
@@ -159,8 +157,8 @@ public class ProcesoBO {
      *             the operacion no permitida exception
      */
     public final void finalizar(final Long prbtId, final List<ProcesoMensajeVO> prmnList,
-            final ItemTipo itemSalidaTipo, final List<Long> itemSalidaList)
-                    throws InstanceNotFoundException, OperacionNoPermitidaException {
+            final ItemTipo itemSalidaTipo, final List<Long> itemSalidaList) throws InstanceNotFoundException,
+            OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
@@ -235,7 +233,7 @@ public class ProcesoBO {
      *             the operacion no permitida exception
      */
     public final void cancelar(final @NonNull ProcesoVO prbt) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+            OperacionNoPermitidaException {
         Preconditions.checkNotNull(prbt.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

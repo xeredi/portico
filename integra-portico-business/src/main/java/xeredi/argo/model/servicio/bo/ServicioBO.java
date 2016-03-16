@@ -170,8 +170,8 @@ public class ServicioBO {
     /**
      * Select lupa list.
      *
-     * @param srvcLupaCriterioVO
-     *            the srvc lupa criterio vo
+     * @param srvcTypeaheadCriterio
+     *            the srvc typeahead criterio
      * @param limit
      *            the limit
      * @return the list

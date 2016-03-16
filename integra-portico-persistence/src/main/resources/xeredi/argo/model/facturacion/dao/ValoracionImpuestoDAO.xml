@@ -88,6 +88,9 @@
                 <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
                 </foreach>
             </if>
+			<if test="fctr != null and fctr.id != null">
+				AND vlrc_fctr_pk = #{fctr.id}
+			</if>
         </where>
     <![CDATA[
         )

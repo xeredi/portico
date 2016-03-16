@@ -23,8 +23,6 @@ public final class ValoracionLineaListAction extends GridListAction<ValoracionLi
      */
     @Override
     public void doList() throws ApplicationException {
-        Preconditions.checkNotNull(model.getVlrcId());
-
         final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
 
         resultList = vlrlBO.selectList(model, getOffset(), limit);

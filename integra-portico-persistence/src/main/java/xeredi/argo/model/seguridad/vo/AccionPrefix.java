@@ -102,6 +102,10 @@ public enum AccionPrefix {
     vldr,
     /** The actr. */
     actr,
+    /** The fcan. */
+    fcan,
+    /** The fcrc. */
+    fcrc,
 
     ;
 }

@@ -158,14 +158,14 @@ public class SubservicioBO {
     /**
      * Select lupa list.
      *
-     * @param ssrvLupaCriterioVO
-     *            the ssrv lupa criterio vo
+     * @param ssrvTypeaheadCriterio
+     *            the ssrv typeahead criterio
      * @param limit
      *            the limit
      * @return the list
      */
-    public final List<SubservicioVO> selectTypeaheadList(final @NonNull SubservicioLupaCriterioVO ssrvTypeaheadCriterio,
-            final int limit) {
+    public final List<SubservicioVO> selectTypeaheadList(
+            final @NonNull SubservicioLupaCriterioVO ssrvTypeaheadCriterio, final int limit) {
         ssrvTypeaheadCriterio.setNumero(Integer.valueOf(ssrvTypeaheadCriterio.getTextoBusqueda()));
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import lombok.NonNull;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
@@ -19,11 +20,11 @@ import net.sf.dynamicreports.report.exception.DRException;
 import xeredi.argo.model.comun.exception.InternalErrorException;
 import xeredi.argo.model.comun.report.BasePdf;
 import xeredi.argo.model.facturacion.bo.FacturaImpresionVO;
-import xeredi.argo.model.facturacion.vo.FacturaImpuestoVO;
-import xeredi.argo.model.facturacion.vo.FacturaLineaVO;
-import xeredi.argo.model.facturacion.vo.FacturaServicioVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
+import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
+import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
+import xeredi.argo.model.facturacion.vo.ValoracionVO;
 
 import com.google.common.base.Preconditions;
 
@@ -77,27 +78,27 @@ public final class FacturaPdf extends BasePdf {
             builder.add(DynamicReports.cmp.horizontalList(
                     DynamicReports.cmp.verticalList(createImportesComponent(vo), FIRMA),
                     createDatosPagadorComponent(vo.getFctr())));
-            builder.add(createServiciosComponent(vo.getFctsMap()));
+            builder.add(createServiciosComponent(vo.getVlrcMap()));
             // builder.add(createInfoCabeceraComponent(vo.getFctr()));
 
-            FacturaLineaVO fctlPrec = null;
-            List<FacturaLineaVO> fctlMods = null;
+            ValoracionLineaVO vlrlPrec = null;
+            List<ValoracionLineaVO> vlrlMods = null;
 
-            for (final FacturaLineaVO fctl : vo.getFctlList()) {
-                if (fctl.getRgla().getTipo() == ReglaTipo.T) {
-                    if (fctlPrec != null) {
-                        // builder.add(createInfoLineasComponent(fctlPrec, fctlMods));
+            for (final ValoracionLineaVO vlrl : vo.getVlrlList()) {
+                if (vlrl.getRgla().getTipo() == ReglaTipo.T) {
+                    if (vlrlPrec != null) {
+                        // builder.add(createInfoLineasComponent(vlrlPrec, vlrlMods));
                     }
 
-                    fctlPrec = fctl;
-                    fctlMods = new ArrayList<>();
+                    vlrlPrec = vlrl;
+                    vlrlMods = new ArrayList<>();
                 }
 
-                fctlMods.add(fctl);
+                vlrlMods.add(vlrl);
             }
 
-            if (fctlPrec != null) {
-                // builder.add(createInfoLineasComponent(fctlPrec, fctlMods));
+            if (vlrlPrec != null) {
+                // builder.add(createInfoLineasComponent(vlrlPrec, vlrlMods));
             }
 
             report.summary(builder);
@@ -146,8 +147,8 @@ public final class FacturaPdf extends BasePdf {
 
         content.add(DynamicReports.cmp.text(formatCurrency(vo.getFctr().getImporte())));
 
-        for (final FacturaImpuestoVO fcti : vo.getFctiList()) {
-            content.add(DynamicReports.cmp.text(formatCurrency(fcti.getImporteImpuesto())));
+        for (final ValoracionImpuestoVO vlri : vo.getVlriList()) {
+            content.add(DynamicReports.cmp.text(formatCurrency(vlri.getImporteImpuesto())));
         }
 
         content.add(DynamicReports.cmp.text(formatCurrency(vo.getFctr().getImporte() + vo.getFctr().getImpuesto())));
@@ -186,17 +187,17 @@ public final class FacturaPdf extends BasePdf {
      *            the fcts map
      * @return the component builder
      */
-    private ComponentBuilder<?, ?> createServiciosComponent(final Map<Long, FacturaServicioVO> fctsMap) {
+    private ComponentBuilder<?, ?> createServiciosComponent(final @NonNull Map<Long, ValoracionVO> vlrcMap) {
         final HorizontalListBuilder content = DynamicReports.cmp.horizontalList();
 
         content.add(DynamicReports.cmp.text("Servicios:"));
 
-        final Iterator<FacturaServicioVO> fctsIterator = fctsMap.values().iterator();
+        final Iterator<ValoracionVO> vlrcIterator = vlrcMap.values().iterator();
 
-        while (fctsIterator.hasNext()) {
-            final FacturaServicioVO fcts = fctsIterator.next();
+        while (vlrcIterator.hasNext()) {
+            final ValoracionVO vlrc = vlrcIterator.next();
 
-            content.add(DynamicReports.cmp.text(fcts.getSrvc().getEtiqueta() + (fctsIterator.hasNext() ? ", " : "")));
+            content.add(DynamicReports.cmp.text(vlrc.getSrvc().getEtiqueta() + (vlrcIterator.hasNext() ? ", " : "")));
         }
 
         return content;
@@ -237,43 +238,43 @@ public final class FacturaPdf extends BasePdf {
     /**
      * Creates the info lineas component.
      *
-     * @param fctl
-     *            the fctl
+     * @param vlrl
+     *            the vlrl
      * @param fctlMods
-     *            the fctl mods
+     *            the vlrl mods
      * @return the component builder
      */
-    private ComponentBuilder<?, ?> createInfoLineasComponent(final FacturaLineaVO fctl,
-            final List<FacturaLineaVO> fctlMods) {
+    private ComponentBuilder<?, ?> createInfoLineasComponent(final @NonNull ValoracionLineaVO vlrl,
+            final @NonNull List<ValoracionLineaVO> vlrlMods) {
         final VerticalListBuilder linea = DynamicReports.cmp.verticalList();
 
         linea.add(DynamicReports.cmp.horizontalFlowList(
-                createEtiquetaValorComponent("Concepto", fctl.getRgla().getCodigo()),
-                createEtiquetaValorComponent("Cuota", formatDouble(fctl.getRgla().getVersion().getValorBase())),
-                createEtiquetaValorComponent("IVA", fctl.getImpuesto().getEtiqueta()),
-                createEtiquetaValorComponent("Importe", formatCurrency(fctl.getImporte()))));
+                createEtiquetaValorComponent("Concepto", vlrl.getRgla().getCodigo()),
+                createEtiquetaValorComponent("Cuota", formatDouble(vlrl.getRgla().getVersion().getValorBase())),
+                createEtiquetaValorComponent("IVA", vlrl.getImpuesto().getEtiqueta()),
+                createEtiquetaValorComponent("Importe", formatCurrency(vlrl.getImporte()))));
 
         final HorizontalListBuilder infos = DynamicReports.cmp.horizontalList();
 
         infos.add(DynamicReports.cmp.gap(10, 1));
 
-        if (fctl.getInfo1() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqInfo1(), fctl.getInfo1()));
+        if (vlrl.getInfo1() != null) {
+            infos.add(createEtiquetaValorComponent(vlrl.getRgla().getVersion().getEtiqInfo1(), vlrl.getInfo1()));
         }
-        if (fctl.getInfo2() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqInfo2(), fctl.getInfo2()));
+        if (vlrl.getInfo2() != null) {
+            infos.add(createEtiquetaValorComponent(vlrl.getRgla().getVersion().getEtiqInfo2(), vlrl.getInfo2()));
         }
-        if (fctl.getInfo3() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqInfo3(), fctl.getInfo3()));
+        if (vlrl.getInfo3() != null) {
+            infos.add(createEtiquetaValorComponent(vlrl.getRgla().getVersion().getEtiqInfo3(), vlrl.getInfo3()));
         }
-        if (fctl.getInfo4() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqInfo4(), fctl.getInfo4()));
+        if (vlrl.getInfo4() != null) {
+            infos.add(createEtiquetaValorComponent(vlrl.getRgla().getVersion().getEtiqInfo4(), vlrl.getInfo4()));
         }
-        if (fctl.getInfo5() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqInfo5(), fctl.getInfo5()));
+        if (vlrl.getInfo5() != null) {
+            infos.add(createEtiquetaValorComponent(vlrl.getRgla().getVersion().getEtiqInfo5(), vlrl.getInfo5()));
         }
-        if (fctl.getInfo6() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqInfo6(), fctl.getInfo6()));
+        if (vlrl.getInfo6() != null) {
+            infos.add(createEtiquetaValorComponent(vlrl.getRgla().getVersion().getEtiqInfo6(), vlrl.getInfo6()));
         }
 
         linea.add(infos);
@@ -282,29 +283,29 @@ public final class FacturaPdf extends BasePdf {
 
         cuants.add(DynamicReports.cmp.gap(10, 1));
 
-        if (fctl.getCuant1() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqCuant1(),
-                    formatDouble(fctl.getCuant1())));
+        if (vlrl.getCuant1() != null) {
+            infos.add(createEtiquetaValorComponent(vlrl.getRgla().getVersion().getEtiqCuant1(),
+                    formatDouble(vlrl.getCuant1())));
         }
-        if (fctl.getCuant2() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqCuant2(),
-                    formatDouble(fctl.getCuant2())));
+        if (vlrl.getCuant2() != null) {
+            infos.add(createEtiquetaValorComponent(vlrl.getRgla().getVersion().getEtiqCuant2(),
+                    formatDouble(vlrl.getCuant2())));
         }
-        if (fctl.getCuant3() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqCuant3(),
-                    formatDouble(fctl.getCuant3())));
+        if (vlrl.getCuant3() != null) {
+            infos.add(createEtiquetaValorComponent(vlrl.getRgla().getVersion().getEtiqCuant3(),
+                    formatDouble(vlrl.getCuant3())));
         }
-        if (fctl.getCuant4() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqCuant4(),
-                    formatDouble(fctl.getCuant4())));
+        if (vlrl.getCuant4() != null) {
+            infos.add(createEtiquetaValorComponent(vlrl.getRgla().getVersion().getEtiqCuant4(),
+                    formatDouble(vlrl.getCuant4())));
         }
-        if (fctl.getCuant5() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqCuant5(),
-                    formatDouble(fctl.getCuant5())));
+        if (vlrl.getCuant5() != null) {
+            infos.add(createEtiquetaValorComponent(vlrl.getRgla().getVersion().getEtiqCuant5(),
+                    formatDouble(vlrl.getCuant5())));
         }
-        if (fctl.getCuant6() != null) {
-            infos.add(createEtiquetaValorComponent(fctl.getRgla().getVersion().getEtiqCuant6(),
-                    formatDouble(fctl.getCuant6())));
+        if (vlrl.getCuant6() != null) {
+            infos.add(createEtiquetaValorComponent(vlrl.getRgla().getVersion().getEtiqCuant6(),
+                    formatDouble(vlrl.getCuant6())));
         }
 
         linea.add(cuants);

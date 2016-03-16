@@ -182,13 +182,13 @@
     <![CDATA[
         SELECT COUNT(1)
         FROM
-            tbl_factura_srv_fcts fcts1
-            INNER JOIN tbl_factura_srv_fcts fcts2 ON
-                fcts1.fcts_fctr_pk <> fcts2.fcts_fctr_pk
-                AND fcts1.fcts_srvc_pk = fcts2.fcts_srvc_pk
-                AND fcts2.fcts_fref > fcts1.fcts_fref
+            tbl_valoracion_vlrc vlrc1
+            INNER JOIN tbl_valoracion_vlrc vlrc2 ON
+                vlrc1.vlrc_fctr_pk <> vlrc2.vlrc_fctr_pk
+                AND vlrc1.vlrc_srvc_pk = vlrc2.vlrc_srvc_pk
+                AND vlrc2.vlrc_fref > vlrc1.vlrc_fref
         WHERE
-            fcts1.fcts_fctr_pk = #{value}
+            vlrc1.vlrc_fctr_pk = #{value}
     ]]>
 	</select>
 
@@ -196,12 +196,13 @@
     <![CDATA[
         SELECT COUNT(1)
         FROM
-            tbl_valoracion_vlrc
-            JOIN tbl_factura_srv_fcts ON
-                fcts_srvc_pk = vlrc_srvc_pk
-                AND vlrc_fref > fcts_fref
+            tbl_valoracion_vlrc vlrc
+            JOIN tbl_valoracion_vlrc vlrc_fact ON
+                vlrc_fact.vlrc_srvc_pk = vlrc.vlrc_srvc_pk
+                AND vlrc.vlrc_fref > vlrc_fact.vlrc_fref
+                AND vlrc.vlrc_pk <> vlrc_fact.vlrc_pk
         WHERE
-            fcts_fctr_pk = #{value}
+            vlrc_fact.vlrc_fctr_pk = #{value}
     ]]>
 	</select>
 </mapper>

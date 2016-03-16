@@ -24,5 +24,5 @@ public final class FacturaCriterioVO extends BaseCriterioVO {
     private FacturaEstado estado;
 
     /** The fcsr. */
-    private FacturaServicioCriterioVO fcts;
+    private Long vlrcId;
 }

@@ -49,8 +49,6 @@ public final class ValoracionDetalleDetailAction extends CrudDetailAction<Valora
      */
     @Override
     public void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model.getVlrcId());
-        Preconditions.checkNotNull(model.getVlrlId());
         Preconditions.checkNotNull(model.getId());
 
         final ValoracionDetalleBO vlrdBO = new ValoracionDetalleBO();

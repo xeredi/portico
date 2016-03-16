@@ -1,12 +1,13 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <div data-uib-pagination data-total-items="vm.fctrList.count" data-items-per-page="vm.fctrList.limit"
-            data-ng-model="vm.page" data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
+        <div data-uib-pagination data-total-items="vm.resultList.count"
+            data-items-per-page="vm.resultList.limit" data-ng-model="vm.page"
+            data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
             data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
     </div>
     <div class="btn-group">
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
-            data-template-url="modules/facturacion/fragment/fctr-filter-content.html" data-bs-modal="modal">
+            data-template-url="modules/facturacion/fragment/factura-filter-content.html" data-bs-modal="modal">
             <i class="glyphicon glyphicon-search"></i><span data-translate="btn_filtrar"></span>
         </button>
     </div>
@@ -14,7 +15,7 @@
 
 <div class="table-responsive">
     <span class="label label-default" data-translate="grid_count"
-        data-translate-value-count="{{vm.fctrList.count | number:0}}"></span>
+        data-translate-value-count="{{vm.resultList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover">
         <thead>
@@ -42,8 +43,8 @@
         </thead>
 
         <tbody>
-            <tr data-ng-repeat="item in vm.fctrList.list track by $index">
-                <td><a data-ng-href="#/facturacion/fctr/detail/{{item.id}}"><i
+            <tr data-ng-repeat="item in vm.resultList.list track by $index">
+                <td><a data-ng-href="#/facturacion/factura/detail/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="item.etiqueta"></td>
                 <td data-ng-bind="item.estado" data-bs-tooltip
