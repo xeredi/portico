@@ -7,7 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import xeredi.argo.model.comun.dao.CrudDAO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
 import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
-import xeredi.argo.model.servicio.vo.ServicioLupaCriterioVO;
+import xeredi.argo.model.servicio.vo.ServicioTypeaheadCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -36,11 +36,11 @@ public interface ServicioDAO extends CrudDAO<ServicioVO, ServicioCriterioVO> {
     /**
      * Select lupa list.
      *
-     * @param srvcCriterioVO
+     * @param criterio
      *            the srvc criterio vo
      * @param bounds
      *            the bounds
      * @return the list
      */
-    List<ServicioVO> selectLupaList(final ServicioLupaCriterioVO srvcCriterioVO, final RowBounds bounds);
+    List<ServicioVO> selectTypeaheadList(final ServicioTypeaheadCriterioVO criterio, final RowBounds bounds);
 }

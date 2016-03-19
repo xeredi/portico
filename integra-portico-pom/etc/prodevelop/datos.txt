@@ -80,6 +80,8 @@ puertos
 		José Antonio Salom
 			964281140
 			jasalom@portcastello.com
+	Ferrol
+		Manuel	981338059
 
 prodevelop
 	xrey@prodevelop.es / prodevelop

@@ -1,9 +1,16 @@
 package xeredi.argo.http.controller.action.facturacion;
 
+import java.util.List;
+
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.vo.FacturaCriterioVO;
+import xeredi.argo.model.facturacion.vo.FacturaEstado;
+import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -13,6 +20,14 @@ public final class FacturaFilterAction extends GridFilterAction<FacturaCriterioV
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -618324706779990531L;
+
+    /** Estados de una factura. */
+    @Getter
+    private FacturaEstado[] fctrEstadoList;
+
+    /** Tipos de servicio. */
+    @Getter
+    private List<LabelValueVO> tpsrList;
 
     /**
      * {@inheritDoc}
@@ -27,7 +42,8 @@ public final class FacturaFilterAction extends GridFilterAction<FacturaCriterioV
      */
     @Override
     public void doLoadDependencies() throws ApplicationException {
-        // noop
+        fctrEstadoList = FacturaEstado.values();
+        tpsrList = TipoServicioProxy.selectLabelValues();
     }
 
     /**

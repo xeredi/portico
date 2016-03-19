@@ -57,6 +57,9 @@ public final class FacturaVO {
     /** The impuesto. */
     private Double impuesto;
 
+    /** The fctr anulada. */
+    private FacturaVO fctrAnulada;
+
     /** The info1. */
     private String info1;
 

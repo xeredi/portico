@@ -6,8 +6,7 @@ angular.module("servicio_controller", [])
 
 .controller("ServicioSecuenciaGridController", ServicioSecuenciaGridController)
 
-.controller("ServicioSecuenciaDetailController",
-        ServicioSecuenciaDetailController)
+.controller("ServicioSecuenciaDetailController", ServicioSecuenciaDetailController)
 
 .controller("ServicioSecuenciaEditController", ServicioSecuenciaEditController)
 
@@ -21,6 +20,8 @@ angular.module("servicio_controller", [])
 
 .controller("ServicioLoadController", ServicioLoadController)
 
+.controller("ServicioTypeaheadController", ServicioTypeaheadController)
+
 .controller("SubservicioGridController", SubservicioGridController)
 
 .controller("SubservicioDetailController", SubservicioDetailController)
@@ -32,95 +33,84 @@ angular.module("servicio_controller", [])
 function config($routeProvider) {
     $routeProvider
 
-            .when("/servicio/valorador/edit/:accion/:entiId/:id", {
-                templateUrl : "modules/entidad/servicio/valorador-edit.html",
-                controller : "ValoradorEditController as vm",
-            })
+    .when("/servicio/valorador/edit/:accion/:entiId/:id", {
+        templateUrl : "modules/entidad/servicio/valorador-edit.html",
+        controller : "ValoradorEditController as vm",
+    })
 
-            .when(
-                    "/servicio/servicio-secuencia/grid",
-                    {
-                        templateUrl : "modules/entidad/servicio/servicio-secuencia-grid.html",
-                        controller : "ServicioSecuenciaGridController as vm",
-                        reloadOnSearch : false
-                    })
+    .when("/servicio/servicio-secuencia/grid", {
+        templateUrl : "modules/entidad/servicio/servicio-secuencia-grid.html",
+        controller : "ServicioSecuenciaGridController as vm",
+        reloadOnSearch : false
+    })
 
-            .when(
-                    "/servicio/servicio-secuencia/detail/:tpsrId/:prtoId/:anno",
-                    {
-                        templateUrl : "modules/entidad/servicio/servicio-secuencia-detail.html",
-                        controller : "ServicioSecuenciaDetailController as vm",
-                    })
+    .when("/servicio/servicio-secuencia/detail/:tpsrId/:prtoId/:anno", {
+        templateUrl : "modules/entidad/servicio/servicio-secuencia-detail.html",
+        controller : "ServicioSecuenciaDetailController as vm",
+    })
 
-            .when(
-                    "/servicio/servicio-secuencia/edit/:accion/:tpsrId?/:prtoId?/:anno?",
-                    {
-                        templateUrl : "modules/entidad/servicio/servicio-secuencia-edit.html",
-                        controller : "ServicioSecuenciaEditController as vm",
-                    })
+    .when("/servicio/servicio-secuencia/edit/:accion/:tpsrId?/:prtoId?/:anno?", {
+        templateUrl : "modules/entidad/servicio/servicio-secuencia-edit.html",
+        controller : "ServicioSecuenciaEditController as vm",
+    })
 
-            .when("/servicio", {
-                templateUrl : "modules/entidad/servicio/servicio-index.html",
-                controller : "ServicioIndexController as vm"
-            })
+    .when("/servicio", {
+        templateUrl : "modules/entidad/servicio/servicio-index.html",
+        controller : "ServicioIndexController as vm"
+    })
 
-            .when("/servicio/servicio/grid/:entiId", {
-                templateUrl : "modules/entidad/servicio/servicio-grid.html",
-                controller : "ServicioGridController as vm",
-                reloadOnSearch : false
-            })
+    .when("/servicio/servicio/grid/:entiId", {
+        templateUrl : "modules/entidad/servicio/servicio-grid.html",
+        controller : "ServicioGridController as vm",
+        reloadOnSearch : false
+    })
 
-            .when("/servicio/servicio/detail/:entiId/:id", {
-                templateUrl : "modules/entidad/servicio/servicio-detail.html",
-                controller : "ServicioDetailController as vm",
-                reloadOnSearch : false,
-            })
+    .when("/servicio/servicio/detail/:entiId/:id", {
+        templateUrl : "modules/entidad/servicio/servicio-detail.html",
+        controller : "ServicioDetailController as vm",
+        reloadOnSearch : false,
+    })
 
-            .when("/servicio/servicio/edit/:accion/:entiId/:id?", {
-                templateUrl : "modules/entidad/servicio/servicio-edit.html",
-                controller : "ServicioEditController as vm"
-            })
+    .when("/servicio/servicio/edit/:accion/:entiId/:id?", {
+        templateUrl : "modules/entidad/servicio/servicio-edit.html",
+        controller : "ServicioEditController as vm"
+    })
 
-            .when("/servicio/servicio/load/:entiId", {
-                templateUrl : "modules/entidad/servicio/servicio-load.html",
-                controller : "ServicioLoadController as vm",
-            })
+    .when("/servicio/servicio/load/:entiId", {
+        templateUrl : "modules/entidad/servicio/servicio-load.html",
+        controller : "ServicioLoadController as vm",
+    })
 
-            .when("/servicio/subservicio/grid/:entiId", {
-                templateUrl : "modules/entidad/servicio/subservicio-grid.html",
-                controller : "SubservicioGridController as vm",
-                reloadOnSearch : false
-            })
+    .when("/servicio/subservicio/grid/:entiId", {
+        templateUrl : "modules/entidad/servicio/subservicio-grid.html",
+        controller : "SubservicioGridController as vm",
+        reloadOnSearch : false
+    })
 
-            .when(
-                    "/servicio/subservicio/detail/:entiId/:id",
-                    {
-                        templateUrl : "modules/entidad/servicio/subservicio-detail.html",
-                        controller : "SubservicioDetailController as vm",
-                        reloadOnSearch : false,
-                    })
+    .when("/servicio/subservicio/detail/:entiId/:id", {
+        templateUrl : "modules/entidad/servicio/subservicio-detail.html",
+        controller : "SubservicioDetailController as vm",
+        reloadOnSearch : false,
+    })
 
-            .when("/servicio/subservicio/edit/:accion/:entiId/:srvcId?/:id?", {
-                templateUrl : "modules/entidad/servicio/subservicio-edit.html",
-                controller : "SubservicioEditController as vm",
-            })
+    .when("/servicio/subservicio/edit/:accion/:entiId/:srvcId?/:id?", {
+        templateUrl : "modules/entidad/servicio/subservicio-edit.html",
+        controller : "SubservicioEditController as vm",
+    })
 
     ;
 }
 
-function ValoradorEditController($routeParams, pageTitleService,
-        ValoradorService) {
+function ValoradorEditController($routeParams, pageTitleService, ValoradorService) {
     var vm = this;
 
     vm.save = save;
     vm.cancel = cancel;
 
     function save() {
-        ValoradorService.save(vm.accion, vm.model).then(
-                function(data) {
-                    ValoradorService.redirectAfterSave(vm.accion,
-                            '/proceso/proceso/grid');
-                });
+        ValoradorService.save(vm.accion, vm.model).then(function(data) {
+            ValoradorService.redirectAfterSave(vm.accion, '/proceso/proceso/grid');
+        });
     }
 
     function cancel() {
@@ -147,8 +137,7 @@ function ValoradorEditController($routeParams, pageTitleService,
     pageTitleService.setTitle("vldr", "page_" + vm.accion);
 }
 
-function ServicioSecuenciaGridController($routeParams, pageTitleService,
-        ServicioSecuenciaService) {
+function ServicioSecuenciaGridController($routeParams, pageTitleService, ServicioSecuenciaService) {
     var vm = this;
 
     vm.filter = filter;
@@ -168,20 +157,18 @@ function ServicioSecuenciaGridController($routeParams, pageTitleService,
     }
 
     function search(page) {
-        ServicioSecuenciaService.listPage(vm.searchCriteria, page, vm.limit)
-                .then(function(data) {
-                    vm.page = data.resultList.page;
-                    vm.limit = data.resultList.limit;
-                    vm.resultList = data.resultList;
-                });
+        ServicioSecuenciaService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
+            vm.page = data.resultList.page;
+            vm.limit = data.resultList.limit;
+            vm.resultList = data.resultList;
+        });
     }
 
     function pageChanged() {
         search(vm.page);
     }
 
-    vm.searchCriteria = $routeParams.searchCriteria ? angular
-            .fromJson($routeParams.searchCriteria) : {};
+    vm.searchCriteria = $routeParams.searchCriteria ? angular.fromJson($routeParams.searchCriteria) : {};
     vm.limit = $routeParams.limit;
 
     search($routeParams.page ? $routeParams.page : 1);
@@ -189,8 +176,7 @@ function ServicioSecuenciaGridController($routeParams, pageTitleService,
     pageTitleService.setTitle("srsc", "page_grid");
 }
 
-function ServicioSecuenciaDetailController($routeParams, pageTitleService,
-        ServicioSecuenciaService) {
+function ServicioSecuenciaDetailController($routeParams, pageTitleService, ServicioSecuenciaService) {
     var vm = this;
 
     vm.remove = remove;
@@ -218,8 +204,7 @@ function ServicioSecuenciaDetailController($routeParams, pageTitleService,
     pageTitleService.setTitle("srsc", "page_detail");
 }
 
-function ServicioSecuenciaEditController($routeParams, pageTitleService,
-        ServicioSecuenciaService) {
+function ServicioSecuenciaEditController($routeParams, pageTitleService, ServicioSecuenciaService) {
     var vm = this;
 
     vm.save = save;
@@ -297,15 +282,14 @@ function ServicioGridController($routeParams, pageTitleService, ServicioService)
     function search(page) {
         vm.searchCriteria.entiId = $routeParams.entiId;
 
-        ServicioService.listPage(vm.searchCriteria, page, vm.limit).then(
-                function(data) {
-                    vm.page = data.resultList.page;
-                    vm.limit = data.resultList.limit;
-                    vm.itemList = data.resultList;
+        ServicioService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
+            vm.page = data.resultList.page;
+            vm.limit = data.resultList.limit;
+            vm.itemList = data.resultList;
 
-                    vm.enti = data.enti;
-                    vm.searchCriteria = data.model;
-                });
+            vm.enti = data.enti;
+            vm.searchCriteria = data.model;
+        });
     }
 
     function pageChanged() {
@@ -313,12 +297,10 @@ function ServicioGridController($routeParams, pageTitleService, ServicioService)
     }
 
     function xlsExport() {
-        ServicioService.xlsExport(vm.searchCriteria, 'srvc_'
-                + vm.searchCriteria.entiId);
+        ServicioService.xlsExport(vm.searchCriteria, 'srvc_' + vm.searchCriteria.entiId);
     }
 
-    vm.searchCriteria = $routeParams.searchCriteria ? angular
-            .fromJson($routeParams.searchCriteria) : {};
+    vm.searchCriteria = $routeParams.searchCriteria ? angular.fromJson($routeParams.searchCriteria) : {};
 
     vm.limit = $routeParams.limit;
 
@@ -327,8 +309,8 @@ function ServicioGridController($routeParams, pageTitleService, ServicioService)
     pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }
 
-function ServicioDetailController($routeParams, pageTitleService,
-        credentialService, ServicioService, SubservicioService) {
+function ServicioDetailController($routeParams, pageTitleService, credentialService, ServicioService,
+        SubservicioService) {
     var vm = this;
 
     vm.remove = remove;
@@ -343,8 +325,7 @@ function ServicioDetailController($routeParams, pageTitleService,
     }
 
     function pdfExport() {
-        ServicioService.pdfExport(vm.item, 'srvc_' + vm.item.entiId + '_'
-                + vm.item.id);
+        ServicioService.pdfExport(vm.item, 'srvc_' + vm.item.entiId + '_' + vm.item.id);
     }
 
     function tabSelected(tabNo) {
@@ -364,14 +345,13 @@ function ServicioDetailController($routeParams, pageTitleService,
                 entiId : subentiId
             };
 
-            SubservicioService.listPage(ssrvSearchCriteria, page, vm.limit)
-                    .then(function(data) {
-                        vm.entiHijasMap[data.enti.enti.id] = data.enti;
-                        vm.itemHijosMap[data.enti.enti.id] = data.resultList;
-                        vm.pageMap[data.enti.enti.id] = data.resultList.page;
+            SubservicioService.listPage(ssrvSearchCriteria, page, vm.limit).then(function(data) {
+                vm.entiHijasMap[data.enti.enti.id] = data.enti;
+                vm.itemHijosMap[data.enti.enti.id] = data.resultList;
+                vm.pageMap[data.enti.enti.id] = data.resultList.page;
 
-                        ServicioService.pageMapChanged(vm.pageMap);
-                    });
+                ServicioService.pageMapChanged(vm.pageMap);
+            });
         }
     }
 
@@ -381,30 +361,27 @@ function ServicioDetailController($routeParams, pageTitleService,
         vm.tabActive[$routeParams.tab] = true;
     }
 
-    vm.pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap)
-            : {};
+    vm.pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap) : {};
 
     vm.search = {
         id : $routeParams.id,
         entiId : $routeParams.entiId
     };
 
-    ServicioService.detail(vm.search).then(
-            function(data) {
-                vm.item = data.model;
-                vm.enti = data.enti;
-                vm.ittrList = data.ittrList;
+    ServicioService.detail(vm.search).then(function(data) {
+        vm.item = data.model;
+        vm.enti = data.enti;
+        vm.ittrList = data.ittrList;
 
-                vm.itemHijosMap = {};
-                vm.entiHijasMap = {};
+        vm.itemHijosMap = {};
+        vm.entiHijasMap = {};
 
-                if (data.enti && vm.enti.entiHijasList) {
-                    for (i = 0; i < vm.enti.entiHijasList.length; i++) {
-                        findSublist(vm.enti.entiHijasList[i],
-                                vm.pageMap[vm.enti.entiHijasList[i]]);
-                    }
-                }
-            });
+        if (data.enti && vm.enti.entiHijasList) {
+            for (i = 0; i < vm.enti.entiHijasList.length; i++) {
+                findSublist(vm.enti.entiHijasList[i], vm.pageMap[vm.enti.entiHijasList[i]]);
+            }
+        }
+    });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
@@ -418,9 +395,8 @@ function ServicioEditController($routeParams, pageTitleService, ServicioService)
     function save() {
         ServicioService.save(vm.accion, vm.item).then(
                 function(data) {
-                    ServicioService.redirectAfterSave(vm.accion,
-                            '/servicio/servicio/detail', [ data.model.entiId,
-                                    data.model.id ]);
+                    ServicioService.redirectAfterSave(vm.accion, '/servicio/servicio/detail', [
+                            data.model.entiId, data.model.id ]);
                 });
     }
 
@@ -458,16 +434,13 @@ function ServicioLoadController($routeParams, pageTitleService, ServicioService)
     vm.cancel = cancel;
 
     function save() {
-        ServicioService.fileUpload(vm.fileLoad).then(
-                function(data) {
-                    vm.model.archId = data.archId;
+        ServicioService.fileUpload(vm.fileLoad).then(function(data) {
+            vm.model.archId = data.archId;
 
-                    ServicioService.load(vm.model).then(
-                            function(data) {
-                                ServicioService.redirectAfterSave(vm.accion,
-                                        '/proceso/proceso/grid');
-                            });
-                });
+            ServicioService.load(vm.model).then(function(data) {
+                ServicioService.redirectAfterSave(vm.accion, '/proceso/proceso/grid');
+            });
+        });
     }
 
     function cancel() {
@@ -485,8 +458,26 @@ function ServicioLoadController($routeParams, pageTitleService, ServicioService)
     pageTitleService.setTitleEnti($routeParams.entiId, "page_loadfile");
 }
 
-function SubservicioGridController($routeParams, pageTitleService,
-        SubservicioService) {
+function ServicioTypeaheadController($scope, ServicioService) {
+    var ta = this;
+
+    ta.search = search;
+
+    function search(entiId, textoBusqueda) {
+        if (textoBusqueda.length <= 0) {
+            return null;
+        }
+
+        return ServicioService.typeahead({
+            entiId : entiId,
+            textoBusqueda : textoBusqueda
+        }).then(function(data) {
+            return data.resultList;
+        });
+    }
+}
+
+function SubservicioGridController($routeParams, pageTitleService, SubservicioService) {
     var vm = this;
 
     vm.filter = filter;
@@ -511,15 +502,14 @@ function SubservicioGridController($routeParams, pageTitleService,
     function search(page) {
         vm.searchCriteria.entiId = $routeParams.entiId;
 
-        SubservicioService.listPage(vm.searchCriteria, page, vm.limit).then(
-                function(data) {
-                    vm.page = data.resultList.page;
-                    vm.limit = data.resultList.limit;
-                    vm.itemList = data.resultList;
+        SubservicioService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
+            vm.page = data.resultList.page;
+            vm.limit = data.resultList.limit;
+            vm.itemList = data.resultList;
 
-                    vm.enti = data.enti;
-                    vm.searchCriteria = data.model;
-                });
+            vm.enti = data.enti;
+            vm.searchCriteria = data.model;
+        });
     }
 
     function pageChanged() {
@@ -527,12 +517,10 @@ function SubservicioGridController($routeParams, pageTitleService,
     }
 
     function xlsExport() {
-        SubservicioService.xlsExport(vm.searchCriteria, 'ssrv_'
-                + vm.searchCriteria.entiId);
+        SubservicioService.xlsExport(vm.searchCriteria, 'ssrv_' + vm.searchCriteria.entiId);
     }
 
-    vm.searchCriteria = $routeParams.searchCriteria ? angular
-            .fromJson($routeParams.searchCriteria) : {};
+    vm.searchCriteria = $routeParams.searchCriteria ? angular.fromJson($routeParams.searchCriteria) : {};
     vm.limit = $routeParams.limit;
 
     search($routeParams.page ? $routeParams.page : 1);
@@ -540,8 +528,7 @@ function SubservicioGridController($routeParams, pageTitleService,
     pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }
 
-function SubservicioDetailController($routeParams, pageTitleService,
-        credentialService, SubservicioService) {
+function SubservicioDetailController($routeParams, pageTitleService, credentialService, SubservicioService) {
     var vm = this;
 
     vm.remove = remove;
@@ -569,14 +556,13 @@ function SubservicioDetailController($routeParams, pageTitleService,
                 padreId : vm.item.id
             };
 
-            SubservicioService.listPage(ssrvSearchCriteria, page, vm.limit)
-                    .then(function(data) {
-                        vm.entiHijasMap[data.enti.enti.id] = data.enti;
-                        vm.itemHijosMap[data.enti.enti.id] = data.resultList;
-                        vm.pageMap[data.enti.enti.id] = data.resultList.page;
+            SubservicioService.listPage(ssrvSearchCriteria, page, vm.limit).then(function(data) {
+                vm.entiHijasMap[data.enti.enti.id] = data.enti;
+                vm.itemHijosMap[data.enti.enti.id] = data.resultList;
+                vm.pageMap[data.enti.enti.id] = data.resultList.page;
 
-                        SubservicioService.pageMapChanged(vm.pageMap);
-                    });
+                SubservicioService.pageMapChanged(vm.pageMap);
+            });
         }
     }
 
@@ -586,37 +572,33 @@ function SubservicioDetailController($routeParams, pageTitleService,
         vm.tabActive[$routeParams.tab] = true;
     }
 
-    vm.pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap)
-            : {};
+    vm.pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap) : {};
 
     vm.search = {
         id : $routeParams.id,
         entiId : $routeParams.entiId
     };
 
-    SubservicioService.detail(vm.search).then(
-            function(data) {
-                vm.enti = data.enti;
-                vm.item = data.model;
-                vm.itemPadresMap = data.itemPadresMap;
-                vm.ittrList = data.ittrList;
+    SubservicioService.detail(vm.search).then(function(data) {
+        vm.enti = data.enti;
+        vm.item = data.model;
+        vm.itemPadresMap = data.itemPadresMap;
+        vm.ittrList = data.ittrList;
 
-                vm.itemHijosMap = {};
-                vm.entiHijasMap = {};
+        vm.itemHijosMap = {};
+        vm.entiHijasMap = {};
 
-                if (data.enti && vm.enti.entiHijasList) {
-                    for (i = 0; i < vm.enti.entiHijasList.length; i++) {
-                        findSublist(vm.enti.entiHijasList[i],
-                                vm.pageMap[vm.enti.entiHijasList[i]]);
-                    }
-                }
-            });
+        if (data.enti && vm.enti.entiHijasList) {
+            for (i = 0; i < vm.enti.entiHijasList.length; i++) {
+                findSublist(vm.enti.entiHijasList[i], vm.pageMap[vm.enti.entiHijasList[i]]);
+            }
+        }
+    });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
-function SubservicioEditController($routeParams, pageTitleService,
-        SubservicioService) {
+function SubservicioEditController($routeParams, pageTitleService, SubservicioService) {
     var vm = this;
 
     vm.save = save;
@@ -625,9 +607,8 @@ function SubservicioEditController($routeParams, pageTitleService,
     function save() {
         SubservicioService.save(vm.accion, vm.item).then(
                 function(data) {
-                    SubservicioService.redirectAfterSave(vm.accion,
-                            '/servicio/subservicio/detail', [
-                                    data.model.entiId, data.model.id ]);
+                    SubservicioService.redirectAfterSave(vm.accion, '/servicio/subservicio/detail', [
+                            data.model.entiId, data.model.id ]);
                 });
     }
 

@@ -365,7 +365,6 @@ function CargoTypeaheadController($scope, CargoService) {
             return data.resultList;
         });
     }
-    ;
 
     function searchAspc(aspcId, textoBusqueda, fechaVigencia) {
         if (textoBusqueda.length <= 0) {
@@ -380,7 +379,6 @@ function CargoTypeaheadController($scope, CargoService) {
             return data.resultList;
         });
     }
-    ;
 
     function searchVlrc(vlrcId, textoBusqueda) {
         if (textoBusqueda.length <= 0) {
@@ -394,7 +392,6 @@ function CargoTypeaheadController($scope, CargoService) {
             return data.resultList;
         });
     }
-    ;
 }
 
 function ReglaDetailController($routeParams, pageTitleService, ReglaService) {
@@ -1168,6 +1165,8 @@ function FacturaGridController($routeParams, pageTitleService, FacturaService) {
 
     function filter() {
         FacturaService.filter(vm.searchCriteria).then(function(data) {
+            vm.fctrEstadoList = data.fctrEstadoList;
+            vm.tpsrList = data.tpsrList;
         });
     }
 

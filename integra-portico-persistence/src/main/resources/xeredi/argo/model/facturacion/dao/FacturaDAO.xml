@@ -48,6 +48,17 @@
 			<result column="fctr_pagador_tppr_pk" property="entiId" />
 			<result column="fctr_pagador" property="texto" />
 		</association>
+
+		<association property="fctrAnulada" javaType="FacturaVO">
+			<result column="fctr_anulada_pk" property="id" />
+			<result column="fcan_fctr_numero" property="numero" />
+
+			<association property="fcsr" javaType="FacturaSerieVO">
+				<result column="fcan_fctr_fcsr_pk" property="id" />
+				<result column="fcan_fcsr_serie" property="serie" />
+				<result column="fcan_fcsr_anio" property="anio" />
+			</association>
+		</association>
 	</resultMap>
 
 	<sql id="SelectPrefix">
@@ -65,7 +76,7 @@
 		    , prmt_parametro AS fctr_pagador_prmt
 		    , prmt_tppr_pk AS fctr_pagador_tppr_pk
     ]]>
-    	<if test="idioma != null">
+		<if test="idioma != null">
 	    <![CDATA[
 	    	, (
 	    		SELECT i18n_text
@@ -103,7 +114,7 @@
 		            )
 		    ) AS fctr_pagador
 	    ]]>
-    	</if>
+		</if>
     <![CDATA[
 		FROM
 		    tbl_factura_fctr
@@ -123,11 +134,37 @@
 			</if>
 			<if test="ids != null">
 				AND fctr_pk IN
-				<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+				<foreach collection="ids" item="item" open="(" close=")"
+					separator=",">#{item}
 				</foreach>
 			</if>
 			<if test="estado != null">
-				fctr_estado = #{estado}
+				AND fctr_estado = #{estado}
+			</if>
+			<if test="tpsrId != null">
+		    <![CDATA[
+		    	AND EXISTS (
+		    		SELECT 1 FROM tbl_valoracion_vlrc
+		    		WHERE vlrc_fctr_pk = fctr_pk
+		    			AND EXISTS (
+		    				SELECT 1 FROM tbl_servicio_srvc
+		    				WHERE srvc_pk = vlrc_srvc_pk
+		    					AND srvc_tpsr_pk = #{tpsrId}
+		    			)
+		    	)
+		    ]]>
+			</if>
+			<if test="pagador != null and pagador.id != null">
+				AND fctr_pagador_prmt_pk = #{pagador.id}
+			</if>
+			<if test="srvc != null and srvc.id != null">
+		    <![CDATA[
+		    	AND EXISTS (
+		    		SELECT 1 FROM tbl_valoracion_vlrc
+		    		WHERE vlrc_fctr_pk = fctr_pk
+		    			AND vlrc_srvc_pk = #{srvc.id}
+		    	)
+		    ]]>
 			</if>
 		</where>
 	</sql>
@@ -144,13 +181,37 @@
 		INNER JOIN tbl_aspecto_aspc ON
 		aspc_pk = fctr_aspc_pk
 		INNER JOIN tbl_factura_serie_fcsr ON
-		fcsr_pk = fctr_fcsr_pk
+		fcsr_pk =
+		fctr_fcsr_pk
 		<include refid="SelectWhere" />
 	</select>
 
 	<select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
+	</select>
+
+	<select id="selectTypeaheadList" parameterType="FacturaTypeaheadCriterioVO">
+    <![CDATA[
+    	SELECT
+    		fctr_pk, fctr_fcsr_pk, fctr_numero
+
+    		, fcsr_serie, fcsr_anio
+    	FROM tbl_factura_fctr
+			INNER JOIN tbl_factura_serie_fcsr ON
+				fcsr_pk = fctr_fcsr_pk
+    ]]>
+		<where>
+			<if test="serie != null">
+				AND fcsr_serie LIKE #{serie}
+			</if>
+			<if test="anio != null">
+				AND fcsr_anio LIKE #{anio}
+			</if>
+			<if test="numero != null">
+				AND fctr_numero LIKE #{numero}
+			</if>
+		</where>
 	</select>
 
 
@@ -178,7 +239,8 @@
             fctr_pk = #{id}
     ]]>
 	</insert>
-	<select id="existsFacturaPosterior" parameterType="Long" resultType="Boolean">
+	<select id="existsFacturaPosterior" parameterType="Long"
+		resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM
@@ -192,7 +254,8 @@
     ]]>
 	</select>
 
-	<select id="existsValoracionPosterior" parameterType="Long" resultType="Boolean">
+	<select id="existsValoracionPosterior" parameterType="Long"
+		resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM

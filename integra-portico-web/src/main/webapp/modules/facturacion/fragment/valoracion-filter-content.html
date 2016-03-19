@@ -34,8 +34,8 @@
                                 data-ng-show="vm.searchCriteria.tpsrId">
                                 <label data-translate="srvc"></label> <input type="text" autocomplete="off"
                                     data-ng-model="vm.searchCriteria.srvc"
-                                    data-ng-controller="SrvcLupaController"
-                                    data-uib-typeahead="srvc as srvc.etiqueta for srvc in search(vm.searchCriteria.tpsrId, $viewValue)"
+                                    data-ng-controller="ServicioTypeaheadController as ta"
+                                    data-uib-typeahead="srvc as srvc.etiqueta for srvc in ta.search(vm.searchCriteria.tpsrId, $viewValue)"
                                     data-typeahead-editable="false" data-typeahead-wait-ms="250"
                                     class="form-control">
                             </div>

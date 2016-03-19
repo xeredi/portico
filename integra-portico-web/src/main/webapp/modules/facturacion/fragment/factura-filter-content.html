@@ -8,7 +8,41 @@
             <div class="modal-body">
                 <form>
                     <fieldset>
-                        <div class="row"></div>
+                        <div class="row">
+                            <div class="col-sm-3 col-md-2 form-group-sm">
+                                <label data-translate="fctr_estado"></label> <select
+                                    data-ng-model="vm.searchCriteria.estado"
+                                    data-ng-options="item as item + ' - ' + (('FacturaEstado_' + item) | translate) for item in vm.fctrEstadoList"
+                                    class="form-control">
+                                    <option />
+                                </select>
+                            </div>
+                            <div class="col-sm-3 col-md-2 form-group-sm">
+                                <label data-translate="tpsr"></label> <select
+                                    data-ng-model="vm.searchCriteria.tpsrId"
+                                    data-ng-options="item.value as (('enti_' + item.value) | translate) for item in vm.tpsrList"
+                                    class="form-control">
+                                    <option />
+                                </select>
+                            </div>
+                            <div class="col-sm-3 col-md-2 form-group-sm"
+                                data-ng-show="vm.searchCriteria.tpsrId">
+                                <label data-translate="srvc"></label> <input type="text" autocomplete="off"
+                                    data-ng-model="vm.searchCriteria.srvc"
+                                    data-ng-controller="ServicioTypeaheadController as ta"
+                                    data-uib-typeahead="srvc as srvc.etiqueta for srvc in ta.search(vm.searchCriteria.tpsrId, $viewValue)"
+                                    data-typeahead-editable="false" data-typeahead-wait-ms="250"
+                                    class="form-control">
+                            </div>
+                            <div class="col-sm-4 col-md-3 form-group-sm">
+                                <label data-translate="fctr_pagador"></label> <input type="text"
+                                    autocomplete="off" data-ng-model="vm.searchCriteria.pagador"
+                                    data-ng-controller="ParametroTypeaheadController as ta"
+                                    data-uib-typeahead="prmt as prmt.etiqueta for prmt in ta.getLabelValues(20010, $viewValue)"
+                                    data-typeahead-editable="false" data-typeahead-wait-ms="250"
+                                    class="form-control">
+                            </div>
+                        </div>
                     </fieldset>
                 </form>
             </div>

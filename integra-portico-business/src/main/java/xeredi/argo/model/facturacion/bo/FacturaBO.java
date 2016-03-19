@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import lombok.NonNull;
 
@@ -20,6 +21,7 @@ import xeredi.argo.model.facturacion.dao.ValoracionDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionImpuestoDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionLineaDAO;
 import xeredi.argo.model.facturacion.vo.FacturaCriterioVO;
+import xeredi.argo.model.facturacion.vo.FacturaTypeaheadCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
@@ -151,6 +153,37 @@ public class FacturaBO {
             }
 
             return new PaginatedList<FacturaVO>(fctrList, offset, limit, count);
+        }
+    }
+
+    /**
+     * Select typeahead list.
+     *
+     * @param criterio
+     *            the criterio
+     * @param limit
+     *            the limit
+     * @return the list
+     */
+    public List<FacturaVO> selectTypeaheadList(final @NonNull FacturaTypeaheadCriterioVO criterio, final int limit) {
+        Preconditions.checkNotNull(criterio.getTextoBusqueda());
+
+        final StringTokenizer tokenizer = new StringTokenizer(criterio.getTextoBusqueda(), "/");
+
+        criterio.setSerie(tokenizer.nextToken().toUpperCase() + "%");
+
+        if (tokenizer.hasMoreTokens()) {
+            criterio.setAnio(tokenizer.nextToken() + "%");
+        }
+
+        if (tokenizer.hasMoreTokens()) {
+            criterio.setNumero(tokenizer.nextToken() + "%");
+        }
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
+
+            return fctrDAO.selectTypeaheadList(criterio, new RowBounds(PaginatedList.MIN_OFFSET, limit));
         }
     }
 }

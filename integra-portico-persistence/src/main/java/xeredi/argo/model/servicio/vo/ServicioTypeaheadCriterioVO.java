@@ -11,7 +11,7 @@ import xeredi.argo.model.item.vo.ItemTypeahead;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public final class ServicioLupaCriterioVO extends BaseCriterioVO implements ItemTypeahead {
+public final class ServicioTypeaheadCriterioVO extends BaseCriterioVO implements ItemTypeahead {
 
     /** The texto busqueda. */
     private String textoBusqueda;

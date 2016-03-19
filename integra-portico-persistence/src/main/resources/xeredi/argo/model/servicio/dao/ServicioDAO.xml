@@ -178,7 +178,7 @@
         </where>
     </select>
 
-    <select id="selectLupaList" parameterType="ServicioLupaCriterioVO" resultMap="ResultMap" fetchSize="10">
+    <select id="selectTypeaheadList" parameterType="ServicioTypeaheadCriterioVO" resultMap="ResultMap" fetchSize="10">
         <![CDATA[
         select
             srvc_pk

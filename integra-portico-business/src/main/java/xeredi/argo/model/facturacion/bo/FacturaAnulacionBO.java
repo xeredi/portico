@@ -98,6 +98,9 @@ public final class FacturaAnulacionBO {
             final FacturaSerieVO fcsr = fcsrDAO.selectObject(fcsrCriterio);
             final FacturaVO fctrCopia = new FacturaVO();
 
+            idsMap.put(fctr.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
+
+            fctrCopia.setId(idsMap.get(fctr.getId()));
             fctrCopia.setAspc(fctr.getAspc());
             fctrCopia.setEstado(fctr.getImporte() > 0 ? FacturaEstado.RN : FacturaEstado.RP);
             fctrCopia.setFalta(Calendar.getInstance().getTime());
@@ -116,16 +119,9 @@ public final class FacturaAnulacionBO {
             fctrCopia.setInfo4(fctr.getInfo4());
             fctrCopia.setInfo5(fctr.getInfo5());
             fctrCopia.setInfo6(fctr.getInfo6());
-
-            idsMap.put(fctr.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
-
-            fctrCopia.setId(idsMap.get(fctr.getId()));
             fctrCopia.setNumero(fcsr.getNumeroUltimo());
 
-            fcsr.setNumeroUltimo(fcsr.getNumeroUltimo() + 1);
-
             fctrDAO.insert(fctrCopia);
-            fcsrDAO.update(fcsr);
 
             final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
             final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();

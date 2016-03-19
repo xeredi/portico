@@ -183,6 +183,7 @@
                             <th data-translate="fini"></th>
                             <th data-translate="ffin"></th>
                             <th data-translate="vlrc_codExencion"></th>
+                            <th data-translate="fctr_rectificada"></th>
                             <th data-translate="vlrc_importe"></th>
                             <th data-translate="vlrc_impuesto"></th>
                         </tr>
@@ -197,6 +198,9 @@
                             <td data-ng-bind="(vlrc.fini | date: ('format_datetime' | translate))"></td>
                             <td data-ng-bind="(vlrc.ffin | date: ('format_datetime' | translate))"></td>
                             <td data-ng-bind="vlrc.codExencion"></td>
+                            <td><a
+                                data-ng-href="#/facturacion/factura/detail/{{vlrc.fctrRectificada.id}}"
+                                data-ng-bind="vlrc.fctrRectificada.etiqueta"></a></td>
                             <td class="number" data-ng-bind="(vlrc.importe | number:2)"></td>
                             <td class="number" data-ng-bind="(vlrc.impuesto | number:2)"></td>
                         </tr>

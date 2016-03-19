@@ -126,9 +126,9 @@
                             data-uib-typeahead="prmt as prmt.etiqueta for prmt in ta.getLabelValues(vm.trmt.trtdMap[tpdtId].entd.tpdt.enti.id, $viewValue, vm.prtoId, vm.item.fref)"
                             data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
                             <input data-ng-switch-when="SR" class="form-control"
-                            data-ng-controller="SrvcLupaController" type="text" autocomplete="off"
+                            data-ng-controller="ServicioTypeaheadController as ta" type="text" autocomplete="off"
                             data-ng-model="vm.model.ittdMap[tpdtId].dsrvc"
-                            data-uib-typeahead="srvc as srvc.etiqueta for srvc in search(vm.trmt.trtdMap[tpdtId].entd.tpdt.enti.id, $viewValue)"
+                            data-uib-typeahead="srvc as srvc.etiqueta for srvc in ta.search(vm.trmt.trtdMap[tpdtId].entd.tpdt.enti.id, $viewValue)"
                             data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control"></td>
                     </tr>
                 </tbody>

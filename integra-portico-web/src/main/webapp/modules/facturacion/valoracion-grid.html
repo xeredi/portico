@@ -43,6 +43,7 @@
                     <th data-translate="tpsr"></th>
                     <th nowrap="nowrap" data-translate="srvc"></th>
                     <th data-translate="aspc"></th>
+                    <th data-translate="fctr_rectificada"></th>
                     <th data-translate="vlrc_pagador"></th>
                     <th data-translate="vlrc_sujPasivo"></th>
                     <th data-translate="vlrc_importe"></th>
@@ -71,6 +72,7 @@
                     <td nowrap="nowrap" data-ng-bind="('enti_' + item.srvc.entiId | translate)"></td>
                     <td data-ng-bind="item.srvc.etiqueta"></td>
                     <td data-ng-bind="item.aspc.codigo" data-bs-tooltip data-title="{{item.aspc.etiqueta}}"></td>
+                    <td data-ng-bind="item.fctrRectificada.etiqueta"></td>
                     <td data-ng-bind="item.pagador.parametro" data-bs-tooltip
                         data-title="{{item.pagador.etiqueta}}"></td>
                     <td><i class="glyphicon glyphicon-{{(item.sujPasivo ? 'ok' : 'remove')}}"></i></td>

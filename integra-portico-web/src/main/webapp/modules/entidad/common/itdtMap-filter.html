@@ -42,9 +42,9 @@
             data-ng-model="vm.searchCriteria.itdtMap[tpdtId].prmt"
             data-uib-typeahead="prmt as prmt.etiqueta for prmt in ta.getLabelValues(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue, vm.prtoId, fechaVigencia)"
             data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control"> <input
-            data-ng-switch-when="SR" data-ng-controller="SrvcLupaController" type="text" autocomplete="off"
-            data-ng-model="vm.searchCriteria.itdtMap[tpdtId].srvc"
-            data-uib-typeahead="srvc as srvc.etiqueta for srvc in search(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
+            data-ng-switch-when="SR" data-ng-controller="ServicioTypeaheadController as ta" type="text"
+            autocomplete="off" data-ng-model="vm.searchCriteria.itdtMap[tpdtId].srvc"
+            data-uib-typeahead="srvc as srvc.etiqueta for srvc in ta.search(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
             data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
     </div>
 </div>

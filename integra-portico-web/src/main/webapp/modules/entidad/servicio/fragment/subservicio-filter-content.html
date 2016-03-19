@@ -11,10 +11,10 @@
                         <div class="row">
                             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
                                 <label data-translate="srvc"></label> <input
-                                    data-ng-controller="SrvcLupaController" type="text" autocomplete="off"
-                                    data-ng-model="vm.searchCriteria.srvc"
+                                    data-ng-controller="ServicioTypeaheadController as ta" type="text"
+                                    autocomplete="off" data-ng-model="vm.searchCriteria.srvc"
                                     data-ng-selected="vm.prtoId = vm.searchCriteria.srvc.prto.id"
-                                    data-uib-typeahead="srvc as srvc.etiqueta for srvc in search(vm.enti.enti.tpsrId, $viewValue)"
+                                    data-uib-typeahead="srvc as srvc.etiqueta for srvc in ta.search(vm.enti.enti.tpsrId, $viewValue)"
                                     data-typeahead-editable="false" data-typeahead-wait-ms="250"
                                     class="form-control">
                             </div>

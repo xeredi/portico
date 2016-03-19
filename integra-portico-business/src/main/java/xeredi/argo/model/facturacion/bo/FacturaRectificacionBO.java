@@ -89,6 +89,7 @@ public final class FacturaRectificacionBO {
             vlrcCopia.setCodExencion(vlrc.getCodExencion());
             vlrcCopia.setFalta(Calendar.getInstance().getTime());
             vlrcCopia.setFctr(null);
+            vlrcCopia.setFctrRectificada(fctr);
             vlrcCopia.setFini(vlrc.getFini());
             vlrcCopia.setFfin(vlrc.getFfin());
             vlrcCopia.setFliq(vlrc.getFliq());

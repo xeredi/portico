@@ -19,8 +19,8 @@
                 <div class="col-md-2 col-lg-1 form-group-sm" data-ng-if="vm.tpsrId">
                     <label data-translate="srvc"></label> <input type="text"
                         data-ng-if="vm.accion == 'create'" autocomplete="off" data-ng-model="vm.model.srvc"
-                        data-ng-controller="SrvcLupaController"
-                        data-uib-typeahead="srvc as srvc.etiqueta for srvc in search(vm.tpsrId, $viewValue)"
+                        data-ng-controller="ServicioTypeaheadController as ta"
+                        data-uib-typeahead="srvc as srvc.etiqueta for srvc in ta.search(vm.tpsrId, $viewValue)"
                         data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
                     <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
                         data-ng-bind="vm.model.srvc.etiqueta"></p>

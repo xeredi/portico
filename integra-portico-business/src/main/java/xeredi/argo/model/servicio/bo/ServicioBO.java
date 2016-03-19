@@ -42,7 +42,7 @@ import xeredi.argo.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.argo.model.servicio.dao.SubservicioSubservicioDAO;
 import xeredi.argo.model.servicio.vo.ServicioArchivoVO;
 import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
-import xeredi.argo.model.servicio.vo.ServicioLupaCriterioVO;
+import xeredi.argo.model.servicio.vo.ServicioTypeaheadCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.argo.model.servicio.vo.SubservicioSubservicioVO;
@@ -170,32 +170,32 @@ public class ServicioBO {
     /**
      * Select lupa list.
      *
-     * @param srvcTypeaheadCriterio
+     * @param criterio
      *            the srvc typeahead criterio
      * @param limit
      *            the limit
      * @return the list
      */
-    public final List<ServicioVO> selectTypeaheadList(final @NonNull ServicioLupaCriterioVO srvcTypeaheadCriterio,
+    public final List<ServicioVO> selectTypeaheadList(final @NonNull ServicioTypeaheadCriterioVO criterio,
             final int limit) {
-        Preconditions.checkNotNull(srvcTypeaheadCriterio.getTextoBusqueda());
+        Preconditions.checkNotNull(criterio.getTextoBusqueda());
 
-        final StringTokenizer tokenizer = new StringTokenizer(srvcTypeaheadCriterio.getTextoBusqueda(), "/");
+        final StringTokenizer tokenizer = new StringTokenizer(criterio.getTextoBusqueda(), "/");
 
-        srvcTypeaheadCriterio.setSubpuerto(tokenizer.nextToken().toUpperCase());
+        criterio.setSubpuerto(tokenizer.nextToken().toUpperCase());
 
         if (tokenizer.hasMoreTokens()) {
-            srvcTypeaheadCriterio.setAnno(tokenizer.nextToken() + "%");
+            criterio.setAnno(tokenizer.nextToken() + "%");
         }
 
         if (tokenizer.hasMoreTokens()) {
-            srvcTypeaheadCriterio.setNumero(tokenizer.nextToken() + "%");
+            criterio.setNumero(tokenizer.nextToken() + "%");
         }
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
 
-            return srvcDAO.selectLupaList(srvcTypeaheadCriterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
+            return srvcDAO.selectTypeaheadList(criterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         }
     }
 
