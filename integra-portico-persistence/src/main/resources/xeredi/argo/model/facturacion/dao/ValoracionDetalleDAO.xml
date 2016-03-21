@@ -44,6 +44,12 @@
 			<result column="rgla_pk" property="id" />
 			<result column="rgla_codigo" property="codigo" />
 			<result column="rgla_tipo" property="tipo" />
+			<result column="rgla_texto" property="texto" />
+
+			<association property="enti" javaType="EntidadVO">
+				<result column="rgla_enti_pk" property="id" />
+				<result column="enti_tipo" property="tipo" />
+			</association>
 
 			<association property="crgo" javaType="CargoVO">
 				<result column="rgla_crgo_pk" property="id" />
@@ -101,8 +107,22 @@
 		    , ssrv_numero, ssrv_tpss_pk, ssrv_srvc_pk
 
 		    , (SELECT vlrc_fref FROM tbl_valoracion_vlrc WHERE vlrc_pk = vlrd_vlrc_pk) AS vlrd_fref
+    ]]>
+		<if test="idioma != null">
+	    <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'rglv'
+                    AND i18n_ext_pk = rglv_pk
+                    AND i18n_lang = #{idioma}
+            ) AS rgla_texto
+	    ]]>
+		</if>
+    <![CDATA[
 		FROM
 		    tbl_valoracion_det_vlrd vlrd
+		    INNER JOIN tbl_valoracion_vlrc ON
+		        vlrc_pk = vlrd_vlrc_pk
 		    INNER JOIN tbl_regla_rgla rgla
 		        ON EXISTS (
 		            SELECT 1
@@ -113,6 +133,9 @@
 		        )
 		    LEFT JOIN tbl_subservicio_ssrv ssrv ON
 		        ssrv_pk = vlrd_ssrv_pk
+		    LEFT JOIN tbl_regla_version_rglv ON
+		        rglv_rgla_pk = rgla_pk
+		        AND vlrc_fref BETWEEN rglv_fini AND COALESCE(rglv_ffin, vlrc_fref)
     ]]>
 	</sql>
 

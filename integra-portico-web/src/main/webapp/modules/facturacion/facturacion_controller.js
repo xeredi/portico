@@ -63,11 +63,15 @@ angular.module("facturacion_controller", [])
 
 .controller("FacturaDetailController", FacturaDetailController)
 
+.controller("FacturaEditController", FacturaEditController)
+
 .controller("FacturaAnulacionEditController", FacturaAnulacionEditController)
 
 .controller("FacturaRectificacionEditController", FacturaRectificacionEditController)
 
 .controller("FacturaLineaDetailController", FacturaLineaDetailController)
+
+.controller("FacturaDetalleDetailController", FacturaDetalleDetailController)
 
 ;
 
@@ -216,6 +220,11 @@ function config($routeProvider) {
         reloadOnSearch : false
     })
 
+    .when("/facturacion/factura/edit/:accion/:id?", {
+        templateUrl : "modules/facturacion/factura-edit.html",
+        controller : "FacturaEditController as vm",
+    })
+
     .when("/facturacion/factura-anulacion/edit/:fctrId", {
         templateUrl : "modules/facturacion/factura-anulacion-edit.html",
         controller : "FacturaAnulacionEditController as vm",
@@ -229,6 +238,12 @@ function config($routeProvider) {
     .when("/facturacion/factura-linea/detail/:id", {
         templateUrl : "modules/facturacion/factura-linea-detail.html",
         controller : "FacturaLineaDetailController as vm",
+        reloadOnSearch : false
+    })
+
+    .when("/facturacion/factura-detalle/detail/:id", {
+        templateUrl : "modules/facturacion/factura-detalle-detail.html",
+        controller : "FacturaDetalleDetailController as vm",
         reloadOnSearch : false
     })
 
@@ -1260,6 +1275,36 @@ function FacturaDetailController($routeParams, pageTitleService, FacturaService,
     pageTitleService.setTitle("fctr", "page_detail");
 }
 
+function FacturaEditController($routeParams, pageTitleService, FacturaService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        FacturaService.save(vm.accion, vm.model).then(function(data) {
+            FacturaService.redirectAfterSave(vm.accion, '/facturacion/factura/detail', [ data.model.id ]);
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    vm.accion = $routeParams.accion;
+    vm.search = {
+        id : $routeParams.id
+    }
+
+    FacturaService.edit(vm.accion, vm.search).then(function(data) {
+        vm.model = data.model;
+
+        vm.aspc = data.aspc;
+    });
+
+    pageTitleService.setTitle("fctr", "page_" + vm.accion);
+}
+
 function FacturaAnulacionEditController($routeParams, pageTitleService, FacturaAnulacionService) {
     var vm = this;
 
@@ -1330,13 +1375,6 @@ function FacturaLineaDetailController($routeParams, pageTitleService, Valoracion
 
     vm.pageChanged = pageChanged;
     vm.tabSelected = tabSelected;
-    vm.remove = remove;
-
-    function remove() {
-        ValoracionLineaService.remove(vm.model).then(function(data) {
-            window.history.back();
-        });
-    }
 
     function pageChanged() {
         findVlrdList(vm.page);
@@ -1346,14 +1384,14 @@ function FacturaLineaDetailController($routeParams, pageTitleService, Valoracion
         ValoracionLineaService.tabSelected(tabNo);
     }
 
-    function findFctdList(page) {
+    function findVlrdList(page) {
         var searchCriteria = {
             vlrlId : vm.model.id
         };
 
         ValoracionDetalleService.listPage(searchCriteria, page, vm.limit).then(function(data) {
-            vm.fctdList = data.resultList;
-            vm.pageMap['fctdList'] = data.resultList.page;
+            vm.vlrdList = data.resultList;
+            vm.pageMap['vlrdList'] = data.resultList.page;
 
             ValoracionLineaService.pageMapChanged(vm.pageMap);
         });
@@ -1378,8 +1416,27 @@ function FacturaLineaDetailController($routeParams, pageTitleService, Valoracion
         vm.vlrlPadre = data.vlrlPadre;
         vm.vlrlHijosList = data.vlrlHijosList;
 
-        findFctdList(vm.pageMap['fctdList']);
+        findVlrdList(vm.pageMap['vlrdList']);
     });
 
     pageTitleService.setTitle("fctl", "page_detail");
+}
+
+function FacturaDetalleDetailController($routeParams, pageTitleService, ValoracionDetalleService) {
+    var vm = this;
+
+    vm.search = {
+        id : $routeParams.id
+    };
+
+    ValoracionDetalleService.detail(vm.search).then(function(data) {
+        vm.model = data.model;
+
+        vm.aspc = data.aspc;
+        vm.vlrl = data.vlrl;
+        vm.vlrlPadre = data.vlrlPadre;
+        vm.vlrdHijosList = data.vlrdHijosList;
+    });
+
+    pageTitleService.setTitle("fctd", "page_detail");
 }

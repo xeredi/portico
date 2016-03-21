@@ -112,6 +112,7 @@ public final class FacturaAnulacionBO {
             fctrCopia.setImpuesto(-fctr.getImpuesto());
             fctrCopia.setPagador(fctr.getPagador());
             fctrCopia.setSujPasivo(fctr.getSujPasivo());
+            fctrCopia.setFctrAnulada(fctr);
 
             fctrCopia.setInfo1(fctr.getInfo1());
             fctrCopia.setInfo2(fctr.getInfo2());

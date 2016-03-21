@@ -64,10 +64,11 @@
 	<sql id="SelectPrefix">
     <![CDATA[
 		SELECT
-		    fctr_pk, fctr_aspc_pk, fctr_pagador_prmt_pk, fctr_fcsr_pk, fctr_numero
-		    , fctr_fref, fctr_falta, fctr_fini, fctr_ffin, fctr_estado, fctr_es_suj_pasivo
-		    , fctr_info1, fctr_info2, fctr_info3, fctr_info4, fctr_info5, fctr_info6
-		    , fctr_importe, fctr_impuesto
+		    fctr.fctr_pk, fctr.fctr_aspc_pk, fctr.fctr_pagador_prmt_pk, fctr.fctr_fcsr_pk, fctr.fctr_numero
+		    , fctr.fctr_fref, fctr.fctr_falta, fctr.fctr_fini, fctr.fctr_ffin, fctr.fctr_estado, fctr.fctr_es_suj_pasivo
+		    , fctr.fctr_info1, fctr.fctr_info2, fctr.fctr_info3, fctr.fctr_info4, fctr.fctr_info5, fctr.fctr_info6
+		    , fctr.fctr_importe, fctr.fctr_impuesto
+		    , fctr.fctr_anulada_pk
 
 		    , aspc_codigo, aspc_tpsr_pk
 
@@ -75,6 +76,8 @@
 
 		    , prmt_parametro AS fctr_pagador_prmt
 		    , prmt_tppr_pk AS fctr_pagador_tppr_pk
+
+		    , fcan.fctr_numero AS fcan_fctr_numero
     ]]>
 		<if test="idioma != null">
 	    <![CDATA[
@@ -86,10 +89,10 @@
 	    				SELECT aspv_pk
 	    				FROM tbl_aspecto_version_aspv
 	    				WHERE
-	    					aspv_aspc_pk = fctr_aspc_pk
+	    					aspv_aspc_pk = fctr.fctr_aspc_pk
 	    					AND (
-	    						aspv_fini <= fctr_fref
-	    						AND (aspv_ffin IS NULL OR aspv_ffin > fctr_fref)
+	    						aspv_fini <= fctr.fctr_fref
+	    						AND (aspv_ffin IS NULL OR aspv_ffin > fctr.fctr_fref)
 	    					)
 	    			)
 	    			AND i18n_pref = 'aspv'
@@ -108,44 +111,46 @@
 		                SELECT prvr_pk
 		                FROM tbl_parametro_version_prvr
 		                WHERE
-		                    prvr_prmt_pk = fctr_pagador_prmt_pk
-		                    AND prvr_fini <= fctr_fref
-		                    AND (prvr_ffin IS NULL OR prvr_ffin > fctr_fref)
+		                    prvr_prmt_pk = fctr.fctr_pagador_prmt_pk
+		                    AND prvr_fini <= fctr.fctr_fref
+		                    AND (prvr_ffin IS NULL OR prvr_ffin > fctr.fctr_fref)
 		            )
 		    ) AS fctr_pagador
 	    ]]>
 		</if>
     <![CDATA[
 		FROM
-		    tbl_factura_fctr
+		    tbl_factura_fctr fctr
 		    INNER JOIN tbl_aspecto_aspc ON
-		        aspc_pk = fctr_aspc_pk
+		        aspc_pk = fctr.fctr_aspc_pk
 		    INNER JOIN tbl_factura_serie_fcsr ON
-		        fcsr_pk = fctr_fcsr_pk
+		        fcsr_pk = fctr.fctr_fcsr_pk
 		    INNER JOIN tbl_parametro_prmt ON
-		        prmt_pk = fctr_pagador_prmt_pk
+		        prmt_pk = fctr.fctr_pagador_prmt_pk
+		    LEFT JOIN tbl_factura_fctr fcan ON
+		    	fcan.fctr_pk = fctr.fctr_anulada_pk
     ]]>
 	</sql>
 
 	<sql id="SelectWhere">
 		<where>
 			<if test="id != null">
-				fctr_pk = #{id}
+				fctr.fctr_pk = #{id}
 			</if>
 			<if test="ids != null">
-				AND fctr_pk IN
+				AND fctr.fctr_pk IN
 				<foreach collection="ids" item="item" open="(" close=")"
 					separator=",">#{item}
 				</foreach>
 			</if>
 			<if test="estado != null">
-				AND fctr_estado = #{estado}
+				AND fctr.fctr_estado = #{estado}
 			</if>
 			<if test="tpsrId != null">
 		    <![CDATA[
 		    	AND EXISTS (
 		    		SELECT 1 FROM tbl_valoracion_vlrc
-		    		WHERE vlrc_fctr_pk = fctr_pk
+		    		WHERE vlrc_fctr_pk = fctr.fctr_pk
 		    			AND EXISTS (
 		    				SELECT 1 FROM tbl_servicio_srvc
 		    				WHERE srvc_pk = vlrc_srvc_pk
@@ -155,13 +160,13 @@
 		    ]]>
 			</if>
 			<if test="pagador != null and pagador.id != null">
-				AND fctr_pagador_prmt_pk = #{pagador.id}
+				AND fctr.fctr_pagador_prmt_pk = #{pagador.id}
 			</if>
 			<if test="srvc != null and srvc.id != null">
 		    <![CDATA[
 		    	AND EXISTS (
 		    		SELECT 1 FROM tbl_valoracion_vlrc
-		    		WHERE vlrc_fctr_pk = fctr_pk
+		    		WHERE vlrc_fctr_pk = fctr.fctr_pk
 		    			AND vlrc_srvc_pk = #{srvc.id}
 		    	)
 		    ]]>
@@ -177,7 +182,7 @@
 	<select id="count" resultType="Integer" parameterType="FacturaCriterioVO">
 		SELECT COUNT(1)
 		FROM
-		tbl_factura_fctr
+		tbl_factura_fctr fctr
 		INNER JOIN tbl_aspecto_aspc ON
 		aspc_pk = fctr_aspc_pk
 		INNER JOIN tbl_factura_serie_fcsr ON
@@ -220,12 +225,12 @@
         INSERT INTO tbl_factura_fctr (
             fctr_pk, fctr_aspc_pk, fctr_pagador_prmt_pk, fctr_fcsr_pk, fctr_numero
             , fctr_fref, fctr_falta, fctr_fini, fctr_ffin, fctr_estado, fctr_es_suj_pasivo
-            , fctr_importe, fctr_impuesto
+            , fctr_importe, fctr_impuesto, fctr_anulada_pk
             , fctr_info1, fctr_info2, fctr_info3, fctr_info4, fctr_info5, fctr_info6
         ) VALUES (
             #{id}, #{aspc.id}, #{pagador.id}, #{fcsr.id}, #{numero}
             , #{fref}, #{falta}, #{fini}, #{ffin}, #{estado}, #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}
-            , #{importe}, #{impuesto}
+            , #{importe}, #{impuesto}, #{fctrAnulada.id}
             , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
         )
     ]]>

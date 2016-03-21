@@ -34,6 +34,11 @@
                     <p class="form-control-static">{{vm.model.estado}} - {{'FacturaEstado_' +
                         vm.model.estado | translate}}</p>
                 </div>
+                <div class="col-md-2 form-group-sm"
+                    data-ng-if="vm.model.estado == 'RN' || vm.model.estado == 'RP'">
+                    <label data-translate="fctr_anulada"></label>
+                    <p class="form-control-static" data-ng-bind="vm.model.fctrAnulada.etiqueta"></p>
+                </div>
                 <div class="col-md-2 form-group-sm">
                     <label data-translate="tpsr"></label>
                     <p class="form-control-static">
@@ -119,198 +124,100 @@
             </div>
         </fieldset>
 
-        <fieldset>
-            <legend data-translate="fctgList"></legend>
+        <div class="row">
+            <fieldset class="col-md-6 col-lg-4 col-xl-3">
+                <legend data-translate="fctgList"></legend>
 
-            <div class="table-responsive">
-                <table class="table-bordered table-condensed table-hover">
-                    <thead>
-                        <tr>
-                            <th data-translate="crgo"></th>
-                            <th data-translate="fctg_importe"></th>
-                        </tr>
-                    </thead>
+                <div class="table-responsive">
+                    <table class="table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th data-translate="crgo"></th>
+                                <th data-translate="fctg_importe"></th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                        <tr data-ng-repeat="fctg in vm.fctgList track by $index">
-                            <td><a
-                                data-ng-href="#/facturacion/cargo/detail/{{fctg.crgo.id}}/{{vm.model.fref}}"
-                                data-ng-bind="fctg.crgo.etiqueta"></a></td>
-                            <td class="number" data-ng-bind="(fctg.importe | number:2)"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </fieldset>
+                        <tbody>
+                            <tr data-ng-repeat="fctg in vm.fctgList track by $index">
+                                <td><a
+                                    data-ng-href="#/facturacion/cargo/detail/{{fctg.crgo.id}}/{{vm.model.fref}}"
+                                    data-ng-bind="fctg.crgo.etiqueta"></a></td>
+                                <td class="number" data-ng-bind="(fctg.importe | number:2)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
 
-        <fieldset>
-            <legend data-translate="fctiList"></legend>
+            <fieldset class="col-md-6 col-lg-4 col-xl-3">
+                <legend data-translate="fctiList"></legend>
 
-            <div class="table-responsive">
-                <table class="table-bordered table-condensed table-hover">
-                    <thead>
-                        <tr>
-                            <th data-translate="fcti_impuesto"></th>
-                            <th data-translate="fcti_porcentaje"></th>
-                            <th data-translate="fcti_importe_base"></th>
-                            <th data-translate="fcti_importe_impuesto"></th>
-                        </tr>
-                    </thead>
+                <div class="table-responsive">
+                    <table class="table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th data-translate="fcti_impuesto"></th>
+                                <th data-translate="fcti_porcentaje"></th>
+                                <th data-translate="fcti_importe_base"></th>
+                                <th data-translate="fcti_importe_impuesto"></th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                        <tr data-ng-repeat="fcti in vm.fctiList track by $index">
-                            <td><a
-                                data-ng-href="#/maestro/parametro/detail/{{fcti.impuesto.entiId}}/{{fcti.impuesto.id}}/{{vm.model.fref}}"
-                                data-ng-bind="fcti.impuesto.etiqueta"></a></td>
-                            <td class="number" data-ng-bind="(fcti.porcentaje | number:2)"></td>
-                            <td class="number" data-ng-bind="(fcti.importeBase | number:2)"></td>
-                            <td class="number" data-ng-bind="(fcti.importeImpuesto | number:2)"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </fieldset>
-
-        <fieldset>
-            <legend data-translate="vlrcList"></legend>
-
-            <div class="table-responsive">
-                <table class="table-bordered table-condensed table-hover">
-                    <thead>
-                        <tr>
-                            <th data-translate="srvc"></th>
-                            <th data-translate="fref"></th>
-                            <th data-translate="fini"></th>
-                            <th data-translate="ffin"></th>
-                            <th data-translate="vlrc_codExencion"></th>
-                            <th data-translate="fctr_rectificada"></th>
-                            <th data-translate="vlrc_importe"></th>
-                            <th data-translate="vlrc_impuesto"></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr data-ng-repeat="vlrc in vm.vlrcList track by $index">
-                            <td><a
-                                data-ng-href="#/servicio/servicio/detail/{{vlrc.srvc.entiId}}/{{vlrc.srvc.id}}"
-                                data-ng-bind="vlrc.srvc.etiqueta"></a></td>
-                            <td data-ng-bind="(vlrc.fref | date: ('format_date' | translate))"></td>
-                            <td data-ng-bind="(vlrc.fini | date: ('format_datetime' | translate))"></td>
-                            <td data-ng-bind="(vlrc.ffin | date: ('format_datetime' | translate))"></td>
-                            <td data-ng-bind="vlrc.codExencion"></td>
-                            <td><a
-                                data-ng-href="#/facturacion/factura/detail/{{vlrc.fctrRectificada.id}}"
-                                data-ng-bind="vlrc.fctrRectificada.etiqueta"></a></td>
-                            <td class="number" data-ng-bind="(vlrc.importe | number:2)"></td>
-                            <td class="number" data-ng-bind="(vlrc.impuesto | number:2)"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </fieldset>
-    </div>
-
-    <!--
-    <div data-uib-tab data-heading="{{'fctlList' | translate}}" data-select="vm.tabSelected('fctlList')">
-        <div class="btn-toolbar" role="toolbar">
-            <div class="btn-group">
-                <div data-uib-pagination data-total-items="vm.fctlList.count"
-                    data-items-per-page="vm.fctlList.limit" data-ng-model="vm.page"
-                    data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
-                    data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
-            </div>
+                        <tbody>
+                            <tr data-ng-repeat="fcti in vm.fctiList track by $index">
+                                <td><a
+                                    data-ng-href="#/maestro/parametro/detail/{{fcti.impuesto.entiId}}/{{fcti.impuesto.id}}/{{vm.model.fref}}"
+                                    data-ng-bind="fcti.impuesto.etiqueta"></a></td>
+                                <td class="number" data-ng-bind="(fcti.porcentaje | number:2)"></td>
+                                <td class="number" data-ng-bind="(fcti.importeBase | number:2)"></td>
+                                <td class="number" data-ng-bind="(fcti.importeImpuesto | number:2)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
         </div>
 
-        <div class="table-responsive">
-            <span class="label label-default" data-translate="grid_count"
-                data-translate-value-count="{{vm.fctlList.count | number:0}}"></span>
+        <div class="row">
+            <fieldset class="col-md-10 col-lg-8 col-xl-6">
+                <legend data-translate="vlrcList"></legend>
 
-            <table class="table-bordered table-condensed table-hover">
-                <thead>
-                    <tr>
-                        <th />
-                        <th data-translate="srvc"></th>
-                        <th data-translate="enti"></th>
-                        <th data-translate="rgla"></th>
-                        <th data-translate="rgla_tipo"></th>
-                        <th data-translate="fctl_importeBase"></th>
-                        <th data-translate="fctl_importe"></th>
-                        <th data-translate="fctl_fctdCount"></th>
-                        <th data-translate="fctl_impuesto"></th>
-                        <th data-translate="fini"></th>
-                        <th data-translate="ffin"></th>
+                <div class="table-responsive">
+                    <table class="table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th data-translate="srvc"></th>
+                                <th data-translate="fref"></th>
+                                <th data-translate="fini"></th>
+                                <th data-translate="ffin"></th>
+                                <th data-translate="vlrc_codExencion"></th>
+                                <th data-translate="fctr_rectificada"></th>
+                                <th data-translate="vlrc_importe"></th>
+                                <th data-translate="vlrc_impuesto"></th>
+                            </tr>
+                        </thead>
 
-                        <th data-ng-if="vm.aspc.version.lgrpInfo1" data-translate="fctl_info1"></th>
-                        <th data-ng-if="vm.aspc.version.lgrpInfo2" data-translate="fctl_info2"></th>
-                        <th data-ng-if="vm.aspc.version.lgrpInfo3" data-translate="fctl_info3"></th>
-                        <th data-ng-if="vm.aspc.version.lgrpInfo4" data-translate="fctl_info4"></th>
-                        <th data-ng-if="vm.aspc.version.lgrpInfo5" data-translate="fctl_info5"></th>
-                        <th data-ng-if="vm.aspc.version.lgrpInfo6" data-translate="fctl_info6"></th>
-
-                        <th data-translate="fctl_cuant1"></th>
-                        <th data-translate="fctl_cuant2"></th>
-                        <th data-translate="fctl_cuant3"></th>
-                        <th data-translate="fctl_cuant4"></th>
-                        <th data-translate="fctl_cuant5"></th>
-                        <th data-translate="fctl_cuant6"></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr data-ng-repeat="fctl in vm.fctlList.list track by $index">
-                        <td><a data-ng-href="#/facturacion/fctl/detail/{{fctl.id}}"><i
-                                class="glyphicon glyphicon-search"></i></a></td>
-                        <td nowrap="nowrap" data-ng-bind="fctl.fcts.srvc.etiqueta"></td>
-                        <td nowrap="nowrap" data-ng-bind="('enti_' + fctl.rgla.enti.id | translate)"></td>
-                        <td nowrap="nowrap" data-ng-bind="fctl.rgla.codigo"></td>
-                        <td data-ng-bind="fctl.rgla.tipo" data-bs-tooltip
-                            data-title="{{('ReglaTipo_' + fctl.rgla.tipo | translate)}}"></td>
-                        <td class="number"><span data-ng-if="(fctl.rgla.tipo != 'T')"
-                            data-ng-bind="(fctl.importeBase | number:2)"></span></td>
-                        <td class="number" data-ng-bind="(fctl.importe | number:2)"></td>
-                        <td class="number" data-ng-bind="fctl.fctdCount"></td>
-                        <td data-ng-bind="fctl.impuesto.parametro" data-bs-tooltip
-                            data-title="{{fctl.impuesto.etiqueta}}"></td>
-                        <td data-ng-bind="(fctl.fini | date:'short')"></td>
-                        <td data-ng-bind="(fctl.ffin | date:'short')"></td>
-
-                        <td nowrap="nowrap" data-ng-if="vm.aspc.version.lgrpInfo1"><span
-                            data-ng-if="(fctl.rgla.tipo == 'T' && fctl.info1)">{{fctl.rgla.version.etiqInfo1}}:
-                                {{fctl.info1}}</span></td>
-                        <td nowrap="nowrap" data-ng-if="vm.aspc.version.lgrpInfo2"><span
-                            data-ng-if="(fctl.rgla.tipo == 'T' && fctl.info2)">{{fctl.rgla.version.etiqInfo2}}:
-                                {{fctl.info2}}</span></td>
-                        <td nowrap="nowrap" data-ng-if="vm.aspc.version.lgrpInfo3"><span
-                            data-ng-if="(fctl.rgla.tipo == 'T' && fctl.info3)">{{fctl.rgla.version.etiqInfo3}}:
-                                {{fctl.info3}}</span></td>
-                        <td nowrap="nowrap" data-ng-if="vm.aspc.version.lgrpInfo4"><span
-                            data-ng-if="(fctl.rgla.tipo == 'T' && fctl.info4)">{{fctl.rgla.version.etiqInfo4}}:
-                                {{fctl.info4}}</span></td>
-                        <td nowrap="nowrap" data-ng-if="vm.aspc.version.lgrpInfo5"><span
-                            data-ng-if="(fctl.rgla.tipo == 'T' && fctl.info5)">{{fctl.rgla.version.etiqInfo5}}:
-                                {{fctl.info5}}</span></td>
-                        <td nowrap="nowrap" data-ng-if="vm.aspc.version.lgrpInfo6"><span
-                            data-ng-if="(fctl.rgla.tipo == 'T' && fctl.info6)">{{fctl.rgla.version.etiqInfo6}}:
-                                {{fctl.info6}}</span></td>
-
-                        <td><span data-ng-if="fctl.cuant1">{{fctl.rgla.version.etiqCuant1}}:
-                                {{fctl.cuant1}}</span></td>
-                        <td><span data-ng-if="fctl.cuant2">{{fctl.rgla.version.etiqCuant2}}:
-                                {{fctl.cuant2}}</span></td>
-                        <td><span data-ng-if="fctl.cuant3">{{fctl.rgla.version.etiqCuant3}}:
-                                {{fctl.cuant3}}</span></td>
-                        <td><span data-ng-if="fctl.cuant4">{{fctl.rgla.version.etiqCuant4}}:
-                                {{fctl.cuant4}}</span></td>
-                        <td><span data-ng-if="fctl.cuant5">{{fctl.rgla.version.etiqCuant5}}:
-                                {{fctl.cuant5}}</span></td>
-                        <td><span data-ng-if="fctl.cuant6">{{fctl.rgla.version.etiqCuant6}}:
-                                {{fctl.cuant6}}</span></td>
-                    </tr>
-                </tbody>
-            </table>
+                        <tbody>
+                            <tr data-ng-repeat="vlrc in vm.vlrcList track by $index">
+                                <td><a
+                                    data-ng-href="#/servicio/servicio/detail/{{vlrc.srvc.entiId}}/{{vlrc.srvc.id}}"
+                                    data-ng-bind="vlrc.srvc.etiqueta"></a></td>
+                                <td data-ng-bind="(vlrc.fref | date: ('format_date' | translate))"></td>
+                                <td data-ng-bind="(vlrc.fini | date: ('format_datetime' | translate))"></td>
+                                <td data-ng-bind="(vlrc.ffin | date: ('format_datetime' | translate))"></td>
+                                <td data-ng-bind="vlrc.codExencion"></td>
+                                <td><a
+                                    data-ng-href="#/facturacion/factura/detail/{{vlrc.fctrRectificada.id}}"
+                                    data-ng-bind="vlrc.fctrRectificada.etiqueta"></a></td>
+                                <td class="number" data-ng-bind="(vlrc.importe | number:2)"></td>
+                                <td class="number" data-ng-bind="(vlrc.impuesto | number:2)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
         </div>
     </div>
- -->
 
     <div data-uib-tab data-active="vm.tabActive['fctlList']" data-select="vm.tabSelected('fctlList')"
         data-heading="{{'fctlList' | translate}}">
@@ -503,6 +410,4 @@
             </table>
         </div>
     </div>
-</div>
-
 </div>

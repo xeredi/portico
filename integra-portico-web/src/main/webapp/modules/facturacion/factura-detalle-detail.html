@@ -1,15 +1,8 @@
 <div data-ng-if="vm.model">
     <div data-uib-tabset data-type="pills">
-        <div data-uib-tab data-select="vm.tabSelected(null)" data-heading="{{'vlrd' | translate}}">
+        <div data-uib-tab data-select="vm.tabSelected(null)" data-heading="{{'fctd' | translate}}">
             <div class="btn-toolbar" role="toolbar">
-                <div class="btn-group">
-                    <a class="btn btn-default"
-                        data-ng-href="#/facturacion/valoracion-detalle/edit/edit/{{vm.model.vlrcId}}/{{vm.model.vlrlId}}/{{vm.model.id}}"><i
-                        class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
-                    <button data-ng-click="vm.remove()" class="btn btn-default">
-                        <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
-                    </button>
-                </div>
+                <div class="btn-group"></div>
             </div>
 
             <fieldset>
@@ -161,7 +154,7 @@
 
                         <tbody>
                             <tr data-ng-repeat="vlrd in vm.vlrdHijosList track by $index">
-                                <td><a data-ng-href="#/facturacion/valoracion-detalle/detail/{{vlrd.id}}"><i
+                                <td><a data-ng-href="#/facturacion/factura-detalle/detail/{{vlrd.id}}"><i
                                         class="glyphicon glyphicon-search"></i></a></td>
                                 <td nowrap="nowrap" data-ng-bind="vlrd.rgla.texto" data-bs-tooltip
                                     data-title="{{vlrd.rgla.codigo}}"></td>

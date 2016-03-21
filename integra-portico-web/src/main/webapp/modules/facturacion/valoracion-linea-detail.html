@@ -17,10 +17,10 @@
                         <p class="form-control-static">
                             <a data-ng-if="vm.model.rgla.enti.tipo == 'T'"
                                 data-ng-href="#/metamodelo/tipo-servicio/detail/{{vm.model.rgla.enti.id}}"
-                                data-translate="{{'enti_' + vm.model.rgla.enti.id}}"></a> <a
+                                data-ng-bind="'enti_' + vm.model.rgla.enti.id | translate"></a> <a
                                 data-ng-if="vm.model.rgla.enti.tipo == 'S'"
                                 data-ng-href="#/metamodelo/tipo-subservicio/detail/{{vm.model.rgla.enti.id}}"
-                                data-translate="{{'enti_' + vm.model.rgla.enti.id}}"></a>
+                                data-ng-bind="'enti_' + vm.model.rgla.enti.id | translate"></a>
                         </p>
                     </div>
                     <div class="col-md-1 form-group-sm">
@@ -31,12 +31,12 @@
                                 data-ng-bind="vm.model.rgla.crgo.codigo"></a>
                         </p>
                     </div>
-                    <div class="col-md-1 form-group-sm">
+                    <div class="col-md-3 form-group-sm">
                         <label data-translate="rgla"></label>
                         <p class="form-control-static">
                             <a
                                 data-ng-href="#/facturacion/regla/detail/{{vm.model.rgla.id}}/{{vm.model.fref}}"
-                                data-ng-bind="vm.model.rgla.codigo"></a>
+                                data-ng-bind="vm.model.rgla.etiqueta"></a>
                         </p>
                     </div>
                     <div class="col-md-1 form-group-sm">
@@ -189,8 +189,10 @@
                             <tr data-ng-repeat="vlrl in vm.vlrlHijosList track by $index">
                                 <td><a data-ng-href="#/facturacion/valoracion-linea/detail/{{vlrl.id}}"><i
                                         class="glyphicon glyphicon-search"></i></a></td>
-                                <td nowrap="nowrap" data-ng-bind="vlrl.rgla.codigo"></td>
-                                <td nowrap="nowrap" data-ng-bind="vlrl.rgla.tipo"></td>
+                                <td nowrap="nowrap" data-ng-bind="vlrl.rgla.texto" data-bs-tooltip
+                                    data-title="{{vlrl.rgla.codigo}}"></td>
+                                <td nowrap="nowrap" data-ng-bind="vlrl.rgla.tipo" data-bs-tooltip
+                                    data-title="{{'ReglaTipo_' + vlrl.rgla.tipo | translate}}"></td>
                                 <td nowrap="nowrap" data-ng-bind="vlrl.rgla.version.valorBase | number:4"
                                     class="number"></td>
                                 <td nowrap="nowrap" class="number">{{vlrl.importeBase | number:2}} &euro;</td>
@@ -239,8 +241,6 @@
                     <thead>
                         <tr>
                             <th />
-                            <th data-translate="rgla"></th>
-                            <th data-translate="vlrd_valorBase"></th>
                             <th data-translate="vlrd_importeBase" data-ng-if="vm.model.rgla.tipo != 'T'"></th>
                             <th data-translate="vlrd_importe"></th>
                             <th data-ng-bind="'enti_' + vm.vlrlPadre.rgla.enti.id | translate"></th>
@@ -278,8 +278,6 @@
                         <tr data-ng-repeat="vlrd in vm.vlrdList.list track by $index">
                             <td><a data-ng-href="#/facturacion/valoracion-detalle/detail/{{vlrd.id}}"><i
                                     class="glyphicon glyphicon-search"></i></a></td>
-                            <td nowrap="nowrap" data-ng-bind="vlrd.rgla.codigo"></td>
-                            <td class="number" data-ng-bind="vlrd.valorBase | number:4"></td>
                             <td nowrap="nowrap" class="number" data-ng-if="vlrd.rgla.tipo != 'T'">{{vlrd.importeBase
                                 | number:2}} &euro;</td>
                             <td nowrap="nowrap" class="number">{{vlrd.importe | number:2}} &euro;</td>

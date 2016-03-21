@@ -1,1 +1,304 @@
-factura-linea-detail.html
+<div data-ng-if="vm.model">
+    <div data-uib-tabset data-type="pills">
+        <div data-uib-tab data-select="vm.tabSelected(null)" data-heading="{{'fctl' | translate}}">
+            <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group"></div>
+            </div>
+
+            <fieldset>
+                <div class="row">
+                    <div class="col-md-2 form-group-sm">
+                        <label data-translate="enti"></label>
+                        <p class="form-control-static">
+                            <a data-ng-if="vm.model.rgla.enti.tipo == 'T'"
+                                data-ng-href="#/metamodelo/tipo-servicio/detail/{{vm.model.rgla.enti.id}}"
+                                data-translate="{{'enti_' + vm.model.rgla.enti.id}}"></a> <a
+                                data-ng-if="vm.model.rgla.enti.tipo == 'S'"
+                                data-ng-href="#/metamodelo/tipo-subservicio/detail/{{vm.model.rgla.enti.id}}"
+                                data-translate="{{'enti_' + vm.model.rgla.enti.id}}"></a>
+                        </p>
+                    </div>
+                    <div class="col-md-1 form-group-sm">
+                        <label data-translate="crgo"></label>
+                        <p class="form-control-static">
+                            <a
+                                data-ng-href="#/facturacion/cargo/detail/{{vm.model.rgla.crgo.id}}/{{vm.model.fref}}"
+                                data-ng-bind="vm.model.rgla.crgo.codigo"></a>
+                        </p>
+                    </div>
+                    <div class="col-md-3 form-group-sm">
+                        <label data-translate="rgla"></label>
+                        <p class="form-control-static">
+                            <a
+                                data-ng-href="#/facturacion/regla/detail/{{vm.model.rgla.id}}/{{vm.model.fref}}"
+                                data-ng-bind="vm.model.rgla.etiqueta"></a>
+                        </p>
+                    </div>
+                    <div class="col-md-1 form-group-sm">
+                        <label data-translate="rgla_tipo"></label>
+                        <p class="form-control-static" data-ng-bind="vm.model.rgla.tipo"></p>
+                    </div>
+                    <div class="col-md-1 form-group-sm">
+                        <label data-translate="rgla_valorBase"></label>
+                        <p class="form-control-static number"
+                            data-ng-bind="vm.model.rgla.version.valorBase | number:4"></p>
+                    </div>
+                    <div class="col-md-1 form-group-sm" data-ng-if="vm.model.rgla.tipo != 'T'">
+                        <label data-translate="vlrl_importeBase"></label>
+                        <p class="form-control-static number">{{vm.model.importeBase | number:2}} &euro;</p>
+                    </div>
+                    <div class="col-md-1 form-group-sm">
+                        <label data-translate="vlrl_importe"></label>
+                        <p class="form-control-static number">{{vm.model.importe | number:2}} &euro;</p>
+                    </div>
+                    <div class="col-md-2 form-group-sm">
+                        <label data-translate="vlrl_impuesto"></label>
+                        <p class="form-control-static">
+                            <a
+                                data-ng-href="#/maestro/parametro/detail/{{vm.vlrlPadre.impuesto.entiId}}/{{vm.vlrlPadre.impuesto.id}}/{{vm.model.fref}}"
+                                data-ng-bind="vm.vlrlPadre.impuesto.etiqueta"></a>
+                        </p>
+                    </div>
+                    <div data-ng-if="vm.model.ssrv.id" class="col-md-1 form-group-sm">
+                        <label data-translate="vlrl_ssrv"></label>
+                        <p class="form-control-static">
+                            <a
+                                data-ng-href="#/servicio/subservicio/detail/{{vm.model.rgla.enti.id}}/{{vm.model.ssrv.id}}"
+                                data-ng-bind="vm.model.ssrv.numero"></a>
+                        </p>
+                    </div>
+                    <div data-ng-if="vm.model.ssrv.id && vm.model.rgla.crgo.version.temporal"
+                        class="col-md-1 form-group-sm">
+                        <label data-translate="fini"></label>
+                        <p class="form-control-static"
+                            data-ng-bind="vm.model.fini | date: ('format_datetime' | translate)"></p>
+                    </div>
+                    <div data-ng-if="vm.model.ssrv.id && vm.model.rgla.crgo.version.temporal"
+                        class="col-md-1 form-group-sm">
+                        <label data-translate="ffin"></label>
+                        <p class="form-control-static"
+                            data-ng-bind="vm.model.ffin | date: ('format_datetime' | translate)"></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo1 && vm.aspc.version.lgrpInfo1"
+                        class="col-md-4 form-group-sm">
+                        <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo1"></label>
+                        <p class="form-control-static" data-ng-bind="vm.model.info1"></p>
+                    </div>
+                    <div data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo2 && vm.aspc.version.lgrpInfo2"
+                        class="col-md-4 form-group-sm">
+                        <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo2"></label>
+                        <p class="form-control-static" data-ng-bind="vm.model.info2"></p>
+                    </div>
+                    <div data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo3 && vm.aspc.version.lgrpInfo3"
+                        class="col-md-4 form-group-sm">
+                        <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo3"></label>
+                        <p class="form-control-static" data-ng-bind="vm.model.info3"></p>
+                    </div>
+                    <div data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo4 && vm.aspc.version.lgrpInfo4"
+                        class="col-md-4 form-group-sm">
+                        <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo4"></label>
+                        <p class="form-control-static" data-ng-bind="vm.model.info4"></p>
+                    </div>
+                    <div data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo5 && vm.aspc.version.lgrpInfo5"
+                        class="col-md-4 form-group-sm">
+                        <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo5"></label>
+                        <p class="form-control-static" data-ng-bind="vm.model.info5"></p>
+                    </div>
+                    <div data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo6 && vm.aspc.version.lgrpInfo6"
+                        class="col-md-4 form-group-sm">
+                        <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo6"></label>
+                        <p class="form-control-static" data-ng-bind="vm.model.info6"></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant1" class="col-md-2 form-group-sm">
+                        <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant1"></label>
+                        <p class="form-control-static number" data-ng-bind="vm.model.cuant1 | number:2"></p>
+                    </div>
+                    <div data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant2" class="col-md-2 form-group-sm">
+                        <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant2"></label>
+                        <p class="form-control-static number" data-ng-bind="vm.model.cuant2 | number:2"></p>
+                    </div>
+                    <div data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant3" class="col-md-2 form-group-sm">
+                        <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant3"></label>
+                        <p class="form-control-static number" data-ng-bind="vm.model.cuant3 | number:2"></p>
+                    </div>
+                    <div data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant4" class="col-md-2 form-group-sm">
+                        <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant4"></label>
+                        <p class="form-control-static number" data-ng-bind="vm.model.cuant4 | number:2"></p>
+                    </div>
+                    <div data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant5" class="col-md-2 form-group-sm">
+                        <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant5"></label>
+                        <p class="form-control-static number" data-ng-bind="vm.model.cuant5 | number:2"></p>
+                    </div>
+                    <div data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant6" class="col-md-2 form-group-sm">
+                        <label data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant6"></label>
+                        <p class="form-control-static number" data-ng-bind="vm.model.cuant6 | number:2"></p>
+                    </div>
+                </div>
+            </fieldset>
+
+
+            <fieldset data-ng-if="vm.model.rgla.tipo == 'T'">
+                <legend>Modificadores</legend>
+
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group"></div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th />
+                                <th data-translate="rgla"></th>
+                                <th data-translate="rgla_tipo"></th>
+                                <th data-translate="rgla_valorBase"></th>
+                                <th data-translate="vlrl_importeBase"></th>
+                                <th data-translate="vlrl_importe"></th>
+
+                                <th data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant1"><span
+                                    data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant1"></span></th>
+                                <th data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant2"><span
+                                    data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant2"></span></th>
+                                <th data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant3"><span
+                                    data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant3"></span></th>
+                                <th data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant4"><span
+                                    data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant4"></span></th>
+                                <th data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant5"><span
+                                    data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant5"></span></th>
+                                <th data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant6"><span
+                                    data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant6"></span></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr data-ng-repeat="vlrl in vm.vlrlHijosList track by $index">
+                                <td><a data-ng-href="#/facturacion/factura-linea/detail/{{vlrl.id}}"><i
+                                        class="glyphicon glyphicon-search"></i></a></td>
+                                <td nowrap="nowrap" data-ng-bind="vlrl.rgla.texto" data-bs-tooltip
+                                    data-title="{{vlrl.rgla.codigo}}"></td>
+                                <td nowrap="nowrap" data-ng-bind="vlrl.rgla.tipo" data-bs-tooltip
+                                    data-title="{{'ReglaTipo_' + vlrl.rgla.tipo | translate}}"></td>
+                                <td nowrap="nowrap" data-ng-bind="vlrl.rgla.version.valorBase | number:4"
+                                    class="number"></td>
+                                <td nowrap="nowrap" class="number">{{vlrl.importeBase | number:2}} &euro;</td>
+                                <td nowrap="nowrap" class="number">{{vlrl.importe | number:2}} &euro;</td>
+
+                                <td data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant1" class="number"
+                                    data-ng-bind="vlrl.cuant1 | number:2"></td>
+                                <td data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant2" class="number"
+                                    data-ng-bind="vlrl.cuant2 | number:2"></td>
+                                <td data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant3" class="number"
+                                    data-ng-bind="vlrl.cuant3 | number:2"></td>
+                                <td data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant4" class="number"
+                                    data-ng-bind="vlrl.cuant4 | number:2"></td>
+                                <td data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant5" class="number"
+                                    data-ng-bind="vlrl.cuant5 | number:2"></td>
+                                <td data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant6" class="number"
+                                    data-ng-bind="vlrl.cuant6 | number:2"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+        <div data-uib-tab data-active="vm.tabActive['vlrdList']" data-select="vm.tabSelected('vlrdList')"
+            data-heading="{{'fctdList' | translate}}">
+            <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group">
+                    <div data-uib-pagination data-total-items="vm.vlrdList.count"
+                        data-items-per-page="vm.vlrdList.limit" data-ng-model="vm.page"
+                        data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
+                        data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <span class="label label-default" data-translate="grid_count"
+                    data-translate-value-count="{{vm.vlrdList.count | number:0}}"></span>
+
+                <table class="table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th />
+                            <th data-translate="vlrd_importeBase" data-ng-if="vm.model.rgla.tipo != 'T'"></th>
+                            <th data-translate="vlrd_importe"></th>
+                            <th data-ng-bind="'enti_' + vm.vlrlPadre.rgla.enti.id | translate"></th>
+                            <th data-translate="vlrd_fini" data-ng-if="model.rgla.crgo.version.temporal"></th>
+                            <th data-translate="vlrd_ffin" data-ng-if="model.rgla.crgo.version.temporal"></th>
+                            <th data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo1 && !vm.aspc.version.lgrpInfo1"><span
+                                data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo1"></span></th>
+                            <th data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo2 && !vm.aspc.version.lgrpInfo2"><span
+                                data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo2"></span></th>
+                            <th data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo3 && !vm.aspc.version.lgrpInfo3"><span
+                                data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo3"></span></th>
+                            <th data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo4 && !vm.aspc.version.lgrpInfo4"><span
+                                data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo4"></span></th>
+                            <th data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo5 && !vm.aspc.version.lgrpInfo5"><span
+                                data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo5"></span></th>
+                            <th data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo6 && !vm.aspc.version.lgrpInfo6"><span
+                                data-ng-bind="vm.vlrlPadre.rgla.version.etiqInfo6"></span></th>
+
+                            <th data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant1"><span
+                                data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant1"></span></th>
+                            <th data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant2"><span
+                                data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant2"></span></th>
+                            <th data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant3"><span
+                                data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant3"></span></th>
+                            <th data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant4"><span
+                                data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant4"></span></th>
+                            <th data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant5"><span
+                                data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant5"></span></th>
+                            <th data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant6"><span
+                                data-ng-bind="vm.vlrlPadre.rgla.version.etiqCuant6"></span></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr data-ng-repeat="vlrd in vm.vlrdList.list track by $index">
+                            <td><a data-ng-href="#/facturacion/factura-detalle/detail/{{vlrd.id}}"><i
+                                    class="glyphicon glyphicon-search"></i></a></td>
+                            <td nowrap="nowrap" class="number" data-ng-if="vlrd.rgla.tipo != 'T'">{{vlrd.importeBase
+                                | number:2}} &euro;</td>
+                            <td nowrap="nowrap" class="number">{{vlrd.importe | number:2}} &euro;</td>
+                            <td data-ng-bind="vlrd.ssrv.numero"></td>
+                            <td data-ng-bind="vlrd.fini | date:'short'"
+                                data-ng-if="model.rgla.crgo.version.temporal"></td>
+                            <td data-ng-bind="vlrd.ffin | date:'short'"
+                                data-ng-if="model.rgla.crgo.version.temporal"></td>
+                            <td data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo1 && !vm.aspc.version.lgrpInfo1"
+                                data-ng-bind="vlrd.info1"></td>
+                            <td data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo2 && !vm.aspc.version.lgrpInfo2"
+                                data-ng-bind="vlrd.info2"></td>
+                            <td data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo3 && !vm.aspc.version.lgrpInfo3"
+                                data-ng-bind="vlrd.info3"></td>
+                            <td data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo4 && !vm.aspc.version.lgrpInfo4"
+                                data-ng-bind="vlrd.info4"></td>
+                            <td data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo5 && !vm.aspc.version.lgrpInfo5"
+                                data-ng-bind="vlrd.info5"></td>
+                            <td data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo6 && !vm.aspc.version.lgrpInfo6"
+                                data-ng-bind="vlrd.info6"></td>
+                            <td data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant1" class="number"
+                                data-ng-bind="vlrd.cuant1 | number:2"></td>
+                            <td data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant2" class="number"
+                                data-ng-bind="vlrd.cuant2 | number:2"></td>
+                            <td data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant3" class="number"
+                                data-ng-bind="vlrd.cuant3 | number:2"></td>
+                            <td data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant4" class="number"
+                                data-ng-bind="vlrd.cuant4 | number:2"></td>
+                            <td data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant5" class="number"
+                                data-ng-bind="vlrd.cuant5 | number:2"></td>
+                            <td data-ng-if="vm.vlrlPadre.rgla.version.etiqCuant6" class="number"
+                                data-ng-bind="vlrd.cuant6 | number:2"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

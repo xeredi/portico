@@ -1,17 +1,19 @@
-<fieldset>
-    <div class="row">
-        <div class="col-sm-4 col-md-3 col-md-2 form-group-sm">
-            <label data-translate="pepr"></label>
-            <p class="form-control-static">
-                <a data-ng-href="#/estadistica/periodo-proceso/detail/{{vm.item.pepr.id}}"
-                    data-ng-bind="vm.item.pepr.etiqueta"></a>
-            </p>
+<div data-ng-if="vm.item">
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-md-2 form-group-sm">
+                <label data-translate="pepr"></label>
+                <p class="form-control-static">
+                    <a data-ng-href="#/estadistica/periodo-proceso/detail/{{vm.item.pepr.id}}"
+                        data-ng-bind="vm.item.pepr.etiqueta"></a>
+                </p>
+            </div>
+            <div class="col-sm-4 col-md-3 col-md-2 form-group-sm">
+                <label data-translate="prto"></label>
+                <p class="form-control-static" data-ng-bind="vm.item.prto.etiqueta"></p>
+            </div>
         </div>
-        <div class="col-sm-4 col-md-3 col-md-2 form-group-sm">
-            <label data-translate="prto"></label>
-            <p class="form-control-static" data-ng-bind="vm.item.prto.etiqueta"></p>
-        </div>
-    </div>
 
-    <div data-ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
-</fieldset>
+        <div data-ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+    </fieldset>
+</div>
