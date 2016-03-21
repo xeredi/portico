@@ -146,6 +146,15 @@
 			<if test="estado != null">
 				AND fctr.fctr_estado = #{estado}
 			</if>
+			<if test="vlrcId != null">
+		    <![CDATA[
+		    	AND EXISTS (
+		    		SELECT 1 FROM tbl_valoracion_vlrc
+		    		WHERE vlrc_fctr_pk = fctr.fctr_pk
+		    			AND vlrc_pk = #{vlrcId}
+		    	)
+		    ]]>
+			</if>
 			<if test="tpsrId != null">
 		    <![CDATA[
 		    	AND EXISTS (

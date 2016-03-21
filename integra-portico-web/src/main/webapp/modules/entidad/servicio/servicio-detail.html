@@ -16,7 +16,8 @@
                     </button>
                 </div>
                 <div class="btn-group" data-ng-if="vm.enti.enti.facturable">
-                    <a class="btn btn-default" data-ng-if="mc.hasAccnPath('vldr-create')"
+                    <a class="btn btn-default"
+                        data-ng-if="mc.hasAccnPath('vldr-create') && vm.enti.enti.estadosVlrcSet.indexOf(vm.item.estado) >= 0"
                         data-ng-href="#/servicio/valorador/edit/create/{{vm.item.entiId}}/{{vm.item.id}}"><i
                         class="glyphicon glyphicon-euro"></i> <span data-translate="btn_valorar"></span> </a> <a
                         data-ng-if="mc.hasAccnPath('vlrc-list')" class="btn btn-default"

@@ -22,8 +22,9 @@
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
                 <th data-translate="fctr"></th>
-                <th data-translate="fctr_estado"></th>
                 <th data-translate="fctr_falta"></th>
+                <th data-translate="fctr_estado"></th>
+                <th data-translate="fctr_anulada"></th>
                 <th data-translate="fref"></th>
                 <th data-translate="fini"></th>
                 <th data-translate="ffin"></th>
@@ -47,9 +48,10 @@
                 <td><a data-ng-href="#/facturacion/factura/detail/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="item.etiqueta"></td>
+                <td nowrap="nowrap" data-ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
                 <td data-ng-bind="item.estado" data-bs-tooltip
                     data-title="{{'FacturaEstado_' + item.estado | translate}}"></td>
-                <td nowrap="nowrap" data-ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
+                <td data-ng-bind="item.fctrAnulada.etiqueta"></td>
                 <td nowrap="nowrap" data-ng-bind="item.fref | date: ('format_date' | translate)"></td>
                 <td nowrap="nowrap" data-ng-bind="item.fini | date: ('format_datetime' | translate)"></td>
                 <td nowrap="nowrap" data-ng-bind="item.ffin | date: ('format_datetime' | translate)"></td>
