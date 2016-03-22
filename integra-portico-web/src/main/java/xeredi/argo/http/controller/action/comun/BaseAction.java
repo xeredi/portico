@@ -78,7 +78,7 @@ public abstract class BaseAction extends ActionSupport {
         } catch (final ApplicationException ex) {
             LOG.error(ex, ex);
 
-            addActionError(MessageI18nKey.E00000, ex.getMessage(getLocale()));
+            addActionError(ex.getMessage(getLocale()));
         } catch (final Throwable ex) {
             LOG.fatal(ex, ex);
 

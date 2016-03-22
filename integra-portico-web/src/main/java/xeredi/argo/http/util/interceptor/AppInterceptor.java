@@ -47,7 +47,8 @@ public final class AppInterceptor extends AbstractInterceptor {
                         final AccionPrefix prefix = ((ProtectedAction) action).getAccnPrefix();
                         final AccionCodigo codigo = ((ProtectedAction) action).getAccion();
 
-                        if (action instanceof ProtectedItemAction) {
+                        if (action instanceof ProtectedItemAction && prefix != AccionPrefix.ittr) {
+                            // FIXME Corregir los permisos de trámites
                             final Long entiId = ((ProtectedItemAction) action).getEntiId();
 
                             if (!SessionManager.hasPermission(prefix, codigo, entiId)) {

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+    <properties>
+        <title>Guia de Instalación - Migración de Datos</title>
+        <author>Xesus Rey Diaz</author>
+        <date>2016/03/16</date>
+    </properties>
+
+    <body>
+        <section name="Creación de la base de datos de Argo">
+            <a name="sec_dbcreate"></a>
+
+            <p>Se crearán dos usuarios de base de datos</p>
+
+            <ul>
+                <li>Usuario para los administraciones de la aplicación (Schema ARGOADM). Este usuario será el
+                    encargado de gestionar los objetos de la base de datos (creación de tablas, vistas, etc.),
+                    así como de realizar tareas de mantenimiento de la B.D. Este usuario se encargará de dar
+                    permisos de acceso al usuario de aplicación. Este usuario tendrá permisos para crear,
+                    modificar y eliminar objetos de base de datos (tablas, vistas, indices, procedimientos
+                    almacenados, sinónimos), así como permisos para dar permisos de acceso (consulta,
+                    inserción,
+                    modificación, borrado) a dichos objetos de base de datos.
+                </li>
+                <li>Usuario para los usuarios de la aplicación (Schema ARGO). Este usuario será el que se
+                    utilice para acceder a la B.D. desde la aplicación.
+                </li>
+            </ul>
+        </section>
+
+        <section name="Integra v1">
+            <p>Pasos a realizar para migrar los datos desde Integra v1 a Argo
+            </p>
+
+            <ul>
+                <li>Importación de maestros.</li>
+                <li>Importación de servicios.</li>
+            </ul>
+        </section>
+    </body>
+</document>

@@ -626,6 +626,8 @@ public enum MessageI18nKey {
     E00014,
     /** Error de privilegios insuficientes. */
     E00015,
+    /** Estado del servicio no válido para ser valorado. */
+    E00016,
 
     /** The cdms_numero. */
     cdms_numero,

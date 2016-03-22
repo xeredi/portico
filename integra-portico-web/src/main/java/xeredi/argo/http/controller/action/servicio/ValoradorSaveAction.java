@@ -8,12 +8,19 @@ import java.util.List;
 import java.util.Map;
 
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
+import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
 import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.servicio.bo.ServicioBO;
+import xeredi.argo.model.servicio.bo.ServicioBOFactory;
+import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.ValoradorVO;
 import xeredi.argo.proceso.facturacion.ProcesoValorador;
 
@@ -61,6 +68,16 @@ public final class ValoradorSaveAction extends CrudSaveAction<ValoradorVO> {
         Preconditions.checkNotNull(model.getSrvc());
         Preconditions.checkNotNull(model.getSrvc().getEntiId());
         Preconditions.checkNotNull(model.getSrvc().getId());
-        Preconditions.checkNotNull(model.getFliq());
+
+        FieldValidator.validateRequired(this, MessageI18nKey.vlrc_fliq, model.getFliq());
+
+        final TipoServicioDetailVO tpsr = TipoServicioProxy.select(model.getSrvc().getEntiId());
+
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getSrvc().getEntiId());
+        final ServicioVO srvc = srvcBO.select(model.getSrvc().getId(), getIdioma());
+
+        if (!tpsr.getEnti().getEstadosVlrcSet().contains(srvc.getEstado())) {
+            addActionError(MessageI18nKey.E00016, srvc.getEstado());
+        }
     }
 }

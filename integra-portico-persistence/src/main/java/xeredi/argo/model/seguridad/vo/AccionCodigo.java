@@ -30,6 +30,11 @@ public enum AccionCodigo {
     print,
     /** The xls_export. FIXME Ver si hace falta!!!! */
     xls_export,
+    /**
+     * Importacion de ficheros, utilizado en manifiestos de pesca (fichero plano), manifiestos de mercancía
+     * (edifact) y escalas (edifact).
+     */
+    file_import,
 
     ;
 }

@@ -51,6 +51,7 @@ import xeredi.argo.model.facturacion.vo.ValoracionLineaAgregadaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionTemporalVO;
 import xeredi.argo.model.facturacion.vo.ValoradorContextoVO;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.servicio.dao.ServicioDAO;
 import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
@@ -103,13 +104,10 @@ public class ValoradorBO {
         Preconditions.checkNotNull(fechaLiquidacion);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
-            final ValoradorContextoDAO contextoDAO = session.getMapper(ValoradorContextoDAO.class);
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
             final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
 
-            final ValoradorContextoVO vldrContexto = new ValoradorContextoVO();
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
 
             srvcCriterio.setId(srvcId);
@@ -121,6 +119,7 @@ public class ValoradorBO {
             }
 
             if (crgoIds.isEmpty()) {
+                final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
                 final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
 
                 crgoCriterioVO.setFechaVigencia(fechaLiquidacion);
@@ -131,10 +130,21 @@ public class ValoradorBO {
                 }
             }
 
+            final TipoServicioDetailVO tpsr = TipoServicioProxy.select(srvc.getEntiId());
+
+            if (!tpsr.getEnti().getEstadosVlrcSet().contains(srvc.getEstado())) {
+                throw new Error("Servicio en estado no facturable: " + srvc.getEstado());
+            }
+
+            final ValoradorContextoDAO contextoDAO = session.getMapper(ValoradorContextoDAO.class);
+            final ValoradorContextoVO vldrContexto = new ValoradorContextoVO();
+
             vldrContexto.setFliquidacion(fechaLiquidacion);
             vldrContexto.setPrbt(proceso.getPrbtData().getPrbt());
             vldrContexto.setSrvc(srvc);
-            vldrContexto.setTpsr(TipoServicioProxy.select(vldrContexto.getSrvc().getEntiId()).getEnti());
+            vldrContexto.setTpsr(tpsr.getEnti());
+
+            final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
 
             for (final Long crgoId : crgoIds) {
                 // Obtencion de los cargos, y los cargos dependientes

@@ -9,6 +9,10 @@
             <item name="Instalación" href="instalacion.html" />
         </menu>
 
+        <menu name="Manual de Instalación" inherit="top">
+            <item name="Migración de datos" href="installguide/migration.html" />
+        </menu>
+
         <menu name="Manual de Usuario" inherit="top">
             <item name="Acceso a la aplicación" href="userguide/acceso.html" />
             <item name="Gestión de Servicios" href="userguide/servicios.html" />
