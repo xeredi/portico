@@ -1,27 +1,39 @@
-angular.module("servicio_service", [ "crud_service" ])
+(function() {
+    'use strict';
 
-.factory("ValoradorService", ValoradorService)
+    angular.module("servicio_service", [ "crud_service" ])
 
-.factory("ServicioSecuenciaService", ServicioSecuenciaService)
+    .factory("ValoradorService", ValoradorService)
 
-.factory("ServicioService", ServicioService)
+    .factory("ServicioSecuenciaService", ServicioSecuenciaService)
 
-.factory("SubservicioService", SubservicioService)
+    .factory("ServicioService", ServicioService)
 
-;
+    .factory("SubservicioService", SubservicioService)
 
-function ValoradorService($http, $q, CrudService) {
-	return CrudService.create("servicio/valorador");
-}
+    ;
 
-function ServicioSecuenciaService($http, $q, CrudService) {
-	return CrudService.create("servicio/servicio-secuencia");
-}
+    ValoradorService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function ServicioService($http, $q, CrudService) {
-	return CrudService.create("servicio/servicio");
-}
+    function ValoradorService($http, $q, CrudService) {
+        return CrudService.create("servicio/valorador");
+    }
 
-function SubservicioService($http, $q, CrudService) {
-	return CrudService.create("servicio/subservicio");
-}
+    ServicioSecuenciaService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function ServicioSecuenciaService($http, $q, CrudService) {
+        return CrudService.create("servicio/servicio-secuencia");
+    }
+
+    ServicioService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function ServicioService($http, $q, CrudService) {
+        return CrudService.create("servicio/servicio");
+    }
+
+    SubservicioService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function SubservicioService($http, $q, CrudService) {
+        return CrudService.create("servicio/subservicio");
+    }
+})();

@@ -841,6 +841,8 @@ INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'prbt_alertasC
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'prbt_alertasCnt', 'Nº Alertas')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'prbt_mensajesCnt')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'prbt_mensajesCnt', 'Nº Mensajes')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'prbt_cancelar')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'prbt_cancelar', 'Cancelar')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'prmn')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'prmn', 'Mensaje de Proceso')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'prmnList')\

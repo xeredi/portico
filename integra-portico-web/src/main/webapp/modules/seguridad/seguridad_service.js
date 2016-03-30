@@ -1,62 +1,69 @@
-angular.module("seguridad_service", [ "crud_service" ])
+(function() {
+    'use strict';
 
-.factory("UsuarioService", UsuarioService)
+    angular.module("seguridad_service", [ "crud_service" ])
 
-.factory("AccionService", AccionService)
+    .factory("UsuarioService", UsuarioService)
 
-.factory("GrupoService", GrupoService)
+    .factory("AccionService", AccionService)
 
-;
+    .factory("GrupoService", GrupoService)
 
-function UsuarioService($http, $q, CrudService) {
-    var service = CrudService.create("seguridad/usuario");
+    ;
 
-    service.acceso = function(usuario) {
-        console.log('acceso');
+    UsuarioService.$inject = [ '$http', '$q', 'CrudService' ];
 
-        return $http.post(service.getUri() + "-acceso.action", {model: usuario})
-            .then(success)
-            .catch(fail);
+    function UsuarioService($http, $q, CrudService) {
+        var service = CrudService.create("seguridad/usuario");
 
-        function success(response) {
-            return response.data;
-        }
+        service.acceso = function(usuario) {
+            console.log('acceso');
 
-        function fail(error) {
-            var msg = 'Acceso failed. ' + error.data;
-            console.log(msg);
+            return $http.post(service.getUri() + "-acceso.action", {
+                model : usuario
+            }).then(success, fail);
 
-            return $q.reject(msg);
-        }
-    };
+            function success(response) {
+                return response.data;
+            }
 
-    service.salir = function(usuario) {
-        console.log('salir');
+            function fail(error) {
+                var msg = 'Acceso failed. ' + error.data;
+                console.log(msg);
 
-        return $http.post(service.getUri() + "-salir.action")
-            .then(success)
-            .catch(fail);
+                return $q.reject(msg);
+            }
+        };
 
-        function success(response) {
-            return response.data;
-        }
+        service.salir = function(usuario) {
+            console.log('salir');
 
-        function fail(error) {
-            var msg = 'Salir failed. ' + error.data;
-            console.log(msg);
+            return $http.post(service.getUri() + "-salir.action").then(success, fail);
 
-            return $q.reject(msg);
-        }
-    };
+            function success(response) {
+                return response.data;
+            }
 
-    return service;
-}
+            function fail(error) {
+                var msg = 'Salir failed. ' + error.data;
+                console.log(msg);
 
-function AccionService($http, $q, CrudService) {
-	return CrudService.create("seguridad/accion");
-}
+                return $q.reject(msg);
+            }
+        };
 
-function GrupoService($http, $q, CrudService) {
-	return CrudService.create("seguridad/grupo");
-}
+        return service;
+    }
 
+    AccionService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function AccionService($http, $q, CrudService) {
+        return CrudService.create("seguridad/accion");
+    }
+
+    GrupoService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function GrupoService($http, $q, CrudService) {
+        return CrudService.create("seguridad/grupo");
+    }
+})();

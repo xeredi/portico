@@ -14,7 +14,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ManifiestoTotalDetailAction.
  */
-public final class ManifiestoTotalDetailAction extends CrudDetailAction<ServicioVO> {
+public final class ResumenTotalesAction extends CrudDetailAction<ServicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3964457625490510954L;

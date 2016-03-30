@@ -19,7 +19,7 @@ public final class AccionVO {
     private AccionPrefix prefix;
 
     /** The codigo. */
-    private AccionCodigo codigo;
+    private String codigo;
 
     /** The core. */
     private Boolean core;

@@ -2,7 +2,7 @@
     <tbody>
         <tr>
             <th>{{'enti_' + parameter.item.entiId | translate}}</th>
-            <td><a style="color: black" ui-sref="parametro-detail(parameter.item)">{{parameter.item.etiqueta}}</a></td>
+            <td><a style="color: black" data-ui-sref="parametro-detail(parameter.item)">{{parameter.item.etiqueta}}</a></td>
         </tr>
         <tr data-ng-if="parameter.enti.enti.puerto">
             <th>{{'prto' | translate}}</th>

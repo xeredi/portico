@@ -1,21 +1,31 @@
-angular.module("maestro_service", [ "crud_service" ])
+(function() {
+    'use strict';
 
-.factory("MaestroService", MaestroService)
+    angular.module("maestro_service", [ "crud_service" ])
 
-.factory("ParametroService", ParametroService)
+    .factory("MaestroService", MaestroService)
 
-.factory("SubparametroService", SubparametroService)
+    .factory("ParametroService", ParametroService)
 
-;
+    .factory("SubparametroService", SubparametroService)
 
-function MaestroService($http, $q, CrudService) {
-    return CrudService.create("maestro/maestro");
-}
+    ;
 
-function ParametroService($http, $q, CrudService) {
-    return CrudService.create("maestro/parametro");
-}
+    MaestroService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function SubparametroService($http, $q, CrudService) {
-    return CrudService.create("maestro/subparametro");
-}
+    function MaestroService($http, $q, CrudService) {
+        return CrudService.create("maestro/maestro");
+    }
+
+    ParametroService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function ParametroService($http, $q, CrudService) {
+        return CrudService.create("maestro/parametro");
+    }
+
+    SubparametroService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function SubparametroService($http, $q, CrudService) {
+        return CrudService.create("maestro/subparametro");
+    }
+})();

@@ -1,4 +1,4 @@
-package xeredi.argo.http.controller.action.servicio.manifiesto;
+package xeredi.argo.http.controller.action.servicio.bl;
 
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
@@ -14,7 +14,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class BlTotalDetailAction.
  */
-public final class BlTotalDetailAction extends CrudDetailAction<SubservicioVO> {
+public final class ResumenTotalesAction extends CrudDetailAction<SubservicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3008689259701964426L;
@@ -29,8 +29,6 @@ public final class BlTotalDetailAction extends CrudDetailAction<SubservicioVO> {
     @Override
     public void doDetail() throws ApplicationException {
         Preconditions.checkNotNull(model.getId());
-        Preconditions.checkNotNull(model.getSrvc());
-        Preconditions.checkNotNull(model.getSrvc().getId());
 
         final BlBO mablBO = new BlBO();
 

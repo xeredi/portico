@@ -1,33 +1,47 @@
-angular.module("administracion_service", [ "crud_service" ])
+(function() {
+    'use strict';
 
-.factory("AdministracionService", AdministracionService)
+    angular.module("administracion_service", [ "crud_service" ])
 
-.factory("SuperpuertoService", SuperpuertoService)
+    .factory("AdministracionService", AdministracionService)
 
-.factory("PuertoService", PuertoService)
+    .factory("SuperpuertoService", SuperpuertoService)
 
-.factory("ConfigurationService", ConfigurationService)
+    .factory("PuertoService", PuertoService)
 
-.factory("MessageI18nService", MessageI18nService)
+    .factory("ConfigurationService", ConfigurationService)
 
-;
+    .factory("MessageI18nService", MessageI18nService)
 
-function AdministracionService($http, $q, CrudService) {
-    return CrudService.create("administracion");
-}
+    ;
 
-function SuperpuertoService($http, $q, CrudService) {
-    return CrudService.create("administracion/puerto/superpuerto");
-}
+    AdministracionService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function PuertoService($http, $q, CrudService) {
-    return CrudService.create("administracion/puerto/puerto");
-}
+    function AdministracionService($http, $q, CrudService) {
+        return CrudService.create("administracion");
+    }
 
-function ConfigurationService($http, $q, CrudService) {
-    return CrudService.create("administracion/configuration/configuration");
-}
+    SuperpuertoService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function MessageI18nService($http, $q, CrudService) {
-    return CrudService.create("administracion/messagei18n/message-i18n");
-}
+    function SuperpuertoService($http, $q, CrudService) {
+        return CrudService.create("administracion/puerto/superpuerto");
+    }
+
+    PuertoService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function PuertoService($http, $q, CrudService) {
+        return CrudService.create("administracion/puerto/puerto");
+    }
+
+    ConfigurationService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function ConfigurationService($http, $q, CrudService) {
+        return CrudService.create("administracion/configuration/configuration");
+    }
+
+    MessageI18nService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function MessageI18nService($http, $q, CrudService) {
+        return CrudService.create("administracion/messagei18n/message-i18n");
+    }
+})();

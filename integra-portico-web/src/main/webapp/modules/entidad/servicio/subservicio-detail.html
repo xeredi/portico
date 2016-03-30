@@ -20,6 +20,12 @@
                         data-ng-click="vm.ssrvAction(enac.path)" class="btn btn-default"
                         data-ng-bind="('enac_' + enac.id | translate)"></button>
                 </div>
+                <div class="btn-group">
+                    <a data-ng-repeat="acen in vm.enti.acenList track by $index"
+                        data-ng-if="!acen.accn.core && !acen.accn.multiple"
+                        data-ng-href="#/servicio/{{acen.accn.codigo}}/{{vm.item.id}}" class="btn btn-default"
+                        data-ng-bind="acen.accn.codigo"></a>
+                </div>
                 <div class="btn-group" data-ng-if="vm.enti.enti.tpdtEstado">
                     <a data-ng-repeat="trmt in vm.enti.trmtList track by $index"
                         data-ng-if="(vm.item.estado == trmt.estadoOrig)"

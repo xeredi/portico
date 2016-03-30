@@ -9,12 +9,9 @@
                         <option />
                     </select>
                 </div>
-                <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                    <label data-translate="accn_codigo"></label> <select data-ng-model="vm.model.codigo"
-                        data-ng-options="codigo as (codigo | translate) for codigo in vm.codigoList | orderBy"
-                        class="form-control">
-                        <option />
-                    </select>
+                <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
+                    <label data-translate="accn_codigo"></label> <input type="text"
+                        data-ng-model="vm.model.codigo" class="form-control" />
                 </div>
                 <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                     <label data-translate="accn_core"></label> <select data-ng-model="vm.model.core"

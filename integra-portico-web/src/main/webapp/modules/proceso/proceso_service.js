@@ -1,16 +1,23 @@
-angular.module("proceso_service", [ "crud_service" ])
+(function() {
+    'use strict';
 
-.factory("ProcesoService", ProcesoService)
+    angular.module("proceso_service", [ "crud_service" ])
 
-.factory("ProcesoMensajeService", ProcesoMensajeService)
+    .factory("ProcesoService", ProcesoService)
 
-;
+    .factory("ProcesoMensajeService", ProcesoMensajeService)
 
-function ProcesoService($http, $q, CrudService) {
-	return CrudService.create("proceso/proceso");
-}
+    ;
 
-function ProcesoMensajeService($http, $q, CrudService) {
-	return CrudService.create("proceso/proceso-mensaje");
-}
+    ProcesoService.$inject = [ '$http', '$q', 'CrudService' ];
 
+    function ProcesoService($http, $q, CrudService) {
+        return CrudService.create("proceso/proceso");
+    }
+
+    ProcesoMensajeService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function ProcesoMensajeService($http, $q, CrudService) {
+        return CrudService.create("proceso/proceso-mensaje");
+    }
+})();

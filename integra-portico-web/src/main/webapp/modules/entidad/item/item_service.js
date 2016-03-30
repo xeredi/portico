@@ -1,9 +1,15 @@
-angular.module("item_service", [ "crud_service" ])
+(function() {
+    'use strict';
 
-.factory("ItemTramiteService", ItemTramiteService)
+    angular.module("item_service", [ "crud_service" ])
 
-;
+    .factory("ItemTramiteService", ItemTramiteService)
 
-function ItemTramiteService($http, $q, CrudService) {
-	return CrudService.create("item/item-tramite");
-}
+    ;
+
+    ItemTramiteService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function ItemTramiteService($http, $q, CrudService) {
+        return CrudService.create("item/item-tramite");
+    }
+})();

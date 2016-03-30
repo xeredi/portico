@@ -1,93 +1,127 @@
-angular.module("facturacion_service", [ "crud_service" ])
+(function() {
+    'use strict';
 
-.factory("FacturacionService", FacturacionService)
+    angular.module("facturacion_service", [ "crud_service" ])
 
-.factory("CargoService", CargoService)
+    .factory("FacturacionService", FacturacionService)
 
-.factory("ReglaService", ReglaService)
+    .factory("CargoService", CargoService)
 
-.factory("ReglaIncompatibleService", ReglaIncompatibleService)
+    .factory("ReglaService", ReglaService)
 
-.factory("AspectoService", AspectoService)
+    .factory("ReglaIncompatibleService", ReglaIncompatibleService)
 
-.factory("AspectoCargoService", AspectoCargoService)
+    .factory("AspectoService", AspectoService)
 
-.factory("FacturaSerieService", FacturaSerieService)
+    .factory("AspectoCargoService", AspectoCargoService)
 
-.factory("ValoracionService", ValoracionService)
+    .factory("FacturaSerieService", FacturaSerieService)
 
-.factory("ValoracionLineaService", ValoracionLineaService)
+    .factory("ValoracionService", ValoracionService)
 
-.factory("ValoracionDetalleService", ValoracionDetalleService)
+    .factory("ValoracionLineaService", ValoracionLineaService)
 
-.factory("FacturaService", FacturaService)
+    .factory("ValoracionDetalleService", ValoracionDetalleService)
 
-.factory("FacturaAnulacionService", FacturaAnulacionService)
+    .factory("FacturaService", FacturaService)
 
-.factory("FacturaRectificacionService", FacturaRectificacionService)
+    .factory("FacturaAnulacionService", FacturaAnulacionService)
 
-.factory("ValoradorService", ValoradorService)
+    .factory("FacturaRectificacionService", FacturaRectificacionService)
 
-.factory("FacturadorService", FacturadorService)
+    .factory("ValoradorService", ValoradorService)
 
-;
+    .factory("FacturadorService", FacturadorService)
 
-function FacturacionService($http, $q, CrudService) {
-    return CrudService.create("facturacion/facturacion");
-}
+    ;
 
-function CargoService($http, $q, CrudService) {
-    return CrudService.create("facturacion/cargo");
-}
+    FacturacionService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function ReglaService($http, $q, CrudService) {
-    return CrudService.create("facturacion/regla");
-}
+    function FacturacionService($http, $q, CrudService) {
+        return CrudService.create("facturacion/facturacion");
+    }
 
-function ReglaIncompatibleService($http, $q, CrudService) {
-    return CrudService.create("facturacion/regla-incompatible");
-}
+    CargoService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function AspectoService($http, $q, CrudService) {
-    return CrudService.create("facturacion/aspecto");
-}
+    function CargoService($http, $q, CrudService) {
+        return CrudService.create("facturacion/cargo");
+    }
 
-function AspectoCargoService($http, $q, CrudService) {
-    return CrudService.create("facturacion/aspecto-cargo");
-}
+    ReglaService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function FacturaSerieService($http, $q, CrudService) {
-    return CrudService.create("facturacion/factura-serie");
-}
+    function ReglaService($http, $q, CrudService) {
+        return CrudService.create("facturacion/regla");
+    }
 
-function ValoracionService($http, $q, CrudService) {
-    return CrudService.create("facturacion/valoracion");
-}
+    ReglaIncompatibleService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function ValoracionLineaService($http, $q, CrudService) {
-    return CrudService.create("facturacion/valoracion-linea");
-}
+    function ReglaIncompatibleService($http, $q, CrudService) {
+        return CrudService.create("facturacion/regla-incompatible");
+    }
 
-function ValoracionDetalleService($http, $q, CrudService) {
-    return CrudService.create("facturacion/valoracion-detalle");
-}
+    AspectoService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function FacturaService($http, $q, CrudService) {
-    return CrudService.create("facturacion/factura");
-}
+    function AspectoService($http, $q, CrudService) {
+        return CrudService.create("facturacion/aspecto");
+    }
 
-function FacturaAnulacionService($http, $q, CrudService) {
-    return CrudService.create("facturacion/factura-anulacion");
-}
+    AspectoCargoService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function FacturaRectificacionService($http, $q, CrudService) {
-    return CrudService.create("facturacion/factura-rectificacion");
-}
+    function AspectoCargoService($http, $q, CrudService) {
+        return CrudService.create("facturacion/aspecto-cargo");
+    }
 
-function ValoradorService($http, $q, CrudService) {
-    return CrudService.create("facturacion/valorador");
-}
+    FacturaSerieService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function FacturadorService($http, $q, CrudService) {
-    return CrudService.create("facturacion/facturador");
-}
+    function FacturaSerieService($http, $q, CrudService) {
+        return CrudService.create("facturacion/factura-serie");
+    }
+
+    ValoracionService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function ValoracionService($http, $q, CrudService) {
+        return CrudService.create("facturacion/valoracion");
+    }
+
+    ValoracionLineaService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function ValoracionLineaService($http, $q, CrudService) {
+        return CrudService.create("facturacion/valoracion-linea");
+    }
+
+    ValoracionDetalleService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function ValoracionDetalleService($http, $q, CrudService) {
+        return CrudService.create("facturacion/valoracion-detalle");
+    }
+
+    FacturaService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function FacturaService($http, $q, CrudService) {
+        return CrudService.create("facturacion/factura");
+    }
+
+    FacturaAnulacionService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function FacturaAnulacionService($http, $q, CrudService) {
+        return CrudService.create("facturacion/factura-anulacion");
+    }
+
+    FacturaRectificacionService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function FacturaRectificacionService($http, $q, CrudService) {
+        return CrudService.create("facturacion/factura-rectificacion");
+    }
+
+    ValoradorService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function ValoradorService($http, $q, CrudService) {
+        return CrudService.create("facturacion/valorador");
+    }
+
+    FacturadorService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function FacturadorService($http, $q, CrudService) {
+        return CrudService.create("facturacion/facturador");
+    }
+})();

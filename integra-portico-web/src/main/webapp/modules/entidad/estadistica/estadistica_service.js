@@ -1,21 +1,31 @@
-angular.module("estadistica_service", [ "crud_service" ])
+(function() {
+    'use strict';
 
-.factory("PeriodoProcesoService", PeriodoProcesoService)
+    angular.module("estadistica_service", [ "crud_service" ])
 
-.factory("CuadroMesService", CuadroMesService)
+    .factory("PeriodoProcesoService", PeriodoProcesoService)
 
-.factory("EstadisticaService", EstadisticaService)
+    .factory("CuadroMesService", CuadroMesService)
 
-;
+    .factory("EstadisticaService", EstadisticaService)
 
-function PeriodoProcesoService($http, $q, CrudService) {
-    return CrudService.create("estadistica/periodo-proceso");
-}
+    ;
 
-function CuadroMesService($http, $q, CrudService) {
-    return CrudService.create("estadistica/cuadro-mes");
-}
+    PeriodoProcesoService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function EstadisticaService($http, $q, CrudService) {
-    return CrudService.create("estadistica/estadistica");
-}
+    function PeriodoProcesoService($http, $q, CrudService) {
+        return CrudService.create("estadistica/periodo-proceso");
+    }
+
+    CuadroMesService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function CuadroMesService($http, $q, CrudService) {
+        return CrudService.create("estadistica/cuadro-mes");
+    }
+
+    EstadisticaService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function EstadisticaService($http, $q, CrudService) {
+        return CrudService.create("estadistica/estadistica");
+    }
+})();

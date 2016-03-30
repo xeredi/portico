@@ -49,6 +49,9 @@ public abstract class AbstractEntidadDetailVO {
     /** {@link List} de acciones web que se pueden realizar sobre el grid de la entidad. */
     private List<EntidadAccionGridVO> enagList = new ArrayList<>();
 
+    /** {@link List} de acciones web que se pueden realizar sobre la entidad. */
+    private List<AccionEntidadVO> acenList = new ArrayList<>();
+
     /** The trmt list. */
     private List<TramiteVO> trmtList = new ArrayList<>();
 

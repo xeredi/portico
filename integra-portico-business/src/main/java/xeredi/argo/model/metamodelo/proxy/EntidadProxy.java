@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.bo.EntidadAccionBO;
 import xeredi.argo.model.metamodelo.bo.EntidadAccionGridBO;
 import xeredi.argo.model.metamodelo.bo.EntidadBO;
@@ -18,6 +19,8 @@ import xeredi.argo.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
+import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 import xeredi.argo.model.metamodelo.vo.EntidadAccionCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadAccionGridCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadAccionGridVO;
@@ -110,10 +113,6 @@ public final class EntidadProxy {
         for (final EntidadGrupoDatoVO engd : engdBO.selectList(new EntidadGrupoDatoCriterioVO())) {
             final AbstractEntidadDetailVO entidadDetail = ENTIDAD_MAP.get(engd.getEntiId());
 
-            if (entidadDetail.getEngdList() == null) {
-                entidadDetail.setEngdList(new ArrayList<EntidadGrupoDatoVO>());
-            }
-
             entidadDetail.getEngdList().add(engd);
             engd.setEntiId(null);
         }
@@ -122,12 +121,6 @@ public final class EntidadProxy {
 
         for (final EntidadTipoDatoVO entd : entdBO.selectList(new EntidadTipoDatoCriterioVO())) {
             final AbstractEntidadDetailVO entiDetail = ENTIDAD_MAP.get(entd.getEntiId());
-
-            if (entiDetail.getEntdList() == null) {
-                entiDetail.setEntdList(new ArrayList<Long>());
-                entiDetail.setEntdGridList(new ArrayList<Long>());
-                entiDetail.setEntdMap(new HashMap<Long, EntidadTipoDatoVO>());
-            }
 
             if (entd.getTpdt() != null) {
                 entd.setTpdt(TipoDatoProxy.select(entd.getTpdt().getId()));
@@ -146,15 +139,17 @@ public final class EntidadProxy {
             final AbstractEntidadDetailVO entiDetailPadre = ENTIDAD_MAP.get(enen.getEntiPadreId());
             final AbstractEntidadDetailVO entiDetailHija = ENTIDAD_MAP.get(enen.getEntiHija().getId());
 
-            if (entiDetailPadre.getEntiHijasList() == null) {
-                entiDetailPadre.setEntiHijasList(new ArrayList<Long>());
-            }
             entiDetailPadre.getEntiHijasList().add(entiDetailHija.getEnti().getId());
-
-            if (entiDetailHija.getEntiPadresList() == null) {
-                entiDetailHija.setEntiPadresList(new ArrayList<Long>());
-            }
             entiDetailHija.getEntiPadresList().add(entiDetailPadre.getEnti().getId());
+        }
+
+        final AccionEntidadBO acenBO = new AccionEntidadBO();
+
+        for (final AccionEntidadVO acen : acenBO.selectList(new AccionEntidadCriterioVO())) {
+            final AbstractEntidadDetailVO entiDetail = ENTIDAD_MAP.get(acen.getEntiId());
+
+            entiDetail.getAcenList().add(acen);
+            acen.setEntiId(null);
         }
 
         final EntidadAccionBO enacBO = new EntidadAccionBO();
@@ -162,9 +157,6 @@ public final class EntidadProxy {
         for (final EntidadAccionVO enac : enacBO.selectList(new EntidadAccionCriterioVO())) {
             final AbstractEntidadDetailVO entiDetail = ENTIDAD_MAP.get(enac.getEntiId());
 
-            if (entiDetail.getEnacList() == null) {
-                entiDetail.setEnacList(new ArrayList<EntidadAccionVO>());
-            }
             entiDetail.getEnacList().add(enac);
             enac.setEntiId(null);
         }
@@ -174,9 +166,6 @@ public final class EntidadProxy {
         for (final EntidadAccionGridVO enag : enagBO.selectList(new EntidadAccionGridCriterioVO())) {
             final AbstractEntidadDetailVO entiDetail = ENTIDAD_MAP.get(enag.getEntiId());
 
-            if (entiDetail.getEnagList() == null) {
-                entiDetail.setEnagList(new ArrayList<EntidadAccionGridVO>());
-            }
             entiDetail.getEnagList().add(enag);
             enag.setEntiId(null);
         }
@@ -186,10 +175,6 @@ public final class EntidadProxy {
 
         for (final TramiteVO trmt : trmtBO.selectList(trmtCriterio)) {
             final AbstractEntidadDetailVO entiDetail = ENTIDAD_MAP.get(trmt.getEntiId());
-
-            if (entiDetail.getTrmtList() == null) {
-                entiDetail.setTrmtList(new ArrayList<TramiteVO>());
-            }
 
             entiDetail.getTrmtList().add(trmt);
             trmt.setEntiId(null);
@@ -212,6 +197,7 @@ public final class EntidadProxy {
                 entiDetail.setEntdMap(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntdMap());
                 entiDetail.setEntiHijasList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntiHijasList());
                 entiDetail.setEntiPadresList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntiPadresList());
+                entiDetail.setAcenList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getAcenList());
                 entiDetail.setEnacList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEnacList());
                 entiDetail.setEnagList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEnagList());
                 entiDetail.setEngdList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEngdList());

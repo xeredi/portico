@@ -1,105 +1,143 @@
-angular.module("metamodelo_service", [ "crud_service" ])
+(function() {
+    'use strict';
 
-.factory("TipoDatoService", TipoDatoService)
+    angular.module("metamodelo_service", [ "crud_service" ])
 
-.factory("CodigoReferenciaService", CodigoReferenciaService)
+    .factory("TipoDatoService", TipoDatoService)
 
-.factory("AccionEntidadService", AccionEntidadService)
+    .factory("CodigoReferenciaService", CodigoReferenciaService)
 
-.factory("EntidadAccionService", EntidadAccionService)
+    .factory("AccionEntidadService", AccionEntidadService)
 
-.factory("EntidadAccionGridService", EntidadAccionGridService)
+    .factory("EntidadAccionService", EntidadAccionService)
 
-.factory("EntidadEntidadService", EntidadEntidadService)
+    .factory("EntidadAccionGridService", EntidadAccionGridService)
 
-.factory("EntidadGrupoDatoService", EntidadGrupoDatoService)
+    .factory("EntidadEntidadService", EntidadEntidadService)
 
-.factory("EntidadTipoDatoService", EntidadTipoDatoService)
+    .factory("EntidadGrupoDatoService", EntidadGrupoDatoService)
 
-.factory("TramiteService", TramiteService)
+    .factory("EntidadTipoDatoService", EntidadTipoDatoService)
 
-.factory("AccionTramiteService", AccionTramiteService)
+    .factory("TramiteService", TramiteService)
 
-.factory("TramiteTipoDatoService", TramiteTipoDatoService)
+    .factory("AccionTramiteService", AccionTramiteService)
 
-.factory("TipoParametroService", TipoParametroService)
+    .factory("TramiteTipoDatoService", TramiteTipoDatoService)
 
-.factory("TipoSubparametroService", TipoSubparametroService)
+    .factory("TipoParametroService", TipoParametroService)
 
-.factory("TipoServicioService", TipoServicioService)
+    .factory("TipoSubparametroService", TipoSubparametroService)
 
-.factory("TipoSubservicioService", TipoSubservicioService)
+    .factory("TipoServicioService", TipoServicioService)
 
-.factory("TipoEstadisticaService", TipoEstadisticaService)
+    .factory("TipoSubservicioService", TipoSubservicioService)
 
-.factory("CampoAgregacionService", CampoAgregacionService)
+    .factory("TipoEstadisticaService", TipoEstadisticaService)
 
-;
+    .factory("CampoAgregacionService", CampoAgregacionService)
 
-function TipoDatoService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/tipo-dato");
-}
+    ;
 
-function CodigoReferenciaService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/codigo-referencia");
-}
+    TipoDatoService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function AccionEntidadService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/accion-entidad");
-}
+    function TipoDatoService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/tipo-dato");
+    }
 
-function EntidadAccionService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/entidad-accion");
-}
+    CodigoReferenciaService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function EntidadAccionGridService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/entidad-accion-grid");
-}
+    function CodigoReferenciaService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/codigo-referencia");
+    }
 
-function EntidadEntidadService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/entidad-entidad");
-}
+    AccionEntidadService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function EntidadGrupoDatoService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/entidad-grupo-dato");
-}
+    function AccionEntidadService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/accion-entidad");
+    }
 
-function EntidadTipoDatoService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/entidad-tipo-dato");
-}
+    EntidadAccionService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function TramiteService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/tramite");
-}
+    function EntidadAccionService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/entidad-accion");
+    }
 
-function AccionTramiteService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/accion-tramite");
-}
+    EntidadAccionGridService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function TramiteTipoDatoService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/tramite-tipo-dato");
-}
+    function EntidadAccionGridService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/entidad-accion-grid");
+    }
 
-function TipoParametroService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/tipo-parametro");
-}
+    EntidadEntidadService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function TipoSubparametroService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/tipo-subparametro");
-}
+    function EntidadEntidadService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/entidad-entidad");
+    }
 
-function TipoServicioService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/tipo-servicio");
-}
+    EntidadGrupoDatoService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function TipoSubservicioService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/tipo-subservicio");
-}
+    function EntidadGrupoDatoService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/entidad-grupo-dato");
+    }
 
-function TipoEstadisticaService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/tipo-estadistica");
-}
+    EntidadTipoDatoService.$inject = [ '$http', '$q', 'CrudService' ];
 
-function CampoAgregacionService($http, $q, CrudService) {
-    return CrudService.create("metamodelo/campo-agregacion");
-}
+    function EntidadTipoDatoService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/entidad-tipo-dato");
+    }
+
+    TramiteService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function TramiteService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/tramite");
+    }
+
+    AccionTramiteService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function AccionTramiteService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/accion-tramite");
+    }
+
+    TramiteTipoDatoService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function TramiteTipoDatoService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/tramite-tipo-dato");
+    }
+
+    TipoParametroService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function TipoParametroService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/tipo-parametro");
+    }
+
+    TipoSubparametroService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function TipoSubparametroService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/tipo-subparametro");
+    }
+
+    TipoServicioService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function TipoServicioService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/tipo-servicio");
+    }
+
+    TipoSubservicioService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function TipoSubservicioService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/tipo-subservicio");
+    }
+
+    TipoEstadisticaService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function TipoEstadisticaService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/tipo-estadistica");
+    }
+
+    CampoAgregacionService.$inject = [ '$http', '$q', 'CrudService' ];
+
+    function CampoAgregacionService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/campo-agregacion");
+    }
+})();

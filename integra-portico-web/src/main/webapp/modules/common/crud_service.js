@@ -1,425 +1,426 @@
-angular.module("crud_service", [])
+(function() {
+    'use strict';
 
-.factory("CrudService", CrudService)
+    angular.module("crud_service", [])
 
-;
+    .factory("CrudService", CrudService)
 
-function CrudService($http, $q, $location, Upload) {
-    function Crud() {
-        var _uri;
+    ;
 
-        function setUri(uri) {
-            _uri = uri;
-        }
+    CrudService.$inject = [ '$http', '$q', '$location', 'Upload' ];
 
-        function getUri() {
-            return _uri;
-        }
+    function CrudService($http, $q, $location, Upload) {
+        function Crud() {
+            var _uri;
 
-        function index() {
-            // console.log('index');
-
-            return $http.post(_uri + "-index.action")
-                .then(success)
-                .catch(fail);
-
-            function success(response) {
-                return response.data;
+            function setUri(uri) {
+                _uri = uri;
             }
 
-            function fail(error) {
-                var msg = 'Index failed. ' + error.data;
-                console.log(msg);
-
-                return $q.reject(msg);
-            }
-        }
-
-        function list(searchCriteria) {
-            // console.log('list');
-
-            return $http.post(_uri + "-list.action", {model: searchCriteria})
-                .then(success)
-                .catch(fail);
-
-            function success(response) {
-                $location.search({
-                    searchCriteria : JSON.stringify(searchCriteria)
-                }).replace();
-
-                return response.data;
+            function getUri() {
+                return _uri;
             }
 
-            function fail(error) {
-                var msg = 'List failed. ' + error.data;
-                console.log(msg);
+            function index() {
+                // console.log('index');
 
-                return $q.reject(msg);
-            }
-        }
+                return $http.post(_uri + "-index.action").then(success, fail);
 
-        function listPage(searchCriteria, page, limit) {
-            // console.log('list page');
+                function success(response) {
+                    return response.data;
+                }
 
-            return $http.post(_uri + "-list.action", {model: searchCriteria, page: page, limit: limit})
-                .then(success)
-                .catch(fail);
+                function fail(error) {
+                    var msg = 'Index failed. ' + error;
+                    console.log(msg);
 
-            function success(response) {
-                $location.search({
-                    page : page,
-                    limit : limit,
-                    searchCriteria : JSON.stringify(searchCriteria)
-                }).replace();
-
-                return response.data;
-            }
-
-            function fail(error) {
-                var msg = 'List Page failed. ' + error.data;
-                console.log(msg);
-
-                return $q.reject(msg);
-            }
-        }
-
-        function typeahead(searchCriteria) {
-            // console.log('typeahead');
-
-            return $http.post(_uri + "-typeahead.action", {model: searchCriteria})
-                .then(success)
-                .catch(fail);
-
-            function success(response) {
-                return response.data;
-            }
-
-            function fail(error) {
-                var msg = 'Typeahead failed. ' + error.data;
-                console.log(msg);
-
-                return $q.reject(msg);
-            }
-        }
-
-        function xlsExport(searchCriteria, filename) {
-            // console.log('xls export');
-
-            return $http.post(_uri + "-xls-export.action", {criterio: searchCriteria}, {
-                responseType : 'arraybuffer'
-            })
-                .then(success)
-                .catch(fail);
-
-            function success(response) {
-                var file = new Blob([ response.data ], {
-                    type : 'application/xls'
-                });
-
-                setTimeout(function() {
-                    saveAs(file, filename  + '.xls');
-                }, 0);
-
-                return response.data;
-            }
-
-            function fail(error) {
-                var msg = 'Xls Export failed. ' + error.data;
-                console.log(msg);
-
-                return $q.reject(msg);
-            }
-        }
-
-        function filter(searchCriteria) {
-            // console.log('filter');
-
-            return $http.post(_uri + "-filter.action", {model: searchCriteria})
-                .then(success)
-                .catch(fail);
-
-            function success(response) {
-                return response.data;
-            }
-
-            function fail(error) {
-                var msg = 'Filter failed. ' + error.data;
-                console.log(msg);
-
-                return $q.reject(msg);
-            }
-        }
-
-        function detail(id) {
-            // console.log('detail');
-
-            return $http.post(_uri + "-detail.action", {model: id})
-                .then(success)
-                .catch(fail);
-
-            function success(response) {
-                return response.data;
-            }
-
-            function fail(error) {
-                var msg = 'Detail failed. ' + error.data;
-                console.log(msg);
-
-                return $q.reject(msg);
-            }
-        }
-
-        function pdfExport(id, filename) {
-            // console.log('Pdf export');
-
-            return $http.post(_uri + "-pdf-export.action", {model: id}, {
-                responseType : 'arraybuffer'
-            })
-                .then(success)
-                .catch(fail);
-
-            function success(response) {
-                var file = new Blob([ response.data ], {
-                    type : 'application/pdf'
-                });
-
-                setTimeout(function() {
-                    saveAs(file, filename  + '.pdf');
-                }, 0);
-
-                return response.data;
-            }
-
-            function fail(error) {
-                var msg = 'Pdf export failed. ' + error.data;
-                console.log(msg);
-
-                return $q.reject(msg);
-            }
-        }
-
-        function fileExport(id, filename) {
-            // console.log('File export');
-
-            return $http.post(_uri + "-file-export.action", {model: id}, {
-                responseType : 'arraybuffer'
-            })
-                .then(success)
-                .catch(fail);
-
-            function success(response) {
-                var file = new Blob([ response.data ]);
-
-                setTimeout(function() {
-                    saveAs(file, filename);
-                }, 0);
-
-                return response.data;
-            }
-
-            function fail(error) {
-                var msg = 'File export failed. ' + error.data;
-                console.log(msg);
-
-                return $q.reject(msg);
-            }
-        }
-
-        function remove(item) {
-            // console.log('remove');
-
-            if (confirm("Are you sure?")) {
-                return $http.post(_uri + "-remove.action", {model: item})
-                    .then(success)
-                    .catch(fail);
-            }
-
-            function success(response) {
-                return response.data;
-            }
-
-            function fail(error) {
-                var msg = 'Remove failed. ' + error.data;
-                console.log(msg);
-
-                return $q.reject(msg);
-            }
-        }
-
-        function edit(accion, id) {
-            // console.log('edit');
-
-            return $http.post(_uri + "-edit.action", {model: id, accion : accion})
-                .then(success)
-                .catch(fail);
-
-            function success(response) {
-                return response.data;
-            }
-
-            function fail(error) {
-                var msg = 'Edit failed. ' + error.data;
-                console.log(msg);
-
-                return $q.reject(msg);
-            }
-        }
-
-        function save(accion, item) {
-            // console.log('save');
-
-            return $http.post(_uri + "-save.action", {model: item, accion : accion})
-                .then(success)
-                .catch(fail);
-
-            function success(response) {
-                return response.data;
-            }
-
-            function fail(error) {
-                var msg = 'Save failed. ' + error.data;
-                console.log(msg);
-
-                return $q.reject(msg);
-            }
-        }
-
-        function saveI18n(accion, item, i18nMap) {
-            // console.log('save i18n');
-
-            return $http.post(_uri + "-save.action", {model: item, i18nMap: i18nMap, accion : accion})
-                .then(success)
-                .catch(fail);
-
-            function success(response) {
-                return response.data;
-            }
-
-            function fail(error) {
-                var msg = 'Save I18n failed. ' + error.data;
-                console.log(msg);
-
-                return $q.reject(msg);
-            }
-        }
-
-        function loadPrepare(item) {
-            // console.log('loadPrepare');
-
-            return $http.post(_uri + "-load-prepare.action", {model: item})
-                .then(success)
-                .catch(fail);
-
-            function success(response) {
-                return response.data;
-            }
-
-            function fail(error) {
-                var msg = 'loadPrepare failed. ' + error.data;
-                console.log(msg);
-
-                return $q.reject(msg);
-            }
-        }
-
-        function load(item) {
-            // console.log('load');
-
-            return $http.post(_uri + "-load.action", {model: item})
-                .then(success)
-                .catch(fail);
-
-            function success(response) {
-                return response.data;
-            }
-
-            function fail(error) {
-                var msg = 'load failed. ' + error.data;
-                console.log(msg);
-
-                return $q.reject(msg);
-            }
-        }
-
-        function fileUpload(file) {
-            console.log('fileUpload');
-
-            return Upload.upload({
-                url: _uri + "-file-upload.action",
-                data: {uploadedFile: file}
-            })
-                .then(success)
-                .catch(fail);
-
-            function success(response) {
-                return response.data;
-            }
-
-            function fail(error) {
-                var msg = 'fileUpload failed. ' + error.data;
-
-                console.log(msg);
-
-                return $q.reject(msg);
-            }
-        }
-
-        function redirectAfterSave(accion, url, urlParams) {
-            if (urlParams) {
-                for (i=0; i<urlParams.length; i++) {
-                    url += '/' + urlParams[i];
+                    return $q.reject(msg);
                 }
             }
 
-            // alert(url);
+            function list(searchCriteria) {
+                // console.log('list');
 
-            accion == 'edit' ? setTimeout(function() {
-                window.history.back();
-            }, 0) : $location.path(url).replace();
-        }
+                return $http.post(_uri + "-list.action", {
+                    model : searchCriteria
+                }).then(success, fail);
 
-        function tabSelected(tab) {
-            $location.search('tab', tab).replace();
-        }
+                function success(response) {
+                    $location.search({
+                        searchCriteria : JSON.stringify(searchCriteria)
+                    }).replace();
 
-        function pageMapChanged(pageMap) {
-            $location.search('pageMap', JSON.stringify(pageMap)).replace();
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'List failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
+            function listPage(searchCriteria, page, limit) {
+                // console.log('list page');
+
+                return $http.post(_uri + "-list.action", {
+                    model : searchCriteria,
+                    page : page,
+                    limit : limit
+                }).then(success, fail);
+
+                function success(response) {
+                    $location.search({
+                        page : page,
+                        limit : limit,
+                        searchCriteria : JSON.stringify(searchCriteria)
+                    }).replace();
+
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'List Page failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
+            function typeahead(searchCriteria) {
+                return $http.post(_uri + "-typeahead.action", {
+                    model : searchCriteria
+                }).then(success, fail);
+
+                function success(response) {
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'Typeahead failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
+            function xlsExport(searchCriteria, filename) {
+                // console.log('xls export');
+
+                return $http.post(_uri + "-xls-export.action", {
+                    criterio : searchCriteria
+                }, {
+                    responseType : 'arraybuffer'
+                }).then(success, fail);
+
+                function success(response) {
+                    var file = new Blob([ response.data ], {
+                        type : 'application/xls'
+                    });
+
+                    setTimeout(function() {
+                        saveAs(file, filename + '.xls');
+                    }, 0);
+
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'Xls Export failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
+            function filter(searchCriteria) {
+                // console.log('filter');
+
+                return $http.post(_uri + "-filter.action", {
+                    model : searchCriteria
+                }).then(success, fail);
+
+                function success(response) {
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'Filter failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
+            function detail(id) {
+                // console.log('detail');
+
+                return $http.post(_uri + "-detail.action", {
+                    model : id
+                }).then(success, fail);
+
+                function success(response) {
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'Detail failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
+            function pdfExport(id, filename) {
+                // console.log('Pdf export');
+
+                return $http.post(_uri + "-pdf-export.action", {
+                    model : id
+                }, {
+                    responseType : 'arraybuffer'
+                }).then(success, fail);
+
+                function success(response) {
+                    var file = new Blob([ response.data ], {
+                        type : 'application/pdf'
+                    });
+
+                    setTimeout(function() {
+                        saveAs(file, filename + '.pdf');
+                    }, 0);
+
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'Pdf export failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
+            function fileExport(id, filename) {
+                // console.log('File export');
+
+                return $http.post(_uri + "-file-export.action", {
+                    model : id
+                }, {
+                    responseType : 'arraybuffer'
+                }).then(success, fail);
+
+                function success(response) {
+                    var file = new Blob([ response.data ]);
+
+                    setTimeout(function() {
+                        saveAs(file, filename);
+                    }, 0);
+
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'File export failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
+            function remove(item) {
+                // console.log('remove');
+
+                if (confirm("Are you sure?")) {
+                    return $http.post(_uri + "-remove.action", {
+                        model : item
+                    }).then(success, fail);
+                }
+
+                function success(response) {
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'Remove failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
+            function edit(accion, id) {
+                return $http.post(_uri + "-edit.action", {
+                    model : id,
+                    accion : accion
+                }).then(success, fail);
+
+                function success(response) {
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'Edit failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
+            function save(accion, item) {
+                return $http.post(_uri + "-save.action", {
+                    model : item,
+                    accion : accion
+                }).then(success, fail);
+
+                function success(response) {
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'Save failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
+            function saveI18n(accion, item, i18nMap) {
+                return $http.post(_uri + "-save.action", {
+                    model : item,
+                    i18nMap : i18nMap,
+                    accion : accion
+                }).then(success, fail);
+
+                function success(response) {
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'Save I18n failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
+            function loadPrepare(item) {
+                // console.log('loadPrepare');
+
+                return $http.post(_uri + "-load-prepare.action", {
+                    model : item
+                }).then(success, fail);
+
+                function success(response) {
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'loadPrepare failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
+            function load(item) {
+                return $http.post(_uri + "-load.action", {
+                    model : item
+                }).then(success, fail);
+
+                function success(response) {
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'load failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
+            function fileUpload(file) {
+                console.log('fileUpload');
+
+                return Upload.upload({
+                    url : _uri + "-file-upload.action",
+                    data : {
+                        uploadedFile : file
+                    }
+                }).then(success, fail);
+
+                function success(response) {
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'fileUpload failed. ' + error;
+
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
+            function redirectAfterSave(accion, url, urlParams) {
+                if (urlParams) {
+                    var i;
+
+                    for (i in urlParams.length) {
+                        url += '/' + urlParams[i];
+                    }
+                }
+
+                // alert(url);
+
+                accion == 'edit' ? setTimeout(function() {
+                    window.history.back();
+                }, 0) : $location.path(url).replace();
+            }
+
+            function tabSelected(tab) {
+                $location.search('tab', tab).replace();
+            }
+
+            function pageMapChanged(pageMap) {
+                $location.search('pageMap', JSON.stringify(pageMap)).replace();
+            }
+
+            return {
+                index : index,
+                listPage : listPage,
+                list : list,
+                typeahead : typeahead,
+                xlsExport : xlsExport,
+                filter : filter,
+                detail : detail,
+                pdfExport : pdfExport,
+                fileExport : fileExport,
+                remove : remove,
+                edit : edit,
+                save : save,
+                saveI18n : saveI18n,
+                redirectAfterSave : redirectAfterSave,
+                loadPrepare : loadPrepare,
+                load : load,
+                fileUpload : fileUpload,
+                tabSelected : tabSelected,
+                pageMapChanged : pageMapChanged,
+                setUri : setUri,
+                getUri : getUri
+            };
         }
 
         return {
-            index: index
-            , listPage: listPage
-            , list: list
-            , typeahead: typeahead
-            , xlsExport: xlsExport
-            , filter: filter
-            , detail: detail
-            , pdfExport: pdfExport
-            , fileExport: fileExport
-            , remove: remove
-            , edit: edit
-            , save: save
-            , saveI18n: saveI18n
-            , redirectAfterSave: redirectAfterSave
-            , loadPrepare: loadPrepare
-            , load: load
-            , fileUpload: fileUpload
-            , tabSelected: tabSelected
-            , pageMapChanged: pageMapChanged
-            , setUri: setUri
-            , getUri: getUri
+            create : function(uri) {
+                var crud = new Crud();
+
+                crud.setUri(uri);
+
+                return crud;
+            }
         };
+
     }
-
-    return {
-        create: function (uri) {
-          var crud = new Crud();
-
-          crud.setUri(uri);
-
-          return crud;
-      }
-    };
-
-
-}
+})();

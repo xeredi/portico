@@ -1,456 +1,468 @@
-angular.module("administracion_controller", [])
+(function() {
+    'use strict';
 
-.config(config)
+    angular.module("administracion_controller", [ "administracion_service" ])
 
-.controller("AdministracionIndexController", AdministracionIndexController)
+    .config(administracion_config)
 
-.controller("SuperpuertoGridController", SuperpuertoGridController)
+    .controller("AdministracionIndexController", AdministracionIndexController)
 
-.controller("SuperpuertoDetailController", SuperpuertoDetailController)
+    .controller("SuperpuertoGridController", SuperpuertoGridController)
 
-.controller("SuperpuertoEditController", SuperpuertoEditController)
+    .controller("SuperpuertoDetailController", SuperpuertoDetailController)
 
-.controller("PuertoGridController", PuertoGridController)
+    .controller("SuperpuertoEditController", SuperpuertoEditController)
 
-.controller("PuertoDetailController", PuertoDetailController)
+    .controller("PuertoGridController", PuertoGridController)
 
-.controller("PuertoEditController", PuertoEditController)
+    .controller("PuertoDetailController", PuertoDetailController)
 
-.controller("ConfigurationGridController", ConfigurationGridController)
+    .controller("PuertoEditController", PuertoEditController)
 
-.controller("ConfigurationDetailController", ConfigurationDetailController)
+    .controller("ConfigurationGridController", ConfigurationGridController)
 
-.controller("ConfigurationEditController", ConfigurationEditController)
+    .controller("ConfigurationDetailController", ConfigurationDetailController)
 
-.controller("MessageI18nGridController", MessageI18nGridController)
+    .controller("ConfigurationEditController", ConfigurationEditController)
 
-.controller("MessageI18nDetailController", MessageI18nDetailController)
+    .controller("MessageI18nGridController", MessageI18nGridController)
 
-.controller("MessageI18nEditController", MessageI18nEditController)
+    .controller("MessageI18nDetailController", MessageI18nDetailController)
 
-;
-
-function config($routeProvider) {
-    $routeProvider
-
-    .when("/administracion", {
-        templateUrl : "modules/administracion/administracion-index.html",
-        controller : "AdministracionIndexController as vm"
-    })
-
-    .when("/administracion/puerto/superpuerto/grid", {
-        templateUrl : "modules/administracion/superpuerto-grid.html",
-        controller : "SuperpuertoGridController as vm",
-        reloadOnSearch : false
-    })
-
-    .when("/administracion/puerto/superpuerto/detail/:id", {
-        templateUrl : "modules/administracion/superpuerto-detail.html",
-        controller : "SuperpuertoDetailController as vm",
-    })
-
-    .when("/administracion/puerto/superpuerto/edit/:accion/:id?", {
-        templateUrl : "modules/administracion/superpuerto-edit.html",
-        controller : "SuperpuertoEditController as vm",
-    })
-
-    .when("/administracion/puerto/puerto/grid", {
-        templateUrl : "modules/administracion/puerto-grid.html",
-        controller : "PuertoGridController as vm",
-        reloadOnSearch : false
-    })
-
-    .when("/administracion/puerto/puerto/detail/:id", {
-        templateUrl : "modules/administracion/puerto-detail.html",
-        controller : "PuertoDetailController as vm",
-    })
-
-    .when("/administracion/puerto/puerto/edit/:accion/:id?", {
-        templateUrl : "modules/administracion/puerto-edit.html",
-        controller : "PuertoEditController as vm",
-    })
-
-    .when("/administracion/configuration/configuration/grid", {
-        templateUrl : "modules/administracion/configuration-grid.html",
-        controller : "ConfigurationGridController as vm",
-        reloadOnSearch : false
-    })
-
-    .when("/administracion/configuration/configuration/detail/:key", {
-        templateUrl : "modules/administracion/configuration-detail.html",
-        controller : "ConfigurationDetailController as vm",
-    })
-
-    .when("/administracion/configuration/configuration/edit/:accion/:key?", {
-        templateUrl : "modules/administracion/configuration-edit.html",
-        controller : "ConfigurationEditController as vm",
-    })
-
-    .when("/administracion/messagei18n/messagei18n/grid", {
-        templateUrl : "modules/administracion/messagei18n-grid.html",
-        controller : "MessageI18nGridController as vm",
-        reloadOnSearch : false
-    })
-
-    .when("/administracion/messagei18n/messagei18n/detail/:key", {
-        templateUrl : "modules/administracion/messagei18n-detail.html",
-        controller : "MessageI18nDetailController as vm",
-    })
-
-    .when("/administracion/messagei18n/messagei18n/edit/:accion/:key", {
-        templateUrl : "modules/administracion/messagei18n-edit.html",
-        controller : "MessageI18nEditController as vm",
-    })
+    .controller("MessageI18nEditController", MessageI18nEditController)
 
     ;
-}
 
-function AdministracionIndexController($routeParams, pageTitleService,
-        AdministracionService) {
-    var vm = this;
+    administracion_config.$inject = [ '$routeProvider' ];
 
-    AdministracionService.index().then(function(data) {
-    });
+    function administracion_config($routeProvider) {
+        $routeProvider
 
-    pageTitleService.setTitle("sec_administracion", "page_home");
-}
+        .when("/administracion", {
+            templateUrl : "modules/administracion/administracion-index.html",
+            controller : "AdministracionIndexController as vm"
+        })
 
-function SuperpuertoGridController($routeParams, pageTitleService,
-        SuperpuertoService) {
-    var vm = this;
+        .when("/administracion/puerto/superpuerto/grid", {
+            templateUrl : "modules/administracion/superpuerto-grid.html",
+            controller : "SuperpuertoGridController as vm",
+            reloadOnSearch : false
+        })
 
-    vm.filter = filter;
-    vm.resetFilter = resetFilter;
-    vm.search = search;
-    vm.pageChanged = pageChanged;
+        .when("/administracion/puerto/superpuerto/detail/:id", {
+            templateUrl : "modules/administracion/superpuerto-detail.html",
+            controller : "SuperpuertoDetailController as vm",
+        })
 
-    function filter() {
-        SuperpuertoService.filter(vm.searchCriteria).then(function(data) {
+        .when("/administracion/puerto/superpuerto/edit/:accion/:id?", {
+            templateUrl : "modules/administracion/superpuerto-edit.html",
+            controller : "SuperpuertoEditController as vm",
+        })
+
+        .when("/administracion/puerto/puerto/grid", {
+            templateUrl : "modules/administracion/puerto-grid.html",
+            controller : "PuertoGridController as vm",
+            reloadOnSearch : false
+        })
+
+        .when("/administracion/puerto/puerto/detail/:id", {
+            templateUrl : "modules/administracion/puerto-detail.html",
+            controller : "PuertoDetailController as vm",
+        })
+
+        .when("/administracion/puerto/puerto/edit/:accion/:id?", {
+            templateUrl : "modules/administracion/puerto-edit.html",
+            controller : "PuertoEditController as vm",
+        })
+
+        .when("/administracion/configuration/configuration/grid", {
+            templateUrl : "modules/administracion/configuration-grid.html",
+            controller : "ConfigurationGridController as vm",
+            reloadOnSearch : false
+        })
+
+        .when("/administracion/configuration/configuration/detail/:key", {
+            templateUrl : "modules/administracion/configuration-detail.html",
+            controller : "ConfigurationDetailController as vm",
+        })
+
+        .when("/administracion/configuration/configuration/edit/:accion/:key?", {
+            templateUrl : "modules/administracion/configuration-edit.html",
+            controller : "ConfigurationEditController as vm",
+        })
+
+        .when("/administracion/messagei18n/messagei18n/grid", {
+            templateUrl : "modules/administracion/messagei18n-grid.html",
+            controller : "MessageI18nGridController as vm",
+            reloadOnSearch : false
+        })
+
+        .when("/administracion/messagei18n/messagei18n/detail/:key", {
+            templateUrl : "modules/administracion/messagei18n-detail.html",
+            controller : "MessageI18nDetailController as vm",
+        })
+
+        .when("/administracion/messagei18n/messagei18n/edit/:accion/:key", {
+            templateUrl : "modules/administracion/messagei18n-edit.html",
+            controller : "MessageI18nEditController as vm",
+        })
+
+        ;
+    }
+
+    AdministracionIndexController.$inject = [ '$routeParams', 'pageTitleService', 'AdministracionService' ];
+
+    function AdministracionIndexController($routeParams, pageTitleService, AdministracionService) {
+        var vm = this;
+
+        AdministracionService.index().then(function(data) {
         });
+
+        pageTitleService.setTitle("sec_administracion", "page_home");
     }
 
-    function resetFilter() {
-        vm.searchCriteria = {};
-    }
+    SuperpuertoGridController.$inject = [ '$routeParams', 'pageTitleService', 'SuperpuertoService' ];
 
-    function search(page) {
-        SuperpuertoService.listPage(vm.searchCriteria, page, vm.limit).then(
-                function(data) {
-                    vm.page = data.resultList.page;
-                    vm.limit = data.resultList.limit;
-                    vm.sprtList = data.resultList;
-                });
-    }
+    function SuperpuertoGridController($routeParams, pageTitleService, SuperpuertoService) {
+        var vm = this;
 
-    function pageChanged() {
-        search(vm.page);
-    }
+        vm.filter = filter;
+        vm.resetFilter = resetFilter;
+        vm.search = search;
+        vm.pageChanged = pageChanged;
 
-    vm.searchCriteria = $routeParams.searchCriteria ? angular
-            .fromJson($routeParams.searchCriteria) : {};
-    vm.limit = $routeParams.limit;
-
-    search($routeParams.page ? $routeParams.page : 1);
-
-    pageTitleService.setTitle("sprt", "page_grid");
-}
-
-function SuperpuertoDetailController($routeParams, pageTitleService,
-        SuperpuertoService) {
-    var vm = this;
-
-    vm.remove = remove;
-
-    function remove() {
-        SuperpuertoService.remove(vm.model).then(function(data) {
-            window.history.back();
-        });
-    }
-
-    vm.search = {
-        id : $routeParams.id
-    };
-
-    SuperpuertoService.detail(vm.search).then(function(data) {
-        vm.model = data.model;
-        vm.i18nMap = data.i18nMap;
-    });
-
-    pageTitleService.setTitle("sprt", "page_detail");
-}
-
-function SuperpuertoEditController($routeParams, pageTitleService,
-        SuperpuertoService) {
-    var vm = this;
-
-    vm.save = save;
-    vm.cancel = cancel;
-
-    function save() {
-        SuperpuertoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
-                function(data) {
-                    SuperpuertoService.redirectAfterSave(vm.accion,
-                            '/administracion/puerto/superpuerto/detail',
-                            [ data.model.id ]);
-                });
-    }
-
-    function cancel() {
-        window.history.back();
-    }
-
-    vm.accion = $routeParams.accion;
-
-    vm.search = {
-        id : $routeParams.id
-    };
-
-    SuperpuertoService.edit(vm.accion, vm.search).then(
-            function(data) {
-                vm.model = data.model;
-                vm.i18nMap = data.i18nMap;
+        function filter() {
+            SuperpuertoService.filter(vm.searchCriteria).then(function(data) {
             });
+        }
 
-    pageTitleService.setTitle("sprt", "page_" + vm.accion);
-}
+        function resetFilter() {
+            vm.searchCriteria = {};
+        }
 
-function PuertoGridController($routeParams, pageTitleService, PuertoService) {
-    var vm = this;
+        function search(page) {
+            SuperpuertoService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
+                vm.page = data.resultList.page;
+                vm.limit = data.resultList.limit;
+                vm.sprtList = data.resultList;
+            });
+        }
 
-    vm.filter = filter;
-    vm.resetFilter = resetFilter;
-    vm.search = search;
-    vm.pageChanged = pageChanged;
+        function pageChanged() {
+            search(vm.page);
+        }
 
-    function filter() {
-        PuertoService.filter(vm.searchCriteria).then(function(data) {
+        vm.searchCriteria = $routeParams.searchCriteria ? angular.fromJson($routeParams.searchCriteria) : {};
+        vm.limit = $routeParams.limit;
+
+        search($routeParams.page ? $routeParams.page : 1);
+
+        pageTitleService.setTitle("sprt", "page_grid");
+    }
+
+    SuperpuertoDetailController.$inject = [ '$routeParams', 'pageTitleService', 'SuperpuertoService' ];
+
+    function SuperpuertoDetailController($routeParams, pageTitleService, SuperpuertoService) {
+        var vm = this;
+
+        vm.remove = remove;
+
+        function remove() {
+            SuperpuertoService.remove(vm.model).then(function(data) {
+                window.history.back();
+            });
+        }
+
+        vm.search = {
+            id : $routeParams.id
+        };
+
+        SuperpuertoService.detail(vm.search).then(function(data) {
+            vm.model = data.model;
+            vm.i18nMap = data.i18nMap;
+        });
+
+        pageTitleService.setTitle("sprt", "page_detail");
+    }
+
+    SuperpuertoEditController.$inject = [ '$routeParams', 'pageTitleService', 'SuperpuertoService' ];
+
+    function SuperpuertoEditController($routeParams, pageTitleService, SuperpuertoService) {
+        var vm = this;
+
+        vm.save = save;
+        vm.cancel = cancel;
+
+        function save() {
+            SuperpuertoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
+                    function(data) {
+                        SuperpuertoService.redirectAfterSave(vm.accion,
+                                '/administracion/puerto/superpuerto/detail', [ data.model.id ]);
+                    });
+        }
+
+        function cancel() {
+            window.history.back();
+        }
+
+        vm.accion = $routeParams.accion;
+
+        vm.search = {
+            id : $routeParams.id
+        };
+
+        SuperpuertoService.edit(vm.accion, vm.search).then(function(data) {
+            vm.model = data.model;
+            vm.i18nMap = data.i18nMap;
+        });
+
+        pageTitleService.setTitle("sprt", "page_" + vm.accion);
+    }
+
+    PuertoGridController.$inject = [ '$routeParams', 'pageTitleService', 'PuertoService' ];
+
+    function PuertoGridController($routeParams, pageTitleService, PuertoService) {
+        var vm = this;
+
+        vm.filter = filter;
+        vm.resetFilter = resetFilter;
+        vm.search = search;
+        vm.pageChanged = pageChanged;
+
+        function filter() {
+            PuertoService.filter(vm.searchCriteria).then(function(data) {
+                vm.sprtList = data.sprtList;
+            });
+        }
+
+        function resetFilter() {
+            vm.searchCriteria = {};
+        }
+
+        function search(page) {
+            PuertoService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
+                vm.page = data.resultList.page;
+                vm.limit = data.resultList.limit;
+                vm.prtoList = data.resultList;
+            });
+        }
+
+        function pageChanged() {
+            search(vm.page);
+        }
+
+        vm.searchCriteria = $routeParams.searchCriteria ? angular.fromJson($routeParams.searchCriteria) : {};
+        vm.limit = $routeParams.limit;
+
+        search($routeParams.page ? $routeParams.page : 1);
+
+        pageTitleService.setTitle("prto", "page_grid");
+    }
+
+    PuertoDetailController.$inject = [ '$routeParams', 'pageTitleService', 'PuertoService' ];
+
+    function PuertoDetailController($routeParams, pageTitleService, PuertoService) {
+        var vm = this;
+
+        vm.remove = remove;
+
+        function remove() {
+            PuertoService.remove(vm.model).then(function(data) {
+                window.history.back();
+            });
+        }
+
+        vm.search = {
+            id : $routeParams.id
+        };
+
+        PuertoService.detail(vm.search).then(function(data) {
+            vm.model = data.model;
+            vm.i18nMap = data.i18nMap;
+        });
+
+        pageTitleService.setTitle("prto", "page_detail");
+    }
+
+    PuertoEditController.$inject = [ '$routeParams', 'pageTitleService', 'PuertoService' ];
+
+    function PuertoEditController($routeParams, pageTitleService, PuertoService) {
+        var vm = this;
+
+        vm.save = save;
+        vm.cancel = cancel;
+
+        function save() {
+            PuertoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
+                    function(data) {
+                        PuertoService.redirectAfterSave(vm.accion, '/administracion/puerto/puerto/detail',
+                                [ data.model.id ]);
+                    });
+        }
+
+        function cancel() {
+            window.history.back();
+        }
+
+        vm.accion = $routeParams.accion;
+
+        vm.search = {
+            id : $routeParams.id
+        };
+
+        PuertoService.edit(vm.accion, vm.search).then(function(data) {
+            vm.model = data.model;
+            vm.i18nMap = data.i18nMap;
+
             vm.sprtList = data.sprtList;
         });
+
+        pageTitleService.setTitle("prto", "page_" + vm.accion);
     }
 
-    function resetFilter() {
-        vm.searchCriteria = {};
+    ConfigurationGridController.$inject = [ '$routeParams', 'pageTitleService', 'ConfigurationService' ];
+
+    function ConfigurationGridController($routeParams, pageTitleService, ConfigurationService) {
+        var vm = this;
+
+        vm.search = search;
+        vm.reload = reload;
+
+        function search() {
+            ConfigurationService.list().then(function(data) {
+                vm.confList = data.resultList;
+            });
+        }
+
+        function reload() {
+            alert('Implementar');
+        }
+
+        search();
+
+        pageTitleService.setTitle("conf", "page_grid");
     }
 
-    function search(page) {
-        PuertoService.listPage(vm.searchCriteria, page, vm.limit).then(
-                function(data) {
-                    vm.page = data.resultList.page;
-                    vm.limit = data.resultList.limit;
-                    vm.prtoList = data.resultList;
-                });
+    ConfigurationDetailController.$inject = [ '$routeParams', 'pageTitleService', 'ConfigurationService' ];
+
+    function ConfigurationDetailController($routeParams, pageTitleService, ConfigurationService) {
+        var vm = this;
+
+        vm.search = {
+            key : $routeParams.key
+        };
+
+        ConfigurationService.detail(vm.search).then(function(data) {
+            vm.model = data.model;
+        });
+
+        pageTitleService.setTitle("conf", "page_detail");
     }
 
-    function pageChanged() {
-        search(vm.page);
-    }
+    ConfigurationEditController.$inject = [ '$routeParams', 'pageTitleService', 'ConfigurationService' ];
 
-    vm.searchCriteria = $routeParams.searchCriteria ? angular
-            .fromJson($routeParams.searchCriteria) : {};
-    vm.limit = $routeParams.limit;
+    function ConfigurationEditController($routeParams, pageTitleService, ConfigurationService) {
+        var vm = this;
 
-    search($routeParams.page ? $routeParams.page : 1);
+        vm.save = save;
+        vm.cancel = cancel;
 
-    pageTitleService.setTitle("prto", "page_grid");
-}
+        function save() {
+            ConfigurationService.save(vm.accion, vm.model).then(
+                    function(data) {
+                        ConfigurationService.redirectAfterSave(vm.accion,
+                                '/administracion/configuration/detail', [ data.model.key ]);
+                    });
+        }
 
-function PuertoDetailController($routeParams, pageTitleService, PuertoService) {
-    var vm = this;
-
-    vm.remove = remove;
-
-    function remove() {
-        PuertoService.remove(vm.model).then(function(data) {
+        function cancel() {
             window.history.back();
+        }
+
+        vm.accion = $routeParams.accion;
+
+        vm.search = {
+            key : $routeParams.key
+        };
+
+        ConfigurationService.edit(vm.accion, vm.search).then(function(data) {
+            vm.model = data.model;
         });
+
+        pageTitleService.setTitle("conf", "page_" + vm.accion);
     }
 
-    vm.search = {
-        id : $routeParams.id
-    };
+    MessageI18nGridController.$inject = [ '$routeParams', 'pageTitleService', 'MessageI18nService' ];
 
-    PuertoService.detail(vm.search).then(function(data) {
-        vm.model = data.model;
-        vm.i18nMap = data.i18nMap;
-    });
+    function MessageI18nGridController($routeParams, pageTitleService, MessageI18nService) {
+        var vm = this;
 
-    pageTitleService.setTitle("prto", "page_detail");
-}
+        vm.search = search;
+        vm.reload = reload;
 
-function PuertoEditController($routeParams, pageTitleService, PuertoService) {
-    var vm = this;
+        function search() {
+            MessageI18nService.list().then(function(data) {
+                vm.keyList = data.resultList;
+                vm.keyMap = data.keyMap;
+                vm.availableLanguages = data.availableLanguages;
+            });
+        }
 
-    vm.save = save;
-    vm.cancel = cancel;
+        function reload() {
+            alert('Implementar');
+        }
 
-    function save() {
-        PuertoService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
-                function(data) {
-                    PuertoService.redirectAfterSave(vm.accion,
-                            '/administracion/puerto/puerto/detail',
-                            [ data.model.id ]);
-                });
+        search();
+
+        pageTitleService.setTitle("m18n", "page_grid");
     }
 
-    function cancel() {
-        window.history.back();
-    }
+    MessageI18nDetailController.$inject = [ '$routeParams', 'pageTitleService', 'MessageI18nService' ];
 
-    vm.accion = $routeParams.accion;
+    function MessageI18nDetailController($routeParams, pageTitleService, MessageI18nService) {
+        var vm = this;
 
-    vm.search = {
-        id : $routeParams.id
-    };
+        MessageI18nService.detail($routeParams.key).then(function(data) {
+            vm.key = data.model;
+            vm.i18nMap = data.i18nMap;
 
-    PuertoService.edit(vm.accion, vm.search).then(function(data) {
-        vm.model = data.model;
-        vm.i18nMap = data.i18nMap;
-
-        vm.sprtList = data.sprtList;
-    });
-
-    pageTitleService.setTitle("prto", "page_" + vm.accion);
-}
-
-function ConfigurationGridController($routeParams, pageTitleService,
-        ConfigurationService) {
-    var vm = this;
-
-    vm.search = search;
-    vm.reload = reload;
-
-    function search() {
-        ConfigurationService.list().then(function(data) {
-            vm.confList = data.resultList;
-        });
-    }
-
-    function reload() {
-        alert('Implementar');
-    }
-
-    search();
-
-    pageTitleService.setTitle("conf", "page_grid");
-}
-
-function ConfigurationDetailController($routeParams, pageTitleService,
-        ConfigurationService) {
-    var vm = this;
-
-    vm.search = {
-        key : $routeParams.key
-    };
-
-    ConfigurationService.detail(vm.search).then(function(data) {
-        vm.model = data.model;
-    });
-
-    pageTitleService.setTitle("conf", "page_detail");
-}
-
-function ConfigurationEditController($routeParams, pageTitleService,
-        ConfigurationService) {
-    var vm = this;
-
-    vm.save = save;
-    vm.cancel = cancel;
-
-    function save() {
-        ConfigurationService.save(vm.accion, vm.model).then(
-                function(data) {
-                    ConfigurationService.redirectAfterSave(vm.accion,
-                            '/administracion/configuration/detail',
-                            [ data.model.key ]);
-                });
-    }
-
-    function cancel() {
-        window.history.back();
-    }
-
-    vm.accion = $routeParams.accion;
-
-    vm.search = {
-        key : $routeParams.key
-    };
-
-    ConfigurationService.edit(vm.accion, vm.search).then(function(data) {
-        vm.model = data.model;
-    });
-
-    pageTitleService.setTitle("conf", "page_" + vm.accion);
-}
-
-function MessageI18nGridController($routeParams, pageTitleService,
-        MessageI18nService) {
-    var vm = this;
-
-    vm.search = search;
-    vm.reload = reload;
-
-    function search() {
-        MessageI18nService.list().then(function(data) {
-            vm.keyList = data.resultList;
-            vm.keyMap = data.keyMap;
             vm.availableLanguages = data.availableLanguages;
         });
+
+        pageTitleService.setTitle("m18n", "page_detail");
     }
 
-    function reload() {
-        alert('Implementar');
+    MessageI18nEditController.$inject = [ '$routeParams', 'pageTitleService', 'MessageI18nService' ];
+
+    function MessageI18nEditController($routeParams, pageTitleService, MessageI18nService) {
+        var vm = this;
+
+        vm.save = save;
+        vm.cancel = cancel;
+
+        function save() {
+            MessageI18nService.saveI18n(vm.accion, vm.key, vm.i18nMap).then(function(data) {
+                MessageI18nService.redirectAfterSave(vm.accion, data.model, "messagei18n-detail");
+            });
+        }
+
+        function cancel() {
+            window.history.back();
+        }
+
+        vm.accion = $routeParams.accion;
+
+        vm.search = {
+            key : $routeParams.key
+        };
+
+        MessageI18nService.edit(vm.accion, vm.search).then(function(data) {
+            vm.key = data.model;
+            vm.i18nMap = data.i18nMap;
+
+            vm.availableLanguages = data.availableLanguages;
+        });
+
+        pageTitleService.setTitle("m18n", "page_" + vm.accion);
     }
-
-    search();
-
-    pageTitleService.setTitle("m18n", "page_grid");
-}
-
-function MessageI18nDetailController($routeParams, pageTitleService,
-        MessageI18nService) {
-    var vm = this;
-
-    MessageI18nService.detail($routeParams.key).then(function(data) {
-        vm.key = data.model;
-        vm.i18nMap = data.i18nMap;
-
-        vm.availableLanguages = data.availableLanguages;
-    });
-
-    pageTitleService.setTitle("m18n", "page_detail");
-}
-
-function MessageI18nEditController($routeParams, pageTitleService,
-        MessageI18nService) {
-    var vm = this;
-
-    vm.save = save;
-    vm.cancel = cancel;
-
-    function save() {
-        MessageI18nService.saveI18n(vm.accion, vm.key, vm.i18nMap).then(
-                function(data) {
-                    MessageI18nService.redirectAfterSave(vm.accion, data.model,
-                            "messagei18n-detail");
-                });
-    }
-
-    function cancel() {
-        window.history.back();
-    }
-
-    vm.accion = $routeParams.accion;
-
-    vm.search = {
-        key : $routeParams.key
-    };
-
-    MessageI18nService.edit(vm.accion, vm.search).then(function(data) {
-        vm.key = data.model;
-        vm.i18nMap = data.i18nMap;
-
-        vm.availableLanguages = data.availableLanguages;
-    });
-
-    pageTitleService.setTitle("m18n", "page_" + vm.accion);
-}
+})();
