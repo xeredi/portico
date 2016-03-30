@@ -71,6 +71,9 @@
                     tppr.label = translation.toUpperCase();
                 });
 
+                // tppr.itemListEnabled =
+                // credentialService.hasAcenPath(tppr.value, "item-list");
+
                 return tppr;
             });
         });

@@ -247,17 +247,27 @@
         };
 
         function hasAccnPath(path) {
-            var value = localStorageService.get("accnPaths")
-                    && localStorageService.get("accnPaths").indexOf(path) >= 0;
+            var accnPaths = localStorageService.get("accnPaths");
 
-            return value;
+            if (accnPaths) {
+                return accnPaths.indexOf(path) >= 0;
+            }
+
+            return false;
         }
 
         function hasAcenPath(entiId, path) {
-            var value = localStorageService.get("acenPaths") && localStorageService.get("acenPaths")[entiId]
-                    && localStorageService.get("acenPaths")[entiId].indexOf(path) >= 0;
+            var acenPaths = localStorageService.get("acenPaths");
 
-            return value;
+            if (acenPaths) {
+                var acenPathsEnti = acenPaths[entiId];
+
+                if (acenPathsEnti) {
+                    return acenPathsEnti.indexOf(path) >= 0;
+                }
+            }
+
+            return false;
         }
     }
 
