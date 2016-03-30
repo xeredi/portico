@@ -13,26 +13,22 @@
 
     ;
 
-    ValoradorService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function ValoradorService($http, $q, CrudService) {
         return CrudService.create("servicio/valorador");
     }
 
-    ServicioSecuenciaService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function ServicioSecuenciaService($http, $q, CrudService) {
         return CrudService.create("servicio/servicio-secuencia");
     }
 
-    ServicioService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function ServicioService($http, $q, CrudService) {
         return CrudService.create("servicio/servicio");
     }
 
-    SubservicioService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function SubservicioService($http, $q, CrudService) {
         return CrudService.create("servicio/subservicio");
     }

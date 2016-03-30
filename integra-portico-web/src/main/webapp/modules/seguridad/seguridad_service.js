@@ -11,8 +11,7 @@
 
     ;
 
-    UsuarioService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function UsuarioService($http, $q, CrudService) {
         var service = CrudService.create("seguridad/usuario");
 
@@ -55,14 +54,12 @@
         return service;
     }
 
-    AccionService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function AccionService($http, $q, CrudService) {
         return CrudService.create("seguridad/accion");
     }
 
-    GrupoService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function GrupoService($http, $q, CrudService) {
         return CrudService.create("seguridad/grupo");
     }

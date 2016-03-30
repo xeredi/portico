@@ -11,20 +11,17 @@
 
     ;
 
-    MaestroService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function MaestroService($http, $q, CrudService) {
         return CrudService.create("maestro/maestro");
     }
 
-    ParametroService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function ParametroService($http, $q, CrudService) {
         return CrudService.create("maestro/parametro");
     }
 
-    SubparametroService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function SubparametroService($http, $q, CrudService) {
         return CrudService.create("maestro/subparametro");
     }

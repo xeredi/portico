@@ -9,28 +9,26 @@ module.exports = function(grunt) {
         },
         concat : {
             jsconcat : {
-                src : [ 'src/main/webapp/app.js', // 'src/main/webapp/modules/common/crud_service.js',
-                // 'src/main/webapp/modules/common/config.js',
-                // 'src/main/webapp/modules/administracion/administracion_service.js',
-                // 'src/main/webapp/modules/administracion/administracion_controller.js',
-                // 'src/main/webapp/modules/facturacion/facturacion_service.js',
-                // 'src/main/webapp/modules/facturacion/facturacion_controller.js',
-                // 'src/main/webapp/modules/metamodelo/metamodelo_service.js',
-                // 'src/main/webapp/modules/metamodelo/metamodelo_controller.js',
-                // 'src/main/webapp/modules/proceso/proceso_service.js',
-                // 'src/main/webapp/modules/proceso/proceso_controller.js',
-                // 'src/main/webapp/modules/seguridad/seguridad_service.js',
-                // 'src/main/webapp/modules/seguridad/seguridad_controller.js',
-                // 'src/main/webapp/modules/entidad/item/item_service.js',
-                // 'src/main/webapp/modules/entidad/item/item_controller.js',
-                // 'src/main/webapp/modules/entidad/maestro/maestro_service.js',
-                // 'src/main/webapp/modules/entidad/maestro/maestro_controller.js',
-                // 'src/main/webapp/modules/entidad/servicio/servicio_service.js',
-                // 'src/main/webapp/modules/entidad/servicio/servicio_controller.js',
-                // 'src/main/webapp/modules/entidad/estadistica/estadistica_service.js',
-                // 'src/main/webapp/modules/entidad/estadistica/estadistica_controller.js',
-
-                ],
+                src : [ 'src/main/webapp/app.js', 'src/main/webapp/modules/common/crud_service.js',
+                        'src/main/webapp/modules/common/config.js',
+                        'src/main/webapp/modules/administracion/administracion_service.js',
+                        'src/main/webapp/modules/administracion/administracion_controller.js',
+                        'src/main/webapp/modules/metamodelo/metamodelo_service.js',
+                        'src/main/webapp/modules/metamodelo/metamodelo_controller.js',
+                        'src/main/webapp/modules/seguridad/seguridad_service.js',
+                        'src/main/webapp/modules/seguridad/seguridad_controller.js',
+                        'src/main/webapp/modules/entidad/item/item_service.js',
+                        'src/main/webapp/modules/entidad/item/item_controller.js',
+                        'src/main/webapp/modules/entidad/maestro/maestro_service.js',
+                        'src/main/webapp/modules/entidad/maestro/maestro_controller.js',
+                        'src/main/webapp/modules/entidad/servicio/servicio_service.js',
+                        'src/main/webapp/modules/entidad/servicio/servicio_controller.js',
+                        'src/main/webapp/modules/entidad/estadistica/estadistica_service.js',
+                        'src/main/webapp/modules/entidad/estadistica/estadistica_controller.js',
+                        'src/main/webapp/modules/facturacion/facturacion_service.js',
+                        'src/main/webapp/modules/facturacion/facturacion_controller.js',
+                        'src/main/webapp/modules/proceso/proceso_service.js',
+                        'src/main/webapp/modules/proceso/proceso_controller.js', ],
                 dest : 'src/main/webapp/<%= pkg.name %>.js',
             },
             extjslibconcat : {
@@ -38,6 +36,16 @@ module.exports = function(grunt) {
                         '//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-route.min.js', ],
                 dest : 'src/main/webapp/argo_lib.js',
             }
+        },
+        ngAnnotate : {
+            options : {
+                singleQuotes : true,
+            },
+            app : {
+                files : {
+                    'src/main/webapp/<%= pkg.name %>.js' : [ 'src/main/webapp/<%= pkg.name %>.js' ],
+                },
+            },
         },
         uglify : {
             options : {
@@ -53,7 +61,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-ng-annotate');
 
     // Default task(s).
-    grunt.registerTask('default', [ /* 'jshint', */'concat', 'uglify' ]);
+    grunt.registerTask('default', [ /* 'jshint', */'concat', 'ngAnnotate', 'uglify' ]);
 };

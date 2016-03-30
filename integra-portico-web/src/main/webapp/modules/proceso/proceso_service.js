@@ -9,14 +9,12 @@
 
     ;
 
-    ProcesoService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function ProcesoService($http, $q, CrudService) {
         return CrudService.create("proceso/proceso");
     }
 
-    ProcesoMensajeService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function ProcesoMensajeService($http, $q, CrudService) {
         return CrudService.create("proceso/proceso-mensaje");
     }

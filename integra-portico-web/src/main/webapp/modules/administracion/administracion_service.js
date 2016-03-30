@@ -15,32 +15,27 @@
 
     ;
 
-    AdministracionService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function AdministracionService($http, $q, CrudService) {
         return CrudService.create("administracion");
     }
 
-    SuperpuertoService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function SuperpuertoService($http, $q, CrudService) {
         return CrudService.create("administracion/puerto/superpuerto");
     }
 
-    PuertoService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function PuertoService($http, $q, CrudService) {
         return CrudService.create("administracion/puerto/puerto");
     }
 
-    ConfigurationService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function ConfigurationService($http, $q, CrudService) {
         return CrudService.create("administracion/configuration/configuration");
     }
 
-    MessageI18nService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function MessageI18nService($http, $q, CrudService) {
         return CrudService.create("administracion/messagei18n/message-i18n");
     }

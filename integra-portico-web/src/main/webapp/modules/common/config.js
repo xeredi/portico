@@ -32,6 +32,8 @@
 
     .run(run)
 
+    .factory('httpInterceptor', httpInterceptor)
+
     .factory('pageTitleService', pageTitleService)
 
     .factory('credentialService', credentialService)
@@ -42,8 +44,7 @@
 
     ;
 
-    routeProvider_config.$inject = [ '$routeProvider' ];
-
+    /* @ngInject */
     function routeProvider_config($routeProvider) {
         $routeProvider
 
@@ -56,8 +57,7 @@
         ;
     }
 
-    uiGmapGoogleMapApiProvider_config.$inject = [ 'uiGmapGoogleMapApiProvider' ];
-
+    /* @ngInject */
     function uiGmapGoogleMapApiProvider_config(uiGmapGoogleMapApiProvider) {
         uiGmapGoogleMapApiProvider.configure({
             key : 'AIzaSyBkTsBBx0pgO-i66oeAKasc9fswUDfFH-M',
@@ -66,8 +66,7 @@
         });
     }
 
-    datepickerProvider_config.$inject = [ '$datepickerProvider' ];
-
+    /* @ngInject */
     function datepickerProvider_config($datepickerProvider) {
         angular.extend($datepickerProvider.defaults, {
             dateFormat : 'dd/MM/yyyy',
@@ -79,8 +78,7 @@
         });
     }
 
-    timepickerProvider_config.$inject = [ '$timepickerProvider' ];
-
+    /* @ngInject */
     function timepickerProvider_config($timepickerProvider) {
         angular.extend($timepickerProvider.defaults, {
             timeFormat : 'HH:mm',
@@ -90,24 +88,21 @@
         });
     }
 
-    tooltipProvider_config.$inject = [ '$tooltipProvider' ];
-
+    /* @ngInject */
     function tooltipProvider_config($tooltipProvider) {
         angular.extend($tooltipProvider.defaults, {
             container : 'body'
         });
     }
 
-    modalProvider_config.$inject = [ '$modalProvider' ];
-
+    /* @ngInject */
     function modalProvider_config($modalProvider) {
         angular.extend($modalProvider.defaults, {
             html : true
         });
     }
 
-    tabProvider_config.$inject = [ '$tabProvider' ];
-
+    /* @ngInject */
     function tabProvider_config($tabProvider) {
         angular.extend($tabProvider.defaults, {
             animation : 'am-flip-x',
@@ -115,24 +110,18 @@
         });
     }
 
-    translateProvider_config.$inject = [ '$translateProvider' ];
-
+    /* @ngInject */
     function translateProvider_config($translateProvider) {
         $translateProvider.useSanitizeValueStrategy('escape');
     }
 
-    localStorageServiceProvider_config.$inject = [ 'localStorageServiceProvider' ];
-
+    /* @ngInject */
     function localStorageServiceProvider_config(localStorageServiceProvider) {
         localStorageServiceProvider.setPrefix('argo');
     }
 
-    httpProvider_config.$inject = [ '$httpProvider' ];
-
+    /* @ngInject */
     function httpProvider_config($httpProvider) {
-        var activeRequests = 0;
-        var startTimeMs;
-
         // initialize get if not there
         if (!$httpProvider.defaults.headers.get) {
             $httpProvider.defaults.headers.get = {};
@@ -141,73 +130,10 @@
         $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
         $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
 
-        $httpProvider.interceptors.push(function($q, $rootScope, $injector, $location, usSpinnerService) {
-            return {
-                'request' : function(request) {
-                    if (activeRequests == 0) {
-                        startTimeMs = (new Date()).getMilliseconds();
-                    }
-
-                    activeRequests++;
-                    usSpinnerService.spin("spinner");
-
-                    return request;
-                },
-                'response' : function(response) {
-                    activeRequests--;
-
-                    if (activeRequests <= 0) {
-                        usSpinnerService.stop("spinner");
-
-                        activeRequests = 0;
-
-                        $rootScope.requestTimeMs = (new Date()).getMilliseconds() - startTimeMs;
-                    }
-
-                    $rootScope.actionErrors = null;
-
-                    if (response.data) {
-                        if (response.data.responseCode) {
-                            switch (response.data.responseCode) {
-                            case "login":
-                                $location.path("/seguridad/usuario/acceso");
-
-                                return $q.reject(response);
-
-                                break;
-                            default:
-                                break;
-                            }
-                        }
-
-                        if (response.data.accionesUsuario) {
-                            $rootScope.accionesUsuario = response.data.accionesUsuario;
-                        }
-
-                        if (response.data.actionErrors && response.data.actionErrors.length > 0) {
-                            $rootScope.actionErrors = response.data.actionErrors;
-
-                            return $q.reject(response.data.actionErrors);
-                        }
-                    }
-
-                    return response;
-                },
-                'responseError' : function(responseError) {
-                    activeRequests--;
-
-                    if (activeRequests <= 0) {
-                        usSpinnerService.stop("spinner");
-                    }
-
-                    return responseError;
-                }
-            };
-        });
+        $httpProvider.interceptors.push('httpInterceptor');
     }
 
-    run.$inject = [ '$rootScope' ];
-
+    /* @ngInject */
     function run($rootScope) {
         $rootScope.default_language = "es";
         $rootScope.available_languages = [ "es", "ca", "en" ];
@@ -215,10 +141,8 @@
         $rootScope.datetimeFormat = "dd/MM/yyyy HH:mm";
     }
 
-    MainController.$inject = [ 'credentialService' ];
-
+    /* @ngInject */
     function MainController(credentialService) {
-        // console.log("MainController");
         var vm = this;
 
         vm.hasAccnPath = hasAccnPath;
@@ -233,8 +157,7 @@
         }
     }
 
-    HomeController.$inject = [ '$http', 'pageTitleService' ];
-
+    /* @ngInject */
     function HomeController($http, pageTitleService) {
         $http.post("index.action").success(function(data) {
         });
@@ -242,8 +165,81 @@
         pageTitleService.setTitle("page_home", "page_home");
     }
 
-    pageTitleService.$inject = [ 'localStorageService' ];
+    /* @ngInject */
+    function httpInterceptor($q, $rootScope, $injector, $location, usSpinnerService) {
+        var activeRequests = 0;
+        var startTimeMs;
 
+        return {
+            request : request,
+            response : response,
+            responseError : responseError
+        };
+
+        function request(req) {
+            if (activeRequests == 0) {
+                startTimeMs = (new Date()).getMilliseconds();
+            }
+
+            activeRequests++;
+            usSpinnerService.spin("spinner");
+
+            return req;
+        }
+
+        function response(res) {
+            activeRequests--;
+
+            if (activeRequests <= 0) {
+                usSpinnerService.stop("spinner");
+
+                activeRequests = 0;
+
+                $rootScope.requestTimeMs = (new Date()).getMilliseconds() - startTimeMs;
+            }
+
+            $rootScope.actionErrors = null;
+
+            if (res.data) {
+                if (res.data.responseCode) {
+                    switch (res.data.responseCode) {
+                    case "login":
+                        $location.path("/seguridad/usuario/acceso");
+
+                        return $q.reject(res);
+
+                        break;
+                    default:
+                        break;
+                    }
+                }
+
+                if (res.data.accionesUsuario) {
+                    $rootScope.accionesUsuario = res.data.accionesUsuario;
+                }
+
+                if (res.data.actionErrors && res.data.actionErrors.length > 0) {
+                    $rootScope.actionErrors = res.data.actionErrors;
+
+                    return $q.reject(res.data.actionErrors);
+                }
+            }
+
+            return res;
+        }
+
+        function responseError(res) {
+            activeRequests--;
+
+            if (activeRequests <= 0) {
+                usSpinnerService.stop("spinner");
+            }
+
+            return res;
+        }
+    }
+
+    /* @ngInject */
     function credentialService(localStorageService) {
         return {
             hasAccnPath : hasAccnPath,
@@ -265,8 +261,7 @@
         }
     }
 
-    pageTitleService.$inject = [ '$rootScope', '$translate' ];
-
+    /* @ngInject */
     function pageTitleService($rootScope, $translate) {
         return {
             setTitleEnti : setTitleEnti,

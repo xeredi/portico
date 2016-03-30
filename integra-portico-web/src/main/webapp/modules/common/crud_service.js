@@ -7,8 +7,7 @@
 
     ;
 
-    CrudService.$inject = [ '$http', '$q', '$location', 'Upload' ];
-
+    /* @ngInject */
     function CrudService($http, $q, $location, Upload) {
         function Crud() {
             var _uri;

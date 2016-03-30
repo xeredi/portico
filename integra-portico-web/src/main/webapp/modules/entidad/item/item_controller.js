@@ -11,8 +11,7 @@
 
     ;
 
-    item_config.$inject = [ '$routeProvider' ];
-
+    /* @ngInject */
     function item_config($routeProvider) {
         $routeProvider
 
@@ -29,8 +28,7 @@
         ;
     }
 
-    ItemTramiteDetailController.$inject = [ '$routeParams', 'pageTitleService', 'ItemTramiteService' ];
-
+    /* @ngInject */
     function ItemTramiteDetailController($routeParams, pageTitleService, ItemTramiteService) {
         var vm = this;
 
@@ -61,8 +59,7 @@
         pageTitleService.setTitle("trmt", "page_detail");
     }
 
-    ItemTramiteEditController.$inject = [ '$routeParams', 'pageTitleService', 'ItemTramiteService' ];
-
+    /* @ngInject */
     function ItemTramiteEditController($routeParams, pageTitleService, ItemTramiteService) {
         var vm = this;
 

@@ -33,8 +33,7 @@
 
     ;
 
-    servicio_config.$inject = [ '$routeProvider' ];
-
+    /* @ngInject */
     function servicio_config($routeProvider) {
         $routeProvider
 
@@ -106,8 +105,7 @@
         ;
     }
 
-    ValoradorEditController.$inject = [ '$routeParams', 'pageTitleService', 'ValoradorService' ];
-
+    /* @ngInject */
     function ValoradorEditController($routeParams, pageTitleService, ValoradorService) {
         var vm = this;
 
@@ -144,9 +142,7 @@
         pageTitleService.setTitle("vldr", "page_" + vm.accion);
     }
 
-    ServicioSecuenciaGridController.$inject = [ '$routeParams', 'pageTitleService',
-            'ServicioSecuenciaService' ];
-
+    /* @ngInject */
     function ServicioSecuenciaGridController($routeParams, pageTitleService, ServicioSecuenciaService) {
         var vm = this;
 
@@ -186,9 +182,7 @@
         pageTitleService.setTitle("srsc", "page_grid");
     }
 
-    ServicioSecuenciaDetailController.$inject = [ '$routeParams', 'pageTitleService',
-            'ServicioSecuenciaService' ];
-
+    /* @ngInject */
     function ServicioSecuenciaDetailController($routeParams, pageTitleService, ServicioSecuenciaService) {
         var vm = this;
 
@@ -217,9 +211,7 @@
         pageTitleService.setTitle("srsc", "page_detail");
     }
 
-    ServicioSecuenciaEditController.$inject = [ '$routeParams', 'pageTitleService',
-            'ServicioSecuenciaService' ];
-
+    /* @ngInject */
     function ServicioSecuenciaEditController($routeParams, pageTitleService, ServicioSecuenciaService) {
         var vm = this;
 
@@ -262,8 +254,7 @@
     }
 
     // SERVICIO
-    ServicioIndexController.$inject = [ '$routeParams', 'pageTitleService', 'ServicioService' ];
-
+    /* @ngInject */
     function ServicioIndexController($translate, pageTitleService, ServicioService) {
         var vm = this;
 
@@ -275,8 +266,7 @@
         pageTitleService.setTitle("srvcList", "page_home");
     }
 
-    ServicioGridController.$inject = [ '$routeParams', 'pageTitleService', 'ServicioService' ];
-
+    /* @ngInject */
     function ServicioGridController($routeParams, pageTitleService, ServicioService) {
         var vm = this;
 
@@ -329,9 +319,7 @@
         pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
     }
 
-    ServicioDetailController.$inject = [ '$routeParams', 'pageTitleService', 'credentialService',
-            'ServicioService', 'SubservicioService' ];
-
+    /* @ngInject */
     function ServicioDetailController($routeParams, pageTitleService, credentialService, ServicioService,
             SubservicioService) {
         var vm = this;
@@ -411,8 +399,7 @@
         pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
     }
 
-    ServicioEditController.$inject = [ '$routeParams', 'pageTitleService', 'ServicioService' ];
-
+    /* @ngInject */
     function ServicioEditController($routeParams, pageTitleService, ServicioService) {
         var vm = this;
 
@@ -454,8 +441,7 @@
         pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);
     }
 
-    ServicioLoadController.$inject = [ '$routeParams', 'pageTitleService', 'ServicioService' ];
-
+    /* @ngInject */
     function ServicioLoadController($routeParams, pageTitleService, ServicioService) {
         var vm = this;
 
@@ -487,8 +473,7 @@
         pageTitleService.setTitleEnti($routeParams.entiId, "page_loadfile");
     }
 
-    ServicioTypeaheadController.$inject = [ 'ServicioService' ];
-
+    /* @ngInject */
     function ServicioTypeaheadController(ServicioService) {
         var ta = this;
 
@@ -508,8 +493,7 @@
         }
     }
 
-    SubservicioGridController.$inject = [ '$routeParams', 'pageTitleService', 'SubservicioService' ];
-
+    /* @ngInject */
     function SubservicioGridController($routeParams, pageTitleService, SubservicioService) {
         var vm = this;
 
@@ -561,9 +545,7 @@
         pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
     }
 
-    SubservicioDetailController.$inject = [ '$routeParams', 'pageTitleService', 'credentialService',
-            'SubservicioService' ];
-
+    /* @ngInject */
     function SubservicioDetailController($routeParams, pageTitleService, credentialService,
             SubservicioService) {
         var vm = this;
@@ -637,8 +619,7 @@
         pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
     }
 
-    SubservicioEditController.$inject = [ '$routeParams', 'pageTitleService', 'SubservicioService' ];
-
+    /* @ngInject */
     function SubservicioEditController($routeParams, pageTitleService, SubservicioService) {
         var vm = this;
 

@@ -39,104 +39,87 @@
 
     ;
 
-    TipoDatoService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function TipoDatoService($http, $q, CrudService) {
         return CrudService.create("metamodelo/tipo-dato");
     }
 
-    CodigoReferenciaService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function CodigoReferenciaService($http, $q, CrudService) {
         return CrudService.create("metamodelo/codigo-referencia");
     }
 
-    AccionEntidadService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function AccionEntidadService($http, $q, CrudService) {
         return CrudService.create("metamodelo/accion-entidad");
     }
 
-    EntidadAccionService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function EntidadAccionService($http, $q, CrudService) {
         return CrudService.create("metamodelo/entidad-accion");
     }
 
-    EntidadAccionGridService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function EntidadAccionGridService($http, $q, CrudService) {
         return CrudService.create("metamodelo/entidad-accion-grid");
     }
 
-    EntidadEntidadService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function EntidadEntidadService($http, $q, CrudService) {
         return CrudService.create("metamodelo/entidad-entidad");
     }
 
-    EntidadGrupoDatoService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function EntidadGrupoDatoService($http, $q, CrudService) {
         return CrudService.create("metamodelo/entidad-grupo-dato");
     }
 
-    EntidadTipoDatoService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function EntidadTipoDatoService($http, $q, CrudService) {
         return CrudService.create("metamodelo/entidad-tipo-dato");
     }
 
-    TramiteService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function TramiteService($http, $q, CrudService) {
         return CrudService.create("metamodelo/tramite");
     }
 
-    AccionTramiteService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function AccionTramiteService($http, $q, CrudService) {
         return CrudService.create("metamodelo/accion-tramite");
     }
 
-    TramiteTipoDatoService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function TramiteTipoDatoService($http, $q, CrudService) {
         return CrudService.create("metamodelo/tramite-tipo-dato");
     }
 
-    TipoParametroService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function TipoParametroService($http, $q, CrudService) {
         return CrudService.create("metamodelo/tipo-parametro");
     }
 
-    TipoSubparametroService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function TipoSubparametroService($http, $q, CrudService) {
         return CrudService.create("metamodelo/tipo-subparametro");
     }
 
-    TipoServicioService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function TipoServicioService($http, $q, CrudService) {
         return CrudService.create("metamodelo/tipo-servicio");
     }
 
-    TipoSubservicioService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function TipoSubservicioService($http, $q, CrudService) {
         return CrudService.create("metamodelo/tipo-subservicio");
     }
 
-    TipoEstadisticaService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function TipoEstadisticaService($http, $q, CrudService) {
         return CrudService.create("metamodelo/tipo-estadistica");
     }
 
-    CampoAgregacionService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function CampoAgregacionService($http, $q, CrudService) {
         return CrudService.create("metamodelo/campo-agregacion");
     }

@@ -11,20 +11,17 @@
 
     ;
 
-    PeriodoProcesoService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function PeriodoProcesoService($http, $q, CrudService) {
         return CrudService.create("estadistica/periodo-proceso");
     }
 
-    CuadroMesService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function CuadroMesService($http, $q, CrudService) {
         return CrudService.create("estadistica/cuadro-mes");
     }
 
-    EstadisticaService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function EstadisticaService($http, $q, CrudService) {
         return CrudService.create("estadistica/estadistica");
     }

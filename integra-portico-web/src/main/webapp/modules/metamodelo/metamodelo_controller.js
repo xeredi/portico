@@ -91,8 +91,7 @@
 
     ;
 
-    metamodelo_config.$inject = [ '$routeProvider' ];
-
+    /* @ngInject */
     function metamodelo_config($routeProvider) {
         $routeProvider
 
@@ -293,8 +292,7 @@
         ;
     }
 
-    TipoDatoGridController.$inject = [ '$routeParams', 'pageTitleService', 'TipoDatoService' ];
-
+    /* @ngInject */
     function TipoDatoGridController($routeParams, pageTitleService, TipoDatoService) {
         var vm = this;
 
@@ -334,8 +332,7 @@
         pageTitleService.setTitle("tpdt", "page_grid");
     }
 
-    TipoDatoDetailController.$inject = [ '$routeParams', 'pageTitleService', 'TipoDatoService' ];
-
+    /* @ngInject */
     function TipoDatoDetailController($routeParams, pageTitleService, TipoDatoService) {
         var vm = this;
 
@@ -359,8 +356,7 @@
         pageTitleService.setTitle("tpdt", "page_detail");
     }
 
-    TipoDatoEditController.$inject = [ '$routeParams', 'pageTitleService', 'TipoDatoService' ];
-
+    /* @ngInject */
     function TipoDatoEditController($routeParams, pageTitleService, TipoDatoService) {
         var vm = this;
 
@@ -397,9 +393,7 @@
         pageTitleService.setTitle("tpdt", "page_" + vm.accion);
     }
 
-    CodigoReferenciaDetailController.$inject = [ '$routeParams', 'pageTitleService',
-            'CodigoReferenciaService' ];
-
+    /* @ngInject */
     function CodigoReferenciaDetailController($routeParams, pageTitleService, CodigoReferenciaService) {
         var vm = this;
 
@@ -423,8 +417,7 @@
         pageTitleService.setTitle("cdrf", "page_detail");
     }
 
-    CodigoReferenciaEditController.$inject = [ '$routeParams', 'pageTitleService', 'CodigoReferenciaService' ];
-
+    /* @ngInject */
     function CodigoReferenciaEditController($routeParams, pageTitleService, CodigoReferenciaService) {
         var vm = this;
 
@@ -457,8 +450,7 @@
         pageTitleService.setTitle("cdrf", "page_" + vm.accion);
     }
 
-    TipoParametroGridController.$inject = [ '$routeParams', 'pageTitleService', 'TipoParametroService' ];
-
+    /* @ngInject */
     function TipoParametroGridController($routeParams, pageTitleService, TipoParametroService) {
         var vm = this;
 
@@ -496,8 +488,7 @@
         pageTitleService.setTitle("tppr", "page_grid");
     }
 
-    TipoParametroDetailController.$inject = [ '$routeParams', 'pageTitleService', 'TipoParametroService' ];
-
+    /* @ngInject */
     function TipoParametroDetailController($routeParams, pageTitleService, TipoParametroService) {
         var vm = this;
 
@@ -538,8 +529,7 @@
         pageTitleService.setTitle("tppr", "page_detail");
     }
 
-    TipoParametroEditController.$inject = [ '$routeParams', 'pageTitleService', 'TipoParametroService' ];
-
+    /* @ngInject */
     function TipoParametroEditController($routeParams, pageTitleService, TipoParametroService) {
         var vm = this;
 
@@ -573,9 +563,7 @@
         pageTitleService.setTitle("tppr", "page_" + vm.accion);
     }
 
-    TipoSubparametroDetailController.$inject = [ '$routeParams', 'pageTitleService',
-            'TipoSubparametroService' ];
-
+    /* @ngInject */
     function TipoSubparametroDetailController($routeParams, pageTitleService, TipoSubparametroService) {
         var vm = this;
 
@@ -615,8 +603,7 @@
         pageTitleService.setTitle("tpsp", "page_detail");
     }
 
-    TipoSubparametroEditController.$inject = [ '$routeParams', 'pageTitleService', 'TipoSubparametroService' ];
-
+    /* @ngInject */
     function TipoSubparametroEditController($routeParams, pageTitleService, TipoSubparametroService) {
         var vm = this;
 
@@ -651,8 +638,7 @@
         pageTitleService.setTitle("tpsp", "page_" + vm.accion);
     }
 
-    TipoServicioGridController.$inject = [ '$routeParams', 'pageTitleService', 'TipoServicioService' ];
-
+    /* @ngInject */
     function TipoServicioGridController($routeParams, pageTitleService, TipoServicioService) {
         var vm = this;
 
@@ -690,8 +676,7 @@
         pageTitleService.setTitle("tpsr", "page_grid");
     }
 
-    TipoServicioDetailController.$inject = [ '$routeParams', 'pageTitleService', 'TipoServicioService' ];
-
+    /* @ngInject */
     function TipoServicioDetailController($routeParams, pageTitleService, TipoServicioService) {
         var vm = this;
 
@@ -734,8 +719,7 @@
         pageTitleService.setTitle("tpsr", "page_detail");
     }
 
-    TipoServicioEditController.$inject = [ '$routeParams', 'pageTitleService', 'TipoServicioService' ];
-
+    /* @ngInject */
     function TipoServicioEditController($routeParams, pageTitleService, TipoServicioService) {
         var vm = this;
 
@@ -769,8 +753,7 @@
         pageTitleService.setTitle("tpsr", "page_" + vm.accion);
     }
 
-    TipoSubservicioDetailController.$inject = [ '$routeParams', 'pageTitleService', 'TipoSubservicioService' ];
-
+    /* @ngInject */
     function TipoSubservicioDetailController($routeParams, pageTitleService, TipoSubservicioService) {
         var vm = this;
 
@@ -813,8 +796,7 @@
         pageTitleService.setTitle("tpss", "page_detail");
     }
 
-    TipoSubservicioEditController.$inject = [ '$routeParams', 'pageTitleService', 'TipoSubservicioService' ];
-
+    /* @ngInject */
     function TipoSubservicioEditController($routeParams, pageTitleService, TipoSubservicioService) {
         var vm = this;
 
@@ -849,8 +831,7 @@
         pageTitleService.setTitle("tpss", "page_" + vm.accion);
     }
 
-    TipoEstadisticaGridController.$inject = [ '$routeParams', 'pageTitleService', 'TipoEstadisticaService' ];
-
+    /* @ngInject */
     function TipoEstadisticaGridController($routeParams, pageTitleService, TipoEstadisticaService) {
         var vm = this;
 
@@ -888,8 +869,7 @@
         pageTitleService.setTitle("tpes", "page_grid");
     }
 
-    TipoEstadisticaDetailController.$inject = [ '$routeParams', 'pageTitleService', 'TipoEstadisticaService' ];
-
+    /* @ngInject */
     function TipoEstadisticaDetailController($routeParams, pageTitleService, TipoEstadisticaService) {
         var vm = this;
 
@@ -931,8 +911,7 @@
         pageTitleService.setTitle("tpes", "page_detail");
     }
 
-    TipoEstadisticaEditController.$inject = [ '$routeParams', 'pageTitleService', 'TipoEstadisticaService' ];
-
+    /* @ngInject */
     function TipoEstadisticaEditController($routeParams, pageTitleService, TipoEstadisticaService) {
         var vm = this;
 
@@ -964,8 +943,7 @@
         pageTitleService.setTitle("tpes", "page_" + vm.accion);
     }
 
-    CampoAgregacionDetailController.$inject = [ '$routeParams', 'pageTitleService', 'CampoAgregacionService' ];
-
+    /* @ngInject */
     function CampoAgregacionDetailController($routeParams, pageTitleService, CampoAgregacionService) {
         var vm = this;
 
@@ -991,8 +969,7 @@
         pageTitleService.setTitle("cmag", "page_detail");
     }
 
-    CampoAgregacionEditController.$inject = [ '$routeParams', 'pageTitleService', 'CampoAgregacionService' ];
-
+    /* @ngInject */
     function CampoAgregacionEditController($routeParams, pageTitleService, CampoAgregacionService) {
         var vm = this;
 
@@ -1027,8 +1004,7 @@
         pageTitleService.setTitle("cmag", "page_" + vm.accion);
     }
 
-    EntidadTipoDatoDetailController.$inject = [ '$routeParams', 'pageTitleService', 'EntidadTipoDatoService' ];
-
+    /* @ngInject */
     function EntidadTipoDatoDetailController($routeParams, pageTitleService, EntidadTipoDatoService) {
         var vm = this;
 
@@ -1052,8 +1028,7 @@
         pageTitleService.setTitle("entd", "page_detail");
     }
 
-    EntidadTipoDatoEditController.$inject = [ '$routeParams', 'pageTitleService', 'EntidadTipoDatoService' ];
-
+    /* @ngInject */
     function EntidadTipoDatoEditController($routeParams, pageTitleService, EntidadTipoDatoService) {
         var vm = this;
 
@@ -1089,9 +1064,7 @@
         pageTitleService.setTitle("entd", "page_" + vm.accion);
     }
 
-    EntidadGrupoDatoDetailController.$inject = [ '$routeParams', 'pageTitleService',
-            'EntidadGrupoDatoService' ];
-
+    /* @ngInject */
     function EntidadGrupoDatoDetailController($routeParams, pageTitleService, EntidadGrupoDatoService) {
         var vm = this;
 
@@ -1115,8 +1088,7 @@
         pageTitleService.setTitle("engd", "page_detail");
     }
 
-    EntidadGrupoDatoEditController.$inject = [ '$routeParams', 'pageTitleService', 'EntidadGrupoDatoService' ];
-
+    /* @ngInject */
     function EntidadGrupoDatoEditController($routeParams, pageTitleService, EntidadGrupoDatoService) {
         var vm = this;
 
@@ -1149,8 +1121,7 @@
         pageTitleService.setTitle("engd", "page_" + vm.accion);
     }
 
-    TramiteDetailController.$inject = [ '$routeParams', 'pageTitleService', 'TramiteService' ];
-
+    /* @ngInject */
     function TramiteDetailController($routeParams, pageTitleService, TramiteService) {
         var vm = this;
 
@@ -1178,8 +1149,7 @@
         pageTitleService.setTitle("trmt", "page_detail");
     }
 
-    TramiteEditController.$inject = [ '$routeParams', 'pageTitleService', 'TramiteService' ];
-
+    /* @ngInject */
     function TramiteEditController($routeParams, pageTitleService, TramiteService) {
         var vm = this;
 
@@ -1212,8 +1182,7 @@
         pageTitleService.setTitle("trmt", "page_" + vm.accion);
     }
 
-    TramiteTipoDatoDetailController.$inject = [ '$routeParams', 'pageTitleService', 'TramiteTipoDatoService' ];
-
+    /* @ngInject */
     function TramiteTipoDatoDetailController($routeParams, pageTitleService, TramiteTipoDatoService) {
         var vm = this;
 
@@ -1241,8 +1210,7 @@
         pageTitleService.setTitle("trtd", "page_detail");
     }
 
-    TramiteTipoDatoEditController.$inject = [ '$routeParams', 'pageTitleService', 'TramiteTipoDatoService' ];
-
+    /* @ngInject */
     function TramiteTipoDatoEditController($routeParams, pageTitleService, TramiteTipoDatoService) {
         var vm = this;
 
@@ -1281,8 +1249,7 @@
         pageTitleService.setTitle("trtd", "page_" + vm.accion);
     }
 
-    AccionTramiteDetailController.$inject = [ '$routeParams', 'pageTitleService', 'AccionTramiteService' ];
-
+    /* @ngInject */
     function AccionTramiteDetailController($routeParams, pageTitleService, AccionTramiteService) {
         var vm = this;
 
@@ -1305,8 +1272,7 @@
         pageTitleService.setTitle("actr", "page_detail");
     }
 
-    AccionTramiteEditController.$inject = [ '$routeParams', 'pageTitleService', 'AccionTramiteService' ];
-
+    /* @ngInject */
     function AccionTramiteEditController($routeParams, pageTitleService, AccionTramiteService) {
         var vm = this;
 
@@ -1347,8 +1313,7 @@
         pageTitleService.setTitle("actr", "page_" + vm.accion);
     }
 
-    AccionEntidadDetailController.$inject = [ '$routeParams', 'pageTitleService', 'AccionEntidadService' ];
-
+    /* @ngInject */
     function AccionEntidadDetailController($routeParams, pageTitleService, AccionEntidadService) {
         var vm = this;
 
@@ -1373,8 +1338,7 @@
         pageTitleService.setTitle("acen", "page_detail");
     }
 
-    AccionEntidadEditController.$inject = [ '$routeParams', 'pageTitleService', 'AccionEntidadService' ];
-
+    /* @ngInject */
     function AccionEntidadEditController($routeParams, pageTitleService, AccionEntidadService) {
         var vm = this;
 
@@ -1415,8 +1379,7 @@
         pageTitleService.setTitle("acen", "page_" + vm.accion);
     }
 
-    EntidadAccionDetailController.$inject = [ '$routeParams', 'pageTitleService', 'EntidadAccionService' ];
-
+    /* @ngInject */
     function EntidadAccionDetailController($routeParams, pageTitleService, EntidadAccionService) {
         var vm = this;
 
@@ -1440,8 +1403,7 @@
         pageTitleService.setTitle("enac", "page_detail");
     }
 
-    EntidadAccionEditController.$inject = [ '$routeParams', 'pageTitleService', 'EntidadAccionService' ];
-
+    /* @ngInject */
     function EntidadAccionEditController($routeParams, pageTitleService, EntidadAccionService) {
         var vm = this;
 
@@ -1474,9 +1436,7 @@
         pageTitleService.setTitle("enag", "page_" + vm.accion);
     }
 
-    EntidadAccionGridDetailController.$inject = [ '$routeParams', 'pageTitleService',
-            'EntidadAccionGridService' ];
-
+    /* @ngInject */
     function EntidadAccionGridDetailController($routeParams, pageTitleService, EntidadAccionGridService) {
         var vm = this;
 
@@ -1500,9 +1460,7 @@
         pageTitleService.setTitle("enag", "page_detail");
     }
 
-    EntidadAccionGridEditController.$inject = [ '$routeParams', 'pageTitleService',
-            'EntidadAccionGridService' ];
-
+    /* @ngInject */
     function EntidadAccionGridEditController($routeParams, pageTitleService, EntidadAccionGridService) {
         var vm = this;
 
@@ -1535,8 +1493,7 @@
         pageTitleService.setTitle("enag", "page_" + vm.accion);
     }
 
-    EntidadEntidadEditController.$inject = [ '$routeParams', 'pageTitleService', 'EntidadEntidadService' ];
-
+    /* @ngInject */
     function EntidadEntidadEditController($routeParams, pageTitleService, EntidadEntidadService) {
         var vm = this;
 

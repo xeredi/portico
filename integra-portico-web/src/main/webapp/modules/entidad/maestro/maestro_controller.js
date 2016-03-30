@@ -21,8 +21,7 @@
 
     ;
 
-    maestro_config.$inject = [ '$routeProvider' ];
-
+    /* @ngInject */
     function maestro_config($routeProvider) {
         $routeProvider
 
@@ -62,8 +61,7 @@
         ;
     }
 
-    MaestroIndexController.$inject = [ '$translate', 'pageTitleService', 'MaestroService' ];
-
+    /* @ngInject */
     function MaestroIndexController($translate, pageTitleService, MaestroService) {
         var vm = this;
 
@@ -80,8 +78,7 @@
         pageTitleService.setTitle("prmtList", "page_home");
     }
 
-    ParametroGridController.$inject = [ '$routeParams', 'pageTitleService', 'ParametroService' ];
-
+    /* @ngInject */
     function ParametroGridController($routeParams, pageTitleService, ParametroService) {
         var vm = this;
 
@@ -132,9 +129,7 @@
         pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
     }
 
-    ParametroDetailController.$inject = [ '$routeParams', 'pageTitleService', 'credentialService',
-            'ParametroService', 'SubparametroService' ];
-
+    /* @ngInject */
     function ParametroDetailController($routeParams, pageTitleService, credentialService, ParametroService,
             SubparametroService) {
         var vm = this;
@@ -207,8 +202,7 @@
         pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
     }
 
-    ParametroEditController.$inject = [ '$routeParams', 'pageTitleService', 'ParametroService' ];
-
+    /* @ngInject */
     function ParametroEditController($routeParams, pageTitleService, ParametroService) {
         var vm = this;
 
@@ -250,8 +244,7 @@
         pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);
     }
 
-    ParametroTypeaheadController.$inject = [ 'ParametroService' ];
-
+    /* @ngInject */
     function ParametroTypeaheadController(ParametroService) {
         var vm = this;
 
@@ -277,8 +270,7 @@
         }
     }
 
-    SubparametroDetailController.$inject = [ '$routeParams', 'pageTitleService', 'SubparametroService' ];
-
+    /* @ngInject */
     function SubparametroDetailController($routeParams, pageTitleService, SubparametroService) {
         var vm = this;
 
@@ -306,8 +298,7 @@
         pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
     }
 
-    SubparametroEditController.$inject = [ '$routeParams', 'pageTitleService', 'SubparametroService' ];
-
+    /* @ngInject */
     function SubparametroEditController($routeParams, pageTitleService, SubparametroService) {
         var vm = this;
 

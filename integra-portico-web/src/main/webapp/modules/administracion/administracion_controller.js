@@ -33,8 +33,7 @@
 
     ;
 
-    administracion_config.$inject = [ '$routeProvider' ];
-
+    /* @ngInject */
     function administracion_config($routeProvider) {
         $routeProvider
 
@@ -110,8 +109,7 @@
         ;
     }
 
-    AdministracionIndexController.$inject = [ '$routeParams', 'pageTitleService', 'AdministracionService' ];
-
+    /* @ngInject */
     function AdministracionIndexController($routeParams, pageTitleService, AdministracionService) {
         var vm = this;
 
@@ -121,8 +119,7 @@
         pageTitleService.setTitle("sec_administracion", "page_home");
     }
 
-    SuperpuertoGridController.$inject = [ '$routeParams', 'pageTitleService', 'SuperpuertoService' ];
-
+    /* @ngInject */
     function SuperpuertoGridController($routeParams, pageTitleService, SuperpuertoService) {
         var vm = this;
 
@@ -160,8 +157,7 @@
         pageTitleService.setTitle("sprt", "page_grid");
     }
 
-    SuperpuertoDetailController.$inject = [ '$routeParams', 'pageTitleService', 'SuperpuertoService' ];
-
+    /* @ngInject */
     function SuperpuertoDetailController($routeParams, pageTitleService, SuperpuertoService) {
         var vm = this;
 
@@ -185,8 +181,7 @@
         pageTitleService.setTitle("sprt", "page_detail");
     }
 
-    SuperpuertoEditController.$inject = [ '$routeParams', 'pageTitleService', 'SuperpuertoService' ];
-
+    /* @ngInject */
     function SuperpuertoEditController($routeParams, pageTitleService, SuperpuertoService) {
         var vm = this;
 
@@ -219,8 +214,7 @@
         pageTitleService.setTitle("sprt", "page_" + vm.accion);
     }
 
-    PuertoGridController.$inject = [ '$routeParams', 'pageTitleService', 'PuertoService' ];
-
+    /* @ngInject */
     function PuertoGridController($routeParams, pageTitleService, PuertoService) {
         var vm = this;
 
@@ -259,8 +253,7 @@
         pageTitleService.setTitle("prto", "page_grid");
     }
 
-    PuertoDetailController.$inject = [ '$routeParams', 'pageTitleService', 'PuertoService' ];
-
+    /* @ngInject */
     function PuertoDetailController($routeParams, pageTitleService, PuertoService) {
         var vm = this;
 
@@ -284,8 +277,7 @@
         pageTitleService.setTitle("prto", "page_detail");
     }
 
-    PuertoEditController.$inject = [ '$routeParams', 'pageTitleService', 'PuertoService' ];
-
+    /* @ngInject */
     function PuertoEditController($routeParams, pageTitleService, PuertoService) {
         var vm = this;
 
@@ -320,8 +312,7 @@
         pageTitleService.setTitle("prto", "page_" + vm.accion);
     }
 
-    ConfigurationGridController.$inject = [ '$routeParams', 'pageTitleService', 'ConfigurationService' ];
-
+    /* @ngInject */
     function ConfigurationGridController($routeParams, pageTitleService, ConfigurationService) {
         var vm = this;
 
@@ -343,8 +334,7 @@
         pageTitleService.setTitle("conf", "page_grid");
     }
 
-    ConfigurationDetailController.$inject = [ '$routeParams', 'pageTitleService', 'ConfigurationService' ];
-
+    /* @ngInject */
     function ConfigurationDetailController($routeParams, pageTitleService, ConfigurationService) {
         var vm = this;
 
@@ -359,8 +349,7 @@
         pageTitleService.setTitle("conf", "page_detail");
     }
 
-    ConfigurationEditController.$inject = [ '$routeParams', 'pageTitleService', 'ConfigurationService' ];
-
+    /* @ngInject */
     function ConfigurationEditController($routeParams, pageTitleService, ConfigurationService) {
         var vm = this;
 
@@ -392,8 +381,7 @@
         pageTitleService.setTitle("conf", "page_" + vm.accion);
     }
 
-    MessageI18nGridController.$inject = [ '$routeParams', 'pageTitleService', 'MessageI18nService' ];
-
+    /* @ngInject */
     function MessageI18nGridController($routeParams, pageTitleService, MessageI18nService) {
         var vm = this;
 
@@ -417,8 +405,7 @@
         pageTitleService.setTitle("m18n", "page_grid");
     }
 
-    MessageI18nDetailController.$inject = [ '$routeParams', 'pageTitleService', 'MessageI18nService' ];
-
+    /* @ngInject */
     function MessageI18nDetailController($routeParams, pageTitleService, MessageI18nService) {
         var vm = this;
 
@@ -432,8 +419,7 @@
         pageTitleService.setTitle("m18n", "page_detail");
     }
 
-    MessageI18nEditController.$inject = [ '$routeParams', 'pageTitleService', 'MessageI18nService' ];
-
+    /* @ngInject */
     function MessageI18nEditController($routeParams, pageTitleService, MessageI18nService) {
         var vm = this;
 

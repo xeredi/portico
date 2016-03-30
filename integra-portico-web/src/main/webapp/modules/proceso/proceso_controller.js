@@ -11,8 +11,7 @@
 
     ;
 
-    proceso_config.$inject = [ '$routeProvider' ];
-
+    /* @ngInject */
     function proceso_config($routeProvider) {
         $routeProvider
 
@@ -31,8 +30,7 @@
         ;
     }
 
-    ProcesoGridController.$inject = [ '$routeParams', 'pageTitleService', 'ProcesoService' ];
-
+    /* @ngInject */
     function ProcesoGridController($routeParams, pageTitleService, ProcesoService) {
         var vm = this;
 
@@ -78,9 +76,7 @@
         pageTitleService.setTitle("prbt", "page_grid");
     }
 
-    ProcesoDetailController.$inject = [ '$routeParams', 'pageTitleService', 'ProcesoService',
-            'ProcesoMensajeService' ];
-
+    /* @ngInject */
     function ProcesoDetailController($routeParams, pageTitleService, ProcesoService, ProcesoMensajeService) {
         var vm = this;
 

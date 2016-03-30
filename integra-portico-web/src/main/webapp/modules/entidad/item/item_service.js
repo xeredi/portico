@@ -7,8 +7,7 @@
 
     ;
 
-    ItemTramiteService.$inject = [ '$http', '$q', 'CrudService' ];
-
+    /* @ngInject */
     function ItemTramiteService($http, $q, CrudService) {
         return CrudService.create("item/item-tramite");
     }

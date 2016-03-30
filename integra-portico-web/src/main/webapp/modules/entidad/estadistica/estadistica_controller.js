@@ -22,8 +22,7 @@
 
     ;
 
-    estadistica_config.$inject = [ '$routeProvider' ];
-
+    /* @ngInject */
     function estadistica_config($routeProvider) {
         $routeProvider
 
@@ -67,8 +66,7 @@
         ;
     }
 
-    PeriodoProcesoGridController.$inject = [ '$routeParams', 'pageTitleService', 'PeriodoProcesoService' ];
-
+    /* @ngInject */
     function PeriodoProcesoGridController($routeParams, pageTitleService, PeriodoProcesoService) {
         var vm = this;
 
@@ -108,8 +106,7 @@
         pageTitleService.setTitle("pepr", "page_grid");
     }
 
-    PeriodoProcesoDetailController.$inject = [ '$routeParams', 'pageTitleService', 'PeriodoProcesoService' ];
-
+    /* @ngInject */
     function PeriodoProcesoDetailController($routeParams, pageTitleService, PeriodoProcesoService) {
         var vm = this;
 
@@ -139,8 +136,7 @@
         pageTitleService.setTitle("pepr", "page_detail");
     }
 
-    PeriodoProcesoEditController.$inject = [ '$routeParams', 'pageTitleService', 'PeriodoProcesoService' ];
-
+    /* @ngInject */
     function PeriodoProcesoEditController($routeParams, pageTitleService, PeriodoProcesoService) {
         var vm = this;
 
@@ -171,8 +167,7 @@
         pageTitleService.setTitle("pepr", "page_" + vm.accion);
     }
 
-    PeriodoProcesoLoadController.$inject = [ '$routeParams', 'pageTitleService', 'PeriodoProcesoService' ];
-
+    /* @ngInject */
     function PeriodoProcesoLoadController($routeParams, pageTitleService, PeriodoProcesoService) {
         var vm = this;
 
@@ -200,8 +195,7 @@
         pageTitleService.setTitle("pepr", "page_loadfile");
     }
 
-    CuadroMesDetailController.$inject = [ '$routeParams', 'pageTitleService', 'CuadroMesService' ];
-
+    /* @ngInject */
     function CuadroMesDetailController($routeParams, pageTitleService, CuadroMesService) {
         var vm = this;
 
@@ -217,8 +211,7 @@
         pageTitleService.setTitle("cdms", "page_detail");
     }
 
-    EstadisticaGridController.$inject = [ '$routeParams', 'pageTitleService', 'EstadisticaService' ];
-
+    /* @ngInject */
     function EstadisticaGridController($routeParams, pageTitleService, EstadisticaService) {
         var vm = this;
 
@@ -280,8 +273,7 @@
         pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
     }
 
-    EstadisticaDetailController.$inject = [ '$routeParams', 'pageTitleService', 'EstadisticaService' ];
-
+    /* @ngInject */
     function EstadisticaDetailController($routeParams, pageTitleService, EstadisticaService) {
         var vm = this;
 

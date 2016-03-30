@@ -29,8 +29,7 @@
 
     ;
 
-    seguridad_config.$inject = [ '$routeProvider' ];
-
+    /* @ngInject */
     function seguridad_config($routeProvider) {
         $routeProvider
 
@@ -95,8 +94,7 @@
         ;
     }
 
-    AccionGridController.$inject = [ '$routeParams', 'pageTitleService', 'AccionService' ];
-
+    /* @ngInject */
     function AccionGridController($routeParams, pageTitleService, AccionService) {
         var vm = this;
 
@@ -136,8 +134,7 @@
         pageTitleService.setTitle("accn", "page_grid");
     }
 
-    AccionDetailController.$inject = [ '$routeParams', 'pageTitleService', 'AccionService' ];
-
+    /* @ngInject */
     function AccionDetailController($routeParams, pageTitleService, AccionService) {
         var vm = this;
 
@@ -162,8 +159,7 @@
         pageTitleService.setTitle("accn", "page_detail");
     }
 
-    AccionEditController.$inject = [ '$routeParams', 'pageTitleService', 'AccionService' ];
-
+    /* @ngInject */
     function AccionEditController($routeParams, pageTitleService, AccionService) {
         var vm = this;
 
@@ -201,8 +197,7 @@
         pageTitleService.setTitle("accn", "page_" + vm.accion);
     }
 
-    GrupoGridController.$inject = [ '$routeParams', 'pageTitleService', 'GrupoService' ];
-
+    /* @ngInject */
     function GrupoGridController($routeParams, pageTitleService, GrupoService) {
         var vm = this;
 
@@ -240,8 +235,7 @@
         pageTitleService.setTitle("grpo", "page_grid");
     }
 
-    GrupoDetailController.$inject = [ '$routeParams', 'pageTitleService', 'GrupoService' ];
-
+    /* @ngInject */
     function GrupoDetailController($routeParams, pageTitleService, GrupoService) {
         var vm = this;
 
@@ -269,8 +263,7 @@
         pageTitleService.setTitle("grpo", "page_detail");
     }
 
-    GrupoEditController.$inject = [ '$routeParams', 'pageTitleService', 'GrupoService' ];
-
+    /* @ngInject */
     function GrupoEditController($routeParams, pageTitleService, GrupoService) {
         var vm = this;
 
@@ -316,8 +309,7 @@
         pageTitleService.setTitle("grpo", "page_" + vm.accion);
     }
 
-    UsuarioGridController.$inject = [ '$routeParams', 'pageTitleService', 'UsuarioService' ];
-
+    /* @ngInject */
     function UsuarioGridController($routeParams, pageTitleService, UsuarioService) {
         var vm = this;
 
@@ -357,8 +349,7 @@
         pageTitleService.setTitle("usro", "page_grid");
     }
 
-    UsuarioDetailController.$inject = [ '$routeParams', 'pageTitleService', 'UsuarioService' ];
-
+    /* @ngInject */
     function UsuarioDetailController($routeParams, pageTitleService, UsuarioService) {
         var vm = this;
 
@@ -383,8 +374,7 @@
         pageTitleService.setTitle("usro", "page_detail");
     }
 
-    UsuarioEditController.$inject = [ '$routeParams', 'pageTitleService', 'UsuarioService' ];
-
+    /* @ngInject */
     function UsuarioEditController($routeParams, pageTitleService, UsuarioService) {
         var vm = this;
 
@@ -423,8 +413,7 @@
         pageTitleService.setTitle("usro", "page_" + vm.accion);
     }
 
-    UsuarioAccesoController.$inject = [ '$routeParams', 'pageTitleService', 'UsuarioService' ];
-
+    /* @ngInject */
     function UsuarioAccesoController($location, localStorageService, pageTitleService, UsuarioService) {
         var vm = this;
 
@@ -442,8 +431,7 @@
         pageTitleService.setTitle("usro", "page_acceso");
     }
 
-    UsuarioSalirController.$inject = [ '$routeParams', 'pageTitleService', 'UsuarioService' ];
-
+    /* @ngInject */
     function UsuarioSalirController($location, localStorageService, UsuarioService) {
         UsuarioService.salir().then(function(data) {
             localStorageService.remove("accnPaths");

@@ -78,8 +78,7 @@
 
     ;
 
-    facturacion_config.$inject = [ '$routeProvider' ];
-
+    /* @ngInject */
     function facturacion_config($routeProvider) {
         $routeProvider
 
@@ -256,8 +255,7 @@
     }
 
     // -------------------- Inicio Facturacion ------------------
-    FacturacionIndexController.$inject = [ '$routeParams', 'pageTitleService', 'FacturacionService' ];
-
+    /* @ngInject */
     function FacturacionIndexController($routeParams, pageTitleService, FacturacionService) {
         var vm = this;
 
@@ -268,8 +266,7 @@
     }
 
     // -------------------- Parametrizacion ------------------
-    CargoGridController.$inject = [ '$routeParams', 'pageTitleService', 'CargoService' ];
-
+    /* @ngInject */
     function CargoGridController($routeParams, pageTitleService, CargoService) {
         var vm = this;
 
@@ -308,8 +305,7 @@
         pageTitleService.setTitle("crgo", "page_grid");
     }
 
-    CargoDetailController.$inject = [ '$routeParams', 'pageTitleService', 'CargoService' ];
-
+    /* @ngInject */
     function CargoDetailController($routeParams, pageTitleService, CargoService) {
         var vm = this;
 
@@ -336,8 +332,7 @@
         pageTitleService.setTitle("crgo", "page_detail");
     }
 
-    CargoEditController.$inject = [ '$routeParams', 'pageTitleService', 'CargoService' ];
-
+    /* @ngInject */
     function CargoEditController($routeParams, pageTitleService, CargoService) {
         var vm = this;
 
@@ -373,8 +368,7 @@
         pageTitleService.setTitle("crgo", "page_" + vm.accion);
     }
 
-    CargoTypeaheadController.$inject = [ 'CargoService' ];
-
+    /* @ngInject */
     function CargoTypeaheadController(CargoService) {
         var ta = this;
 
@@ -424,8 +418,7 @@
         }
     }
 
-    ReglaDetailController.$inject = [ '$routeParams', 'pageTitleService', 'ReglaService' ];
-
+    /* @ngInject */
     function ReglaDetailController($routeParams, pageTitleService, ReglaService) {
         var vm = this;
 
@@ -452,8 +445,7 @@
         pageTitleService.setTitle("rgla", "page_detail");
     }
 
-    ReglaEditController.$inject = [ '$routeParams', 'pageTitleService', 'ReglaService' ];
-
+    /* @ngInject */
     function ReglaEditController($routeParams, pageTitleService, ReglaService) {
         var vm = this;
 
@@ -492,8 +484,7 @@
         pageTitleService.setTitle("rgla", "page_" + vm.accion);
     }
 
-    ReglaTypeaheadController.$inject = [ 'ReglaService' ];
-
+    /* @ngInject */
     function ReglaTypeaheadController(ReglaService) {
         var ta = this;
 
@@ -529,9 +520,7 @@
         }
     }
 
-    ReglaIncompatibleDetailController.$inject = [ '$routeParams', 'pageTitleService',
-            'ReglaIncompatibleService' ];
-
+    /* @ngInject */
     function ReglaIncompatibleDetailController($routeParams, pageTitleService, ReglaIncompatibleService) {
         var vm = this;
 
@@ -555,9 +544,7 @@
         pageTitleService.setTitle("rgin", "page_detail");
     }
 
-    ReglaIncompatibleEditController.$inject = [ '$routeParams', 'pageTitleService',
-            'ReglaIncompatibleService' ];
-
+    /* @ngInject */
     function ReglaIncompatibleEditController($routeParams, pageTitleService, ReglaIncompatibleService) {
         var vm = this;
 
@@ -593,8 +580,7 @@
         pageTitleService.setTitle("rgin", "page_" + vm.accion);
     }
 
-    AspectoGridController.$inject = [ '$routeParams', 'pageTitleService', 'AspectoService' ];
-
+    /* @ngInject */
     function AspectoGridController($routeParams, pageTitleService, AspectoService) {
         var vm = this;
 
@@ -633,8 +619,7 @@
         pageTitleService.setTitle("aspc", "page_grid");
     }
 
-    AspectoDetailController.$inject = [ '$routeParams', 'pageTitleService', 'AspectoService' ];
-
+    /* @ngInject */
     function AspectoDetailController($routeParams, pageTitleService, AspectoService) {
         var vm = this;
 
@@ -661,8 +646,7 @@
         pageTitleService.setTitle("aspc", "page_detail");
     }
 
-    AspectoEditController.$inject = [ '$routeParams', 'pageTitleService', 'AspectoService' ];
-
+    /* @ngInject */
     function AspectoEditController($routeParams, pageTitleService, AspectoService) {
         var vm = this;
 
@@ -697,8 +681,7 @@
         pageTitleService.setTitle("aspc", "page_" + vm.accion);
     }
 
-    AspectoTypeaheadController.$inject = [ 'AspectoService' ];
-
+    /* @ngInject */
     function AspectoTypeaheadController(AspectoService) {
         var ta = this;
 
@@ -719,8 +702,7 @@
         }
     }
 
-    AspectoCargoDetailController.$inject = [ '$routeParams', 'pageTitleService', 'AspectoCargoService' ];
-
+    /* @ngInject */
     function AspectoCargoDetailController($routeParams, pageTitleService, AspectoCargoService) {
         var vm = this;
 
@@ -744,8 +726,7 @@
         pageTitleService.setTitle("ascr", "page_detail");
     }
 
-    AspectoCargoEditController.$inject = [ '$routeParams', 'pageTitleService', 'AspectoCargoService' ];
-
+    /* @ngInject */
     function AspectoCargoEditController($routeParams, pageTitleService, AspectoCargoService) {
         var vm = this;
 
@@ -780,8 +761,7 @@
         pageTitleService.setTitle("ascr", "page_" + vm.accion);
     }
 
-    FacturaSerieGridController.$inject = [ '$routeParams', 'pageTitleService', 'FacturaSerieService' ];
-
+    /* @ngInject */
     function FacturaSerieGridController($routeParams, pageTitleService, FacturaSerieService) {
         var vm = this;
 
@@ -820,8 +800,7 @@
         pageTitleService.setTitle("fcsr", "page_grid");
     }
 
-    FacturaSerieDetailController.$inject = [ '$routeParams', 'pageTitleService', 'FacturaSerieService' ];
-
+    /* @ngInject */
     function FacturaSerieDetailController($routeParams, pageTitleService, FacturaSerieService) {
         var vm = this;
 
@@ -845,8 +824,7 @@
         pageTitleService.setTitle("fcsr", "page_detail");
     }
 
-    FacturaSerieEditController.$inject = [ '$routeParams', 'pageTitleService', 'FacturaSerieService' ];
-
+    /* @ngInject */
     function FacturaSerieEditController($routeParams, pageTitleService, FacturaSerieService) {
         var vm = this;
 
@@ -879,8 +857,7 @@
     }
 
     // -------------------- Gestion ------------------
-    ValoracionGridController.$inject = [ '$routeParams', 'pageTitleService', 'ValoracionService' ];
-
+    /* @ngInject */
     function ValoracionGridController($routeParams, pageTitleService, ValoracionService) {
         var vm = this;
 
@@ -922,9 +899,7 @@
         pageTitleService.setTitle("vlrc", "page_grid");
     }
 
-    ValoracionDetailController.$inject = [ '$routeParams', 'pageTitleService', 'ValoracionService',
-            'ValoracionLineaService' ];
-
+    /* @ngInject */
     function ValoracionDetailController($routeParams, pageTitleService, ValoracionService,
             ValoracionLineaService) {
         var vm = this;
@@ -992,8 +967,7 @@
         pageTitleService.setTitle("vlrc", "page_detail");
     }
 
-    ValoracionEditController.$inject = [ '$routeParams', 'pageTitleService', 'ValoracionService' ];
-
+    /* @ngInject */
     function ValoracionEditController($routeParams, pageTitleService, ValoracionService) {
         var vm = this;
 
@@ -1028,9 +1002,7 @@
         pageTitleService.setTitle("vlrc", "page_" + vm.accion);
     }
 
-    ValoracionLineaDetailController.$inject = [ '$routeParams', 'pageTitleService', 'ValoracionLineaService',
-            'ValoracionDetalleService' ];
-
+    /* @ngInject */
     function ValoracionLineaDetailController($routeParams, pageTitleService, ValoracionLineaService,
             ValoracionDetalleService) {
         var vm = this;
@@ -1092,8 +1064,7 @@
         pageTitleService.setTitle("vlrl", "page_detail");
     }
 
-    ValoracionLineaEditController.$inject = [ '$routeParams', 'pageTitleService', 'ValoracionLineaService' ];
-
+    /* @ngInject */
     function ValoracionLineaEditController($routeParams, pageTitleService, ValoracionLineaService) {
         var vm = this;
 
@@ -1130,9 +1101,7 @@
         pageTitleService.setTitle("vlrl", "page_" + vm.accion);
     }
 
-    ValoracionDetalleDetailController.$inject = [ '$routeParams', 'pageTitleService',
-            'ValoracionDetalleService' ];
-
+    /* @ngInject */
     function ValoracionDetalleDetailController($routeParams, pageTitleService, ValoracionDetalleService) {
         var vm = this;
 
@@ -1162,9 +1131,7 @@
         pageTitleService.setTitle("vlrd", "page_detail");
     }
 
-    ValoracionDetalleEditController.$inject = [ '$routeParams', 'pageTitleService',
-            'ValoracionDetalleService' ];
-
+    /* @ngInject */
     function ValoracionDetalleEditController($routeParams, pageTitleService, ValoracionDetalleService) {
         var vm = this;
 
@@ -1201,8 +1168,7 @@
         pageTitleService.setTitle("vlrd", "page_" + vm.accion);
     }
 
-    FacturadorEditController.$inject = [ '$routeParams', 'pageTitleService', 'FacturadorService' ];
-
+    /* @ngInject */
     function FacturadorEditController($routeParams, pageTitleService, FacturadorService) {
         var vm = this;
 
@@ -1236,8 +1202,7 @@
         pageTitleService.setTitle("fcdr", "page_" + vm.accion);
     }
 
-    FacturaGridController.$inject = [ '$routeParams', 'pageTitleService', 'FacturaService' ];
-
+    /* @ngInject */
     function FacturaGridController($routeParams, pageTitleService, FacturaService) {
         var vm = this;
 
@@ -1277,9 +1242,7 @@
         pageTitleService.setTitle("fctr", "page_grid");
     }
 
-    FacturaDetailController.$inject = [ '$routeParams', 'pageTitleService', 'FacturaService',
-            'ValoracionLineaService' ];
-
+    /* @ngInject */
     function FacturaDetailController($routeParams, pageTitleService, FacturaService, ValoracionLineaService) {
         var vm = this;
 
@@ -1346,8 +1309,7 @@
         pageTitleService.setTitle("fctr", "page_detail");
     }
 
-    FacturaEditController.$inject = [ '$routeParams', 'pageTitleService', 'FacturaService' ];
-
+    /* @ngInject */
     function FacturaEditController($routeParams, pageTitleService, FacturaService) {
         var vm = this;
 
@@ -1380,8 +1342,7 @@
         pageTitleService.setTitle("fctr", "page_" + vm.accion);
     }
 
-    FacturaAnulacionEditController.$inject = [ '$routeParams', 'pageTitleService', 'FacturaAnulacionService' ];
-
+    /* @ngInject */
     function FacturaAnulacionEditController($routeParams, pageTitleService, FacturaAnulacionService) {
         var vm = this;
 
@@ -1414,9 +1375,7 @@
         pageTitleService.setTitle("fcan", "page_" + vm.accion);
     }
 
-    FacturaRectificacionEditController.$inject = [ '$routeParams', 'pageTitleService',
-            'FacturaRectificacionService' ];
-
+    /* @ngInject */
     function FacturaRectificacionEditController($routeParams, pageTitleService, FacturaRectificacionService) {
         var vm = this;
 
@@ -1449,9 +1408,7 @@
         pageTitleService.setTitle("fcrc", "page_" + vm.accion);
     }
 
-    FacturaLineaDetailController.$inject = [ '$routeParams', 'pageTitleService', 'ValoracionLineaService',
-            'ValoracionDetalleService' ];
-
+    /* @ngInject */
     function FacturaLineaDetailController($routeParams, pageTitleService, ValoracionLineaService,
             ValoracionDetalleService) {
         var vm = this;
@@ -1505,8 +1462,7 @@
         pageTitleService.setTitle("fctl", "page_detail");
     }
 
-    FacturaDetalleDetailController.$inject = [ '$routeParams', 'pageTitleService', 'ValoracionDetalleService' ];
-
+    /* @ngInject */
     function FacturaDetalleDetailController($routeParams, pageTitleService, ValoracionDetalleService) {
         var vm = this;
 
