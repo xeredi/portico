@@ -62,17 +62,18 @@
     }
 
     /* @ngInject */
-    function MaestroIndexController($translate, pageTitleService, MaestroService) {
+    function MaestroIndexController($translate, $filter, pageTitleService, credentialService, MaestroService) {
         var vm = this;
 
         MaestroService.index().then(function(data) {
-            vm.tpprList = data.resultList.map(function(tppr) {
+            vm.tpprList = $filter('filter')(data.resultList, function(element) {
+                return credentialService.hasAcenPath(element.value, "item-list");
+            });
+
+            vm.tpprList = vm.tpprList.map(function(tppr) {
                 $translate('enti_' + tppr.value).then(function(translation) {
                     tppr.label = translation.toUpperCase();
                 });
-
-                // tppr.itemListEnabled =
-                // credentialService.hasAcenPath(tppr.value, "item-list");
 
                 return tppr;
             });

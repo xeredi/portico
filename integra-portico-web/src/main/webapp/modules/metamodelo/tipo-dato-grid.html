@@ -36,9 +36,9 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody data-ng-init="vm.tpdtDetailAllowed = mc.hasAccnPath('tpdt-detail')">
                 <tr data-ng-repeat="tpdt in vm.resultList.list track by $index">
-                    <td><a data-ng-if="mc.hasAccnPath('tpdt-detail')"
+                    <td><a data-ng-if="vm.tpdtDetailAllowed"
                         data-ng-href="#/metamodelo/tipo-dato/detail/{{tpdt.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="tpdt.codigo"></td>

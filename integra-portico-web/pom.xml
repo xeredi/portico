@@ -18,22 +18,49 @@
     <build>
         <directory>target/${profile-id}</directory>
         <finalName>${project.artifactId}</finalName>
-        <!-- -->
+<!--
         <plugins>
             <plugin>
-                <groupId>pl.allegro</groupId>
-                <artifactId>grunt-maven-plugin</artifactId>
-                <version>1.4.1</version>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>0.0.29</version>
+                <configuration>
+                    <nodeVersion>v4.4.1</nodeVersion>
+                    <npmVersion>3.8.5</npmVersion>
+                    <installDirectory>target</installDirectory>
+                </configuration>
                 <executions>
                     <execution>
+                        <id>install node and npm</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <phase>generate-resources</phase>
                         <goals>
                             <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>grunt build</id>
+                        <phase>generate-resources</phase>
+                        <goals>
                             <goal>grunt</goal>
                         </goals>
+                        <configuration>
+                            <arguments> -verbose </arguments>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
+ -->
     </build>
 
     <dependencies>

@@ -858,7 +858,8 @@
 
     // -------------------- Gestion ------------------
     /* @ngInject */
-    function ValoracionGridController($routeParams, pageTitleService, ValoracionService) {
+    function ValoracionGridController($routeParams, pageTitleService, ValoracionService,
+            ValoracionViewService) {
         var vm = this;
 
         vm.filter = filter;
@@ -882,6 +883,12 @@
                 vm.page = data.resultList.page;
                 vm.limit = data.resultList.limit;
                 vm.resultList = data.resultList;
+
+                vm.resultList.list = data.resultList.list.map(function(element) {
+                    ValoracionViewService.applyFilters(element);
+
+                    return element;
+                });
 
                 vm.tpdtCodExencion = data.tpdtCodExencion;
             });

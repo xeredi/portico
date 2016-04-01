@@ -44,9 +44,9 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody data-ng-init="vm.tpprDetailAllowed = mc.hasAccnPath('tppr-detail')">
                 <tr data-ng-repeat="enti in vm.resultList.list track by $index">
-                    <td><a data-ng-if="mc.hasAccnPath('tppr-detail')"
+                    <td><a data-ng-if="vm.tpprDetailAllowed"
                         data-ng-href="#/metamodelo/tipo-parametro/detail/{{enti.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="enti.codigo"></td>

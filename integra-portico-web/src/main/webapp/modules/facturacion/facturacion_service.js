@@ -33,6 +33,8 @@
 
     .factory("FacturadorService", FacturadorService)
 
+    .service("ValoracionViewService", ValoracionViewService)
+
     ;
 
     /* @ngInject */
@@ -108,5 +110,26 @@
     /* @ngInject */
     function FacturadorService($http, $q, CrudService) {
         return CrudService.create("facturacion/facturador");
+    }
+
+    /* @ngInject */
+    function ValoracionViewService($filter, $translate) {
+        var vm = this;
+
+        vm.applyFilters = applyFilters;
+
+        function applyFilters(element) {
+            element.faltaLabel = $filter('date')(element.falta, 'dd/MM/yyyy HH:mm');
+            element.finiLabel = $filter('date')(element.fini, 'dd/MM/yyyy HH:mm');
+            element.ffinLabel = $filter('date')(element.ffin, 'dd/MM/yyyy HH:mm');
+            element.fliqLabel = $filter('date')(element.fliq, 'dd/MM/yyyy');
+
+            element.importeLabel = $filter('number')(element.importe, 2);
+            element.impuestoLabel = $filter('number')(element.impuesto, 2);
+
+            $translate('enti_' + element.srvc.entiId).then(function(translation) {
+                element.srvc.entiLabel = translation;
+            });
+        }
     }
 })();

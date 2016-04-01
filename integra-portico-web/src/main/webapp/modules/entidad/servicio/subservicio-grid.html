@@ -42,9 +42,9 @@
                         data-ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody data-ng-init="vm.ssrvDetailAllowed = mc.hasAcenPath(vm.enti.enti.id, 'item-detail')">
                 <tr data-ng-repeat="item in vm.itemList.list track by $index">
-                    <td><a data-ng-if="mc.hasAcenPath(vm.enti.enti.id, 'item-detail')"
+                    <td><a data-ng-if="vm.ssrvDetailAllowed"
                         data-ng-href="#/servicio/subservicio/detail/{{item.entiId}}/{{item.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="item.srvc.etiqueta" nowrap="nowrap"></td>

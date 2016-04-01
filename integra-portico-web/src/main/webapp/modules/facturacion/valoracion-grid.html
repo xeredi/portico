@@ -63,25 +63,25 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody data-ng-init="vm.vlrcDetailAllowed = mc.hasAccnPath('vlrc-detail')">
                 <tr data-ng-repeat="item in vm.resultList.list track by $index">
-                    <td><a data-ng-if="mc.hasAccnPath('vlrc-detail')"
+                    <td><a data-ng-if="vm.vlrcDetailAllowed"
                         data-ng-href="#/facturacion/valoracion/detail/{{item.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="item.id"></td>
-                    <td nowrap="nowrap" data-ng-bind="('enti_' + item.srvc.entiId | translate)"></td>
+                    <td nowrap="nowrap" data-ng-bind="item.srvc.entiLabel"></td>
                     <td data-ng-bind="item.srvc.etiqueta"></td>
                     <td data-ng-bind="item.aspc.codigo" data-bs-tooltip data-title="{{item.aspc.etiqueta}}"></td>
                     <td data-ng-bind="item.fctrRectificada.etiqueta"></td>
                     <td data-ng-bind="item.pagador.parametro" data-bs-tooltip
                         data-title="{{item.pagador.etiqueta}}"></td>
                     <td><i class="glyphicon glyphicon-{{(item.sujPasivo ? 'ok' : 'remove')}}"></i></td>
-                    <td nowrap="nowrap" class="number">{{(item.importe | number:2)}} &euro;</td>
-                    <td nowrap="nowrap" class="number">{{(item.impuesto | number:2)}} &euro;</td>
-                    <td nowrap="nowrap" data-ng-bind="(item.fliq | date: dateFormat)"></td>
-                    <td nowrap="nowrap" data-ng-bind="(item.fini | date: datetimeFormat)"></td>
-                    <td nowrap="nowrap" data-ng-bind="(item.ffin | date: datetimeFormat)"></td>
-                    <td nowrap="nowrap" data-ng-bind="(item.falta | date: datetimeFormat)"></td>
+                    <td nowrap="nowrap" class="number">{{item.importeLabel}} &euro;</td>
+                    <td nowrap="nowrap" class="number">{{item.impuestoLabel}} &euro;</td>
+                    <td nowrap="nowrap" data-ng-bind="item.fliqLabel"></td>
+                    <td nowrap="nowrap" data-ng-bind="item.finiLabel"></td>
+                    <td nowrap="nowrap" data-ng-bind="item.ffinLabel"></td>
+                    <td nowrap="nowrap" data-ng-bind="item.faltaLabel"></td>
                     <td data-ng-bind="item.codExencion" data-bs-tooltip
                         data-title="{{('cdrf_' + vm.tpdtCodExencion.id + '_' + item.codExencion | translate)}}"></td>
 
