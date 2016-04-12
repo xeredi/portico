@@ -26,7 +26,7 @@
         <maven-surefire-report-plugin.version>2.19.1</maven-surefire-report-plugin.version>
         <doxia-module-docbook-simple.version>1.7</doxia-module-docbook-simple.version>
 
-        <antlr4-maven-plugin.version>4.5.2-1</antlr4-maven-plugin.version>
+        <antlr4-maven-plugin.version>4.5.3</antlr4-maven-plugin.version>
         <migrations-maven-plugin.version>1.1.2</migrations-maven-plugin.version>
         <maven-schemaspy-plugin.version>1.0.3</maven-schemaspy-plugin.version>
 
@@ -62,6 +62,7 @@
 
         <poi.version>3.14</poi.version>
         <dynamicreports.version>4.1.0</dynamicreports.version>
+        <itext.version>2.1.7</itext.version>
         <guava.version>19.0</guava.version>
         <commons-io.version>2.4</commons-io.version>
         <commons-compress.version>1.10</commons-compress.version>
@@ -287,6 +288,7 @@
                             </plugin>
                             <plugin>
                                 <artifactId>maven-javadoc-plugin</artifactId>
+                                <version>${maven-javadoc-plugin.version}</version>
                                 <configuration>
                                     <source>1.8</source>
                                     <aggregate>true</aggregate>

@@ -36,6 +36,8 @@ public class I18nJs {
      *             Signals that an I/O exception has occurred.
      */
     public void export() throws IOException {
+        LOG.info("I18n export");
+
         final String[] languages = ConfigurationProxy.getStringArray(ConfigurationKey.language_available);
         final String defaultLanguage = ConfigurationProxy.getString(ConfigurationKey.language_default);
         final String webappInstallPath = ConfigurationProxy.getString(ConfigurationKey.webapp_install_path);
@@ -47,6 +49,8 @@ public class I18nJs {
                 I18nPrefix.trmt, I18nPrefix.enac, I18nPrefix.enag, I18nPrefix.tpdt, I18nPrefix.cdrf);
 
         for (final String language : languages) {
+            LOG.info("Language: " + language);
+
             final List<LabelValueVO> labelValues = new ArrayList<>();
 
             labelValues.addAll(i18nBO.selectLabelValueList(i18nPrefixSet, language));
@@ -71,18 +75,26 @@ public class I18nJs {
             }
 
             final String jsTemplate = "angular.module('i18n', [ 'pascalprecht.translate' ]).config(function($translateProvider) { $translateProvider.translations('"
-                    + language + "', {" + i18nParams.toString() + "}); $translateProvider.preferredLanguage('"
+                    + language
+                    + "', {"
+                    + i18nParams.toString()
+                    + "}); $translateProvider.preferredLanguage('"
                     + defaultLanguage + "'); });";
 
             final String filename = webappInstallPath + "/modules/i18n/i18n_messages_" + language + ".js";
 
+            LOG.info("Filename: " + filename);
+
             try (final PrintWriter printWriter = new PrintWriter(filename, "UTF-8")) {
                 printWriter.print(jsTemplate);
 
-                System.out.println(filename);
-                System.out.println(jsTemplate);
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("jsTemplate: " + jsTemplate);
+                }
             }
         }
+
+        LOG.info("I18n export success");
     }
 
     /**

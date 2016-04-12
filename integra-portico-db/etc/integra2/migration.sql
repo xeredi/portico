@@ -1,6 +1,17 @@
-DROP SEQUENCE sq_migration;
-DROP TABLE tbl_migration_id_mgid;
+-- CREACION DE SINONIMOS PARA LAS TABLAS DE INTEGRA1
+DECLARE
+	CURSOR c IS SELECT table_name FROM all_tables WHERE owner = 'INTEGRA';
+	cmd VARCHAR2(200);
+BEGIN
+	FOR t IN c LOOP
+		cmd := 'CREATE SYNONYM ' || t.table_name || ' FOR integra.' || t.table_name;
+		EXECUTE IMMEDIATE cmd;
+	END LOOP;
+END;
 
+
+
+-- CREACION DE SECUENCIA Y TABLA INTERMEDIA DE MIGRACION
 CREATE SEQUENCE sq_migration;
 
 CREATE TABLE tbl_migration_id_mgid (
@@ -489,3 +500,18 @@ ifac_procjerarquia_prje
 ifac_procoperandoprecio_oppr
 ifap_actualizacionipc_aipc
 */
+
+-- BORRADO DE SECUENCIA Y TABLA INTERMEDIA DE MIGRACION
+DROP SEQUENCE sq_migration;
+DROP TABLE tbl_migration_id_mgid;
+
+-- BORRADO DE SINONIMOS PARA LAS TABLAS DE INTEGRA1
+DECLARE
+	CURSOR c IS SELECT table_name FROM all_tables WHERE owner = 'INTEGRA';
+	cmd VARCHAR2(200);
+BEGIN
+	FOR t IN c LOOP
+		cmd := 'DROP SYNONYM ' || t.table_name;
+		EXECUTE IMMEDIATE cmd;
+	END LOOP;
+END;

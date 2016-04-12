@@ -10,6 +10,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import lombok.NonNull;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.base.Preconditions;
@@ -86,10 +88,8 @@ public final class OppeFileExport {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public void generarEAP(final OutputStream stream, final List<EstadisticaVO> estdList) throws IOException {
-        Preconditions.checkNotNull(stream);
-        Preconditions.checkNotNull(estdList);
-
+    public void generarEAP(final @NonNull OutputStream stream, final @NonNull List<EstadisticaVO> estdList)
+            throws IOException {
         for (final EstadisticaVO estdVO : estdList) {
             final StringBuffer buffer = new StringBuffer();
 
@@ -214,8 +214,8 @@ public final class OppeFileExport {
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Mes, estdVO.getPepr().getMes()));
             buffer.append(getTokenString(EstadisticaFileKeyword.Autp, estdVO.getPrto().getCodigo()));
 
-            final String tipoOperacionBl = getTokenPrmt(EstadisticaFileKeyword.EMM_TipoOperacion,
-                    estdVO.getItdtMap().get(TipoDato.TIPO_OP_BL.getId()).getPrmt());
+            final String tipoOperacionBl = getTokenPrmt(EstadisticaFileKeyword.EMM_TipoOperacion, estdVO.getItdtMap()
+                    .get(TipoDato.TIPO_OP_BL.getId()).getPrmt());
 
             buffer.append(tipoOperacionBl);
             buffer.append(getTokenPrmt(EstadisticaFileKeyword.EMM_UnloOrigen,
@@ -301,8 +301,8 @@ public final class OppeFileExport {
             buffer.append(getTokenPrmt(EstadisticaFileKeyword.EME_RegistroBuqueEEE,
                     estdVO.getItdtMap().get(TipoDato.REG_TBUQUE_EEE.getId()).getPrmt()));
 
-            final String direccion = getTokenString(EstadisticaFileKeyword.EME_DireccionTransporte,
-                    estdVO.getItdtMap().get(TipoDato.DIREC_MERC.getId()).getCadena());
+            final String direccion = getTokenString(EstadisticaFileKeyword.EME_DireccionTransporte, estdVO.getItdtMap()
+                    .get(TipoDato.DIREC_MERC.getId()).getCadena());
 
             buffer.append("E".equals(direccion) ? "1" : "2");
 

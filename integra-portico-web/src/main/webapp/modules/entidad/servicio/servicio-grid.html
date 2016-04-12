@@ -71,15 +71,15 @@
                     <td data-ng-repeat="tpdtId in vm.enti.entdGridList track by $index"
                         data-ng-switch="vm.enti.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span
                         data-ng-switch-when="BO"><i
-                            class="glyphicon glyphicon-{{(item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove')}}"></i></span>
+                            class="glyphicon glyphicon-{{item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></span>
                         <span data-ng-switch-when="ND" class="pull-right"
-                        data-ng-bind="(item.itdtMap[tpdtId].cantidadDecimal | number:2)"></span> <span
+                        data-ng-bind="item.itdtMap[tpdtId].cantidadDecimal | number:2"></span> <span
                         data-ng-switch-when="NE" class="pull-right"
-                        data-ng-bind="(item.itdtMap[tpdtId].cantidadEntera | number:0)"></span> <span
+                        data-ng-bind="item.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span
                         data-ng-switch-when="FE" class="pull-right"
-                        data-ng-bind="(item.itdtMap[tpdtId].fecha | date: dateFormat)"></span> <span
+                        data-ng-bind="item.itdtMap[tpdtId].fecha | date: dateFormat"></span> <span
                         data-ng-switch-when="FH" class="pull-right"
-                        data-ng-bind="(item.itdtMap[tpdtId].fecha | date: datetimeFormat)"></span> <span
+                        data-ng-bind="item.itdtMap[tpdtId].fecha | date: datetimeFormat"></span> <span
                         data-ng-switch-when="CR" data-bs-tooltip
                         data-title="{{('cdrf_' + tpdtId + '_' + item.itdtMap[tpdtId].cadena | translate)}}"
                         data-ng-bind="item.itdtMap[tpdtId].cadena"></span><span data-ng-switch-when="TX"

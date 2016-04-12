@@ -38,15 +38,14 @@
                         data-ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody data-ng-init="vm.entiDetailAllowed = mc.hasAcenPath(vm.enti.enti.id, 'item-detail')">
                 <tr data-ng-repeat="item in vm.itemList.list track by $index">
-                    <td><a data-ng-if="mc.hasAcenPath(vm.enti.enti.id, 'item-detail')"
+                    <td><a data-ng-if="vm.entiDetailAllowed"
                         data-ng-href="#/estadistica/estadistica/detail/{{vm.enti.enti.id}}/{{item.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td nowrap="nowrap" data-ng-bind="item.pepr.etiqueta"></td>
                     <td nowrap="nowrap" data-ng-bind="item.prto.etiqueta"></td>
-                    <td data-ng-repeat="tpdtId in vm.enti.entdList track by $index"
-                        data-ng-if="vm.enti.entdMap[tpdtId].gridable" data-ng-switch
+                    <td data-ng-repeat="tpdtId in vm.enti.entdGridList track by $index" data-ng-switch
                         data-on="vm.enti.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span
                         data-ng-switch-when="BO"><i
                             class="glyphicon glyphicon-{{vm.item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></span>

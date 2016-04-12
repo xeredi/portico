@@ -18,6 +18,15 @@
     <build>
         <directory>target/${profile-id}</directory>
         <finalName>${project.artifactId}</finalName>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>resources/${database-vendor}</directory>
+            </resource>
+        </resources>
 <!--
         <plugins>
             <plugin>

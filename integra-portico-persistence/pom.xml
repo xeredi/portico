@@ -11,17 +11,6 @@
     </parent>
     <name>Persistencia</name>
 
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-            <resource>
-                <directory>resources/${database-vendor}</directory>
-            </resource>
-        </resources>
-    </build>
-
     <dependencies>
         <dependency>
             <groupId>xeredi</groupId>
