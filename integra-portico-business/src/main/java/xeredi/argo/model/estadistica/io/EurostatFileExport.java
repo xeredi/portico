@@ -14,10 +14,16 @@ import xeredi.argo.model.estadistica.vo.EurostatVO;
 public final class EurostatFileExport {
 
     /** The Constant FIELD_SEPARATOR. */
-    public static final char FIELD_SEPARATOR = ';';
+    public static final String FIELD_SEPARATOR = ";";
+
+    /** The Constant ROW_SEPARATOR. */
+    public static final String ROW_SEPARATOR = "\n";
+
+    /** The Constant EMPTY_FIELD. */
+    public static final String EMPTY_FIELD = "";
 
     /** The Constant FIELD_COUNT. */
-    public static final int FIELD_COUNT = 15;
+    public static final int FIELD_COUNT = 18;
 
     /** The Constant FIELD_PREFIX. */
     public static final String FIELD_PREFIX = "c";
@@ -46,10 +52,14 @@ public final class EurostatFileExport {
                 final String fieldName = FIELD_PREFIX + i;
                 final Object fieldValue = erst.getMap().get(fieldName);
 
-                buffer.append(fieldValue == null ? "" : fieldValue.toString()).append(FIELD_SEPARATOR);
+                buffer.append(fieldValue == null ? EMPTY_FIELD : fieldValue.toString());
+
+                if (i < (FIELD_COUNT - 1)) {
+                    buffer.append(FIELD_SEPARATOR);
+                }
             }
 
-            buffer.append('\n');
+            buffer.append(ROW_SEPARATOR);
 
             stream.write(buffer.toString().getBytes());
         }

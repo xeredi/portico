@@ -24,13 +24,13 @@
             <result column="c2" property="c2" />
             <result column="c3" property="c3" />
 
-            <result column="c4" property="c4" />
+            <result column="c9" property="c9" />
         </association>
     </resultMap>
 
     <select id="selectA1List" parameterType="EurostatCriterioVO" resultMap="ResultMapA1">
     <![CDATA[
-        SELECT report, year, quarter, port, c0, c1, c2, c3, sum(c4) AS c4
+        SELECT report, year, quarter, port, c0, c1, c2, c3, sum(c9) AS c9
         FROM (
             SELECT
                 'A1' AS report
@@ -103,7 +103,7 @@
                     FROM tbl_estadistica_dato_esdt
                     WHERE esdt_estd_pk = estd_pk
                         AND esdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
-                ) AS c4
+                ) AS c9
             FROM tbl_estadistica_estd
                 INNER JOIN tbl_periodo_proceso_pepr ON
                     pepr_pk = estd_pepr_pk
@@ -121,6 +121,537 @@
         ) SQL
         GROUP BY report, year, quarter, port, c0, c1, c2, c3
         ORDER BY report, year, quarter, port, c0, c1, c2, c3
+    ]]>
+    </select>
+
+    <resultMap id="ResultMapA2" type="EurostatVO">
+        <id column="report" />
+        <id column="year" />
+        <id column="quarter" />
+        <id column="port" />
+        <id column="c0" />
+        <id column="c1" />
+        <id column="c2" />
+        <id column="c3" />
+
+        <result column="report" property="report" />
+        <result column="year" property="year" />
+        <result column="quarter" property="quarter" />
+        <result column="port" property="port" />
+
+        <association property="map" javaType="java.util.Map">
+            <result column="c0" property="c0" />
+            <result column="c1" property="c1" />
+            <result column="c2" property="c2" />
+            <result column="c3" property="c3" />
+
+            <result column="c9" property="c9" />
+        </association>
+    </resultMap>
+
+    <select id="selectA2List" parameterType="EurostatCriterioVO" resultMap="ResultMapA2">
+    <![CDATA[
+        SELECT report, year, quarter, port, c0, c1, c2, c3, sum(c9) AS c9
+        FROM (
+        	SELECT
+        	    'A2' AS report
+        	    , pepr_anio AS year
+        	    , pepr_trimestre AS quarter
+        	    , (SELECT prto_unlocode FROM tbl_puerto_prto WHERE prto_pk = estd_subp_pk) AS port
+        	    , (
+        	        CASE (
+        	            SELECT esdt_cadena
+        	            FROM tbl_estadistica_dato_esdt
+        	            WHERE esdt_estd_pk = estd_pk
+        	                AND esdt_tpdt_pk = portico.getTipoDato('DIREC_MERC')
+        	        )
+        	            WHEN 'E' THEN 1
+        	            WHEN 'S' THEN 2
+        	            ELSE NULL
+        	        END
+        	    ) AS c0
+        	    , (
+        	        SELECT prmt_parametro FROM tbl_parametro_prmt
+        	        WHERE
+        	            prmt_pk = (
+        	                SELECT esdt_prmt_pk
+        	                FROM tbl_estadistica_dato_esdt
+        	                WHERE esdt_estd_pk = estd_pk
+        	                    AND esdt_tpdt_pk = portico.getTipoDato('UNLOCODE')
+        	            )
+        	    ) AS c1
+        	    , (
+        	        SELECT prmt_parametro FROM tbl_parametro_prmt
+        	        WHERE
+        	            prmt_pk = (
+        	                SELECT prdt_prmt_pk
+        	                FROM tbl_parametro_dato_prdt
+        	                WHERE
+        	                    prdt_tpdt_pk = portico.gettipodato('ZONA_COST_EEE')
+        	                    AND prdt_prvr_pk = (
+        	                        SELECT prvr_pk FROM tbl_parametro_version_prvr
+        	                        WHERE prvr_fini <= pepr_freferencia
+        	                            AND (prvr_ffin IS NULL OR prvr_ffin > pepr_freferencia)
+        	                            AND prvr_prmt_pk = (
+        	                                SELECT esdt_prmt_pk
+        	                                FROM tbl_estadistica_dato_esdt
+        	                                WHERE esdt_estd_pk = estd_pk
+        	                                    AND esdt_tpdt_pk = portico.getTipoDato('UNLOCODE')
+        	                            )
+        	                    )
+
+        	            )
+        	    ) AS c2
+        	    , (
+        	        SELECT prdt_cadena FROM tbl_parametro_dato_prdt
+        	        WHERE prdt_tpdt_pk = portico.gettipodato('CADENA_01')
+        	            AND prdt_prvr_pk = (
+        	                SELECT prvr_pk FROM tbl_parametro_version_prvr
+        	                WHERE
+        	                    prvr_fini <= pepr_freferencia
+        	                    AND (prvr_ffin IS NULL OR prvr_ffin > pepr_freferencia)
+        	                    AND prvr_prmt_pk = (
+        	                        SELECT esdt_prmt_pk
+        	                        FROM tbl_estadistica_dato_esdt
+        	                        WHERE esdt_estd_pk = estd_pk
+        	                            AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+        	                    )
+        	            )
+        	    ) AS c3
+        	    , (
+        	        SELECT esdt_ndecimal
+        	        FROM tbl_estadistica_dato_esdt
+        	        WHERE esdt_estd_pk = estd_pk
+        	            AND esdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
+        	    ) AS c9
+        	FROM tbl_estadistica_estd
+        	    INNER JOIN tbl_periodo_proceso_pepr ON
+        	        pepr_pk = estd_pepr_pk
+    ]]>
+        <where>
+        <![CDATA[
+            estd_tpes_pk = portico.getentidad('MOVIMIENTO_MERCANCIA_EEE')
+
+    	    AND EXISTS (
+    	        SELECT 1
+    	        FROM tbl_estadistica_dato_esdt
+    	        WHERE
+    	            esdt_estd_pk = estd_pk
+    	            AND esdt_tpdt_pk = portico.gettipodato('UNIDAD_CARGA')
+    	            AND EXISTS (
+    	                SELECT 1
+    	                FROM tbl_parametro_version_prvr
+    	                WHERE prvr_prmt_pk = esdt_prmt_pk
+    	                    AND prvr_fini <= pepr_freferencia
+    	                    AND (prvr_ffin IS NULL OR prvr_ffin > pepr_freferencia)
+    	                    AND EXISTS (
+    	                        SELECT 1 FROM tbl_parametro_dato_prdt
+    	                        WHERE prdt_prvr_pk = prvr_pk
+    	                            AND prdt_tpdt_pk = portico.gettipodato('CADENA_01')
+    	                            AND prdt_cadena = ANY ('11', '12', '13', '19', '21', '22', '23', '29', '91', '92', '99')
+    	                    )
+    	            )
+    	    )
+        ]]>
+            <if test="year != null">
+                AND pepr_anio = #{year}
+            </if>
+            <if test="quarter != null">
+                AND pepr_trimestre = #{quarter}
+            </if>
+        </where>
+    <![CDATA[
+        ) SQL
+        GROUP BY report, year, quarter, port, c0, c1, c2, c3
+        ORDER BY report, year, quarter, port, c0, c1, c2, c3
+    ]]>
+    </select>
+
+    <resultMap id="ResultMapC1" type="EurostatVO">
+        <id column="report" />
+        <id column="year" />
+        <id column="quarter" />
+        <id column="port" />
+        <id column="c0" />
+        <id column="c1" />
+        <id column="c2" />
+        <id column="c3" />
+
+        <result column="report" property="report" />
+        <result column="year" property="year" />
+        <result column="quarter" property="quarter" />
+        <result column="port" property="port" />
+
+        <association property="map" javaType="java.util.Map">
+            <result column="c0" property="c0" />
+            <result column="c1" property="c1" />
+            <result column="c2" property="c2" />
+            <result column="c3" property="c3" />
+
+            <result column="c9" property="c9" />
+            <result column="c10" property="c10" />
+            <result column="c11" property="c11" />
+            <result column="c12" property="c12" />
+        </association>
+    </resultMap>
+
+    <select id="selectC1List" parameterType="EurostatCriterioVO" resultMap="ResultMapC1">
+    <![CDATA[
+        SELECT report, year, quarter, port, c0, c1, c2, c3
+            , COALESCE(sum(c9), 0) AS c9, COALESCE(sum(c10), 0) AS c10
+            , COALESCE(sum(c11), 0) AS c11, COALESCE(sum(c12), 0) AS c12
+        FROM (
+        	SELECT
+        	    'C1' AS report
+        	    , pepr_anio AS year
+        	    , pepr_trimestre AS quarter
+        	    , (SELECT prto_unlocode FROM tbl_puerto_prto WHERE prto_pk = estd_subp_pk) AS port
+        	    , (
+        	        CASE (
+        	            SELECT esdt_cadena
+        	            FROM tbl_estadistica_dato_esdt
+        	            WHERE esdt_estd_pk = estd_pk
+        	                AND esdt_tpdt_pk = portico.getTipoDato('DIREC_MERC')
+        	        )
+        	            WHEN 'E' THEN 1
+        	            WHEN 'S' THEN 2
+        	            ELSE NULL
+        	        END
+        	    ) AS c0
+        	    , (
+        	        SELECT prmt_parametro FROM tbl_parametro_prmt
+        	        WHERE
+        	            prmt_pk = (
+        	                SELECT esdt_prmt_pk
+        	                FROM tbl_estadistica_dato_esdt
+        	                WHERE esdt_estd_pk = estd_pk
+        	                    AND esdt_tpdt_pk = portico.getTipoDato('UNLOCODE')
+        	            )
+        	    ) AS c1
+        	    , (
+        	        SELECT prmt_parametro FROM tbl_parametro_prmt
+        	        WHERE
+        	            prmt_pk = (
+        	                SELECT prdt_prmt_pk
+        	                FROM tbl_parametro_dato_prdt
+        	                WHERE
+        	                    prdt_tpdt_pk = portico.gettipodato('ZONA_COST_EEE')
+        	                    AND prdt_prvr_pk = (
+        	                        SELECT prvr_pk FROM tbl_parametro_version_prvr
+        	                        WHERE prvr_fini <= pepr_freferencia
+        	                            AND (prvr_ffin IS NULL OR prvr_ffin > pepr_freferencia)
+        	                            AND prvr_prmt_pk = (
+        	                                SELECT esdt_prmt_pk
+        	                                FROM tbl_estadistica_dato_esdt
+        	                                WHERE esdt_estd_pk = estd_pk
+        	                                    AND esdt_tpdt_pk = portico.getTipoDato('UNLOCODE')
+        	                            )
+        	                    )
+
+        	            )
+        	    ) AS c2
+        	    , (
+        	        SELECT prdt_cadena FROM tbl_parametro_dato_prdt
+        	        WHERE prdt_tpdt_pk = portico.gettipodato('CADENA_01')
+        	            AND prdt_prvr_pk = (
+        	                SELECT prvr_pk FROM tbl_parametro_version_prvr
+        	                WHERE
+        	                    prvr_fini <= pepr_freferencia
+        	                    AND (prvr_ffin IS NULL OR prvr_ffin > pepr_freferencia)
+        	                    AND prvr_prmt_pk = (
+        	                        SELECT esdt_prmt_pk
+        	                        FROM tbl_estadistica_dato_esdt
+        	                        WHERE esdt_estd_pk = estd_pk
+        	                            AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+        	                    )
+        	            )
+        	    ) AS c3
+        	    , (
+        	        SELECT esdt_ndecimal
+        	        FROM tbl_estadistica_dato_esdt
+        	        WHERE esdt_estd_pk = estd_pk
+        	            AND esdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
+        	    ) AS c9
+        	    , (
+        	        SELECT esdt_nentero
+        	        FROM tbl_estadistica_dato_esdt
+        	        WHERE esdt_estd_pk = estd_pk
+        	            AND esdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+        	    ) AS c10
+                , (
+                    SELECT esdt_nentero
+                    FROM tbl_estadistica_dato_esdt
+                    WHERE esdt_estd_pk = estd_pk
+                        AND esdt_tpdt_pk = portico.getTipoDato('ENTERO_04')
+                ) AS c11
+        	    , (
+        	        SELECT esdt_nentero
+        	        FROM tbl_estadistica_dato_esdt
+        	        WHERE esdt_estd_pk = estd_pk
+        	            AND esdt_tpdt_pk = portico.getTipoDato('ENTERO_05')
+        	    ) AS c12
+        	FROM tbl_estadistica_estd
+        	    INNER JOIN tbl_periodo_proceso_pepr ON
+        	        pepr_pk = estd_pepr_pk
+    ]]>
+        <where>
+        <![CDATA[
+            estd_tpes_pk = portico.getentidad('MOVIMIENTO_MERCANCIA_EEE')
+
+    	    AND EXISTS (
+    	        SELECT 1
+    	        FROM tbl_estadistica_dato_esdt
+    	        WHERE
+    	            esdt_estd_pk = estd_pk
+    	            AND esdt_tpdt_pk = portico.gettipodato('UNIDAD_CARGA')
+    	            AND EXISTS (
+    	                SELECT 1
+    	                FROM tbl_parametro_version_prvr
+    	                WHERE prvr_prmt_pk = esdt_prmt_pk
+    	                    AND prvr_fini <= pepr_freferencia
+    	                    AND (prvr_ffin IS NULL OR prvr_ffin > pepr_freferencia)
+    	                    AND EXISTS (
+    	                        SELECT 1 FROM tbl_parametro_dato_prdt
+    	                        WHERE prdt_prvr_pk = prvr_pk
+    	                            AND prdt_tpdt_pk = portico.gettipodato('CADENA_01')
+    	                            AND prdt_cadena = ANY ('31', '32', '33', '34', '51', '52', '53', '54', '56', '59', '61', '62', '64', '65', '66', '69')
+    	                    )
+    	            )
+    	    )
+        ]]>
+            <if test="year != null">
+                AND pepr_anio = #{year}
+            </if>
+            <if test="quarter != null">
+                AND pepr_trimestre = #{quarter}
+            </if>
+        </where>
+    <![CDATA[
+        ) SQL
+        GROUP BY report, year, quarter, port, c0, c1, c2, c3
+        ORDER BY report, year, quarter, port, c0, c1, c2, c3
+    ]]>
+    </select>
+
+    <resultMap id="ResultMapD1" type="EurostatVO">
+        <id column="report" />
+        <id column="year" />
+        <id column="quarter" />
+        <id column="port" />
+        <id column="c0" />
+        <id column="c1" />
+        <id column="c2" />
+        <id column="c5" />
+
+        <result column="report" property="report" />
+        <result column="year" property="year" />
+        <result column="quarter" property="quarter" />
+        <result column="port" property="port" />
+
+        <association property="map" javaType="java.util.Map">
+            <result column="c0" property="c0" />
+            <result column="c1" property="c1" />
+            <result column="c2" property="c2" />
+            <result column="c5" property="c5" />
+
+            <result column="c10" property="c10" />
+        </association>
+    </resultMap>
+
+    <select id="selectD1List" parameterType="EurostatCriterioVO" resultMap="ResultMapD1">
+    <![CDATA[
+        SELECT report, year, quarter, port, c0, c1, c2, c5, sum(c10) AS c10
+        FROM (
+            SELECT
+                'D1' AS report
+                , pepr_anio AS year
+                , pepr_trimestre AS quarter
+                , (SELECT prto_unlocode FROM tbl_puerto_prto WHERE prto_pk = estd_subp_pk) AS port
+                , (
+                    CASE (
+                        SELECT esdt_cadena
+                        FROM tbl_estadistica_dato_esdt
+                        WHERE esdt_estd_pk = estd_pk
+                            AND esdt_tpdt_pk = portico.getTipoDato('DIREC_MERC')
+                    )
+                        WHEN 'E' THEN 1
+                        WHEN 'S' THEN 2
+                        ELSE NULL
+                    END
+                ) AS c0
+                , (
+                    SELECT prmt_parametro FROM tbl_parametro_prmt
+                    WHERE
+                        prmt_pk = (
+                            SELECT esdt_prmt_pk
+                            FROM tbl_estadistica_dato_esdt
+                            WHERE esdt_estd_pk = estd_pk
+                                AND esdt_tpdt_pk = portico.getTipoDato('UNLOCODE')
+                        )
+                ) AS c1
+                , (
+                    SELECT prmt_parametro FROM tbl_parametro_prmt
+                    WHERE
+                        prmt_pk = (
+                            SELECT prdt_prmt_pk
+                            FROM tbl_parametro_dato_prdt
+                            WHERE
+                                prdt_tpdt_pk = portico.gettipodato('ZONA_COST_EEE')
+                                AND prdt_prvr_pk = (
+                                    SELECT prvr_pk FROM tbl_parametro_version_prvr
+                                    WHERE prvr_fini <= pepr_freferencia
+                                        AND (prvr_ffin IS NULL OR prvr_ffin > pepr_freferencia)
+                                        AND prvr_prmt_pk = (
+                                            SELECT esdt_prmt_pk
+                                            FROM tbl_estadistica_dato_esdt
+                                            WHERE esdt_estd_pk = estd_pk
+                                                AND esdt_tpdt_pk = portico.getTipoDato('UNLOCODE')
+                                        )
+                                )
+
+                        )
+                ) AS c2
+                , (
+                    SELECT prmt_parametro FROM tbl_parametro_prmt
+                    WHERE
+                        prmt_pk = (
+                            SELECT esdt_prmt_pk
+                            FROM tbl_estadistica_dato_esdt
+                            WHERE esdt_estd_pk = estd_pk
+                                AND esdt_tpdt_pk = portico.getTipoDato('REG_TBUQUE_EEE')
+                        )
+                ) AS c5
+                , (
+                    SELECT esdt_nentero
+                    FROM tbl_estadistica_dato_esdt
+                    WHERE esdt_estd_pk = estd_pk
+                        AND esdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+                ) AS c10
+            FROM tbl_estadistica_estd
+                INNER JOIN tbl_periodo_proceso_pepr ON
+                    pepr_pk = estd_pepr_pk
+    ]]>
+        <where>
+        <![CDATA[
+            estd_tpes_pk = portico.getentidad('MOVIMIENTO_MERCANCIA_EEE')
+
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_estadistica_dato_esdt
+                WHERE esdt_estd_pk = estd_pk
+                    AND esdt_tpdt_pk = portico.gettipodato('UNIDAD_CARGA')
+                    AND esdt_prmt_pk = ANY (
+                        SELECT prmt_pk FROM tbl_parametro_prmt
+                        WHERE prmt_tppr_pk = portico.getentidad('UNIDAD_CARGA')
+                            AND prmt_parametro = ANY ('PS', 'PA', '55')
+                    )
+            )
+
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_estadistica_dato_esdt
+                WHERE esdt_estd_pk = estd_pk
+                    AND esdt_tpdt_pk = portico.gettipodato('ENTERO_01')
+                    AND esdt_nentero > 0
+            )
+        ]]>
+            <if test="year != null">
+                AND pepr_anio = #{year}
+            </if>
+            <if test="quarter != null">
+                AND pepr_trimestre = #{quarter}
+            </if>
+        </where>
+    <![CDATA[
+        ) SQL
+        GROUP BY report, year, quarter, port, c0, c1, c2, c5
+        ORDER BY report, year, quarter, port, c0, c1, c2, c5
+    ]]>
+    </select>
+
+    <resultMap id="ResultMapF2" type="EurostatVO">
+        <id column="report" />
+        <id column="year" />
+        <id column="quarter" />
+        <id column="port" />
+        <id column="c0" />
+        <id column="c6" />
+        <id column="c8" />
+
+        <result column="report" property="report" />
+        <result column="year" property="year" />
+        <result column="quarter" property="quarter" />
+        <result column="port" property="port" />
+
+        <association property="map" javaType="java.util.Map">
+            <result column="c0" property="c0" />
+            <result column="c6" property="c6" />
+            <result column="c8" property="c8" />
+
+            <result column="c13" property="c13" />
+            <result column="c15" property="c15" />
+        </association>
+    </resultMap>
+
+    <select id="selectF2List" parameterType="EurostatCriterioVO" resultMap="ResultMapF2">
+    <![CDATA[
+        SELECT report, year, quarter, port, c0, c6, c8, sum(c13) AS c13, sum(c15) AS c15
+        FROM (
+            SELECT
+                'F2' AS report
+                , pepr_anio AS year
+                , pepr_trimestre AS quarter
+                , (SELECT prto_unlocode FROM tbl_puerto_prto WHERE prto_pk = estd_subp_pk) AS port
+                , 1 AS c0
+                , (
+                    SELECT prmt_parametro FROM tbl_parametro_prmt
+                    WHERE
+                        prmt_pk = (
+                            SELECT esdt_prmt_pk
+                            FROM tbl_estadistica_dato_esdt
+                            WHERE esdt_estd_pk = estd_pk
+                                AND esdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE_EEE')
+                        )
+                ) AS c6
+                , (
+                    SELECT prmt_parametro FROM tbl_parametro_prmt
+                    WHERE
+                        prmt_pk = (
+                            SELECT esdt_prmt_pk
+                            FROM tbl_estadistica_dato_esdt
+                            WHERE esdt_estd_pk = estd_pk
+                                AND esdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE_GT_EEE')
+                        )
+                ) AS c8
+                , (
+                    SELECT esdt_nentero
+                    FROM tbl_estadistica_dato_esdt
+                    WHERE esdt_estd_pk = estd_pk
+                        AND esdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+                ) AS c13
+                , (
+                    SELECT esdt_nentero
+                    FROM tbl_estadistica_dato_esdt
+                    WHERE esdt_estd_pk = estd_pk
+                        AND esdt_tpdt_pk = portico.getTipoDato('ENTERO_02')
+                ) AS c15
+            FROM tbl_estadistica_estd
+                INNER JOIN tbl_periodo_proceso_pepr ON
+                    pepr_pk = estd_pepr_pk
+    ]]>
+        <where>
+            estd_tpes_pk = portico.getentidad('MOVIMIENTO_TIPO_BUQUE_EEE')
+            <if test="year != null">
+                AND pepr_anio = #{year}
+            </if>
+            <if test="quarter != null">
+                AND pepr_trimestre = #{quarter}
+            </if>
+        </where>
+    <![CDATA[
+        ) SQL
+        GROUP BY report, year, quarter, port, c0, c6, c8
+        ORDER BY report, year, quarter, port, c0, c6, c8
     ]]>
     </select>
 </mapper>
