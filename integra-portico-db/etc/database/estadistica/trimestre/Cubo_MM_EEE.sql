@@ -1,3 +1,51 @@
+SELECT 
+  'A3' AS report
+  , 2015 AS year
+  , 0 AS quarter
+  , (SELECT prto_unlocode FROM tbl_puerto_prto WHERE prto_pk = estd_subp_pk) AS port
+  , d0
+  , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = d1) AS d1
+  , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = d2) AS d2
+  , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = d3) AS d3
+  , d4
+FROM (
+SELECT 
+    estd_subp_pk, d0, d1, d2, d3, SUM(d4) AS d4
+FROM c_mm_eee 
+WHERE 
+    EXISTS (
+        SELECT 1 FROM tbl_periodo_proceso_pepr
+        WHERE pepr_pk = estd_pepr_pk
+            AND pepr_anio = 2015
+    )
+GROUP BY estd_subp_pk, d0, d1, d2, d3
+)
+ORDER BY report, year, quarter, port, d1, d0, d2, d3
+;
+
+SELECT * FROM c_mm_eee;
+
+DROP TABLE c_mm_eee;
+
+CREATE TABLE c_mm_eee AS
+    SELECT estd_pepr_pk, estd_subp_pk
+        , (SELECT pepr_freferencia FROM tbl_periodo_proceso_pepr WHERE pepr_pk = estd_pepr_pk) AS estd_fref
+        
+        , (SELECT esdt_cadena FROM tbl_estadistica_dato_esdt 
+            WHERE esdt_estd_pk = estd_pk AND esdt_tpdt_pk = portico.gettipodato('DIREC_MERC')) AS d0
+        , (SELECT esdt_prmt_pk FROM tbl_estadistica_dato_esdt 
+            WHERE esdt_estd_pk = estd_pk AND esdt_tpdt_pk = portico.getTipoDato('UNLOCODE')) AS d1
+        , (SELECT esdt_prmt_pk FROM tbl_estadistica_dato_esdt 
+            WHERE esdt_estd_pk = estd_pk AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')) AS d2
+        , (SELECT esdt_prmt_pk FROM tbl_estadistica_dato_esdt 
+            WHERE esdt_estd_pk = estd_pk AND esdt_tpdt_pk = portico.gettipodato('GRUPO_NST')) AS d3
+        , (SELECT esdt_ndecimal FROM tbl_estadistica_dato_esdt 
+            WHERE esdt_estd_pk = estd_pk AND esdt_tpdt_pk = portico.gettipodato('DECIMAL_01')) AS d4
+    FROM tbl_estadistica_estd
+    WHERE estd_tpes_pk = portico.getentidad('MOVIMIENTO_MERCANCIA_EEE')
+;
+
+
 SELECT c0, c1, c2, c3, c4, c5, c6, c7, c8, sum(c9)
 FROM (
 SELECT 

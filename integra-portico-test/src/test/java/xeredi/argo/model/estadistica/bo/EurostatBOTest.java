@@ -28,6 +28,18 @@ public final class EurostatBOTest {
         final EurostatFileExport fileExport = new EurostatFileExport();
         final EurostatBO erstBO = new EurostatBO();
 
+        LOG.info("A3");
+
+        try (final FileOutputStream fos = new FileOutputStream("/A3_2015_0.txt")) {
+            final EurostatCriterioVO erstCriterio = new EurostatCriterioVO();
+
+            erstCriterio.setYear(2015);
+
+            fileExport.generateFile(fos, erstBO.selectA3List(erstCriterio));
+        } catch (final Throwable ex) {
+            ex.printStackTrace(System.err);
+        }
+
         LOG.info("A2_1");
 
         try (final FileOutputStream fos = new FileOutputStream("/A2_2015_1.txt")) {
