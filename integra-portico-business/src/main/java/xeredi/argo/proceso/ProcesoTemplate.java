@@ -52,6 +52,18 @@ public abstract class ProcesoTemplate {
     private static final int BATCH_MAX_SIZE = 1000;
 
     /** The prbt data. */
+
+    /**
+     * Gets the prbt data.
+     *
+     * @return the prbt data
+     */
+
+    /**
+     * Gets the prbt data.
+     *
+     * @return the prbt data
+     */
     @Getter
     protected ProcesoData prbtData;
 
@@ -388,6 +400,44 @@ public abstract class ProcesoTemplate {
             } catch (final ParseException ex) {
                 addError(MensajeCodigo.G_002, paramName + ": " + parameterValueString);
             }
+        }
+
+        return null;
+    }
+
+    /**
+     * Find integer parameter.
+     *
+     * @param paramName
+     *            the param name
+     * @return the integer
+     */
+    protected final Integer findIntegerParameter(final String paramName) {
+        final String parameterValueString = findStringParameter(paramName);
+
+        if (parameterValueString != null) {
+            try {
+                return Integer.parseInt(parameterValueString);
+            } catch (final NumberFormatException ex) {
+                addError(MensajeCodigo.G_013, paramName);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Find boolean parameter.
+     *
+     * @param paramName
+     *            the param name
+     * @return the boolean
+     */
+    protected final Boolean findBooleanParameter(final String paramName) {
+        final String parameterValueString = findStringParameter(paramName);
+
+        if (parameterValueString != null) {
+            return Boolean.parseBoolean(parameterValueString);
         }
 
         return null;

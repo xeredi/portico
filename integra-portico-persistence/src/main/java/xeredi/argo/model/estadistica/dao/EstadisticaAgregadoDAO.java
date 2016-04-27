@@ -1,9 +1,9 @@
 package xeredi.argo.model.estadistica.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import xeredi.argo.model.estadistica.vo.EstadisticaAgregadoCriterioVO;
-import xeredi.argo.model.estadistica.vo.EstadisticaAgregadoVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,7 +26,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectActividadPesquera(final EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<Map<String, Object>> selectActividadPesquera(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Update srvc avituallamiento.
@@ -44,7 +44,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectAvituallamiento(final EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<Map<String, Object>> selectAvituallamiento(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Update srvc agregacion superficie.
@@ -62,7 +62,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectAgregacionSuperficie(final EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<Map<String, Object>> selectAgregacionSuperficie(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Update srvc agregacion escala.
@@ -80,7 +80,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectAgregacionEscala(final EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<Map<String, Object>> selectAgregacionEscala(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Update srvc movimiento tipo buque eee.
@@ -98,7 +98,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectMovimientoTipoBuqueEEE(final EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<Map<String, Object>> selectMovimientoTipoBuqueEEE(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Update srvc buque fondeado atracado.
@@ -116,7 +116,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectBuqueFondeadoAtracado(final EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<Map<String, Object>> selectBuqueFondeadoAtracado(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Update srvc movimiento mercancia.
@@ -134,7 +134,7 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectMovimientoMercancia(final EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<Map<String, Object>> selectMovimientoMercancia(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Select movimiento mercancia eee.
@@ -143,5 +143,5 @@ public interface EstadisticaAgregadoDAO {
      *            the esag criterio vo
      * @return the list
      */
-    List<EstadisticaAgregadoVO> selectMovimientoMercanciaEEE(final EstadisticaAgregadoCriterioVO esagCriterioVO);
+    List<Map<String, Object>> selectMovimientoMercanciaEEE(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 }

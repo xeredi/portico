@@ -56,46 +56,11 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
     @Override
     protected void ejecutarProceso() {
         // Validacion de parametros
-        String autpCodigo = null;
-        Integer anio = null;
-        Integer mes = null;
-        Boolean sobreescribir = null;
 
-        if (prbtData.getPrpmMap().containsKey(params.autp.name())) {
-            autpCodigo = prbtData.getPrpmMap().get(params.autp.name()).getValor();
-        } else {
-            addError(MensajeCodigo.G_012, params.autp.name());
-        }
-
-        if (prbtData.getPrpmMap().containsKey(params.anio.name())) {
-            try {
-                anio = Integer.parseInt(prbtData.getPrpmMap().get(params.anio.name()).getValor());
-            } catch (final NumberFormatException ex) {
-                addError(MensajeCodigo.G_013, params.anio.name());
-            }
-        } else {
-            addError(MensajeCodigo.G_012, params.anio.name());
-        }
-
-        if (prbtData.getPrpmMap().containsKey(params.mes.name())) {
-            try {
-                mes = Integer.parseInt(prbtData.getPrpmMap().get(params.mes.name()).getValor());
-            } catch (final NumberFormatException ex) {
-                addError(MensajeCodigo.G_013, params.mes.name());
-            }
-        } else {
-            addError(MensajeCodigo.G_012, params.mes.name());
-        }
-
-        if (prbtData.getPrpmMap().containsKey(params.sobreescribir.name())) {
-            try {
-                sobreescribir = Boolean.parseBoolean(prbtData.getPrpmMap().get(params.sobreescribir.name()).getValor());
-            } catch (final NumberFormatException ex) {
-                addError(MensajeCodigo.G_013, params.sobreescribir.name());
-            }
-        } else {
-            addError(MensajeCodigo.G_012, params.sobreescribir.name());
-        }
+        final String autpCodigo = findStringParameter(params.autp.name());
+        final Integer anio = findIntegerParameter(params.anio.name());
+        final Integer mes = findIntegerParameter(params.mes.name());
+        final Boolean sobreescribir = findBooleanParameter(params.sobreescribir.name());
 
         if (prbtData.getPrmnList().isEmpty()) {
             try {
@@ -160,5 +125,4 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
     protected ProcesoTipo getProcesoTipo() {
         return ProcesoTipo.EST_CREACION;
     }
-
 }

@@ -52,7 +52,7 @@
         <umlgraph.version>5.6.6</umlgraph.version>
 
         <commons-lang3.version>3.4</commons-lang3.version>
-        <mybatis.version>3.3.0</mybatis.version>
+        <mybatis.version>3.4.0</mybatis.version>
         <commons-dbcp.version>1.4</commons-dbcp.version>
         <commons-pool.version>1.6</commons-pool.version>
         <commons-configuration.version>1.10</commons-configuration.version>
@@ -72,7 +72,7 @@
         <quartz.version>2.2.2</quartz.version>
 
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
-        <struts2.version>2.3.28</struts2.version>
+        <struts2.version>2.3.28.1</struts2.version>
         <jackson.version>2.7.3</jackson.version>
         <commons-validator.version>1.5.0</commons-validator.version>
         <angularjs.version>1.5.3</angularjs.version>

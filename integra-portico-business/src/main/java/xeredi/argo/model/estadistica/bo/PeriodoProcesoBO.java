@@ -379,12 +379,14 @@ public class PeriodoProcesoBO {
             }
 
             final Calendar finicio = Calendar.getInstance();
+
             finicio.setTimeInMillis(0);
             finicio.set(Calendar.YEAR, pepr.getAnio());
             finicio.set(Calendar.MONTH, pepr.getMes() - 1);
             finicio.set(Calendar.DAY_OF_MONTH, 1);
 
             final Calendar ffin = Calendar.getInstance();
+
             ffin.setTimeInMillis(0);
             ffin.set(Calendar.YEAR, pepr.getAnio());
             ffin.set(Calendar.MONTH, pepr.getMes());

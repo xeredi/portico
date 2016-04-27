@@ -7,8 +7,8 @@
     <properties resource="Configuration_env.properties" />
 
     <settings>
-        <setting name="logImpl" value="${db.logImpl}" />
-        <setting name="proxyFactory" value="${db.proxyFactory}" />
+        <setting name="logImpl" value="NO_LOGGING" />
+        <setting name="proxyFactory" value="CGLIB" />
         <setting name="jdbcTypeForNull" value="NULL" />
     </settings>
 
