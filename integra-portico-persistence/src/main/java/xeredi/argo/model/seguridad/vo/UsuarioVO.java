@@ -23,6 +23,9 @@ public final class UsuarioVO {
     /** The contrasenia. */
     private String contrasenia;
 
+    /** The email. */
+    private String email;
+
     /** The nombre. */
     private String nombre;
 

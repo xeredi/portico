@@ -114,7 +114,8 @@ CREATE TABLE tbl_usuario_usro (
 	usro_pk NUMBER(19) NOT NULL
 	, usro_login VARCHAR2(50) NOT NULL
 	, usro_contrasenia VARCHAR2(50) NOT NULL
-	, usro_nombre VARCHAR2(50) NOT NULL
+	, usro_nombre VARCHAR2(100) NOT NULL
+	, usro_email VARCHAR2(100) NOT NULL
 	, usro_sprt_pk NUMBER(19)
 	, usro_prto_pk NUMBER(19)
 
@@ -1079,6 +1080,7 @@ COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_cantidad IS 'Cantidad'\
 -- tbl_proceso_batch_prbt
 CREATE TABLE tbl_proceso_batch_prbt (
 	prbt_pk NUMBER(19) NOT NULL
+	, prbt_usro_pk NUMBER(19) NOT NULL
 	, prbt_modulo char(1) NOT NULL
 	, prbt_tipo VARCHAR2(20) NOT NULL
 	, prbt_estado char(1) NOT NULL
@@ -1090,6 +1092,9 @@ CREATE TABLE tbl_proceso_batch_prbt (
 	, prbt_mensajes_cnt NUMBER(6) NOT NULL
 
 	, CONSTRAINT pk_prbt PRIMARY KEY (prbt_pk)
+
+	, CONSTRAINT fk_prbt_usro_pk FOREIGN KEY (prbt_usro_pk)
+		REFERENCES tbl_usuario_usro (usro_pk)
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_proceso_batch_prbt FOR porticoadm.tbl_proceso_batch_prbt\
@@ -1098,6 +1103,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_proceso_batch_prbt TO portico\
 
 COMMENT ON TABLE tbl_proceso_batch_prbt IS 'Ejecuciones de Procesos Batch de la Aplicacion'\
 COMMENT ON COLUMN tbl_proceso_batch_prbt.prbt_pk IS 'Identificador de proceso'\
+COMMENT ON COLUMN tbl_proceso_batch_prbt.prbt_usro_pk IS 'Identificador de usuario que lanza el proceso'\
 COMMENT ON COLUMN tbl_proceso_batch_prbt.prbt_modulo IS 'Modulo al que pertenece el proceso: S (Servicio), E (Estadistica), F (Facturacion)'\
 COMMENT ON COLUMN tbl_proceso_batch_prbt.prbt_tipo IS 'Tipo de Proceso'\
 COMMENT ON COLUMN tbl_proceso_batch_prbt.prbt_estado IS 'Estado en el que se encuentra el proceso: C (En cola), E (En ejecucion), F (Finalizado)'\
@@ -1565,7 +1571,6 @@ CREATE TABLE tbl_factura_fctr (
 
 CREATE OR REPLACE SYNONYM portico.tbl_factura_fctr FOR porticoadm.tbl_factura_fctr\
 
-CREATE INDEX ix_fctr_aspc_pk ON tbl_factura_fctr (fctr_aspc_pk)\
 CREATE INDEX ix_fctr_pagador_prmt_pk ON tbl_factura_fctr (fctr_pagador_prmt_pk)\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_fctr TO portico\

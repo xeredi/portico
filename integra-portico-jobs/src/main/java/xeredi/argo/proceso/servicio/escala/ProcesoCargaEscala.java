@@ -40,6 +40,9 @@ import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
 import xeredi.argo.model.proceso.vo.ProcesoItemVO;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
+import xeredi.argo.model.seguridad.bo.UsuarioBO;
+import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
+import xeredi.argo.model.seguridad.vo.UsuarioVO;
 import xeredi.argo.model.servicio.bo.escala.EscalaEdiBO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
@@ -94,33 +97,47 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
         final ArchivoBO archBO = new ArchivoBO();
 
         final String folderPath = ConfigurationProxy.getString(ConfigurationKey.escala_files_entrada_home);
-        final File folder = new File(folderPath);
-        final File[] files = folder.listFiles();
+        final String userBatch = ConfigurationProxy.getString(ConfigurationKey.user_batch);
 
-        if (files.length > 0) {
-            Arrays.sort(files, new FiledateComparator());
+        final UsuarioBO usroBO = new UsuarioBO();
+        final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
 
-            for (final File file : files) {
-                try {
-                    if (LOG.isInfoEnabled()) {
-                        LOG.info("Crear proceso para archivo: " + file.getCanonicalPath());
+        usroCriterio.setLogin(userBatch);
+
+        try {
+            final UsuarioVO usro = usroBO.selectObject(usroCriterio);
+
+            final File folder = new File(folderPath);
+            final File[] files = folder.listFiles();
+
+            if (files.length > 0) {
+                Arrays.sort(files, new FiledateComparator());
+
+                for (final File file : files) {
+                    try {
+                        if (LOG.isInfoEnabled()) {
+                            LOG.info("Crear proceso para archivo: " + file.getCanonicalPath());
+                        }
+
+                        final ArchivoVO arch = archBO.create(file, ArchivoSentido.E);
+
+                        prbtBO.crear(usro.getId(), ProcesoTipo.ESC_CARGA, null, ItemTipo.arch,
+                                Arrays.asList(arch.getArin().getId()));
+
+                        file.delete();
+                    } catch (final ApplicationException ex) {
+                        // FIXME hacer algo con la excepcion
+
+                        LOG.fatal(ex, ex);
+                    } catch (final IOException ex) {
+                        // FIXME hacer algo con la excepcion
+
+                        LOG.fatal(ex, ex);
                     }
-
-                    final ArchivoVO arch = archBO.create(file, ArchivoSentido.E);
-
-                    prbtBO.crear(ProcesoTipo.ESC_CARGA, null, ItemTipo.arch, Arrays.asList(arch.getArin().getId()));
-
-                    file.delete();
-                } catch (final ApplicationException ex) {
-                    // FIXME hacer algo con la excepcion
-
-                    LOG.fatal(ex, ex);
-                } catch (final IOException ex) {
-                    // FIXME hacer algo con la excepcion
-
-                    LOG.fatal(ex, ex);
                 }
             }
+        } catch (final InstanceNotFoundException ex) {
+            LOG.fatal(ex, ex);
         }
     }
 

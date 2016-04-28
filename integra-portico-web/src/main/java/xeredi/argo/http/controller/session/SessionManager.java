@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.session;
 
 import java.util.Map;
 
+import lombok.NonNull;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.seguridad.bo.AccionBO;
@@ -40,7 +41,7 @@ public final class SessionManager {
      *            the action
      * @return true, if is authenticated
      */
-    public static boolean isAuthenticated(final BaseAction action) {
+    public static boolean isAuthenticated(final @NonNull BaseAction action) {
         return getSession().containsKey(ParamNames.loginResult.name());
     }
 
@@ -53,7 +54,7 @@ public final class SessionManager {
      *            the codigo
      * @return true, if successful
      */
-    public static boolean hasPermission(final AccionPrefix prefix, final AccionCodigo codigo) {
+    public static boolean hasPermission(final @NonNull AccionPrefix prefix, final @NonNull AccionCodigo codigo) {
         final AccionBO accnBO = new AccionBO();
 
         return accnBO.exists(prefix, codigo,
@@ -71,7 +72,8 @@ public final class SessionManager {
      *            the enti id
      * @return true, if successful
      */
-    public static boolean hasPermission(final AccionPrefix prefix, final AccionCodigo codigo, final Long entiId) {
+    public static boolean hasPermission(final @NonNull AccionPrefix prefix, final @NonNull AccionCodigo codigo,
+            final @NonNull Long entiId) {
         final AccionBO accnBO = new AccionBO();
 
         return accnBO.exists(prefix, codigo, entiId, ((ResultadoLoginVO) getSession()
@@ -89,7 +91,8 @@ public final class SessionManager {
      * @throws ApplicationException
      *             the application exception
      */
-    public static ResultadoLoginVO login(final String login, final String password) throws ApplicationException {
+    public static ResultadoLoginVO login(final @NonNull String login, final @NonNull String password)
+            throws ApplicationException {
         final UsuarioAccesoBO usacBO = new UsuarioAccesoBO();
 
         final ResultadoLoginVO resultadoLogin = usacBO.acceso(login, password);
@@ -107,6 +110,17 @@ public final class SessionManager {
      */
     public static void logout() throws ApplicationException {
         getSession().clear();
+    }
+
+    /**
+     * Gets the usro id.
+     *
+     * @return the usro id
+     * @throws ApplicationException
+     *             the application exception
+     */
+    public static Long getUsroId() throws ApplicationException {
+        return ((ResultadoLoginVO) getSession().get(ParamNames.loginResult.name())).getUsroId();
     }
 
     /**

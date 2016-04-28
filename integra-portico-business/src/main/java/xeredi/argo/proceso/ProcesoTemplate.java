@@ -52,18 +52,6 @@ public abstract class ProcesoTemplate {
     private static final int BATCH_MAX_SIZE = 1000;
 
     /** The prbt data. */
-
-    /**
-     * Gets the prbt data.
-     *
-     * @return the prbt data
-     */
-
-    /**
-     * Gets the prbt data.
-     *
-     * @return the prbt data
-     */
     @Getter
     protected ProcesoData prbtData;
 
@@ -74,6 +62,7 @@ public abstract class ProcesoTemplate {
         prepararProcesos();
 
         final ProcesoBO prbtBO = new ProcesoBO();
+
         ProcesoVO prbt = null;
 
         do {
@@ -379,6 +368,25 @@ public abstract class ProcesoTemplate {
      */
     protected final void addInfo(final @NonNull MensajeCodigo codigo, final String mensaje) {
         addMensaje(codigo, MensajeNivel.I, mensaje);
+    }
+
+    /**
+     * Checks for errors.
+     *
+     * @return true, if successful
+     */
+    public final boolean hasErrors() {
+        if (prbtData == null) {
+            return false;
+        }
+
+        for (final ProcesoMensajeVO prmn : prbtData.getPrmnList()) {
+            if (prmn.getNivel() == MensajeNivel.E) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

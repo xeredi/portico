@@ -34,6 +34,8 @@ public enum MensajeCodigo {
     G_012,
     /** Parametro no valido. */
     G_013,
+    /** Instancia no encontrada. */
+    G_014,
 
     /** Periodo de Proceso duplicado. */
     E_001,

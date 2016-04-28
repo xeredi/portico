@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -113,7 +114,7 @@ public abstract class BaseAction extends ActionSupport {
      * @param key
      *            the key
      */
-    public final void addActionError(final MessageI18nKey key) {
+    public final void addActionError(final @NonNull MessageI18nKey key) {
         addActionError(bundle.getString(key.name()));
     }
 
@@ -125,7 +126,7 @@ public abstract class BaseAction extends ActionSupport {
      * @param args
      *            the args
      */
-    public final void addActionError(final MessageI18nKey key, final Object... args) {
+    public final void addActionError(final @NonNull MessageI18nKey key, final Object... args) {
         addActionError(MessageFormat.format(bundle.getString(key.name()), args));
     }
 
@@ -136,7 +137,7 @@ public abstract class BaseAction extends ActionSupport {
      *            the key
      * @return the text
      */
-    public final String getText(final MessageI18nKey key) {
+    public final String getText(final @NonNull MessageI18nKey key) {
         return bundle.getString(key.name());
     }
 

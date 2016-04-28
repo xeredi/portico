@@ -259,9 +259,13 @@ INSERT INTO tbl_grupo_accion_grac (grac_grpo_pk, grac_accn_pk)
 	FROM tbl_accion_accn\
 
 -- Usuarios
-INSERT INTO tbl_usuario_usro (usro_pk, usro_login, usro_contrasenia, usro_nombre, usro_sprt_pk, usro_prto_pk) VALUES (
-	1000, 'admin', 'admin', 'Administrador', NULL, NULL)\
+INSERT INTO tbl_usuario_usro (usro_pk, usro_login, usro_contrasenia, usro_email, usro_nombre, usro_sprt_pk, usro_prto_pk) VALUES (
+	1000, 'admin', 'admin', 'xeredi@gmail.com', 'Administrador', NULL, NULL)\
+INSERT INTO tbl_usuario_usro (usro_pk, usro_login, usro_contrasenia, usro_email, usro_nombre, usro_sprt_pk, usro_prto_pk) VALUES (
+	1001, 'batch', 'batch', 'xeredi@gmail.com', 'Procesos Batch', NULL, NULL)\
+
 INSERT INTO tbl_usuario_grupo_usgr (usgr_usro_pk, usgr_grpo_pk) VALUES (1000, 4000)\
+
 
 INSERT INTO tbl_puerto_prto (prto_pk, prto_sprt_pk, prto_codigo, prto_codigo_corto, prto_codigo_edi, prto_rec_aduanero, prto_unlocode)
 VALUES (37100, 36100, '0', '0', NULL, NULL, 'ES***')\
@@ -354,7 +358,7 @@ INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_valu
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'filter_limit', 'Long', '5')\
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'webapp_install_path', 'String', '/home/xeredi/proyectos/team/git/portico/integra-portico-web/src/main/webapp')\
+	'webapp_install_path', 'String', '/home/xeredi/git/portico/integra-portico-web/src/main/webapp')\
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'db_migration_dataSource_driver', 'String', 'oracle.jdbc.OracleDriver')\
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
@@ -363,6 +367,25 @@ INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_valu
 	'db_migration_dataSource_username', 'String', 'integra')\
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'db_migration_dataSource_password', 'String', 'integra')\
+
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'email_user', 'String', 'xeredi')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'email_password', 'String', 'changeme')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'email_host', 'String', 'smtp.googlemail.com')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'email_port', 'String', '465')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'email_ssl', 'String', 'true')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'email_account', 'String', 'xeredi@gmail.com')\
+
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'user_batch', 'String', 'batch')\
+
+
+
 
 
 -- Mensajes i18n
@@ -467,6 +490,8 @@ INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'usro_login')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'usro_login', 'Login')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'usro_contrasenia')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'usro_contrasenia', 'Contraseña')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'usro_email')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'usro_email', 'Email')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'usro_nombre')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'usro_nombre', 'Nombre')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'grpo')\

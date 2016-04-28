@@ -4,7 +4,9 @@
 
 <mapper namespace="xeredi.argo.model.proceso.dao.ProcesoDAO">
 	<resultMap type="ProcesoVO" id="ResultMap">
-		<id column="prbt_pk" property="id" />
+		<id column="prbt_pk" />
+
+		<result column="prbt_pk" property="id" />
 		<result column="prbt_modulo" property="modulo" />
 		<result column="prbt_tipo" property="tipo" />
 		<result column="prbt_estado" property="estado" />
@@ -14,12 +16,18 @@
 		<result column="prbt_errores_cnt" property="erroresCnt" />
 		<result column="prbt_alertas_cnt" property="alertasCnt" />
 		<result column="prbt_mensajes_cnt" property="mensajesCnt" />
+
+		<association property="usro" javaType="UsuarioVO">
+			<result column="prbt_usro_pk" property="id" />
+			<result column="usro_login" property="login" />
+		</association>
 	</resultMap>
 
 	<sql id="SelectPrefix">
     <![CDATA[
     SELECT
         prbt_pk
+        , prbt_usro_pk
         , prbt_modulo
         , prbt_tipo
         , prbt_estado
@@ -29,6 +37,8 @@
         , prbt_errores_cnt
         , prbt_alertas_cnt
         , prbt_mensajes_cnt
+
+        , (SELECT usro_login FROM tbl_usuario_usro WHERE usro_pk = prbt_usro_pk) AS usro_login
     FROM
         tbl_proceso_batch_prbt
     ]]>
@@ -91,9 +101,9 @@
 
 	<insert id="insert" parameterType="ProcesoVO">
         <![CDATA[
-        INSERT INTO tbl_proceso_batch_prbt(prbt_pk, prbt_modulo, prbt_tipo, prbt_estado, prbt_falta, prbt_finicio, prbt_ffin
+        INSERT INTO tbl_proceso_batch_prbt(prbt_pk, prbt_usro_pk, prbt_modulo, prbt_tipo, prbt_estado, prbt_falta, prbt_finicio, prbt_ffin
             , prbt_errores_cnt, prbt_alertas_cnt, prbt_mensajes_cnt)
-        VALUES (#{id}, #{modulo}, #{tipo}, 'C', portico.getSysDatetime(), NULL, NULL, 0, 0, 0)
+        VALUES (#{id}, #{usro.id}, #{modulo}, #{tipo}, 'C', portico.getSysDatetime(), NULL, NULL, 0, 0, 0)
         ]]>
 	</insert>
 

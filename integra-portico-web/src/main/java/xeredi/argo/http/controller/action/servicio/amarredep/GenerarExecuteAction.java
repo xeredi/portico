@@ -7,6 +7,7 @@ import java.util.Map;
 
 import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.BaseAction;
+import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
@@ -45,7 +46,7 @@ public final class GenerarExecuteAction extends BaseAction {
 
             parametroMap.put(ProcesoAmarreDeportivo.params.ffin.name(), format.format(model.getFrefMax()));
 
-            prbtBO.crear(ProcesoTipo.SAMD_CREACION, parametroMap, null, null);
+            prbtBO.crear(SessionManager.getUsroId(), ProcesoTipo.SAMD_CREACION, parametroMap, null, null);
         }
     }
 }

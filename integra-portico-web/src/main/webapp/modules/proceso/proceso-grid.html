@@ -32,6 +32,7 @@
                     <th nowrap="nowrap" data-translate="prbt_modulo"></th>
                     <th nowrap="nowrap" data-translate="prbt_tipo"></th>
                     <th nowrap="nowrap" data-translate="prbt_estado"></th>
+                    <th nowrap="nowrap" data-translate="usro"></th>
                     <th nowrap="nowrap" data-translate="prbt_falta"></th>
                     <th nowrap="nowrap" data-translate="fini"></th>
                     <th nowrap="nowrap" data-translate="ffin"></th>
@@ -48,6 +49,7 @@
                     <td data-ng-bind="('ProcesoModulo_' + prbt.modulo | translate)"></td>
                     <td data-ng-bind="('ProcesoTipo_' + prbt.tipo | translate)"></td>
                     <td data-ng-bind="('ProcesoEstado_' + prbt.estado | translate)"></td>
+                    <td data-ng-bind="prbt.usro.login"></td>
                     <td data-ng-bind="(prbt.falta | date: datetimeFormat)"></td>
                     <td data-ng-bind="(prbt.finicio | date: datetimeFormat)"></td>
                     <td data-ng-bind="(prbt.ffin | date: datetimeFormat)"></td>

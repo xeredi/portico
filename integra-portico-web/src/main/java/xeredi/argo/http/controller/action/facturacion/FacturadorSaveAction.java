@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
+import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -63,8 +64,8 @@ public final class FacturadorSaveAction extends CrudSaveAction<FacturadorVO> {
             parametroMap.put(ProcesoFacturador.Params.grupoTipo.name(), model.getGrupoTipo().name());
         }
 
-        final ProcesoVO prbt = prbtBO.crear(ProcesoTipo.FACTURADOR, parametroMap, ItemTipo.vlrc,
-                model.getVlrcId() == null ? null : Arrays.asList(model.getVlrcId()));
+        final ProcesoVO prbt = prbtBO.crear(SessionManager.getUsroId(), ProcesoTipo.FACTURADOR, parametroMap,
+                ItemTipo.vlrc, model.getVlrcId() == null ? null : Arrays.asList(model.getVlrcId()));
 
         model.setPrbtId(prbt.getId());
     }

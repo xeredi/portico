@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
+import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -55,7 +56,8 @@ public final class ValoradorSaveAction extends CrudSaveAction<ValoradorVO> {
 
         parametroMap.put(ProcesoValorador.Params.fliq.name(), dateFormat.format(model.getFliq()));
 
-        final ProcesoVO prbt = prbtBO.crear(ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc, itemEntradaList);
+        final ProcesoVO prbt = prbtBO.crear(SessionManager.getUsroId(), ProcesoTipo.VALORADOR, parametroMap,
+                ItemTipo.srvc, itemEntradaList);
 
         model.setPrbt(prbt);
     }

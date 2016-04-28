@@ -86,15 +86,28 @@ public enum ConfigurationKey {
 
     /** The db_migration_data source_driver. */
     db_migration_dataSource_driver,
-
     /** The db_migration_data source_url. */
     db_migration_dataSource_url,
-
     /** The db_migration_data source_username. */
     db_migration_dataSource_username,
-
     /** The db_migration_data source_password. */
     db_migration_dataSource_password,
+
+    /** The email_user. */
+    email_user,
+    /** The email_password. */
+    email_password,
+    /** The email_host. */
+    email_host,
+    /** The email_port. */
+    email_port,
+    /** The email_ssl. */
+    email_ssl,
+    /** The email_account. */
+    email_account,
+
+    /** The user_batch. */
+    user_batch,
 
     ;
 

@@ -96,4 +96,15 @@ public final class ConfigurationProxy {
         return configuration.getInt(key.name());
     }
 
+    /**
+     * Gets the boolean.
+     *
+     * @param key
+     *            the key
+     * @return the boolean
+     */
+    public static boolean getBoolean(final @NonNull ConfigurationKey key) {
+        return configuration.getBoolean(key.name());
+    }
+
 }

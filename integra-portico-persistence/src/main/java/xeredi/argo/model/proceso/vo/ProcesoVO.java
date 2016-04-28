@@ -2,6 +2,7 @@ package xeredi.argo.model.proceso.vo;
 
 import java.util.Date;
 
+import xeredi.argo.model.seguridad.vo.UsuarioVO;
 import lombok.Data;
 
 // TODO: Auto-generated Javadoc
@@ -13,6 +14,9 @@ public final class ProcesoVO {
 
     /** The id. */
     private Long id;
+
+    /** The usro. */
+    private UsuarioVO usro;
 
     /** The modulo. */
     private ProcesoModulo modulo;

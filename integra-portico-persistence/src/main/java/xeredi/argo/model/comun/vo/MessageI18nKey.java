@@ -101,13 +101,22 @@ public enum MessageI18nKey {
     ffac,
 
     /** The usro. */
-    usro, /** The usro list. */
-    usroList, /** The usro_login. */
-    usro_login, /** The usro_contrasenia. */
-    usro_contrasenia, /** The usro_nombre. */
-    usro_nombre, /** The grpo. */
-    grpo, /** The grpo list. */
-    grpoList, /** The grpo_nombre. */
+    usro,
+    /** The usro list. */
+    usroList,
+    /** The usro_login. */
+    usro_login,
+    /** The usro_contrasenia. */
+    usro_contrasenia,
+    /** The usro_nombre. */
+    usro_nombre,
+    /** The usro_email. */
+    usro_email,
+    /** The grpo. */
+    grpo,
+    /** The grpo list. */
+    grpoList,
+    /** The grpo_nombre. */
     grpo_nombre,
     /** The accn. */
     accn,
@@ -735,9 +744,15 @@ public enum MessageI18nKey {
     actr,
 
     /** The fcan. */
-    fcan, fcan_fecha, fcan_observaciones,
+    fcan,
+    /** The fcan_fecha. */
+    fcan_fecha,
+    /** The fcan_observaciones. */
+    fcan_observaciones,
     /** The fcrc. */
-    fcrc, fcrc_duplicar,
+    fcrc,
+    /** The fcrc_duplicar. */
+    fcrc_duplicar,
 
     ;
 

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import xeredi.argo.http.controller.action.comun.CrudLoadAction;
+import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.http.view.estadistica.ProcesoEstadisticaVO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -42,7 +43,8 @@ public final class PeriodoProcesoLoadAction extends CrudLoadAction<ProcesoEstadi
 
             parametroMap.put(ProcesoCargaOppe.params.sobreescribir.name(), model.getSobreescribir().toString());
 
-            prbtBO.crear(ProcesoTipo.EST_CARGA, parametroMap, ItemTipo.arch, Arrays.asList(model.getArchId()));
+            prbtBO.crear(SessionManager.getUsroId(), ProcesoTipo.EST_CARGA, parametroMap, ItemTipo.arch,
+                    Arrays.asList(model.getArchId()));
         }
     }
 }

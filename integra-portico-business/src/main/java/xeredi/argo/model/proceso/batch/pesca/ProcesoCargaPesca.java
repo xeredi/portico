@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,6 +31,9 @@ import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
 import xeredi.argo.model.proceso.vo.ProcesoItemVO;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
+import xeredi.argo.model.seguridad.bo.UsuarioBO;
+import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
+import xeredi.argo.model.seguridad.vo.UsuarioVO;
 import xeredi.argo.model.servicio.bo.pesca.ManifiestoPescaBO;
 import xeredi.argo.model.servicio.io.pesca.PescaFileImport;
 import xeredi.argo.model.servicio.vo.ServicioVO;
@@ -45,6 +50,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
     private static final Log LOG = LogFactory.getLog(ProcesoCargaPesca.class);
 
     /** The prto map. */
+    @Getter
     private Map<String, PuertoVO> prtoMap;
 
     /**
@@ -64,29 +70,43 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
         }
 
         final String folderPath = ConfigurationProxy.getString(ConfigurationKey.pesca_files_entrada_home);
-        final File folder = new File(folderPath);
-        final File[] files = folder.listFiles();
+        final String userBatch = ConfigurationProxy.getString(ConfigurationKey.user_batch);
 
-        if (files != null && files.length > 0) {
-            Arrays.sort(files, new FiledateComparator());
+        final UsuarioBO usroBO = new UsuarioBO();
+        final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
 
-            for (final File file : files) {
-                try {
-                    if (LOG.isInfoEnabled()) {
-                        LOG.info("Crear proceso para archivo: " + file.getCanonicalPath());
+        usroCriterio.setLogin(userBatch);
+
+        try {
+            final UsuarioVO usro = usroBO.selectObject(usroCriterio);
+
+            final File folder = new File(folderPath);
+            final File[] files = folder.listFiles();
+
+            if (files != null && files.length > 0) {
+                Arrays.sort(files, new FiledateComparator());
+
+                for (final File file : files) {
+                    try {
+                        if (LOG.isInfoEnabled()) {
+                            LOG.info("Crear proceso para archivo: " + file.getCanonicalPath());
+                        }
+
+                        final ArchivoVO arch = archBO.create(file, ArchivoSentido.E);
+
+                        prbtBO.crear(usro.getId(), ProcesoTipo.PES_CARGA, null, ItemTipo.arch,
+                                Arrays.asList(arch.getArin().getId()));
+
+                        file.delete();
+                    } catch (final ApplicationException ex) {
+                        LOG.fatal(ex, ex);
+                    } catch (final IOException ex) {
+                        LOG.fatal(ex, ex);
                     }
-
-                    final ArchivoVO arch = archBO.create(file, ArchivoSentido.E);
-
-                    prbtBO.crear(ProcesoTipo.PES_CARGA, null, ItemTipo.arch, Arrays.asList(arch.getArin().getId()));
-
-                    file.delete();
-                } catch (final ApplicationException ex) {
-                    LOG.fatal(ex, ex);
-                } catch (final IOException ex) {
-                    LOG.fatal(ex, ex);
                 }
             }
+        } catch (final InstanceNotFoundException ex) {
+            LOG.fatal(ex, ex);
         }
     }
 
@@ -150,14 +170,5 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
     @Override
     protected ProcesoTipo getProcesoTipo() {
         return ProcesoTipo.PES_CARGA;
-    }
-
-    /**
-     * Gets the prto map.
-     *
-     * @return the prto map
-     */
-    public Map<String, PuertoVO> getPrtoMap() {
-        return prtoMap;
     }
 }

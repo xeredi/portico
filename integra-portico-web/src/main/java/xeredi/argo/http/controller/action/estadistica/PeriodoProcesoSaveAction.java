@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
+import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.http.view.estadistica.ProcesoEstadisticaVO;
 import xeredi.argo.model.comun.bo.ArchivoBO;
@@ -58,11 +59,12 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<ProcesoEstadi
 
             final ArchivoVO arch = archBO.create(file, ArchivoSentido.E);
 
-            prbtBO.crear(ProcesoTipo.EST_CARGA, parametroMap, ItemTipo.arch, Arrays.asList(arch.getArin().getId()));
+            prbtBO.crear(SessionManager.getUsroId(), ProcesoTipo.EST_CARGA, parametroMap, ItemTipo.arch,
+                    Arrays.asList(arch.getArin().getId()));
 
             break;
         case create:
-            prbtBO.crear(ProcesoTipo.EST_CREACION, parametroMap, null, null);
+            prbtBO.crear(SessionManager.getUsroId(), ProcesoTipo.EST_CREACION, parametroMap, null, null);
 
             break;
         default:

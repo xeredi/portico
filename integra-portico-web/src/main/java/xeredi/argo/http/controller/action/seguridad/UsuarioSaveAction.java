@@ -53,6 +53,7 @@ public final class UsuarioSaveAction extends CrudSaveAction<UsuarioVO> {
 
         FieldValidator.validateRequired(this, MessageI18nKey.usro_login, model.getLogin());
         FieldValidator.validateRequired(this, MessageI18nKey.usro_contrasenia, model.getContrasenia());
+        FieldValidator.validateRequired(this, MessageI18nKey.usro_email, model.getEmail());
         FieldValidator.validateRequired(this, MessageI18nKey.usro_nombre, model.getNombre());
     }
 

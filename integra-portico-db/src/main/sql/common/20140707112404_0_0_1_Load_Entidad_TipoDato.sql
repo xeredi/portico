@@ -2223,7 +2223,6 @@ INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpd
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-TRUNCATE TABLE tbl_proceso_archivo_prar\
 TRUNCATE TABLE tbl_proceso_item_prit\
 TRUNCATE TABLE tbl_proceso_mensaje_prmn\
 TRUNCATE TABLE tbl_proceso_parametro_prpm\
