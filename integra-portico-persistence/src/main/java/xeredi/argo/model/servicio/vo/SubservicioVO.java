@@ -4,6 +4,7 @@ import java.util.Date;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import xeredi.argo.model.item.vo.ItemVO;
 
 // TODO: Auto-generated Javadoc
@@ -12,6 +13,7 @@ import xeredi.argo.model.item.vo.ItemVO;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public final class SubservicioVO extends ItemVO {
 
     /** The srvc id. */

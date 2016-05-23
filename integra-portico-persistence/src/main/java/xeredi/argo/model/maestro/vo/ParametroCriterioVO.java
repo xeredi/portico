@@ -6,6 +6,7 @@ import java.util.Set;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
 import xeredi.argo.model.item.vo.ItemTypeahead;
@@ -16,6 +17,7 @@ import xeredi.argo.model.item.vo.ItemTypeahead;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public final class ParametroCriterioVO extends ItemCriterioVO implements ItemTypeahead {
 
     /** The texto busqueda. */

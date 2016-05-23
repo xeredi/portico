@@ -2,6 +2,7 @@ package xeredi.argo.model.maestro.vo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
@@ -15,6 +16,7 @@ import xeredi.argo.model.item.vo.ItemVO;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public final class ParametroVO extends ItemVO implements Versionable<ParametroVersionVO> {
 
     /** Descripcion del parametro. */

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,6 +17,7 @@ import xeredi.argo.model.item.vo.ItemVO;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public final class ServicioVO extends ItemVO {
 
     /** The Constant NUMERO_LENGTH. */

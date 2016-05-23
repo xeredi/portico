@@ -2,6 +2,7 @@ package xeredi.argo.model.maestro.vo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import xeredi.argo.model.comun.vo.Versionable;
 import xeredi.argo.model.item.vo.ItemVO;
 
@@ -11,6 +12,7 @@ import xeredi.argo.model.item.vo.ItemVO;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public final class SubparametroVO extends ItemVO implements Versionable<SubparametroVersionVO> {
 
     /** The prmt id. */

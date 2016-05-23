@@ -4,6 +4,7 @@ import java.util.Date;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
 
@@ -13,6 +14,7 @@ import xeredi.argo.model.item.vo.ItemCriterioVO;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public final class ServicioCriterioVO extends ItemCriterioVO {
 
     /** The subp id. */

@@ -234,6 +234,10 @@
                     return $http.post(_uri + "-remove.action", {
                         model : item
                     }).then(success, fail);
+                } else {
+                	// FIXME
+
+                	return null;
                 }
 
                 function success(response) {
@@ -364,14 +368,12 @@
 
             function redirectAfterSave(accion, url, urlParams) {
                 if (urlParams) {
-                    var i;
+                	var i;
 
-                    for (i in urlParams.length) {
+                    for (i in urlParams) {
                         url += '/' + urlParams[i];
                     }
                 }
-
-                // alert(url);
 
                 accion == 'edit' ? setTimeout(function() {
                     window.history.back();

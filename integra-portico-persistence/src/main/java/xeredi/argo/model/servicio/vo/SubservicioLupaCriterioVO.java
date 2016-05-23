@@ -2,6 +2,7 @@ package xeredi.argo.model.servicio.vo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
 import xeredi.argo.model.item.vo.ItemTypeahead;
 
@@ -11,6 +12,7 @@ import xeredi.argo.model.item.vo.ItemTypeahead;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public final class SubservicioLupaCriterioVO extends BaseCriterioVO implements ItemTypeahead {
     /** The enti id. */
     private Long entiId;

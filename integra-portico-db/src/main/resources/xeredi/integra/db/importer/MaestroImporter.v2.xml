@@ -1,0 +1,2487 @@
+<importer>
+	<!-- // MAESTROS SIN DEPENDENCIAS // MAESTROS SIN DEPENDENCIAS // -->
+	<!-- // MAESTROS SIN DEPENDENCIAS // MAESTROS SIN DEPENDENCIAS // -->
+
+	<sql id="AREA_GEOGRAFICA" table="IEST_AREAGEOGRAFICA_AGEO" tempImp="false">
+    <![CDATA[
+        SELECT
+        	maes.ageo_id
+        	, maes.ageo_codigo
+         	, (SELECT i18n.ageo_nombre FROM iest_areageograficai18n_ageo i18n
+            	WHERE i18n.ageo_id = maes.ageo_id
+                	AND i18n.ageo_idioma = ?
+                	AND ? BETWEEN ageo_fecha_creacion AND COALESCE(ageo_fecha_fin, ?)
+        	) AS i18n_nombre
+        FROM iest_areageografica_ageo maes
+        ORDER BY maes.ageo_es_activo DESC
+    ]]>
+	</sql>
+
+	<sql id="AREA_MUNDIAL" table="IEST_AREAMUNDIAL_AMUN" tempImp="false">
+	<![CDATA[
+		SELECT
+			maes.amun_id
+			, maes.amun_codigo
+		 	, (SELECT i18n.amun_nombre FROM iest_areamundiali18n_amun i18n
+		    	WHERE i18n.amun_id = maes.amun_id
+					AND i18n.amun_idioma = ?
+		        	AND ? BETWEEN amun_fecha_creacion AND COALESCE(amun_fecha_fin, ?)
+		 ) AS i18n_nombre
+		FROM iest_areamundial_amun maes
+		ORDER BY maes.amun_es_activo DESC
+	]]>
+	</sql>
+
+	<sql id="ARTE_PESCA" table="IPES_ARTEPESCA_ARPE" tempImp="false">
+	<![CDATA[
+		SELECT
+			maes.arpe_id
+			, maes.arpe_codigo
+		    , (SELECT i18n.arpe_nombre FROM ipes_artepescai18n_arpe i18n
+		        WHERE i18n.arpe_id = maes.arpe_id
+		            AND i18n.arpe_idioma = ?
+		            AND ? BETWEEN arpe_fecha_creacion AND COALESCE(arpe_fecha_fin, ?)
+		    ) AS i18n_nombre
+		FROM ipes_artepesca_arpe maes
+		ORDER BY maes.arpe_es_activo DESC
+	]]>
+	</sql>
+
+	<sql id="COMPRADOR_PESCA" table="IPES_COMPRADOR_COPE MAES" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.COPE_id
+		    , MAES.COPE_CODIGO
+		    , MAES.COPE_NIF
+		    , MAES.COPE_DESCRIPCION
+		FROM IPES_COMPRADOR_COPE MAES
+		order by MAES.cope_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="DESCUENTO_ADICIONAL" table="IGEN_DESCUENTOADIC_DEAD"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.DEAD_id
+			, MAES.DEAD_CODIGO
+		    , (SELECT I18N.DEAD_NOMBRE FROM IGEN_DESCUENTOADICi18n_DEAD I18N
+		        WHERE I18N.DEAD_ID = MAES.DEAD_ID
+		            AND I18N.DEAD_IDIOMA = ?
+		            AND ? BETWEEN DEAD_FECHA_CREACION and coalesce(DEAD_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IGEN_DESCUENTOADIC_DEAD MAES
+		order by MAES.DEAD_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="GRUPO_ARANCELARIO" table="IMAN_GRUPOARANCEL_GARA" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.GARA_id
+			, MAES.GARA_CODIGO
+		 , (SELECT I18N.GARA_NOMBRE FROM IMAN_GRUPOARANCELi18n_GARA I18N
+		     WHERE I18N.GARA_ID = MAES.GARA_ID
+		         AND I18N.GARA_IDIOMA = ?
+		         AND ? BETWEEN GARA_FECHA_CREACION and coalesce(GARA_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IMAN_GRUPOARANCEL_GARA MAES
+		order by MAES.GARA_es_activo desc
+	]]>
+	</sql>
+
+	<sql id="GRUPO_FAMILIA_ESPECIE_PESCA" table="IPES_GRUPOFAMILIA_GFPE"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.GFPE_id
+			, MAES.GFPE_CODIGO
+		    , (SELECT I18N.GFPE_NOMBRE FROM IPES_GRUPOFAMILIAi18n_GFPE I18N
+		        WHERE I18N.GFPE_ID = MAES.GFPE_ID
+		            AND I18N.GFPE_IDIOMA = ?
+		            AND ? BETWEEN GFPE_FECHA_CREACION and coalesce(GFPE_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IPES_GRUPOFAMILIA_GFPE MAES
+		order by MAES.GFPE_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="GRUPO_NATURALEZA" table="IEST_GRUPONATURALEZA_GNAT"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.GNAT_id
+			, MAES.GNAT_CODIGO
+		 , (SELECT I18N.GNAT_NOMBRE FROM IEST_GRUPONATURALEZAi18n_GNAT I18N
+		     WHERE I18N.GNAT_ID = MAES.GNAT_ID
+		         AND I18N.GNAT_IDIOMA = ?
+		         AND ? BETWEEN GNAT_FECHA_CREACION and coalesce(GNAT_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IEST_GRUPONATURALEZA_GNAT MAES
+		order by MAES.GNAT_es_activo desc
+	]]>
+	</sql>
+
+	<sql id="GRUPO_NST" table="IEST_GRUPONST_GNST" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.GNST_id
+			, MAES.GNST_CODIGO
+		 , (SELECT I18N.GNST_NOMBRE FROM IEST_GRUPONSTi18n_GNST I18N
+		     WHERE I18N.GNST_ID = MAES.GNST_ID
+		         AND I18N.GNST_IDIOMA = ?
+		         AND ? BETWEEN GNST_FECHA_CREACION and coalesce(GNST_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IEST_GRUPONST_GNST MAES
+		order by MAES.GNST_es_activo desc
+	]]>
+	</sql>
+
+	<sql id="GRUPO_ZONA" table="ISUP_GRUPOZONA_GZSU" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.GZSU_id
+			, MAES.GZSU_CODIGO
+		    , (SELECT I18N.GZSU_NOMBRE FROM ISUP_GRUPOZONAi18n_GZSU I18N
+		        WHERE I18N.GZSU_ID = MAES.GZSU_ID
+		            AND I18N.GZSU_IDIOMA = ?
+		            AND ? BETWEEN GZSU_FECHA_CREACION and coalesce(GZSU_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM ISUP_GRUPOZONA_GZSU MAES
+		order by MAES.GZSU_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="INSTRUCCION_MARCAJE" table="IMAN_INSTRUCCMARCAJE_IMAR"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.IMAR_id
+			, MAES.IMAR_CODIGO
+		    , (SELECT I18N.IMAR_NOMBRE FROM IMAN_INSTRUCCMARCAJEi18n_IMAR I18N
+		        WHERE I18N.IMAR_ID = MAES.IMAR_ID
+		            AND I18N.IMAR_IDIOMA = ?
+		            AND ? BETWEEN IMAR_FECHA_CREACION and coalesce(IMAR_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IMAN_INSTRUCCMARCAJE_IMAR MAES
+		order by MAES.IMAR_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="MODULO_BATCH" table="ICON_MODULOBATCH_MODB" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.MODB_id
+			, MAES.MODB_COD
+		    , (SELECT I18N.MODB_NOMBRE FROM ICON_MODULOBATCHi18n_MODB I18N
+		        WHERE I18N.MODB_ID = MAES.MODB_ID
+		            AND I18N.MODB_IDIOMA = ?
+		            AND ? BETWEEN MODB_FECHA_CREACION and coalesce(MODB_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM ICON_MODULOBATCH_MODB MAES
+		order by MAES.MODB_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="PRESENTACION_PESCA" table="IPES_PRESENTACION_PRPE"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.PRPE_id
+			, MAES.PRPE_CODIGO
+		    , (SELECT I18N.PRPE_NOMBRE FROM IPES_PRESENTACIONi18n_PRPE I18N
+		        WHERE I18N.PRPE_ID = MAES.PRPE_ID
+		            AND I18N.PRPE_IDIOMA = ?
+		            AND ? BETWEEN PRPE_FECHA_CREACION and coalesce(PRPE_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IPES_PRESENTACION_PRPE MAES
+		order by MAES.PRPE_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="SERVICIO_DEPORTIVO" table="IEMD_SERVICIODEP_SDEP" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.SDEP_id
+			, MAES.SDEP_CODIGO
+		    , (SELECT I18N.SDEP_NOMBRE FROM IEMD_SERVICIODEPi18n_SDEP I18N
+		        WHERE I18N.SDEP_ID = MAES.SDEP_ID
+		            AND I18N.SDEP_IDIOMA = ?
+		            AND ? BETWEEN SDEP_FECHA_CREACION and coalesce(SDEP_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IEMD_SERVICIODEP_SDEP MAES
+		order by MAES.SDEP_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="SUBGRUPO_MERCANCIA_EST" table="IEST_SUBGRUPO_SUBG"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.SUBG_id
+			, MAES.SUBG_CODIGO
+		 , (SELECT I18N.SUBG_NOMBRE FROM IEST_SUBGRUPOi18n_SUBG I18N
+		     WHERE I18N.SUBG_ID = MAES.SUBG_ID
+		         AND I18N.SUBG_IDIOMA = ?
+		         AND ? BETWEEN SUBG_FECHA_CREACION and coalesce(SUBG_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IEST_SUBGRUPO_SUBG MAES
+		order by MAES.SUBG_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="SUBTIPO_MANIFIESTO_PESCA" table="IPES_MANIFIESTOSTIPO_MPST"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.MPST_id
+			, MAES.MPST_CODIGO
+		 , (SELECT I18N.MPST_NOMBRE FROM IPES_MANIFIESTOSTIPOi18n_MPST I18N
+		     WHERE I18N.MPST_ID = MAES.MPST_ID
+		         AND I18N.MPST_IDIOMA = ?
+		         AND ? BETWEEN MPST_FECHA_CREACION and coalesce(MPST_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IPES_MANIFIESTOSTIPO_MPST MAES
+		order by MAES.MPST_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_ACT_GRAL_CONCESIONAL" table="IEXP_TIPOACTIVIDADG_TAGE"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.TAGE_id
+			, MAES.TAGE_CODIGO
+		 , (SELECT I18N.TAGE_NOMBRE FROM IEXP_TIPOACTIVIDADGi18n_TAGE I18N
+		     WHERE I18N.TAGE_ID = MAES.TAGE_ID
+		         AND I18N.TAGE_IDIOMA = ?
+		         AND ? BETWEEN TAGE_FECHA_CREACION and coalesce(TAGE_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IEXP_TIPOACTIVIDADG_TAGE MAES
+		order by MAES.TAGE_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_ALINEACION" table="IESC_ALINEACIONTIPO_ALIT" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.ALIT_id
+			, MAES.ALIT_CODIGO
+		 , (SELECT I18N.ALIT_NOMBRE FROM IESC_ALINEACIONTIPOi18n_ALIT I18N
+		     WHERE I18N.ALIT_ID = MAES.ALIT_ID
+		         AND I18N.ALIT_IDIOMA = ?
+		         AND ? BETWEEN ALIT_FECHA_CREACION and coalesce(ALIT_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IESC_ALINEACIONTIPO_ALIT MAES
+		order by MAES.ALIT_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_AMARRE" table="IEMD_TIPOAMARRE_TAMD" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.TAMD_id
+			, MAES.TAMD_CODIGO
+		 , (SELECT I18N.TAMD_NOMBRE FROM IEMD_TIPOAMARREi18n_TAMD I18N
+		     WHERE I18N.TAMD_ID = MAES.TAMD_ID
+		         AND I18N.TAMD_IDIOMA = ?
+		         AND ? BETWEEN TAMD_FECHA_CREACION and coalesce(TAMD_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IEMD_TIPOAMARRE_TAMD MAES
+		order by MAES.TAMD_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_ATRAQUE" table="IESC_ATRAQUETIPO_ATRT" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.ATRT_id
+			, MAES.ATRT_CODIGO
+		 , (SELECT I18N.ATRT_NOMBRE FROM IESC_ATRAQUETIPOi18n_ATRT I18N
+		     WHERE I18N.ATRT_ID = MAES.ATRT_ID
+		         AND I18N.ATRT_IDIOMA = ?
+		         AND ? BETWEEN ATRT_FECHA_CREACION and coalesce(ATRT_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IESC_ATRAQUETIPO_ATRT MAES
+		order by MAES.ATRT_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_BIEN_CONCESIONAL" table="IEXP_TIPOBIEN_TBIE" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.TBIE_id
+			, MAES.TBIE_CODIGO
+		 , (SELECT I18N.TBIE_NOMBRE FROM IEXP_TIPOBIENi18n_TBIE I18N
+		     WHERE I18N.TBIE_ID = MAES.TBIE_ID
+		         AND I18N.TBIE_IDIOMA = ?
+		         AND ? BETWEEN TBIE_FECHA_CREACION and coalesce(TBIE_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IEXP_TIPOBIEN_TBIE MAES
+		order by MAES.TBIE_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_BULTO" table="IMAN_TIPOBULTO_TBUL" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.TBUL_id
+			, MAES.TBUL_CODIGO
+		 , (SELECT I18N.TBUL_NOMBRE FROM IMAN_TIPOBULTOi18n_TBUL I18N
+		     WHERE I18N.TBUL_ID = MAES.TBUL_ID
+		         AND I18N.TBUL_IDIOMA = ?
+		         AND ? BETWEEN TBUL_FECHA_CREACION and coalesce(TBUL_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IMAN_TIPOBULTO_TBUL MAES
+		order by MAES.TBUL_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_BUQUE_PESCA" table="IPES_BUQUETIPO_BTPE" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.BTPE_id
+			, MAES.BTPE_CODIGO
+		 , (SELECT I18N.BTPE_NOMBRE FROM IPES_BUQUETIPOi18n_BTPE I18N
+		     WHERE I18N.BTPE_ID = MAES.BTPE_ID
+		         AND I18N.BTPE_IDIOMA = ?
+		         AND ? BETWEEN BTPE_FECHA_CREACION and coalesce(BTPE_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IPES_BUQUETIPO_BTPE MAES
+		order by MAES.BTPE_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_BUQUE_EEE" table="IEST_BUQUETIPOEEE_BUQT" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.BUQT_id
+			, MAES.BUQT_CODIGO
+		 , (SELECT I18N.BUQT_NOMBRE FROM IEST_BUQUETIPOEEEi18n_BUQT I18N
+		     WHERE I18N.BUQT_ID = MAES.BUQT_ID
+		         AND I18N.BUQT_IDIOMA = ?
+		         AND ? BETWEEN BUQT_FECHA_CREACION and coalesce(BUQT_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IEST_BUQUETIPOEEE_BUQT MAES
+		order by MAES.BUQT_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_CAPTURA_PESCA" table="IPES_CAPTURATIPO_CATI" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.CATI_id
+			, MAES.CATI_CODIGO
+		 , (SELECT I18N.CATI_NOMBRE FROM IPES_CAPTURATIPOi18n_CATI I18N
+		     WHERE I18N.CATI_ID = MAES.CATI_ID
+		         AND I18N.CATI_IDIOMA = ?
+		         AND ? BETWEEN CATI_FECHA_CREACION and coalesce(CATI_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IPES_CAPTURATIPO_CATI MAES
+		order by MAES.CATI_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_CONTADOR" table="ISUM_TIPOCONTADOR_TCSU" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.TCSU_id
+			, MAES.TCSU_CODIGO
+		 , (SELECT I18N.TCSU_NOMBRE FROM ISUM_TIPOCONTADORi18n_TCSU I18N
+		     WHERE I18N.TCSU_ID = MAES.TCSU_ID
+		         AND I18N.TCSU_IDIOMA = ?
+		         AND ? BETWEEN TCSU_FECHA_CREACION and coalesce(TCSU_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM ISUM_TIPOCONTADOR_TCSU MAES
+		order by MAES.TCSU_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_DOCUMENTO_AEAT" table="IMAN_TIPODOCAEAT_ATTD"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.ATTD_id
+			, MAES.ATTD_CODIGO
+		 , (SELECT I18N.ATTD_NOMBRE FROM IMAN_TIPODOCAEATi18n_ATTD I18N
+		     WHERE I18N.ATTD_ID = MAES.ATTD_ID
+		         AND I18N.ATTD_IDIOMA = ?
+		         AND ? BETWEEN ATTD_FECHA_CREACION and coalesce(ATTD_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IMAN_TIPODOCAEAT_ATTD MAES
+		order by MAES.ATTD_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_EMBARCACION" table="IEMD_TIPOEMBARCACION_TEMD"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.TEMD_id
+			, MAES.TEMD_CODIGO
+		 , (SELECT I18N.TEMD_NOMBRE FROM IEMD_TIPOEMBARCACIONi18n_TEMD I18N
+		     WHERE I18N.TEMD_ID = MAES.TEMD_ID
+		         AND I18N.TEMD_IDIOMA = ?
+		         AND ? BETWEEN TEMD_FECHA_CREACION and coalesce(TEMD_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IEMD_TIPOEMBARCACION_TEMD MAES
+		order by MAES.TEMD_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_EXENCION" table="IGEN_EXENCIONTIPO_EXET" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.EXET_id
+			, MAES.EXET_CODIGO
+		 , (SELECT I18N.EXET_NOMBRE FROM IGEN_EXENCIONTIPOi18n_EXET I18N
+		     WHERE I18N.EXET_ID = MAES.EXET_ID
+		         AND I18N.EXET_IDIOMA = ?
+		         AND ? BETWEEN EXET_FECHA_CREACION and coalesce(EXET_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IGEN_EXENCIONTIPO_EXET MAES
+		order by MAES.EXET_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_MANIFIESTO_PESCA" table="IPES_MANIFIESTOTIPO_MPTI"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.MPTI_id
+			, MAES.MPTI_CODIGO
+		 , (SELECT I18N.MPTI_NOMBRE FROM IPES_MANIFIESTOTIPOi18n_MPTI I18N
+		     WHERE I18N.MPTI_ID = MAES.MPTI_ID
+		         AND I18N.MPTI_IDIOMA = ?
+		         AND ? BETWEEN MPTI_FECHA_CREACION and coalesce(MPTI_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IPES_MANIFIESTOTIPO_MPTI MAES
+		order by MAES.MPTI_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_MANIOBRA_REMOLQUE" table="IPRA_MANIOBRATIPO_PRAT"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.PRAT_id
+			, MAES.PRAT_CODIGO
+		 , (SELECT I18N.PRAT_NOMBRE FROM IPRA_MANIOBRATIPOi18n_PRAT I18N
+		     WHERE I18N.PRAT_ID = MAES.PRAT_ID
+		         AND I18N.PRAT_IDIOMA = ?
+		         AND ? BETWEEN PRAT_FECHA_CREACION and coalesce(PRAT_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IPRA_MANIOBRATIPO_PRAT MAES
+		order by MAES.PRAT_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_MEDIO_AMARRE" table="IAMA_AMARREMEDIOTIPO_AMAT"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.AMAT_id
+			, MAES.AMAT_CODIGO
+		 , (SELECT I18N.AMAT_NOMBRE FROM IAMA_AMARREMEDIOTIPOi18n_AMAT I18N
+		     WHERE I18N.AMAT_ID = MAES.AMAT_ID
+		         AND I18N.AMAT_IDIOMA = ?
+		         AND ? BETWEEN AMAT_FECHA_CREACION and coalesce(AMAT_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IAMA_AMARREMEDIOTIPO_AMAT MAES
+		order by MAES.AMAT_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_MERCANCIA" table="IESC_MERCANCIATIPO_MERT" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.MERT_id
+		    , MAES.MERT_CODIGO
+		    , (SELECT I18N.mert_NOMBRE FROM IESC_MERCANCIATIPOi18n_MERT I18N
+		        WHERE I18N.mert_ID = MAES.mert_ID
+		            AND I18N.mert_IDIOMA = ?
+		            AND ? BETWEEN mert_FECHA_CREACION and coalesce(mert_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM
+		    IESC_MERCANCIATIPO_MERT MAES
+		order by MAES.mert_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_MERCANCIA_EST" table="IEST_MERCANCIATIPO_EMET"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.EMET_id
+			, MAES.EMET_CODIGO
+		 , (SELECT I18N.EMET_NOMBRE FROM IEST_MERCANCIATIPOi18n_EMET I18N
+		     WHERE I18N.EMET_ID = MAES.EMET_ID
+		         AND I18N.EMET_IDIOMA = ?
+		         AND ? BETWEEN EMET_FECHA_CREACION and coalesce(EMET_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IEST_MERCANCIATIPO_EMET MAES
+		order by MAES.EMET_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_MOVIMIENTO_AMARRE" table="IAMA_MOVIMIENTOTIPO_AMMT"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.AMMT_id
+			, MAES.AMMT_CODIGO
+		 , (SELECT I18N.AMMT_NOMBRE FROM IAMA_MOVIMIENTOTIPOi18n_AMMT I18N
+		     WHERE I18N.AMMT_ID = MAES.AMMT_ID
+		         AND I18N.AMMT_IDIOMA = ?
+		         AND ? BETWEEN AMMT_FECHA_CREACION and coalesce(AMMT_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IAMA_MOVIMIENTOTIPO_AMMT MAES
+		order by MAES.AMMT_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_MOVIMIENTO_REMOLQUE" table="IREM_MOVIMIENTOTIPO_REMT"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.REMT_id
+			, MAES.REMT_CODIGO
+		 , (SELECT I18N.REMT_NOMBRE FROM IREM_MOVIMIENTOTIPOi18n_REMT I18N
+		     WHERE I18N.REMT_ID = MAES.REMT_ID
+		         AND I18N.REMT_IDIOMA = ?
+		         AND ? BETWEEN REMT_FECHA_CREACION and coalesce(REMT_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IREM_MOVIMIENTOTIPO_REMT MAES
+		order by MAES.REMT_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_OPERACION_SUPERFICIE" table="ISUP_TIPOOPERACION_TOSU"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.TOSU_id
+			, MAES.TOSU_CODIGO
+		 , (SELECT I18N.TOSU_NOMBRE FROM ISUP_TIPOOPERACIONi18n_TOSU I18N
+		     WHERE I18N.TOSU_ID = MAES.TOSU_ID
+		         AND I18N.TOSU_IDIOMA = ?
+		         AND ? BETWEEN TOSU_FECHA_CREACION and coalesce(TOSU_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM ISUP_TIPOOPERACION_TOSU MAES
+		order by MAES.TOSU_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_ORGANIZACION" table="ICOM_ORGANIZACIONTIPO_ORGT"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.ORGT_id
+		    , I18N.ORGT_descripcion
+		    , MAES.ORGT_TIPO_BASE
+		    , I18N.ORGT_NOMBRE
+		FROM ICOM_ORGANIZACIONTIPO_ORGT MAES
+		    INNER JOIN ICOM_ORGANIZACIONTIPOI18N_ORGT I18N ON
+		        I18N.ORGT_ID = MAES.ORGT_ID
+		        AND I18N.ORGT_IDIOMA = ?
+		        AND ? BETWEEN ORGT_FECHA_CREACION AND COALESCE(ORGT_FECHA_FIN, ?)
+		order by MAES.ORGT_es_activo desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_PRESTADOR_SERVICIO" table="ICOM_PRESTADORTIPO_PRET"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.PRET_id
+			, MAES.PRET_TIPO_BASE
+		 , (SELECT I18N.PRET_NOMBRE FROM ICOM_PRESTADORTIPOi18n_PRET I18N
+		     WHERE I18N.PRET_ID = MAES.PRET_ID
+		         AND I18N.PRET_IDIOMA = ?
+		         AND ? BETWEEN PRET_FECHA_CREACION and coalesce(PRET_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM ICOM_PRESTADORTIPO_PRET MAES
+		order by MAES.PRET_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_SERVICIO_TRAFICO" table="IESC_SERVICIOTIPO_SETT"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.SETT_id
+			, MAES.SETT_CODIGO
+		 , (SELECT I18N.SETT_NOMBRE FROM IESC_SERVICIOTIPOi18n_SETT I18N
+		     WHERE I18N.SETT_ID = MAES.SETT_ID
+		         AND I18N.SETT_IDIOMA = ?
+		         AND ? BETWEEN SETT_FECHA_CREACION and coalesce(SETT_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IESC_SERVICIOTIPO_SETT MAES
+		order by MAES.SETT_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_SUPERFICIE" table="ISUP_TIPOSUPERFICIE_TSUP" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.TSUP_id
+			, MAES.TSUP_CODIGO
+		 , (SELECT I18N.TSUP_NOMBRE FROM ISUP_TIPOSUPERFICIEi18n_TSUP I18N
+		     WHERE I18N.TSUP_ID = MAES.TSUP_ID
+		         AND I18N.TSUP_IDIOMA = ?
+		         AND ? BETWEEN TSUP_FECHA_CREACION and coalesce(TSUP_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM ISUP_TIPOSUPERFICIE_TSUP MAES
+		order by MAES.TSUP_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_SUPERFICIE_BIEN" table="IEXP_TIPOSUPERFICIEB_TSEX"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.TSEX_id
+			, MAES.TSEX_CODIGO
+		 , (SELECT I18N.TSEX_NOMBRE FROM IEXP_TIPOSUPERFICIEBi18n_TSEX I18N
+		     WHERE I18N.TSEX_ID = MAES.TSEX_ID
+		         AND I18N.TSEX_IDIOMA = ?
+		         AND ? BETWEEN TSEX_FECHA_CREACION and coalesce(TSEX_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IEXP_TIPOSUPERFICIEB_TSEX MAES
+		order by MAES.TSEX_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="UNIDAD_SUPERFICIE" table="ISUP_UNIDAD_UNIS" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.UNIS_id
+			, MAES.UNIS_CODIGO
+		 , (SELECT I18N.UNIS_NOMBRE FROM ISUP_UNIDADi18n_UNIS I18N
+		     WHERE I18N.UNIS_ID = MAES.UNIS_ID
+		         AND I18N.UNIS_IDIOMA = ?
+		         AND ? BETWEEN UNIS_FECHA_CREACION and coalesce(UNIS_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM ISUP_UNIDAD_UNIS MAES
+		order by MAES.UNIS_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<sql id="ZONA_PESCA" table="IPES_ZONAPESCA_ZOPE" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.ZOPE_id
+			, MAES.ZOPE_CODIGO
+		 , (SELECT I18N.ZOPE_NOMBRE FROM IPES_ZONAPESCAi18n_ZOPE I18N
+		     WHERE I18N.ZOPE_ID = MAES.ZOPE_ID
+		         AND I18N.ZOPE_IDIOMA = ?
+		         AND ? BETWEEN ZOPE_FECHA_CREACION and coalesce(ZOPE_FECHA_FIN, ?)
+		 ) AS I18N_NOMBRE
+		FROM IPES_ZONAPESCA_ZOPE MAES
+		order by MAES.ZOPE_ES_ACTIVO desc
+	]]>
+	</sql>
+
+	<!-- // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS // MAESTROS SIN DEPENDENCIAS
+		CON DATOS ASOCIADOS // -->
+	<!-- // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS // MAESTROS SIN DEPENDENCIAS
+		CON DATOS ASOCIADOS // -->
+	<sql id="TIPO_BUQUE_GT_EEE" table="IEST_BUQUETIPOGTEEE_BGTE"
+		tempImp="false">
+    <![CDATA[
+		SELECT
+		    MAES.BGTE_id
+		    , MAES.BGTE_CODIGO
+		    , MAES.BGTE_LIMITE_INFERIOR
+		FROM IEST_BUQUETIPOGTEEE_BGTE MAES
+		order by MAES.BGTE_es_activo desc
+    ]]>
+	</sql>
+
+	<sql id="ACUERDO" table="IESC_ACUERDO_ACUE" tempImp="true">
+	<![CDATA[
+		SELECT
+		    MAES.ACUE_id
+		    , MAES.ACUE_CODIGO
+		    , maes.acue_fecha_comienzo
+		    , MAES.ACUE_FECHA_FINAL
+		    , TEMP.ACUE_ES_APLICA_MANIFIESTO
+		    , TEMP.ACUE_ES_APLICA_escala
+		    , (SELECT I18N.ACUE_NOMBRE
+		    	FROM IESC_ACUERDOI18N_ACUE I18N
+		      	WHERE I18N.ACUE_ID = MAES.ACUE_ID
+		            AND I18N.ACUE_IDIOMA = ?
+		            AND ? BETWEEN ACUE_FECHA_CREACION AND COALESCE(ACUE_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IESC_ACUERDO_ACUE MAES
+		    INNER JOIN IESC_ACUERDOTEMP_ACUE TEMP ON
+				TEMP.ACUE_ID = MAES.ACUE_ID
+				AND ? BETWEEN TEMP.acue_FECHA_CREACION AND COALESCE(TEMP.acue_FECHA_FIN, ?)
+		order by MAES.ACUE_es_activo desc
+	]]>
+	</sql>
+
+	<sql id="CONVENIO" table="IESC_CONVENIO_CONV" tempImp="false">
+    <![CDATA[
+        SELECT
+            maes.conv_id
+            , maes.conv_codigo
+            , temp.conv_fecha_inicio_convenio
+            , temp.conv_fecha_fin_convenio
+            , temp.conv_empresa
+            , temp.conv_codigo_edi
+            , (SELECT i18n.conv_nombre
+                FROM iesc_convenioi18n_conv i18n
+                WHERE i18n.conv_id = maes.conv_id
+                    AND i18n.conv_idioma = ?
+                    AND ? BETWEEN conv_fecha_creacion AND COALESCE(conv_fecha_fin, ?)
+            ) AS i18n_nombre
+        FROM
+            iesc_convenio_conv maes
+            INNER JOIN iesc_conveniotemp_conv temp ON
+                temp.conv_id = maes.conv_id
+        ORDER BY maes.conv_es_activo DESC, temp.conv_fecha_inicio_convenio DESC
+    ]]>
+	</sql>
+
+	<sql id="MARCA_VEHICULO" table="IMAN_MARCAVEHICULO_VMAR" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.vmar_id
+			, MAES.vmar_codigo
+			, MAES.vmar_marca
+		FROM IMAN_MARCAVEHICULO_VMAR MAES
+		order by MAES.VMAR_es_activo desc
+	]]>
+	</sql>
+
+	<sql id="MERCANCIAS_PELIGROSAS" table="IMAN_MMPP_MMPP" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.MMPP_id
+		    , MAES.MMPP_NUMERO_ONU || '-' || MAES.MMPP_CLASE || '-' || MAES.MMPP_numero_version as maes_codigo
+		    , MAES.MMPP_NUMERO_ONU
+		    , MAES.MMPP_CLASE
+		    , MAES.MMPP_NUMERO_version
+		    , (SELECT I18N.MMPP_NOMBRE FROM IMAN_MMPPi18n_MMPP I18N
+		        WHERE I18N.MMPP_ID = MAES.MMPP_ID
+		            AND I18N.MMPP_IDIOMA = ?
+		            AND ? BETWEEN MMPP_FECHA_CREACION and coalesce(MMPP_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IMAN_MMPP_MMPP MAES
+		order by MAES.MMPP_es_activo desc
+	]]>
+	</sql>
+
+	<sql id="MODO_TRANSPORTE_EDI" table="IMAN_MODOTRANSPEDI_TEDI"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.TEDI_id
+		    , MAES.TEDI_codigo
+		    , MAES.TEDI_tipo
+		    , (SELECT I18N.TEDI_NOMBRE FROM IMAN_MODOTRANSPEDIi18n_TEDI I18N
+		        WHERE I18N.TEDI_ID = MAES.TEDI_ID
+		            AND I18N.TEDI_IDIOMA = ?
+		            AND ? BETWEEN TEDI_FECHA_CREACION and coalesce(TEDI_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IMAN_MODOTRANSPEDI_TEDI MAES
+		order by MAES.TEDI_es_activo desc
+	]]>
+	</sql>
+
+	<sql id="NAVIERA" table="IESC_NAVIERA_NAVI" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.NAVI_id
+			, MAES.NAVI_CODIGO
+			, MAES.NAVI_DESCRIPCION
+		FROM IESC_NAVIERA_NAVI MAES
+		order by MAES.NAVI_es_activo desc
+	]]>
+	</sql>
+
+	<sql id="RECEPTOR_MERCANCIA" table="IMAN_RECEPTOR_RECE" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.RECE_id
+			, MAES.RECE_CODIGO
+			, MAES.RECE_DESCRIPCION
+		FROM IMAN_RECEPTOR_RECE MAES
+		order by MAES.RECE_es_activo desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_ACTIVIDAD" table="IESC_ACTIVIDADTIPO_ACTT" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.ACTT_id
+		    , MAES.ACTT_CODIGO
+		    , MAES.ACTT_codigo_est
+		    , (SELECT I18N.ACTT_NOMBRE FROM IESC_ACTIVIDADTIPOi18n_ACTT I18N
+		        WHERE I18N.ACTT_ID = MAES.ACTT_ID
+		            AND I18N.ACTT_IDIOMA = ?
+		            AND ? BETWEEN ACTT_FECHA_CREACION and coalesce(ACTT_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IESC_ACTIVIDADTIPO_ACTT MAES
+		order by MAES.ACTT_es_activo desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_BUQUE_GT" table="IEST_BUQUETIPOGT_BUGT" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.BUGT_id
+		    , MAES.BUGT_CODIGO
+		    , MAES.BUGT_LIMITE_SUPERIOR
+		    , (SELECT I18N.BUGT_NOMBRE FROM IEST_BUQUETIPOGTI18N_BUGT I18N
+		        WHERE I18N.BUGT_ID = MAES.BUGT_ID
+		            AND I18N.BUGT_IDIOMA = ?
+		            AND ? BETWEEN BUGT_FECHA_CREACION and coalesce(BUGT_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IEST_BUQUETIPOGT_BUGT MAES
+		order by MAES.BUGT_es_activo desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_CERTIFICADO" table="IESC_CERTIFICADOTIPO_CERT"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.CERT_id
+			, MAES.CERT_CODIGO
+			, MAES.CERT_CODIGO_edi
+			, (SELECT I18N.CERT_NOMBRE
+				FROM IESC_CERTIFICADOTIPOi18n_CERT I18N
+				WHERE
+					I18N.CERT_ID = MAES.CERT_ID
+					AND I18N.CERT_IDIOMA = ?
+					AND ? BETWEEN CERT_FECHA_CREACION and coalesce(CERT_FECHA_FIN,	?)
+			) AS I18N_NOMBRE
+		FROM IESC_CERTIFICADOTIPO_CERT MAES
+	]]>
+	</sql>
+
+	<sql id="TIPO_ERROR_EDI" table="IGEN_ERROREDITIPO_ETED" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.ETED_id
+		    , MAES.ETED_CODIGO
+		    , MAES.ETED_NIVEL
+		    , (SELECT I18N.ETED_NOMBRE FROM IGEN_ERROREDITIPOI18N_ETED I18N
+		        WHERE I18N.ETED_ID = MAES.ETED_ID
+		            AND I18N.ETED_IDIOMA = ?
+		            AND ? BETWEEN ETED_FECHA_CREACION and coalesce(ETED_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IGEN_ERROREDITIPO_ETED MAES
+		order by MAES.ETED_es_activo desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_IVA" table="IFAC_IVATIPO_IVAT" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.IVAT_id
+		    , MAES.IVAT_CODIGO
+		    , MAES.IVAT_FECHA_INICIO
+		    , MAES.IVAT_FECHA_FIN
+		    , MAES.IVAT_PORCENTAJE
+		    , (SELECT I18N.IVAT_NOMBRE FROM IFAC_IVATIPOI18N_IVAT I18N
+		        WHERE I18N.IVAT_ID = MAES.IVAT_ID
+		            AND I18N.IVAT_IDIOMA = ?
+		            AND ? BETWEEN IVAT_FECHA_CREACION and coalesce(IVAT_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IFAC_IVATIPO_IVAT MAES
+		order by MAES.IVAT_es_activo desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_OPERACION_PESCA" table="IPES_OPERACIONTIPO_TOPP"
+		tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.TOPP_id
+		    , MAES.TOPP_CODIGO
+		    , MAES.TOPP_ES_GENERADA_TASA
+		    , to_char(MAES.TOPP_CODIGO_EXENCION)
+		    , MAES.TOPP_venta
+		    , (SELECT I18N.TOPP_NOMBRE FROM IPES_OPERACIONTIPOI18N_TOPP I18N
+		        WHERE I18N.TOPP_ID = MAES.topp_ID
+		            AND I18N.TOPP_IDIOMA = ?
+		            AND ? BETWEEN TOPP_FECHA_CREACION and coalesce(TOPP_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IPES_OPERACIONTIPO_TOPP MAES
+		order by MAES.TOPP_es_activo desc
+	]]>
+	</sql>
+
+	<sql id="TIPO_RESIDUO" table="IESC_RESIDUOSTIPO_REST" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.REST_id
+		    , MAES.REST_CODIGO
+		    , MAES.REST_ES_FACTURACION
+		    , MAES.REST_ANEXO_MARPOL
+		    , MAES.REST_PRESENTACION
+		    , (SELECT I18N.REST_NOMBRE FROM IESC_RESIDUOSTIPOI18N_REST I18N
+		        WHERE I18N.REST_ID = MAES.REST_ID
+		            AND I18N.REST_IDIOMA = ?
+		            AND ? BETWEEN REST_FECHA_CREACION and coalesce(REST_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IESC_RESIDUOSTIPO_REST MAES
+		order by MAES.REST_es_activo desc
+	]]>
+	</sql>
+
+
+
+
+
+	<!-- // MAESTROS CON DEPENDENCIAS // MAESTROS CON DEPENDENCIAS // -->
+	<!-- // MAESTROS CON DEPENDENCIAS // MAESTROS CON DEPENDENCIAS // -->
+
+	<sql id="TIPO_GASTO" table="ISUM_TIPOGASTO_TGSU" tempImp="false">
+    <![CDATA[
+		SELECT
+	        maes.TGSU_id
+	        , maes.TGSU_codigo
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.tgsu_ivat_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') as tgsu_ivat
+		    , (SELECT I18N.TGSU_NOMBRE FROM ISUM_TIPOGASTOI18N_TGSU I18N
+		        WHERE I18N.TGSU_ID = MAES.TGSU_ID
+		            AND I18N.TGSU_IDIOMA = ?
+		            AND ? BETWEEN TGSU_FECHA_CREACION and coalesce(TGSU_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM ISUM_TIPOGASTO_TGSU MAES
+	    order by MAES.TGSU_ES_ACTIVO desc
+    ]]>
+	</sql>
+
+	<sql id="TIPO_NAVEGACION" table="IGEN_NAVEGACIONTIPO_NAVT" tempImp="false">
+    <![CDATA[
+        SELECT
+        	maes.navt_id
+	        , maes.navt_codigo
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.navt_ivat_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') as navt_ivat
+            , (SELECT I18N.NAVT_NOMBRE FROM IGEN_NAVEGACIONTIPOi18n_NAVT I18N
+                WHERE I18N.NAVT_ID = MAES.NAVT_ID
+                    AND I18N.NAVT_IDIOMA = ?
+                    AND ? BETWEEN NAVT_FECHA_CREACION and coalesce(NAVT_FECHA_FIN, ?)
+            ) AS I18N_NOMBRE
+        FROM IGEN_NAVEGACIONTIPO_NAVT MAES
+        order by MAES.NAVT_ES_ACTIVO desc
+    ]]>
+	</sql>
+
+    <sql id="PAIS" table="IGEN_PAIS_PAIS" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.PAIS_id
+			, MAES.PAIS_ISO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.pais_amun_id
+	            	AND trid_table_name = 'IEST_AREAMUNDIAL_AMUN') as pais_amun
+		 	, MAES.PAIS_ES_EU
+		 	, MAES.PAIS_ES_SCHENGEN
+		 	, (SELECT I18N.PAIS_NOMBRE
+		 		FROM IGEN_PAISI18N_PAIS I18N
+		     	WHERE I18N.PAIS_ID = MAES.PAIS_ID
+		        	AND I18N.PAIS_IDIOMA = ?
+		         	AND ? BETWEEN PAIS_FECHA_CREACION AND COALESCE(PAIS_FECHA_FIN, ?)
+		 	) AS I18N_NOMBRE
+		FROM IGEN_PAIS_PAIS MAES
+		order by MAES.PAIS_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="PROVINCIA" table="IGEN_PROVINCIA_PROV" tempImp="false">
+	<![CDATA[
+		SELECT
+			maes.prov_id
+			, maes.prov_codigo
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.prov_pais_id
+	            	AND trid_table_name = 'IGEN_PAIS_PAIS') as prov_pais
+			, (SELECT I18N.prov_NOMBRE FROM IGEN_PROVINCIAI18N_PROV I18N
+			    WHERE I18N.PROV_ID = MAES.PROV_ID
+			    	AND I18N.PROV_IDIOMA =  ?
+			    	AND ? BETWEEN PROV_FECHA_CREACION and coalesce(PROV_FECHA_FIN,  ?)
+			) AS I18N_NOMBRE
+		FROM IGEN_PROVINCIA_PROV MAES
+		ORDER BY MAES.PROV_ES_ACTIVO DESC
+	]]>
+    </sql>
+
+    <sql id="MUNICIPIO" table="IGEN_MUNICIPIO_MUNI" tempImp="false">
+	<![CDATA[
+		SELECT
+			maes.muni_id
+		    , (
+		        SELECT MAES.PROV_CODIGO
+		        FROM IGEN_PROVINCIA_PROV MAES
+		        where prov_id = muni_prov_id
+		    )
+		    || MAES.MUNI_CODIGO AS MAES_CODIGO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.muni_prov_id
+	            	AND trid_table_name = 'IGEN_PROVINCIA_PROV') as muni_prov
+			, muni_direccion_cont
+			, (SELECT I18N.muni_NOMBRE FROM IGEN_municipioI18N_muni I18N
+			    WHERE I18N.muni_ID = MAES.muni_ID
+			        AND I18N.muni_IDIOMA = ?
+			        AND ? BETWEEN muni_FECHA_CREACION and coalesce(muni_FECHA_FIN, ?)
+			) AS I18N_NOMBRE
+		FROM IGEN_municipio_muni MAES
+		ORDER BY MAES.muni_ES_ACTIVO DESC
+	]]>
+    </sql>
+
+    <sql id="TIPO_ATRAQUE_EDI" table="IESC_RELACIONATRAQUETIPO_RATT" tempImp="false">
+    <![CDATA[
+        select
+        	ratt_id
+            , (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_1)
+              || (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_2)
+              || (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_3)
+              AS ratt_atet
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = ratt_atrt_id
+	            	AND trid_table_name = 'IESC_ATRAQUETIPO_ATRT') as ratt_atrt
+            , (select atet_nombre from IESC_ATRAQUEEDITIPOI18N_ATET where atet_id = RATT_ATET_ID_1 and ATET_IDIOMA = idioma
+                AND FREFERENCIA BETWEEN ATET_FECHA_CREACION AND COALESCE(ATET_FECHA_FIN, FREFERENCIA))
+              || ' / ' ||
+              (select atet_nombre from IESC_ATRAQUEEDITIPOI18N_ATET where atet_id = RATT_ATET_ID_2 and ATET_IDIOMA = idioma
+                AND FREFERENCIA BETWEEN ATET_FECHA_CREACION AND COALESCE(ATET_FECHA_FIN, FREFERENCIA))
+              || ' / ' ||
+              (select atet_nombre from IESC_ATRAQUEEDITIPOI18N_ATET where atet_id = RATT_ATET_ID_3 and ATET_IDIOMA = idioma
+                AND FREFERENCIA BETWEEN ATET_FECHA_CREACION AND COALESCE(ATET_FECHA_FIN, FREFERENCIA))
+                AS texto
+        from (
+            select ? as idioma, ? as FREFERENCIA, ? as fref, ratt.*
+            from IESC_RELACIONATRAQUETIPO_RATT ratt
+        ) sql
+    ]]>
+    </sql>
+
+    <sql id="SUBTIPO_RESIDUO" table="IESC_RESIDUOSSUBTIPO_RESS" tempImp="false">
+	<![CDATA[
+		SELECT
+			maes.ress_id
+		    , (SELECT REST_CODIGO FROM IESC_RESIDUOSTIPO_REST
+		        WHERE REST_ID = RESS_REST_ID) ||
+		    MAES.RESS_CODIGO AS CODIGO
+		    , RESS_ES_FACTURACION
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.ress_rest_id
+	            	AND trid_table_name = 'IESC_RESIDUOSTIPO_REST') as ress_rest
+		    , (SELECT I18N.RESS_NOMBRE FROM IESC_RESIDUOSSUBTIPOI18N_RESS I18N
+		        WHERE I18N.RESS_ID = MAES.RESS_ID
+		            AND I18N.RESS_IDIOMA = ?
+		            AND ? BETWEEN RESS_FECHA_CREACION and coalesce(RESS_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM
+		    IESC_RESIDUOSSUBTIPO_RESS MAES
+		order by MAES.RESS_ES_ACTIVO desc
+	]]>
+    </sql>
+
+    <sql id="TIPO_OPERACION_MERCANCIA" table="IGEN_OPERACIONTIPO_OPET" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.OPET_id
+		    , MAES.OPET_CODIGO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.opet_ivat_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') as opet_ivat
+		    , (SELECT I18N.opet_NOMBRE FROM igen_operaciontipoI18N_opet I18N
+		        WHERE I18N.opet_ID = MAES.opet_ID
+		            AND I18N.opet_IDIOMA = ?
+		            AND ? BETWEEN opet_FECHA_CREACION and coalesce(opet_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM
+		    igen_operaciontipo_opet MAES
+		order by MAES.OPET_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="TIPO_ACTIVIDAD_EDI" table="IESC_ACTIVIDADEDITIPO_ACET" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.ACET_id
+		    , MAES.ACET_CODIGO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.acet_actt_id
+	            	AND trid_table_name = 'IESC_ACTIVIDADTIPO_ACTT') as acet_actt
+		    , (SELECT I18N.ACET_NOMBRE FROM IESC_ACTIVIDADEDITIPOI18N_ACET I18N
+		        WHERE I18N.ACET_ID = MAES.ACET_ID
+		            AND I18N.ACET_IDIOMA = ?
+		            AND ? BETWEEN ACET_FECHA_CREACION and coalesce(ACET_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM
+		    IESC_ACTIVIDADEDITIPO_ACET MAES
+		order by MAES.ACET_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="FAMILIA_ESPECIE_PESCA" table="IPES_FAMILIA_FAPE" tempImp="false">
+	<![CDATA[
+		SELECT
+      		MAES.FAPE_id
+      		, MAES.FAPE_CODIGO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.fape_gfpe_id
+	            	AND trid_table_name = 'IPES_GRUPOFAMILIA_GFPE') as fape_gfpe
+		 	, (SELECT I18N.FAPE_NOMBRE
+		 		FROM IPES_FAMILIAi18n_FAPE I18N
+		    	WHERE I18N.FAPE_ID = MAES.FAPE_ID
+		        	AND I18N.FAPE_IDIOMA = ?
+		         	AND ? BETWEEN FAPE_FECHA_CREACION AND COALESCE(FAPE_FECHA_FIN, ?)
+		 	) AS i18n_nombre
+		FROM
+			IPES_FAMILIA_FAPE MAES
+		order by MAES.FAPE_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="ESPECIE_PESCA" tempImp="false">
+	<![CDATA[
+		SELECT
+      		MAES.ESPE_id
+      		, MAES.ESPE_CODIGO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.espe_familia_id
+	            	AND trid_table_name = 'IPES_FAMILIA_FAPE') as espe_fape
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.espe_tipo_captura_id
+	            	AND trid_table_name = 'IPES_CAPTURATIPO_CATI') as espe_cati
+		 	, (SELECT I18N.ESPE_NOMBRE
+		 		FROM IPES_ESPECIEPESCAI18N_ESPE I18N
+		    	WHERE I18N.ESPE_ID = MAES.ESPE_ID
+		        	AND I18N.ESPE_IDIOMA = ?
+		         	AND ? BETWEEN ESPE_FECHA_CREACION AND COALESCE(ESPE_FECHA_FIN, ?)
+		 	) AS i18n_nombre
+		FROM
+			IPES_ESPECIEPESCA_ESPE MAES
+		order by MAES.ESPE_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="TERMINAL" table="IMAN_TERMINAL_TERM" tempImp="true">
+	<![CDATA[
+		SELECT
+			MAES.TERM_id
+			, SUBSTR(MAES.TERM_CODIGO, 1, 1)
+			, SUBSTR(MAES.TERM_CODIGO, 2)
+		    , TEMP.TERM_ES_CONCESION
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.term_ivat_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') as term_ivat
+		 	, (SELECT I18N.TERM_NOMBRE
+		 		FROM IMAN_TERMnINALi18n_TERM I18N
+		    	WHERE I18N.TERM_ID = MAES.TERM_ID
+		        	AND I18N.TERM_IDIOMA = ?
+		         	AND ? BETWEEN TERM_FECHA_CREACION AND COALESCE(TERM_FECHA_FIN, ?)
+		 	) AS i18n_nombre
+		FROM
+			IMAN_TERMINAL_TERM MAES
+		 	JOIN IMAN_TERMINALTEMP_TERM TEMP ON
+		    	TEMP.TERM_ID = MAES.TERM_ID
+		     	AND ? BETWEEN TEMP.TERM_FECHA_CREACION AND COALESCE(TEMP.TERM_FECHA_FIN, ?)
+		order by maes.term_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="TIPO_BUQUE_EST" table="IEST_BUQUETIPOEST_BUQT" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.BUQT_id
+		    , MAES.BUQT_CODIGO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.buqt_tipo_eee_id
+	            	AND trid_table_name = 'IEST_BUQUETIPOEEE_BUQT') as buqt_tipo_eee
+		    , (SELECT I18N.BUQT_NOMBRE FROM IEST_BUQUETIPOESTi18n_BUQT I18N
+		        WHERE I18N.BUQT_ID = MAES.BUQT_ID
+		            AND I18N.BUQT_IDIOMA = ?
+		            AND ? BETWEEN BUQT_FECHA_CREACION and coalesce(BUQT_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IEST_BUQUETIPOEST_BUQT MAES
+		order by maes.buqt_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="TIPO_BUQUE" table="IGEN_BUQUETIPO_BUQT" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.BUQT_id
+		    , MAES.BUQT_CODIGO
+		    , coalesce(MAES.BUQT_ES_RORO, 0)
+		    , coalesce(MAES.BUQT_ES_COMERCIAL, 0)
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.buqt_tipo_est_id
+	            	AND trid_table_name = 'IEST_BUQUETIPOEST_BUQT') as buqt_tipo_est
+		    , (SELECT I18N.BUQT_NOMBRE FROM IGEN_BUQUETIPOI18N_BUQT I18N
+		        WHERE I18N.BUQT_ID = MAES.BUQT_ID
+		            AND I18N.BUQT_IDIOMA = ?
+		            AND ? BETWEEN BUQT_FECHA_CREACION and coalesce(BUQT_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM IGEN_BUQUETIPO_BUQT MAES
+		order by maes.buqt_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="TIPO_BUQUE_EDI" table="IESC_BUQUETIPOEDI_BQTE" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.bqte_id
+		    , MAES.bqte_CODIGO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.bqte_tipo_id
+	            	AND trid_table_name = 'IGEN_BUQUETIPO_BUQT') as bqte_tipo
+		    , (SELECT I18N.BQTE_NOMBRE FROM IESC_BUQUETIPOEDIi18n_BQTE I18N
+		        WHERE I18N.BQTE_ID = MAES.BQTE_ID
+		            AND I18N.BQTE_IDIOMA = ?
+		            AND ? BETWEEN BQTE_FECHA_CREACION and coalesce(BQTE_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM
+		    IESC_BUQUETIPOEDI_BQTE MAES
+		order by maes.BQTE_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="TIPO_SUMINISTRO" table="ISUM_TIPOSUMINISTRO_TSUM" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.TSUM_id
+		    , MAES.TSUM_CODIGO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.tsum_ivat_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') as tsum_ivat
+		    , MAES.TSUM_ES_AVITUALLAMIENTO
+		    , (SELECT I18N.TSUM_NOMBRE FROM ISUM_TIPOSUMINISTROI18N_TSUM I18N
+		        WHERE I18N.TSUM_ID = MAES.TSUM_ID
+		            AND I18N.TSUM_IDIOMA = ?
+		            AND ? BETWEEN TSUM_FECHA_CREACION and coalesce(TSUM_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM ISUM_TIPOSUMINISTRO_TSUM MAES
+		order by MAES.TSUM_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="NATURALEZA" table="IEST_NATURALEZA_NATU" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.NATU_id
+			, MAES.NATU_codigo
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.natu_grupo_id
+	            	AND trid_table_name = 'IEST_GRUPONATURALEZA_GNAT') as natu_grupo
+			, (SELECT I18N.NATU_NOMBRE
+			 	FROM IEST_NATURALEZAi18n_NATU I18N
+			    WHERE I18N.NATU_ID = MAES.NATU_ID
+			    	AND I18N.NATU_IDIOMA = ?
+			        AND ? BETWEEN NATU_FECHA_CREACION AND COALESCE(NATU_FECHA_FIN, ?)
+			) AS I18N_NOMBRE
+		FROM IEST_NATURALEZA_NATU MAES
+		order by MAES.NATU_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="UNIDAD_CARGA" table="IMAN_UNIDADCARGA_UNIC" tempImp="true">
+	<![CDATA[
+		SELECT
+			MAES.UNIC_id
+			, MAES.UNIC_CODIGO
+			, TEMP.UNIC_TIPO_EEE, TEMP.UNIC_ES_EEE, TEMP.UNIC_TEUS
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.unic_emet_id
+	            	AND trid_table_name = 'IEST_MERCANCIATIPO_EMET') as unic_emet
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.unic_merc_id
+	            	AND trid_table_name = 'IMAN_MERCANCIA_MERC') as unic_merc
+		 	, (SELECT I18N.UNIC_NOMBRE
+		 		FROM IMAN_UNIDADCARGAI18N_UNIC I18N
+		    	WHERE I18N.UNIC_ID = MAES.UNIC_ID
+		        	AND I18N.UNIC_IDIOMA = ?
+		         	AND ? BETWEEN UNIC_FECHA_CREACION AND COALESCE(UNIC_FECHA_FIN, ?)
+		 	) AS i18n_nombre
+		FROM
+			IMAN_UNIDADCARGA_UNIC MAES
+		 	JOIN IMAN_UNIDADCARGATEMP_UNIC TEMP ON
+		    	TEMP.UNIC_ID = MAES.UNIC_ID
+		     	AND ? BETWEEN TEMP.UNIC_FECHA_CREACION AND COALESCE(TEMP.UNIC_FECHA_FIN, ?)
+	    WHERE TEMP.UNIC_MERC_ID IS NULL
+		order by MAES.UNIC_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="MERCANCIA" table="IMAN_MERCANCIA_MERC" tempImp="true">
+	<![CDATA[
+		SELECT
+			MAES.merc_id
+			, MAES.merc_CODIGO
+			, MAES.merc_fecha_comienzo
+		 	, MAES.merc_fecha_finalizacion
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.merc_unidad_carga_id
+	            	AND trid_table_name = 'IMAN_UNIDADCARGA_UNIC') as merc_unidad_carga
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.merc_grupo_nst_id
+	            	AND trid_table_name = 'IEST_GRUPONST_GNST') as merc_grupo_nst
+		 	, TEMP.merc_es_transporte_mercancia
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.merc_subgrupo_id
+	            	AND trid_table_name = 'IEST_SUBGRUPO_SUBG') as merc_subgrupo
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.merc_grupo_arancel_id
+	            	AND trid_table_name = 'IMAN_GRUPOARANCEL_GARA') as merc_grupo_arancel
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.merc_naturaleza_id
+	            	AND trid_table_name = 'IEST_NATURALEZA_NATU') as merc_naturaleza
+		 	, TEMP.merc_observaciones
+		 	, (SELECT I18N.MERC_NOMBRE
+		 		FROM IMAN_MERCANCIAI18N_MERC I18N
+		    	WHERE I18N.MERC_ID = MAES.MERC_ID
+		        	AND I18N.MERC_IDIOMA = ?
+		         	AND ? BETWEEN MERC_FECHA_CREACION AND COALESCE(MERC_FECHA_FIN, ?)
+		 	) AS i18n_nombre
+		FROM
+		    IMAN_MERCANCIA_MERC MAES
+		    JOIN IMAN_MERCANCIATEMP_MERC TEMP ON
+		    	TEMP.MERC_ID = maes.MERC_ID
+		        AND ? BETWEEN TEMP.MERC_FECHA_CREACION AND COALESCE(TEMP.MERC_FECHA_FIN, ?)
+		order by MAES.MERC_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="UNIDAD_CARGA" table="IMAN_UNIDADCARGA_UNIC" tempImp="true">
+	<![CDATA[
+		SELECT
+			MAES.UNIC_id
+			, MAES.UNIC_CODIGO
+			, TEMP.UNIC_TIPO_EEE, TEMP.UNIC_ES_EEE, TEMP.UNIC_TEUS
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.unic_emet_id
+	            	AND trid_table_name = 'IEST_MERCANCIATIPO_EMET') as unic_emet
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.unic_merc_id
+	            	AND trid_table_name = 'IMAN_MERCANCIA_MERC') as unic_merc
+		 	, (SELECT I18N.UNIC_NOMBRE
+		 		FROM IMAN_UNIDADCARGAI18N_UNIC I18N
+		    	WHERE I18N.UNIC_ID = MAES.UNIC_ID
+		        	AND I18N.UNIC_IDIOMA = ?
+		         	AND ? BETWEEN UNIC_FECHA_CREACION AND COALESCE(UNIC_FECHA_FIN, ?)
+		 	) AS i18n_nombre
+		FROM
+			IMAN_UNIDADCARGA_UNIC MAES
+		 	JOIN IMAN_UNIDADCARGATEMP_UNIC TEMP ON
+		    	TEMP.UNIC_ID = MAES.UNIC_ID
+		     	AND ? BETWEEN TEMP.UNIC_FECHA_CREACION AND COALESCE(TEMP.UNIC_FECHA_FIN, ?)
+	    WHERE TEMP.UNIC_MERC_ID IS NOT NULL
+		order by MAES.UNIC_es_activo desc
+	]]>
+    </sql>
+
+<!--
+    <sql id="TIPO_EQUIPAMIENTO" table="IMAN_TIPOEQUIPAMIENTO_TEQU" tempImp="false">
+    <![CDATA[
+        SELECT
+        	MAES.TEQU_id
+            , MAES.TEQU_CODIGO || MAES.TEQU_TAMANYO AS CODIGO
+            , MAES.TEQU_ES_RORO
+            , MAES.TEQU_TAMANYO
+        , (SELECT UNIC_CODIGO FROM IMAN_UNIDADCARGA_UNIC
+                where unic_id = tequ_unidad_carga_id) as unic_codigo
+        , (SELECT merc_codigo FROM IMAN_MERCANCIA_MERC
+                where exists (
+                  select 1
+                  from IMAN_UNIDADCARGATEMP_UNIC
+                  where unic_id = MAES.TEQU_UNIDAD_CARGA_ID
+                    and UNIC_MERC_ID = merc_id
+              )
+          and rownum <= 1
+        ) as merc_codigo
+            , (SELECT I18N.TEQU_NOMBRE FROM IMAN_TIPOEQUIPAMIENTOi18n_TEQU I18N
+                WHERE I18N.TEQU_ID = MAES.TEQU_ID
+                    AND I18N.TEQU_IDIOMA = ?
+                    AND ? BETWEEN TEQU_FECHA_CREACION and coalesce(TEQU_FECHA_FIN, ?)
+            ) AS I18N_NOMBRE
+        FROM IMAN_TIPOEQUIPAMIENTO_TEQU MAES
+        order by MAES.TEQU_es_activo desc
+    ]]>
+    </sql>
+-->
+
+    <sql id="ZONA_COSTERA_EEE" table="IEST_ZONACOSTERAEEE_ZCOS" tempImp="false">
+	<![CDATA[
+		SELECT
+			maes.zcos_id
+			, (
+				SELECT PAIS_ISO
+				FROM IGEN_PAIS_PAIS
+				WHERE pais_id = maes.ZCOS_pais_id
+			)
+			|| MAES.ZCOS_codigo AS codigo
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.zcos_pais_id
+	            	AND trid_table_name = 'IGEN_PAIS_PAIS') as zcos_pais
+		 	, (SELECT I18N.ZCOS_NOMBRE
+		 		FROM IEST_ZONACOSTERAEEEi18n_ZCOS I18N
+		    	WHERE I18N.ZCOS_ID = MAES.ZCOS_ID
+		        	AND I18N.ZCOS_IDIOMA = ?
+		         	AND ? BETWEEN ZCOS_FECHA_CREACION AND COALESCE(ZCOS_FECHA_FIN, ?)
+		 	) AS I18N_NOMBRE
+		FROM
+			IEST_ZONACOSTERAEEE_ZCOS MAES
+		order by MAES.ZCOS_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="UNLOCODE" table="IGEN_UNLOCODE_UNLO" tempImp="false">
+	<![CDATA[
+		SELECT
+			maes.unlo_id
+			, (SELECT PAIS_ISO FROM IGEN_PAIS_PAIS WHERE pais_id = maes.unlo_pais_id) || UNLO_CODIGO AS unlo_codigo
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.unlo_pais_id
+	            	AND trid_table_name = 'IGEN_PAIS_PAIS') as unlo_pais
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.unlo_ageo_id
+	            	AND trid_table_name = 'IEST_AREAGEOGRAFICA_AGEO') as unlo_ageo
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.unlo_zcos_id
+	            	AND trid_table_name = 'IEST_ZONACOSTERAEEE_ZCOS') as unlo_zcos
+		 	, UNLO_LATITUD
+		 	, UNLO_LONGITUD
+		 	, UNLO_ES_INSULAR
+		 	, UNLO_ES_MEL_CEU_CAN
+		 	, (SELECT I18N.UNLO_NOMBRE
+		 		FROM IGEN_UNLOCODEi18n_UNLO I18N
+		     	WHERE I18N.UNLO_ID = MAES.UNLO_ID
+		        	AND I18N.UNLO_IDIOMA = ?
+		         	AND ? BETWEEN UNLO_FECHA_CREACION AND COALESCE(UNLO_FECHA_FIN, ?)
+		 	) AS I18N_NOMBRE
+		FROM IGEN_UNLOCODE_UNLO MAES
+		order by MAES.UNLO_es_activo desc
+	]]>
+    </sql>
+
+<!--
+    <sql id="AUTORIDAD_PORTUARIA" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.AUTP_ID
+		    , (
+		        SELECT
+		            (
+		                SELECT PAIS_ISO
+		                FROM IGEN_PAIS_PAIS
+		                where pais_id = unlo_pais_id
+		            )
+		            || UNLO_CODIGO
+		        FROM IGEN_UNLOCODE_UNLO
+		        WHERE UNLO_ID = AUTP_UNLO_ID
+		    ) as autp_unlo
+		    , MAES.AUTP_DEPENDENCIA_AUTP_ID
+		    , (SELECT I18N.AUTP_NOMBRE FROM IGEN_AUTORIDAD_PORTi18n_AUTP I18N
+		        WHERE I18N.AUTP_ID = MAES.AUTP_ID
+		            AND I18N.AUTP_IDIOMA = ?
+		            AND ? BETWEEN AUTP_FECHA_CREACION and coalesce(AUTP_FECHA_FIN, ?)
+		    ) AS I18N_NOMBRE
+		FROM
+		    IGEN_AUTORIDAD_PORT_AUTP MAES
+		WHERE
+		    (MAES.AUTP_DEPENDENCIA_AUTP_ID IS NULL OR MAES.AUTP_DEPENDENCIA_AUTP_ID <= MAES.AUTP_ID)
+        order by MAES.AUTP_ID, MAES.AUTP_ES_ACTIVO desc
+	]]>
+    </sql>
+-->
+
+    <sql id="RECINTO_ADUANERO" table="IMAN_RECINTOADUANERO_RADU" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.radu_id
+		    , MAES.radu_codigo
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.radu_unlocode_id
+	            	AND trid_table_name = 'IGEN_UNLOCODE_UNLO') as radu_unlocode
+			, (SELECT I18N.RADU_NOMBRE
+				FROM IMAN_RECINTOADUANEROi18n_RADU I18N
+			    WHERE I18N.RADU_ID = MAES.RADU_ID
+			    	AND I18N.RADU_IDIOMA = ?
+			        AND ? BETWEEN RADU_FECHA_CREACION and coalesce(RADU_FECHA_FIN, ?)
+			 ) AS I18N_NOMBRE
+		FROM
+		    IMAN_RECINTOADUANERO_RADU MAES
+		order by MAES.RADU_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="SUBPUERTO" table="IGEN_SUBPUERTO_SUBP" tempImp="false">
+    <![CDATA[
+        SELECT
+            MAES.SUBP_id
+            , MAES.SUBP_CODIGO
+            , MAES.SUBP_CODIGO_EDI
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.subp_unlo_id
+	            	AND trid_table_name = 'IGEN_UNLOCODE_UNLO') as subp_unlo
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE
+	            	trid_old_id = (
+						SELECT radu_id
+		                FROM IMAN_RECINTOADUANERO_RADU
+		                WHERE RADU_UNLOCODE_ID = SUBP_UNLO_ID
+		            )
+	            	AND trid_table_name = 'IMAN_RECINTOADUANERO_RADU') as subp_radu
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.subp_ivat_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') as subp_ivat
+            , MAES.SUBP_ES_PARA_ESTADISTICAS
+            , (SELECT I18N.subp_NOMBRE
+                FROM IGEN_SUBPUERTOi18n_SUBP I18N
+                WHERE I18N.SUBP_ID = MAES.SUBP_ID
+                    AND I18N.SUBP_IDIOMA = ?
+                    AND ? BETWEEN SUBP_FECHA_CREACION AND COALESCE(SUBP_FECHA_FIN, ?)
+            ) AS i18n_nombre
+        FROM
+            IGEN_SUBPUERTO_SUBP MAES
+        order by MAES.SUBP_es_activo desc
+    ]]>
+    </sql>
+
+    <sql id="ZONA_DEPOSITO" table="ISUP_ZONA_ZONS" tempImp="true">
+    <![CDATA[
+		 select
+		       maes.ZONS_id
+		    , (select SUBP_CODIGO from IGEN_SUBPUERTO_SUBP where SUBP_ID = maes.ZONS_SUBP_ID) AS SUBP_CODIGO
+		    , maes.ZONS_CODIGO as codigo
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.zons_tipo_superficie_id
+	            	AND trid_table_name = 'ISUP_TIPOSUPERFICIE_TSUP') as zons_tipo_superficie
+        	, to_char(temp.ZONS_CODIGO_EXENCION)
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.zons_grupo_zona_deposito_id
+	            	AND trid_table_name = 'ISUP_GRUPOZONA_GZSU') as zons_grupo_zona_deposito
+	        , temp.ZONS_ES_RO_RO
+	        , temp.ZONS_ES_ZONA_MUELLES
+	        , temp.ZONS_SUPERFICIE
+	        , temp.ZONS_ALTURA
+	        , temp.ZONS_PLANTAS
+
+	        , (SELECT I18N.ZONS_NOMBRE
+	            FROM ISUP_ZONAI18N_ZONS I18N
+	            WHERE I18N.ZONS_ID = MAES.ZONS_ID
+	                AND I18N.ZONS_IDIOMA = ?
+	                AND ? BETWEEN ZONS_FECHA_CREACION AND COALESCE(ZONS_FECHA_FIN, ?)
+	        ) AS I18N_NOMBRE
+	    from ISUP_ZONA_ZONS maes
+	        join ISUP_ZONATEMP_ZONS temp on
+	            temp.ZONS_ID = maes.ZONS_ID
+	            AND ? BETWEEN temp.ZONS_FECHA_CREACION AND COALESCE(temp.ZONS_FECHA_FIN, ?)
+    ]]>
+    </sql>
+
+    <sql id="SERVICIO_TRAFICO" table="IESC_TRAFICO_TRAF" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.TRAF_id
+	        , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP
+	            WHERE SUBP_ID = TRAF_SUBP_ID) AS SUBP_CODIGO
+	        , MAES.TRAF_CODIGO AS CODIGO
+	        , MAES.TRAF_INCREMENTA_CONTADORES
+			    , (SELECT I18N.TRAF_NOMBRE FROM IESC_TRAFICOi18n_TRAF I18N
+			        WHERE I18N.TRAF_ID = MAES.TRAF_ID
+			            AND I18N.TRAF_IDIOMA = ?
+			            AND ? BETWEEN TRAF_FECHA_CREACION and coalesce(TRAF_FECHA_FIN, ?)
+			    ) AS I18N_NOMBRE
+			FROM IESC_TRAFICO_TRAF MAES
+	    order by MAES.TRAF_ES_ACTIVO desc
+	]]>
+    </sql>
+
+    <sql id="MUELLE" table="IESC_MUELLE_MUEL" tempImp="true">
+	<![CDATA[
+		SELECT
+			MAES.MUEL_id
+	        , SUBSTR(MAES.MUEL_CODIGO, 1, 1) AS SUBP_CODIGO
+	        , SUBSTR(MAES.MUEL_CODIGO, 2)
+	        , (SELECT I18N.MUEL_NOMBRE
+	          FROM IESC_MUELLEi18n_MUEL I18N
+	            WHERE I18N.MUEL_ID = MAES.MUEL_ID
+	                AND I18N.MUEL_IDIOMA = ?
+	                AND ? BETWEEN MUEL_FECHA_CREACION AND COALESCE(MUEL_FECHA_FIN, ?)
+	        ) AS i18n_nombre
+		FROM
+		    IESC_MUELLE_MUEL MAES
+		    JOIN IESC_MUELLEtemp_MUEL TEMP ON
+		    	TEMP.MUEL_ID = MAES.MUEL_ID
+		        AND ? BETWEEN TEMP.MUEL_FECHA_CREACION AND COALESCE(TEMP.MUEL_FECHA_FIN, ?)
+		order by MAES.MUEL_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="INSTALACION_DEP_AUT" table="IEMD_INSTALACIONDEPA_INDA" tempImp="false">
+    <![CDATA[
+        SELECT
+        	maes.INDA_id
+            , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDA_SUBPUERTO_ID) AS SUBP_CODIGO
+            , INDA_CODIGO as codigo
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.inda_puerto_id
+	            	AND trid_table_name = 'IGEN_UNLOCODE_UNLO') as inda_puerto
+            , MAES.INDA_OBSERVACIONES
+            , (SELECT I18N.INDA_NOMBRE
+                FROM IEMD_INSTALACIONDEPAI18N_INDA I18N
+                WHERE I18N.INDA_ID = MAES.INDA_ID
+                    AND I18N.INDA_IDIOMA = ?
+                    AND ? BETWEEN INDA_FECHA_CREACION AND COALESCE(INDA_FECHA_FIN, ?)
+            ) AS I18N_NOMBRE
+        FROM IEMD_INSTALACIONDEPA_INDA MAES
+        order by INDA_ES_ACTIVO desc
+    ]]>
+    </sql>
+
+    <sql id="INSTALACION_DEP" table="IEMD_INSTALACIONDEP_INDP" tempImp="false">
+    <![CDATA[
+        SELECT
+        	MAES.indp_id
+            , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDP_SUBPUERTO_ID) AS SUBP_CODIGO
+            , MAES.INDP_CODIGO AS MAES_CODIGO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.indp_tipo_amarre_id
+	            	AND trid_table_name = 'IEMD_TIPOAMARRE_TAMD') as indp_tipo_amarre
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.indp_tipo_embarcacion_id
+	            	AND trid_table_name = 'IEMD_TIPOEMBARCACION_TEMD') as indp_tipo_embarcacion
+            , MAES.indp_calado_real
+            , MAES.indp_manga_real
+            , MAES.INDP_ESLORA_REAL
+            , MAES.INDP_ALTURA_REAL
+            , MAES.INDP_CALADO_MAXIMO
+            , MAES.indp_manga_maxima
+            , MAES.INDP_ESLORA_MAXIMA
+            , MAES.indp_altura_maxima
+            , MAES.indp_calado_minimo
+            , MAES.indp_manga_minima
+            , MAES.INDP_ESLORA_MINIMA
+            , MAES.INDP_ALTURA_MINIMA
+            , MAES.INDP_ES_EN_TIERRA
+            , MAES.INDP_observaciones
+            , (SELECT I18N.INDP_NOMBRE
+                FROM IEMD_INSTALACIONDEPi18n_INDP I18N
+                WHERE I18N.INDP_ID = MAES.INDP_ID
+                    AND I18N.INDP_IDIOMA = ?
+                    AND ? BETWEEN INDP_FECHA_CREACION AND COALESCE(INDP_FECHA_FIN, ?)
+            ) AS i18n_nombre
+        FROM
+            IEMD_INSTALACIONDEP_INDP MAES
+        order by MAES.INDP_es_activo desc
+    ]]>
+    </sql>
+
+    <sql id="AMARRE_DEP" table="IEMD_AMARRE_AMAD" tempImp="false">
+    <![CDATA[
+        SELECT
+        	maes.AMAD_id
+            , (
+            	select subp_codigo
+            	from IGEN_SUBPUERTO_SUBP
+            	where
+            		subp_id = (
+		                select
+		                    INDP_SUBPUERTO_ID
+		                from IEMD_INSTALACIONDEP_INDP
+		                WHERE indp_id = maes.AMAD_INSTALACIONDEP_ID
+            		)
+            ) AS subp_codigo
+            , (
+                select
+                    indp_codigo
+                from IEMD_INSTALACIONDEP_INDP
+                WHERE indp_id = maes.AMAD_INSTALACIONDEP_ID
+            ) || '-' || maes.AMAD_PANTALAN || '-' || maes.AMAD_PUESTO
+            AS codigo
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.amad_instalaciondep_id
+	            	AND trid_table_name = 'IEMD_INSTALACIONDEP_INDP') as amad_instalaciondep
+            , maes.AMAD_PANTALAN, maes.AMAD_PUESTO, maes.AMAD_estado, maes.AMAD_descripcion
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.amad_tipoamarre_id
+	            	AND trid_table_name = 'IEMD_TIPOAMARRE_TAMD') as amad_tipoamarre
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.amad_tipoembarcacion_id
+	            	AND trid_table_name = 'IEMD_TIPOEMBARCACION_TEMD') as amad_tipoembarcacion
+            , maes.amad_calado_real, maes.amad_manga_real, maes.amad_eslora_real, maes.amad_altura_real
+            , maes.amad_calado_maximo, maes.amad_manga_maxima, maes.amad_eslora_maxima, maes.amad_altura_maxima
+            , maes.amad_calado_minimo, maes.amad_manga_minima, maes.amad_eslora_minima, maes.amad_altura_minima
+            , maes.amad_observaciones
+        FROM IEMD_AMARRE_AMAD maes
+    ]]>
+    </sql>
+
+    <sql id="ALINEACION" table="IGEN_ALINEACION_ALIN" tempImp="true">
+	<![CDATA[
+		SELECT
+			maes.alin_id
+	        , SUBSTR(MAES.ALIN_CODIGO, 1, 1) AS subp_codigo
+	        , SUBSTR(MAES.ALIN_CODIGO, 2)
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.alin_muel_id
+	            	AND trid_table_name = 'IESC_MUELLE_MUEL') as alin_muel
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.alin_alit_id
+	            	AND trid_table_name = 'IESC_ALINEACIONTIPO_ALIT') as alin_alit
+	        , TEMP.ALIN_NORAY_INICIAL
+	        , temp.ALIN_NORAY_FINAL
+	        , temp.ALIN_CALADO
+	        , temp.ALIN_longitud
+	        , temp.ALIN_ANCHURA
+	        , temp.ALIN_ES_EN_CONCESION
+	        , temp.ALIN_ES_DE_PARTICULARES
+	        , TEMP.ALIN_ES_AGUAS_EN_COCESION
+	        , temp.ALIN_ZONA_PUERTO
+	        , (SELECT I18N.ALIN_NOMBRE
+	          FROM IGEN_ALINEACIONI18N_ALIN I18N
+	            WHERE I18N.ALIN_ID = MAES.ALIN_ID
+	                AND I18N.ALIN_IDIOMA = ?
+	                AND ? BETWEEN ALIN_FECHA_CREACION AND COALESCE(ALIN_FECHA_FIN, ?)
+	        ) AS i18n_nombre
+		FROM
+		    IGEN_ALINEACION_ALIN MAES
+		    JOIN IGEN_ALINEACIONTEMP_ALIN TEMP ON
+		    	TEMP.ALIN_ID = MAES.ALIN_ID
+		        AND ? BETWEEN TEMP.ALIN_FECHA_CREACION AND COALESCE(TEMP.ALIN_FECHA_FIN, ?)
+		order by MAES.ALIN_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="ORGANIZACION" table="ICOM_ORGANIZACION_ORGA" tempImp="false">
+    <![CDATA[
+        SELECT
+            MAES.ORGA_id
+            , MAES.ORGA_COD
+            , MAES.orga_nombre
+            , MAES.ORGA_TIPO_DOC_FISCAL
+            , COALESCE(MAES.ORGA_DOC_FISCAL_PREFIJO, '')
+                || COALESCE(MAES.ORGA_DOC_FISCAL, '')
+                || COALESCE(MAES.ORGA_DOC_FISCAL_SUFIJO, '')
+            AS ORGA_DOCUMENTO
+            , MAES.ORGA_DESCRIPCION
+            , DIRC_DIRECCION || ', ' || DIRC_PORTAL || ', ' || DIRC_piso || DIRC_letra || DIRC_puerta as direccion
+            , DIRC_COD_POSTAL
+            , NULL AS UNLOCODE
+            , DIRC_PERSONA_CONTACTO
+            , DIRC_TELEFONOA
+            , DIRC_TELEFONOB
+            , DIRC_FAX
+            , DIRC_EMAIL
+            , DIRC_PAGINA_WEB
+            FROM ICOM_ORGANIZACION_ORGA MAES
+            LEFT JOIN ICOM_DIRECCION_CONT_DIRC ON
+                DIRC_ID_ORGANIZACION = ORGA_ID
+        order by MAES.ORGA_ES_ACTIVO desc
+    ]]>
+    </sql>
+
+    <sql id="EMBARCACION_DEP" table="IEMD_EMBARCACION_EMBD" tempImp="false">
+    <![CDATA[
+        select
+            maes.EMBD_id
+            , maes.EMBD_CODIGO
+            , maes.EMBD_MATRICULA
+            , maes.EMBD_NOMBRE
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.embd_tipo_embarcacion_id
+	            	AND trid_table_name = 'IEMD_TIPOEMBARCACION_TEMD') as embd_tipo_embarcacion
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.embd_orga_id
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') as embd_orga
+            , maes.EMBD_ESLORA
+            , maes.EMBD_MANGA
+            , maes.EMBD_CALADO
+            , maes.EMBD_ALTURA
+            , maes.EMBD_DESPLAZAMIENTO
+            , maes.EMBD_TONELAJE
+            , maes.EMBD_POTENCIA
+            , maes.EMBD_ES_A_MOTOR
+            , maes.EMBD_ES_TRANSEUNTE
+            , maes.EMBD_ES_SUJETO_NAV_INT
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.embd_pais_id
+	            	AND trid_table_name = 'IGEN_PAIS_PAIS') as embd_pais
+            , maes.EMBD_OBSERVACIONES
+        from IEMD_EMBARCACION_EMBD maes
+        order by maes.EMBD_ES_ACTIVO desc
+    ]]>
+    </sql>
+
+    <sql id="EMBARCACION_DEP_AUT" table="IEMD_EMBARCACIONAUT_EMBA" tempImp="true">
+    <![CDATA[
+        SELECT
+            maes.EMBA_id
+            , maes.EMBA_CODIGO
+            , maes.EMBA_MATRICULA
+            , maes.EMBA_NOMBRE
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.emba_tipo_embarcacion_id
+	            	AND trid_table_name = 'IEMD_TIPOEMBARCACION_TEMD') as emba_tipo_embarcacion
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = eacl_orga_id_cliente
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') as eacl_orga_cliente
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = eacl_orga_id_cliente_ad
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') as eacl_orga_cliente_ad
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = emba_instalaciondepa_id
+	            	AND trid_table_name = 'IEMD_INSTALACIONDEPA_INDA') as emba_instalaciondepa
+            , maes.EMBA_ESLORA
+            , maes.EMBA_MANGA
+            , maes.EMBA_CALADO
+            , maes.EMBA_ALTURA
+            , maes.EMBA_DESPLAZAMIENTO
+            , maes.EMBA_TONELAJE
+            , maes.EMBA_POTENCIA
+            , maes.EMBA_ES_A_MOTOR
+            , to_char(maes.EMBA_CODIGO_EXENCION)
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = emba_tipo_exencion_id
+	            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') as emba_tipo_exencion
+            , EACL.EACL_ES_SUJ_PASIVO_SUST
+            , EACL.EACL_ES_TRANSEUNTE
+            , EACL.EACL_ES_NAVEGACION_INT
+            , maes.EMBA_OBSERVACIONES
+        FROM IEMD_EMBARCACIONAUT_EMBA maes
+            JOIN IEMD_EMBARCACIONAUTCLI_EACL EACL ON
+                EACL_EMBARCACIONAUT_ID = EMBA_ID
+                AND ? BETWEEN EACL_FECHA_INICIO AND COALESCE(EACL_FECHA_FIN, ?)
+        order by maes.EMBA_ES_ACTIVO desc, EACL.EACL_ES_ACTIVO desc
+    ]]>
+    </sql>
+
+    <sql id="INSTALACION_ESPECIAL" table="IMAN_INSTESPECIAL_IESP" tempImp="true">
+	<![CDATA[
+		SELECT
+	        MAES.iesp_id
+	        , SUBSTR(MAES.iesp_CODIGO, 1, 1) AS subp_codigo
+	        , SUBSTR(MAES.iesp_CODIGO, 2)
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.iesp_alineacion
+	            	AND trid_table_name = 'IGEN_ALINEACION_ALIN') as iesp_alineacion
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.iesp_orga_id_estibador
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') as iesp_orga_estibador
+	        , TEMP.IESP_ES_ADICIONADA_EST
+	        , (SELECT I18N.iesp_NOMBRE
+	          FROM IMAN_INSTESPECIALi18n_IESP I18N
+	            WHERE I18N.IESP_ID = MAES.IESP_ID
+	                AND I18N.IESP_IDIOMA = ?
+	                AND ? BETWEEN IESP_FECHA_CREACION AND COALESCE(IESP_FECHA_FIN, ?)
+	        ) AS i18n_nombre
+		FROM
+		    IMAN_INSTESPECIAL_IESP MAES
+		    JOIN IMAN_INSTESPECIALtemp_IESP TEMP ON
+		    	TEMP.IESP_ID = MAES.IESP_ID
+		        AND ? BETWEEN TEMP.IESP_FECHA_CREACION AND COALESCE(TEMP.IESP_FECHA_FIN, ?)
+		order by MAES.IESP_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="BUQUE_PESCA" table="IPES_BUQUE_BUPE" tempImp="true">
+	<![CDATA[
+		SELECT
+	        MAES.BUPE_id
+	        , MAES.BUPE_CODIGO
+
+	        , TEMP.bupe_nombre
+	        , TEMP.BUPE_CALLSIGN
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.bupe_bandera
+	            	AND trid_table_name = 'IGEN_PAIS_PAIS') as bupe_bandera
+
+	        , TEMP.BUPE_LISTA
+	        , TEMP.bupe_matricula
+	        , TEMP.BUPE_FOLIO
+	        , TEMP.BUPE_CENSO
+	        , TEMP.BUPE_GT
+	        , TEMP.BUPE_ESLORA
+	        , TEMP.BUPE_MANGA
+	        , TEMP.BUPE_CALADO_MAXIMO
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.bupe_orga_id_consignatario
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') as bupe_orga_consignatario
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.bupe_orga_id_armador
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') as bupe_orga_armador
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.bupe_zona_pesca_id
+	            	AND trid_table_name = 'IPES_ZONAPESCA_ZOPE') as bupe_zona_pesca
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.bupe_arte_pesca_id
+	            	AND trid_table_name = 'IPES_ARTEPESCA_ARPE') as bupe_arte_pesca
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.bupe_tipo_buque_id
+	            	AND trid_table_name = 'IPES_BUQUETIPO_BTPE') as bupe_tipo_buque
+
+	        , TEMP.BUPE_es_generada_tasa
+		FROM
+		    IPES_BUQUE_BUPE MAES
+		    JOIN IPES_BUQUEtemp_BUPE TEMP ON
+		    	TEMP.BUPE_ID = MAES.BUPE_ID
+		        AND ? BETWEEN TEMP.BUPE_FECHA_CREACION AND COALESCE(TEMP.BUPE_FECHA_FIN, ?)
+		order by MAES.BUPE_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="REDES" table="ISUM_RED_REDS" tempImp="false">
+	<![CDATA[
+		SELECT
+		    MAES.REDS_id
+		    , (
+		        SELECT SUBP_CODIGO
+		        FROM IGEN_SUBPUERTO_SUBP
+		        WHERE SUBP_ID = REDS_SUBP_ID
+		    ) AS subp_codigo
+		    , MAES.REDS_CODIGO as CODIGO
+		    , MAES.REDS_NOMBRE
+		    , MAES.REDS_TIPO_RED
+		    , MAES.REDS_SUBTIPO_RED
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = reds_proveedor_id
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') as reds_proveedor
+		    , MAES.REDS_NUMERO_POLIZA
+		    , MAES.REDS_POTENCIA
+		    , MAES.REDS_TARFIFA
+		    , MAES.REDS_COSTE_UNITARIO
+		    , MAES.REDS_OBSERVACIONES
+		FROM ISUM_RED_REDS MAES
+		order by MAES.REDS_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="CONTADOR" table="ISUM_CONTADOR_COSU" tempImp="true">
+	<![CDATA[
+	SELECT
+		  MAES.COSU_id
+		  , (
+		    SELECT subp_codigo
+		    FROM IGEN_SUBPUERTO_SUBP
+		    WHERE SUBP_ID = COSU_SUBP_ID
+		  ) AS subp_codigo
+		  , MAES.COSU_CODIGO as COSU_CODIGO
+		  , MAES.COSU_FECHA_INSTALACION
+		  , MAES.COSU_FECHA_BAJA
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = cosu_tipo_id
+	            	AND trid_table_name = 'ISUM_TIPOCONTADOR_TCSU') as cosu_tipo
+		  , MAES.COSU_ESTADO
+		  , MAES.COSU_ES_PARA_BUQUES
+		  , MAES.COSU_FABRICANTE
+		  , MAES.COSU_ANYO_FABRICACION
+		  , MAES.COSU_POTENCIA_MAXIMA
+		  , MAES.COSU_DIGITOS
+		  , MAES.COSU_FACTOR_MULTIPLICADOR
+		  , MAES.COSU_FECHA_COMPRA
+		  , MAES.COSU_FECHA_FIN_GARANTIA
+		  , MAES.COSU_FECHA_INSTALACION
+		  , MAES.COSU_FECHA_VIDA_ESTIMADA
+	FROM ISUM_CONTADOR_COSU MAES
+	WHERE ? BETWEEN COSU_FECHA_INSTALACION AND COALESCE(COSU_FECHA_BAJA, ?)
+	]]>
+    </sql>
+
+    <sql id="PUNTO_RED" table="ISUM_PUNTORED_PRSU" tempImp="false">
+    <![CDATA[
+        SELECT
+        	maes.prsu_id
+            , (
+            	SELECT
+            		SUBP_CODIGO
+            	FROM IGEN_SUBPUERTO_SUBP
+            	WHERE
+            		SUBP_ID = (
+            			SELECT REDS_SUBP_ID
+            			FROM ISUM_RED_REDS
+                		WHERE
+                			REDS_ID = PRSU_REDS_ID
+                	)
+            ) AS subp_codigo
+            , (
+                SELECT
+                    REDS_CODIGO
+                FROM ISUM_RED_REDS
+                WHERE REDS_ID = PRSU_REDS_ID
+            ) || '-' || maes.prsu_codigo AS CODIGO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = prsu_reds_id
+	            	AND trid_table_name = 'ISUM_RED_REDS') as prsu_reds
+            , PRSU_referencia
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = prsu_tsum_id
+	            	AND trid_table_name = 'ISUM_TIPOSUMINISTRO_TSUM') as prsu_tsum
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = prsu_ivat_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') as prsu_ivat
+            , PRSU_NOMBRE, PRSU_UBICACION, PRSU_CONSUMO_MIN, PRSU_CONSUMO_MIN_PERIDO, PRSU_TUBERIA_ENT_DIAMETRO, PRSU_TUBERIA_SAL_DIAMETRO
+            , PRSU_DISTANCIA_ANTERIOR, PRSU_RUTA_LECTURA, PRSU_FORMA_REC_LECTURA, PRSU_POSICION_RUTA
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE
+	            	trid_old_id = (
+	                    SELECT CPSU_COSU_ID FROM ISUM_CONTADORPUNTORED_CPSU
+	                    WHERE
+	                    	CPSU_PRSU_ID = PRSU_ID
+	                        AND sysdate between CPSU_FECHA_INICIO AND COALESCE(CPSU_FECHA_FINAL, SYSDATE)
+	                        AND cpsu_es_activo = 1
+	            	)
+	            	AND trid_table_name = 'ISUM_CONTADOR_COSU') as prsu_cosu
+            , (
+                CASE
+                    WHEN prsu_inst_deport_subp_id IS NULL
+                    THEN NULL
+
+                    ELSE (
+				        SELECT trid_new_id FROM tbl_traduccion_ids_trid
+				        WHERE
+				        	trid_old_id = (
+				        		SELECT amad_id FROM IEMD_AMARRE_AMAD
+				        		WHERE
+				        			amad_instalaciondep_id = (
+				        				SELECT indp_id FROM iemd_instalaciondep_indp
+				        				WHERE
+				        					indp_subpuerto_id = prsu_inst_deport_subp_id
+				        					AND indp_codigo = prsu_inst_deport_codigo
+				        			)
+				        			AND amad_pantalan = prsu_inst_deport_pantalan
+				        			AND amad_puesto = prsu_inst_depor_puesto
+				        	)
+				        	AND trid_table_name = 'IEMD_AMARRE_AMAD'
+                    )
+                END
+            ) AS prsu_amad
+            , prsu_seccion_cable, prsu_potencia, prsu_sec_repetidores
+        FROM isum_puntored_prsu maes
+    ]]>
+    </sql>
+
+    <sql id="REGISTRO_TIPO_BUQUE_EEE" table="IEST_REGISTROBUQUEEEETIPO_BUET" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.BUET_id
+		    , (
+		        SELECT PAIS_ISO
+		        FROM IGEN_PAIS_PAIS
+		        WHERE PAIS_ID = BUET_PAIS_ID
+		    ) || MAES.BUET_CODIGO as codigo
+		    , MAES.BUET_DESCRIPCION
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = buet_pais_id
+	            	AND trid_table_name = 'IGEN_PAIS_PAIS') as buet_pais
+		FROM IEST_REGISTROBUQUEEEETIPO_BUET maes
+		order by MAES.BUET_es_activo desc
+	]]>
+    </sql>
+
+    <sql id="REGISTRO_TIPO_BUQUE" table="IEST_REGISTROBUQUETIPO_BURT" tempImp="false">
+	<![CDATA[
+		SELECT
+			maes.burt_id
+		    , (
+		        SELECT PAIS_ISO
+		        FROM IGEN_PAIS_PAIS
+		        WHERE PAIS_ID = BURT_PAIS_ID
+		    ) || MAES.BURT_CODIGO AS CODIGO
+		    , MAES.BURT_DESCRIPCION
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = burt_buet_id
+	            	AND trid_table_name = 'IEST_REGISTROBUQUEEEETIPO_BUET') as burt_buet
+		    , MAES.BURT_poblacion
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = burt_pais_id
+	            	AND trid_table_name = 'IGEN_PAIS_PAIS') as burt_pais
+		FROM IEST_REGISTROBUQUETIPO_BURT MAES
+		ORDER BY MAES.BURT_ES_ACTIVO DESC
+	]]>
+    </sql>
+
+    <sql id="BUQUE" table="IESC_BUQUE_BUQU" tempImp="false">
+	<![CDATA[
+		SELECT
+			 MAES.BUqu_buque_id
+			, MAES.BUqu_CODIGO_imo
+			, TEMP.BUQU_nombre_buque
+			, TEMP.BUQU_CALLSIGN
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = buqu_bandera_pais_id
+	            	AND trid_table_name = 'IGEN_PAIS_PAIS') as buqu_bandera_pais
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.buqu_buqt_id
+	            	AND trid_table_name = 'IGEN_BUQUETIPO_BUQT') as buqu_buqt
+			, TEMP.BUQU_FECHA_ALTA_EDI
+			, TEMP.BUQU_FECHA_VAL_EDI
+			, TEMP.BUQU_ES_PENdIENTE_VAL_EDI
+			, TEMP.BUQU_OBSERVACIONES_DUE
+			, TEMP.BUQU_GT
+			, TEMP.BUQU_UNIDADES_FACTURACION
+			, TEMP.BUQU_TONELADAS_REGISTRADAS
+			, TEMP.BUQU_TONELAJE_MEDIO
+			, TEMP.BUQU_VOLUMEN_SBT
+			, TEMP.BUQU_UNIDAD_MEDIDA_SBT
+			, TEMP.BUQU_CALADO_MINIMO
+			, TEMP.BUQU_CALADO_MAXIMO
+			, TEMP.BUQU_ESLORA
+			, TEMP.BUQU_MANGA
+			, TEMP.BUQU_ALTURA_PUNTAL
+			, TEMP.BUQU_POTENCIA
+			, TEMP.BUQU_ALTURA_ARBOLADURA
+			, TEMP.BUQU_VELOCIDAD_CRUCERO
+			, TEMP.BUQU_VELOCIDAD_MAXIMA
+			, TEMP.BUQU_NUMERO_HELICES_PROPULSION
+			, TEMP.BUQU_NUMERO_HELICES_PROA
+			, TEMP.BUQU_NUMERO_HELICES_POPA
+			, TEMP.BUQU_HELICES
+			, TEMP.BUQU_NUMERO_SBT
+			, TEMP.BUQU_NUMERO_PASARELAS
+			, TEMP.BUQU_ES_DOBLE_CASCO
+			, TEMP.BUQU_ES_CERTIFICADO_CAPITANIA
+			, TEMP.BUQU_ES_MOU_PSC_REQUERIDO
+			, TEMP.BUQU_CAPACIDAD_CARGA_MAX
+			, TEMP.BUQU_LONGITUD_CARGA_MAX
+			, TEMP.BUQU_TRIPULACION_MAXIMA
+			, TEMP.BUQU_PASAJE_MAXIMO
+			, TEMP.BUQU_FECHA_CONSTRUCCION
+			, TEMP.BUQU_SOCIEDAD_CLASIFICACION
+			, TEMP.BUQU_ASEGURADORA
+			, TEMP.BUQU_CLUB_P_I
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.buqu_registro_pais_id
+	            	AND trid_table_name = 'IGEN_PAIS_PAIS') as buqu_registro_pais
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.buqu_burt_id
+	            	AND trid_table_name = 'IEST_REGISTROBUQUETIPO_BURT') as buqu_burt
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.buqu_armador_orga_id
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') as buqu_armador_orga
+			, TEMP.BUQU_LIBRO_REGISTRO
+			, TEMP.BUQU_DIRECCION_NAVIERA
+			, TEMP.BUQU_NUMERO_CERTIFICADO_GT
+			, TEMP.BUQU_FECHA_SEG_RESP_CIVIL
+			, TEMP.BUQU_ES_NAVEGACION_INTERN
+			, TEMP.BUQU_ES_OPERACIONES_COMER
+			, TEMP.BUQU_ES_MOU_PSC_INSPECCION
+			, TEMP.BUQU_FECHA_MOU_PSC_INSPECCION
+			, TEMP.BUQU_MOU_PSC_PENDIENTE
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = temp.buqu_mou_psc_unlo_id
+	            	AND trid_table_name = 'IGEN_UNLOCODE_UNLO') as buqu_mou_psc_unlo
+			, TEMP.BUQU_OBSERVACIONES
+	    FROM
+			IESC_BUQUE_BUQU MAES
+			JOIN IESC_BUQUEtemp_BUQU TEMP ON
+				TEMP.BUqu_buque_id = MAES.BUqu_buque_id
+		order by MAES.BUQU_es_activo desc
+	]]>
+    </sql>
+
+    <!-- <sql id="BUQUE_CAPACIDAD" tempImp="false"> <![CDATA[ select maes.cabu_buque_codigo_imo , (SELECT REST_CODIGO
+        FROM IESC_RESIDUOSTIPO_REST WHERE REST_ID = RESS_REST_ID) || ress.ress_codigo AS codigo , temp.CABU_FECHA_CREACION
+        , temp.CABU_FECHA_FIN , temp.CABU_CAPACIDAD_MAXIMA from IESC_CAPACIDADBUQUE_CABU maes join IESC_CAPACIDADBUQUETEMP_CABU
+        temp on temp.CABU_ID = maes.CABU_ID join IESC_RESIDUOSSUBTIPO_RESS RESS on RESS.RESS_ID = maes.CABU_RESIDUO_SUBTIPO_ID
+        ]]> </sql> -->
+
+    <sql id="BUQUE_CERTIFICADO" table="IESC_CERTIFICADOBUQUE_CERB" tempImp="false">
+    <![CDATA[
+        SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.cerb_buque_id
+	            	AND trid_table_name = 'IESC_BUQUE_BUQU') AS cerb_buque
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.cerb_cert_id
+	            	AND trid_table_name = 'IESC_CERTIFICADOTIPO_CERT') AS cerb_cert
+
+            , maes.CERB_FECHA_INICIO_VALIDEZ
+            , maes.CERB_FECHA_FIN_VALIDEZ
+        FROM iesc_certificadobuque_cerb maes
+    ]]>
+    </sql>
+
+    <sql id="BUQUE_CONVENIO" table="IESC_BUQUECONVENIO_BUCO" tempImp="false">
+    <![CDATA[
+        SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.buco_buque_id
+	            	AND trid_table_name = 'IESC_BUQUE_BUQU') AS buco_buque
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.buco_conv_id
+	            	AND trid_table_name = 'IESC_CONVENIO_CONV') AS buco_conv
+
+            , maes.buqu_fecha_inicio_adhesion
+            , maes.buqu_fecha_fin_adhesion
+        FROM iesc_buqueconvenio_buco maes
+    ]]>
+    </sql>
+
+    <sql id="BUQUE_SUBPUERTO" table="IESC_BUQUESUBPUERTO_BUSP" tempImp="false">
+    <![CDATA[
+        SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.busp_buque_id
+	            	AND trid_table_name = 'IESC_BUQUE_BUQU') AS busp_buque
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.busp_subp_id
+	            	AND trid_table_name = 'IGEN_SUBPUERTO_SUBP') AS busp_subp
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = busp_orga_id
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS busp_orga
+            , maes.busp_es_base_en_puerto
+            , maes.busp_es_plan_residuos_liq
+            , maes.busp_es_plan_residuos_sol
+            , maes.busp_observaciones
+        FROM iesc_buquesubpuerto_busp maes
+    ]]>
+    </sql>
+
+    <sql id="BUQUE_TRAFICO" table="IESC_TRAFICOBUQUE_TRBU" tempImp="false">
+    <![CDATA[
+        select
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.trbu_buque_id
+	            	AND trid_table_name = 'IESC_BUQUE_BUQU') AS trbu_buque
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.trbu_traf_id
+	            	AND trid_table_name = 'IESC_TRAFICO_TRAF') AS trbu_traf
+
+            , maes.trbu_fecha_inicio
+            , maes.trbu_fecha_fin
+            , coalesce(maes.trbu_numero_puertos, 0)
+        FROM iesc_traficobuque_trbu maes
+    ]]>
+    </sql>
+
+    <sql id="TIPO_SERV_TIPO_TRAF" table="IESC_SERVICIOTIPOSERVICIO_STST" tempImp="false">
+    <![CDATA[
+        SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.stst_sett_id
+	            	AND trid_table_name = 'IESC_SERVICIOTIPO_SETT') AS stst_sett
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.stst_traf_id
+	            	AND trid_table_name = 'IESC_TRAFICO_TRAF') AS stst_traf
+
+            , maes.stst_fecha_inicio_adhesion
+            , maes.stst_fecha_fin_adhesion
+            , maes.stst_valor
+        FROM iesc_serviciotiposervicio_stst maes
+        ORDER BY stst_es_activo DESC
+    ]]>
+    </sql>
+
+    <sql id="ORGANIZACION_SUBPUERTO" table="ICOM_ORGANIZACIONSUBP_ORSP" tempImp="false">
+    <![CDATA[
+        SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.orsp_organizacion_id
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS orsp_organizacion
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.orsp_subpuerto_id
+	            	AND trid_table_name = 'IGEN_SUBPUERTO_SUBP') AS orsp_subpuerto
+
+            , coalesce(DIRN.DIRN_direccion, '') || ' ' || coalesce(dirn_portal, '') || ', ' || coalesce(dirn_piso, '') || ' ' || coalesce(dirn_puerta, '')
+                AS DIRN_DIRECCION
+            , DIRN_COD_POSTAL
+            , NULL AS LOCALIDAD
+            , DIRN_PERSONA_CONTACTO
+            , DIRN_telefonoa
+            , DIRN_TELEFONOB
+            , DIRN_FAX
+            , DIRN_EMAIL
+            , NULL AS web
+        FROM
+            ICOM_ORGANIZACIONSUBP_ORSP MAES
+            LEFT JOIN ICOM_DIRECCION_NOTI_DIRN dirn ON
+                DIRN_SUBP_ID = ORSP_SUBPuerto_ID
+                and DIRN_orga_ID = orsp_organizacion_ID
+    ]]>
+    </sql>
+
+    <sql id="ORGANIZACION_TIPO" table="ICOM_ORGANIZACIONORGT_OROT" tempImp="false">
+    <![CDATA[
+        SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.orot_organizacion_id
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS orot_organizacion
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.orot_tipo_organizacion_id
+	            	AND trid_table_name = 'ICOM_ORGANIZACIONTIPO_ORGT') AS orot_tipo_organizacion
+        FROM icom_organizacionorgt_orot maes
+    ]]>
+    </sql>
+
+<!--
+    <sql id="PUNTO_RED_ORGANIZACION" tempImp="true">
+    <![CDATA[
+        select
+            (
+                SELECT
+                    (
+                        SELECT
+                            (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = REDS_SUBP_ID)
+                            || REDS_CODIGO
+                        FROM ISUM_RED_REDS
+                        WHERE REDS_ID = PRSU_REDS_ID
+                    ) || '-' || prsu_codigo AS CODIGO
+                FROM isum_puntored_prsu
+                where prsu_id = clsu_prsu_id
+            ) AS clsu_prsu
+            , (
+                SELECT
+                    ORGA_COD
+                FROM ICOM_ORGANIZACION_ORGA
+                where orga_id = CLSU_ORGA_ID_CLIENTE
+            ) as clsu_orga
+            , maes.CLSU_FECHA_INICIO
+            , maes.CLSU_FECHA_final
+            , maes.CLSU_porcetntaje
+            , to_char(maes.CLSU_COD_EXENCION)
+            , (SELECT EXET_CODIGO
+                    FROM IGEN_EXENCIONTIPO_EXET
+                where exet_id = CLSU_EXET_ID
+            ) AS CLSU_EXET
+        from
+          ISUM_CLIENTEPUNTORED_CLSU maes
+        where
+            ? BETWEEN CLSU_FECHA_INICIO AND COALESCE(CLSU_FECHA_final, ?)
+        order by clsu_es_activo desc
+    ]]>
+    </sql>
+
+    <sql id="PUNTO_RED_TIPO_GASTO" tempImp="true">
+    <![CDATA[
+        select
+            (
+                SELECT
+                    (
+                        SELECT
+                            (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = REDS_SUBP_ID)
+                            || REDS_CODIGO
+                        FROM ISUM_RED_REDS
+                        WHERE REDS_ID = PRSU_REDS_ID
+                    ) || '-' || prsu_codigo AS CODIGO
+                FROM isum_puntored_prsu
+                where prsu_id = GPSU_prsu_id
+            ) AS GPSU_prsu
+            , (
+              select TGSU_codigo
+              from
+                ISUM_TIPOGASTO_TGSU
+                where tgsu_id = GPSU_TGSU_ID
+            ) as GPSU_TGSU
+            , maes.GPSU_FECHA_INICIO
+            , maes.GPSU_FECHA_FINAL
+            , (
+                select IVAT_codigo
+                from IFAC_IVATIPO_IVAT
+                where IVAT_ID = GPSU_IVAT_ID
+            ) as GPSU_IVAT
+            , maes.GPSU_COSTE
+        from ISUM_GASTOPUNTORED_GPSU maes
+        where
+             ? BETWEEN GPSU_FECHA_INICIO AND COALESCE(GPSU_FECHA_final, ?)
+        order by GPSU_ES_ACTIVO desc
+    ]]>
+    </sql>
+
+    <sql id="PUNTO_RED_TIPO_LECTURA" tempImp="true">
+    <![CDATA[
+        select
+            (
+                SELECT
+                    (
+                        SELECT
+                            (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = REDS_SUBP_ID)
+                            || REDS_CODIGO
+                        FROM ISUM_RED_REDS
+                        WHERE REDS_ID = PRSU_REDS_ID
+                    ) || '-' || prsu_codigo AS CODIGO
+                FROM isum_puntored_prsu
+                where prsu_id = LPSU_prsu_id
+            ) AS LPSU_prsu
+            , 'L' as tipo_lectura
+            , maes.LPSU_FECHA_INICIO
+            , maes.LPSU_FECHA_FINAL
+            , coalesce(maes.LPSU_LECTURA_INICIO, 0)
+            , maes.LPSU_LECTURA_FINAL
+        from ISUM_LECTURAPUNTORED_LPSU maes
+        where
+             ? BETWEEN LPSU_FECHA_INICIO AND COALESCE(LPSU_FECHA_final, ?)
+        order by LPSU_ES_ACTIVO desc
+    ]]>
+    </sql>
+
+    <sql id="AMARRE_PUNTO_RED" tempImp="false">
+    <![CDATA[
+        SELECT
+            (
+                SELECT
+                    (
+                        select
+                            (select subp_codigo
+                            from IGEN_SUBPUERTO_SUBP where subp_id = INDP_SUBPUERTO_ID)
+                            || indp_codigo
+                        from IEMD_INSTALACIONDEP_INDP
+                        WHERE indp_id = AMAD_INSTALACIONDEP_ID
+                    ) || '-' || AMAD_PANTALAN || '-' || AMAD_PUESTO
+                FROM IEMD_AMARRE_AMAD
+                WHERE AMAD_ID = MAES.ADPR_AMARREDEP_ID
+            ) as amad_codigo
+            , (
+                SELECT
+                    (
+                        SELECT
+                            (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = REDS_SUBP_ID)
+                            || REDS_CODIGO
+                        FROM ISUM_RED_REDS
+                        WHERE REDS_ID = PRSU_REDS_ID
+                    ) || '-' || PRSU_CODIGO
+                FROM ISUM_PUNTORED_PRSU
+                WHERE PRSU_ID = ADPR_PUNTORED_ID
+            ) AS PRSU_CODIGO
+            , adpr_factor_consumo, adpr_observaciones
+        FROM IEMD_AMARRE_PUNTO_RED_ADPR MAES
+        order by ADPR_es_activo desc
+    ]]>
+    </sql>
+
+    <sql id="AMARRE_SERVICIO_DEPORTIVO" tempImp="false">
+    <![CDATA[
+        SELECT
+            (
+                SELECT
+                    (
+                        select
+                            (select subp_codigo
+                            from IGEN_SUBPUERTO_SUBP where subp_id = INDP_SUBPUERTO_ID)
+                            || indp_codigo
+                        from IEMD_INSTALACIONDEP_INDP
+                        WHERE indp_id = AMAD_INSTALACIONDEP_ID
+                    ) || '-' || AMAD_PANTALAN || '-' || AMAD_PUESTO
+                FROM IEMD_AMARRE_AMAD
+                WHERE AMAD_ID = MAES.Asde_AMARREDEP_ID
+            ) AS AMAD_CODIGO
+            , (
+                SELECT SDEP_CODIGO
+                FROM IEMD_SERVICIODEP_SDEP
+                WHERE SDEP_ID = ASDE_SERVICIODEP_ID
+            ) as sdep_codigo
+            , maes.asde_observaciones
+        FROM IEMD_AMARRE_SERVICIODEP_ASDE MAES
+        order by asde_es_activo desc
+    ]]>
+    </sql>
+-->
+
+</importer>

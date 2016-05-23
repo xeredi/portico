@@ -52,6 +52,8 @@ public abstract class GridListAction<C extends BaseCriterioVO, R> extends BaseAc
     @Override
     public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(model);
+        Preconditions.checkArgument(page > 0);
+        Preconditions.checkArgument(limit > 0);
 
         model.setIdioma(idioma);
 
