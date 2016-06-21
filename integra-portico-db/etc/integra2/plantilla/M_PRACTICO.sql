@@ -1,0 +1,11 @@
+SET DEFINE OFF;
+Insert into M_PRACTICO
+   (CODIGO, NOMBRE, USRALTA, USRMODIF, FECALTA, FECMODIF)
+ Values
+   (1, 'Practico 1', 'prueba', 
+    'prueba', TO_DATE('09/15/2014 15:16:56', 'MM/DD/YYYY HH24:MI:SS'), TO_DATE('09/15/2014 15:16:56', 'MM/DD/YYYY HH24:MI:SS'));
+Insert into M_PRACTICO
+   (CODIGO, NOMBRE, USRMODIF, FECMODIF)
+ Values
+   (0, 'Exento', 'prueba', TO_DATE('09/16/2014 12:34:48', 'MM/DD/YYYY HH24:MI:SS'));
+COMMIT;

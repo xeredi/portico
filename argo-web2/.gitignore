@@ -1,0 +1,7 @@
+/.project
+/typings/
+/node_modules/
+/.tern-project
+/.settings/
+/.classpath
+/target/

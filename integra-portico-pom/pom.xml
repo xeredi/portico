@@ -170,6 +170,7 @@
         <module>../integra-portico-web</module>
 
         <!-- module>../integra-portico-test</module -->
+        <module>argo-web2</module>
     </modules>
 
     <distributionManagement>

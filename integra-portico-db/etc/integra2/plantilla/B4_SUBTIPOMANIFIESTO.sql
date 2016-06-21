@@ -1,0 +1,18 @@
+SET DEFINE OFF;
+Insert into B4_SUBTIPOMANIFIESTO
+   (CODIGO, NOMBRE, CODTIPOMANIFIESTO)
+ Values
+   ('A', 'Altura', 'A');
+Insert into B4_SUBTIPOMANIFIESTO
+   (CODIGO, NOMBRE, CODTIPOMANIFIESTO, USRMODIF, FECMODIF)
+ Values
+   ('M', 'Mesa subasta', 'B', 'prueba', TO_DATE('10/23/2014 15:49:34', 'MM/DD/YYYY HH24:MI:SS'));
+Insert into B4_SUBTIPOMANIFIESTO
+   (CODIGO, NOMBRE, CODTIPOMANIFIESTO)
+ Values
+   ('L', 'Lonja', 'B');
+Insert into B4_SUBTIPOMANIFIESTO
+   (CODIGO, NOMBRE, CODTIPOMANIFIESTO)
+ Values
+   ('X', 'Lonja marisco', 'B');
+COMMIT;

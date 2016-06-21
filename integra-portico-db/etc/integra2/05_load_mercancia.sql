@@ -1,7 +1,25 @@
+select pais_iso, unlo_codigo 
+from 
+    igen_unlocode_unlo
+    inner join igen_pais_pais on pais_id = unlo_pais_id
+where 
+    not exists (
+        select 1 from M_PUERTO 
+        where codpais = pais_iso and codpue = unlo_codigo
+    )
+    and pais_es_activo = 1
+    and unlo_es_activo = 1
+order by pais_iso, unlo_codigo 
+;
+
 delete from G3_CABECERA;
 select * from G3_CABECERA;
+select * from M_PUERTO 
+where codpais = 'ES'
+order by codpais, codpue;
 
 select * from G3_TIPOMOVMERC;
+select * from TIPO_BUQUE order by codtipobuque;
 select * from iman_manifiesto_mani;
 
 select * from iesc_trafico_traf traf inner join iesc_traficoi18n_traf i18n on i18n.traf_id = traf.traf_id;
@@ -31,13 +49,14 @@ SELECT
     , (select pais_iso from igen_pais_pais where pais_id = ESCA_PAIS_ID_siguiente) as CODPAIsiguiente
     , (select unlo_codigo from igen_unlocode_unlo where unlo_id = ESCA_loco_ID_siguiente) as CODPUEsiguiente
     , MANI_ES_SERV_REGULAR_AUT as INDSERREGULAR, null as NUMSERVICIO, MANI_ES_REGIMEN_SIMPLE as INDREGSIMPLIF
-    , MANI_TRANSITO_COM_SIM as CODTIPOTRANSITO, MANI_TIPO_OPERACION as CODTIPOMOVMERC, MANI_FECHA_referencia as FECDECLARACION
+    , MANI_TRANSITO_COM_SIM as CODTIPOTRANSITO
+    , (case MANI_TIPO_OPERACION when 'C' then '1' when 'D' then '2' end) as CODTIPOMOVMERC, MANI_FECHA_referencia as FECDECLARACION
     , (SELECT serv_numero from icom_servicio_serv where serv_id = esca_id) AS NUMESCALA
     , null as INDBAJA, null as FECBAJA, sysdate as FECALTA, null as FECMODIF, null as USRALTA, null as USRMODIF
     , null as GUIDSRV
-    , (select buqt_codigo from IGEN_BUQUETIPO_BUQT where BUQT_id = (
+    , /*(select buqt_codigo from IGEN_BUQUETIPO_BUQT where BUQT_id = (
         select BUQU_BUQT_ID from IESC_BUQUETEMP_BUQU where buqu_buque_id = esca_buque_id and BUQU_FECHA_CREACION <= MANI_FECHA_REFERENCIA and (buqu_fecha_fin is null or buqu_fecha_fin > MANI_FECHA_REFERENCIA))
-      ) as CODTIPOBUQUE
+      )*/ null as CODTIPOBUQUE
     , (select term_codigo from iman_terminal_term where term_id = mani_terminal_ID) as CODTERMINAL
     , /*(select traf_codigo from iesc_trafico_traf where traf_id = mani_servicio_ID)*/ null as TIPTRAFICO
     , null as TIPTRAFICOSUGERIDO, null as CODSERVMARIT, null as INDRECIBCOARRI, null as INDTERMDESCONOCIDA, null as INDRECIBNDP
@@ -54,4 +73,5 @@ FROM icom_servicio_serv serv
         mani_id = serv_id
     left join iesc_escala_esca on
         esca_id = mani_escala_id
+order by codtipobuque
 ;

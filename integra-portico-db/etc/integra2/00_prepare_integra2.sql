@@ -1,7 +1,7 @@
 -- Creacion del dblink
 create database link dblinkIntegra
 connect to integra identified by integra
-using '192.168.1.101:1521/orcl';
+using '192.168.1.130:1521/orcl';
 
 
 -- Creacion de sinonimos
