@@ -3,6 +3,12 @@ SELECT * from M_USUARIO;
 SELECT * from CEN_EMPRESA;
 SELECT * from CEN_CONSEJO;
 
+delete from M_BUQUEBONIF;
+delete from M_BUQUEVERSION;
+DELETE FROM tipo_buque;
+delete from TIPO_BUQUEOPPE;
+delete from m_buque;
+delete from m_naviera;
 delete from M_MUELLE where codpue <> 'M';
 delete FROM M_TERMINAL;
 
@@ -12,6 +18,7 @@ DELETE from M_USUARIO;
 DELETE from M_PUERTO_LOCAL
 WHERE codpue <> 'M';
 
+/* ==================== M_PUERTO_LOCAL ====================== */
 INSERT INTO M_PUERTO_LOCAL(codpue, nombre, codpailocode, codpuelocode, codap, recaduanero)
 select subp_codigo AS codpue
     , (select subp_nombre from IGEN_SUBPUERTOi18n_SUBP i18n where i18n.subp_id = subp.subp_id AND i18n.subp_idioma = 'es_ES') AS nombre
@@ -38,6 +45,7 @@ from IGEN_SUBPUERTO_SUBP subp
 -- PAS - 3 - Pasaporte
 ---NIF - 2 - NIF
 -- OTR - 4 - Otros
+/* ==================== M_USUARIO ====================== */
 INSERT INTO M_USUARIO (CODUSUARIO, NOMBRE, APELLIDOS, NOMBRECOMPLETO, CODTIPODOCUMENTO, NUMDOC, PAGINAWEB, usralta, usrmodif, fecalta, fecmodif
     , LETRANIF, CODAPSCT, INDBAJA, FECBAJA, CODTIPUSU, NACIONALIDAD, IDIOMA, DIRTIPOVIA, DIRNOMVIA, DIRNUMPORTAL, DIRESCALERA, DIRPISO, DIRPUERTA, DIRPAIS
     , DIRPROVINCIA, DIRMUNICIPIO, DIRCODPOSTAL, OBSERVACIONES, INDCONTADO, INDNOTIFELECTRONICA, CODTIPONOTIF, CODTIPOCOBRO, IDAPLICANTERIOR, INDAPREMIO, INDFACTURAEFACE)
@@ -81,9 +89,35 @@ SELECT (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 
 from ICEN_CONSEJO_COAD
 ;
 
-INSERT INTO CEN_EMPRESA(CODEMPRESA, NOMBRECOMPLETO, CODTIPODOCUMENTO, NUMDOC, usralta, usrmodif, fecalta, fecmodif, LETRANIF, INDBAJA, FECBAJA, CODTIPUSU, OBSERVACIONES, CENSADA, CODCLIENTE)
-SELECT (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'ICEN_CONSEJO_COAD' AND trid_old_id = coad_id) as id
-    , emce_nombre, emce_tipo_doc_fiscal, COALESCE(emce_doc_fiscal_prefijo), coad_numero, coad_fecha, coad_observaciones, null, null, SYSDATE, null
+INSERT INTO CEN_EMPRESA(
+    CODEMPRESA, NOMBRECOMPLETO, CODTIPODOCUMENTO, NUMDOC, usralta, usrmodif, fecalta, fecmodif
+    , LETRANIF, INDBAJA, FECBAJA, CODTIPUSU, OBSERVACIONES, CENSADA, CODCLIENTE
+)
+SELECT (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'ICEN_EMPRESACENSADA_EMCE' AND trid_old_id = emce_id) as CODEMPRESA
+    , emce_nombre as NOMBRECOMPLETO
+    , (CASE emce_tipo_doc_fiscal
+        WHEN 'CIF' THEN 1
+        WHEN 'NIF' THEN 2
+        WHEN 'Pasaporte' THEN 3
+        ELSE 4
+        END) AS CODTIPODOCUMENTO
+    , CONCAT(
+          CONCAT(
+            COALESCE(emce_doc_fiscal_prefijo, ''), emce_doc_fiscal
+          )
+          , COALESCE(emce_doc_fiscal_sufijo, '')
+      ) as NUMDOC
+    , NULL AS usralta
+    , NULL AS usrmodif
+    , NULL AS fecalta
+    , NULL AS fecmodif
+    , emce_doc_fiscal_sufijo as LETRANIF
+    , null as INDBAJA
+    , null as FECBAJA
+    , null as CODTIPUSU
+    , null as OBSERVACIONES
+    , null as CENSADA
+    , null as CODCLIENTE
 from ICEN_EMPRESACENSADA_EMCE
 ;
 
@@ -174,10 +208,6 @@ from
 /* --------------------------- m_naviera ------------------------------- */
 /* --------------------------- m_naviera ------------------------------- */
 /* --------------------------- m_naviera ------------------------------- */
-select * from m_naviera;
-select * from iesc_naviera_navi;
-delete from m_naviera;
-
 INSERT INTO m_naviera (CODIGO, NOMBRE, CIF, IDCLIENTE, OBSERVACIONES, USRALTA, USRMODIF, FECALTA, FECMODIF, IMOREGOWNER, CODNAVIERAPORTEL)
 select 
     (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'IESC_NAVIERA_NAVI' AND trid_old_id = navi_id) as CODIGO
@@ -194,20 +224,6 @@ from iesc_naviera_navi
 /* --------------------------- m_buque ------------------------------- */
 /* --------------------------- m_buque ------------------------------- */
 /* --------------------------- m_buque ------------------------------- */
-select buqt_id, buqt_codigo
-    , (select buqt_descripcion from IGEN_BUQUETIPOi18n_BUQT i18n where i18n.buqt_id = buqt.buqt_id and i18n.buqt_idioma = 'es_ES' and i18n.buqt_es_activo = 1) as descripcion
-    , (select buqt_codigo from IEST_BUQUETIPOEST_BUQT buqtest where buqtest.buqt_id = buqt.BUQT_TIPO_EST_ID) as codigoest
-    , (select buqt_descripcion from IEST_BUQUETIPOESTI18N_BUQT i18n where i18n.buqt_id = buqt.BUQT_TIPO_EST_ID and i18n.buqt_idioma = 'es_ES' and i18n.buqt_es_activo = 1) as descripcion_est
-    , buqt_es_activo, buqt_es_roro, buqt_es_comercial, buqt_tipo_est_id
-from IGEN_BUQUETIPO_BUQT buqt order by buqt_codigo;
-select * from IGEN_BUQUETIPOi18n_BUQT;
-select * from TIPO_BUQUE order by codtipobuque;
-select * from TIPO_BUQUEOPPE;
-
-delete from M_BUQUEVERSION;
-delete from M_BUQUEBONIF;
-delete from m_buque;
-
 INSERT INTO M_BUQUE (CODBUQUE, NOMBRE, CODIMO, FECALTA, FECMODIF, USRALTA, USRMODIF, IDAPLICANTERIOR, INDPDTEREV)
 SELECT 
     (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'IESC_BUQUE_BUQU' AND trid_old_id = buqu_buque_id) as CODBUQUE
@@ -218,6 +234,55 @@ SELECT
 FROM iesc_buque_buqu buqu
 ;
 
+INSERT INTO TIPO_BUQUEOPPE (
+    CODIGO
+    , DESCRIPCION
+)
+SELECT 
+    BUQT_CODIGO AS CODIGO
+    , COALESCE(BUQT_NOMBRE, 'SIN DESCRIPCION!!') AS DESCRIPCION
+FROM 
+    IEST_BUQUETIPOEST_BUQT BUQT
+    LEFT JOIN IEST_BUQUETIPOEEEI18N_BUQT I18N ON
+        I18N.BUQT_ID = BUQT.BUQT_ID
+        AND i18n.buqt_es_activo = 1
+        AND i18n.buqt_idioma = 'es_ES'
+;
+
+insert into tipo_buque (
+    CODTIPOBUQUE
+    , DESCRIPCION
+    , FECALTA
+    , FECMODIF
+    , USRALTA
+    , USRMODIF
+    , CODTIPOOPPE
+    , TIPTRAFICO
+    , ESTCODTIPBUQCOM
+    , INDAPLICCONT008
+    , INDGUERRA
+)
+SELECT
+    BUQT_CODIGO AS CODTIPOBUQUE
+    , COALESCE(BUQT_NOMBRE, 'SIN DESCRIPCION!!!') AS DESCRIPCION
+    , SYSDATE AS FECALTA
+    , NULL AS FECMODIF
+    , NULL AS USRALTA
+    , NULL AS USRMODIF
+    , COALESCE(
+        (SELECT BUQT_CODIGO FROM IEST_BUQUETIPOEST_BUQT BUQTE WHERE BUQTE.BUQT_ID = BUQT.BUQT_ID), '**'
+    ) AS CODTIPOOPPE
+    , NULL AS TIPTRAFICO
+    , NULL AS ESTCODTIPBUQCOM
+    , NULL AS INDAPLICCONT008
+    , NULL AS INDGUERRA
+FROM IGEN_BUQUETIPO_BUQT BUQT
+    LEFT JOIN IGEN_BUQUETIPOI18N_BUQT I18N ON
+        I18N.BUQT_ID = BUQT.BUQT_ID
+        AND i18n.buqt_es_activo = 1
+        AND i18n.buqt_idioma = 'es_ES'
+;
+
 insert into m_buqueversion (
     CODBUQUE, VERSION, FECINIVIG, FECFINVIG, CODTIPOBUQUE, BANDERA, CALLSIGN, CODARMADOR, CODPAIREGISTRO, CODPUEREGISTRO, SOCCLASIFICACION, CIAASEGURADORA
     , CLUBPI, FECCONSTRUCCION, CALMAXIMO, GT, TPM, TRB, ESLORATOTAL, MANGA, PUNTAL, ALTURAARBOLADURA, POTENCIA, VELCRUCERO, VELMAXIMA, INDDOBLECASCO
@@ -226,40 +291,44 @@ insert into m_buqueversion (
     , NUMHELICES, SITUACIONHELICES, LASTRESUCIO, TANFANGOS, TANAGUASOLEOSAS, AGUASSUCIAS, BASURAS, INDCERTARQ, FECEMICERTARQ, LIBROREGISTRO, INDINSPMOU, CODPAIINSPMOU
     , CODPUEINSPMOU, FECINSPMOU, NUMDEFINSPMOU, CODPAIMATRICULA, CODPUEMATRICULA, FECMATRICULA, MATRICULA, INDCERTIGS, FECVIGCERTIGS, NUMREGCERTIGS, CODMMSI, OBSERVACIONES
     , FECALTA, FECMODIF, USRALTA, USRMODIF, INDCERTMATRICULA, CODLLOYDS, CODTIPOPRESTACION, CODPUEBASE, IDNAVIERA, INDAPLIC195, INDTERCEROSPAISES, INDNOOPEAIS, INDGNL, INDIBIZASAV)
-SELECT 
-    (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'IESC_BUQUE_BUQU' AND trid_old_id = buqu_buque_id) as CODBUQUE
-    , BUQU_TIEMPO_CREACION AS VERSION, BUQU_FECHA_CREACION AS FECINIVIG, BUQU_FECHA_FIN AS FECFINVIG
-    , (select buqt_codigo FROM IGEN_BUQUETIPO_BUQT WHERE buqt_id = BUQU_BUQT_ID) AS CODTIPOBUQUE
-    , (select pais_iso from IGEN_PAIS_PAIS where pais_id = buqu_bandera_pais_id) as BANDERA
-    , buqu_callsign as CALLSIGN
-    , (select orga_cod from Icom_organizacion_orga where orga_id = buqu_armador_orga_id) as CODARMADOR
-    , (select pais_iso from IGEN_PAIS_PAIS where pais_id = BUQU_REGISTRO_PAIS_ID) as CODPAIREGISTRO
-    , null as CODPUEREGISTRO, BUQU_SOCIEDAD_CLASIFICACION as SOCCLASIFICACION, BUQU_ASEGURADORA as CIAASEGURADORA
-    , BUQU_CLUB_P_I as CLUBPI, BUQU_FECHA_CONSTRUCCION as FECCONSTRUCCION, BUQU_CALADO_MAXIMO as CALMAXIMO, buqu_gt as gt, null as tpm, BUQU_TONELADAS_REGISTRADAS as trb
-    , BUQU_ESLORA as esloratotal, BUQU_manga as manga, BUQU_altura_puntal as puntal, BUQU_altura_arboladura as alturaarboladura, buqu_potencia as potencia
-    , buqu_velocidad_crucero as velcrucero, buqu_velocidad_maxima as velmaxima, BUQU_ES_DOBLE_CASCO as INDDOBLECASCO, BUQU_VOLUMEN_SBT as SBTVOLUMEN, BUQU_UNIDAD_MEDIDA_SBT as SBTUNIDADES
-    , null as RAMPA1SITUACION, null as RAMPA1ALCANCE, null as RAMPA1ANCHURA, null as RAMPA2SITUACION, null as RAMPA2ALCANCE, null as RAMPA2ANCHURA
-    , null as RAMPA3SITUACION, null as RAMPA3ALCANCE, null as RAMPA3ANCHURA, null as RAMPA4SITUACION, null as RAMPA4ALCANCE, null as RAMPA4ANCHURA
-    , coalesce(BUQU_NUMERO_HELICES_PROA, 0) + coalesce(BUQU_NUMERO_HELICES_Popa, 0) as NUMHELICES
-    , null as SITUACIONHELICES, null as LASTRESUCIO, null as TANFANGOS, null as TANAGUASOLEOSAS, null as AGUASSUCIAS, null as BASURAS
-    , (case
-        when BUQU_FECHA_CERTIFICADO_GT is null then '0'
-        else '1'
-    end) as INDCERTARQ
-    , BUQU_FECHA_CERTIFICADO_GT as FECEMICERTARQ, BUQU_LIBRO_REGISTRO as LIBROREGISTRO, BUQU_ES_MOU_PSC_REQUERIDO as INDINSPMOU
-    , (select pais_iso from IGEN_PAIS_PAIS where pais_id = BUQU_MOU_PSC_PAIS_ID) as CODPAIINSPMOU
-    , (select unlo_codigo from IGEN_unlocode_unlo where unlo_id = BUQU_MOU_PSC_unlo_ID) as CODPUEINSPMOU
-    , BUQU_FECHA_MOU_PSC_INSPECCION as FECINSPMOU, BUQU_MOU_PSC_PENDIENTE as NUMDEFINSPMOU
-    , null as CODPAIMATRICULA, null as CODPUEMATRICULA, null as FECMATRICULA, null as MATRICULA
-    , null as INDCERTIGS, null as FECVIGCERTIGS, null as NUMREGCERTIGS
-    , (SELECT buqu_mmsi from iesc_buque_buqu buqu where buqu.buqu_buque_id = buqut.buqu_buque_id) as CODMMSI
-    , buqu_observaciones as OBSERVACIONES
-    , SYSDATE AS FECALTA, NULL AS FECMODIF, NULL AS USRALTA, NULL AS USRMODIF
-    , null as INDCERTMATRICULA, null as CODLLOYDS, null as CODTIPOPRESTACION, null as CODPUEBASE
-    , (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'IESC_NAVIERA_NAVI' AND trid_old_id = BUQU_NAVI_ID) as IDNAVIERA
-    , null as INDAPLIC195, null as INDTERCEROSPAISES, null as INDNOOPEAIS, null as INDGNL, null as INDIBIZASAV
-FROM iesc_buquetemp_buqu buqut
-order by codtipobuque
+SELECT * FROM (
+    SELECT 
+        (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'IESC_BUQUE_BUQU' AND trid_old_id = buqu_buque_id) as CODBUQUE
+        , BUQU_TIEMPO_CREACION AS VERSION
+        , BUQU_FECHA_CREACION AS FECINIVIG
+        , BUQU_FECHA_FIN AS FECFINVIG
+        , (select buqt_codigo FROM IGEN_BUQUETIPO_BUQT WHERE buqt_id = BUQU_BUQT_ID) AS CODTIPOBUQUE
+        , (select pais_iso from IGEN_PAIS_PAIS where pais_id = buqu_bandera_pais_id) as BANDERA
+        , buqu_callsign as CALLSIGN
+        , (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'ICOM_ORGANIZACION_ORGA' AND trid_old_id = buqu_armador_orga_id) as CODARMADOR
+        , (select pais_iso from IGEN_PAIS_PAIS where pais_id = BUQU_REGISTRO_PAIS_ID) as CODPAIREGISTRO
+        , null as CODPUEREGISTRO, BUQU_SOCIEDAD_CLASIFICACION as SOCCLASIFICACION, BUQU_ASEGURADORA as CIAASEGURADORA
+        , BUQU_CLUB_P_I as CLUBPI, BUQU_FECHA_CONSTRUCCION as FECCONSTRUCCION, BUQU_CALADO_MAXIMO as CALMAXIMO, buqu_gt as gt, null as tpm, BUQU_TONELADAS_REGISTRADAS as trb
+        , BUQU_ESLORA as esloratotal, BUQU_manga as manga, BUQU_altura_puntal as puntal, BUQU_altura_arboladura as alturaarboladura, buqu_potencia as potencia
+        , buqu_velocidad_crucero as velcrucero, buqu_velocidad_maxima as velmaxima, BUQU_ES_DOBLE_CASCO as INDDOBLECASCO, BUQU_VOLUMEN_SBT as SBTVOLUMEN, BUQU_UNIDAD_MEDIDA_SBT as SBTUNIDADES
+        , null as RAMPA1SITUACION, null as RAMPA1ALCANCE, null as RAMPA1ANCHURA, null as RAMPA2SITUACION, null as RAMPA2ALCANCE, null as RAMPA2ANCHURA
+        , null as RAMPA3SITUACION, null as RAMPA3ALCANCE, null as RAMPA3ANCHURA, null as RAMPA4SITUACION, null as RAMPA4ALCANCE, null as RAMPA4ANCHURA
+        , coalesce(BUQU_NUMERO_HELICES_PROA, 0) + coalesce(BUQU_NUMERO_HELICES_Popa, 0) as NUMHELICES
+        , null as SITUACIONHELICES, null as LASTRESUCIO, null as TANFANGOS, null as TANAGUASOLEOSAS, null as AGUASSUCIAS, null as BASURAS
+        , (case
+            when BUQU_FECHA_CERTIFICADO_GT is null then '0'
+            else '1'
+        end) as INDCERTARQ
+        , BUQU_FECHA_CERTIFICADO_GT as FECEMICERTARQ, BUQU_LIBRO_REGISTRO as LIBROREGISTRO, BUQU_ES_MOU_PSC_REQUERIDO as INDINSPMOU
+        , (select pais_iso from IGEN_PAIS_PAIS where pais_id = BUQU_MOU_PSC_PAIS_ID) as CODPAIINSPMOU
+        , (select unlo_codigo from IGEN_unlocode_unlo where unlo_id = BUQU_MOU_PSC_unlo_ID) as CODPUEINSPMOU
+        , BUQU_FECHA_MOU_PSC_INSPECCION as FECINSPMOU, BUQU_MOU_PSC_PENDIENTE as NUMDEFINSPMOU
+        , null as CODPAIMATRICULA, null as CODPUEMATRICULA, null as FECMATRICULA, null as MATRICULA
+        , null as INDCERTIGS, null as FECVIGCERTIGS, null as NUMREGCERTIGS
+        , (SELECT buqu_mmsi from iesc_buque_buqu buqu where buqu.buqu_buque_id = buqut.buqu_buque_id) as CODMMSI
+        , buqu_observaciones as OBSERVACIONES
+        , SYSDATE AS FECALTA, NULL AS FECMODIF, NULL AS USRALTA, NULL AS USRMODIF
+        , null as INDCERTMATRICULA, null as CODLLOYDS, null as CODTIPOPRESTACION, null as CODPUEBASE
+        , (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'IESC_NAVIERA_NAVI' AND trid_old_id = BUQU_NAVI_ID) as IDNAVIERA
+        , null as INDAPLIC195, null as INDTERCEROSPAISES, null as INDNOOPEAIS, null as INDGNL, null as INDIBIZASAV
+    FROM iesc_buquetemp_buqu buqut
+) SQL
+WHERE CODBUQUE IS NOT NULL
 ;
 
 
@@ -267,36 +336,7 @@ order by codtipobuque
 
 
 
-SELECT * FROM ESCALA;
 
-INSERT INTO escala (
-    CODPUE, ANYO, CODESCALA, ETA, ETD, CODPAIORIGEN, CODPUEORIGEN, CODPAIDESTINO, CODPUEDESTINO, NUMVIAJE, INDAUTCABOTAJE, INDNAVINT, INDENTFESTIVO
-    , INDCONVCALIDAD, INDGREENAWARD, CODCONSIGNATARIO, CODPAIDESPTIEMPO, CODPUEDESPTIEMPO, FECVALDESPTIEMPO, PERDESPTIEMPO, NOMBRECAPITAN, ENTRADANUMTRIP
-    , ENTRADANUMPASAJ, ENTRADANUMPOLIZ, SALIDANUMTRIP, SALIDANUMPASAJE, SALIDANUMPOLIZ, NUMESCALA, INDINSPMOUEFEC, FECINSPMOU, INDCRUDOFUELALQ, INDMMPPABORDO
-    , INDMMPPCARGA, INDMMPPDESCARGA, FECSOLICITUD, FECAUTORIZACION, FECINIREAL, FECFINREAL, CODESTADO, FECAUTCAPITANIA, INDAUTCAPITANIA, OBSERVACIONES
-    , INDEXISTEACUERDORES, CODPAIACUERDORES, CODPUEACUERDORES, EMPRESAACUERDORES, INDCERTSOLAS, EMPRESAEMICERTSOLAS, FECVENCICERTSOLAS, INDMEDPROTECSOLAS
-    , INDPROCADECSOLAS, NIVELPROTECSOLAS, CONTENTRADASERVMARIT, INDNECESITAAUTCAPIT, DECLARACIONCAPITAN, ACUERDORES, CONTENTRADABUQUE, FECALTA, FECMODIF
-    , USRALTA, USRMODIF, OBSCAMBIOESTADO, CODSERVMARIT, GUIDSRV, INDNOLIQUIDABLE, INDLIQT0, INDLIQT7, INDRESIDUOSZONA2, INDENTDESULTPUERTO, INDRESNOAPLIC10C
-    , NUMPUERTOSRES, CODPAIORIGENDEC, CODPUEORIGENDEC, CODPAIDESTINODEC, CODPUEDESTINODEC, NUMTONMARPOLI, NUMTONMARPOLV, INDAPLICARB, INDEXENTOT0, INDREVISAUTORIZACION
-    , CODBUQUECERT, INDMANUAL, TIPTRAFICO, INDRECMODIFESCINI, CODMUELLEEST1, CODTIPACTIVREALEST1, INDAPLICAVI193EST1, IDSUJPASIVOT0, INDLIQT1, INDNOLIQT1NOCT, INDNOLIQT7NOCT
-    , INDNOLIQT0NOCT, INDTRAFINT, CODTIPOTRAFINT, ESTCODTIPNAV, ESTCODTIPNAVENT, ESTCODTIPNAVSAL, ESTCODTIPTER, ESTCODTIPSITOPPE, ESTINDDESGUACE, ESTINDEXENTA, INDTINUMESCSUMIN
-    , CODTIPOMOVMERCMC, CODTIPOMOVMERCDS, ESTCODTIPNAVENTOPPE, ESTCODTIPNAVSALOPPE, ESTCODTIPTERORIG, ESTCODTIPTERDEST, INDREVISION, MODOREVISION, TIPOREVISION, NUMRESOLUCION
-    , FACTRECTIF, FECREGSALIDA, DOCSUSTRECT, CODMOTREVISION, INDAPLIC2453PESCA, INDAPLIC2453CABL, INDAPLIC2453INACT, CODTERMINAL, INDINISINSECTEMP, INDPERIODOMANUAL, INDLIQT0PROLONGADA
-    , JUSTIFEXENTOT7, JUSTIFEXENTOT0, CODTIPOIVAT0, CODTIPOIVAT1, CODTIPOIVAT7, IND2453, CODBON2453, PORC2453, IND2454, CODBON2454, PORC2454, IND2455, CODBON2455, PORC2455, IDSUJPASIVOT7
-    , INDLIQPORATRAQUES, SERVMARITIMOEDI, CODBUQUE, CODBON24532, PORC24532, CODBON24533, PORC24533, CODBON24534, PORC24534, OBSERVACIONESFACT)
-;
-SELECT 
-    (SELECT subp_codigo FROM IGEN_SUBPUERTO_SUBP WHERE subp_id = serv_subp_id) AS CODPUE
-    , serv_anno as ANYO, serv_numero as CODESCALA, ESCA_FECHA_INICIO AS eta, ESCA_FECHA_finalizacion AS etd
-    , (SELECT pais_iso FROM igen_pais_pais WHERE pais_id = esca_pais_id_anterior) AS CODPAIORIGEN
-    , (SELECT UNLO_codigo FROM igen_unlocode_unlo WHERE unlo_id = esca_loco_id_anterior) AS CODPUEORIGEN
-    , (SELECT pais_iso FROM igen_pais_pais WHERE pais_id = esca_pais_id_siguiente) AS CODPAIDESTINO
-    , (SELECT UNLO_codigo FROM igen_unlocode_unlo WHERE unlo_id = esca_loco_id_siguiente) AS CODPUEDESTINO
-    , null AS numviaje, ES_AUT_CABOTAJE as INDAUTCABOTAJE, ESCA_ES_NAVEGACION_INT as INDNAVINT, null as INDENTFESTIVO
-    , null as INDCONVCALIDAD, null as INDGREENAWARD
-    , (SELECT orga_cod FROM icom_organizacion_orga WHERE orga_id = ESCA_ORGA_ID_CONSIGNAT) AS CODCONSIGNATARIO
-FROM iesc_escala_esca 
-    INNER JOIN icom_servicio_serv ON serv_id = esca_id
-;
+
 
     

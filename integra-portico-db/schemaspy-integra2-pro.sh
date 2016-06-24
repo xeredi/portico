@@ -1,0 +1,1 @@
+java -jar schemaspy.jar -t orathin -db vallibona -port 1521 -s INTEGRADOSMELILLA -u INTEGRADOSMELILLA -p INTEGRADOSMELILLA -o target/integra2-sch-pro -host vallibona.prodevelop.es -dp jdbc-ora.jar
