@@ -1,3 +1,5 @@
+victoria: 655963224
+
 email
 		https://correo.prodevelop.es/exchange
 
@@ -9,11 +11,22 @@ VPN
 
 	$ openconnect --user=jrey_prodevelop --authgroup=VPN_PUERTOS vpn.puertos.es
 
+	Melilla:
+			openconnect --user=prodevelop --authgroup=APML vpn2.puertodemelilla.es
+			(prodevelop / 1nt3gr4Do$)
+
 Maquima Weblogic
 	integraman01desa.puertos.es
 	IP: 172.20.22.91
 	Usuario: externos
 	Password: 3xt3rn4lsupport
+
+Maquina
+	http://172.20.22.156/
+	http://172.20.22.156/Integrados/login.do?metodo=entrada
+
+	app: prueba/1
+	maquina: externos/3xt3rn4lsupport
 
 
 
@@ -53,7 +66,7 @@ Oracle
 
 puertos
 	PdE - Estadisticas
-		Oscar Souto 		915245579
+		Oscar Souto 		915245578
 
 	alicante
 		Patricia Fernandez	649775106

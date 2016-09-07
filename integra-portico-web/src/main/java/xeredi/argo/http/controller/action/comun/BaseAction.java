@@ -105,7 +105,7 @@ public abstract class BaseAction extends ActionSupport {
      */
     public final Long getSprtId() {
         // FIXME !!!
-        return 36001L;
+        return 2762002L;
     }
 
     /**

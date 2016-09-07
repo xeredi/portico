@@ -12,8 +12,6 @@ where
 order by pais_iso, unlo_codigo 
 ;
 
-delete from G3_CABECERA;
-select * from G3_CABECERA;
 select * from M_PUERTO 
 where codpais = 'ES'
 order by codpais, codpue;
@@ -30,15 +28,16 @@ INSERT INTO G3_CABECERA (
     , CODTIPOMOVMERC, FECDECLARACION, NUMESCALA, INDBAJA, FECBAJA, FECALTA, FECMODIF, USRALTA, USRMODIF, GUIDSRV, CODTIPOBUQUE, CODTERMINAL
     , TIPTRAFICO, TIPTRAFICOSUGERIDO, CODSERVMARIT, INDRECIBCOARRI, INDTERMDESCONOCIDA, INDRECIBNDP, FECINIREALESCALA, ESTINDEXENTA, ESTPAIOPPEEME
     , ESTDIGPAIOPPEEME, ESTIMOESCALA, INDMANUAL, INDSINTRAMOS, CODPROCESOCARGA, CODPUEESCALA, ANYOESCALA, CODESCALA)
-;
 SELECT 
     (select subp_codigo from IGEN_subpuerto_subp where subp_ID = serv_subp_id) AS CODPUE
-    , serv_anno AS ANYO, serv_numero AS CODSER, serv_NUMERO as NUMDECLARACION, MANI_TIPO_OPERACION as TIPODECLARACION
+    , serv_anno AS ANYO, serv_numero AS CODSER
+    , serv_numero as NUMDECLARACION /* ojo */
+    , MANI_TIPO_OPERACION as TIPODECLARACION
     , MANI_NUMERO_VIAJE as NUMVIAJE
-    , (select BUQU_NOMBRE_BUQUE from IESC_BUQUETEMP_BUQU where buqu_buque_id = esca_buque_id and BUQU_FECHA_CREACION <= MANI_FECHA_REFERENCIA and (buqu_fecha_fin is null or buqu_fecha_fin > MANI_FECHA_REFERENCIA)) as NOMBUQUE
+    , (select BUQU_NOMBRE_BUQUE from IESC_BUQUETEMP_BUQU where buqu_es_activo = 1 and buqu_buque_id = esca_buque_id and BUQU_FECHA_CREACION <= MANI_FECHA_REFERENCIA and (buqu_fecha_fin is null or buqu_fecha_fin > MANI_FECHA_REFERENCIA)) as NOMBUQUE
     , (select BUQU_codigo_imo from IESC_BUQUE_BUQU where buqu_buque_id = esca_buque_id) as IDENTBUQUE
     , (select pais_iso from igen_pais_pais where pais_id = (
-        select BUQU_BANDERA_PAIS_ID from IESC_BUQUETEMP_BUQU where buqu_buque_id = esca_buque_id and BUQU_FECHA_CREACION <= MANI_FECHA_REFERENCIA and (buqu_fecha_fin is null or buqu_fecha_fin > MANI_FECHA_REFERENCIA))
+        select BUQU_BANDERA_PAIS_ID from IESC_BUQUETEMP_BUQU where buqu_es_activo = 1 and buqu_buque_id = esca_buque_id and BUQU_FECHA_CREACION <= MANI_FECHA_REFERENCIA and (buqu_fecha_fin is null or buqu_fecha_fin > MANI_FECHA_REFERENCIA))
       ) as CODPAIBUQUE
     , (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'ICOM_ORGANIZACION_ORGA' AND trid_old_id = MANI_CONSIGNATARIO_ID) as IDCONSIGNATARIO
     , MANI_FECHA_REFERENCIA as FECENTSAL
@@ -67,11 +66,436 @@ SELECT
     , (case when MANI_NUMERO_TRAMOS is null then '1' else '0' end) AS INDSINTRAMOS
 
     , null as CODPROCESOCARGA
-    , null as CODPUEESCALA, null as ANYOESCALA, null as CODESCALA
+    , (SELECT subp_codigo FROM igen_subpuerto_subp WHERE subp_id = (SELECT serv_subp_id from icom_servicio_serv where serv_id = esca_id)) AS CODPUEESCALA
+    , (SELECT serv_anno from icom_servicio_serv where serv_id = esca_id) AS ANYOESCALA
+    , (SELECT serv_numero from icom_servicio_serv where serv_id = esca_id) AS CODESCALA
 FROM icom_servicio_serv serv
     INNER JOIN iman_manifiesto_mani mani ON
         mani_id = serv_id
     left join iesc_escala_esca on
         esca_id = mani_escala_id
-order by codtipobuque
+where serv_fecha_baja is null
+    and serv_numero > '00001' 
+-- order by codpue, anyo, codser
 ;
+
+
+
+INSERT INTO G3_TRAMO (
+    CODPUE
+    , ANYO
+    , CODSER
+    , CODTRAMO
+    , IDCONSIGNATARIO
+    , CODESTADO
+    , FECALTA
+    , FECMODIF
+    , USRALTA
+    , USRMODIF
+    , GUIDSRV
+    , INDLIQT2
+    , INDLIQT3
+    , IDSUJPASIVO
+    , INDNOLIQUIDABLE
+    , INDCONOCPASAJ
+    , INDCONOCMERCVAC
+    , INDNOLIQMATRICREPET
+    , INDMATRICREPET
+    , INDREGSIMPLIF
+    , IDSUJPASIVOT2
+    , INDT2IMPORTECERO
+    , INDT3IMPORTECERO
+    , INDCONTRASTECOARRI
+    , INDCONTRASTENDPPART
+    , INDCONTRASTENDPEQUIP
+    , INDNOLIQT2NOCT
+    , INDNOLIQT3NOCT
+    , INDT2PTEREVIMPCERO
+    , INDT3PTEREVIMPCERO
+    , INDT2REVIMPCERO
+    , INDT3REVIMPCERO
+    , INDDISCREP
+    , ESTINDEXENTA
+    , INDMANUAL
+    , NUMTRAMOSIME
+    , NUMVERSION
+    , INDULTIMAVERSION
+    , MODOVERSION
+    , TIPOREVISION
+    , OBSERVACIONES
+    , NUMRESOLUCION
+    , FACTRECTIF
+    , FECREGSALIDA
+    , DOCSUSTRECT
+    , NUMVIAJE
+    , NOMBUQUE
+    , IDENTBUQUE
+    , CODPAIBUQUE
+    , FECENTSAL
+    , CODMUELLE
+    , IDESTIBADOR
+    , CODPAIANTERIOR
+    , CODPUEANTERIOR
+    , CODPAISIGUIENTE
+    , CODPUESIGUIENTE
+    , INDSERREGULAR
+    , NUMSERVICIO
+    , CODTIPOTRANSITO
+    , CODTIPOMOVMERC
+    , CODTERMINAL
+    , INDTERMDESCONOCIDA
+    , ESTINDTERMCONCT3
+    , INDCOEFRORO
+    , INDPDTECONTCOARRI
+    , INDDISCREPCOARRI
+    , CODPUEESC
+    , ANYOESC
+    , CODESC
+    , CODESTADIA
+    , INDEXENTOT2
+    , INDEXENTOT3
+    , JUSTIFEXENTOT2
+    , JUSTIFEXENTOT3
+    , CODTIPOIVAT2
+    , CODTIPOIVAT3
+    , IND215
+    , IND2453
+    , CODBON2453
+    , PORC2453
+    , CODPROCESOCARGA
+    , NIFCSGMERCANCIA
+    , CARDIFTRAMO
+    , CODTIPCONCT2
+    , OBSERVACIONESFACT
+    , TOTALKGGRUPO1
+    , TOTALKGGRUPO2
+    , TOTALKGGRUPO3
+    , TOTALKGGRUPO4
+    , TOTALKGGRUPO5
+    , TOTALVEHREGMERC
+    , TOTAL0001
+    , TOTAL0001C
+    , TOTAL0001X
+    , TOTAL0001D
+    , TOTAL0004
+    , TOTAL0005
+    , TOTAL0005L
+    , TOTAL0006
+    , TOTAL0007
+    , TOTAL0008
+    , TOTALCN20LLENO
+    , TOTALCN40LLENO
+    , TOTALCN20VACIO
+    , TOTALCN40VACIO
+    , TOTALOTRPEQLLENO
+    , TOTALOTRPEQVACIO
+    , INDMIGRACION
+    , TRAMUECODMUELLE
+    , TRAMUECODTRAMO
+    , REVISADO
+)
+SELECT 
+    (select subp_codigo from IGEN_subpuerto_subp where subp_ID = serv_subp_id) AS CODPUE
+    , serv_anno AS ANYO
+    , serv_numero AS CODSER
+    , (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'IMAN_CONSIGNATARIO_MACO' AND trid_old_id = MACO_ID) as CODTRAMO
+    , (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'ICOM_ORGANIZACION_ORGA' AND trid_old_id = MANI_CONSIGNATARIO_ID) as IDCONSIGNATARIO
+    , 'FI' AS CODESTADO /* ojo */
+    , SYSDATE AS FECALTA
+    , NULL AS FECMODIF
+    , 'prueba1' AS USRALTA
+    , NULL AS USRMODIF
+    , NULL AS GUIDSRV
+    , NULL AS INDLIQT2
+    , NULL AS INDLIQT3
+    , NULL AS IDSUJPASIVO
+    , NULL AS INDNOLIQUIDABLE
+    , NULL AS INDCONOCPASAJ
+    , NULL AS INDCONOCMERCVAC
+    , NULL AS INDNOLIQMATRICREPET
+    , NULL AS INDMATRICREPET
+    , MANI_ES_REGIMEN_SIMPLE AS INDREGSIMPLIF
+    , NULL AS IDSUJPASIVOT2
+    , NULL AS INDT2IMPORTECERO
+    , NULL AS INDT3IMPORTECERO
+    , NULL AS INDCONTRASTECOARRI
+    , NULL AS INDCONTRASTENDPPART
+    , NULL AS INDCONTRASTENDPEQUIP
+    , NULL AS INDNOLIQT2NOCT
+    , NULL AS INDNOLIQT3NOCT
+    , NULL AS INDT2PTEREVIMPCERO
+    , NULL AS INDT3PTEREVIMPCERO
+    , NULL AS INDT2REVIMPCERO
+    , NULL AS INDT3REVIMPCERO
+    , NULL AS INDDISCREP
+    , NULL AS ESTINDEXENTA
+    , NULL AS INDMANUAL
+    , NULL AS NUMTRAMOSIME
+    , NULL AS NUMVERSION
+    , NULL AS INDULTIMAVERSION
+    , NULL AS MODOVERSION
+    , NULL AS TIPOREVISION
+    , NULL AS OBSERVACIONES
+    , NULL AS NUMRESOLUCION
+    , NULL AS FACTRECTIF
+    , NULL AS FECREGSALIDA
+    , NULL AS DOCSUSTRECT
+    , NULL AS NUMVIAJE
+    , buqut.buqu_nombre_buque AS NOMBUQUE
+    , buqu.buqu_codigo_imo AS IDENTBUQUE
+    , (select pais_iso from IGEN_PAIS_PAIS where pais_id = buqut.buqu_bandera_pais_id) as CODPAIBUQUE
+    , NULL AS FECENTSAL
+    , (select alin_codigo FROM igen_alineacion_alin WHERE alin_id = mani_alineacion_id) AS CODMUELLE
+    , NULL AS IDESTIBADOR
+    , (select pais_iso from igen_pais_pais where pais_id = ESCA_PAIS_ID_ANTERIOR) as CODPAIANTERIOR
+    , (select unlo_codigo from igen_unlocode_unlo where unlo_id = ESCA_loco_ID_ANTERIOR) as CODPUEANTERIOR
+    , (select pais_iso from igen_pais_pais where pais_id = ESCA_PAIS_ID_siguiente) as CODPAIsiguiente
+    , (select unlo_codigo from igen_unlocode_unlo where unlo_id = ESCA_loco_ID_siguiente) as CODPUEsiguiente
+    , NULL AS INDSERREGULAR
+    , NULL AS NUMSERVICIO
+    , NULL AS CODTIPOTRANSITO
+    , NULL AS CODTIPOMOVMERC
+    , (select term_codigo from iman_terminal_term where term_id = mani_terminal_id) AS CODTERMINAL
+    , NULL AS INDTERMDESCONOCIDA
+    , NULL AS ESTINDTERMCONCT3
+    , NULL AS INDCOEFRORO
+    , NULL AS INDPDTECONTCOARRI
+    , NULL AS INDDISCREPCOARRI
+    , (SELECT subp_codigo FROM igen_subpuerto_subp WHERE subp_id = (SELECT serv_subp_id from icom_servicio_serv where serv_id = esca_id)) AS CODPUEESC
+    , (SELECT serv_anno from icom_servicio_serv where serv_id = esca_id) AS ANYOESC
+    , (SELECT serv_numero from icom_servicio_serv where serv_id = esca_id) AS CODESC
+    , NULL AS CODESTADIA
+    , NULL AS INDEXENTOT2
+    , NULL AS INDEXENTOT3
+    , NULL AS JUSTIFEXENTOT2
+    , NULL AS JUSTIFEXENTOT3
+    , NULL AS CODTIPOIVAT2
+    , NULL AS CODTIPOIVAT3
+    , NULL AS IND215
+    , NULL AS IND2453
+    , NULL AS CODBON2453
+    , NULL AS PORC2453
+    , NULL AS CODPROCESOCARGA
+    , NULL AS NIFCSGMERCANCIA
+    , NULL AS CARDIFTRAMO
+    , NULL AS CODTIPCONCT2
+    , NULL AS OBSERVACIONESFACT
+    , NULL AS TOTALKGGRUPO1
+    , NULL AS TOTALKGGRUPO2
+    , NULL AS TOTALKGGRUPO3
+    , NULL AS TOTALKGGRUPO4
+    , NULL AS TOTALKGGRUPO5
+    , NULL AS TOTALVEHREGMERC
+    , NULL AS TOTAL0001
+    , NULL AS TOTAL0001C
+    , NULL AS TOTAL0001X
+    , NULL AS TOTAL0001D
+    , NULL AS TOTAL0004
+    , NULL AS TOTAL0005
+    , NULL AS TOTAL0005L
+    , NULL AS TOTAL0006
+    , NULL AS TOTAL0007
+    , NULL AS TOTAL0008
+    , NULL AS TOTALCN20LLENO
+    , NULL AS TOTALCN40LLENO
+    , NULL AS TOTALCN20VACIO
+    , NULL AS TOTALCN40VACIO
+    , NULL AS TOTALOTRPEQLLENO
+    , NULL AS TOTALOTRPEQVACIO
+    , NULL AS INDMIGRACION
+    , NULL AS TRAMUECODMUELLE
+    , NULL AS TRAMUECODTRAMO
+    , NULL AS REVISADO
+FROM icom_servicio_serv serv
+    INNER JOIN iman_manifiesto_mani mani ON
+        mani_id = serv_id
+    INNER JOIN IMAN_CONSIGNATARIO_MACO ON 
+        maco_mani_id = serv_id
+    left join iesc_escala_esca on
+        esca_id = mani_escala_id
+    left join iesc_buque_buqu buqu on 
+        esca_buque_id = buqu.BUQU_BUQUE_ID 
+    left join IESC_BUQUETEMP_BUQU buqut on 
+        esca_buque_id = buqut.BUQU_BUQUE_ID
+        and ESCA_FECHA_ENTRADA >= buqut.BUQU_FECHA_CREACION
+        and (buqut.BUQU_FECHA_fin is null or buqut.BUQU_FECHA_fin > ESCA_FECHA_ENTRADA)
+        and buqut.buqu_es_activo = 1
+where serv_fecha_baja is null
+    and serv_numero > '00001' 
+;
+
+INSERT INTO G3_CONOCIMIENTO (
+    CODPUE
+    ,  ANYO
+    ,  CODSER
+    ,  CODTRAMO
+    ,  NUMORDEN
+    ,  TIPOCONOC
+    ,  CONOCEMBARQUE
+    ,  CODPAI1
+    ,  CODPUE1
+    ,  CODPAI2
+    ,  CODPUE2
+    ,  CODPAI3
+    ,  CODPUE3
+    ,  CODPAI4
+    ,  CODPUE4
+    ,  CODTIPTRANSPORTE
+    ,  SERVMERCANCIA
+    ,  INDAH
+    ,  INDEM
+    ,  INDPE
+    ,  INDBAJA
+    ,  FECBAJA
+    ,  FECALTA
+    ,  FECMODIF
+    ,  USRALTA
+    ,  USRMODIF
+    ,  CODTIPOTERORIGEN
+    ,  CODTIPOTERDESTINO
+    ,  ESTCODTIPOPE
+    ,  ESTCODTIPNAV
+    ,  ESTCODTIPTER
+    ,  ESTINDNACIONAL
+    ,  ESTCODTIPOSCHENGEN
+    ,  ESTCODPAI
+    ,  ESTCODPUE
+    ,  INDNOAPLICSITAD
+    ,  ESTCODTIPOPEROPPE
+    ,  ESTCODTIPNAVOPPE
+    ,  ESTINDTRANSITO
+    ,  OBSERVACIONES
+    ,  ESTCODTIPTERORIG
+    ,  ESTCODTIPTERDEST
+    ,  ESTCODTIPTER2
+    ,  ESTCODTIPTER4
+    ,  NUMDECMANASOCIADO
+    ,  IMOBUQUE
+    ,  CODCOMERCIAL
+    ,  CODMUELLE
+    ,  DESCEDILOCODE1
+    ,  DESCEDILOCODE2
+    ,  DESCEDILOCODE3
+    ,  DESCEDILOCODE4
+)
+/*
+;
+select * from (
+*/
+SELECT 
+    (select subp_codigo from IGEN_subpuerto_subp where subp_ID = serv_subp_id) AS CODPUE
+    , serv_anno AS ANYO
+    , serv_numero AS CODSER
+    , (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'IMAN_CONSIGNATARIO_MACO' AND trid_old_id = MACO_ID) as CODTRAMO
+    , MABL_ORDEN AS NUMORDEN
+    , (CASE MABL_TIPO WHEN 'M' THEN 'M' WHEN 'P' THEN 'P' WHEN 'V' THEN 'T' END) AS TIPOCONOC
+    , NULL AS CONOCEMBARQUE
+    /* ojo */
+    , (select pais_iso from igen_pais_pais where pais_id = (SELECT unlo_pais_id from igen_unlocode_unlo WHERE unlo_id = MABL_ORIGEN_UNLO_ID)) as CODPAI1
+    , (select unlo_codigo from igen_unlocode_unlo where unlo_id = MABL_ORIGEN_UNLO_ID) as CODPUE1
+    , (select pais_iso from igen_pais_pais where pais_id = (SELECT unlo_pais_id from igen_unlocode_unlo WHERE unlo_id = MABL_CARGA_UNLO_ID)) as CODPAI2
+    , (select unlo_codigo from igen_unlocode_unlo where unlo_id = MABL_CARGA_UNLO_ID) as CODPUE2
+    , (select pais_iso from igen_pais_pais where pais_id = (SELECT unlo_pais_id from igen_unlocode_unlo WHERE unlo_id = MABL_DESCARGA_UNLO_ID)) as CODPAI3
+    , (select unlo_codigo from igen_unlocode_unlo where unlo_id = MABL_DESCARGA_UNLO_ID) as CODPUE3
+    , (select pais_iso from igen_pais_pais where pais_id = (SELECT unlo_pais_id from igen_unlocode_unlo WHERE unlo_id = MABL_DESTINO_UNLO_ID)) as CODPAI4
+    , (select unlo_codigo from igen_unlocode_unlo where unlo_id = MABL_DESTINO_UNLO_ID) as CODPUE4
+    , (select tedi_codigo from IMAN_MODOTRANSPEDI_TEDI where tedi_id = MABL_MODO_TRANSP_EDI_ID) AS CODTIPTRANSPORTE
+    , NULL AS SERVMERCANCIA
+    , NULL AS INDAH
+    , NULL AS INDEM
+    , NULL AS INDPE
+    , NULL AS INDBAJA
+    , NULL AS FECBAJA
+    , SYSDATE AS FECALTA
+    , NULL AS FECMODIF
+    , 'prueba1' AS USRALTA
+    , NULL AS USRMODIF
+    , NULL AS CODTIPOTERORIGEN
+    , NULL AS CODTIPOTERDESTINO
+    , NULL AS ESTCODTIPOPE
+    , NULL AS ESTCODTIPNAV
+    , NULL AS ESTCODTIPTER
+    , NULL AS ESTINDNACIONAL
+    , NULL AS ESTCODTIPOSCHENGEN
+    , NULL AS ESTCODPAI
+    , NULL AS ESTCODPUE
+    , NULL AS INDNOAPLICSITAD
+    , NULL AS ESTCODTIPOPEROPPE
+    , (case (select navt_codigo from IGEN_NAVEGACIONTIPO_NAVT where navt_id = MABL_TIPO_NAVEGACION_ID)
+        WHEN '**' THEN NULL
+        ELSE (select navt_codigo from IGEN_NAVEGACIONTIPO_NAVT where navt_id = MABL_TIPO_NAVEGACION_ID)
+    end) AS ESTCODTIPNAVOPPE
+    , NULL AS ESTINDTRANSITO
+    , NULL AS OBSERVACIONES
+    , NULL AS ESTCODTIPTERORIG
+    , NULL AS ESTCODTIPTERDEST
+    , NULL AS ESTCODTIPTER2
+    , NULL AS ESTCODTIPTER4
+    , NULL AS NUMDECMANASOCIADO
+    , NULL AS IMOBUQUE
+    , NULL AS CODCOMERCIAL
+    , NULL AS CODMUELLE
+    , NULL AS DESCEDILOCODE1
+    , NULL AS DESCEDILOCODE2
+    , NULL AS DESCEDILOCODE3
+    , NULL AS DESCEDILOCODE4
+FROM icom_servicio_serv serv
+    INNER JOIN iman_manifiesto_mani mani ON
+        mani_id = serv_id
+    INNER JOIN iman_bl_mabl ON
+        mabl_mani_id = serv_id
+    INNER JOIN IMAN_CONSIGNATARIO_MACO ON 
+        maco_mani_id = serv_id
+        AND mabl_consignatario_id = maco_id
+where serv_fecha_baja is null
+    and serv_numero > '00001' 
+    and mabl_es_activo = 1 
+/*
+) sql
+where 
+    not exists (
+        select 1 from m_puerto
+        where 
+            codpais = codpai4
+            AND codpue = codpue4
+    )
+*/
+;
+
+
+SELECT * FROM EST_TIPO_TERRITORIO;
+
+
+SELECT * FROM EST_TIPO_OPECONOC	;
+
+CA	Carga                               E, ET
+DE	Descarga                            D, DT
+TR	Tránsito marítimo
+TB	Transbordo                          
+TT	Tránsito terrestre
+
+SELECT tobl_codigo, tobl_nombre FROM IMAN_TIPOOPERACION_TOBL maes INNER JOIN IMAN_TIPOOPERACIONI18N_TOBL i18n on i18n.tobl_id = maes.tobl_id ;
+
+**	OPERACION GENERICA
+AC	REC. ADUAN. > 5%
+AS	REC. ADUAN. < 5%
+AV	AVITUALLAMIENTO
+CA	CTRL. ADUANERO TERR.
+D	DESEMBARQUE
+DT	DESEMB. EN TRANSITO
+E	EMBARQUE
+ET	EMBARQUE EN TRANSITO
+T	TRANSBORDO
+TD	TRANSBORDO DESCARGA
+TE	TRANSBORDO EMBARQUE
+
+select * from EST_TIPO_NAVEGACION;
+select * from IGEN_NAVEGACIONTIPO_NAVT;
+
+select * from G3_CONOCIMIENTO;
+select * from G3_tramo;
+select * from G3_CABECERA;
+
+delete from G3_CONOCIMIENTO WHERE CODSER > 1;
+delete from G3_TRAMO WHERE CODSER > 1;
+delete from G3_CABECERA WHERE CODSER > 1;
