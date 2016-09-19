@@ -124,11 +124,16 @@ public final class EntidadProxy {
 
             if (entd.getTpdt() != null) {
                 entd.setTpdt(TipoDatoProxy.select(entd.getTpdt().getId()));
+
+                if (entd.getValidacion() != null) {
+                    entd.setVldn(ValidacionProxy.generate(entd.getTpdt().getTipoElemento(), entd.getValidacion()));
+                }
             }
 
             if (entd.getGridable()) {
                 entiDetail.getEntdGridList().add(entd.getTpdt().getId());
             }
+
             entiDetail.getEntdList().add(entd.getTpdt().getId());
             entiDetail.getEntdMap().put(entd.getTpdt().getId(), entd);
         }

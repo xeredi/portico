@@ -1,7 +1,33 @@
 DELETE FROM OPERACION;
-DELETE FROM ESTADIA;
+DELETE FROM ESTADIA esta
+where 
+    not exists (
+        select * from g3_tramo tram
+        where 
+            tram.CODPUEESC = esta.CODPUE
+            AND tram.ANYOESC = esta.ANYO
+            AND tram.CODESC = esta.CODESCALA
+            AND tram.CODESTADIA = esta.CODESTADIA
+    )
+;
 delete from ESCALA_FTBUQUE;
-DELETE FROM ESCALA;
+DELETE FROM ESCALA esca
+where 
+    not exists (
+        select 1 from g3_tramo tram
+        where 
+            tram.CODPUEESC = esca.CODPUE
+            AND tram.ANYOESC = esca.ANYO
+            AND tram.CODESC = esca.CODESCALA
+    )
+    and not exists (
+        select 1 from LQ_BORRADOR Borr
+        where 
+            Borr.CODPUEESC = esca.CODPUE
+            AND Borr.ANYOESC = esca.ANYO
+            AND Borr.CODESC = esca.CODESCALA
+    )
+;
 
 SELECT * FROM OPERACION;
 SELECT * FROM ESTADIA
@@ -10,6 +36,7 @@ select * from ESCALA_FTBUQUE;
 SELECT * FROM ESCALA
 where codpue = 'A' and anyo = '2016' and codescala > 500
 ;
+select * from g3_tramo;
 
 A201600512
 
@@ -190,12 +217,12 @@ SELECT * FROM (
         , NULL AS FECVALDESPTIEMPO
         , NULL AS PERDESPTIEMPO
         , COALESCE(ESCA_CAPITAN_ENTRADA, ESCA_CAPITAN_SALIDA) AS NOMBRECAPITAN
-        , COALESCE(ESCA_TRIPULANTES_ENTRADA, 0) AS ENTRADANUMTRIP
-        , COALESCE(ESCA_PASAJEROS_ENTRADA, 0) AS ENTRADANUMPASAJ
-        , COALESCE(ESCA_POLIZONES_ENTRADA, 0) AS ENTRADANUMPOLIZ
-        , COALESCE(ESCA_TRIPULANTES_SALIDA, 0) AS SALIDANUMTRIP
-        , COALESCE(ESCA_PASAJEROS_SALIDA, 0) AS SALIDANUMPASAJE
-        , COALESCE(ESCA_POLIZONES_SALIDA, 0) AS SALIDANUMPOLIZ
+        , (case ESCA_TRIPULANTES_ENTRADA when 0 then null else ESCA_TRIPULANTES_ENTRADA end) AS ENTRADANUMTRIP
+        , (case ESCA_PASAJEROS_ENTRADA when 0 then null else ESCA_PASAJEROS_ENTRADA end) AS ENTRADANUMPASAJ
+        , (case ESCA_POLIZONES_ENTRADA when 0 then null else ESCA_POLIZONES_ENTRADA end) AS ENTRADANUMPOLIZ
+        , (case ESCA_TRIPULANTES_SALIDA when 0 then null else ESCA_TRIPULANTES_SALIDA end) AS SALIDANUMTRIP
+        , (case ESCA_PASAJEROS_SALIDA when 0 then null else ESCA_PASAJEROS_SALIDA end) AS SALIDANUMPASAJE
+        , (case ESCA_POLIZONES_SALIDA when 0 then null else ESCA_POLIZONES_SALIDA end) AS SALIDANUMPOLIZ
         , CONCAT((SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = serv_subp_id), CONCAT(serv_anno, serv_numero)) AS NUMESCALA
         , buqut.BUQU_ES_MOU_PSC_INSPECCION AS INDINSPMOUEFEC
         , buqut.BUQU_FECHA_MOU_PSC_INSPECCION AS FECINSPMOU
@@ -263,7 +290,7 @@ SELECT * FROM (
         , NULL AS CODMUELLEEST1
         , NULL AS CODTIPACTIVREALEST1
         , 0 AS INDAPLICAVI193EST1
-        , NULL AS IDSUJPASIVOT0 -- OJO
+        , (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'ICOM_ORGANIZACION_ORGA' AND trid_old_id = ESCA_ORGA_ID_CONSIGNAT) AS IDSUJPASIVOT0 -- OJO
         , 0 AS INDLIQT1
         , 0 AS INDNOLIQT1NOCT
         , 0 AS INDNOLIQT7NOCT
@@ -313,7 +340,7 @@ SELECT * FROM (
         , 0 AS IND2455
         , NULL AS CODBON2455
         , NULL AS PORC2455
-        , NULL AS IDSUJPASIVOT7 -- OJO
+        , (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'ICOM_ORGANIZACION_ORGA' AND trid_old_id = ESCA_ORGA_ID_CONSIGNAT) AS IDSUJPASIVOT7 -- OJO
         , 0 AS INDLIQPORATRAQUES
         , NULL AS SERVMARITIMOEDI
         , (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'IESC_BUQUE_BUQU' AND trid_old_id = ESCA_BUQUE_ID) as CODBUQUE
@@ -720,7 +747,7 @@ SELECT
     , NULL AS INDOPCOMZONA2
     , coalesce(coalesce(atrdr.ATRD_FECHA_INICIO_OPERAC, atrda.ATRD_FECHA_INICIO_OPERAC), atrds.ATRD_FECHA_INICIO_OPERAC) AS FECINIOPZONA2
     , (SELECT acet_codigo FROM IESC_ACTIVIDADEDITIPO_ACET where acet_id = atrdr.atrd_tipo_actividad_edi) AS CODTIPACTIVREAL
-    , /*ATRA_ES_SUJETO_PAS_SUSTIT */ null AS IDSUJPASIVO
+    , (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'ICOM_ORGANIZACION_ORGA' AND trid_old_id = ESCA_ORGA_ID_CONSIGNAT) AS IDSUJPASIVO -- OJO
     , NULL AS INDLIQT1
     , atrda.ATRD_NORAY_INICIAL AS NORAYINIAUT
     , atrda.ATRD_NORAY_final AS NORAYFINAUT
@@ -775,6 +802,8 @@ FROM
     IESC_ATRAQUE_ATRA atra
     INNER JOIN icom_servicio_serv serv ON
         serv.serv_id = atra.atra_escala_id
+    INNER JOIN iesc_escala_esca esca ON
+        serv.serv_id = esca.esca_id
     LEFT JOIN iesc_atraquedetalle_atrd atrds ON
         atrds.atrd_atra_id = atra.atra_id
         AND atrds.atrd_momento = 'S'

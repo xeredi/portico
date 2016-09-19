@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import lombok.NonNull;
 
@@ -24,6 +25,7 @@ import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
+import xeredi.argo.model.metamodelo.vo.ValidacionKeyword;
 import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 import com.google.common.base.Preconditions;
@@ -178,6 +180,71 @@ public final class FieldValidator {
     }
 
     /**
+     * Validate validacion.
+     *
+     * @param action
+     *            the action
+     * @param fieldName
+     *            the field name
+     * @param fieldValue
+     *            the field value
+     */
+    public static void validateValidacion(final @NonNull BaseAction action, final @NonNull MessageI18nKey fieldName,
+            final String fieldValue) {
+        if (fieldValue != null) {
+            final StringTokenizer tokenizer = new StringTokenizer(fieldValue, ";");
+
+            while (tokenizer.hasMoreTokens()) {
+                final String token = tokenizer.nextToken().trim();
+
+                ValidacionKeyword prefix = null;
+
+                // Validacion del prefijo
+                for (final ValidacionKeyword keyword : ValidacionKeyword.values()) {
+                    if (token.startsWith(keyword.name())) {
+                        prefix = keyword;
+                    }
+                }
+
+                if (prefix == null) {
+                    throw new Error(token + " no tiene un prefijo válido");
+                }
+
+                final String arguments = token.substring(prefix.name().length()).trim();
+
+                if (arguments.isEmpty() || !arguments.startsWith("(") || !arguments.endsWith(")")
+                        || (arguments.length() < 3)) {
+                    throw new Error(prefix.name() + ": Argumentos no válidos");
+                }
+
+                final String argumentList = arguments.substring(1, arguments.length() - 1).trim();
+
+                switch (prefix) {
+                case minLength:
+                case maxLength:
+                    try {
+                        Integer.parseInt(argumentList);
+                    } catch (final NumberFormatException ex) {
+                        throw new Error(prefix + " ha de tener como argumento un número entero");
+                    }
+
+                    break;
+                case minValue:
+                    break;
+                case maxValue:
+                    break;
+                case validValues:
+                    break;
+                case regexp:
+                    break;
+                default:
+                    throw new Error(prefix.name() + " No implementado");
+                }
+            }
+        }
+    }
+
+    /**
      * Validate version.
      *
      * @param action
@@ -231,53 +298,90 @@ public final class FieldValidator {
      *            the action
      * @param entiDetail
      *            the enti detail
-     * @param itemVO
-     *            the item vo
+     * @param item
+     *            the item
      */
     public static void validateItem(final @NonNull BaseAction action,
-            final @NonNull AbstractEntidadDetailVO entiDetail, final @NonNull ItemVO itemVO) {
+            final @NonNull AbstractEntidadDetailVO entiDetail, final @NonNull ItemVO item) {
         if (entiDetail.getEntdList() != null) {
-            final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
+            final Map<Long, ItemDatoVO> itdtMap = item.getItdtMap();
 
             for (final Long tpdtId : entiDetail.getEntdList()) {
                 final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
-                final ItemDatoVO itdtVO = itdtMap == null ? null : itdtMap.get(entd.getTpdt().getId());
+                final ItemDatoVO itdt = itdtMap == null ? null : itdtMap.get(entd.getTpdt().getId());
                 final String fieldname = action.getText("entd_" + entd.getId());
 
-                validateRequired(action, fieldname, itdtVO, entd.getObligatorio());
+                validateRequired(action, fieldname, itdt, entd.getObligatorio());
 
-                if (itdtVO != null) {
-                    itdtVO.setTpdtId(entd.getTpdt().getId());
+                if (itdt != null) {
+                    itdt.setTpdtId(entd.getTpdt().getId());
                     switch (entd.getTpdt().getTipoElemento()) {
                     case BO:
                     case NE:
-                        validateRequired(action, fieldname, itdtVO.getCantidadEntera(), entd.getObligatorio());
+                        validateRequired(action, fieldname, itdt.getCantidadEntera(), entd.getObligatorio());
+
+                        if (itdt.getCantidadEntera() != null && entd.getVldn() != null) {
+                            if (entd.getVldn().getMinValue() != null
+                                    && itdt.getCantidadEntera() < (Long) entd.getVldn().getMinValue()) {
+                                throw new Error("Valor mínimo de: " + entd.getVldn().getMinValue());
+                            }
+                            if (entd.getVldn().getMaxValue() != null
+                                    && itdt.getCantidadEntera() > (Long) entd.getVldn().getMaxValue()) {
+                                throw new Error("Valor máximo de: " + entd.getVldn().getMaxValue());
+                            }
+                        }
 
                         break;
                     case ND:
-                        validateRequired(action, fieldname, itdtVO.getCantidadDecimal(), entd.getObligatorio());
+                        validateRequired(action, fieldname, itdt.getCantidadDecimal(), entd.getObligatorio());
+
+                        if (itdt.getCantidadDecimal() != null && entd.getVldn() != null) {
+                            if (entd.getVldn().getMinValue() != null
+                                    && itdt.getCantidadDecimal() < (Double) entd.getVldn().getMinValue()) {
+                                throw new Error("Valor mínimo de: " + entd.getVldn().getMinValue());
+                            }
+                            if (entd.getVldn().getMaxValue() != null
+                                    && itdt.getCantidadDecimal() > (Double) entd.getVldn().getMaxValue()) {
+                                throw new Error("Valor máximo de: " + entd.getVldn().getMaxValue());
+                            }
+                        }
 
                         break;
                     case PR:
-                        validateRequired(action, fieldname, itdtVO.getPrmt(), entd.getObligatorio());
+                        validateRequired(action, fieldname, itdt.getPrmt(), entd.getObligatorio());
 
                         break;
                     case SR:
-                        validateRequired(action, fieldname, itdtVO.getSrvc(), entd.getObligatorio());
+                        validateRequired(action, fieldname, itdt.getSrvc(), entd.getObligatorio());
 
                         break;
                     case CR:
-                        validateRequired(action, fieldname, itdtVO.getCadena(), entd.getObligatorio());
-                        validateCR(action, fieldname, itdtVO.getCadena(), entd.getTpdt().getCdrfCodeSet());
+                        validateRequired(action, fieldname, itdt.getCadena(), entd.getObligatorio());
+                        validateCR(action, fieldname, itdt.getCadena(), entd.getTpdt().getCdrfCodeSet());
 
                         break;
                     case TX:
-                        validateRequired(action, fieldname, itdtVO.getCadena(), entd.getObligatorio());
+                        validateRequired(action, fieldname, itdt.getCadena(), entd.getObligatorio());
+
+                        if (itdt.getCadena() != null && entd.getVldn() != null) {
+                            if (entd.getVldn().getMinLength() != null
+                                    && itdt.getCadena().length() < entd.getVldn().getMinLength()) {
+                                throw new Error("longitud mínima de: " + entd.getVldn().getMinLength());
+                            }
+                            if (entd.getVldn().getMaxLength() != null
+                                    && itdt.getCadena().length() > entd.getVldn().getMaxLength()) {
+                                throw new Error("longitud máxima de: " + entd.getVldn().getMaxLength());
+                            }
+                            if (entd.getVldn().getRegexp() != null
+                                    && !entd.getVldn().getRegexp().matcher(itdt.getCadena()).matches()) {
+                                throw new Error("No cumple el platron: " + entd.getVldn().getRegexp().pattern());
+                            }
+                        }
 
                         break;
                     case FE:
                     case FH:
-                        validateRequired(action, fieldname, itdtVO.getFecha(), entd.getObligatorio());
+                        validateRequired(action, fieldname, itdt.getFecha(), entd.getObligatorio());
 
                         break;
                     default:

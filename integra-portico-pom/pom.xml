@@ -45,7 +45,7 @@
         <sqlserver.version>1.3.1</sqlserver.version>
         <commons-dbutils.version>1.6</commons-dbutils.version>
 
-        <slf4j.version>1.7.15</slf4j.version>
+        <slf4j.version>1.7.21</slf4j.version>
         <commons-email.version>1.4</commons-email.version>
         <commons-logging.version>1.2</commons-logging.version>
         <log4j.version>1.2.17</log4j.version>
@@ -53,39 +53,39 @@
         <umlgraph.version>5.6.6</umlgraph.version>
 
         <commons-lang3.version>3.4</commons-lang3.version>
-        <mybatis.version>3.4.0</mybatis.version>
+        <mybatis.version>3.4.1</mybatis.version>
         <commons-dbcp.version>1.4</commons-dbcp.version>
         <commons-pool.version>1.6</commons-pool.version>
         <commons-configuration.version>1.10</commons-configuration.version>
         <cglib.version>2.2.2</cglib.version>
         <javassist.version>3.20.0-GA</javassist.version>
-        <lombok.version>1.16.8</lombok.version>
+        <lombok.version>1.16.10</lombok.version>
 
         <poi.version>3.14</poi.version>
-        <dynamicreports.version>4.1.0</dynamicreports.version>
+        <dynamicreports.version>4.1.1</dynamicreports.version>
         <itext.version>2.1.7</itext.version>
         <guava.version>19.0</guava.version>
         <commons-io.version>2.5</commons-io.version>
-        <commons-compress.version>1.11</commons-compress.version>
+        <commons-compress.version>1.12</commons-compress.version>
         <antlr4-runtime.version>4.5.3</antlr4-runtime.version>
-        <xdocreport.version>1.0.5</xdocreport.version>
+        <xdocreport.version>1.0.6</xdocreport.version>
 
         <quartz.version>2.2.3</quartz.version>
 
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
-        <struts2.version>2.3.28.1</struts2.version>
-        <jackson.version>2.7.4</jackson.version>
+        <struts2.version>2.3.30</struts2.version>
+        <jackson.version>2.8.2</jackson.version>
         <commons-validator.version>1.5.1</commons-validator.version>
-        <angularjs.version>1.5.5</angularjs.version>
+        <angularjs.version>1.5.8</angularjs.version>
         <bootstrap.version>3.3.5</bootstrap.version>
-        <bootswatch.version>3.3.5</bootswatch.version>
-        <angular-ui-bootstrap.version>1.3.2</angular-ui-bootstrap.version>
+        <bootswatch.version>3.3.5+4</bootswatch.version>
+        <angular-ui-bootstrap.version>1.3.3</angular-ui-bootstrap.version>
         <angular-translate.version>2.10.0</angular-translate.version>
         <angular-strap.version>2.3.4</angular-strap.version>
         <angular-spinner.version>0.8.1</angular-spinner.version>
         <angular-google-maps.version>2.1.1</angular-google-maps.version>
-        <angular-local-storage.version>0.2.7</angular-local-storage.version>
-        <lodash.version>4.0.0</lodash.version>
+        <angular-local-storage.version>0.3.0</angular-local-storage.version>
+        <lodash.version>4.15.0</lodash.version>
         <spin-js.version>2.1.0</spin-js.version>
     </properties>
 

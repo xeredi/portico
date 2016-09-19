@@ -1,3 +1,4 @@
+
 select pais_iso, unlo_codigo 
 from 
     igen_unlocode_unlo
@@ -51,7 +52,7 @@ SELECT
     , MANI_TRANSITO_COM_SIM as CODTIPOTRANSITO
     , (case MANI_TIPO_OPERACION when 'C' then '1' when 'D' then '2' end) as CODTIPOMOVMERC, MANI_FECHA_referencia as FECDECLARACION
     , (SELECT serv_numero from icom_servicio_serv where serv_id = esca_id) AS NUMESCALA
-    , null as INDBAJA, null as FECBAJA, sysdate as FECALTA, null as FECMODIF, null as USRALTA, null as USRMODIF
+    , 0 as INDBAJA, null as FECBAJA, sysdate as FECALTA, null as FECMODIF, null as USRALTA, null as USRMODIF
     , null as GUIDSRV
     , /*(select buqt_codigo from IGEN_BUQUETIPO_BUQT where BUQT_id = (
         select BUQU_BUQT_ID from IESC_BUQUETEMP_BUQU where buqu_buque_id = esca_buque_id and BUQU_FECHA_CREACION <= MANI_FECHA_REFERENCIA and (buqu_fecha_fin is null or buqu_fecha_fin > MANI_FECHA_REFERENCIA))
@@ -404,7 +405,7 @@ SELECT
     , NULL AS INDAH
     , NULL AS INDEM
     , NULL AS INDPE
-    , NULL AS INDBAJA
+    , 0 AS INDBAJA
     , NULL AS FECBAJA
     , SYSDATE AS FECALTA
     , NULL AS FECMODIF
@@ -463,6 +464,199 @@ where
 ;
 
 
+/* correccion de numeros de partida duplicados */
+select * 
+from iman_partida_part part
+where 
+    exists (
+        select 1 from iman_partida_part part2
+        where 
+            part2.part_mabl_id = part.part_mabl_id
+            and part2.part_orden = part.part_orden
+            and part2.part_es_activo = 1
+            and part2.part_id <> part.part_id
+    )
+    and part.part_es_activo = 1
+    AND EXISTS (
+        SELECT 1 FROM IMAN_BL_MABL WHERE MABL_ID = PART_MABL_ID AND MABL_ES_ACTIVO = 1
+    )
+;
+
+update iman_partida_part part set
+    part.part_orden = 
+        part.part_orden
+        + 10000 * (
+            SELECT COUNT(1) FROM iman_partida_part part2 
+            where 
+                part2.part_es_activo = 1
+                AND part2.part_mabl_id = part.part_mabl_id 
+                AND part2.part_orden = part.part_orden
+                AND part2.part_id > part.part_id
+        )
+where 
+    exists (
+        select 1 from iman_partida_part part2
+        where 
+            part2.part_mabl_id = part.part_mabl_id
+            and part2.part_orden = part.part_orden
+            and part2.part_es_activo = 1
+            and part2.part_id <> part.part_id
+    )
+    and part.part_es_activo = 1
+    AND EXISTS (
+        SELECT 1 FROM IMAN_BL_MABL WHERE MABL_ID = PART_MABL_ID AND MABL_ES_ACTIVO = 1
+    )
+;
+
+
+
+
+
+
+
+
+INSERT INTO G3_PARTIDA (
+    CODPUE
+    , ANYO
+    , CODSER
+    , CODTRAMO
+    , NUMORDEN
+    , TIPOCONOC
+    , NUMPARTIDA
+    , NUMBULTOS
+    , CODTIPBULTO
+    , CODARAN
+    , MARCAS
+    , CODMARCAVEH
+    , PESO
+    , VOLUMEN
+    , SITADUANERA
+    , INDBAJA
+    , FECBAJA
+    , CODMUELLE
+    , IDESTIBADOR
+    , CODTERMINAL
+    , NUMDECLARACIONPREVISTA
+    , CODCOMERCIAL
+    , DESCMERCANCIA
+    , FECALTA
+    , FECMODIF
+    , USRALTA
+    , USRMODIF
+    , ESTINDPASSERVMARITIMO
+    , ESTCODFORMAPRESENT
+    , ESTCODVEHREGMERC
+    , ESTINDINSTALESPECIAL
+    , ESTINDTIENEEQUIP
+    , ESTCODTIPEQMEM
+    , ESTCODTIPOCN
+    , ESTCODEQUIP
+    , ESTMATRICEQUIP
+    , ESTNUMEQUIPS
+    , ESTTIPOTRANSOPPE
+    , ESTTUCAOPPE
+    , OBSERVACIONES
+    , NUMBULTOSDEC
+    , CODTIPOREGIMEN
+    , CODTIPOVEHREGSIMPLIF
+    , CODRECEPTORMERCANCIA
+    , VERCODARAN
+    , CODMARCAS
+    , INDENS
+    , MMPPONU
+    , MMPPCLASE
+    , MMPPPAGINA
+    , MMPPENMIENDA
+    , INDINSTALESPECIAL
+    , CODCLASIFADICIONAL
+    , INDB2NOAPLIC2453
+)
+/*
+select CODPUE, ANYO, CODSER, CODTRAMO, NUMORDEN, TIPOCONOC, NUMPARTIDA, count(1)
+from (
+*/
+SELECT
+    (select subp_codigo from IGEN_subpuerto_subp where subp_ID = serv_subp_id) AS CODPUE
+    , serv_anno AS ANYO
+    , serv_numero AS CODSER
+    , (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'IMAN_CONSIGNATARIO_MACO' AND trid_old_id = MACO_ID) as CODTRAMO
+    , MABL_ORDEN AS NUMORDEN
+    , (CASE MABL_TIPO WHEN 'M' THEN 'M' WHEN 'P' THEN 'P' WHEN 'V' THEN 'T' END) AS TIPOCONOC
+
+    , part_orden AS  NUMPARTIDA
+    , PART_NUMERO_BULTOS AS  NUMBULTOS
+    , (select tbul_codigo from IMAN_TIPOBULTO_TBUL where tbul_id = PART_TIPO_BULTO_ID) AS  CODTIPBULTO
+    , (SELECT merc_codigo FROM IMAN_MERCANCIA_MERC WHERE merc_id = PART_MERCANCIA_ID) AS  CODARAN
+    , NULL AS  MARCAS
+    , (select vmar_codigo from IMAN_MARCAVEHICULO_VMAR where vmar_id = PART_MARCA_VEHICULO_ID) AS  CODMARCAVEH
+    , PART_PESO AS  PESO
+    , PART_VOLUMEN AS  VOLUMEN
+    , NULL AS  SITADUANERA /*ojo*/
+    , 0 AS  INDBAJA
+    , NULL AS  FECBAJA
+    , NULL AS  CODMUELLE
+    , NULL AS  IDESTIBADOR
+    , NULL AS  CODTERMINAL
+    , NULL AS  NUMDECLARACIONPREVISTA
+    , NULL AS  CODCOMERCIAL
+    , NULL AS  DESCMERCANCIA
+    , SYSDATE AS  FECALTA
+    , NULL AS  FECMODIF
+    , NULL AS  USRALTA
+    , NULL AS  USRMODIF
+    , NULL AS  ESTINDPASSERVMARITIMO
+    , NULL AS  ESTCODFORMAPRESENT
+    , NULL AS  ESTCODVEHREGMERC
+    , NULL AS  ESTINDINSTALESPECIAL
+    , NULL AS  ESTINDTIENEEQUIP
+    , NULL AS  ESTCODTIPEQMEM
+    , NULL AS  ESTCODTIPOCN
+    , NULL AS  ESTCODEQUIP
+    , NULL AS  ESTMATRICEQUIP
+    , NULL AS  ESTNUMEQUIPS
+    , NULL AS  ESTTIPOTRANSOPPE
+    , NULL AS  ESTTUCAOPPE
+    , PART_OBSERVACIONES AS  OBSERVACIONES
+    , NULL AS  NUMBULTOSDEC
+    , NULL AS  CODTIPOREGIMEN
+    , NULL AS  CODTIPOVEHREGSIMPLIF
+    , NULL AS  CODRECEPTORMERCANCIA
+    , NULL AS  VERCODARAN
+    , NULL AS  CODMARCAS
+    , NULL AS  INDENS
+    , NULL AS  MMPPONU
+    , NULL AS  MMPPCLASE
+    , NULL AS  MMPPPAGINA
+    , NULL AS  MMPPENMIENDA
+    , (CASE PART_INST_ESPEC_ESP_ID WHEN NULL THEN 0 ELSE 1 END) AS  INDINSTALESPECIAL
+    , NULL AS  CODCLASIFADICIONAL
+    , NULL AS  INDB2NOAPLIC2453
+FROM iman_partida_part
+    INNER JOIN iman_bl_mabl ON
+        mabl_id = part_mabl_id
+    INNER JOIN icom_servicio_serv serv ON
+        serv_id = mabl_mani_id
+    INNER JOIN iman_manifiesto_mani mani ON
+        mani_id = serv_id
+    INNER JOIN IMAN_CONSIGNATARIO_MACO ON 
+        maco_mani_id = serv_id
+        AND mabl_consignatario_id = maco_id
+where serv_fecha_baja is null
+    and serv_numero > '00001' 
+    and part_es_activo = 1 
+    and mabl_es_activo = 1 
+/*
+) sql
+group by CODPUE, ANYO, CODSER, CODTRAMO, NUMORDEN, TIPOCONOC, NUMPARTIDA
+having count(1) > 1
+order by CODPUE, ANYO, CODSER, CODTRAMO, NUMORDEN, TIPOCONOC
+*/
+;
+
+
+
+
+
 SELECT * FROM EST_TIPO_TERRITORIO;
 
 
@@ -492,10 +686,24 @@ TE	TRANSBORDO EMBARQUE
 select * from EST_TIPO_NAVEGACION;
 select * from IGEN_NAVEGACIONTIPO_NAVT;
 
+select * from G3_partida;
 select * from G3_CONOCIMIENTO;
 select * from G3_tramo;
 select * from G3_CABECERA;
 
+delete from G3_partida WHERE CODSER > 1;
 delete from G3_CONOCIMIENTO WHERE CODSER > 1;
 delete from G3_TRAMO WHERE CODSER > 1;
 delete from G3_CABECERA WHERE CODSER > 1;
+
+
+select * from 
+G3_TIPOBULTO;
+
+
+select tbul_codigo, tbul_nombre
+from iman_tipobulto_tbul maes
+    LEFT JOIN iman_tipobultoi18n_tbul i18n on i18n.tbul_id = maes.tbul_id
+where not exists (select 1 from G3_TIPOBULTO where codigo = maes.tbul_codigo)
+    and i18n.tbul_es_activo = 1
+    order by tbul_codigo;

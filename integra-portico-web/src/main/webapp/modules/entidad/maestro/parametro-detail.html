@@ -1,6 +1,7 @@
 <div data-ng-if="vm.item">
-    <div data-uib-tabset data-type="pills">
-        <div data-uib-tab data-select="vm.tabSelected(null)"
+	<!--  data-index="0" -->
+    <div data-uib-tabset data-type="pills" data-active="vm.tabActive">
+        <div data-uib-tab data-select="vm.tabSelected(0)"
             data-heading="{{'enti_' + vm.enti.enti.id | translate}}">
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
@@ -65,12 +66,13 @@
                 <div data-ng-if="vm.enti.enti.i18n" class="row"
                     data-ng-include="'modules/common/i18nMap-detail.html'"></div>
 
-                <div data-ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+                <div data-ng-include="'modules/entidad/item/fragment/itdtMap-detail-content.html'"></div>
             </fieldset>
         </div>
+        <!--  data-index="$index + 1" -->
         <div data-uib-tab data-ng-repeat="entiHijaId in vm.enti.entiHijasList track by $index"
-            data-ng-if="mc.hasAcenPath(entiHijaId, 'item-list')" data-active="vm.tabActive[entiHijaId]"
-            data-select="vm.tabSelected(entiHijaId)" data-heading="{{'enti_' + entiHijaId | translate}}">
+            data-ng-if="mc.hasAcenPath(entiHijaId, 'item-list')"
+            data-select="vm.tabSelected($index + 1)" data-heading="{{'enti_' + entiHijaId | translate}}">
             <div data-ng-if="vm.itemHijosMap[entiHijaId]">
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group">

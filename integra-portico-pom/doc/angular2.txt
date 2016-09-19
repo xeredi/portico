@@ -1,0 +1,25 @@
+Comandos para instalar una aplicación:
+$ npm install
+$ npm run tsc
+$ npm run serve
+
+
+
+Compilar todo a un unico js
+$ tsc --out modules.js
+
+
+Ejemplo blog chuli
+http://blog.mgechev.com/2016/06/26/tree-shaking-angular2-production-build-rollup-javascript/
+
+$ npm install typings
+$ npm install
+
+
+Otro ejemplo
+http://blog.rangle.io/optimize-your-angular2-application-with-tree-shaking/
+
+$ npm install
+$ npm run build
+$ npm run build:prod
+$ npm run serve

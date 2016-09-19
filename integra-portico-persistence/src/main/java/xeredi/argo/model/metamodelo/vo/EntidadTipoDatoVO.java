@@ -45,6 +45,12 @@ public final class EntidadTipoDatoVO {
     /** The etiqueta. */
     private String etiqueta;
 
+    /** Regla de validación en formato texto. */
+    private String validacion;
+
+    /** Regla de validación. */
+    private ValidacionVO vldn;
+
     /**
      * Gets the span normalizado.
      *

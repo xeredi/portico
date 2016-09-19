@@ -700,6 +700,8 @@ INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'entd_valorDef
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entd_valorDefecto', 'V. Defecto')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'entd_etiqueta')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entd_etiqueta', 'Etiqueta')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'entd_validacion')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entd_validacion', 'Validación')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'EntidadTipo_P')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'EntidadTipo_P', 'Maestro')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'EntidadTipo_B')\

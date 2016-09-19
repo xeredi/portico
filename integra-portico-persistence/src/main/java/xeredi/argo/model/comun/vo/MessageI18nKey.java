@@ -218,7 +218,9 @@ public enum MessageI18nKey {
     entd_gridable, /** The entd_filtrable. */
     entd_filtrable, /** The entd_valor defecto. */
     entd_valorDefecto, /** The entd_etiqueta. */
-    entd_etiqueta, /** The Entidad tipo_ p. */
+    entd_etiqueta,
+    /** The entd validacion. */
+    entd_validacion, /** The Entidad tipo_ p. */
     EntidadTipo_P, /** The Entidad tipo_ b. */
     EntidadTipo_B, /** The Entidad tipo_ t. */
     EntidadTipo_T, /** The Entidad tipo_ s. */

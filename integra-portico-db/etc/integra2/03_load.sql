@@ -126,7 +126,7 @@ SELECT (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 
     , NULL AS fecalta
     , NULL AS fecmodif
     , emce_doc_fiscal_sufijo as LETRANIF
-    , null as INDBAJA
+    , 0 as INDBAJA
     , null as FECBAJA
     , null as CODTIPUSU
     , null as OBSERVACIONES

@@ -362,6 +362,7 @@ CREATE TABLE tbl_entidad_tipo_dato_entd (
 	, entd_gridable int NOT NULL
 	, entd_filtrable int NOT NULL
 	, entd_valor_defecto VARCHAR2(30)
+	, entd_validacion VARCHAR2(100)
 
 	, CONSTRAINT pk_entd PRIMARY KEY (entd_pk)
 	, CONSTRAINT uq_entd UNIQUE (entd_enti_pk, entd_tpdt_pk)

@@ -17,6 +17,7 @@
 		<result column="entd_filtrable" property="filtrable" />
 		<result column="entd_valor_defecto" property="valorDefecto" />
 		<result column="entd_etiqueta" property="etiqueta" />
+		<result column="entd_validacion" property="validacion" />
 
 		<association property="tpdt" javaType="TipoDatoVO">
 			<result column="tpdt_pk" property="id" />
@@ -38,7 +39,7 @@
     <![CDATA[
         SELECT
             entd_pk, entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio
-            , entd_gridable, entd_filtrable, entd_valor_defecto
+            , entd_gridable, entd_filtrable, entd_valor_defecto, entd_validacion
             , tpdt_pk, tpdt_tipo_elemento, tpdt_tipo_html
             , enti_pk, enti_codigo, enti_tipo, enti_puerto
     ]]>
@@ -113,12 +114,12 @@
         <![CDATA[
         INSERT INTO tbl_entidad_tipo_dato_entd (
             entd_pk, entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable
-            , entd_filtrable, entd_valor_defecto)
+            , entd_filtrable, entd_valor_defecto, entd_validacion)
         VALUES (#{id}, #{entiId}, #{tpdt.id}, #{grupo}, #{fila}, #{orden}, #{span}
             , #{obligatorio, jdbcType=INTEGER, javaType=Boolean}
             , #{gridable, jdbcType=INTEGER, javaType=Boolean}
             , #{filtrable, jdbcType=INTEGER, javaType=Boolean}
-            , #{valorDefecto})
+            , #{valorDefecto}, #{validacion})
         ]]>
 	</insert>
 
@@ -133,6 +134,7 @@
             , entd_gridable = #{gridable, jdbcType=INTEGER, javaType=Boolean}
             , entd_filtrable = #{filtrable, jdbcType=INTEGER, javaType=Boolean}
             , entd_valor_defecto = #{valorDefecto}
+            , entd_validacion = #{validacion}
         WHERE entd_pk = #{id}
         ]]>
 	</update>

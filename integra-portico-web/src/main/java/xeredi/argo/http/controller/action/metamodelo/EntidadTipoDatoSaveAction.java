@@ -73,6 +73,8 @@ public final class EntidadTipoDatoSaveAction extends CrudSaveAction<EntidadTipoD
         FieldValidator.validateRequired(this, MessageI18nKey.entd_obligatorio, model.getObligatorio());
         FieldValidator.validateRequired(this, MessageI18nKey.entd_gridable, model.getGridable());
         FieldValidator.validateRequired(this, MessageI18nKey.entd_filtrable, model.getFiltrable());
+
+        FieldValidator.validateValidacion(this, MessageI18nKey.entd_validacion, model.getValidacion());
     }
 
     /**
