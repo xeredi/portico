@@ -2,7 +2,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>argo-web</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <parent>
         <groupId>argo</groupId>
         <artifactId>argo-pom</artifactId>
@@ -10,10 +10,6 @@
         <relativePath>../integra-portico-pom</relativePath>
     </parent>
     <name>Web</name>
-
-    <properties>
-        <war.warName>${project.artifactId}</war.warName>
-    </properties>
 
     <build>
         <directory>target/${profile-id}</directory>
@@ -27,49 +23,6 @@
                 <directory>resources/${database-vendor}</directory>
             </resource>
         </resources>
-<!--
-        <plugins>
-            <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <version>0.0.29</version>
-                <configuration>
-                    <nodeVersion>v4.4.1</nodeVersion>
-                    <npmVersion>3.8.5</npmVersion>
-                    <installDirectory>target</installDirectory>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>install node and npm</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>install-node-and-npm</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>npm install</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>install</arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>grunt build</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>grunt</goal>
-                        </goals>
-                        <configuration>
-                            <arguments> -verbose </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
- -->
     </build>
 
     <dependencies>
@@ -114,62 +67,6 @@
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
             <version>${commons-validator.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angularjs</artifactId>
-            <version>${angularjs.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>${bootstrap.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootswatch-slate</artifactId>
-            <version>${bootswatch.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angular-translate</artifactId>
-            <version>${angular-translate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angular-ui-bootstrap</artifactId>
-            <version>${angular-ui-bootstrap.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>lodash</artifactId>
-            <version>${lodash.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angular-strap</artifactId>
-            <version>${angular-strap.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>spin-js</artifactId>
-            <version>${spin-js.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>angular-spinner</artifactId>
-            <version>${angular-spinner.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>angular-local-storage</artifactId>
-            <version>${angular-local-storage.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angular-google-maps</artifactId>
-            <version>${angular-google-maps.version}</version>
         </dependency>
     </dependencies>
 </project>

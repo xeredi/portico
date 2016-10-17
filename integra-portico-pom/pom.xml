@@ -38,6 +38,7 @@
         <argo-persistence.version>0.0.1</argo-persistence.version>
         <argo-business.version>0.0.1</argo-business.version>
         <argo-jobs.version>0.0.1</argo-jobs.version>
+        <argo-web.version>0.0.1</argo-web.version>
 
         <!-- Libraries versions -->
         <postgresql.version>9.4-1205-jdbc42</postgresql.version>
@@ -168,6 +169,7 @@
         <module>../integra-portico-business</module>
         <module>../integra-portico-jobs</module>
         <module>../integra-portico-web</module>
+        <module>../argo-front-ng1</module>
 
         <!-- module>../integra-portico-test</module -->
     </modules>
