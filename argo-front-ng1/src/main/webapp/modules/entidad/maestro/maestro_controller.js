@@ -177,9 +177,7 @@
 			ParametroService.tabSelected(tabNo);
 		}
 
-		vm.tabActive = $routeParams.tab ? $routeParams.tab : 0;
-
-		alert('tab: ' + vm.tabActive);
+		vm.tab = $routeParams.tab ? $routeParams.tab : $routeParams.entiId;
 
 		vm.search = {
 			id : $routeParams.id,

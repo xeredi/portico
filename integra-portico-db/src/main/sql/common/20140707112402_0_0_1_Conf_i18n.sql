@@ -358,7 +358,7 @@ INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_valu
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'filter_limit', 'Long', '5')\
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'webapp_install_path', 'String', '/home/xeredi/git/portico/integra-portico-web/src/main/webapp')\
+	'webapp_install_path', 'String', '/home/xeredi/git/portico/argo-front-ng1/src/main/webapp')\
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'db_migration_dataSource_driver', 'String', 'oracle.jdbc.OracleDriver')\
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
