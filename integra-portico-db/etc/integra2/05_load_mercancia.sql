@@ -653,11 +653,145 @@ order by CODPUE, ANYO, CODSER, CODTRAMO, NUMORDEN, TIPOCONOC
 */
 ;
 
+INSERT INTO G3_EQUIPAMIENTO (
+    CODPUE
+    , ANYO
+    , CODSER
+    , CODTRAMO
+    , NUMORDEN
+    , TIPOCONOC
+    , CODEQUIP
+    , CODTIPOEQUIP
+    , INDISO
+    , MATRICULA
+    , CODTIPOTAMANYO
+    , CODESTADO
+    , TARA
+    , NUMPRECINTO
+    , UNIDADESVACIOS
+    , INDBAJA
+    , FECBAJA
+    , FECALTA
+    , FECMODIF
+    , USRALTA
+    , USRMODIF
+    , NUMBULTOS
+    , INDEXENTOLIQ
+    , CODTIPOCN
+    , ESTCODTIPOUTI
+    , ESTNUMEQUIPS
+    , ESTNUMTEUS
+    , ESTINDVACIO
+    , ESTCODARAN
+    , ESTCODTIPEQMEM
+    , ESTTIPOTRANSOPPE
+    , ESTTUCAOPPE
+    , OBSERVACIONES
+    , ESTTARA
+    , CODMENSAJECOARRI
+    , SECEQUIPCOARRI
+    , CODTIPOREGIMEN
+    , INDMATREPETIDA
+    , ESTVERCODARAN
+    , NUMPRECINTO2
+    , NUMPRECINTO3
+    , NUMPRECINTO4
+    , NUMPRECINTO5
+    , CODTIPCONCB3
+    , CODTERMINAL
+)
+/*
+;
+select distinct CODTIPOTAMANYO from (
+*/
+SELECT 
+    (select subp_codigo from IGEN_subpuerto_subp where subp_ID = serv_subp_id) AS CODPUE
+    , serv_anno AS ANYO
+    , serv_numero AS CODSER
+    , (select trid_new_id from tbl_traduccion_ids_trid where trid_table_name = 'IMAN_CONSIGNATARIO_MACO' AND trid_old_id = MACO_ID) as CODTRAMO
+    , MABL_ORDEN AS NUMORDEN
+    , (CASE MABL_TIPO WHEN 'M' THEN 'M' WHEN 'P' THEN 'P' WHEN 'V' THEN 'T' END) AS TIPOCONOC
+
+    , EQUI_ORDEN AS CODEQUIP
+    , (select tequ_codigo from IMAN_TIPOEQUIPAMIENTO_TEQU where tequ_id = EQUI_TIPO_ID) AS CODTIPOEQUIP
+    , NULL AS INDISO
+    , EQUI_MATRICULA AS MATRICULA
+    , (select tequ_tamanyo from IMAN_TIPOEQUIPAMIENTO_TEQU where tequ_id = EQUI_TIPO_ID) AS CODTIPOTAMANYO
+    , NULL AS CODESTADO
+    , round(EQUI_TARA, 2) AS TARA
+    , (select preq_precinto from IMAN_PRECINTOEQUIP_PREQ where preq_equi_id = equi_id and preq_es_activo = 1 and rownum = 1) AS NUMPRECINTO
+    , EQUI_NUMERO_VACIOS AS UNIDADESVACIOS
+    , 0 AS INDBAJA
+    , NULL AS FECBAJA
+    , SYSDATE AS FECALTA
+    , NULL AS FECMODIF
+    , 'prueba1' AS USRALTA
+    , NULL AS USRMODIF
+    , (SELECT SUM(COALESCE(PAEQ_NUMERO_BULTOS, 0)) FROM IMAN_PARTIDAEQUIP_PAEQ WHERE paeq_equi_id = equi_id and paeq_es_activo = 1) AS NUMBULTOS
+    , NULL AS INDEXENTOLIQ /* ojo */
+    , NULL AS CODTIPOCN
+    , NULL AS ESTCODTIPOUTI
+    , NULL AS ESTNUMEQUIPS
+    , NULL AS ESTNUMTEUS
+    , NULL AS ESTINDVACIO
+    , NULL AS ESTCODARAN
+    , NULL AS ESTCODTIPEQMEM
+    , NULL AS ESTTIPOTRANSOPPE
+    , NULL AS ESTTUCAOPPE
+    , SUBSTR(EQUI_OBSERVACIONES, 0 , 200) AS OBSERVACIONES
+    , EQUI_TARA AS ESTTARA
+    , NULL AS CODMENSAJECOARRI
+    , NULL AS SECEQUIPCOARRI
+    , NULL AS CODTIPOREGIMEN
+    , NULL AS INDMATREPETIDA
+    , NULL AS ESTVERCODARAN
+
+    , (select preq_precinto from IMAN_PRECINTOEQUIP_PREQ where preq_equi_id = equi_id and preq_es_activo = 1 and rownum = 2) AS NUMPRECINTO2
+    , (select preq_precinto from IMAN_PRECINTOEQUIP_PREQ where preq_equi_id = equi_id and preq_es_activo = 1 and rownum = 3) AS NUMPRECINTO3
+    , (select preq_precinto from IMAN_PRECINTOEQUIP_PREQ where preq_equi_id = equi_id and preq_es_activo = 1 and rownum = 4) AS NUMPRECINTO4
+    , (select preq_precinto from IMAN_PRECINTOEQUIP_PREQ where preq_equi_id = equi_id and preq_es_activo = 1 and rownum = 5) AS NUMPRECINTO5
+    , NULL AS CODTIPCONCB3
+    , NULL AS CODTERMINAL
+FROM iman_equipamiento_equi
+    INNER JOIN iman_bl_mabl ON
+        mabl_id = equi_mabl_id
+    INNER JOIN icom_servicio_serv serv ON
+        serv_id = mabl_mani_id
+    INNER JOIN iman_manifiesto_mani mani ON
+        mani_id = serv_id
+    INNER JOIN IMAN_CONSIGNATARIO_MACO ON 
+        maco_mani_id = serv_id
+        AND mabl_consignatario_id = maco_id
+where serv_fecha_baja is null
+    and serv_numero > '00001' 
+    and equi_es_activo = 1 
+    and mabl_es_activo = 1 
+/*
+) sql
+where not exists (
+    select 1
+    from G3_TIPOTAMEQUIP
+    where codigo = CODTIPOTAMANYO
+)
+order by CODTIPOTAMANYO
+*/
+;
 
 
+SELECT preq_equi_id, count(1) 
+FROM IMAN_PRECINTOEQUIP_PREQ
+where preq_es_activo = 1
+group by PREQ_EQUI_ID
+having count(1) > 1;
 
+SELECT PAEQ_equi_id, sum(PAEQ_NUMERO_BULTOS)
+FROM INTEGRA.IMAN_PARTIDAEQUIP_PAEQ
+where paeq_es_activo = 1
+group by PAEQ_equi_id
+having sum(PAEQ_NUMERO_BULTOS) > 99999
+;
 
-SELECT * FROM EST_TIPO_TERRITORIO;
+select max(equi_tara) from IMAN_EQUIPAMIENTO_EQUI;
 
 
 SELECT * FROM EST_TIPO_OPECONOC	;

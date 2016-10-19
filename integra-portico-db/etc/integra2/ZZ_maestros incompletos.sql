@@ -221,3 +221,48 @@ insert into G3_TIPOBULTO (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripc
 insert into G3_TIPOBULTO (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'ZX'	, 'RIG, DE CONTRACHAPADO');
 insert into G3_TIPOBULTO (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'ZY'	, 'RIG, DE MADERA RECONSTITUIDA');
 
+
+
+select * from G3_TIPOTAMEQUIP;
+
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '2300', '2300');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '2451', '2451');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '2476', '2476');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '25U5', '25U5');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '28U3', '28U3');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '29U1', '29U1');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '2CU2', '2CU2');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '2DP1', '2DP1');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '2EB0', '2EB0');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '2EG3', '2EG3');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '2EP1', '2EP1');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '2EU1', '2EU1');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '2NG1', '2NG1');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '3CT0', '3CT0');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '40U5', '40U5');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '45H0', '45H0');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '48P5', '48P5');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '48U2', '48U2');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '48UO', '48UO');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '49P0', '49P0');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '49U2', '49U2');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '4EG2', '4EG2');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '4EP1', '4EP1');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '4FG1', '4FG1');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, '4NR1', '4NR1');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'ACU1', 'ACU1');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'AEU3', 'AEU3');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'ANG3', 'ANG3');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'ANU3', 'ANU3');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'APG1', 'APG1');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'G9P0', 'G9P0');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'GNU3', 'GNU3');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'H0U1', 'H0U1');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'HEU1', 'HEU1');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'HFP1', 'HFP1');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'L4R0', 'L4R0');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'LDG1', 'LDG1');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'LDG2', 'LDG2');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'LEU1', 'LEU1');
+insert into G3_TIPOTAMEQUIP (usralta, USRMODIF, FECALTA, FECMODIF, codigo, descripcion) values (NULL, NULL, SYSDATE, null, 'LPG3', 'LPG3');
+
