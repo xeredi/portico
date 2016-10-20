@@ -3,6 +3,8 @@ package xeredi.argo.model.servicio.bo;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.NonNull;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -60,25 +62,39 @@ public final class ServicioBOFactory {
     /**
      * New instance.
      *
-     * @param entiId
-     *            the enti id
+     * @param entiId            the enti id
      * @return the servicio bo
      */
-    public static final ServicioBO newInstance(final Long entiId) {
+    public static final ServicioBO newInstance(final @NonNull Long entiId/*, final @NonNull Long usroId*/) {
+        ServicioBO srvcBO = null;
+
         if (MAP.containsKey(entiId)) {
             try {
-                return (ServicioBO) MAP.get(entiId).newInstance();
+                srvcBO = (ServicioBO) MAP.get(entiId).newInstance();
             } catch (final IllegalAccessException ex) {
                 throw new Error(ex);
             } catch (final InstantiationException ex) {
                 throw new Error(ex);
             }
+        } else {
+            srvcBO = new ServicioBO();
         }
 
-        return new ServicioBO();
+        // srvcBO.setUsroId(usroId);
+
+        return srvcBO;
     }
 
-    public static final ServicioBO newDefaultInstance() {
-        return new ServicioBO();
+    /**
+     * New default instance.
+     *
+     * @return the servicio BO
+     */
+    public static final ServicioBO newDefaultInstance(/*final @NonNull Long usroId*/) {
+        final ServicioBO srvcBO = new ServicioBO();
+
+        // srvcBO.setUsroId(usroId);
+
+        return srvcBO;
     }
 }

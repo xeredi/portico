@@ -1453,8 +1453,8 @@
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.unlo_zcos_id
 	            	AND trid_table_name = 'IEST_ZONACOSTERAEEE_ZCOS') as unlo_zcos
-		 	, UNLO_LATITUD
-		 	, UNLO_LONGITUD
+		 	, NULL AS UNLO_LATITUD
+		 	, NULL AS UNLO_LONGITUD
 		 	, UNLO_ES_INSULAR
 		 	, UNLO_ES_MEL_CEU_CAN
 		 	, (SELECT I18N.UNLO_NOMBRE
@@ -1540,6 +1540,7 @@
 	            WHERE trid_old_id = maes.subp_ivat_id
 	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') as subp_ivat
             , MAES.SUBP_ES_PARA_ESTADISTICAS
+            , NULL AS SUBP_AUTP_ID
             , (SELECT I18N.subp_NOMBRE
                 FROM IGEN_SUBPUERTOi18n_SUBP I18N
                 WHERE I18N.SUBP_ID = MAES.SUBP_ID
@@ -1607,8 +1608,8 @@
 	<![CDATA[
 		SELECT
 			MAES.MUEL_id
-	        , SUBSTR(MAES.MUEL_CODIGO, 1, 1) AS SUBP_CODIGO
-	        , SUBSTR(MAES.MUEL_CODIGO, 2)
+	        , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = TEMP.MUEL_SUBP_ID) AS SUBP_CODIGO
+	        , MAES.MUEL_CODIGO
 	        , (SELECT I18N.MUEL_NOMBRE
 	          FROM IESC_MUELLEi18n_MUEL I18N
 	            WHERE I18N.MUEL_ID = MAES.MUEL_ID
@@ -1727,8 +1728,16 @@
 	<![CDATA[
 		SELECT
 			maes.alin_id
-	        , SUBSTR(MAES.ALIN_CODIGO, 1, 1) AS subp_codigo
-	        , SUBSTR(MAES.ALIN_CODIGO, 2)
+	          , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP
+	              WHERE
+	                  subp_id = (
+	                      select muel_subp_id
+	                      from IESC_MUELLETEMP_MUEL
+	                      where muel_id = temp.alin_muel_id
+	        	                AND temp.ALIN_FECHA_CREACION BETWEEN muel_FECHA_CREACION AND COALESCE(muel_FECHA_FIN, temp.ALIN_FECHA_CREACION)
+	                  )
+	          ) as subp_codigo
+	        , MAES.ALIN_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = temp.alin_muel_id
 	            	AND trid_table_name = 'IESC_MUELLE_MUEL') as alin_muel
@@ -1866,8 +1875,22 @@
 	<![CDATA[
 		SELECT
 	        MAES.iesp_id
-	        , SUBSTR(MAES.iesp_CODIGO, 1, 1) AS subp_codigo
-	        , SUBSTR(MAES.iesp_CODIGO, 2)
+	          , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP
+	              WHERE
+	                  subp_id = (
+	                      select muel_subp_id
+	                      from IESC_MUELLETEMP_MUEL
+	                      where
+	                          muel_id = (
+	                              select alin_muel_id
+	                              from igen_alineaciontemp_alin
+	                              where alin_id = temp.iesp_alineacion
+	              	                AND temp.iesp_FECHA_CREACION BETWEEN alin_FECHA_CREACION AND COALESCE(alin_FECHA_FIN, temp.iesp_FECHA_CREACION)
+	                          )
+	        	                AND temp.iesp_FECHA_CREACION BETWEEN muel_FECHA_CREACION AND COALESCE(muel_FECHA_FIN, temp.iesp_FECHA_CREACION)
+	                  )
+	          ) as subp_codigo
+	        , MAES.iesp_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = temp.iesp_alineacion
 	            	AND trid_table_name = 'IGEN_ALINEACION_ALIN') as iesp_alineacion
@@ -2111,7 +2134,7 @@
 	<![CDATA[
 		SELECT
 			 MAES.BUqu_buque_id
-			, MAES.BUqu_CODIGO_imo
+			, coalesce(MAES.BUqu_CODIGO_imo, concat('bb', MAES.BUqu_buque_id)) as BUqu_CODIGO_imo
 			, TEMP.BUQU_nombre_buque
 			, TEMP.BUQU_CALLSIGN
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid

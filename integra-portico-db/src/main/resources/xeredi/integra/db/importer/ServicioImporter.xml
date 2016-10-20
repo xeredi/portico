@@ -108,7 +108,8 @@
         , esca.esca_manifiesto_notif_practico
         , esca.esca_fecha_entrada
         , esca.esca_fecha_salida
-        , (SELECT buqu_codigo_imo FROM iesc_buque_buqu
+        , (SELECT coalesce(BUqu_CODIGO_imo, concat('bb', BUqu_buque_id)) as BUqu_CODIGO_imo
+        	 FROM iesc_buque_buqu
                 WHERE buqu_buque_id = esca.esca_buque_id) AS imo
         , (
             SELECT buqt_codigo
@@ -258,7 +259,8 @@
         	WHERE actt_id = COALESCE(rea.atrd_tipo_actividad, COALESCE(aut.atrd_tipo_actividad, sol.atrd_tipo_actividad))) AS actt
         , (SELECT acet_codigo FROM iesc_actividadeditipo_acet
         	WHERE acet_id = COALESCE(rea.atrd_tipo_actividad_edi, COALESCE(aut.atrd_tipo_actividad_edi, sol.atrd_tipo_actividad_edi))) AS acet
-        , (SELECT alin_codigo FROM igen_alineacion_alin
+        , (SELECT concat((select subp_codigo from igen_subpuerto_subp where subp_id = (select serv_subp_id from icom_servicio_serv where serv_id = atra.atra_escala_id)), alin_codigo)
+        	FROM igen_alineacion_alin
         	WHERE alin_id = COALESCE(rea.atrd_alineacion, COALESCE(aut.atrd_alineacion, sol.atrd_alineacion))) AS alin
         , (SELECT atrt_codigo from iesc_atraquetipo_atrt
         	WHERE atrt_id = COALESCE(rea.atrd_tipo_atraque, COALESCE(aut.atrd_tipo_atraque, sol.atrd_tipo_atraque))) AS atrt
@@ -564,7 +566,7 @@
         ) as MAPE_TIPO_IVA
         , mape.MAPE_ES_SUJ_PAS_SUSTIT
         , (
-            select ALIN_CODIGO
+            select concat((select subp_codigo from igen_subpuerto_subp where subp_id = (select serv_subp_id from icom_servicio_serv where serv_id = SERV.SERV_id)), alin_codigo)
             from IGEN_ALINEACION_ALIN
             where ALIN_ID = MAPE_ALINEACION_ID
         ) as MAPE_ALINEACION
@@ -830,7 +832,7 @@
             WHERE acue_ID = mani_acuerdo_ID
         ) AS mani_acue
         , (
-            SELECT alin_CODIGO
+            SELECT concat((select subp_codigo from igen_subpuerto_subp where subp_id = (select serv_subp_id from icom_servicio_serv where serv_id = SERV.SERV_id)), alin_codigo)
             FROM Igen_alineacion_alin
             WHERE alin_ID = MANI_alineacion_ID
         ) AS mani_alin
@@ -1019,12 +1021,12 @@
 	  , MABL.MABL_TRANSP_POST_IMO
 	  , MABL.MABL_TIPO_DESTINO
 	  , (
-	      SELECT IESP_CODIGO
+	      SELECT concat((select subp_codigo from igen_subpuerto_subp where subp_id = (select serv_subp_id from icom_servicio_serv where serv_id = MABL.MABL_MANI_ID)), IESP_CODIGO)
 	      FROM IMAN_INSTESPECIAL_IESP
 	      WHERE IESP_ID = MABL_INST_ESPECIAL_ID
 	  ) AS MABL_INST_ESPECIAL
 	  , (
-	      SELECT ALIN_CODIGO
+	      SELECT concat((select subp_codigo from igen_subpuerto_subp where subp_id = (select serv_subp_id from icom_servicio_serv where serv_id = MABL.MABL_MANI_ID)), alin_codigo)
 	      FROM IGEN_ALINEACION_ALIN
 	      WHERE ALIN_ID = MABL_ALINEACION_ID
 	  ) AS MABL_ALINEACION
@@ -1154,7 +1156,7 @@
 	      where RECE_ID = PART_RECEPTOR_ID
 	  ) AS PART_RECEPTOR
 	  , (
-	      SELECT IESP_CODIGO
+	      SELECT concat((select subp_codigo from igen_subpuerto_subp where subp_id = (select serv_subp_id from icom_servicio_serv where serv_id = SERV.SERV_ID)), IESP_CODIGO)
 	      FROM IMAN_INSTESPECIAL_IESP
 	      where IESP_ID = PART_INST_ESPEC_ID
 	  ) AS PART_INST_ESPEC
