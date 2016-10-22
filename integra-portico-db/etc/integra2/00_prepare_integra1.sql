@@ -15,6 +15,24 @@ CREATE TABLE tbl_traduccion_ids_trid (
 select 'INSERT INTO tbl_traduccion_ids_trid (trid_old_id, trid_new_id, trid_table_name) SELECT XXXXX_id, seq_migracion.nextval, ''' || table_name || ''' FROM ' || table_name || ';' AS sql
 from user_tables order by table_name;
 
+-- Generacion de grants al usuario 'integra2'
+select 'GRANT SELECT ON '|| table_name|| ' TO INTEGRADOSMELILLA' || ';' AS sql
+from user_tables order by table_name;
+
+/*
+DECLARE
+	CURSOR c IS SELECT table_name FROM user_tables;
+	cmd VARCHAR2(200);
+BEGIN
+	FOR t IN c LOOP
+		cmd := 'GRANT SELECT ON '|| t.table_name|| ' TO integra2';
+		EXECUTE IMMEDIATE cmd;
+	END LOOP;
+END;
+*/
+
+
+
 
 
 
@@ -24,9 +42,9 @@ DROP TABLE tbl_traduccion_ids_trid;
 -- Borrado de la secuencia
 DROP SEQUENCE seq_migracion;
 
-
-
-
+-- Quitar permisos de select al usuario 'integra2'
+select 'REVOKE SELECT ON '|| table_name|| ' FROM INTEGRADOSMELILLA' || ';' AS sql
+from user_tables order by table_name;
 
 
 
