@@ -10,16 +10,25 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.poi.ss.usermodel.ClientAnchor.AnchorType;
 
+import xeredi.argo.model.auditoria.bo.Auditable;
+import xeredi.argo.model.auditoria.bo.EventoAuditoriaUtils;
+import xeredi.argo.model.auditoria.vo.AuditoriaAccion;
+import xeredi.argo.model.auditoria.vo.AuditoriaPrefijoEntidad;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.ModelException;
+import xeredi.argo.model.comun.proxy.ConfigurationProxy;
+import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.item.dao.ItemTramiteDAO;
 import xeredi.argo.model.item.dao.ItemTramiteDatoDAO;
@@ -56,13 +65,24 @@ import com.google.common.base.Preconditions;
 /**
  * The Class AbstractServicioBO.
  */
-public class ServicioBO {
+public class ServicioBO implements Auditable {
+    @Getter
+    @Setter
+    private Long usroId;
 
     /**
      * Instantiates a new servicio bo.
      */
     protected ServicioBO() {
         super();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AuditoriaPrefijoEntidad getPrefijoEntidad() {
+        return AuditoriaPrefijoEntidad.srvc;
     }
 
     /**
@@ -326,6 +346,10 @@ public class ServicioBO {
             }
 
             insertPostOperations(session, srvc, ssrvList, ssssList);
+
+            if (ConfigurationProxy.getBoolean(ConfigurationKey.audit_enabled)) {
+                EventoAuditoriaUtils.insert(session, this, AuditoriaAccion.INSERT);
+            }
 
             session.commit();
         }

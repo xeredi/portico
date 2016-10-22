@@ -271,7 +271,7 @@ INSERT INTO tbl_puerto_prto (prto_pk, prto_sprt_pk, prto_codigo, prto_codigo_cor
 VALUES (37100, 36100, '0', '0', NULL, NULL, 'ES***')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('prto', 37100, 'es', 'Puerto Genérico')\
 INSERT INTO tbl_puerto_prto (prto_pk, prto_sprt_pk, prto_codigo, prto_codigo_corto, prto_codigo_edi, prto_rec_aduanero, prto_unlocode)
-VALUES (37101, 36101, '*', '*', NULL, NULL, 'ES***')\
+VALUES (37101, 36001, '*', '*', NULL, NULL, 'ES***')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('prto', 37101, 'es', 'Puerto Genérico 2')\
 INSERT INTO tbl_puerto_prto (prto_pk, prto_sprt_pk, prto_codigo, prto_codigo_corto, prto_codigo_edi, prto_rec_aduanero, prto_unlocode)
 VALUES (37102, 36102, '**', '**', NULL, NULL, 'ES***')\
@@ -383,6 +383,8 @@ INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_valu
 
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'user_batch', 'String', 'batch')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'audit_enabled', 'Boolean', 'false')\
 
 
 

@@ -109,6 +109,9 @@ public enum ConfigurationKey {
     /** The user_batch. */
     user_batch,
 
+    /** The audit enabled. */
+    audit_enabled,
+
     ;
 
 }

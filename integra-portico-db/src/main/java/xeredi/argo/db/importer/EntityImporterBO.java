@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import lombok.NonNull;
 import oracle.sql.TIMESTAMP;
 import xeredi.argo.model.item.vo.ItemDatoVO;
@@ -23,6 +26,8 @@ import xeredi.argo.model.util.DateUtil;
  * The Class EntityImporterBO.
  */
 public abstract class EntityImporterBO {
+    /** The Constant LOG. */
+    private static final Log LOG = LogFactory.getLog(EntityImporterBO.class);
 
     /**
      * Delete translations.
@@ -33,7 +38,7 @@ public abstract class EntityImporterBO {
      *             the SQL exception
      */
     protected final void deleteTranslations(final @NonNull Connection con) throws SQLException {
-        try (final PreparedStatement stmt = con.prepareStatement("DELETE FROM tbl_traduccion_ids_trid")) {
+        try (final PreparedStatement stmt = con.prepareStatement("TRUNCATE TABLE tbl_traduccion_ids_trid")) {
             stmt.executeUpdate();
         }
     }
@@ -74,64 +79,70 @@ public abstract class EntityImporterBO {
 
     protected final ItemDatoVO createItdt(final @NonNull Entidad entity, final @NonNull EntidadTipoDatoVO entd,
             final Object value) throws SQLException {
-        final ItemDatoVO itdt = new ItemDatoVO();
+        try {
+            final ItemDatoVO itdt = new ItemDatoVO();
 
-        itdt.setTpdtId(entd.getTpdt().getId());
+            itdt.setTpdtId(entd.getTpdt().getId());
 
-        if (value != null) {
-            switch (entd.getTpdt().getTipoElemento()) {
-            case BO:
-            case NE:
-                itdt.setCantidadEntera(((BigDecimal) value).longValue());
+            if (value != null) {
+                switch (entd.getTpdt().getTipoElemento()) {
+                case BO:
+                case NE:
+                    itdt.setCantidadEntera(((BigDecimal) value).longValue());
 
-                break;
-            case ND:
-                itdt.setCantidadDecimal(((BigDecimal) value).doubleValue());
+                    break;
+                case ND:
+                    itdt.setCantidadDecimal(((BigDecimal) value).doubleValue());
 
-                break;
-            case FE:
-            case FH:
-                final Date date = value instanceof TIMESTAMP ? ((TIMESTAMP) value).dateValue() : (Date) value;
+                    break;
+                case FE:
+                case FH:
+                    final Date date = value instanceof TIMESTAMP ? ((TIMESTAMP) value).dateValue() : (Date) value;
 
-                if (date != null) {
-                    if ((entd.getTpdt().getTipoElemento() == TipoElemento.FE)) {
-                        DateUtil.truncTime(date, Calendar.HOUR_OF_DAY);
-                    } else {
-                        DateUtil.truncTime(date, Calendar.SECOND);
+                    if (date != null) {
+                        if ((entd.getTpdt().getTipoElemento() == TipoElemento.FE)) {
+                            DateUtil.truncTime(date, Calendar.HOUR_OF_DAY);
+                        } else {
+                            DateUtil.truncTime(date, Calendar.SECOND);
+                        }
+
+                        itdt.setFecha(date);
                     }
 
-                    itdt.setFecha(date);
+                    break;
+                case CR:
+                case TX:
+                    itdt.setCadena((String) value);
+
+                    break;
+                case PR:
+                    final ParametroVO prmt = new ParametroVO();
+
+                    prmt.setId(((BigDecimal) value).longValue());
+
+                    itdt.setPrmt(prmt);
+
+                    break;
+                case SR:
+                    final ServicioVO srvc = new ServicioVO();
+
+                    srvc.setId(((BigDecimal) value).longValue());
+
+                    itdt.setSrvc(srvc);
+
+                    break;
+
+                default:
+                    throw new Error("Unsupported data type '" + entd.getTpdt().getCodigo() + "' for entity '"
+                            + entity.name() + "'");
                 }
-
-                break;
-            case CR:
-            case TX:
-                itdt.setCadena((String) value);
-
-                break;
-            case PR:
-                final ParametroVO prmt = new ParametroVO();
-
-                prmt.setId(((BigDecimal) value).longValue());
-
-                itdt.setPrmt(prmt);
-
-                break;
-            case SR:
-                final ServicioVO srvc = new ServicioVO();
-
-                srvc.setId(((BigDecimal) value).longValue());
-
-                itdt.setSrvc(srvc);
-
-                break;
-
-            default:
-                throw new Error("Unsupported data type '" + entd.getTpdt().getCodigo() + "' for entity '"
-                        + entity.name() + "'");
             }
-        }
 
-        return itdt;
+            return itdt;
+        } catch (final Exception ex) {
+            LOG.error("Entity: " + entity + ", value: " + value + ", entd: " + entd);
+
+            throw new SQLException(ex);
+        }
     }
 }
