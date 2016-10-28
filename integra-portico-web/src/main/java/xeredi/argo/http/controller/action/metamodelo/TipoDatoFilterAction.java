@@ -6,10 +6,10 @@ package xeredi.argo.http.controller.action.metamodelo;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
 import xeredi.argo.model.metamodelo.vo.TipoHtml;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 /**
  * The Class TipoDatoFilterAction.

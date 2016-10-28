@@ -1,17 +1,15 @@
 package xeredi.argo.model.metamodelo.vo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TramiteVO.
  */
 @Data
-public final class TramiteVO {
-
-    /** The id. */
-    private Long id;
-
+@EqualsAndHashCode(callSuper = true)
+public final class TramiteVO extends FuncionalidadVO {
     /** The enti id. */
     private Long entiId;
 

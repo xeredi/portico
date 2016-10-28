@@ -146,15 +146,20 @@
     function MainController(credentialService) {
         var vm = this;
 
-        vm.hasAccnPath = hasAccnPath;
-        vm.hasAcenPath = hasAcenPath;
+        vm.hasAcbsPath = hasAcbsPath;
+        vm.hasAcen = hasAcen;
+        vm.hasFncdId = hasFncdId;
 
-        function hasAccnPath(path) {
-            return credentialService.hasAccnPath(path);
+        function hasAcbsPath(path) {
+            return credentialService.hasAcbsPath(path);
         }
 
-        function hasAcenPath(entiId, path) {
-            return credentialService.hasAcenPath(entiId, path);
+        function hasAcen(entiId, code) {
+            return credentialService.hasAcen(entiId, code);
+        }
+
+        function hasFncdId(fncdId) {
+            return credentialService.hasFncdId(fncdId);
         }
     }
 
@@ -243,32 +248,27 @@
     /* @ngInject */
     function credentialService(localStorageService) {
         return {
-            hasAccnPath : hasAccnPath,
-            hasAcenPath : hasAcenPath
+            hasAcbsPath : hasAcbsPath,
+            hasFncdId : hasFncdId,
+            hasAcen : hasAcen
         };
 
-        function hasAccnPath(path) {
-            var accnPaths = localStorageService.get("accnPaths");
+        function hasAcbsPath(path) {
+            var acbsPaths = localStorageService.get("acbsPaths");
 
-            if (accnPaths) {
-                return accnPaths.indexOf(path) >= 0;
-            }
-
-            return false;
+            return acbsPaths ? acbsPaths.indexOf(path) >= 0 : false;
         }
 
-        function hasAcenPath(entiId, path) {
-            var acenPaths = localStorageService.get("acenPaths");
+        function hasFncdId(fncdId) {
+            var fncdIds = localStorageService.get("fncdIds");
 
-            if (acenPaths) {
-                var acenPathsEnti = acenPaths[entiId];
+            return fncdIds ? fncdIds.indexOf(fncdId) >= 0 : false;
+        }
 
-                if (acenPathsEnti) {
-                    return acenPathsEnti.indexOf(path) >= 0;
-                }
-            }
+        function hasAcen(entiId, codigo) {
+            var acenMap = localStorageService.get("acenMap");
 
-            return false;
+            return acenMap && acenMap[entiId] ? acenMap[entiId].indexOf(codigo) >= 0 : false;
         }
     }
 

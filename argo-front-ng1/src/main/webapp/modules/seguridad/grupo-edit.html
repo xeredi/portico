@@ -9,49 +9,100 @@
             </div>
         </fieldset>
 
-        <fieldset>
-            <legend data-translate="accnList"></legend>
-
-            <div class="row" data-ng-repeat="prefix in vm.prefixList | orderBy: prefix track by $index">
-                <div class="col-sm-4 col-md-3 col-lg-2">
-                    <p class="list-group-item active" data-ng-bind="prefix | translate"></p>
-                </div>
-                <div class="list-group-item col-sm-8 col-md-9 col-lg-10">
-                    <div data-ng-repeat="accn in vm.accnMap[prefix] track by $index"
-                        class="col-sm-4 col-md-3 col-lg-2">
-                        <div class="checkbox">
-                            <label> <input type="checkbox"
-                                data-ng-click="vm.updateAcciones($event, accn.id)"
-                                data-ng-checked="vm.model.accnIds.indexOf(accn.id) >= 0"> <span
-                                data-ng-bind="accn.codigo"></span>
-                            </label>
+        <div data-uib-tabset data-type="pills">
+            <div data-uib-tab data-select="vm.tabSelected('acbsList')" data-index="'acbsList'"
+                data-heading="{{'acbsList' | translate}}" data-ng-if="mc.hasAcbsPath('acbs-list')">
+                <fieldset>
+                    <div class="row"
+                        data-ng-repeat="prefix in vm.prefixList | orderBy: prefix track by $index">
+                        <div class="col-sm-4 col-md-3 col-lg-2">
+                            <p class="list-group-item active" data-ng-bind="prefix | translate"></p>
+                        </div>
+                        <div class="list-group-item col-sm-8 col-md-9 col-lg-10">
+                            <div data-ng-repeat="acbs in vm.acbsMap[prefix] track by $index"
+                                class="col-sm-4 col-md-3 col-lg-2">
+                                <div class="checkbox">
+                                    <label> <input type="checkbox"
+                                        data-ng-click="vm.updateFncdIds($event, acbs.id)"
+                                        data-ng-checked="vm.model.fncdIds.indexOf(acbs.id) >= 0"> <span
+                                        data-ng-bind="acbs.codigo"></span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </fieldset>
             </div>
-        </fieldset>
-
-        <fieldset>
-            <legend data-translate="acenList"></legend>
-
-            <div class="row" data-ng-repeat="entiId in vm.entiList track by $index">
-                <div class="col-sm-4 col-md-3 col-lg-2">
-                    <p class="list-group-item active" data-ng-bind="'enti_' + entiId | translate"></p>
-                </div>
-                <div class="list-group-item col-sm-8 col-md-9 col-lg-10">
-                    <div data-ng-repeat="acen in vm.acenMap[entiId] track by $index"
-                        class="col-sm-4 col-md-3 col-lg-2">
-                        <div class="checkbox">
-                            <label> <input type="checkbox"
-                                data-ng-click="vm.updateAccionesEntidad($event, acen.id)"
-                                data-ng-checked="vm.model.acenIds.indexOf(acen.id) >= 0"> <span
-                                data-ng-bind="acen.accn.codigo"></span>
-                            </label>
+            <div data-uib-tab data-select="vm.tabSelected('acenList')" data-index="'acenList'"
+                data-heading="{{'acenList' | translate}}" data-ng-if="mc.hasAcbsPath('acen-list')">
+                <fieldset>
+                    <div class="row" data-ng-repeat="entiId in vm.entiList track by $index"
+                        data-ng-if="vm.acenMap[entiId]">
+                        <div class="col-sm-4 col-md-3 col-lg-2">
+                            <p class="list-group-item active" data-ng-bind="'enti_' + entiId | translate"></p>
+                        </div>
+                        <div class="list-group-item col-sm-8 col-md-9 col-lg-10">
+                            <div data-ng-repeat="acen in vm.acenMap[entiId] track by $index"
+                                class="col-sm-4 col-md-3 col-lg-2">
+                                <div class="checkbox">
+                                    <label> <input type="checkbox"
+                                        data-ng-click="vm.updateFncdIds($event, acen.id)"
+                                        data-ng-checked="vm.model.fncdIds.indexOf(acen.id) >= 0"> <span
+                                        data-ng-bind="acen.aebs.codigo"></span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </fieldset>
             </div>
-        </fieldset>
+            <div data-uib-tab data-select="vm.tabSelected('acesList')" data-index="'acesList'"
+                data-heading="{{'acesList' | translate}}">
+                <fieldset>
+                    <div class="row" data-ng-repeat="entiId in vm.entiList track by $index"
+                        data-ng-if="vm.acesMap[entiId]">
+                        <div class="col-sm-4 col-md-3 col-lg-2">
+                            <p class="list-group-item active" data-ng-bind="'enti_' + entiId | translate"></p>
+                        </div>
+                        <div class="list-group-item col-sm-8 col-md-9 col-lg-10">
+                            <div data-ng-repeat="aces in vm.acesMap[entiId] track by $index"
+                                class="col-sm-4 col-md-3 col-lg-2">
+                                <div class="checkbox">
+                                    <label> <input type="checkbox"
+                                        data-ng-click="vm.updateFncdIds($event, aces.id)"
+                                        data-ng-checked="vm.model.fncdIds.indexOf(aces.id) >= 0"> <span
+                                        data-ng-bind="aces.path"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div data-uib-tab data-select="vm.tabSelected('trmtList')" data-index="'trmtList'"
+                data-heading="{{'trmtList' | translate}}">
+                <fieldset>
+                    <div class="row" data-ng-repeat="entiId in vm.entiList track by $index"
+                        data-ng-if="vm.trmtMap[entiId]">
+                        <div class="col-sm-4 col-md-3 col-lg-2">
+                            <p class="list-group-item active" data-ng-bind="'enti_' + entiId | translate"></p>
+                        </div>
+                        <div class="list-group-item col-sm-8 col-md-9 col-lg-10">
+                            <div data-ng-repeat="trmt in vm.trmtMap[entiId] track by $index"
+                                class="col-sm-4 col-md-3 col-lg-2">
+                                <div class="checkbox">
+                                    <label> <input type="checkbox"
+                                        data-ng-click="vm.updateFncdIds($event, trmt.id)"
+                                        data-ng-checked="vm.model.fncdIds.indexOf(trmt.id) >= 0"> <span>{{trmt.etiqueta}}
+                                            ({{trmt.estadoOrig}} -> {{trmt.estadoDest}}) </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
 
         <div class="btn-group">
             <button data-ng-click="vm.save()" class="btn btn-primary">

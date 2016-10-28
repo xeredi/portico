@@ -1,10 +1,29 @@
 package xeredi.argo.model.metamodelo.vo;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Instantiates a new accion entidad base VO.
+ */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class AccionEntidadBaseVO extends FuncionalidadVO {
+public class AccionEntidadBaseVO {
 
+	/** The id. */
+	private Long id;
+
+	/** The prefix. */
+	private AccionPrefix prefix;
+
+	/** The codigo. */
+	private AccionCodigo codigo;
+
+	/**
+	 * Gets the path.
+	 *
+	 * @return the path
+	 */
+	public final String getPath() {
+		return new StringBuilder().append(prefix).append("-").append(codigo).toString();
+	}
 }

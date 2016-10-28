@@ -1,10 +1,10 @@
 <div data-ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" data-ng-if="mc.hasAccnPath('trmt-edit')"
+            <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('trmt-edit')"
                 data-ng-href="#/metamodelo/tramite/edit/edit/{{vm.model.entiId}}/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
-            <button data-ng-if="mc.hasAccnPath('trmt-remove')" data-ng-click="vm.remove()"
+            <button data-ng-if="mc.hasAcbsPath('trmt-remove')" data-ng-click="vm.remove()"
                 class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
@@ -30,12 +30,12 @@
         </div>
     </fieldset>
 
-    <fieldset data-ng-if="mc.hasAccnPath('trtd-list')">
+    <fieldset data-ng-if="mc.hasAcbsPath('trtd-list')">
         <legend data-translate="trtdList"></legend>
 
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
-                <a class="btn btn-default" data-ng-if="mc.hasAccnPath('trtd-create')"
+                <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('trtd-create')"
                     data-ng-href="#/metamodelo/tramite-tipo-dato/edit/create/{{vm.model.id}}"><i
                     class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
             </div>
@@ -54,7 +54,7 @@
             </thead>
             <tbody>
                 <tr data-ng-repeat="trtd in vm.trtdList track by $index">
-                    <td><a data-ng-if="mc.hasAccnPath('trtd-detail')"
+                    <td><a data-ng-if="mc.hasAcbsPath('trtd-detail')"
                         data-ng-href="#/metamodelo/tramite-tipo-dato/detail/{{trtd.trmtId}}/{{trtd.entd.tpdt.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="trtd.entd.etiqueta"></td>
@@ -64,39 +64,6 @@
                         data-title="{{('ElementoTipo_' + trtd.entd.tpdt.tipoElemento | translate)}}"></td>
                     <td data-ng-bind="trtd.entd.tpdt.tpht" data-bs-tooltip
                         data-title="{{('HtmlTipo_' + trtd.entd.tpdt.tpht | translate)}}"></td>
-                </tr>
-            </tbody>
-        </table>
-    </fieldset>
-
-    <fieldset data-ng-if="mc.hasAccnPath('actr-list')">
-        <legend data-translate="actrList"></legend>
-
-        <div class="btn-toolbar" role="toolbar">
-            <div class="btn-group">
-                <a class="btn btn-default" data-ng-if="mc.hasAccnPath('actr-create')"
-                    data-ng-href="#/metamodelo/accion-tramite/edit/create/{{vm.model.id}}"><i
-                    class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
-            </div>
-        </div>
-
-        <table data-ng-if="vm.actrList" class="table-bordered table-condensed table-hover">
-            <thead>
-                <tr>
-                    <th nowrap="nowrap" />
-                    <th data-translate="accn_codigo"></th>
-                    <th data-translate="accn_core"></th>
-                    <th data-translate="accn_multiple"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr data-ng-repeat="actr in vm.actrList track by $index">
-                    <td><a data-ng-if="mc.hasAccnPath('actr-detail')"
-                        data-ng-href="#/metamodelo/accion-tramite/detail/{{actr.id}}"><i
-                            class="glyphicon glyphicon-search"></i></a></td>
-                    <td data-ng-bind="actr.accn.codigo"></td>
-                    <td><i class="glyphicon glyphicon-{{(actr.accn.core ? 'ok' : 'remove')}}"></i></td>
-                    <td><i class="glyphicon glyphicon-{{(actr.accn.multiple ? 'ok' : 'remove')}}"></i></td>
                 </tr>
             </tbody>
         </table>

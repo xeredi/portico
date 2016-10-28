@@ -2,25 +2,21 @@ package xeredi.argo.model.metamodelo.vo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import xeredi.argo.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class AccionEntidadCriterioVO.
+ * Instantiates a new accion entidad criterio VO.
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public final class AccionEntidadCriterioVO extends BaseCriterioVO {
+public final class AccionEntidadCriterioVO extends FuncionalidadCriterioVO {
 
-    /** The id. */
-    private Long id;
+	/** The prefix. */
+	private AccionPrefix prefix;
+
+	/** The codigo. */
+	private AccionCodigo codigo;
 
     /** The enti id. */
     private Long entiId;
-
-    /** The usro id. */
-    private Long usroId;
-
-    /** The grpo id. */
-    private Long grpoId;
 }

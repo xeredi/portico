@@ -7,12 +7,12 @@ import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.EntidadEntidadBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 

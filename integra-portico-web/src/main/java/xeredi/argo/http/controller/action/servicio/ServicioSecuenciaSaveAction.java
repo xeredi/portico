@@ -4,7 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.servicio.bo.ServicioSecuenciaBO;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaVO;
 

@@ -11,9 +11,9 @@ import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc

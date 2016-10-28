@@ -8,8 +8,8 @@ import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 import com.google.common.base.Preconditions;
 

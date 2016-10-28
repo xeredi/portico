@@ -16,9 +16,12 @@ import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.I18nPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.metamodelo.dao.FuncionalidadDAO;
 import xeredi.argo.model.metamodelo.dao.TramiteDAO;
 import xeredi.argo.model.metamodelo.vo.TramiteCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
+import xeredi.argo.model.seguridad.dao.FuncionalidadGrupoDAO;
+import xeredi.argo.model.seguridad.vo.FuncionalidadGrupoCriterioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
@@ -27,127 +30,159 @@ import xeredi.util.mybatis.SqlMapperLocator;
  */
 public final class TramiteBO {
 
-    /**
-     * Select list.
-     *
-     * @param criterio
-     *            the criterio
-     * @return the list
-     */
-    public List<TramiteVO> selectList(final @NonNull TramiteCriterioVO criterio) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final TramiteDAO trmtDAO = session.getMapper(TramiteDAO.class);
+	/**
+	 * Checks if is user allowed.
+	 *
+	 * @param trmtId
+	 *            the trmt id
+	 * @param usroId
+	 *            the usro id
+	 * @return true, if is user allowed
+	 */
+	public boolean isUserAllowed(final @NonNull Long trmtId, final @NonNull Long usroId) {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final TramiteDAO trmtDAO = session.getMapper(TramiteDAO.class);
+			final TramiteCriterioVO trmtCriterio = new TramiteCriterioVO();
 
-            return trmtDAO.selectList(criterio);
-        }
-    }
+			trmtCriterio.setId(trmtId);
+			trmtCriterio.setUsroId(usroId);
 
-    /**
-     * Select.
-     *
-     * @param id
-     *            the id
-     * @param idioma
-     *            the idioma
-     * @return the tramite vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public TramiteVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final TramiteDAO trmtDAO = session.getMapper(TramiteDAO.class);
-            final TramiteCriterioVO criterio = new TramiteCriterioVO();
+			return trmtDAO.count(trmtCriterio) > 0;
+		}
+	}
 
-            criterio.setId(id);
-            criterio.setIdioma(idioma);
+	/**
+	 * Select list.
+	 *
+	 * @param criterio
+	 *            the criterio
+	 * @return the list
+	 */
+	public List<TramiteVO> selectList(final @NonNull TramiteCriterioVO criterio) {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final TramiteDAO trmtDAO = session.getMapper(TramiteDAO.class);
 
-            final TramiteVO trmt = trmtDAO.selectObject(criterio);
+			return trmtDAO.selectList(criterio);
+		}
+	}
 
-            if (trmt == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.trmt, id);
-            }
+	/**
+	 * Select.
+	 *
+	 * @param id
+	 *            the id
+	 * @param idioma
+	 *            the idioma
+	 * @return the tramite vo
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public TramiteVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final TramiteDAO trmtDAO = session.getMapper(TramiteDAO.class);
+			final TramiteCriterioVO criterio = new TramiteCriterioVO();
 
-            return trmt;
-        }
-    }
+			criterio.setId(id);
+			criterio.setIdioma(idioma);
 
-    /**
-     * Insert.
-     *
-     * @param trmt
-     *            the trmt
-     * @param i18nMap
-     *            the i18n map
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
-     */
-    public void insert(final @NonNull TramiteVO trmt, final @NonNull Map<String, I18nVO> i18nMap)
-            throws DuplicateInstanceException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final TramiteDAO trmtDAO = session.getMapper(TramiteDAO.class);
-            final IgBO igBO = new IgBO();
+			final TramiteVO trmt = trmtDAO.selectObject(criterio);
 
-            if (trmtDAO.exists(trmt)) {
-                throw new DuplicateInstanceException(MessageI18nKey.trmt, trmt);
-            }
+			if (trmt == null) {
+				throw new InstanceNotFoundException(MessageI18nKey.trmt, id);
+			}
 
-            trmt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+			return trmt;
+		}
+	}
 
-            trmtDAO.insert(trmt);
+	/**
+	 * Insert.
+	 *
+	 * @param trmt
+	 *            the trmt
+	 * @param i18nMap
+	 *            the i18n map
+	 * @throws DuplicateInstanceException
+	 *             the duplicate instance exception
+	 */
+	public void insert(final @NonNull TramiteVO trmt, final @NonNull Map<String, I18nVO> i18nMap)
+			throws DuplicateInstanceException {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
+			final TramiteDAO trmtDAO = session.getMapper(TramiteDAO.class);
+			final IgBO igBO = new IgBO();
 
-            I18nBO.insertMap(session, I18nPrefix.trmt, trmt.getId(), i18nMap);
+			if (trmtDAO.exists(trmt)) {
+				throw new DuplicateInstanceException(MessageI18nKey.trmt, trmt);
+			}
 
-            session.commit();
-        }
-    }
+			trmt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
-    /**
-     * Update.
-     *
-     * @param trmt
-     *            the trmt
-     * @param i18nMap
-     *            the i18n map
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public void update(final @NonNull TramiteVO trmt, final @NonNull Map<String, I18nVO> i18nMap)
-            throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final TramiteDAO trmtDAO = session.getMapper(TramiteDAO.class);
+			fncdDAO.insert(trmt);
+			trmtDAO.insert(trmt);
 
-            if (trmtDAO.update(trmt) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.trmt, trmt.getId());
-            }
+			I18nBO.insertMap(session, I18nPrefix.trmt, trmt.getId(), i18nMap);
 
-            I18nBO.updateMap(session, I18nPrefix.trmt, trmt.getId(), i18nMap);
+			session.commit();
+		}
+	}
 
-            session.commit();
-        }
-    }
+	/**
+	 * Update.
+	 *
+	 * @param trmt
+	 *            the trmt
+	 * @param i18nMap
+	 *            the i18n map
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public void update(final @NonNull TramiteVO trmt, final @NonNull Map<String, I18nVO> i18nMap)
+			throws InstanceNotFoundException {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final TramiteDAO trmtDAO = session.getMapper(TramiteDAO.class);
 
-    /**
-     * Delete.
-     *
-     * @param trmt
-     *            the trmt
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public void delete(final @NonNull TramiteVO trmt) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(trmt.getId());
+			if (trmtDAO.update(trmt) == 0) {
+				throw new InstanceNotFoundException(MessageI18nKey.trmt, trmt.getId());
+			}
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final TramiteDAO trmtDAO = session.getMapper(TramiteDAO.class);
+			I18nBO.updateMap(session, I18nPrefix.trmt, trmt.getId(), i18nMap);
 
-            I18nBO.deleteMap(session, I18nPrefix.trmt, trmt.getId());
+			session.commit();
+		}
+	}
 
-            if (trmtDAO.delete(trmt) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.trmt, trmt);
-            }
+	/**
+	 * Delete.
+	 *
+	 * @param trmt
+	 *            the trmt
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public void delete(final @NonNull TramiteVO trmt) throws InstanceNotFoundException {
+		Preconditions.checkNotNull(trmt.getId());
 
-            session.commit();
-        }
-    }
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final TramiteDAO trmtDAO = session.getMapper(TramiteDAO.class);
+			final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
+			final FuncionalidadGrupoDAO fngrDAO = session.getMapper(FuncionalidadGrupoDAO.class);
+
+			if (trmtDAO.delete(trmt) == 0) {
+				throw new InstanceNotFoundException(MessageI18nKey.trmt, trmt);
+			}
+
+			final FuncionalidadGrupoCriterioVO fngrCriterio = new FuncionalidadGrupoCriterioVO();
+
+			fngrCriterio.setFncdId(trmt.getId());
+
+			fngrDAO.deleteList(fngrCriterio);
+			fncdDAO.delete(trmt);
+
+			I18nBO.deleteMap(session, I18nPrefix.trmt, trmt.getId());
+
+			session.commit();
+		}
+	}
 
 }

@@ -8,8 +8,8 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.AspectoCargoBO;
 import xeredi.argo.model.facturacion.vo.AspectoCargoVO;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.util.DateUtil;
 
 import com.google.common.base.Preconditions;

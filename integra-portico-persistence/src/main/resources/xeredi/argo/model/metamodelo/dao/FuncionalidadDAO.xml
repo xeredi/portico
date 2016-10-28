@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.metamodelo.dao.FuncionalidadDAO">
+    <resultMap type="FuncionalidadVO" id="ResultMap">
+        <id column="fncd_pk" />
+
+        <result column="fncd_pk" property="id" />
+    </resultMap>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+        fncd_pk
+    FROM
+        tbl_funcionalidad_fncd
+    ]]>
+    </sql>
+
+    <sql id="SelectCountPrefix">
+    <![CDATA[
+    SELECT
+        COUNT(1)
+    FROM
+        tbl_funcionalidad_fncd
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND fncd_pk = #{id}
+            </if>
+            <if test="usroId != null">
+		    <![CDATA[
+				AND EXISTS (
+				  SELECT 1 FROM tbl_funcionalidad_grupo_fngr
+				  WHERE fngr_fncd_pk = fncd_pk
+				      AND EXISTS (
+				          SELECT 1 FROM tbl_usuario_grupo_usgr
+				          WHERE usgr_grpo_pk = fngr_grpo_pk
+				              AND usgr_usro_pk = #{usroId}
+				      )
+				)
+		    ]]>
+            </if>
+            <if test="grpoId != null">
+		    <![CDATA[
+				AND EXISTS (
+				  	SELECT 1 FROM tbl_funcionalidad_grupo_fngr
+				  	WHERE
+				  		fngr_fncd_pk = fncd_pk
+					  	AND fngr_grpo_pk = #{grpoId}
+				)
+		    ]]>
+            </if>
+        </where>
+    </sql>
+
+    <select id="count" parameterType="FuncionalidadCriterioVO" resultType="Integer">
+        <include refid="SelectCountPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="selectList" parameterType="FuncionalidadCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="selectObject" parameterType="FuncionalidadCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <insert id="insert" parameterType="FuncionalidadVO">
+        <![CDATA[
+        INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+        VALUES (#{id})
+        ]]>
+    </insert>
+
+    <delete id="delete" parameterType="FuncionalidadVO">
+        <![CDATA[
+        DELETE FROM tbl_funcionalidad_fncd
+        WHERE
+            fncd_pk = #{id}
+        ]]>
+    </delete>
+</mapper>

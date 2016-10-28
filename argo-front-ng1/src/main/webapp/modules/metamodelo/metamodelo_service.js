@@ -9,10 +9,6 @@
 
     .factory("AccionEntidadService", AccionEntidadService)
 
-    .factory("EntidadAccionService", EntidadAccionService)
-
-    .factory("EntidadAccionGridService", EntidadAccionGridService)
-
     .factory("EntidadEntidadService", EntidadEntidadService)
 
     .factory("EntidadGrupoDatoService", EntidadGrupoDatoService)
@@ -20,8 +16,6 @@
     .factory("EntidadTipoDatoService", EntidadTipoDatoService)
 
     .factory("TramiteService", TramiteService)
-
-    .factory("AccionTramiteService", AccionTramiteService)
 
     .factory("TramiteTipoDatoService", TramiteTipoDatoService)
 
@@ -36,6 +30,10 @@
     .factory("TipoEstadisticaService", TipoEstadisticaService)
 
     .factory("CampoAgregacionService", CampoAgregacionService)
+
+    .factory("AccionBaseService", AccionBaseService)
+
+    .factory("AccionEspecialService", AccionEspecialService)
 
     ;
 
@@ -52,16 +50,6 @@
     /* @ngInject */
     function AccionEntidadService($http, $q, CrudService) {
         return CrudService.create("metamodelo/accion-entidad");
-    }
-
-    /* @ngInject */
-    function EntidadAccionService($http, $q, CrudService) {
-        return CrudService.create("metamodelo/entidad-accion");
-    }
-
-    /* @ngInject */
-    function EntidadAccionGridService($http, $q, CrudService) {
-        return CrudService.create("metamodelo/entidad-accion-grid");
     }
 
     /* @ngInject */
@@ -82,11 +70,6 @@
     /* @ngInject */
     function TramiteService($http, $q, CrudService) {
         return CrudService.create("metamodelo/tramite");
-    }
-
-    /* @ngInject */
-    function AccionTramiteService($http, $q, CrudService) {
-        return CrudService.create("metamodelo/accion-tramite");
     }
 
     /* @ngInject */
@@ -122,5 +105,15 @@
     /* @ngInject */
     function CampoAgregacionService($http, $q, CrudService) {
         return CrudService.create("metamodelo/campo-agregacion");
+    }
+
+    /* @ngInject */
+    function AccionBaseService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/accion-base");
+    }
+
+    /* @ngInject */
+    function AccionEspecialService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/accion-especial");
     }
 })();

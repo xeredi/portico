@@ -5,7 +5,7 @@ import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.vo.ItemVO;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 

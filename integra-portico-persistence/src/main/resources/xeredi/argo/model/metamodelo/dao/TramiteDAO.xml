@@ -102,6 +102,28 @@
 			<if test="estadoOrig != null and !estadoOrig.empty">
 				AND trmt_estado_orig LIKE #{estadoOrig}
 			</if>
+			<if test="grpoId != null">
+	        <![CDATA[
+				AND EXISTS (
+				    SELECT 1 FROM tbl_funcionalidad_grupo_fngr
+				    WHERE fngr_fncd_pk = trmt_pk
+				        AND fngr_grpo_pk = #{grpoId}
+				)
+	        ]]>
+			</if>
+			<if test="usroId != null">
+	        <![CDATA[
+				AND EXISTS (
+				    SELECT 1 FROM tbl_funcionalidad_grupo_fngr
+				    WHERE fngr_fncd_pk = trmt_pk
+				        AND EXISTS (
+				            SELECT 1 FROM tbl_usuario_grupo_usgr
+				            WHERE usgr_grpo_pk = fngr_grpo_pk
+				                AND usgr_usro_pk = #{usroId}
+				        )
+				)
+	        ]]>
+			</if>
 		</where>
 	</sql>
 

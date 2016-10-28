@@ -4,7 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 

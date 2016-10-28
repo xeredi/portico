@@ -348,7 +348,7 @@
         }
 
         function findSublist(subentiId, page) {
-            if (credentialService.hasAcenPath(subentiId, "item-list")) {
+            if (credentialService.hasAcen(subentiId, "list")) {
                 var ssrvSearchCriteria = {
                     srvc : {
                         id : vm.item.id
@@ -569,7 +569,7 @@
         }
 
         function findSublist(subentiId, page) {
-            if (credentialService.hasAcenPath(subentiId, "item-list")) {
+            if (credentialService.hasAcen(subentiId, "list")) {
                 var ssrvSearchCriteria = {
                     entiId : subentiId,
                     padreId : vm.item.id

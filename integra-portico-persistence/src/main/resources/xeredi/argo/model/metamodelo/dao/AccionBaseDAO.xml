@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.metamodelo.dao.AccionBaseDAO">
+    <resultMap type="AccionBaseVO" id="ResultMap">
+        <id column="acbs_pk" />
+
+        <result column="acbs_pk" property="id" />
+        <result column="acbs_prefix" property="prefix" />
+        <result column="acbs_codigo" property="codigo" />
+    </resultMap>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+        acbs_pk, acbs_prefix, acbs_codigo
+    FROM
+        tbl_accion_base_acbs
+    ]]>
+    </sql>
+
+    <sql id="SelectCountPrefix">
+    <![CDATA[
+    SELECT
+        COUNT(1)
+    FROM
+        tbl_accion_base_acbs
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND acbs_pk = #{id}
+            </if>
+            <if test="prefix != null">
+                AND acbs_prefix = #{prefix}
+            </if>
+            <if test="codigo != null">
+                AND acbs_codigo LIKE #{codigo}
+            </if>
+            <if test="usroId != null">
+		    <![CDATA[
+				AND EXISTS (
+				  SELECT 1 FROM tbl_funcionalidad_grupo_fngr
+				  WHERE fngr_fncd_pk = acbs_pk
+				      AND EXISTS (
+				          SELECT 1 FROM tbl_usuario_grupo_usgr
+				          WHERE usgr_grpo_pk = fngr_grpo_pk
+				              AND usgr_usro_pk = #{usroId}
+				      )
+				)
+		    ]]>
+            </if>
+            <if test="grpoId != null">
+		    <![CDATA[
+				AND EXISTS (
+				  	SELECT 1 FROM tbl_funcionalidad_grupo_fngr
+				  	WHERE
+				  		fngr_fncd_pk = acbs_pk
+					  	AND fngr_grpo_pk = #{grpoId}
+				)
+		    ]]>
+            </if>
+        </where>
+    </sql>
+
+    <select id="count" parameterType="AccionBaseCriterioVO" resultType="Integer">
+        <include refid="SelectCountPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="selectList" parameterType="AccionBaseCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY acbs_prefix, acbs_codigo
+    </select>
+
+    <select id="selectObject" parameterType="AccionBaseCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="exists" parameterType="AccionBaseVO" resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_accion_base_acbs
+        WHERE acbs_prefix = #{prefix} AND acbs_codigo = #{codigo}
+        ]]>
+    </select>
+
+    <select id="existsCriterio" parameterType="AccionBaseCriterioVO" resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_accion_base_acbs
+        ]]>
+        <include refid="SelectWhere" />
+    </select>
+
+    <insert id="insert" parameterType="AccionBaseVO">
+        <![CDATA[
+        INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo)
+        VALUES (#{id}, #{prefix}, #{codigo})
+        ]]>
+    </insert>
+
+    <update id="update" parameterType="AccionBaseVO">
+        <![CDATA[
+        UPDATE tbl_accion_base_acbs SET
+            acbs_prefix = #{prefix}
+            , acbs_codigo = #{codigo}
+        WHERE
+            acbs_pk = #{id}
+        ]]>
+    </update>
+
+    <delete id="delete" parameterType="AccionBaseVO">
+        <![CDATA[
+        DELETE FROM tbl_accion_base_acbs
+        WHERE
+            acbs_pk = #{id}
+        ]]>
+    </delete>
+</mapper>

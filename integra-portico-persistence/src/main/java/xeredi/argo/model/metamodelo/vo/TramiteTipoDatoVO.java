@@ -16,5 +16,5 @@ public final class TramiteTipoDatoVO {
     private EntidadTipoDatoVO entd;
 
     /** The obligatorio. */
-    private boolean obligatorio;
+    private Boolean obligatorio;
 }

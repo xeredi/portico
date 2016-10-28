@@ -1,10 +1,10 @@
 <div data-ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a data-ng-if="mc.hasAccnPath('rgla-edit')" class="btn btn-default"
+            <a data-ng-if="mc.hasAcbsPath('rgla-edit')" class="btn btn-default"
                 data-ng-href="#/facturacion/regla/edit/edit/{{vm.model.crgo.id}}/{{vm.model.fref}}/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
-            <button data-ng-if="mc.hasAccnPath('rgla-remove')" data-ng-click="vm.remove()"
+            <button data-ng-if="mc.hasAcbsPath('rgla-remove')" data-ng-click="vm.remove()"
                 class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
@@ -175,12 +175,12 @@
         </div>
     </fieldset>
 
-    <fieldset data-ng-if="mc.hasAccnPath('rgin-list')">
+    <fieldset data-ng-if="mc.hasAcbsPath('rgin-list')">
         <legend data-ng-bind="'Reglas Incompatibles'"></legend>
 
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
-                <a data-ng-if="mc.hasAccnPath('rgin-create')" class="btn btn-default"
+                <a data-ng-if="mc.hasAcbsPath('rgin-create')" class="btn btn-default"
                     data-ng-href="#/facturacion/regla-incompatible/edit/create/{{vm.model.id}}/{{vm.model.fref}}"><i
                     class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
             </div>
@@ -200,7 +200,7 @@
                 </thead>
                 <tbody>
                     <tr data-ng-repeat="rgin in vm.rginList track by $index">
-                        <td><a data-ng-if="mc.hasAccnPath('rgin-detail')"
+                        <td><a data-ng-if="mc.hasAcbsPath('rgin-detail')"
                             data-ng-href="#/facturacion/regla-incompatible/detail/{{rgin.id}}/{{rgin.fref}}"><i
                                 class="glyphicon glyphicon-search"></i></a></td>
                         <td data-ng-bind="rgin.rgla2.codigo"></td>

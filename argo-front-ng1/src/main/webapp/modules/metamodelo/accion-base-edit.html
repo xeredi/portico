@@ -1,0 +1,31 @@
+<div data-ng-if="vm.model">
+    <form role="form">
+        <fieldset>
+            <div class="row">
+                <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
+                    <label data-translate="acbs_prefix"></label> <select data-ng-model="vm.model.prefix"
+                        data-ng-options="acpr as ('AccionPrefijo_' + acpr | translate) for acpr in vm.acprList"
+                        class="form-control">
+                        <option />
+                    </select>
+                </div>
+                <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
+                    <label data-translate="acbs_codigo"></label> <select data-ng-model="vm.model.codigo"
+                        data-ng-options="acco as ('AccionCodigo_' + acco | translate) for acco in vm.accoList"
+                        class="form-control">
+                        <option />
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button data-ng-click="vm.save()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
+            </button>
+            <button data-ng-click="vm.cancel()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
+            </button>
+        </div>
+    </form>
+</div>

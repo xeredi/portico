@@ -1,10 +1,10 @@
 <div data-ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" data-ng-if="mc.hasAccnPath('prto-edit')"
+            <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('prto-edit')"
                 data-ng-href="#/administracion/puerto/puerto/edit/edit/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
-            <button data-ng-if="mc.hasAccnPath('prto-remove')" data-ng-click="vm.remove()"
+            <button data-ng-if="mc.hasAcbsPath('prto-remove')" data-ng-click="vm.remove()"
                 class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>

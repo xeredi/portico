@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 
 import com.google.common.base.Preconditions;
 import com.opensymphony.xwork2.ModelDriven;

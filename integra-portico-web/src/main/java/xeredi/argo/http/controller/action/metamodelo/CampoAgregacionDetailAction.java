@@ -3,8 +3,8 @@ package xeredi.argo.http.controller.action.metamodelo;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 

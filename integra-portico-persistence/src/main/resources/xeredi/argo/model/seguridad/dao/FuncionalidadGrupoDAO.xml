@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.seguridad.dao.FuncionalidadGrupoDAO">
+    <resultMap type="FuncionalidadGrupoVO" id="ResultMap">
+        <id column="fngr_fncd_pk" />
+        <id column="fngr_grpo_pk" />
+
+        <result column="fngr_fncd_pk" property="fncdId" />
+        <result column="fngr_grpo_pk" property="grpoId" />
+    </resultMap>
+
+    <sql id="SelectPrefix">
+        SELECT fngr_fncd_pk, fngr_grpo_pk
+        FROM tbl_funcionalidad_grupo_fngr
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="fncdId != null">
+                AND fngr_fncd_pk = #{fncdId}
+            </if>
+            <if test="grpoId != null">
+                AND fngr_grpo_pk = #{grpoId}
+            </if>
+        </where>
+    </sql>
+
+    <select id="exists" parameterType="FuncionalidadGrupoVO" resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_funcionalidad_grupo_fngr
+        WHERE
+        	fngr_fncd_pk = #{fncdId}
+        	AND fngr_grpo_pk = #{grpoId}
+        ]]>
+    </select>
+
+    <select id="selectObject" parameterType="FuncionalidadGrupoCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="selectList" parameterType="FuncionalidadGrupoCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <insert id="insert" parameterType="FuncionalidadGrupoVO">
+        <![CDATA[
+        INSERT INTO tbl_funcionalidad_grupo_fngr (fngr_fncd_pk, fngr_grpo_pk)
+        VALUES (#{fncdId}, #{grpoId})
+        ]]>
+    </insert>
+
+    <delete id="delete" parameterType="FuncionalidadGrupoVO">
+        DELETE FROM tbl_funcionalidad_grupo_fngr
+        WHERE fngr_fncd_pk = #{fncdId}
+        AND fngr_grpo_pk = #{grpoId}
+    </delete>
+
+    <delete id="deleteList" parameterType="FuncionalidadGrupoCriterioVO">
+        DELETE FROM tbl_funcionalidad_grupo_fngr
+        <include refid="SelectWhere" />
+    </delete>
+</mapper>

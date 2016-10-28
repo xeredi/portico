@@ -12,7 +12,7 @@ import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 

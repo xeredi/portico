@@ -2,7 +2,6 @@ package xeredi.argo.model.metamodelo.vo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import xeredi.argo.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -10,11 +9,7 @@ import xeredi.argo.model.comun.vo.BaseCriterioVO;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public final class TramiteCriterioVO extends BaseCriterioVO {
-
-    /** The id. */
-    private Long id;
-
+public final class TramiteCriterioVO extends FuncionalidadCriterioVO {
     /** The enti id. */
     private Long entiId;
 

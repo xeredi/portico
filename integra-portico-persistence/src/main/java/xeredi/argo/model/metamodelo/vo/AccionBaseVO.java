@@ -11,4 +11,18 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public final class AccionBaseVO extends FuncionalidadVO {
 
+	/** The prefix. */
+	private AccionPrefix prefix;
+
+	/** The codigo. */
+	private AccionCodigo codigo;
+
+	/**
+	 * Gets the path.
+	 *
+	 * @return the path
+	 */
+	public String getPath() {
+		return new StringBuilder().append(prefix).append("-").append(codigo).toString();
+	}
 }

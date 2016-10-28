@@ -1,7 +1,9 @@
-<fieldset data-ng-if="mc.hasAccnPath('acen-list')">
+<fieldset data-ng-if="mc.hasAcbsPath('acen-list')">
+    <legend data-translate="acenList"></legend>
+
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a data-ng-if="mc.hasAccnPath('acen-create')" class="btn btn-default"
+            <a data-ng-if="mc.hasAcbsPath('acen-create')" class="btn btn-default"
                 data-ng-href="#/metamodelo/accion-entidad/edit/create/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
         </div>
@@ -11,19 +13,15 @@
         <thead>
             <tr>
                 <th nowrap="nowrap" />
-                <th data-translate="accn_codigo"></th>
-                <th data-translate="accn_core"></th>
-                <th data-translate="accn_multiple"></th>
+                <th data-translate="aebs_codigo"></th>
             </tr>
         </thead>
         <tbody>
             <tr data-ng-repeat="acen in vm.acenList track by $index">
-                <td><a data-ng-if="mc.hasAccnPath('acen-detail')"
+                <td><a data-ng-if="mc.hasAcbsPath('acen-detail')"
                     data-ng-href="#/metamodelo/accion-entidad/detail/{{acen.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td data-ng-bind="acen.accn.codigo"></td>
-                <td><i class="glyphicon glyphicon-{{(acen.accn.core ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{(acen.accn.multiple ? 'ok' : 'remove')}}"></i></td>
+                <td data-ng-bind="acen.aebs.codigo"></td>
             </tr>
         </tbody>
     </table>

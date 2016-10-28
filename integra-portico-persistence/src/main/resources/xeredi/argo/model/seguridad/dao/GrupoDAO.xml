@@ -47,39 +47,16 @@
 				)
 		    ]]>
 			</if>
-			<if test="accnId != null">
+			<if test="fncdId != null">
     		<![CDATA[
 				AND EXISTS (
-					SELECT 1
-					FROM tbl_grupo_accion_grac
-					WHERE
-						grac_grpo_pk = grpo_pk
-						AND grac_accn_pk = #{accnId}
+				    SELECT 1 FROM tbl_funcionalidad_grupo_fngr
+				    WHERE
+				    	fngr_grpo_pk = grpo_pk
+						AND fngr_fncd_pk = #{fncdId}
 				)
 		    ]]>
 			</if>
-            <if test="acenId != null">
-            <![CDATA[
-                AND EXISTS (
-                    SELECT 1
-                    FROM tbl_grupo_accion_entidad_grae
-                    WHERE
-                        grae_grpo_pk = grpo_pk
-                        AND grae_acen_pk = #{acenId}
-                )
-            ]]>
-            </if>
-            <if test="actrId != null">
-            <![CDATA[
-                AND EXISTS (
-                    SELECT 1
-                    FROM tbl_grupo_accion_tramite_grat
-                    WHERE
-                        grat_grpo_pk = grpo_pk
-                        AND grat_actr_pk = #{actrId}
-                )
-            ]]>
-            </if>
 		</where>
 	</sql>
 

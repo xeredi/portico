@@ -12,11 +12,11 @@ import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.vo.FacturadorVO;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.proceso.facturacion.ProcesoFacturador;
 
 // TODO: Auto-generated Javadoc

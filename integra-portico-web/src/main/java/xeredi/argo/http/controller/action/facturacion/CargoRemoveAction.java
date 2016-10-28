@@ -4,7 +4,7 @@ import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.CargoBO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**

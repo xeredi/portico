@@ -7,7 +7,7 @@ import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.seguridad.bo.ResultadoLoginVO;
+import xeredi.argo.model.seguridad.vo.ResultadoLoginVO;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
 
 import com.opensymphony.xwork2.ModelDriven;

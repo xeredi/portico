@@ -1,26 +1,19 @@
 package xeredi.argo.model.metamodelo.vo;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import lombok.Data;
-import xeredi.argo.model.seguridad.vo.AccionVO;
+import lombok.EqualsAndHashCode;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AccionEntidadVO.
  */
 @Data
-public final class AccionEntidadVO {
-    /** The id. */
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public final class AccionEntidadVO extends FuncionalidadVO {
 
-    /** The accn id. */
-    private AccionVO accn;
+    /** The aebs. */
+    private AccionEntidadBaseVO aebs;
 
     /** The enti id. */
     private Long entiId;
-
-    /** The grpo ids. */
-    private Set<Long> grpoIds = new HashSet<>();
 }

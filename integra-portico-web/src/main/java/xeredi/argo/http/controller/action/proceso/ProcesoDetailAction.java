@@ -7,11 +7,11 @@ import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ProcesoItemVO;
 import xeredi.argo.model.proceso.vo.ProcesoParametroVO;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 

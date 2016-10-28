@@ -8,7 +8,7 @@
         </div>
 
         <div class="btn-group">
-            <button class="btn btn-default" data-ng-if="mc.hasAcenPath(vm.enti.enti.id, 'item-list')"
+            <button class="btn btn-default" data-ng-if="mc.hasAcen(vm.enti.enti.id, 'list')"
                 data-ng-click="vm.filter('lg')"
                 data-template-url="modules/entidad/estadistica/fragment/estadistica-filter-content.html"
                 data-bs-modal="modal">
@@ -38,7 +38,7 @@
                         data-ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></th>
                 </tr>
             </thead>
-            <tbody data-ng-init="vm.entiDetailAllowed = mc.hasAcenPath(vm.enti.enti.id, 'item-detail')">
+            <tbody data-ng-init="vm.entiDetailAllowed = mc.hasAcen(vm.enti.enti.id, 'detail')">
                 <tr data-ng-repeat="item in vm.itemList.list track by $index">
                     <td><a data-ng-if="vm.entiDetailAllowed"
                         data-ng-href="#/estadistica/estadistica/detail/{{vm.enti.enti.id}}/{{item.id}}"><i

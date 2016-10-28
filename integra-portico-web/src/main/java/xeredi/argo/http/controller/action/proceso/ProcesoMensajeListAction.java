@@ -2,10 +2,10 @@ package xeredi.argo.http.controller.action.proceso;
 
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ProcesoMensajeCriterioVO;
 import xeredi.argo.model.proceso.vo.ProcesoMensajeVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 

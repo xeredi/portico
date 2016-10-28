@@ -14,11 +14,11 @@ import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;

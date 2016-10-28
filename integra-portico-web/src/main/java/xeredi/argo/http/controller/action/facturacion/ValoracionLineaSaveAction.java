@@ -7,8 +7,8 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 

@@ -112,8 +112,8 @@ INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, e
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 21020, 'Servicio de Buque de Pesca')\
 	INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable
 		, tpsr_tpdt_estado_pk, tpsr_estados_vlrc, tpsr_estado_def) VALUES (21020, 1, 1, 0, NULL, NULL, NULL)\
-	INSERT INTO tbl_entidad_accgrid_enag(enag_pk, enag_enti_pk, enag_orden, enag_path) VALUES (28001, 21020, 1, 'sbup-generar')\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enag', 'es', 28001, 'Generar Servicios')\
+--	INSERT INTO tbl_entidad_accgrid_enag(enag_pk, enag_enti_pk, enag_orden, enag_path) VALUES (28001, 21020, 1, 'sbup-generar')\
+--		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enag', 'es', 28001, 'Generar Servicios')\
 
 INSERT INTO tbl_entidad_grupo_dato_engd (engd_pk, engd_enti_pk, engd_orden) VALUES (30050, 21020, 1)\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('engd', 'es', 30050, 'General')\
@@ -142,8 +142,8 @@ INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, e
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 21021, 'Servicio de Amarre Dep.')\
 	INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable
 		, tpsr_tpdt_estado_pk, tpsr_estados_vlrc, tpsr_estado_def) VALUES (21021, 1, 1, 0, NULL, NULL, NULL)\
-	INSERT INTO tbl_entidad_accgrid_enag(enag_pk, enag_enti_pk, enag_orden, enag_path) VALUES (28002, 21021, 1, 'samd-generar')\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enag', 'es', 28002, 'Generar Servicios')\
+--	INSERT INTO tbl_entidad_accgrid_enag(enag_pk, enag_enti_pk, enag_orden, enag_path) VALUES (28002, 21021, 1, 'samd-generar')\
+--		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enag', 'es', 28002, 'Generar Servicios')\
 
 INSERT INTO tbl_entidad_grupo_dato_engd (engd_pk, engd_enti_pk, engd_orden) VALUES (30060, 21021, 1)\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('engd', 'es', 30060, 'General')\

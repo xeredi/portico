@@ -3,11 +3,11 @@ package xeredi.argo.http.controller.action.proceso;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.proceso.vo.ProcesoCriterioVO;
 import xeredi.argo.model.proceso.vo.ProcesoEstado;
 import xeredi.argo.model.proceso.vo.ProcesoModulo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**

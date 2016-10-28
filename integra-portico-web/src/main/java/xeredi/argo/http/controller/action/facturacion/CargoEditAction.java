@@ -14,8 +14,8 @@ import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoTipo;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;

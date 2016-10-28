@@ -2,16 +2,17 @@ package xeredi.argo.http.controller.session;
 
 import java.util.Map;
 
+import com.opensymphony.xwork2.ActionContext;
+
 import lombok.NonNull;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.seguridad.bo.AccionBO;
-import xeredi.argo.model.seguridad.bo.ResultadoLoginVO;
+import xeredi.argo.model.metamodelo.bo.AccionBaseBO;
+import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.bo.UsuarioAccesoBO;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
-
-import com.opensymphony.xwork2.ActionContext;
+import xeredi.argo.model.seguridad.vo.ResultadoLoginVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -19,116 +20,116 @@ import com.opensymphony.xwork2.ActionContext;
  */
 public final class SessionManager {
 
-    /**
-     * The Enum ParamNames.
-     */
-    enum ParamNames {
-        /** The login result. */
-        loginResult
-    }
+	/**
+	 * The Enum ParamNames.
+	 */
+	enum ParamNames {
+		/** The login result. */
+		loginResult
+	}
 
-    /**
-     * Instantiates a new session manager.
-     */
-    private SessionManager() {
-        super();
-    }
+	/**
+	 * Instantiates a new session manager.
+	 */
+	private SessionManager() {
+		super();
+	}
 
-    /**
-     * Checks if is authenticated.
-     *
-     * @param action
-     *            the action
-     * @return true, if is authenticated
-     */
-    public static boolean isAuthenticated(final @NonNull BaseAction action) {
-        return getSession().containsKey(ParamNames.loginResult.name());
-    }
+	/**
+	 * Checks if is authenticated.
+	 *
+	 * @param action
+	 *            the action
+	 * @return true, if is authenticated
+	 */
+	public static boolean isAuthenticated(final @NonNull BaseAction action) {
+		return getSession().containsKey(ParamNames.loginResult.name());
+	}
 
-    /**
-     * Checks for permission.
-     *
-     * @param prefix
-     *            the prefix
-     * @param codigo
-     *            the codigo
-     * @return true, if successful
-     */
-    public static boolean hasPermission(final @NonNull AccionPrefix prefix, final @NonNull AccionCodigo codigo) {
-        final AccionBO accnBO = new AccionBO();
+	/**
+	 * Checks for permission.
+	 *
+	 * @param prefix
+	 *            the prefix
+	 * @param codigo
+	 *            the codigo
+	 * @return true, if successful
+	 */
+	public static boolean hasPermission(final @NonNull AccionPrefix prefix, final @NonNull AccionCodigo codigo) {
+		final AccionBaseBO acbsBO = new AccionBaseBO();
 
-        return accnBO.exists(prefix, codigo,
-                ((ResultadoLoginVO) getSession().get(ParamNames.loginResult.name())).getUsroId());
-    }
+		return acbsBO.isUserAllowed(prefix, codigo,
+				((ResultadoLoginVO) getSession().get(ParamNames.loginResult.name())).getUsroId());
+	}
 
-    /**
-     * Checks for permission.
-     *
-     * @param prefix
-     *            the prefix
-     * @param codigo
-     *            the codigo
-     * @param entiId
-     *            the enti id
-     * @return true, if successful
-     */
-    public static boolean hasPermission(final @NonNull AccionPrefix prefix, final @NonNull AccionCodigo codigo,
-            final @NonNull Long entiId) {
-        final AccionBO accnBO = new AccionBO();
+	/**
+	 * Checks for permission.
+	 *
+	 * @param prefix
+	 *            the prefix
+	 * @param codigo
+	 *            the codigo
+	 * @param entiId
+	 *            the enti id
+	 * @return true, if successful
+	 */
+	public static boolean hasPermission(final @NonNull AccionPrefix prefix, final @NonNull AccionCodigo codigo,
+			final @NonNull Long entiId) {
+		final AccionEntidadBO acenBO = new AccionEntidadBO();
 
-        return accnBO.exists(prefix, codigo, entiId, ((ResultadoLoginVO) getSession()
-                .get(ParamNames.loginResult.name())).getUsroId());
-    }
+		return acenBO.isUserAllowed(prefix, codigo, entiId,
+				((ResultadoLoginVO) getSession().get(ParamNames.loginResult.name())).getUsroId());
+	}
 
-    /**
-     * Login.
-     *
-     * @param login
-     *            the login
-     * @param password
-     *            the password
-     * @return the resultado login vo
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public static ResultadoLoginVO login(final @NonNull String login, final @NonNull String password)
-            throws ApplicationException {
-        final UsuarioAccesoBO usacBO = new UsuarioAccesoBO();
+	/**
+	 * Login.
+	 *
+	 * @param login
+	 *            the login
+	 * @param password
+	 *            the password
+	 * @return the resultado login vo
+	 * @throws ApplicationException
+	 *             the application exception
+	 */
+	public static ResultadoLoginVO login(final @NonNull String login, final @NonNull String password)
+			throws ApplicationException {
+		final UsuarioAccesoBO usacBO = new UsuarioAccesoBO();
 
-        final ResultadoLoginVO resultadoLogin = usacBO.acceso(login, password);
+		final ResultadoLoginVO resultadoLogin = usacBO.acceso(login, password);
 
-        getSession().put(ParamNames.loginResult.name(), resultadoLogin);
+		getSession().put(ParamNames.loginResult.name(), resultadoLogin);
 
-        return resultadoLogin;
-    }
+		return resultadoLogin;
+	}
 
-    /**
-     * Logout.
-     *
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public static void logout() throws ApplicationException {
-        getSession().clear();
-    }
+	/**
+	 * Logout.
+	 *
+	 * @throws ApplicationException
+	 *             the application exception
+	 */
+	public static void logout() throws ApplicationException {
+		getSession().clear();
+	}
 
-    /**
-     * Gets the usro id.
-     *
-     * @return the usro id
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public static Long getUsroId() throws ApplicationException {
-        return ((ResultadoLoginVO) getSession().get(ParamNames.loginResult.name())).getUsroId();
-    }
+	/**
+	 * Gets the usro id.
+	 *
+	 * @return the usro id
+	 * @throws ApplicationException
+	 *             the application exception
+	 */
+	public static Long getUsroId() throws ApplicationException {
+		return ((ResultadoLoginVO) getSession().get(ParamNames.loginResult.name())).getUsroId();
+	}
 
-    /**
-     * Gets the session.
-     *
-     * @return the session
-     */
-    private static Map<String, Object> getSession() {
-        return ActionContext.getContext().getSession();
-    }
+	/**
+	 * Gets the session.
+	 *
+	 * @return the session
+	 */
+	private static Map<String, Object> getSession() {
+		return ActionContext.getContext().getSession();
+	}
 }

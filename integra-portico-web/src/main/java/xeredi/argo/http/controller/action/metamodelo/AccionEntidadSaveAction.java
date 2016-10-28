@@ -5,9 +5,9 @@ import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -59,10 +59,10 @@ public final class AccionEntidadSaveAction extends CrudSaveAction<AccionEntidadV
             Preconditions.checkNotNull(model.getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.accn, model.getAccn());
+        FieldValidator.validateRequired(this, MessageI18nKey.aebs, model.getAebs());
 
         if (!hasErrors()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.accn, model.getAccn().getId());
+            FieldValidator.validateRequired(this, MessageI18nKey.aebs, model.getAebs().getId());
         }
     }
 }

@@ -66,6 +66,8 @@ Oracle
 		Usuario INTEGRA_AUDITORIA(password temporal2)
 		Usuario ISCHEDULER.(password temporal3)
 
+		URL jdbc: jdbc:oracle:thin:@//praim4:1521/INTDES
+
 		Integra2 alicante PdE
 		db_migration_dataSource_password	Texto	integra									Alicante2016
 		db_migration_dataSource_url			Texto	jdbc:oracle:thin:@localhost:1521:orcl	jdbc:oracle:thin:@//praim4:1521/INTDES

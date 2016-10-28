@@ -18,11 +18,11 @@ import xeredi.argo.model.comun.vo.ArchivoVO;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.proceso.batch.estadistica.ProcesoCargaOppe;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**

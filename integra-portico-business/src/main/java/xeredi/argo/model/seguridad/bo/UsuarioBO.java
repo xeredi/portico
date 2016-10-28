@@ -5,22 +5,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.seguridad.dao.AccionDAO;
 import xeredi.argo.model.seguridad.dao.GrupoDAO;
 import xeredi.argo.model.seguridad.dao.UsuarioDAO;
 import xeredi.argo.model.seguridad.dao.UsuarioGrupoDAO;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
-import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
 import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
@@ -29,8 +27,6 @@ import xeredi.argo.model.seguridad.vo.UsuarioGrupoVO;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -241,28 +237,4 @@ public final class UsuarioBO {
             return usro;
         }
     }
-
-    /**
-     * Comprueba si un usuario tiene permiso para realizar una accion.
-     *
-     * @param usro
-     *            the usro
-     * @param accnPath
-     *            the accn path
-     * @return true, if successful
-     */
-    public boolean tienePermiso(final @NonNull UsuarioVO usro, final @NonNull AccionCodigo accnPath) {
-        Preconditions.checkNotNull(usro.getId());
-
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final AccionDAO accnDAO = session.getMapper(AccionDAO.class);
-            final AccionCriterioVO accnCriterio = new AccionCriterioVO();
-
-            accnCriterio.setUsroId(usro.getId());
-            accnCriterio.setCodigo(accnPath);
-
-            return accnDAO.existsCriterio(accnCriterio);
-        }
-    }
-
 }

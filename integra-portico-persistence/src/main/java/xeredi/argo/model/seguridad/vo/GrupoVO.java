@@ -19,18 +19,5 @@ public final class GrupoVO {
     private String nombre;
 
     /** The accn ids. */
-    private Set<Long> accnIds;
-
-    /** The acen ids. */
-    private Set<Long> acenIds;
-
-    /**
-     * Instantiates a new grupo vo.
-     */
-    public GrupoVO() {
-        super();
-
-        accnIds = new HashSet<>();
-        acenIds = new HashSet<>();
-    }
+    private Set<Long> fncdIds = new HashSet<>();
 }

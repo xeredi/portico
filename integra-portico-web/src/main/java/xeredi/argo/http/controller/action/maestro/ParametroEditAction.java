@@ -18,8 +18,8 @@ import xeredi.argo.model.maestro.bo.ParametroBO;
 import xeredi.argo.model.maestro.bo.ParametroBOFactory;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 // TODO: Auto-generated Javadoc
 /**

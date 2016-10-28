@@ -1,10 +1,10 @@
 <div data-ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a data-ng-if="mc.hasAccnPath('grpo-edit')" class="btn btn-default"
+            <a data-ng-if="mc.hasAcbsPath('grpo-edit')" class="btn btn-default"
                 data-ng-href="#/seguridad/grupo/edit/edit/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
-            <button data-ng-if="mc.hasAccnPath('grpo-remove')" data-ng-click="vm.remove()"
+            <button data-ng-if="mc.hasAcbsPath('grpo-remove')" data-ng-click="vm.remove()"
                 class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
@@ -20,35 +20,75 @@
         </div>
     </fieldset>
 
-    <fieldset data-ng-if="mc.hasAccnPath('accn-list')">
-        <legend data-translate="accnList"></legend>
 
-        <div class="row" data-ng-repeat="prefix in vm.prefixList | orderBy: prefix track by $index">
-            <div class="col-sm-4 col-md-3 col-lg-2">
-                <p class="list-group-item active" data-translate="{{prefix}}"></p>
-            </div>
-            <div class="list-group col-sm-8 col-md-9 col-lg-10">
-                <a data-ng-href="#/seguridad/accion/detail/{{accn.id}}"
-                    class="col-sm-4 col-md-3 col-lg-2 list-group-item"
-                    data-ng-repeat="accn in vm.accnMap[prefix] track by $index" class="list-group-item"
-                    data-ng-bind="accn.codigo"></a>
-            </div>
+    <div data-uib-tabset data-type="pills">
+        <div data-uib-tab data-select="vm.tabSelected('acbsList')" data-index="'acbsList'"
+            data-heading="{{'acbsList' | translate}}" data-ng-if="mc.hasAcbsPath('acbs-list')">
+            <fieldset>
+                <div class="row" data-ng-repeat="prefix in vm.prefixList | orderBy: prefix track by $index">
+                    <div class="col-sm-4 col-md-3 col-lg-2">
+                        <p class="list-group-item active" data-translate="{{prefix}}"></p>
+                    </div>
+                    <div class="list-group col-sm-8 col-md-9 col-lg-10">
+                        <a data-ng-href="#/metamodelo/accion-base/detail/{{acbs.id}}"
+                            class="col-sm-4 col-md-3 col-lg-2 list-group-item"
+                            data-ng-repeat="acbs in vm.acbsMap[prefix] track by $index"
+                            class="list-group-item" data-ng-bind="acbs.codigo"></a>
+                    </div>
+                </div>
+            </fieldset>
         </div>
-    </fieldset>
-
-    <fieldset data-ng-if="mc.hasAccnPath('acen-list')">
-        <legend data-translate="acenList"></legend>
-
-        <div class="row" data-ng-repeat="entiId in vm.entiList track by $index">
-            <div class="col-sm-4 col-md-3 col-lg-2">
-                <p class="list-group-item active" data-translate="{{'enti_' + entiId}}"></p>
-            </div>
-            <div class="list-group col-sm-8 col-md-9 col-lg-10">
-                <a data-ng-href="#/metamodelo/accion-entidad/detail/{{acen.entiId}}/{{acen.id}}"
-                    class="col-sm-4 col-md-3 col-lg-2 list-group-item"
-                    data-ng-repeat="acen in vm.acenMap[entiId] track by $index" class="list-group-item"
-                    data-ng-bind="acen.accn.codigo"></a>
-            </div>
+        <div data-uib-tab data-select="vm.tabSelected('acenList')" data-index="'acenList'"
+            data-heading="{{'acenList' | translate}}" data-ng-if="mc.hasAcbsPath('acen-list')">
+            <fieldset>
+                <div class="row" data-ng-repeat="entiId in vm.entiList track by $index"
+                    data-ng-if="vm.acenMap[entiId]">
+                    <div class="col-sm-4 col-md-3 col-lg-2">
+                        <p class="list-group-item active" data-translate="{{'enti_' + entiId}}"></p>
+                    </div>
+                    <div class="list-group col-sm-8 col-md-9 col-lg-10">
+                        <a data-ng-href="#/metamodelo/accion-entidad/detail/{{acen.id}}"
+                            class="col-sm-4 col-md-3 col-lg-2 list-group-item"
+                            data-ng-repeat="acen in vm.acenMap[entiId] track by $index"
+                            class="list-group-item" data-ng-bind="acen.aebs.codigo"></a>
+                    </div>
+                </div>
+            </fieldset>
         </div>
-    </fieldset>
+        <div data-uib-tab data-select="vm.tabSelected('acesList')" data-index="'acesList'"
+            data-heading="{{'acesList' | translate}}">
+            <fieldset>
+                <div class="row" data-ng-repeat="entiId in vm.entiList track by $index"
+                    data-ng-if="vm.acesMap[entiId]">
+                    <div class="col-sm-4 col-md-3 col-lg-2">
+                        <p class="list-group-item active" data-translate="{{'enti_' + entiId}}"></p>
+                    </div>
+                    <div class="list-group col-sm-8 col-md-9 col-lg-10">
+                        <a data-ng-href="#/metamodelo/accion-especial/detail/{{aces.id}}"
+                            class="col-sm-4 col-md-3 col-lg-2 list-group-item"
+                            data-ng-repeat="aces in vm.acesMap[entiId] track by $index"
+                            class="list-group-item" data-ng-bind="aces.path"></a>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div data-uib-tab data-select="vm.tabSelected('trmtList')" data-index="'trmtList'"
+            data-heading="{{'trmtList' | translate}}">
+            <fieldset>
+                <div class="row" data-ng-repeat="entiId in vm.entiList track by $index"
+                    data-ng-if="vm.trmtMap[entiId]">
+                    <div class="col-sm-4 col-md-3 col-lg-2">
+                        <p class="list-group-item active" data-translate="{{'enti_' + entiId}}"></p>
+                    </div>
+                    <div class="list-group col-sm-8 col-md-9 col-lg-10">
+                        <a data-ng-href="#/metamodelo/tramite/detail/{{trmt.id}}"
+                            class="col-sm-4 col-md-3 col-lg-2 list-group-item"
+                            data-ng-repeat="trmt in vm.trmtMap[entiId] track by $index"
+                            class="list-group-item">{{trmt.etiqueta}} ({{trmt.estadoOrig}} ->
+                            {{trmt.estadoDest}})</a>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
 </div>

@@ -16,9 +16,9 @@ import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 

@@ -3,8 +3,8 @@
         <fieldset>
             <div class="row">
                 <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
-                    <label data-translate="accn"></label> <select data-ng-model="vm.model.accn.id"
-                        data-ng-options="accn.id as accn.etiqueta for accn in vm.accnList | orderBy: codigo"
+                    <label data-translate="accn"></label> <select data-ng-model="vm.model.aebs.id"
+                        data-ng-options="aebs.id as aebs.path for aebs in vm.aebsList | orderBy: codigo"
                         class="form-control">
                         <option />
                     </select>
@@ -12,18 +12,6 @@
             </div>
         </fieldset>
 
-        <fieldset>
-            <legend data-translate="grpoList"></legend>
-
-            <div class="row">
-                <div class="checkbox" data-ng-repeat="grpo in vm.grpoList track by $index">
-                    <label> <input type="checkbox" data-ng-click="vm.updateGrupos($event, grpo.id)"
-                        data-ng-checked="vm.model.grpoIds.indexOf(grpo.id) >= 0"> <span
-                        data-ng-bind="grpo.nombre"></span>
-                    </label>
-                </div>
-            </div>
-        </fieldset>
         <div class="btn-group">
             <button data-ng-click="vm.save()" class="btn btn-primary">
                 <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>

@@ -8,16 +8,16 @@
         </div>
 
         <div class="btn-group">
-            <button class="btn btn-default" data-ng-if="mc.hasAccnPath('pepr-list')"
+            <button class="btn btn-default" data-ng-if="mc.hasAcbsPath('pepr-list')"
                 data-ng-click="vm.filter('lg')"
                 data-template-url="modules/entidad/estadistica/fragment/periodo-proceso-filter-content.html"
                 data-bs-modal="modal">
                 <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
             </button>
-            <a class="btn btn-default" data-ng-if="mc.hasAccnPath('pepr-load')"
+            <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('pepr-load')"
                 data-ng-href="#/estadistica/periodo-proceso/load"><i class="glyphicon glyphicon-upload"></i>
                 <span data-translate="btn_cargar"></span></a> <a class="btn btn-default"
-                data-ng-if="mc.hasAccnPath('pepr-create')"
+                data-ng-if="mc.hasAcbsPath('pepr-create')"
                 data-ng-href="#/estadistica/periodo-proceso/edit/create"><i
                 class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
         </div>
@@ -40,7 +40,7 @@
             </thead>
             <tbody>
                 <tr data-ng-repeat="item in vm.resultList.list track by $index">
-                    <td><a data-ng-if="mc.hasAccnPath('pepr-detail')"
+                    <td><a data-ng-if="mc.hasAcbsPath('pepr-detail')"
                         data-ng-href="#/estadistica/periodo-proceso/detail/{{item.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="item.sprt.etiqueta"></td>

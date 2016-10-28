@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.metamodelo.dao.AccionEspecialDAO">
+	<resultMap type="AccionEspecialVO" id="ResultMap">
+		<id column="aces_pk" />
+
+		<result column="aces_pk" property="id" />
+		<result column="aces_enti_pk" property="entiId" />
+		<result column="aces_prefix" property="prefix" />
+		<result column="aces_path" property="path" />
+		<result column="aces_orden" property="orden" />
+
+		<result column="aces_etiqueta" property="etiqueta" />
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+        aces_pk, aces_prefix, aces_path, aces_enti_pk, aces_orden
+    FROM
+        tbl_accion_especial_aces
+    ]]>
+	</sql>
+
+	<sql id="SelectCountPrefix">
+    <![CDATA[
+    SELECT
+        COUNT(1)
+    FROM
+        tbl_accion_especial_aces
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND aces_pk = #{id}
+			</if>
+			<if test="prefix != null">
+				AND aces_prefix = #{prefix}
+			</if>
+			<if test="path != null">
+				AND aces_path LIKE #{path}
+			</if>
+			<if test="entiId != null">
+				AND aces_enti_pk = #{entiId}
+			</if>
+			<if test="usroId != null">
+		    <![CDATA[
+				AND EXISTS (
+				  SELECT 1 FROM tbl_funcionalidad_grupo_fngr
+				  WHERE fngr_fncd_pk = aces_pk
+				      AND EXISTS (
+				          SELECT 1 FROM tbl_usuario_grupo_usgr
+				          WHERE usgr_grpo_pk = fngr_grpo_pk
+				              AND usgr_usro_pk = #{usroId}
+				      )
+				)
+		    ]]>
+			</if>
+			<if test="grpoId != null">
+		    <![CDATA[
+				AND EXISTS (
+				  	SELECT 1 FROM tbl_funcionalidad_grupo_fngr
+				  	WHERE
+				  		fngr_fncd_pk = aces_pk
+					  	AND fngr_grpo_pk = #{grpoId}
+				)
+		    ]]>
+			</if>
+		</where>
+	</sql>
+
+	<select id="count" parameterType="AccionEspecialCriterioVO"
+		resultType="Integer">
+		<include refid="SelectCountPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="selectList" parameterType="AccionEspecialCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY aces_enti_pk, aces_prefix, aces_path
+	</select>
+
+	<select id="selectObject" parameterType="AccionEspecialCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="exists" parameterType="AccionEspecialVO" resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_accion_especial_aces
+        WHERE aces_path = #{path}
+        	AND aces_enti_pk = #{entiId}
+        ]]>
+	</select>
+
+	<select id="existsCriterio" parameterType="AccionEspecialCriterioVO"
+		resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_accion_especial_aces
+        ]]>
+		<include refid="SelectWhere" />
+	</select>
+
+	<insert id="insert" parameterType="AccionEspecialVO">
+        <![CDATA[
+        INSERT INTO tbl_accion_especial_aces (aces_pk, aces_prefix, aces_path, aces_enti_pk, aces_orden)
+        VALUES (#{id}, #{prefix}, #{path}, #{entiId}, #{orden})
+        ]]>
+	</insert>
+
+	<update id="update" parameterType="AccionEspecialVO">
+        <![CDATA[
+        UPDATE tbl_accion_especial_aces SET
+            aces_prefix = #{prefix}
+            , aces_path = #{path}
+            , aces_enti_pk = #{entiId}
+            , aces_orden = #{orden}
+        WHERE
+            aces_pk = #{id}
+        ]]>
+	</update>
+
+	<delete id="delete" parameterType="AccionEspecialVO">
+        <![CDATA[
+        DELETE FROM tbl_accion_especial_aces
+        WHERE
+            aces_pk = #{id}
+        ]]>
+	</delete>
+</mapper>

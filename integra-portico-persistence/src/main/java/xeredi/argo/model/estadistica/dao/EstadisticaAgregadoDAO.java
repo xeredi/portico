@@ -1,7 +1,6 @@
 package xeredi.argo.model.estadistica.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import xeredi.argo.model.estadistica.vo.EstadisticaAgregadoCriterioVO;
 import xeredi.argo.model.estadistica.vo.EstadisticaAgregadoVO;

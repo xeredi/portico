@@ -8,13 +8,13 @@
         </div>
 
         <div class="btn-group">
-            <button data-ng-if="mc.hasAccnPath('tppr-list')" class="btn btn-default"
+            <button data-ng-if="mc.hasAcbsPath('tppr-list')" class="btn btn-default"
                 data-ng-click="vm.filter('lg')"
                 data-template-url="modules/metamodelo/fragment/tipo-parametro-filter-content.html"
                 data-bs-modal="modal">
                 <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
             </button>
-            <a data-ng-if="mc.hasAccnPath('tppr-create')" class="btn btn-default"
+            <a data-ng-if="mc.hasAcbsPath('tppr-create')" class="btn btn-default"
                 data-ng-href="#/metamodelo/tipo-parametro/edit/create"><i class="glyphicon glyphicon-file"></i>
                 <span data-translate="btn_crear"></span> </a>
         </div>
@@ -44,7 +44,7 @@
                 </tr>
             </thead>
 
-            <tbody data-ng-init="vm.tpprDetailAllowed = mc.hasAccnPath('tppr-detail')">
+            <tbody data-ng-init="vm.tpprDetailAllowed = mc.hasAcbsPath('tppr-detail')">
                 <tr data-ng-repeat="enti in vm.resultList.list track by $index">
                     <td><a data-ng-if="vm.tpprDetailAllowed"
                         data-ng-href="#/metamodelo/tipo-parametro/detail/{{enti.id}}"><i

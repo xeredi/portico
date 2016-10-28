@@ -67,7 +67,7 @@
 
         MaestroService.index().then(function(data) {
             vm.tpprList = $filter('filter')(data.resultList, function(element) {
-                return credentialService.hasAcenPath(element.value, "item-list");
+                return credentialService.hasAcen(element.value, "list");
             });
 
             vm.tpprList = vm.tpprList.map(function(tppr) {
@@ -181,7 +181,7 @@
                 var i;
 
                 for (i in vm.enti.entiHijasList) {
-                    if (credentialService.hasAcenPath(vm.enti.entiHijasList[i], "item-list")) {
+                    if (credentialService.hasAcen(vm.enti.entiHijasList[i], "list")) {
                         var sprmSearchCriteria = {
                             prmt : {
                                 id : vm.item.id
@@ -212,8 +212,8 @@
         function save() {
             ParametroService.saveI18n(vm.accion, vm.item, vm.i18nMap).then(
                     function(data) {
-                        ParametroService.redirectAfterSave(vm.accion, '/maestro/parametro/detail', [ data.model.entiId,
-                                data.model.id, data.model.version.fini ]);
+                        ParametroService.redirectAfterSave(vm.accion, '/maestro/parametro/detail', [
+                                data.model.entiId, data.model.id, data.model.version.fini ]);
                     });
         }
 

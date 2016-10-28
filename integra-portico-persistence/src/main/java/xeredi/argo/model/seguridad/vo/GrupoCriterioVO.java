@@ -19,13 +19,7 @@ public final class GrupoCriterioVO extends BaseCriterioVO {
     private Long usroId;
 
     /** The accn id. */
-    private Long accnId;
-
-    /** The acen id. */
-    private Long acenId;
-
-    /** Identifiacor de accion asociada a un trámite. */
-    private Long actrId;
+    private Long fncdId;
 
     /** The nombre. */
     private String nombre;

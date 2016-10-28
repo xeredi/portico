@@ -1,9 +1,9 @@
-<fieldset data-ng-if="mc.hasAccnPath('entd-list')">
+<fieldset data-ng-if="mc.hasAcbsPath('entd-list')">
     <legend data-translate="entdList"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a data-ng-if="mc.hasAccnPath('entd-create')" class="btn btn-default"
+            <a data-ng-if="mc.hasAcbsPath('entd-create')" class="btn btn-default"
                 data-ng-href="#/metamodelo/entidad-tipo-dato/edit/create/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
         </div>
@@ -32,7 +32,7 @@
         </thead>
         <tbody>
             <tr data-ng-repeat="entd in vm.entdList track by $index">
-                <td><a data-ng-if="mc.hasAccnPath('entd-detail')"
+                <td><a data-ng-if="mc.hasAcbsPath('entd-detail')"
                     data-ng-href="#/metamodelo/entidad-tipo-dato/detail/{{entd.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="entd.grupo" class="number"></td>

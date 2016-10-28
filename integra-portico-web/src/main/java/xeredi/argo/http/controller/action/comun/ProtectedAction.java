@@ -1,7 +1,7 @@
 package xeredi.argo.http.controller.action.comun;
 
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 public interface ProtectedAction {
     /**

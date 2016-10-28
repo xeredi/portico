@@ -1,10 +1,10 @@
 <div data-ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a data-ng-if="mc.hasAccnPath('usro-edit')" class="btn btn-default"
+            <a data-ng-if="mc.hasAcbsPath('usro-edit')" class="btn btn-default"
                 data-ng-href="#/seguridad/usuario/edit/edit/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
-            <button data-ng-if="mc.hasAccnPath('usro-remove')" data-ng-click="vm.remove()"
+            <button data-ng-if="mc.hasAcbsPath('usro-remove')" data-ng-click="vm.remove()"
                 class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
@@ -36,7 +36,7 @@
         </div>
     </fieldset>
 
-    <fieldset data-ng-if="mc.hasAccnPath('grpo-list')">
+    <fieldset data-ng-if="mc.hasAcbsPath('grpo-list')">
         <legend data-translate="grpoList"></legend>
 
         <div class="list-group">

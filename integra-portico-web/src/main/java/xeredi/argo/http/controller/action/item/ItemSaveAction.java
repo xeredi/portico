@@ -3,8 +3,8 @@ package xeredi.argo.http.controller.action.item;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.vo.ItemVO;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 

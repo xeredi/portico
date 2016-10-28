@@ -1531,8 +1531,8 @@ INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, e
 	, enti_puerto, enti_codigo) VALUES (20118, 'P', 1, 1, 1, 1, 1, 'AMARRE_DEP')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20118, 'Amarre Deportivo')\
 	INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('AMARRE_DEP'), 0, 0, NULL)\
-	INSERT INTO tbl_entidad_accgrid_enag (enag_pk, enag_enti_pk, enag_path, enag_orden) VALUES (28000, 20118, 'amad-recalc-estado', 1)\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enag', 'es', 28000, 'Recalc. Estados')\
+--	INSERT INTO tbl_entidad_accgrid_enag (enag_pk, enag_enti_pk, enag_path, enag_orden) VALUES (28000, 20118, 'amad-recalc-estado', 1)\
+--		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enag', 'es', 28000, 'Recalc. Estados')\
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
 	, enti_puerto, enti_codigo) VALUES (20119, 'P', 1, 1, 1, 1, 0, 'TIPO_LECTURA')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20119, 'Tipo de Lectura (Pto Red)')\
@@ -1547,42 +1547,72 @@ INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, e
 	INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('EMBARCACION_DEP_AUT'), 0, 0, 41021)\
 
 -- Permisos
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    49000 + (tppr_pk - 20000) * 20 + 0 AS fncd_pk
+FROM tbl_tipo_parametro_tppr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     49000 + (tppr_pk - 20000) * 20 + 0 AS acen_pk
     , tppr_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'list') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'list') AS acen_aebs_pk
 FROM tbl_tipo_parametro_tppr\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    49000 + (tppr_pk - 20000) * 20 + 1 AS fncd_pk
+FROM tbl_tipo_parametro_tppr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     49000 + (tppr_pk - 20000) * 20 + 1 AS acen_pk
     , tppr_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'detail') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'detail') AS acen_aebs_pk
 FROM tbl_tipo_parametro_tppr\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    49000 + (tppr_pk - 20000) * 20 + 2 AS fncd_pk
+FROM tbl_tipo_parametro_tppr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     49000 + (tppr_pk - 20000) * 20 + 2 AS acen_pk
     , tppr_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'create') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'create') AS acen_aebs_pk
 FROM tbl_tipo_parametro_tppr\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    49000 + (tppr_pk - 20000) * 20 + 3 AS fncd_pk
+FROM tbl_tipo_parametro_tppr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     49000 + (tppr_pk - 20000) * 20 + 3 AS acen_pk
     , tppr_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'edit') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'edit') AS acen_aebs_pk
 FROM tbl_tipo_parametro_tppr\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    49000 + (tppr_pk - 20000) * 20 + 4 AS fncd_pk
+FROM tbl_tipo_parametro_tppr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     49000 + (tppr_pk - 20000) * 20 + 4 AS acen_pk
     , tppr_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'remove') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'remove') AS acen_aebs_pk
 FROM tbl_tipo_parametro_tppr\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    49000 + (tppr_pk - 20000) * 20 + 5 AS fncd_pk
+FROM tbl_tipo_parametro_tppr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     49000 + (tppr_pk - 20000) * 20 + 5 AS acen_pk
     , tppr_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'duplicate') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'duplicate') AS acen_aebs_pk
 FROM tbl_tipo_parametro_tppr\
+
 
 
 
@@ -1666,42 +1696,73 @@ INSERT INTO tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, 
 
 
 -- Permisos
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    54000 + (tpsp_pk - 24000) * 20 + 0 AS fncd_pk
+FROM tbl_tipo_subparametro_tpsp\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     54000 + (tpsp_pk - 24000) * 20 + 0 AS acen_pk
     , tpsp_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'list') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'list') AS acen_aebs_pk
 FROM tbl_tipo_subparametro_tpsp\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    54000 + (tpsp_pk - 24000) * 20 + 1 AS fncd_pk
+FROM tbl_tipo_subparametro_tpsp\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     54000 + (tpsp_pk - 24000) * 20 + 1 AS acen_pk
     , tpsp_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'detail') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'detail') AS acen_aebs_pk
 FROM tbl_tipo_subparametro_tpsp\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    54000 + (tpsp_pk - 24000) * 20 + 2 AS fncd_pk
+FROM tbl_tipo_subparametro_tpsp\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     54000 + (tpsp_pk - 24000) * 20 + 2 AS acen_pk
     , tpsp_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'create') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'create') AS acen_aebs_pk
 FROM tbl_tipo_subparametro_tpsp\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    54000 + (tpsp_pk - 24000) * 20 + 3 AS fncd_pk
+FROM tbl_tipo_subparametro_tpsp\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     54000 + (tpsp_pk - 24000) * 20 + 3 AS acen_pk
     , tpsp_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'edit') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'edit') AS acen_aebs_pk
 FROM tbl_tipo_subparametro_tpsp\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    54000 + (tpsp_pk - 24000) * 20 + 4 AS fncd_pk
+FROM tbl_tipo_subparametro_tpsp\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     54000 + (tpsp_pk - 24000) * 20 + 4 AS acen_pk
     , tpsp_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'remove') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'remove') AS acen_aebs_pk
 FROM tbl_tipo_subparametro_tpsp\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    54000 + (tpsp_pk - 24000) * 20 + 5 AS fncd_pk
+FROM tbl_tipo_subparametro_tpsp\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     54000 + (tpsp_pk - 24000) * 20 + 5 AS acen_pk
     , tpsp_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'duplicate') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'duplicate') AS acen_aebs_pk
 FROM tbl_tipo_subparametro_tpsp\
+
+
 
 
 
@@ -1725,8 +1786,8 @@ INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, e
 INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 21002, 'Manifiesto de Mercancía')\
 INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable
 	, tpsr_tpdt_estado_pk, tpsr_estados_vlrc, tpsr_estado_def) VALUES (21002, 0, 1, 1, portico.getTipoDato('ESTADO_MAN_MERC'), 'C, I', NULL)\
-	INSERT INTO tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27004, 21002, 1, 'mani-totales')\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27004, 'Verif. Totales')\
+	INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (27004)\
+		INSERT INTO tbl_accion_especial_aces (aces_pk, aces_enti_pk, aces_prefix, aces_orden, aces_path) VALUES (27004, 21002, 'aces', 1, 'mani-totales')\
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (22002, 'S', 1, 1, 1, 1, 'MANIFIESTO_CONSIGNATARIO')\
 INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 22002, 'Consignatario de Manifiesto')\
 INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable
@@ -1738,8 +1799,8 @@ INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, t
 	, tpss_tpdt_estado_pk, tpss_estados_vlrc, tpss_estado_def) VALUES (22003, 21002, 0, 0, 1, portico.getTipoDato('ESTADO_BL'), NULL, NULL)\
 	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21002, 22003, 2)\
 	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (22002, 22003, 1)\
-	INSERT INTO tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27054, 22003, 1, 'mabl-totales')\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27054, 'Verif. Totales')\
+	INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (27054)\
+		INSERT INTO tbl_accion_especial_aces (aces_pk, aces_enti_pk, aces_prefix, aces_orden, aces_path) VALUES (27054, 22003, 'aces', 1, 'mabl-totales')\
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (22004, 'S', 1, 1, 1, 1, 'PARTIDA')\
 INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 22004, 'Partida')\
 INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable
@@ -1783,17 +1844,17 @@ INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, e
 INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 21003, 'Escala')\
 INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable
 	, tpsr_tpdt_estado_pk, tpsr_estados_vlrc, tpsr_estado_def) VALUES (21003, 1, 1, 1, 43265, 'I, F', NULL)\
-	INSERT INTO tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27250, 21003, 1, 'esca-notificar')\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27250, 'Not. Practico')\
+--	INSERT INTO tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27250, 21003, 1, 'esca-notificar')\
+--		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27250, 'Not. Practico')\
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (22011, 'S', 1, 1, 1, 1, 'ATRAQUE')\
 INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 22011, 'Atraque')\
 INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable
 	, tpss_tpdt_estado_pk, tpss_estados_vlrc, tpss_estado_def) VALUES (22011, 21003, 1, 1, 1, 43235, 'I, F', 'S')\
 	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21003, 22011, 1)\
-	INSERT INTO tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27205, 22011, 6, 'atra-cambiar-muelle')\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27205, 'C. Muelle')\
-	INSERT INTO tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27206, 22011, 7, 'atra-autorizar-fprevio')\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27206, 'Aut. F. Previo')\
+--	INSERT INTO tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27205, 22011, 6, 'atra-cambiar-muelle')\
+--		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27205, 'C. Muelle')\
+--	INSERT INTO tbl_entidad_accion_enac(enac_pk, enac_enti_pk, enac_orden, enac_path) VALUES (27206, 22011, 7, 'atra-autorizar-fprevio')\
+--		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enac', 'es', 27206, 'Aut. F. Previo')\
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (22015, 'S', 0, 0, 0, 0, 'ESCALA_CONTADOR')\
 INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 22015, 'Contador de Escala')\
 INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable
@@ -1869,82 +1930,143 @@ INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable
 
 
 -- Permisos
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 0 AS fncd_pk
+FROM tbl_tipo_servicio_tpsr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     58000 + (tpsr_pk - 21000) * 20 + 0 AS acen_pk
     , tpsr_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'list') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'list') AS acen_aebs_pk
 FROM tbl_tipo_servicio_tpsr\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 1 AS fncd_pk
+FROM tbl_tipo_servicio_tpsr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     58000 + (tpsr_pk - 21000) * 20 + 1 AS acen_pk
     , tpsr_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'detail') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'detail') AS acen_aebs_pk
 FROM tbl_tipo_servicio_tpsr\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 2 AS fncd_pk
+FROM tbl_tipo_servicio_tpsr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     58000 + (tpsr_pk - 21000) * 20 + 2 AS acen_pk
     , tpsr_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'create') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'create') AS acen_aebs_pk
 FROM tbl_tipo_servicio_tpsr\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 3 AS fncd_pk
+FROM tbl_tipo_servicio_tpsr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     58000 + (tpsr_pk - 21000) * 20 + 3 AS acen_pk
     , tpsr_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'edit') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'edit') AS acen_aebs_pk
 FROM tbl_tipo_servicio_tpsr\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 4 AS fncd_pk
+FROM tbl_tipo_servicio_tpsr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     58000 + (tpsr_pk - 21000) * 20 + 4 AS acen_pk
     , tpsr_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'remove') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'remove') AS acen_aebs_pk
 FROM tbl_tipo_servicio_tpsr\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 5 AS fncd_pk
+FROM tbl_tipo_servicio_tpsr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     58000 + (tpsr_pk - 21000) * 20 + 5 AS acen_pk
     , tpsr_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'duplicate') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'duplicate') AS acen_aebs_pk
 FROM tbl_tipo_servicio_tpsr\
 
 
 
 
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 0 AS fncd_pk
+FROM tbl_tipo_subservicio_tpss\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     62000 + (tpss_pk - 22000) * 20 + 0 AS acen_pk
     , tpss_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'list') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'list') AS acen_aebs_pk
 FROM tbl_tipo_subservicio_tpss\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 1 AS fncd_pk
+FROM tbl_tipo_subservicio_tpss\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     62000 + (tpss_pk - 22000) * 20 + 1 AS acen_pk
     , tpss_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'detail') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'detail') AS acen_aebs_pk
 FROM tbl_tipo_subservicio_tpss\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 2 AS fncd_pk
+FROM tbl_tipo_subservicio_tpss\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     62000 + (tpss_pk - 22000) * 20 + 2 AS acen_pk
     , tpss_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'create') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'create') AS acen_aebs_pk
 FROM tbl_tipo_subservicio_tpss\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 3 AS fncd_pk
+FROM tbl_tipo_subservicio_tpss\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     62000 + (tpss_pk - 22000) * 20 + 3 AS acen_pk
     , tpss_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'edit') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'edit') AS acen_aebs_pk
 FROM tbl_tipo_subservicio_tpss\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 4 AS fncd_pk
+FROM tbl_tipo_subservicio_tpss\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     62000 + (tpss_pk - 22000) * 20 + 4 AS acen_pk
     , tpss_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'remove') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'remove') AS acen_aebs_pk
 FROM tbl_tipo_subservicio_tpss\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 5 AS fncd_pk
+FROM tbl_tipo_subservicio_tpss\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     62000 + (tpss_pk - 22000) * 20 + 5 AS acen_pk
     , tpss_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'duplicate') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'duplicate') AS acen_aebs_pk
 FROM tbl_tipo_subservicio_tpss\
+
+
 
 
 
@@ -1983,18 +2105,29 @@ INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, e
 	INSERT INTO tbl_tipo_estadistica_tpes(tpes_pk) VALUES (23007)\
 
 
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    66000 + (tpes_pk - 23000) * 20 + 0 AS fncd_pk
+FROM tbl_tipo_estadistica_tpes\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     66000 + (tpes_pk - 23000) * 20 + 0 AS acen_pk
     , tpes_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'list') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'list') AS acen_aebs_pk
 FROM tbl_tipo_estadistica_tpes\
-INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_accn_pk)
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    66000 + (tpes_pk - 23000) * 20 + 1 AS fncd_pk
+FROM tbl_tipo_estadistica_tpes\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
 SELECT
     66000 + (tpes_pk - 23000) * 20 + 1 AS acen_pk
     , tpes_pk AS acen_enti_pk
-		, (SELECT accn_pk FROM tbl_accion_accn WHERE accn_prefix = 'item' AND accn_codigo = 'detail') AS acen_accn_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'detail') AS acen_aebs_pk
 FROM tbl_tipo_estadistica_tpes\
+
+
 
 
 

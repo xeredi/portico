@@ -184,6 +184,97 @@ COMMENT ON COLUMN tbl_usuario_grupo_usgr.usgr_grpo_pk IS 'Identificador de grupo
 
 
 
+-- tbl_funcionalidad_fncd
+CREATE TABLE tbl_funcionalidad_fncd (
+	fncd_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_fncd PRIMARY KEY (fncd_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_funcionalidad_fncd FOR porticoadm.tbl_funcionalidad_fncd\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_funcionalidad_fncd TO portico\
+
+COMMENT ON TABLE tbl_funcionalidad_fncd IS 'Funcionalidades de la aplicacion'\
+COMMENT ON COLUMN tbl_funcionalidad_fncd.fncd_pk IS 'Identificador de funcionalidad'\
+
+
+
+-- tbl_funcionalidad_grupo_fngr
+CREATE TABLE tbl_funcionalidad_grupo_fngr (
+	fngr_fncd_pk NUMBER(19) NOT NULL
+	, fngr_grpo_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_fngr PRIMARY KEY (fngr_fncd_pk, fngr_grpo_pk)
+
+	, CONSTRAINT fk_fngr_fncd_pk FOREIGN KEY (fngr_fncd_pk)
+		REFERENCES tbl_funcionalidad_fncd (fncd_pk)
+	, CONSTRAINT fk_fngr_grpo_pk FOREIGN KEY (fngr_grpo_pk)
+		REFERENCES tbl_grupo_grpo (grpo_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_funcionalidad_grupo_fngr FOR porticoadm.tbl_funcionalidad_grupo_fngr\
+
+CREATE INDEX ix_fngr_grpo_pk ON tbl_funcionalidad_grupo_fngr (fngr_grpo_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_funcionalidad_grupo_fngr TO portico\
+
+COMMENT ON TABLE tbl_funcionalidad_grupo_fngr IS 'Asociacion entre Funcionalidades de la aplicacion y grupos de usuarios'\
+COMMENT ON COLUMN tbl_funcionalidad_grupo_fngr.fngr_fncd_pk IS 'Identificador de funcionalidad'\
+COMMENT ON COLUMN tbl_funcionalidad_grupo_fngr.fngr_grpo_pk IS 'Identificador de grupo de usuarios'\
+
+
+
+-- tbl_accion_base_acbs
+CREATE TABLE tbl_accion_base_acbs (
+	acbs_pk NUMBER(19) NOT NULL
+	, acbs_prefix VARCHAR2(4) NOT NULL
+	, acbs_codigo VARCHAR2(100) NOT NULL
+
+	, CONSTRAINT pk_acbs PRIMARY KEY (acbs_pk)
+	, CONSTRAINT uq_acbs UNIQUE (acbs_prefix, acbs_codigo)
+
+	, CONSTRAINT fk_acbs_pk FOREIGN KEY (acbs_pk)
+		REFERENCES tbl_funcionalidad_fncd (fncd_pk)
+		ON DELETE CASCADE
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_accion_base_acbs FOR porticoadm.tbl_accion_base_acbs\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_accion_base_acbs TO portico\
+
+COMMENT ON TABLE tbl_accion_base_acbs IS 'Acciones base de la aplicacion no asociadas a entidad'\
+COMMENT ON COLUMN tbl_accion_base_acbs.acbs_pk IS 'Identificador de accion base'\
+COMMENT ON COLUMN tbl_accion_base_acbs.acbs_prefix IS 'Prefijo de la accion (tpdt, cdrf, ...)'\
+COMMENT ON COLUMN tbl_accion_base_acbs.acbs_codigo IS 'Path de la accion (create, edit, ...)'\
+
+
+
+-- tbl_accion_entidad_base_aebs
+CREATE TABLE tbl_accion_entidad_base_aebs (
+	aebs_pk NUMBER(19) NOT NULL
+	, aebs_prefix VARCHAR2(4) NOT NULL
+	, aebs_codigo VARCHAR2(100) NOT NULL
+
+	, CONSTRAINT pk_aebs PRIMARY KEY (aebs_pk)
+	, CONSTRAINT uq_aebs UNIQUE (aebs_prefix, aebs_codigo)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_accion_entidad_base_aebs FOR porticoadm.tbl_accion_entidad_base_aebs\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_accion_entidad_base_aebs TO portico\
+
+COMMENT ON TABLE tbl_accion_entidad_base_aebs IS 'Acciones base de la aplicacion asociadas a entidad'\
+COMMENT ON COLUMN tbl_accion_entidad_base_aebs.aebs_pk IS 'Identificador de accion de entidad base'\
+COMMENT ON COLUMN tbl_accion_entidad_base_aebs.aebs_prefix IS 'Prefijo de la accion (tpdt, cdrf, ...)'\
+COMMENT ON COLUMN tbl_accion_entidad_base_aebs.aebs_codigo IS 'Path de la accion (create, edit, ...)'\
+
+
+
+
+
+
+
 -- tbl_entidad_enti
 CREATE TABLE tbl_entidad_enti (
 	enti_pk NUMBER(19) NOT NULL
@@ -216,6 +307,32 @@ COMMENT ON COLUMN tbl_entidad_enti.enti_cmd_edicion IS 'Comando de edicion Habil
 COMMENT ON COLUMN tbl_entidad_enti.enti_cmd_duplicado IS 'Comando de duplicado Habilitado?'\
 COMMENT ON COLUMN tbl_entidad_enti.enti_gis IS 'Entidad Gisable?'\
 COMMENT ON COLUMN tbl_entidad_enti.enti_puerto IS 'Entidad Asociada a Puerto?'\
+
+
+
+-- tbl_accion_especial_aces
+CREATE TABLE tbl_accion_especial_aces (
+	aces_pk NUMBER(19) NOT NULL
+	, aces_enti_pk NUMBER(19) NOT NULL
+	, aces_prefix VARCHAR2(4) NOT NULL
+	, aces_orden NUMBER(3) NOT NULL
+	, aces_path VARCHAR2(100) NOT NULL
+
+	, CONSTRAINT pk_aces PRIMARY KEY (aces_pk)
+	, CONSTRAINT uq_aces UNIQUE (aces_enti_pk, aces_prefix, aces_path)
+
+	, CONSTRAINT fk_aces_pk FOREIGN KEY (aces_pk)
+		REFERENCES tbl_funcionalidad_fncd (fncd_pk)
+		ON DELETE CASCADE
+	, CONSTRAINT fk_aces_enti_pk FOREIGN KEY (aces_enti_pk)
+		REFERENCES tbl_entidad_enti (enti_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_accion_especial_aces FOR porticoadm.tbl_accion_especial_aces\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_accion_especial_aces TO portico\
+
+COMMENT ON TABLE tbl_accion_especial_aces IS 'Acciones de entidad que se salen del estandar de la aplicacion'\
 
 
 
@@ -300,29 +417,6 @@ COMMENT ON COLUMN tbl_codigo_ref_cdrf.cdrf_valor IS 'Valor del Codigo de Referen
 COMMENT ON COLUMN tbl_codigo_ref_cdrf.cdrf_orden IS 'Orden de Visualiazacion del Codigo de Referencia dentro de un Tipo de Dato'\
 
 
-
--- tbl_entidad_accion_enac
-CREATE TABLE tbl_entidad_accion_enac (
-	enac_pk NUMBER(19) NOT NULL
-	, enac_enti_pk NUMBER(19) NOT NULL
-	, enac_path VARCHAR2(30) NOT NULL
-	, enac_orden int NOT NULL
-
-	, CONSTRAINT pk_enac PRIMARY KEY (enac_pk)
-	, CONSTRAINT uq_enac UNIQUE (enac_enti_pk, enac_path)
-
-	, CONSTRAINT fk_enac_enti_pk FOREIGN KEY (enac_enti_pk)
-		REFERENCES tbl_entidad_enti (enti_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_entidad_accion_enac FOR porticoadm.tbl_entidad_accion_enac\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_entidad_accion_enac TO portico\
-
-COMMENT ON TABLE tbl_entidad_accion_enac IS 'Acciones asociadas a entidades'\
-COMMENT ON COLUMN tbl_entidad_accion_enac.enac_enti_pk IS 'Identificador de Entidad'\
-COMMENT ON COLUMN tbl_entidad_accion_enac.enac_path IS 'Path para construir la URL de la accion'\
-COMMENT ON COLUMN tbl_entidad_accion_enac.enac_enti_pk IS 'Orden de aparacion de la accion dentro de las acciones de una entidad'\
 
 
 
@@ -1954,60 +2048,21 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_archivo_srar TO portico\
 
 
 
--- tbl_entidad_accgrid_enag
-CREATE TABLE tbl_entidad_accgrid_enag (
-	enag_pk NUMBER(19) NOT NULL
-	, enag_enti_pk NUMBER(19) NOT NULL
-	, enag_path VARCHAR2(30) NOT NULL
-	, enag_orden INT NOT NULL
-
-	, CONSTRAINT pk_enag PRIMARY KEY (enag_pk)
-
-	, CONSTRAINT uq_enag UNIQUE (enag_enti_pk, enag_path)
-
-	, CONSTRAINT fk_enag_enti_pk FOREIGN KEY (enag_enti_pk)
-		REFERENCES tbl_entidad_enti (enti_pk)
-)
-\
-
-CREATE OR REPLACE SYNONYM portico.tbl_entidad_accgrid_enag FOR tbl_entidad_accgrid_enag\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_entidad_accgrid_enag TO portico\
-
-
-
-
-
--- tbl_accion_accn
-CREATE TABLE tbl_accion_accn (
-	accn_pk NUMBER(19) NOT NULL
-	, accn_prefix VARCHAR2(4) NOT NULL
-	, accn_codigo VARCHAR2(100) NOT NULL
-	, accn_core INT NOT NULL
-	, accn_multiple INT NOT NULL
-
-	, CONSTRAINT pk_accn PRIMARY KEY (accn_pk)
-
-	, CONSTRAINT uk_accn UNIQUE (accn_prefix, accn_codigo)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_accion_accn FOR tbl_accion_accn\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_accion_accn TO portico\
-
-
 -- tbl_accion_entidad_acen
 CREATE TABLE tbl_accion_entidad_acen (
 	acen_pk NUMBER(19) NOT NULL
-	, acen_accn_pk NUMBER(19) NOT NULL
+	, acen_aebs_pk NUMBER(19) NOT NULL
 	, acen_enti_pk NUMBER(19) NOT NULL
 
 	, CONSTRAINT pk_acen PRIMARY KEY (acen_pk)
 
-	, CONSTRAINT uk_acen UNIQUE (acen_accn_pk, acen_enti_pk)
+	, CONSTRAINT uk_acen UNIQUE (acen_aebs_pk, acen_enti_pk)
 
-	, CONSTRAINT fk_acen_accn_pk FOREIGN KEY (acen_accn_pk)
-		REFERENCES tbl_accion_accn (accn_pk)
+	, CONSTRAINT fk_acen_pk FOREIGN KEY (acen_pk)
+		REFERENCES tbl_funcionalidad_fncd (fncd_pk)
+		ON DELETE CASCADE
+	, CONSTRAINT fk_acen_aebs_pk FOREIGN KEY (acen_aebs_pk)
+		REFERENCES tbl_accion_entidad_base_aebs (aebs_pk)
 	, CONSTRAINT fk_acen_enti_pk FOREIGN KEY (acen_enti_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
 )\
@@ -2017,50 +2072,6 @@ CREATE OR REPLACE SYNONYM portico.tbl_accion_entidad_acen FOR tbl_accion_entidad
 CREATE INDEX ix_acen_enti_pk ON tbl_accion_entidad_acen(acen_enti_pk)\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_accion_entidad_acen TO portico\
-
-
--- tbl_grupo_accion_grac
-CREATE TABLE tbl_grupo_accion_grac (
-	grac_grpo_pk NUMBER(19) NOT NULL
-	, grac_accn_pk NUMBER(19) NOT NULL
-
-	, CONSTRAINT pk_grac PRIMARY KEY (grac_grpo_pk, grac_accn_pk)
-
-	, CONSTRAINT fk_grac_grpo_pk FOREIGN KEY (grac_grpo_pk)
-		REFERENCES tbl_grupo_grpo (grpo_pk)
-		ON DELETE CASCADE
-	, CONSTRAINT fk_grac_accn_pk FOREIGN KEY (grac_accn_pk)
-		REFERENCES tbl_accion_accn (accn_pk)
-		ON DELETE CASCADE
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_grupo_accion_grac FOR tbl_grupo_accion_grac\
-
-CREATE INDEX ix_grac_accn_pk ON tbl_grupo_accion_grac(grac_accn_pk)\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_grupo_accion_grac TO portico\
-
-
--- tbl_grupo_accion_entidad_grae
-CREATE TABLE tbl_grupo_accion_entidad_grae (
-	grae_grpo_pk NUMBER(19) NOT NULL
-	, grae_acen_pk NUMBER(19) NOT NULL
-
-	, CONSTRAINT pk_grae PRIMARY KEY (grae_grpo_pk, grae_acen_pk)
-
-	, CONSTRAINT fk_grae_grpo_pk FOREIGN KEY (grae_grpo_pk)
-		REFERENCES tbl_grupo_grpo (grpo_pk)
-		ON DELETE CASCADE
-	, CONSTRAINT fk_grae_acen_pk FOREIGN KEY (grae_acen_pk)
-		REFERENCES tbl_accion_entidad_acen (acen_pk)
-		ON DELETE CASCADE
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_grupo_accion_entidad_grae FOR tbl_grupo_accion_entidad_grae\
-
-CREATE INDEX ix_grae_acen_pk ON tbl_grupo_accion_entidad_grae(grae_acen_pk)\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_grupo_accion_entidad_grae TO portico\
 
 
 -- tbl_tramite_trmt
@@ -2073,6 +2084,9 @@ CREATE TABLE tbl_tramite_trmt (
 	, CONSTRAINT pk_trmt PRIMARY KEY (trmt_pk)
 	, CONSTRAINT uq_trmt UNIQUE (trmt_enti_pk, trmt_estado_orig, trmt_estado_dest)
 
+	, CONSTRAINT fk_trmt_pk FOREIGN KEY (trmt_pk)
+		REFERENCES tbl_funcionalidad_fncd (fncd_pk)
+		ON DELETE CASCADE
 	, CONSTRAINT fk_trmt_enti_pk FOREIGN KEY (trmt_enti_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
 )\
@@ -2080,52 +2094,6 @@ CREATE TABLE tbl_tramite_trmt (
 CREATE OR REPLACE SYNONYM portico.tbl_tramite_trmt FOR tbl_tramite_trmt\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_tramite_trmt TO portico\
-
-
-
--- tbl_accion_tramite_actr
-CREATE TABLE tbl_accion_tramite_actr (
-	actr_pk NUMBER(19) NOT NULL
-	, actr_accn_pk NUMBER(19) NOT NULL
-	, actr_trmt_pk NUMBER(19) NOT NULL
-
-	, CONSTRAINT pk_actr PRIMARY KEY (actr_pk)
-
-	, CONSTRAINT uk_actr UNIQUE (actr_accn_pk, actr_trmt_pk)
-
-	, CONSTRAINT fk_actr_accn_pk FOREIGN KEY (actr_accn_pk)
-		REFERENCES tbl_accion_accn (accn_pk)
-	, CONSTRAINT fk_actr_trmt_pk FOREIGN KEY (actr_trmt_pk)
-		REFERENCES tbl_tramite_trmt (trmt_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_accion_tramite_actr FOR tbl_accion_tramite_actr\
-
-CREATE INDEX ix_actr_trmt_pk ON tbl_accion_tramite_actr (actr_trmt_pk)\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_accion_tramite_actr TO portico\
-
-
--- tbl_grupo_accion_tramite_grat
-CREATE TABLE tbl_grupo_accion_tramite_grat (
-	grat_grpo_pk NUMBER(19) NOT NULL
-	, grat_actr_pk NUMBER(19) NOT NULL
-
-	, CONSTRAINT pk_grat PRIMARY KEY (grat_grpo_pk, grat_actr_pk)
-
-	, CONSTRAINT fk_grat_grpo_pk FOREIGN KEY (grat_grpo_pk)
-		REFERENCES tbl_grupo_grpo (grpo_pk)
-		ON DELETE CASCADE
-	, CONSTRAINT fk_grat_actr_pk FOREIGN KEY (grat_actr_pk)
-		REFERENCES tbl_accion_tramite_actr (actr_pk)
-		ON DELETE CASCADE
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_grupo_accion_tramite_grat FOR tbl_grupo_accion_tramite_grat\
-
-CREATE INDEX ix_grat_actr_pk ON tbl_grupo_accion_tramite_grat (grat_actr_pk)\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_grupo_accion_tramite_grat TO portico\
 
 
 
@@ -2139,6 +2107,8 @@ CREATE TABLE tbl_tramite_tipo_dato_trtd (
 
 	, CONSTRAINT fk_trtd_trmt_pk FOREIGN KEY (trtd_trmt_pk)
 		REFERENCES tbl_tramite_trmt (trmt_pk)
+	, CONSTRAINT fk_trtd_tpdt_pk FOREIGN KEY (trtd_tpdt_pk)
+		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_tramite_tipo_dato_trtd FOR tbl_tramite_tipo_dato_trtd\
@@ -2276,14 +2246,8 @@ DROP TABLE tbl_parametro_trmt_prtr\
 DROP TABLE tbl_item_trmt_dato_ittd\
 DROP TABLE tbl_item_tramite_ittr\
 DROP TABLE tbl_tramite_tipo_dato_trtd\
-DROP TABLE tbl_grupo_accion_tramite_grat\
-DROP TABLE tbl_accion_tramite_actr\
 DROP TABLE tbl_tramite_trmt\
-DROP TABLE tbl_grupo_accion_entidad_grae\
-DROP TABLE tbl_grupo_accion_grac\
 DROP TABLE tbl_accion_entidad_acen\
-DROP TABLE tbl_accion_accn\
-DROP TABLE tbl_entidad_accgrid_enag\
 DROP TABLE tbl_servicio_archivo_srar\
 DROP TABLE tbl_campo_agregacion_cmag\
 DROP TABLE tbl_message_i18n_m18n\
@@ -2336,11 +2300,15 @@ DROP TABLE tbl_parametro_prmt\
 DROP TABLE tbl_tipo_parametro_tppr\
 DROP TABLE tbl_entidad_tipo_dato_entd\
 DROP TABLE tbl_entidad_grupo_dato_engd\
-DROP TABLE tbl_entidad_accion_enac\
 DROP TABLE tbl_codigo_ref_cdrf\
 DROP TABLE tbl_tipo_dato_tpdt\
 DROP TABLE tbl_entidad_entidad_enen\
+DROP TABLE tbl_accion_especial_aces\
 DROP TABLE tbl_entidad_enti\
+DROP TABLE tbl_accion_entidad_base_aebs\
+DROP TABLE tbl_accion_base_acbs\
+DROP TABLE tbl_funcionalidad_grupo_fngr\
+DROP TABLE tbl_funcionalidad_fncd\
 DROP TABLE tbl_usuario_grupo_usgr\
 DROP TABLE tbl_grupo_grpo\
 DROP TABLE tbl_usuario_usro\

@@ -1,7 +1,9 @@
-<fieldset data-ng-if="mc.hasAccnPath('trmt-list')">
+<fieldset data-ng-if="mc.hasAcbsPath('trmt-list') && vm.model.tpdtEstado">
+     <legend data-translate="trmtList"></legend>
+
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a data-ng-if="mc.hasAccnPath('trmt-create')" class="btn btn-default"
+            <a data-ng-if="mc.hasAcbsPath('trmt-create')" class="btn btn-default"
                 data-ng-href="#/metamodelo/tramite/edit/create/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
         </div>
@@ -18,7 +20,7 @@
         </thead>
         <tbody>
             <tr data-ng-repeat="trmt in vm.trmtList track by $index">
-                <td><a data-ng-if="mc.hasAccnPath('trmt-detail')"
+                <td><a data-ng-if="mc.hasAcbsPath('trmt-detail')"
                     data-ng-href="#/metamodelo/tramite/detail/{{trmt.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap" data-ng-bind="trmt.etiqueta"></td>

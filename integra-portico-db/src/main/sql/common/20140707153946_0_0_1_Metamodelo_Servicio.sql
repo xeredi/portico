@@ -1127,134 +1127,171 @@ VALUES (31543, 21010, 41080, 1,  4,  1, 12, 0, 0, 0, NULL)\
 -- TRAMITES
 -- TRAMITES
 -- Manifiesto
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46000, 21002, 'S', 'B')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46000, 'es', 'Bloquear')\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46001, 21002, 'I', 'B')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46001, 'es', 'Bloquear')\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46002, 21002, 'C', 'B')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46002, 'es', 'Bloquear')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46000)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46000, 21002, 'S', 'B')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46000, 'es', 'Bloquear')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46001)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46001, 21002, 'I', 'B')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46001, 'es', 'Bloquear')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46002)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46002, 21002, 'C', 'B')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46002, 'es', 'Bloquear')\
 
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46010, 21002, 'I', 'C')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46010, 'es', 'Completar')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46010)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46010, 21002, 'I', 'C')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46010, 'es', 'Completar')\
 
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46020, 21002, 'C', 'I')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46020, 'es', 'Iniciar')\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46021, 21002, 'B', 'I')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46021, 'es', 'Iniciar')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46020)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46020, 21002, 'C', 'I')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46020, 'es', 'Iniciar')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46021)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46021, 21002, 'B', 'I')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46021, 'es', 'Iniciar')\
 
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46030, 21002, 'I', 'A')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46030, 'es', 'Anular')\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46031, 21002, 'S', 'A')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46031, 'es', 'Anular')\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46032, 21002, 'C', 'A')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46032, 'es', 'Anular')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46030)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46030, 21002, 'I', 'A')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46030, 'es', 'Anular')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46031)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46031, 21002, 'S', 'A')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46031, 'es', 'Anular')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46032)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46032, 21002, 'C', 'A')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46032, 'es', 'Anular')\
 
 -- BL
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46040, 22003, 'S', 'B')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46040, 'es', 'Bloquear')\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46041, 22003, 'I', 'B')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46041, 'es', 'Bloquear')\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46042, 22003, 'C', 'B')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46042, 'es', 'Bloquear')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46040)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46040, 22003, 'S', 'B')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46040, 'es', 'Bloquear')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46041)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46041, 22003, 'I', 'B')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46041, 'es', 'Bloquear')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46042)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46042, 22003, 'C', 'B')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46042, 'es', 'Bloquear')\
 
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46050, 22003, 'I', 'C')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46050, 'es', 'Completar')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46050)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46050, 22003, 'I', 'C')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46050, 'es', 'Completar')\
 
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46060, 22003, 'C', 'I')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46060, 'es', 'Iniciar')\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46061, 22003, 'B', 'I')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46061, 'es', 'Iniciar')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46060)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46060, 22003, 'C', 'I')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46060, 'es', 'Iniciar')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46061)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46061, 22003, 'B', 'I')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46061, 'es', 'Iniciar')\
 
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46070, 22003, 'I', 'A')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46070, 'es', 'Anular')\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46071, 22003, 'S', 'A')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46071, 'es', 'Anular')\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46072, 22003, 'C', 'A')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46072, 'es', 'Anular')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46070)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46070, 22003, 'I', 'A')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46070, 'es', 'Anular')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46071)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46071, 22003, 'S', 'A')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46071, 'es', 'Anular')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46072)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46072, 22003, 'C', 'A')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46072, 'es', 'Anular')\
 
 -- Partida
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46080, 22004, 'R', 'B')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46080, 'es', 'Bloquear')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46080)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46080, 22004, 'R', 'B')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46080, 'es', 'Bloquear')\
 
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46090, 22004, 'B', 'R')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46090, 'es', 'Iniciar')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46090)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46090, 22004, 'B', 'R')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46090, 'es', 'Iniciar')\
 
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46100, 22004, 'R', 'A')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46100, 'es', 'Anular')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46100)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46100, 22004, 'R', 'A')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46100, 'es', 'Anular')\
 
 -- Equipamiento
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46110, 22005, 'R', 'B')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46110, 'es', 'Bloquear')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46110)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46110, 22005, 'R', 'B')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46110, 'es', 'Bloquear')\
 
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46120, 22005, 'B', 'R')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46120, 'es', 'Iniciar')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46120)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46120, 22005, 'B', 'R')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46120, 'es', 'Iniciar')\
 
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46130, 22005, 'R', 'A')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46130, 'es', 'Anular')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46130)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46130, 22005, 'R', 'A')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46130, 'es', 'Anular')\
 
 -- Atraque 22011
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46140, 22011, 'S', 'C')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46140, 'es', 'Autorizar')\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 41040, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 41041, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 45180, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 45380, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 43120, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 41042, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 41043, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 45000, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 41100, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 41080, 0)\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46141, 22011, 'D', 'C')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46141, 'es', 'Autorizar')\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 41040, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 41041, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 45180, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 45380, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 43120, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 41042, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 41043, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 45000, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 41100, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 41080, 0)\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46140)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46140, 22011, 'S', 'C')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46140, 'es', 'Autorizar')\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 41040, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 41041, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 45180, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 45380, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 43120, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 41042, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 41043, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 45000, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 41100, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46140, 41080, 0)\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46141)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46141, 22011, 'D', 'C')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46141, 'es', 'Autorizar')\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 41040, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 41041, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 45180, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 45380, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 43120, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 41042, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 41043, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 45000, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 41100, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46141, 41080, 0)\
 
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46150, 22011, 'S', 'D')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46150, 'es', 'Denegar')\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46150, 41080, 0)\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46151, 22011, 'C', 'D')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46151, 'es', 'Denegar')\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46151, 41080, 0)\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46150)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46150, 22011, 'S', 'D')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46150, 'es', 'Denegar')\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46150, 41080, 0)\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46151)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46151, 22011, 'C', 'D')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46151, 'es', 'Denegar')\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46151, 41080, 0)\
 
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46160, 22011, 'S', 'A')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46160, 'es', 'Anular')\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46161, 22011, 'C', 'A')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46161, 'es', 'Anular')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46160)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46160, 22011, 'S', 'A')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46160, 'es', 'Anular')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46161)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46161, 22011, 'C', 'A')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46161, 'es', 'Anular')\
 
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46170, 22011, 'C', 'I')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46170, 'es', 'Iniciar')\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 41040, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 41041, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 45180, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 45380, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 43120, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 41042, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 41043, 1)\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 45000, 1)\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46170)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46170, 22011, 'C', 'I')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46170, 'es', 'Iniciar')\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 41040, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 41041, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 45180, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 45380, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 43120, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 41042, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 41043, 1)\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46170, 45000, 1)\
 
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46180, 22011, 'I', 'F')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46180, 'es', 'Finalizar')\
-	INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46180, 41100, 1)\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46180)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46180, 22011, 'I', 'F')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46180, 'es', 'Finalizar')\
+		INSERT INTO tbl_tramite_tipo_dato_trtd (trtd_trmt_pk, trtd_tpdt_pk, trtd_obligatorio) VALUES (46180, 41100, 1)\
 
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46190, 22011, 'C', 'S')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46190, 'es', 'Des. Estado')\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46191, 22011, 'I', 'C')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46191, 'es', 'Des. Estado')\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46192, 22011, 'F', 'I')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46192, 'es', 'Des. Estado')\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46193, 22011, 'D', 'S')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46193, 'es', 'Des. Estado')\
-INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46194, 22011, 'A', 'S')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46194, 'es', 'Des. Estado')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46190)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46190, 22011, 'C', 'S')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46190, 'es', 'Des. Estado')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46191)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46191, 22011, 'I', 'C')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46191, 'es', 'Des. Estado')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46192)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46192, 22011, 'F', 'I')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46192, 'es', 'Des. Estado')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46193)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46193, 22011, 'D', 'S')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46193, 'es', 'Des. Estado')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (46194)\
+	INSERT INTO tbl_tramite_trmt (trmt_pk, trmt_enti_pk, trmt_estado_orig, trmt_estado_dest) VALUES (46194, 22011, 'A', 'S')\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('trmt', 46194, 'es', 'Des. Estado')\
 
 
 -- //@UNDO

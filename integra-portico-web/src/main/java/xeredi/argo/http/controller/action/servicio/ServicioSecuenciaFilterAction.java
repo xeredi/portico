@@ -9,9 +9,9 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaCriterioVO;
 
 // TODO: Auto-generated Javadoc

@@ -7,10 +7,10 @@ import java.io.IOException;
 import xeredi.argo.http.controller.action.comun.GridXlsExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.report.ProcesoXls;
 import xeredi.argo.model.proceso.vo.ProcesoCriterioVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -2,8 +2,8 @@ package xeredi.argo.http.controller.action.seguridad;
 
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.bo.UsuarioBO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
 
 import com.google.common.base.Preconditions;

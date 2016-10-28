@@ -9,24 +9,21 @@
         <result column="acen_pk" property="id" />
         <result column="acen_enti_pk" property="entiId" />
 
-        <association property="accn" javaType="AccionVO">
-            <result column="acen_accn_pk" property="id" />
-            <result column="accn_prefix" property="prefix" />
-            <result column="accn_codigo" property="codigo" />
-            <result column="accn_core" property="core" />
-            <result column="accn_multiple" property="multiple" />
+        <association property="aebs" javaType="AccionEntidadBaseVO">
+            <result column="acen_aebs_pk" property="id" />
+            <result column="aebs_prefix" property="prefix" />
+            <result column="aebs_codigo" property="codigo" />
         </association>
     </resultMap>
 
     <sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        acen_pk, acen_enti_pk, acen_accn_pk
-        , accn_prefix, accn_codigo, accn_core, accn_multiple
+        acen_pk, acen_enti_pk, acen_aebs_pk, aebs_prefix, aebs_codigo
     FROM
         tbl_accion_entidad_acen
-        INNER JOIN tbl_accion_accn ON
-            accn_pk = acen_accn_pk
+        INNER JOIN tbl_accion_entidad_base_aebs ON
+            aebs_pk = acen_aebs_pk
     ]]>
     </sql>
 
@@ -36,8 +33,8 @@
         COUNT(1)
     FROM
         tbl_accion_entidad_acen
-        INNER JOIN tbl_accion_accn ON
-            accn_pk = acen_accn_pk
+        INNER JOIN tbl_accion_entidad_base_aebs ON
+            aebs_pk = acen_aebs_pk
     ]]>
     </sql>
 
@@ -53,10 +50,10 @@
             <![CDATA[
                 AND EXISTS (
                     SELECT 1
-                    FROM tbl_grupo_accion_entidad_grae
+                    FROM tbl_funcionalidad_grupo_fngr
                     WHERE
-                        grae_acen_pk = acen_pk
-                        AND grae_grpo_pk = #{grpoId}
+                        fngr_fncd_pk = acen_pk
+                        AND fngr_grpo_pk = #{grpoId}
                 )
             ]]>
             </if>
@@ -64,15 +61,15 @@
             <![CDATA[
                 AND EXISTS (
                     SELECT 1
-                    FROM tbl_grupo_accion_entidad_grae
+                    FROM tbl_funcionalidad_grupo_fngr
                     WHERE
-                        grae_acen_pk = acen_pk
+                        fngr_fncd_pk = acen_pk
                         AND EXISTS (
                             SELECT 1
                             FROM
                                 tbl_usuario_grupo_usgr
                             WHERE
-                                usgr_grpo_pk = grae_grpo_pk
+                                usgr_grpo_pk = fngr_grpo_pk
                                 AND usgr_usro_pk = #{usroId}
                         )
                 )
@@ -89,7 +86,7 @@
     <select id="selectList" parameterType="AccionEntidadCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
-        ORDER BY acen_enti_pk, accn_prefix, accn_codigo
+        ORDER BY acen_enti_pk, aebs_prefix, aebs_codigo
     </select>
 
     <select id="selectObject" parameterType="AccionEntidadCriterioVO" resultMap="ResultMap">
@@ -102,7 +99,7 @@
         SELECT COUNT(1)
         FROM tbl_accion_entidad_acen
         WHERE acen_enti_pk = #{entiId}
-            AND acen_accn_pk = #{accn.id}
+            AND acen_aebs_pk = #{aebs.id}
         ]]>
     </select>
 
@@ -116,15 +113,15 @@
 
     <insert id="insert" parameterType="AccionEntidadVO">
         <![CDATA[
-        INSERT INTO tbl_accion_entidad_acen (acen_pk, acen_accn_pk, acen_enti_pk)
-        VALUES (#{id}, #{accn.id}, #{entiId})
+        INSERT INTO tbl_accion_entidad_acen (acen_pk, acen_aebs_pk, acen_enti_pk)
+        VALUES (#{id}, #{aebs.id}, #{entiId})
         ]]>
     </insert>
 
     <update id="update" parameterType="AccionEntidadVO">
         <![CDATA[
         UPDATE tbl_accion_entidad_acen SET
-            acen_accn_pk = #{accn.id}
+            acen_aebs_pk = #{aebs.id}
             , acen_enti_pk = #{entiId}
         WHERE acen_pk = #{id}
         ]]>

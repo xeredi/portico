@@ -6,11 +6,11 @@ import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.EntidadBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubparametroBO;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;

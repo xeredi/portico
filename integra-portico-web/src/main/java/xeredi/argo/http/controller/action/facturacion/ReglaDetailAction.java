@@ -15,7 +15,7 @@ import xeredi.argo.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 

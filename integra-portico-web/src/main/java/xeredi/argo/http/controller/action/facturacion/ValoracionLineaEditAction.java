@@ -17,8 +17,8 @@ import xeredi.argo.model.maestro.bo.ParametroBO;
 import xeredi.argo.model.maestro.bo.ParametroBOFactory;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.Entidad;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 

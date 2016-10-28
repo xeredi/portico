@@ -14,12 +14,12 @@ import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 
@@ -82,6 +82,7 @@ public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
             final TipoServicioBO tpsrBO = new TipoServicioBO();
             final TipoServicioVO tpsr = tpsrBO.select(model.getEntiId(), getIdioma());
 
+            Preconditions.checkNotNull(tpsr.getTpdtEstado());
             Preconditions.checkNotNull(tpsr.getTpdtEstado().getId());
 
             tpdtEstado = tpdtBO.select(tpsr.getTpdtEstado().getId(), getIdioma());
@@ -91,6 +92,7 @@ public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
             final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
             final TipoSubservicioVO tpss = tpssBO.select(model.getEntiId(), getIdioma());
 
+            Preconditions.checkNotNull(tpss.getTpdtEstado());
             Preconditions.checkNotNull(tpss.getTpdtEstado().getId());
 
             tpdtEstado = tpdtBO.select(tpss.getTpdtEstado().getId(), getIdioma());

@@ -3,10 +3,10 @@
         <div data-uib-tab data-select="vm.tabSelected(null)" data-heading="{{'enti' | translate}}">
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
-                    <a data-ng-if="mc.hasAccnPath('tpes-edit')" class="btn btn-default"
+                    <a data-ng-if="mc.hasAcbsPath('tpes-edit')" class="btn btn-default"
                         data-ng-href="#/metamodelo/tipo-estadistica/edit/edit/{{vm.model.id}}"><i
                         class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
-                    <button data-ng-if="mc.hasAccnPath('tpes-remove')" data-ng-click="vm.remove()"
+                    <button data-ng-if="mc.hasAcbsPath('tpes-remove')" data-ng-click="vm.remove()"
                         class="btn btn-default">
                         <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
                     </button>
@@ -35,20 +35,20 @@
             </fieldset>
         </div>
         <div
-            data-ng-if="mc.hasAccnPath('engd-list') || mc.hasAccnPath('entd-list') || mc.hasAccnPath('cmag-list')"
+            data-ng-if="mc.hasAcbsPath('engd-list') || mc.hasAcbsPath('entd-list') || mc.hasAcbsPath('cmag-list')"
             data-uib-tab data-select="vm.tabSelected('entdList')" data-active="vm.tabActive['entdList']"
             data-heading="{{'entdList' | translate}}">
-            <div data-ng-if="mc.hasAccnPath('engd-list')"
+            <div data-ng-if="mc.hasAcbsPath('engd-list')"
                 data-ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
-            <div data-ng-if="mc.hasAccnPath('entd-list')"
+            <div data-ng-if="mc.hasAcbsPath('entd-list')"
                 data-ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
 
-            <fieldset data-ng-if="mc.hasAccnPath('cmag-list')">
+            <fieldset data-ng-if="mc.hasAcbsPath('cmag-list')">
                 <legend data-translate="cmagList"></legend>
 
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group">
-                        <a data-ng-if="mc.hasAccnPath('cmag-create')" class="btn btn-default"
+                        <a data-ng-if="mc.hasAcbsPath('cmag-create')" class="btn btn-default"
                             data-ng-href="#/metamodelo/campo-agregacion/edit/create/{{vm.model.id}}"><i
                             class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
                     </div>
@@ -64,7 +64,7 @@
                     </thead>
                     <tbody>
                         <tr data-ng-repeat="cmag in vm.cmagList track by $index">
-                            <td><a data-ng-if="mc.hasAccnPath('cmag-detail')"
+                            <td><a data-ng-if="mc.hasAcbsPath('cmag-detail')"
                                 data-ng-href="#/metamodelo/campo-agregacion/detail/{{cmag.tpesId}}/{{cmag.entd.id}}"><i
                                     class="glyphicon glyphicon-search"></i></a></td>
                             <td data-ng-bind="cmag.nombre"></td>
@@ -74,13 +74,14 @@
                 </table>
             </fieldset>
         </div>
-        <div data-ng-if="mc.hasAccnPath('acen-list') || mc.hasAccnPath('enag-list')" data-uib-tab
-            data-select="vm.tabSelected('accnList')" data-active="vm.tabActive['accnList']"
-            data-heading="{{'accnList' | translate}}">
-            <div data-ng-if="mc.hasAccnPath('acen-list')"
+        <div
+            data-ng-if="mc.hasAcbsPath('acen-list') || mc.hasAcbsPath('aces-list')"
+            data-uib-tab data-select="vm.tabSelected('accnList')" data-active="vm.tabActive['accnList']"
+            data-heading="{{'fncdList' | translate}}">
+            <div data-ng-if="mc.hasAcbsPath('acen-list')"
                 data-ng-include="'modules/metamodelo/fragment/accion-entidad-grid-content.html'"></div>
-            <div data-ng-if="mc.hasAccnPath('enag-list')"
-                data-ng-include="'modules/metamodelo/fragment/entidad-accion-grid-grid-content.html'"></div>
+            <div data-ng-if="mc.hasAcbsPath('aces-list')"
+                data-ng-include="'modules/metamodelo/fragment/accion-especial-grid-content.html'"></div>
         </div>
     </div>
 </div>

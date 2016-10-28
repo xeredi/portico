@@ -10,7 +10,7 @@ import xeredi.argo.model.estadistica.bo.CuadroMesBO;
 import xeredi.argo.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.argo.model.estadistica.vo.CuadroMesVO;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 

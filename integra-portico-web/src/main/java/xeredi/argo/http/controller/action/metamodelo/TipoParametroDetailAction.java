@@ -6,10 +6,10 @@ import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoParametroBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubparametroBO;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**

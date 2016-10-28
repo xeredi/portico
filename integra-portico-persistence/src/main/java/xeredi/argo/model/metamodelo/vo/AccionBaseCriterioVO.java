@@ -11,4 +11,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public final class AccionBaseCriterioVO extends FuncionalidadCriterioVO {
 
+	/** The prefix. */
+	private AccionPrefix prefix;
+
+	/** The codigo. */
+	private AccionCodigo codigo;
+
 }

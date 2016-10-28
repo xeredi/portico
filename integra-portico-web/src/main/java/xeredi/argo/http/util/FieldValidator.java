@@ -21,12 +21,12 @@ import xeredi.argo.model.item.vo.ItemTramiteDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
 import xeredi.argo.model.item.vo.ItemVO;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.ValidacionKeyword;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 import com.google.common.base.Preconditions;
 
@@ -418,40 +418,40 @@ public final class FieldValidator {
                 final String fieldname = action.getText("entd_" + trtd.getEntd().getId());
                 final TipoDatoVO tpdt = entiDetail.getEntdMap().get(tpdtId).getTpdt();
 
-                validateRequired(action, fieldname, ittd, trtd.isObligatorio());
+                validateRequired(action, fieldname, ittd, trtd.getObligatorio());
 
                 if (ittd != null) {
                     ittd.setTpdtId(tpdtId);
                     switch (tpdt.getTipoElemento()) {
                     case BO:
                     case NE:
-                        validateRequired(action, fieldname, ittd.getDnentero(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, ittd.getDnentero(), trtd.getObligatorio());
 
                         break;
                     case ND:
-                        validateRequired(action, fieldname, ittd.getDndecimal(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, ittd.getDndecimal(), trtd.getObligatorio());
 
                         break;
                     case PR:
-                        validateRequired(action, fieldname, ittd.getDprmt(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, ittd.getDprmt(), trtd.getObligatorio());
 
                         break;
                     case SR:
-                        validateRequired(action, fieldname, ittd.getDsrvc(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, ittd.getDsrvc(), trtd.getObligatorio());
 
                         break;
                     case CR:
-                        validateRequired(action, fieldname, ittd.getDcadena(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, ittd.getDcadena(), trtd.getObligatorio());
                         validateCR(action, fieldname, ittd.getDcadena(), tpdt.getCdrfCodeSet());
 
                         break;
                     case TX:
-                        validateRequired(action, fieldname, ittd.getDcadena(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, ittd.getDcadena(), trtd.getObligatorio());
 
                         break;
                     case FE:
                     case FH:
-                        validateRequired(action, fieldname, ittd.getDfecha(), trtd.isObligatorio());
+                        validateRequired(action, fieldname, ittd.getDfecha(), trtd.getObligatorio());
 
                         break;
                     default:

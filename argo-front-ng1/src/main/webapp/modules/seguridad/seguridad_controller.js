@@ -255,9 +255,11 @@
             vm.model = data.model;
 
             vm.prefixList = data.prefixList;
-            vm.accnMap = data.accnMap;
+            vm.acbsMap = data.acbsMap;
             vm.entiList = data.entiList;
             vm.acenMap = data.acenMap;
+            vm.acesMap = data.acesMap;
+            vm.trmtMap = data.trmtMap;
         });
 
         pageTitleService.setTitle("grpo", "page_detail");
@@ -269,8 +271,7 @@
 
         vm.save = save;
         vm.cancel = cancel;
-        vm.updateAcciones = updateAcciones;
-        vm.updateAccionesEntidad = updateAccionesEntidad;
+        vm.updateFncdIds = updateFncdIds;
 
         function save() {
             GrupoService.save(vm.accion, vm.model).then(function(data) {
@@ -282,14 +283,9 @@
             window.history.back();
         }
 
-        function updateAcciones($event, accnId) {
-            $event.target.checked ? vm.model.accnIds.push(accnId) : vm.model.accnIds.splice(vm.model.accnIds
-                    .indexOf(accnId), 1);
-        }
-
-        function updateAccionesEntidad($event, acenId) {
-            $event.target.checked ? vm.model.acenIds.push(acenId) : vm.model.acenIds.splice(vm.model.acenIds
-                    .indexOf(acenId), 1);
+        function updateFncdIds($event, fncdId) {
+            $event.target.checked ? vm.model.fncdIds.push(fncdId) : vm.model.fncdIds.splice(vm.model.fncdIds
+                    .indexOf(fncdId), 1);
         }
 
         vm.accion = $routeParams.accion;
@@ -301,9 +297,11 @@
             vm.model = data.model;
 
             vm.prefixList = data.prefixList;
-            vm.accnMap = data.accnMap;
+            vm.acbsMap = data.acbsMap;
             vm.entiList = data.entiList;
             vm.acenMap = data.acenMap;
+            vm.acesMap = data.acesMap;
+            vm.trmtMap = data.trmtMap;
         });
 
         pageTitleService.setTitle("grpo", "page_" + vm.accion);
@@ -421,8 +419,9 @@
 
         function acceso() {
             UsuarioService.acceso(vm.model).then(function(data) {
-                localStorageService.set("accnPaths", data.resultadoLogin.accnPaths);
-                localStorageService.set("acenPaths", data.resultadoLogin.acenPaths);
+                localStorageService.set("acbsPaths", data.resultadoLogin.acbsPaths);
+                localStorageService.set("fncdIds", data.resultadoLogin.fncdIds);
+                localStorageService.set("acenMap", data.resultadoLogin.acenMap);
 
                 $location.path("/");
             });
@@ -434,8 +433,9 @@
     /* @ngInject */
     function UsuarioSalirController($location, localStorageService, UsuarioService) {
         UsuarioService.salir().then(function(data) {
-            localStorageService.remove("accnPaths");
-            localStorageService.remove("acenPaths");
+            localStorageService.remove("acbsPaths");
+            localStorageService.remove("fncdIds");
+            localStorageService.remove("acenMap");
 
             $location.path("/seguridad/usuario/acceso");
         });

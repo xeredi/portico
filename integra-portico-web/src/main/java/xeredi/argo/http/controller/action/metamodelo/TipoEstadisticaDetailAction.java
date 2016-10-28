@@ -6,10 +6,10 @@ import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
 import xeredi.argo.model.metamodelo.bo.TipoEstadisticaBO;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionCriterioVO;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**

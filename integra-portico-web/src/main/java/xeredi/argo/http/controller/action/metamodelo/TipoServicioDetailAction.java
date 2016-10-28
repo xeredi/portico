@@ -8,6 +8,7 @@ import xeredi.argo.model.metamodelo.bo.EntidadBO;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
@@ -15,7 +16,6 @@ import xeredi.argo.model.metamodelo.vo.TipoSubservicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**

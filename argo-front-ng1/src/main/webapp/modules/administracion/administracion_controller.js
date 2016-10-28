@@ -113,6 +113,8 @@
     function AdministracionIndexController($routeParams, pageTitleService, AdministracionService) {
         var vm = this;
 
+        // alert("index");
+
         AdministracionService.index().then(function(data) {
         });
 

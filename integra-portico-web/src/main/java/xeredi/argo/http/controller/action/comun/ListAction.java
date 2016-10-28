@@ -4,7 +4,7 @@ import java.util.List;
 
 import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 
 // TODO: Auto-generated Javadoc
 /**

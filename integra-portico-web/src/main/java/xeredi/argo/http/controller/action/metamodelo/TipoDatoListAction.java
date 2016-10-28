@@ -3,9 +3,9 @@ package xeredi.argo.http.controller.action.metamodelo;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 
 /**
  * The Class TipoDatoListAction.

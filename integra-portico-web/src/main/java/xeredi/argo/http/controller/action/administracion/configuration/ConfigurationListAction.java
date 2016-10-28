@@ -3,7 +3,7 @@ package xeredi.argo.http.controller.action.administracion.configuration;
 import xeredi.argo.http.controller.action.comun.ListAction;
 import xeredi.argo.model.comun.bo.ConfigurationBO;
 import xeredi.argo.model.comun.vo.ConfigurationVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**

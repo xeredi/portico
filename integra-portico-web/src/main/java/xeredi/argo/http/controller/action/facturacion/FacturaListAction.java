@@ -5,7 +5,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.FacturaBO;
 import xeredi.argo.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**

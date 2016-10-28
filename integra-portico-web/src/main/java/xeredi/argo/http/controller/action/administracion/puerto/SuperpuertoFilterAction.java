@@ -3,7 +3,7 @@ package xeredi.argo.http.controller.action.administracion.puerto;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**

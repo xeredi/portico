@@ -5,30 +5,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.metamodelo.dao.AccionEntidadDAO;
-import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
-import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
-import xeredi.argo.model.seguridad.dao.AccionDAO;
-import xeredi.argo.model.seguridad.dao.GrupoAccionDAO;
-import xeredi.argo.model.seguridad.dao.GrupoAccionEntidadDAO;
+import xeredi.argo.model.seguridad.dao.FuncionalidadGrupoDAO;
 import xeredi.argo.model.seguridad.dao.GrupoDAO;
 import xeredi.argo.model.seguridad.dao.UsuarioGrupoDAO;
-import xeredi.argo.model.seguridad.vo.AccionCriterioVO;
-import xeredi.argo.model.seguridad.vo.AccionVO;
-import xeredi.argo.model.seguridad.vo.GrupoAccionCriterioVO;
-import xeredi.argo.model.seguridad.vo.GrupoAccionEntidadCriterioVO;
-import xeredi.argo.model.seguridad.vo.GrupoAccionEntidadVO;
-import xeredi.argo.model.seguridad.vo.GrupoAccionVO;
+import xeredi.argo.model.seguridad.vo.FuncionalidadGrupoCriterioVO;
+import xeredi.argo.model.seguridad.vo.FuncionalidadGrupoVO;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
 import xeredi.argo.model.seguridad.vo.UsuarioGrupoCriterioVO;
@@ -41,228 +33,198 @@ import xeredi.util.pagination.PaginatedList;
  */
 public final class GrupoBO {
 
-    /**
-     * Insert.
-     *
-     * @param grpo
-     *            the grpo
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
-     */
-    public void insert(final GrupoVO grpo) throws DuplicateInstanceException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
-            final IgBO igBO = new IgBO();
+	/**
+	 * Insert.
+	 *
+	 * @param grpo
+	 *            the grpo
+	 * @throws DuplicateInstanceException
+	 *             the duplicate instance exception
+	 */
+	public void insert(final @NonNull GrupoVO grpo) throws DuplicateInstanceException {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
+			final FuncionalidadGrupoDAO fngrDAO = session.getMapper(FuncionalidadGrupoDAO.class);
+			final IgBO igBO = new IgBO();
 
-            if (grpoDAO.exists(grpo)) {
-                throw new DuplicateInstanceException(MessageI18nKey.grpo, grpo);
-            }
+			if (grpoDAO.exists(grpo)) {
+				throw new DuplicateInstanceException(MessageI18nKey.grpo, grpo);
+			}
 
-            grpo.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            grpoDAO.insert(grpo);
+			grpo.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+			grpoDAO.insert(grpo);
 
-            if (grpo.getAccnIds() != null) {
-                final GrupoAccionDAO gracDAO = session.getMapper(GrupoAccionDAO.class);
+			// Permisos del grupo
+			if (grpo.getFncdIds() != null) {
+				for (final Long fncdId : grpo.getFncdIds()) {
+					final FuncionalidadGrupoVO fngr = new FuncionalidadGrupoVO();
 
-                for (final Long accnId : grpo.getAccnIds()) {
-                    final GrupoAccionVO grac = new GrupoAccionVO(grpo.getId(), accnId);
+					fngr.setFncdId(fncdId);
+					fngr.setGrpoId(grpo.getId());
 
-                    gracDAO.insert(grac);
-                }
-            }
+					fngrDAO.insert(fngr);
+				}
+			}
 
-            if (grpo.getAcenIds() != null) {
-                final GrupoAccionEntidadDAO graeDAO = session.getMapper(GrupoAccionEntidadDAO.class);
+			session.commit();
+		}
+	}
 
-                for (final Long acenId : grpo.getAcenIds()) {
-                    final GrupoAccionEntidadVO grae = new GrupoAccionEntidadVO(grpo.getId(), acenId);
+	/**
+	 * Update.
+	 *
+	 * @param grpo
+	 *            the grpo
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public void update(final @NonNull GrupoVO grpo) throws InstanceNotFoundException {
+		Preconditions.checkNotNull(grpo.getId());
 
-                    graeDAO.insert(grae);
-                }
-            }
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
 
-            session.commit();
-        }
-    }
+			if (grpoDAO.update(grpo) == 0) {
+				throw new InstanceNotFoundException(MessageI18nKey.grpo, grpo);
+			}
 
-    /**
-     * Update.
-     *
-     * @param grpo
-     *            the grpo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public void update(final GrupoVO grpo) throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
+			// Permisos: Se borran los de la BD y se sustituyen por los que
+			// vengan en el grupo
+			final FuncionalidadGrupoDAO fngrDAO = session.getMapper(FuncionalidadGrupoDAO.class);
+			final FuncionalidadGrupoCriterioVO fngrCriterio = new FuncionalidadGrupoCriterioVO();
 
-            if (grpoDAO.update(grpo) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.grpo, grpo);
-            }
+			fngrCriterio.setGrpoId(grpo.getId());
 
-            final GrupoAccionDAO gracDAO = session.getMapper(GrupoAccionDAO.class);
-            final GrupoAccionCriterioVO gracCriterio = new GrupoAccionCriterioVO();
+			fngrDAO.deleteList(fngrCriterio);
 
-            gracCriterio.setGrpoId(grpo.getId());
+			if (grpo.getFncdIds() != null) {
+				for (final Long fncdId : grpo.getFncdIds()) {
+					final FuncionalidadGrupoVO fngr = new FuncionalidadGrupoVO();
 
-            gracDAO.deleteList(gracCriterio);
+					fngr.setFncdId(fncdId);
+					fngr.setGrpoId(grpo.getId());
 
-            final GrupoAccionEntidadDAO graeDAO = session.getMapper(GrupoAccionEntidadDAO.class);
-            final GrupoAccionEntidadCriterioVO graeCriterio = new GrupoAccionEntidadCriterioVO();
+					fngrDAO.insert(fngr);
+				}
+			}
 
-            graeCriterio.setGrpoId(grpo.getId());
+			session.commit();
+		}
+	}
 
-            graeDAO.deleteList(graeCriterio);
+	/**
+	 * Delete.
+	 *
+	 * @param grpo
+	 *            the grpo
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public void delete(final @NonNull GrupoVO grpo) throws InstanceNotFoundException {
+		Preconditions.checkNotNull(grpo.getId());
 
-            if (grpo.getAccnIds() != null) {
-                for (final Long accnId : grpo.getAccnIds()) {
-                    final GrupoAccionVO grac = new GrupoAccionVO(grpo.getId(), accnId);
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
 
-                    gracDAO.insert(grac);
-                }
-            }
+			// Borrado de las asociaciones con permisos
+			final FuncionalidadGrupoDAO fngrDAO = session.getMapper(FuncionalidadGrupoDAO.class);
+			final FuncionalidadGrupoCriterioVO fngrCriterio = new FuncionalidadGrupoCriterioVO();
 
-            if (grpo.getAcenIds() != null) {
-                for (final Long acenId : grpo.getAcenIds()) {
-                    final GrupoAccionEntidadVO grae = new GrupoAccionEntidadVO(grpo.getId(), acenId);
+			fngrCriterio.setGrpoId(grpo.getId());
 
-                    graeDAO.insert(grae);
-                }
-            }
+			fngrDAO.deleteList(fngrCriterio);
 
-            session.commit();
-        }
-    }
+			// Borrado de las asociaciones con usuarios
+			final UsuarioGrupoDAO usgrDAO = session.getMapper(UsuarioGrupoDAO.class);
+			final UsuarioGrupoCriterioVO usgrCriterio = new UsuarioGrupoCriterioVO();
 
-    /**
-     * Delete.
-     *
-     * @param grpo
-     *            the grpo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public void delete(final GrupoVO grpo) throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
+			usgrCriterio.setGrpoId(grpo.getId());
 
-            if (grpoDAO.delete(grpo) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.grpo, grpo);
-            }
+			usgrDAO.deleteList(usgrCriterio);
 
-            final GrupoAccionDAO gracDAO = session.getMapper(GrupoAccionDAO.class);
-            final GrupoAccionCriterioVO gracCriterio = new GrupoAccionCriterioVO();
+			if (grpoDAO.delete(grpo) == 0) {
+				throw new InstanceNotFoundException(MessageI18nKey.grpo, grpo);
+			}
 
-            gracCriterio.setGrpoId(grpo.getId());
+			session.commit();
+		}
+	}
 
-            gracDAO.deleteList(gracCriterio);
+	/**
+	 * Select list.
+	 *
+	 * @param grpoCriterio
+	 *            the grpo criterio
+	 * @param offset
+	 *            the offset
+	 * @param limit
+	 *            the limit
+	 * @return the paginated list
+	 */
+	public PaginatedList<GrupoVO> selectList(final GrupoCriterioVO grpoCriterio, final int offset, final int limit) {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
+			final int count = grpoDAO.count(grpoCriterio);
+			final List<GrupoVO> grpoList = new ArrayList<GrupoVO>();
 
-            final GrupoAccionEntidadDAO graeDAO = session.getMapper(GrupoAccionEntidadDAO.class);
-            final GrupoAccionEntidadCriterioVO graeCriterio = new GrupoAccionEntidadCriterioVO();
+			if (count > offset) {
+				grpoList.addAll(grpoDAO.selectList(grpoCriterio, new RowBounds(offset, limit)));
+			}
 
-            graeCriterio.setGrpoId(grpo.getId());
+			return new PaginatedList<GrupoVO>(grpoList, offset, limit, count);
+		}
+	}
 
-            graeDAO.deleteList(graeCriterio);
+	/**
+	 * Select list.
+	 *
+	 * @param grpoCriterio
+	 *            the grpo criterio
+	 * @return the list
+	 */
+	public List<GrupoVO> selectList(final GrupoCriterioVO grpoCriterio) {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
 
-            final UsuarioGrupoDAO usgrDAO = session.getMapper(UsuarioGrupoDAO.class);
-            final UsuarioGrupoCriterioVO usgrCriterio = new UsuarioGrupoCriterioVO();
+			return grpoDAO.selectList(grpoCriterio);
+		}
+	}
 
-            usgrCriterio.setGrpoId(grpo.getId());
+	/**
+	 * Select object.
+	 *
+	 * @param id
+	 *            the id
+	 * @return the grupo vo
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public GrupoVO select(final @NonNull Long id) throws InstanceNotFoundException {
+		final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
 
-            usgrDAO.deleteList(usgrCriterio);
+		grpoCriterio.setId(id);
 
-            session.commit();
-        }
-    }
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
+			final GrupoVO grpo = grpoDAO.selectObject(grpoCriterio);
 
-    /**
-     * Select list.
-     *
-     * @param grpoCriterio
-     *            the grpo criterio
-     * @param offset
-     *            the offset
-     * @param limit
-     *            the limit
-     * @return the paginated list
-     */
-    public PaginatedList<GrupoVO> selectList(final GrupoCriterioVO grpoCriterio, final int offset, final int limit) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
-            final int count = grpoDAO.count(grpoCriterio);
-            final List<GrupoVO> grpoList = new ArrayList<GrupoVO>();
+			if (grpo == null) {
+				throw new InstanceNotFoundException(MessageI18nKey.grpo, id);
+			}
 
-            if (count > offset) {
-                grpoList.addAll(grpoDAO.selectList(grpoCriterio, new RowBounds(offset, limit)));
-            }
+			final Set<Long> fncdIds = new HashSet<>();
+			final FuncionalidadGrupoDAO fncdDAO = session.getMapper(FuncionalidadGrupoDAO.class);
+			final FuncionalidadGrupoCriterioVO fncdCriterio = new FuncionalidadGrupoCriterioVO();
 
-            return new PaginatedList<GrupoVO>(grpoList, offset, limit, count);
-        }
-    }
+			fncdCriterio.setGrpoId(id);
 
-    /**
-     * Select list.
-     *
-     * @param grpoCriterio
-     *            the grpo criterio
-     * @return the list
-     */
-    public List<GrupoVO> selectList(final GrupoCriterioVO grpoCriterio) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
+			for (final FuncionalidadGrupoVO fncd : fncdDAO.selectList(fncdCriterio)) {
+				fncdIds.add(fncd.getFncdId());
+			}
 
-            return grpoDAO.selectList(grpoCriterio);
-        }
-    }
+			grpo.setFncdIds(fncdIds);
 
-    /**
-     * Select object.
-     *
-     * @param id
-     *            the id
-     * @return the grupo vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public GrupoVO select(final @NonNull Long id) throws InstanceNotFoundException {
-        final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
-
-        grpoCriterio.setId(id);
-
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
-            final GrupoVO grpo = grpoDAO.selectObject(grpoCriterio);
-
-            if (grpo == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.grpo, id);
-            }
-
-            final Set<Long> accnIds = new HashSet<Long>();
-            final AccionDAO accnDAO = session.getMapper(AccionDAO.class);
-            final AccionCriterioVO accnCriterio = new AccionCriterioVO();
-
-            accnCriterio.setGrpoId(grpo.getId());
-
-            for (final AccionVO accn : accnDAO.selectList(accnCriterio)) {
-                accnIds.add(accn.getId());
-            }
-
-            grpo.setAccnIds(accnIds);
-
-            final Set<Long> acenIds = new HashSet<Long>();
-            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
-            final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
-
-            acenCriterio.setGrpoId(grpo.getId());
-
-            for (final AccionEntidadVO acen : acenDAO.selectList(acenCriterio)) {
-                acenIds.add(acen.getId());
-            }
-
-            grpo.setAcenIds(acenIds);
-
-            return grpo;
-        }
-    }
+			return grpo;
+		}
+	}
 }

@@ -3,10 +3,10 @@
         <div data-uib-tab data-select="vm.tabSelected(null)" data-heading="{{'enti' | translate}}">
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
-                    <a class="btn btn-default" data-ng-if="mc.hasAccnPath('tpsr-edit')"
+                    <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('tpsr-edit')"
                         data-ng-href="#/metamodelo/tipo-servicio/edit/edit/{{vm.model.id}}"><i
                         class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
-                    <button data-ng-if="mc.hasAccnPath('tpsr-remove')" data-ng-click="vm.remove()"
+                    <button data-ng-if="mc.hasAcbsPath('tpsr-remove')" data-ng-click="vm.remove()"
                         class="btn btn-default">
                         <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
                     </button>
@@ -100,12 +100,12 @@
                 </div>
             </fieldset>
 
-            <fieldset data-ng-if="mc.hasAccnPath('tpss-list')">
+            <fieldset data-ng-if="mc.hasAcbsPath('tpss-list')">
                 <legend data-ng-bind="'Subentidades'"></legend>
 
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group">
-                        <a class="btn btn-default" data-ng-if="mc.hasAccnPath('tpss-create')"
+                        <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('tpss-create')"
                             data-ng-href="#/metamodelo/tipo-subservicio/edit/create/{{vm.model.id}}"><i
                             class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
                     </div>
@@ -130,7 +130,7 @@
                     </thead>
                     <tbody>
                         <tr data-ng-repeat="subenti in vm.subentiList track by $index">
-                            <td><a data-ng-if="mc.hasAccnPath('tpss-detail')"
+                            <td><a data-ng-if="mc.hasAcbsPath('tpss-detail')"
                                 data-ng-href="#/metamodelo/tipo-subservicio/detail/{{subenti.id}}"><i
                                     class="glyphicon glyphicon-search"></i></a></td>
                             <td data-ng-bind="subenti.codigo"></td>
@@ -151,12 +151,12 @@
                 </table>
             </fieldset>
 
-            <fieldset data-ng-if="mc.hasAccnPath('enen-list')">
+            <fieldset data-ng-if="mc.hasAcbsPath('enen-list')">
                 <legend data-ng-bind="'Entidades Hijas'"></legend>
 
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group">
-                        <a class="btn btn-default" data-ng-if="mc.hasAccnPath('enen-create')"
+                        <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('enen-create')"
                             data-ng-href="#/metamodelo/entidad-entidad/edit/create/{{vm.model.id}}"><i
                             class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
                     </div>
@@ -172,7 +172,7 @@
                     </thead>
                     <tbody>
                         <tr data-ng-repeat="entiHija in vm.entiHijasList">
-                            <td><a data-ng-if="mc.hasAccnPath('tpss-detail')"
+                            <td><a data-ng-if="mc.hasAcbsPath('tpss-detail')"
                                 data-ng-href="#/metamodelo/tipo-subservicio/detail/{{entiHija.id}}"><i
                                     class="glyphicon glyphicon-search"></i></a></td>
                             <td data-ng-bind="entiHija.codigo"></td>
@@ -182,27 +182,23 @@
                 </table>
             </fieldset>
         </div>
-        <div data-ng-if="mc.hasAccnPath('engd-list') || mc.hasAccnPath('entd-list')" data-uib-tab
+        <div data-ng-if="mc.hasAcbsPath('engd-list') || mc.hasAcbsPath('entd-list')" data-uib-tab
             data-select="vm.tabSelected('entdList')" data-active="vm.tabActive['entdList']"
             data-heading="{{'entdList' | translate}}">
-            <div data-ng-if="mc.hasAccnPath('engd-list')"
+            <div data-ng-if="mc.hasAcbsPath('engd-list')"
                 data-ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
-            <div data-ng-if="mc.hasAccnPath('entd-list')"
+            <div data-ng-if="mc.hasAcbsPath('entd-list')"
                 data-ng-include="'modules/metamodelo/fragment/entidad-tipo-dato-grid-content.html'"></div>
         </div>
         <div
-            data-ng-if="mc.hasAccnPath('acen-list') || mc.hasAccnPath('enag-list')"
+            data-ng-if="mc.hasAcbsPath('acen-list') || mc.hasAcbsPath('aces-list') || mc.hasAcbsPath('trmt-list')"
             data-uib-tab data-select="vm.tabSelected('accnList')" data-active="vm.tabActive['accnList']"
-            data-heading="{{'accnList' | translate}}">
-            <div data-ng-if="mc.hasAccnPath('acen-list')"
+            data-heading="{{'fncdList' | translate}}">
+            <div data-ng-if="mc.hasAcbsPath('acen-list')"
                 data-ng-include="'modules/metamodelo/fragment/accion-entidad-grid-content.html'"></div>
-            <div data-ng-if="mc.hasAccnPath('enag-list')"
-                data-ng-include="'modules/metamodelo/fragment/entidad-accion-grid-grid-content.html'"></div>
-        </div>
-        <div data-ng-if="mc.hasAccnPath('trmt-list')" data-uib-tab data-ng-if="vm.model.tpdtEstado.id"
-            data-select="vm.tabSelected('trmtList')" data-active="vm.tabActive['trmtList']"
-            data-heading="{{'trmtList' | translate}}">
-            <div data-ng-if="mc.hasAccnPath('trmt-list')"
+            <div data-ng-if="mc.hasAcbsPath('aces-list')"
+                data-ng-include="'modules/metamodelo/fragment/accion-especial-grid-content.html'"></div>
+            <div data-ng-if="mc.hasAcbsPath('trmt-list')"
                 data-ng-include="'modules/metamodelo/fragment/tramite-grid-content.html'"></div>
         </div>
     </div>

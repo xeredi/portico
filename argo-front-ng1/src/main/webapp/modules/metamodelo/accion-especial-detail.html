@@ -1,0 +1,28 @@
+<div data-ng-if="vm.model">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a data-ng-if="mc.hasAcbsPath('aces-edit')" class="btn btn-default"
+                data-ng-href="#/metamodelo/accion-especial/edit/edit/{{vm.model.entiId}}/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
+            <button data-ng-if="mc.hasAcbsPath('aces-remove')" data-ng-click="vm.remove()"
+                class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
+            </button>
+        </div>
+    </div>
+
+    <fieldset>
+        <div class="row" data-ng-include="'modules/common/i18nMap-detail.html'"></div>
+
+        <div class="row">
+            <div class="col-sm-2 col-md-1 form-group-sm">
+                <label data-translate="aces_orden"></label>
+                <p class="form-control-static number" data-ng-bind="vm.model.orden"></p>
+            </div>
+            <div class="col-sm-6 col-md-4 col-xl-3 form-group-sm">
+                <label data-translate="aces_path"></label>
+                <p class="form-control-static" data-ng-bind="vm.model.path"></p>
+            </div>
+        </div>
+    </fieldset>
+</div>

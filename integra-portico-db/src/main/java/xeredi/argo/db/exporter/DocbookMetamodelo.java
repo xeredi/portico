@@ -12,8 +12,8 @@ import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
+import xeredi.argo.model.metamodelo.vo.AccionEspecialVO;
 import xeredi.argo.model.metamodelo.vo.CodigoReferenciaVO;
-import xeredi.argo.model.metamodelo.vo.EntidadAccionVO;
 import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
@@ -630,7 +630,7 @@ public final class DocbookMetamodelo {
             writer.println("</section>");
         }
 
-        if (entiDetail.getEnacList() != null) {
+        if (entiDetail.getAcesList() != null) {
             writer.println("<section><title>Acciones Especificas de la Entidad</title>");
 
             writer.println("<informaltable><title>Acciones Especificas de la de " + entiDetail.getEnti().getNombre()
@@ -644,11 +644,11 @@ public final class DocbookMetamodelo {
             writer.println("<entry>Etiqueta</entry>");
             writer.println("</row></thead><tbody>");
 
-            for (final EntidadAccionVO enac : entiDetail.getEnacList()) {
+            for (final AccionEspecialVO aces : entiDetail.getAcesList()) {
                 writer.println("<row>");
-                writer.println("<entry>" + enac.getOrden() + "</entry>");
-                writer.println("<entry>" + enac.getPath() + "</entry>");
-                writer.println("<entry>" + enac.getEtiqueta() + "</entry>");
+                writer.println("<entry>" + aces.getOrden() + "</entry>");
+                writer.println("<entry>" + aces.getPath() + "</entry>");
+                writer.println("<entry>" + aces.getEtiqueta() + "</entry>");
                 writer.println("</row>");
             }
 

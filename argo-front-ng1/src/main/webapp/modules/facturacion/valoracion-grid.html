@@ -7,13 +7,13 @@
                 data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
         </div>
         <div class="btn-group">
-            <button data-ng-if="mc.hasAccnPath('vlrc-list')" class="btn btn-default"
+            <button data-ng-if="mc.hasAcbsPath('vlrc-list')" class="btn btn-default"
                 data-ng-click="vm.filter('lg')"
                 data-template-url="modules/facturacion/fragment/valoracion-filter-content.html"
                 data-bs-modal="modal">
                 <i class="glyphicon glyphicon-search"></i><span data-translate="btn_filtrar"></span>
             </button>
-            <a class="btn btn-default" data-ng-if="mc.hasAccnPath('vlrc-create')"
+            <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('vlrc-create')"
                 data-ng-href="#/facturacion/valoracion/edit/create"><i class="glyphicon glyphicon-file"></i>
                 <span data-translate="btn_crear"></span> </a>
         </div>
@@ -25,7 +25,7 @@
         </div>
 
         <div class="btn-group">
-            <a class="btn btn-default" data-ng-if="mc.hasAccnPath('fcdr-create')"
+            <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('fcdr-create')"
                 data-ng-href="#/facturacion/facturador/edit/create"><i class="glyphicon glyphicon-euro"></i>
                 <span data-translate="fcdr"></span></a>
         </div>
@@ -63,7 +63,7 @@
                 </tr>
             </thead>
 
-            <tbody data-ng-init="vm.vlrcDetailAllowed = mc.hasAccnPath('vlrc-detail')">
+            <tbody data-ng-init="vm.vlrcDetailAllowed = mc.hasAcbsPath('vlrc-detail')">
                 <tr data-ng-repeat="item in vm.resultList.list track by $index">
                     <td><a data-ng-if="vm.vlrcDetailAllowed"
                         data-ng-href="#/facturacion/valoracion/detail/{{item.id}}"><i

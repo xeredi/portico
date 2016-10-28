@@ -15,8 +15,8 @@ import xeredi.argo.model.maestro.bo.SubparametroBOFactory;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.maestro.vo.SubparametroVO;
 import xeredi.argo.model.metamodelo.proxy.TipoSubparametroProxy;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
-import xeredi.argo.model.seguridad.vo.AccionCodigo;
 
 import com.google.common.base.Preconditions;
 

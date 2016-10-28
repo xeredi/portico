@@ -5,7 +5,7 @@ import java.io.IOException;
 import xeredi.argo.http.controller.action.comun.GridXlsExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 import com.google.common.base.Preconditions;
 

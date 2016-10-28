@@ -68,26 +68,25 @@
 
     .controller("TramiteTipoDatoEditController", TramiteTipoDatoEditController)
 
-    .controller("AccionTramiteDetailController", AccionTramiteDetailController)
-
-    .controller("AccionTramiteEditController", AccionTramiteEditController)
-
+    // ------------------- ACCION DE ENTIDAD --------------------
     .controller("AccionEntidadDetailController", AccionEntidadDetailController)
 
     .controller("AccionEntidadEditController", AccionEntidadEditController)
 
-    // ------------------- ACCION DE ENTIDAD --------------------
-    .controller("EntidadAccionDetailController", EntidadAccionDetailController)
-
-    .controller("EntidadAccionEditController", EntidadAccionEditController)
-
-    // ------------------- ACCION DE GRID DE ENTIDAD --------------------
-    .controller("EntidadAccionGridDetailController", EntidadAccionGridDetailController)
-
-    .controller("EntidadAccionGridEditController", EntidadAccionGridEditController)
-
     // ------------------- DEPENDENCIA ENTRE ENTIDADES --------------------
     .controller("EntidadEntidadEditController", EntidadEntidadEditController)
+
+    // -------------------- ACCION BASE ------------------
+    .controller("AccionBaseGridController", AccionBaseGridController)
+
+    .controller("AccionBaseDetailController", AccionBaseDetailController)
+
+    .controller("AccionBaseEditController", AccionBaseEditController)
+
+    // -------------------- ACCION ESPECIAL ------------------
+    .controller("AccionEspecialDetailController", AccionEspecialDetailController)
+
+    .controller("AccionEspecialEditController", AccionEspecialEditController)
 
     ;
 
@@ -244,16 +243,6 @@
             controller : "TramiteTipoDatoEditController as vm",
         })
 
-        .when("/metamodelo/accion-tramite/edit/:accion/:trmtId/:id?", {
-            templateUrl : "modules/metamodelo/accion-tramite-edit.html",
-            controller : "AccionTramiteEditController as vm",
-        })
-
-        .when("/metamodelo/accion-tramite/detail/:id", {
-            templateUrl : "modules/metamodelo/accion-tramite/-detail.html",
-            controller : "AccionTramiteDetailController as vm",
-        })
-
         .when("/metamodelo/accion-entidad/detail/:id", {
             templateUrl : "modules/metamodelo/accion-entidad-detail.html",
             controller : "AccionEntidadDetailController as vm",
@@ -264,29 +253,35 @@
             controller : "AccionEntidadEditController as vm",
         })
 
-        .when("/metamodelo/entidad-accion/detail/:id", {
-            templateUrl : "modules/metamodelo/entidad-accion-detail.html",
-            controller : "EntidadAccionDetailController as vm",
-        })
-
-        .when("/metamodelo/entidad-accion/edit/:accion/:entiId/:id?", {
-            templateUrl : "modules/metamodelo/entidad-accion-edit.html",
-            controller : "EntidadAccionEditController as vm",
-        })
-
-        .when("/metamodelo/entidad-accion-grid/detail/:id", {
-            templateUrl : "modules/metamodelo/entidad-accion-grid-detail.html",
-            controller : "EntidadAccionGridDetailController as vm",
-        })
-
-        .when("/metamodelo/entidad-accion-grid/edit/:accion/:entiId/:id?", {
-            templateUrl : "modules/metamodelo/entidad-accion-grid-edit.html",
-            controller : "EntidadAccionGridEditController as vm",
-        })
-
         .when("/metamodelo/entidad-entidad/edit/:accion/:entiPadreId/:entiHijaId?", {
             templateUrl : "modules/metamodelo/entidad-entidad-edit.html",
             controller : "EntidadEntidadEditController as vm",
+        })
+
+        .when("/metamodelo/accion-base/grid", {
+            templateUrl : "modules/metamodelo/accion-base-grid.html",
+            controller : "AccionBaseGridController as vm",
+            reloadOnSearch : false
+        })
+
+        .when("/metamodelo/accion-base/detail/:id", {
+            templateUrl : "modules/metamodelo/accion-base-detail.html",
+            controller : "AccionBaseDetailController as vm",
+        })
+
+        .when("/metamodelo/accion-base/edit/:accion/:id?", {
+            templateUrl : "modules/metamodelo/accion-base-edit.html",
+            controller : "AccionBaseEditController as vm",
+        })
+
+        .when("/metamodelo/accion-especial/detail/:id", {
+            templateUrl : "modules/metamodelo/accion-especial-detail.html",
+            controller : "AccionEspecialDetailController as vm",
+        })
+
+        .when("/metamodelo/accion-especial/edit/:accion/:entiId/:id?", {
+            templateUrl : "modules/metamodelo/accion-especial-edit.html",
+            controller : "AccionEspecialEditController as vm",
         })
 
         ;
@@ -521,9 +516,8 @@
             vm.subentiList = data.subentiList;
             vm.entdList = data.entdList;
             vm.engdList = data.engdList;
-            vm.enacList = data.enacList;
-            vm.enagList = data.enagList;
             vm.acenList = data.acenList;
+            vm.acesList = data.acesList;
         });
 
         pageTitleService.setTitle("tppr", "page_detail");
@@ -595,9 +589,8 @@
             vm.i18nMap = data.i18nMap;
             vm.entdList = data.entdList;
             vm.engdList = data.engdList;
-            vm.enacList = data.enacList;
-            vm.enagList = data.enagList;
             vm.acenList = data.acenList;
+            vm.acesList = data.acesList;
         });
 
         pageTitleService.setTitle("tpsp", "page_detail");
@@ -711,9 +704,8 @@
             vm.entdList = data.entdList;
             vm.engdList = data.engdList;
             vm.trmtList = data.trmtList;
-            vm.enacList = data.enacList;
-            vm.enagList = data.enagList;
             vm.acenList = data.acenList;
+            vm.acesList = data.acesList;
         });
 
         pageTitleService.setTitle("tpsr", "page_detail");
@@ -788,9 +780,8 @@
             vm.entdList = data.entdList;
             vm.engdList = data.engdList;
             vm.trmtList = data.trmtList;
-            vm.enacList = data.enacList;
-            vm.enagList = data.enagList;
             vm.acenList = data.acenList;
+            vm.acesList = data.acesList;
         });
 
         pageTitleService.setTitle("tpss", "page_detail");
@@ -903,9 +894,8 @@
             vm.subentiList = data.subentiList;
             vm.entdList = data.entdList;
             vm.engdList = data.engdList;
-            vm.enacList = data.enacList;
-            vm.enagList = data.enagList;
             vm.acenList = data.acenList;
+            vm.acesList = data.acesList;
         });
 
         pageTitleService.setTitle("tpes", "page_detail");
@@ -1220,8 +1210,8 @@
         function save() {
             TramiteTipoDatoService.save(vm.accion, vm.model).then(
                     function(data) {
-                        TramiteTipoDatpService.redirectAfterSave(vm.accion,
-                                '/metamodelo/tramiteTipoDato/detail', [ data.model.trmtId,
+                        TramiteTipoDatoService.redirectAfterSave(vm.accion,
+                                '/metamodelo/tramite-tipo-dato/detail', [ data.model.trmtId,
                                         data.model.entd.tpdt.id ]);
                     });
         }
@@ -1250,70 +1240,6 @@
     }
 
     /* @ngInject */
-    function AccionTramiteDetailController($routeParams, pageTitleService, AccionTramiteService) {
-        var vm = this;
-
-        vm.remove = remove;
-
-        function remove() {
-            AccionTramiteService.remove(vm.model).then(function(data) {
-                window.history.back();
-            });
-        }
-
-        vm.search = {
-            id : $routeParams.id
-        };
-
-        AccionTramiteService.detail(vm.search).then(function(data) {
-            vm.model = data.model;
-        });
-
-        pageTitleService.setTitle("actr", "page_detail");
-    }
-
-    /* @ngInject */
-    function AccionTramiteEditController($routeParams, pageTitleService, AccionTramiteService) {
-        var vm = this;
-
-        vm.save = save;
-        vm.cancel = cancel;
-        vm.updateGrupos = updateGrupos;
-
-        function save() {
-            AccionTramiteService.save(vm.accion, vm.model).then(
-                    function(data) {
-                        AccionTramiteService.redirectAfterSave(vm.accion,
-                                '/metamodelo/accion-tramite/detail', [ data.model.id ]);
-                    });
-        }
-
-        function cancel() {
-            window.history.back();
-        }
-
-        function updateGrupos($event, grpoId) {
-            $event.target.checked ? vm.model.grpoIds.push(grpoId) : vm.model.grpoIds.splice(vm.model.grpoIds
-                    .indexOf(grpoId), 1);
-        }
-
-        vm.accion = $routeParams.accion;
-        vm.search = {
-            id : $routeParams.id,
-            trmtId : $routeParams.trmtId
-        };
-
-        AccionTramiteService.edit(vm.accion, vm.search).then(function(data) {
-            vm.model = data.model;
-
-            vm.accnList = data.accnList;
-            vm.grpoList = data.grpoList;
-        });
-
-        pageTitleService.setTitle("actr", "page_" + vm.accion);
-    }
-
-    /* @ngInject */
     function AccionEntidadDetailController($routeParams, pageTitleService, AccionEntidadService) {
         var vm = this;
 
@@ -1331,8 +1257,6 @@
 
         AccionEntidadService.detail(vm.search).then(function(data) {
             vm.model = data.model;
-
-            vm.grpoList = data.grpoList;
         });
 
         pageTitleService.setTitle("acen", "page_detail");
@@ -1372,125 +1296,10 @@
         AccionEntidadService.edit(vm.accion, vm.search).then(function(data) {
             vm.model = data.model;
 
-            vm.accnList = data.accnList;
-            vm.grpoList = data.grpoList;
+            vm.aebsList = data.aebsList;
         });
 
         pageTitleService.setTitle("acen", "page_" + vm.accion);
-    }
-
-    /* @ngInject */
-    function EntidadAccionDetailController($routeParams, pageTitleService, EntidadAccionService) {
-        var vm = this;
-
-        vm.remove = remove;
-
-        function remove() {
-            EntidadAccionService.remove(vm.model).then(function(data) {
-                window.history.back();
-            });
-        }
-
-        vm.search = {
-            id : $routeParams.id
-        };
-
-        EntidadAccionService.detail(vm.search).then(function(data) {
-            vm.model = data.model;
-            vm.i18nMap = data.i18nMap;
-        });
-
-        pageTitleService.setTitle("enac", "page_detail");
-    }
-
-    /* @ngInject */
-    function EntidadAccionEditController($routeParams, pageTitleService, EntidadAccionService) {
-        var vm = this;
-
-        vm.save = save;
-        vm.cancel = cancel;
-
-        function save() {
-            EntidadAccionService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
-                    function(data) {
-                        EntidadAccionService.redirectAfterSave(vm.accion,
-                                '/metamodelo/entidad-accion/detail', [ data.model.id ]);
-                    });
-        }
-
-        function cancel() {
-            window.history.back();
-        }
-
-        vm.accion = $routeParams.accion;
-        vm.search = {
-            entiId : $routeParams.entiId,
-            id : $routeParams.id
-        };
-
-        EntidadAccionService.edit(vm.accion, vm.search).then(function(data) {
-            vm.model = data.model;
-            vm.i18nMap = data.i18nMap;
-        });
-
-        pageTitleService.setTitle("enag", "page_" + vm.accion);
-    }
-
-    /* @ngInject */
-    function EntidadAccionGridDetailController($routeParams, pageTitleService, EntidadAccionGridService) {
-        var vm = this;
-
-        vm.remove = remove;
-
-        function remove() {
-            EntidadAccionGridService.remove(vm.model).then(function(data) {
-                window.history.back();
-            });
-        }
-
-        vm.search = {
-            id : $routeParams.id
-        };
-
-        EntidadAccionGridService.detail(vm.search).then(function(data) {
-            vm.model = data.model;
-            vm.i18nMap = data.i18nMap;
-        });
-
-        pageTitleService.setTitle("enag", "page_detail");
-    }
-
-    /* @ngInject */
-    function EntidadAccionGridEditController($routeParams, pageTitleService, EntidadAccionGridService) {
-        var vm = this;
-
-        vm.save = save;
-        vm.cancel = cancel;
-
-        function save() {
-            EntidadAccionGridService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
-                    function(data) {
-                        EntidadAccionGridService.redirectAfterSave(vm.accion,
-                                '/metamodelo/entidad-accion-grid/detail', [ data.model.id ]);
-                    });
-        }
-
-        function cancel() {
-            window.history.back();
-        }
-
-        vm.accion = $routeParams.accion;
-        vm.search = {
-            entiId : $routeParams.entiId,
-            id : $routeParams.id
-        };
-
-        EntidadAccionGridService.edit(vm.accion, vm.search).then(function(data) {
-            vm.model = data.model;
-            vm.i18nMap = data.i18nMap;
-        });
-
-        pageTitleService.setTitle("enag", "page_" + vm.accion);
     }
 
     /* @ngInject */
@@ -1530,4 +1339,159 @@
 
         pageTitleService.setTitle("enen", "page_" + vm.accion);
     }
+
+    /* @ngInject */
+    function AccionBaseGridController($routeParams, pageTitleService, AccionBaseService) {
+        var vm = this;
+
+        vm.filter = filter;
+        vm.resetFilter = resetFilter;
+        vm.search = search;
+        vm.pageChanged = pageChanged;
+
+        function filter() {
+            AccionBaseService.filter(vm.searchCriteria).then(function(data) {
+                vm.acprList = data.acprList;
+                vm.accoList = data.accoList;
+            });
+        }
+
+        function resetFilter() {
+            vm.searchCriteria = {};
+        }
+
+        function search(page) {
+            AccionBaseService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
+                vm.page = data.resultList.page;
+                vm.limit = data.resultList.limit;
+                vm.resultList = data.resultList;
+            });
+        }
+
+        function pageChanged() {
+            search(vm.page);
+        }
+
+        vm.searchCriteria = $routeParams.searchCriteria ? angular.fromJson($routeParams.searchCriteria) : {};
+        vm.limit = $routeParams.limit;
+
+        search($routeParams.page ? $routeParams.page : 1);
+
+        pageTitleService.setTitle("acbs", "page_grid");
+    }
+
+    /* @ngInject */
+    function AccionBaseDetailController($routeParams, pageTitleService, AccionBaseService) {
+        var vm = this;
+
+        vm.remove = remove;
+
+        function remove() {
+            AccionBaseService.remove(vm.model).then(function(data) {
+                window.history.back();
+            });
+        }
+
+        vm.search = {
+            id : $routeParams.id
+        };
+
+        AccionBaseService.detail(vm.search).then(function(data) {
+            vm.model = data.model;
+        });
+
+        pageTitleService.setTitle("acbs", "page_detail");
+    }
+
+    /* @ngInject */
+    function AccionBaseEditController($routeParams, pageTitleService, AccionBaseService) {
+        var vm = this;
+
+        vm.save = save;
+        vm.cancel = cancel;
+
+        function save() {
+            AccionBaseService.save(vm.accion, vm.model).then(
+                    function(data) {
+                        AccionBaseService.redirectAfterSave(vm.accion, '/metamodelo/accion-base/detail',
+                                [ data.model.id ]);
+                    });
+        }
+
+        function cancel() {
+            window.history.back();
+        }
+
+        vm.accion = $routeParams.accion;
+        vm.search = {
+            id : $routeParams.id
+        };
+
+        AccionBaseService.edit(vm.accion, vm.search).then(function(data) {
+            vm.model = data.model;
+
+            vm.acprList = data.acprList;
+            vm.accoList = data.accoList;
+        });
+
+        pageTitleService.setTitle("acbs", "page_" + vm.accion);
+    }
+
+    /* @ngInject */
+    function AccionEspecialDetailController($routeParams, pageTitleService, AccionEspecialService) {
+        var vm = this;
+
+        vm.remove = remove;
+
+        function remove() {
+            AccionEspecialService.remove(vm.model).then(function(data) {
+                window.history.back();
+            });
+        }
+
+        vm.search = {
+            id : $routeParams.id
+        };
+
+        AccionEspecialService.detail(vm.search).then(function(data) {
+            vm.model = data.model;
+            vm.i18nMap = data.i18nMap;
+        });
+
+        pageTitleService.setTitle("aces", "page_detail");
+    }
+
+    /* @ngInject */
+    function AccionEspecialEditController($routeParams, pageTitleService, AccionEspecialService) {
+        var vm = this;
+
+        vm.save = save;
+        vm.cancel = cancel;
+
+        function save() {
+            AccionEspecialService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(
+                    function(data) {
+                        AccionEspecialService.redirectAfterSave(vm.accion,
+                                '/metamodelo/accion-especial/detail', [ data.model.id ]);
+                    });
+        }
+
+        function cancel() {
+            window.history.back();
+        }
+
+        vm.accion = $routeParams.accion;
+        vm.search = {
+            id : $routeParams.id,
+            entiId : $routeParams.entiId
+        };
+
+        AccionEspecialService.edit(vm.accion, vm.search).then(function(data) {
+            vm.model = data.model;
+            vm.i18nMap = data.i18nMap;
+        });
+
+        pageTitleService.setTitle("aces", "page_" + vm.accion);
+    }
+
 })();

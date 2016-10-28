@@ -1,0 +1,65 @@
+package xeredi.argo.http.controller.action.metamodelo;
+
+import com.google.common.base.Preconditions;
+
+import lombok.Getter;
+import xeredi.argo.http.controller.action.comun.CrudEditAction;
+import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.metamodelo.bo.AccionBaseBO;
+import xeredi.argo.model.metamodelo.vo.AccionBaseCriterioVO;
+import xeredi.argo.model.metamodelo.vo.AccionBaseVO;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AccionBaseEditAction.
+ */
+public final class AccionBaseEditAction extends CrudEditAction<AccionBaseVO> {
+
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 182459317575847660L;
+
+	@Getter
+	private AccionPrefix[] acprList;
+
+	@Getter
+	private AccionCodigo[] accoList;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		if (accion == AccionCodigo.create) {
+			model = new AccionBaseVO();
+		} else {
+			Preconditions.checkNotNull(model.getId());
+
+			final AccionBaseBO acbsBO = new AccionBaseBO();
+			final AccionBaseCriterioVO acbsCriterio = new AccionBaseCriterioVO();
+
+			acbsCriterio.setId(model.getId());
+
+			model = acbsBO.selectObject(acbsCriterio);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		accoList = AccionCodigo.values();
+		acprList = AccionPrefix.values();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public AccionPrefix getAccnPrefix() {
+		return AccionPrefix.acbs;
+	}
+
+}

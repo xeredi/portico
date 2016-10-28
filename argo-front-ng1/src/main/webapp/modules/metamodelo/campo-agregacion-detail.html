@@ -1,10 +1,10 @@
 <div data-ng-if="vm.model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a data-ng-if="mc.hasAccnPath('cmag-edit')" class="btn btn-default"
+            <a data-ng-if="mc.hasAcbsPath('cmag-edit')" class="btn btn-default"
                 data-ng-href="#/metamodelo/campo-agregacion/edit/edit/{{vm.model.tpesId}}/{{vm.model.entd.id}}"><i
                 class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
-            <button data-ng-if="mc.hasAccnPath('cmag-remove')" data-ng-click="vm.remove()"
+            <button data-ng-if="mc.hasAcbsPath('cmag-remove')" data-ng-click="vm.remove()"
                 class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>

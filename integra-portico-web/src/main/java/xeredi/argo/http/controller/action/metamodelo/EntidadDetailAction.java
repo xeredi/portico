@@ -3,6 +3,8 @@ package xeredi.argo.http.controller.action.metamodelo;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Preconditions;
+
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.bo.I18nBO;
@@ -10,23 +12,18 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.I18nPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
-import xeredi.argo.model.metamodelo.bo.EntidadAccionBO;
-import xeredi.argo.model.metamodelo.bo.EntidadAccionGridBO;
+import xeredi.argo.model.metamodelo.bo.AccionEspecialBO;
 import xeredi.argo.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
-import xeredi.argo.model.metamodelo.vo.EntidadAccionCriterioVO;
-import xeredi.argo.model.metamodelo.vo.EntidadAccionGridCriterioVO;
-import xeredi.argo.model.metamodelo.vo.EntidadAccionGridVO;
-import xeredi.argo.model.metamodelo.vo.EntidadAccionVO;
+import xeredi.argo.model.metamodelo.vo.AccionEspecialCriterioVO;
+import xeredi.argo.model.metamodelo.vo.AccionEspecialVO;
 import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -54,11 +51,7 @@ public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetai
 
     /** The enac list. */
     @Getter
-    protected List<EntidadAccionVO> enacList;
-
-    /** The enag list. */
-    @Getter
-    protected List<EntidadAccionGridVO> enagList;
+    protected List<AccionEspecialVO> acesList;
 
     /** The acen list. */
     @Getter
@@ -91,21 +84,12 @@ public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetai
 
         engdList = engdBO.selectList(engdCriterio);
 
-        final EntidadAccionBO enacBO = new EntidadAccionBO();
-        final EntidadAccionCriterioVO enacCriterio = new EntidadAccionCriterioVO();
+        final AccionEspecialCriterioVO acesCriterio = new AccionEspecialCriterioVO();
 
-        enacCriterio.setEntiId(model.getId());
-        enacCriterio.setIdioma(getIdioma());
+        acesCriterio.setEntiId(model.getId());
+        acesCriterio.setIdioma(getIdioma());
 
-        enacList = enacBO.selectList(enacCriterio);
-
-        final EntidadAccionGridBO enagBO = new EntidadAccionGridBO();
-        final EntidadAccionGridCriterioVO enagCriterio = new EntidadAccionGridCriterioVO();
-
-        enagCriterio.setEntiId(model.getId());
-        enagCriterio.setIdioma(getIdioma());
-
-        enagList = enagBO.selectList(enagCriterio);
+        acesList = new AccionEspecialBO().selectList(acesCriterio);
 
         final AccionEntidadBO acenBO = new AccionEntidadBO();
         final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();

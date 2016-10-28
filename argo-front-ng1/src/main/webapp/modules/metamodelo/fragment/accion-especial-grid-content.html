@@ -1,0 +1,30 @@
+<fieldset data-ng-if="mc.hasAcbsPath('aces-list')">
+    <legend data-translate="acesList"></legend>
+
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a data-ng-if="mc.hasAcbsPath('aces-create')" class="btn btn-default"
+                data-ng-href="#/metamodelo/accion-especial/edit/create/{{vm.model.id}}"><i
+                class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
+        </div>
+    </div>
+
+    <table class="table-bordered table-condensed table-hover">
+        <thead>
+            <tr>
+                <th nowrap="nowrap" />
+                <th data-translate="aces_orden"></th>
+                <th data-translate="aces_path"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="aces in vm.acesList track by $index">
+                <td><a data-ng-if="mc.hasAcbsPath('aces-detail')"
+                    data-ng-href="#/metamodelo/accion-especial/detail/{{aces.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
+                <td data-ng-bind="aces.orden"></td>
+                <td data-ng-bind="aces.path"></td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>

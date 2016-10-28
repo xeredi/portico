@@ -8,13 +8,13 @@
         </div>
 
         <div class="btn-group">
-            <button data-ng-if="mc.hasAccnPath('tpes-list')" class="btn btn-default"
+            <button data-ng-if="mc.hasAcbsPath('tpes-list')" class="btn btn-default"
                 data-ng-click="vm.filter('lg')"
                 data-template-url="modules/metamodelo/fragment/tipo-estadistica-filter-content.html"
                 data-bs-modal="modal">
                 <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
             </button>
-            <a data-ng-if="mc.hasAccnPath('tpes-create')" class="btn btn-default"
+            <a data-ng-if="mc.hasAcbsPath('tpes-create')" class="btn btn-default"
                 data-ng-href="#/metamodelo/tipo-estadistica/edit/create"><i
                 class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span> </a>
         </div>
@@ -36,7 +36,7 @@
 
             <tbody>
                 <tr data-ng-repeat="enti in vm.resultList.list track by $index">
-                    <td><a data-ng-if="mc.hasAccnPath('tpes-detail')"
+                    <td><a data-ng-if="mc.hasAcbsPath('tpes-detail')"
                         data-ng-href="#/metamodelo/tipo-estadistica/detail/{{enti.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="enti.codigo"></td>

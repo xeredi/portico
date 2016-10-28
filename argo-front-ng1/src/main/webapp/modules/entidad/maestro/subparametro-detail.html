@@ -1,13 +1,13 @@
 <div data-ng-if="vm.item">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" data-ng-if="mc.hasAcenPath(vm.item.entiId, 'item-edit')"
+            <a class="btn btn-default" data-ng-if="mc.hasAcen(vm.item.entiId, 'edit')"
                 data-ng-href="#/maestro/subparametro/edit/edit/{{vm.item.entiId}}/{{vm.item.prmtId}}/{{vm.item.id}}/{{vm.item.fref}}"><i
                 class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a> <a
-                class="btn btn-default" data-ng-if="mc.hasAcenPath(vm.item.entiId, 'item-duplicate')"
+                class="btn btn-default" data-ng-if="mc.hasAcen(vm.item.entiId, 'duplicate')"
                 data-ng-href="#/maestro/subparametro/edit/duplicate/{{vm.item.entiId}}/{{vm.item.prmtId}}/{{vm.item.id}}/{{vm.item.fref}}"><i
                 class="glyphicon glyphicon-tags"></i> <span data-translate="btn_duplicar"></span></a>
-            <button data-ng-if="mc.hasAcenPath(vm.item.entiId, 'item-remove')" data-ng-click="vm.remove()"
+            <button data-ng-if="mc.hasAcen(vm.item.entiId, 'remove')" data-ng-click="vm.remove()"
                 class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>

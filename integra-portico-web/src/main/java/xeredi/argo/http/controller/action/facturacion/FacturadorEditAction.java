@@ -15,7 +15,7 @@ import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
 import xeredi.argo.model.facturacion.vo.FacturadorVO;
 import xeredi.argo.model.facturacion.vo.ValoracionGrupoTipo;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;

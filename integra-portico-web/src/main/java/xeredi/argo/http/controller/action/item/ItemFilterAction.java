@@ -14,9 +14,9 @@ import xeredi.argo.model.item.vo.ItemCriterioVO;
 import xeredi.argo.model.maestro.bo.ParametroBO;
 import xeredi.argo.model.maestro.bo.ParametroBOFactory;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoHtml;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;

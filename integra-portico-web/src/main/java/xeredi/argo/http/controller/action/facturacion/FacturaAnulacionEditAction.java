@@ -14,7 +14,7 @@ import xeredi.argo.model.facturacion.vo.FacturaAnulacionVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
-import xeredi.argo.model.seguridad.vo.AccionPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
