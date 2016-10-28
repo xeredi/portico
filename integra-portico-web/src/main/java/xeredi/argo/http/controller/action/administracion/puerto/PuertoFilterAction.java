@@ -2,30 +2,29 @@ package xeredi.argo.http.controller.action.administracion.puerto;
 
 import java.util.List;
 
-import lombok.Getter;
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PuertoFilterAction.
  */
+@Data
 public final class PuertoFilterAction extends GridFilterAction<PuertoCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7596165170000341208L;
 
-    /** The accn prefix. */
-    @Getter
-    private final AccionPrefix accnPrefix = AccionPrefix.prto;
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.prto;
 
     /** The sprt list. */
-    @Getter
     private List<SuperpuertoVO> sprtList;
 
     /**

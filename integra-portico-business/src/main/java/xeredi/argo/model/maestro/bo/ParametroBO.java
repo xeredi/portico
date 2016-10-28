@@ -21,7 +21,7 @@ import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.item.vo.ItemDatoVO;
@@ -114,7 +114,7 @@ public class ParametroBO {
             prmtDAO.insertVersion(prmt);
 
             if (tpprDetail.getEnti().isI18n()) {
-                I18nBO.insertMap(session, I18nPrefix.prvr, prmt.getVersion().getId(), i18nMap);
+                I18nBO.insertMap(session, ClassPrefix.prvr, prmt.getVersion().getId(), i18nMap);
             }
 
             if (prmt.getItdtMap() != null) {
@@ -225,7 +225,7 @@ public class ParametroBO {
             prmtDAO.insertVersion(prmt);
 
             if (tpprDetail.getEnti().isI18n()) {
-                I18nBO.duplicateMap(session, I18nPrefix.prvr, prmt.getVersion().getId(), i18nMap);
+                I18nBO.duplicateMap(session, ClassPrefix.prvr, prmt.getVersion().getId(), i18nMap);
             }
 
             if (prmt.getItdtMap() != null) {
@@ -411,7 +411,7 @@ public class ParametroBO {
             prmtDAO.insertVersion(prmt);
 
             if (tpprDetail.getEnti().isI18n()) {
-                I18nBO.duplicateMap(session, I18nPrefix.prvr, prmt.getVersion().getId(), i18nMap);
+                I18nBO.duplicateMap(session, ClassPrefix.prvr, prmt.getVersion().getId(), i18nMap);
             }
 
             if (prmt.getItdtMap() != null) {
@@ -502,7 +502,7 @@ public class ParametroBO {
             }
 
             if (tpprDetail.getEnti().isI18n()) {
-                I18nBO.updateMap(session, I18nPrefix.prvr, prmt.getVersion().getId(), i18nMap);
+                I18nBO.updateMap(session, ClassPrefix.prvr, prmt.getVersion().getId(), i18nMap);
             }
 
             if (prmt.getItdtMap() != null) {
@@ -561,7 +561,7 @@ public class ParametroBO {
 
             prdtDAO.deleteList(prmtCriterio);
 
-            I18nBO.deleteMap(session, I18nPrefix.prvr, prmt.getVersion().getId());
+            I18nBO.deleteMap(session, ClassPrefix.prvr, prmt.getVersion().getId());
 
             if (prmtDAO.deleteVersion(prmt) == 0) {
                 throw new InstanceNotFoundException(prmt.getEntiId(), prmt);

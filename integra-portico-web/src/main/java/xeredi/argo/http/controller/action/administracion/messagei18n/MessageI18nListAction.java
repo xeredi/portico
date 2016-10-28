@@ -4,23 +4,26 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import lombok.Getter;
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.ListAction;
 import xeredi.argo.model.comun.bo.MessageI18nBO;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class MessageI18nListAction.
  */
+@Data
 public final class MessageI18nListAction extends ListAction<MessageI18nKey> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 9186179634462884228L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.m18n;
+
     /** The key map. */
-    @Getter
     private Map<MessageI18nKey, Map<String, String>> keyMap;
 
     /**
@@ -44,23 +47,5 @@ public final class MessageI18nListAction extends ListAction<MessageI18nKey> {
                 keyMap.get(key).put(language, map.get(key));
             }
         }
-    }
-
-    // @Action("m18n-reload")
-    // public String reload() throws IOException {
-    // final I18nJs i18nJs = new I18nJs();
-    //
-    // i18nJs.export();
-    //
-    // return SUCCESS;
-    // }
-
-    // get / set
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.m18n;
     }
 }

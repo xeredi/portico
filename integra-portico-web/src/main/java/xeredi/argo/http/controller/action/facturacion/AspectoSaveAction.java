@@ -3,34 +3,36 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.Calendar;
 import java.util.Map;
 
-import lombok.Setter;
-
 import org.apache.commons.validator.GenericValidator;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.util.DateUtil;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoSaveAction.
  */
+@Data
 public final class AspectoSaveAction extends CrudSaveAction<AspectoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5347828326827355006L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.aspc;
+
     /** The i18n map. */
-    @Setter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -126,13 +128,5 @@ public final class AspectoSaveAction extends CrudSaveAction<AspectoVO> {
             FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo6, model.getVersion().getCpathInfo6());
             FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo6, model.getVersion().getCgrpInfo6());
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.aspc;
     }
 }

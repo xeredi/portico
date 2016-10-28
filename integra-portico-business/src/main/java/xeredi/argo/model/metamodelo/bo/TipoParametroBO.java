@@ -13,7 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.EntidadDAO;
@@ -148,7 +148,7 @@ public final class TipoParametroBO {
             entiDAO.insert(tpprVO);
             tpprDAO.insert(tpprVO);
 
-            I18nBO.insertMap(session, I18nPrefix.enti, tpprVO.getId(), i18nMap);
+            I18nBO.insertMap(session, ClassPrefix.enti, tpprVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -177,7 +177,7 @@ public final class TipoParametroBO {
             }
 
             entiDAO.update(tpprVO);
-            I18nBO.updateMap(session, I18nPrefix.enti, tpprVO.getId(), i18nMap);
+            I18nBO.updateMap(session, ClassPrefix.enti, tpprVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -202,7 +202,7 @@ public final class TipoParametroBO {
                 throw new InstanceNotFoundException(MessageI18nKey.tppr, tppr);
             }
 
-            I18nBO.deleteMap(session, I18nPrefix.enti, tppr.getId());
+            I18nBO.deleteMap(session, ClassPrefix.enti, tppr.getId());
             entiDAO.delete(tppr);
 
             session.commit();

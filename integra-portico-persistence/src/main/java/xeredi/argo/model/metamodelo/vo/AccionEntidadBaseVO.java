@@ -1,6 +1,7 @@
 package xeredi.argo.model.metamodelo.vo;
 
 import lombok.Data;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -13,7 +14,7 @@ public class AccionEntidadBaseVO {
 	private Long id;
 
 	/** The prefix. */
-	private AccionPrefix prefix;
+	private ClassPrefix prefix;
 
 	/** The codigo. */
 	private AccionCodigo codigo;

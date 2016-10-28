@@ -2,12 +2,12 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
-import lombok.Getter;
+import lombok.Data;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
@@ -17,13 +17,16 @@ import xeredi.util.applicationobjects.LabelValueVO;
 /**
  * The Class TipoServicioEditAction.
  */
+@Data
 public final class TipoServicioEditAction extends EntidadEditAction<TipoServicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7056943059440927593L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.tpsr;
+
     /** The tpdt estado list. */
-    @Getter
     private List<LabelValueVO> tpdtEstadoList;
 
     /**
@@ -53,13 +56,4 @@ public final class TipoServicioEditAction extends EntidadEditAction<TipoServicio
 
         tpdtEstadoList = tpdtBO.selectLabelValues(tpdtCriterio);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.tpsr;
-    }
-
 }

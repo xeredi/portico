@@ -5,36 +5,32 @@ import java.util.List;
 
 import com.google.common.base.Preconditions;
 
-import lombok.Getter;
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.FacturaBO;
 import xeredi.argo.model.facturacion.bo.FacturaSerieBO;
 import xeredi.argo.model.facturacion.vo.FacturaAnulacionVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturaAnulacionEditAction.
  */
+@Data
 public final class FacturaAnulacionEditAction extends CrudEditAction<FacturaAnulacionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3480470491984180806L;
 
-    @Getter
-    private List<FacturaSerieVO> fcsrList;
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.fcan;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.fcan;
-    }
+    /** The fcsr list. */
+    private List<FacturaSerieVO> fcsrList;
 
     /**
      * {@inheritDoc}

@@ -7,13 +7,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ItemTipo;
@@ -25,24 +28,18 @@ import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.ValoradorVO;
 import xeredi.argo.proceso.facturacion.ProcesoValorador;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoradorSaveAction.
  */
+@Data
 public final class ValoradorSaveAction extends CrudSaveAction<ValoradorVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8899968426612094160L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.vldr;
-    }
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.vldr;
 
     /**
      * {@inheritDoc}

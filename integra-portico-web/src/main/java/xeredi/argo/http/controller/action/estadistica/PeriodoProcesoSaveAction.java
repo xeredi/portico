@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
@@ -15,10 +16,10 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.vo.ArchivoSentido;
 import xeredi.argo.model.comun.vo.ArchivoVO;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.proceso.batch.estadistica.ProcesoCargaOppe;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ItemTipo;
@@ -28,10 +29,14 @@ import xeredi.argo.model.proceso.vo.ProcesoTipo;
 /**
  * The Class PeriodoProcesoSaveAction.
  */
+@Data
 public final class PeriodoProcesoSaveAction extends CrudSaveAction<ProcesoEstadisticaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 230657854894847117L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.pepr;
 
     /**
      * {@inheritDoc}
@@ -86,13 +91,5 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<ProcesoEstadi
         FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, model.getPepr().getAnio());
         FieldValidator.validateRequired(this, MessageI18nKey.pepr_mes, model.getPepr().getMes());
         FieldValidator.validateRequired(this, MessageI18nKey.pepr_sobreescribir, model.getSobreescribir());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.pepr;
     }
 }

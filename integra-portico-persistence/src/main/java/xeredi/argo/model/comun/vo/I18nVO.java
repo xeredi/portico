@@ -10,7 +10,7 @@ import lombok.Data;
 public final class I18nVO {
 
     /** The prefix. */
-    private I18nPrefix prefix;
+    private ClassPrefix prefix;
 
     /** The external id. */
     private Long externalId;

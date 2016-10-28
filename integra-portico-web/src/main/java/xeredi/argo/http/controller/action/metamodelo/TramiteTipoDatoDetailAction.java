@@ -2,20 +2,25 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import com.google.common.base.Preconditions;
 
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.TramiteTipoDatoBO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TramiteTipoDatoDetailAction.
  */
+@Data
 public final class TramiteTipoDatoDetailAction extends CrudDetailAction<TramiteTipoDatoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4066766450469953829L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.trtd;
 
     /**
      * {@inheritDoc}
@@ -29,13 +34,5 @@ public final class TramiteTipoDatoDetailAction extends CrudDetailAction<TramiteT
         final TramiteTipoDatoBO trtdBO = new TramiteTipoDatoBO();
 
         model = trtdBO.select(model.getTrmtId(), model.getEntd().getTpdt().getId(), getIdioma());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.trtd;
     }
 }

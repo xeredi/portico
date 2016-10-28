@@ -2,9 +2,10 @@ package xeredi.argo.http.controller.action.proceso;
 
 import com.google.common.base.Preconditions;
 
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
 
@@ -12,10 +13,14 @@ import xeredi.argo.model.proceso.vo.ProcesoVO;
 /**
  * The Class ProcesoCancelarAction.
  */
+@Data
 public final class ProcesoRemoveAction extends CrudRemoveAction<ProcesoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3995570668859920070L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.prbt;
 
     /**
      * {@inheritDoc}
@@ -27,13 +32,5 @@ public final class ProcesoRemoveAction extends CrudRemoveAction<ProcesoVO> {
         final ProcesoBO prbtBO = new ProcesoBO();
 
         prbtBO.cancelar(model);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.prbt;
     }
 }

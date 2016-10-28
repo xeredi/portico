@@ -36,7 +36,7 @@ import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.proxy.PorticoResourceBundle;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.item.vo.ItemDatoVO;
@@ -179,7 +179,7 @@ public final class ServicioImporterBO {
         final SubservicioBO ssrvBO = SubservicioBOFactory.newDefaultInstance();
 
         final AbstractEntidadDetailVO entiDetail = EntidadProxy.select(entidad.getId());
-        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + entiDetail.getEnti().getId());
+        final String entiName = bundle.getString(ClassPrefix.enti.name() + "_" + entiDetail.getEnti().getId());
 
         if (LOG.isInfoEnabled()) {
             LOG.info("Importacion de la entidad: " + entiName);
@@ -191,7 +191,7 @@ public final class ServicioImporterBO {
 
             if (entd.getTpdt().getEnti() != null && !tpprPrmtMap.containsKey(entd.getTpdt().getEnti().getId())) {
                 if (LOG.isDebugEnabled()) {
-                    final String tpprName = bundle.getString(I18nPrefix.enti.name() + "_"
+                    final String tpprName = bundle.getString(ClassPrefix.enti.name() + "_"
                             + entd.getTpdt().getEnti().getId());
 
                     LOG.debug("Busqueda de los parametros del maestro " + tpprName);
@@ -313,7 +313,7 @@ public final class ServicioImporterBO {
 
                             if (rs.wasNull() && entd.getObligatorio()
                                     && entd.getTpdt().getTipoElemento() != TipoElemento.BO) {
-                                final String tpdtName = bundle.getString(I18nPrefix.tpdt.name() + "_"
+                                final String tpdtName = bundle.getString(ClassPrefix.tpdt.name() + "_"
                                         + entd.getTpdt().getId());
 
                                 throw new Error("Campo obligatorio no encontrado para el dato: " + tpdtName
@@ -396,7 +396,7 @@ public final class ServicioImporterBO {
                                     final Long padrePorticoId = entiMap.get(entdId).get(padreIntegraId);
 
                                     if (padrePorticoId == null) {
-                                        final String entiPadreName = bundle.getString(I18nPrefix.enti.name() + "_"
+                                        final String entiPadreName = bundle.getString(ClassPrefix.enti.name() + "_"
                                                 + entdId);
 
                                         LOG.error("No se encuentra el subservicio " + padreIntegraId
@@ -419,7 +419,7 @@ public final class ServicioImporterBO {
 
                                 if (rs.wasNull() && entd.getObligatorio()
                                         && entd.getTpdt().getTipoElemento() != TipoElemento.BO) {
-                                    final String tpdtName = bundle.getString(I18nPrefix.tpdt.name() + "_"
+                                    final String tpdtName = bundle.getString(ClassPrefix.tpdt.name() + "_"
                                             + entd.getTpdt().getId());
 
                                     throw new Error("Campo obligatorio no encontrado para el dato: " + tpdtName
@@ -495,9 +495,9 @@ public final class ServicioImporterBO {
                             value.toString().toUpperCase());
 
                     if (prmtId == null) {
-                        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_"
+                        final String entiName = bundle.getString(ClassPrefix.enti.name() + "_"
                                 + entdVO.getTpdt().getEnti().getId());
-                        final String tpdtName = bundle.getString(I18nPrefix.tpdt.name() + "_"
+                        final String tpdtName = bundle.getString(ClassPrefix.tpdt.name() + "_"
                                 + entdVO.getTpdt().getId());
 
                         final String errorMessage = "Parametro no encontrado para el codigo: " + value
@@ -517,9 +517,9 @@ public final class ServicioImporterBO {
                             Long.valueOf(value.toString()));
 
                     if (srvcId == null) {
-                        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_"
+                        final String entiName = bundle.getString(ClassPrefix.enti.name() + "_"
                                 + entdVO.getTpdt().getEnti().getId());
-                        final String tpdtName = bundle.getString(I18nPrefix.tpdt.name() + "_"
+                        final String tpdtName = bundle.getString(ClassPrefix.tpdt.name() + "_"
                                 + entdVO.getTpdt().getId());
 
                         final String errorMessage = "Servicio no encontrado para el id: " + value

@@ -1,13 +1,12 @@
 package xeredi.argo.http.controller.action.comun;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
+
+import lombok.Data;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.Versionable;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-
-import com.google.common.base.Preconditions;
-import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -16,14 +15,16 @@ import com.opensymphony.xwork2.ModelDriven;
  * @param <T>
  *            the generic type
  */
+@Data
 public abstract class CrudDetailAction<T> extends BaseAction implements ModelDriven<T>, ProtectedAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4674010824776069801L;
 
+    /** The accion. */
+    private final AccionCodigo accion = AccionCodigo.detail;
+
     /** The model. */
-    @Getter
-    @Setter
     protected T model;
 
     /**
@@ -47,12 +48,4 @@ public abstract class CrudDetailAction<T> extends BaseAction implements ModelDri
      *             the application exception
      */
     public abstract void doDetail() throws ApplicationException;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final AccionCodigo getAccion() {
-        return AccionCodigo.detail;
-    }
 }

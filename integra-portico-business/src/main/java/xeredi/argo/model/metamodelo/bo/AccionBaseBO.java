@@ -13,13 +13,13 @@ import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.AccionBaseDAO;
 import xeredi.argo.model.metamodelo.dao.FuncionalidadDAO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.dao.FuncionalidadGrupoDAO;
 import xeredi.argo.model.seguridad.vo.FuncionalidadGrupoCriterioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -42,7 +42,7 @@ public final class AccionBaseBO {
 	 *            the usro id
 	 * @return true, if is user allowed
 	 */
-	public boolean isUserAllowed(final @NonNull AccionPrefix prefix, final @NonNull AccionCodigo codigo,
+	public boolean isUserAllowed(final @NonNull ClassPrefix prefix, final @NonNull AccionCodigo codigo,
 			final @NonNull Long usroId) {
 		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
 			final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);

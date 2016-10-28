@@ -1,8 +1,11 @@
 package xeredi.argo.http.controller.action.item;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.item.bo.ItemTramiteBO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
 import xeredi.argo.model.item.vo.ItemVO;
@@ -11,7 +14,6 @@ import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TramiteProxy;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
@@ -23,27 +25,26 @@ import xeredi.argo.model.servicio.bo.SubservicioBOFactory;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ItemTramiteDetailAction.
  */
+@Data
 public final class ItemTramiteDetailAction extends CrudDetailAction<ItemTramiteVO> implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2680320980030804227L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.ittr;
+
     /** The trmt. */
-    @Getter
     protected TramiteDetailVO trmt;
 
     /** The enti. */
-    @Getter
     protected AbstractEntidadDetailVO enti;
 
     /** The item. */
-    @Getter
     protected ItemVO item;
 
     /**
@@ -97,13 +98,5 @@ public final class ItemTramiteDetailAction extends CrudDetailAction<ItemTramiteV
         Preconditions.checkNotNull(model.getTrmt().getEntiId());
 
         return model.getTrmt().getEntiId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final AccionPrefix getAccnPrefix() {
-        return AccionPrefix.ittr;
     }
 }

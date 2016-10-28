@@ -9,7 +9,7 @@ import java.util.Set;
 
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -53,8 +53,8 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
         }
 
         final I18nBO i18nBO = new I18nBO();
-        final Set<I18nPrefix> prefixSet = Sets.newHashSet(I18nPrefix.tpdt, I18nPrefix.cdrf, I18nPrefix.enti,
-                I18nPrefix.entd, I18nPrefix.enac, I18nPrefix.engd);
+        final Set<ClassPrefix> prefixSet = Sets.newHashSet(ClassPrefix.tpdt, ClassPrefix.cdrf, ClassPrefix.enti,
+                ClassPrefix.entd, ClassPrefix.engd);
 
         final List<LabelValueVO> list = i18nBO.selectLabelValueList(prefixSet,
                 locale.getLanguage().isEmpty() ? defaultLanguage : locale.getLanguage());

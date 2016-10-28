@@ -1,22 +1,27 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.TipoSubparametroBO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoSubparametroSaveAction.
  */
+@Data
 public final class TipoSubparametroSaveAction extends EntidadSaveAction<TipoSubparametroVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3409997803363715915L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.tpsp;
 
     /**
      * {@inheritDoc}
@@ -51,13 +56,4 @@ public final class TipoSubparametroSaveAction extends EntidadSaveAction<TipoSubp
             throw new Error("Accion no soportada: " + accion);
         }
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.tpsp;
-    }
-
 }

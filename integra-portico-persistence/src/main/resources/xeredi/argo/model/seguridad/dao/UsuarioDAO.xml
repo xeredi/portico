@@ -70,6 +70,15 @@
 			<if test="prtoId != null">
 				AND usro_prto_pk = #{prtoId}
 			</if>
+			<if test="grpoId != null">
+	        <![CDATA[
+				AND EXISTS (
+					SELECT 1 FROM tbl_usuario_grupo_usgr
+					WHERE usgr_usro_pk = usro_pk
+						AND usgr_grpo_pk = #{grpoId}
+				)
+	        ]]>
+			</if>
 		</where>
 	</sql>
 

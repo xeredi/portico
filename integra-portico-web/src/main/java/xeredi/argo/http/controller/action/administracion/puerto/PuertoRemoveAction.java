@@ -1,21 +1,26 @@
 package xeredi.argo.http.controller.action.administracion.puerto;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.PuertoVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PuertoRemoveAction.
  */
+@Data
 public final class PuertoRemoveAction extends CrudRemoveAction<PuertoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -635054006561119868L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.prto;
 
     /**
      * {@inheritDoc}
@@ -27,13 +32,5 @@ public final class PuertoRemoveAction extends CrudRemoveAction<PuertoVO> {
         final PuertoBO prtoBO = new PuertoBO();
 
         prtoBO.delete(model);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.prto;
     }
 }

@@ -1,9 +1,9 @@
 package xeredi.argo.http.controller.action.proceso;
 
-import lombok.Getter;
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.proceso.vo.ProcesoCriterioVO;
 import xeredi.argo.model.proceso.vo.ProcesoEstado;
 import xeredi.argo.model.proceso.vo.ProcesoModulo;
@@ -13,21 +13,22 @@ import xeredi.argo.model.proceso.vo.ProcesoTipo;
 /**
  * The Class ProcesoFilterAction.
  */
+@Data
 public final class ProcesoFilterAction extends GridFilterAction<ProcesoCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2346523384273947533L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.prbt;
+
     /** The proceso tipos. */
-    @Getter
     private ProcesoTipo[] procesoTipos;
 
     /** The proceso modulos. */
-    @Getter
     private ProcesoModulo[] procesoModulos;
 
     /** The proceso estados. */
-    @Getter
     private ProcesoEstado[] procesoEstados;
 
     /**
@@ -46,13 +47,5 @@ public final class ProcesoFilterAction extends GridFilterAction<ProcesoCriterioV
         procesoTipos = ProcesoTipo.values();
         procesoEstados = ProcesoEstado.values();
         procesoModulos = ProcesoModulo.values();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.prbt;
     }
 }

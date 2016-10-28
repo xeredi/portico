@@ -2,19 +2,24 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import com.google.common.base.Preconditions;
 
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.TramiteTipoDatoBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
 
+@Data
 public final class TramiteTipoDatoSaveAction extends CrudSaveAction<TramiteTipoDatoVO> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -6877738229315027201L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.trtd;
 
 	/**
 	 * {@inheritDoc}
@@ -61,13 +66,5 @@ public final class TramiteTipoDatoSaveAction extends CrudSaveAction<TramiteTipoD
 		}
 
 		FieldValidator.validateRequired(this, MessageI18nKey.trtd_obligatorio, model.getObligatorio());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public AccionPrefix getAccnPrefix() {
-		return AccionPrefix.trtd;
 	}
 }

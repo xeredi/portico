@@ -13,10 +13,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public final class I18nCriterioVO extends BaseCriterioVO {
     /** The prefix. */
-    private I18nPrefix prefix;
+    private ClassPrefix prefix;
 
     /** The prefix set. */
-    private Set<I18nPrefix> prefixSet;
+    private Set<ClassPrefix> prefixSet;
 
     /** The external id. */
     private Long externalId;

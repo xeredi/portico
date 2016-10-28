@@ -2,28 +2,30 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.Map;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
-
-import com.google.common.base.Preconditions;
 
 /**
  * The Class TipoDatoDetailAction.
  */
+@Data
 public final class TipoDatoDetailAction extends CrudDetailAction<TipoDatoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6843746887292732660L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.tpdt;
+
     /** The i18n map. */
-    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -36,14 +38,6 @@ public final class TipoDatoDetailAction extends CrudDetailAction<TipoDatoVO> {
         final TipoDatoBO tpdtBO = new TipoDatoBO();
 
         model = tpdtBO.select(model.getId(), idioma);
-        i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, model.getId());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.tpdt;
+        i18nMap = I18nBO.selectMap(ClassPrefix.tpdt, model.getId());
     }
 }

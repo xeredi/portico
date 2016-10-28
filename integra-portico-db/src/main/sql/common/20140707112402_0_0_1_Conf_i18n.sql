@@ -417,17 +417,6 @@ INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2792)\
 INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2801)\
 	INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo) VALUES (2801, 'cdms', 'detail')\
 
-INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2840)\
-	INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo) VALUES (2840, 'actr', 'list')\
-INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2841)\
-	INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo) VALUES (2841, 'actr', 'detail')\
-INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2842)\
-	INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo) VALUES (2842, 'actr', 'create')\
-INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2843)\
-	INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo) VALUES (2843, 'actr', 'edit')\
-INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2844)\
-	INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo) VALUES (2844, 'actr', 'remove')\
-
 INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2862)\
 	INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo) VALUES (2862, 'fcan', 'create')\
 
@@ -444,6 +433,21 @@ INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2903)\
 	INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo) VALUES (2903, 'aces', 'edit')\
 INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2904)\
 	INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo) VALUES (2904, 'aces', 'remove')\
+
+
+-- Modulos (5000)
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (5000)\
+	INSERT INTO tbl_modulo_mdlo (mdlo_pk, mdlo_codigo) VALUES (5000, 'administracion')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (5001)\
+	INSERT INTO tbl_modulo_mdlo (mdlo_pk, mdlo_codigo) VALUES (5001, 'maestros')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (5002)\
+	INSERT INTO tbl_modulo_mdlo (mdlo_pk, mdlo_codigo) VALUES (5002, 'servicios')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (5003)\
+	INSERT INTO tbl_modulo_mdlo (mdlo_pk, mdlo_codigo) VALUES (5003, 'estadisticas')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (5004)\
+	INSERT INTO tbl_modulo_mdlo (mdlo_pk, mdlo_codigo) VALUES (5004, 'facturacion')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (5005)\
+	INSERT INTO tbl_modulo_mdlo (mdlo_pk, mdlo_codigo) VALUES (5005, 'procesos')\
 
 
 

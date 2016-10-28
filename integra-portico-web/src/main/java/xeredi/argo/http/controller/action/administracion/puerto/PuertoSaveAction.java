@@ -2,30 +2,33 @@ package xeredi.argo.http.controller.action.administracion.puerto;
 
 import java.util.Map;
 
-import lombok.Setter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PuertoSaveAction.
  */
+@Data
 public final class PuertoSaveAction extends CrudSaveAction<PuertoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5154698578823186211L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.prto;
+
     /** The i18n map. */
-    @Setter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -66,13 +69,5 @@ public final class PuertoSaveAction extends CrudSaveAction<PuertoVO> {
         FieldValidator.validateRequired(this, MessageI18nKey.sprt, model.getSprt());
 
         FieldValidator.validateI18n(this, i18nMap);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.prto;
     }
 }

@@ -1,18 +1,23 @@
 package xeredi.argo.http.controller.action.administracion.configuration;
 
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.ListAction;
 import xeredi.argo.model.comun.bo.ConfigurationBO;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.ConfigurationVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ConfigurationListAction.
  */
+@Data
 public final class ConfigurationListAction extends ListAction<ConfigurationVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4157882341228986446L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.conf;
 
     /**
      * {@inheritDoc}
@@ -22,13 +27,5 @@ public final class ConfigurationListAction extends ListAction<ConfigurationVO> {
         final ConfigurationBO confBO = new ConfigurationBO();
 
         resultList = confBO.selectList();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.conf;
     }
 }

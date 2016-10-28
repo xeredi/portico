@@ -7,10 +7,10 @@ import com.opensymphony.xwork2.ActionContext;
 import lombok.NonNull;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.AccionBaseBO;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.bo.UsuarioAccesoBO;
 import xeredi.argo.model.seguridad.vo.ResultadoLoginVO;
 
@@ -55,7 +55,7 @@ public final class SessionManager {
 	 *            the codigo
 	 * @return true, if successful
 	 */
-	public static boolean hasPermission(final @NonNull AccionPrefix prefix, final @NonNull AccionCodigo codigo) {
+	public static boolean hasPermission(final @NonNull ClassPrefix prefix, final @NonNull AccionCodigo codigo) {
 		final AccionBaseBO acbsBO = new AccionBaseBO();
 
 		return acbsBO.isUserAllowed(prefix, codigo,
@@ -73,7 +73,7 @@ public final class SessionManager {
 	 *            the enti id
 	 * @return true, if successful
 	 */
-	public static boolean hasPermission(final @NonNull AccionPrefix prefix, final @NonNull AccionCodigo codigo,
+	public static boolean hasPermission(final @NonNull ClassPrefix prefix, final @NonNull AccionCodigo codigo,
 			final @NonNull Long entiId) {
 		final AccionEntidadBO acenBO = new AccionEntidadBO();
 

@@ -2,21 +2,26 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import com.google.common.base.Preconditions;
 
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.AspectoCargoBO;
 import xeredi.argo.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoCargoVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoCargoDetailAction.
  */
+@Data
 public final class AspectoCargoDetailAction extends CrudDetailAction<AspectoCargoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3728076328413890092L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.ascr;
 
     /**
      * {@inheritDoc}
@@ -33,13 +38,5 @@ public final class AspectoCargoDetailAction extends CrudDetailAction<AspectoCarg
         ascrCriterio.setIdioma(idioma);
 
         model = ascrBO.selectObject(ascrCriterio);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.ascr;
     }
 }

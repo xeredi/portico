@@ -1,7 +1,9 @@
 package xeredi.argo.http.controller.action.estadistica;
 
+import lombok.Data;
 import xeredi.argo.http.controller.action.item.ItemDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.estadistica.bo.EstadisticaBO;
 import xeredi.argo.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.argo.model.estadistica.vo.EstadisticaVO;
@@ -12,10 +14,14 @@ import xeredi.argo.model.metamodelo.vo.TipoEstadisticaDetailVO;
 /**
  * The Class EstadisticaDetailAction.
  */
+@Data
 public final class EstadisticaDetailAction extends ItemDetailAction<EstadisticaVO, TipoEstadisticaDetailVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -375730466702517334L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.estd;
 
     /**
      * {@inheritDoc}

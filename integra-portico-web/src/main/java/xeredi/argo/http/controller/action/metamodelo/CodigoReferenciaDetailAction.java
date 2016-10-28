@@ -2,29 +2,31 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.Map;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.CodigoReferenciaBO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.CodigoReferenciaVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * Visualización de un Código de Referencia.
  */
+@Data
 public final class CodigoReferenciaDetailAction extends CrudDetailAction<CodigoReferenciaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2272224842467117453L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.cdrf;
+
     /** The cdri map. */
-    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -37,14 +39,6 @@ public final class CodigoReferenciaDetailAction extends CrudDetailAction<CodigoR
         final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
         model = cdrfBO.select(model.getId(), idioma);
-        i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, model.getId());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.cdrf;
+        i18nMap = I18nBO.selectMap(ClassPrefix.cdrf, model.getId());
     }
 }

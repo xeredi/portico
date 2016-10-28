@@ -13,7 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.argo.model.comun.dao.SuperpuertoDAO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
@@ -149,7 +149,7 @@ public final class SuperpuertoBO {
 
             sprtDAO.insert(sprt);
 
-            I18nBO.insertMap(session, I18nPrefix.sprt, sprt.getId(), i18nMap);
+            I18nBO.insertMap(session, ClassPrefix.sprt, sprt.getId(), i18nMap);
 
             session.commit();
         }
@@ -177,7 +177,7 @@ public final class SuperpuertoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.sprt, sprt);
             }
 
-            I18nBO.updateMap(session, I18nPrefix.sprt, sprt.getId(), i18nMap);
+            I18nBO.updateMap(session, ClassPrefix.sprt, sprt.getId(), i18nMap);
 
             session.commit();
         }
@@ -201,7 +201,7 @@ public final class SuperpuertoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.sprt, sprt);
             }
 
-            I18nBO.deleteMap(session, I18nPrefix.sprt, sprt.getId());
+            I18nBO.deleteMap(session, ClassPrefix.sprt, sprt.getId());
 
             session.commit();
         }

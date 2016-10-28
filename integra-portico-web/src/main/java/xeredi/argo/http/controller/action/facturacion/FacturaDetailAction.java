@@ -2,9 +2,12 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.List;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.FacturaBO;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
@@ -17,33 +20,30 @@ import xeredi.argo.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturaDetailAction.
  */
+@Data
 public final class FacturaDetailAction extends CrudDetailAction<FacturaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5987039917634891480L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.fctr;
+
     /** The aspc. */
-    @Getter
     private AspectoVO aspc;
 
     /** The fcts list. */
-    @Getter
     private List<ValoracionVO> vlrcList;
 
     /** The fcti list. */
-    @Getter
     private List<ValoracionImpuestoVO> fctiList;
 
     /** The fctg list. */
-    @Getter
     private List<ValoracionCargoVO> fctgList;
 
     /**
@@ -77,13 +77,5 @@ public final class FacturaDetailAction extends CrudDetailAction<FacturaVO> {
         aspcCriterio.setIdioma(getIdioma());
 
         aspc = aspcBO.selectObject(aspcCriterio);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.fctr;
     }
 }

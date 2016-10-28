@@ -1,8 +1,12 @@
 package xeredi.argo.http.controller.action.item;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
 import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
@@ -10,7 +14,6 @@ import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TramiteProxy;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteDetailVO;
@@ -19,16 +22,18 @@ import xeredi.argo.model.servicio.bo.ServicioBOFactory;
 import xeredi.argo.model.servicio.bo.SubservicioBO;
 import xeredi.argo.model.servicio.bo.SubservicioBOFactory;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ItemTramiteSaveAction.
  */
+@Data
 public final class ItemTramiteSaveAction extends CrudSaveAction<ItemTramiteVO> implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1629906671936657593L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.ittr;
 
     /**
      * {@inheritDoc}
@@ -109,13 +114,5 @@ public final class ItemTramiteSaveAction extends CrudSaveAction<ItemTramiteVO> i
         Preconditions.checkNotNull(model.getTrmt().getEntiId());
 
         return model.getTrmt().getEntiId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final AccionPrefix getAccnPrefix() {
-        return AccionPrefix.ittr;
     }
 }

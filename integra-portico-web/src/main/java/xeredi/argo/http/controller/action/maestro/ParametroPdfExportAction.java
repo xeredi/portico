@@ -12,7 +12,7 @@ import com.google.common.base.Preconditions;
 import xeredi.argo.http.controller.action.item.ItemFileExportAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.maestro.bo.ParametroBO;
@@ -77,7 +77,7 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
         final Map<String, I18nVO> i18nMap = new HashMap<>();
 
         if (entiDetail.getEnti().isI18n()) {
-            i18nMap.putAll(I18nBO.selectMap(I18nPrefix.prvr, model.getVersion().getId()));
+            i18nMap.putAll(I18nBO.selectMap(ClassPrefix.prvr, model.getVersion().getId()));
         }
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {

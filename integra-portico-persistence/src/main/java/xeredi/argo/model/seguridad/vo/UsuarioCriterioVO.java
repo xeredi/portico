@@ -23,4 +23,7 @@ public final class UsuarioCriterioVO extends BaseCriterioVO {
 
     /** The sprt id. */
     private Long sprtId;
+
+    /** The grpo id. */
+    private Long grpoId;
 }

@@ -2,23 +2,28 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import com.google.common.base.Preconditions;
 
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.AccionBaseBO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AccionBaseSaveAction.
  */
+@Data
 public final class AccionBaseSaveAction extends CrudSaveAction<AccionBaseVO> {
 
     /** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 3847810790957415340L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.acbs;
 
 	/**
      * {@inheritDoc}
@@ -53,13 +58,5 @@ public final class AccionBaseSaveAction extends CrudSaveAction<AccionBaseVO> {
 
         FieldValidator.validateRequired(this, MessageI18nKey.acbs_codigo, model.getCodigo());
         FieldValidator.validateRequired(this, MessageI18nKey.acbs_prefix, model.getPrefix());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.acbs;
     }
 }

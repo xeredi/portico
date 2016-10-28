@@ -3,37 +3,38 @@ package xeredi.argo.http.controller.action.administracion.puerto;
 import java.util.List;
 import java.util.Map;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PuertoEditAction.
  */
+@Data
 public final class PuertoEditAction extends CrudEditAction<PuertoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2800418654791205407L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.prto;
+
     /** The i18n map. */
-    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /** The sprt list. */
-    @Getter
     private List<SuperpuertoVO> sprtList;
 
     /**
@@ -47,7 +48,7 @@ public final class PuertoEditAction extends CrudEditAction<PuertoVO> {
             final PuertoBO prtoBO = new PuertoBO();
 
             model = prtoBO.select(model.getId(), idioma);
-            i18nMap = I18nBO.selectMap(I18nPrefix.prto, model.getId());
+            i18nMap = I18nBO.selectMap(ClassPrefix.prto, model.getId());
         }
     }
 
@@ -62,13 +63,5 @@ public final class PuertoEditAction extends CrudEditAction<PuertoVO> {
         sprtCriterio.setIdioma(idioma);
 
         sprtList = sprtBO.selectList(sprtCriterio);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.prto;
     }
 }

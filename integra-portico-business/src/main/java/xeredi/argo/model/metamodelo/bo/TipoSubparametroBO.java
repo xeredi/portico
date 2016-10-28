@@ -13,7 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.EntidadDAO;
@@ -158,7 +158,7 @@ public final class TipoSubparametroBO {
 
             enenDAO.insert(enen);
 
-            I18nBO.insertMap(session, I18nPrefix.enti, enti.getId(), i18nMap);
+            I18nBO.insertMap(session, ClassPrefix.enti, enti.getId(), i18nMap);
 
             session.commit();
         }
@@ -187,7 +187,7 @@ public final class TipoSubparametroBO {
             }
 
             entiDAO.update(tpspVO);
-            I18nBO.updateMap(session, I18nPrefix.enti, tpspVO.getId(), i18nMap);
+            I18nBO.updateMap(session, ClassPrefix.enti, tpspVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -221,7 +221,7 @@ public final class TipoSubparametroBO {
 
             enenDAO.delete(enen);
             entiDAO.delete(enti);
-            I18nBO.deleteMap(session, I18nPrefix.enti, enti.getId());
+            I18nBO.deleteMap(session, ClassPrefix.enti, enti.getId());
 
             session.commit();
         }

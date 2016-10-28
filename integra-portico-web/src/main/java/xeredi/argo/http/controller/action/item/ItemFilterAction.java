@@ -7,19 +7,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
 import xeredi.argo.model.maestro.bo.ParametroBO;
 import xeredi.argo.model.maestro.bo.ParametroBOFactory;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoHtml;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -30,18 +30,20 @@ import com.google.common.base.Preconditions;
  * @param <E>
  *            the element type
  */
+@Data
 public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends AbstractEntidadDetailVO> extends
         GridFilterAction<C> implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8917073535249583222L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.item;
+
     /** The enti. */
-    @Getter
     protected E enti;
 
     /** The label values map. */
-    @Getter
     protected Map<Long, List<LabelValueVO>> labelValuesMap;
 
     /**
@@ -114,13 +116,5 @@ public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends Abstr
     @Override
     public final Long getEntiId() {
         return model.getEntiId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final AccionPrefix getAccnPrefix() {
-        return AccionPrefix.item;
     }
 }

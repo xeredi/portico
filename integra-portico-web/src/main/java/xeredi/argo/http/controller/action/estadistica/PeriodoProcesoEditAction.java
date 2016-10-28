@@ -2,26 +2,29 @@ package xeredi.argo.http.controller.action.estadistica;
 
 import java.util.List;
 
-import lombok.Getter;
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.http.view.estadistica.ProcesoEstadisticaVO;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PeriodoProcesoEditAction.
  */
+@Data
 public final class PeriodoProcesoEditAction extends CrudEditAction<ProcesoEstadisticaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -505923029249050738L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.pepr;
+
     /** The sprt list. */
-    @Getter
     private List<SuperpuertoVO> sprtList;
 
     /**
@@ -43,13 +46,5 @@ public final class PeriodoProcesoEditAction extends CrudEditAction<ProcesoEstadi
         sprtCriterioVO.setIdioma(getIdioma());
 
         sprtList = sprtBO.selectList(sprtCriterioVO);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.pepr;
     }
 }

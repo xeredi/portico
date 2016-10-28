@@ -3,19 +3,19 @@ package xeredi.argo.http.util.interceptor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionInvocation;
+import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.http.controller.action.comun.ProtectedAction;
 import xeredi.argo.http.controller.action.item.ProtectedItemAction;
 import xeredi.argo.http.controller.action.seguridad.UsuarioAccesoAction;
 import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.opensymphony.xwork2.Action;
-import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -44,10 +44,10 @@ public final class AppInterceptor extends AbstractInterceptor {
             } else {
                 if (SessionManager.isAuthenticated(action)) {
                     if (action instanceof ProtectedAction) {
-                        final AccionPrefix prefix = ((ProtectedAction) action).getAccnPrefix();
+                        final ClassPrefix prefix = ((ProtectedAction) action).getPrefix();
                         final AccionCodigo codigo = ((ProtectedAction) action).getAccion();
 
-                        if (action instanceof ProtectedItemAction && prefix != AccionPrefix.ittr) {
+                        if (action instanceof ProtectedItemAction && prefix != ClassPrefix.ittr) {
                             // FIXME Corregir los permisos de trámites
                             final Long entiId = ((ProtectedItemAction) action).getEntiId();
 

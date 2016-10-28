@@ -3,9 +3,12 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.ReglaBO;
 import xeredi.argo.model.facturacion.bo.ReglaIncompatibleBO;
 import xeredi.argo.model.facturacion.vo.ReglaCriterioVO;
@@ -13,21 +16,21 @@ import xeredi.argo.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReglaIncompatibleEditAction.
  */
+@Data
 public final class ReglaIncompatibleEditAction extends CrudEditAction<ReglaIncompatibleVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3935107404576977395L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.rgin;
+
     /** The rgla2 list. */
-    @Getter
     private List<ReglaVO> rgla2List = new ArrayList<>();
 
     /**
@@ -72,13 +75,5 @@ public final class ReglaIncompatibleEditAction extends CrudEditAction<ReglaIncom
         rgla2Criterio.setFechaVigencia(model.getFref());
 
         rgla2List = rglaBO.selectList(rgla2Criterio);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.rgin;
     }
 }

@@ -3,31 +3,34 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.Calendar;
 import java.util.Map;
 
-import lombok.Setter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.CargoBO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.util.DateUtil;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CargoSaveAction.
  */
+@Data
 public final class CargoSaveAction extends CrudSaveAction<CargoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4637124394309482562L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.crgo;
+
     /** The i18n map. */
-    @Setter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -72,13 +75,5 @@ public final class CargoSaveAction extends CrudSaveAction<CargoVO> {
         DateUtil.truncTime(model.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
 
         FieldValidator.validateVersion(this, accion, model);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.crgo;
     }
 }

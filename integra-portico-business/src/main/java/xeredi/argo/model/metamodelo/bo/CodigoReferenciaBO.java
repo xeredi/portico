@@ -10,7 +10,7 @@ import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.CodigoReferenciaDAO;
@@ -48,7 +48,7 @@ public final class CodigoReferenciaBO {
             cdrfVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             cdrfDAO.insert(cdrfVO);
 
-            I18nBO.insertMap(session, I18nPrefix.cdrf, cdrfVO.getId(), i18nMap);
+            I18nBO.insertMap(session, ClassPrefix.cdrf, cdrfVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -74,7 +74,7 @@ public final class CodigoReferenciaBO {
                 throw new InstanceNotFoundException(MessageI18nKey.cdrf, cdrfVO);
             }
 
-            I18nBO.updateMap(session, I18nPrefix.cdrf, cdrfVO.getId(), i18nMap);
+            I18nBO.updateMap(session, ClassPrefix.cdrf, cdrfVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -94,7 +94,7 @@ public final class CodigoReferenciaBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
-            I18nBO.deleteMap(session, I18nPrefix.cdrf, cdrfVO.getId());
+            I18nBO.deleteMap(session, ClassPrefix.cdrf, cdrfVO.getId());
 
             final int deleted = cdrfDAO.delete(cdrfVO);
 

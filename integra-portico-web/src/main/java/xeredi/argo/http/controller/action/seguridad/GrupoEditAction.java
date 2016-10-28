@@ -7,9 +7,10 @@ import java.util.Map;
 
 import com.google.common.base.Preconditions;
 
-import lombok.Getter;
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.AccionBaseBO;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.bo.AccionEspecialBO;
@@ -22,7 +23,6 @@ import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 import xeredi.argo.model.metamodelo.vo.AccionEspecialCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEspecialVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.metamodelo.vo.TramiteCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
@@ -33,31 +33,29 @@ import xeredi.argo.model.seguridad.vo.GrupoVO;
 /**
  * The Class GrupoEditAction.
  */
+@Data
 public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5574343207861340756L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.grpo;
+
     /** The prefix list. */
-    @Getter
-    private List<AccionPrefix> prefixList;
+    private List<ClassPrefix> prefixList;
 
     /** The accn map. */
-    @Getter
-    private Map<AccionPrefix, List<AccionBaseVO>> acbsMap;
+    private Map<ClassPrefix, List<AccionBaseVO>> acbsMap;
 
     /** The enti list. */
-    @Getter
     private List<Long> entiList;
 
     /** The acen map. */
-    @Getter
     private Map<Long, List<AccionEntidadVO>> acenMap;
 
-    @Getter
     private Map<Long, List<AccionEspecialVO>> acesMap;
 
-    @Getter
     private Map<Long, List<TramiteVO>> trmtMap;
 
     /**
@@ -149,13 +147,5 @@ public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
 
             trmtMap.get(trmt.getEntiId()).add(trmt);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.grpo;
     }
 }

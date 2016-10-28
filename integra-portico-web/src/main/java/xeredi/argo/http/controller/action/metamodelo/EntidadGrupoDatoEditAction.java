@@ -3,30 +3,32 @@ package xeredi.argo.http.controller.action.metamodelo;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadGrupoDatoEditAction.
  */
+@Data
 public final class EntidadGrupoDatoEditAction extends CrudEditAction<EntidadGrupoDatoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1801325748314233476L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.engd;
+
     /** The i18n map. */
-    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -44,7 +46,7 @@ public final class EntidadGrupoDatoEditAction extends CrudEditAction<EntidadGrup
             final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
             model = engdBO.select(model.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.engd, model.getId());
+            i18nMap = I18nBO.selectMap(ClassPrefix.engd, model.getId());
         }
     }
 
@@ -54,13 +56,5 @@ public final class EntidadGrupoDatoEditAction extends CrudEditAction<EntidadGrup
     @Override
     public void doLoadDependencies() throws ApplicationException {
         // noop
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.engd;
     }
 }

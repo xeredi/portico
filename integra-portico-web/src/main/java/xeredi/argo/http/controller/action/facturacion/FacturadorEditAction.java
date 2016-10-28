@@ -3,10 +3,13 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.Calendar;
 import java.util.List;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.facturacion.bo.FacturaSerieBO;
@@ -15,42 +18,31 @@ import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
 import xeredi.argo.model.facturacion.vo.FacturadorVO;
 import xeredi.argo.model.facturacion.vo.ValoracionGrupoTipo;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturadorEditAction.
  */
+@Data
 public final class FacturadorEditAction extends CrudEditAction<FacturadorVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1389260062489112937L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.fcdr;
+
     /** The fcsr list. */
-    @Getter
     private List<FacturaSerieVO> fcsrList;
 
     /** The tpsr list. */
-    @Getter
     private List<LabelValueVO> tpsrList;
 
     /** The prto list. */
-    @Getter
     private List<PuertoVO> prtoList;
 
-    @Getter
     private ValoracionGrupoTipo[] grupoTipoList;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.fcdr;
-    }
 
     /**
      * {@inheritDoc}

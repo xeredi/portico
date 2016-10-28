@@ -2,12 +2,13 @@ package xeredi.argo.http.controller.action.item;
 
 import java.io.IOException;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridXlsExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -16,10 +17,14 @@ import com.google.common.base.Preconditions;
  * @param <C>
  *            the generic type
  */
+@Data
 public abstract class ItemXlsExportAction<C extends ItemCriterioVO> extends GridXlsExportAction<C> implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1760701788741847611L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.item;
 
     /**
      * {@inheritDoc}
@@ -50,13 +55,5 @@ public abstract class ItemXlsExportAction<C extends ItemCriterioVO> extends Grid
     @Override
     public final Long getEntiId() {
         return criterio.getEntiId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final AccionPrefix getAccnPrefix() {
-        return AccionPrefix.item;
     }
 }

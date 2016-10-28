@@ -13,13 +13,13 @@ import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.AccionEntidadDAO;
 import xeredi.argo.model.metamodelo.dao.FuncionalidadDAO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.dao.FuncionalidadGrupoDAO;
 import xeredi.argo.model.seguridad.vo.FuncionalidadGrupoCriterioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -44,7 +44,7 @@ public final class AccionEntidadBO {
 	 *            the usro id
 	 * @return true, if is user allowed
 	 */
-	public boolean isUserAllowed(final @NonNull AccionPrefix prefix, final @NonNull AccionCodigo codigo,
+	public boolean isUserAllowed(final @NonNull ClassPrefix prefix, final @NonNull AccionCodigo codigo,
 			final @NonNull Long entiId, final @NonNull Long usroId) {
 		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
 			final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);

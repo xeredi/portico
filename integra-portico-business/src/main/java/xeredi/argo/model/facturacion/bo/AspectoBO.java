@@ -17,7 +17,7 @@ import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.dao.AspectoDAO;
@@ -183,7 +183,7 @@ public final class AspectoBO {
 
             aspcDAO.insertVersion(aspc);
 
-            I18nBO.insertMap(session, I18nPrefix.aspv, aspc.getVersion().getId(), i18nMap);
+            I18nBO.insertMap(session, ClassPrefix.aspv, aspc.getVersion().getId(), i18nMap);
 
             session.commit();
         }
@@ -218,7 +218,7 @@ public final class AspectoBO {
             aspcDAO.insert(aspc);
             aspcDAO.insertVersion(aspc);
 
-            I18nBO.insertMap(session, I18nPrefix.aspv, aspc.getVersion().getId(), i18nMap);
+            I18nBO.insertMap(session, ClassPrefix.aspv, aspc.getVersion().getId(), i18nMap);
 
             session.commit();
         }
@@ -256,7 +256,7 @@ public final class AspectoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.aspc, aspc);
             }
 
-            I18nBO.updateMap(session, I18nPrefix.aspv, aspc.getVersion().getId(), i18nMap);
+            I18nBO.updateMap(session, ClassPrefix.aspv, aspc.getVersion().getId(), i18nMap);
 
             session.commit();
         }
@@ -277,7 +277,7 @@ public final class AspectoBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
 
-            I18nBO.deleteMap(session, I18nPrefix.aspv, aspc.getVersion().getId());
+            I18nBO.deleteMap(session, ClassPrefix.aspv, aspc.getVersion().getId());
 
             if (aspcDAO.deleteVersion(aspc) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.aspc, aspc);

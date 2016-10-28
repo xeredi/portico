@@ -1,21 +1,26 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.TipoEstadisticaBO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoEstadisticaRemoveAction.
  */
+@Data
 public final class TipoEstadisticaRemoveAction extends CrudRemoveAction<TipoEstadisticaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8551997472365097343L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.tpes;
 
     /**
      * {@inheritDoc}
@@ -28,13 +33,4 @@ public final class TipoEstadisticaRemoveAction extends CrudRemoveAction<TipoEsta
 
         entiBO.delete(model);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.tpes;
-    }
-
 }

@@ -2,9 +2,12 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.List;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
@@ -12,29 +15,27 @@ import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionLineaDetailAction.
  */
+@Data
 public final class ValoracionLineaDetailAction extends CrudDetailAction<ValoracionLineaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -157778002663429185L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.vlrl;
+
     /** The aspc. */
-    @Getter
     private AspectoVO aspc;
 
     /** The vlrl padre. */
-    @Getter
     private ValoracionLineaVO vlrlPadre;
 
     /** The vlrl hijos list. */
-    @Getter
     private List<ValoracionLineaVO> vlrlHijosList;
 
     /**
@@ -85,13 +86,5 @@ public final class ValoracionLineaDetailAction extends CrudDetailAction<Valoraci
         aspcCriterio.setIdioma(getIdioma());
 
         aspc = aspcBO.selectObject(aspcCriterio);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.vlrl;
     }
 }

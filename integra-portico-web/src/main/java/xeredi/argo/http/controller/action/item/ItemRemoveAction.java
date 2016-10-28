@@ -1,11 +1,12 @@
 package xeredi.argo.http.controller.action.item;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.item.vo.ItemVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -14,10 +15,14 @@ import com.google.common.base.Preconditions;
  * @param <I>
  *            the generic type
  */
+@Data
 public abstract class ItemRemoveAction<I extends ItemVO> extends CrudRemoveAction<I> implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6012777404694278177L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.item;
 
     /**
      * {@inheritDoc}
@@ -45,13 +50,5 @@ public abstract class ItemRemoveAction<I extends ItemVO> extends CrudRemoveActio
     @Override
     public final Long getEntiId() {
         return model.getEntiId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final AccionPrefix getAccnPrefix() {
-        return AccionPrefix.item;
     }
 }

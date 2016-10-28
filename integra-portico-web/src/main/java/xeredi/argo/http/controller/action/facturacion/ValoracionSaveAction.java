@@ -2,22 +2,27 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import com.google.common.base.Preconditions;
 
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionSaveAction.
  */
+@Data
 public final class ValoracionSaveAction extends CrudSaveAction<ValoracionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4029857636749956262L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.vlrc;
 
     /**
      * {@inheritDoc}
@@ -73,13 +78,5 @@ public final class ValoracionSaveAction extends CrudSaveAction<ValoracionVO> {
         if (!hasErrors()) {
             FieldValidator.validateRequired(this, MessageI18nKey.vlrc_pagador, model.getPagador().getId());
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.vlrc;
     }
 }

@@ -4,8 +4,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import lombok.Data;
 import xeredi.argo.http.controller.action.item.ItemXlsExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.estadistica.bo.EstadisticaBO;
 import xeredi.argo.model.estadistica.report.EstadisticaXls;
@@ -17,10 +19,14 @@ import xeredi.argo.model.metamodelo.vo.TipoEstadisticaDetailVO;
 /**
  * The Class EstadisticaXlsExportAction.
  */
+@Data
 public final class EstadisticaXlsExportAction extends ItemXlsExportAction<EstadisticaCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1981745354519002750L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.estd;
 
     /**
      * {@inheritDoc}

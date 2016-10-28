@@ -15,7 +15,7 @@ import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.dao.CargoDAO;
@@ -154,7 +154,7 @@ public class CargoBO {
 
             crgoDAO.insertVersion(crgo);
 
-            I18nBO.insertMap(session, I18nPrefix.crgv, crgo.getVersion().getId(), i18nMap);
+            I18nBO.insertMap(session, ClassPrefix.crgv, crgo.getVersion().getId(), i18nMap);
 
             session.commit();
         }
@@ -190,7 +190,7 @@ public class CargoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.crgo, crgo);
             }
 
-            I18nBO.updateMap(session, I18nPrefix.crgv, crgo.getVersion().getId(), i18nMap);
+            I18nBO.updateMap(session, ClassPrefix.crgv, crgo.getVersion().getId(), i18nMap);
 
             session.commit();
         }
@@ -215,7 +215,7 @@ public class CargoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.crgo, crgo);
             }
 
-            I18nBO.deleteMap(session, I18nPrefix.crgv, crgo.getVersion().getId());
+            I18nBO.deleteMap(session, ClassPrefix.crgv, crgo.getVersion().getId());
 
             session.commit();
         }

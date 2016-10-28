@@ -1,21 +1,26 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CampoAgregacionDetailAction.
  */
+@Data
 public final class CampoAgregacionDetailAction extends CrudDetailAction<CampoAgregacionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7449645197472409959L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.cmag;
 
     /**
      * {@inheritDoc}
@@ -29,13 +34,5 @@ public final class CampoAgregacionDetailAction extends CrudDetailAction<CampoAgr
         final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
 
         model = cmagBO.select(model.getTpesId(), model.getEntd().getId(), idioma);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.cmag;
     }
 }

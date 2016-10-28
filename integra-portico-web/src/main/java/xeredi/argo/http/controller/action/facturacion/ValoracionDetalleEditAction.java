@@ -1,8 +1,11 @@
 package xeredi.argo.http.controller.action.facturacion;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.ValoracionDetalleBO;
 import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
@@ -12,29 +15,27 @@ import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionDetalleEditAction.
  */
+@Data
 public final class ValoracionDetalleEditAction extends CrudEditAction<ValoracionDetalleVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2216528521567482950L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.vlrd;
+
     /** The vlrl. */
-    @Getter
     private ValoracionLineaVO vlrl;
 
     /** The vlrl padre. */
-    @Getter
     private ValoracionLineaVO vlrlPadre;
 
     /** The aspc. */
-    @Getter
     private AspectoVO aspc;
 
     /**
@@ -87,13 +88,5 @@ public final class ValoracionDetalleEditAction extends CrudEditAction<Valoracion
     @Override
     public void doLoadDependencies() throws ApplicationException {
         // noop
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.vlrd;
     }
 }

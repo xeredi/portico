@@ -2,29 +2,32 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.Map;
 
-import lombok.Setter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TramiteSaveAction.
  */
+@Data
 public final class TramiteSaveAction extends CrudSaveAction<TramiteVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6857018201060457551L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.trmt;
+
     /** The i18n map. */
-    @Setter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -70,13 +73,5 @@ public final class TramiteSaveAction extends CrudSaveAction<TramiteVO> {
         }
 
         FieldValidator.validateI18n(this, i18nMap);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.trmt;
     }
 }

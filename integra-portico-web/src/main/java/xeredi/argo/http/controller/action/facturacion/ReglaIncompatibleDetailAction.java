@@ -2,21 +2,26 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import com.google.common.base.Preconditions;
 
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.ReglaIncompatibleBO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReglaIncompatibleDetailAction.
  */
+@Data
 public final class ReglaIncompatibleDetailAction extends CrudDetailAction<ReglaIncompatibleVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7041617693291205414L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.rgin;
 
     /**
      * {@inheritDoc}
@@ -32,13 +37,5 @@ public final class ReglaIncompatibleDetailAction extends CrudDetailAction<ReglaI
         rginCriterio.setFechaVigencia(model.getFref());
 
         model = rginBO.selectObject(rginCriterio);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.rgin;
     }
 }

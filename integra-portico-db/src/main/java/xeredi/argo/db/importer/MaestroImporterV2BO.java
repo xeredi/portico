@@ -17,25 +17,25 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import lombok.NonNull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.log4j.lf5.viewer.configure.MRUFileManager;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.dao.I18nDAO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
-import xeredi.argo.model.comun.vo.I18nPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
@@ -57,8 +57,6 @@ import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
 import xeredi.argo.model.util.DateUtil;
 import xeredi.util.mybatis.SqlMapperLocator;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -330,7 +328,7 @@ public final class MaestroImporterV2BO extends EntityImporterBO {
 					final String texto = rs.getString(i++);
 
 					i18n.setExternalId(prmt.getVersion().getId());
-					i18n.setPrefix(I18nPrefix.prvr);
+					i18n.setPrefix(ClassPrefix.prvr);
 					i18n.setLanguage(ConfigurationProxy.getString(ConfigurationKey.language_default));
 					i18n.setText(texto);
 

@@ -1,18 +1,23 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
+import lombok.Data;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.TipoEstadisticaBO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoEstadisticaSaveAction.
  */
+@Data
 public final class TipoEstadisticaSaveAction extends EntidadSaveAction<TipoEstadisticaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4043292220180385996L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.tpes;
 
     /**
      * {@inheritDoc}
@@ -41,13 +46,5 @@ public final class TipoEstadisticaSaveAction extends EntidadSaveAction<TipoEstad
         default:
             throw new Error("Accion no soportada: " + accion);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.tpes;
     }
 }

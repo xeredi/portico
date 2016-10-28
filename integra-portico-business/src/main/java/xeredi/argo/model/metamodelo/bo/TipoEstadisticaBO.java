@@ -13,7 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.EntidadDAO;
@@ -147,7 +147,7 @@ public final class TipoEstadisticaBO {
             entiDAO.insert(tpesVO);
             tpesDAO.insert(tpesVO);
 
-            I18nBO.insertMap(session, I18nPrefix.enti, tpesVO.getId(), i18nMap);
+            I18nBO.insertMap(session, ClassPrefix.enti, tpesVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -174,7 +174,7 @@ public final class TipoEstadisticaBO {
                 throw new InstanceNotFoundException(MessageI18nKey.tpes, tpesVO);
             }
 
-            I18nBO.updateMap(session, I18nPrefix.enti, tpesVO.getId(), i18nMap);
+            I18nBO.updateMap(session, ClassPrefix.enti, tpesVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -199,7 +199,7 @@ public final class TipoEstadisticaBO {
                 throw new InstanceNotFoundException(MessageI18nKey.tpes, tpes);
             }
 
-            I18nBO.deleteMap(session, I18nPrefix.enti, tpes.getId());
+            I18nBO.deleteMap(session, ClassPrefix.enti, tpes.getId());
 
             entiDAO.delete(tpes);
 

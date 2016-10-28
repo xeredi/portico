@@ -2,32 +2,35 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
 import xeredi.argo.model.metamodelo.bo.TramiteTipoDatoBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class TramiteTipoDatoEditAction.
  */
+@Data
 public final class TramiteTipoDatoEditAction extends CrudEditAction<TramiteTipoDatoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7651037788650883305L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.trtd;
+
     /** The entd list. */
-    @Getter
     private List<EntidadTipoDatoVO> entdList;
 
     /**
@@ -71,13 +74,5 @@ public final class TramiteTipoDatoEditAction extends CrudEditAction<TramiteTipoD
 
             entdList = entdBO.selectList(entdCriterio);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.trtd;
     }
 }

@@ -225,6 +225,31 @@ COMMENT ON COLUMN tbl_funcionalidad_grupo_fngr.fngr_grpo_pk IS 'Identificador de
 
 
 
+-- tbl_modulo_mdlo
+CREATE TABLE tbl_modulo_mdlo (
+	mdlo_pk NUMBER(19) NOT NULL
+	, mdlo_codigo VARCHAR2(100) NOT NULL
+
+	, CONSTRAINT pk_mdlo PRIMARY KEY (mdlo_pk)
+	, CONSTRAINT uq_mdlo UNIQUE (mdlo_codigo)
+
+	, CONSTRAINT fk_mdlo_pk FOREIGN KEY (mdlo_pk)
+		REFERENCES tbl_funcionalidad_fncd (fncd_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_modulo_mdlo FOR porticoadm.tbl_modulo_mdlo\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_modulo_mdlo TO portico\
+
+COMMENT ON TABLE tbl_modulo_mdlo IS 'Modulos de la aplicacion'\
+COMMENT ON COLUMN tbl_modulo_mdlo.mdlo_pk IS 'Identificador de modulo'\
+COMMENT ON COLUMN tbl_modulo_mdlo.mdlo_codigo IS 'Codigo del modulo (servicios, maestros, ...)'\
+
+
+
+
+
+
 -- tbl_accion_base_acbs
 CREATE TABLE tbl_accion_base_acbs (
 	acbs_pk NUMBER(19) NOT NULL
@@ -236,7 +261,6 @@ CREATE TABLE tbl_accion_base_acbs (
 
 	, CONSTRAINT fk_acbs_pk FOREIGN KEY (acbs_pk)
 		REFERENCES tbl_funcionalidad_fncd (fncd_pk)
-		ON DELETE CASCADE
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_accion_base_acbs FOR porticoadm.tbl_accion_base_acbs\
@@ -323,7 +347,6 @@ CREATE TABLE tbl_accion_especial_aces (
 
 	, CONSTRAINT fk_aces_pk FOREIGN KEY (aces_pk)
 		REFERENCES tbl_funcionalidad_fncd (fncd_pk)
-		ON DELETE CASCADE
 	, CONSTRAINT fk_aces_enti_pk FOREIGN KEY (aces_enti_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
 )\
@@ -2060,7 +2083,6 @@ CREATE TABLE tbl_accion_entidad_acen (
 
 	, CONSTRAINT fk_acen_pk FOREIGN KEY (acen_pk)
 		REFERENCES tbl_funcionalidad_fncd (fncd_pk)
-		ON DELETE CASCADE
 	, CONSTRAINT fk_acen_aebs_pk FOREIGN KEY (acen_aebs_pk)
 		REFERENCES tbl_accion_entidad_base_aebs (aebs_pk)
 	, CONSTRAINT fk_acen_enti_pk FOREIGN KEY (acen_enti_pk)
@@ -2086,7 +2108,6 @@ CREATE TABLE tbl_tramite_trmt (
 
 	, CONSTRAINT fk_trmt_pk FOREIGN KEY (trmt_pk)
 		REFERENCES tbl_funcionalidad_fncd (fncd_pk)
-		ON DELETE CASCADE
 	, CONSTRAINT fk_trmt_enti_pk FOREIGN KEY (trmt_enti_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
 )\
@@ -2306,6 +2327,7 @@ DROP TABLE tbl_entidad_entidad_enen\
 DROP TABLE tbl_accion_especial_aces\
 DROP TABLE tbl_entidad_enti\
 DROP TABLE tbl_accion_entidad_base_aebs\
+DROP TABLE tbl_modulo_mdlo\
 DROP TABLE tbl_accion_base_acbs\
 DROP TABLE tbl_funcionalidad_grupo_fngr\
 DROP TABLE tbl_funcionalidad_fncd\

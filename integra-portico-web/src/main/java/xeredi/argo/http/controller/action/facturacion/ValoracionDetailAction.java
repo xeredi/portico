@@ -2,9 +2,12 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.List;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.bo.ValoracionCargoBO;
@@ -16,35 +19,32 @@ import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionDetailAction.
  */
+@Data
 public final class ValoracionDetailAction extends CrudDetailAction<ValoracionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8955027989386166332L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.vlrc;
+
     /** The aspc. */
-    @Getter
     private AspectoVO aspc;
 
     /** The vlrg list. */
-    @Getter
     private List<ValoracionCargoVO> vlrgList;
 
     /** The vlri list. */
-    @Getter
     private List<ValoracionImpuestoVO> vlriList;
 
     /** The tpdt cod exencion. */
-    @Getter
     private TipoDatoVO tpdtCodExencion;
 
     /**
@@ -81,13 +81,5 @@ public final class ValoracionDetailAction extends CrudDetailAction<ValoracionVO>
         aspcCriterio.setIdioma(getIdioma());
 
         aspc = aspcBO.selectObject(aspcCriterio);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.vlrc;
     }
 }

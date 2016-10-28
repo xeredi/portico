@@ -3,28 +3,31 @@ package xeredi.argo.http.controller.action.estadistica;
 import java.util.List;
 import java.util.Map;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.estadistica.bo.CuadroMesBO;
 import xeredi.argo.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.argo.model.estadistica.vo.CuadroMesVO;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CuadroMesAction.
  */
+@Data
 public final class CuadroMesDetailAction extends CrudDetailAction<PeriodoProcesoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6080323896171314975L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.cdms;
+
     /** The cdms map. */
-    @Getter
     private Map<String, List<CuadroMesVO>> cdmsMap;
 
     // acciones web
@@ -41,14 +44,5 @@ public final class CuadroMesDetailAction extends CrudDetailAction<PeriodoProceso
 
         model = peprBO.select(model.getId(), getIdioma());
         cdmsMap = cdmsBO.selectMap(model.getId());
-    }
-
-    // get / set
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.cdms;
     }
 }

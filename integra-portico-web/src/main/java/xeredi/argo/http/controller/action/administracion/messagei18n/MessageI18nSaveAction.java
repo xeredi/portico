@@ -2,25 +2,28 @@ package xeredi.argo.http.controller.action.administracion.messagei18n;
 
 import java.util.Map;
 
-import lombok.Setter;
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.model.comun.bo.MessageI18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.MessageI18nVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class MessageI18nSaveAction.
  */
+@Data
 public final class MessageI18nSaveAction extends CrudSaveAction<MessageI18nKey> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3331358676066653527L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.m18n;
+
     /** The i18n map. */
-    @Setter
     private Map<String, MessageI18nVO> i18nMap;
 
     /**
@@ -39,13 +42,5 @@ public final class MessageI18nSaveAction extends CrudSaveAction<MessageI18nKey> 
     @Override
     public void doValidate() throws ApplicationException {
         // FIXME Validate
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.m18n;
     }
 }

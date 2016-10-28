@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.metamodelo.dao.ModuloDAO">
+    <resultMap type="ModuloVO" id="ResultMap">
+        <id column="mdlo_pk" />
+
+        <result column="mdlo_pk" property="id" />
+        <result column="mdlo_codigo" property="codigo" />
+
+        <result column="mdlo_etiqueta" property="etiqueta" />
+    </resultMap>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+        mdlo_pk, mdlo_codigo
+    FROM
+        tbl_modulo_mdlo
+    ]]>
+    </sql>
+
+    <sql id="SelectCountPrefix">
+    <![CDATA[
+    SELECT
+        COUNT(1)
+    FROM
+        tbl_modulo_mdlo
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND mdlo_pk = #{id}
+            </if>
+            <if test="codigo != null">
+                AND mdlo_codigo = #{codigo}
+            </if>
+            <if test="grpoId != null">
+            <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_funcionalidad_grupo_fngr
+                    WHERE
+                        fngr_fncd_pk = mdlo_pk
+                        AND fngr_grpo_pk = #{grpoId}
+                )
+            ]]>
+            </if>
+            <if test="usroId != null">
+            <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_funcionalidad_grupo_fngr
+                    WHERE
+                        fngr_fncd_pk = mdlo_pk
+                        AND EXISTS (
+                            SELECT 1
+                            FROM
+                                tbl_usuario_grupo_usgr
+                            WHERE
+                                usgr_grpo_pk = fngr_grpo_pk
+                                AND usgr_usro_pk = #{usroId}
+                        )
+                )
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <select id="count" parameterType="ModuloCriterioVO" resultType="Integer">
+        <include refid="SelectCountPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="selectList" parameterType="ModuloCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY mdlo_codigo
+    </select>
+
+    <select id="selectObject" parameterType="ModuloCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="exists" parameterType="ModuloVO" resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_modulo_mdlo
+        WHERE mdlo_codigo = #{codigo}
+        ]]>
+    </select>
+
+    <select id="existsCriterio" parameterType="ModuloCriterioVO" resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_modulo_mdlo
+        ]]>
+        <include refid="SelectWhere" />
+    </select>
+
+    <insert id="insert" parameterType="ModuloVO">
+        <![CDATA[
+        INSERT INTO tbl_modulo_mdlo (mdlo_pk, mdlo_codigo)
+        VALUES (#{id}, #{aebs.id}, #{codigo})
+        ]]>
+    </insert>
+
+    <update id="update" parameterType="ModuloVO">
+        <![CDATA[
+        UPDATE tbl_modulo_mdlo SET
+            mdlo_codigo = #{codigo}
+        WHERE mdlo_pk = #{id}
+        ]]>
+    </update>
+
+    <delete id="delete" parameterType="ModuloVO">
+        <![CDATA[
+        DELETE FROM tbl_modulo_mdlo
+        WHERE
+            mdlo_pk = #{id}
+        ]]>
+    </delete>
+</mapper>

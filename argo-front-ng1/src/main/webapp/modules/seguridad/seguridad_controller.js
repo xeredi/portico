@@ -320,6 +320,7 @@
             UsuarioService.filter(vm.searchCriteria).then(function(data) {
                 vm.sprtList = data.sprtList;
                 vm.prtoList = data.prtoList;
+                vm.grpoList = data.grpoList;
             });
         }
 

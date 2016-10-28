@@ -2,30 +2,27 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import com.google.common.base.Preconditions;
 
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.FacturaAnulacionBO;
 import xeredi.argo.model.facturacion.vo.FacturaAnulacionVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturaAnulacionSaveAction.
  */
+@Data
 public final class FacturaAnulacionSaveAction extends CrudSaveAction<FacturaAnulacionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1464959696532041004L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.fcan;
-    }
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.fcan;
 
     /**
      * {@inheritDoc}

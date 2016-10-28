@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.EntidadGrupoDatoDAO;
@@ -48,7 +48,7 @@ public final class EntidadGrupoDatoBO {
             // FIXME Deberia controlar duplicados
             engdDAO.insert(engdVO);
 
-            I18nBO.insertMap(session, I18nPrefix.engd, engdVO.getId(), i18nMap);
+            I18nBO.insertMap(session, ClassPrefix.engd, engdVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -76,7 +76,7 @@ public final class EntidadGrupoDatoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.engd, engdVO);
             }
 
-            I18nBO.updateMap(session, I18nPrefix.engd, engdVO.getId(), i18nMap);
+            I18nBO.updateMap(session, ClassPrefix.engd, engdVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -96,7 +96,7 @@ public final class EntidadGrupoDatoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.engd, engd);
             }
 
-            I18nBO.deleteMap(session, I18nPrefix.engd, engd.getId());
+            I18nBO.deleteMap(session, ClassPrefix.engd, engd.getId());
 
             session.commit();
         }

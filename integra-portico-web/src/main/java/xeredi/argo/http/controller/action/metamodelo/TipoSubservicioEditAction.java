@@ -2,30 +2,33 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoSubservicioEditAction.
  */
+@Data
 public final class TipoSubservicioEditAction extends EntidadEditAction<TipoSubservicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5529476683109631764L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.tpss;
+
     /** The tpdt estado list. */
-    @Getter
     private List<LabelValueVO> tpdtEstadoList;
 
     /**
@@ -54,13 +57,5 @@ public final class TipoSubservicioEditAction extends EntidadEditAction<TipoSubse
         tpdtCriterio.setIdioma(idioma);
 
         tpdtEstadoList = tpdtBO.selectLabelValues(tpdtCriterio);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.tpss;
     }
 }

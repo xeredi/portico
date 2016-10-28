@@ -2,21 +2,26 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.Calendar;
 
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoListAction.
  */
+@Data
 public final class AspectoListAction extends GridListAction<AspectoCriterioVO, AspectoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6610833697858691088L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.aspc;
 
     /**
      * {@inheritDoc}
@@ -30,13 +35,5 @@ public final class AspectoListAction extends GridListAction<AspectoCriterioVO, A
         final AspectoBO aspcBO = new AspectoBO();
 
         resultList = aspcBO.selectList(model, getOffset(), limit);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.aspc;
     }
 }

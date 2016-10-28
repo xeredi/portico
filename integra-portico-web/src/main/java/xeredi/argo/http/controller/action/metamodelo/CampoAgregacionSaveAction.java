@@ -1,24 +1,29 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CampoAgregacionSaveAction.
  */
+@Data
 public final class CampoAgregacionSaveAction extends CrudSaveAction<CampoAgregacionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -8815220820665248741L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.cmag;
 
     /**
      * {@inheritDoc}
@@ -61,13 +66,5 @@ public final class CampoAgregacionSaveAction extends CrudSaveAction<CampoAgregac
 
         FieldValidator.validateRequired(this, MessageI18nKey.cmag_nombre, model.getNombre());
         FieldValidator.validateRequired(this, MessageI18nKey.cmag_agregar, model.getAgregar());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.cmag;
     }
 }

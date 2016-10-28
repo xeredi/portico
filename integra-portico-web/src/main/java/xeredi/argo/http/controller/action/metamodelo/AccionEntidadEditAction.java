@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.google.common.base.Preconditions;
 
-import lombok.Getter;
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBaseBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
@@ -14,28 +15,22 @@ import xeredi.argo.model.metamodelo.vo.AccionEntidadBaseCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadBaseVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AccionEntidadEditAction.
  */
+@Data
 public final class AccionEntidadEditAction extends CrudEditAction<AccionEntidadVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6298953902914627135L;
 
-    /** The accn list. */
-    @Getter
-    private List<AccionEntidadBaseVO> aebsList;
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.acen;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.acen;
-    }
+    /** The accn list. */
+    private List<AccionEntidadBaseVO> aebsList;
 
     /**
      * {@inheritDoc}
@@ -64,7 +59,7 @@ public final class AccionEntidadEditAction extends CrudEditAction<AccionEntidadV
         final AccionEntidadBaseBO aebsBO = new AccionEntidadBaseBO();
         final AccionEntidadBaseCriterioVO aebsCriterio = new AccionEntidadBaseCriterioVO();
 
-        aebsCriterio.setPrefix(AccionPrefix.item);
+        aebsCriterio.setPrefix(ClassPrefix.item);
 
         aebsList = aebsBO.selectList(aebsCriterio);
     }

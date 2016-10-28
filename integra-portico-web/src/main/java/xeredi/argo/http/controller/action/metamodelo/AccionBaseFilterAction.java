@@ -1,23 +1,28 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
+import lombok.Data;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.metamodelo.vo.AccionBaseCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AccionBaseFilterAction.
  */
-public final class AccionBaseFilterAction extends GridFilterAction<TipoServicioCriterioVO> {
+@Data
+public final class AccionBaseFilterAction extends GridFilterAction<AccionBaseCriterioVO> {
 
     /** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -1615933316922788769L;
 
+	/** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.acbs;
+
 	@Getter
-	private AccionPrefix[] acprList;
+	private ClassPrefix[] acprList;
 
 	@Getter
 	private AccionCodigo[] accoList;
@@ -36,14 +41,6 @@ public final class AccionBaseFilterAction extends GridFilterAction<TipoServicioC
     @Override
     public void doLoadDependencies() throws ApplicationException {
 		accoList = AccionCodigo.values();
-		acprList = AccionPrefix.values();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.acbs;
+		acprList = ClassPrefix.values();
     }
 }

@@ -3,35 +3,37 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.Calendar;
 import java.util.Map;
 
-import lombok.Setter;
-
 import org.apache.commons.validator.GenericValidator;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ReglaBO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.util.DateUtil;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReglaSaveAction.
  */
+@Data
 public final class ReglaSaveAction extends CrudSaveAction<ReglaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1378188997796757435L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.rgla;
+
     /** The i18n map. */
-    @Setter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -176,13 +178,5 @@ public final class ReglaSaveAction extends CrudSaveAction<ReglaVO> {
                         .getPathCuant6());
             }
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.rgla;
     }
 }

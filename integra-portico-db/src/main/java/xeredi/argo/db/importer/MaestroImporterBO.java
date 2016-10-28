@@ -35,7 +35,7 @@ import xeredi.argo.model.comun.exception.OverlapException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.proxy.PorticoResourceBundle;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
@@ -155,7 +155,7 @@ public final class MaestroImporterBO {
 
                 for (final MaestroNodoVO maestroVO : maestrosList) {
                     final AbstractEntidadDetailVO entiDetail = EntidadProxy.select(maestroVO.getEntidad().getId());
-                    final String entiName = bundle.getString(I18nPrefix.enti.name() + "_"
+                    final String entiName = bundle.getString(ClassPrefix.enti.name() + "_"
                             + entiDetail.getEnti().getId());
 
                     switch (entiDetail.getEnti().getTipo()) {
@@ -215,7 +215,7 @@ public final class MaestroImporterBO {
             final StringBuffer sql) throws SQLException, DuplicateInstanceException, InstanceNotFoundException {
         final TipoParametroDetailVO tpprDetail = TipoParametroProxy.select(entidad.getId());
         final ParametroBO prmtBO = ParametroBOFactory.newInstance(entidad.getId());
-        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + tpprDetail.getEnti().getId());
+        final String entiName = bundle.getString(ClassPrefix.enti.name() + "_" + tpprDetail.getEnti().getId());
 
         if (!tpprPrmtMap.containsKey(tpprDetail.getEnti().getId())) {
             tpprPrmtMap.put(tpprDetail.getEnti().getId(), new HashMap<String, Long>());
@@ -295,7 +295,7 @@ public final class MaestroImporterBO {
                     final I18nVO i18nVO = new I18nVO();
                     final String texto = rs.getString(i++);
 
-                    i18nVO.setPrefix(I18nPrefix.prvr);
+                    i18nVO.setPrefix(ClassPrefix.prvr);
                     i18nVO.setLanguage(ConfigurationProxy.getString(ConfigurationKey.language_default));
                     i18nVO.setText(texto);
 
@@ -351,10 +351,10 @@ public final class MaestroImporterBO {
         final SubparametroBO sprmBO = SubparametroBOFactory.newDefaultInstance();
         final TipoSubparametroDetailVO tpspDetail = TipoSubparametroProxy.select(entidad.getId());
         final TipoParametroDetailVO tpprPadreDetail = TipoParametroProxy.select(tpspDetail.getEnti().getTpprId());
-        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + tpspDetail.getEnti().getId());
-        final String entiAsociadaName = bundle.getString(I18nPrefix.enti.name() + "_"
+        final String entiName = bundle.getString(ClassPrefix.enti.name() + "_" + tpspDetail.getEnti().getId());
+        final String entiAsociadaName = bundle.getString(ClassPrefix.enti.name() + "_"
                 + tpspDetail.getEnti().getTpprAsociado().getId());
-        final String entiPadreName = bundle.getString(I18nPrefix.enti.name() + "_" + tpprPadreDetail.getEnti().getId());
+        final String entiPadreName = bundle.getString(ClassPrefix.enti.name() + "_" + tpprPadreDetail.getEnti().getId());
 
         if (tpspDetail.getEntiPadresList() == null || tpspDetail.getEntiPadresList().isEmpty()) {
             throw new Error("El tipo de subparametro: " + entiName + " no tiene entidades padre");

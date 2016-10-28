@@ -6,13 +6,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.vo.FacturadorVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
@@ -23,18 +24,14 @@ import xeredi.argo.proceso.facturacion.ProcesoFacturador;
 /**
  * The Class FacturadorSaveAction.
  */
+@Data
 public final class FacturadorSaveAction extends CrudSaveAction<FacturadorVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2241047270819035432L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.fcdr;
-    }
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.fcdr;
 
     /**
      * {@inheritDoc}

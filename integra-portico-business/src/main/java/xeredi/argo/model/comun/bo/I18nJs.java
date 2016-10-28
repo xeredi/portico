@@ -15,8 +15,8 @@ import org.apache.commons.logging.LogFactory;
 import com.google.common.collect.Sets;
 
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
-import xeredi.argo.model.comun.vo.I18nPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -45,8 +45,8 @@ public class I18nJs {
         final I18nBO i18nBO = new I18nBO();
         final MessageI18nBO mesgBO = new MessageI18nBO();
 
-        final Set<I18nPrefix> i18nPrefixSet = Sets.newHashSet(I18nPrefix.enti, I18nPrefix.engd, I18nPrefix.entd,
-                I18nPrefix.trmt, I18nPrefix.enac, I18nPrefix.enag, I18nPrefix.tpdt, I18nPrefix.cdrf);
+        final Set<ClassPrefix> i18nPrefixSet = Sets.newHashSet(ClassPrefix.enti, ClassPrefix.engd, ClassPrefix.entd,
+                ClassPrefix.trmt, ClassPrefix.tpdt, ClassPrefix.cdrf);
 
         for (final String language : languages) {
             LOG.info("Language: " + language);

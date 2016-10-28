@@ -5,16 +5,15 @@ import java.util.Map;
 
 import com.google.common.base.Preconditions;
 
-import lombok.Getter;
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.EntidadBO;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
 import xeredi.argo.model.metamodelo.bo.TramiteTipoDatoBO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
@@ -24,21 +23,22 @@ import xeredi.argo.model.metamodelo.vo.TramiteVO;
 /**
  * The Class TramiteDetailAction.
  */
+@Data
 public final class TramiteDetailAction extends CrudDetailAction<TramiteVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -8184203973522067742L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.trmt;
+
     /** The i18n map. */
-    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /** The enti. */
-    @Getter
     private EntidadVO enti;
 
     /** The trtd list. */
-    @Getter
     private List<TramiteTipoDatoVO> trtdList;
 
     /**
@@ -52,7 +52,7 @@ public final class TramiteDetailAction extends CrudDetailAction<TramiteVO> {
 
         model = trmtBO.select(model.getId(), idioma);
 
-        i18nMap = I18nBO.selectMap(I18nPrefix.trmt, model.getId());
+        i18nMap = I18nBO.selectMap(ClassPrefix.trmt, model.getId());
 
         final EntidadBO entiBO = new EntidadBO();
 
@@ -65,13 +65,5 @@ public final class TramiteDetailAction extends CrudDetailAction<TramiteVO> {
         trtdCriterio.setIdioma(idioma);
 
         trtdList = trtdBO.selectList(trtdCriterio);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.trmt;
     }
 }

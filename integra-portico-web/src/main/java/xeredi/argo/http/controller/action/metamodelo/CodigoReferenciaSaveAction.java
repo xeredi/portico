@@ -2,29 +2,32 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.Map;
 
-import lombok.Setter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.CodigoReferenciaBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.CodigoReferenciaVO;
-
-import com.google.common.base.Preconditions;
 
 /**
  * Grabación de un Código de Referencia.
  */
+@Data
 public final class CodigoReferenciaSaveAction extends CrudSaveAction<CodigoReferenciaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8704360630485075850L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.cdrf;
+
     /** The cdri map. */
-    @Setter
     private Map<String, I18nVO> i18nMap;
 
     /**
@@ -65,13 +68,5 @@ public final class CodigoReferenciaSaveAction extends CrudSaveAction<CodigoRefer
 
         FieldValidator.validateRequired(this, MessageI18nKey.cdrf_orden, model.getOrden());
         FieldValidator.validateI18n(this, i18nMap);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.cdrf;
     }
 }

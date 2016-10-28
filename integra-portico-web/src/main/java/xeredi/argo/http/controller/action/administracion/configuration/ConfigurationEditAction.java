@@ -1,21 +1,26 @@
 package xeredi.argo.http.controller.action.administracion.configuration;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.ConfigurationBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.ConfigurationVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ConfigurationEditAction.
  */
+@Data
 public final class ConfigurationEditAction extends CrudEditAction<ConfigurationVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7232090855025643651L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.conf;
 
     /**
      * {@inheritDoc}
@@ -42,13 +47,5 @@ public final class ConfigurationEditAction extends CrudEditAction<ConfigurationV
     @Override
     public void doLoadDependencies() throws ApplicationException {
         // noop
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.conf;
     }
 }

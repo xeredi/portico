@@ -6,20 +6,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.item.vo.ItemVO;
 import xeredi.argo.model.maestro.bo.ParametroBO;
 import xeredi.argo.model.maestro.bo.ParametroBOFactory;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoHtml;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -30,18 +30,20 @@ import com.google.common.base.Preconditions;
  * @param <E>
  *            the element type
  */
+@Data
 public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidadDetailVO> extends CrudEditAction<I>
         implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4070230048819938799L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.item;
+
     /** The enti. */
-    @Getter
     protected E enti;
 
     /** The label values map. */
-    @Getter
     protected Map<Long, List<LabelValueVO>> labelValuesMap;
 
     /**
@@ -112,13 +114,5 @@ public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidad
     @Override
     public final Long getEntiId() {
         return model.getEntiId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final AccionPrefix getAccnPrefix() {
-        return AccionPrefix.item;
     }
 }

@@ -2,26 +2,35 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import com.google.common.base.Preconditions;
 
+import lombok.Data;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.AccionBaseBO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AccionBaseEditAction.
  */
+
+/**
+ * Instantiates a new accion base edit action.
+ */
+@Data
 public final class AccionBaseEditAction extends CrudEditAction<AccionBaseVO> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 182459317575847660L;
 
+	/** The prefix. */
+	private final ClassPrefix prefix = ClassPrefix.acbs;
+
 	@Getter
-	private AccionPrefix[] acprList;
+	private ClassPrefix[] acprList;
 
 	@Getter
 	private AccionCodigo[] accoList;
@@ -51,15 +60,6 @@ public final class AccionBaseEditAction extends CrudEditAction<AccionBaseVO> {
 	@Override
 	public void doLoadDependencies() throws ApplicationException {
 		accoList = AccionCodigo.values();
-		acprList = AccionPrefix.values();
+		acprList = ClassPrefix.values();
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public AccionPrefix getAccnPrefix() {
-		return AccionPrefix.acbs;
-	}
-
 }

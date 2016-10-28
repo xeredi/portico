@@ -1,20 +1,25 @@
 package xeredi.argo.http.controller.action.administracion.puerto;
 
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PuertoListAction.
  */
+@Data
 public final class PuertoListAction extends GridListAction<PuertoCriterioVO, PuertoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1750952015496111173L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.prto;
 
     /**
      * {@inheritDoc}
@@ -24,13 +29,5 @@ public final class PuertoListAction extends GridListAction<PuertoCriterioVO, Pue
         final PuertoBO prtoBO = new PuertoBO();
 
         resultList = prtoBO.selectList(model, getOffset(), limit);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.prto;
     }
 }

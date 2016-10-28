@@ -2,9 +2,12 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.List;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.AspectoCargoBO;
 import xeredi.argo.model.facturacion.bo.CargoBO;
@@ -15,21 +18,21 @@ import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoCargoEditAction.
  */
+@Data
 public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1292421221150084862L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.ascr;
+
     /** The crgo list. */
-    @Getter
     private List<CargoVO> crgoList;
 
     /**
@@ -79,13 +82,5 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
 
             crgoList = crgoBO.selectList(crgoCriterio);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.ascr;
     }
 }

@@ -2,9 +2,12 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.List;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
@@ -17,30 +20,28 @@ import xeredi.argo.model.maestro.bo.ParametroBO;
 import xeredi.argo.model.maestro.bo.ParametroBOFactory;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.Entidad;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionLineaEditAction.
  */
+@Data
 public final class ValoracionLineaEditAction extends CrudEditAction<ValoracionLineaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1498921008270553150L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.vlrl;
+
     /** The vlrl padre. */
-    @Getter
     private ValoracionLineaVO vlrlPadre;
 
     /** The aspc. */
-    @Getter
     private AspectoVO aspc;
 
     /** The impuesto list. */
-    @Getter
     private List<ParametroVO> impuestoList;
 
     /**
@@ -113,13 +114,5 @@ public final class ValoracionLineaEditAction extends CrudEditAction<ValoracionLi
         final ParametroBO prmtBO = ParametroBOFactory.newInstance(prmtCriterio.getEntiId());
 
         impuestoList = prmtBO.selectList(prmtCriterio);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.vlrl;
     }
 }

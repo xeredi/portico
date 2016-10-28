@@ -1,13 +1,13 @@
 package xeredi.argo.http.controller.action.item;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.item.vo.ItemVO;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -18,14 +18,17 @@ import com.google.common.base.Preconditions;
  * @param <E>
  *            the element type
  */
+@Data
 public abstract class ItemDetailAction<I extends ItemVO, E extends AbstractEntidadDetailVO> extends CrudDetailAction<I>
         implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5159354861110927934L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.item;
+
     /** The enti. */
-    @Getter
     protected E enti;
 
     /**
@@ -54,13 +57,5 @@ public abstract class ItemDetailAction<I extends ItemVO, E extends AbstractEntid
     @Override
     public final Long getEntiId() {
         return model.getEntiId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final AccionPrefix getAccnPrefix() {
-        return AccionPrefix.item;
     }
 }

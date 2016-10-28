@@ -9,7 +9,7 @@ import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.bo.AccionEspecialBO;
@@ -66,7 +66,7 @@ public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetai
 
         doSpecificDetail();
 
-        i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
+        i18nMap = I18nBO.selectMap(ClassPrefix.enti, model.getId());
 
         final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
         final EntidadTipoDatoCriterioVO entdCriterio = new EntidadTipoDatoCriterioVO();

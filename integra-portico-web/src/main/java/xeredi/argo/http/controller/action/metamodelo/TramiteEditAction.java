@@ -3,41 +3,42 @@ package xeredi.argo.http.controller.action.metamodelo;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.EntidadBO;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class TramiteEditAction.
  */
+@Data
 public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5189072539193429710L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.trmt;
+
     /** The i18n map. */
-    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /** The enti. */
-    @Getter
     private TipoDatoVO tpdtEstado;
 
     /**
@@ -59,7 +60,7 @@ public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
 
             model = trmtBO.select(model.getId(), getIdioma());
 
-            i18nMap = I18nBO.selectMap(I18nPrefix.trmt, model.getId());
+            i18nMap = I18nBO.selectMap(ClassPrefix.trmt, model.getId());
 
             break;
         default:
@@ -101,13 +102,5 @@ public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
         default:
             throw new Error("Invalid Entity Type: " + enti.getTipo().name());
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.trmt;
     }
 }

@@ -1248,8 +1248,14 @@ public enum MessageI18nKey {
 
 	/** Accion Base. */
 	acbs,
+
+	/** The acbs list. */
 	acbsList,
+
+	/** The acbs codigo. */
 	acbs_codigo,
+
+	/** The acbs prefix. */
 	acbs_prefix,
 	/** Accion Entidad Base. */
 	aebs,
@@ -1267,6 +1273,15 @@ public enum MessageI18nKey {
 	fncd,
 	/** The fncd list. */
 	fncdList,
+
+    /** The mdlo. */
+    mdlo,
+    /** The mdlo list. */
+    mdloList,
+    /** The mdlo codigo. */
+    mdlo_codigo,
+    /** The mdlo etiqueta. */
+    mdlo_etiqueta,
 
 	;
 

@@ -17,7 +17,7 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.CodigoReferenciaDAO;
@@ -108,7 +108,7 @@ public final class TipoDatoBO {
             tpdtVO.setId(tpdtDAO.nextSequence());
             tpdtDAO.insert(tpdtVO);
 
-            I18nBO.insertMap(session, I18nPrefix.tpdt, tpdtVO.getId(), i18nMap);
+            I18nBO.insertMap(session, ClassPrefix.tpdt, tpdtVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -134,7 +134,7 @@ public final class TipoDatoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.tpdt, tpdtVO.getCodigo());
             }
 
-            I18nBO.updateMap(session, I18nPrefix.tpdt, tpdtVO.getId(), i18nMap);
+            I18nBO.updateMap(session, ClassPrefix.tpdt, tpdtVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -155,7 +155,7 @@ public final class TipoDatoBO {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
             final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
-            I18nBO.deleteMap(session, I18nPrefix.tpdt, tpdt.getId());
+            I18nBO.deleteMap(session, ClassPrefix.tpdt, tpdt.getId());
 
             final CodigoReferenciaCriterioVO cdrfCriterio = new CodigoReferenciaCriterioVO();
 

@@ -7,7 +7,7 @@ import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
@@ -40,7 +40,7 @@ public abstract class EntidadEditAction<T extends EntidadVO> extends CrudEditAct
         } else {
             Preconditions.checkNotNull(model.getId());
 
-            i18nMap = I18nBO.selectMap(I18nPrefix.enti, model.getId());
+            i18nMap = I18nBO.selectMap(ClassPrefix.enti, model.getId());
         }
 
         doSpecificEdit();

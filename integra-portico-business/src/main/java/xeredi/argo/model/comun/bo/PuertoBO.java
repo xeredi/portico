@@ -13,7 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.argo.model.comun.dao.PuertoDAO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
@@ -150,7 +150,7 @@ public final class PuertoBO {
             prto.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             prtoDAO.insert(prto);
-            I18nBO.insertMap(session, I18nPrefix.prto, prto.getId(), i18nMap);
+            I18nBO.insertMap(session, ClassPrefix.prto, prto.getId(), i18nMap);
 
             session.commit();
         }
@@ -180,7 +180,7 @@ public final class PuertoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.prto, prto);
             }
 
-            I18nBO.updateMap(session, I18nPrefix.prto, prto.getId(), i18nMap);
+            I18nBO.updateMap(session, ClassPrefix.prto, prto.getId(), i18nMap);
 
             session.commit();
         }
@@ -204,7 +204,7 @@ public final class PuertoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.prto, prto);
             }
 
-            I18nBO.deleteMap(session, I18nPrefix.prto, prto.getId());
+            I18nBO.deleteMap(session, ClassPrefix.prto, prto.getId());
 
             session.commit();
         }

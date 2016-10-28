@@ -2,38 +2,40 @@ package xeredi.argo.http.controller.action.servicio;
 
 import java.util.List;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
 import xeredi.argo.model.servicio.bo.ServicioSecuenciaBO;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaVO;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServicioSecuenciaEditAction.
  */
+@Data
 public final class ServicioSecuenciaEditAction extends CrudEditAction<ServicioSecuenciaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7265649887754786022L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.srsc;
+
     /** The prto list. */
-    @Getter
     private List<PuertoVO> prtoList;
 
     /** The tpsr list. */
-    @Getter
     private List<TipoServicioVO> tpsrList;
 
     /**
@@ -79,13 +81,5 @@ public final class ServicioSecuenciaEditAction extends CrudEditAction<ServicioSe
         tpsrCriterio.setIdioma(getIdioma());
 
         tpsrList = tpsrBO.selectList(tpsrCriterio);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.srsc;
     }
 }

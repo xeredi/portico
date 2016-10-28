@@ -15,7 +15,7 @@ import xeredi.argo.model.comun.bo.I18nBO;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.I18nPrefix;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.AccionEspecialDAO;
@@ -77,7 +77,7 @@ public final class AccionEspecialBO {
 			fncdDAO.insert(aces);
 			acesDAO.insert(aces);
 
-            I18nBO.insertMap(session, I18nPrefix.aces, aces.getId(), i18nMap);
+            I18nBO.insertMap(session, ClassPrefix.aces, aces.getId(), i18nMap);
 
 			session.commit();
 		}
@@ -101,7 +101,7 @@ public final class AccionEspecialBO {
 				throw new InstanceNotFoundException(MessageI18nKey.aces, aces);
 			}
 
-            I18nBO.updateMap(session, I18nPrefix.aces, aces.getId(), i18nMap);
+            I18nBO.updateMap(session, ClassPrefix.aces, aces.getId(), i18nMap);
 
 			session.commit();
 		}
@@ -132,7 +132,7 @@ public final class AccionEspecialBO {
 			}
 
 
-            I18nBO.deleteMap(session, I18nPrefix.aces, aces.getId());
+            I18nBO.deleteMap(session, ClassPrefix.aces, aces.getId());
 
 			fngrDAO.deleteList(fngrCriterio);
 			fncdDAO.delete(aces);

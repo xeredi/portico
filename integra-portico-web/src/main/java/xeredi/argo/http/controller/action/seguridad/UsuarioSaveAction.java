@@ -1,24 +1,29 @@
 package xeredi.argo.http.controller.action.seguridad;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.seguridad.bo.UsuarioBO;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class UsuarioSaveAction.
  */
+@Data
 public final class UsuarioSaveAction extends CrudSaveAction<UsuarioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4486221964172526427L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.usro;
 
     /**
      * {@inheritDoc}
@@ -56,13 +61,4 @@ public final class UsuarioSaveAction extends CrudSaveAction<UsuarioVO> {
         FieldValidator.validateRequired(this, MessageI18nKey.usro_email, model.getEmail());
         FieldValidator.validateRequired(this, MessageI18nKey.usro_nombre, model.getNombre());
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.usro;
-    }
-
 }

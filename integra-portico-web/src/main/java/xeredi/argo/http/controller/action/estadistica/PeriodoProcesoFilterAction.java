@@ -2,23 +2,28 @@ package xeredi.argo.http.controller.action.estadistica;
 
 import java.util.List;
 
+import lombok.Data;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoCriterioVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PeriodoProcesoFilterAction.
  */
+@Data
 public final class PeriodoProcesoFilterAction extends GridFilterAction<PeriodoProcesoCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4100651934689033353L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.pepr;
 
     /** The subps. */
     @Getter
@@ -43,13 +48,5 @@ public final class PeriodoProcesoFilterAction extends GridFilterAction<PeriodoPr
         sprtCriterio.setIdioma(idioma);
 
         sprtList = sprtBO.selectList(sprtCriterio);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.pepr;
     }
 }

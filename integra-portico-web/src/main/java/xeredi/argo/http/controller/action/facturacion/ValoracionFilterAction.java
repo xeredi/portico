@@ -2,16 +2,16 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.List;
 
-import lombok.Getter;
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -20,21 +20,22 @@ import xeredi.util.applicationobjects.LabelValueVO;
 /**
  * The Class ValoracionFilterAction.
  */
+@Data
 public final class ValoracionFilterAction extends GridFilterAction<ValoracionCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3391977535580636697L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.vlrc;
+
     /** The tpdt cod exencion. */
-    @Getter
     private TipoDatoVO tpdtCodExencion;
 
     /** The tpsr list. */
-    @Getter
     private List<LabelValueVO> tpsrList;
 
     /** The prto list. */
-    @Getter
     private List<PuertoVO> prtoList;
 
     /**
@@ -58,13 +59,5 @@ public final class ValoracionFilterAction extends GridFilterAction<ValoracionCri
         prtoList = prtoBO.selectList(prtoCriterio);
         tpsrList = TipoServicioProxy.selectLabelValues();
         tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.vlrc;
     }
 }

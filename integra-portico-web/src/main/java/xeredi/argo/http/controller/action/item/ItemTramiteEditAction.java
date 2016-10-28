@@ -5,9 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
@@ -19,7 +22,6 @@ import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TramiteProxy;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
 import xeredi.argo.model.metamodelo.vo.TipoHtml;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
@@ -34,35 +36,32 @@ import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ItemTramiteEditAction.
  */
+@Data
 public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> implements ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7371401403513787913L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.ittr;
+
     /** The trmt. */
-    @Getter
     protected TramiteDetailVO trmt;
 
     /** The item. */
-    @Getter
     private ItemVO item;
 
     /** The enti. */
-    @Getter
     private AbstractEntidadDetailVO enti;
 
     /** The label values map. */
-    @Getter
     private HashMap<Long, List<LabelValueVO>> labelValuesMap;
 
     /** The prto id. */
-    @Getter
     private Long prtoId;
 
     /**
@@ -177,13 +176,5 @@ public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> i
         Preconditions.checkNotNull(model.getTrmt().getEntiId());
 
         return model.getTrmt().getEntiId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final AccionPrefix getAccnPrefix() {
-        return AccionPrefix.ittr;
     }
 }

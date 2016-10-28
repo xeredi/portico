@@ -1,31 +1,34 @@
 package xeredi.argo.http.controller.action.facturacion;
 
-import lombok.Setter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ValoracionDetalleBO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionDetalleSaveAction.
  */
+@Data
 public final class ValoracionDetalleSaveAction extends CrudSaveAction<ValoracionDetalleVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1354136282476244950L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.vlrd;
+
     /** The vlrl. */
-    @Setter
     private ValoracionLineaVO vlrl;
 
     /**
@@ -80,13 +83,5 @@ public final class ValoracionDetalleSaveAction extends CrudSaveAction<Valoracion
 
         FieldValidator.validateRequired(this, MessageI18nKey.vlrd_importe, model.getImporte());
 
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.vlrd;
     }
 }

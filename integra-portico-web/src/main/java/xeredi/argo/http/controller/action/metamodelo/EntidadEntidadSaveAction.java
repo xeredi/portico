@@ -1,24 +1,29 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.EntidadEntidadBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadEntidadSaveAction.
  */
+@Data
 public final class EntidadEntidadSaveAction extends CrudSaveAction<EntidadEntidadVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3600184227172584616L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.enen;
 
     /**
      * {@inheritDoc}
@@ -60,13 +65,5 @@ public final class EntidadEntidadSaveAction extends CrudSaveAction<EntidadEntida
         }
 
         FieldValidator.validateRequired(this, MessageI18nKey.enen_orden, model.getOrden());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.enen;
     }
 }

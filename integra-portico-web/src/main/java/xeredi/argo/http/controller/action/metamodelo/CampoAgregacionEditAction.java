@@ -2,28 +2,31 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CampoAgregacionEditAction.
  */
+@Data
 public final class CampoAgregacionEditAction extends CrudEditAction<CampoAgregacionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6163643952983909955L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.cmag;
+
     /** The entd list. */
-    @Getter
     private List<EntidadTipoDatoVO> entdList;
 
     /**
@@ -49,13 +52,5 @@ public final class CampoAgregacionEditAction extends CrudEditAction<CampoAgregac
     @Override
     public void doLoadDependencies() throws ApplicationException {
         // FIXME Hay que cargar dependencias??
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.cmag;
     }
 }

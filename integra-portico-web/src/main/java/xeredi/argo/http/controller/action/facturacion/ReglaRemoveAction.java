@@ -1,21 +1,26 @@
 package xeredi.argo.http.controller.action.facturacion;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.ReglaBO;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReglaRemoveAction.
  */
+@Data
 public final class ReglaRemoveAction extends CrudRemoveAction<ReglaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5160365319372545490L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.rgla;
 
     /**
      * {@inheritDoc}
@@ -27,13 +32,5 @@ public final class ReglaRemoveAction extends CrudRemoveAction<ReglaVO> {
         final ReglaBO rglaBO = new ReglaBO();
 
         rglaBO.delete(model);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.rgla;
     }
 }

@@ -1,24 +1,29 @@
 package xeredi.argo.http.controller.action.facturacion;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.FacturaSerieBO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * Accion Web de Almacenamiento de una Serie de Factura.
  */
+@Data
 public final class FacturaSerieSaveAction extends CrudSaveAction<FacturaSerieVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1166773054003527886L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.fcsr;
 
     /**
      * {@inheritDoc}
@@ -54,13 +59,5 @@ public final class FacturaSerieSaveAction extends CrudSaveAction<FacturaSerieVO>
         }
 
         FieldValidator.validateRequired(this, MessageI18nKey.fcsr_numeroUltimo, model.getNumeroUltimo());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.fcsr;
     }
 }

@@ -1,21 +1,26 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoServicioRemoveAction.
  */
+@Data
 public final class TipoServicioRemoveAction extends CrudRemoveAction<TipoServicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5096593722337875752L;
+
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.tpsr;
 
     /**
      * {@inheritDoc}
@@ -27,13 +32,5 @@ public final class TipoServicioRemoveAction extends CrudRemoveAction<TipoServici
         final TipoServicioBO entiBO = new TipoServicioBO();
 
         entiBO.delete(model);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.tpsr;
     }
 }

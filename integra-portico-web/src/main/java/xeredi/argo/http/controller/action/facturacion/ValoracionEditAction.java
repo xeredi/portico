@@ -3,40 +3,41 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.Date;
 import java.util.List;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionEditAction.
  */
+@Data
 public final class ValoracionEditAction extends CrudEditAction<ValoracionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5032238434151606002L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.vlrc;
+
     /** The tpsr list. */
-    @Getter
     private List<LabelValueVO> tpsrList;
 
     /** The pagador enti id. */
-    @Getter
     private Long pagadorEntiId;
 
     /** The tpdt cod exencion. */
-    @Getter
     private TipoDatoVO tpdtCodExencion;
 
     /**
@@ -73,13 +74,5 @@ public final class ValoracionEditAction extends CrudEditAction<ValoracionVO> {
         tpsrList = TipoServicioProxy.selectLabelValues();
         pagadorEntiId = Entidad.ORGANIZACION.getId();
         tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.vlrc;
     }
 }

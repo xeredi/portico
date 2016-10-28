@@ -2,11 +2,11 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
-import lombok.Getter;
+import lombok.Data;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.TipoParametroBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubparametroBO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
@@ -15,13 +15,16 @@ import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
 /**
  * The Class TipoParametroDetailAction.
  */
+@Data
 public final class TipoParametroDetailAction extends EntidadDetailAction<TipoParametroVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 9182419626664730526L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.tppr;
+
     /** The tpsp list. */
-    @Getter
     private List<TipoSubparametroVO> subentiList;
 
     /**
@@ -41,13 +44,4 @@ public final class TipoParametroDetailAction extends EntidadDetailAction<TipoPar
 
         subentiList = tpspBO.selectList(tpspCriterio);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.tppr;
-    }
-
 }

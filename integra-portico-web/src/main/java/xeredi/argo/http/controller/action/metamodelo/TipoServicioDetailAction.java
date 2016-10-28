@@ -2,13 +2,13 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
-import lombok.Getter;
+import lombok.Data;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.EntidadBO;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
-import xeredi.argo.model.metamodelo.vo.AccionPrefix;
 import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
@@ -21,21 +21,22 @@ import xeredi.argo.model.metamodelo.vo.TramiteVO;
 /**
  * The Class TipoServicioDetailAction.
  */
+@Data
 public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3574420037025529065L;
 
+    /** The prefix. */
+    private final ClassPrefix prefix = ClassPrefix.tpsr;
+
     /** The tpss list. */
-    @Getter
     private List<TipoSubservicioVO> subentiList;
 
     /** The enti hijas list. */
-    @Getter
     private List<EntidadVO> entiHijasList;
 
     /** The trmt list. */
-    @Getter
     private List<TramiteVO> trmtList;
 
     /**
@@ -72,13 +73,5 @@ public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServ
         trmtCriterio.setIdioma(idioma);
 
         trmtList = trmtBO.selectList(trmtCriterio);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AccionPrefix getAccnPrefix() {
-        return AccionPrefix.tpsr;
     }
 }
