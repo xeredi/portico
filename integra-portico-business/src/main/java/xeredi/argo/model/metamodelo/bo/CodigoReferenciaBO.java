@@ -6,11 +6,13 @@ import java.util.Map;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.argo.model.comun.bo.I18nBO;
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.CodigoReferenciaDAO;
@@ -18,37 +20,36 @@ import xeredi.argo.model.metamodelo.vo.CodigoReferenciaCriterioVO;
 import xeredi.argo.model.metamodelo.vo.CodigoReferenciaVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class CodigoReferenciaAdminBO.
  */
 public final class CodigoReferenciaBO {
+
     /**
      * Insert.
      *
-     * @param cdrfVO
-     *            the cdrf vo
+     * @param cdrf
+     *            the cdrf
      * @param i18nMap
      *            the i18n map
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final CodigoReferenciaVO cdrfVO, final Map<String, I18nVO> i18nMap)
+    public void insert(final @NonNull CodigoReferenciaVO cdrf, final @NonNull Map<String, I18nVO> i18nMap)
             throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
             final IgBO igBO = new IgBO();
 
-            if (cdrfDAO.exists(cdrfVO)) {
-                throw new DuplicateInstanceException(MessageI18nKey.cdrf, cdrfVO);
+            if (cdrfDAO.exists(cdrf)) {
+                throw new DuplicateInstanceException(MessageI18nKey.cdrf, cdrf);
             }
 
-            cdrfVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            cdrfDAO.insert(cdrfVO);
+            igBO.assignNextVal(cdrf);
+            cdrfDAO.insert(cdrf);
 
-            I18nBO.insertMap(session, ClassPrefix.cdrf, cdrfVO.getId(), i18nMap);
+            I18nUtilBO.insertMap(session, cdrf, i18nMap);
 
             session.commit();
         }
@@ -57,24 +58,24 @@ public final class CodigoReferenciaBO {
     /**
      * Update.
      *
-     * @param cdrfVO
-     *            the cdrf vo
+     * @param cdrf
+     *            the cdrf
      * @param i18nMap
      *            the i18n map
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final CodigoReferenciaVO cdrfVO, final Map<String, I18nVO> i18nMap)
+    public void update(final @NonNull CodigoReferenciaVO cdrf, final @NonNull Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-            final int updated = cdrfDAO.update(cdrfVO);
+            final int updated = cdrfDAO.update(cdrf);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.cdrf, cdrfVO);
+                throw new InstanceNotFoundException(MessageI18nKey.cdrf, cdrf);
             }
 
-            I18nBO.updateMap(session, ClassPrefix.cdrf, cdrfVO.getId(), i18nMap);
+            I18nUtilBO.updateMap(session, cdrf, i18nMap);
 
             session.commit();
         }
@@ -83,23 +84,23 @@ public final class CodigoReferenciaBO {
     /**
      * Delete.
      *
-     * @param cdrfVO
-     *            the cdrf vo
+     * @param cdrf
+     *            the cdrf
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final CodigoReferenciaVO cdrfVO) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(cdrfVO.getId());
+    public void delete(final @NonNull CodigoReferenciaVO cdrf) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(cdrf.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
-            I18nBO.deleteMap(session, ClassPrefix.cdrf, cdrfVO.getId());
+            I18nUtilBO.deleteMap(session, cdrf);
 
-            final int deleted = cdrfDAO.delete(cdrfVO);
+            final int deleted = cdrfDAO.delete(cdrf);
 
             if (deleted == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.cdrf, cdrfVO);
+                throw new InstanceNotFoundException(MessageI18nKey.cdrf, cdrf);
             }
 
             session.commit();
@@ -117,7 +118,7 @@ public final class CodigoReferenciaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public CodigoReferenciaVO select(final Long cdrfId, final String idioma) throws InstanceNotFoundException {
+    public CodigoReferenciaVO select(final @NonNull Long cdrfId, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
             final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();
@@ -144,7 +145,7 @@ public final class CodigoReferenciaBO {
      *            the idioma
      * @return the list
      */
-    public List<CodigoReferenciaVO> selectList(final Long tpdtId, final String idioma) {
+    public List<CodigoReferenciaVO> selectList(final @NonNull Long tpdtId, final String idioma) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
             final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();

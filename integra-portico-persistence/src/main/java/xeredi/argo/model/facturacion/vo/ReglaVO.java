@@ -3,6 +3,8 @@ package xeredi.argo.model.facturacion.vo;
 import java.util.Date;
 
 import lombok.Data;
+import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.I18nable;
 import xeredi.argo.model.comun.vo.Versionable;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 
@@ -11,7 +13,10 @@ import xeredi.argo.model.metamodelo.vo.EntidadVO;
  * The Class ReglaVO.
  */
 @Data
-public final class ReglaVO implements Versionable<ReglaVersionVO> {
+public final class ReglaVO implements Versionable<ReglaVersionVO>, I18nable {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.rgla;
 
     /** The id. */
     private Long id;

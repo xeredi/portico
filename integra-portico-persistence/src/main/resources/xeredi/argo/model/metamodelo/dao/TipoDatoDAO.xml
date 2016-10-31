@@ -112,11 +112,6 @@
 		<include refid="SelectWhere" />
 	</select>
 
-	<select id="nextSequence" resultType="Long">
-		SELECT COALESCE(MAX(tpdt_pk), 40000) + 1 as tpdt_pk
-		FROM tbl_tipo_dato_tpdt
-	</select>
-
 	<select id="exists" parameterType="TipoDatoVO" resultType="boolean">
         <![CDATA[
         SELECT COUNT(1)

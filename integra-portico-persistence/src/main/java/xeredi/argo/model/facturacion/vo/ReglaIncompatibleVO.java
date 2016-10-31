@@ -3,6 +3,7 @@ package xeredi.argo.model.facturacion.vo;
 import java.util.Date;
 
 import lombok.Data;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.Versionable;
 
 // TODO: Auto-generated Javadoc
@@ -11,6 +12,9 @@ import xeredi.argo.model.comun.vo.Versionable;
  */
 @Data
 public final class ReglaIncompatibleVO implements Versionable<ReglaIncompatibleVersionVO> {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.rgin;
 
     /** The id. */
     private Long id;

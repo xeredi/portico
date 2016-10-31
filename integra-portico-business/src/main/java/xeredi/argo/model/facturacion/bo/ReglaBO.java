@@ -2,29 +2,29 @@ package xeredi.argo.model.facturacion.bo;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import lombok.NonNull;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.argo.model.comun.bo.I18nBO;
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.dao.ReglaDAO;
 import xeredi.argo.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
+import xeredi.argo.model.util.DateUtil;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -110,6 +110,15 @@ public class ReglaBO {
      */
     public void insert(final @NonNull ReglaVO rgla, final Map<String, I18nVO> i18nMap) throws OverlapException {
         Preconditions.checkNotNull(rgla.getVersion());
+        Preconditions.checkNotNull(rgla.getVersion().getFini());
+        Preconditions.checkNotNull(rgla.getCrgo());
+        Preconditions.checkNotNull(rgla.getCrgo().getId());
+        Preconditions.checkNotNull(rgla.getEnti());
+        Preconditions.checkNotNull(rgla.getEnti().getId());
+        Preconditions.checkNotNull(rgla.getTipo());
+
+        DateUtil.truncTime(rgla.getVersion().getFini(), Calendar.HOUR_OF_DAY);
+        DateUtil.truncTime(rgla.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
@@ -122,16 +131,16 @@ public class ReglaBO {
                     throw new OverlapException(MessageI18nKey.rgla, rgla);
                 }
             } else {
-                rgla.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                igBO.assignNextVal(rgla);
 
                 rglaDAO.insert(rgla);
             }
 
-            rgla.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            igBO.assignNextVal(rgla.getVersion());
 
             rglaDAO.insertVersion(rgla);
 
-            I18nBO.insertMap(session, ClassPrefix.rglv, rgla.getVersion().getId(), i18nMap);
+            I18nUtilBO.insertMap(session, rgla, i18nMap);
 
             session.commit();
         }
@@ -154,6 +163,9 @@ public class ReglaBO {
         Preconditions.checkNotNull(rgla.getVersion());
         Preconditions.checkNotNull(rgla.getVersion().getId());
 
+        DateUtil.truncTime(rgla.getVersion().getFini(), Calendar.HOUR_OF_DAY);
+        DateUtil.truncTime(rgla.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
 
@@ -167,7 +179,7 @@ public class ReglaBO {
                 throw new InstanceNotFoundException(MessageI18nKey.rgla, rgla);
             }
 
-            I18nBO.updateMap(session, ClassPrefix.rglv, rgla.getVersion().getId(), i18nMap);
+            I18nUtilBO.updateMap(session, rgla, i18nMap);
 
             session.commit();
         }
@@ -193,10 +205,34 @@ public class ReglaBO {
                 throw new InstanceNotFoundException(MessageI18nKey.rgla, rgla);
             }
 
-            I18nBO.deleteMap(session, ClassPrefix.rglv, rgla.getVersion().getId());
+            I18nUtilBO.deleteMap(session, rgla);
 
             session.commit();
         }
+    }
+
+    /**
+     * Select.
+     *
+     * @param id
+     *            the id
+     * @param fref
+     *            the fref
+     * @param idioma
+     *            the idioma
+     * @return the regla VO
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public ReglaVO select(final @NonNull Long id, final @NonNull Date fref, final String idioma)
+            throws InstanceNotFoundException {
+        final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
+
+        rglaCriterio.setId(id);
+        rglaCriterio.setFechaVigencia(fref);
+        rglaCriterio.setIdioma(idioma);
+
+        return selectObject(rglaCriterio);
     }
 
     /**

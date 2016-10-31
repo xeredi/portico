@@ -12,7 +12,6 @@ import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.ReglaBO;
 import xeredi.argo.model.facturacion.bo.ReglaIncompatibleBO;
 import xeredi.argo.model.facturacion.vo.ReglaCriterioVO;
-import xeredi.argo.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
@@ -46,13 +45,8 @@ public final class ReglaIncompatibleEditAction extends CrudEditAction<ReglaIncom
             Preconditions.checkNotNull(model.getId());
 
             final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
-            final ReglaIncompatibleCriterioVO rginCriterio = new ReglaIncompatibleCriterioVO();
 
-            rginCriterio.setId(model.getId());
-            rginCriterio.setFechaVigencia(model.getFref());
-            rginCriterio.setIdioma(idioma);
-
-            model = rginBO.selectObject(rginCriterio);
+            model = rginBO.select(model.getId(), model.getFref());
         }
     }
 
@@ -62,17 +56,13 @@ public final class ReglaIncompatibleEditAction extends CrudEditAction<ReglaIncom
     @Override
     public void doLoadDependencies() throws ApplicationException {
         final ReglaBO rglaBO = new ReglaBO();
-        final ReglaCriterioVO rgla1Criterio = new ReglaCriterioVO();
-
-        rgla1Criterio.setId(model.getRgla1Id());
-        rgla1Criterio.setFechaVigencia(model.getFref());
-
-        final ReglaVO rgla = rglaBO.selectObject(rgla1Criterio);
+        final ReglaVO rgla = rglaBO.select(model.getRgla1Id(), model.getFref(), getIdioma());
 
         final ReglaCriterioVO rgla2Criterio = new ReglaCriterioVO();
 
         rgla2Criterio.setCrgoId(rgla.getCrgo().getId());
         rgla2Criterio.setFechaVigencia(model.getFref());
+        rgla2Criterio.setIdioma(getIdioma());
 
         rgla2List = rglaBO.selectList(rgla2Criterio);
     }

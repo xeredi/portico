@@ -74,9 +74,6 @@ public final class ReglaSaveAction extends CrudSaveAction<ReglaVO> {
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_tipo, model.getTipo());
         FieldValidator.validateRequired(this, MessageI18nKey.enti, model.getEnti());
 
-        DateUtil.truncTime(model.getVersion().getFini(), Calendar.HOUR_OF_DAY);
-        DateUtil.truncTime(model.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
-
         FieldValidator.validateVersion(this, accion, model);
 
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_orden, model.getVersion().getOrden());

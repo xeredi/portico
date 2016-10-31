@@ -12,7 +12,6 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
-import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
@@ -46,13 +45,8 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
             Preconditions.checkNotNull(model.getId());
 
             final AspectoBO aspcBO = new AspectoBO();
-            final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
-            aspcCriterio.setId(model.getId());
-            aspcCriterio.setFechaVigencia(model.getFref());
-            aspcCriterio.setIdioma(idioma);
-
-            model = aspcBO.selectObject(aspcCriterio);
+            model = aspcBO.select(model.getId(), model.getFref(), getIdioma());
             i18nMap = I18nBO.selectMap(ClassPrefix.aspv, model.getVersion().getId());
         }
     }

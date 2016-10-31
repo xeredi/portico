@@ -8,15 +8,13 @@ import com.google.common.base.Preconditions;
 
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.facturacion.bo.CargoBO;
 import xeredi.argo.model.facturacion.bo.ReglaBO;
-import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
-import xeredi.argo.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
@@ -57,13 +55,7 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
             Preconditions.checkNotNull(model.getCrgo().getId());
 
             final CargoBO crgoBO = new CargoBO();
-            final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
-
-            crgoCriterio.setId(model.getCrgo().getId());
-            crgoCriterio.setFechaVigencia(model.getFref());
-            crgoCriterio.setIdioma(idioma);
-
-            final CargoVO crgo = crgoBO.selectObject(crgoCriterio);
+            final CargoVO crgo = crgoBO.select(model.getCrgo().getId(), model.getFref(), getIdioma());
 
             model.setCrgo(crgo);
             model.getVersion().setFini(Calendar.getInstance().getTime());
@@ -71,13 +63,9 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
             Preconditions.checkNotNull(model.getId());
 
             final ReglaBO rglaBO = new ReglaBO();
-            final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
 
-            rglaCriterio.setId(model.getId());
-            rglaCriterio.setFechaVigencia(model.getFref());
-
-            model = rglaBO.selectObject(rglaCriterio);
-            i18nMap = I18nBO.selectMap(ClassPrefix.rglv, model.getVersion().getId());
+            model = rglaBO.select(model.getId(), model.getFref(), getIdioma());
+            i18nMap = I18nUtilBO.selectMap(model);
         }
     }
 
@@ -91,13 +79,8 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
 
             final TipoServicioBO tpsrBO = new TipoServicioBO();
             final CargoBO crgoBO = new CargoBO();
-            final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
-            crgoCriterio.setId(model.getCrgo().getId());
-            crgoCriterio.setFechaVigencia(model.getFref());
-            crgoCriterio.setIdioma(getIdioma());
-
-            final CargoVO crgo = crgoBO.selectObject(crgoCriterio);
+            final CargoVO crgo = crgoBO.select(model.getCrgo().getId(), model.getFref(), getIdioma());
             final TipoServicioCriterioVO tpsrCriterioVO = new TipoServicioCriterioVO();
 
             tpsrCriterioVO.setId(crgo.getTpsr().getId());

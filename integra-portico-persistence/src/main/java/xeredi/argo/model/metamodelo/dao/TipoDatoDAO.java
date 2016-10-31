@@ -14,13 +14,6 @@ import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
  */
 public interface TipoDatoDAO extends CrudDAO<TipoDatoVO, TipoDatoCriterioVO> {
     /**
-     * Next sequence.
-     *
-     * @return the long
-     */
-    Long nextSequence();
-
-    /**
      * Select map.
      *
      * @param tpdtCriterio

@@ -1,6 +1,7 @@
 <div data-ng-if="vm.model">
-    <div data-uib-tabset data-type="pills">
-        <div data-uib-tab data-select="vm.tabSelected(null)" data-heading="{{'enti' | translate}}">
+    <div data-uib-tabset data-type="pills" data-active="vm.tab">
+        <div data-uib-tab data-select="vm.tabSelected('enti')" data-index="'enti'">
+            <div data-uib-tab-heading data-translate="enti"></div>
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
                     <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('tpsr-edit')"
@@ -183,8 +184,8 @@
             </fieldset>
         </div>
         <div data-ng-if="mc.hasAcbsPath('engd-list') || mc.hasAcbsPath('entd-list')" data-uib-tab
-            data-select="vm.tabSelected('entdList')" data-active="vm.tabActive['entdList']"
-            data-heading="{{'entdList' | translate}}">
+            data-select="vm.tabSelected('entdList')" data-index="'entdList'">
+            <div data-uib-tab-heading data-translate="entdList"></div>
             <div data-ng-if="mc.hasAcbsPath('engd-list')"
                 data-ng-include="'modules/metamodelo/fragment/entidad-grupo-dato-grid-content.html'"></div>
             <div data-ng-if="mc.hasAcbsPath('entd-list')"
@@ -192,8 +193,8 @@
         </div>
         <div
             data-ng-if="mc.hasAcbsPath('acen-list') || mc.hasAcbsPath('aces-list') || mc.hasAcbsPath('trmt-list')"
-            data-uib-tab data-select="vm.tabSelected('accnList')" data-active="vm.tabActive['accnList']"
-            data-heading="{{'fncdList' | translate}}">
+            data-uib-tab data-select="vm.tabSelected('accnList')" data-index="'accnList'">
+            <div data-uib-tab-heading data-translate="fncdList"></div>
             <div data-ng-if="mc.hasAcbsPath('acen-list')"
                 data-ng-include="'modules/metamodelo/fragment/accion-entidad-grid-content.html'"></div>
             <div data-ng-if="mc.hasAcbsPath('aces-list')"

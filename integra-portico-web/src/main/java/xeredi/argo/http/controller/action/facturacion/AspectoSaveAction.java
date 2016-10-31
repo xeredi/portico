@@ -1,6 +1,5 @@
 package xeredi.argo.http.controller.action.facturacion;
 
-import java.util.Calendar;
 import java.util.Map;
 
 import org.apache.commons.validator.GenericValidator;
@@ -17,7 +16,6 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.util.DateUtil;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -72,9 +70,6 @@ public final class AspectoSaveAction extends CrudSaveAction<AspectoVO> {
         } else {
             Preconditions.checkNotNull(model.getId());
         }
-
-        DateUtil.truncTime(model.getVersion().getFini(), Calendar.HOUR_OF_DAY);
-        DateUtil.truncTime(model.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
 
         FieldValidator.validateVersion(this, accion, model);
         FieldValidator.validateRequired(this, MessageI18nKey.aspc_prioridad, model.getVersion().getPrioridad());

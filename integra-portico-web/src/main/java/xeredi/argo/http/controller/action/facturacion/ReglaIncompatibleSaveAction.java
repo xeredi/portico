@@ -66,9 +66,6 @@ public final class ReglaIncompatibleSaveAction extends CrudSaveAction<ReglaIncom
             Preconditions.checkNotNull(model.getRgla2().getId());
         }
 
-        DateUtil.truncTime(model.getVersion().getFini(), Calendar.HOUR_OF_DAY);
-        DateUtil.truncTime(model.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
-
         FieldValidator.validateVersion(this, accion, model);
     }
 }

@@ -8,16 +8,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.argo.model.comun.bo.I18nBO;
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
+import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.CodigoReferenciaDAO;
@@ -30,8 +31,6 @@ import xeredi.argo.model.metamodelo.vo.TipoElemento;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -49,66 +48,68 @@ public final class TipoDatoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public TipoDatoVO select(final Long id, final String idioma) throws InstanceNotFoundException {
+    public TipoDatoVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
             final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-            final TipoDatoCriterioVO tpdtCriterioVO = new TipoDatoCriterioVO();
+            final TipoDatoCriterioVO tpdtCriterio = new TipoDatoCriterioVO();
 
-            tpdtCriterioVO.setId(id);
-            tpdtCriterioVO.setIdioma(idioma);
+            tpdtCriterio.setId(id);
+            tpdtCriterio.setIdioma(idioma);
 
-            final TipoDatoVO tpdtVO = tpdtDAO.selectObject(tpdtCriterioVO);
+            final TipoDatoVO tpdt = tpdtDAO.selectObject(tpdtCriterio);
 
-            if (tpdtVO == null) {
+            if (tpdt == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.tpdt, id);
             }
 
             // Si el tipo de dato es un codigo de referencia, se buscan los
             // valores posibles
-            if (tpdtVO.getTipoElemento() == TipoElemento.CR) {
+            if (tpdt.getTipoElemento() == TipoElemento.CR) {
                 final CodigoReferenciaCriterioVO cdrfCriterio = new CodigoReferenciaCriterioVO();
 
                 cdrfCriterio.setIdioma(idioma);
-                cdrfCriterio.setTpdtIds(new HashSet<>(Arrays.asList(new Long[] { tpdtVO.getId() })));
+                cdrfCriterio.setTpdtIds(new HashSet<>(Arrays.asList(new Long[] { tpdt.getId() })));
 
-                tpdtVO.setCdrfList(cdrfDAO.selectList(cdrfCriterio));
+                tpdt.setCdrfList(cdrfDAO.selectList(cdrfCriterio));
 
                 final Set<String> cdrfCodeSet = new HashSet<>();
 
-                for (final CodigoReferenciaVO cdrfVO : tpdtVO.getCdrfList()) {
-                    cdrfCodeSet.add(cdrfVO.getValor());
+                for (final CodigoReferenciaVO cdrf : tpdt.getCdrfList()) {
+                    cdrfCodeSet.add(cdrf.getValor());
                 }
 
-                tpdtVO.setCdrfCodeSet(cdrfCodeSet);
+                tpdt.setCdrfCodeSet(cdrfCodeSet);
             }
 
-            return tpdtVO;
+            return tpdt;
         }
     }
 
     /**
      * Insert.
      *
-     * @param tpdtVO
-     *            the tpdt vo
+     * @param tpdt
+     *            the tpdt
      * @param i18nMap
      *            the i18n map
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final TipoDatoVO tpdtVO, final Map<String, I18nVO> i18nMap) throws DuplicateInstanceException {
+    public void insert(final @NonNull TipoDatoVO tpdt, final @NonNull Map<String, I18nVO> i18nMap)
+            throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
+            final IgBO igBO = new IgBO();
 
-            if (tpdtDAO.exists(tpdtVO)) {
-                throw new DuplicateInstanceException(MessageI18nKey.tpdt, tpdtVO);
+            if (tpdtDAO.exists(tpdt)) {
+                throw new DuplicateInstanceException(MessageI18nKey.tpdt, tpdt);
             }
 
-            tpdtVO.setId(tpdtDAO.nextSequence());
-            tpdtDAO.insert(tpdtVO);
+            igBO.assignNextVal(tpdt);
+            tpdtDAO.insert(tpdt);
 
-            I18nBO.insertMap(session, ClassPrefix.tpdt, tpdtVO.getId(), i18nMap);
+            I18nUtilBO.insertMap(session, tpdt, i18nMap);
 
             session.commit();
         }
@@ -117,24 +118,25 @@ public final class TipoDatoBO {
     /**
      * Update.
      *
-     * @param tpdtVO
-     *            the tpdt vo
+     * @param tpdt
+     *            the tpdt
      * @param i18nMap
      *            the i18n map
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final TipoDatoVO tpdtVO, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(tpdtVO.getId());
+    public void update(final @NonNull TipoDatoVO tpdt, final @NonNull Map<String, I18nVO> i18nMap)
+            throws InstanceNotFoundException {
+        Preconditions.checkNotNull(tpdt.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
 
-            if (tpdtDAO.update(tpdtVO) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.tpdt, tpdtVO.getCodigo());
+            if (tpdtDAO.update(tpdt) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.tpdt, tpdt.getCodigo());
             }
 
-            I18nBO.updateMap(session, ClassPrefix.tpdt, tpdtVO.getId(), i18nMap);
+            I18nUtilBO.updateMap(session, tpdt, i18nMap);
 
             session.commit();
         }
@@ -155,7 +157,7 @@ public final class TipoDatoBO {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
             final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
-            I18nBO.deleteMap(session, ClassPrefix.tpdt, tpdt.getId());
+            I18nUtilBO.deleteMap(session, tpdt);
 
             final CodigoReferenciaCriterioVO cdrfCriterio = new CodigoReferenciaCriterioVO();
 
@@ -174,38 +176,38 @@ public final class TipoDatoBO {
     /**
      * Select list.
      *
-     * @param tpdtCriterioVO
-     *            the tpdt criterio vo
+     * @param tpdtCriterio
+     *            the tpdt criterio
      * @return the list
      */
-    public List<TipoDatoVO> selectList(final TipoDatoCriterioVO tpdtCriterioVO) {
+    public List<TipoDatoVO> selectList(final @NonNull TipoDatoCriterioVO tpdtCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
 
-            return tpdtDAO.selectList(tpdtCriterioVO);
+            return tpdtDAO.selectList(tpdtCriterio);
         }
     }
 
     /**
      * Select list.
      *
-     * @param tpdtCriterioVO
-     *            the tpdt criterio vo
+     * @param tpdtCriterio
+     *            the tpdt criterio
      * @param offset
      *            the offset
      * @param limit
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<TipoDatoVO> selectList(final TipoDatoCriterioVO tpdtCriterioVO, final int offset,
+    public PaginatedList<TipoDatoVO> selectList(final @NonNull TipoDatoCriterioVO tpdtCriterio, final int offset,
             final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
-            final int count = tpdtDAO.count(tpdtCriterioVO);
+            final int count = tpdtDAO.count(tpdtCriterio);
             final List<TipoDatoVO> tpdtList = new ArrayList<>();
 
             if (count > offset) {
-                tpdtList.addAll(tpdtDAO.selectList(tpdtCriterioVO, new RowBounds(offset, limit)));
+                tpdtList.addAll(tpdtDAO.selectList(tpdtCriterio, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<>(tpdtList, offset, limit, count);
@@ -215,63 +217,60 @@ public final class TipoDatoBO {
     /**
      * Select label values.
      *
-     * @param tpdtCriterioVO
-     *            the tpdt criterio vo
+     * @param tpdtCriterio
+     *            the tpdt criterio
      * @return the list
      */
-    public List<LabelValueVO> selectLabelValues(final TipoDatoCriterioVO tpdtCriterioVO) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
-            final List<LabelValueVO> list = new ArrayList<>();
+    public List<LabelValueVO> selectLabelValues(final @NonNull TipoDatoCriterioVO tpdtCriterio) {
+        final List<LabelValueVO> list = new ArrayList<>();
 
-            for (final TipoDatoVO tpdt : tpdtDAO.selectList(tpdtCriterioVO)) {
-                list.add(new LabelValueVO(tpdt.getNombre(), tpdt.getId()));
-            }
-
-            return list;
+        for (final TipoDatoVO tpdt : selectList(tpdtCriterio)) {
+            list.add(new LabelValueVO(tpdt.getNombre(), tpdt.getId()));
         }
+
+        return list;
     }
 
     /**
      * Select map.
      *
-     * @param tpdtCriterioVO
-     *            the tpdt criterio vo
+     * @param tpdtCriterio
+     *            the tpdt criterio
      * @return the map
      */
-    public Map<Long, TipoDatoVO> selectMap(final TipoDatoCriterioVO tpdtCriterioVO) {
+    public Map<Long, TipoDatoVO> selectMap(final @NonNull TipoDatoCriterioVO tpdtCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
             final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
-            final Map<Long, TipoDatoVO> tpdtMap = tpdtDAO.selectMap(tpdtCriterioVO);
+            final Map<Long, TipoDatoVO> tpdtMap = tpdtDAO.selectMap(tpdtCriterio);
             final Map<Long, List<CodigoReferenciaVO>> cdrfMap = new HashMap<>();
 
-            for (final CodigoReferenciaVO cdrfVO : cdrfDAO.selectList(new CodigoReferenciaCriterioVO())) {
-                if (!cdrfMap.containsKey(cdrfVO.getTpdtId())) {
-                    cdrfMap.put(cdrfVO.getTpdtId(), new ArrayList<CodigoReferenciaVO>());
+            for (final CodigoReferenciaVO cdrf : cdrfDAO.selectList(new CodigoReferenciaCriterioVO())) {
+                if (!cdrfMap.containsKey(cdrf.getTpdtId())) {
+                    cdrfMap.put(cdrf.getTpdtId(), new ArrayList<CodigoReferenciaVO>());
                 }
 
-                cdrfMap.get(cdrfVO.getTpdtId()).add(cdrfVO);
+                cdrfMap.get(cdrf.getTpdtId()).add(cdrf);
 
-                cdrfVO.setTpdtId(null);
-                cdrfVO.setOrden(null);
+                cdrf.setTpdtId(null);
+                cdrf.setOrden(null);
             }
 
-            for (final TipoDatoVO tpdtVO : tpdtMap.values()) {
-                if (cdrfMap.containsKey(tpdtVO.getId())) {
-                    tpdtVO.setCdrfList(cdrfMap.get(tpdtVO.getId()));
+            for (final TipoDatoVO tpdt : tpdtMap.values()) {
+                if (cdrfMap.containsKey(tpdt.getId())) {
+                    tpdt.setCdrfList(cdrfMap.get(tpdt.getId()));
 
                     final Set<String> cdrfCodeSet = new HashSet<>();
 
-                    for (final CodigoReferenciaVO cdrfVO : cdrfMap.get(tpdtVO.getId())) {
-                        cdrfCodeSet.add(cdrfVO.getValor());
+                    for (final CodigoReferenciaVO cdrf : cdrfMap.get(tpdt.getId())) {
+                        cdrfCodeSet.add(cdrf.getValor());
                     }
 
-                    tpdtVO.setCdrfCodeSet(cdrfCodeSet);
+                    tpdt.setCdrfCodeSet(cdrfCodeSet);
                 }
 
-                tpdtMap.put(tpdtVO.getId(), tpdtVO);
+                tpdtMap.put(tpdt.getId(), tpdt);
             }
 
             return tpdtMap;

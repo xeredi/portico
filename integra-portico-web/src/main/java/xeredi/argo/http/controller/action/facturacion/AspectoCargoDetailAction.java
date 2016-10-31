@@ -7,7 +7,6 @@ import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.AspectoCargoBO;
-import xeredi.argo.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoCargoVO;
 
 // TODO: Auto-generated Javadoc
@@ -31,12 +30,7 @@ public final class AspectoCargoDetailAction extends CrudDetailAction<AspectoCarg
         Preconditions.checkNotNull(model.getId());
 
         final AspectoCargoBO ascrBO = new AspectoCargoBO();
-        final AspectoCargoCriterioVO ascrCriterio = new AspectoCargoCriterioVO();
 
-        ascrCriterio.setId(model.getId());
-        ascrCriterio.setFechaVigencia(model.getFref());
-        ascrCriterio.setIdioma(idioma);
-
-        model = ascrBO.selectObject(ascrCriterio);
+        model = ascrBO.select(model.getId(), model.getFref(), getIdioma());
     }
 }

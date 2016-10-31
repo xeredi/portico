@@ -3,6 +3,7 @@ package xeredi.argo.model.maestro.vo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.Versionable;
 import xeredi.argo.model.item.vo.ItemVO;
 
@@ -14,6 +15,9 @@ import xeredi.argo.model.item.vo.ItemVO;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public final class SubparametroVO extends ItemVO implements Versionable<SubparametroVersionVO> {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.sprm;
 
     /** The prmt id. */
     private Long prmtId;

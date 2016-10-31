@@ -45,11 +45,9 @@
                 }).then(success, fail);
 
                 function success(response) {
-/*
                     $location.search({
                         searchCriteria : JSON.stringify(searchCriteria)
                     }).replace();
-*/
 
                     return response.data;
                 }
@@ -63,7 +61,7 @@
             }
 
             function listPage(searchCriteria, page, limit) {
-                console.log('list page');
+                // console.log('list page');
 
                 return $http.post(_uri + "-list.action", {
                     model : searchCriteria,
@@ -72,13 +70,11 @@
                 }).then(success, fail);
 
                 function success(response) {
-/*
                     $location.search({
                         page : page,
                         limit : limit,
                         searchCriteria : JSON.stringify(searchCriteria)
                     }).replace();
-*/
 
                     return response.data;
                 }
@@ -239,9 +235,9 @@
                         model : item
                     }).then(success, fail);
                 } else {
-                	// FIXME
+                    // FIXME
 
-                	return null;
+                    return null;
                 }
 
                 function success(response) {
@@ -372,7 +368,7 @@
 
             function redirectAfterSave(accion, url, urlParams) {
                 if (urlParams) {
-                	var i;
+                    var i;
 
                     for (i in urlParams) {
                         url += '/' + urlParams[i];

@@ -523,11 +523,7 @@
             TipoParametroService.tabSelected(tabNo);
         }
 
-        vm.tabActive = {};
-
-        if ($routeParams.tab) {
-            vm.tabActive[$routeParams.tab] = true;
-        }
+        vm.tab = $routeParams.tab ? $routeParams.tab : "enti";
 
         vm.search = {
             id : $routeParams.id
@@ -597,11 +593,7 @@
             TipoSubparametroService.tabSelected(tabNo);
         }
 
-        vm.tabActive = {};
-
-        if ($routeParams.tab) {
-            vm.tabActive[$routeParams.tab] = true;
-        }
+        vm.tab = $routeParams.tab ? $routeParams.tab : "enti";
 
         vm.search = {
             id : $routeParams.id
@@ -709,11 +701,7 @@
             TipoServicioService.tabSelected(tabNo);
         }
 
-        vm.tabActive = {};
-
-        if ($routeParams.tab) {
-            vm.tabActive[$routeParams.tab] = true;
-        }
+        vm.tab = $routeParams.tab ? $routeParams.tab : "enti";
 
         vm.search = {
             id : $routeParams.id
@@ -785,11 +773,7 @@
             TipoSubservicioService.tabSelected(tabNo);
         }
 
-        vm.tabActive = {};
-
-        if ($routeParams.tab) {
-            vm.tabActive[$routeParams.tab] = true;
-        }
+        vm.tab = $routeParams.tab ? $routeParams.tab : "enti";
 
         vm.search = {
             id : $routeParams.id
@@ -900,11 +884,7 @@
             TipoEstadisticaService.tabSelected(tabNo);
         }
 
-        vm.tabActive = {};
-
-        if ($routeParams.tab) {
-            vm.tabActive[$routeParams.tab] = true;
-        }
+        vm.tab = $routeParams.tab ? $routeParams.tab : "enti";
 
         vm.search = {
             id : $routeParams.id

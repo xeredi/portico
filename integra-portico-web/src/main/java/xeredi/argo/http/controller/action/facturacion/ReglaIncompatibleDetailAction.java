@@ -1,13 +1,10 @@
 package xeredi.argo.http.controller.action.facturacion;
 
-import com.google.common.base.Preconditions;
-
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.ReglaIncompatibleBO;
-import xeredi.argo.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleVO;
 
 // TODO: Auto-generated Javadoc
@@ -28,14 +25,8 @@ public final class ReglaIncompatibleDetailAction extends CrudDetailAction<ReglaI
      */
     @Override
     public void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
-
         final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
-        final ReglaIncompatibleCriterioVO rginCriterio = new ReglaIncompatibleCriterioVO();
 
-        rginCriterio.setId(model.getId());
-        rginCriterio.setFechaVigencia(model.getFref());
-
-        model = rginBO.selectObject(rginCriterio);
+        model = rginBO.select(model.getId(), model.getFref());
     }
 }

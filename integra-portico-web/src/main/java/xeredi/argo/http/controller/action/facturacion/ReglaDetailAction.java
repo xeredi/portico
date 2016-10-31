@@ -7,13 +7,12 @@ import com.google.common.base.Preconditions;
 
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.facturacion.bo.ReglaBO;
 import xeredi.argo.model.facturacion.bo.ReglaIncompatibleBO;
-import xeredi.argo.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
@@ -45,13 +44,9 @@ public final class ReglaDetailAction extends CrudDetailAction<ReglaVO> {
         Preconditions.checkNotNull(model.getId());
 
         final ReglaBO rglaBO = new ReglaBO();
-        final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
 
-        rglaCriterio.setId(model.getId());
-        rglaCriterio.setFechaVigencia(model.getFref());
-
-        model = rglaBO.selectObject(rglaCriterio);
-        i18nMap = I18nBO.selectMap(ClassPrefix.rglv, model.getVersion().getId());
+        model = rglaBO.select(model.getId(), model.getFref(), getIdioma());
+        i18nMap = I18nUtilBO.selectMap(model);
 
         final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
         final ReglaIncompatibleCriterioVO rginCriterioVO = new ReglaIncompatibleCriterioVO();

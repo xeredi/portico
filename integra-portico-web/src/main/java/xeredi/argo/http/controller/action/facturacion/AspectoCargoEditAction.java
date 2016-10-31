@@ -11,9 +11,7 @@ import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.AspectoCargoBO;
 import xeredi.argo.model.facturacion.bo.CargoBO;
-import xeredi.argo.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoCargoVO;
-import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
@@ -46,13 +44,8 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
             Preconditions.checkNotNull(model.getId());
 
             final AspectoCargoBO ascrBO = new AspectoCargoBO();
-            final AspectoCargoCriterioVO ascrCriterio = new AspectoCargoCriterioVO();
 
-            ascrCriterio.setId(model.getId());
-            ascrCriterio.setFechaVigencia(model.getFref());
-            ascrCriterio.setIdioma(idioma);
-
-            model = ascrBO.selectObject(ascrCriterio);
+            model = ascrBO.select(model.getId(), model.getFref(), getIdioma());
         }
     }
 
@@ -65,13 +58,7 @@ public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO>
             Preconditions.checkNotNull(model.getAspcId());
 
             final AspectoBO aspcBO = new AspectoBO();
-            final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
-
-            aspcCriterio.setId(model.getAspcId());
-            aspcCriterio.setFechaVigencia(model.getFref());
-            aspcCriterio.setIdioma(getIdioma());
-
-            final AspectoVO aspc = aspcBO.selectObject(aspcCriterio);
+            final AspectoVO aspc = aspcBO.select(model.getAspcId(), model.getFref(), getIdioma());
 
             final CargoBO crgoBO = new CargoBO();
             final CargoCriterioVO crgoCriterio = new CargoCriterioVO();

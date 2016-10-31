@@ -6,7 +6,7 @@ import com.google.common.base.Preconditions;
 
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
@@ -38,6 +38,6 @@ public final class TipoDatoDetailAction extends CrudDetailAction<TipoDatoVO> {
         final TipoDatoBO tpdtBO = new TipoDatoBO();
 
         model = tpdtBO.select(model.getId(), idioma);
-        i18nMap = I18nBO.selectMap(ClassPrefix.tpdt, model.getId());
+        i18nMap = I18nUtilBO.selectMap(model);
     }
 }

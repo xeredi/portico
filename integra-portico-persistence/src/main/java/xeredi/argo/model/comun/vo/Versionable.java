@@ -9,7 +9,7 @@ import java.util.Date;
  * @param <T>
  *            the generic type
  */
-public interface Versionable<T extends VersionVO> {
+public interface Versionable<T extends VersionVO> extends Identifiable {
     /**
      * Gets the version.
      *

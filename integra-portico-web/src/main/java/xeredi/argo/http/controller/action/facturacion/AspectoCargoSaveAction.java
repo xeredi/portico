@@ -64,9 +64,6 @@ public final class AspectoCargoSaveAction extends CrudSaveAction<AspectoCargoVO>
             Preconditions.checkNotNull(model.getVersion().getId());
         }
 
-        DateUtil.truncTime(model.getVersion().getFini(), Calendar.HOUR_OF_DAY);
-        DateUtil.truncTime(model.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
-
         FieldValidator.validateVersion(this, accion, model);
     }
 }

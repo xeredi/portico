@@ -4,13 +4,22 @@ import java.util.List;
 import java.util.Set;
 
 import lombok.Data;
+import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.I18nable;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoDatoVO.
  */
+
+/**
+ * Instantiates a new tipo dato VO.
+ */
 @Data
-public final class TipoDatoVO {
+public final class TipoDatoVO implements I18nable {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.tpdt;
 
     /** The id. */
     private Long id;
@@ -35,4 +44,23 @@ public final class TipoDatoVO {
 
     /** The cdrf code set. */
     private Set<String> cdrfCodeSet;
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getEtiqueta() {
+        if (codigo == null) {
+            return null;
+        }
+
+        final StringBuilder builder = new StringBuilder();
+
+        builder.append(codigo);
+
+        if (nombre != null) {
+            builder.append(" - ").append(nombre);
+        }
+
+        return builder.toString();
+    }
 }
