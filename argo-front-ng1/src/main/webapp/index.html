@@ -31,15 +31,19 @@
                             <li role="presentation" class="divider"></li>
                             <li><a data-ng-href="#/" data-translate="page_home"></a></li>
                             <li role="presentation" class="divider"></li>
-                            <li><a data-ng-href="#/servicio" data-translate="srvcList"></a></li>
-                            <li><a data-ng-if="mc.hasAcbsPath('pepr-list')"
+                            <li><a data-ng-if="mc.hasMdlo('servicios')" data-ng-href="#/servicio"
+                                data-translate="srvcList"></a></li>
+                            <li><a data-ng-if="mc.hasMdlo('estadisticas')"
                                 data-ng-href="#/estadistica/periodo-proceso/grid" data-translate="estdList"></a></li>
-                            <li><a data-ng-href="#/maestro" data-translate="prmtList"></a></li>
-                            <li><a data-ng-href="#/facturacion" data-translate="sec_facturacion"></a></li>
-                            <li><a data-ng-if="mc.hasAcbsPath('prbt-list')"
+                            <li><a data-ng-if="mc.hasMdlo('maestros')" data-ng-href="#/maestro"
+                                data-translate="prmtList"></a></li>
+                            <li><a data-ng-if="mc.hasMdlo('facturacion')" data-ng-href="#/facturacion"
+                                data-translate="sec_facturacion"></a></li>
+                            <li><a data-ng-if="mc.hasMdlo('procesos')"
                                 data-ng-href="#/proceso/proceso/grid" data-translate="prbtList"></a></li>
                             <li role="presentation" class="divider"></li>
-                            <li><a data-ng-href="#/administracion" data-translate="sec_administracion"></a></li>
+                            <li><a data-ng-if="mc.hasMdlo('administracion')"
+                                data-ng-href="#/administracion" data-translate="sec_administracion"></a></li>
                             <li role="presentation" class="divider"></li>
                             <li><a data-ng-href="#/seguridad/usuario/salir" data-translate="usro_salir"></a></li>
                         </ul></li>

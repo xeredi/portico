@@ -254,6 +254,7 @@
         GrupoService.detail(vm.search).then(function(data) {
             vm.model = data.model;
 
+            vm.mdloList = data.mdloList;
             vm.prefixList = data.prefixList;
             vm.acbsMap = data.acbsMap;
             vm.entiList = data.entiList;
@@ -296,6 +297,7 @@
         GrupoService.edit(vm.accion, vm.search).then(function(data) {
             vm.model = data.model;
 
+            vm.mdloList = data.mdloList;
             vm.prefixList = data.prefixList;
             vm.acbsMap = data.acbsMap;
             vm.entiList = data.entiList;
@@ -420,6 +422,7 @@
 
         function acceso() {
             UsuarioService.acceso(vm.model).then(function(data) {
+                localStorageService.set("mdloSet", data.resultadoLogin.mdloSet);
                 localStorageService.set("acbsPaths", data.resultadoLogin.acbsPaths);
                 localStorageService.set("fncdIds", data.resultadoLogin.fncdIds);
                 localStorageService.set("acenMap", data.resultadoLogin.acenMap);
@@ -434,6 +437,7 @@
     /* @ngInject */
     function UsuarioSalirController($location, localStorageService, UsuarioService) {
         UsuarioService.salir().then(function(data) {
+            localStorageService.remove("mdloSet");
             localStorageService.remove("acbsPaths");
             localStorageService.remove("fncdIds");
             localStorageService.remove("acenMap");

@@ -1,12 +1,14 @@
 package xeredi.argo.http.controller.action.comun;
 
+import com.google.common.base.Preconditions;
+
 import lombok.Getter;
 import lombok.Setter;
+import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.comun.vo.Versionable;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -38,12 +40,20 @@ public abstract class CrudSaveAction<T> extends BaseAction implements ProtectedA
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(model);
 
+        if (model instanceof Identifiable) {
+            if (accion != AccionCodigo.create) {
+                Preconditions.checkNotNull(((Identifiable) model).getId());
+            }
+        }
+
         if (model instanceof Versionable<?>) {
             Preconditions.checkNotNull(((Versionable<?>) model).getVersion());
 
             if (accion != AccionCodigo.create) {
                 Preconditions.checkNotNull(((Versionable<?>) model).getVersion().getId());
             }
+
+            FieldValidator.validateVersion(this, accion, (Versionable<?>) model);
         }
 
         doValidate();

@@ -2,29 +2,29 @@ package xeredi.argo.model.facturacion.bo;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import lombok.NonNull;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.argo.model.comun.bo.I18nBO;
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.dao.CargoDAO;
 import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
+import xeredi.argo.model.util.DateUtil;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -99,6 +99,30 @@ public class CargoBO {
     /**
      * Select.
      *
+     * @param id
+     *            the id
+     * @param fref
+     *            the fref
+     * @param idioma
+     *            the idioma
+     * @return the cargo VO
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public CargoVO select(final @NonNull Long id, final @NonNull Date fref, final String idioma)
+            throws InstanceNotFoundException {
+        final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
+
+        crgoCriterio.setId(id);
+        crgoCriterio.setFechaVigencia(fref);
+        crgoCriterio.setIdioma(idioma);
+
+        return selectObject(crgoCriterio);
+    }
+
+    /**
+     * Select.
+     *
      * @param crgoCriterio
      *            the crgo criterio
      * @return the cargo vo
@@ -134,6 +158,9 @@ public class CargoBO {
         Preconditions.checkNotNull(crgo.getTpsr());
         Preconditions.checkNotNull(crgo.getTpsr().getId());
 
+        DateUtil.truncTime(crgo.getVersion().getFini(), Calendar.HOUR_OF_DAY);
+        DateUtil.truncTime(crgo.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
             final IgBO igBO = new IgBO();
@@ -145,16 +172,16 @@ public class CargoBO {
                     throw new OverlapException(MessageI18nKey.crgo, crgo);
                 }
             } else {
-                crgo.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                igBO.assignNextVal(crgo);
 
                 crgoDAO.insert(crgo);
             }
 
-            crgo.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            igBO.assignNextVal(crgo.getVersion());
 
             crgoDAO.insertVersion(crgo);
 
-            I18nBO.insertMap(session, ClassPrefix.crgv, crgo.getVersion().getId(), i18nMap);
+            I18nUtilBO.insertMap(session, crgo, i18nMap);
 
             session.commit();
         }
@@ -172,10 +199,13 @@ public class CargoBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void update(final @NonNull CargoVO crgo, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException,
-            OverlapException {
+    public void update(final @NonNull CargoVO crgo, final Map<String, I18nVO> i18nMap)
+            throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(crgo.getVersion());
         Preconditions.checkNotNull(crgo.getVersion().getId());
+
+        DateUtil.truncTime(crgo.getVersion().getFini(), Calendar.HOUR_OF_DAY);
+        DateUtil.truncTime(crgo.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
@@ -190,7 +220,7 @@ public class CargoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.crgo, crgo);
             }
 
-            I18nBO.updateMap(session, ClassPrefix.crgv, crgo.getVersion().getId(), i18nMap);
+            I18nUtilBO.updateMap(session, crgo, i18nMap);
 
             session.commit();
         }
@@ -215,7 +245,7 @@ public class CargoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.crgo, crgo);
             }
 
-            I18nBO.deleteMap(session, ClassPrefix.crgv, crgo.getVersion().getId());
+            I18nUtilBO.deleteMap(session, crgo);
 
             session.commit();
         }

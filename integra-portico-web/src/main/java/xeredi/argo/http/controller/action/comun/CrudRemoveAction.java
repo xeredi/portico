@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.comun;
 
 import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.comun.vo.Versionable;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 
@@ -29,6 +30,10 @@ public abstract class CrudRemoveAction<T> extends BaseAction implements Protecte
     @Override
     public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(model);
+
+        if (model instanceof Identifiable) {
+            Preconditions.checkNotNull(((Identifiable) model).getId());
+        }
 
         if (model instanceof Versionable<?>) {
             Preconditions.checkNotNull(((Versionable<?>) model).getVersion());

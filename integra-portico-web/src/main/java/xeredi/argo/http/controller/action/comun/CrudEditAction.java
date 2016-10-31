@@ -5,6 +5,7 @@ import java.util.Calendar;
 import lombok.Getter;
 import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.comun.vo.Versionable;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 
@@ -44,6 +45,10 @@ public abstract class CrudEditAction<T> extends BaseAction implements ModelDrive
         if (accion == AccionCodigo.edit || accion == AccionCodigo.duplicate) {
             if (model instanceof Versionable<?>) {
                 Preconditions.checkNotNull(((Versionable<?>) model).getFref());
+            }
+
+            if (model instanceof Identifiable) {
+                Preconditions.checkNotNull(((Identifiable) model).getId());
             }
         } else {
             if (model instanceof Versionable<?> && ((Versionable<?>) model).getFref() == null) {

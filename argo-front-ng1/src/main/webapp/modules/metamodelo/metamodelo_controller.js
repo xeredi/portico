@@ -88,6 +88,13 @@
 
     .controller("AccionEspecialEditController", AccionEspecialEditController)
 
+    // -------------------- MODULO ------------------
+    .controller("ModuloGridController", ModuloGridController)
+
+    .controller("ModuloDetailController", ModuloDetailController)
+
+    .controller("ModuloEditController", ModuloEditController)
+
     ;
 
     /* @ngInject */
@@ -282,6 +289,22 @@
         .when("/metamodelo/accion-especial/edit/:accion/:entiId/:id?", {
             templateUrl : "modules/metamodelo/accion-especial-edit.html",
             controller : "AccionEspecialEditController as vm",
+        })
+
+        .when("/metamodelo/modulo/grid", {
+            templateUrl : "modules/metamodelo/modulo-grid.html",
+            controller : "ModuloGridController as vm",
+            reloadOnSearch : false
+        })
+
+        .when("/metamodelo/modulo/detail/:id", {
+            templateUrl : "modules/metamodelo/modulo-detail.html",
+            controller : "ModuloDetailController as vm",
+        })
+
+        .when("/metamodelo/modulo/edit/:accion/:id?", {
+            templateUrl : "modules/metamodelo/modulo-edit.html",
+            controller : "ModuloEditController as vm",
         })
 
         ;
@@ -1492,6 +1515,96 @@
         });
 
         pageTitleService.setTitle("aces", "page_" + vm.accion);
+    }
+
+    /* @ngInject */
+    function ModuloGridController($routeParams, pageTitleService, ModuloService) {
+        var vm = this;
+
+        vm.filter = filter;
+        vm.resetFilter = resetFilter;
+        vm.search = search;
+        vm.pageChanged = pageChanged;
+
+        function filter() {
+            ModuloService.filter(vm.searchCriteria).then(function(data) {
+            });
+        }
+
+        function resetFilter() {
+            vm.searchCriteria = {};
+        }
+
+        function search(page) {
+            ModuloService.listPage(vm.searchCriteria, page, vm.limit).then(function(data) {
+                vm.page = data.resultList.page;
+                vm.limit = data.resultList.limit;
+                vm.resultList = data.resultList;
+            });
+        }
+
+        function pageChanged() {
+            search(vm.page);
+        }
+
+        vm.searchCriteria = $routeParams.searchCriteria ? angular.fromJson($routeParams.searchCriteria) : {};
+        vm.limit = $routeParams.limit;
+
+        search($routeParams.page ? $routeParams.page : 1);
+
+        pageTitleService.setTitle("mdlo", "page_grid");
+    }
+
+    /* @ngInject */
+    function ModuloDetailController($routeParams, pageTitleService, ModuloService) {
+        var vm = this;
+
+        vm.remove = remove;
+
+        function remove() {
+            ModuloService.remove(vm.model).then(function(data) {
+                window.history.back();
+            });
+        }
+
+        vm.search = {
+            id : $routeParams.id
+        };
+
+        ModuloService.detail(vm.search).then(function(data) {
+            vm.model = data.model;
+        });
+
+        pageTitleService.setTitle("mdlo", "page_detail");
+    }
+
+    /* @ngInject */
+    function ModuloEditController($routeParams, pageTitleService, ModuloService) {
+        var vm = this;
+
+        vm.save = save;
+        vm.cancel = cancel;
+
+        function save() {
+            ModuloService.save(vm.accion, vm.model).then(function(data) {
+                ModuloService.redirectAfterSave(vm.accion, '/metamodelo/modulo/detail', [ data.model.id ]);
+            });
+        }
+
+        function cancel() {
+            window.history.back();
+        }
+
+        vm.accion = $routeParams.accion;
+        vm.search = {
+            id : $routeParams.id
+        };
+
+        ModuloService.edit(vm.accion, vm.search).then(function(data) {
+            vm.model = data.model;
+        });
+
+        pageTitleService.setTitle("mdlo", "page_" + vm.accion);
     }
 
 })();

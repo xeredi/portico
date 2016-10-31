@@ -3,17 +3,13 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
-
 import lombok.Data;
-import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.facturacion.bo.CargoBO;
-import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoTipo;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
@@ -40,7 +36,6 @@ public final class CargoEditAction extends CrudEditAction<CargoVO> {
     private List<LabelValueVO> tpsrList;
 
     /** The tipos. */
-    @Getter
     private CargoTipo[] tipos;
 
     /**
@@ -49,17 +44,10 @@ public final class CargoEditAction extends CrudEditAction<CargoVO> {
     @Override
     public void doEdit() throws ApplicationException {
         if (accion != AccionCodigo.create) {
-            Preconditions.checkNotNull(model.getId());
-
             final CargoBO crgoBO = new CargoBO();
-            final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
-            crgoCriterio.setId(model.getId());
-            crgoCriterio.setFechaVigencia(model.getFref());
-            crgoCriterio.setIdioma(idioma);
-
-            model = crgoBO.selectObject(crgoCriterio);
-            i18nMap = I18nBO.selectMap(ClassPrefix.crgv, model.getVersion().getId());
+            model = crgoBO.select(model.getId(), model.getFref(), getIdioma());
+            i18nMap = I18nUtilBO.selectMap(model);
         }
     }
 

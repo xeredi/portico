@@ -25,7 +25,6 @@ import xeredi.util.mybatis.SqlMapperLocator;
  * The Class I18nBO.
  */
 public final class I18nBO {
-
     /**
      * Select map.
      *
@@ -35,7 +34,8 @@ public final class I18nBO {
      *            the external id
      * @return the map
      */
-    public final static Map<String, I18nVO> selectMap(final @NonNull ClassPrefix prefix, final @NonNull Long externalId) {
+    public final static Map<String, I18nVO> selectMap(final @NonNull ClassPrefix prefix,
+            final @NonNull Long externalId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
             final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
@@ -54,27 +54,6 @@ public final class I18nBO {
     }
 
     /**
-     * Select list.
-     *
-     * @param prefix
-     *            the prefix
-     * @param language
-     *            the language
-     * @return the list
-     */
-    public final static List<I18nVO> selectList(final @NonNull ClassPrefix prefix, final @NonNull String language) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
-            final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
-
-            i18nCriterioVO.setPrefix(prefix);
-            i18nCriterioVO.setLanguage(language);
-
-            return i18nDAO.selectList(i18nCriterioVO);
-        }
-    }
-
-    /**
      * Select label value list.
      *
      * @param prefixSet
@@ -83,7 +62,7 @@ public final class I18nBO {
      *            the language
      * @return the list
      */
-    public final List<LabelValueVO> selectLabelValueList(final @NonNull Set<ClassPrefix> prefixSet,
+    final List<LabelValueVO> selectLabelValueList(final @NonNull Set<ClassPrefix> prefixSet,
             final @NonNull String language) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);

@@ -3,17 +3,19 @@
 
 <div class="list-group">
     <h4>
-        <a data-ng-href="#/servicio" class="list-group-item col-sm-6 col-md-3" data-translate="srvcList"></a>
+        <a data-ng-if="mc.hasMdlo('servicios')" data-ng-href="#/servicio"
+            class="list-group-item col-sm-6 col-md-3" data-translate="srvcList"></a>
     </h4>
     <h4>
-        <a data-ng-if="mc.hasAcbsPath('pepr-list')" data-ng-href="#/estadistica/periodo-proceso/grid"
+        <a data-ng-if="mc.hasMdlo('estadisticas')" data-ng-href="#/estadistica/periodo-proceso/grid"
             class="list-group-item col-sm-6 col-md-3" data-translate="estdList"></a>
     </h4>
     <h4>
-        <a data-ng-href="#/maestro" class="list-group-item col-sm-6 col-md-3" data-translate="prmtList"></a>
+        <a data-ng-if="mc.hasMdlo('maestros')" data-ng-href="#/maestro"
+            class="list-group-item col-sm-6 col-md-3" data-translate="prmtList"></a>
     </h4>
     <h4>
-        <a data-ng-href="#/facturacion" class="list-group-item col-sm-6 col-md-3"
-            data-translate="sec_facturacion"></a>
+        <a data-ng-if="mc.hasMdlo('facturacion')" data-ng-href="#/facturacion"
+            class="list-group-item col-sm-6 col-md-3" data-translate="sec_facturacion"></a>
     </h4>
 </div>

@@ -3,6 +3,8 @@ package xeredi.argo.model.seguridad.vo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
+import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.Modelable;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -10,7 +12,10 @@ import xeredi.argo.model.comun.vo.BaseCriterioVO;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public final class UsuarioCriterioVO extends BaseCriterioVO {
+public final class UsuarioCriterioVO extends BaseCriterioVO implements Modelable {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.usro;
 
     /** The id. */
     private Long id;

@@ -434,6 +434,17 @@ INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2903)\
 INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2904)\
 	INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo) VALUES (2904, 'aces', 'remove')\
 
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2920)\
+	INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo) VALUES (2920, 'mdlo', 'list')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2921)\
+	INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo) VALUES (2921, 'mdlo', 'detail')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2922)\
+	INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo) VALUES (2922, 'mdlo', 'create')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2923)\
+	INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo) VALUES (2923, 'mdlo', 'edit')\
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2924)\
+	INSERT INTO tbl_accion_base_acbs (acbs_pk, acbs_prefix, acbs_codigo) VALUES (2924, 'mdlo', 'remove')\
+
 
 -- Modulos (5000)
 INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (5000)\
@@ -1787,6 +1798,12 @@ INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'acbs_codigo')
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'acbs_prefix')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'acbs_prefix', 'Prefijo')\
 
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'mdlo')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'mdlo', 'Módulo')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'mdloList')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'mdloList', 'Módulos')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'mdlo_codigo')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'mdlo_codigo', 'Código')\
 
 
 

@@ -15,6 +15,7 @@ import xeredi.argo.model.metamodelo.bo.AccionBaseBO;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.bo.AccionEspecialBO;
 import xeredi.argo.model.metamodelo.bo.EntidadBO;
+import xeredi.argo.model.metamodelo.bo.ModuloBO;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseVO;
@@ -24,6 +25,8 @@ import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 import xeredi.argo.model.metamodelo.vo.AccionEspecialCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEspecialVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
+import xeredi.argo.model.metamodelo.vo.ModuloCriterioVO;
+import xeredi.argo.model.metamodelo.vo.ModuloVO;
 import xeredi.argo.model.metamodelo.vo.TramiteCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
 import xeredi.argo.model.seguridad.bo.GrupoBO;
@@ -33,6 +36,10 @@ import xeredi.argo.model.seguridad.vo.GrupoVO;
 /**
  * The Class GrupoEditAction.
  */
+
+/**
+ * Instantiates a new grupo edit action.
+ */
 @Data
 public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
 
@@ -41,6 +48,9 @@ public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
 
     /** The prefix. */
     private final ClassPrefix prefix = ClassPrefix.grpo;
+
+    /** The mdlo list. */
+    private List<ModuloVO> mdloList;
 
     /** The prefix list. */
     private List<ClassPrefix> prefixList;
@@ -54,8 +64,10 @@ public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
     /** The acen map. */
     private Map<Long, List<AccionEntidadVO>> acenMap;
 
+    /** The aces map. */
     private Map<Long, List<AccionEspecialVO>> acesMap;
 
+    /** The trmt map. */
     private Map<Long, List<TramiteVO>> trmtMap;
 
     /**
@@ -79,6 +91,14 @@ public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
      */
     @Override
     public void doLoadDependencies() throws ApplicationException {
+        // Modulos
+        final ModuloBO mdloBO = new ModuloBO();
+        final ModuloCriterioVO mdloCriterio = new ModuloCriterioVO();
+
+        mdloCriterio.setIdioma(getIdioma());
+
+        mdloList = mdloBO.selectList(mdloCriterio);
+
         // Entidades
         entiList = new ArrayList<>();
 

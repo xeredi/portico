@@ -146,9 +146,14 @@
     function MainController(credentialService) {
         var vm = this;
 
+        vm.hasMdlo = hasMdlo;
         vm.hasAcbsPath = hasAcbsPath;
         vm.hasAcen = hasAcen;
         vm.hasFncdId = hasFncdId;
+
+        function hasMdlo(mdlo) {
+            return credentialService.hasMdlo(mdlo);
+        }
 
         function hasAcbsPath(path) {
             return credentialService.hasAcbsPath(path);
@@ -248,10 +253,17 @@
     /* @ngInject */
     function credentialService(localStorageService) {
         return {
+            hasMdlo : hasMdlo,
             hasAcbsPath : hasAcbsPath,
             hasFncdId : hasFncdId,
             hasAcen : hasAcen
         };
+
+        function hasMdlo(mdlo) {
+            var mdloSet = localStorageService.get("mdloSet");
+
+            return mdloSet ? mdloSet.indexOf(mdlo) >= 0 : false;
+        }
 
         function hasAcbsPath(path) {
             var acbsPaths = localStorageService.get("acbsPaths");

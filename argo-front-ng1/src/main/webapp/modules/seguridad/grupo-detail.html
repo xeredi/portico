@@ -20,8 +20,20 @@
         </div>
     </fieldset>
 
-
     <div data-uib-tabset data-type="pills">
+        <div data-uib-tab data-select="vm.tabSelected('mdloList')" data-index="'mdloList'"
+            data-heading="{{'mdloList' | translate}}" data-ng-if="mc.hasAcbsPath('mdlo-list')">
+            <fieldset>
+                <div class="row">
+                    <div class="list-group col-sm-12">
+                        <a data-ng-repeat="mdlo in vm.mdloList"
+                            data-ng-href="#/metamodelo/modulo/detail/{{mdlo.id}}"
+                            class="col-sm-4 col-md-3 col-lg-2 list-group-item" class="list-group-item"
+                            data-ng-bind="mdlo.codigo"></a>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
         <div data-uib-tab data-select="vm.tabSelected('acbsList')" data-index="'acbsList'"
             data-heading="{{'acbsList' | translate}}" data-ng-if="mc.hasAcbsPath('acbs-list')">
             <fieldset>

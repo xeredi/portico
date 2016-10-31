@@ -35,6 +35,8 @@
 
     .factory("AccionEspecialService", AccionEspecialService)
 
+    .factory("ModuloService", ModuloService)
+
     ;
 
     /* @ngInject */
@@ -115,5 +117,10 @@
     /* @ngInject */
     function AccionEspecialService($http, $q, CrudService) {
         return CrudService.create("metamodelo/accion-especial");
+    }
+
+    /* @ngInject */
+    function ModuloService($http, $q, CrudService) {
+        return CrudService.create("metamodelo/modulo");
     }
 })();

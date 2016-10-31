@@ -3,15 +3,16 @@ package xeredi.argo.model.comun.bo;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.NonNull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.dao.IgDAO;
+import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.comun.vo.IgVO;
+import xeredi.argo.model.comun.vo.VersionVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
@@ -30,6 +31,26 @@ public final class IgBO {
     private static final Map<String, IgVO> MAP = new HashMap<>();
 
     /**
+     * Assign next val.
+     *
+     * @param identifiable
+     *            the identifiable
+     */
+    public synchronized void assignNextVal(final Identifiable identifiable) {
+        identifiable.setId(nextVal(SQ_INTEGRA));
+    }
+
+    /**
+     * Assign next val.
+     *
+     * @param version
+     *            the version
+     */
+    public synchronized void assignNextVal(final VersionVO version) {
+        version.setId(nextVal(SQ_INTEGRA));
+    }
+
+    /**
      * Next val.
      *
      * @param nombre
@@ -41,7 +62,7 @@ public final class IgBO {
 
         if (vo == null) {
             try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
-                if (LOG.isDebugEnabled()) {
+                if (LOG.isTraceEnabled()) {
                     LOG.debug("Inicializar secuencia: " + nombre);
                 }
 
@@ -66,7 +87,7 @@ public final class IgBO {
 
         if (vo.getUltimo() + vo.getIncremento() > vo.getFin()) {
             try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
-                if (LOG.isDebugEnabled()) {
+                if (LOG.isTraceEnabled()) {
                     LOG.debug("Actualizar secuencia: " + nombre);
                 }
 

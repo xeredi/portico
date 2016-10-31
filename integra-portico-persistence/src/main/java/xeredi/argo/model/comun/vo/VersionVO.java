@@ -8,8 +8,18 @@ import lombok.Data;
 /**
  * The Class ItemVersionVO.
  */
+
+/**
+ * Instantiates a new version VO.
+ */
 @Data
 public abstract class VersionVO {
+    /**
+     * Gets the prefix.
+     *
+     * @return the prefix
+     */
+    public abstract ClassPrefix getPrefix();
 
     /** The id. */
     protected Long id;

@@ -44,7 +44,8 @@ public final class AspectoBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<AspectoVO> selectList(final AspectoCriterioVO aspcCriterioVO, final int offset, final int limit) {
+    public PaginatedList<AspectoVO> selectList(final AspectoCriterioVO aspcCriterioVO, final int offset,
+            final int limit) {
         Preconditions.checkNotNull(aspcCriterioVO);
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
@@ -126,6 +127,19 @@ public final class AspectoBO {
         }
     }
 
+    /**
+     * Select.
+     *
+     * @param id
+     *            the id
+     * @param fref
+     *            the fref
+     * @param idioma
+     *            the idioma
+     * @return the aspecto VO
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
     public AspectoVO select(final @NonNull Long id, final @NonNull Date fref, final String idioma)
             throws InstanceNotFoundException {
         final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
@@ -236,8 +250,8 @@ public final class AspectoBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void update(final AspectoVO aspc, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException,
-    OverlapException {
+    public void update(final AspectoVO aspc, final Map<String, I18nVO> i18nMap)
+            throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getVersion());
         Preconditions.checkNotNull(aspc.getId());

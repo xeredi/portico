@@ -50,7 +50,8 @@ public final class UsuarioBO {
                 throw new DuplicateInstanceException(MessageI18nKey.usro, usro);
             }
 
-            usro.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            igBO.assignNextVal(usro);
+
             usroDAO.insert(usro);
 
             if (usro.getGrpoIds() != null) {

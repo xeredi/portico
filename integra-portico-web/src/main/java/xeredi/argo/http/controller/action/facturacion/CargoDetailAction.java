@@ -3,17 +3,14 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
-
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.facturacion.bo.CargoBO;
 import xeredi.argo.model.facturacion.bo.ReglaBO;
-import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 import xeredi.argo.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
@@ -42,17 +39,10 @@ public final class CargoDetailAction extends CrudDetailAction<CargoVO> {
      */
     @Override
     public void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
-
         final CargoBO crgoBO = new CargoBO();
-        final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
-        crgoCriterio.setId(model.getId());
-        crgoCriterio.setFechaVigencia(model.getFref());
-        crgoCriterio.setIdioma(getIdioma());
-
-        model = crgoBO.selectObject(crgoCriterio);
-        i18nMap = I18nBO.selectMap(ClassPrefix.crgv, model.getVersion().getId());
+        model = crgoBO.select(model.getId(), model.getFref(), getIdioma());
+        i18nMap = I18nUtilBO.selectMap(model);
 
         final ReglaBO rglaBO = new ReglaBO();
         final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();

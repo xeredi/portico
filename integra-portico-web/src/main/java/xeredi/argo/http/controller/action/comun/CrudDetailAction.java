@@ -5,6 +5,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 import lombok.Data;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.comun.vo.Versionable;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 
@@ -36,6 +37,10 @@ public abstract class CrudDetailAction<T> extends BaseAction implements ModelDri
 
         if (model instanceof Versionable<?>) {
             Preconditions.checkNotNull(((Versionable<?>) model).getFref());
+        }
+
+        if (model instanceof Identifiable) {
+            Preconditions.checkNotNull(((Identifiable) model).getId());
         }
 
         doDetail();

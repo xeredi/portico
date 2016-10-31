@@ -15,6 +15,7 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.AccionBaseDAO;
 import xeredi.argo.model.metamodelo.dao.AccionEntidadDAO;
 import xeredi.argo.model.metamodelo.dao.AccionEspecialDAO;
+import xeredi.argo.model.metamodelo.dao.ModuloDAO;
 import xeredi.argo.model.metamodelo.dao.TramiteDAO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseVO;
@@ -23,6 +24,8 @@ import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 import xeredi.argo.model.metamodelo.vo.AccionEspecialCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEspecialVO;
+import xeredi.argo.model.metamodelo.vo.ModuloCriterioVO;
+import xeredi.argo.model.metamodelo.vo.ModuloVO;
 import xeredi.argo.model.metamodelo.vo.TramiteCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
 import xeredi.argo.model.seguridad.dao.UsuarioDAO;
@@ -37,88 +40,100 @@ import xeredi.util.mybatis.SqlMapperLocator;
  */
 public final class UsuarioAccesoBO {
 
-	/**
-	 * Acceso.
-	 *
-	 * @param login
-	 *            the login
-	 * @param contrasenia
-	 *            the contrasenia
-	 * @return the resultado login vo
-	 * @throws InstanceNotFoundException
-	 *             the instance not found exception
-	 * @throws ContraseniaIncorrectaException
-	 *             the contrasenia incorrecta exception
-	 */
-	public ResultadoLoginVO acceso(final String login, final String contrasenia)
-			throws InstanceNotFoundException, ContraseniaIncorrectaException {
-		Preconditions.checkNotNull(login);
-		Preconditions.checkNotNull(contrasenia);
+    /**
+     * Acceso.
+     *
+     * @param login
+     *            the login
+     * @param contrasenia
+     *            the contrasenia
+     * @return the resultado login vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws ContraseniaIncorrectaException
+     *             the contrasenia incorrecta exception
+     */
+    public ResultadoLoginVO acceso(final String login, final String contrasenia)
+            throws InstanceNotFoundException, ContraseniaIncorrectaException {
+        Preconditions.checkNotNull(login);
+        Preconditions.checkNotNull(contrasenia);
 
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
-			final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
+            final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
 
-			usroCriterio.setLogin(login);
+            usroCriterio.setLogin(login);
 
-			final UsuarioVO usro = usroDAO.selectObject(usroCriterio);
+            final UsuarioVO usro = usroDAO.selectObject(usroCriterio);
 
-			if (usro == null) {
-				throw new InstanceNotFoundException(MessageI18nKey.usro, login);
-			}
+            if (usro == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.usro, login);
+            }
 
-			if (!contrasenia.equals(usro.getContrasenia())) {
-				throw new ContraseniaIncorrectaException(login);
-			}
+            if (!contrasenia.equals(usro.getContrasenia())) {
+                throw new ContraseniaIncorrectaException(login);
+            }
 
-			// Recuperacion de los paths a las acciones base
-			final Set<String> paths = new HashSet<>();
-			final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
-			final AccionBaseCriterioVO acbsCriterio = new AccionBaseCriterioVO();
+            // Recuperacion de los modulos
+            final Set<String> mdloSet = new HashSet<>();
+            final ModuloDAO mdloDAO = session.getMapper(ModuloDAO.class);
+            final ModuloCriterioVO mdloCriterio = new ModuloCriterioVO();
 
-			acbsCriterio.setUsroId(usro.getId());
+            mdloCriterio.setUsroId(usro.getId());
 
-			for (final AccionBaseVO acbs : acbsDAO.selectList(acbsCriterio)) {
-				paths.add(acbs.getPath());
-			}
+            for (final ModuloVO mdlo : mdloDAO.selectList(mdloCriterio)) {
+                mdloSet.add(mdlo.getCodigo());
+            }
 
-			// Recuperacion de las acciones de entidad
-			final Map<Long, Set<AccionCodigo>> acenMap = new HashMap<>();
-			final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
-			final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
+            // Recuperacion de los paths a las acciones base
+            final Set<String> paths = new HashSet<>();
+            final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
+            final AccionBaseCriterioVO acbsCriterio = new AccionBaseCriterioVO();
 
-			acenCriterio.setUsroId(usro.getId());
+            acbsCriterio.setUsroId(usro.getId());
 
-			for (final AccionEntidadVO acen : acenDAO.selectList(acenCriterio)) {
-				if (!acenMap.containsKey(acen.getEntiId())) {
-					acenMap.put(acen.getEntiId(), new HashSet<>());
-				}
+            for (final AccionBaseVO acbs : acbsDAO.selectList(acbsCriterio)) {
+                paths.add(acbs.getPath());
+            }
 
-				acenMap.get(acen.getEntiId()).add(acen.getAebs().getCodigo());
-			}
+            // Recuperacion de las acciones de entidad
+            final Map<Long, Set<AccionCodigo>> acenMap = new HashMap<>();
+            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
+            final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
 
-			// Recuperacion del resto de funcionalidades (acciones especiales y tramites)
-			final Set<Long> fncdIds = new HashSet<>();
+            acenCriterio.setUsroId(usro.getId());
 
-			final AccionEspecialDAO acesDAO = session.getMapper(AccionEspecialDAO.class);
-			final AccionEspecialCriterioVO acesCriterio = new AccionEspecialCriterioVO();
+            for (final AccionEntidadVO acen : acenDAO.selectList(acenCriterio)) {
+                if (!acenMap.containsKey(acen.getEntiId())) {
+                    acenMap.put(acen.getEntiId(), new HashSet<>());
+                }
 
-			acesCriterio.setUsroId(usro.getId());
+                acenMap.get(acen.getEntiId()).add(acen.getAebs().getCodigo());
+            }
 
-			for (final AccionEspecialVO aces : acesDAO.selectList(acesCriterio)) {
-				fncdIds.add(aces.getId());
-			}
+            // Recuperacion del resto de funcionalidades (acciones especiales y tramites)
+            final Set<Long> fncdIds = new HashSet<>();
 
-			final TramiteDAO trmtDAO = session.getMapper(TramiteDAO.class);
-			final TramiteCriterioVO trmtCriterio = new TramiteCriterioVO();
+            final AccionEspecialDAO acesDAO = session.getMapper(AccionEspecialDAO.class);
+            final AccionEspecialCriterioVO acesCriterio = new AccionEspecialCriterioVO();
 
-			trmtCriterio.setUsroId(usro.getId());
+            acesCriterio.setUsroId(usro.getId());
 
-			for (final TramiteVO trmt : trmtDAO.selectList(trmtCriterio)) {
-				fncdIds.add(trmt.getId());
-			}
+            for (final AccionEspecialVO aces : acesDAO.selectList(acesCriterio)) {
+                fncdIds.add(aces.getId());
+            }
 
-			return new ResultadoLoginVO(usro.getId(), usro.getNombre(), usro.getSprt(), usro.getPrto(), paths, acenMap, fncdIds);
-		}
-	}
+            final TramiteDAO trmtDAO = session.getMapper(TramiteDAO.class);
+            final TramiteCriterioVO trmtCriterio = new TramiteCriterioVO();
+
+            trmtCriterio.setUsroId(usro.getId());
+
+            for (final TramiteVO trmt : trmtDAO.selectList(trmtCriterio)) {
+                fncdIds.add(trmt.getId());
+            }
+
+            return new ResultadoLoginVO(usro.getId(), usro.getNombre(), usro.getSprt(), usro.getPrto(), mdloSet, paths,
+                    acenMap, fncdIds);
+        }
+    }
 }

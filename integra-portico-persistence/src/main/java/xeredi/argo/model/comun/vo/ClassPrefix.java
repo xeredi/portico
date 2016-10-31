@@ -40,6 +40,10 @@ public enum ClassPrefix {
     prvr,
     /** The prdt. */
     prdt,
+    /** The sprm. */
+    sprm,
+    /** The spvr. */
+    spvr,
     /** The srvc. */
     srvc,
     /** The srsc. */
@@ -109,13 +113,13 @@ public enum ClassPrefix {
     /** The rglv. */
     rglv,
     /** The rgin. */
-    rgin,
+    rgin, rgiv,
     /** The aspc. */
     aspc,
     /** The aspv. */
     aspv,
     /** The ascr. */
-    ascr,
+    ascr, ascv,
     /** The fcan. */
     fcan,
     /** The fcrc. */

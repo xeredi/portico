@@ -3,14 +3,12 @@
 	display: none !important;
 }
 
-/* IE */
 ul, li {
 	list-style: none;
 	list-style-type: none;
 	list-style-image: none;
 }
 
-/* Layout */
 #body-content {
 	margin-top: 50px;
 }
@@ -150,6 +148,14 @@ td {
 
 .error {
 	background-color: red;
+}
+
+.list-group {
+	margin-bottom: 5px;
+}
+
+.checkbox {
+	margin: 0px;
 }
 
 /* Bootstrap XL */

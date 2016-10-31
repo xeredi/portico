@@ -1,9 +1,6 @@
 package xeredi.argo.http.controller.action.facturacion;
 
-import java.util.Calendar;
 import java.util.Map;
-
-import com.google.common.base.Preconditions;
 
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
@@ -15,7 +12,6 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.CargoBO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.util.DateUtil;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -62,18 +58,11 @@ public final class CargoSaveAction extends CrudSaveAction<CargoVO> {
         if (AccionCodigo.create == accion) {
             FieldValidator.validateRequired(this, MessageI18nKey.crgo_codigo, model.getCodigo());
             FieldValidator.validateRequired(this, MessageI18nKey.tpsr, model.getTpsr());
-        } else {
-            Preconditions.checkNotNull(model.getId());
         }
 
         FieldValidator.validateI18n(this, i18nMap);
         FieldValidator.validateRequired(this, MessageI18nKey.crgo_tipo, model.getVersion().getTipo());
         FieldValidator.validateRequired(this, MessageI18nKey.crgo_temporal, model.getVersion().getTemporal());
         FieldValidator.validateRequired(this, MessageI18nKey.crgo_principal, model.getVersion().getPrincipal());
-
-        DateUtil.truncTime(model.getVersion().getFini(), Calendar.HOUR_OF_DAY);
-        DateUtil.truncTime(model.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
-
-        FieldValidator.validateVersion(this, accion, model);
     }
 }
