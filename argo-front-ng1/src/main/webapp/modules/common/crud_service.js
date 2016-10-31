@@ -45,9 +45,11 @@
                 }).then(success, fail);
 
                 function success(response) {
+/*
                     $location.search({
                         searchCriteria : JSON.stringify(searchCriteria)
                     }).replace();
+*/
 
                     return response.data;
                 }
@@ -61,7 +63,7 @@
             }
 
             function listPage(searchCriteria, page, limit) {
-                // console.log('list page');
+                console.log('list page');
 
                 return $http.post(_uri + "-list.action", {
                     model : searchCriteria,
@@ -70,11 +72,13 @@
                 }).then(success, fail);
 
                 function success(response) {
+/*
                     $location.search({
                         page : page,
                         limit : limit,
                         searchCriteria : JSON.stringify(searchCriteria)
                     }).replace();
+*/
 
                     return response.data;
                 }

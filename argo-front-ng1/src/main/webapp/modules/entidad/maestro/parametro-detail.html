@@ -1,8 +1,8 @@
 <div data-ng-if="vm.item">
     <!--  data-index="0" -->
     <div data-uib-tabset data-type="pills">
-        <div data-uib-tab data-select="vm.tabSelected(vm.enti.enti.id)" data-index="vm.enti.enti.id"
-            data-index="vm.enti.enti.id" data-heading="{{'enti_' + vm.enti.enti.id | translate}}">
+        <div data-uib-tab data-select="vm.tabSelected(vm.enti.enti.id)" data-index="vm.enti.enti.id">
+            <div data-uib-tab-heading data-translate="{{'enti_' + vm.enti.enti.id}}"></div>
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
                     <a class="btn btn-default" data-ng-if="mc.hasAcen(vm.item.entiId, 'edit')"
@@ -63,15 +63,16 @@
                     </div>
                 </div>
 
-                <div data-ng-if="vm.enti.enti.i18n" class="row" data-ng-include="'modules/common/i18nMap-detail.html'"></div>
+                <div data-ng-if="vm.enti.enti.i18n" class="row"
+                    data-ng-include="'modules/common/i18nMap-detail.html'"></div>
 
                 <div data-ng-include="'modules/entidad/item/fragment/itdtMap-detail-content.html'"></div>
             </fieldset>
         </div>
-        <!--  data-index="$index + 1" -->
         <div data-uib-tab data-ng-repeat="entiHijaId in vm.enti.entiHijasList track by $index"
             data-ng-if="mc.hasAcen(entiHijaId, 'list')" data-select="vm.tabSelected(entiHijaId)"
-            data-index="entiHijaId" data-heading="{{'enti_' + entiHijaId | translate}}">
+            data-index="entiHijaId">
+            <div data-uib-tab-heading data-translate="{{'enti_' + entiHijaId}}"></div>
             <div data-ng-if="vm.itemHijosMap[entiHijaId]">
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group">
@@ -107,7 +108,8 @@
                                 <th class="date" data-translate="fini"></th>
                                 <th class="date" data-translate="ffin"></th>
 
-                                <th data-ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdGridList track by $index"
+                                <th
+                                    data-ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdGridList track by $index"
                                     data-ng-bind="('entd_' + vm.entiHijasMap[entiHijaId].entdMap[tpdtId].id | translate)"></th>
                             </tr>
                         </thead>
@@ -127,18 +129,20 @@
                                 <td data-ng-bind="(itemHijo.version.ffin | date: ('format_date' | translate))"
                                     nowrap="nowrap"></td>
 
-                                <td data-ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdGridList track by $index"
+                                <td
+                                    data-ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdGridList track by $index"
                                     data-ng-switch="vm.entiHijasMap[entiHijaId].entdMap[tpdtId].tpdt.tipoElemento"
                                     nowrap="nowrap"><span data-ng-switch-when="BO"><i
                                         class="glyphicon glyphicon-{{(itemHijo.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove')}}"></i></span>
                                     <span data-ng-switch-when="ND" class="pull-right"
-                                    data-ng-bind="(itemHijo.itdtMap[tpdtId].cantidadDecimal | number:2)"></span> <span
-                                    data-ng-switch-when="NE" class="pull-right"
-                                    data-ng-bind="(itemHijo.itdtMap[tpdtId].cantidadEntera | number:0)"></span> <span
-                                    data-ng-switch-when="CR"
+                                    data-ng-bind="(itemHijo.itdtMap[tpdtId].cantidadDecimal | number:2)"></span>
+                                    <span data-ng-switch-when="NE" class="pull-right"
+                                    data-ng-bind="(itemHijo.itdtMap[tpdtId].cantidadEntera | number:0)"></span>
+                                    <span data-ng-switch-when="CR"
                                     data-ng-bind="('cdrf_' + tpdtId + '_' + item.itdtMap[tpdtId].cadena | translate)"></span>
-                                    <span data-ng-switch-when="TX" data-ng-bind="itemHijo.itdtMap[tpdtId].cadena"></span>
-                                    <span data-ng-switch-when="PR" data-bs-tooltip
+                                    <span data-ng-switch-when="TX"
+                                    data-ng-bind="itemHijo.itdtMap[tpdtId].cadena"></span> <span
+                                    data-ng-switch-when="PR" data-bs-tooltip
                                     data-title="{{itemHijo.itdtMap[tpdtId].prmt.etiqueta}}"
                                     data-ng-bind="itemHijo.itdtMap[tpdtId].prmt.parametro"></span> <span
                                     data-ng-switch-when="FE"
