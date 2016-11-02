@@ -5,11 +5,10 @@ import java.util.Map;
 
 import com.google.common.base.Preconditions;
 
-import lombok.Getter;
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.bo.AccionEspecialBO;
@@ -32,29 +31,25 @@ import xeredi.argo.model.metamodelo.vo.EntidadVO;
  * @param <T>
  *            the generic type
  */
+@Data
 public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetailAction<T> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2541307413836565323L;
 
     /** The i18n map. */
-    @Getter
     protected Map<String, I18nVO> i18nMap;
 
     /** The entd list. */
-    @Getter
     protected List<EntidadTipoDatoVO> entdList;
 
     /** The engd list. */
-    @Getter
     protected List<EntidadGrupoDatoVO> engdList;
 
     /** The enac list. */
-    @Getter
     protected List<AccionEspecialVO> acesList;
 
     /** The acen list. */
-    @Getter
     protected List<AccionEntidadVO> acenList;
 
     /**
@@ -66,7 +61,7 @@ public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetai
 
         doSpecificDetail();
 
-        i18nMap = I18nBO.selectMap(ClassPrefix.enti, model.getId());
+        i18nMap = I18nUtilBO.selectMap(model);
 
         final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
         final EntidadTipoDatoCriterioVO entdCriterio = new EntidadTipoDatoCriterioVO();

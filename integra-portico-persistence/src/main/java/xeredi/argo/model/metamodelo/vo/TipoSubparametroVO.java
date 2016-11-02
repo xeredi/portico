@@ -10,7 +10,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public final class TipoSubparametroVO extends EntidadVO {
-
     /** The tppr. */
     private Long tpprId;
 

@@ -9,11 +9,10 @@ import org.apache.ibatis.session.SqlSession;
 import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.FuncionalidadDAO;
@@ -116,12 +115,11 @@ public final class TramiteBO {
 				throw new DuplicateInstanceException(MessageI18nKey.trmt, trmt);
 			}
 
-			trmt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-
+			igBO.assignNextVal(trmt);
 			fncdDAO.insert(trmt);
 			trmtDAO.insert(trmt);
 
-			I18nBO.insertMap(session, ClassPrefix.trmt, trmt.getId(), i18nMap);
+			I18nUtilBO.insertMap(session, trmt, i18nMap);
 
 			session.commit();
 		}
@@ -139,6 +137,8 @@ public final class TramiteBO {
 	 */
 	public void update(final @NonNull TramiteVO trmt, final @NonNull Map<String, I18nVO> i18nMap)
 			throws InstanceNotFoundException {
+	    Preconditions.checkNotNull(trmt.getId());
+
 		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
 			final TramiteDAO trmtDAO = session.getMapper(TramiteDAO.class);
 
@@ -146,7 +146,7 @@ public final class TramiteBO {
 				throw new InstanceNotFoundException(MessageI18nKey.trmt, trmt.getId());
 			}
 
-			I18nBO.updateMap(session, ClassPrefix.trmt, trmt.getId(), i18nMap);
+			I18nUtilBO.updateMap(session, trmt, i18nMap);
 
 			session.commit();
 		}
@@ -179,7 +179,7 @@ public final class TramiteBO {
 			fngrDAO.deleteList(fngrCriterio);
 			fncdDAO.delete(trmt);
 
-			I18nBO.deleteMap(session, ClassPrefix.trmt, trmt.getId());
+			I18nUtilBO.deleteMap(session, trmt);
 
 			session.commit();
 		}

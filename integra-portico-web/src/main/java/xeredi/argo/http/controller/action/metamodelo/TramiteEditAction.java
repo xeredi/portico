@@ -7,7 +7,7 @@ import com.google.common.base.Preconditions;
 
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
@@ -59,8 +59,7 @@ public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
             Preconditions.checkNotNull(model.getId());
 
             model = trmtBO.select(model.getId(), getIdioma());
-
-            i18nMap = I18nBO.selectMap(ClassPrefix.trmt, model.getId());
+            i18nMap = I18nUtilBO.selectMap(model);
 
             break;
         default:
@@ -73,6 +72,8 @@ public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
      */
     @Override
     public void doLoadDependencies() throws ApplicationException {
+        Preconditions.checkNotNull(model.getEntiId());
+
         final EntidadBO entiBO = new EntidadBO();
         final TipoDatoBO tpdtBO = new TipoDatoBO();
 

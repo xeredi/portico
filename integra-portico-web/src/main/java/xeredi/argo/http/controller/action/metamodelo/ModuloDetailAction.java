@@ -1,5 +1,6 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
+import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
@@ -13,6 +14,9 @@ import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.ModuloBO;
 import xeredi.argo.model.metamodelo.vo.ModuloCriterioVO;
 import xeredi.argo.model.metamodelo.vo.ModuloVO;
+import xeredi.argo.model.seguridad.bo.GrupoBO;
+import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
+import xeredi.argo.model.seguridad.vo.GrupoVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -30,6 +34,8 @@ public final class ModuloDetailAction extends CrudDetailAction<ModuloVO> {
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
 
+    private List<GrupoVO> grpoList;
+
     /**
      * {@inheritDoc}
      */
@@ -44,5 +50,13 @@ public final class ModuloDetailAction extends CrudDetailAction<ModuloVO> {
 
         model = mdloBO.selectObject(mdloCriterio);
         i18nMap = I18nBO.selectMap(ClassPrefix.mdlo, model.getId());
+
+        final GrupoBO grpoBO = new GrupoBO();
+        final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
+
+        grpoCriterio.setFncdId(model.getId());
+        grpoCriterio.setIdioma(getIdioma());
+
+        grpoList = grpoBO.selectList(grpoCriterio);
     }
 }

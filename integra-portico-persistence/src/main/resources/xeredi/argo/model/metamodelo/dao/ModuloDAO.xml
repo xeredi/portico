@@ -16,6 +16,18 @@
     <![CDATA[
     SELECT
         mdlo_pk, mdlo_codigo
+    ]]>
+		<if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'mdlo'
+                    AND i18n_ext_pk = mdlo_pk
+                    AND i18n_lang = #{idioma}
+            ) AS mdlo_etiqueta
+        ]]>
+		</if>
+    <![CDATA[
     FROM
         tbl_modulo_mdlo
     ]]>
@@ -105,7 +117,7 @@
     <insert id="insert" parameterType="ModuloVO">
         <![CDATA[
         INSERT INTO tbl_modulo_mdlo (mdlo_pk, mdlo_codigo)
-        VALUES (#{id}, #{aebs.id}, #{codigo})
+        VALUES (#{id}, #{codigo})
         ]]>
     </insert>
 

@@ -1,6 +1,8 @@
 package xeredi.argo.model.metamodelo.vo;
 
 import lombok.Data;
+import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.I18nable;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -8,7 +10,10 @@ import lombok.Data;
  * Servicio, Subtipos de Subservicio y Tipos de Estadística.
  */
 @Data
-public class EntidadVO {
+public class EntidadVO implements I18nable {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.enti;
 
     /** Identificador único de entidad. */
     private Long id;

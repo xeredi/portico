@@ -119,12 +119,6 @@
     ]]>
 	</select>
 
-	<select id="nextSequence" resultType="Long">
-    <![CDATA[
-        SELECT COALESCE(MAX(enti_pk), 20000) + 1 as enti_pk FROM tbl_entidad_enti
-    ]]>
-	</select>
-
 	<insert id="insert" parameterType="EntidadVO">
     <![CDATA[
         INSERT INTO tbl_entidad_enti(enti_pk, enti_codigo, enti_tipo

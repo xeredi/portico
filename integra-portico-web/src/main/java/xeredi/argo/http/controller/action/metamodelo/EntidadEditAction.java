@@ -3,16 +3,15 @@ package xeredi.argo.http.controller.action.metamodelo;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -21,13 +20,13 @@ import com.google.common.base.Preconditions;
  * @param <T>
  *            the generic type
  */
+@Data
 public abstract class EntidadEditAction<T extends EntidadVO> extends CrudEditAction<T> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3928988946180134293L;
 
     /** The i18n map. */
-    @Getter
     protected Map<String, I18nVO> i18nMap;
 
     /**
@@ -40,7 +39,7 @@ public abstract class EntidadEditAction<T extends EntidadVO> extends CrudEditAct
         } else {
             Preconditions.checkNotNull(model.getId());
 
-            i18nMap = I18nBO.selectMap(ClassPrefix.enti, model.getId());
+            i18nMap = I18nUtilBO.selectMap(model);
         }
 
         doSpecificEdit();

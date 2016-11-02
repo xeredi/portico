@@ -48,7 +48,7 @@ public final class EntidadBO {
      *            the enti criterio vo
      * @return the list
      */
-    public List<EntidadVO> selectList(final EntidadCriterioVO entiCriterio) {
+    public List<EntidadVO> selectList(final @NonNull EntidadCriterioVO entiCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
@@ -64,15 +64,12 @@ public final class EntidadBO {
      * @return the list
      */
     public List<LabelValueVO> selectLabelValues(final @NonNull EntidadCriterioVO entiCriterio) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
-            final List<LabelValueVO> list = new ArrayList<>();
+        final List<LabelValueVO> list = new ArrayList<>();
 
-            for (final EntidadVO enti : entiDAO.selectList(entiCriterio)) {
-                list.add(new LabelValueVO(enti.getNombre(), enti.getId()));
-            }
-
-            return list;
+        for (final EntidadVO enti : selectList(entiCriterio)) {
+            list.add(new LabelValueVO(enti.getNombre(), enti.getId()));
         }
+
+        return list;
     }
 }

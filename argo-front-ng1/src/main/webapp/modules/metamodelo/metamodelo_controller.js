@@ -1553,6 +1553,9 @@
 
         ModuloService.detail(vm.search).then(function(data) {
             vm.model = data.model;
+            vm.i18nMap = data.i18nMap;
+
+            vm.grpoList = data.grpoList;
         });
 
         pageTitleService.setTitle("mdlo", "page_detail");
@@ -1566,7 +1569,7 @@
         vm.cancel = cancel;
 
         function save() {
-            ModuloService.save(vm.accion, vm.model).then(function(data) {
+            ModuloService.saveI18n(vm.accion, vm.model, vm.i18nMap).then(function(data) {
                 ModuloService.redirectAfterSave(vm.accion, '/metamodelo/modulo/detail', [ data.model.id ]);
             });
         }
@@ -1582,6 +1585,7 @@
 
         ModuloService.edit(vm.accion, vm.search).then(function(data) {
             vm.model = data.model;
+            vm.i18nMap = data.i18nMap;
         });
 
         pageTitleService.setTitle("mdlo", "page_" + vm.accion);

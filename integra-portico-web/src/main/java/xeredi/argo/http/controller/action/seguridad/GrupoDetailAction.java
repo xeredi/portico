@@ -23,6 +23,7 @@ import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 import xeredi.argo.model.metamodelo.vo.AccionEspecialCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEspecialVO;
+import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.metamodelo.vo.ModuloCriterioVO;
 import xeredi.argo.model.metamodelo.vo.ModuloVO;
@@ -117,7 +118,7 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 
         entiList = new ArrayList<>();
 
-        for (final EntidadVO enti : entiBO.selectList(null)) {
+        for (final EntidadVO enti : entiBO.selectList(new EntidadCriterioVO())) {
             entiList.add(enti.getId());
         }
 

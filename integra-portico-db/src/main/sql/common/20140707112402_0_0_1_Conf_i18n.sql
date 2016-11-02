@@ -449,16 +449,22 @@ INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (2924)\
 -- Modulos (5000)
 INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (5000)\
 	INSERT INTO tbl_modulo_mdlo (mdlo_pk, mdlo_codigo) VALUES (5000, 'administracion')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('mdlo', 5000, 'es', 'Administración')\
 INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (5001)\
 	INSERT INTO tbl_modulo_mdlo (mdlo_pk, mdlo_codigo) VALUES (5001, 'maestros')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('mdlo', 5001, 'es', 'Maestros')\
 INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (5002)\
 	INSERT INTO tbl_modulo_mdlo (mdlo_pk, mdlo_codigo) VALUES (5002, 'servicios')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('mdlo', 5002, 'es', 'Servicios')\
 INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (5003)\
 	INSERT INTO tbl_modulo_mdlo (mdlo_pk, mdlo_codigo) VALUES (5003, 'estadisticas')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('mdlo', 5003, 'es', 'Estadísticas')\
 INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (5004)\
 	INSERT INTO tbl_modulo_mdlo (mdlo_pk, mdlo_codigo) VALUES (5004, 'facturacion')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('mdlo', 5004, 'es', 'Facturación')\
 INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (5005)\
 	INSERT INTO tbl_modulo_mdlo (mdlo_pk, mdlo_codigo) VALUES (5005, 'procesos')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text) VALUES ('mdlo', 5005, 'es', 'Procesos')\
 
 
 

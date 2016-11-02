@@ -14,7 +14,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public final class TipoServicioVO extends EntidadVO {
-
     /** The temporal. */
     private boolean temporal;
 

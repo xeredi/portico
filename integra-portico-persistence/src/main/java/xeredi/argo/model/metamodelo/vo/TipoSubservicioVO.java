@@ -14,7 +14,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public final class TipoSubservicioVO extends EntidadVO {
-
     /** The tpsr id. */
     private Long tpsrId;
 

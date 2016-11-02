@@ -11,11 +11,10 @@ import org.apache.ibatis.session.SqlSession;
 import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.FuncionalidadDAO;
@@ -64,7 +63,7 @@ public final class ModuloBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final @NonNull ModuloVO mdlo, final Map<String, I18nVO> i18nMap)
+    public void insert(final @NonNull ModuloVO mdlo, final @NonNull Map<String, I18nVO> i18nMap)
             throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ModuloDAO mdloDAO = session.getMapper(ModuloDAO.class);
@@ -75,12 +74,11 @@ public final class ModuloBO {
                 throw new DuplicateInstanceException(MessageI18nKey.mdlo, mdlo);
             }
 
-            mdlo.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-
+            igBO.assignNextVal(mdlo);
             fncdDAO.insert(mdlo);
             mdloDAO.insert(mdlo);
 
-            I18nBO.insertMap(session, ClassPrefix.mdlo, mdlo.getId(), i18nMap);
+            I18nUtilBO.insertMap(session, mdlo, i18nMap);
 
             session.commit();
         }
@@ -96,7 +94,7 @@ public final class ModuloBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @NonNull ModuloVO mdlo, final Map<String, I18nVO> i18nMap)
+    public void update(final @NonNull ModuloVO mdlo, final @NonNull Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(mdlo.getId());
 
@@ -107,7 +105,7 @@ public final class ModuloBO {
                 throw new InstanceNotFoundException(MessageI18nKey.mdlo, mdlo);
             }
 
-            I18nBO.updateMap(session, ClassPrefix.mdlo, mdlo.getId(), i18nMap);
+            I18nUtilBO.updateMap(session, mdlo, i18nMap);
 
             session.commit();
         }
@@ -137,7 +135,7 @@ public final class ModuloBO {
                 throw new InstanceNotFoundException(MessageI18nKey.mdlo, mdlo);
             }
 
-            I18nBO.deleteMap(session, ClassPrefix.mdlo, mdlo.getId());
+            I18nUtilBO.deleteMap(session, mdlo);
 
             fngrDAO.deleteList(fngrCriterio);
             fncdDAO.delete(mdlo);
@@ -219,21 +217,12 @@ public final class ModuloBO {
      *             the instance not found exception
      */
     public ModuloVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final ModuloDAO mdloDAO = session.getMapper(ModuloDAO.class);
-            final ModuloCriterioVO mdloCriterio = new ModuloCriterioVO();
+        final ModuloCriterioVO mdloCriterio = new ModuloCriterioVO();
 
-            mdloCriterio.setId(id);
-            mdloCriterio.setIdioma(idioma);
+        mdloCriterio.setId(id);
+        mdloCriterio.setIdioma(idioma);
 
-            final ModuloVO mdlo = mdloDAO.selectObject(mdloCriterio);
-
-            if (mdlo == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.mdlo, mdloCriterio);
-            }
-
-            return mdlo;
-        }
+        return selectObject(mdloCriterio);
     }
 
 }

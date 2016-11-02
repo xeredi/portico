@@ -135,7 +135,6 @@ public final class TramiteTipoDatoBO {
 	 */
 	public void delete(final @NonNull TramiteTipoDatoVO trtd) throws InstanceNotFoundException {
 		Preconditions.checkNotNull(trtd.getTrmtId());
-		Preconditions.checkNotNull(trtd.getObligatorio());
 		Preconditions.checkNotNull(trtd.getEntd());
 		Preconditions.checkNotNull(trtd.getEntd().getTpdt());
 		Preconditions.checkNotNull(trtd.getEntd().getTpdt().getId());

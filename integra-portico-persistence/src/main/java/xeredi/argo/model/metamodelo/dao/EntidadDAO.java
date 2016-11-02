@@ -14,13 +14,6 @@ import xeredi.argo.model.metamodelo.vo.EntidadVO;
  */
 public interface EntidadDAO extends CrudDAO<EntidadVO, EntidadCriterioVO> {
     /**
-     * Next sequence.
-     *
-     * @return the long
-     */
-    Long nextSequence();
-
-    /**
      * Select map.
      *
      * @param entiCriterio

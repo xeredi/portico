@@ -2,6 +2,8 @@ package xeredi.argo.model.metamodelo.vo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.I18nable;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -9,7 +11,11 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public final class TramiteVO extends FuncionalidadVO {
+public final class TramiteVO extends FuncionalidadVO implements I18nable {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.trmt;
+
     /** The enti id. */
     private Long entiId;
 
