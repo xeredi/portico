@@ -5,7 +5,6 @@ import java.util.List;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaEstado;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
@@ -20,9 +19,6 @@ public final class FacturaFilterAction extends GridFilterAction<FacturaCriterioV
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -618324706779990531L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.fctr;
 
     /** Estados de una factura. */
     private FacturaEstado[] fctrEstadoList;

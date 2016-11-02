@@ -13,10 +13,6 @@ import xeredi.argo.model.comun.vo.SuperpuertoVO;
 /**
  * The Class UsuarioVO.
  */
-
-/**
- * {@inheritDoc}
- */
 @Data
 public final class UsuarioVO implements Identifiable {
 

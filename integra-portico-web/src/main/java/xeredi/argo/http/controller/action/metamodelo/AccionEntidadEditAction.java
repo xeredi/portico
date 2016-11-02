@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
@@ -21,13 +22,11 @@ import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
  * The Class AccionEntidadEditAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class AccionEntidadEditAction extends CrudEditAction<AccionEntidadVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6298953902914627135L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.acen;
 
     /** The accn list. */
     private List<AccionEntidadBaseVO> aebsList;

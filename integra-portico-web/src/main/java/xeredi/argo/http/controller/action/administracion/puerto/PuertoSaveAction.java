@@ -9,7 +9,6 @@ import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.PuertoVO;
@@ -24,9 +23,6 @@ public final class PuertoSaveAction extends CrudSaveAction<PuertoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5154698578823186211L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.prto;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;

@@ -19,13 +19,4 @@ public final class EstadisticaVO extends ItemVO {
 
     /** The autp. */
     private PuertoVO prto;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getEtiqueta() {
-        // FIXME Implementar
-        return null;
-    }
 }

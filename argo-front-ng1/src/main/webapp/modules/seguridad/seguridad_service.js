@@ -5,15 +5,13 @@
 
     .factory("UsuarioService", UsuarioService)
 
-    .factory("AccionService", AccionService)
-
     .factory("GrupoService", GrupoService)
 
     ;
 
     /* @ngInject */
     function UsuarioService($http, $q, CrudService) {
-        var service = CrudService.create("seguridad/usuario");
+        var service = CrudService.create("seguridad/usuario", "usro");
 
         service.acceso = function(usuario) {
             console.log('acceso');
@@ -55,12 +53,7 @@
     }
 
     /* @ngInject */
-    function AccionService($http, $q, CrudService) {
-        return CrudService.create("seguridad/accion");
-    }
-
-    /* @ngInject */
     function GrupoService($http, $q, CrudService) {
-        return CrudService.create("seguridad/grupo");
+        return CrudService.create("seguridad/grupo", "grpo");
     }
 })();

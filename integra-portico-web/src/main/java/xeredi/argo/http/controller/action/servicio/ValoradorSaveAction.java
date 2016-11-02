@@ -10,11 +10,11 @@ import java.util.Map;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
@@ -33,13 +33,11 @@ import xeredi.argo.proceso.facturacion.ProcesoValorador;
  * The Class ValoradorSaveAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ValoradorSaveAction extends CrudSaveAction<ValoradorVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8899968426612094160L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.vldr;
 
     /**
      * {@inheritDoc}

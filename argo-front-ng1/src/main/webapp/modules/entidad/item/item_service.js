@@ -9,6 +9,6 @@
 
     /* @ngInject */
     function ItemTramiteService($http, $q, CrudService) {
-        return CrudService.create("item/item-tramite");
+        return CrudService.create("item/item-tramite", "ittr");
     }
 })();

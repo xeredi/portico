@@ -5,9 +5,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.GridXlsExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.report.ProcesoXls;
@@ -18,13 +18,11 @@ import xeredi.argo.model.proceso.vo.ProcesoCriterioVO;
  * The Class ProcesoXlsExportAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ProcesoXlsExportAction extends GridXlsExportAction<ProcesoCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1158663234899347739L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.prbt;
 
     /**
      * {@inheritDoc}

@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.item.bo.ItemTramiteBO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
 import xeredi.argo.model.item.vo.ItemVO;
@@ -34,9 +33,6 @@ public final class ItemTramiteDetailAction extends CrudDetailAction<ItemTramiteV
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2680320980030804227L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.ittr;
 
     /** The trmt. */
     protected TramiteDetailVO trmt;

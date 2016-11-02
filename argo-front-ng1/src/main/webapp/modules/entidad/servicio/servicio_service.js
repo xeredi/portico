@@ -15,21 +15,21 @@
 
     /* @ngInject */
     function ValoradorService($http, $q, CrudService) {
-        return CrudService.create("servicio/valorador");
+        return CrudService.create("servicio/valorador", "vldr");
     }
 
     /* @ngInject */
     function ServicioSecuenciaService($http, $q, CrudService) {
-        return CrudService.create("servicio/servicio-secuencia");
+        return CrudService.create("servicio/servicio-secuencia", "srsc");
     }
 
     /* @ngInject */
     function ServicioService($http, $q, CrudService) {
-        return CrudService.create("servicio/servicio");
+        return CrudService.create("servicio/servicio", "srvc");
     }
 
     /* @ngInject */
     function SubservicioService($http, $q, CrudService) {
-        return CrudService.create("servicio/subservicio");
+        return CrudService.create("servicio/subservicio", "ssrv");
     }
 })();

@@ -3,9 +3,9 @@ package xeredi.argo.http.controller.action.metamodelo;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
 
@@ -14,13 +14,11 @@ import xeredi.argo.model.metamodelo.vo.TramiteVO;
  * The Class TramiteRmoveAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class TramiteRemoveAction extends CrudRemoveAction<TramiteVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -8053448630800994429L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.trmt;
 
     /**
      * {@inheritDoc}

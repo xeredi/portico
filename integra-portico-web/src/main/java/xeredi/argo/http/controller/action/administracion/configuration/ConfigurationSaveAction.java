@@ -6,7 +6,6 @@ import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.model.comun.bo.ConfigurationBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.ConfigurationVO;
 
 // TODO: Auto-generated Javadoc
@@ -18,9 +17,6 @@ public final class ConfigurationSaveAction extends CrudSaveAction<ConfigurationV
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6903870337366067759L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.conf;
 
     /**
      * {@inheritDoc}

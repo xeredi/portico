@@ -1,6 +1,8 @@
 package xeredi.argo.model.estadistica.vo;
 
 import lombok.Data;
+import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 
@@ -9,7 +11,10 @@ import xeredi.argo.model.maestro.vo.ParametroVO;
  * The Class CuadroMesVO.
  */
 @Data
-public final class CuadroMesVO {
+public final class CuadroMesVO implements Identifiable {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.cdms;
 
     /** The id. */
     private Long id;

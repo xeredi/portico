@@ -6,10 +6,10 @@ import java.util.Map;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.EntidadBO;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
@@ -27,13 +27,11 @@ import xeredi.argo.model.metamodelo.vo.TramiteVO;
  * The Class TramiteEditAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5189072539193429710L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.trmt;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;

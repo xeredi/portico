@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import org.apache.commons.lang3.StringUtils;
 
+import xeredi.argo.model.comun.vo.I18nable;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.item.vo.ItemVO;
 
@@ -18,7 +19,7 @@ import xeredi.argo.model.item.vo.ItemVO;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public final class ServicioVO extends ItemVO {
+public final class ServicioVO extends ItemVO implements I18nable {
 
     /** The Constant NUMERO_LENGTH. */
     public static final int NUMERO_LENGTH = 5;

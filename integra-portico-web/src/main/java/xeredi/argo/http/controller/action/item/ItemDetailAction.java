@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.item.vo.ItemVO;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 
@@ -24,9 +23,6 @@ public abstract class ItemDetailAction<I extends ItemVO, E extends AbstractEntid
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5159354861110927934L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.item;
 
     /** The enti. */
     protected E enti;

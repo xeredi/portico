@@ -3,7 +3,6 @@ package xeredi.argo.http.controller.action.facturacion;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
@@ -20,9 +19,6 @@ public final class ValoracionListAction extends GridListAction<ValoracionCriteri
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3608142356966434674L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.vlrc;
 
     /** The tpdt cod exencion. */
     private TipoDatoVO tpdtCodExencion;

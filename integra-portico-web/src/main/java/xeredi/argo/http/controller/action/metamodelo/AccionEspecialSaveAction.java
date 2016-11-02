@@ -5,10 +5,10 @@ import java.util.Map;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.AccionEspecialBO;
@@ -19,13 +19,11 @@ import xeredi.argo.model.metamodelo.vo.AccionEspecialVO;
  * The Class AccionEspecialSaveAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class AccionEspecialSaveAction extends CrudSaveAction<AccionEspecialVO> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -6614369736767022920L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.aces;
 
 	/** The i18n map. */
 	private Map<String, I18nVO> i18nMap;

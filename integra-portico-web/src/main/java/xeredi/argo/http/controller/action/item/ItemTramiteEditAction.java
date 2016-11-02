@@ -10,7 +10,6 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
@@ -45,9 +44,6 @@ public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> i
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7371401403513787913L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.ittr;
 
     /** The trmt. */
     protected TramiteDetailVO trmt;

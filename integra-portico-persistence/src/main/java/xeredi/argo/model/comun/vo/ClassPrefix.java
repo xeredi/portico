@@ -113,13 +113,17 @@ public enum ClassPrefix {
     /** The rglv. */
     rglv,
     /** The rgin. */
-    rgin, rgiv,
+    rgin,
+    /** The rgiv. */
+    rgiv,
     /** The aspc. */
     aspc,
     /** The aspv. */
     aspv,
     /** The ascr. */
-    ascr, ascv,
+    ascr,
+    /** The ascv. */
+    ascv,
     /** The fcan. */
     fcan,
     /** The fcrc. */

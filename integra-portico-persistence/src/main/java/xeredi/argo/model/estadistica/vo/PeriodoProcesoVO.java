@@ -8,6 +8,8 @@ import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
+import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 
 // TODO: Auto-generated Javadoc
@@ -15,7 +17,10 @@ import xeredi.argo.model.comun.vo.SuperpuertoVO;
  * The Class PeriodoProcesoVO.
  */
 @Data
-public final class PeriodoProcesoVO {
+public final class PeriodoProcesoVO implements Identifiable {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.pepr;
 
     /** The id. */
     private Long id;

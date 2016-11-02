@@ -5,10 +5,8 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.FacturaBO;
-import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
 
@@ -22,9 +20,6 @@ public final class FacturaEditAction extends CrudEditAction<FacturaVO> {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1122946174457133287L;
 
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.fctr;
-
     /** The aspc. */
     private AspectoVO aspc;
 
@@ -36,17 +31,10 @@ public final class FacturaEditAction extends CrudEditAction<FacturaVO> {
         Preconditions.checkNotNull(model.getId());
 
         final FacturaBO fctrBO = new FacturaBO();
+        final AspectoBO aspcBO = new AspectoBO();
 
         model = fctrBO.select(model.getId(), getIdioma());
-
-        final AspectoBO aspcBO = new AspectoBO();
-        final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
-
-        aspcCriterio.setId(model.getAspc().getId());
-        aspcCriterio.setFechaVigencia(model.getFref());
-        aspcCriterio.setIdioma(getIdioma());
-
-        aspc = aspcBO.selectObject(aspcCriterio);
+        aspc = aspcBO.select(model.getAspc().getId(), model.getFref(), getIdioma());
     }
 
     /**

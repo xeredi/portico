@@ -3,9 +3,9 @@ package xeredi.argo.http.controller.action.metamodelo;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.ModuloBO;
 import xeredi.argo.model.metamodelo.vo.ModuloVO;
 
@@ -14,13 +14,11 @@ import xeredi.argo.model.metamodelo.vo.ModuloVO;
  * The Class ModuloRemoveAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ModuloRemoveAction extends CrudRemoveAction<ModuloVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7556234323466189867L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.mdlo;
 
     /**
      * {@inheritDoc}

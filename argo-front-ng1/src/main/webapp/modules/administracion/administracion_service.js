@@ -22,21 +22,21 @@
 
     /* @ngInject */
     function SuperpuertoService($http, $q, CrudService) {
-        return CrudService.create("administracion/puerto/superpuerto");
+        return CrudService.create("administracion/puerto/superpuerto", "sprt");
     }
 
     /* @ngInject */
     function PuertoService($http, $q, CrudService) {
-        return CrudService.create("administracion/puerto/puerto");
+        return CrudService.create("administracion/puerto/puerto", "prto");
     }
 
     /* @ngInject */
     function ConfigurationService($http, $q, CrudService) {
-        return CrudService.create("administracion/configuration/configuration");
+        return CrudService.create("administracion/configuration/configuration", "conf");
     }
 
     /* @ngInject */
     function MessageI18nService($http, $q, CrudService) {
-        return CrudService.create("administracion/messagei18n/message-i18n");
+        return CrudService.create("administracion/messagei18n/message-i18n", "m18n");
     }
 })();

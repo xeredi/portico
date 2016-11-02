@@ -1,9 +1,9 @@
 package xeredi.argo.http.controller.action.proceso;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.proceso.vo.ProcesoCriterioVO;
 import xeredi.argo.model.proceso.vo.ProcesoEstado;
 import xeredi.argo.model.proceso.vo.ProcesoModulo;
@@ -14,13 +14,11 @@ import xeredi.argo.model.proceso.vo.ProcesoTipo;
  * The Class ProcesoFilterAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ProcesoFilterAction extends GridFilterAction<ProcesoCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2346523384273947533L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.prbt;
 
     /** The proceso tipos. */
     private ProcesoTipo[] procesoTipos;

@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
 
@@ -18,9 +17,6 @@ public final class PeriodoProcesoRemoveAction extends CrudRemoveAction<PeriodoPr
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5932718578821008471L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.pepr;
 
     /**
      * {@inheritDoc}

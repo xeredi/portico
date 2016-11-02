@@ -4,24 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
 import xeredi.argo.model.comun.dao.PuertoDAO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -41,21 +39,12 @@ public final class PuertoBO {
      *             the instance not found exception
      */
     public PuertoVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final PuertoDAO prtoDAO = session.getMapper(PuertoDAO.class);
-            final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+        final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-            prtoCriterio.setId(id);
-            prtoCriterio.setIdioma(idioma);
+        prtoCriterio.setId(id);
+        prtoCriterio.setIdioma(idioma);
 
-            final PuertoVO prto = prtoDAO.selectObject(prtoCriterio);
-
-            if (prto == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.prto, id);
-            }
-
-            return prto;
-        }
+        return selectObject(prtoCriterio);
     }
 
     /**
@@ -150,7 +139,7 @@ public final class PuertoBO {
             prto.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             prtoDAO.insert(prto);
-            I18nBO.insertMap(session, ClassPrefix.prto, prto.getId(), i18nMap);
+            I18nUtilBO.insertMap(session, prto, i18nMap);
 
             session.commit();
         }
@@ -180,7 +169,7 @@ public final class PuertoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.prto, prto);
             }
 
-            I18nBO.updateMap(session, ClassPrefix.prto, prto.getId(), i18nMap);
+            I18nUtilBO.updateMap(session, prto, i18nMap);
 
             session.commit();
         }
@@ -204,7 +193,7 @@ public final class PuertoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.prto, prto);
             }
 
-            I18nBO.deleteMap(session, ClassPrefix.prto, prto.getId());
+            I18nUtilBO.deleteMap(session, prto);
 
             session.commit();
         }

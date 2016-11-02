@@ -31,171 +31,191 @@ import xeredi.util.pagination.PaginatedList;
  */
 public final class AccionEntidadBO {
 
-	/**
-	 * Checks if is user allowed.
-	 *
-	 * @param prefix
-	 *            the prefix
-	 * @param codigo
-	 *            the codigo
-	 * @param entiId
-	 *            the enti id
-	 * @param usroId
-	 *            the usro id
-	 * @return true, if is user allowed
-	 */
-	public boolean isUserAllowed(final @NonNull ClassPrefix prefix, final @NonNull AccionCodigo codigo,
-			final @NonNull Long entiId, final @NonNull Long usroId) {
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
-			final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
+    /**
+     * Checks if is user allowed.
+     *
+     * @param prefix
+     *            the prefix
+     * @param codigo
+     *            the codigo
+     * @param entiId
+     *            the enti id
+     * @param usroId
+     *            the usro id
+     * @return true, if is user allowed
+     */
+    public boolean isUserAllowed(final @NonNull ClassPrefix prefix, final @NonNull AccionCodigo codigo,
+            final @NonNull Long entiId, final @NonNull Long usroId) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
+            final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
 
-			acenCriterio.setCodigo(codigo);
-			acenCriterio.setPrefix(prefix);
-			acenCriterio.setEntiId(entiId);
-			acenCriterio.setUsroId(usroId);
+            acenCriterio.setCodigo(codigo);
+            acenCriterio.setPrefix(prefix);
+            acenCriterio.setEntiId(entiId);
+            acenCriterio.setUsroId(usroId);
 
-			return acenDAO.count(acenCriterio) > 0;
-		}
-	}
+            return acenDAO.count(acenCriterio) > 0;
+        }
+    }
 
-	/**
-	 * Insert.
-	 *
-	 * @param acen
-	 *            the acen
-	 * @throws DuplicateInstanceException
-	 *             the duplicate instance exception
-	 */
-	public void insert(final @NonNull AccionEntidadVO acen) throws DuplicateInstanceException {
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
-			final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
-			final IgBO igBO = new IgBO();
+    /**
+     * Insert.
+     *
+     * @param acen
+     *            the acen
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
+     */
+    public void insert(final @NonNull AccionEntidadVO acen) throws DuplicateInstanceException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
+            final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
+            final IgBO igBO = new IgBO();
 
-			if (acenDAO.exists(acen)) {
-				throw new DuplicateInstanceException(MessageI18nKey.acen, acen);
-			}
+            if (acenDAO.exists(acen)) {
+                throw new DuplicateInstanceException(MessageI18nKey.acen, acen);
+            }
 
-			acen.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-			fncdDAO.insert(acen);
-			acenDAO.insert(acen);
+            acen.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            fncdDAO.insert(acen);
+            acenDAO.insert(acen);
 
-			session.commit();
-		}
-	}
+            session.commit();
+        }
+    }
 
-	/**
-	 * Update.
-	 *
-	 * @param acen
-	 *            the acen
-	 * @throws InstanceNotFoundException
-	 *             the instance not found exception
-	 */
-	public void update(final @NonNull AccionEntidadVO acen) throws InstanceNotFoundException {
-		Preconditions.checkNotNull(acen.getId());
+    /**
+     * Update.
+     *
+     * @param acen
+     *            the acen
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public void update(final @NonNull AccionEntidadVO acen) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(acen.getId());
 
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
 
-			if (acenDAO.update(acen) == 0) {
-				throw new InstanceNotFoundException(MessageI18nKey.acen, acen);
-			}
+            if (acenDAO.update(acen) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.acen, acen);
+            }
 
-			session.commit();
-		}
-	}
+            session.commit();
+        }
+    }
 
-	/**
-	 * Delete.
-	 *
-	 * @param acen
-	 *            the acen
-	 * @throws InstanceNotFoundException
-	 *             the instance not found exception
-	 */
-	public void delete(final @NonNull AccionEntidadVO acen) throws InstanceNotFoundException {
-		Preconditions.checkNotNull(acen.getId());
+    /**
+     * Delete.
+     *
+     * @param acen
+     *            the acen
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public void delete(final @NonNull AccionEntidadVO acen) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(acen.getId());
 
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
-			final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
-			final FuncionalidadGrupoDAO fngrDAO = session.getMapper(FuncionalidadGrupoDAO.class);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
+            final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
+            final FuncionalidadGrupoDAO fngrDAO = session.getMapper(FuncionalidadGrupoDAO.class);
 
-			final FuncionalidadGrupoCriterioVO fngrCriterio = new FuncionalidadGrupoCriterioVO();
+            final FuncionalidadGrupoCriterioVO fngrCriterio = new FuncionalidadGrupoCriterioVO();
 
-			fngrCriterio.setFncdId(acen.getId());
+            fngrCriterio.setFncdId(acen.getId());
 
-			if (acenDAO.delete(acen) == 0) {
-				throw new InstanceNotFoundException(MessageI18nKey.acen, acen);
-			}
+            if (acenDAO.delete(acen) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.acen, acen);
+            }
 
-			fngrDAO.deleteList(fngrCriterio);
-			fncdDAO.delete(acen);
+            fngrDAO.deleteList(fngrCriterio);
+            fncdDAO.delete(acen);
 
-			session.commit();
-		}
-	}
+            session.commit();
+        }
+    }
 
-	/**
-	 * Select list.
-	 *
-	 * @param acenCriterio
-	 *            the acen criterio
-	 * @param offset
-	 *            the offset
-	 * @param limit
-	 *            the limit
-	 * @return the paginated list
-	 */
-	public PaginatedList<AccionEntidadVO> selectList(final @NonNull AccionEntidadCriterioVO acenCriterio,
-			final int offset, final int limit) {
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
-			final int count = acenDAO.count(acenCriterio);
-			final List<AccionEntidadVO> acenList = (count > offset)
-					? acenDAO.selectList(acenCriterio, new RowBounds(offset, limit)) : new ArrayList<>();
+    /**
+     * Select list.
+     *
+     * @param acenCriterio
+     *            the acen criterio
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
+     */
+    public PaginatedList<AccionEntidadVO> selectList(final @NonNull AccionEntidadCriterioVO acenCriterio,
+            final int offset, final int limit) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
+            final int count = acenDAO.count(acenCriterio);
+            final List<AccionEntidadVO> acenList = (count > offset)
+                    ? acenDAO.selectList(acenCriterio, new RowBounds(offset, limit)) : new ArrayList<>();
 
-			return new PaginatedList<AccionEntidadVO>(acenList, offset, limit, count);
-		}
-	}
+            return new PaginatedList<AccionEntidadVO>(acenList, offset, limit, count);
+        }
+    }
 
-	/**
-	 * Select list.
-	 *
-	 * @param acenCriterio
-	 *            the acen criterio
-	 * @return the list
-	 */
-	public List<AccionEntidadVO> selectList(final @NonNull AccionEntidadCriterioVO acenCriterio) {
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
+    /**
+     * Select list.
+     *
+     * @param acenCriterio
+     *            the acen criterio
+     * @return the list
+     */
+    public List<AccionEntidadVO> selectList(final @NonNull AccionEntidadCriterioVO acenCriterio) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
 
-			return acenDAO.selectList(acenCriterio);
-		}
-	}
+            return acenDAO.selectList(acenCriterio);
+        }
+    }
 
-	/**
-	 * Select object.
-	 *
-	 * @param acenCriterio
-	 *            the acen criterio
-	 * @return the accion entidad vo
-	 * @throws InstanceNotFoundException
-	 *             the instance not found exception
-	 */
-	public AccionEntidadVO selectObject(final @NonNull AccionEntidadCriterioVO acenCriterio)
-			throws InstanceNotFoundException {
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
-			final AccionEntidadVO acen = acenDAO.selectObject(acenCriterio);
+    /**
+     * Select.
+     *
+     * @param id
+     *            the id
+     * @param idioma
+     *            the idioma
+     * @return the accion entidad VO
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public AccionEntidadVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+        final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
 
-			if (acen == null) {
-				throw new InstanceNotFoundException(MessageI18nKey.acen, acenCriterio);
-			}
+        acenCriterio.setId(id);
+        acenCriterio.setIdioma(idioma);
 
-			return acen;
-		}
-	}
+        return selectObject(acenCriterio);
+    }
+
+    /**
+     * Select object.
+     *
+     * @param acenCriterio
+     *            the acen criterio
+     * @return the accion entidad vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public AccionEntidadVO selectObject(final @NonNull AccionEntidadCriterioVO acenCriterio)
+            throws InstanceNotFoundException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
+            final AccionEntidadVO acen = acenDAO.selectObject(acenCriterio);
+
+            if (acen == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.acen, acenCriterio);
+            }
+
+            return acen;
+        }
+    }
 }

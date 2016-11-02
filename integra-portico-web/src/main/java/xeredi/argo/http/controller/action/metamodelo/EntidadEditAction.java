@@ -6,6 +6,7 @@ import java.util.Map;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -21,6 +22,7 @@ import xeredi.argo.model.metamodelo.vo.EntidadVO;
  *            the generic type
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public abstract class EntidadEditAction<T extends EntidadVO> extends CrudEditAction<T> {
 
     /** The Constant serialVersionUID. */

@@ -6,7 +6,6 @@ import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
@@ -25,9 +24,6 @@ public final class ValoracionFilterAction extends GridFilterAction<ValoracionCri
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3391977535580636697L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.vlrc;
 
     /** The tpdt cod exencion. */
     private TipoDatoVO tpdtCodExencion;

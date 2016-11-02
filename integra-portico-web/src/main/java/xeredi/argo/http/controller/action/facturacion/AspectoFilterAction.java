@@ -5,7 +5,6 @@ import java.util.List;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -19,9 +18,6 @@ public final class AspectoFilterAction extends GridFilterAction<AspectoCriterioV
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7354700770368605863L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.aspc;
 
     /** The tpsr list. */
     private List<LabelValueVO> tpsrList;

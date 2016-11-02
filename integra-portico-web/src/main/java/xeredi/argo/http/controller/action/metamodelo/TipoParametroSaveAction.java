@@ -1,9 +1,9 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.TipoParametroBO;
 import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
@@ -13,13 +13,11 @@ import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
  * The Class TipoParametroSaveAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class TipoParametroSaveAction extends EntidadSaveAction<TipoParametroVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5259207976545583053L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.tppr;
 
     /**
      * {@inheritDoc}

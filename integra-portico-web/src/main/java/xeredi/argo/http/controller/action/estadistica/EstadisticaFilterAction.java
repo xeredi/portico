@@ -10,7 +10,6 @@ import lombok.Data;
 import xeredi.argo.http.controller.action.item.ItemFilterAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.estadistica.vo.EstadisticaCriterioVO;
@@ -26,9 +25,6 @@ public final class EstadisticaFilterAction extends ItemFilterAction<EstadisticaC
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7668343371684180192L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.estd;
 
     /** The prto list. */
     private List<PuertoVO> prtoList;

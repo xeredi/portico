@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.FacturaSerieBO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
 
@@ -18,9 +17,6 @@ public final class FacturaSerieRemoveAction extends CrudRemoveAction<FacturaSeri
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5331771894462064607L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.fcsr;
 
     /**
      * {@inheritDoc}

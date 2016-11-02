@@ -6,9 +6,9 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.CargoBO;
 import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
@@ -19,13 +19,11 @@ import xeredi.argo.model.servicio.vo.ValoradorVO;
  * The Class ValoradorEditAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ValoradorEditAction extends CrudEditAction<ValoradorVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7029860077578860054L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.vldr;
 
     /** The crgo list. */
     private List<CargoVO> crgoList;

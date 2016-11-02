@@ -9,7 +9,6 @@ import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.facturacion.bo.FacturaSerieBO;
@@ -29,9 +28,6 @@ public final class FacturadorEditAction extends CrudEditAction<FacturadorVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1389260062489112937L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.fcdr;
 
     /** The fcsr list. */
     private List<FacturaSerieVO> fcsrList;

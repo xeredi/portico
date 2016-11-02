@@ -3,7 +3,6 @@ package xeredi.argo.http.controller.action.administracion.puerto;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -15,9 +14,6 @@ public final class SuperpuertoFilterAction extends GridFilterAction<SuperpuertoC
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6057301028031916940L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.sprt;
 
     /**
      * {@inheritDoc}

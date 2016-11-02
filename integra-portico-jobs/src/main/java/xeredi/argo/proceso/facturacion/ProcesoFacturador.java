@@ -42,6 +42,7 @@ public final class ProcesoFacturador extends ProcesoTemplate {
         /** The vlrc. */
         vlrc,
 
+        /** The grupo tipo. */
         grupoTipo,
 
         ;
@@ -69,15 +70,15 @@ public final class ProcesoFacturador extends ProcesoTemplate {
             Long fcsrId = null;
 
             if (prbtData.getPrpmMap().containsKey(Params.ffac.name())) {
-                ffac = new SimpleDateFormat("dd/MM/yyyy").parse(prbtData.getPrpmMap().get(Params.ffac.name())
-                        .getValor());
+                ffac = new SimpleDateFormat("dd/MM/yyyy")
+                        .parse(prbtData.getPrpmMap().get(Params.ffac.name()).getValor());
             }
             if (prbtData.getPrpmMap().containsKey(Params.fcsr.name())) {
                 fcsrId = Long.parseLong(prbtData.getPrpmMap().get(Params.fcsr.name()).getValor());
             }
             if (prbtData.getPrpmMap().containsKey(Params.grupoTipo.name())) {
-                vgrpCriterio.setGrupoTipo(ValoracionGrupoTipo.valueOf(prbtData.getPrpmMap()
-                        .get(Params.grupoTipo.name()).getValor()));
+                vgrpCriterio.setGrupoTipo(
+                        ValoracionGrupoTipo.valueOf(prbtData.getPrpmMap().get(Params.grupoTipo.name()).getValor()));
             } else {
                 vgrpCriterio.setGrupoTipo(ValoracionGrupoTipo.V);
             }

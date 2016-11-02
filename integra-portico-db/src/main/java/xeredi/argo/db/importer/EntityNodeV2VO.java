@@ -3,6 +3,10 @@ package xeredi.argo.db.importer;
 import lombok.Data;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 
+// TODO: Auto-generated Javadoc
+/**
+ * EntityNodeV2VO
+ */
 @Data
 public final class EntityNodeV2VO {
 

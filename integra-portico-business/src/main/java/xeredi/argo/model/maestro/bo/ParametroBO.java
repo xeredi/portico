@@ -11,17 +11,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.argo.model.comun.bo.I18nBO;
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.item.vo.ItemDatoVO;
@@ -40,8 +40,6 @@ import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -114,7 +112,7 @@ public class ParametroBO {
             prmtDAO.insertVersion(prmt);
 
             if (tpprDetail.getEnti().isI18n()) {
-                I18nBO.insertMap(session, ClassPrefix.prvr, prmt.getVersion().getId(), i18nMap);
+                I18nUtilBO.insertMap(session, prmt, i18nMap);
             }
 
             if (prmt.getItdtMap() != null) {
@@ -225,7 +223,7 @@ public class ParametroBO {
             prmtDAO.insertVersion(prmt);
 
             if (tpprDetail.getEnti().isI18n()) {
-                I18nBO.duplicateMap(session, ClassPrefix.prvr, prmt.getVersion().getId(), i18nMap);
+                I18nUtilBO.insertMap(session, prmt, i18nMap);
             }
 
             if (prmt.getItdtMap() != null) {
@@ -411,7 +409,7 @@ public class ParametroBO {
             prmtDAO.insertVersion(prmt);
 
             if (tpprDetail.getEnti().isI18n()) {
-                I18nBO.duplicateMap(session, ClassPrefix.prvr, prmt.getVersion().getId(), i18nMap);
+                I18nUtilBO.insertMap(session, prmt, i18nMap);
             }
 
             if (prmt.getItdtMap() != null) {
@@ -502,7 +500,7 @@ public class ParametroBO {
             }
 
             if (tpprDetail.getEnti().isI18n()) {
-                I18nBO.updateMap(session, ClassPrefix.prvr, prmt.getVersion().getId(), i18nMap);
+                I18nUtilBO.updateMap(session, prmt, i18nMap);
             }
 
             if (prmt.getItdtMap() != null) {
@@ -561,7 +559,7 @@ public class ParametroBO {
 
             prdtDAO.deleteList(prmtCriterio);
 
-            I18nBO.deleteMap(session, ClassPrefix.prvr, prmt.getVersion().getId());
+            I18nUtilBO.deleteMap(session, prmt);
 
             if (prmtDAO.deleteVersion(prmt) == 0) {
                 throw new InstanceNotFoundException(prmt.getEntiId(), prmt);

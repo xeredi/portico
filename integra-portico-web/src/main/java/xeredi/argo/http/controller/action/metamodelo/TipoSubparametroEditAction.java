@@ -5,8 +5,8 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.EntidadBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
@@ -20,12 +20,10 @@ import xeredi.util.applicationobjects.LabelValueVO;
  * The Class TipoSubparametroEditAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class TipoSubparametroEditAction extends EntidadEditAction<TipoSubparametroVO> {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7770071461552035741L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.tpsp;
 
     /** The tppr list. */
     private List<LabelValueVO> tpprList;

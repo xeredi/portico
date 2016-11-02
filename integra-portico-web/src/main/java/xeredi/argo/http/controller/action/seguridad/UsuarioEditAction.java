@@ -5,11 +5,11 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
@@ -26,13 +26,11 @@ import xeredi.argo.model.seguridad.vo.UsuarioVO;
  * The Class UsuarioEditAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class UsuarioEditAction extends CrudEditAction<UsuarioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4943518127497768526L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.usro;
 
     /** The grpo list. */
     private List<GrupoVO> grpoList;

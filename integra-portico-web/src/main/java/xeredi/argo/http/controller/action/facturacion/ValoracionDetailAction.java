@@ -7,7 +7,6 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.bo.ValoracionCargoBO;
@@ -31,9 +30,6 @@ public final class ValoracionDetailAction extends CrudDetailAction<ValoracionVO>
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8955027989386166332L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.vlrc;
 
     /** The aspc. */
     private AspectoVO aspc;

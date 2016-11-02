@@ -6,7 +6,6 @@ import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
@@ -22,9 +21,6 @@ public final class ValoracionLineaSaveAction extends CrudSaveAction<ValoracionLi
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2626755272488026780L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.vlrl;
 
     /**
      * {@inheritDoc}

@@ -7,7 +7,6 @@ import java.util.Map;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.ListAction;
 import xeredi.argo.model.comun.bo.MessageI18nBO;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 
 // TODO: Auto-generated Javadoc
@@ -19,9 +18,6 @@ public final class MessageI18nListAction extends ListAction<MessageI18nKey> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 9186179634462884228L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.m18n;
 
     /** The key map. */
     private Map<MessageI18nKey, Map<String, String>> keyMap;

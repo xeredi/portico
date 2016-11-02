@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
-
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
@@ -36,15 +35,8 @@ import xeredi.argo.model.seguridad.vo.GrupoVO;
 /**
  * The Class GrupoDetailAction.
  */
-
-/**
- * Instantiates a new grupo detail action.
- */
-
-/**
- * Instantiates a new grupo detail action.
- */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 
     /** The Constant serialVersionUID. */
@@ -52,9 +44,6 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 
     /** The mdlo list. */
     private List<ModuloVO> mdloList;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.grpo;
 
     /** The prefix list. */
     private List<ClassPrefix> prefixList;
@@ -79,8 +68,6 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
      */
     @Override
     public void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
-
         final GrupoBO grpoBO = new GrupoBO();
 
         model = grpoBO.select(model.getId());

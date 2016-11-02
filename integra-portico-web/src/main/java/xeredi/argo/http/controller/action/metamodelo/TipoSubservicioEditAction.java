@@ -5,8 +5,8 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
@@ -20,13 +20,11 @@ import xeredi.util.applicationobjects.LabelValueVO;
  * The Class TipoSubservicioEditAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class TipoSubservicioEditAction extends EntidadEditAction<TipoSubservicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5529476683109631764L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.tpss;
 
     /** The tpdt estado list. */
     private List<LabelValueVO> tpdtEstadoList;

@@ -7,7 +7,6 @@ import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.http.view.estadistica.ProcesoEstadisticaVO;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 
@@ -20,9 +19,6 @@ public final class PeriodoProcesoEditAction extends CrudEditAction<ProcesoEstadi
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -505923029249050738L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.pepr;
 
     /** The sprt list. */
     private List<SuperpuertoVO> sprtList;

@@ -1,13 +1,18 @@
 package xeredi.argo.model.metamodelo.vo;
 
 import lombok.Data;
+import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.I18nable;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoParametroTipoDatoVO.
  */
 @Data
-public final class EntidadTipoDatoVO {
+public final class EntidadTipoDatoVO implements I18nable {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.entd;
 
     /** The id. */
     private Long id;

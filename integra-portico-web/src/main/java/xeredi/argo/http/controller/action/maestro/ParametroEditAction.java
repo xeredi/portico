@@ -7,10 +7,9 @@ import java.util.Map;
 
 import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemEditAction;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
@@ -69,7 +68,7 @@ public final class ParametroEditAction extends ItemEditAction<ParametroVO, TipoP
             }
 
             if (enti.getEnti().isI18n()) {
-                i18nMap = I18nBO.selectMap(ClassPrefix.prvr, model.getVersion().getId());
+                i18nMap = I18nUtilBO.selectMap(model);
             }
         }
     }

@@ -1,9 +1,9 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.ModuloBO;
 import xeredi.argo.model.metamodelo.vo.ModuloCriterioVO;
 import xeredi.argo.model.metamodelo.vo.ModuloVO;
@@ -13,13 +13,11 @@ import xeredi.argo.model.metamodelo.vo.ModuloVO;
  * The Class ModuloListAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ModuloListAction  extends GridListAction<ModuloCriterioVO, ModuloVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7287670605906578392L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.mdlo;
 
     /**
      * {@inheritDoc}

@@ -5,9 +5,9 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.AspectoCargoBO;
 import xeredi.argo.model.facturacion.bo.CargoBO;
@@ -22,13 +22,11 @@ import xeredi.argo.model.metamodelo.vo.AccionCodigo;
  * The Class AspectoCargoEditAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1292421221150084862L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.ascr;
 
     /** The crgo list. */
     private List<CargoVO> crgoList;

@@ -12,7 +12,6 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
 import xeredi.argo.model.maestro.bo.ParametroBO;
 import xeredi.argo.model.maestro.bo.ParametroBOFactory;
@@ -36,9 +35,6 @@ public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends Abstr
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8917073535249583222L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.item;
 
     /** The enti. */
     protected E enti;

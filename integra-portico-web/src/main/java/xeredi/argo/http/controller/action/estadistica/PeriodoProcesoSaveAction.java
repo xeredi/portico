@@ -16,7 +16,6 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.vo.ArchivoSentido;
 import xeredi.argo.model.comun.vo.ArchivoVO;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
@@ -34,9 +33,6 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<ProcesoEstadi
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 230657854894847117L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.pepr;
 
     /**
      * {@inheritDoc}

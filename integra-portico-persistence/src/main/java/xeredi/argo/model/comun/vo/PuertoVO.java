@@ -7,7 +7,10 @@ import lombok.Data;
  * The Class PuertoVO.
  */
 @Data
-public final class PuertoVO {
+public final class PuertoVO implements Identifiable, I18nable {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.prto;
 
     /** The id. */
     private Long id;

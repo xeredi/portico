@@ -5,10 +5,10 @@ import java.util.Map;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
@@ -20,13 +20,11 @@ import xeredi.argo.model.metamodelo.vo.TipoElemento;
  * The Class TipoDatoSaveAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class TipoDatoSaveAction extends CrudSaveAction<TipoDatoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6497317985967093794L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.tpdt;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;

@@ -42,7 +42,6 @@ public class I18nJs {
         final String defaultLanguage = ConfigurationProxy.getString(ConfigurationKey.language_default);
         final String webappInstallPath = ConfigurationProxy.getString(ConfigurationKey.webapp_install_path);
 
-        final I18nBO i18nBO = new I18nBO();
         final MessageI18nBO mesgBO = new MessageI18nBO();
 
         final Set<ClassPrefix> i18nPrefixSet = Sets.newHashSet(ClassPrefix.enti, ClassPrefix.engd, ClassPrefix.entd,
@@ -53,7 +52,7 @@ public class I18nJs {
 
             final List<LabelValueVO> labelValues = new ArrayList<>();
 
-            labelValues.addAll(i18nBO.selectLabelValueList(i18nPrefixSet, language));
+            labelValues.addAll(I18nUtilBO.selectLabelValueList(i18nPrefixSet, language));
 
             final Map<MessageI18nKey, String> m18nMap = mesgBO.selectLocaleMap(new Locale(language));
 

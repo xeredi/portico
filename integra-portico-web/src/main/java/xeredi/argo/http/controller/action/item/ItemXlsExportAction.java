@@ -7,7 +7,6 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridXlsExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -22,9 +21,6 @@ public abstract class ItemXlsExportAction<C extends ItemCriterioVO> extends Grid
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1760701788741847611L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.item;
 
     /**
      * {@inheritDoc}

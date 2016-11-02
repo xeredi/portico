@@ -2,7 +2,7 @@ package xeredi.argo.model.metamodelo.vo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.I18nable;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -10,11 +10,7 @@ import xeredi.argo.model.comun.vo.ClassPrefix;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public final class AccionEspecialVO extends FuncionalidadVO {
-
-	/** The prefix. */
-	private ClassPrefix prefix;
-
+public final class AccionEspecialVO extends FuncionalidadVO implements I18nable {
 	/** The codigo. */
 	private String path;
 

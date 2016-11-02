@@ -3,9 +3,9 @@ package xeredi.argo.http.controller.action.metamodelo;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.TipoParametroBO;
 import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
 
@@ -14,13 +14,11 @@ import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
  * The Class TipoParametroRemoveAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class TipoParametroRemoveAction extends CrudRemoveAction<TipoParametroVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5117314548397691124L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.tppr;
 
     /**
      * {@inheritDoc}

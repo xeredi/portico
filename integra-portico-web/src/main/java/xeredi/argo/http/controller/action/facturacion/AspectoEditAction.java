@@ -7,9 +7,8 @@ import com.google.common.base.Preconditions;
 
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
@@ -26,9 +25,6 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6065040172880726006L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.aspc;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -47,7 +43,7 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
             final AspectoBO aspcBO = new AspectoBO();
 
             model = aspcBO.select(model.getId(), model.getFref(), getIdioma());
-            i18nMap = I18nBO.selectMap(ClassPrefix.aspv, model.getVersion().getId());
+            i18nMap = I18nUtilBO.selectMap(model);
         }
     }
 

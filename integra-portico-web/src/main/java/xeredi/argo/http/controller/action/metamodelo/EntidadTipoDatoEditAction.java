@@ -8,10 +8,10 @@ import java.util.Map;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
@@ -27,13 +27,11 @@ import xeredi.util.applicationobjects.LabelValueVO;
  * The Class EntidadTipoDatoEditAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class EntidadTipoDatoEditAction extends CrudEditAction<EntidadTipoDatoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3500048499586562595L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.entd;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -59,7 +57,7 @@ public final class EntidadTipoDatoEditAction extends CrudEditAction<EntidadTipoD
             final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
             model = entdBO.select(model.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(ClassPrefix.entd, model.getId());
+            i18nMap = I18nUtilBO.selectMap(model);
         }
     }
 

@@ -6,10 +6,10 @@ import java.util.Map;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.ModuloBO;
 import xeredi.argo.model.metamodelo.vo.ModuloCriterioVO;
@@ -23,17 +23,16 @@ import xeredi.argo.model.seguridad.vo.GrupoVO;
  * The Class ModuloDetailAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ModuloDetailAction extends CrudDetailAction<ModuloVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 696320810765547190L;
 
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.mdlo;
-
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
 
+    /** The grpo list. */
     private List<GrupoVO> grpoList;
 
     /**
@@ -49,7 +48,7 @@ public final class ModuloDetailAction extends CrudDetailAction<ModuloVO> {
         mdloCriterio.setId(model.getId());
 
         model = mdloBO.selectObject(mdloCriterio);
-        i18nMap = I18nBO.selectMap(ClassPrefix.mdlo, model.getId());
+        i18nMap = I18nUtilBO.selectMap(model);
 
         final GrupoBO grpoBO = new GrupoBO();
         final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();

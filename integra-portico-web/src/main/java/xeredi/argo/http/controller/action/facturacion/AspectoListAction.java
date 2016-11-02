@@ -5,7 +5,6 @@ import java.util.Calendar;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
@@ -19,9 +18,6 @@ public final class AspectoListAction extends GridListAction<AspectoCriterioVO, A
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6610833697858691088L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.aspc;
 
     /**
      * {@inheritDoc}

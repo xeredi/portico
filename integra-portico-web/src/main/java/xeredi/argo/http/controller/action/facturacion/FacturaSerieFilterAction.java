@@ -3,7 +3,6 @@ package xeredi.argo.http.controller.action.facturacion;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.vo.FacturaSerieCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -15,9 +14,6 @@ public final class FacturaSerieFilterAction extends GridFilterAction<FacturaSeri
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 453805992132153117L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.fcsr;
 
     /**
      * {@inheritDoc}

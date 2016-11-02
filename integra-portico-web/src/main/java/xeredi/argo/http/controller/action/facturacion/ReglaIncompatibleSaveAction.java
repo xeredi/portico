@@ -1,19 +1,15 @@
 package xeredi.argo.http.controller.action.facturacion;
 
-import java.util.Calendar;
-
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.bo.ReglaIncompatibleBO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.argo.model.util.DateUtil;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -24,9 +20,6 @@ public final class ReglaIncompatibleSaveAction extends CrudSaveAction<ReglaIncom
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3406256689953956051L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.rgin;
 
     /**
      * {@inheritDoc}

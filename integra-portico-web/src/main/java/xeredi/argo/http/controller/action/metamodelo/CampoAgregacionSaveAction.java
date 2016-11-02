@@ -3,10 +3,10 @@ package xeredi.argo.http.controller.action.metamodelo;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
@@ -17,13 +17,11 @@ import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
  * The Class CampoAgregacionSaveAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class CampoAgregacionSaveAction extends CrudSaveAction<CampoAgregacionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -8815220820665248741L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.cmag;
 
     /**
      * {@inheritDoc}

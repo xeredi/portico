@@ -4,7 +4,6 @@ import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 
@@ -17,9 +16,6 @@ public final class SuperpuertoListAction extends GridListAction<SuperpuertoCrite
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 871252972692007990L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.sprt;
 
     /**
      * {@inheritDoc}

@@ -4,9 +4,8 @@ import java.util.Map;
 
 import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemDetailAction;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.maestro.bo.ParametroBO;
 import xeredi.argo.model.maestro.bo.ParametroBOFactory;
@@ -39,7 +38,7 @@ public final class ParametroDetailAction extends ItemDetailAction<ParametroVO, T
         model = itemBO.select(model.getId(), idioma, model.getFref());
 
         if (enti.getEnti().isI18n()) {
-            i18nMap = I18nBO.selectMap(ClassPrefix.prvr, model.getVersion().getId());
+            i18nMap = I18nUtilBO.selectMap(model);
         }
     }
 }

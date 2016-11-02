@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.ValoracionDetalleBO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
 
@@ -18,9 +17,6 @@ public final class ValoracionDetalleRemoveAction extends CrudRemoveAction<Valora
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1970434275265288322L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.vlrd;
 
     /**
      * {@inheritDoc}

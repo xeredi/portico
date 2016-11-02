@@ -13,16 +13,16 @@
 
     /* @ngInject */
     function PeriodoProcesoService($http, $q, CrudService) {
-        return CrudService.create("estadistica/periodo-proceso");
+        return CrudService.create("estadistica/periodo-proceso", "pepr");
     }
 
     /* @ngInject */
     function CuadroMesService($http, $q, CrudService) {
-        return CrudService.create("estadistica/cuadro-mes");
+        return CrudService.create("estadistica/cuadro-mes", "cdms");
     }
 
     /* @ngInject */
     function EstadisticaService($http, $q, CrudService) {
-        return CrudService.create("estadistica/estadistica");
+        return CrudService.create("estadistica/estadistica", "estd");
     }
 })();

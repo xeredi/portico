@@ -5,7 +5,6 @@ import java.util.Calendar;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.CargoBO;
 import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
@@ -19,9 +18,6 @@ public final class CargoListAction extends GridListAction<CargoCriterioVO, Cargo
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6203976676780090103L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.crgo;
 
     /**
      * {@inheritDoc}

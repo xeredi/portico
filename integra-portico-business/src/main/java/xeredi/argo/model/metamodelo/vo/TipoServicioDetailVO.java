@@ -15,6 +15,11 @@ public final class TipoServicioDetailVO extends AbstractEntidadDetailVO {
     /** The tpsr. */
     private TipoServicioVO enti;
 
+    /**
+     * Creates the item.
+     *
+     * @return the servicio VO
+     */
     public ServicioVO createItem() {
         final ServicioVO item = new ServicioVO();
 

@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.item.vo.ItemVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 
@@ -21,9 +20,6 @@ public abstract class ItemSaveAction<I extends ItemVO> extends CrudSaveAction<I>
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8814260021956629985L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.item;
 
     /**
      * {@inheritDoc}

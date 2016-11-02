@@ -6,6 +6,7 @@ import java.util.Map;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -32,6 +33,7 @@ import xeredi.argo.model.metamodelo.vo.EntidadVO;
  *            the generic type
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetailAction<T> {
 
     /** The Constant serialVersionUID. */

@@ -10,7 +10,6 @@ import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.facturacion.bo.CargoBO;
 import xeredi.argo.model.facturacion.bo.ReglaBO;
@@ -32,9 +31,6 @@ import xeredi.util.applicationobjects.LabelValueVO;
 public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7473288340314527092L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.rgla;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;

@@ -5,9 +5,9 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
 import xeredi.argo.model.metamodelo.bo.TramiteTipoDatoBO;
@@ -22,13 +22,11 @@ import xeredi.argo.model.metamodelo.vo.TramiteVO;
  * The Class TramiteTipoDatoEditAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class TramiteTipoDatoEditAction extends CrudEditAction<TramiteTipoDatoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7651037788650883305L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.trtd;
 
     /** The entd list. */
     private List<EntidadTipoDatoVO> entdList;

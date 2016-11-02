@@ -1,6 +1,5 @@
 package xeredi.argo.proceso;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 import lombok.Data;
-import xeredi.argo.model.comun.vo.ArchivoInfoVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.proceso.vo.ProcesoItemVO;

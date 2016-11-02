@@ -3,9 +3,9 @@ package xeredi.argo.http.controller.action.servicio;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.servicio.bo.ServicioSecuenciaBO;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaVO;
@@ -15,13 +15,11 @@ import xeredi.argo.model.servicio.vo.ServicioSecuenciaVO;
  * The Class ServicioSecuenciaDetailAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ServicioSecuenciaDetailAction extends CrudDetailAction<ServicioSecuenciaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2738862112087523687L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.srsc;
 
     /**
      * {@inheritDoc}

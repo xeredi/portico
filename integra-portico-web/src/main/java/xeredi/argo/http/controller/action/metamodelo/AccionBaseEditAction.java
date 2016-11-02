@@ -3,7 +3,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
-import lombok.Getter;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
@@ -16,23 +16,17 @@ import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 /**
  * The Class AccionBaseEditAction.
  */
-
-/**
- * Instantiates a new accion base edit action.
- */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class AccionBaseEditAction extends CrudEditAction<AccionBaseVO> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 182459317575847660L;
 
-	/** The prefix. */
-	private final ClassPrefix prefix = ClassPrefix.acbs;
-
-	@Getter
+	/** The acpr list. */
 	private ClassPrefix[] acprList;
 
-	@Getter
+	/** The acco list. */
 	private AccionCodigo[] accoList;
 
 	/**

@@ -8,7 +8,6 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
@@ -27,9 +26,6 @@ public final class ValoracionEditAction extends CrudEditAction<ValoracionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5032238434151606002L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.vlrc;
 
     /** The tpsr list. */
     private List<LabelValueVO> tpsrList;

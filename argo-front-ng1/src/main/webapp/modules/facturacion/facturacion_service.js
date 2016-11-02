@@ -44,72 +44,72 @@
 
     /* @ngInject */
     function CargoService($http, $q, CrudService) {
-        return CrudService.create("facturacion/cargo");
+        return CrudService.create("facturacion/cargo", "crgo");
     }
 
     /* @ngInject */
     function ReglaService($http, $q, CrudService) {
-        return CrudService.create("facturacion/regla");
+        return CrudService.create("facturacion/regla", "rgla");
     }
 
     /* @ngInject */
     function ReglaIncompatibleService($http, $q, CrudService) {
-        return CrudService.create("facturacion/regla-incompatible");
+        return CrudService.create("facturacion/regla-incompatible", "rgin");
     }
 
     /* @ngInject */
     function AspectoService($http, $q, CrudService) {
-        return CrudService.create("facturacion/aspecto");
+        return CrudService.create("facturacion/aspecto", "aspc");
     }
 
     /* @ngInject */
     function AspectoCargoService($http, $q, CrudService) {
-        return CrudService.create("facturacion/aspecto-cargo");
+        return CrudService.create("facturacion/aspecto-cargo", "ascr");
     }
 
     /* @ngInject */
     function FacturaSerieService($http, $q, CrudService) {
-        return CrudService.create("facturacion/factura-serie");
+        return CrudService.create("facturacion/factura-serie", "fcsr");
     }
 
     /* @ngInject */
     function ValoracionService($http, $q, CrudService) {
-        return CrudService.create("facturacion/valoracion");
+        return CrudService.create("facturacion/valoracion", "vlrc");
     }
 
     /* @ngInject */
     function ValoracionLineaService($http, $q, CrudService) {
-        return CrudService.create("facturacion/valoracion-linea");
+        return CrudService.create("facturacion/valoracion-linea", "vlrl");
     }
 
     /* @ngInject */
     function ValoracionDetalleService($http, $q, CrudService) {
-        return CrudService.create("facturacion/valoracion-detalle");
+        return CrudService.create("facturacion/valoracion-detalle", "vlrd");
     }
 
     /* @ngInject */
     function FacturaService($http, $q, CrudService) {
-        return CrudService.create("facturacion/factura");
+        return CrudService.create("facturacion/factura", "fctr");
     }
 
     /* @ngInject */
     function FacturaAnulacionService($http, $q, CrudService) {
-        return CrudService.create("facturacion/factura-anulacion");
+        return CrudService.create("facturacion/factura-anulacion", "fcan");
     }
 
     /* @ngInject */
     function FacturaRectificacionService($http, $q, CrudService) {
-        return CrudService.create("facturacion/factura-rectificacion");
+        return CrudService.create("facturacion/factura-rectificacion", "fcrc");
     }
 
     /* @ngInject */
     function ValoradorService($http, $q, CrudService) {
-        return CrudService.create("facturacion/valorador");
+        return CrudService.create("facturacion/valorador", "vldr");
     }
 
     /* @ngInject */
     function FacturadorService($http, $q, CrudService) {
-        return CrudService.create("facturacion/facturador");
+        return CrudService.create("facturacion/facturador", "fcdr");
     }
 
     /* @ngInject */

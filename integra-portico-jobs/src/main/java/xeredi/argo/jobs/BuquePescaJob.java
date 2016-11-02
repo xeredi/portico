@@ -9,6 +9,10 @@ import org.quartz.JobExecutionException;
 
 import xeredi.argo.model.proceso.batch.pesca.ProcesoBuquePesca;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BuquePescaJob.
+ */
 @DisallowConcurrentExecution
 public final class BuquePescaJob implements Job {
 

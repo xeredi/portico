@@ -16,6 +16,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.proxy.PorticoResourceBundle;
+import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 
@@ -63,6 +64,10 @@ public abstract class BaseAction extends ActionSupport {
     @Getter
     protected final String[] availableLanguages = ConfigurationProxy
             .getStringArray(ConfigurationKey.language_available);
+
+    @Getter
+    @Setter
+    protected ClassPrefix prefix;
 
     /** The response code. */
     @Getter

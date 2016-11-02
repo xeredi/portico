@@ -2,6 +2,8 @@ package xeredi.argo.model.proceso.vo;
 
 import java.util.Date;
 
+import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
 import lombok.Data;
 
@@ -10,7 +12,10 @@ import lombok.Data;
  * The Class ProcesoVO.
  */
 @Data
-public final class ProcesoVO {
+public final class ProcesoVO implements Identifiable {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.prbt;
 
     /** The id. */
     private Long id;

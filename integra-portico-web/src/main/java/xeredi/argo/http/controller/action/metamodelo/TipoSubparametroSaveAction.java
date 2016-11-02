@@ -3,9 +3,9 @@ package xeredi.argo.http.controller.action.metamodelo;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
@@ -15,13 +15,11 @@ import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
  * The Class TipoSubparametroSaveAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class TipoSubparametroSaveAction extends EntidadSaveAction<TipoSubparametroVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3409997803363715915L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.tpsp;
 
     /**
      * {@inheritDoc}

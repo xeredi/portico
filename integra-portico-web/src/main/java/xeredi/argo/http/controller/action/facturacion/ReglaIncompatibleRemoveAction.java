@@ -3,7 +3,6 @@ package xeredi.argo.http.controller.action.facturacion;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.ReglaIncompatibleBO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleVO;
 
@@ -16,9 +15,6 @@ public final class ReglaIncompatibleRemoveAction extends CrudRemoveAction<ReglaI
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4230713466511401390L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.rgin;
 
     /**
      * {@inheritDoc}

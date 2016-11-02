@@ -6,10 +6,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import xeredi.argo.model.estadistica.vo.EstadisticaVO;
 
-// TODO: Auto-generated Javadoc
 /**
- * Instantiates a new tipo estadistica detail vo.
+ * The Class TipoEstadisticaDetailVO.
  */
+// TODO: Auto-generated Javadoc
 @Data
 @EqualsAndHashCode(callSuper = true)
 public final class TipoEstadisticaDetailVO extends AbstractEntidadDetailVO {
@@ -23,6 +23,11 @@ public final class TipoEstadisticaDetailVO extends AbstractEntidadDetailVO {
     /** The cmdi list. */
     private List<CampoDimensionVO> cmdiList;
 
+    /**
+     * Creates the item.
+     *
+     * @return the estadistica VO
+     */
     public EstadisticaVO createItem() {
         final EstadisticaVO item = new EstadisticaVO();
 

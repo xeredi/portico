@@ -8,7 +8,6 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.FacturaBO;
 import xeredi.argo.model.facturacion.bo.FacturaSerieBO;
 import xeredi.argo.model.facturacion.vo.FacturaAnulacionVO;
@@ -25,9 +24,6 @@ public final class FacturaAnulacionEditAction extends CrudEditAction<FacturaAnul
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3480470491984180806L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.fcan;
 
     /** The fcsr list. */
     private List<FacturaSerieVO> fcsrList;

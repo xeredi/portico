@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.I18nable;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.Versionable;
 import xeredi.argo.model.item.vo.ItemVO;
@@ -18,7 +19,7 @@ import xeredi.argo.model.item.vo.ItemVO;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public final class ParametroVO extends ItemVO implements Versionable<ParametroVersionVO> {
+public final class ParametroVO extends ItemVO implements Versionable<ParametroVersionVO>, I18nable {
 
     /** The prefix. */
     private final transient ClassPrefix prefix = ClassPrefix.prmt;

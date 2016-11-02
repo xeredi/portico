@@ -5,9 +5,9 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
@@ -18,13 +18,11 @@ import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
  * The Class CampoAgregacionEditAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class CampoAgregacionEditAction extends CrudEditAction<CampoAgregacionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6163643952983909955L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.cmag;
 
     /** The entd list. */
     private List<EntidadTipoDatoVO> entdList;

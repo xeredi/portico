@@ -7,7 +7,6 @@ import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.facturacion.bo.CargoBO;
 import xeredi.argo.model.facturacion.bo.ReglaBO;
@@ -24,9 +23,6 @@ public final class CargoDetailAction extends CrudDetailAction<CargoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 731400411604425450L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.crgo;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;

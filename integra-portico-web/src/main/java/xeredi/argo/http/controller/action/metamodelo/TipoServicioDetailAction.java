@@ -3,8 +3,8 @@ package xeredi.argo.http.controller.action.metamodelo;
 import java.util.List;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.EntidadBO;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
@@ -22,13 +22,11 @@ import xeredi.argo.model.metamodelo.vo.TramiteVO;
  * The Class TipoServicioDetailAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3574420037025529065L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.tpsr;
 
     /** The tpss list. */
     private List<TipoSubservicioVO> subentiList;

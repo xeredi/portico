@@ -6,7 +6,6 @@ import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.model.comun.bo.MessageI18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.MessageI18nVO;
 
@@ -19,9 +18,6 @@ public final class MessageI18nSaveAction extends CrudSaveAction<MessageI18nKey> 
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3331358676066653527L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.m18n;
 
     /** The i18n map. */
     private Map<String, MessageI18nVO> i18nMap;

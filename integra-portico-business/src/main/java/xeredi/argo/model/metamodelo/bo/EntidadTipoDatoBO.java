@@ -9,11 +9,10 @@ import org.apache.ibatis.session.SqlSession;
 import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.bo.IgBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.EntidadTipoDatoDAO;
@@ -54,7 +53,7 @@ public final class EntidadTipoDatoBO {
             entdVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             entdDAO.insert(entdVO);
-            I18nBO.insertMap(session, ClassPrefix.entd, entdVO.getId(), i18nMap);
+            I18nUtilBO.insertMap(session, entdVO, i18nMap);
 
             session.commit();
         }
@@ -83,7 +82,7 @@ public final class EntidadTipoDatoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.entd, entdVO);
             }
 
-            I18nBO.updateMap(session, ClassPrefix.entd, entdVO.getId(), i18nMap);
+            I18nUtilBO.updateMap(session, entdVO, i18nMap);
 
             session.commit();
         }
@@ -107,7 +106,7 @@ public final class EntidadTipoDatoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.entd, entdVO);
             }
 
-            I18nBO.deleteMap(session, ClassPrefix.entd, entdVO.getId());
+            I18nUtilBO.deleteMap(session, entdVO);
 
             session.commit();
         }

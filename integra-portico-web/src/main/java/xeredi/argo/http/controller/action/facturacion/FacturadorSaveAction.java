@@ -11,7 +11,6 @@ import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.vo.FacturadorVO;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
@@ -29,9 +28,6 @@ public final class FacturadorSaveAction extends CrudSaveAction<FacturadorVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2241047270819035432L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.fcdr;
 
     /**
      * {@inheritDoc}

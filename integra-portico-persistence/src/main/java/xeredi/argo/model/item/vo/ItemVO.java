@@ -6,7 +6,8 @@ import java.util.Map;
 
 import lombok.Data;
 import lombok.NonNull;
-import xeredi.argo.model.comun.vo.ItemEntidad;
+import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 
@@ -15,7 +16,10 @@ import xeredi.argo.model.servicio.vo.ServicioVO;
  * The Class ItemVO.
  */
 @Data
-public abstract class ItemVO implements ItemEntidad {
+public abstract class ItemVO implements Identifiable {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.item;
 
     /** The id. */
     private Long id;

@@ -6,7 +6,6 @@ import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
 import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
@@ -31,9 +30,6 @@ public final class ItemTramiteSaveAction extends CrudSaveAction<ItemTramiteVO> i
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1629906671936657593L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.ittr;
 
     /**
      * {@inheritDoc}

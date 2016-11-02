@@ -11,6 +11,7 @@
     function CrudService($http, $q, $location, Upload) {
         function Crud() {
             var _uri;
+            var _prefix;
 
             function setUri(uri) {
                 _uri = uri;
@@ -18,6 +19,14 @@
 
             function getUri() {
                 return _uri;
+            }
+
+            function setPrefix(prefix) {
+                _prefix = prefix;
+            }
+
+            function getPrefix() {
+                return _prefix;
             }
 
             function index() {
@@ -41,7 +50,8 @@
                 // console.log('list');
 
                 return $http.post(_uri + "-list.action", {
-                    model : searchCriteria
+                    model : searchCriteria,
+                    prefix : _prefix
                 }).then(success, fail);
 
                 function success(response) {
@@ -66,7 +76,8 @@
                 return $http.post(_uri + "-list.action", {
                     model : searchCriteria,
                     page : page,
-                    limit : limit
+                    limit : limit,
+                    prefix : _prefix
                 }).then(success, fail);
 
                 function success(response) {
@@ -89,7 +100,8 @@
 
             function typeahead(searchCriteria) {
                 return $http.post(_uri + "-typeahead.action", {
-                    model : searchCriteria
+                    model : searchCriteria,
+                    prefix : _prefix
                 }).then(success, fail);
 
                 function success(response) {
@@ -108,7 +120,8 @@
                 // console.log('xls export');
 
                 return $http.post(_uri + "-xls-export.action", {
-                    criterio : searchCriteria
+                    criterio : searchCriteria,
+                    prefix : _prefix
                 }, {
                     responseType : 'arraybuffer'
                 }).then(success, fail);
@@ -137,7 +150,8 @@
                 // console.log('filter');
 
                 return $http.post(_uri + "-filter.action", {
-                    model : searchCriteria
+                    model : searchCriteria,
+                    prefix : _prefix
                 }).then(success, fail);
 
                 function success(response) {
@@ -156,7 +170,8 @@
                 // console.log('detail');
 
                 return $http.post(_uri + "-detail.action", {
-                    model : id
+                    model : id,
+                    prefix : _prefix
                 }).then(success, fail);
 
                 function success(response) {
@@ -175,7 +190,8 @@
                 // console.log('Pdf export');
 
                 return $http.post(_uri + "-pdf-export.action", {
-                    model : id
+                    model : id,
+                    prefix : _prefix
                 }, {
                     responseType : 'arraybuffer'
                 }).then(success, fail);
@@ -204,7 +220,8 @@
                 // console.log('File export');
 
                 return $http.post(_uri + "-file-export.action", {
-                    model : id
+                    model : id,
+                    prefix : _prefix
                 }, {
                     responseType : 'arraybuffer'
                 }).then(success, fail);
@@ -232,7 +249,8 @@
 
                 if (confirm("Are you sure?")) {
                     return $http.post(_uri + "-remove.action", {
-                        model : item
+                        model : item,
+                        prefix : _prefix
                     }).then(success, fail);
                 } else {
                     // FIXME
@@ -255,7 +273,8 @@
             function edit(accion, id) {
                 return $http.post(_uri + "-edit.action", {
                     model : id,
-                    accion : accion
+                    accion : accion,
+                    prefix : _prefix
                 }).then(success, fail);
 
                 function success(response) {
@@ -273,7 +292,8 @@
             function save(accion, item) {
                 return $http.post(_uri + "-save.action", {
                     model : item,
-                    accion : accion
+                    accion : accion,
+                    prefix : _prefix
                 }).then(success, fail);
 
                 function success(response) {
@@ -292,7 +312,8 @@
                 return $http.post(_uri + "-save.action", {
                     model : item,
                     i18nMap : i18nMap,
-                    accion : accion
+                    accion : accion,
+                    prefix : _prefix
                 }).then(success, fail);
 
                 function success(response) {
@@ -311,7 +332,8 @@
                 // console.log('loadPrepare');
 
                 return $http.post(_uri + "-load-prepare.action", {
-                    model : item
+                    model : item,
+                    prefix : _prefix
                 }).then(success, fail);
 
                 function success(response) {
@@ -328,7 +350,8 @@
 
             function load(item) {
                 return $http.post(_uri + "-load.action", {
-                    model : item
+                    model : item,
+                    prefix : _prefix
                 }).then(success, fail);
 
                 function success(response) {
@@ -409,15 +432,18 @@
                 tabSelected : tabSelected,
                 pageMapChanged : pageMapChanged,
                 setUri : setUri,
-                getUri : getUri
+                getUri : getUri,
+                setPrefix : setPrefix,
+                getPrefix : getPrefix,
             };
         }
 
         return {
-            create : function(uri) {
+            create : function(uri, prefix) {
                 var crud = new Crud();
 
                 crud.setUri(uri);
+                crud.setPrefix(prefix);
 
                 return crud;
             }

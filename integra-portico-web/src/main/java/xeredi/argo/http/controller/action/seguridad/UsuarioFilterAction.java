@@ -3,11 +3,11 @@ package xeredi.argo.http.controller.action.seguridad;
 import java.util.List;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
@@ -22,13 +22,11 @@ import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
  * The Class UsuarioFilterAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class UsuarioFilterAction extends GridFilterAction<UsuarioCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6193819984435577729L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.usro;
 
     /** The sprt list. */
     private List<SuperpuertoVO> sprtList;
@@ -36,6 +34,7 @@ public final class UsuarioFilterAction extends GridFilterAction<UsuarioCriterioV
     /** The prto list. */
     private List<PuertoVO> prtoList;
 
+    /** The grpo list. */
     private List<GrupoVO> grpoList;
 
     /**

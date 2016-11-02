@@ -8,6 +8,7 @@ import java.util.Map;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
@@ -42,13 +43,11 @@ import xeredi.argo.model.seguridad.vo.GrupoVO;
  * Instantiates a new grupo edit action.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5574343207861340756L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.grpo;
 
     /** The mdlo list. */
     private List<ModuloVO> mdloList;

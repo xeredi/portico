@@ -7,11 +7,10 @@ import com.google.common.base.Preconditions;
 
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
-import xeredi.argo.model.comun.bo.I18nBO;
+import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
@@ -27,9 +26,6 @@ public final class PuertoEditAction extends CrudEditAction<PuertoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2800418654791205407L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.prto;
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
@@ -48,7 +44,7 @@ public final class PuertoEditAction extends CrudEditAction<PuertoVO> {
             final PuertoBO prtoBO = new PuertoBO();
 
             model = prtoBO.select(model.getId(), idioma);
-            i18nMap = I18nBO.selectMap(ClassPrefix.prto, model.getId());
+            i18nMap = I18nUtilBO.selectMap(model);
         }
     }
 

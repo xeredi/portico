@@ -12,6 +12,7 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.estadistica.dao.EstadisticaDAO;
@@ -38,8 +39,8 @@ public class EstadisticaBO {
      *            the limit
      * @return the paginated list
      */
-    public final PaginatedList<EstadisticaVO> selectList(final EstadisticaCriterioVO estdCriterioVO, final int offset,
-            final int limit) {
+    public final PaginatedList<EstadisticaVO> selectList(final @NonNull EstadisticaCriterioVO estdCriterioVO,
+            final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
             final int count = estdDAO.count(estdCriterioVO);
@@ -62,7 +63,7 @@ public class EstadisticaBO {
      *            the estd criterio vo
      * @return the list
      */
-    public final List<EstadisticaVO> selectList(final EstadisticaCriterioVO estdCriterioVO) {
+    public final List<EstadisticaVO> selectList(final @NonNull EstadisticaCriterioVO estdCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
             final List<EstadisticaVO> estdList = estdDAO.selectList(estdCriterioVO);
@@ -74,27 +75,47 @@ public class EstadisticaBO {
     }
 
     /**
+     * Select.
+     *
+     * @param id
+     *            the id
+     * @param idioma
+     *            the idioma
+     * @return the estadistica VO
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public final EstadisticaVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+        final EstadisticaCriterioVO estdCriterio = new EstadisticaCriterioVO();
+
+        estdCriterio.setId(id);
+        estdCriterio.setIdioma(idioma);
+
+        return selectObject(estdCriterio);
+    }
+
+    /**
      * Select object.
      *
-     * @param estdCriterioVO
-     *            the estd criterio vo
+     * @param estdCriterio
+     *            the estd criterio
      * @return the estadistica vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final EstadisticaVO selectObject(final EstadisticaCriterioVO estdCriterioVO)
+    public final EstadisticaVO selectObject(final @NonNull EstadisticaCriterioVO estdCriterio)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
-            final EstadisticaVO estdVO = estdDAO.selectObject(estdCriterioVO);
+            final EstadisticaVO estd = estdDAO.selectObject(estdCriterio);
 
-            if (estdVO == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.estd, estdCriterioVO);
+            if (estd == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.estd, estdCriterio);
             }
 
-            final List<EstadisticaVO> estdList = Arrays.asList(new EstadisticaVO[] { estdVO });
+            final List<EstadisticaVO> estdList = Arrays.asList(new EstadisticaVO[] { estd });
 
-            fillDependencies(session, estdList, estdCriterioVO, true);
+            fillDependencies(session, estdList, estdCriterio, true);
 
             return estdList.get(0);
         }
@@ -107,44 +128,44 @@ public class EstadisticaBO {
      *            the session
      * @param estdList
      *            the estd list
-     * @param estdCriterioVO
-     *            the estd criterio vo
+     * @param estdCriterio
+     *            the estd criterio
      * @param useIds
      *            the use ids
      */
-    private final void fillDependencies(final SqlSession session, final List<EstadisticaVO> estdList,
-            final EstadisticaCriterioVO estdCriterioVO, final boolean useIds) {
+    private final void fillDependencies(final @NonNull SqlSession session, final @NonNull List<EstadisticaVO> estdList,
+            final @NonNull EstadisticaCriterioVO estdCriterio, final boolean useIds) {
         if (!estdList.isEmpty()) {
             if (useIds) {
                 final Set<Long> ids = new HashSet<>();
 
-                for (final EstadisticaVO estdVO : estdList) {
-                    ids.add(estdVO.getId());
+                for (final EstadisticaVO estd : estdList) {
+                    ids.add(estd.getId());
                 }
 
-                estdCriterioVO.setIds(ids);
+                estdCriterio.setIds(ids);
             }
 
             final EstadisticaDatoDAO esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
             final Map<Long, Map<Long, ItemDatoVO>> itdtMap = new HashMap<>();
 
-            for (final ItemDatoVO itdtVO : esdtDAO.selectList(estdCriterioVO)) {
-                if (!itdtMap.containsKey(itdtVO.getItemId())) {
-                    itdtMap.put(itdtVO.getItemId(), new HashMap<Long, ItemDatoVO>());
+            for (final ItemDatoVO itdt : esdtDAO.selectList(estdCriterio)) {
+                if (!itdtMap.containsKey(itdt.getItemId())) {
+                    itdtMap.put(itdt.getItemId(), new HashMap<Long, ItemDatoVO>());
                 }
 
-                itdtMap.get(itdtVO.getItemId()).put(itdtVO.getTpdtId(), itdtVO);
+                itdtMap.get(itdt.getItemId()).put(itdt.getTpdtId(), itdt);
 
-                itdtVO.setItemId(null);
-                itdtVO.setTpdtId(null);
+                itdt.setItemId(null);
+                itdt.setTpdtId(null);
             }
 
-            for (final EstadisticaVO estdVO : estdList) {
-                estdVO.setItdtMap(itdtMap.get(estdVO.getId()));
+            for (final EstadisticaVO estd : estdList) {
+                estd.setItdtMap(itdtMap.get(estd.getId()));
             }
 
             if (useIds) {
-                estdCriterioVO.setIds(null);
+                estdCriterio.setIds(null);
             }
         }
     }

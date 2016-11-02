@@ -37,8 +37,10 @@ public final class ManifiestoBO extends ServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected final void insertPostOperations(final SqlSession session, final ServicioVO srvc,
+    protected final void insertPostOperations(final @NonNull SqlSession session, final @NonNull ServicioVO srvc,
             final List<SubservicioVO> ssrvList, final List<SubservicioSubservicioVO> ssssList) {
+        Preconditions.checkNotNull(srvc.getId());
+
         final BlDAO blDAO = session.getMapper(BlDAO.class);
 
         final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
@@ -104,7 +106,7 @@ public final class ManifiestoBO extends ServicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final ResumenTotalesVO selectResumen(final Long maniId) throws InstanceNotFoundException {
+    public final ResumenTotalesVO selectResumen(final @NonNull Long maniId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ManifiestoResumenDAO resumenDAO = session.getMapper(ManifiestoResumenDAO.class);
             final ResumenTotalesCriterioVO totalCriterioVO = new ResumenTotalesCriterioVO();

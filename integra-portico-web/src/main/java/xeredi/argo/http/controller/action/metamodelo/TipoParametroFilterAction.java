@@ -1,9 +1,9 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.vo.TipoParametroCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -11,13 +11,11 @@ import xeredi.argo.model.metamodelo.vo.TipoParametroCriterioVO;
  * The Class TipoParametroFilterAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class TipoParametroFilterAction extends GridFilterAction<TipoParametroCriterioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8019963453091790625L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.tppr;
 
     /**
      * {@inheritDoc}

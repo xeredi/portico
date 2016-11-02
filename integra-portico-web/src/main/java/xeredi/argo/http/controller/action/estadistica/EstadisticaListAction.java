@@ -1,17 +1,15 @@
 package xeredi.argo.http.controller.action.estadistica;
 
+import com.google.common.base.Preconditions;
+
+import lombok.Data;
 import xeredi.argo.http.controller.action.item.ItemListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.estadistica.bo.EstadisticaBO;
 import xeredi.argo.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.argo.model.estadistica.vo.EstadisticaVO;
 import xeredi.argo.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaDetailVO;
-
-import com.google.common.base.Preconditions;
-
-import lombok.Data;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -23,9 +21,6 @@ public final class EstadisticaListAction extends
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1284436845357248301L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.estd;
 
     /**
      * {@inheritDoc}

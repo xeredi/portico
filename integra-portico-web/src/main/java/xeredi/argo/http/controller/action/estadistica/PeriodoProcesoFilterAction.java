@@ -7,7 +7,6 @@ import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoCriterioVO;
@@ -21,9 +20,6 @@ public final class PeriodoProcesoFilterAction extends GridFilterAction<PeriodoPr
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4100651934689033353L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.pepr;
 
     /** The subps. */
     @Getter

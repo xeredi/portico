@@ -7,13 +7,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.collect.Sets;
+
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
-import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.collect.Sets;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -52,11 +52,10 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
             contentList.add(new Object[] { key.name(), map.get(key) });
         }
 
-        final I18nBO i18nBO = new I18nBO();
         final Set<ClassPrefix> prefixSet = Sets.newHashSet(ClassPrefix.tpdt, ClassPrefix.cdrf, ClassPrefix.enti,
                 ClassPrefix.entd, ClassPrefix.engd);
 
-        final List<LabelValueVO> list = i18nBO.selectLabelValueList(prefixSet,
+        final List<LabelValueVO> list = I18nUtilBO.selectLabelValueList(prefixSet,
                 locale.getLanguage().isEmpty() ? defaultLanguage : locale.getLanguage());
 
         for (final LabelValueVO vo : list) {

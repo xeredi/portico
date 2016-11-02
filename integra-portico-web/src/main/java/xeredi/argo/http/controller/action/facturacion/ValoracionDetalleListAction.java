@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.facturacion.bo.ValoracionDetalleBO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
@@ -19,9 +18,6 @@ public final class ValoracionDetalleListAction extends GridListAction<Valoracion
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5836376477924004332L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.vlrd;
 
     /**
      * {@inheritDoc}

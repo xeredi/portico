@@ -44,7 +44,7 @@ public final class AppInterceptor extends AbstractInterceptor {
             } else {
                 if (SessionManager.isAuthenticated(action)) {
                     if (action instanceof ProtectedAction) {
-                        final ClassPrefix prefix = ((ProtectedAction) action).getPrefix();
+                        final ClassPrefix prefix = action.getPrefix();
                         final AccionCodigo codigo = ((ProtectedAction) action).getAccion();
 
                         if (action instanceof ProtectedItemAction && prefix != ClassPrefix.ittr) {

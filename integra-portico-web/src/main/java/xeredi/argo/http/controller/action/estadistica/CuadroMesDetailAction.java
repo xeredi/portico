@@ -8,7 +8,6 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.estadistica.bo.CuadroMesBO;
 import xeredi.argo.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.argo.model.estadistica.vo.CuadroMesVO;
@@ -23,9 +22,6 @@ public final class CuadroMesDetailAction extends CrudDetailAction<PeriodoProceso
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6080323896171314975L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.cdms;
 
     /** The cdms map. */
     private Map<String, List<CuadroMesVO>> cdmsMap;

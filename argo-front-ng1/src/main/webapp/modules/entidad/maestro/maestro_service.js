@@ -18,11 +18,11 @@
 
     /* @ngInject */
     function ParametroService($http, $q, CrudService) {
-        return CrudService.create("maestro/parametro");
+        return CrudService.create("maestro/parametro", "prmt");
     }
 
     /* @ngInject */
     function SubparametroService($http, $q, CrudService) {
-        return CrudService.create("maestro/subparametro");
+        return CrudService.create("maestro/subparametro", "sprm");
     }
 })();

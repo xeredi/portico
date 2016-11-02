@@ -3,9 +3,9 @@ package xeredi.argo.http.controller.action.metamodelo;
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
 
@@ -14,13 +14,11 @@ import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
  * The Class TipoEstadisticaRemoveAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class TipoEstadisticaRemoveAction extends CrudRemoveAction<TipoEstadisticaVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8551997472365097343L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.tpes;
 
     /**
      * {@inheritDoc}

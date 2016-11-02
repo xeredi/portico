@@ -1,9 +1,9 @@
 package xeredi.argo.http.controller.action.proceso;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ProcesoCriterioVO;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
@@ -13,13 +13,11 @@ import xeredi.argo.model.proceso.vo.ProcesoVO;
  * The Class ProcesoListAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class ProcesoListAction extends GridListAction<ProcesoCriterioVO, ProcesoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4892003930947515760L;
-
-    /** The prefix. */
-    private final ClassPrefix prefix = ClassPrefix.prbt;
 
     /**
      * {@inheritDoc}

@@ -11,11 +11,11 @@
 
     /* @ngInject */
     function ProcesoService($http, $q, CrudService) {
-        return CrudService.create("proceso/proceso");
+        return CrudService.create("proceso/proceso", "prbt");
     }
 
     /* @ngInject */
     function ProcesoMensajeService($http, $q, CrudService) {
-        return CrudService.create("proceso/proceso-mensaje");
+        return CrudService.create("proceso/proceso-mensaje", "prmn");
     }
 })();

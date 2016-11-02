@@ -8,7 +8,6 @@
 
 		<result column="aces_pk" property="id" />
 		<result column="aces_enti_pk" property="entiId" />
-		<result column="aces_prefix" property="prefix" />
 		<result column="aces_path" property="path" />
 		<result column="aces_orden" property="orden" />
 
@@ -18,7 +17,7 @@
 	<sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        aces_pk, aces_prefix, aces_path, aces_enti_pk, aces_orden
+        aces_pk, aces_path, aces_enti_pk, aces_orden
     FROM
         tbl_accion_especial_aces
     ]]>
@@ -37,9 +36,6 @@
 		<where>
 			<if test="id != null">
 				AND aces_pk = #{id}
-			</if>
-			<if test="prefix != null">
-				AND aces_prefix = #{prefix}
 			</if>
 			<if test="path != null">
 				AND aces_path LIKE #{path}
@@ -83,7 +79,7 @@
 		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
-		ORDER BY aces_enti_pk, aces_prefix, aces_path
+		ORDER BY aces_enti_pk, aces_path
 	</select>
 
 	<select id="selectObject" parameterType="AccionEspecialCriterioVO"
@@ -112,15 +108,14 @@
 
 	<insert id="insert" parameterType="AccionEspecialVO">
         <![CDATA[
-        INSERT INTO tbl_accion_especial_aces (aces_pk, aces_prefix, aces_path, aces_enti_pk, aces_orden)
-        VALUES (#{id}, #{prefix}, #{path}, #{entiId}, #{orden})
+        INSERT INTO tbl_accion_especial_aces (aces_pk, aces_path, aces_enti_pk, aces_orden)
+        VALUES (#{id}, #{path}, #{entiId}, #{orden})
         ]]>
 	</insert>
 
 	<update id="update" parameterType="AccionEspecialVO">
         <![CDATA[
         UPDATE tbl_accion_especial_aces SET
-            aces_prefix = #{prefix}
             , aces_path = #{path}
             , aces_enti_pk = #{entiId}
             , aces_orden = #{orden}
