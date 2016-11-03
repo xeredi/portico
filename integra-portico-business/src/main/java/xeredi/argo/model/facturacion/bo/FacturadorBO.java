@@ -4,14 +4,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import lombok.NonNull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.argo.model.comun.bo.IgBO;
+import lombok.NonNull;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.facturacion.dao.FacturaDAO;
 import xeredi.argo.model.facturacion.dao.FacturaSerieDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionDAO;
@@ -82,8 +81,6 @@ public class FacturadorBO {
                 final ValoracionGrupoDAO vgrpDAO = session.getMapper(ValoracionGrupoDAO.class);
                 final List<ValoracionGrupoVO> vgrpList = vgrpDAO.selectList(vgrpCriterio);
 
-                final IgBO igBO = new IgBO();
-
                 LOG.info("Inserción de Facturas");
 
                 for (final ValoracionGrupoVO vgrp : vgrpList) {
@@ -93,7 +90,7 @@ public class FacturadorBO {
                     double importe = 0;
                     double impuesto = 0;
 
-                    fctr.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                    IgUtilBO.assignNextVal(fctr);
 
                     fctr.setEstado(FacturaEstado.NO);
                     fctr.setFalta(Calendar.getInstance().getTime());

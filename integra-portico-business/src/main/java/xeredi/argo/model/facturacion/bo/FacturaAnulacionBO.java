@@ -4,12 +4,13 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.argo.model.comun.bo.IgBO;
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -31,8 +32,6 @@ import xeredi.argo.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.util.mybatis.SqlMapperLocator;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -89,7 +88,6 @@ public final class FacturaAnulacionBO {
 
             // Crear nueva factura a partir de los datos de la factura anulada.
             final Map<Long, Long> idsMap = new HashMap<>();
-            final IgBO igBO = new IgBO();
 
             final FacturaSerieCriterioVO fcsrCriterio = new FacturaSerieCriterioVO();
 
@@ -98,9 +96,10 @@ public final class FacturaAnulacionBO {
             final FacturaSerieVO fcsr = fcsrDAO.selectObject(fcsrCriterio);
             final FacturaVO fctrCopia = new FacturaVO();
 
-            idsMap.put(fctr.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(fctrCopia);
 
-            fctrCopia.setId(idsMap.get(fctr.getId()));
+            idsMap.put(fctr.getId(), fctrCopia.getId());
+
             fctrCopia.setAspc(fctr.getAspc());
             fctrCopia.setEstado(fctr.getImporte() > 0 ? FacturaEstado.RN : FacturaEstado.RP);
             fctrCopia.setFalta(Calendar.getInstance().getTime());
@@ -132,9 +131,10 @@ public final class FacturaAnulacionBO {
             for (final ValoracionVO vlrc : vlrcDAO.selectList(vlrcCriterio)) {
                 final ValoracionVO vlrcCopia = new ValoracionVO();
 
-                idsMap.put(vlrc.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
+                IgUtilBO.assignNextVal(vlrcCopia);
 
-                vlrcCopia.setId(idsMap.get(vlrc.getId()));
+                idsMap.put(vlrc.getId(), vlrcCopia.getId());
+
                 vlrcCopia.setAspc(vlrc.getAspc());
                 vlrcCopia.setCodExencion(vlrc.getCodExencion());
                 vlrcCopia.setFalta(Calendar.getInstance().getTime());
@@ -167,9 +167,10 @@ public final class FacturaAnulacionBO {
             for (final ValoracionLineaVO vlrl : vlrlDAO.selectList(vlrlCriterio)) {
                 final ValoracionLineaVO vlrlCopia = new ValoracionLineaVO();
 
-                idsMap.put(vlrl.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
+                IgUtilBO.assignNextVal(vlrlCopia);
 
-                vlrlCopia.setId(idsMap.get(vlrl.getId()));
+                idsMap.put(vlrl.getId(), vlrlCopia.getId());
+
                 vlrlCopia.setPadreId(idsMap.get(vlrl.getPadreId()));
                 vlrlCopia.setVlrcId(idsMap.get(vlrl.getVlrcId()));
 
@@ -197,9 +198,10 @@ public final class FacturaAnulacionBO {
             for (final ValoracionDetalleVO vlrd : vlrdDAO.selectList(vlrdCriterio)) {
                 final ValoracionDetalleVO vlrdCopia = new ValoracionDetalleVO();
 
-                idsMap.put(vlrd.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
+                IgUtilBO.assignNextVal(vlrdCopia);
 
-                vlrdCopia.setId(idsMap.get(vlrd.getId()));
+                idsMap.put(vlrd.getId(), vlrdCopia.getId());
+
                 vlrdCopia.setPadreId(idsMap.get(vlrd.getPadreId()));
                 vlrdCopia.setVlrcId(idsMap.get(vlrd.getVlrcId()));
                 vlrdCopia.setVlrlId(idsMap.get(vlrd.getVlrlId()));

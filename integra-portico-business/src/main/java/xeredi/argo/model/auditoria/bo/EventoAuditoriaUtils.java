@@ -10,7 +10,7 @@ import lombok.NonNull;
 import xeredi.argo.model.auditoria.dao.EventoAuditoriaDAO;
 import xeredi.argo.model.auditoria.vo.AuditoriaAccion;
 import xeredi.argo.model.auditoria.vo.EventoAuditoriaVO;
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
 
 // TODO: Auto-generated Javadoc
@@ -40,7 +40,8 @@ public final class EventoAuditoriaUtils {
 
         usro.setId(auditable.getUsroId());
 
-        evau.setId((new IgBO()).nextVal(IgBO.SQ_INTEGRA));
+        IgUtilBO.assignNextVal(evau);
+
         evau.setFecha(Calendar.getInstance().getTime());
         evau.setAccion(accion);
         evau.setPrefijoEntidad(auditable.getPrefijoEntidad());

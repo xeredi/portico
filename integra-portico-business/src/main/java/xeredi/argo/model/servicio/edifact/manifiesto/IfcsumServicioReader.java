@@ -11,11 +11,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import lombok.NonNull;
-
 import org.antlr.v4.runtime.RuleContext;
 
-import xeredi.argo.model.comun.bo.IgBO;
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
@@ -47,8 +48,6 @@ import xeredi.edifact.grammar.IfcsumD14bParser.RffContext;
 import xeredi.edifact.grammar.IfcsumD14bParser.SelContext;
 import xeredi.edifact.grammar.IfcsumD14bParser.SgpContext;
 import xeredi.edifact.grammar.IfcsumD14bParser.TdtContext;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -224,7 +223,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
                 macoActual = tpssDetail.createItem();
 
-                macoActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+                IgUtilBO.assignNextVal(macoActual);
+
                 macoActual.setNumero(contador++);
                 macoActual.addItdt(TipoDato.ORGA.getId(), getOrganizacion(nif));
 
@@ -257,7 +257,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
         blActual = tpssDetail.createItem();
 
-        blActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        IgUtilBO.assignNextVal(blActual);
+
         blActual.setNumero(contador++);
         blActual.setEstado("I"); // FIXME Calcular
         blActual.addItdt(TipoDato.COD_EXEN.getId(), "0"); // FIXME Calcular
@@ -302,7 +303,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
         partActual = tpssDetail.createItem();
 
-        partActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        IgUtilBO.assignNextVal(partActual);
+
         partActual.setNumero(contador++);
         partActual.setEstado("R");
         partActual.addItdt(TipoDato.COD_EXEN.getId(), "0"); // FIXME Calcular
@@ -647,7 +649,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
         paimActual = tpssDetail.createItem();
 
-        paimActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        IgUtilBO.assignNextVal(paimActual);
+
         paimActual.setNumero(contador++);
 
         ssrvList.add(paimActual);
@@ -668,7 +671,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
         padoActual = tpssDetail.createItem();
 
-        padoActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        IgUtilBO.assignNextVal(padoActual);
+
         padoActual.setNumero(contador++);
 
         ssrvList.add(padoActual);
@@ -691,7 +695,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
         paeqActual = tpssDetail.createItem();
 
-        paeqActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        IgUtilBO.assignNextVal(paeqActual);
+
         paeqActual.setNumero(contador++);
 
         ssrvList.add(paeqActual);
@@ -723,7 +728,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
         ssrvList.add(pampActual);
         addSsss(partActual, pampActual);
 
-        pampActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        IgUtilBO.assignNextVal(pampActual);
+
         pampActual.setNumero(contador++);
 
         pampActual.addItdt(
@@ -745,7 +751,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
         equiActual = tpssDetail.createItem();
 
-        equiActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        IgUtilBO.assignNextVal(equiActual);
+
         equiActual.setNumero(contador++);
         equiActual.setEstado("R");
 
@@ -810,7 +817,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
         preqActual = tpssDetail.createItem();
 
-        preqActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        IgUtilBO.assignNextVal(preqActual);
+
         preqActual.setNumero(contador++);
 
         ssrvList.add(preqActual);

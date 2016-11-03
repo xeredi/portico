@@ -3,8 +3,6 @@ package xeredi.argo.http.controller.action.metamodelo;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
@@ -59,8 +57,6 @@ public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetai
      */
     @Override
     public final void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
-
         doSpecificDetail();
 
         i18nMap = I18nUtilBO.selectMap(model);

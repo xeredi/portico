@@ -9,7 +9,10 @@ import lombok.Data;
  * The Class ArchivoInfoVO.
  */
 @Data
-public final class ArchivoInfoVO {
+public final class ArchivoInfoVO implements Identifiable {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.arch;
 
     /** The id. */
     private Long id;

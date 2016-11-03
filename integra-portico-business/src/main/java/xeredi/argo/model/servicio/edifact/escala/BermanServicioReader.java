@@ -11,7 +11,7 @@ import java.util.Map;
 
 import org.antlr.v4.runtime.RuleContext;
 
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
@@ -599,7 +599,7 @@ public final class BermanServicioReader extends BermanD14bBaseVisitor {
 
         ssrvMap.get(Entidad.ATRAQUE).add(atraqueActual);
 
-        atraqueActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        IgUtilBO.assignNextVal(atraqueActual);
 
         final String codigoAtraque = ctx.c233().f7273(0).getText();
 
@@ -679,7 +679,7 @@ public final class BermanServicioReader extends BermanD14bBaseVisitor {
 
         ssrvMap.get(Entidad.OPERACION_ATRAQUE).add(atraqueActual);
 
-        operacionActual.setId(new IgBO().nextVal(IgBO.SQ_INTEGRA));
+        IgUtilBO.assignNextVal(operacionActual);
 
         operacionActual.addItdt(TipoDato.TIPO_OP_MERC.getId(),
                 getMaestro(Entidad.TIPO_OPERACION_MERCANCIA, ctx.c524().f4079().getText()));

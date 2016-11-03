@@ -5,6 +5,9 @@ import java.util.List;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -16,8 +19,6 @@ import xeredi.argo.model.metamodelo.vo.EntidadEntidadVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
 import xeredi.util.mybatis.SqlMapperLocator;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -56,8 +57,8 @@ public final class EntidadEntidadBO {
 
             if (entiPadreVO.getTipo() == TipoEntidad.P
                     && (entiHijaVO.getTipo() == TipoEntidad.T || entiHijaVO.getTipo() == TipoEntidad.S)) {
-                throw new Error("Una entidad de tipo maestro no puede ser padre de entidades asociadas a servicios: "
-                        + enenVO);
+                throw new Error(
+                        "Una entidad de tipo maestro no puede ser padre de entidades asociadas a servicios: " + enenVO);
             }
             if (entiPadreVO.getTipo() == TipoEntidad.S && entiHijaVO.getTipo() == TipoEntidad.T) {
                 throw new Error(
@@ -142,6 +143,27 @@ public final class EntidadEntidadBO {
     }
 
     /**
+     * Select.
+     *
+     * @param entipId
+     *            the entip id
+     * @param entihId
+     *            the entih id
+     * @return the entidad entidad VO
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public EntidadEntidadVO select(final @NonNull Long entipId, final @NonNull Long entihId)
+            throws InstanceNotFoundException {
+        final EntidadEntidadCriterioVO enenCriterio = new EntidadEntidadCriterioVO();
+
+        enenCriterio.setEntiPadreId(entipId);
+        enenCriterio.setEntiHijaId(entipId);
+
+        return selectObject(enenCriterio);
+    }
+
+    /**
      * Select object.
      *
      * @param enenCriterioVO
@@ -150,7 +172,7 @@ public final class EntidadEntidadBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public EntidadEntidadVO selectObject(final EntidadEntidadCriterioVO enenCriterioVO)
+    public EntidadEntidadVO selectObject(final @NonNull EntidadEntidadCriterioVO enenCriterioVO)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(enenCriterioVO.getEntiPadreId());
         Preconditions.checkNotNull(enenCriterioVO.getEntiHijaId());

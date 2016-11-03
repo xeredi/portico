@@ -6,6 +6,8 @@ package xeredi.argo.model.comun.vo;
  */
 public enum ClassPrefix {
 
+    /** The arch. */
+    arch,
     /** The conf. */
     conf,
     /** The m 18 n. */
@@ -14,10 +16,16 @@ public enum ClassPrefix {
     usro,
     /** The grpo. */
     grpo,
+    /** The usgr. */
+    usgr,
     /** The fncd. */
     fncd,
+    /** The fngr. */
+    fngr,
     /** The mdlo. */
     mdlo,
+    /** The aebs. */
+    aebs,
     /** The acbs. */
     acbs,
     /** The acen. */
@@ -138,6 +146,11 @@ public enum ClassPrefix {
     prbt,
     /** The prmn. */
     prmn,
+    /** The prit. */
+    prit,
+    /** The prpm. */
+    prpm,
+    evau,
 
     // PARA BORRAR!!!!
     /** The actr. */

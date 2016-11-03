@@ -8,7 +8,9 @@ import java.util.Map;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.argo.model.comun.bo.IgBO;
+import com.google.common.base.Preconditions;
+
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.metamodelo.vo.Entidad;
@@ -24,8 +26,6 @@ import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -50,8 +50,6 @@ public final class EscalaEdiBO {
         Preconditions.checkNotNull(esclVO);
         Preconditions.checkNotNull(atrqList);
         Preconditions.checkNotNull(oprcMap);
-
-        final IgBO igBO = new IgBO();
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
             final ServicioSecuenciaDAO srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
@@ -84,7 +82,8 @@ public final class EscalaEdiBO {
                 throw new Error("No se encuentra secuencia para: " + esclVO);
             }
 
-            esclVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(esclVO);
+
             esclVO.setNumero(String.valueOf(secuencia));
             srvcDAO.insert(esclVO);
 
@@ -98,7 +97,8 @@ public final class EscalaEdiBO {
             int numeroAtraque = 1;
 
             for (final SubservicioVO atrqVO : atrqList) {
-                atrqVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                IgUtilBO.assignNextVal(atrqVO);
+
                 atrqVO.setSrvc(esclVO);
                 atrqVO.setNumero(numeroAtraque++);
                 ssrvDAO.insert(atrqVO);

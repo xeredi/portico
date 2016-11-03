@@ -7,14 +7,13 @@
         <id column="aebs_pk" />
 
         <result column="aebs_pk" property="id" />
-        <result column="aebs_prefix" property="prefix" />
         <result column="aebs_codigo" property="codigo" />
     </resultMap>
 
     <sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        aebs_pk, aebs_prefix, aebs_codigo
+        aebs_pk, aebs_codigo
     FROM
         tbl_accion_entidad_base_aebs
     ]]>
@@ -34,9 +33,6 @@
             <if test="id != null">
                 AND aebs_pk = #{id}
             </if>
-            <if test="prefix != null">
-                AND aebs_prefix = #{prefix}
-            </if>
             <if test="codigo != null">
                 AND aebs_codigo LIKE #{codigo}
             </if>
@@ -51,7 +47,7 @@
     <select id="selectList" parameterType="AccionEntidadBaseCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
-        ORDER BY aebs_prefix, aebs_codigo
+        ORDER BY aebs_codigo
     </select>
 
     <select id="selectObject" parameterType="AccionEntidadBaseCriterioVO" resultMap="ResultMap">
@@ -63,7 +59,7 @@
         <![CDATA[
         SELECT COUNT(1)
         FROM tbl_accion_entidad_base_aebs
-        WHERE aebs_prefix = #{prefix} AND aebs_codigo = #{codigo}
+        WHERE aebs_codigo = #{codigo}
         ]]>
     </select>
 
@@ -77,16 +73,15 @@
 
     <insert id="insert" parameterType="AccionEntidadBaseVO">
         <![CDATA[
-        INSERT INTO tbl_accion_entidad_base_aebs (aebs_pk, aebs_prefix, aebs_codigo)
-        VALUES (#{id}, #{prefix}, #{codigo})
+        INSERT INTO tbl_accion_entidad_base_aebs (aebs_pk, aebs_codigo)
+        VALUES (#{id}, #{codigo})
         ]]>
     </insert>
 
     <update id="update" parameterType="AccionEntidadBaseVO">
         <![CDATA[
         UPDATE tbl_accion_entidad_base_aebs SET
-            aebs_prefix = #{prefix}
-            , aebs_codigo = #{codigo}
+            aebs_codigo = #{codigo}
         WHERE
             aebs_pk = #{id}
         ]]>

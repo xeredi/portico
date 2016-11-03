@@ -23,7 +23,7 @@ import xeredi.argo.model.auditoria.bo.Auditable;
 import xeredi.argo.model.auditoria.bo.EventoAuditoriaUtils;
 import xeredi.argo.model.auditoria.vo.AuditoriaAccion;
 import xeredi.argo.model.auditoria.vo.AuditoriaPrefijoEntidad;
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.ModelException;
@@ -261,8 +261,6 @@ public class ServicioBO implements Auditable {
                 }
             }
 
-            final IgBO igBO = new IgBO();
-
             srscDAO.incrementarSecuencia(srvc);
 
             final Integer secuencia = srscDAO.obtenerSecuencia(srvc);
@@ -277,7 +275,8 @@ public class ServicioBO implements Auditable {
                 throw new DuplicateInstanceException(srvc.getEntiId(), srvc);
             }
 
-            srvc.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(srvc);
+
             srvcDAO.insert(srvc);
 
             if (srvc.getItdtMap() != null) {
@@ -289,13 +288,15 @@ public class ServicioBO implements Auditable {
 
             if (ssrvList != null) {
                 for (final SubservicioVO ssrvVO : ssrvList) {
-                    final Long ssrvId = igBO.nextVal(IgBO.SQ_INTEGRA);
+                    final SubservicioVO ssrvNew = new SubservicioVO();
+
+                    IgUtilBO.assignNextVal(ssrvNew);
 
                     if (ssrvVO.getId() != null) {
-                        ssrvDepsMap.put(ssrvVO.getId(), ssrvId);
+                        ssrvDepsMap.put(ssrvVO.getId(), ssrvNew.getId());
                     }
 
-                    ssrvVO.setId(ssrvId);
+                    ssrvVO.setId(ssrvNew.getId());
                     ssrvVO.setSrvc(srvc);
                     ssrvDAO.insert(ssrvVO);
 
@@ -420,8 +421,6 @@ public class ServicioBO implements Auditable {
                     }
                 }
 
-                final IgBO igBO = new IgBO();
-
                 srscDAO.incrementarSecuencia(srvc);
 
                 final Integer secuencia = srscDAO.obtenerSecuencia(srvc);
@@ -436,7 +435,8 @@ public class ServicioBO implements Auditable {
                     throw new DuplicateInstanceException(srvc.getEntiId(), srvc);
                 }
 
-                srvc.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                IgUtilBO.assignNextVal(srvc);
+
                 srvcDAO.insert(srvc);
 
                 if (srvc.getItdtMap() != null) {
@@ -448,13 +448,15 @@ public class ServicioBO implements Auditable {
 
                 if (ssrvList != null) {
                     for (final SubservicioVO ssrvVO : ssrvList) {
-                        final Long ssrvId = igBO.nextVal(IgBO.SQ_INTEGRA);
+                        final SubservicioVO ssrvNew = new SubservicioVO();
+
+                        IgUtilBO.assignNextVal(ssrvNew);
 
                         if (ssrvVO.getId() != null) {
-                            ssrvDepsMap.put(ssrvVO.getId(), ssrvId);
+                            ssrvDepsMap.put(ssrvVO.getId(), ssrvNew.getId());
                         }
 
-                        ssrvVO.setId(ssrvId);
+                        ssrvVO.setId(ssrvNew.getId());
                         ssrvVO.setSrvc(srvc);
                         ssrvDAO.insert(ssrvVO);
 
@@ -565,7 +567,6 @@ public class ServicioBO implements Auditable {
             final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
             final ServicioSecuenciaDAO srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
 
-            final IgBO igBO = new IgBO();
             final Map<Long, Long> ssrvIds = new HashMap<>();
 
             // Busqueda de los elementos a duplicar
@@ -592,13 +593,15 @@ public class ServicioBO implements Auditable {
                 throw new Error("No se encuentra secuencia para: " + srvcVO.getEtiqueta());
             }
 
-            srvcVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(srvcVO);
+
             srvcVO.setNumero(ServicioVO.convertNumero(secuencia));
 
             for (final SubservicioVO ssrvVO : ssrvList) {
                 final Long ssrvIdActual = ssrvVO.getId();
 
-                ssrvVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                IgUtilBO.assignNextVal(ssrvVO);
+
                 ssrvVO.setSrvc(srvcVO);
 
                 ssrvIds.put(ssrvIdActual, ssrvVO.getId());
@@ -722,8 +725,6 @@ public class ServicioBO implements Auditable {
         Preconditions.checkNotNull(ittr.getTrmt().getEntiId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final IgBO igBO = new IgBO();
-
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
 
@@ -743,7 +744,8 @@ public class ServicioBO implements Auditable {
             final ItemTramiteDAO ittrDAO = session.getMapper(ItemTramiteDAO.class);
             final TramiteDetailVO trmtDetail = TramiteProxy.select(ittr.getTrmt().getId());
 
-            ittr.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(ittr);
+
             ittr.setFecha(Calendar.getInstance().getTime());
 
             ittrDAO.insert(ittr);

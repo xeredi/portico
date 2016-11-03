@@ -12,7 +12,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -45,13 +45,12 @@ public final class GrupoBO {
 		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
 			final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
 			final FuncionalidadGrupoDAO fngrDAO = session.getMapper(FuncionalidadGrupoDAO.class);
-			final IgBO igBO = new IgBO();
 
 			if (grpoDAO.exists(grpo)) {
 				throw new DuplicateInstanceException(MessageI18nKey.grpo, grpo);
 			}
 
-			grpo.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(grpo);
 			grpoDAO.insert(grpo);
 
 			// Permisos del grupo

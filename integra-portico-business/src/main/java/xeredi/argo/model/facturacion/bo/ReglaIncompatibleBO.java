@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -46,7 +46,6 @@ public class ReglaIncompatibleBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaIncompatibleDAO rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
-            final IgBO igBO = new IgBO();
 
             if (rginDAO.exists(rgin)) {
                 rgin.setId(rginDAO.selectId(rgin));
@@ -55,13 +54,11 @@ public class ReglaIncompatibleBO {
                     throw new OverlapException(MessageI18nKey.rgin, rgin);
                 }
             } else {
-                igBO.assignNextVal(rgin);
-
+                IgUtilBO.assignNextVal(rgin);
                 rginDAO.insert(rgin);
             }
 
-            igBO.assignNextVal(rgin.getVersion());
-
+            IgUtilBO.assignNextVal(rgin.getVersion());
             rginDAO.insertVersion(rgin);
 
             session.commit();

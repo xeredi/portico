@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lombok.Data;
+import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
 
 // TODO: Auto-generated Javadoc
@@ -12,7 +14,10 @@ import xeredi.argo.model.metamodelo.vo.TramiteVO;
  * The Class ItemTramiteVO.
  */
 @Data
-public final class ItemTramiteVO {
+public final class ItemTramiteVO implements Identifiable {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.ittr;
 
     /** The id. */
     private Long id;

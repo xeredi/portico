@@ -4,14 +4,13 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import com.google.common.base.Preconditions;
 
-import xeredi.argo.model.comun.bo.IgBO;
+import lombok.NonNull;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -80,7 +79,6 @@ public final class FacturaRectificacionBO {
             }
 
             // Creacion de la valoracion
-            final IgBO igBO = new IgBO();
             final Map<Long, Long> idsMap = new HashMap<>();
 
             final ValoracionVO vlrcCopia = new ValoracionVO();
@@ -105,7 +103,8 @@ public final class FacturaRectificacionBO {
             vlrcCopia.setInfo4(vlrc.getInfo4());
             vlrcCopia.setInfo5(vlrc.getInfo5());
             vlrcCopia.setInfo6(vlrc.getInfo6());
-            vlrcCopia.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+
+            IgUtilBO.assignNextVal(vlrcCopia);
 
             idsMap.put(vlrc.getId(), vlrcCopia.getId());
 
@@ -141,9 +140,10 @@ public final class FacturaRectificacionBO {
                     vlrlCopia.setCuant5(vlrl.getCuant5());
                     vlrlCopia.setCuant6(vlrl.getCuant6());
 
-                    idsMap.put(vlrl.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
+                    IgUtilBO.assignNextVal(vlrlCopia);
 
-                    vlrlCopia.setId(idsMap.get(vlrl.getId()));
+                    idsMap.put(vlrl.getId(), vlrlCopia.getId());
+
                     vlrlCopia.setPadreId(idsMap.get(vlrl.getPadreId()));
                     vlrlCopia.setVlrcId(vlrcCopia.getId());
 
@@ -157,9 +157,10 @@ public final class FacturaRectificacionBO {
                 for (final ValoracionDetalleVO vlrd : vlrdDAO.selectList(vlrdCriterio)) {
                     final ValoracionDetalleVO vlrdCopia = new ValoracionDetalleVO();
 
-                    idsMap.put(vlrd.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
+                    IgUtilBO.assignNextVal(vlrdCopia);
 
-                    vlrdCopia.setId(idsMap.get(vlrd.getId()));
+                    idsMap.put(vlrd.getId(), vlrdCopia.getId());
+
                     vlrdCopia.setPadreId(idsMap.get(vlrd.getPadreId()));
                     vlrdCopia.setVlrlId(idsMap.get(vlrd.getVlrlId()));
                     vlrdCopia.setVlrcId(vlrcCopia.getId());

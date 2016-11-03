@@ -3,6 +3,8 @@ package xeredi.argo.model.facturacion.vo;
 import java.util.Date;
 
 import lombok.Data;
+import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -10,7 +12,10 @@ import xeredi.argo.model.servicio.vo.SubservicioVO;
  * The Class ValoracionDetalleVO.
  */
 @Data
-public final class ValoracionDetalleVO {
+public final class ValoracionDetalleVO implements Identifiable {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.vlrd;
 
     /** The id. */
     private Long id;

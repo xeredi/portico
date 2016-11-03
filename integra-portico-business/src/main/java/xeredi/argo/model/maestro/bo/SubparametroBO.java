@@ -16,7 +16,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.google.common.base.Preconditions;
 
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -71,17 +71,16 @@ public class SubparametroBO {
 
             final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
             final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
-            final IgBO igBO = new IgBO();
 
             if (sprmDAO.exists(sprm)) {
                 sprm.setId(sprmDAO.selectId(sprm));
             } else {
-                sprm.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                IgUtilBO.assignNextVal(sprm);
 
                 sprmDAO.insert(sprm);
             }
 
-            sprm.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(sprm.getVersion());
 
             if (sprmDAO.existsOverlap(sprm)) {
                 throw new OverlapException(sprm.getEntiId(), sprm);
@@ -137,17 +136,16 @@ public class SubparametroBO {
 
             final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
             final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
-            final IgBO igBO = new IgBO();
 
             if (sprmDAO.exists(sprm)) {
                 sprm.setId(sprmDAO.selectId(sprm));
             } else {
-                sprm.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                IgUtilBO.assignNextVal(sprm);
 
                 sprmDAO.insert(sprm);
             }
 
-            sprm.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(sprm.getVersion());
 
             if (sprmDAO.existsOverlap(sprm)) {
                 throw new OverlapException(sprm.getEntiId(), sprm);

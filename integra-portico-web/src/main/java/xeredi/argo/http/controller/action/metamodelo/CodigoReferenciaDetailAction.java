@@ -2,8 +2,6 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
@@ -32,8 +30,6 @@ public final class CodigoReferenciaDetailAction extends CrudDetailAction<CodigoR
      */
     @Override
     public void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
-
         final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
         model = cdrfBO.select(model.getId(), idioma);

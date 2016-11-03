@@ -5,13 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.argo.model.comun.bo.IgBO;
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.dao.ArchivoInfoDAO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OperacionNoPermitidaException;
@@ -37,8 +38,6 @@ import xeredi.argo.model.proceso.vo.ProcesoVO;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -68,15 +67,14 @@ public class ProcesoBO {
             final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
             final ProcesoParametroDAO prpmDAO = session.getMapper(ProcesoParametroDAO.class);
 
-            final IgBO igBO = new IgBO();
-
             final UsuarioVO usro = new UsuarioVO();
 
             usro.setId(usroId);
 
             final ProcesoVO prbt = new ProcesoVO();
 
-            prbt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(prbt);
+
             prbt.setUsro(usro);
             prbt.setModulo(tipo.getModulo());
             prbt.setTipo(tipo);
@@ -134,8 +132,8 @@ public class ProcesoBO {
             prbtCriterioVO.setModulo(tipo.getModulo());
             prbtCriterioVO.setTipo(tipo);
 
-            final List<ProcesoVO> prbtList = prbtDAO.selectList(prbtCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET,
-                    1));
+            final List<ProcesoVO> prbtList = prbtDAO.selectList(prbtCriterioVO,
+                    new RowBounds(RowBounds.NO_ROW_OFFSET, 1));
 
             if (!prbtList.isEmpty()) {
                 final ProcesoVO prbtVO = prbtList.get(0);
@@ -168,8 +166,8 @@ public class ProcesoBO {
      *             the operacion no permitida exception
      */
     public final void finalizar(final @NonNull Long prbtId, final List<ProcesoMensajeVO> prmnList,
-            final ItemTipo itemSalidaTipo, final List<Long> itemSalidaList) throws InstanceNotFoundException,
-            OperacionNoPermitidaException {
+            final ItemTipo itemSalidaTipo, final List<Long> itemSalidaList)
+            throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
@@ -245,8 +243,8 @@ public class ProcesoBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public final void cancelar(final @NonNull ProcesoVO prbt) throws InstanceNotFoundException,
-            OperacionNoPermitidaException {
+    public final void cancelar(final @NonNull ProcesoVO prbt)
+            throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(prbt.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

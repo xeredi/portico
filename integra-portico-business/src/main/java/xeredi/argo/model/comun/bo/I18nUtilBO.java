@@ -29,6 +29,13 @@ import xeredi.util.mybatis.SqlMapperLocator;
 public final class I18nUtilBO {
 
     /**
+     * Instantiates a new i 18 n util BO.
+     */
+    private I18nUtilBO() {
+        super();
+    }
+
+    /**
      * Select label value list.
      *
      * @param prefixSet

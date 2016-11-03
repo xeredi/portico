@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import lombok.NonNull;
-
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -19,7 +17,10 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.argo.model.comun.bo.IgBO;
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.ModelException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -57,8 +58,6 @@ import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.proceso.ProcesoTemplate;
 import xeredi.util.mybatis.SqlMapperLocator;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -237,8 +236,6 @@ public class ValoradorBO {
         final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
         final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
 
-        final IgBO igBO = new IgBO();
-
         generateSql(vldrContexto.getAspc());
 
         final List<ValoracionAgregadaVO> vlraList = vlraDAO.selectList(vldrContexto);
@@ -246,7 +243,8 @@ public class ValoradorBO {
         final Map<Long, Long> vlrtIdMap = new HashMap<>();
 
         for (final ValoracionAgregadaVO vlra : vlraList) {
-            vlra.getVlrc().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(vlra.getVlrc());
+
             vlra.getVlrc().setAspc(vldrContexto.getAspc());
             vlra.getVlrc().setFalta(Calendar.getInstance().getTime());
 
@@ -260,7 +258,8 @@ public class ValoradorBO {
 
             for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
                 vlrl.getVlrl().setVlrcId(vlra.getVlrc().getId());
-                vlrl.getVlrl().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+
+                IgUtilBO.assignNextVal(vlrl.getVlrl());
 
                 if (vlrl.getVlrl().getRgla().getTipo() == ReglaTipo.T) {
                     vlrlPadreId = vlrl.getVlrl().getId();
@@ -286,10 +285,14 @@ public class ValoradorBO {
 
                     // LOG.debug("vlrd: " + vlrd);
 
+                    final ValoracionDetalleVO vlrdNew = new ValoracionDetalleVO();
+
+                    IgUtilBO.assignNextVal(vlrdNew);
+
                     final Long vlrtId = vlrd.getId();
                     final Long vlrtPadreId = vlrd.getPadreId();
 
-                    vlrtIdMap.put(vlrtId, igBO.nextVal(IgBO.SQ_INTEGRA));
+                    vlrtIdMap.put(vlrtId, vlrdNew.getId());
 
                     Preconditions.checkNotNull(vlrtIdMap.get(vlrd.getId()));
                     Preconditions.checkNotNull(vlrtIdMap.get(vlrd.getPadreId()));
@@ -359,8 +362,6 @@ public class ValoradorBO {
         rglaCriterio.setCrgoId(vldrContexto.getCrgo().getId());
         rglaCriterio.setFechaVigencia(vldrContexto.getFref());
 
-        final IgBO igBO = new IgBO();
-
         {
             // Aplicar procedimientos de tipo precio
             rglaCriterio.setTipo(ReglaTipo.T);
@@ -389,7 +390,8 @@ public class ValoradorBO {
                 final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
 
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
-                    vlrt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                    IgUtilBO.assignNextVal(vlrt);
+
                     vlrt.setPadreId(vlrt.getId());
 
                     vlrt.setRgla(rgla);
@@ -452,7 +454,7 @@ public class ValoradorBO {
                 final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
 
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
-                    vlrt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                    IgUtilBO.assignNextVal(vlrt);
 
                     vlrt.setRgla(rgla);
                     vlrt.setFreferencia(vldrContexto.getFref());
@@ -520,7 +522,7 @@ public class ValoradorBO {
                 final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
 
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
-                    vlrt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                    IgUtilBO.assignNextVal(vlrt);
 
                     vlrt.setRgla(rgla);
                     vlrt.setFreferencia(vldrContexto.getFref());

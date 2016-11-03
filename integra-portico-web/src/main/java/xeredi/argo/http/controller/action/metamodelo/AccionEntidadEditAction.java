@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBaseBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
@@ -57,8 +56,6 @@ public final class AccionEntidadEditAction extends CrudEditAction<AccionEntidadV
     public void doLoadDependencies() throws ApplicationException {
         final AccionEntidadBaseBO aebsBO = new AccionEntidadBaseBO();
         final AccionEntidadBaseCriterioVO aebsCriterio = new AccionEntidadBaseCriterioVO();
-
-        aebsCriterio.setPrefix(ClassPrefix.item);
 
         aebsList = aebsBO.selectList(aebsCriterio);
     }

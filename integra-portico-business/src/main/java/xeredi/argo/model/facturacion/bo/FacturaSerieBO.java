@@ -3,13 +3,14 @@ package xeredi.argo.model.facturacion.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.argo.model.comun.bo.IgBO;
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -18,8 +19,6 @@ import xeredi.argo.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -40,13 +39,12 @@ public final class FacturaSerieBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final FacturaSerieDAO fcsrDAO = session.getMapper(FacturaSerieDAO.class);
-            final IgBO igBO = new IgBO();
 
             if (fcsrDAO.exists(fcsr)) {
                 throw new DuplicateInstanceException(MessageI18nKey.fcsr, fcsr);
             }
 
-            fcsr.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(fcsr);
             fcsrDAO.insert(fcsr);
 
             session.commit();

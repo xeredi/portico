@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.google.common.base.Preconditions;
 
 import xeredi.argo.model.comun.bo.I18nUtilBO;
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -38,13 +38,10 @@ public final class EntidadGrupoDatoBO {
         Preconditions.checkNotNull(engdVO.getNumero());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final IgBO igBO = new IgBO();
-
-            engdVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-
             final EntidadGrupoDatoDAO engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
 
             // FIXME Deberia controlar duplicados
+            IgUtilBO.assignNextVal(engdVO);
             engdDAO.insert(engdVO);
 
             I18nUtilBO.insertMap(session, engdVO, i18nMap);

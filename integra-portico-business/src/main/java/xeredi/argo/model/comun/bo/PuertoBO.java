@@ -134,10 +134,7 @@ public final class PuertoBO {
                 throw new DuplicateInstanceException(MessageI18nKey.prto, prto);
             }
 
-            final IgBO igBO = new IgBO();
-
-            prto.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-
+            IgUtilBO.assignNextVal(prto);
             prtoDAO.insert(prto);
             I18nUtilBO.insertMap(session, prto, i18nMap);
 

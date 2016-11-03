@@ -132,12 +132,8 @@ public final class SuperpuertoBO {
                 throw new DuplicateInstanceException(MessageI18nKey.sprt, sprt);
             }
 
-            final IgBO igBO = new IgBO();
-
-            sprt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-
+            IgUtilBO.assignNextVal(sprt);
             sprtDAO.insert(sprt);
-
             I18nUtilBO.insertMap(session, sprt, i18nMap);
 
             session.commit();

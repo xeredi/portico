@@ -6,11 +6,12 @@ import java.io.InputStream;
 import java.util.Calendar;
 import java.util.List;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
 import xeredi.argo.model.comun.dao.ArchivoDAO;
 import xeredi.argo.model.comun.dao.ArchivoInfoDAO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -23,8 +24,6 @@ import xeredi.argo.model.comun.vo.ArchivoVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.util.GzipUtil;
 import xeredi.util.mybatis.SqlMapperLocator;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -57,13 +56,10 @@ public final class ArchivoBO {
             throw new InternalErrorException(ex);
         }
 
-        final IgBO igBO = new IgBO();
-
-        arch.getArin().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
 
+            IgUtilBO.assignNextVal(arch.getArin());
             archDAO.insert(arch);
 
             session.commit();
@@ -83,10 +79,8 @@ public final class ArchivoBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
-            final IgBO igBO = new IgBO();
 
-            arch.getArin().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-
+            IgUtilBO.assignNextVal(arch.getArin());
             archDAO.insert(arch);
 
             session.commit();

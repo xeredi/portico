@@ -12,7 +12,7 @@ import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.I18nUtilBO;
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.I18nVO;
@@ -136,13 +136,12 @@ public final class TipoSubservicioBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoSubservicioDAO tpssDAO = session.getMapper(TipoSubservicioDAO.class);
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
-            final IgBO igBO = new IgBO();
 
             if (entiDAO.exists(tpss)) {
                 throw new DuplicateInstanceException(MessageI18nKey.tpss, tpss);
             }
 
-            igBO.assignNextVal(tpss);
+            IgUtilBO.assignNextVal(tpss);
             tpss.setTipo(TipoEntidad.S);
 
             entiDAO.insert(tpss);

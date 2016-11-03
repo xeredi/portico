@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -108,8 +108,6 @@ public final class AspectoCargoBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoCargoDAO ascrDAO = session.getMapper(AspectoCargoDAO.class);
 
-            final IgBO igBO = new IgBO();
-
             if (ascrDAO.exists(ascr)) {
                 ascr.setId(ascrDAO.selectId(ascr));
 
@@ -117,12 +115,12 @@ public final class AspectoCargoBO {
                     throw new OverlapException(MessageI18nKey.ascr, ascr);
                 }
             } else {
-                igBO.assignNextVal(ascr);
+                IgUtilBO.assignNextVal(ascr);
 
                 ascrDAO.insert(ascr);
             }
 
-            igBO.assignNextVal(ascr.getVersion());
+            IgUtilBO.assignNextVal(ascr.getVersion());
 
             ascrDAO.insertVersion(ascr);
 

@@ -14,7 +14,7 @@ import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.I18nUtilBO;
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
@@ -167,7 +167,6 @@ public final class AspectoBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
-            final IgBO igBO = new IgBO();
 
             if (aspcDAO.exists(aspc)) {
                 aspc.setId(aspcDAO.selectId(aspc));
@@ -176,12 +175,12 @@ public final class AspectoBO {
                     throw new OverlapException(MessageI18nKey.aspc, aspc);
                 }
             } else {
-                igBO.assignNextVal(aspc);
+                IgUtilBO.assignNextVal(aspc);
 
                 aspcDAO.insert(aspc);
             }
 
-            igBO.assignNextVal(aspc.getVersion());
+            IgUtilBO.assignNextVal(aspc.getVersion());
 
             aspcDAO.insertVersion(aspc);
 
@@ -215,10 +214,8 @@ public final class AspectoBO {
                 throw new DuplicateInstanceException(MessageI18nKey.aspc, aspc);
             }
 
-            final IgBO igBO = new IgBO();
-
-            igBO.assignNextVal(aspc);
-            igBO.assignNextVal(aspc.getVersion());
+            IgUtilBO.assignNextVal(aspc);
+            IgUtilBO.assignNextVal(aspc.getVersion());
 
             aspcDAO.insert(aspc);
             aspcDAO.insertVersion(aspc);

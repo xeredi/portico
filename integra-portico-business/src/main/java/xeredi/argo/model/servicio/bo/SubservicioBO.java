@@ -9,13 +9,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.argo.model.comun.bo.IgBO;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Sets;
+
+import lombok.NonNull;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.ModelException;
@@ -39,9 +41,6 @@ import xeredi.argo.model.servicio.vo.SubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Sets;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -211,13 +210,12 @@ public class SubservicioBO {
                 }
             }
 
-            final IgBO igBO = new IgBO();
-
             if (ssrvDAO.exists(ssrvVO)) {
                 throw new DuplicateInstanceException(ssrvVO.getEntiId(), ssrvVO);
             }
 
-            ssrvVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(ssrvVO);
+
             ssrvDAO.insert(ssrvVO);
 
             for (final Long tpdtId : ssrvVO.getItdtMap().keySet()) {
@@ -482,8 +480,6 @@ public class SubservicioBO {
         Preconditions.checkNotNull(ittr.getTrmt().getEntiId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final IgBO igBO = new IgBO();
-
             // Modificacion del subservicio
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
@@ -504,7 +500,8 @@ public class SubservicioBO {
             // Alta del tramite
             final TramiteDetailVO trmtDetail = TramiteProxy.select(ittr.getTrmt().getId());
 
-            ittr.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(ittr);
+
             ittr.setFecha(Calendar.getInstance().getTime());
 
             if (ssrvDAO.updateEstado(ittr) == 0) {

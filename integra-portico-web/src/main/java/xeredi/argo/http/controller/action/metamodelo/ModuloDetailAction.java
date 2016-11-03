@@ -3,8 +3,6 @@ package xeredi.argo.http.controller.action.metamodelo;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
@@ -40,8 +38,6 @@ public final class ModuloDetailAction extends CrudDetailAction<ModuloVO> {
      */
     @Override
     public void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
-
         final ModuloBO mdloBO = new ModuloBO();
         final ModuloCriterioVO mdloCriterio = new ModuloCriterioVO();
 

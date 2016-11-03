@@ -3,13 +3,14 @@ package xeredi.argo.model.facturacion.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.argo.model.comun.bo.IgBO;
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.dao.AspectoDAO;
@@ -33,8 +34,6 @@ import xeredi.argo.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -211,9 +210,8 @@ public final class ValoracionLineaBO {
             }
 
             // Grabacion de datos
-            final IgBO igBO = new IgBO();
 
-            vlrl.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(vlrl);
 
             if (rgla.getTipo() == ReglaTipo.T) {
                 vlrl.setPadreId(vlrl.getId());

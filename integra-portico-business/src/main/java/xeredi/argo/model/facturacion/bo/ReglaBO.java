@@ -14,7 +14,7 @@ import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.I18nUtilBO;
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
 import xeredi.argo.model.comun.vo.I18nVO;
@@ -122,7 +122,6 @@ public class ReglaBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
-            final IgBO igBO = new IgBO();
 
             if (rglaDAO.exists(rgla)) {
                 rgla.setId(rglaDAO.selectId(rgla));
@@ -131,12 +130,11 @@ public class ReglaBO {
                     throw new OverlapException(MessageI18nKey.rgla, rgla);
                 }
             } else {
-                igBO.assignNextVal(rgla);
-
+                IgUtilBO.assignNextVal(rgla);
                 rglaDAO.insert(rgla);
             }
 
-            igBO.assignNextVal(rgla.getVersion());
+            IgUtilBO.assignNextVal(rgla.getVersion());
 
             rglaDAO.insertVersion(rgla);
 

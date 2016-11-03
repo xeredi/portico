@@ -16,7 +16,7 @@ import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.I18nUtilBO;
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.I18nVO;
@@ -100,13 +100,12 @@ public final class TipoDatoBO {
             throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
-            final IgBO igBO = new IgBO();
 
             if (tpdtDAO.exists(tpdt)) {
                 throw new DuplicateInstanceException(MessageI18nKey.tpdt, tpdt);
             }
 
-            igBO.assignNextVal(tpdt);
+            IgUtilBO.assignNextVal(tpdt);
             tpdtDAO.insert(tpdt);
 
             I18nUtilBO.insertMap(session, tpdt, i18nMap);

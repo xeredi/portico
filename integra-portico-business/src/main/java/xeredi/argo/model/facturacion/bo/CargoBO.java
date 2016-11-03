@@ -14,7 +14,7 @@ import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.I18nUtilBO;
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
 import xeredi.argo.model.comun.vo.I18nVO;
@@ -163,7 +163,6 @@ public class CargoBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
-            final IgBO igBO = new IgBO();
 
             if (crgoDAO.exists(crgo)) {
                 crgo.setId(crgoDAO.selectId(crgo));
@@ -172,12 +171,12 @@ public class CargoBO {
                     throw new OverlapException(MessageI18nKey.crgo, crgo);
                 }
             } else {
-                igBO.assignNextVal(crgo);
+                IgUtilBO.assignNextVal(crgo);
 
                 crgoDAO.insert(crgo);
             }
 
-            igBO.assignNextVal(crgo.getVersion());
+            IgUtilBO.assignNextVal(crgo.getVersion());
 
             crgoDAO.insertVersion(crgo);
 

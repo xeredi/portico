@@ -6,6 +6,8 @@ import lombok.Data;
 
 import org.apache.commons.lang3.StringUtils;
 
+import xeredi.argo.model.comun.vo.ClassPrefix;
+import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 
 // TODO: Auto-generated Javadoc
@@ -13,7 +15,10 @@ import xeredi.argo.model.maestro.vo.ParametroVO;
  * The Class FacturaVO.
  */
 @Data
-public final class FacturaVO {
+public final class FacturaVO implements Identifiable {
+
+    /** The prefix. */
+    private final transient ClassPrefix prefix = ClassPrefix.fctr;
 
     /** The Constant NUMERO_LENGTH. */
     private static final int NUMERO_LENGTH = 5;

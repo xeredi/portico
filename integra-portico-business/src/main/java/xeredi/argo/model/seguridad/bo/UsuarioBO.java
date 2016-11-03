@@ -12,7 +12,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -44,13 +44,12 @@ public final class UsuarioBO {
     public void insert(final @NonNull UsuarioVO usro) throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
-            final IgBO igBO = new IgBO();
 
             if (usroDAO.exists(usro)) {
                 throw new DuplicateInstanceException(MessageI18nKey.usro, usro);
             }
 
-            igBO.assignNextVal(usro);
+            IgUtilBO.assignNextVal(usro);
 
             usroDAO.insert(usro);
 

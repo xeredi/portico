@@ -7,7 +7,6 @@ import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.EntidadEntidadBO;
-import xeredi.argo.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadVO;
 
 // TODO: Auto-generated Javadoc
@@ -31,11 +30,7 @@ public final class EntidadEntidadDetailAction extends CrudDetailAction<EntidadEn
         Preconditions.checkNotNull(model.getEntiHija().getId());
 
         final EntidadEntidadBO enenBO = new EntidadEntidadBO();
-        final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
 
-        enenCriterioVO.setEntiPadreId(model.getEntiPadreId());
-        enenCriterioVO.setEntiHijaId(model.getEntiHija().getId());
-
-        model = enenBO.selectObject(enenCriterioVO);
+        model = enenBO.select(model.getEntiPadreId(), model.getEntiHija().getId());
     }
 }

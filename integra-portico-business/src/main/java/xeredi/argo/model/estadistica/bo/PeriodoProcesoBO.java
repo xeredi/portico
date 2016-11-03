@@ -12,15 +12,16 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import lombok.NonNull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.argo.model.comun.bo.IgBO;
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.dao.ArchivoDAO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
@@ -56,8 +57,6 @@ import xeredi.argo.model.servicio.dao.ServicioDAO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -139,7 +138,7 @@ public class PeriodoProcesoBO {
      *            the limit
      * @return the paginated list
      */
-    public final PaginatedList<PeriodoProcesoVO> selectList(final PeriodoProcesoCriterioVO peprCriterioVO,
+    public final PaginatedList<PeriodoProcesoVO> selectList(final @NonNull PeriodoProcesoCriterioVO peprCriterioVO,
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
@@ -192,8 +191,7 @@ public class PeriodoProcesoBO {
      * @param peprVO
      *            the pepr vo
      */
-    private final void delete(final SqlSession session, final PeriodoProcesoVO peprVO) {
-        Preconditions.checkNotNull(peprVO);
+    private final void delete(final @NonNull SqlSession session, final @NonNull PeriodoProcesoVO peprVO) {
         Preconditions.checkNotNull(peprVO.getAnio());
         Preconditions.checkNotNull(peprVO.getMes());
         Preconditions.checkNotNull(peprVO.getSprt());
@@ -251,8 +249,8 @@ public class PeriodoProcesoBO {
     /**
      * Cargar archivo.
      *
-     * @param peprVO
-     *            the pepr vo
+     * @param pepr
+     *            the pepr
      * @param prtoMap
      *            the prto map
      * @param estdList
@@ -262,23 +260,22 @@ public class PeriodoProcesoBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public final void cargarArchivo(final PeriodoProcesoVO peprVO, final Map<String, PuertoVO> prtoMap,
-            final List<EstadisticaVO> estdList, final boolean removeIfExists) throws DuplicateInstanceException {
+    public final void cargarArchivo(final @NonNull PeriodoProcesoVO pepr, final @NonNull Map<String, PuertoVO> prtoMap,
+            final @NonNull List<EstadisticaVO> estdList, final boolean removeIfExists)
+            throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
             final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
             final EstadisticaDatoDAO esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
 
-            final IgBO igBO = new IgBO();
-
             final Date falta = Calendar.getInstance().getTime();
 
             // Si el periodo proceso ya existe
-            if (peprDAO.exists(peprVO)) {
+            if (peprDAO.exists(pepr)) {
                 if (removeIfExists) {
-                    delete(session, peprVO);
+                    delete(session, pepr);
                 } else {
-                    throw new DuplicateInstanceException(MessageI18nKey.pepr, peprVO);
+                    throw new DuplicateInstanceException(MessageI18nKey.pepr, pepr);
                 }
             }
 
@@ -287,18 +284,18 @@ public class PeriodoProcesoBO {
                 LOG.debug("Obtencion de secuencias");
             }
 
-            peprVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            peprVO.setFalta(falta);
+            IgUtilBO.assignNextVal(pepr);
+            pepr.setFalta(falta);
 
-            for (final EstadisticaVO estdVO : estdList) {
-                estdVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-                estdVO.setPepr(peprVO);
+            for (final EstadisticaVO estd : estdList) {
+                IgUtilBO.assignNextVal(estd);
+                estd.setPepr(pepr);
             }
 
-            for (final EstadisticaVO estdVO : estdList) {
-                for (final ItemDatoVO itdtVO : estdVO.getItdtMap().values()) {
+            for (final EstadisticaVO estd : estdList) {
+                for (final ItemDatoVO itdt : estd.getItdtMap().values()) {
                     // FIXME Validamos si los datos pasados son correctos??
-                    itdtVO.setItemId(estdVO.getId());
+                    itdt.setItemId(estd.getId());
                 }
             }
 
@@ -307,15 +304,15 @@ public class PeriodoProcesoBO {
             }
 
             // Insertar
-            peprDAO.insert(peprVO);
+            peprDAO.insert(pepr);
 
-            for (final EstadisticaVO estdVO : estdList) {
-                estdDAO.insert(estdVO);
+            for (final EstadisticaVO estd : estdList) {
+                estdDAO.insert(estd);
             }
 
-            for (final EstadisticaVO estdVO : estdList) {
-                for (final ItemDatoVO itdtVO : estdVO.getItdtMap().values()) {
-                    esdtDAO.insert(itdtVO);
+            for (final EstadisticaVO estd : estdList) {
+                for (final ItemDatoVO itdt : estd.getItdtMap().values()) {
+                    esdtDAO.insert(itdt);
                 }
             }
 
@@ -323,7 +320,7 @@ public class PeriodoProcesoBO {
                 LOG.debug("Generacion de cuadro mensual");
             }
 
-            generarCuadroMensual(session, peprVO.getId(), removeIfExists);
+            generarCuadroMensual(session, pepr.getId(), removeIfExists);
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Commit datos");
@@ -345,7 +342,7 @@ public class PeriodoProcesoBO {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public final void agregarServicios(final PeriodoProcesoVO pepr, final boolean removeIfExists)
+    public final void agregarServicios(final @NonNull PeriodoProcesoVO pepr, final boolean removeIfExists)
             throws DuplicateInstanceException, IOException {
         Preconditions.checkNotNull(pepr.getSprt());
         Preconditions.checkNotNull(pepr.getSprt().getId());
@@ -355,8 +352,6 @@ public class PeriodoProcesoBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
             final EstadisticaAgregadoDAO esagDAO = session.getMapper(EstadisticaAgregadoDAO.class);
-
-            final IgBO igBO = new IgBO();
 
             // Si el periodo proceso ya existe
             if (peprDAO.exists(pepr)) {
@@ -371,7 +366,7 @@ public class PeriodoProcesoBO {
                 }
             }
 
-            pepr.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(pepr);
             pepr.setFalta(Calendar.getInstance().getTime());
 
             if (LOG.isDebugEnabled()) {
@@ -392,8 +387,8 @@ public class PeriodoProcesoBO {
             ffin.set(Calendar.MONTH, pepr.getMes());
             ffin.set(Calendar.DAY_OF_MONTH, 1);
 
-            final EstadisticaAgregadoCriterioVO esagCriterioVO = new EstadisticaAgregadoCriterioVO(pepr.getId(), pepr
-                    .getSprt().getId(), finicio.getTime(), ffin.getTime());
+            final EstadisticaAgregadoCriterioVO esagCriterioVO = new EstadisticaAgregadoCriterioVO(pepr.getId(),
+                    pepr.getSprt().getId(), finicio.getTime(), ffin.getTime());
 
             final Map<Entidad, List<EstadisticaVO>> estdMap = new HashMap<Entidad, List<EstadisticaVO>>();
 
@@ -407,10 +402,8 @@ public class PeriodoProcesoBO {
                 LOG.debug("Actividad Pesquera - select");
             }
 
-            estdMap.put(
-                    Entidad.ACTIVIDAD_PESQUERA,
-                    obtenerEstadisticas(pepr, Entidad.ACTIVIDAD_PESQUERA.getId(),
-                            esagDAO.selectActividadPesquera(esagCriterioVO)));
+            estdMap.put(Entidad.ACTIVIDAD_PESQUERA, obtenerEstadisticas(pepr, Entidad.ACTIVIDAD_PESQUERA.getId(),
+                    esagDAO.selectActividadPesquera(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Avituallamiento - update");
@@ -422,10 +415,8 @@ public class PeriodoProcesoBO {
                 LOG.debug("Avituallamiento - select");
             }
 
-            estdMap.put(
-                    Entidad.AVITUALLAMIENTO,
-                    obtenerEstadisticas(pepr, Entidad.AVITUALLAMIENTO.getId(),
-                            esagDAO.selectAvituallamiento(esagCriterioVO)));
+            estdMap.put(Entidad.AVITUALLAMIENTO, obtenerEstadisticas(pepr, Entidad.AVITUALLAMIENTO.getId(),
+                    esagDAO.selectAvituallamiento(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Agregacion Superficie - update");
@@ -437,10 +428,8 @@ public class PeriodoProcesoBO {
                 LOG.debug("Agregacion Superficie - select");
             }
 
-            estdMap.put(
-                    Entidad.AGREGACION_SUPERFICIE,
-                    obtenerEstadisticas(pepr, Entidad.AGREGACION_SUPERFICIE.getId(),
-                            esagDAO.selectAgregacionSuperficie(esagCriterioVO)));
+            estdMap.put(Entidad.AGREGACION_SUPERFICIE, obtenerEstadisticas(pepr, Entidad.AGREGACION_SUPERFICIE.getId(),
+                    esagDAO.selectAgregacionSuperficie(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Agregacion Escala - update");
@@ -452,10 +441,8 @@ public class PeriodoProcesoBO {
                 LOG.debug("Agregacion Escala - select");
             }
 
-            estdMap.put(
-                    Entidad.AGREGACION_ESCALA,
-                    obtenerEstadisticas(pepr, Entidad.AGREGACION_ESCALA.getId(),
-                            esagDAO.selectAgregacionEscala(esagCriterioVO)));
+            estdMap.put(Entidad.AGREGACION_ESCALA, obtenerEstadisticas(pepr, Entidad.AGREGACION_ESCALA.getId(),
+                    esagDAO.selectAgregacionEscala(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Movimiento Tipo Buque EEE - update");
@@ -467,10 +454,8 @@ public class PeriodoProcesoBO {
                 LOG.debug("Movimiento Tipo Buque EEE - select");
             }
 
-            estdMap.put(
-                    Entidad.MOVIMIENTO_TIPO_BUQUE_EEE,
-                    obtenerEstadisticas(pepr, Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId(),
-                            esagDAO.selectMovimientoTipoBuqueEEE(esagCriterioVO)));
+            estdMap.put(Entidad.MOVIMIENTO_TIPO_BUQUE_EEE, obtenerEstadisticas(pepr,
+                    Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId(), esagDAO.selectMovimientoTipoBuqueEEE(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Buque Fondeado Atracado - update");
@@ -482,10 +467,8 @@ public class PeriodoProcesoBO {
                 LOG.debug("Buque Fondeado Atracado - select");
             }
 
-            estdMap.put(
-                    Entidad.BUQUE_FONDEADO_ATRACADO,
-                    obtenerEstadisticas(pepr, Entidad.BUQUE_FONDEADO_ATRACADO.getId(),
-                            esagDAO.selectBuqueFondeadoAtracado(esagCriterioVO)));
+            estdMap.put(Entidad.BUQUE_FONDEADO_ATRACADO, obtenerEstadisticas(pepr,
+                    Entidad.BUQUE_FONDEADO_ATRACADO.getId(), esagDAO.selectBuqueFondeadoAtracado(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Movimiento Mercancia - update");
@@ -497,19 +480,15 @@ public class PeriodoProcesoBO {
                 LOG.debug("Movimiento Mercancia - select");
             }
 
-            estdMap.put(
-                    Entidad.MOVIMIENTO_MERCANCIA,
-                    obtenerEstadisticas(pepr, Entidad.MOVIMIENTO_MERCANCIA.getId(),
-                            esagDAO.selectMovimientoMercancia(esagCriterioVO)));
+            estdMap.put(Entidad.MOVIMIENTO_MERCANCIA, obtenerEstadisticas(pepr, Entidad.MOVIMIENTO_MERCANCIA.getId(),
+                    esagDAO.selectMovimientoMercancia(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Movimiento Mercancia EEE - select");
             }
 
-            estdMap.put(
-                    Entidad.MOVIMIENTO_MERCANCIA_EEE,
-                    obtenerEstadisticas(pepr, Entidad.MOVIMIENTO_MERCANCIA_EEE.getId(),
-                            esagDAO.selectMovimientoMercanciaEEE(esagCriterioVO)));
+            estdMap.put(Entidad.MOVIMIENTO_MERCANCIA_EEE, obtenerEstadisticas(pepr,
+                    Entidad.MOVIMIENTO_MERCANCIA_EEE.getId(), esagDAO.selectMovimientoMercanciaEEE(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Generacion de archivo de OPPE");
@@ -520,7 +499,7 @@ public class PeriodoProcesoBO {
             final ArchivoVO arch = new ArchivoVO();
             final ArchivoInfoVO arin = new ArchivoInfoVO();
 
-            arin.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(arin);
             arin.setNombre(pepr.getFilename() + ".zip");
             arin.setSentido(ArchivoSentido.S);
             arin.setFalta(Calendar.getInstance().getTime());
@@ -581,8 +560,8 @@ public class PeriodoProcesoBO {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private byte[] generarArchivo(final PeriodoProcesoVO pepr, final Map<Entidad, List<EstadisticaVO>> estdMap)
-            throws IOException {
+    private byte[] generarArchivo(final @NonNull PeriodoProcesoVO pepr,
+            final @NonNull Map<Entidad, List<EstadisticaVO>> estdMap) throws IOException {
         final OppeFileExport export = new OppeFileExport();
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -626,94 +605,94 @@ public class PeriodoProcesoBO {
     /**
      * Obtener estadisticas.
      *
-     * @param peprVO
-     *            the pepr vo
+     * @param pepr
+     *            the pepr
      * @param tpesId
      *            the tpes id
      * @param esagList
      *            the esag list
      * @return the list
      */
-    private final List<EstadisticaVO> obtenerEstadisticas(final PeriodoProcesoVO peprVO, final Long tpesId,
-            final List<EstadisticaAgregadoVO> esagList) {
+    private final List<EstadisticaVO> obtenerEstadisticas(final @NonNull PeriodoProcesoVO pepr,
+            final @NonNull Long tpesId, final @NonNull List<EstadisticaAgregadoVO> esagList) {
 
-        final IgBO igBO = new IgBO();
         final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy.select(tpesId);
         final List<EstadisticaVO> estdList = new ArrayList<>();
 
-        for (final EstadisticaAgregadoVO esagVO : esagList) {
-            final EstadisticaVO estdVO = new EstadisticaVO();
+        for (final EstadisticaAgregadoVO esag : esagList) {
+            final EstadisticaVO estd = new EstadisticaVO();
 
-            estdVO.setEntiId(tpesId);
-            estdVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            estdVO.setPrto(esagVO.getPrto());
-            estdVO.setPepr(peprVO);
-            estdVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
+            IgUtilBO.assignNextVal(estd);
+
+            estd.setEntiId(tpesId);
+            estd.setPrto(esag.getPrto());
+            estd.setPepr(pepr);
+            estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
             if (tpesDetail.getEntdList() != null) {
                 for (final Long tpdtId : tpesDetail.getEntdList()) {
                     final EntidadTipoDatoVO entd = tpesDetail.getEntdMap().get(tpdtId);
-                    final Object value = esagVO.getEsdtMap().get(entd.getTpdt().getCodigo());
-                    final ItemDatoVO itdtVO = new ItemDatoVO();
+                    final Object value = esag.getEsdtMap().get(entd.getTpdt().getCodigo());
+                    final ItemDatoVO itdt = new ItemDatoVO();
 
-                    itdtVO.setTpdtId(entd.getTpdt().getId());
-                    estdVO.getItdtMap().put(entd.getTpdt().getId(), itdtVO);
+                    itdt.setTpdtId(entd.getTpdt().getId());
+                    estd.getItdtMap().put(entd.getTpdt().getId(), itdt);
 
                     if (value == null) {
                         if (entd.getTpdt().getTipoElemento() == TipoElemento.BO) {
-                            itdtVO.setCantidadEntera(0L);
+                            itdt.setCantidadEntera(0L);
                         }
                     } else {
                         switch (entd.getTpdt().getTipoElemento()) {
                         case BO:
                         case NE:
                             if (value instanceof BigDecimal) {
-                                itdtVO.setCantidadEntera(((BigDecimal) value).longValue());
+                                itdt.setCantidadEntera(((BigDecimal) value).longValue());
                             } else if (value instanceof Long) {
-                                itdtVO.setCantidadEntera(((Long) value).longValue());
+                                itdt.setCantidadEntera(((Long) value).longValue());
                             } else {
-                                itdtVO.setCantidadEntera(((Double) value).longValue());
+                                itdt.setCantidadEntera(((Double) value).longValue());
                             }
 
                             break;
                         case ND:
                             if (value instanceof BigDecimal) {
-                                itdtVO.setCantidadDecimal(((BigDecimal) value).doubleValue());
+                                itdt.setCantidadDecimal(((BigDecimal) value).doubleValue());
                             } else {
-                                itdtVO.setCantidadDecimal(((Double) value).doubleValue());
+                                itdt.setCantidadDecimal(((Double) value).doubleValue());
                             }
 
                             break;
                         case PR:
-                            final ParametroVO prmtVO = new ParametroVO();
+                            final ParametroVO prmt = new ParametroVO();
 
                             if (value instanceof BigDecimal) {
-                                prmtVO.setId(((BigDecimal) value).longValue());
+                                prmt.setId(((BigDecimal) value).longValue());
                             } else {
-                                prmtVO.setId(((Long) value).longValue());
+                                prmt.setId(((Long) value).longValue());
                             }
 
-                            prmtVO.setParametro(String.valueOf(esagVO.getEsdtMap().get(
-                                    entd.getTpdt().getCodigo() + "_prmt")));
+                            prmt.setParametro(
+                                    String.valueOf(esag.getEsdtMap().get(entd.getTpdt().getCodigo() + "_prmt")));
 
-                            itdtVO.setPrmt(prmtVO);
+                            itdt.setPrmt(prmt);
 
                             break;
                         case SR:
-                            final ServicioVO srvcVO = new ServicioVO();
+                            final ServicioVO srvc = new ServicioVO();
 
                             if (value instanceof BigDecimal) {
-                                srvcVO.setId(((BigDecimal) value).longValue());
+                                srvc.setId(((BigDecimal) value).longValue());
                             } else {
-                                srvcVO.setId(((Long) value).longValue());
+                                srvc.setId(((Long) value).longValue());
                             }
 
-                            itdtVO.setSrvc(srvcVO);
+                            itdt.setSrvc(srvc);
 
                             break;
                         case CR:
                         case TX:
-                            itdtVO.setCadena((String) value);
+                            itdt.setCadena((String) value);
 
                             break;
                         case FE:
@@ -722,7 +701,7 @@ public class PeriodoProcesoBO {
                              * if (value instanceof TIMESTAMP) { itdtVO.setFecha(((TIMESTAMP)
                              * value).dateValue()); } else { itdtVO.setFecha((Date) value); }
                              */
-                            itdtVO.setFecha((Date) value);
+                            itdt.setFecha((Date) value);
 
                             break;
 
@@ -733,7 +712,7 @@ public class PeriodoProcesoBO {
                 }
             }
 
-            estdList.add(estdVO);
+            estdList.add(estd);
         }
 
         return estdList;
@@ -749,7 +728,8 @@ public class PeriodoProcesoBO {
      * @param sobreescribir
      *            the sobreescribir
      */
-    private final void generarCuadroMensual(final SqlSession session, final Long peprId, final boolean sobreescribir) {
+    private final void generarCuadroMensual(final @NonNull SqlSession session, final @NonNull Long peprId,
+            final boolean sobreescribir) {
         final CuadroMesDAO cdmsDAO = session.getMapper(CuadroMesDAO.class);
 
         int orden = 0;
@@ -888,18 +868,22 @@ public class PeriodoProcesoBO {
                 CuadroMesConcepto.GSIESP, orden++, TipoDato.DECIMAL_01, "E", "C", "ZZ", "E", "C%", "**************S"));
         cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
                 CuadroMesConcepto.GSIESP, orden++, TipoDato.DECIMAL_01, "D", "C", "ZZ", "D", "C%", "**************S"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
-                CuadroMesConcepto.GSIESP, orden++, TipoDato.DECIMAL_01, "ET", "C", "ZZ", "ET", "C%", "**************S"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
-                CuadroMesConcepto.GSIESP, orden++, TipoDato.DECIMAL_01, "DT", "C", "ZZ", "DT", "C%", "**************S"));
+        cdmsDAO.insert_CM_GSIESP_GSNIES(
+                new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA, CuadroMesConcepto.GSIESP, orden++,
+                        TipoDato.DECIMAL_01, "ET", "C", "ZZ", "ET", "C%", "**************S"));
+        cdmsDAO.insert_CM_GSIESP_GSNIES(
+                new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA, CuadroMesConcepto.GSIESP, orden++,
+                        TipoDato.DECIMAL_01, "DT", "C", "ZZ", "DT", "C%", "**************S"));
         cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
                 CuadroMesConcepto.GSIESP, orden++, TipoDato.DECIMAL_01, "E", "E", "ZZ", "E", "E%", "**************S"));
         cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
                 CuadroMesConcepto.GSIESP, orden++, TipoDato.DECIMAL_01, "D", "E", "ZZ", "D", "E%", "**************S"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
-                CuadroMesConcepto.GSIESP, orden++, TipoDato.DECIMAL_01, "ET", "E", "ZZ", "ET", "E%", "**************S"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
-                CuadroMesConcepto.GSIESP, orden++, TipoDato.DECIMAL_01, "DT", "E", "ZZ", "DT", "E%", "**************S"));
+        cdmsDAO.insert_CM_GSIESP_GSNIES(
+                new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA, CuadroMesConcepto.GSIESP, orden++,
+                        TipoDato.DECIMAL_01, "ET", "E", "ZZ", "ET", "E%", "**************S"));
+        cdmsDAO.insert_CM_GSIESP_GSNIES(
+                new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA, CuadroMesConcepto.GSIESP, orden++,
+                        TipoDato.DECIMAL_01, "DT", "E", "ZZ", "DT", "E%", "**************S"));
         cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
                 CuadroMesConcepto.GSIESP, orden++, TipoDato.DECIMAL_01, "T", "E", "ZZ", "T%", null, "**************S"));
 
@@ -910,18 +894,22 @@ public class PeriodoProcesoBO {
                 CuadroMesConcepto.GSNIES, orden++, TipoDato.DECIMAL_01, "E", "C", "ZZ", "E", "C%", "**************N"));
         cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
                 CuadroMesConcepto.GSNIES, orden++, TipoDato.DECIMAL_01, "D", "C", "ZZ", "D", "C%", "**************N"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
-                CuadroMesConcepto.GSNIES, orden++, TipoDato.DECIMAL_01, "ET", "C", "ZZ", "ET", "C%", "**************N"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
-                CuadroMesConcepto.GSNIES, orden++, TipoDato.DECIMAL_01, "DT", "C", "ZZ", "DT", "C%", "**************N"));
+        cdmsDAO.insert_CM_GSIESP_GSNIES(
+                new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA, CuadroMesConcepto.GSNIES, orden++,
+                        TipoDato.DECIMAL_01, "ET", "C", "ZZ", "ET", "C%", "**************N"));
+        cdmsDAO.insert_CM_GSIESP_GSNIES(
+                new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA, CuadroMesConcepto.GSNIES, orden++,
+                        TipoDato.DECIMAL_01, "DT", "C", "ZZ", "DT", "C%", "**************N"));
         cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
                 CuadroMesConcepto.GSNIES, orden++, TipoDato.DECIMAL_01, "E", "E", "ZZ", "E", "E%", "**************N"));
         cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
                 CuadroMesConcepto.GSNIES, orden++, TipoDato.DECIMAL_01, "D", "E", "ZZ", "D", "E%", "**************N"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
-                CuadroMesConcepto.GSNIES, orden++, TipoDato.DECIMAL_01, "ET", "E", "ZZ", "ET", "E%", "**************N"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
-                CuadroMesConcepto.GSNIES, orden++, TipoDato.DECIMAL_01, "DT", "E", "ZZ", "DT", "E%", "**************N"));
+        cdmsDAO.insert_CM_GSIESP_GSNIES(
+                new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA, CuadroMesConcepto.GSNIES, orden++,
+                        TipoDato.DECIMAL_01, "ET", "E", "ZZ", "ET", "E%", "**************N"));
+        cdmsDAO.insert_CM_GSIESP_GSNIES(
+                new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA, CuadroMesConcepto.GSNIES, orden++,
+                        TipoDato.DECIMAL_01, "DT", "E", "ZZ", "DT", "E%", "**************N"));
         cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
                 CuadroMesConcepto.GSNIES, orden++, TipoDato.DECIMAL_01, "T", "E", "ZZ", "T%", null, "**************N"));
 
@@ -1004,21 +992,25 @@ public class PeriodoProcesoBO {
                 CuadroMesConcepto.PASCRU, orden++, TipoDato.ENTERO_01, "E", "C", "ZZ", "E", "C%", "'0001X', '0002X'"));
         cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
                 CuadroMesConcepto.PASCRU, orden++, TipoDato.ENTERO_01, "D", "C", "ZZ", "D", "C%", "'0001X', '0002X'"));
-        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
-                CuadroMesConcepto.PASCRU, orden++, TipoDato.ENTERO_01, "ET", "C", "ZZ", "E%", "C%", "'0001C', '0002C'"));
-        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
-                CuadroMesConcepto.PASCRU, orden++, TipoDato.ENTERO_01, "DT", "C", "ZZ", "D%", "C%", "'0001C', '0002C'"));
+        cdmsDAO.insert_CM_PASCRU(
+                new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA, CuadroMesConcepto.PASCRU, orden++,
+                        TipoDato.ENTERO_01, "ET", "C", "ZZ", "E%", "C%", "'0001C', '0002C'"));
+        cdmsDAO.insert_CM_PASCRU(
+                new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA, CuadroMesConcepto.PASCRU, orden++,
+                        TipoDato.ENTERO_01, "DT", "C", "ZZ", "D%", "C%", "'0001C', '0002C'"));
         cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
                 CuadroMesConcepto.PASCRU, orden++, TipoDato.ENTERO_01, "E", "E", "ZZ", "E", "E%", "'0001X', '0002X'"));
         cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
                 CuadroMesConcepto.PASCRU, orden++, TipoDato.ENTERO_01, "D", "E", "ZZ", "D", "E%", "'0001X', '0002X'"));
-        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
-                CuadroMesConcepto.PASCRU, orden++, TipoDato.ENTERO_01, "ET", "E", "ZZ", "E$", "E%", "'0001C', '0002C'"));
-        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
-                CuadroMesConcepto.PASCRU, orden++, TipoDato.ENTERO_01, "DT", "E", "ZZ", "D$", "E%", "'0001C', '0002C'"));
-        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA,
-                CuadroMesConcepto.PASCRU, orden++, TipoDato.ENTERO_01, "T", "E", "ZZ", "T%", null,
-                "'0001X', '0002X', '0001C', '0002C'"));
+        cdmsDAO.insert_CM_PASCRU(
+                new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA, CuadroMesConcepto.PASCRU, orden++,
+                        TipoDato.ENTERO_01, "ET", "E", "ZZ", "E$", "E%", "'0001C', '0002C'"));
+        cdmsDAO.insert_CM_PASCRU(
+                new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA, CuadroMesConcepto.PASCRU, orden++,
+                        TipoDato.ENTERO_01, "DT", "E", "ZZ", "D$", "E%", "'0001C', '0002C'"));
+        cdmsDAO.insert_CM_PASCRU(
+                new CuadroMesParametroVO(peprId, Entidad.MOVIMIENTO_MERCANCIA, CuadroMesConcepto.PASCRU, orden++,
+                        TipoDato.ENTERO_01, "T", "E", "ZZ", "T%", null, "'0001X', '0002X', '0001C', '0002C'"));
 
         if (LOG.isDebugEnabled()) {
             LOG.debug(CuadroMesConcepto.CNUMCA);
@@ -1223,23 +1215,23 @@ public class PeriodoProcesoBO {
         }
 
         // CONSULTAS RESUMEN DE LA PROPIA TABLA DE CUADRO MES
-        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(peprId, null, CuadroMesConcepto.MCONV, orden++, null, "E",
-                "C", "ZZ", "E", "C", null));
-        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(peprId, null, CuadroMesConcepto.MCONV, orden++, null, "D",
-                "C", "ZZ", "D", "C", null));
+        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(peprId, null, CuadroMesConcepto.MCONV, orden++, null, "E", "C",
+                "ZZ", "E", "C", null));
+        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(peprId, null, CuadroMesConcepto.MCONV, orden++, null, "D", "C",
+                "ZZ", "D", "C", null));
         cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(peprId, null, CuadroMesConcepto.MCONV, orden++, null, "ET",
                 "C", "ZZ", "ET", "C", null));
         cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(peprId, null, CuadroMesConcepto.MCONV, orden++, null, "DT",
                 "C", "ZZ", "DT", "C", null));
-        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(peprId, null, CuadroMesConcepto.MCONV, orden++, null, "E",
-                "E", "ZZ", "E", "E", null));
-        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(peprId, null, CuadroMesConcepto.MCONV, orden++, null, "D",
-                "E", "ZZ", "D", "E", null));
+        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(peprId, null, CuadroMesConcepto.MCONV, orden++, null, "E", "E",
+                "ZZ", "E", "E", null));
+        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(peprId, null, CuadroMesConcepto.MCONV, orden++, null, "D", "E",
+                "ZZ", "D", "E", null));
         cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(peprId, null, CuadroMesConcepto.MCONV, orden++, null, "ET",
                 "E", "ZZ", "ET", "E", null));
         cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(peprId, null, CuadroMesConcepto.MCONV, orden++, null, "DT",
                 "E", "ZZ", "DT", "E", null));
-        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(peprId, null, CuadroMesConcepto.MCONV, orden++, null, "T",
-                "E", "ZZ", "T", "E", null));
+        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(peprId, null, CuadroMesConcepto.MCONV, orden++, null, "T", "E",
+                "ZZ", "T", "E", null));
     }
 }

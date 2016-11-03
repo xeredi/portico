@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
@@ -68,14 +68,12 @@ public final class AccionBaseBO {
 		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
 			final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
 			final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
-			final IgBO igBO = new IgBO();
 
 			if (acbsDAO.exists(acbs)) {
 				throw new DuplicateInstanceException(MessageI18nKey.acbs, acbs);
 			}
 
-			acbs.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-
+			IgUtilBO.assignNextVal(acbs);
 			fncdDAO.insert(acbs);
 			acbsDAO.insert(acbs);
 

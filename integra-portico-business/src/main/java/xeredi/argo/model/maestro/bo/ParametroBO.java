@@ -19,7 +19,7 @@ import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.I18nUtilBO;
-import xeredi.argo.model.comun.bo.IgBO;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
 import xeredi.argo.model.comun.vo.I18nVO;
@@ -93,17 +93,16 @@ public class ParametroBO {
 
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final ParametroDatoDAO prdtDAO = session.getMapper(ParametroDatoDAO.class);
-            final IgBO igBO = new IgBO();
 
             if (prmtDAO.exists(prmt)) {
                 prmt.setId(prmtDAO.selectId(prmt));
             } else {
-                prmt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                IgUtilBO.assignNextVal(prmt);
 
                 prmtDAO.insert(prmt);
             }
 
-            prmt.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(prmt.getVersion());
 
             if (prmtDAO.existsOverlap(prmt)) {
                 throw new OverlapException(MessageI18nKey.prmt, prmt);
@@ -192,8 +191,6 @@ public class ParametroBO {
             final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
             final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
-            final IgBO igBO = new IgBO();
-
             // Busqueda del parametro a duplicar
             final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
 
@@ -209,12 +206,12 @@ public class ParametroBO {
             if (prmtDAO.exists(prmt)) {
                 prmt.setId(prmtDAO.selectId(prmt));
             } else {
-                prmt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                IgUtilBO.assignNextVal(prmt);
 
                 prmtDAO.insert(prmt);
             }
 
-            prmt.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(prmt.getVersion());
 
             if (prmtDAO.existsOverlap(prmt)) {
                 throw new OverlapException(MessageI18nKey.prmt, prmt);
@@ -277,9 +274,10 @@ public class ParametroBO {
                         }
 
                         for (final SubparametroVO sprmVO : sprmMap.values()) {
+                            IgUtilBO.assignNextVal(sprmVO);
+                            IgUtilBO.assignNextVal(sprmVO.getVersion());
+
                             sprmVO.setPrmtId(prmt.getId());
-                            sprmVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-                            sprmVO.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
                             sprmVO.getVersion().setFini(prmt.getVersion().getFini());
                             sprmVO.getVersion().setFfin(prmt.getVersion().getFfin());
 
@@ -381,8 +379,6 @@ public class ParametroBO {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final ParametroDatoDAO prdtDAO = session.getMapper(ParametroDatoDAO.class);
 
-            final IgBO igBO = new IgBO();
-
             // Busqueda del parametro a duplicar
             final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
 
@@ -400,7 +396,7 @@ public class ParametroBO {
             prmtDAO.updateVersion(prmtActual);
 
             // Alta de la nueva version
-            prmt.getVersion().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            IgUtilBO.assignNextVal(prmt.getVersion());
 
             if (prmtDAO.existsOverlap(prmt)) {
                 throw new OverlapException(MessageI18nKey.prmt, prmt);
