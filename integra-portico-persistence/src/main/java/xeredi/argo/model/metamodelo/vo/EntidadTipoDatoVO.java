@@ -8,6 +8,10 @@ import xeredi.argo.model.comun.vo.I18nable;
 /**
  * The Class TipoParametroTipoDatoVO.
  */
+
+/**
+ * Instantiates a new entidad tipo dato VO.
+ */
 @Data
 public final class EntidadTipoDatoVO implements I18nable {
 
@@ -116,5 +120,15 @@ public final class EntidadTipoDatoVO implements I18nable {
         }
 
         return getSpanNormalizado(span * 1.29);
+    }
+
+    /**
+     * Gets the span css.
+     *
+     * @return the span css
+     */
+    public String getSpanCss() {
+        return new StringBuilder().append(" col-sm-").append(getSpanSm()).append(" col-md-").append(getSpan())
+                .append(" col-lg-").append(getSpanLg()).append(" col-xl-").append(getSpanXl()).toString();
     }
 }

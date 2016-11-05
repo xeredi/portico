@@ -4,8 +4,7 @@
             <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('trmt-edit')"
                 data-ng-href="#/metamodelo/tramite/edit/edit/{{vm.model.entiId}}/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
-            <button data-ng-if="mc.hasAcbsPath('trmt-remove')" data-ng-click="vm.remove()"
-                class="btn btn-default">
+            <button data-ng-if="mc.hasAcbsPath('trmt-remove')" data-ng-click="vm.remove()" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
         </div>
@@ -58,7 +57,8 @@
                         data-ng-href="#/metamodelo/tramite-tipo-dato/detail/{{trtd.trmtId}}/{{trtd.entd.tpdt.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="trtd.entd.etiqueta"></td>
-                    <td><i class="glyphicon glyphicon-{{(trtd.obligatorio ? 'ok' : 'remove')}}"></i></td>
+                    <td><i class="glyphicon"
+                        data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[trtd.obligatorio]"></i></td>
                     <td data-ng-bind="trtd.entd.tpdt.nombre"></td>
                     <td data-ng-bind="trtd.entd.tpdt.tipoElemento" data-bs-tooltip
                         data-title="{{('ElementoTipo_' + trtd.entd.tpdt.tipoElemento | translate)}}"></td>

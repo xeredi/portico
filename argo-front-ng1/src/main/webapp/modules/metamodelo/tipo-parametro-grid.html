@@ -1,22 +1,19 @@
 <div data-ng-if="vm.resultList">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <div data-uib-pagination data-total-items="vm.resultList.count"
-                data-items-per-page="vm.resultList.limit" data-ng-model="vm.page"
-                data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
+            <div data-uib-pagination data-total-items="vm.resultList.count" data-items-per-page="vm.resultList.limit"
+                data-ng-model="vm.page" data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
                 data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
         </div>
 
         <div class="btn-group">
-            <button data-ng-if="mc.hasAcbsPath('tppr-list')" class="btn btn-default"
-                data-ng-click="vm.filter('lg')"
-                data-template-url="modules/metamodelo/fragment/tipo-parametro-filter-content.html"
-                data-bs-modal="modal">
+            <button data-ng-if="mc.hasAcbsPath('tppr-list')" class="btn btn-default" data-ng-click="vm.filter('lg')"
+                data-template-url="modules/metamodelo/fragment/tipo-parametro-filter-content.html" data-bs-modal="modal">
                 <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
             </button>
             <a data-ng-if="mc.hasAcbsPath('tppr-create')" class="btn btn-default"
-                data-ng-href="#/metamodelo/tipo-parametro/edit/create"><i class="glyphicon glyphicon-file"></i>
-                <span data-translate="btn_crear"></span> </a>
+                data-ng-href="#/metamodelo/tipo-parametro/edit/create"><i class="glyphicon glyphicon-file"></i> <span
+                data-translate="btn_crear"></span> </a>
         </div>
     </div>
 
@@ -51,14 +48,22 @@
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="enti.codigo"></td>
                     <td data-ng-bind="enti.nombre"></td>
-                    <td><i class="glyphicon glyphicon-{{(enti.cmdAlta ? 'ok' : 'remove')}}"></i></td>
-                    <td><i class="glyphicon glyphicon-{{(enti.cmdBaja ? 'ok' : 'remove')}}"></i></td>
-                    <td><i class="glyphicon glyphicon-{{(enti.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
-                    <td><i class="glyphicon glyphicon-{{(enti.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
-                    <td><i class="glyphicon glyphicon-{{(enti.gis ? 'ok' : 'remove')}}"></i></td>
-                    <td><i class="glyphicon glyphicon-{{(enti.puerto ? 'ok' : 'remove')}}"></i></td>
-                    <td><i class="glyphicon glyphicon-{{(enti.i18n ? 'ok' : 'remove')}}"></i></td>
-                    <td><i class="glyphicon glyphicon-{{(enti.tempExp ? 'ok' : 'remove')}}"></i></td>
+                    <td><i class="glyphicon"
+                        data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[enti.cmdAlta]"></i></td>
+                    <td><i class="glyphicon"
+                        data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[enti.cmdBaja]"></i></td>
+                    <td><i class="glyphicon"
+                        data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[enti.cmdEdicion]"></i></td>
+                    <td><i class="glyphicon"
+                        data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[enti.cmdDuplicado]"></i></td>
+                    <td><i class="glyphicon"
+                        data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[enti.gis]"></i></td>
+                    <td><i class="glyphicon"
+                        data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[enti.puerto]"></i></td>
+                    <td><i class="glyphicon"
+                        data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[enti.i18n]"></i></td>
+                    <td><i class="glyphicon"
+                        data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[enti.tempExp]"></i></td>
                     <td class="number" data-ng-bind="(enti.maxGrid | number:0)"></td>
                     <td><a data-ng-href="#/metamodelo/tipo-dato/detail/{{enti.tpdtNombre.id}}"
                         data-ng-bind="enti.tpdtNombre.nombre"></a></td>

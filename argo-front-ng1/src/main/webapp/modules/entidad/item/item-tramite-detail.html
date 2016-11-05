@@ -11,8 +11,7 @@
             </div>
             <div class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
                 <label data-translate="falta"></label>
-                <p class="form-control-static"
-                    data-ng-bind="vm.model.fecha | date: ('format_datetime' | translate)"></p>
+                <p class="form-control-static" data-ng-bind="vm.model.fecha | date: ('format_datetime' | translate)"></p>
             </div>
         </div>
 
@@ -43,44 +42,39 @@
                     <td><span data-ng-bind="vm.model.ditemFfin | date: ('format_datetime' | translate)"></span></td>
                 </tr>
                 <tr data-ng-repeat="tpdtId in vm.trmt.tpdtList track by $index">
-                    <th data-ng-bind="'entd_' + vm.trmt.trtdMap[tpdtId].entd.id | translate">EO
-                        {{tpdtId}}</th>
+                    <th data-ng-bind="'entd_' + vm.trmt.trtdMap[tpdtId].entd.id | translate">EO {{tpdtId}}</th>
                     <td data-ng-switch data-on="vm.trmt.trtdMap[tpdtId].entd.tpdt.tipoElemento"><i
-                        data-ng-switch-when="BO"
-                        class="glyphicon glyphicon-{{vm.model.ittdMap[tpdtId].onentero ? 'ok' : 'remove'}}"></i>
-                        <span data-ng-switch-when="ND"
-                        data-ng-bind="vm.model.ittdMap[tpdtId].ondecimal | number:2"></span> <span
-                        data-ng-switch-when="NE" data-ng-bind="vm.model.ittdMap[tpdtId].onentero"></span> <span
+                        data-ng-switch-when="BO" class="glyphicon"
+                        data-ng-class="{1:'glyphicon-ok', 0:'glyphicon-remove'}[vm.model.ittdMap[tpdtId].onentero]"></i>
+                        <span data-ng-switch-when="ND" data-ng-bind="vm.model.ittdMap[tpdtId].ondecimal | number:2"></span>
+                        <span data-ng-switch-when="NE" data-ng-bind="vm.model.ittdMap[tpdtId].onentero"></span> <span
                         data-ng-switch-when="FE"
-                        data-ng-bind="vm.model.ittdMap[tpdtId].ofecha | date: ('format_date' | translate)"></span>
-                        <span data-ng-switch-when="FH"
-                        data-ng-bind="vm.model.ittdMap[tpdtId].ofecha | date: ('format_datetime' | translate)"></span>
-                        <span data-ng-switch-when="CR" data-ng-if="vm.model.ittdMap[tpdtId].ocadena"
-                        data-ng-bind="'cdrf_' + tpdtId + '_' + vm.model.ittdMap[tpdtId].ocadena | translate"></span>
-                        <span data-ng-switch-when="TX" data-ng-bind="vm.model.ittdMap[tpdtId].ocadena"></span>
-                        <a data-ng-switch-when="PR"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].ofecha | date: ('format_date' | translate)"></span> <span
+                        data-ng-switch-when="FH"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].ofecha | date: ('format_datetime' | translate)"></span> <span
+                        data-ng-switch-when="CR" data-ng-if="vm.model.ittdMap[tpdtId].ocadena"
+                        data-ng-bind="'cdrf_' + tpdtId + '_' + vm.model.ittdMap[tpdtId].ocadena | translate"></span> <span
+                        data-ng-switch-when="TX" data-ng-bind="vm.model.ittdMap[tpdtId].ocadena"></span> <a
+                        data-ng-switch-when="PR"
                         data-ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].oprmt.id}}/{{vm.item.fref}}"
-                        data-ng-bind="vm.model.ittdMap[tpdtId].oprmt.etiqueta"></a> <a
-                        data-ng-switch-when="SR"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].oprmt.etiqueta"></a> <a data-ng-switch-when="SR"
                         data-ng-href="#/servicio/servicio/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].osrvc.id}}"
                         data-ng-bind="vm.model.ittdMap[tpdtId].osrvc.etiqueta"></a></td>
-                    <td data-ng-switch data-on="vm.trmt.trtdMap[tpdtId].entd.tpdt.tipoElemento"
-                        class="form-group-sm"><i data-ng-switch-when="BO"
-                        class="glyphicon glyphicon-{{vm.model.ittdMap[tpdtId].dnentero ? 'ok' : 'remove'}}"></i>
-                        <span data-ng-switch-when="ND"
-                        data-ng-bind="vm.model.ittdMap[tpdtId].dndecimal | number:2"></span> <span
-                        data-ng-switch-when="NE" data-ng-bind="vm.model.ittdMap[tpdtId].dnentero"></span> <span
+                    <td data-ng-switch data-on="vm.trmt.trtdMap[tpdtId].entd.tpdt.tipoElemento" class="form-group-sm"><i
+                        data-ng-switch-when="BO" class="glyphicon"
+                        data-ng-class="{1:'glyphicon-ok', 0:'glyphicon-remove'}[vm.model.ittdMap[tpdtId].dnentero]"></i>
+                        <span data-ng-switch-when="ND" data-ng-bind="vm.model.ittdMap[tpdtId].dndecimal | number:2"></span>
+                        <span data-ng-switch-when="NE" data-ng-bind="vm.model.ittdMap[tpdtId].dnentero"></span> <span
                         data-ng-switch-when="FE"
-                        data-ng-bind="vm.model.ittdMap[tpdtId].dfecha | date: ('format_date' | translate)"></span>
-                        <span data-ng-switch-when="FH"
-                        data-ng-bind="vm.model.ittdMap[tpdtId].dfecha | date: ('format_datetime' | translate)"></span>
-                        <span data-ng-switch-when="CR" data-ng-if="vm.model.ittdMap[tpdtId].dcadena"
-                        data-ng-bind="'cdrf_' + tpdtId + '_' + vm.model.ittdMap[tpdtId].dcadena | translate"></span>
-                        <span data-ng-switch-when="TX" data-ng-bind="vm.model.ittdMap[tpdtId].dcadena"></span>
-                        <a data-ng-switch-when="PR"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].dfecha | date: ('format_date' | translate)"></span> <span
+                        data-ng-switch-when="FH"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].dfecha | date: ('format_datetime' | translate)"></span> <span
+                        data-ng-switch-when="CR" data-ng-if="vm.model.ittdMap[tpdtId].dcadena"
+                        data-ng-bind="'cdrf_' + tpdtId + '_' + vm.model.ittdMap[tpdtId].dcadena | translate"></span> <span
+                        data-ng-switch-when="TX" data-ng-bind="vm.model.ittdMap[tpdtId].dcadena"></span> <a
+                        data-ng-switch-when="PR"
                         data-ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].dprmt.id}}/{{vm.item.fref}}"
-                        data-ng-bind="vm.model.ittdMap[tpdtId].dprmt.etiqueta"></a> <a
-                        data-ng-switch-when="SR"
+                        data-ng-bind="vm.model.ittdMap[tpdtId].dprmt.etiqueta"></a> <a data-ng-switch-when="SR"
                         data-ng-href="#/servicio/servicio/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].dsrvc.id}}"
                         data-ng-bind="vm.model.ittdMap[tpdtId].dsrvc.etiqueta"></a></td>
                 </tr>

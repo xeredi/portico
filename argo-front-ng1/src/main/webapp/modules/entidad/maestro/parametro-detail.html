@@ -98,15 +98,15 @@
                     <table class="table-bordered table-condensed table-hover">
                         <thead>
                             <tr>
-                                <th class="buttonLinks" />
+                                <th />
 
                                 <th data-ng-if="vm.entiHijasMap[entiHijaId].enti.tpprAsociado.puerto"
                                     data-translate="prto"></th>
                                 <th
                                     data-ng-bind="('enti_' + vm.entiHijasMap[entiHijaId].enti.tpprAsociado.id | translate)"></th>
 
-                                <th class="date" data-translate="fini"></th>
-                                <th class="date" data-translate="ffin"></th>
+                                <th data-translate="fini"></th>
+                                <th data-translate="ffin"></th>
 
                                 <th
                                     data-ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdGridList track by $index"
@@ -133,7 +133,8 @@
                                     data-ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdGridList track by $index"
                                     data-ng-switch="vm.entiHijasMap[entiHijaId].entdMap[tpdtId].tpdt.tipoElemento"
                                     nowrap="nowrap"><span data-ng-switch-when="BO"><i
-                                        class="glyphicon glyphicon-{{(itemHijo.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove')}}"></i></span>
+                                        class="glyphicon"
+                                        data-ng-class="{1:'glyphicon-ok', 0:'glyphicon-remove'}[itemHijo.itdtMap[tpdtId].cantidadEntera]"></i></span>
                                     <span data-ng-switch-when="ND" class="pull-right"
                                     data-ng-bind="(itemHijo.itdtMap[tpdtId].cantidadDecimal | number:2)"></span>
                                     <span data-ng-switch-when="NE" class="pull-right"

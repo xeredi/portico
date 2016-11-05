@@ -4,8 +4,7 @@
             <a data-ng-if="mc.hasAcbsPath('entd-edit')" class="btn btn-default"
                 data-ng-href="#/metamodelo/entidad-tipo-dato/edit/edit/{{vm.model.entiId}}/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
-            <button data-ng-if="mc.hasAcbsPath('entd-remove')" data-ng-click="vm.remove()"
-                class="btn btn-default">
+            <button data-ng-if="mc.hasAcbsPath('entd-remove')" data-ng-click="vm.remove()" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
         </div>
@@ -33,11 +32,9 @@
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                 <label data-translate="enti"></label>
                 <p class="form-control-static">
-                    <span data-ng-if="vm.model.tpdt.enti"> <a
-                        data-ng-if="vm.model.tpdt.enti.tipo == 'P'"
+                    <span data-ng-if="vm.model.tpdt.enti"> <a data-ng-if="vm.model.tpdt.enti.tipo == 'P'"
                         data-ng-href="#/metamodelo/tipo-parametro/detail/{{vm.model.tpdt.enti.id}}"
-                        data-ng-bind="vm.model.tpdt.enti.nombre"></a><a
-                        data-ng-if="vm.model.tpdt.enti.tipo == 'T'"
+                        data-ng-bind="vm.model.tpdt.enti.nombre"></a><a data-ng-if="vm.model.tpdt.enti.tipo == 'T'"
                         data-ng-href="#/metamodelo/tipo-servicio/detail/{{vm.model.tpdt.enti.id}}"
                         data-ng-bind="vm.model.tpdt.enti.nombre"></a></span>
                 </p>
@@ -79,19 +76,22 @@
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label data-translate="entd_obligatorio"></label>
                 <p class="form-control-static">
-                    <i class="glyphicon glyphicon-{{(vm.model.obligatorio ? 'ok' : 'remove')}}"></i>
+                    <i class="glyphicon"
+                        data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[vm.model.obligatorio]"></i>
                 </p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label data-translate="entd_gridable"></label>
                 <p class="form-control-static">
-                    <i class="glyphicon glyphicon-{{(vm.model.gridable ? 'ok' : 'remove')}}"></i>
+                    <i class="glyphicon"
+                        data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[vm.model.gridable]"></i>
                 </p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                 <label data-translate="entd_filtrable"></label>
                 <p class="form-control-static">
-                    <i class="glyphicon glyphicon-{{(vm.model.filtrable ? 'ok' : 'remove')}}"></i>
+                    <i class="glyphicon"
+                        data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[vm.model.filtrable]"></i>
                 </p>
             </div>
         </div>

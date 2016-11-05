@@ -69,7 +69,8 @@
                                 data-ng-href="#/metamodelo/campo-agregacion/detail/{{cmag.tpesId}}/{{cmag.entd.id}}"><i
                                     class="glyphicon glyphicon-search"></i></a></td>
                             <td data-ng-bind="cmag.nombre"></td>
-                            <td><i class="glyphicon glyphicon-{{(cmag.agregar ? 'ok' : 'remove')}}"></i></td>
+                            <td><i class="glyphicon"
+                                data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[cmag.agregar]"></i></td>
                         </tr>
                     </tbody>
                 </table>

@@ -1,4 +1,4 @@
-<table class="table infowindow">
+<table class="table">
     <tbody>
         <tr>
             <th>{{'enti_' + parameter.item.entiId | translate}}</th>
@@ -12,8 +12,8 @@
             data-ng-if="parameter.enti.entdMap[tpdtId].gridable" data-ng-switch
             data-on="parameter.enti.entdMap[tpdtId].tpdt.tipoElemento">
             <th>{{'entd_' + parameter.enti.entdMap[tpdtId].id | translate}}</th>
-            <td data-ng-switch-when="BO"><i
-                class="glyphicon glyphicon-{{parameter.item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></td>
+            <td data-ng-switch-when="BO"><i class="glyphicon"
+                data-ng-class="{1:'glyphicon-ok', 0:'glyphicon-remove'}[parameter.item.itdtMap[tpdtId].cantidadEntera]"></i></td>
             <td data-ng-switch-when="ND">{{parameter.item.itdtMap[tpdtId].cantidadDecimal | number:2}}</td>
             <td data-ng-switch-when="NE">{{parameter.item.itdtMap[tpdtId].cantidadEntera}}</td>
             <td data-ng-switch-when="FE">{{parameter.item.itdtMap[tpdtId].fecha | date: ('format_date' |

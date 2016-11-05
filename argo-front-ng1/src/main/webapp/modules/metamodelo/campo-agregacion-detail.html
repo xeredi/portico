@@ -4,8 +4,7 @@
             <a data-ng-if="mc.hasAcbsPath('cmag-edit')" class="btn btn-default"
                 data-ng-href="#/metamodelo/campo-agregacion/edit/edit/{{vm.model.tpesId}}/{{vm.model.entd.id}}"><i
                 class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
-            <button data-ng-if="mc.hasAcbsPath('cmag-remove')" data-ng-click="vm.remove()"
-                class="btn btn-default">
+            <button data-ng-if="mc.hasAcbsPath('cmag-remove')" data-ng-click="vm.remove()" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
             </button>
         </div>
@@ -20,7 +19,8 @@
             <div class="col-md-1 form-group-sm">
                 <label data-translate="cmag_agregar"></label>
                 <p class="form-control-static">
-                    <i class="glyphicon glyphicon-{{(vm.model.agregar ? 'ok' : 'remove')}}"></i>
+                    <i class="glyphicon"
+                        data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[vm.model.agregar]"></i>
                 </p>
             </div>
         </div>

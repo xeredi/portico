@@ -41,9 +41,12 @@
                 <td data-ng-bind="entd.span" class="number"></td>
                 <td data-ng-bind="entd.spanLg" class="number"></td>
                 <td nowrap="nowrap" data-ng-bind="entd.etiqueta"></td>
-                <td><i class="glyphicon glyphicon-{{(entd.obligatorio ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{(entd.gridable ? 'ok' : 'remove')}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{(entd.filtrable ? 'ok' : 'remove')}}"></i></td>
+                <td><i class="glyphicon"
+                    data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[entd.obligatorio]"></i></td>
+                <td><i class="glyphicon"
+                    data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[entd.gridable]"></i></td>
+                <td><i class="glyphicon"
+                    data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[entd.filtrable]"></i></td>
                 <td nowrap="nowrap" data-ng-bind="entd.tpdt.nombre"></td>
                 <td data-bs-tooltip data-title="{{('ElementoTipo_' + entd.tpdt.tipoElemento | translate)}}"
                     data-ng-bind="entd.tpdt.tipoElemento"></td>

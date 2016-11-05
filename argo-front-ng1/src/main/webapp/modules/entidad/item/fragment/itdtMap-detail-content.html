@@ -1,136 +1,71 @@
-<div class="row"
-	data-ng-repeat="engd in vm.enti.engdList track by $index">
-	<fieldset>
-		<legend data-ng-if="vm.enti.engdList.length > 1"
-			data-ng-bind="('engd_' + engd.id | translate)"></legend>
-
-		<div data-ng-repeat="tpdtId in vm.enti.entdList track by $index"
-			data-ng-if="(vm.enti.entdMap[tpdtId].grupo == engd.numero)"
-			data-ng-switch="vm.enti.entdMap[tpdtId].tpdt.tipoElemento">
-			<div data-ng-switch-when="BO"
-				class="col-sm-{{vm.enti.entdMap[tpdtId].spanSm}} col-md-{{vm.enti.entdMap[tpdtId].span}} col-lg-{{vm.enti.entdMap[tpdtId].spanLg}} col-xl-{{vm.enti.entdMap[tpdtId].spanXl}} form-group-sm">
-				<label
-					data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
-				<p class="form-control-static">
-					<i
-						class="glyphicon glyphicon-{{(vm.item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove')}}"></i>
-				</p>
-			</div>
-			<div data-ng-switch-when="ND"
-				class="col-sm-{{vm.enti.entdMap[tpdtId].spanSm}} col-md-{{vm.enti.entdMap[tpdtId].span}} col-lg-{{vm.enti.entdMap[tpdtId].spanLg}} col-xl-{{vm.enti.entdMap[tpdtId].spanXl}} form-group-sm">
-				<label
-					data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
-				<p class="form-control-static number"
-					data-ng-bind="(vm.item.itdtMap[tpdtId].cantidadDecimal | number:2)"></p>
-			</div>
-			<div data-ng-switch-when="NE"
-				class="col-sm-{{vm.enti.entdMap[tpdtId].spanSm}} col-md-{{vm.enti.entdMap[tpdtId].span}} col-lg-{{vm.enti.entdMap[tpdtId].spanLg}} col-xl-{{vm.enti.entdMap[tpdtId].spanXl}} form-group-sm">
-				<label
-					data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
-				<p class="form-control-static number"
-					data-ng-bind="(vm.item.itdtMap[tpdtId].cantidadEntera | number:0)"></p>
-			</div>
-			<div data-ng-switch-when="FE"
-				class="col-sm-{{vm.enti.entdMap[tpdtId].spanSm}} col-md-{{vm.enti.entdMap[tpdtId].span}} col-lg-{{vm.enti.entdMap[tpdtId].spanLg}} col-xl-{{vm.enti.entdMap[tpdtId].spanXl}} form-group-sm">
-				<label
-					data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
-				<p class="form-control-static number"
-					data-ng-bind="(vm.item.itdtMap[tpdtId].fecha | date: dateFormat)"></p>
-			</div>
-			<div data-ng-switch-when="FH"
-				class="col-sm-{{vm.enti.entdMap[tpdtId].spanSm}} col-md-{{vm.enti.entdMap[tpdtId].span}} col-lg-{{vm.enti.entdMap[tpdtId].spanLg}} col-xl-{{vm.enti.entdMap[tpdtId].spanXl}} form-group-sm">
-				<label
-					data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
-				<p class="form-control-static number"
-					data-ng-bind="(vm.item.itdtMap[tpdtId].fecha | date: datetimeFormat)"></p>
-			</div>
-			<div data-ng-switch-when="CR"
-				class="col-sm-{{vm.enti.entdMap[tpdtId].spanSm}} col-md-{{vm.enti.entdMap[tpdtId].span}} col-lg-{{vm.enti.entdMap[tpdtId].spanLg}} col-xl-{{vm.enti.entdMap[tpdtId].spanXl}} form-group-sm">
-				<label
-					data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
-				<p class="form-control-static">
-					<span data-ng-if="vm.item.itdtMap[tpdtId].cadena"
-						data-ng-bind="('cdrf_' + tpdtId + '_' + vm.item.itdtMap[tpdtId].cadena | translate)"></span>
-				</p>
-			</div>
-			<div data-ng-switch-when="PR"
-				class="col-sm-{{vm.enti.entdMap[tpdtId].spanSm}} col-md-{{vm.enti.entdMap[tpdtId].span}} col-lg-{{vm.enti.entdMap[tpdtId].spanLg}} col-xl-{{vm.enti.entdMap[tpdtId].spanXl}} form-group-sm">
-				<label
-					data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
-				<p class="form-control-static">
-					<a
-						data-ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.item.itdtMap[tpdtId].prmt.id}}/{{vm.item.fref}}"
-						data-ng-bind="vm.item.itdtMap[tpdtId].prmt.etiqueta"></a>
-				</p>
-			</div>
-			<div data-ng-switch-when="SR"
-				class="col-sm-{{vm.enti.entdMap[tpdtId].spanSm}} col-md-{{vm.enti.entdMap[tpdtId].span}} col-lg-{{vm.enti.entdMap[tpdtId].spanLg}} col-xl-{{vm.enti.entdMap[tpdtId].spanXl}} form-group-sm">
-				<label
-					data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
-				<p class="form-control-static">
-					<a
-						data-ng-href="#/servicio/servicio/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.item.itdtMap[tpdtId].srvc.id}}"
-						data-ng-bind="vm.item.itdtMap[tpdtId].srvc.etiqueta"></a>
-				</p>
-			</div>
-			<div data-ng-switch-when="TX">
-				<div data-ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'T'"
-					class="col-sm-{{vm.enti.entdMap[tpdtId].spanSm}} col-md-{{vm.enti.entdMap[tpdtId].span}} col-lg-{{vm.enti.entdMap[tpdtId].spanLg}} col-xl-{{vm.enti.entdMap[tpdtId].spanXl}} form-group-sm">
-					<label
-						data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
-					<p class="form-control-static"
-						data-ng-bind="vm.item.itdtMap[tpdtId].cadena"></p>
-				</div>
-				<div data-ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'TA'"
-					class="col-sm-12 form-group-sm">
-					<div
-						class="col-sm-{{vm.enti.entdMap[tpdtId].spanSm}} col-md-{{vm.enti.entdMap[tpdtId].span}} col-lg-{{vm.enti.entdMap[tpdtId].spanLg}} col-xl-{{vm.enti.entdMap[tpdtId].spanXl}} form-group-sm">
-						<label
-							data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
-						<p class="form-control-static"
-							data-ng-bind="vm.item.itdtMap[tpdtId].cadena"></p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</fieldset>
-</div>
-<!--div class="row" data-ng-repeat="engd in vm.enti.engdList track by $index">
+<div class="row" data-ng-repeat="engd in vm.enti.engdList track by $index">
     <fieldset>
         <legend data-ng-if="vm.enti.engdList.length > 1" data-ng-bind="('engd_' + engd.id | translate)"></legend>
 
         <div data-ng-repeat="tpdtId in vm.enti.entdList track by $index"
             data-ng-if="(vm.enti.entdMap[tpdtId].grupo == engd.numero)"
-            data-ng-switch="vm.enti.entdMap[tpdtId].tpdt.tipoElemento"
-            class="col-sm-{{vm.enti.entdMap[tpdtId].spanSm}} col-md-{{vm.enti.entdMap[tpdtId].span}} col-lg-{{vm.enti.entdMap[tpdtId].spanLg}} col-xl-{{vm.enti.entdMap[tpdtId].spanXl}} form-group-sm">
-            <label data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
-            <p data-ng-switch-when="BO" class="form-control-static">
-                <i class="glyphicon glyphicon-{{(vm.item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove')}}"></i>
-            </p>
-            <p class="form-control-static number" data-ng-switch-when="ND"
-                data-ng-bind="(vm.item.itdtMap[tpdtId].cantidadDecimal | number:2)"></p>
-            <p class="form-control-static number" data-ng-switch-when="NE"
-                data-ng-bind="(vm.item.itdtMap[tpdtId].cantidadEntera | number:0)"></p>
-            <p class="form-control-static" data-ng-switch-when="FE"
-                data-ng-bind="(vm.item.itdtMap[tpdtId].fecha | date: dateFormat)"></p>
-            <p class="form-control-static" data-ng-switch-when="FH"
-                data-ng-bind="(vm.item.itdtMap[tpdtId].fecha | date: datetimeFormat)"></p>
-            <p class="form-control-static" data-ng-switch-when="CR">
-                <span data-ng-if="vm.item.itdtMap[tpdtId].cadena"
-                    data-ng-bind="('cdrf_' + tpdtId + '_' + vm.item.itdtMap[tpdtId].cadena | translate)"></span>
-            </p>
-            <p class="form-control-static" data-ng-switch-when="TX"
-                data-ng-bind="vm.item.itdtMap[tpdtId].cadena"></p>
-            <p class="form-control-static" data-ng-switch-when="PR">
-                <a
-                    data-ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.item.itdtMap[tpdtId].prmt.id}}/{{vm.item.fref}}"
-                    data-ng-bind="vm.item.itdtMap[tpdtId].prmt.etiqueta"></a>
-            </p>
-            <p class="form-control-static" data-ng-switch-when="SR">
-                <a
-                    data-ng-href="#/servicio/servicio/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.item.itdtMap[tpdtId].srvc.id}}"
-                    data-ng-bind="vm.item.itdtMap[tpdtId].srvc.etiqueta"></a>
-            </p>
+            data-ng-switch="vm.enti.entdMap[tpdtId].tpdt.tipoElemento">
+            <div data-ng-switch-when="BO" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
+                <label data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
+                <p class="form-control-static">
+                    <i class="glyphicon"
+                        data-ng-class="{1:'glyphicon-ok', 0:'glyphicon-remove'}[vm.item.itdtMap[tpdtId].cantidadEntera]"></i>
+                </p>
+            </div>
+            <div data-ng-switch-when="ND" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
+                <label data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
+                <p class="form-control-static number"
+                    data-ng-bind="(vm.item.itdtMap[tpdtId].cantidadDecimal | number:2)"></p>
+            </div>
+            <div data-ng-switch-when="NE" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
+                <label data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
+                <p class="form-control-static number" data-ng-bind="(vm.item.itdtMap[tpdtId].cantidadEntera | number:0)"></p>
+            </div>
+            <div data-ng-switch-when="FE" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
+                <label data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
+                <p class="form-control-static number" data-ng-bind="(vm.item.itdtMap[tpdtId].fecha | date: dateFormat)"></p>
+            </div>
+            <div data-ng-switch-when="FH" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
+                <label data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
+                <p class="form-control-static number"
+                    data-ng-bind="(vm.item.itdtMap[tpdtId].fecha | date: datetimeFormat)"></p>
+            </div>
+            <div data-ng-switch-when="CR" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
+                <label data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
+                <p class="form-control-static">
+                    <span data-ng-if="vm.item.itdtMap[tpdtId].cadena"
+                        data-ng-bind="('cdrf_' + tpdtId + '_' + vm.item.itdtMap[tpdtId].cadena | translate)"></span>
+                </p>
+            </div>
+            <div data-ng-switch-when="PR" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
+                <label data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
+                <p class="form-control-static">
+                    <a
+                        data-ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.item.itdtMap[tpdtId].prmt.id}}/{{vm.item.fref}}"
+                        data-ng-bind="vm.item.itdtMap[tpdtId].prmt.etiqueta"></a>
+                </p>
+            </div>
+            <div data-ng-switch-when="SR" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
+                <label data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
+                <p class="form-control-static">
+                    <a
+                        data-ng-href="#/servicio/servicio/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.item.itdtMap[tpdtId].srvc.id}}"
+                        data-ng-bind="vm.item.itdtMap[tpdtId].srvc.etiqueta"></a>
+                </p>
+            </div>
+            <div data-ng-switch-when="TX">
+                <div data-ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'T'" class="form-group-sm"
+                    data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
+                    <label data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
+                    <p class="form-control-static" data-ng-bind="vm.item.itdtMap[tpdtId].cadena"></p>
+                </div>
+                <div data-ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'TA'" class="col-sm-12 form-group-sm">
+                    <div class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
+                        <label data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
+                        <p class="form-control-static" data-ng-bind="vm.item.itdtMap[tpdtId].cadena"></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </fieldset>
-</div-->
+</div>

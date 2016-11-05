@@ -10,8 +10,8 @@
                         class="btn btn-default" data-ng-if="mc.hasAcen(vm.enti.enti.id, 'duplicate')"
                         data-ng-href="#/servicio/subservicio/edit/duplicate/{{vm.enti.enti.id}}/{{vm.item.srvc.id}}/{{vm.item.id}}"><i
                         class="glyphicon glyphicon-tags"></i> <span data-translate="btn_duplicar"></span></a>
-                    <button data-ng-if="mc.hasAcen(vm.enti.enti.id, 'remove')"
-                        data-ng-click="vm.remove()" class="btn btn-default">
+                    <button data-ng-if="mc.hasAcen(vm.enti.enti.id, 'remove')" data-ng-click="vm.remove()"
+                        class="btn btn-default">
                         <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
                     </button>
                 </div>
@@ -150,7 +150,8 @@
                                     data-ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdGridList track by $index"
                                     data-ng-switch="vm.entiHijasMap[entiHijaId].entdMap[tpdtId].tpdt.tipoElemento"
                                     nowrap="nowrap"><span data-ng-switch-when="BO"><i
-                                        class="glyphicon glyphicon-{{(itemHijo.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove')}}"></i></span>
+                                        class="glyphicon"
+                                        data-ng-class="{1:'glyphicon-ok', 0:'glyphicon-remove'}[itemHijo.itdtMap[tpdtId].cantidadEntera]"></i></span>
                                     <span data-ng-switch-when="ND"
                                     data-ng-bind="(itemHijo.itdtMap[tpdtId].cantidadEntera | number:2)"
                                     class="number"></span> <span data-ng-switch-when="NE"

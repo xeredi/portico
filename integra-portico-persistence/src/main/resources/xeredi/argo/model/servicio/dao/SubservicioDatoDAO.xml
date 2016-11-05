@@ -92,11 +92,7 @@
 		                                FROM tbl_servicio_srvc
 		                                WHERE prvr_fini <= srvc_fref
 		                                    AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
-		                                    AND srvc_pk = (
-		                                        SELECT ssrv_srvc_pk
-		                                        FROM tbl_subservicio_ssrv
-		                                        WHERE ssrv_pk = ssdt_ssrv_pk
-		                                    )
+		                                    AND srvc_pk = ssrv_srvc_pk
 
 		                            )
 		                    )
@@ -119,11 +115,7 @@
 		                                FROM tbl_servicio_srvc
 		                                WHERE prvr_fini <= srvc_fref
 		                                    AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
-		                                    AND srvc_pk = (
-		                                        SELECT ssrv_srvc_pk
-		                                        FROM tbl_subservicio_ssrv
-		                                        WHERE ssrv_pk = ssdt_ssrv_pk
-		                                    )
+		                                    AND srvc_pk = ssrv_srvc_pk
 
 		                            )
 		                    )
@@ -135,6 +127,7 @@
     <![CDATA[
 		FROM
 		    tbl_subservicio_dato_ssdt
+            INNER JOIN tbl_subservicio_ssrv ON ssrv_pk = ssdt_ssrv_pk
 		    LEFT JOIN tbl_parametro_prmt ON
 		        prmt_pk = ssdt_prmt_pk
     ]]>

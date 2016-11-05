@@ -70,8 +70,8 @@
                         data-ng-bind="(item.ffin | date: datetimeFormat)"></td>
                     <td data-ng-repeat="tpdtId in vm.enti.entdGridList track by $index"
                         data-ng-switch="vm.enti.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span
-                        data-ng-switch-when="BO"><i
-                            class="glyphicon glyphicon-{{item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></span>
+                        data-ng-switch-when="BO"><i class="glyphicon"
+                            data-ng-class="{1:'glyphicon-ok', 0:'glyphicon-remove'}[item.itdtMap[tpdtId].cantidadEntera]"></i></span>
                         <span data-ng-switch-when="ND" class="pull-right"
                         data-ng-bind="item.itdtMap[tpdtId].cantidadDecimal | number:2"></span> <span
                         data-ng-switch-when="NE" class="pull-right"

@@ -23,8 +23,7 @@
                     <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                         <label data-translate="enti_tipo"></label>
                         <p class="form-control-static" data-bs-tooltip
-                            data-title="{{('EntidadTipo_' + vm.model.tipo | translate)}}"
-                            data-ng-bind="vm.model.tipo"></p>
+                            data-title="{{('EntidadTipo_' + vm.model.tipo | translate)}}" data-ng-bind="vm.model.tipo"></p>
                     </div>
                     <div class="col-sm-3 col-md-2 form-group-sm">
                         <label data-translate="enti_maxGrid"></label>
@@ -45,49 +44,57 @@
                     <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                         <label data-translate="enti_cmdAlta"></label>
                         <p class="form-control-static">
-                            <i class="glyphicon glyphicon-{{(vm.model.cmdAlta ? 'ok' : 'remove')}}"></i>
+                            <i class="glyphicon"
+                                data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[vm.model.cmdAlta]"></i>
                         </p>
                     </div>
                     <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                         <label data-translate="enti_cmdBaja"></label>
                         <p class="form-control-static">
-                            <i class="glyphicon glyphicon-{{(vm.model.cmdBaja ? 'ok' : 'remove')}}"></i>
+                            <i class="glyphicon"
+                                data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[vm.model.cmdBaja]"></i>
                         </p>
                     </div>
                     <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                         <label data-translate="enti_cmdEdicion"></label>
                         <p class="form-control-static">
-                            <i class="glyphicon glyphicon-{{(vm.model.cmdEdicion ? 'ok' : 'remove')}}"></i>
+                            <i class="glyphicon"
+                                data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[vm.model.cmdEdicion]"></i>
                         </p>
                     </div>
                     <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                         <label data-translate="enti_cmdDuplicado"></label>
                         <p class="form-control-static">
-                            <i class="glyphicon glyphicon-{{(vm.model.cmdDuplicado ? 'ok' : 'remove')}}"></i>
+                            <i class="glyphicon"
+                                data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[vm.model.cmdDuplicado]"></i>
                         </p>
                     </div>
                     <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                         <label data-translate="enti_gis"></label>
                         <p class="form-control-static">
-                            <i class="glyphicon glyphicon-{{(vm.model.gis ? 'ok' : 'remove')}}"></i>
+                            <i class="glyphicon"
+                                data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[vm.model.gis]"></i>
                         </p>
                     </div>
                     <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                         <label data-translate="enti_puerto"></label>
                         <p class="form-control-static">
-                            <i class="glyphicon glyphicon-{{(vm.model.puerto ? 'ok' : 'remove')}}"></i>
+                            <i class="glyphicon"
+                                data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[vm.model.puerto]"></i>
                         </p>
                     </div>
                     <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                         <label data-translate="enti_i18n"></label>
                         <p class="form-control-static">
-                            <i class="glyphicon glyphicon-{{(vm.model.i18n ? 'ok' : 'remove')}}"></i>
+                            <i class="glyphicon"
+                                data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[vm.model.i18n]"></i>
                         </p>
                     </div>
                     <div class="col-sm-2 col-md-1 col-lg-1 form-group-sm">
                         <label data-translate="enti_tempExp"></label>
                         <p class="form-control-static">
-                            <i class="glyphicon glyphicon-{{(vm.model.tempExp ? 'ok' : 'remove')}}"></i>
+                            <i class="glyphicon"
+                                data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[vm.model.tempExp]"></i>
                         </p>
                     </div>
                     <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
@@ -130,11 +137,16 @@
                                     class="glyphicon glyphicon-search"></i></a></td>
                             <td data-ng-bind="subenti.codigo"></td>
                             <td data-ng-bind="subenti.nombre"></td>
-                            <td><i class="glyphicon glyphicon-{{(subenti.cmdAlta ? 'ok' : 'remove')}}"></i></td>
-                            <td><i class="glyphicon glyphicon-{{(subenti.cmdBaja ? 'ok' : 'remove')}}"></i></td>
-                            <td><i class="glyphicon glyphicon-{{(subenti.cmdEdicion ? 'ok' : 'remove')}}"></i></td>
-                            <td><i
-                                class="glyphicon glyphicon-{{(subenti.cmdDuplicado ? 'ok' : 'remove')}}"></i></td>
+                            <td><i class="glyphicon"
+                                data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[subenti.cmdAlta]"> </i></td>
+                            <td><i class="glyphicon"
+                                data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[subenti.cmdBaja]"> </i></td>
+                            <td><i class="glyphicon"
+                                data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[subenti.cmdEdicion]">
+                            </i></td>
+                            <td><i class="glyphicon"
+                                data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[subenti.cmdDuplicado]">
+                            </i></td>
                             <td class="number" data-ng-bind="(subenti.maxGrid | number:0)"></td>
                             <td data-ng-bind="subenti.tpprAsociado.nombre"></td>
                             <td data-ng-bind="subenti.classpath"></td>
