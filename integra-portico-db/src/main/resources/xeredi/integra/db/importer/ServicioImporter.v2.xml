@@ -1,0 +1,1241 @@
+<importer>
+<!--
+	<sql id="ASIGNACION_AMARRE" table="IEMD_ASIGNACIONAMARRE_ASAM"
+		sqlId="SELECT asam_id FROM IEMD_ASIGNACIONAMARRE_ASAM">
+    <![CDATA[
+        SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = asam_id
+	            	AND trid_table_name = 'IEMD_ASIGNACIONAMARRE_ASAM') AS asam_id
+            , serv.serv_fecha_creacion
+            , serv.serv_fecha_baja
+            , serv.serv_fecha_modificacion
+            , serv.serv_tipo
+            , (
+                SELECT modu_cod
+                FROM icon_modulo_modu
+                WHERE modu_id = serv_modu_id
+            ) AS serv_modu
+            , (
+                SELECT subp_codigo
+                FROM igen_subpuerto_subp
+                WHERE subp_id = serv_subp_id
+            ) AS serv_subp
+            , serv.serv_anno
+            , serv.serv_numero
+            , serv.serv_fecha_estadistica
+            , SERV.SERV_FECHA_ANULA_FACTURA
+            , COALESCE(ASAM.ASAM_FECHA_INICIO_PRINCIPAL, SYSDATE) as f_referencia
+            , ASAM.ASAM_FECHA_INICIO_PRINCIPAL
+            , ASAM.ASAM_FECHA_FINAL_PRINCIPAL
+            , ASAM.ASAM_estado
+
+            , ASAM.ASAM_ES_NOAUT_CON_OCUPAC
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = asam_amarre_principal_id
+	            	AND trid_table_name = 'IEMD_AMARRE_AMAD') AS asam_amarre_principal
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = asam_amarre_secundario_id
+	            	AND trid_table_name = 'IEMD_AMARRE_AMAD') AS asam_amarre_secundario
+            , ASAM.ASAM_FECHA_INICIO_SECUNDARIO
+            , ASAM.ASAM_FECHA_FINAL_SECUNDARIO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = asam_orga_id_cliente
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS asam_orga_cliente
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = asam_embarcacion_id
+	            	AND trid_table_name = 'IEMD_EMBARCACION_EMBD') AS asam_embarcacion
+            , to_char(ASAM.ASAM_CODIGO_EXENCION)
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = asam_tipo_exencion_id
+	            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') AS asam_tipo_exencion
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = asam_orga_id_cliente_ad
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS asam_orga_cliente_ad
+            , ASAM.ASAM_ES_SUJETO_PAS_SUSTIT
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = asam_tipo_iva_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') AS asam_tipo_iva
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = asam_dead_id
+	            	AND trid_table_name = 'IGEN_DESCUENTOADIC_DEAD') AS asam_dead
+            , ASAM.ASAM_OBSERVACOIONES
+        FROM IEMD_ASIGNACIONAMARRE_ASAM asam
+            JOIN ICOM_SERVICIO_SERV serv ON
+                SERV_ID = ASAM_ID
+        WHERE
+            serv.serv_fecha_baja IS NULL
+    ]]>
+	</sql>
+
+	<sql id="ESCALA" table="IESC_ESCALA_ESCA" sqlId="SELECT esca_id FROM iesc_escala_esca">
+    <![CDATA[
+	    SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = esca_id
+	            	AND trid_table_name = 'IESC_ESCALA_ESCA') AS esca_id
+	        , serv.serv_fecha_creacion
+	        , serv.serv_fecha_baja
+	        , serv.serv_fecha_modificacion
+	        , serv.serv_tipo
+	        , (
+	            SELECT modu_cod
+	            FROM icon_modulo_modu
+	            WHERE modu_id = serv_modu_id
+	        ) AS serv_modu
+	        , (
+	            SELECT subp_codigo
+	            FROM igen_subpuerto_subp
+	            WHERE subp_id = serv_subp_id
+	        ) AS serv_subp
+	        , serv.serv_anno
+	        , serv.serv_numero
+	        , serv.serv_fecha_estadistica
+	        , serv.serv_fecha_anula_factura
+	        , COALESCE(esca.esca_fecha_inicio, SYSDATE) as f_referencia
+	        , COALESCE(esca.esca_fecha_inicio, SYSDATE)
+	        , esca.esca_fecha_finalizacion
+	        , esca.esca_estado
+
+	        , esca.esca_es_carga_edi
+	        , esca.esca_emisor_edi
+	        , esca.esca_ref_mensaje_edi
+	        , esca.esca_estado_cap_mar
+	        , esca.esca_fecha_cap_mar
+	        , esca.esca_fecha_notif_practico
+	        , esca.esca_manifiesto_notif_practico
+	        , esca.esca_fecha_entrada
+	        , esca.esca_fecha_salida
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = esca_buque_id
+	            	AND trid_table_name = 'IESC_BUQUE_BUQU') AS esca_buque
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = esca_buqt_id_entrada
+	            	AND trid_table_name = 'IGEN_BUQUETIPO_BUQT') AS esca_buqt_entrada
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = esca_buqt_id_salida
+	            	AND trid_table_name = 'IGEN_BUQUETIPO_BUQT') AS esca_buqt_salida
+	        , esca.esca_tipo_estancia
+	        , esca.esca_es_navegacion_int
+	        , TO_CHAR(esca.esca_codigo_exencion)
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = esca_tipo_exencion
+	            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') AS esca_tipo_exencion
+	        , esca.esca_es_carga_mmpp
+	        , esca.esca_es_transporte_mmpp
+	        , esca.esca_es_descarga_mmpp
+	        , esca.esca_es_suj_pas_sustit
+	        , esca.esca_es_oper_comercial
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = esca_acue_id
+	            	AND trid_table_name = 'IESC_ACUERDO_ACUE') AS esca_acue
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = esca_traf_id
+	            	AND trid_table_name = 'IESC_TRAFICO_TRAF') AS esca_traf
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = esca_ivat_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') AS esca_ivat
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = esca_navt_id_entrada
+	            	AND trid_table_name = 'IGEN_NAVEGACIONTIPO_NAVT') AS esca_navt_entrada
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = esca_navt_id_salida
+	            	AND trid_table_name = 'IGEN_NAVEGACIONTIPO_NAVT') AS esca_navt_salida
+	        , esca.esca_capitan_entrada
+	        , esca.esca_capitan_salida
+	        , esca.esca_tripulantes_entrada
+	        , esca.esca_tripulantes_salida
+	        , esca.esca_pasajeros_entrada
+	        , esca.esca_pasajeros_salida
+	        , esca.esca_polizones_entrada
+	        , esca.esca_polizones_salida
+	        , esca.esca_esclusas
+	        , esca.esca_pasarelas
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = esca_loco_id_siguiente
+	            	AND trid_table_name = 'IGEN_UNLOCODE_UNLO') AS esca_loco_siguiente
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = esca_loco_id_anterior
+	            	AND trid_table_name = 'IGEN_UNLOCODE_UNLO') AS esca_loco_anterior
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = esca_orga_id_s_marit
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS esca_orga_s_marit
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = esca_orga_id_residuos
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS esca_orga_residuos
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = esca_orga_id_consignat
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS esca_orga_consignat
+	        , esca.esca_observ
+	        , esca.esca_observ_cap_mar
+	        , esca.esca_observ_due
+	        , esca.esca_observ_facturacion
+	        , esca.es_aut_cabotaje
+	        , esca.es_crudo_transportado
+	        , esca.esca_es_recogido_medios_marit
+	        , esca.esca_es_certificado_anexo
+	        , esca.esca_es_certificado_residuo
+	        , esca.esca_es_tarifa_residuos
+	        , esca.esca_condiciones_tanque_lastre
+	        , esca.esca_condiciones_tanque_carga
+	        , esca.esca_es_mercancia_regulada
+	        , esca.esca_volumen_carga
+	        , esca.esca_es_tareas_obligatorias
+	        , esca.esca_texto_tareas_obligatorias
+	        , esca.esca_es_modificado_edi
+	        , esca.esca_es_base_en_puerto
+	    FROM iesc_escala_esca esca
+	        JOIN icom_servicio_serv serv ON
+	            serv_id = esca_id
+    ]]>
+	</sql>
+
+	<sql id="ATRAQUE" table="IESC_ATRAQUE_ATRA" sqlId="SELECT atra_id FROM iesc_atraque_atra">
+    <![CDATA[
+    SELECT
+        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = atra_escala_id
+            	AND trid_table_name = 'IESC_ESCALA_ESCA') AS atra_escala_id
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = atra_id
+            	AND trid_table_name = 'IESC_ATRAQUE_ATRA') AS atra_id
+        , atra.atra_numero
+        , COALESCE(rea.atrd_fecha_inicio, aut.atrd_fecha_inicio, sol.atrd_fecha_inicio) AS finicio
+        , COALESCE(rea.atrd_fecha_finalizacion, rea.atrd_fecha_finalizacion, sol.atrd_fecha_finalizacion) AS ffin
+        , atra.atra_estado
+
+        , atra.atra_emisor_edi
+        , atra.atra_numero_edi
+        , TO_CHAR(atra.atra_codigo_exencion)
+        , atra.atra_es_sujeto_pas_sustit
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = atra_orga_id_cliente
+            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS atra_orga_id_cliente
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = atra_tipo_exencion
+            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') AS atra_tipo_exencion
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = atra_orga_id_consignatario
+            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS atra_orga_id_consignatario
+        , atra.atra_es_modificado_edi
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = atra_dead_id
+            	AND trid_table_name = 'IGEN_DESCUENTOADIC_DEAD') AS atra_dead_id
+
+        , COALESCE(rea.atrd_tipo_estancia, COALESCE(aut.atrd_tipo_estancia, sol.atrd_tipo_estancia))
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = COALESCE(rea.atrd_tipo_actividad, COALESCE(aut.atrd_tipo_actividad, sol.atrd_tipo_actividad))
+            	AND trid_table_name = 'IESC_ACTIVIDADTIPO_ACTT') AS atrd_tipo_actividad
+        , (SELECT acet_codigo FROM iesc_actividadeditipo_acet
+            WHERE acet_id = COALESCE(rea.atrd_tipo_actividad_edi, COALESCE(aut.atrd_tipo_actividad_edi, sol.atrd_tipo_actividad_edi))) AS atrd_tipo_actividad_edi
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = COALESCE(rea.atrd_alineacion, COALESCE(aut.atrd_alineacion, sol.atrd_alineacion))
+            	AND trid_table_name = 'IGEN_ALINEACION_ALIN') AS atrd_alineacion
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = COALESCE(rea.atrd_tipo_atraque, COALESCE(aut.atrd_tipo_atraque, sol.atrd_tipo_atraque))
+            	AND trid_table_name = 'IESC_ATRAQUETIPO_ATRT') AS atrd_tipo_atraque
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE
+            	trid_old_id = (
+            		SELECT ratt_id FROM iesc_relacionatraquetipo_ratt
+            		WHERE
+            			ratt_atet_id_1 = COALESCE(rea.atrd_tipo_atraque_edi_1, COALESCE(aut.atrd_tipo_atraque_edi_1, sol.atrd_tipo_atraque_edi_1))
+            			AND ratt_atet_id_2 = COALESCE(rea.atrd_tipo_atraque_edi_2, COALESCE(aut.atrd_tipo_atraque_edi_2, sol.atrd_tipo_atraque_edi_2))
+            			AND ratt_atet_id_3 = COALESCE(rea.atrd_tipo_atraque_edi_3, COALESCE(aut.atrd_tipo_atraque_edi_3, sol.atrd_tipo_atraque_edi_3))
+            	)
+            	AND trid_table_name = 'IESC_RELACIONATRAQUETIPO_RATT') AS atrd_tipo_atraque_edi
+        , COALESCE(rea.atrd_noray_inicial, COALESCE(aut.atrd_noray_inicial, sol.atrd_noray_inicial))
+        , COALESCE(rea.atrd_noray_final, COALESCE(aut.atrd_noray_final, sol.atrd_noray_final))
+        , COALESCE(rea.atrd_calado_entrada, COALESCE(aut.atrd_calado_entrada, sol.atrd_calado_entrada))
+        , COALESCE(rea.atrd_calado_salida, COALESCE(aut.atrd_calado_salida, sol.atrd_calado_salida))
+        , COALESCE(rea.atrd_es_exencion_prac_sol, COALESCE(aut.atrd_es_exencion_prac_sol, sol.atrd_es_exencion_prac_sol))
+        , COALESCE(rea.atrd_rampa_adicional, COALESCE(aut.atrd_rampa_adicional, sol.atrd_rampa_adicional))
+        , COALESCE(rea.atrd_eslora_rampa, COALESCE(aut.atrd_eslora_rampa, sol.atrd_eslora_rampa))
+        , sol.atrd_es_luz_solicitada
+        , sol.atrd_es_fuerza_solicitada
+        , sol.atrd_es_combust_solicitado
+        , sol.atrd_es_hielo_solicitado
+        , sol.atrd_es_agua_solicitada
+        , COALESCE(rea.atrd_observaciones, COALESCE(aut.atrd_observaciones, sol.atrd_observaciones))
+    FROM iesc_atraque_atra atra
+      LEFT JOIN iesc_atraquedetalle_atrd sol ON
+        sol.atrd_atra_id = atra.atra_id
+        AND sol.atrd_momento = 'S'
+      LEFT JOIN iesc_atraquedetalle_atrd aut ON
+        aut.atrd_atra_id = atra.atra_id
+        AND aut.atrd_momento = 'A'
+      LEFT JOIN iesc_atraquedetalle_atrd rea ON
+        rea.atrd_atra_id = atra.atra_id
+        AND rea.atrd_momento = 'R'
+    WHERE atra.atra_es_activo = 1
+    ]]>
+	</sql>
+
+	<sql id="OPERACION_ATRAQUE" table="IESC_ATRAQUEOPERACION_ATOP"
+		sqlId="SELECT atop_id FROM IESC_ATRAQUEOPERACION_ATOP">
+    <![CDATA[
+    SELECT
+        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = serv_id
+            	AND trid_table_name = 'IESC_ESCALA_ESCA') AS serv_id
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = atop_id
+            	AND trid_table_name = 'IESC_ATRAQUEOPERACION_ATOP') AS atop_id
+
+        , ATOP_ORDEN
+
+        , ATOP_FECHA_INICIO
+        , ATOP_FECHA_final
+
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = atra_id
+            	AND trid_table_name = 'IESC_ATRAQUE_ATRA') AS atra_id
+
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = atop_opet_id
+            	AND trid_table_name = 'IGEN_OPERACIONTIPO_OPET') AS atop_opet_id
+        , ATOP_PESO_MAX_UNITARIO
+        , ATOP_CANTIDAD_MOVIDA
+        , 'KGM' as ATOP_UNIDAD_BERMAN
+        , ATOP_LUGAR_DESCARGA_CARGA
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = atop_orga_id_estibador
+            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS atop_orga_id_estibador
+        , ATOP_DETALLE_MERCANCIA
+        , ATOP_ESTIBADOR_DESC
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = atop_mert_id
+            	AND trid_table_name = 'IESC_MERCANCIATIPO_MERT') AS atop_mert_id
+    FROM
+        IESC_ATRAQUEOPERACION_ATOP ATOP
+        JOIN IESC_ATRAQUE_ATRA ON
+            ATRA_ID = ATOP_ATRA_ID
+            AND ATRA_ES_ACTIVO = 1
+        JOIN ICOM_SERVICIO_SERV SERV ON
+    	        SERV_ID = ATRA_ESCALA_ID
+    	        and serv_fecha_baja is null
+    WHERE
+        ATOP_ES_ACTIVO = 1
+    ]]>
+	</sql>
+
+	<sql id="ESCALA_CONTADOR" table="IFAC_CONTADORESCALA_COES"
+		sqlId="SELECT coes_id FROM ifac_contadorescala_coes">
+    <![CDATA[
+    SELECT
+        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = coes_esca_id
+            	AND trid_table_name = 'IESC_ESCALA_ESCA') AS coes_esca_id
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = coes_id
+            	AND trid_table_name = 'IFAC_CONTADORESCALA_COES') AS coes_id
+    	, ROWNUM
+
+    	, coes_tipo
+    	, coes_lecturas
+    FROM ifac_contadorescala_coes
+    ]]>
+	</sql>
+
+	<sql id="ESCALA_RESIDUO" table="IESC_ESCALARESIDUO_ESCR"
+		sqlId="SELECT escr_id FROM iesc_escalaresiduo_escr">
+    <![CDATA[
+    SELECT
+        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = escr_esca_id
+            	AND trid_table_name = 'IESC_ESCALA_ESCA') AS coes_esca_id
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = escr_id
+            	AND trid_table_name = 'IESC_ESCALARESIDUO_ESCR') AS escr_id
+    	, ROWNUM
+
+        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+            WHERE trid_old_id = escr_ress_id
+            	AND trid_table_name = 'IESC_RESIDUOSSUBTIPO_RESS') AS escr_ress_id
+        , escr_cantidad_declarada
+        , escr_cantidad_estimada
+        , escr_cantidad_pendiente
+        , escr_cantidad_entregada
+        , escr_capacidad_maxima
+    FROM iesc_escalaresiduo_escr
+    WHERE escr_es_activo = 1
+    ]]>
+	</sql>
+
+
+	<sql id="OCUPACION_SUPERFICIE" table="ISUP_SUPERFICIE_SUOC"
+		sqlId="SELECT suoc_id FROM isup_superficie_suoc">
+    <![CDATA[
+		SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = suoc_id
+	            	AND trid_table_name = 'ISUP_SUPERFICIE_SUOC') AS suoc_id
+		    , serv.serv_fecha_creacion
+		    , serv.serv_fecha_baja
+		    , serv.serv_fecha_modificacion
+		    , serv.serv_tipo
+		    , (
+		        SELECT modu_cod
+		        FROM icon_modulo_modu
+		        WHERE modu_id = serv_modu_id
+		    ) AS serv_modu
+		    , (
+		        SELECT subp_codigo
+		        FROM igen_subpuerto_subp
+		        WHERE subp_id = serv_subp_id
+		    ) AS serv_subp
+		    , serv.serv_anno
+		    , serv.serv_numero
+		    , serv.serv_fecha_estadistica
+		    , serv.serv_fecha_anula_factura
+		    , sude.sude_fecha_inicio AS fecha_referencia
+
+		    , sude.sude_fecha_inicio
+		    , sude.sude_fecha_fin
+	        , suoc.suoc_estado
+
+		    , suoc.suoc_referencia
+		    , suoc.suoc_tipo_valoracion
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = suoc_tipo_iva_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') AS suoc_tipo_iva_id
+		    , TO_CHAR(suoc.suoc_codigo_exencion)
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = suoc_tipo_exencion_id
+	            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') AS suoc_tipo_exencion_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = suoc_dead_id
+	            	AND trid_table_name = 'IGEN_DESCUENTOADIC_DEAD') AS suoc_dead_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = suoc_orga_id_cliente
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS suoc_orga_id_cliente
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = suoc_orga_id_cliente_tasas
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS suoc_orga_id_cliente_tasas
+		    , suoc.suoc_es_suj_pas_sustit
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = suoc_tipo_mercancia_id
+	            	AND trid_table_name = 'IEST_MERCANCIATIPO_EMET') AS suoc_tipo_mercancia_id
+		    , suoc.suoc_mercancia
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = suoc_tipo_operacion_id
+	            	AND trid_table_name = 'ISUP_TIPOOPERACION_TOSU') AS suoc_tipo_operacion_id
+		    , suoc.suoc_es_ro_ro
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = sude_zona_deposito_id
+	            	AND trid_table_name = 'ISUP_ZONA_ZONS') AS sude_zona_deposito_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = sude_tipo_unidad_id
+	            	AND trid_table_name = 'ISUP_UNIDAD_UNIS') AS sude_tipo_unidad_id
+		    , sude.sude_fecha_solicitud
+		    , sude.sude_superficie_solicitud
+		    , sude.sude_toneladas_solicitud
+		    , sude.sude_fecha_autorizacion
+		    , sude.sude_superficie_autorizacion
+		    , sude.sude_toneladas_autorizacion
+		    , suoc.suoc_observ
+		    , suoc.suoc_observ_facturacion
+		FROM isup_superficie_suoc suoc
+		  JOIN isup_superficiedetalle_sude sude ON
+		      sude.sude_suoc_id = suoc.suoc_id
+		      AND sude.sude_momento = 'R'
+		  JOIN icom_servicio_serv serv ON
+		    serv_id = suoc_id
+		    AND serv.serv_fecha_baja IS NULL
+    ]]>
+	</sql>
+
+	<sql id="OCUPACION_SUPERFICIE_LINEA" table="ISUP_LINEAOCUPACION_SULO"
+		sqlId="SELECT sulo_id FROM isup_lineaocupacion_sulo">
+    <![CDATA[
+		SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = serv_id
+	            	AND trid_table_name = 'ISUP_SUPERFICIE_SUOC') AS serv_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = sulo_id
+	            	AND trid_table_name = 'ISUP_LINEAOCUPACION_SULO') AS sulo_id
+		    , sulo.sulo_orden
+
+		    , sulo.sulo_fecha_inicio
+		    , sulo.sulo_fecha_fin
+
+		    , sulo.sulo_medida
+		    , sulo.sulo_medida_equivalente
+		    , sulo.sulo_mercancia
+		    , sulo.sulo_referencia
+		    , sulo.sulo_observaciones
+		FROM isup_superficie_suoc suoc
+	  	    JOIN isup_superficiedetalle_sude sude ON
+		    	sude.sude_suoc_id = suoc.suoc_id
+		    	AND sude.sude_momento = 'R'
+		    JOIN isup_lineaocupacion_sulo sulo ON
+		    	sulo.sulo_suoc_id = suoc.suoc_id
+		    	AND sulo.sulo_es_activo = 1
+		    JOIN icom_servicio_serv serv ON
+		    	serv_id = suoc_id
+		    	AND serv.serv_fecha_baja IS NULL
+    ]]>
+	</sql>
+
+	<sql id="MANIFIESTO_PESCA" table="IPES_MANIFIESTO_MAPE"
+		sqlId="SELECT mape_id FROM ipes_manifiesto_mape">
+    <![CDATA[
+	    select
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mape_id
+	            	AND trid_table_name = 'IPES_MANIFIESTO_MAPE') AS mape_id
+	        , SERV.SERV_FECHA_CREACION
+	        , SERV.SERV_FECHA_BAJA
+	        , SERV.SERV_FECHA_modificacion
+	        , SERV.SERV_TIPO
+	        , (
+	            SELECT MODU_COD
+	            FROM ICON_MODULO_MODU
+	            WHERE modu_id = serv_modu_id
+	        ) AS SERV_MODU
+	        , (
+	            SELECT SUBP_CODIGO
+	            FROM IGEN_SUBPUERTO_SUBP
+	            WHERE SUBP_ID = SERV_SUBP_ID
+	        ) AS SERV_SUBP
+	        , SERV.SERV_ANNO
+	        , SERV.SERV_NUMERO
+	        , SERV.SERV_FECHA_ESTADISTICA
+	        , SERV.SERV_FECHA_ANULA_FACTURA
+	        , mape.MAPE_FECHA_REFERENCIA
+	        , mape.MAPE_ESTADO
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mape_buque_id
+	            	AND trid_table_name = 'IPES_BUQUE_BUPE') AS mape_buque_id
+	        , TO_CHAR(mape.MAPE_CODIGO_EXENCION)
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mape_tipo_exencion_id
+	            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') AS mape_tipo_exencion_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mape_tipo_operacion_id
+	            	AND trid_table_name = 'IPES_OPERACIONTIPO_TOPP') AS mape_tipo_operacion_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mape_orga_id_vendedor
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS mape_orga_id_vendedor
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mape_orga_id_cliente
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS mape_orga_id_cliente
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mape_tipo_manifiesto_id
+	            	AND trid_table_name = 'IPES_MANIFIESTOTIPO_MPTI') AS mape_tipo_manifiesto_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mape_subtipo_manifiesto_id
+	            	AND trid_table_name = 'IPES_MANIFIESTOSUBTIPO_MPST') AS mape_subtipo_manifiesto_id
+	        , mape.MAPE_REFERENCIA
+	        , mape.MAPE_ORDEN_VENTA
+	        , mape.MAPE_PESO_TOTAL
+	        , mape.MAPE_IMPORTE_TOTAL
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mape_tipo_iva_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') AS mape_tipo_iva_id
+	        , mape.MAPE_ES_SUJ_PAS_SUSTIT
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mape_alineacion_id
+	            	AND trid_table_name = 'IGEN_ALINEACION_ALIN') AS mape_alineacion_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mape_arte_pesca_id
+	            	AND trid_table_name = 'IPES_ARTEPESCA_ARPE') AS mape_arte_pesca_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mape_zona_pesca_id
+	            	AND trid_table_name = 'IPES_ZONAPESCA_ZOPE') AS mape_zona_pesca_id
+	        , mape.MAPE_NOMBRE_FICHERO
+	        , mape.MAPE_OBSERV
+	        , mape.MAPE_OBSERV_FACTURACION
+	    from IPES_MANIFIESTO_MAPE mape
+	        join ICOM_SERVICIO_SERV serv on
+	            serv.SERV_ID = mape.MAPE_ID
+	            AND serv.SERV_FECHA_BAJA is null
+    ]]>
+	</sql>
+
+	<sql id="PARTIDA_PESCA" table="IPES_PARTIDA_PAPE"
+		sqlId="SELECT pape_id FROM ipes_partida_pape">
+    <![CDATA[
+	    select
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = serv_id
+	            	AND trid_table_name = 'IPES_MANIFIESTO_MAPE') AS serv_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = pape_id
+	            	AND trid_table_name = 'IPES_PARTIDA_PAPE') AS pape_id
+	        , pape.PAPE_ORDEN
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = pape_especie_id
+	            	AND trid_table_name = 'IPES_ESPECIEPESCA_ESPE') AS pape_especie_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = pape_comprador_id
+	            	AND trid_table_name = 'IPES_COMPRADOR_COPE') AS pape_comprador_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = pape_presentacion_id
+	            	AND trid_table_name = 'IPES_PRESENTACION_PRPE') AS pape_presentacion_id
+	        , pape.PAPE_DESTINO
+	        , pape.PAPE_CAJAS
+	        , pape.PAPE_KILOS
+	        , pape.PAPE_PRECIO
+	        , pape.PAPE_IMPORTE_PRIMERA_VENTA
+	    from IPES_MANIFIESTO_MAPE mape
+	        join ICOM_SERVICIO_SERV serv on
+	            serv.SERV_ID = mape.MAPE_ID
+	            AND serv.SERV_FECHA_BAJA is null
+	        join IPES_PARTIDA_PAPE pape on
+	            pape.PAPE_MAPE_ID = serv.SERV_ID
+	            and pape.PAPE_ES_ACTIVO = 1
+    ]]>
+	</sql>
+
+	<sql id="SUMINISTRO_CONSUMO" table="ISUM_CONSUMO_SUCO"
+		sqlId="SELECT suco_id FROM isum_consumo_suco">
+    <![CDATA[
+	    select
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = suco_id
+	            	AND trid_table_name = 'ISUM_CONSUMO_SUCO') AS suco_id
+	        , SERV.SERV_FECHA_CREACION
+	        , SERV.SERV_FECHA_BAJA
+	        , SERV.SERV_FECHA_modificacion
+	        , SERV.SERV_TIPO
+	        , (
+	            SELECT MODU_COD
+	            FROM ICON_MODULO_MODU
+	            WHERE modu_id = serv_modu_id
+	        ) AS SERV_MODU
+	        , (
+	            SELECT SUBP_CODIGO
+	            FROM IGEN_SUBPUERTO_SUBP
+	            WHERE SUBP_ID = SERV_SUBP_ID
+	        ) AS SERV_SUBP
+	        , SERV.SERV_ANNO
+	        , SERV.SERV_NUMERO
+	        , SERV.SERV_FECHA_ESTADISTICA
+	        , SERV.SERV_FECHA_ANULA_FACTURA
+	        , coalesce(sucdRea.SUCD_FECHA_INICIO, sucdAut.SUCD_FECHA_INICIO, sucdSol.SUCD_FECHA_INICIO) AS serv_freferencia
+
+	        , coalesce(sucdRea.SUCD_FECHA_INICIO, sucdAut.SUCD_FECHA_INICIO, sucdSol.SUCD_FECHA_INICIO)
+	        , coalesce(sucdRea.SUCD_FECHA_FINALIZACION, sucdAut.SUCD_FECHA_FINALIZACION, sucdSol.SUCD_FECHA_FINALIZACION)
+	        , suco.SUCO_ESTADO
+
+	        , suco.SUCO_REFERENCIA
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = suco_tsum_id
+	            	AND trid_table_name = 'ISUM_TIPOSUMINISTRO_TSUM') AS suco_tsum_id
+	        , to_char(suco.SUCO_CODIGO_EXENCION)
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = suco_exet_id
+	            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') AS suco_exet_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = suco_dead_id
+	            	AND trid_table_name = 'IGEN_DESCUENTOADIC_DEAD') AS suco_dead_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = suco_orga_id_cliente
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS suco_orga_id_cliente
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = suco_orga_id_tasa
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS suco_orga_id_tasa
+	        , suco.SUCO_ES_SUJ_PAS_SUSTIT
+	        , sucdSol.SUCD_FECHA_SOLICITUD
+	        , sucdAut.SUCD_FECHA_AUTORIZACION
+	        , suco.SUCO_OBSERV
+	        , suco.SUCO_OBSERV_FACTURACION
+	    from ISUM_CONSUMO_SUCO suco
+	        join ICOM_SERVICIO_SERV serv on
+	            serv.SERV_ID = suco.SUCO_ID
+	            AND serv.SERV_FECHA_BAJA IS NULL
+	        left join ISUM_CONSUMODETALLE_SUCD sucdSol on
+	            sucdSol.SUCD_SUCO_ID = SUCO_ID and sucdSol.SUCD_MOMENTO = 'S'
+	        left join ISUM_CONSUMODETALLE_SUCD sucdAut on
+	            sucdAut.SUCD_SUCO_ID = SUCO_ID and sucdAut.SUCD_MOMENTO = 'A'
+	        left join ISUM_CONSUMODETALLE_SUCD sucdRea on
+	            sucdRea.SUCD_SUCO_ID = SUCO_ID and sucdRea.SUCD_MOMENTO = 'R'
+    ]]>
+	</sql>
+
+	<sql id="SUMINISTRO_CONSUMO_GASTO" table="ISUM_GASTOCONSUMO_GCSU"
+		sqlId="SELECT gcsu_id FROM isum_gastoconsumo_gcsu">
+    <![CDATA[
+    	select
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = serv_id
+	            	AND trid_table_name = 'ISUM_CONSUMO_SUCO') AS serv_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = gcsu_id
+	            	AND trid_table_name = 'ISUM_GASTOCONSUMO_GCSU') AS gcsu_id
+
+	        , ROWNUM as numero
+	    	, gcsu.GCSU_FECHA_INICIO
+	        , gcsu.GCSU_FECHA_FINAL
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = gcsu_tgsu_id
+	            	AND trid_table_name = 'ISUM_TIPOGASTO_TGSU') AS gcsu_tgsu_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = gcsu_ivat_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') AS gcsu_ivat_id
+	        , gcsu.GCSU_COSTE
+	    from
+	        ISUM_GASTOCONSUMO_GCSU gcsu
+	        join ISUM_CONSUMO_SUCO suco on
+	            suco.SUCO_ID = gcsu.GCSU_SUCO_ID
+	        join ISUM_CONSUMODETALLE_SUCD sucd on
+	            sucd.SUCD_SUCO_ID = suco.suco_id
+	            AND sucd.SUCD_MOMENTO = 'R'
+	        join ICOM_SERVICIO_SERV serv ON
+	          serv.serv_id = suco.suco_id
+	          AND serv.SERV_FECHA_BAJA IS NULL
+	    where
+	        gcsu.GCSU_ES_ACTIVO = 1
+    ]]>
+	</sql>
+
+	<sql id="SUMINISTRO_CONSUMO_LECTURA" table="ISUM_LECTURACONSUMO_LCSU"
+		sqlId="SELECT lcsu_id FROM isum_lecturaconsumo_lcsu">
+    <![CDATA[
+	    select
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = serv_id
+	            	AND trid_table_name = 'ISUM_CONSUMO_SUCO') AS serv_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = lcsu_id
+	            	AND trid_table_name = 'ISUM_LECTURACONSUMO_LCSU') AS lcsu_id
+
+	        , LCSU.LCSU_ORDEN as numero
+	    	, LCSU.LCSU_FECHA_INICIO
+	        , LCSU.LCSU_FECHA_FINAL
+
+	        , LCSU.LCSU_LECTURA_INICIO
+	        , LCSU.LCSU_OBSERV_INICIAL
+	        , LCSU.LCSU_LECTURA_FINAL
+	        , LCSU.LCSU_OBSERV_FINAL
+	        , LCSU.LCSU_CONSUMO
+	        , LCSU.LCSU_TIPO_HORA
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = lcsu_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') AS lcsu_ivat_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = lcsu_cosu_id
+	            	AND trid_table_name = 'ISUM_CONTADOR_COSU') AS lcsu_cosu_id
+	    from
+	        ISUM_LECTURACONSUMO_LCSU LCSU
+	        join ISUM_CONSUMO_SUCO suco on
+	            suco.SUCO_ID = LCSU.LCSU_SUCO_ID
+	        join ISUM_CONSUMODETALLE_SUCD sucd on
+	            sucd.SUCD_SUCO_ID = suco.suco_id
+	            AND sucd.SUCD_MOMENTO = 'R'
+	        join ICOM_SERVICIO_SERV serv ON
+	          serv.serv_id = suco.suco_id
+	          AND serv.SERV_FECHA_BAJA IS NULL
+	    where
+	        LCSU.LCSU_ES_ACTIVO = 1
+    ]]>
+	</sql>
+
+	<sql id="MANIFIESTO" table="IMAN_MANIFIESTO_MANI"
+		sqlId="SELECT mani_id FROM iman_manifiesto_mani">
+    <![CDATA[
+	    SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mani_id
+	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS mani_id
+	        , SERV.SERV_FECHA_CREACION
+	        , SERV.SERV_FECHA_BAJA
+	        , SERV.SERV_FECHA_modificacion
+	        , SERV.SERV_TIPO
+	        , (
+	            SELECT MODU_COD
+	            FROM ICON_MODULO_MODU
+	            WHERE modu_id = serv_modu_id
+	        ) AS SERV_MODU
+	        , (
+	            SELECT SUBP_CODIGO
+	            FROM IGEN_SUBPUERTO_SUBP
+	            WHERE SUBP_ID = SERV_SUBP_ID
+	        ) AS SERV_SUBP
+	        , SERV.SERV_ANNO
+	        , SERV.SERV_NUMERO
+	        , SERV.SERV_FECHA_ESTADISTICA
+	        , SERV.SERV_FECHA_ANULA_FACTURA
+	        , MANI.MANI_FECHA_REFERENCIA
+	        , MANI.MANI_ESTADO
+
+	        , MANI.MANI_FECHA_ENVIO
+	        , MANI.MANI_TIPO_MANIFIESTO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mani_escala_id
+	            	AND trid_table_name = 'IESC_ESCALA_ESCA') AS mani_escala_id
+	        , MANI.MANI_ES_VIA_EDI
+	        , MANI.MANI_NUMERO_EDI
+	        , MANI.MANI_NUMERO_VIAJE
+	        , to_number(MANI.MANI_NUMERO_TRAMOS)
+	        , MANI.MANI_DIAS_EN_PUERTO
+	        , MANI.MANI_ES_SERV_REGULAR_AUT
+	        , MANI.MANI_ES_REGIMEN_SIMPLE
+	        , MANI.MANI_ES_ABARLOADO
+	        , MANI.MANI_TIPO_OPERACION
+	        , MANI.MANI_TRANSITO_COM_SIM
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mani_acuerdo_id
+	            	AND trid_table_name = 'IESC_ACUERDO_ACUE') AS mani_acuerdo_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mani_alineacion_id
+	            	AND trid_table_name = 'IGEN_ALINEACION_ALIN') AS mani_alineacion_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mani_recinto_adu_id
+	            	AND trid_table_name = 'IMAN_RECINTOADUANERO_RADU') AS mani_recinto_adu_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mani_estibador_id
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS mani_estibador_id
+	        , TO_CHAR(MANI.MANI_CODIGO_EXENCION)
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mani_tipo_exencion_id
+	            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') AS mani_tipo_exencion_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mani_consignatario_id
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS mani_consignatario_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mani_terminal_id
+	            	AND trid_table_name = 'IMAN_TERMINAL_TERM') AS mani_terminal_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mani_servicio_id
+	            	AND trid_table_name = 'IESC_TRAFICO_TRAF') AS mani_servicio_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mani_ens_pais_id
+	            	AND trid_table_name = 'IGEN_PAIS_PAIS') AS mani_ens_pais_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mani_dead_id
+	            	AND trid_table_name = 'IGEN_DESCUENTOADIC_DEAD') AS mani_dead_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mani_tipo_iva_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') AS mani_tipo_iva_id
+	        , MANI.MANI_OBSERVACIONES
+	        , MANI.MANI_OBSERVACIONES_FACT
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mani_inst_especial_id
+	            	AND trid_table_name = 'IMAN_INSTESPECIAL_IESP') AS mani_inst_especial_id
+	    FROM IMAN_MANIFIESTO_MANI MANI
+	        JOIN ICOM_SERVICIO_SERV serv ON
+	            SERV_ID = MANI_ID
+	            AND SERV_FECHA_BAJA IS NULL
+    ]]>
+	</sql>
+
+	<sql id="MANIFIESTO_CONSIGNATARIO" table="IMAN_CONSIGNATARIO_MACO"
+		sqlId="SELECT maco_id FROM iman_consignatario_maco">
+    <![CDATA[
+        select
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maco_mani_id
+	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS maco_mani_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maco_id
+	            	AND trid_table_name = 'IMAN_CONSIGNATARIO_MACO') AS maco_id
+            , maco.MACO_ORDEN as numero
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maco_consignatario_id
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS maco_consignatario_id
+        from IMAN_CONSIGNATARIO_MACO maco
+        where maco.MACO_ES_ACTIVO = 1
+            AND EXISTS (
+                SELECT 1
+                FROM ICOM_SERVICIO_SERV
+                WHERE SERV_ID = MACO_MANI_ID
+                    AND SERV_FECHA_BAJA IS NULL
+            )
+    ]]>
+	</sql>
+
+	<sql id="BL" table="IMAN_BL_MABL" sqlId="SELECT mabl_id FROM iman_bl_mabl">
+    <![CDATA[
+		SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_mani_id
+	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS mabl_mani_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_id
+	            	AND trid_table_name = 'IMAN_BL_MABL') AS mabl_id
+			, MABL.MABL_ORDEN
+ 		    , MABL.MABL_ESTADO
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_consignatario_id
+	            	AND trid_table_name = 'IMAN_CONSIGNATARIO_MACO') AS mabl_consignatario_id
+
+			, MABL.MABL_TIPO
+			, MABL.MABL_TRAMO
+			, TO_CHAR(MABL.MABL_CODIGO_EXENCION)
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_tipo_exencion_id
+	            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') AS mabl_tipo_exencion_id
+			, MABL.MABL_NOMBRE
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_tipo_operacion_id
+	            	AND trid_table_name = 'IMAN_TIPOOPERACION_TOBL') AS mabl_tipo_operacion_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_origen_unlo_id
+	            	AND trid_table_name = 'IGEN_UNLOCODE_UNLO') AS mabl_origen_unlo_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_carga_unlo_id
+	            	AND trid_table_name = 'IGEN_UNLOCODE_UNLO') AS mabl_carga_unlo_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_descarga_unlo_id
+	            	AND trid_table_name = 'IGEN_UNLOCODE_UNLO') AS mabl_descarga_unlo_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_destino_unlo_id
+	            	AND trid_table_name = 'IGEN_UNLOCODE_UNLO') AS mabl_destino_unlo_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_transbordo_unlo_id
+	            	AND trid_table_name = 'IGEN_UNLOCODE_UNLO') AS mabl_transbordo_unlo_id
+			, MABL.MABL_DEC_SUM_TRANSITO
+			, MABL.MABL_TIPO_TRANSPORTE
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_modo_transp_edi_id
+	            	AND trid_table_name = 'IMAN_MODOTRANSPEDI_TEDI') AS mabl_modo_transp_edi_id
+			, MABL.MABL_TRANSP_POST_IMO
+			, MABL.MABL_TIPO_DESTINO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_inst_especial_id
+	            	AND trid_table_name = 'IMAN_INSTESPECIAL_IESP') AS mabl_inst_especial_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_alineacion_id
+	            	AND trid_table_name = 'IGEN_ALINEACION_ALIN') AS mabl_alineacion_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_cliente_id
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS mabl_cliente_id
+			, MABL.MABL_ES_SUJ_PASIVO_SUST
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_tipo_navegacion_id
+	            	AND trid_table_name = 'IGEN_NAVEGACIONTIPO_NAVT') AS mabl_tipo_navegacion_id
+			, MABL.MABL_ES_REGIMEN_SIMPLE
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_terminal_id
+	            	AND trid_table_name = 'IMAN_TERMINAL_TERM') AS mabl_terminal_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_acuerdo_id
+	            	AND trid_table_name = 'IESC_ACUERDO_ACUE') AS mabl_acuerdo_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_servicio_id
+	            	AND trid_table_name = 'IESC_TRAFICO_TRAF') AS mabl_servicio_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_estibador_id
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS mabl_estibador_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = mabl_tipo_iva_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') AS mabl_tipo_iva_id
+			, MABL.MABL_OBSERVACIONES
+			, MABL.MABL_OBSERVACIONES_FACT
+
+			, MABL.MABL_BL_TRANSITO
+		FROM IMAN_BL_MABL MABL
+		       inner join ICOM_SERVICIO_SERV serv ON
+		           serv.serv_id = mabl.mabl_mani_id
+		WHERE
+			    MABL.MABL_ES_ACTIVO = 1
+		       AND serv.SERV_FECHA_BAJA IS NULL
+		       AND EXISTS (
+		           SELECT 1
+		           FROM iman_consignatario_maco
+		           WHERE maco_ID = MABL.MABL_consignatario_ID
+		               AND maco_es_activo = 1
+		       )
+    ]]>
+	</sql>
+
+	<sql id="PARTIDA" table="IMAN_PARTIDA_PART" sqlId="SELECT part_id FROM iman_partida_part">
+    <![CDATA[
+		SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = serv_id
+	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS serv_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = part_id
+	            	AND trid_table_name = 'IMAN_PARTIDA_PART') AS part_id
+		  , part.part_orden
+	      , PART.PART_ESTADO
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = part_mabl_id
+	            	AND trid_table_name = 'IMAN_BL_MABL') AS part_mabl_id
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = part_mercancia_id
+	            	AND trid_table_name = 'IMAN_MERCANCIA_MERC') AS part_mercancia_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = part_tipo_bulto_id
+	            	AND trid_table_name = 'IMAN_TIPOBULTO_TBUL') AS part_tipo_bulto_id
+		  , TO_CHAR(PART.PART_CODIGO_EXENCION)
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = part_tipo_exencion_id
+	            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') AS part_tipo_exencion_id
+		  , PART.PART_ES_AVITUALLAMIENTO
+		  , PART.PART_ES_RORO
+		  , PART.PART_NUMERO_BULTOS
+		  , PART.PART_UNIDADES_CARGA
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = part_unidad_carga_id
+	            	AND trid_table_name = 'IMAN_UNIDADCARGA_UNIC') AS part_unidad_carga_id
+		  , PART.PART_NUMERO_PASAJE
+		  , PART.PART_VOLUMEN
+		  , PART.PART_PESO
+		  , PART.PART_NUM_PART_TRANSITO
+		  , PART.PART_DEC_SUM_TRANSITO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = part_acuerdo_id
+	            	AND trid_table_name = 'IESC_ACUERDO_ACUE') AS part_acuerdo_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = part_estibador_id
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS part_estibador_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = part_receptor_id
+	            	AND trid_table_name = 'IMAN_RECEPTOR_RECE') AS part_receptor_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = part_inst_espec_id
+	            	AND trid_table_name = 'IMAN_INSTESPECIAL_IESP') AS part_inst_espec_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = part_tipo_sum_id
+	            	AND trid_table_name = 'ISUM_TIPOSUMINISTRO_TSUM') AS part_tipo_sum_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = part_terminal_id
+	            	AND trid_table_name = 'IMAN_TERMINAL_TERM') AS part_terminal_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = part_marca_vehiculo_id
+	            	AND trid_table_name = 'IMAN_MARCAVEHICULO_VMAR') AS part_marca_vehiculo_id
+		  , PART.PART_ES_DECLARADO_ENS
+		  , PART.PART_OBSERVACIONES
+		FROM IMAN_PARTIDA_PART PART
+		    JOIN IMAN_BL_MABL ON
+		        MABL_ID = PART_MABL_ID
+		    JOIN ICOM_SERVICIO_SERV SERV ON
+		        SERV_ID = MABL_MANI_ID
+		where
+	        part_es_activo = 1
+		    AND MABL_ES_ACTIVO = 1
+	        and serv_fecha_baja is null
+	        AND EXISTS (
+	            SELECT 1
+	            FROM iman_consignatario_maco
+	            WHERE maco_ID = MABL_consignatario_ID
+	                AND maco_es_activo = 1
+	        )
+    ]]>
+	</sql>
+-->
+	<sql id="EQUIPAMIENTO" table="IMAN_EQUIPAMIENTO_EQUI"
+		sqlId="SELECT equi_id FROM iman_equipamiento_equi">
+    <![CDATA[
+		SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = serv_id
+	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS serv_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = equi_id
+	            	AND trid_table_name = 'IMAN_EQUIPAMIENTO_EQUI') AS equi_id
+		    , EQUI.EQUI_ORDEN
+	        , EQUI.EQUI_ESTADO
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = equi_mabl_id
+	            	AND trid_table_name = 'IMAN_BL_MABL') AS equi_mabl_id
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = equi_tipo_id
+	            	AND trid_table_name = 'IMAN_TIPOEQUIPAMIENTO_TEQU') AS equi_tipo_id
+		    , EQUI.EQUI_MATRICULA
+		    , to_char(EQUI.EQUI_CODIGO_EXENCION)
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = equi_tipo_exencion_id
+	            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') AS equi_tipo_exencion_id
+		    , EQUI.EQUI_LLENO_VACIO
+		    , EQUI.EQUI_NUMERO_VACIOS
+		    , EQUI.EQUI_ES_RORO
+		    , EQUI.EQUI_TARA
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = equi_unidad_carga_id
+	            	AND trid_table_name = 'IMAN_UNIDADCARGA_UNIC') AS equi_unidad_carga_id
+		    , EQUI.EQUI_OBSERVACIONES
+		FROM IMAN_EQUIPAMIENTO_EQUI EQUI
+		    JOIN IMAN_BL_MABL MABL ON
+		        MABL_ID = EQUI_MABL_ID
+		    JOIN ICOM_SERVICIO_SERV SERV ON
+		        SERV_ID = MABL_MANI_ID
+		where equi_es_activo = 1
+	        AND MABL_ES_ACTIVO = 1
+	        and serv_fecha_baja is null
+	        AND EXISTS (
+	            SELECT 1
+	            FROM iman_consignatario_maco
+	            WHERE maco_ID = MABL_consignatario_ID
+	                AND maco_es_activo = 1
+	        )
+    ]]>
+	</sql>
+
+	<sql id="PARTIDA_EQUIPAMIENTO" table="IMAN_PARTIDAEQUIP_PAEQ"
+		sqlId="SELECT paeq_id FROM iman_partidaequip_paeq">
+    <![CDATA[
+		SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = serv_id
+	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS serv_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = paeq_id
+	            	AND trid_table_name = 'IMAN_PARTIDAEQUIP_PAEQ') AS paeq_id
+		    , rownum as numero
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = paeq_part_id
+	            	AND trid_table_name = 'IMAN_PARTIDA_PART') AS paeq_part_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = paeq_equi_id
+	            	AND trid_table_name = 'IMAN_EQUIPAMIENTO_EQUI') AS paeq_equi_id
+
+		    , PAEQ.PAEQ_NUMERO_BULTOS
+		FROM IMAN_PARTIDAEQUIP_PAEQ PAEQ
+		    JOIN IMAN_PARTIDA_PART PART ON
+		        PART_ID = PAEQ_PART_ID
+		    JOIN IMAN_EQUIPAMIENTO_EQUI EQUI ON
+		        EQUI_ID = PAEQ_EQUI_ID
+		    JOIN IMAN_BL_MABL MABL ON
+		        MABL_ID = PART_MABL_ID
+		    JOIN ICOM_SERVICIO_SERV SERV ON
+		        SERV_ID = MABL_MANI_ID
+		where PAEQ_es_activo = 1
+	        and SERV_FECHA_BAJA is null
+	        AND MABL_ES_ACTIVO = 1
+	        AND EQUI_ES_ACTIVO = 1
+	        AND PART_ES_ACTIVO = 1
+	        AND EXISTS (
+	            SELECT 1
+	            FROM iman_consignatario_maco
+	            WHERE maco_ID = MABL_consignatario_ID
+	                AND maco_es_activo = 1
+	        )
+    ]]>
+	</sql>
+
+	<sql id="PRECINTO_EQUIPAMIENTO" table="IMAN_PRECINTOEQUIP_PREQ"
+		sqlId="SELECT preq_id FROM iman_precintoequip_preq">
+    <![CDATA[
+		SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = serv_id
+	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS serv_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = preq_id
+	            	AND trid_table_name = 'IMAN_PRECINTOEQUIP_PREQ') AS preq_id
+		    , rownum as numero
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = equi_id
+	            	AND trid_table_name = 'IMAN_EQUIPAMIENTO_EQUI') AS equi_id
+
+		    , PREQ.PREQ_PRECINTO
+		FROM IMAN_PRECINTOEQUIP_PREQ PREQ
+		    JOIN IMAN_EQUIPAMIENTO_EQUI EQUI ON
+		        EQUI_ID = PREQ_EQUI_ID
+		    JOIN IMAN_BL_MABL MABL ON
+		        MABL_ID = EQUI_MABL_ID
+		    JOIN ICOM_SERVICIO_SERV SERV ON
+		        SERV_ID = MABL_MANI_ID
+		where
+	        PREQ_es_activo = 1
+	        AND SERV_FECHA_BAJA IS NULL
+	        AND MABL_ES_ACTIVO = 1
+	        AND EQUI_ES_ACTIVO = 1
+	        AND EXISTS (
+	            SELECT 1
+	            FROM iman_consignatario_maco
+	            WHERE maco_ID = MABL_consignatario_ID
+	                AND maco_es_activo = 1
+	        )
+    ]]>
+	</sql>
+
+	<sql id="PARTIDA_IM" table="IMAN_PARTIDAIM_PAIM"
+		sqlId="SELECT paim_id FROM iman_partidaim_paim">
+    <![CDATA[
+		SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = serv_id
+	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS serv_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = paim_id
+	            	AND trid_table_name = 'IMAN_PARTIDAIM_PAIM') AS paim_id
+		    , PAIM.PAIM_NUMERO
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = part_id
+	            	AND trid_table_name = 'IMAN_PARTIDA_PART') AS part_id
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = paim_imar_id
+	            	AND trid_table_name = 'IMAN_INSTRUCCMARCAJE_IMAR') AS paim_imar_id
+		    , PAIM.PAIM_DESCRIPCION
+		FROM IMAN_PARTIDAIM_PAIM PAIM
+		    JOIN IMAN_PARTIDA_PART PART ON
+		        PART_ID = PAIM_PART_ID
+		    JOIN IMAN_BL_MABL MABL ON
+		        MABL_ID = PART_MABL_ID
+		    JOIN ICOM_SERVICIO_SERV SERV ON
+		        SERV_ID = MABL_MANI_ID
+		where
+	        paim_es_activo = 1
+	        AND SERV_FECHA_BAJA IS NULL
+	        AND MABL_ES_ACTIVO = 1
+	        AND PART_ES_ACTIVO = 1
+	        AND EXISTS (
+	            SELECT 1
+	            FROM iman_consignatario_maco
+	            WHERE maco_ID = MABL_consignatario_ID
+	                AND maco_es_activo = 1
+	        )
+    ]]>
+	</sql>
+
+	<sql id="PARTIDA_MMPP" table="IMAN_PARTIDAMMPP_PAMP"
+		sqlId="SELECT pamp_id FROM iman_partidammpp_pamp">
+    <![CDATA[
+		SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = serv_id
+	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS serv_id
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = pamp_id
+	            	AND trid_table_name = 'IMAN_PARTIDAMMPP_PAMP') AS pamp_id
+		    , PAMP.PAMP_orden
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = part_id
+	            	AND trid_table_name = 'IMAN_PARTIDA_PART') AS part_id
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = pamp_mmpp_id
+	            	AND trid_table_name = 'IMAN_MMPP_MMPP') AS pamp_mmpp_id
+		FROM
+			IMAN_PARTIDAMMPP_PAMP PAMP
+		    JOIN IMAN_PARTIDA_PART PART ON
+		        PART_ID = PAMP_PART_ID
+		    JOIN IMAN_BL_MABL MABL ON
+		        MABL_ID = PART_MABL_ID
+		    JOIN ICOM_SERVICIO_SERV SERV ON
+		        SERV_ID = MABL_MANI_ID
+		where
+	        PAMP_es_activo = 1
+	        AND SERV_FECHA_BAJA IS NULL
+	        AND MABL_ES_ACTIVO = 1
+	        AND PART_ES_ACTIVO = 1
+	        AND EXISTS (
+	            SELECT 1
+	            FROM iman_consignatario_maco
+	            WHERE maco_ID = MABL_consignatario_ID
+	                AND maco_es_activo = 1
+	        )
+    ]]>
+	</sql>
+</importer>

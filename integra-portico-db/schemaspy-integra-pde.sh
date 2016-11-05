@@ -1,0 +1,1 @@
+java -jar schemaspy.jar -t  orathin_servicename -db INTDES -port 1521 -s INTEGRA -u INTEGRA -p INTEGRA -o target/integra-sch-pde -host praim4 -dp jdbc-ora.jar

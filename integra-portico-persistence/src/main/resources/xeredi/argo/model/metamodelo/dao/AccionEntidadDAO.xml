@@ -11,7 +11,6 @@
 
         <association property="aebs" javaType="AccionEntidadBaseVO">
             <result column="acen_aebs_pk" property="id" />
-            <result column="aebs_prefix" property="prefix" />
             <result column="aebs_codigo" property="codigo" />
         </association>
     </resultMap>
@@ -42,6 +41,9 @@
         <where>
             <if test="id != null">
                 AND acen_pk = #{id}
+            </if>
+            <if test="codigo != null">
+                AND aebs_codigo = #{codigo}
             </if>
             <if test="entiId != null">
                 AND acen_enti_pk = #{entiId}

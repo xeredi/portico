@@ -35,7 +35,7 @@ public abstract class ModelException extends ApplicationException {
      */
     public ModelException(final @NonNull String message, final @NonNull MessageI18nKey aclassName,
             final Object... aobjId) {
-        super(message + " de la clase '" + aclassName + "' con identificador: " + aobjId);
+        super(message + " de la clase '" + aclassName + "' con identificador: " + aobjId[0]);
 
         className = aclassName.name();
 

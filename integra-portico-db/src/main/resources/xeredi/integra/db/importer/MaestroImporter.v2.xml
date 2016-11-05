@@ -2,10 +2,13 @@
 	<!-- // MAESTROS SIN DEPENDENCIAS // MAESTROS SIN DEPENDENCIAS // -->
 	<!-- // MAESTROS SIN DEPENDENCIAS // MAESTROS SIN DEPENDENCIAS // -->
 
-	<sql id="AREA_GEOGRAFICA" table="IEST_AREAGEOGRAFICA_AGEO" tempImp="false">
+	<sql id="AREA_GEOGRAFICA" table="IEST_AREAGEOGRAFICA_AGEO" tempImp="false"
+		sqlId="SELECT ageo_id FROM iest_areageografica_ageo">
     <![CDATA[
         SELECT
-        	maes.ageo_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.ageo_id
+	            	AND trid_table_name = 'IEST_AREAGEOGRAFICA_AGEO') AS ageo_id
         	, maes.ageo_codigo
          	, (SELECT i18n.ageo_nombre FROM iest_areageograficai18n_ageo i18n
             	WHERE i18n.ageo_id = maes.ageo_id
@@ -17,10 +20,13 @@
     ]]>
 	</sql>
 
-	<sql id="AREA_MUNDIAL" table="IEST_AREAMUNDIAL_AMUN" tempImp="false">
+	<sql id="AREA_MUNDIAL" table="IEST_AREAMUNDIAL_AMUN" tempImp="false"
+		sqlId="SELECT amun_id FROM iest_areamundial_amun">
 	<![CDATA[
 		SELECT
-			maes.amun_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.amun_id
+	            	AND trid_table_name = 'IEST_AREAMUNDIAL_AMUN') AS amun_id
 			, maes.amun_codigo
 		 	, (SELECT i18n.amun_nombre FROM iest_areamundiali18n_amun i18n
 		    	WHERE i18n.amun_id = maes.amun_id
@@ -32,10 +38,13 @@
 	]]>
 	</sql>
 
-	<sql id="ARTE_PESCA" table="IPES_ARTEPESCA_ARPE" tempImp="false">
+	<sql id="ARTE_PESCA" table="IPES_ARTEPESCA_ARPE" tempImp="false"
+		sqlId="SELECT arpe_id FROM ipes_artepesca_arpe">
 	<![CDATA[
 		SELECT
-			maes.arpe_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.arpe_id
+	            	AND trid_table_name = 'IPES_ARTEPESCA_ARPE') AS arpe_id
 			, maes.arpe_codigo
 		    , (SELECT i18n.arpe_nombre FROM ipes_artepescai18n_arpe i18n
 		        WHERE i18n.arpe_id = maes.arpe_id
@@ -47,10 +56,13 @@
 	]]>
 	</sql>
 
-	<sql id="COMPRADOR_PESCA" table="IPES_COMPRADOR_COPE MAES" tempImp="false">
+	<sql id="COMPRADOR_PESCA" table="IPES_COMPRADOR_COPE" tempImp="false"
+		sqlId="SELECT cope_id FROM ipes_comprador_cope">
 	<![CDATA[
 		SELECT
-		    MAES.COPE_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.cope_id
+	            	AND trid_table_name = 'IPES_COMPRADOR_COPE') AS cope_id
 		    , MAES.COPE_CODIGO
 		    , MAES.COPE_NIF
 		    , MAES.COPE_DESCRIPCION
@@ -60,25 +72,30 @@
 	</sql>
 
 	<sql id="DESCUENTO_ADICIONAL" table="IGEN_DESCUENTOADIC_DEAD"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT dead_id FROM igen_descuentoadic_dead">
 	<![CDATA[
 		SELECT
-			MAES.DEAD_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.dead_id
+	            	AND trid_table_name = 'IGEN_DESCUENTOADIC_DEAD') AS dead_id
 			, MAES.DEAD_CODIGO
 		    , (SELECT I18N.DEAD_NOMBRE FROM IGEN_DESCUENTOADICi18n_DEAD I18N
 		        WHERE I18N.DEAD_ID = MAES.DEAD_ID
 		            AND I18N.DEAD_IDIOMA = ?
 		            AND ? BETWEEN DEAD_FECHA_CREACION and coalesce(DEAD_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IGEN_DESCUENTOADIC_DEAD MAES
+		FROM igen_descuentoadic_dead MAES
 		order by MAES.DEAD_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="GRUPO_ARANCELARIO" table="IMAN_GRUPOARANCEL_GARA" tempImp="false">
+	<sql id="GRUPO_ARANCELARIO" table="IMAN_GRUPOARANCEL_GARA" tempImp="false"
+		sqlId="SELECT gara_id FROM iman_grupoarancel_gara">
 	<![CDATA[
 		SELECT
-			MAES.GARA_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.gara_id
+	            	AND trid_table_name = 'IMAN_GRUPOARANCEL_GARA') AS gara_id
 			, MAES.GARA_CODIGO
 		 , (SELECT I18N.GARA_NOMBRE FROM IMAN_GRUPOARANCELi18n_GARA I18N
 		     WHERE I18N.GARA_ID = MAES.GARA_ID
@@ -91,211 +108,246 @@
 	</sql>
 
 	<sql id="GRUPO_FAMILIA_ESPECIE_PESCA" table="IPES_GRUPOFAMILIA_GFPE"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT gfpe_id FROM ipes_grupofamilia_gfpe">
 	<![CDATA[
 		SELECT
-			MAES.GFPE_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.gfpe_id
+	            	AND trid_table_name = 'IPES_GRUPOFAMILIA_GFPE') AS gfpe_id
 			, MAES.GFPE_CODIGO
 		    , (SELECT I18N.GFPE_NOMBRE FROM IPES_GRUPOFAMILIAi18n_GFPE I18N
 		        WHERE I18N.GFPE_ID = MAES.GFPE_ID
 		            AND I18N.GFPE_IDIOMA = ?
 		            AND ? BETWEEN GFPE_FECHA_CREACION and coalesce(GFPE_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IPES_GRUPOFAMILIA_GFPE MAES
+		FROM ipes_grupofamilia_gfpe MAES
 		order by MAES.GFPE_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="GRUPO_NATURALEZA" table="IEST_GRUPONATURALEZA_GNAT"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT gnat_id FROM iest_gruponaturaleza_gnat">
 	<![CDATA[
 		SELECT
-			MAES.GNAT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.gnat_id
+	            	AND trid_table_name = 'IEST_GRUPONATURALEZA_GNAT') AS gnat_id
 			, MAES.GNAT_CODIGO
 		 , (SELECT I18N.GNAT_NOMBRE FROM IEST_GRUPONATURALEZAi18n_GNAT I18N
 		     WHERE I18N.GNAT_ID = MAES.GNAT_ID
 		         AND I18N.GNAT_IDIOMA = ?
 		         AND ? BETWEEN GNAT_FECHA_CREACION and coalesce(GNAT_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IEST_GRUPONATURALEZA_GNAT MAES
+		FROM iest_gruponaturaleza_gnat MAES
 		order by MAES.GNAT_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="GRUPO_NST" table="IEST_GRUPONST_GNST" tempImp="false">
+	<sql id="GRUPO_NST" table="IEST_GRUPONST_GNST" tempImp="false"
+		sqlId="SELECT gnst_id FROM iest_gruponst_gnst">
 	<![CDATA[
 		SELECT
-			MAES.GNST_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.gnst_id
+	            	AND trid_table_name = 'IEST_GRUPONST_GNST') AS gnst_id
 			, MAES.GNST_CODIGO
 		 , (SELECT I18N.GNST_NOMBRE FROM IEST_GRUPONSTi18n_GNST I18N
 		     WHERE I18N.GNST_ID = MAES.GNST_ID
 		         AND I18N.GNST_IDIOMA = ?
 		         AND ? BETWEEN GNST_FECHA_CREACION and coalesce(GNST_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IEST_GRUPONST_GNST MAES
+		FROM iest_gruponst_gnst MAES
 		order by MAES.GNST_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="GRUPO_ZONA" table="ISUP_GRUPOZONA_GZSU" tempImp="false">
+	<sql id="GRUPO_ZONA" table="ISUP_GRUPOZONA_GZSU" tempImp="false"
+		sqlId="SELECT gzsu_id FROM isup_grupozona_gzsu">
 	<![CDATA[
 		SELECT
-			MAES.GZSU_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.gzsu_id
+	            	AND trid_table_name = 'ISUP_GRUPOZONA_GZSU') AS gzsu_id
 			, MAES.GZSU_CODIGO
 		    , (SELECT I18N.GZSU_NOMBRE FROM ISUP_GRUPOZONAi18n_GZSU I18N
 		        WHERE I18N.GZSU_ID = MAES.GZSU_ID
 		            AND I18N.GZSU_IDIOMA = ?
 		            AND ? BETWEEN GZSU_FECHA_CREACION and coalesce(GZSU_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM ISUP_GRUPOZONA_GZSU MAES
+		FROM isup_grupozona_gzsu MAES
 		order by MAES.GZSU_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="INSTRUCCION_MARCAJE" table="IMAN_INSTRUCCMARCAJE_IMAR"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT imar_id FROM iman_instruccmarcaje_imar">
 	<![CDATA[
 		SELECT
-			MAES.IMAR_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.imar_id
+	            	AND trid_table_name = 'IMAN_INSTRUCCMARCAJE_IMAR') AS imar_id
 			, MAES.IMAR_CODIGO
 		    , (SELECT I18N.IMAR_NOMBRE FROM IMAN_INSTRUCCMARCAJEi18n_IMAR I18N
 		        WHERE I18N.IMAR_ID = MAES.IMAR_ID
 		            AND I18N.IMAR_IDIOMA = ?
 		            AND ? BETWEEN IMAR_FECHA_CREACION and coalesce(IMAR_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IMAN_INSTRUCCMARCAJE_IMAR MAES
+		FROM iman_instruccmarcaje_imar MAES
 		order by MAES.IMAR_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="MODULO_BATCH" table="ICON_MODULOBATCH_MODB" tempImp="false">
+	<sql id="MODULO_BATCH" table="ICON_MODULOBATCH_MODB" tempImp="false"
+		sqlId="SELECT modb_id FROM icon_modulobatch_modb">
 	<![CDATA[
 		SELECT
-			MAES.MODB_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.modb_id
+	            	AND trid_table_name = 'ICON_MODULOBATCH_MODB') AS modb_id
 			, MAES.MODB_COD
 		    , (SELECT I18N.MODB_NOMBRE FROM ICON_MODULOBATCHi18n_MODB I18N
 		        WHERE I18N.MODB_ID = MAES.MODB_ID
 		            AND I18N.MODB_IDIOMA = ?
 		            AND ? BETWEEN MODB_FECHA_CREACION and coalesce(MODB_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM ICON_MODULOBATCH_MODB MAES
+		FROM icon_modulobatch_modb MAES
 		order by MAES.MODB_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="PRESENTACION_PESCA" table="IPES_PRESENTACION_PRPE"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT prpe_id FROM ipes_presentacion_prpe">
 	<![CDATA[
 		SELECT
-			MAES.PRPE_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.prpe_id
+	            	AND trid_table_name = 'IPES_PRESENTACION_PRPE') AS prpe_id
 			, MAES.PRPE_CODIGO
 		    , (SELECT I18N.PRPE_NOMBRE FROM IPES_PRESENTACIONi18n_PRPE I18N
 		        WHERE I18N.PRPE_ID = MAES.PRPE_ID
 		            AND I18N.PRPE_IDIOMA = ?
 		            AND ? BETWEEN PRPE_FECHA_CREACION and coalesce(PRPE_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IPES_PRESENTACION_PRPE MAES
+		FROM ipes_presentacion_prpe MAES
 		order by MAES.PRPE_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="SERVICIO_DEPORTIVO" table="IEMD_SERVICIODEP_SDEP" tempImp="false">
+	<sql id="SERVICIO_DEPORTIVO" table="IEMD_SERVICIODEP_SDEP" tempImp="false"
+		sqlId="SELECT sdep_id FROM iemd_serviciodep_sdep">
 	<![CDATA[
 		SELECT
-			MAES.SDEP_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.sdep_id
+	            	AND trid_table_name = 'IEMD_SERVICIODEP_SDEP') AS sdep_id
 			, MAES.SDEP_CODIGO
 		    , (SELECT I18N.SDEP_NOMBRE FROM IEMD_SERVICIODEPi18n_SDEP I18N
 		        WHERE I18N.SDEP_ID = MAES.SDEP_ID
 		            AND I18N.SDEP_IDIOMA = ?
 		            AND ? BETWEEN SDEP_FECHA_CREACION and coalesce(SDEP_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IEMD_SERVICIODEP_SDEP MAES
+		FROM iemd_serviciodep_sdep MAES
 		order by MAES.SDEP_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="SUBGRUPO_MERCANCIA_EST" table="IEST_SUBGRUPO_SUBG"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT subg_id FROM iest_subgrupo_subg">
 	<![CDATA[
 		SELECT
-			MAES.SUBG_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.subg_id
+	            	AND trid_table_name = 'IEST_SUBGRUPO_SUBG') AS subg_id
 			, MAES.SUBG_CODIGO
 		 , (SELECT I18N.SUBG_NOMBRE FROM IEST_SUBGRUPOi18n_SUBG I18N
 		     WHERE I18N.SUBG_ID = MAES.SUBG_ID
 		         AND I18N.SUBG_IDIOMA = ?
 		         AND ? BETWEEN SUBG_FECHA_CREACION and coalesce(SUBG_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IEST_SUBGRUPO_SUBG MAES
+		FROM iest_subgrupo_subg MAES
 		order by MAES.SUBG_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="SUBTIPO_MANIFIESTO_PESCA" table="IPES_MANIFIESTOSTIPO_MPST"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT mpst_id FROM ipes_manifiestostipo_mpst">
 	<![CDATA[
 		SELECT
-			MAES.MPST_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.mpst_id
+	            	AND trid_table_name = 'IPES_MANIFIESTOSTIPO_MPST') AS mpst_id
 			, MAES.MPST_CODIGO
 		 , (SELECT I18N.MPST_NOMBRE FROM IPES_MANIFIESTOSTIPOi18n_MPST I18N
 		     WHERE I18N.MPST_ID = MAES.MPST_ID
 		         AND I18N.MPST_IDIOMA = ?
 		         AND ? BETWEEN MPST_FECHA_CREACION and coalesce(MPST_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IPES_MANIFIESTOSTIPO_MPST MAES
+		FROM ipes_manifiestostipo_mpst MAES
 		order by MAES.MPST_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_ACT_GRAL_CONCESIONAL" table="IEXP_TIPOACTIVIDADG_TAGE"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT tage_id FROM iexp_tipoactividadg_tage">
 	<![CDATA[
 		SELECT
-			MAES.TAGE_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.tage_id
+	            	AND trid_table_name = 'IEXP_TIPOACTIVIDADG_TAGE') AS tage_id
 			, MAES.TAGE_CODIGO
 		 , (SELECT I18N.TAGE_NOMBRE FROM IEXP_TIPOACTIVIDADGi18n_TAGE I18N
 		     WHERE I18N.TAGE_ID = MAES.TAGE_ID
 		         AND I18N.TAGE_IDIOMA = ?
 		         AND ? BETWEEN TAGE_FECHA_CREACION and coalesce(TAGE_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IEXP_TIPOACTIVIDADG_TAGE MAES
+		FROM iexp_tipoactividadg_tage MAES
 		order by MAES.TAGE_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_ALINEACION" table="IESC_ALINEACIONTIPO_ALIT" tempImp="false">
+	<sql id="TIPO_ALINEACION" table="IESC_ALINEACIONTIPO_ALIT" tempImp="false"
+		sqlId="SELECT alit_id FROM iesc_alineaciontipo_alit">
 	<![CDATA[
 		SELECT
-			MAES.ALIT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.alit_id
+	            	AND trid_table_name = 'IESC_ALINEACIONTIPO_ALIT') AS alit_id
 			, MAES.ALIT_CODIGO
 		 , (SELECT I18N.ALIT_NOMBRE FROM IESC_ALINEACIONTIPOi18n_ALIT I18N
 		     WHERE I18N.ALIT_ID = MAES.ALIT_ID
 		         AND I18N.ALIT_IDIOMA = ?
 		         AND ? BETWEEN ALIT_FECHA_CREACION and coalesce(ALIT_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IESC_ALINEACIONTIPO_ALIT MAES
+		FROM iesc_alineaciontipo_alit MAES
 		order by MAES.ALIT_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_AMARRE" table="IEMD_TIPOAMARRE_TAMD" tempImp="false">
+	<sql id="TIPO_AMARRE" table="IEMD_TIPOAMARRE_TAMD" tempImp="false"
+		sqlId="SELECT tamd_id FROM iemd_tipoamarre_tamd">
 	<![CDATA[
 		SELECT
-			MAES.TAMD_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.tamd_id
+	            	AND trid_table_name = 'IEMD_TIPOAMARRE_TAMD') AS tamd_id
 			, MAES.TAMD_CODIGO
 		 , (SELECT I18N.TAMD_NOMBRE FROM IEMD_TIPOAMARREi18n_TAMD I18N
 		     WHERE I18N.TAMD_ID = MAES.TAMD_ID
 		         AND I18N.TAMD_IDIOMA = ?
 		         AND ? BETWEEN TAMD_FECHA_CREACION and coalesce(TAMD_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IEMD_TIPOAMARRE_TAMD MAES
+		FROM iemd_tipoamarre_tamd MAES
 		order by MAES.TAMD_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_ATRAQUE" table="IESC_ATRAQUETIPO_ATRT" tempImp="false">
+	<sql id="TIPO_ATRAQUE" table="IESC_ATRAQUETIPO_ATRT" tempImp="false"
+		sqlId="SELECT atrt_id FROM iesc_atraquetipo_atrt">
 	<![CDATA[
 		SELECT
-			MAES.ATRT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.atrt_id
+	            	AND trid_table_name = 'IESC_ATRAQUETIPO_ATRT') AS atrt_id
 			, MAES.ATRT_CODIGO
 		 , (SELECT I18N.ATRT_NOMBRE FROM IESC_ATRAQUETIPOi18n_ATRT I18N
 		     WHERE I18N.ATRT_ID = MAES.ATRT_ID
@@ -307,195 +359,229 @@
 	]]>
 	</sql>
 
-	<sql id="TIPO_BIEN_CONCESIONAL" table="IEXP_TIPOBIEN_TBIE" tempImp="false">
+	<sql id="TIPO_BIEN_CONCESIONAL" table="IEXP_TIPOBIEN_TBIE" tempImp="false"
+		sqlId="SELECT tbie_id FROM iexp_tipobien_tbie">
 	<![CDATA[
 		SELECT
-			MAES.TBIE_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.tbie_id
+	            	AND trid_table_name = 'IEXP_TIPOBIEN_TBIE') AS tbie_id
 			, MAES.TBIE_CODIGO
 		 , (SELECT I18N.TBIE_NOMBRE FROM IEXP_TIPOBIENi18n_TBIE I18N
 		     WHERE I18N.TBIE_ID = MAES.TBIE_ID
 		         AND I18N.TBIE_IDIOMA = ?
 		         AND ? BETWEEN TBIE_FECHA_CREACION and coalesce(TBIE_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IEXP_TIPOBIEN_TBIE MAES
+		FROM iexp_tipobien_tbie MAES
 		order by MAES.TBIE_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_BULTO" table="IMAN_TIPOBULTO_TBUL" tempImp="false">
+	<sql id="TIPO_BULTO" table="IMAN_TIPOBULTO_TBUL" tempImp="false"
+		sqlId="SELECT tbul_id FROM iman_tipobulto_tbul">
 	<![CDATA[
 		SELECT
-			MAES.TBUL_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.tbul_id
+	            	AND trid_table_name = 'IMAN_TIPOBULTO_TBUL') AS tbul_id
 			, MAES.TBUL_CODIGO
 		 , (SELECT I18N.TBUL_NOMBRE FROM IMAN_TIPOBULTOi18n_TBUL I18N
 		     WHERE I18N.TBUL_ID = MAES.TBUL_ID
 		         AND I18N.TBUL_IDIOMA = ?
 		         AND ? BETWEEN TBUL_FECHA_CREACION and coalesce(TBUL_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IMAN_TIPOBULTO_TBUL MAES
+		FROM iman_tipobulto_tbul MAES
 		order by MAES.TBUL_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_BUQUE_PESCA" table="IPES_BUQUETIPO_BTPE" tempImp="false">
+	<sql id="TIPO_BUQUE_PESCA" table="IPES_BUQUETIPO_BTPE" tempImp="false"
+		sqlId="SELECT btpe_id FROM ipes_buquetipo_btpe">
 	<![CDATA[
 		SELECT
-			MAES.BTPE_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.btpe_id
+	            	AND trid_table_name = 'IPES_BUQUETIPO_BTPE') AS btpe_id
 			, MAES.BTPE_CODIGO
 		 , (SELECT I18N.BTPE_NOMBRE FROM IPES_BUQUETIPOi18n_BTPE I18N
 		     WHERE I18N.BTPE_ID = MAES.BTPE_ID
 		         AND I18N.BTPE_IDIOMA = ?
 		         AND ? BETWEEN BTPE_FECHA_CREACION and coalesce(BTPE_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IPES_BUQUETIPO_BTPE MAES
+		FROM ipes_buquetipo_btpe MAES
 		order by MAES.BTPE_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_BUQUE_EEE" table="IEST_BUQUETIPOEEE_BUQT" tempImp="false">
+	<sql id="TIPO_BUQUE_EEE" table="IEST_BUQUETIPOEEE_BUQT" tempImp="false"
+		sqlId="SELECT BUQT_id FROM iest_buquetipoeee_buqt">
 	<![CDATA[
 		SELECT
-			MAES.BUQT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.buqt_id
+	            	AND trid_table_name = 'IEST_BUQUETIPOEEE_BUQT') AS buqt_id
 			, MAES.BUQT_CODIGO
 		 , (SELECT I18N.BUQT_NOMBRE FROM IEST_BUQUETIPOEEEi18n_BUQT I18N
 		     WHERE I18N.BUQT_ID = MAES.BUQT_ID
 		         AND I18N.BUQT_IDIOMA = ?
 		         AND ? BETWEEN BUQT_FECHA_CREACION and coalesce(BUQT_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IEST_BUQUETIPOEEE_BUQT MAES
+		FROM iest_buquetipoeee_buqt MAES
 		order by MAES.BUQT_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_CAPTURA_PESCA" table="IPES_CAPTURATIPO_CATI" tempImp="false">
+	<sql id="TIPO_CAPTURA_PESCA" table="IPES_CAPTURATIPO_CATI" tempImp="false"
+		sqlId="SELECT cati_id FROM ipes_capturatipo_cati">
 	<![CDATA[
 		SELECT
-			MAES.CATI_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.cati_id
+	            	AND trid_table_name = 'IPES_CAPTURATIPO_CATI') AS cati_id
 			, MAES.CATI_CODIGO
 		 , (SELECT I18N.CATI_NOMBRE FROM IPES_CAPTURATIPOi18n_CATI I18N
 		     WHERE I18N.CATI_ID = MAES.CATI_ID
 		         AND I18N.CATI_IDIOMA = ?
 		         AND ? BETWEEN CATI_FECHA_CREACION and coalesce(CATI_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IPES_CAPTURATIPO_CATI MAES
+		FROM ipes_capturatipo_cati MAES
 		order by MAES.CATI_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_CONTADOR" table="ISUM_TIPOCONTADOR_TCSU" tempImp="false">
+	<sql id="TIPO_CONTADOR" table="ISUM_TIPOCONTADOR_TCSU" tempImp="false"
+		sqlId="SELECT tcsu_id FROM isum_tipocontador_tcsu">
 	<![CDATA[
 		SELECT
-			MAES.TCSU_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.tcsu_id
+	            	AND trid_table_name = 'ISUM_TIPOCONTADOR_TCSU') AS tcsu_id
 			, MAES.TCSU_CODIGO
 		 , (SELECT I18N.TCSU_NOMBRE FROM ISUM_TIPOCONTADORi18n_TCSU I18N
 		     WHERE I18N.TCSU_ID = MAES.TCSU_ID
 		         AND I18N.TCSU_IDIOMA = ?
 		         AND ? BETWEEN TCSU_FECHA_CREACION and coalesce(TCSU_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM ISUM_TIPOCONTADOR_TCSU MAES
+		FROM isum_tipocontador_tcsu MAES
 		order by MAES.TCSU_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_DOCUMENTO_AEAT" table="IMAN_TIPODOCAEAT_ATTD"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT attd_id FROM iman_tipodocaeat_attd">
 	<![CDATA[
 		SELECT
-			MAES.ATTD_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.attd_id
+	            	AND trid_table_name = 'IMAN_TIPODOCAEAT_ATTD') AS attd_id
 			, MAES.ATTD_CODIGO
 		 , (SELECT I18N.ATTD_NOMBRE FROM IMAN_TIPODOCAEATi18n_ATTD I18N
 		     WHERE I18N.ATTD_ID = MAES.ATTD_ID
 		         AND I18N.ATTD_IDIOMA = ?
 		         AND ? BETWEEN ATTD_FECHA_CREACION and coalesce(ATTD_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IMAN_TIPODOCAEAT_ATTD MAES
+		FROM iman_tipodocaeat_attd MAES
 		order by MAES.ATTD_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_EMBARCACION" table="IEMD_TIPOEMBARCACION_TEMD"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT temd_id FROM iemd_tipoembarcacion_temd">
 	<![CDATA[
 		SELECT
-			MAES.TEMD_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.temd_id
+	            	AND trid_table_name = 'IEMD_TIPOEMBARCACION_TEMD') AS temd_id
 			, MAES.TEMD_CODIGO
 		 , (SELECT I18N.TEMD_NOMBRE FROM IEMD_TIPOEMBARCACIONi18n_TEMD I18N
 		     WHERE I18N.TEMD_ID = MAES.TEMD_ID
 		         AND I18N.TEMD_IDIOMA = ?
 		         AND ? BETWEEN TEMD_FECHA_CREACION and coalesce(TEMD_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IEMD_TIPOEMBARCACION_TEMD MAES
+		FROM iemd_tipoembarcacion_temd MAES
 		order by MAES.TEMD_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_EXENCION" table="IGEN_EXENCIONTIPO_EXET" tempImp="false">
+	<sql id="TIPO_EXENCION" table="IGEN_EXENCIONTIPO_EXET" tempImp="false"
+		sqlId="SELECT exet_id FROM igen_exenciontipo_exet">
 	<![CDATA[
 		SELECT
-			MAES.EXET_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.exet_id
+	            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') AS exet_id
 			, MAES.EXET_CODIGO
 		 , (SELECT I18N.EXET_NOMBRE FROM IGEN_EXENCIONTIPOi18n_EXET I18N
 		     WHERE I18N.EXET_ID = MAES.EXET_ID
 		         AND I18N.EXET_IDIOMA = ?
 		         AND ? BETWEEN EXET_FECHA_CREACION and coalesce(EXET_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IGEN_EXENCIONTIPO_EXET MAES
+		FROM igen_exenciontipo_exet MAES
 		order by MAES.EXET_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_MANIFIESTO_PESCA" table="IPES_MANIFIESTOTIPO_MPTI"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT mpti_id FROM ipes_manifiestotipo_mpti">
 	<![CDATA[
 		SELECT
-			MAES.MPTI_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.mpti_id
+	            	AND trid_table_name = 'IPES_MANIFIESTOTIPO_MPTI') AS mpti_id
 			, MAES.MPTI_CODIGO
 		 , (SELECT I18N.MPTI_NOMBRE FROM IPES_MANIFIESTOTIPOi18n_MPTI I18N
 		     WHERE I18N.MPTI_ID = MAES.MPTI_ID
 		         AND I18N.MPTI_IDIOMA = ?
 		         AND ? BETWEEN MPTI_FECHA_CREACION and coalesce(MPTI_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IPES_MANIFIESTOTIPO_MPTI MAES
+		FROM ipes_manifiestotipo_mpti MAES
 		order by MAES.MPTI_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_MANIOBRA_REMOLQUE" table="IPRA_MANIOBRATIPO_PRAT"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT prat_id FROM ipra_maniobratipo_prat">
 	<![CDATA[
 		SELECT
-			MAES.PRAT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.prat_id
+	            	AND trid_table_name = 'IPRA_MANIOBRATIPO_PRAT') AS prat_id
 			, MAES.PRAT_CODIGO
 		 , (SELECT I18N.PRAT_NOMBRE FROM IPRA_MANIOBRATIPOi18n_PRAT I18N
 		     WHERE I18N.PRAT_ID = MAES.PRAT_ID
 		         AND I18N.PRAT_IDIOMA = ?
 		         AND ? BETWEEN PRAT_FECHA_CREACION and coalesce(PRAT_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IPRA_MANIOBRATIPO_PRAT MAES
+		FROM ipra_maniobratipo_prat MAES
 		order by MAES.PRAT_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_MEDIO_AMARRE" table="IAMA_AMARREMEDIOTIPO_AMAT"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT amat_id FROM iama_amarremediotipo_amat">
 	<![CDATA[
 		SELECT
-			MAES.AMAT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.amat_id
+	            	AND trid_table_name = 'IAMA_AMARREMEDIOTIPO_AMAT') AS amat_id
 			, MAES.AMAT_CODIGO
 		 , (SELECT I18N.AMAT_NOMBRE FROM IAMA_AMARREMEDIOTIPOi18n_AMAT I18N
 		     WHERE I18N.AMAT_ID = MAES.AMAT_ID
 		         AND I18N.AMAT_IDIOMA = ?
 		         AND ? BETWEEN AMAT_FECHA_CREACION and coalesce(AMAT_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IAMA_AMARREMEDIOTIPO_AMAT MAES
+		FROM iama_amarremediotipo_amat MAES
 		order by MAES.AMAT_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_MERCANCIA" table="IESC_MERCANCIATIPO_MERT" tempImp="false">
+	<sql id="TIPO_MERCANCIA" table="IESC_MERCANCIATIPO_MERT" tempImp="false"
+		sqlId="SELECT mert_id FROM iesc_mercanciatipo_mert">
 	<![CDATA[
 		SELECT
-		    MAES.MERT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.mert_id
+	            	AND trid_table_name = 'IESC_MERCANCIATIPO_MERT') AS mert_id
 		    , MAES.MERT_CODIGO
 		    , (SELECT I18N.mert_NOMBRE FROM IESC_MERCANCIATIPOi18n_MERT I18N
 		        WHERE I18N.mert_ID = MAES.mert_ID
@@ -503,84 +589,94 @@
 		            AND ? BETWEEN mert_FECHA_CREACION and coalesce(mert_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
 		FROM
-		    IESC_MERCANCIATIPO_MERT MAES
+		    iesc_mercanciatipo_mert MAES
 		order by MAES.mert_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_MERCANCIA_EST" table="IEST_MERCANCIATIPO_EMET"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT emet_id FROM iest_mercanciatipo_emet">
 	<![CDATA[
 		SELECT
-			MAES.EMET_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.emet_id
+	            	AND trid_table_name = 'IEST_MERCANCIATIPO_EMET') AS emet_id
 			, MAES.EMET_CODIGO
 		 , (SELECT I18N.EMET_NOMBRE FROM IEST_MERCANCIATIPOi18n_EMET I18N
 		     WHERE I18N.EMET_ID = MAES.EMET_ID
 		         AND I18N.EMET_IDIOMA = ?
 		         AND ? BETWEEN EMET_FECHA_CREACION and coalesce(EMET_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IEST_MERCANCIATIPO_EMET MAES
+		FROM iest_mercanciatipo_emet MAES
 		order by MAES.EMET_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_MOVIMIENTO_AMARRE" table="IAMA_MOVIMIENTOTIPO_AMMT"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT ammt_id FROM iama_movimientotipo_ammt">
 	<![CDATA[
 		SELECT
-			MAES.AMMT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.ammt_id
+	            	AND trid_table_name = 'IAMA_MOVIMIENTOTIPO_AMMT') AS ammt_id
 			, MAES.AMMT_CODIGO
 		 , (SELECT I18N.AMMT_NOMBRE FROM IAMA_MOVIMIENTOTIPOi18n_AMMT I18N
 		     WHERE I18N.AMMT_ID = MAES.AMMT_ID
 		         AND I18N.AMMT_IDIOMA = ?
 		         AND ? BETWEEN AMMT_FECHA_CREACION and coalesce(AMMT_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IAMA_MOVIMIENTOTIPO_AMMT MAES
+		FROM iama_movimientotipo_ammt MAES
 		order by MAES.AMMT_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_MOVIMIENTO_REMOLQUE" table="IREM_MOVIMIENTOTIPO_REMT"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT remt_id FROM irem_movimientotipo_remt">
 	<![CDATA[
 		SELECT
-			MAES.REMT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.remt_id
+	            	AND trid_table_name = 'IREM_MOVIMIENTOTIPO_REMT') AS remt_id
 			, MAES.REMT_CODIGO
 		 , (SELECT I18N.REMT_NOMBRE FROM IREM_MOVIMIENTOTIPOi18n_REMT I18N
 		     WHERE I18N.REMT_ID = MAES.REMT_ID
 		         AND I18N.REMT_IDIOMA = ?
 		         AND ? BETWEEN REMT_FECHA_CREACION and coalesce(REMT_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IREM_MOVIMIENTOTIPO_REMT MAES
+		FROM irem_movimientotipo_remt MAES
 		order by MAES.REMT_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_OPERACION_SUPERFICIE" table="ISUP_TIPOOPERACION_TOSU"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT tosu_id FROM isup_tipooperacion_tosu">
 	<![CDATA[
 		SELECT
-			MAES.TOSU_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.tosu_id
+	            	AND trid_table_name = 'ISUP_TIPOOPERACION_TOSU') AS tosu_id
 			, MAES.TOSU_CODIGO
 		 , (SELECT I18N.TOSU_NOMBRE FROM ISUP_TIPOOPERACIONi18n_TOSU I18N
 		     WHERE I18N.TOSU_ID = MAES.TOSU_ID
 		         AND I18N.TOSU_IDIOMA = ?
 		         AND ? BETWEEN TOSU_FECHA_CREACION and coalesce(TOSU_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM ISUP_TIPOOPERACION_TOSU MAES
+		FROM isup_tipooperacion_tosu MAES
 		order by MAES.TOSU_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_ORGANIZACION" table="ICOM_ORGANIZACIONTIPO_ORGT"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT orgt_id FROM icom_organizaciontipo_orgt">
 	<![CDATA[
 		SELECT
-		    MAES.ORGT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.orgt_id
+	            	AND trid_table_name = 'ICOM_ORGANIZACIONTIPO_ORGT') AS orgt_id
 		    , I18N.ORGT_descripcion
 		    , MAES.ORGT_TIPO_BASE
 		    , I18N.ORGT_NOMBRE
-		FROM ICOM_ORGANIZACIONTIPO_ORGT MAES
+		FROM icom_organizaciontipo_orgt MAES
 		    INNER JOIN ICOM_ORGANIZACIONTIPOI18N_ORGT I18N ON
 		        I18N.ORGT_ID = MAES.ORGT_ID
 		        AND I18N.ORGT_IDIOMA = ?
@@ -590,94 +686,109 @@
 	</sql>
 
 	<sql id="TIPO_PRESTADOR_SERVICIO" table="ICOM_PRESTADORTIPO_PRET"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT pret_id FROM icom_prestadortipo_pret">
 	<![CDATA[
 		SELECT
-			MAES.PRET_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.pret_id
+	            	AND trid_table_name = 'ICOM_PRESTADORTIPO_PRET') AS pret_id
 			, MAES.PRET_TIPO_BASE
 		 , (SELECT I18N.PRET_NOMBRE FROM ICOM_PRESTADORTIPOi18n_PRET I18N
 		     WHERE I18N.PRET_ID = MAES.PRET_ID
 		         AND I18N.PRET_IDIOMA = ?
 		         AND ? BETWEEN PRET_FECHA_CREACION and coalesce(PRET_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM ICOM_PRESTADORTIPO_PRET MAES
+		FROM icom_prestadortipo_pret MAES
 		order by MAES.PRET_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_SERVICIO_TRAFICO" table="IESC_SERVICIOTIPO_SETT"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT sett_id FROM iesc_serviciotipo_sett">
 	<![CDATA[
 		SELECT
-			MAES.SETT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.sett_id
+	            	AND trid_table_name = 'IESC_SERVICIOTIPO_SETT') AS sett_id
 			, MAES.SETT_CODIGO
 		 , (SELECT I18N.SETT_NOMBRE FROM IESC_SERVICIOTIPOi18n_SETT I18N
 		     WHERE I18N.SETT_ID = MAES.SETT_ID
 		         AND I18N.SETT_IDIOMA = ?
 		         AND ? BETWEEN SETT_FECHA_CREACION and coalesce(SETT_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IESC_SERVICIOTIPO_SETT MAES
+		FROM iesc_serviciotipo_sett MAES
 		order by MAES.SETT_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_SUPERFICIE" table="ISUP_TIPOSUPERFICIE_TSUP" tempImp="false">
+	<sql id="TIPO_SUPERFICIE" table="ISUP_TIPOSUPERFICIE_TSUP" tempImp="false"
+		sqlId="SELECT tsup_id FROM isup_tiposuperficie_tsup">
 	<![CDATA[
 		SELECT
-			MAES.TSUP_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.tsup_id
+	            	AND trid_table_name = 'ISUP_TIPOSUPERFICIE_TSUP') AS tsup_id
 			, MAES.TSUP_CODIGO
 		 , (SELECT I18N.TSUP_NOMBRE FROM ISUP_TIPOSUPERFICIEi18n_TSUP I18N
 		     WHERE I18N.TSUP_ID = MAES.TSUP_ID
 		         AND I18N.TSUP_IDIOMA = ?
 		         AND ? BETWEEN TSUP_FECHA_CREACION and coalesce(TSUP_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM ISUP_TIPOSUPERFICIE_TSUP MAES
+		FROM isup_tiposuperficie_tsup MAES
 		order by MAES.TSUP_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_SUPERFICIE_BIEN" table="IEXP_TIPOSUPERFICIEB_TSEX"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT tsex_id FROM iexp_tiposuperficieb_tsex">
 	<![CDATA[
 		SELECT
-			MAES.TSEX_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.tsex_id
+	            	AND trid_table_name = 'IEXP_TIPOSUPERFICIEB_TSEX') AS tsex_id
 			, MAES.TSEX_CODIGO
 		 , (SELECT I18N.TSEX_NOMBRE FROM IEXP_TIPOSUPERFICIEBi18n_TSEX I18N
 		     WHERE I18N.TSEX_ID = MAES.TSEX_ID
 		         AND I18N.TSEX_IDIOMA = ?
 		         AND ? BETWEEN TSEX_FECHA_CREACION and coalesce(TSEX_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IEXP_TIPOSUPERFICIEB_TSEX MAES
+		FROM iexp_tiposuperficieb_tsex MAES
 		order by MAES.TSEX_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="UNIDAD_SUPERFICIE" table="ISUP_UNIDAD_UNIS" tempImp="false">
+	<sql id="UNIDAD_SUPERFICIE" table="ISUP_UNIDAD_UNIS" tempImp="false"
+		sqlId="SELECT unis_id FROM isup_unidad_unis">
 	<![CDATA[
 		SELECT
-			MAES.UNIS_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.unis_id
+	            	AND trid_table_name = 'ISUP_UNIDAD_UNIS') AS unis_id
 			, MAES.UNIS_CODIGO
 		 , (SELECT I18N.UNIS_NOMBRE FROM ISUP_UNIDADi18n_UNIS I18N
 		     WHERE I18N.UNIS_ID = MAES.UNIS_ID
 		         AND I18N.UNIS_IDIOMA = ?
 		         AND ? BETWEEN UNIS_FECHA_CREACION and coalesce(UNIS_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM ISUP_UNIDAD_UNIS MAES
+		FROM isup_unidad_unis MAES
 		order by MAES.UNIS_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="ZONA_PESCA" table="IPES_ZONAPESCA_ZOPE" tempImp="false">
+	<sql id="ZONA_PESCA" table="IPES_ZONAPESCA_ZOPE" tempImp="false"
+		sqlId="SELECT zope_id FROM ipes_zonapesca_zope">
 	<![CDATA[
 		SELECT
-			MAES.ZOPE_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.zope_id
+	            	AND trid_table_name = 'IPES_ZONAPESCA_ZOPE') AS zope_id
 			, MAES.ZOPE_CODIGO
 		 , (SELECT I18N.ZOPE_NOMBRE FROM IPES_ZONAPESCAi18n_ZOPE I18N
 		     WHERE I18N.ZOPE_ID = MAES.ZOPE_ID
 		         AND I18N.ZOPE_IDIOMA = ?
 		         AND ? BETWEEN ZOPE_FECHA_CREACION and coalesce(ZOPE_FECHA_FIN, ?)
 		 ) AS I18N_NOMBRE
-		FROM IPES_ZONAPESCA_ZOPE MAES
+		FROM ipes_zonapesca_zope MAES
 		order by MAES.ZOPE_ES_ACTIVO desc
 	]]>
 	</sql>
@@ -687,21 +798,26 @@
 	<!-- // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS // MAESTROS SIN DEPENDENCIAS
 		CON DATOS ASOCIADOS // -->
 	<sql id="TIPO_BUQUE_GT_EEE" table="IEST_BUQUETIPOGTEEE_BGTE"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT bgte_id FROM iest_buquetipogteee_bgte">
     <![CDATA[
 		SELECT
-		    MAES.BGTE_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.bgte_id
+	            	AND trid_table_name = 'IEST_BUQUETIPOGTEEE_BGTE') AS bgte_id
 		    , MAES.BGTE_CODIGO
 		    , MAES.BGTE_LIMITE_INFERIOR
-		FROM IEST_BUQUETIPOGTEEE_BGTE MAES
+		FROM iest_buquetipogteee_bgte MAES
 		order by MAES.BGTE_es_activo desc
     ]]>
 	</sql>
 
-	<sql id="ACUERDO" table="IESC_ACUERDO_ACUE" tempImp="true">
+	<sql id="ACUERDO" table="IESC_ACUERDO_ACUE" tempImp="true"
+		sqlId="SELECT acue_id FROM iesc_acuerdo_acue">
 	<![CDATA[
 		SELECT
-		    MAES.ACUE_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.acue_id
+	            	AND trid_table_name = 'IESC_ACUERDO_ACUE') AS acue_id
 		    , MAES.ACUE_CODIGO
 		    , maes.acue_fecha_comienzo
 		    , MAES.ACUE_FECHA_FINAL
@@ -713,7 +829,7 @@
 		            AND I18N.ACUE_IDIOMA = ?
 		            AND ? BETWEEN ACUE_FECHA_CREACION AND COALESCE(ACUE_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IESC_ACUERDO_ACUE MAES
+		FROM iesc_acuerdo_acue MAES
 		    INNER JOIN IESC_ACUERDOTEMP_ACUE TEMP ON
 				TEMP.ACUE_ID = MAES.ACUE_ID
 				AND ? BETWEEN TEMP.acue_FECHA_CREACION AND COALESCE(TEMP.acue_FECHA_FIN, ?)
@@ -721,10 +837,13 @@
 	]]>
 	</sql>
 
-	<sql id="CONVENIO" table="IESC_CONVENIO_CONV" tempImp="false">
+	<sql id="CONVENIO" table="IESC_CONVENIO_CONV" tempImp="false"
+		sqlId="SELECT conv_id FROM iesc_convenio_conv">
     <![CDATA[
         SELECT
-            maes.conv_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.conv_id
+	            	AND trid_table_name = 'IESC_CONVENIO_CONV') AS conv_id
             , maes.conv_codigo
             , temp.conv_fecha_inicio_convenio
             , temp.conv_fecha_fin_convenio
@@ -744,21 +863,27 @@
     ]]>
 	</sql>
 
-	<sql id="MARCA_VEHICULO" table="IMAN_MARCAVEHICULO_VMAR" tempImp="false">
+	<sql id="MARCA_VEHICULO" table="IMAN_MARCAVEHICULO_VMAR" tempImp="false"
+		sqlId="SELECT vmar_id FROM iman_marcavehiculo_vmar">
 	<![CDATA[
 		SELECT
-			MAES.vmar_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.vmar_id
+	            	AND trid_table_name = 'IMAN_MARCAVEHICULO_VMAR') AS vmar_id
 			, MAES.vmar_codigo
 			, MAES.vmar_marca
-		FROM IMAN_MARCAVEHICULO_VMAR MAES
+		FROM iman_marcavehiculo_vmar MAES
 		order by MAES.VMAR_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="MERCANCIAS_PELIGROSAS" table="IMAN_MMPP_MMPP" tempImp="false">
+	<sql id="MERCANCIAS_PELIGROSAS" table="IMAN_MMPP_MMPP" tempImp="false"
+		sqlId="SELECT mmpp_id FROM iman_mmpp_mmpp">
 	<![CDATA[
 		SELECT
-		    MAES.MMPP_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.mmpp_id
+	            	AND trid_table_name = 'IMAN_MMPP_MMPP') AS mmpp_id
 		    , MAES.MMPP_NUMERO_ONU || '-' || MAES.MMPP_CLASE || '-' || MAES.MMPP_numero_version as maes_codigo
 		    , MAES.MMPP_NUMERO_ONU
 		    , MAES.MMPP_CLASE
@@ -768,16 +893,18 @@
 		            AND I18N.MMPP_IDIOMA = ?
 		            AND ? BETWEEN MMPP_FECHA_CREACION and coalesce(MMPP_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IMAN_MMPP_MMPP MAES
+		FROM iman_mmpp_mmpp MAES
 		order by MAES.MMPP_es_activo desc
 	]]>
 	</sql>
 
 	<sql id="MODO_TRANSPORTE_EDI" table="IMAN_MODOTRANSPEDI_TEDI"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT tedi_id FROM iman_modotranspedi_tedi">
 	<![CDATA[
 		SELECT
-		    MAES.TEDI_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.tedi_id
+	            	AND trid_table_name = 'IMAN_MODOTRANSPEDI_TEDI') AS tedi_id
 		    , MAES.TEDI_codigo
 		    , MAES.TEDI_tipo
 		    , (SELECT I18N.TEDI_NOMBRE FROM IMAN_MODOTRANSPEDIi18n_TEDI I18N
@@ -785,37 +912,46 @@
 		            AND I18N.TEDI_IDIOMA = ?
 		            AND ? BETWEEN TEDI_FECHA_CREACION and coalesce(TEDI_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IMAN_MODOTRANSPEDI_TEDI MAES
+		FROM iman_modotranspedi_tedi MAES
 		order by MAES.TEDI_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="NAVIERA" table="IESC_NAVIERA_NAVI" tempImp="false">
+	<sql id="NAVIERA" table="IESC_NAVIERA_NAVI" tempImp="false"
+		sqlId="SELECT navi_id FROM iesc_naviera_navi">
 	<![CDATA[
 		SELECT
-			MAES.NAVI_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.navi_id
+	            	AND trid_table_name = 'IESC_NAVIERA_NAVI') AS navi_id
 			, MAES.NAVI_CODIGO
 			, MAES.NAVI_DESCRIPCION
-		FROM IESC_NAVIERA_NAVI MAES
+		FROM iesc_naviera_navi MAES
 		order by MAES.NAVI_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="RECEPTOR_MERCANCIA" table="IMAN_RECEPTOR_RECE" tempImp="false">
+	<sql id="RECEPTOR_MERCANCIA" table="IMAN_RECEPTOR_RECE" tempImp="false"
+		sqlId="SELECT rece_id FROM iman_receptor_rece">
 	<![CDATA[
 		SELECT
-			MAES.RECE_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.rece_id
+	            	AND trid_table_name = 'IMAN_RECEPTOR_RECE') AS rece_id
 			, MAES.RECE_CODIGO
 			, MAES.RECE_DESCRIPCION
-		FROM IMAN_RECEPTOR_RECE MAES
+		FROM iman_receptor_rece MAES
 		order by MAES.RECE_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_ACTIVIDAD" table="IESC_ACTIVIDADTIPO_ACTT" tempImp="false">
+	<sql id="TIPO_ACTIVIDAD" table="IESC_ACTIVIDADTIPO_ACTT" tempImp="false"
+		sqlId="SELECT actt_id FROM iesc_actividadtipo_actt">
 	<![CDATA[
 		SELECT
-		    MAES.ACTT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.actt_id
+	            	AND trid_table_name = 'IESC_ACTIVIDADTIPO_ACTT') AS actt_id
 		    , MAES.ACTT_CODIGO
 		    , MAES.ACTT_codigo_est
 		    , (SELECT I18N.ACTT_NOMBRE FROM IESC_ACTIVIDADTIPOi18n_ACTT I18N
@@ -823,15 +959,18 @@
 		            AND I18N.ACTT_IDIOMA = ?
 		            AND ? BETWEEN ACTT_FECHA_CREACION and coalesce(ACTT_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IESC_ACTIVIDADTIPO_ACTT MAES
+		FROM iesc_actividadtipo_actt MAES
 		order by MAES.ACTT_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_BUQUE_GT" table="IEST_BUQUETIPOGT_BUGT" tempImp="false">
+	<sql id="TIPO_BUQUE_GT" table="IEST_BUQUETIPOGT_BUGT" tempImp="false"
+		sqlId="SELECT bugt_id FROM iest_buquetipogt_bugt">
 	<![CDATA[
 		SELECT
-		    MAES.BUGT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.bugt_id
+	            	AND trid_table_name = 'IEST_BUQUETIPOGT_BUGT') AS bugt_id
 		    , MAES.BUGT_CODIGO
 		    , MAES.BUGT_LIMITE_SUPERIOR
 		    , (SELECT I18N.BUGT_NOMBRE FROM IEST_BUQUETIPOGTI18N_BUGT I18N
@@ -839,16 +978,18 @@
 		            AND I18N.BUGT_IDIOMA = ?
 		            AND ? BETWEEN BUGT_FECHA_CREACION and coalesce(BUGT_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IEST_BUQUETIPOGT_BUGT MAES
+		FROM iest_buquetipogt_bugt MAES
 		order by MAES.BUGT_es_activo desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_CERTIFICADO" table="IESC_CERTIFICADOTIPO_CERT"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT cert_id FROM iesc_certificadotipo_cert">
 	<![CDATA[
 		SELECT
-			MAES.CERT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.cert_id
+	            	AND trid_table_name = 'IESC_CERTIFICADOTIPO_CERT') AS cert_id
 			, MAES.CERT_CODIGO
 			, MAES.CERT_CODIGO_edi
 			, (SELECT I18N.CERT_NOMBRE
@@ -858,14 +999,17 @@
 					AND I18N.CERT_IDIOMA = ?
 					AND ? BETWEEN CERT_FECHA_CREACION and coalesce(CERT_FECHA_FIN,	?)
 			) AS I18N_NOMBRE
-		FROM IESC_CERTIFICADOTIPO_CERT MAES
+		FROM iesc_certificadotipo_cert MAES
 	]]>
 	</sql>
 
-	<sql id="TIPO_ERROR_EDI" table="IGEN_ERROREDITIPO_ETED" tempImp="false">
+	<sql id="TIPO_ERROR_EDI" table="IGEN_ERROREDITIPO_ETED" tempImp="false"
+		sqlId="SELECT eted_id FROM igen_erroreditipo_eted">
 	<![CDATA[
 		SELECT
-		    MAES.ETED_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.eted_id
+	            	AND trid_table_name = 'IGEN_ERROREDITIPO_ETED') AS eted_id
 		    , MAES.ETED_CODIGO
 		    , MAES.ETED_NIVEL
 		    , (SELECT I18N.ETED_NOMBRE FROM IGEN_ERROREDITIPOI18N_ETED I18N
@@ -873,15 +1017,18 @@
 		            AND I18N.ETED_IDIOMA = ?
 		            AND ? BETWEEN ETED_FECHA_CREACION and coalesce(ETED_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IGEN_ERROREDITIPO_ETED MAES
+		FROM igen_erroreditipo_eted MAES
 		order by MAES.ETED_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_IVA" table="IFAC_IVATIPO_IVAT" tempImp="false">
+	<sql id="TIPO_IVA" table="IFAC_IVATIPO_IVAT" tempImp="false"
+		sqlId="SELECT ivat_id FROM ifac_ivatipo_ivat">
 	<![CDATA[
 		SELECT
-		    MAES.IVAT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.ivat_id
+	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') AS ivat_id
 		    , MAES.IVAT_CODIGO
 		    , MAES.IVAT_FECHA_INICIO
 		    , MAES.IVAT_FECHA_FIN
@@ -891,16 +1038,18 @@
 		            AND I18N.IVAT_IDIOMA = ?
 		            AND ? BETWEEN IVAT_FECHA_CREACION and coalesce(IVAT_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IFAC_IVATIPO_IVAT MAES
-		order by MAES.IVAT_es_activo desc
+		FROM ifac_ivatipo_ivat MAES
+		order by MAES.IVAT_CODIGO, MAES.IVAT_es_activo desc, MAES.IVAT_FECHA_INICIO desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_OPERACION_PESCA" table="IPES_OPERACIONTIPO_TOPP"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT topp_id FROM ipes_operaciontipo_topp">
 	<![CDATA[
 		SELECT
-		    MAES.TOPP_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.topp_id
+	            	AND trid_table_name = 'IPES_OPERACIONTIPO_TOPP') AS topp_id
 		    , MAES.TOPP_CODIGO
 		    , MAES.TOPP_ES_GENERADA_TASA
 		    , to_char(MAES.TOPP_CODIGO_EXENCION)
@@ -910,15 +1059,18 @@
 		            AND I18N.TOPP_IDIOMA = ?
 		            AND ? BETWEEN TOPP_FECHA_CREACION and coalesce(TOPP_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IPES_OPERACIONTIPO_TOPP MAES
+		FROM ipes_operaciontipo_topp MAES
 		order by MAES.TOPP_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_RESIDUO" table="IESC_RESIDUOSTIPO_REST" tempImp="false">
+	<sql id="TIPO_RESIDUO" table="IESC_RESIDUOSTIPO_REST" tempImp="false"
+		sqlId="SELECT rest_id FROM iesc_residuostipo_rest">
 	<![CDATA[
 		SELECT
-		    MAES.REST_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.rest_id
+	            	AND trid_table_name = 'IESC_RESIDUOSTIPO_REST') AS rest_id
 		    , MAES.REST_CODIGO
 		    , MAES.REST_ES_FACTURACION
 		    , MAES.REST_ANEXO_MARPOL
@@ -928,7 +1080,7 @@
 		            AND I18N.REST_IDIOMA = ?
 		            AND ? BETWEEN REST_FECHA_CREACION and coalesce(REST_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IESC_RESIDUOSTIPO_REST MAES
+		FROM iesc_residuostipo_rest MAES
 		order by MAES.REST_es_activo desc
 	]]>
 	</sql>
@@ -940,10 +1092,13 @@
 	<!-- // MAESTROS CON DEPENDENCIAS // MAESTROS CON DEPENDENCIAS // -->
 	<!-- // MAESTROS CON DEPENDENCIAS // MAESTROS CON DEPENDENCIAS // -->
 
-	<sql id="TIPO_GASTO" table="ISUM_TIPOGASTO_TGSU" tempImp="false">
+	<sql id="TIPO_GASTO" table="ISUM_TIPOGASTO_TGSU" tempImp="false"
+		sqlId="SELECT tgsu_id FROM isum_tipogasto_tgsu">
     <![CDATA[
 		SELECT
-	        maes.TGSU_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.tgsu_id
+	            	AND trid_table_name = 'ISUM_TIPOGASTO_TGSU') AS tgsu_id
 	        , maes.TGSU_codigo
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.tgsu_ivat_id
@@ -953,15 +1108,18 @@
 		            AND I18N.TGSU_IDIOMA = ?
 		            AND ? BETWEEN TGSU_FECHA_CREACION and coalesce(TGSU_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM ISUM_TIPOGASTO_TGSU MAES
+		FROM isum_tipogasto_tgsu MAES
 	    order by MAES.TGSU_ES_ACTIVO desc
     ]]>
 	</sql>
 
-	<sql id="TIPO_NAVEGACION" table="IGEN_NAVEGACIONTIPO_NAVT" tempImp="false">
+	<sql id="TIPO_NAVEGACION" table="IGEN_NAVEGACIONTIPO_NAVT" tempImp="false"
+		sqlId="SELECT navt_id FROM igen_navegaciontipo_navt">
     <![CDATA[
         SELECT
-        	maes.navt_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.navt_id
+	            	AND trid_table_name = 'IGEN_NAVEGACIONTIPO_NAVT') AS navt_id
 	        , maes.navt_codigo
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.navt_ivat_id
@@ -971,15 +1129,18 @@
                     AND I18N.NAVT_IDIOMA = ?
                     AND ? BETWEEN NAVT_FECHA_CREACION and coalesce(NAVT_FECHA_FIN, ?)
             ) AS I18N_NOMBRE
-        FROM IGEN_NAVEGACIONTIPO_NAVT MAES
+        FROM igen_navegaciontipo_navt MAES
         order by MAES.NAVT_ES_ACTIVO desc
     ]]>
 	</sql>
 
-	<sql id="PAIS" table="IGEN_PAIS_PAIS" tempImp="false">
+	<sql id="PAIS" table="IGEN_PAIS_PAIS" tempImp="false"
+		sqlId="SELECT pais_id FROM igen_pais_pais">
 	<![CDATA[
 		SELECT
-			MAES.PAIS_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.pais_id
+	            	AND trid_table_name = 'IGEN_PAIS_PAIS') AS pais_id
 			, MAES.PAIS_ISO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.pais_amun_id
@@ -992,15 +1153,18 @@
 		        	AND I18N.PAIS_IDIOMA = ?
 		         	AND ? BETWEEN PAIS_FECHA_CREACION AND COALESCE(PAIS_FECHA_FIN, ?)
 		 	) AS I18N_NOMBRE
-		FROM IGEN_PAIS_PAIS MAES
+		FROM igen_pais_pais MAES
 		order by MAES.PAIS_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="PROVINCIA" table="IGEN_PROVINCIA_PROV" tempImp="false">
+	<sql id="PROVINCIA" table="IGEN_PROVINCIA_PROV" tempImp="false"
+		sqlId="SELECT prov_id FROM igen_provincia_prov">
 	<![CDATA[
 		SELECT
-			maes.prov_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.prov_id
+	            	AND trid_table_name = 'IGEN_PROVINCIA_PROV') AS prov_id
 			, maes.prov_codigo
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.prov_pais_id
@@ -1010,15 +1174,18 @@
 			    	AND I18N.PROV_IDIOMA =  ?
 			    	AND ? BETWEEN PROV_FECHA_CREACION and coalesce(PROV_FECHA_FIN,  ?)
 			) AS I18N_NOMBRE
-		FROM IGEN_PROVINCIA_PROV MAES
+		FROM igen_provincia_prov MAES
 		ORDER BY MAES.PROV_ES_ACTIVO DESC
 	]]>
 	</sql>
 
-	<sql id="MUNICIPIO" table="IGEN_MUNICIPIO_MUNI" tempImp="false">
+	<sql id="MUNICIPIO" table="IGEN_MUNICIPIO_MUNI" tempImp="false"
+		sqlId="SELECT muni_id FROM igen_municipio_muni">
 	<![CDATA[
 		SELECT
-			maes.muni_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.muni_id
+	            	AND trid_table_name = 'IGEN_MUNICIPIO_MUNI') AS muni_id
 		    , (
 		        SELECT MAES.PROV_CODIGO
 		        FROM IGEN_PROVINCIA_PROV MAES
@@ -1034,16 +1201,18 @@
 			        AND I18N.muni_IDIOMA = ?
 			        AND ? BETWEEN muni_FECHA_CREACION and coalesce(muni_FECHA_FIN, ?)
 			) AS I18N_NOMBRE
-		FROM IGEN_municipio_muni MAES
+		FROM igen_municipio_muni MAES
 		ORDER BY MAES.muni_ES_ACTIVO DESC
 	]]>
 	</sql>
 
 	<sql id="TIPO_ATRAQUE_EDI" table="IESC_RELACIONATRAQUETIPO_RATT"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT ratt_id FROM iesc_relacionatraquetipo_ratt">
     <![CDATA[
         select
-        	ratt_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = ratt_id
+	            	AND trid_table_name = 'IESC_RELACIONATRAQUETIPO_RATT') AS ratt_id
             , (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_1)
               || (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_2)
               || (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_3)
@@ -1062,16 +1231,18 @@
                 AS texto
         from (
             select ? as idioma, ? as FREFERENCIA, ? as fref, ratt.*
-            from IESC_RELACIONATRAQUETIPO_RATT ratt
+            from iesc_relacionatraquetipo_ratt ratt
         ) sql
     ]]>
 	</sql>
 
 	<sql id="SUBTIPO_RESIDUO" table="IESC_RESIDUOSSUBTIPO_RESS"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT ress_id FROM iesc_residuossubtipo_ress">
 	<![CDATA[
 		SELECT
-			maes.ress_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.ress_id
+	            	AND trid_table_name = 'IESC_RESIDUOSSUBTIPO_RESS') AS ress_id
 		    , (SELECT REST_CODIGO FROM IESC_RESIDUOSTIPO_REST
 		        WHERE REST_ID = RESS_REST_ID) ||
 		    MAES.RESS_CODIGO AS CODIGO
@@ -1085,16 +1256,18 @@
 		            AND ? BETWEEN RESS_FECHA_CREACION and coalesce(RESS_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
 		FROM
-		    IESC_RESIDUOSSUBTIPO_RESS MAES
+		    iesc_residuossubtipo_ress MAES
 		order by MAES.RESS_ES_ACTIVO desc
 	]]>
 	</sql>
 
 	<sql id="TIPO_OPERACION_MERCANCIA" table="IGEN_OPERACIONTIPO_OPET"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT opet_id FROM igen_operaciontipo_opet">
 	<![CDATA[
 		SELECT
-		    MAES.OPET_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.opet_id
+	            	AND trid_table_name = 'IGEN_OPERACIONTIPO_OPET') AS opet_id
 		    , MAES.OPET_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.opet_ivat_id
@@ -1111,10 +1284,12 @@
 	</sql>
 
 	<sql id="TIPO_ACTIVIDAD_EDI" table="IESC_ACTIVIDADEDITIPO_ACET"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT acet_id FROM iesc_actividadeditipo_acet">
 	<![CDATA[
 		SELECT
-		    MAES.ACET_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.acet_id
+	            	AND trid_table_name = 'IESC_ACTIVIDADEDITIPO_ACET') AS acet_id
 		    , MAES.ACET_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.acet_actt_id
@@ -1125,15 +1300,18 @@
 		            AND ? BETWEEN ACET_FECHA_CREACION and coalesce(ACET_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
 		FROM
-		    IESC_ACTIVIDADEDITIPO_ACET MAES
+		    iesc_actividadeditipo_acet MAES
 		order by MAES.ACET_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="FAMILIA_ESPECIE_PESCA" table="IPES_FAMILIA_FAPE" tempImp="false">
+	<sql id="FAMILIA_ESPECIE_PESCA" table="IPES_FAMILIA_FAPE" tempImp="false"
+		sqlId="SELECT fape_id FROM ipes_familia_fape">
 	<![CDATA[
 		SELECT
-      		MAES.FAPE_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.fape_id
+	            	AND trid_table_name = 'IPES_FAMILIA_FAPE') AS fape_id
       		, MAES.FAPE_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.fape_gfpe_id
@@ -1145,15 +1323,18 @@
 		         	AND ? BETWEEN FAPE_FECHA_CREACION AND COALESCE(FAPE_FECHA_FIN, ?)
 		 	) AS i18n_nombre
 		FROM
-			IPES_FAMILIA_FAPE MAES
+			ipes_familia_fape MAES
 		order by MAES.FAPE_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="ESPECIE_PESCA" tempImp="false">
+	<sql id="ESPECIE_PESCA" table="IPES_ESPECIEPESCA_ESPE" tempImp="false"
+		sqlId="SELECT espe_id FROM ipes_especiepesca_espe">
 	<![CDATA[
 		SELECT
-      		MAES.ESPE_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.espe_id
+	            	AND trid_table_name = 'IPES_ESPECIEPESCA_ESPE') AS espe_id
       		, MAES.ESPE_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.espe_familia_id
@@ -1168,15 +1349,18 @@
 		         	AND ? BETWEEN ESPE_FECHA_CREACION AND COALESCE(ESPE_FECHA_FIN, ?)
 		 	) AS i18n_nombre
 		FROM
-			IPES_ESPECIEPESCA_ESPE MAES
+			ipes_especiepesca_espe MAES
 		order by MAES.ESPE_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="TERMINAL" table="IMAN_TERMINAL_TERM" tempImp="true">
+	<sql id="TERMINAL" table="IMAN_TERMINAL_TERM" tempImp="true"
+		sqlId="SELECT term_id FROM iman_terminal_term">
 	<![CDATA[
 		SELECT
-			MAES.TERM_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.term_id
+	            	AND trid_table_name = 'IMAN_TERMINAL_TERM') AS term_id
 			, SUBSTR(MAES.TERM_CODIGO, 1, 1)
 			, SUBSTR(MAES.TERM_CODIGO, 2)
 		    , TEMP.TERM_ES_CONCESION
@@ -1190,7 +1374,7 @@
 		         	AND ? BETWEEN TERM_FECHA_CREACION AND COALESCE(TERM_FECHA_FIN, ?)
 		 	) AS i18n_nombre
 		FROM
-			IMAN_TERMINAL_TERM MAES
+			iman_terminal_term MAES
 		 	JOIN IMAN_TERMINALTEMP_TERM TEMP ON
 		    	TEMP.TERM_ID = MAES.TERM_ID
 		     	AND ? BETWEEN TEMP.TERM_FECHA_CREACION AND COALESCE(TEMP.TERM_FECHA_FIN, ?)
@@ -1198,10 +1382,13 @@
 	]]>
 	</sql>
 
-	<sql id="TIPO_BUQUE_EST" table="IEST_BUQUETIPOEST_BUQT" tempImp="false">
+	<sql id="TIPO_BUQUE_EST" table="IEST_BUQUETIPOEST_BUQT" tempImp="false"
+		sqlId="SELECT buqt_id FROM iest_buquetipoest_buqt">
 	<![CDATA[
 		SELECT
-		    MAES.BUQT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.buqt_id
+	            	AND trid_table_name = 'IEST_BUQUETIPOEST_BUQT') AS buqt_id
 		    , MAES.BUQT_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.buqt_tipo_eee_id
@@ -1211,15 +1398,18 @@
 		            AND I18N.BUQT_IDIOMA = ?
 		            AND ? BETWEEN BUQT_FECHA_CREACION and coalesce(BUQT_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IEST_BUQUETIPOEST_BUQT MAES
+		FROM iest_buquetipoest_buqt MAES
 		order by maes.buqt_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_BUQUE" table="IGEN_BUQUETIPO_BUQT" tempImp="false">
+	<sql id="TIPO_BUQUE" table="IGEN_BUQUETIPO_BUQT" tempImp="false"
+		sqlId="SELECT buqt_id FROM igen_buquetipo_buqt">
 	<![CDATA[
 		SELECT
-		    MAES.BUQT_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.buqt_id
+	            	AND trid_table_name = 'IGEN_BUQUETIPO_BUQT') AS buqt_id
 		    , MAES.BUQT_CODIGO
 		    , coalesce(MAES.BUQT_ES_RORO, 0)
 		    , coalesce(MAES.BUQT_ES_COMERCIAL, 0)
@@ -1231,15 +1421,18 @@
 		            AND I18N.BUQT_IDIOMA = ?
 		            AND ? BETWEEN BUQT_FECHA_CREACION and coalesce(BUQT_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM IGEN_BUQUETIPO_BUQT MAES
+		FROM igen_buquetipo_buqt MAES
 		order by maes.buqt_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_BUQUE_EDI" table="IESC_BUQUETIPOEDI_BQTE" tempImp="false">
+	<sql id="TIPO_BUQUE_EDI" table="IESC_BUQUETIPOEDI_BQTE" tempImp="false"
+		sqlId="SELECT bqte_id FROM iesc_buquetipoedi_bqte">
 	<![CDATA[
 		SELECT
-		    MAES.bqte_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.bqte_id
+	            	AND trid_table_name = 'IESC_BUQUETIPOEDI_BQTE') AS bqte_id
 		    , MAES.bqte_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.bqte_tipo_id
@@ -1250,15 +1443,18 @@
 		            AND ? BETWEEN BQTE_FECHA_CREACION and coalesce(BQTE_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
 		FROM
-		    IESC_BUQUETIPOEDI_BQTE MAES
+		    iesc_buquetipoedi_bqte MAES
 		order by maes.BQTE_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="TIPO_SUMINISTRO" table="ISUM_TIPOSUMINISTRO_TSUM" tempImp="false">
+	<sql id="TIPO_SUMINISTRO" table="ISUM_TIPOSUMINISTRO_TSUM" tempImp="false"
+		sqlId="SELECT tsum_id FROM isum_tiposuministro_tsum">
 	<![CDATA[
 		SELECT
-		    MAES.TSUM_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.tsum_id
+	            	AND trid_table_name = 'ISUM_TIPOSUMINISTRO_TSUM') AS tsum_id
 		    , MAES.TSUM_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.tsum_ivat_id
@@ -1269,15 +1465,18 @@
 		            AND I18N.TSUM_IDIOMA = ?
 		            AND ? BETWEEN TSUM_FECHA_CREACION and coalesce(TSUM_FECHA_FIN, ?)
 		    ) AS I18N_NOMBRE
-		FROM ISUM_TIPOSUMINISTRO_TSUM MAES
+		FROM isum_tiposuministro_tsum MAES
 		order by MAES.TSUM_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="NATURALEZA" table="IEST_NATURALEZA_NATU" tempImp="false">
+	<sql id="NATURALEZA" table="IEST_NATURALEZA_NATU" tempImp="false"
+		sqlId="SELECT natu_id FROM iest_naturaleza_natu">
 	<![CDATA[
 		SELECT
-			MAES.NATU_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.natu_id
+	            	AND trid_table_name = 'IEST_NATURALEZA_NATU') AS natu_id
 			, MAES.NATU_codigo
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.natu_grupo_id
@@ -1288,15 +1487,18 @@
 			    	AND I18N.NATU_IDIOMA = ?
 			        AND ? BETWEEN NATU_FECHA_CREACION AND COALESCE(NATU_FECHA_FIN, ?)
 			) AS I18N_NOMBRE
-		FROM IEST_NATURALEZA_NATU MAES
+		FROM iest_naturaleza_natu MAES
 		order by MAES.NATU_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="UNIDAD_CARGA" table="IMAN_UNIDADCARGA_UNIC" tempImp="true">
+	<sql id="UNIDAD_CARGA" table="IMAN_UNIDADCARGA_UNIC" tempImp="true"
+		sqlId="SELECT DISTINCT maes.unic_id FROM iman_unidadcarga_unic maes JOIN iman_unidadcargatemp_unic temp ON temp.unic_id = maes.unic_id WHERE temp.unic_merc_id IS NULL">
 	<![CDATA[
 		SELECT
-			MAES.UNIC_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.unic_id
+	            	AND trid_table_name = 'IMAN_UNIDADCARGA_UNIC') AS unic_id
 			, MAES.UNIC_CODIGO
 			, TEMP.UNIC_TIPO_EEE, TEMP.UNIC_ES_EEE, TEMP.UNIC_TEUS
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -1312,25 +1514,45 @@
 		         	AND ? BETWEEN UNIC_FECHA_CREACION AND COALESCE(UNIC_FECHA_FIN, ?)
 		 	) AS i18n_nombre
 		FROM
-			IMAN_UNIDADCARGA_UNIC MAES
+			iman_unidadcarga_unic MAES
 		 	JOIN IMAN_UNIDADCARGATEMP_UNIC TEMP ON
 		    	TEMP.UNIC_ID = MAES.UNIC_ID
 		     	AND ? BETWEEN TEMP.UNIC_FECHA_CREACION AND COALESCE(TEMP.UNIC_FECHA_FIN, ?)
 	    WHERE TEMP.UNIC_MERC_ID IS NULL
-		order by MAES.UNIC_es_activo desc
+		order by MAES.UNIC_CODIGO, MAES.UNIC_es_activo desc, TEMP.UNIC_FECHA_CREACION desc
 	]]>
 	</sql>
 
-	<sql id="MERCANCIA" table="IMAN_MERCANCIA_MERC" tempImp="true">
+	<sql id="MERCANCIA" table="IMAN_MERCANCIA_MERC" tempImp="true"
+		sqlId="SELECT merc_id FROM iman_mercancia_merc">
 	<![CDATA[
 		SELECT
-			MAES.merc_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.merc_id
+	            	AND trid_table_name = 'IMAN_MERCANCIA_MERC') AS merc_id
 			, MAES.merc_CODIGO
 			, MAES.merc_fecha_comienzo
 		 	, MAES.merc_fecha_finalizacion
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = temp.merc_unidad_carga_id
-	            	AND trid_table_name = 'IMAN_UNIDADCARGA_UNIC') as merc_unidad_carga
+	          , (
+	              case
+	                  when exists (
+	                      select 1
+	                      from
+	                          iman_unidadcarga_unic MAES2
+	                          JOIN IMAN_unidadcargaTEMP_unic TEMP2 ON
+	                            TEMP2.unic_ID = maes2.unic_ID
+	                              AND SYSDATE BETWEEN TEMP2.unic_FECHA_CREACION AND COALESCE(TEMP2.unic_FECHA_FIN, SYSDATE)
+	                      where
+	                          TEMP.MERC_UNIDAD_CARGA_ID = MAES2.UNIC_ID
+	                          AND TEMP2.UNIC_MERC_ID is  not null
+	                  ) then null
+	                  else (
+	                      SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	                      WHERE trid_old_id = temp.merc_unidad_carga_id
+	                            AND trid_table_name = 'IMAN_UNIDADCARGA_UNIC'
+	                  )
+	              end
+	          ) as merc_unidad_carga
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = temp.merc_grupo_nst_id
 	            	AND trid_table_name = 'IEST_GRUPONST_GNST') as merc_grupo_nst
@@ -1352,7 +1574,7 @@
 		         	AND ? BETWEEN MERC_FECHA_CREACION AND COALESCE(MERC_FECHA_FIN, ?)
 		 	) AS i18n_nombre
 		FROM
-		    IMAN_MERCANCIA_MERC MAES
+		    iman_mercancia_merc MAES
 		    JOIN IMAN_MERCANCIATEMP_MERC TEMP ON
 		    	TEMP.MERC_ID = maes.MERC_ID
 		        AND ? BETWEEN TEMP.MERC_FECHA_CREACION AND COALESCE(TEMP.MERC_FECHA_FIN, ?)
@@ -1360,10 +1582,13 @@
 	]]>
 	</sql>
 
-	<sql id="UNIDAD_CARGA" table="IMAN_UNIDADCARGA_UNIC" tempImp="true">
+	<sql id="UNIDAD_CARGA" table="IMAN_UNIDADCARGA_UNIC" tempImp="true"
+		sqlId="SELECT DISTINCT maes.unic_id FROM iman_unidadcarga_unic maes JOIN iman_unidadcargatemp_unic temp ON temp.unic_id = maes.unic_id WHERE temp.unic_merc_id IS NOT NULL">
 	<![CDATA[
 		SELECT
-			MAES.UNIC_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.unic_id
+	            	AND trid_table_name = 'IMAN_UNIDADCARGA_UNIC') AS unic_id
 			, MAES.UNIC_CODIGO
 			, TEMP.UNIC_TIPO_EEE, TEMP.UNIC_ES_EEE, TEMP.UNIC_TEUS
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -1379,12 +1604,12 @@
 		         	AND ? BETWEEN UNIC_FECHA_CREACION AND COALESCE(UNIC_FECHA_FIN, ?)
 		 	) AS i18n_nombre
 		FROM
-			IMAN_UNIDADCARGA_UNIC MAES
+			iman_unidadcarga_unic MAES
 		 	JOIN IMAN_UNIDADCARGATEMP_UNIC TEMP ON
 		    	TEMP.UNIC_ID = MAES.UNIC_ID
 		     	AND ? BETWEEN TEMP.UNIC_FECHA_CREACION AND COALESCE(TEMP.UNIC_FECHA_FIN, ?)
 	    WHERE TEMP.UNIC_MERC_ID IS NOT NULL
-		order by MAES.UNIC_es_activo desc
+		order by MAES.UNIC_CODIGO, MAES.UNIC_es_activo desc, TEMP.UNIC_FECHA_CREACION desc
 	]]>
 	</sql>
 
@@ -1401,10 +1626,12 @@
 		desc ]]> </sql> -->
 
 	<sql id="ZONA_COSTERA_EEE" table="IEST_ZONACOSTERAEEE_ZCOS"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT zcos_id FROM iest_zonacosteraeee_zcos">
 	<![CDATA[
 		SELECT
-			maes.zcos_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.zcos_id
+	            	AND trid_table_name = 'IEST_ZONACOSTERAEEE_ZCOS') AS zcos_id
 			, (
 				SELECT PAIS_ISO
 				FROM IGEN_PAIS_PAIS
@@ -1421,15 +1648,18 @@
 		         	AND ? BETWEEN ZCOS_FECHA_CREACION AND COALESCE(ZCOS_FECHA_FIN, ?)
 		 	) AS I18N_NOMBRE
 		FROM
-			IEST_ZONACOSTERAEEE_ZCOS MAES
+			iest_zonacosteraeee_zcos MAES
 		order by MAES.ZCOS_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="UNLOCODE" table="IGEN_UNLOCODE_UNLO" tempImp="false">
+	<sql id="UNLOCODE" table="IGEN_UNLOCODE_UNLO" tempImp="false"
+		sqlId="SELECT unlo_id FROM igen_unlocode_unlo">
 	<![CDATA[
 		SELECT
-			maes.unlo_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.unlo_id
+	            	AND trid_table_name = 'IGEN_UNLOCODE_UNLO') AS unlo_id
 			, (SELECT PAIS_ISO FROM IGEN_PAIS_PAIS WHERE pais_id = maes.unlo_pais_id) || UNLO_CODIGO AS unlo_codigo
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.unlo_pais_id
@@ -1450,7 +1680,7 @@
 		        	AND I18N.UNLO_IDIOMA = ?
 		         	AND ? BETWEEN UNLO_FECHA_CREACION AND COALESCE(UNLO_FECHA_FIN, ?)
 		 	) AS I18N_NOMBRE
-		FROM IGEN_UNLOCODE_UNLO MAES
+		FROM igen_unlocode_unlo MAES
 		order by MAES.UNLO_es_activo desc
 	]]>
 	</sql>
@@ -1466,10 +1696,12 @@
 		MAES.AUTP_ES_ACTIVO desc ]]> </sql> -->
 
 	<sql id="RECINTO_ADUANERO" table="IMAN_RECINTOADUANERO_RADU"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT radu_id FROM iman_recintoaduanero_radu">
 	<![CDATA[
 		SELECT
-		    MAES.radu_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.radu_id
+	            	AND trid_table_name = 'IMAN_RECINTOADUANERO_RADU') AS radu_id
 		    , MAES.radu_codigo
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.radu_unlocode_id
@@ -1481,15 +1713,18 @@
 			        AND ? BETWEEN RADU_FECHA_CREACION and coalesce(RADU_FECHA_FIN, ?)
 			 ) AS I18N_NOMBRE
 		FROM
-		    IMAN_RECINTOADUANERO_RADU MAES
+		    iman_recintoaduanero_radu MAES
 		order by MAES.RADU_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="SUBPUERTO" table="IGEN_SUBPUERTO_SUBP" tempImp="false">
+	<sql id="SUBPUERTO" table="IGEN_SUBPUERTO_SUBP" tempImp="false"
+		sqlId="SELECT subp_id FROM igen_subpuerto_subp">
     <![CDATA[
         SELECT
-            MAES.SUBP_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.subp_id
+	            	AND trid_table_name = 'IGEN_SUBPUERTO_SUBP') AS subp_id
             , MAES.SUBP_CODIGO
             , MAES.SUBP_CODIGO_EDI
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -1515,15 +1750,18 @@
                     AND ? BETWEEN SUBP_FECHA_CREACION AND COALESCE(SUBP_FECHA_FIN, ?)
             ) AS i18n_nombre
         FROM
-            IGEN_SUBPUERTO_SUBP MAES
+            igen_subpuerto_subp MAES
         order by MAES.SUBP_es_activo desc
     ]]>
 	</sql>
 
-	<sql id="ZONA_DEPOSITO" table="ISUP_ZONA_ZONS" tempImp="true">
+	<sql id="ZONA_DEPOSITO" table="ISUP_ZONA_ZONS" tempImp="true"
+		sqlId="SELECT zons_id FROM isup_zona_zons">
     <![CDATA[
 		 select
-		       maes.ZONS_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.zons_id
+	            	AND trid_table_name = 'ISUP_ZONA_ZONS') AS zons_id
 		    , (select SUBP_CODIGO from IGEN_SUBPUERTO_SUBP where SUBP_ID = maes.ZONS_SUBP_ID) AS SUBP_CODIGO
 		    , maes.ZONS_CODIGO as codigo
 
@@ -1546,17 +1784,20 @@
 	                AND I18N.ZONS_IDIOMA = ?
 	                AND ? BETWEEN ZONS_FECHA_CREACION AND COALESCE(ZONS_FECHA_FIN, ?)
 	        ) AS I18N_NOMBRE
-	    from ISUP_ZONA_ZONS maes
+	    from isup_zona_zons maes
 	        join ISUP_ZONATEMP_ZONS temp on
 	            temp.ZONS_ID = maes.ZONS_ID
 	            AND ? BETWEEN temp.ZONS_FECHA_CREACION AND COALESCE(temp.ZONS_FECHA_FIN, ?)
     ]]>
 	</sql>
 
-	<sql id="SERVICIO_TRAFICO" table="IESC_TRAFICO_TRAF" tempImp="false">
+	<sql id="SERVICIO_TRAFICO" table="IESC_TRAFICO_TRAF" tempImp="false"
+		sqlId="SELECT traf_id FROM iesc_trafico_traf">
 	<![CDATA[
 		SELECT
-			MAES.TRAF_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.traf_id
+	            	AND trid_table_name = 'IESC_TRAFICO_TRAF') AS traf_id
 	        , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP
 	            WHERE SUBP_ID = TRAF_SUBP_ID) AS SUBP_CODIGO
 	        , MAES.TRAF_CODIGO AS CODIGO
@@ -1566,15 +1807,18 @@
 			            AND I18N.TRAF_IDIOMA = ?
 			            AND ? BETWEEN TRAF_FECHA_CREACION and coalesce(TRAF_FECHA_FIN, ?)
 			    ) AS I18N_NOMBRE
-			FROM IESC_TRAFICO_TRAF MAES
+			FROM iesc_trafico_traf MAES
 	    order by MAES.TRAF_ES_ACTIVO desc
 	]]>
 	</sql>
 
-	<sql id="MUELLE" table="IESC_MUELLE_MUEL" tempImp="true">
+	<sql id="MUELLE" table="IESC_MUELLE_MUEL" tempImp="true"
+		sqlId="SELECT muel_id FROM iesc_muelle_muel">
 	<![CDATA[
 		SELECT
-			MAES.MUEL_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.muel_id
+	            	AND trid_table_name = 'IESC_MUELLE_MUEL') AS muel_id
 	        , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = TEMP.MUEL_SUBP_ID) AS SUBP_CODIGO
 	        , MAES.MUEL_CODIGO
 	        , (SELECT I18N.MUEL_NOMBRE
@@ -1584,7 +1828,7 @@
 	                AND ? BETWEEN MUEL_FECHA_CREACION AND COALESCE(MUEL_FECHA_FIN, ?)
 	        ) AS i18n_nombre
 		FROM
-		    IESC_MUELLE_MUEL MAES
+		    iesc_muelle_muel MAES
 		    JOIN IESC_MUELLEtemp_MUEL TEMP ON
 		    	TEMP.MUEL_ID = MAES.MUEL_ID
 		        AND ? BETWEEN TEMP.MUEL_FECHA_CREACION AND COALESCE(TEMP.MUEL_FECHA_FIN, ?)
@@ -1593,10 +1837,12 @@
 	</sql>
 
 	<sql id="INSTALACION_DEP_AUT" table="IEMD_INSTALACIONDEPA_INDA"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT inda_id FROM iemd_instalaciondepa_inda">
     <![CDATA[
         SELECT
-        	maes.INDA_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.inda_id
+	            	AND trid_table_name = 'IEMD_INSTALACIONDEPA_INDA') AS inda_id
             , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDA_SUBPUERTO_ID) AS SUBP_CODIGO
             , INDA_CODIGO as codigo
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -1609,15 +1855,18 @@
                     AND I18N.INDA_IDIOMA = ?
                     AND ? BETWEEN INDA_FECHA_CREACION AND COALESCE(INDA_FECHA_FIN, ?)
             ) AS I18N_NOMBRE
-        FROM IEMD_INSTALACIONDEPA_INDA MAES
+        FROM iemd_instalaciondepa_inda MAES
         order by INDA_ES_ACTIVO desc
     ]]>
 	</sql>
 
-	<sql id="INSTALACION_DEP" table="IEMD_INSTALACIONDEP_INDP" tempImp="false">
+	<sql id="INSTALACION_DEP" table="IEMD_INSTALACIONDEP_INDP" tempImp="false"
+		sqlId="SELECT indp_id FROM iemd_instalaciondep_indp">
     <![CDATA[
         SELECT
-        	MAES.indp_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.indp_id
+	            	AND trid_table_name = 'IEMD_INSTALACIONDEP_INDP') AS indp_id
             , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDP_SUBPUERTO_ID) AS SUBP_CODIGO
             , MAES.INDP_CODIGO AS MAES_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -1647,15 +1896,18 @@
                     AND ? BETWEEN INDP_FECHA_CREACION AND COALESCE(INDP_FECHA_FIN, ?)
             ) AS i18n_nombre
         FROM
-            IEMD_INSTALACIONDEP_INDP MAES
+            iemd_instalaciondep_indp MAES
         order by MAES.INDP_es_activo desc
     ]]>
 	</sql>
 
-	<sql id="AMARRE_DEP" table="IEMD_AMARRE_AMAD" tempImp="false">
+	<sql id="AMARRE_DEP" table="IEMD_AMARRE_AMAD" tempImp="false"
+		sqlId="SELECT amad_id FROM iemd_amarre_amad">
     <![CDATA[
         SELECT
-        	maes.AMAD_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.amad_id
+	            	AND trid_table_name = 'IEMD_AMARRE_AMAD') AS amad_id
             , (
             	select subp_codigo
             	from IGEN_SUBPUERTO_SUBP
@@ -1688,14 +1940,17 @@
             , maes.amad_calado_maximo, maes.amad_manga_maxima, maes.amad_eslora_maxima, maes.amad_altura_maxima
             , maes.amad_calado_minimo, maes.amad_manga_minima, maes.amad_eslora_minima, maes.amad_altura_minima
             , maes.amad_observaciones
-        FROM IEMD_AMARRE_AMAD maes
+        FROM iemd_amarre_amad maes
     ]]>
 	</sql>
 
-	<sql id="ALINEACION" table="IGEN_ALINEACION_ALIN" tempImp="true">
+	<sql id="ALINEACION" table="IGEN_ALINEACION_ALIN" tempImp="true"
+		sqlId="SELECT alin_id FROM igen_alineacion_alin">
 	<![CDATA[
 		SELECT
-			maes.alin_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.alin_id
+	            	AND trid_table_name = 'IGEN_ALINEACION_ALIN') AS alin_id
 	          , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP
 	              WHERE
 	                  subp_id = (
@@ -1728,7 +1983,7 @@
 	                AND ? BETWEEN ALIN_FECHA_CREACION AND COALESCE(ALIN_FECHA_FIN, ?)
 	        ) AS i18n_nombre
 		FROM
-		    IGEN_ALINEACION_ALIN MAES
+		    igen_alineacion_alin MAES
 		    JOIN IGEN_ALINEACIONTEMP_ALIN TEMP ON
 		    	TEMP.ALIN_ID = MAES.ALIN_ID
 		        AND ? BETWEEN TEMP.ALIN_FECHA_CREACION AND COALESCE(TEMP.ALIN_FECHA_FIN, ?)
@@ -1736,10 +1991,13 @@
 	]]>
 	</sql>
 
-	<sql id="ORGANIZACION" table="ICOM_ORGANIZACION_ORGA" tempImp="false">
+	<sql id="ORGANIZACION" table="ICOM_ORGANIZACION_ORGA" tempImp="false"
+		sqlId="SELECT orga_id FROM icom_organizacion_orga">
     <![CDATA[
         SELECT
-            MAES.ORGA_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.orga_id
+	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS orga_id
             , MAES.ORGA_COD
             , MAES.orga_nombre
             , MAES.ORGA_TIPO_DOC_FISCAL
@@ -1757,17 +2015,20 @@
             , DIRC_FAX
             , DIRC_EMAIL
             , DIRC_PAGINA_WEB
-            FROM ICOM_ORGANIZACION_ORGA MAES
+            FROM icom_organizacion_orga MAES
             LEFT JOIN ICOM_DIRECCION_CONT_DIRC ON
                 DIRC_ID_ORGANIZACION = ORGA_ID
         order by MAES.ORGA_ES_ACTIVO desc
     ]]>
 	</sql>
 
-	<sql id="EMBARCACION_DEP" table="IEMD_EMBARCACION_EMBD" tempImp="false">
+	<sql id="EMBARCACION_DEP" table="IEMD_EMBARCACION_EMBD" tempImp="false"
+		sqlId="SELECT embd_id FROM iemd_embarcacion_embd">
     <![CDATA[
         select
-            maes.EMBD_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.embd_id
+	            	AND trid_table_name = 'IEMD_EMBARCACION_EMBD') AS embd_id
             , maes.EMBD_CODIGO
             , maes.EMBD_MATRICULA
             , maes.EMBD_NOMBRE
@@ -1791,16 +2052,18 @@
 	            WHERE trid_old_id = maes.embd_pais_id
 	            	AND trid_table_name = 'IGEN_PAIS_PAIS') as embd_pais
             , maes.EMBD_OBSERVACIONES
-        from IEMD_EMBARCACION_EMBD maes
+        from iemd_embarcacion_embd maes
         order by maes.EMBD_ES_ACTIVO desc
     ]]>
 	</sql>
 
 	<sql id="EMBARCACION_DEP_AUT" table="IEMD_EMBARCACIONAUT_EMBA"
-		tempImp="true">
+		tempImp="true" sqlId="SELECT emba_id FROM iemd_embarcacionaut_emba">
     <![CDATA[
         SELECT
-            maes.EMBA_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.emba_id
+	            	AND trid_table_name = 'IEMD_EMBARCACIONAUT_EMBA') AS emba_id
             , maes.EMBA_CODIGO
             , maes.EMBA_MATRICULA
             , maes.EMBA_NOMBRE
@@ -1832,7 +2095,7 @@
             , EACL.EACL_ES_TRANSEUNTE
             , EACL.EACL_ES_NAVEGACION_INT
             , maes.EMBA_OBSERVACIONES
-        FROM IEMD_EMBARCACIONAUT_EMBA maes
+        FROM iemd_embarcacionaut_emba maes
             JOIN IEMD_EMBARCACIONAUTCLI_EACL EACL ON
                 EACL_EMBARCACIONAUT_ID = EMBA_ID
                 AND ? BETWEEN EACL_FECHA_INICIO AND COALESCE(EACL_FECHA_FIN, ?)
@@ -1841,10 +2104,12 @@
 	</sql>
 
 	<sql id="INSTALACION_ESPECIAL" table="IMAN_INSTESPECIAL_IESP"
-		tempImp="true">
+		tempImp="true" sqlId="SELECT iesp_id FROM iman_instespecial_iesp">
 	<![CDATA[
 		SELECT
-	        MAES.iesp_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.iesp_id
+	            	AND trid_table_name = 'IMAN_INSTESPECIAL_IESP') AS iesp_id
 	          , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP
 	              WHERE
 	                  subp_id = (
@@ -1875,7 +2140,7 @@
 	                AND ? BETWEEN IESP_FECHA_CREACION AND COALESCE(IESP_FECHA_FIN, ?)
 	        ) AS i18n_nombre
 		FROM
-		    IMAN_INSTESPECIAL_IESP MAES
+		    iman_instespecial_iesp MAES
 		    JOIN IMAN_INSTESPECIALtemp_IESP TEMP ON
 		    	TEMP.IESP_ID = MAES.IESP_ID
 		        AND ? BETWEEN TEMP.IESP_FECHA_CREACION AND COALESCE(TEMP.IESP_FECHA_FIN, ?)
@@ -1883,10 +2148,13 @@
 	]]>
 	</sql>
 
-	<sql id="BUQUE_PESCA" table="IPES_BUQUE_BUPE" tempImp="true">
+	<sql id="BUQUE_PESCA" table="IPES_BUQUE_BUPE" tempImp="true"
+		sqlId="SELECT bupe_id FROM ipes_buque_bupe">
 	<![CDATA[
 		SELECT
-	        MAES.BUPE_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.bupe_id
+	            	AND trid_table_name = 'IPES_BUQUE_BUPE') AS bupe_id
 	        , MAES.BUPE_CODIGO
 
 	        , TEMP.bupe_nombre
@@ -1922,7 +2190,7 @@
 
 	        , TEMP.BUPE_es_generada_tasa
 		FROM
-		    IPES_BUQUE_BUPE MAES
+		    ipes_buque_bupe MAES
 		    JOIN IPES_BUQUEtemp_BUPE TEMP ON
 		    	TEMP.BUPE_ID = MAES.BUPE_ID
 		        AND ? BETWEEN TEMP.BUPE_FECHA_CREACION AND COALESCE(TEMP.BUPE_FECHA_FIN, ?)
@@ -1930,10 +2198,13 @@
 	]]>
 	</sql>
 
-	<sql id="REDES" table="ISUM_RED_REDS" tempImp="false">
+	<sql id="REDES" table="ISUM_RED_REDS" tempImp="false"
+		sqlId="SELECT reds_id FROM isum_red_reds">
 	<![CDATA[
 		SELECT
-		    MAES.REDS_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.reds_id
+	            	AND trid_table_name = 'ISUM_RED_REDS') AS reds_id
 		    , (
 		        SELECT SUBP_CODIGO
 		        FROM IGEN_SUBPUERTO_SUBP
@@ -1951,15 +2222,18 @@
 		    , MAES.REDS_TARFIFA
 		    , MAES.REDS_COSTE_UNITARIO
 		    , MAES.REDS_OBSERVACIONES
-		FROM ISUM_RED_REDS MAES
+		FROM isum_red_reds MAES
 		order by MAES.REDS_es_activo desc
 	]]>
 	</sql>
 
-	<sql id="CONTADOR" table="ISUM_CONTADOR_COSU" tempImp="true">
+	<sql id="CONTADOR" table="ISUM_CONTADOR_COSU" tempImp="true"
+		sqlId="SELECT cosu_id FROM isum_contador_cosu">
 	<![CDATA[
 	SELECT
-		  MAES.COSU_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.cosu_id
+	            	AND trid_table_name = 'ISUM_CONTADOR_COSU') AS cosu_id
 		  , (
 		    SELECT subp_codigo
 		    FROM IGEN_SUBPUERTO_SUBP
@@ -1982,15 +2256,18 @@
 		  , MAES.COSU_FECHA_FIN_GARANTIA
 		  , MAES.COSU_FECHA_INSTALACION
 		  , MAES.COSU_FECHA_VIDA_ESTIMADA
-	FROM ISUM_CONTADOR_COSU MAES
+	FROM isum_contador_cosu MAES
 	WHERE ? BETWEEN COSU_FECHA_INSTALACION AND COALESCE(COSU_FECHA_BAJA, ?)
 	]]>
 	</sql>
 
-	<sql id="PUNTO_RED" table="ISUM_PUNTORED_PRSU" tempImp="false">
+	<sql id="PUNTO_RED" table="ISUM_PUNTORED_PRSU" tempImp="false"
+		sqlId="SELECT prsu_id FROM isum_puntored_prsu">
     <![CDATA[
         SELECT
-        	maes.prsu_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.prsu_id
+	            	AND trid_table_name = 'ISUM_PUNTORED_PRSU') AS prsu_id
             , (
             	SELECT
             		SUBP_CODIGO
@@ -2061,10 +2338,12 @@
 	</sql>
 
 	<sql id="REGISTRO_TIPO_BUQUE_EEE" table="IEST_REGISTROBUQUEEEETIPO_BUET"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT buet_id FROM iest_registrobuqueeeetipo_buet">
 	<![CDATA[
 		SELECT
-			MAES.BUET_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.buet_id
+	            	AND trid_table_name = 'IEST_REGISTROBUQUEEEETIPO_BUET') AS buet_id
 		    , (
 		        SELECT PAIS_ISO
 		        FROM IGEN_PAIS_PAIS
@@ -2074,16 +2353,18 @@
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = buet_pais_id
 	            	AND trid_table_name = 'IGEN_PAIS_PAIS') as buet_pais
-		FROM IEST_REGISTROBUQUEEEETIPO_BUET maes
+		FROM iest_registrobuqueeeetipo_buet maes
 		order by MAES.BUET_es_activo desc
 	]]>
 	</sql>
 
 	<sql id="REGISTRO_TIPO_BUQUE" table="IEST_REGISTROBUQUETIPO_BURT"
-		tempImp="false">
+		tempImp="false" sqlId="SELECT burt_id FROM iest_registrobuquetipo_burt">
 	<![CDATA[
 		SELECT
-			maes.burt_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.burt_id
+	            	AND trid_table_name = 'IEST_REGISTROBUQUETIPO_BURT') AS burt_id
 		    , (
 		        SELECT PAIS_ISO
 		        FROM IGEN_PAIS_PAIS
@@ -2097,15 +2378,18 @@
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = burt_pais_id
 	            	AND trid_table_name = 'IGEN_PAIS_PAIS') as burt_pais
-		FROM IEST_REGISTROBUQUETIPO_BURT MAES
+		FROM iest_registrobuquetipo_burt MAES
 		ORDER BY MAES.BURT_ES_ACTIVO DESC
 	]]>
 	</sql>
 
-	<sql id="BUQUE" table="IESC_BUQUE_BUQU" tempImp="false">
+	<sql id="BUQUE" table="IESC_BUQUE_BUQU" tempImp="false"
+		sqlId="SELECT buqu_buque_id FROM iesc_buque_buqu">
 	<![CDATA[
 		SELECT
-			 MAES.BUqu_buque_id
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.buqu_buque_id
+	            	AND trid_table_name = 'IESC_BUQUE_BUQU') AS buqu_buque_id
 			, coalesce(MAES.BUqu_CODIGO_imo, concat('bb', MAES.BUqu_buque_id)) as BUqu_CODIGO_imo
 			, TEMP.BUQU_nombre_buque
 			, TEMP.BUQU_CALLSIGN
@@ -2174,7 +2458,7 @@
 	            	AND trid_table_name = 'IGEN_UNLOCODE_UNLO') as buqu_mou_psc_unlo
 			, TEMP.BUQU_OBSERVACIONES
 	    FROM
-			IESC_BUQUE_BUQU MAES
+			iesc_buque_buqu MAES
 			JOIN IESC_BUQUEtemp_BUQU TEMP ON
 				TEMP.BUqu_buque_id = MAES.BUqu_buque_id
 		order by MAES.BUQU_es_activo desc
