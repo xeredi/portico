@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<groups xmlns="http://www.isdc.ro/wro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.isdc.ro/wro wro.xsd">
+
+    <group name="dependencies">
+        <js>https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js</js>
+        <js>https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js</js>
+        <js>https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.8/angular-locale_es-es.min.js</js>
+        <js>https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.2.0/ui-bootstrap-tpls.min.js</js>
+        <js>https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.13.0/angular-translate.min.js</js>
+        <js>https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.5.0/angular-local-storage.min.js
+        </js>
+        <js>https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.2.9/ng-file-upload.min.js
+        </js>
+        <js>https://cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.1.6/angular-google-maps.min.js</js>
+        <js>https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.min.js</js>
+        <js>https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/angular-strap.min.js</js>
+        <js>https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/angular-strap.tpl.min.js</js>
+        <js>https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js</js>
+        <js>https://cdnjs.cloudflare.com/ajax/libs/angular-spinner/0.8.1/angular-spinner.min.js</js>
+
+        <css>https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css</css>
+        <css>https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css</css>
+        <css>https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/slate/bootstrap.min.css</css>
+    </group>
+
+    <group name="core">
+        <js>/*.js</js>
+        <js>/modules/administracion/*.js</js>
+        <js>/modules/common/*.js</js>
+        <js>/modules/entidad/item/*.js</js>
+        <js>/modules/entidad/estadistica/*.js</js>
+        <js>/modules/entidad/maestro/*.js</js>
+        <js>/modules/entidad/servicio/*.js</js>
+        <js>/modules/entidad/servicio/bl/*.js</js>
+        <js>/modules/entidad/servicio/manifiesto/*.js</js>
+        <js>/modules/metamodelo/*.js</js>
+        <js>/modules/seguridad/*.js</js>
+        <js>/modules/proceso/*.js</js>
+        <js>/modules/facturacion/*.js</js>
+        <css>/*.css</css>
+    </group>
+</groups>

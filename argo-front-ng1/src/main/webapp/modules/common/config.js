@@ -3,7 +3,7 @@
 
     angular.module(
             "config",
-            [ "ngRoute", "pasvaz.bindonce", "mgcrea.ngStrap", "mgcrea.ngStrap.aside", "ui.bootstrap.tpls",
+            [ "ngRoute", "mgcrea.ngStrap", "mgcrea.ngStrap.aside", "ui.bootstrap.tpls",
                     "ui.bootstrap.tabs", "ui.bootstrap.pagination", "ui.bootstrap.dropdown",
                     "ui.bootstrap.typeahead", "pascalprecht.translate", "angularSpinner",
                     "uiGmapgoogle-maps", "ngFileUpload", "LocalStorageModule", "i18n",

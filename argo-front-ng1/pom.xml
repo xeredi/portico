@@ -1,19 +1,71 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>argo-front-ng1</artifactId>
-	<packaging>war</packaging>
-	<parent>
-		<groupId>argo</groupId>
-		<artifactId>argo-pom</artifactId>
-		<version>0.0.1</version>
-		<relativePath>../integra-portico-pom</relativePath>
-	</parent>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>argo-front-ng1</artifactId>
+    <packaging>war</packaging>
+    <parent>
+        <groupId>argo</groupId>
+        <artifactId>argo-pom</artifactId>
+        <version>0.0.1</version>
+        <relativePath>../integra-portico-pom</relativePath>
+    </parent>
     <name>Fornt Angular1</name>
 
     <properties>
         <war.warName>${project.artifactId}</war.warName>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>ro.isdc.wro4j</groupId>
+                <artifactId>wro4j-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <minimize>false</minimize>
+                    <destinationFolder>${basedir}/src/main/webapp/wro/</destinationFolder>
+                    <contextFolder>${basedir}/src/main/webapp/</contextFolder>
+                    <wroManagerFactory>ro.isdc.wro.extensions.manager.standalone.GoogleStandaloneManagerFactory</wroManagerFactory>
+                </configuration>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>ro.isdc.wro4j</groupId>
+                                        <artifactId>wro4j-maven-plugin</artifactId>
+                                        <versionRange>[1.0,)</versionRange>
+                                        <goals>
+                                            <goal>run</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute/>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
     <dependencies>
         <dependency>
