@@ -48,10 +48,10 @@
                 <td><i class="glyphicon"
                     data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[entd.filtrable]"></i></td>
                 <td nowrap="nowrap" data-ng-bind="entd.tpdt.nombre"></td>
-                <td data-bs-tooltip data-title="{{('ElementoTipo_' + entd.tpdt.tipoElemento | translate)}}"
-                    data-ng-bind="entd.tpdt.tipoElemento"></td>
-                <td data-bs-tooltip data-title="{{('HtmlTipo_' + entd.tpdt.tpht | translate)}}"
-                    data-ng-bind="entd.tpdt.tpht"></td>
+                <td><span data-ng-bind="entd.tpdt.tipoElemento"
+                    data-uib-tooltip="{{'ElementoTipo_' + entd.tpdt.tipoElemento | translate}}"></span></td>
+                <td><span data-ng-bind="entd.tpdt.tpht"
+                    data-uib-tooltip="{{'HtmlTipo_' + entd.tpdt.tpht | translate}}"></span></td>
                 <td nowrap="nowrap" data-ng-bind="entd.tpdt.enti.nombre"></td>
                 <td nowrap="nowrap" data-ng-bind="entd.valorDefecto"></td>
                 <td nowrap="nowrap" data-ng-bind="entd.validacion"></td>

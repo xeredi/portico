@@ -60,10 +60,10 @@
                     <td><i class="glyphicon"
                         data-ng-class="{true:'glyphicon-ok', false:'glyphicon-remove'}[trtd.obligatorio]"></i></td>
                     <td data-ng-bind="trtd.entd.tpdt.nombre"></td>
-                    <td data-ng-bind="trtd.entd.tpdt.tipoElemento" data-bs-tooltip
-                        data-title="{{('ElementoTipo_' + trtd.entd.tpdt.tipoElemento | translate)}}"></td>
-                    <td data-ng-bind="trtd.entd.tpdt.tpht" data-bs-tooltip
-                        data-title="{{('HtmlTipo_' + trtd.entd.tpdt.tpht | translate)}}"></td>
+                    <td><span data-ng-bind="trtd.entd.tpdt.tipoElemento"
+                        data-uib-tooltip="{{('ElementoTipo_' + trtd.entd.tpdt.tipoElemento | translate)}}"></span></td>
+                    <td><span data-ng-bind="trtd.entd.tpdt.tpht"
+                        data-uib-tooltip="{{('HtmlTipo_' + trtd.entd.tpdt.tpht | translate)}}"></span></td>
                 </tr>
             </tbody>
         </table>

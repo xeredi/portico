@@ -1,8 +1,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <div data-uib-pagination data-total-items="vm.resultList.count"
-            data-items-per-page="vm.resultList.limit" data-ng-model="vm.page"
-            data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
+        <div data-uib-pagination data-total-items="vm.resultList.count" data-items-per-page="vm.resultList.limit"
+            data-ng-model="vm.page" data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
             data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
     </div>
     <div class="btn-group">
@@ -49,8 +48,8 @@
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="item.etiqueta"></td>
                 <td nowrap="nowrap" data-ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
-                <td data-ng-bind="item.estado" data-bs-tooltip
-                    data-title="{{'FacturaEstado_' + item.estado | translate}}"></td>
+                <td><span data-ng-bind="item.estado"
+                    data-uib-tooltip="{{'FacturaEstado_' + item.estado | translate}}"></span></td>
                 <td data-ng-bind="item.fctrAnulada.etiqueta"></td>
                 <td nowrap="nowrap" data-ng-bind="item.fref | date: ('format_date' | translate)"></td>
                 <td nowrap="nowrap" data-ng-bind="item.fini | date: ('format_datetime' | translate)"></td>

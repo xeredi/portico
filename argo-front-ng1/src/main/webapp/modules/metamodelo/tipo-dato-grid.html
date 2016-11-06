@@ -1,22 +1,19 @@
 <div data-ng-if="vm.resultList">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <div data-uib-pagination data-total-items="vm.resultList.count"
-                data-items-per-page="vm.resultList.limit" data-ng-model="vm.page"
-                data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
+            <div data-uib-pagination data-total-items="vm.resultList.count" data-items-per-page="vm.resultList.limit"
+                data-ng-model="vm.page" data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
                 data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
         </div>
 
         <div class="btn-group">
-            <button data-ng-if="mc.hasAcbsPath('tpdt-list')" class="btn btn-default"
-                data-ng-click="vm.filter('lg')"
-                data-template-url="modules/metamodelo/fragment/tipo-dato-filter-content.html"
-                data-bs-modal="modal">
+            <button data-ng-if="mc.hasAcbsPath('tpdt-list')" class="btn btn-default" data-ng-click="vm.filter('lg')"
+                data-template-url="modules/metamodelo/fragment/tipo-dato-filter-content.html" data-bs-modal="modal">
                 <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
             </button>
             <a data-ng-if="mc.hasAcbsPath('tpdt-create')" class="btn btn-default"
-                data-ng-href="#/metamodelo/tipo-dato/edit/create"><i class="glyphicon glyphicon-file"></i>
-                <span data-translate="btn_crear"></span> </a>
+                data-ng-href="#/metamodelo/tipo-dato/edit/create"><i class="glyphicon glyphicon-file"></i> <span
+                data-translate="btn_crear"></span> </a>
         </div>
     </div>
 
@@ -43,11 +40,11 @@
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="tpdt.codigo"></td>
                     <td data-ng-bind="tpdt.nombre"></td>
-                    <td nowrap="nowrap" data-bs-tooltip data-title="{{('HtmlTipo_' + tpdt.tpht | translate)}}"
-                        data-ng-bind="tpdt.tpht"></td>
-                    <td nowrap="nowrap" data-bs-tooltip
-                        data-title="{{('ElementoTipo_' + tpdt.tipoElemento | translate)}}"
-                        data-ng-bind="tpdt.tipoElemento"></td>
+                    <td nowrap="nowrap"><span data-uib-tooltip="{{('HtmlTipo_' + tpdt.tpht | translate)}}"
+                        data-ng-bind="tpdt.tpht"></span></td>
+                    <td nowrap="nowrap"><span
+                        data-uib-tooltip="{{('ElementoTipo_' + tpdt.tipoElemento | translate)}}"
+                        data-ng-bind="tpdt.tipoElemento"></span></td>
                     <td data-ng-bind="tpdt.enti.nombre"></td>
                 </tr>
             </tbody>

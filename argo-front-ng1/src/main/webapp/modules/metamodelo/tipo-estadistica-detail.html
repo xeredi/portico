@@ -20,12 +20,6 @@
                         <label data-translate="enti_codigo"></label>
                         <p class="form-control-static" data-ng-bind="vm.model.codigo"></p>
                     </div>
-                    <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-                        <label data-translate="enti_tipo"></label>
-                        <p class="form-control-static" data-bs-tooltip
-                            data-title="{{('EntidadTipo_' + vm.model.tipo | translate)}}"
-                            data-ng-bind="vm.model.tipo"></p>
-                    </div>
                     <div class="col-sm-3 col-md-2 form-group-sm">
                         <label data-translate="enti_maxGrid"></label>
                         <p class="form-control-static number" data-ng-bind="(vm.model.maxGrid | number:0)"></p>
@@ -35,8 +29,7 @@
                 <div class="row" data-ng-include="'modules/common/i18nMap-detail.html'"></div>
             </fieldset>
         </div>
-        <div
-            data-ng-if="mc.hasAcbsPath('engd-list') || mc.hasAcbsPath('entd-list') || mc.hasAcbsPath('cmag-list')"
+        <div data-ng-if="mc.hasAcbsPath('engd-list') || mc.hasAcbsPath('entd-list') || mc.hasAcbsPath('cmag-list')"
             data-uib-tab data-select="vm.tabSelected('entdList')" data-index="'entdList'">
             <div data-uib-tab-heading data-translate="entdList"></div>
             <div data-ng-if="mc.hasAcbsPath('engd-list')"

@@ -3,9 +3,9 @@
 
     angular.module(
             "config",
-            [ "ngRoute", "mgcrea.ngStrap", "mgcrea.ngStrap.aside", "ui.bootstrap.tpls",
-                    "ui.bootstrap.tabs", "ui.bootstrap.pagination", "ui.bootstrap.dropdown",
-                    "ui.bootstrap.typeahead", "pascalprecht.translate", "angularSpinner",
+            [ "ngRoute", "mgcrea.ngStrap", "mgcrea.ngStrap.aside", "ui.bootstrap.tpls", "ui.bootstrap.tabs",
+                    "ui.bootstrap.pagination", "ui.bootstrap.dropdown", "ui.bootstrap.typeahead",
+                    "ui.bootstrap.tooltip", "ui.bootstrap.modal", "pascalprecht.translate", "angularSpinner",
                     "uiGmapgoogle-maps", "ngFileUpload", "LocalStorageModule", "i18n",
                     "administracion_controller", "metamodelo_controller", "facturacion_controller",
                     "item_controller", "maestro_controller", "servicio_controller", "estadistica_controller",

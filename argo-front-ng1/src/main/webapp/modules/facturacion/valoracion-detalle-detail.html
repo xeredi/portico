@@ -17,8 +17,7 @@
                     <div class="col-md-3 form-group-sm">
                         <label data-translate="rgla"></label>
                         <p class="form-control-static">
-                            <a
-                                data-ng-href="#/facturacion/regla/detail/{{vm.model.rgla.id}}/{{vm.model.fref}}"
+                            <a data-ng-href="#/facturacion/regla/detail/{{vm.model.rgla.id}}/{{vm.model.fref}}"
                                 data-ng-bind="vm.model.rgla.etiqueta"></a>
                         </p>
                     </div>
@@ -59,13 +58,11 @@
                     </div>
                     <div class="col-md-2 form-group-sm" data-ng-if="vlrl.rgla.crgo.version.temporal">
                         <label data-translate="vlrd_fini"></label>
-                        <p class="form-control-static"
-                            data-ng-bind="model.fini | date: ('format_datetime' | translate)"></p>
+                        <p class="form-control-static" data-ng-bind="model.fini | date: ('format_datetime' | translate)"></p>
                     </div>
                     <div class="col-md-2 form-group-sm" data-ng-if="vlrl.rgla.crgo.version.temporal">
                         <label data-translate="vlrd_ffin"></label>
-                        <p class="form-control-static"
-                            data-ng-bind="model.ffin | date: ('format_datetime' | translate)"></p>
+                        <p class="form-control-static" data-ng-bind="model.ffin | date: ('format_datetime' | translate)"></p>
                     </div>
                 </div>
 
@@ -163,10 +160,10 @@
                             <tr data-ng-repeat="vlrd in vm.vlrdHijosList track by $index">
                                 <td><a data-ng-href="#/facturacion/valoracion-detalle/detail/{{vlrd.id}}"><i
                                         class="glyphicon glyphicon-search"></i></a></td>
-                                <td nowrap="nowrap" data-ng-bind="vlrd.rgla.texto" data-bs-tooltip
-                                    data-title="{{vlrd.rgla.codigo}}"></td>
-                                <td nowrap="nowrap" data-ng-bind="vlrd.rgla.tipo" data-bs-tooltip
-                                    data-title="{{'ReglaTipo_' + vlrd.rgla.tipo | translate}}"></td>
+                                <td nowrap="nowrap"><span data-ng-bind="vlrd.rgla.texto"
+                                    data-uib-tooltip="{{vlrd.rgla.codigo}}"></span></td>
+                                <td nowrap="nowrap"><span data-ng-bind="vlrd.rgla.tipo"
+                                    data-uib-tooltip="{{'ReglaTipo_' + vlrd.rgla.tipo | translate}}"></span></td>
                                 <td class="number" data-ng-bind="vlrd.valorBase | number:4"></td>
                                 <td nowrap="nowrap" class="number">{{vlrd.importeBase | number:2}} &euro;</td>
                                 <td nowrap="nowrap" class="number">{{vlrd.importe | number:2}} &euro;</td>

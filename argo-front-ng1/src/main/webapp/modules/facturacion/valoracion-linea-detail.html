@@ -26,16 +26,14 @@
                     <div class="col-md-1 form-group-sm">
                         <label data-translate="crgo"></label>
                         <p class="form-control-static">
-                            <a
-                                data-ng-href="#/facturacion/cargo/detail/{{vm.model.rgla.crgo.id}}/{{vm.model.fref}}"
+                            <a data-ng-href="#/facturacion/cargo/detail/{{vm.model.rgla.crgo.id}}/{{vm.model.fref}}"
                                 data-ng-bind="vm.model.rgla.crgo.codigo"></a>
                         </p>
                     </div>
                     <div class="col-md-3 form-group-sm">
                         <label data-translate="rgla"></label>
                         <p class="form-control-static">
-                            <a
-                                data-ng-href="#/facturacion/regla/detail/{{vm.model.rgla.id}}/{{vm.model.fref}}"
+                            <a data-ng-href="#/facturacion/regla/detail/{{vm.model.rgla.id}}/{{vm.model.fref}}"
                                 data-ng-bind="vm.model.rgla.etiqueta"></a>
                         </p>
                     </div>
@@ -45,8 +43,7 @@
                     </div>
                     <div class="col-md-1 form-group-sm">
                         <label data-translate="rgla_valorBase"></label>
-                        <p class="form-control-static number"
-                            data-ng-bind="vm.model.rgla.version.valorBase | number:4"></p>
+                        <p class="form-control-static number" data-ng-bind="vm.model.rgla.version.valorBase | number:4"></p>
                     </div>
                     <div class="col-md-1 form-group-sm" data-ng-if="vm.model.rgla.tipo != 'T'">
                         <label data-translate="vlrl_importeBase"></label>
@@ -189,12 +186,11 @@
                             <tr data-ng-repeat="vlrl in vm.vlrlHijosList track by $index">
                                 <td><a data-ng-href="#/facturacion/valoracion-linea/detail/{{vlrl.id}}"><i
                                         class="glyphicon glyphicon-search"></i></a></td>
-                                <td nowrap="nowrap" data-ng-bind="vlrl.rgla.texto" data-bs-tooltip
-                                    data-title="{{vlrl.rgla.codigo}}"></td>
-                                <td nowrap="nowrap" data-ng-bind="vlrl.rgla.tipo" data-bs-tooltip
-                                    data-title="{{'ReglaTipo_' + vlrl.rgla.tipo | translate}}"></td>
-                                <td nowrap="nowrap" data-ng-bind="vlrl.rgla.version.valorBase | number:4"
-                                    class="number"></td>
+                                <td nowrap="nowrap"><span data-ng-bind="vlrl.rgla.texto"
+                                    data-uib-tooltip="{{vlrl.rgla.codigo}}"></span></td>
+                                <td nowrap="nowrap"><span data-ng-bind="vlrl.rgla.tipo"
+                                    data-uib-tooltip="{{'ReglaTipo_' + vlrl.rgla.tipo | translate}}"></span></td>
+                                <td nowrap="nowrap" data-ng-bind="vlrl.rgla.version.valorBase | number:4" class="number"></td>
                                 <td nowrap="nowrap" class="number">{{vlrl.importeBase | number:2}} &euro;</td>
                                 <td nowrap="nowrap" class="number">{{vlrl.importe | number:2}} &euro;</td>
 
@@ -282,10 +278,8 @@
                                 | number:2}} &euro;</td>
                             <td nowrap="nowrap" class="number">{{vlrd.importe | number:2}} &euro;</td>
                             <td data-ng-bind="vlrd.ssrv.numero"></td>
-                            <td data-ng-bind="vlrd.fini | date:'short'"
-                                data-ng-if="model.rgla.crgo.version.temporal"></td>
-                            <td data-ng-bind="vlrd.ffin | date:'short'"
-                                data-ng-if="model.rgla.crgo.version.temporal"></td>
+                            <td data-ng-bind="vlrd.fini | date:'short'" data-ng-if="model.rgla.crgo.version.temporal"></td>
+                            <td data-ng-bind="vlrd.ffin | date:'short'" data-ng-if="model.rgla.crgo.version.temporal"></td>
                             <td data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo1 && !vm.aspc.version.lgrpInfo1"
                                 data-ng-bind="vlrd.info1"></td>
                             <td data-ng-if="vm.vlrlPadre.rgla.version.etiqInfo2 && !vm.aspc.version.lgrpInfo2"

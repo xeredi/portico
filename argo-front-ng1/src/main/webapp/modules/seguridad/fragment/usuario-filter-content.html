@@ -3,7 +3,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-ng-click="$hide()">&times;</button>
-                <p class="modal-title">{{'usro' | translate}}: {{'filtro' | translate}}</p>
+                <p class="modal-title">
+                    <span data-translate="usro"></span>:&nbsp;<span data-translate="filtro"></span>
+                </p>
             </div>
             <div class="modal-body">
                 <form role="form">
@@ -14,24 +16,21 @@
                                     data-ng-model="vm.searchCriteria.login" class="form-control">
                             </div>
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                                <label data-translate="sprt"></label> <select
-                                    data-ng-model="vm.searchCriteria.sprtId"
+                                <label data-translate="sprt"></label> <select data-ng-model="vm.searchCriteria.sprtId"
                                     data-ng-options="sprt.id as sprt.etiqueta for sprt in vm.sprtList"
                                     class="form-control">
                                     <option />
                                 </select>
                             </div>
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                                <label data-translate="prto"></label> <select
-                                    data-ng-model="vm.searchCriteria.prtoId"
+                                <label data-translate="prto"></label> <select data-ng-model="vm.searchCriteria.prtoId"
                                     data-ng-options="prto.id as prto.etiqueta for prto in vm.prtoList"
                                     class="form-control">
                                     <option />
                                 </select>
                             </div>
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                                <label data-translate="grpo"></label> <select
-                                    data-ng-model="vm.searchCriteria.grpoId"
+                                <label data-translate="grpo"></label> <select data-ng-model="vm.searchCriteria.grpoId"
                                     data-ng-options="grpo.id as grpo.nombre for grpo in vm.grpoList"
                                     class="form-control">
                                     <option />

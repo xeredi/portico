@@ -1,9 +1,8 @@
 <div data-ng-if="vm.itemList">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <div data-uib-pagination data-total-items="vm.itemList.count"
-                data-items-per-page="vm.itemList.limit" data-ng-model="vm.page"
-                data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
+            <div data-uib-pagination data-total-items="vm.itemList.count" data-items-per-page="vm.itemList.limit"
+                data-ng-model="vm.page" data-ng-change="vm.pageChanged()" class="pagination" data-max-size="1"
                 data-previous-text="&lsaquo;&lsaquo;" data-next-text="&rsaquo;&rsaquo;"></div>
         </div>
 
@@ -54,15 +53,14 @@
                         data-ng-switch-when="NE" class="pull-right"
                         data-ng-bind="item.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span
                         data-ng-switch-when="FE" class="pull-right"
-                        data-ng-bind="item.itdtMap[tpdtId].fecha | date: ('format_date' | translate)"></span>
-                        <span data-ng-switch-when="FH" class="pull-right"
-                        data-ng-bind="item.itdtMap[tpdtId].fecha | date: ('format_datetime' | translate)"></span>
-                        <span data-ng-switch-when="CR" data-bs-tooltip
-                        data-title="{{'cdrf_' + tpdtId + '_' + item.itdtMap[tpdtId].cadena | translate}}"
+                        data-ng-bind="item.itdtMap[tpdtId].fecha | date: ('format_date' | translate)"></span> <span
+                        data-ng-switch-when="FH" class="pull-right"
+                        data-ng-bind="item.itdtMap[tpdtId].fecha | date: ('format_datetime' | translate)"></span> <span
+                        data-ng-switch-when="CR"
+                        data-uib-tooltip="{{'cdrf_' + tpdtId + '_' + item.itdtMap[tpdtId].cadena | translate}}"
                         data-ng-if="item.itdtMap[tpdtId].cadena" data-ng-bind="item.itdtMap[tpdtId].cadena"></span><span
                         data-ng-switch-when="TX" data-ng-bind="item.itdtMap[tpdtId].cadena"></span><span
-                        data-ng-switch-when="PR" data-bs-tooltip
-                        data-title="{{item.itdtMap[tpdtId].prmt.etiqueta}}"
+                        data-ng-switch-when="PR" data-uib-tooltip="{{item.itdtMap[tpdtId].prmt.etiqueta}}"
                         data-ng-bind="item.itdtMap[tpdtId].prmt.parametro"></span></td>
                 </tr>
             </tbody>

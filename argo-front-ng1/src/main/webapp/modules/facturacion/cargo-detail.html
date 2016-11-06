@@ -97,8 +97,8 @@
                                 class="glyphicon glyphicon-search"></i></a></td>
                         <td data-ng-bind="rgla.codigo"></td>
                         <td nowrap="nowrap" data-ng-bind="rgla.texto"></td>
-                        <td data-ng-bind="rgla.tipo" data-bs-tooltip
-                            data-title="{{'ReglaTipo_' + rgla.tipo | translate}}"></td>
+                        <td><span data-ng-bind="rgla.tipo"
+                            data-uib-tooltip="{{'ReglaTipo_' + rgla.tipo | translate}}"></span></td>
                         <td data-ng-bind="('enti_' + rgla.enti.id | translate)"></td>
                         <td data-ng-bind="(rgla.version.fini | date: dateFormat)"></td>
                         <td data-ng-bind="(rgla.version.ffin | date: dateFormat)"></td>
