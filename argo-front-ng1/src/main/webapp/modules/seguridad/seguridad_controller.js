@@ -53,22 +53,22 @@
 
         .when("/seguridad/usuario/detail/:id", {
             templateUrl : "modules/seguridad/usuario-detail.html",
-            controller : "UsuarioDetailController as vm",
+            controller : "UsuarioDetailController as vm"
         })
 
         .when("/seguridad/usuario/edit/:accion/:id?", {
             templateUrl : "modules/seguridad/usuario-edit.html",
-            controller : "UsuarioEditController as vm",
+            controller : "UsuarioEditController as vm"
         })
 
         .when("/seguridad/usuario/acceso", {
             templateUrl : "modules/seguridad/usuario-acceso.html",
-            controller : "UsuarioAccesoController as vm",
+            controller : "UsuarioAccesoController as vm"
         })
 
         .when("/seguridad/usuario/salir", {
             templateUrl : "modules/seguridad/usuario-acceso.html",
-            controller : "UsuarioSalirController as vm",
+            controller : "UsuarioSalirController as vm"
         })
 
         ;

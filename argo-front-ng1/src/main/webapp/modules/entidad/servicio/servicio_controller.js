@@ -39,7 +39,7 @@
 
         .when("/servicio/valorador/edit/:accion/:entiId/:id", {
             templateUrl : "modules/entidad/servicio/valorador-edit.html",
-            controller : "ValoradorEditController as vm",
+            controller : "ValoradorEditController as vm"
         })
 
         .when("/servicio/servicio-secuencia/grid", {
@@ -50,12 +50,12 @@
 
         .when("/servicio/servicio-secuencia/detail/:tpsrId/:prtoId/:anno", {
             templateUrl : "modules/entidad/servicio/servicio-secuencia-detail.html",
-            controller : "ServicioSecuenciaDetailController as vm",
+            controller : "ServicioSecuenciaDetailController as vm"
         })
 
         .when("/servicio/servicio-secuencia/edit/:accion/:tpsrId?/:prtoId?/:anno?", {
             templateUrl : "modules/entidad/servicio/servicio-secuencia-edit.html",
-            controller : "ServicioSecuenciaEditController as vm",
+            controller : "ServicioSecuenciaEditController as vm"
         })
 
         .when("/servicio", {
@@ -72,7 +72,7 @@
         .when("/servicio/servicio/detail/:entiId/:id", {
             templateUrl : "modules/entidad/servicio/servicio-detail.html",
             controller : "ServicioDetailController as vm",
-            reloadOnSearch : false,
+            reloadOnSearch : false
         })
 
         .when("/servicio/servicio/edit/:accion/:entiId/:id?", {
@@ -82,7 +82,7 @@
 
         .when("/servicio/servicio/load/:entiId", {
             templateUrl : "modules/entidad/servicio/servicio-load.html",
-            controller : "ServicioLoadController as vm",
+            controller : "ServicioLoadController as vm"
         })
 
         .when("/servicio/subservicio/grid/:entiId", {
@@ -94,12 +94,12 @@
         .when("/servicio/subservicio/detail/:entiId/:id", {
             templateUrl : "modules/entidad/servicio/subservicio-detail.html",
             controller : "SubservicioDetailController as vm",
-            reloadOnSearch : false,
+            reloadOnSearch : false
         })
 
         .when("/servicio/subservicio/edit/:accion/:entiId/:srvcId?/:id?", {
             templateUrl : "modules/entidad/servicio/subservicio-edit.html",
-            controller : "SubservicioEditController as vm",
+            controller : "SubservicioEditController as vm"
         })
 
         ;

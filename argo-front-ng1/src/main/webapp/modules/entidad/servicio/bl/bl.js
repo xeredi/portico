@@ -13,7 +13,7 @@ function config($routeProvider) {
 
     .when("/servicio/bl/resumen-totales/:id", {
         templateUrl : "modules/entidad/servicio/bl/resumen-totales.html",
-        controller : "BlResumenTotalesController as vm",
+        controller : "BlResumenTotalesController as vm"
     })
 
     ;

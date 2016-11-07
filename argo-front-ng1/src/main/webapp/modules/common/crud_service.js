@@ -434,7 +434,7 @@
                 setUri : setUri,
                 getUri : getUri,
                 setPrefix : setPrefix,
-                getPrefix : getPrefix,
+                getPrefix : getPrefix
             };
         }
 

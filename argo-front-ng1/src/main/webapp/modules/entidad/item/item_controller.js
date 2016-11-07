@@ -17,12 +17,12 @@
 
         .when("/item/item-tramite/detail/:entiId/:id", {
             templateUrl : "modules/entidad/item/item-tramite-detail.html",
-            controller : "ItemTramiteDetailController as vm",
+            controller : "ItemTramiteDetailController as vm"
         })
 
         .when("/item/item-tramite/edit/:accion/:entiId/:itemId/:trmtId/:id?", {
             templateUrl : "modules/entidad/item/item-tramite-edit.html",
-            controller : "ItemTramiteEditController as vm",
+            controller : "ItemTramiteEditController as vm"
         })
 
         ;

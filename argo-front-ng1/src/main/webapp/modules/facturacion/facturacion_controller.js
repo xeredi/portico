@@ -98,32 +98,32 @@
 
         .when("/facturacion/cargo/detail/:id/:fref", {
             templateUrl : "modules/facturacion/cargo-detail.html",
-            controller : "CargoDetailController as vm",
+            controller : "CargoDetailController as vm"
         })
 
         .when("/facturacion/cargo/edit/:accion/:id?/:fref?", {
             templateUrl : "modules/facturacion/cargo-edit.html",
-            controller : "CargoEditController as vm",
+            controller : "CargoEditController as vm"
         })
 
         .when("/facturacion/regla/detail/:id/:fref", {
             templateUrl : "modules/facturacion/regla-detail.html",
-            controller : "ReglaDetailController as vm",
+            controller : "ReglaDetailController as vm"
         })
 
         .when("/facturacion/regla/edit/:accion/:crgoId/:fref/:id?", {
             templateUrl : "modules/facturacion/regla-edit.html",
-            controller : "ReglaEditController as vm",
+            controller : "ReglaEditController as vm"
         })
 
         .when("/facturacion/regla-incompatible/detail/:id/:fref", {
             templateUrl : "modules/facturacion/regla-incompatible-detail.html",
-            controller : "ReglaIncompatibleDetailController as vm",
+            controller : "ReglaIncompatibleDetailController as vm"
         })
 
         .when("/facturacion/regla-incompatible/edit/:accion/:rgla1Id/:fref/:id?", {
             templateUrl : "modules/facturacion/regla-incompatible-edit.html",
-            controller : "ReglaIncompatibleEditController as vm",
+            controller : "ReglaIncompatibleEditController as vm"
         })
 
         .when("/facturacion/aspecto/grid", {
@@ -134,22 +134,22 @@
 
         .when("/facturacion/aspecto/detail/:id/:fref", {
             templateUrl : "modules/facturacion/aspecto-detail.html",
-            controller : "AspectoDetailController as vm",
+            controller : "AspectoDetailController as vm"
         })
 
         .when("/facturacion/aspecto/edit/:accion/:id?/:fref?", {
             templateUrl : "modules/facturacion/aspecto-edit.html",
-            controller : "AspectoEditController as vm",
+            controller : "AspectoEditController as vm"
         })
 
         .when("/facturacion/aspecto-cargo/detail/:id/:fref", {
             templateUrl : "modules/facturacion/aspecto-cargo-detail.html",
-            controller : "AspectoCargoDetailController as vm",
+            controller : "AspectoCargoDetailController as vm"
         })
 
         .when("/facturacion/aspecto-cargo/edit/:accion/:aspcId/:fref/:id?", {
             templateUrl : "modules/facturacion/aspecto-cargo-edit.html",
-            controller : "AspectoCargoEditController as vm",
+            controller : "AspectoCargoEditController as vm"
         })
 
         .when("/facturacion/factura-serie/grid", {
@@ -160,12 +160,12 @@
 
         .when("/facturacion/factura-serie/detail/:id", {
             templateUrl : "modules/facturacion/factura-serie-detail.html",
-            controller : "FacturaSerieDetailController as vm",
+            controller : "FacturaSerieDetailController as vm"
         })
 
         .when("/facturacion/factura-serie/edit/:accion/:id?", {
             templateUrl : "modules/facturacion/factura-serie-edit.html",
-            controller : "FacturaSerieEditController as vm",
+            controller : "FacturaSerieEditController as vm"
         })
 
         // -------------------- Gestion ------------------
@@ -209,7 +209,7 @@
 
         .when("/facturacion/facturador/edit/:accion/:vlrcId?", {
             templateUrl : "modules/facturacion/facturador-edit.html",
-            controller : "FacturadorEditController as vm",
+            controller : "FacturadorEditController as vm"
         })
 
         .when("/facturacion/factura/grid", {
@@ -226,17 +226,17 @@
 
         .when("/facturacion/factura/edit/:accion/:id?", {
             templateUrl : "modules/facturacion/factura-edit.html",
-            controller : "FacturaEditController as vm",
+            controller : "FacturaEditController as vm"
         })
 
         .when("/facturacion/factura-anulacion/edit/:fctrId", {
             templateUrl : "modules/facturacion/factura-anulacion-edit.html",
-            controller : "FacturaAnulacionEditController as vm",
+            controller : "FacturaAnulacionEditController as vm"
         })
 
         .when("/facturacion/factura-rectificacion/edit/:fctrId", {
             templateUrl : "modules/facturacion/factura-rectificacion-edit.html",
-            controller : "FacturaRectificacionEditController as vm",
+            controller : "FacturaRectificacionEditController as vm"
         })
 
         .when("/facturacion/factura-linea/detail/:id", {

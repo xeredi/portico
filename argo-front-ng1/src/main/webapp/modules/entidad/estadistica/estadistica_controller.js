@@ -34,22 +34,22 @@
 
         .when("/estadistica/periodo-proceso/detail/:id", {
             templateUrl : "modules/entidad/estadistica/periodo-proceso-detail.html",
-            controller : "PeriodoProcesoDetailController as vm",
+            controller : "PeriodoProcesoDetailController as vm"
         })
 
         .when("/estadistica/periodo-proceso/edit/:accion/:id?", {
             templateUrl : "modules/entidad/estadistica/periodo-proceso-edit.html",
-            controller : "PeriodoProcesoEditController as vm",
+            controller : "PeriodoProcesoEditController as vm"
         })
 
         .when("/estadistica/periodo-proceso/load", {
             templateUrl : "modules/entidad/estadistica/periodo-proceso-load.html",
-            controller : "PeriodoProcesoLoadController as vm",
+            controller : "PeriodoProcesoLoadController as vm"
         })
 
         .when("/estadistica/cuadro-mes/detail/:peprId", {
             templateUrl : "modules/entidad/estadistica/cuadro-mes-detail.html",
-            controller : "CuadroMesDetailController as vm",
+            controller : "CuadroMesDetailController as vm"
         })
 
         .when("/estadistica/estadistica/grid/:entiId/:peprId/:autpId", {

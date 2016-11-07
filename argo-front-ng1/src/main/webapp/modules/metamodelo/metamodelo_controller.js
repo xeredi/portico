@@ -109,22 +109,22 @@
 
         .when("/metamodelo/tipo-dato/detail/:id", {
             templateUrl : "modules/metamodelo/tipo-dato-detail.html",
-            controller : "TipoDatoDetailController as vm",
+            controller : "TipoDatoDetailController as vm"
         })
 
         .when("/metamodelo/tipo-dato/edit/:accion/:id?", {
             templateUrl : "modules/metamodelo/tipo-dato-edit.html",
-            controller : "TipoDatoEditController as vm",
+            controller : "TipoDatoEditController as vm"
         })
 
         .when("/metamodelo/codigo-referencia/detail/:id", {
             templateUrl : "modules/metamodelo/codigo-referencia-detail.html",
-            controller : "CodigoReferenciaDetailController as vm",
+            controller : "CodigoReferenciaDetailController as vm"
         })
 
         .when("/metamodelo/codigo-referencia/edit/:accion/:tpdtId/:id?", {
             templateUrl : "modules/metamodelo/codigo-referencia-edit.html",
-            controller : "CodigoReferenciaEditController as vm",
+            controller : "CodigoReferenciaEditController as vm"
         })
 
         .when("/metamodelo/tipo-parametro/grid", {
@@ -141,7 +141,7 @@
 
         .when("/metamodelo/tipo-parametro/edit/:accion/:id?", {
             templateUrl : "modules/metamodelo/tipo-parametro-edit.html",
-            controller : "TipoParametroEditController as vm",
+            controller : "TipoParametroEditController as vm"
         })
 
         .when("/metamodelo/tipo-subparametro/detail/:id", {
@@ -152,7 +152,7 @@
 
         .when("/metamodelo/tipo-subparametro/edit/:accion/:tpprId/:id?", {
             templateUrl : "modules/metamodelo/tipo-subparametro-edit.html",
-            controller : "TipoSubparametroEditController as vm",
+            controller : "TipoSubparametroEditController as vm"
         })
 
         .when("/metamodelo/tipo-servicio/grid", {
@@ -169,7 +169,7 @@
 
         .when("/metamodelo/tipo-servicio/edit/:accion/:id?", {
             templateUrl : "modules/metamodelo/tipo-servicio-edit.html",
-            controller : "TipoServicioEditController as vm",
+            controller : "TipoServicioEditController as vm"
         })
 
         .when("/metamodelo/tipo-subservicio/detail/:id", {
@@ -180,7 +180,7 @@
 
         .when("/metamodelo/tipo-subservicio/edit/:accion/:tpsrId/:id?", {
             templateUrl : "modules/metamodelo/tipo-subservicio-edit.html",
-            controller : "TipoSubservicioEditController as vm",
+            controller : "TipoSubservicioEditController as vm"
         })
 
         .when("/metamodelo/tipo-estadistica/grid", {
@@ -197,72 +197,72 @@
 
         .when("/metamodelo/tipo-estadistica/edit/:accion/:id?", {
             templateUrl : "modules/metamodelo/tipo-estadistica-edit.html",
-            controller : "TipoEstadisticaEditController as vm",
+            controller : "TipoEstadisticaEditController as vm"
         })
 
         .when("/metamodelo/campo-agregacion/detail/:tpesId/:entdId", {
             templateUrl : "modules/metamodelo/campo-agregacion-detail.html",
-            controller : "CampoAgregacionDetailController as vm",
+            controller : "CampoAgregacionDetailController as vm"
         })
 
         .when("/metamodelo/campo-agregacion/edit/:accion/:tpesId/:entdId?", {
             templateUrl : "modules/metamodelo/campo-agregacion-edit.html",
-            controller : "CampoAgregacionEditController as vm",
+            controller : "CampoAgregacionEditController as vm"
         })
 
         .when("/metamodelo/entidad-grupo-dato/detail/:id", {
             templateUrl : "modules/metamodelo/entidad-grupo-dato-detail.html",
-            controller : "EntidadGrupoDatoDetailController as vm",
+            controller : "EntidadGrupoDatoDetailController as vm"
         })
 
         .when("/metamodelo/entidad-grupo-dato/edit/:accion/:entiId/:id?", {
             templateUrl : "modules/metamodelo/entidad-grupo-dato-edit.html",
-            controller : "EntidadGrupoDatoEditController as vm",
+            controller : "EntidadGrupoDatoEditController as vm"
         })
 
         .when("/metamodelo/entidad-tipo-dato/detail/:id", {
             templateUrl : "modules/metamodelo/entidad-tipo-dato-detail.html",
-            controller : "EntidadTipoDatoDetailController as vm",
+            controller : "EntidadTipoDatoDetailController as vm"
         })
 
         .when("/metamodelo/entidad-tipo-dato/edit/:accion/:entiId/:id?", {
             templateUrl : "modules/metamodelo/entidad-tipo-dato-edit.html",
-            controller : "EntidadTipoDatoEditController as vm",
+            controller : "EntidadTipoDatoEditController as vm"
         })
 
         .when("/metamodelo/tramite/detail/:id", {
             templateUrl : "modules/metamodelo/tramite-detail.html",
-            controller : "TramiteDetailController as vm",
+            controller : "TramiteDetailController as vm"
         })
 
         .when("/metamodelo/tramite/edit/:accion/:entiId/:id?", {
             templateUrl : "modules/metamodelo/tramite-edit.html",
-            controller : "TramiteEditController as vm",
+            controller : "TramiteEditController as vm"
         })
 
         .when("/metamodelo/tramite-tipo-dato/detail/:trmtId/:tpdtId", {
             templateUrl : "modules/metamodelo/tramite-tipo-dato-detail.html",
-            controller : "TramiteTipoDatoDetailController as vm",
+            controller : "TramiteTipoDatoDetailController as vm"
         })
 
         .when("/metamodelo/tramite-tipo-dato/edit/:accion/:trmtId/:tpdtId?", {
             templateUrl : "modules/metamodelo/tramite-tipo-dato-edit.html",
-            controller : "TramiteTipoDatoEditController as vm",
+            controller : "TramiteTipoDatoEditController as vm"
         })
 
         .when("/metamodelo/accion-entidad/detail/:id", {
             templateUrl : "modules/metamodelo/accion-entidad-detail.html",
-            controller : "AccionEntidadDetailController as vm",
+            controller : "AccionEntidadDetailController as vm"
         })
 
         .when("/metamodelo/accion-entidad/edit/:accion/:entiId/:id?", {
             templateUrl : "modules/metamodelo/accion-entidad-edit.html",
-            controller : "AccionEntidadEditController as vm",
+            controller : "AccionEntidadEditController as vm"
         })
 
         .when("/metamodelo/entidad-entidad/edit/:accion/:entiPadreId/:entiHijaId?", {
             templateUrl : "modules/metamodelo/entidad-entidad-edit.html",
-            controller : "EntidadEntidadEditController as vm",
+            controller : "EntidadEntidadEditController as vm"
         })
 
         .when("/metamodelo/accion-base/grid", {
@@ -273,22 +273,22 @@
 
         .when("/metamodelo/accion-base/detail/:id", {
             templateUrl : "modules/metamodelo/accion-base-detail.html",
-            controller : "AccionBaseDetailController as vm",
+            controller : "AccionBaseDetailController as vm"
         })
 
         .when("/metamodelo/accion-base/edit/:accion/:id?", {
             templateUrl : "modules/metamodelo/accion-base-edit.html",
-            controller : "AccionBaseEditController as vm",
+            controller : "AccionBaseEditController as vm"
         })
 
         .when("/metamodelo/accion-especial/detail/:id", {
             templateUrl : "modules/metamodelo/accion-especial-detail.html",
-            controller : "AccionEspecialDetailController as vm",
+            controller : "AccionEspecialDetailController as vm"
         })
 
         .when("/metamodelo/accion-especial/edit/:accion/:entiId/:id?", {
             templateUrl : "modules/metamodelo/accion-especial-edit.html",
-            controller : "AccionEspecialEditController as vm",
+            controller : "AccionEspecialEditController as vm"
         })
 
         .when("/metamodelo/modulo/grid", {
@@ -299,12 +299,12 @@
 
         .when("/metamodelo/modulo/detail/:id", {
             templateUrl : "modules/metamodelo/modulo-detail.html",
-            controller : "ModuloDetailController as vm",
+            controller : "ModuloDetailController as vm"
         })
 
         .when("/metamodelo/modulo/edit/:accion/:id?", {
             templateUrl : "modules/metamodelo/modulo-edit.html",
-            controller : "ModuloEditController as vm",
+            controller : "ModuloEditController as vm"
         })
 
         ;

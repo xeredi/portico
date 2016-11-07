@@ -50,12 +50,12 @@
 
         .when("/administracion/puerto/superpuerto/detail/:id", {
             templateUrl : "modules/administracion/superpuerto-detail.html",
-            controller : "SuperpuertoDetailController as vm",
+            controller : "SuperpuertoDetailController as vm"
         })
 
         .when("/administracion/puerto/superpuerto/edit/:accion/:id?", {
             templateUrl : "modules/administracion/superpuerto-edit.html",
-            controller : "SuperpuertoEditController as vm",
+            controller : "SuperpuertoEditController as vm"
         })
 
         .when("/administracion/puerto/puerto/grid", {
@@ -66,12 +66,12 @@
 
         .when("/administracion/puerto/puerto/detail/:id", {
             templateUrl : "modules/administracion/puerto-detail.html",
-            controller : "PuertoDetailController as vm",
+            controller : "PuertoDetailController as vm"
         })
 
         .when("/administracion/puerto/puerto/edit/:accion/:id?", {
             templateUrl : "modules/administracion/puerto-edit.html",
-            controller : "PuertoEditController as vm",
+            controller : "PuertoEditController as vm"
         })
 
         .when("/administracion/configuration/configuration/grid", {
@@ -82,12 +82,12 @@
 
         .when("/administracion/configuration/configuration/detail/:key", {
             templateUrl : "modules/administracion/configuration-detail.html",
-            controller : "ConfigurationDetailController as vm",
+            controller : "ConfigurationDetailController as vm"
         })
 
         .when("/administracion/configuration/configuration/edit/:accion/:key?", {
             templateUrl : "modules/administracion/configuration-edit.html",
-            controller : "ConfigurationEditController as vm",
+            controller : "ConfigurationEditController as vm"
         })
 
         .when("/administracion/messagei18n/messagei18n/grid", {
@@ -98,12 +98,12 @@
 
         .when("/administracion/messagei18n/messagei18n/detail/:key", {
             templateUrl : "modules/administracion/messagei18n-detail.html",
-            controller : "MessageI18nDetailController as vm",
+            controller : "MessageI18nDetailController as vm"
         })
 
         .when("/administracion/messagei18n/messagei18n/edit/:accion/:key", {
             templateUrl : "modules/administracion/messagei18n-edit.html",
-            controller : "MessageI18nEditController as vm",
+            controller : "MessageI18nEditController as vm"
         })
 
         ;

@@ -44,18 +44,18 @@
 
         .when("/maestro/parametro/edit/:accion/:entiId/:id?/:fref?", {
             templateUrl : "modules/entidad/maestro/parametro-edit.html",
-            controller : "ParametroEditController as vm",
+            controller : "ParametroEditController as vm"
         })
 
         .when("/maestro/subparametro/detail/:entiId/:id/:fref?", {
             templateUrl : "modules/entidad/maestro/subparametro-detail.html",
             controller : "SubparametroDetailController as vm",
-            reloadOnSearch : false,
+            reloadOnSearch : false
         })
 
         .when("/maestro/subparametro/edit/:accion/:entiId/:prmtId/:id?/:fref?", {
             templateUrl : "modules/entidad/maestro/subparametro-edit.html",
-            controller : "SubparametroEditController as vm",
+            controller : "SubparametroEditController as vm"
         })
 
         ;
