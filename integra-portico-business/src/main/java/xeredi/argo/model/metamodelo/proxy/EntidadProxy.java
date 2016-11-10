@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
@@ -79,7 +80,7 @@ public final class EntidadProxy {
 	 *            the id
 	 * @return the entidad vo
 	 */
-	public static AbstractEntidadDetailVO select(final Long id) {
+	public static AbstractEntidadDetailVO select(final @NonNull Long id) {
 		if (!ENTIDAD_MAP.containsKey(id)) {
 			throw new Error(new InstanceNotFoundException(MessageI18nKey.enti, id));
 		}

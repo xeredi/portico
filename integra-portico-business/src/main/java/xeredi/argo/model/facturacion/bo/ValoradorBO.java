@@ -96,7 +96,8 @@ public class ValoradorBO {
      */
     public void valorarServicio(final Long srvcId, final Set<Long> crgoIds, final Date fechaLiquidacion)
             throws ModelException {
-        LOG.info("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion);
+        LOG.info(
+                "Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion);
 
         Preconditions.checkNotNull(srvcId);
         Preconditions.checkNotNull(crgoIds);
@@ -369,56 +370,60 @@ public class ValoradorBO {
             final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterio);
 
             for (final ReglaVO rgla : rglaList) {
-                LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
+                try {
+                    LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
 
-                generateSql(rgla);
-                vldrContexto.setRgla(rgla);
+                    generateSql(rgla);
+                    vldrContexto.setRgla(rgla);
 
-                final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
+                    final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
 
-                switch (rgla.getEnti().getTipo()) {
-                case T:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaServicio(vldrContexto));
+                    switch (rgla.getEnti().getTipo()) {
+                    case T:
+                        vlrtList.addAll(vlrtDAO.selectAplicarReglaServicio(vldrContexto));
 
-                    break;
-                default:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaSubservicio(vldrContexto));
+                        break;
+                    default:
+                        vlrtList.addAll(vlrtDAO.selectAplicarReglaSubservicio(vldrContexto));
 
-                    break;
-                }
-
-                final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
-
-                for (final ValoracionTemporalVO vlrt : vlrtList) {
-                    IgUtilBO.assignNextVal(vlrt);
-
-                    vlrt.setPadreId(vlrt.getId());
-
-                    vlrt.setRgla(rgla);
-                    vlrt.setFreferencia(vldrContexto.getFref());
-                    vlrt.setFliquidacion(vldrContexto.getFliquidacion());
-
-                    if (vldrContexto.getCrgo().getVersion().getTemporal()) {
-                        vlrt.setFinicio(vldrContexto.getFini());
-                        vlrt.setFfin(vldrContexto.getFfin());
+                        break;
                     }
 
-                    if (vlrt.getImporte() == -0.0) {
-                        vlrt.setImporte(+0.0);
+                    final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
+
+                    for (final ValoracionTemporalVO vlrt : vlrtList) {
+                        IgUtilBO.assignNextVal(vlrt);
+
+                        vlrt.setPadreId(vlrt.getId());
+
+                        vlrt.setRgla(rgla);
+                        vlrt.setFreferencia(vldrContexto.getFref());
+                        vlrt.setFliquidacion(vldrContexto.getFliquidacion());
+
+                        if (vldrContexto.getCrgo().getVersion().getTemporal()) {
+                            vlrt.setFinicio(vldrContexto.getFini());
+                            vlrt.setFfin(vldrContexto.getFfin());
+                        }
+
+                        if (vlrt.getImporte() == -0.0) {
+                            vlrt.setImporte(+0.0);
+                        }
+
+                        if (vlrt.getImporteInc() == null) {
+                            vlrtListGanadores.add(vlrt);
+
+                        } else if (vlrt.getImporte() < vlrt.getImporteInc()) {
+                            vlrtListGanadores.add(vlrt);
+
+                            vlrtDAO.deleteIncompatibilidadList(vlrt);
+                        }
                     }
 
-                    if (vlrt.getImporteInc() == null) {
-                        vlrtListGanadores.add(vlrt);
-
-                    } else if (vlrt.getImporte() < vlrt.getImporteInc()) {
-                        vlrtListGanadores.add(vlrt);
-
-                        vlrtDAO.deleteIncompatibilidadList(vlrt);
+                    for (final ValoracionTemporalVO vlrt : vlrtListGanadores) {
+                        vlrtDAO.insert(vlrt);
                     }
-                }
-
-                for (final ValoracionTemporalVO vlrt : vlrtListGanadores) {
-                    vlrtDAO.insert(vlrt);
+                } catch (final Throwable ex) {
+                    throw new Error(rgla.getCodigo() + " - " + ex.getMessage(), ex);
                 }
             }
         }
@@ -430,63 +435,67 @@ public class ValoradorBO {
             final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterio);
 
             for (final ReglaVO rgla : rglaList) {
-                LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
+                try {
+                    LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
 
-                generateSql(rgla);
-                vldrContexto.setRgla(rgla);
+                    generateSql(rgla);
+                    vldrContexto.setRgla(rgla);
 
-                final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
+                    final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
 
-                switch (rgla.getEnti().getTipo()) {
-                case T:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(vldrContexto));
+                    switch (rgla.getEnti().getTipo()) {
+                    case T:
+                        vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(vldrContexto));
 
-                    break;
+                        break;
 
-                default:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorSubservicio(vldrContexto));
+                    default:
+                        vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorSubservicio(vldrContexto));
 
-                    break;
-                }
-
-                boolean incompatibilidadFound = false;
-
-                final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
-
-                for (final ValoracionTemporalVO vlrt : vlrtList) {
-                    IgUtilBO.assignNextVal(vlrt);
-
-                    vlrt.setRgla(rgla);
-                    vlrt.setFreferencia(vldrContexto.getFref());
-                    vlrt.setFliquidacion(vldrContexto.getFliquidacion());
-
-                    if (vldrContexto.getCrgo().getVersion().getTemporal()) {
-                        vlrt.setFinicio(vldrContexto.getFini());
-                        vlrt.setFfin(vldrContexto.getFfin());
+                        break;
                     }
 
-                    if (vlrt.getImporte() == -0.0) {
-                        vlrt.setImporte(+0.0);
+                    boolean incompatibilidadFound = false;
+
+                    final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
+
+                    for (final ValoracionTemporalVO vlrt : vlrtList) {
+                        IgUtilBO.assignNextVal(vlrt);
+
+                        vlrt.setRgla(rgla);
+                        vlrt.setFreferencia(vldrContexto.getFref());
+                        vlrt.setFliquidacion(vldrContexto.getFliquidacion());
+
+                        if (vldrContexto.getCrgo().getVersion().getTemporal()) {
+                            vlrt.setFinicio(vldrContexto.getFini());
+                            vlrt.setFfin(vldrContexto.getFfin());
+                        }
+
+                        if (vlrt.getImporte() == -0.0) {
+                            vlrt.setImporte(+0.0);
+                        }
+
+                        if (vlrt.getImporteInc() == null) {
+                            vlrtListGanadores.add(vlrt);
+                        } else if (vlrt.getImporte() < vlrt.getImporteInc()) {
+                            incompatibilidadFound = true;
+
+                            vlrtListGanadores.add(vlrt);
+                            vlrtDAO.deleteIncompatibilidadList(vlrt);
+                        }
                     }
 
-                    if (vlrt.getImporteInc() == null) {
-                        vlrtListGanadores.add(vlrt);
-                    } else if (vlrt.getImporte() < vlrt.getImporteInc()) {
-                        incompatibilidadFound = true;
-
-                        vlrtListGanadores.add(vlrt);
-                        vlrtDAO.deleteIncompatibilidadList(vlrt);
+                    for (final ValoracionTemporalVO vlrt : vlrtListGanadores) {
+                        vlrtDAO.insert(vlrt);
                     }
-                }
 
-                for (final ValoracionTemporalVO vlrt : vlrtListGanadores) {
-                    vlrtDAO.insert(vlrt);
-                }
+                    if (incompatibilidadFound) {
+                        LOG.info("Incompatibilidades. Recalcular Importes!!");
 
-                if (incompatibilidadFound) {
-                    LOG.info("Incompatibilidades. Recalcular Importes!!");
-
-                    vlrtDAO.updateRecalcularCargo(vldrContexto);
+                        vlrtDAO.updateRecalcularCargo(vldrContexto);
+                    }
+                } catch (final Throwable ex) {
+                    throw new Error(rgla.getCodigo() + " - " + ex.getMessage(), ex);
                 }
             }
         }
@@ -498,63 +507,67 @@ public class ValoradorBO {
             final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterio);
 
             for (final ReglaVO rgla : rglaList) {
-                LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
+                try {
+                    LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
 
-                generateSql(rgla);
-                vldrContexto.setRgla(rgla);
+                    generateSql(rgla);
+                    vldrContexto.setRgla(rgla);
 
-                final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
+                    final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
 
-                switch (rgla.getEnti().getTipo()) {
-                case T:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(vldrContexto));
+                    switch (rgla.getEnti().getTipo()) {
+                    case T:
+                        vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(vldrContexto));
 
-                    break;
+                        break;
 
-                default:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorSubservicio(vldrContexto));
+                    default:
+                        vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorSubservicio(vldrContexto));
 
-                    break;
-                }
-
-                boolean incompatibilidadFound = false;
-
-                final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
-
-                for (final ValoracionTemporalVO vlrt : vlrtList) {
-                    IgUtilBO.assignNextVal(vlrt);
-
-                    vlrt.setRgla(rgla);
-                    vlrt.setFreferencia(vldrContexto.getFref());
-                    vlrt.setFliquidacion(vldrContexto.getFliquidacion());
-
-                    if (vldrContexto.getCrgo().getVersion().getTemporal()) {
-                        vlrt.setFinicio(vldrContexto.getFini());
-                        vlrt.setFfin(vldrContexto.getFfin());
+                        break;
                     }
 
-                    if (vlrt.getImporte() == -0.0) {
-                        vlrt.setImporte(+0.0);
+                    boolean incompatibilidadFound = false;
+
+                    final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
+
+                    for (final ValoracionTemporalVO vlrt : vlrtList) {
+                        IgUtilBO.assignNextVal(vlrt);
+
+                        vlrt.setRgla(rgla);
+                        vlrt.setFreferencia(vldrContexto.getFref());
+                        vlrt.setFliquidacion(vldrContexto.getFliquidacion());
+
+                        if (vldrContexto.getCrgo().getVersion().getTemporal()) {
+                            vlrt.setFinicio(vldrContexto.getFini());
+                            vlrt.setFfin(vldrContexto.getFfin());
+                        }
+
+                        if (vlrt.getImporte() == -0.0) {
+                            vlrt.setImporte(+0.0);
+                        }
+
+                        if (vlrt.getImporteInc() == null) {
+                            vlrtListGanadores.add(vlrt);
+                        } else if (vlrt.getImporte() < vlrt.getImporteInc()) {
+                            incompatibilidadFound = true;
+
+                            vlrtListGanadores.add(vlrt);
+                            vlrtDAO.deleteIncompatibilidadList(vlrt);
+                        }
                     }
 
-                    if (vlrt.getImporteInc() == null) {
-                        vlrtListGanadores.add(vlrt);
-                    } else if (vlrt.getImporte() < vlrt.getImporteInc()) {
-                        incompatibilidadFound = true;
-
-                        vlrtListGanadores.add(vlrt);
-                        vlrtDAO.deleteIncompatibilidadList(vlrt);
+                    for (final ValoracionTemporalVO vlrt : vlrtListGanadores) {
+                        vlrtDAO.insert(vlrt);
                     }
-                }
 
-                for (final ValoracionTemporalVO vlrt : vlrtListGanadores) {
-                    vlrtDAO.insert(vlrt);
-                }
+                    if (incompatibilidadFound) {
+                        LOG.info("Incompatibilidades. Recalcular Importes!!");
 
-                if (incompatibilidadFound) {
-                    LOG.info("Incompatibilidades. Recalcular Importes!!");
-
-                    vlrtDAO.updateRecalcularCargo(vldrContexto);
+                        vlrtDAO.updateRecalcularCargo(vldrContexto);
+                    }
+                } catch (final Throwable ex) {
+                    throw new Error(rgla.getCodigo() + " - " + ex.getMessage(), ex);
                 }
             }
         }

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
@@ -59,7 +60,7 @@ public final class TipoSubservicioProxy {
      *            the id
      * @return the tipo subservicio vo
      */
-    public static TipoSubservicioDetailVO select(final Long id) {
+    public static TipoSubservicioDetailVO select(final @NonNull Long id) {
         if (!TIPO_SUBSERVICIO_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tpss, id));
         }

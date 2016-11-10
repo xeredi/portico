@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
@@ -58,7 +59,7 @@ public final class TipoDatoProxy {
      *            the id
      * @return the tipo dato vo
      */
-    public static TipoDatoVO select(final Long id) {
+    public static TipoDatoVO select(final @NonNull Long id) {
         if (!TIPO_DATO_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tpdt, id));
         }

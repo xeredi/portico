@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
@@ -48,7 +49,7 @@ public final class TramiteProxy {
      *            the id
      * @return the tramite detail vo
      */
-    public static TramiteDetailVO select(final Long id) {
+    public static TramiteDetailVO select(final @NonNull Long id) {
         if (!MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.trmt, id));
         }

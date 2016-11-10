@@ -197,7 +197,7 @@
     <select id="selectList" parameterType="ReglaCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
-        ORDER BY rgla_crgo_pk, rgla_enti_pk, rgla_tipo_prioridad, rglv_orden
+        ORDER BY rgla_crgo_pk, rgla_tipo_prioridad, rglv_orden
     </select>
 
     <select id="selectObject" parameterType="ReglaCriterioVO" resultMap="ResultMap">

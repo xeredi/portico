@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
@@ -62,7 +63,7 @@ public final class TipoEstadisticaProxy {
      *            the id
      * @return the tipo parametro vo
      */
-    public static TipoEstadisticaDetailVO select(final long id) {
+    public static TipoEstadisticaDetailVO select(final @NonNull long id) {
         if (!TIPO_ESTADISTICA_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tpes, id));
         }

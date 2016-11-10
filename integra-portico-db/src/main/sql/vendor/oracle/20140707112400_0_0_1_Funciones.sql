@@ -888,6 +888,19 @@ BEGIN
 		)
 	;
 
+  DELETE FROM tbl_i18n_i18n
+  WHERE
+      i18n_pref = 'rglv'
+      AND EXISTS (
+          SELECT 1 FROM tbl_regla_version_rglv
+          WHERE rglv_pk = i18n_ext_pk
+              AND EXISTS (
+                  SELECT 1 FROM tbl_regla_rgla
+                  WHERE rgla_pk = rglv_rgla_pk
+                    AND rgla_crgo_pk = crgoId
+              )
+      )
+  ;
 	DELETE FROM tbl_regla_version_rglv
 	WHERE EXISTS (
 		SELECT 1 FROM tbl_regla_rgla
