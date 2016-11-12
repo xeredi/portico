@@ -1996,6 +1996,28 @@ SELECT
 		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'duplicate') AS acen_aebs_pk
 FROM tbl_tipo_servicio_tpsr\
 
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 6 AS fncd_pk
+FROM tbl_tipo_servicio_tpsr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 6 AS acen_pk
+    , tpsr_pk AS acen_enti_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'ittrList') AS acen_aebs_pk
+FROM tbl_tipo_servicio_tpsr\
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 7 AS fncd_pk
+FROM tbl_tipo_servicio_tpsr\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
+SELECT
+    58000 + (tpsr_pk - 21000) * 20 + 7 AS acen_pk
+    , tpsr_pk AS acen_enti_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'ittrDetail') AS acen_aebs_pk
+FROM tbl_tipo_servicio_tpsr\
+
 
 
 
@@ -2064,6 +2086,28 @@ SELECT
     62000 + (tpss_pk - 22000) * 20 + 5 AS acen_pk
     , tpss_pk AS acen_enti_pk
 		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'duplicate') AS acen_aebs_pk
+FROM tbl_tipo_subservicio_tpss\
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 6 AS fncd_pk
+FROM tbl_tipo_subservicio_tpss\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 6 AS acen_pk
+    , tpss_pk AS acen_enti_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'ittrList') AS acen_aebs_pk
+FROM tbl_tipo_subservicio_tpss\
+
+INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 7 AS fncd_pk
+FROM tbl_tipo_subservicio_tpss\
+INSERT INTO tbl_accion_entidad_acen(acen_pk, acen_enti_pk, acen_aebs_pk)
+SELECT
+    62000 + (tpss_pk - 22000) * 20 + 7 AS acen_pk
+    , tpss_pk AS acen_enti_pk
+		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'ittrDetail') AS acen_aebs_pk
 FROM tbl_tipo_subservicio_tpss\
 
 

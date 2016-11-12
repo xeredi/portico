@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.servicio.dao.ServicioActorDAO">
+    <insert id="insert" parameterType="Long">
+        <![CDATA[
+        INSERT INTO tbl_servicio_actor_srac (srac_srvc_pk, srac_actr_pk)
+        SELECT srdt_srvc_pk, srdt_prmt_pk
+        FROM tbl_servicio_dato_srdt
+        WHERE
+            srdt_tpdt_pk = ANY (
+                SELECT tpdt_pk FROM tbl_tipo_dato_tpdt
+                WHERE tpdt_enti_pk = portico.getEntidad('ORGANIZACION')
+            )
+            AND srdt_prmt_pk IS NOT NULL
+            AND srdt_srvc_pk = #{value}
+
+        UNION
+
+        SELECT ssrv_srvc_pk, ssdt_prmt_pk
+        FROM tbl_subservicio_ssrv
+            INNER JOIN tbl_subservicio_dato_ssdt ON ssdt_ssrv_pk = ssrv_pk
+        WHERE
+            ssdt_tpdt_pk = ANY (
+                SELECT tpdt_pk FROM tbl_tipo_dato_tpdt
+                WHERE tpdt_enti_pk = portico.getEntidad('ORGANIZACION')
+            )
+            AND ssdt_prmt_pk IS NOT NULL
+            AND ssrv_srvc_pk = #{value}
+        ]]>
+    </insert>
+
+    <delete id="deleteList" parameterType="Long">
+        <![CDATA[
+        DELETE FROM tbl_servicio_actor_srac
+        WHERE
+            srac_srvc_pk = #{value}
+        ]]>
+    </delete>
+</mapper>

@@ -3,16 +3,17 @@ package xeredi.argo.http.controller.action.comun;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
+import com.opensymphony.xwork2.ActionSupport;
+
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.proxy.PorticoResourceBundle;
@@ -20,15 +21,12 @@ import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 
-import com.opensymphony.xwork2.ActionSupport;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class BaseAction.
  */
 @ParentPackage("default")
 @Result(type = "json", params = { "excludeNullProperties", "true", "ignoreHierarchy", "false", "enableGZIP", "true" })
-@ToString
 public abstract class BaseAction extends ActionSupport {
 
     /** The Constant serialVersionUID. */
@@ -65,8 +63,8 @@ public abstract class BaseAction extends ActionSupport {
     protected final String[] availableLanguages = ConfigurationProxy
             .getStringArray(ConfigurationKey.language_available);
 
+    /** the prefix. */
     @Getter
-    @Setter
     protected ClassPrefix prefix;
 
     /** The response code. */
@@ -74,12 +72,22 @@ public abstract class BaseAction extends ActionSupport {
     @Setter
     protected String responseCode;
 
+    /** the usro id. */
+    @Getter
+    protected Long usroId;
+
+    @Getter
+    protected Long sprtId;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public final String execute() throws ApplicationException {
         try {
+            usroId = SessionManager.getUsroId();
+            sprtId = SessionManager.getSprtId();
+
             doExecute();
         } catch (final ApplicationException ex) {
             LOG.error(ex, ex);
@@ -101,17 +109,6 @@ public abstract class BaseAction extends ActionSupport {
      *             the application exception
      */
     public abstract void doExecute() throws ApplicationException;
-
-    // get / set
-    /**
-     * Gets the sprt id.
-     *
-     * @return the sprt id
-     */
-    public final Long getSprtId() {
-        // FIXME !!!
-        return 2762002L;
-    }
 
     /**
      * Adds the action error.

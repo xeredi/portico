@@ -327,7 +327,6 @@ public class JSONInterceptor extends AbstractInterceptor {
      *            the parameter count
      * @return the method
      */
-    @SuppressWarnings("unchecked")
     private Method getMethod(final Class clazz, final String name, final int parameterCount) {
         final Method[] smdMethods = JSONUtil.listSMDMethods(clazz, ignoreSMDMethodInterfaces);
 

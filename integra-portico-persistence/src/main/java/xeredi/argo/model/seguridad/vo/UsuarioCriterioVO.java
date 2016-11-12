@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
 import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.Modelable;
+import xeredi.argo.model.maestro.vo.ParametroVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -28,6 +29,9 @@ public final class UsuarioCriterioVO extends BaseCriterioVO implements Modelable
 
     /** The sprt id. */
     private Long sprtId;
+
+    /** The orga. */
+    private ParametroVO orga;
 
     /** The grpo id. */
     private Long grpoId;

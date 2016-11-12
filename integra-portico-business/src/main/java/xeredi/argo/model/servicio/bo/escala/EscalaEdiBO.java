@@ -15,6 +15,7 @@ import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
+import xeredi.argo.model.servicio.dao.ServicioActorDAO;
 import xeredi.argo.model.servicio.dao.ServicioDAO;
 import xeredi.argo.model.servicio.dao.ServicioDatoDAO;
 import xeredi.argo.model.servicio.dao.ServicioSecuenciaDAO;
@@ -58,6 +59,7 @@ public final class EscalaEdiBO {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
             final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+            final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
 
             final EscalaDAO esclDAO = session.getMapper(EscalaDAO.class);
 
@@ -149,6 +151,9 @@ public final class EscalaEdiBO {
             esclDAO.updateNavegacionSalida(esclVO.getId());
             esclDAO.updateTipoIva(esclVO.getId());
             esclDAO.updateRecalcularFechas(esclVO.getId());
+
+            // Actores de la escala
+            sracDAO.insert(esclVO.getId());
 
             session.commit();
         }

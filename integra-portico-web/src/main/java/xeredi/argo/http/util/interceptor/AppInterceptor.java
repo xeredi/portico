@@ -9,6 +9,7 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.http.controller.action.comun.ProtectedAction;
+import xeredi.argo.http.controller.action.item.FuncionalidadAction;
 import xeredi.argo.http.controller.action.item.ProtectedItemAction;
 import xeredi.argo.http.controller.action.seguridad.UsuarioAccesoAction;
 import xeredi.argo.http.controller.session.SessionManager;
@@ -47,8 +48,7 @@ public final class AppInterceptor extends AbstractInterceptor {
                         final ClassPrefix prefix = action.getPrefix();
                         final AccionCodigo codigo = ((ProtectedAction) action).getAccion();
 
-                        if (action instanceof ProtectedItemAction && prefix != ClassPrefix.ittr) {
-                            // FIXME Corregir los permisos de trámites
+                        if (action instanceof ProtectedItemAction) {
                             final Long entiId = ((ProtectedItemAction) action).getEntiId();
 
                             if (!SessionManager.hasPermission(prefix, codigo, entiId)) {
@@ -58,6 +58,14 @@ public final class AppInterceptor extends AbstractInterceptor {
                             if (!SessionManager.hasPermission(prefix, codigo)) {
                                 action.addActionError(MessageI18nKey.E00015, prefix.name(), codigo);
                             }
+                        }
+                    }
+
+                    if (action instanceof FuncionalidadAction) {
+                        final Long fncdId = ((FuncionalidadAction) action).getFncdId();
+
+                        if (!SessionManager.hasPermission(fncdId)) {
+                            action.addActionError(MessageI18nKey.E00015, fncdId);
                         }
                     }
 

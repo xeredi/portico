@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
+import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.argo.model.servicio.bo.SubservicioBO;
 import xeredi.argo.model.servicio.dao.pesca.ManifiestoPescaDAO;
@@ -17,6 +18,16 @@ import xeredi.argo.model.servicio.vo.SubservicioVO;
  * The Class PartidaPescaBO.
  */
 public final class PartidaPescaBO extends SubservicioBO {
+
+    /**
+     * Instantiates a new partida pesca BO.
+     *
+     * @param ausroId
+     *            the ausro id
+     */
+    private PartidaPescaBO(Long ausroId) {
+        super(Entidad.PARTIDA_PESCA.getId(), ausroId);
+    }
 
     /**
      * {@inheritDoc}

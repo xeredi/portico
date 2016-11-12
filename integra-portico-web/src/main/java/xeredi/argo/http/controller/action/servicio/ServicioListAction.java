@@ -25,7 +25,7 @@ public final class ServicioListAction extends ItemListAction<ServicioCriterioVO,
     public void doSpecificList() throws ApplicationException {
         enti = TipoServicioProxy.select(model.getEntiId());
 
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId());
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId(), usroId);
 
         resultList = srvcBO.selectList(model, getOffset(), limit);
     }

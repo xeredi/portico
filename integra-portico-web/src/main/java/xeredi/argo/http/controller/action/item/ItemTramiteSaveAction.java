@@ -1,9 +1,10 @@
 package xeredi.argo.http.controller.action.item;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 import lombok.Data;
-import xeredi.argo.http.controller.action.comun.CrudSaveAction;
+import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -25,43 +26,57 @@ import xeredi.argo.model.servicio.bo.SubservicioBOFactory;
 /**
  * The Class ItemTramiteSaveAction.
  */
+
+/**
+ * Instantiates a new item tramite save action.
+ */
 @Data
-public final class ItemTramiteSaveAction extends CrudSaveAction<ItemTramiteVO> implements ProtectedItemAction {
+public final class ItemTramiteSaveAction extends BaseAction implements ModelDriven<ItemTramiteVO>, FuncionalidadAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1629906671936657593L;
 
+    /** The model. */
+    protected ItemTramiteVO model;
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void doSave() throws ApplicationException {
+    public void doExecute() throws ApplicationException {
         final AbstractEntidadDetailVO enti = EntidadProxy.select(model.getTrmt().getEntiId());
 
-        switch (enti.getEnti().getTipo()) {
-        case T:
-            final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getTrmt().getEntiId());
+        doValidate();
 
-            srvcBO.statechange(model);
+        if (!hasErrors()) {
 
-            break;
-        case S:
-            final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getTrmt().getEntiId());
+            switch (enti.getEnti().getTipo()) {
+            case T:
+                final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getTrmt().getEntiId(), usroId);
 
-            ssrvBO.statechange(model);
+                srvcBO.statechange(model);
 
-            break;
-        case P:
-            throw new Error("No implementado!!");
-        default:
-            throw new Error("Invalid entity type: " + enti.getEnti().getTipo());
+                break;
+            case S:
+                final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getTrmt().getEntiId(), usroId);
+
+                ssrvBO.statechange(model);
+
+                break;
+            case P:
+                throw new Error("No implementado!!");
+            default:
+                throw new Error("Invalid entity type: " + enti.getEnti().getTipo());
+            }
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Do validate.
+     *
+     * @throws ApplicationException
+     *             the application exception
      */
-    @Override
     public void doValidate() throws ApplicationException {
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getItemId());
@@ -104,11 +119,11 @@ public final class ItemTramiteSaveAction extends CrudSaveAction<ItemTramiteVO> i
      * {@inheritDoc}
      */
     @Override
-    public final Long getEntiId() {
+    public Long getFncdId() {
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getTrmt());
-        Preconditions.checkNotNull(model.getTrmt().getEntiId());
+        Preconditions.checkNotNull(model.getTrmt().getId());
 
-        return model.getTrmt().getEntiId();
+        return model.getTrmt().getId();
     }
 }

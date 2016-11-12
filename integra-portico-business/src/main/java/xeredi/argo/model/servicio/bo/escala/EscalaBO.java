@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.google.common.base.Preconditions;
 
+import lombok.NonNull;
+import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.servicio.bo.ServicioBO;
 import xeredi.argo.model.servicio.dao.escala.EscalaDAO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
@@ -18,6 +20,17 @@ import xeredi.util.mybatis.SqlMapperLocator;
  * The Class EscalaBO.
  */
 public final class EscalaBO extends ServicioBO {
+
+    /**
+     * Instantiates a new escala BO.
+     *
+     * @param ausroId
+     *            the ausro id
+     */
+    public EscalaBO(final @NonNull Long ausroId) {
+        super(Entidad.ESCALA.getId(), ausroId);
+    }
+
     /**
      * {@inheritDoc}
      */

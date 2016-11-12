@@ -287,8 +287,8 @@ public final class IfcsumMaestroReader extends IfcsumD14bBaseVisitor {
 
         addCodigoMaestro(Entidad.UNLOCODE, prto.getUnlocode());
 
-        // Busqueda de la escala
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(Entidad.MANIFIESTO.getId());
+        // Busqueda de la escala FIXME Pasar usuario
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(Entidad.MANIFIESTO.getId(), null);
         final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
 
         prtoCriterio.setId(prto.getId());

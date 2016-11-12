@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 import lombok.Data;
-import xeredi.argo.http.controller.action.comun.CrudEditAction;
+import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteDatoVO;
@@ -40,10 +41,13 @@ import xeredi.util.applicationobjects.LabelValueVO;
  * The Class ItemTramiteEditAction.
  */
 @Data
-public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> implements ProtectedItemAction {
+public final class ItemTramiteEditAction extends BaseAction implements ModelDriven<ItemTramiteVO>, FuncionalidadAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7371401403513787913L;
+
+    /** The model. */
+    protected ItemTramiteVO model;
 
     /** The trmt. */
     protected TramiteDetailVO trmt;
@@ -64,7 +68,7 @@ public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> i
      * {@inheritDoc}
      */
     @Override
-    public final void doEdit() throws ApplicationException {
+    public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(model.getItemId());
         Preconditions.checkNotNull(model.getTrmt().getId());
 
@@ -77,7 +81,7 @@ public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> i
         switch (tipoEntidad) {
         case T:
             final TipoServicioDetailVO tpsr = TipoServicioProxy.select(model.getTrmt().getEntiId());
-            final ServicioBO srvcBO = ServicioBOFactory.newInstance(tpsr.getEnti().getId());
+            final ServicioBO srvcBO = ServicioBOFactory.newInstance(tpsr.getEnti().getId(), usroId);
             final ServicioVO srvc = srvcBO.select(model.getItemId(), getIdioma());
 
             prtoId = srvc.getPrto().getId();
@@ -88,7 +92,7 @@ public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> i
             break;
         case S:
             final TipoSubservicioDetailVO tpss = TipoSubservicioProxy.select(model.getTrmt().getEntiId());
-            final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getTrmt().getEntiId());
+            final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getTrmt().getEntiId(), usroId);
             final SubservicioVO ssrv = ssrvBO.select(model.getItemId(), getIdioma());
 
             prtoId = ssrv.getSrvc().getPrto().getId();
@@ -135,12 +139,16 @@ public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> i
                 model.getIttdMap().put(tpdtId, ittd);
             }
         }
+
+        doLoadDependencies();
     }
 
     /**
-     * {@inheritDoc}
+     * Do load dependencies.
+     *
+     * @throws ApplicationException
+     *             the application exception
      */
-    @Override
     public final void doLoadDependencies() throws ApplicationException {
         Preconditions.checkNotNull(model.getTrmt().getEntiId());
 
@@ -166,11 +174,11 @@ public final class ItemTramiteEditAction extends CrudEditAction<ItemTramiteVO> i
      * {@inheritDoc}
      */
     @Override
-    public final Long getEntiId() {
+    public Long getFncdId() {
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getTrmt());
-        Preconditions.checkNotNull(model.getTrmt().getEntiId());
+        Preconditions.checkNotNull(model.getTrmt().getId());
 
-        return model.getTrmt().getEntiId();
+        return model.getTrmt().getId();
     }
 }

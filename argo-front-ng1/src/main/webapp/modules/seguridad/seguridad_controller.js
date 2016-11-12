@@ -214,6 +214,8 @@
                 vm.sprtList = data.sprtList;
                 vm.prtoList = data.prtoList;
                 vm.grpoList = data.grpoList;
+                vm.orgaEntiId = data.orgaEntiId;
+                vm.fref = data.fref;
             });
         }
 
@@ -261,6 +263,8 @@
             vm.model = data.model;
 
             vm.grpoList = data.grpoList;
+            vm.orgaEntiId = data.orgaEntiId;
+            vm.fref = data.fref;
         });
 
         pageTitleService.setTitle("usro", "page_detail");
@@ -300,6 +304,8 @@
 
             vm.sprtList = data.sprtList;
             vm.prtoList = data.prtoList;
+            vm.orgaEntiId = data.orgaEntiId;
+            vm.fref = data.fref;
         });
 
         pageTitleService.setTitle("usro", "page_" + vm.accion);

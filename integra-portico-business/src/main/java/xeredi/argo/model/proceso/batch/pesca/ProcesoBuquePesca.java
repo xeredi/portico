@@ -49,7 +49,7 @@ public final class ProcesoBuquePesca extends ProcesoTemplate {
         if (prbtData.getPrmnList().isEmpty()) {
             final TipoServicioDetailVO enti = TipoServicioProxy.select(Entidad.BUQUE_PESCA_SRV.getId());
 
-            final BuquePescaServicioBO bo = new BuquePescaServicioBO();
+            final BuquePescaServicioBO bo = new BuquePescaServicioBO(prbtData.getPrbt().getUsro().getId());
             final ServicioCriterioVO criterio = new ServicioCriterioVO();
 
             criterio.setFrefMax(ffin);

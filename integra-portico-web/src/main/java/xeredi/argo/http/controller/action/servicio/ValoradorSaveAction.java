@@ -12,7 +12,6 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
-import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -51,8 +50,8 @@ public final class ValoradorSaveAction extends CrudSaveAction<ValoradorVO> {
 
         parametroMap.put(ProcesoValorador.Params.fliq.name(), dateFormat.format(model.getFliq()));
 
-        final ProcesoVO prbt = prbtBO.crear(SessionManager.getUsroId(), ProcesoTipo.VALORADOR, parametroMap,
-                ItemTipo.srvc, itemEntradaList);
+        final ProcesoVO prbt = prbtBO.crear(usroId, ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc,
+                itemEntradaList);
 
         model.setPrbt(prbt);
     }
@@ -70,7 +69,7 @@ public final class ValoradorSaveAction extends CrudSaveAction<ValoradorVO> {
 
         final TipoServicioDetailVO tpsr = TipoServicioProxy.select(model.getSrvc().getEntiId());
 
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getSrvc().getEntiId());
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getSrvc().getEntiId(), usroId);
         final ServicioVO srvc = srvcBO.select(model.getSrvc().getId(), getIdioma());
 
         if (!tpsr.getEnti().getEstadosVlrcSet().contains(srvc.getEstado())) {

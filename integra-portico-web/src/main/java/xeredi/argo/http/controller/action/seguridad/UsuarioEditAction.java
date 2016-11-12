@@ -1,5 +1,7 @@
 package xeredi.argo.http.controller.action.seguridad;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
@@ -15,6 +17,7 @@ import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
+import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.seguridad.bo.GrupoBO;
 import xeredi.argo.model.seguridad.bo.UsuarioBO;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
@@ -40,6 +43,12 @@ public final class UsuarioEditAction extends CrudEditAction<UsuarioVO> {
 
     /** The prto list. */
     private List<PuertoVO> prtoList;
+
+    /** The orga enti id. */
+    private final Long orgaEntiId = Entidad.ORGANIZACION.getId();
+
+    /** The fref. */
+    private final Date fref = Calendar.getInstance().getTime();
 
     /**
      * {@inheritDoc}

@@ -132,8 +132,8 @@ public final class UsuarioAccesoBO {
                 fncdIds.add(trmt.getId());
             }
 
-            return new ResultadoLoginVO(usro.getId(), usro.getNombre(), usro.getSprt(), usro.getPrto(), mdloSet, paths,
-                    acenMap, fncdIds);
+            return new ResultadoLoginVO(usro.getId(), usro.getNombre(), usro.getSprt(), usro.getPrto(), usro.getOrga(),
+                    mdloSet, paths, acenMap, fncdIds);
         }
     }
 }

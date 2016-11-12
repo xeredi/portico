@@ -1,68 +1,65 @@
 <div data-ng-if="vm.model">
-	<form role="form" data-ng-submit="vm.save()">
-		<fieldset>
-			<div class="row">
-				<div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-					<label data-translate="usro_login"></label> <input type="text"
-						data-ng-model="vm.model.login" class="form-control" />
-				</div>
-				<div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-					<label data-translate="usro_contrasenia"></label> <input
-						type="password" data-ng-model="vm.model.contrasenia"
-						class="form-control" />
-				</div>
-				<div class="col-sm-4 col-md-3 col-lg-3 col-xl-2 form-group-sm">
-					<label data-translate="usro_email"></label> <input type="text"
-						data-ng-model="vm.model.email" class="form-control" />
-				</div>
-				<div class="col-sm-5 col-md-4 col-lg-3 col-xl-2 form-group-sm">
-					<label data-translate="usro_nombre"></label> <input type="text"
-						data-ng-model="vm.model.nombre" class="form-control" />
-				</div>
-				<div class="col-sm-5 col-md-4 col-lg-3 col-xl-2 form-group-sm">
-					<label data-translate="sprt"></label> <select
-						data-ng-model="vm.model.sprt.id"
-						data-ng-options="sprt.id as sprt.etiqueta for sprt in vm.sprtList"
-						class="form-control">
-						<option />
-					</select>
-				</div>
-				<div class="col-sm-5 col-md-4 col-lg-3 col-xl-2 form-group-sm">
-					<label data-translate="prto"></label> <select
-						data-ng-model="vm.model.prto.id"
-						data-ng-options="prto.id as prto.etiqueta for prto in vm.prtoList"
-						class="form-control">
-						<option />
-					</select>
-				</div>
-			</div>
-		</fieldset>
+    <form role="form" data-ng-submit="vm.save()">
+        <fieldset>
+            <div class="row">
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                    <label data-translate="usro_login"></label> <input type="text" data-ng-model="vm.model.login"
+                        class="form-control" />
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                    <label data-translate="usro_contrasenia"></label> <input type="password"
+                        data-ng-model="vm.model.contrasenia" class="form-control" />
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-3 col-xl-2 form-group-sm">
+                    <label data-translate="usro_email"></label> <input type="text" data-ng-model="vm.model.email"
+                        class="form-control" />
+                </div>
+                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-2 form-group-sm">
+                    <label data-translate="usro_nombre"></label> <input type="text" data-ng-model="vm.model.nombre"
+                        class="form-control" />
+                </div>
+                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-2 form-group-sm">
+                    <label data-translate="sprt"></label> <select data-ng-model="vm.model.sprt.id"
+                        data-ng-options="sprt.id as sprt.etiqueta for sprt in vm.sprtList" class="form-control">
+                        <option />
+                    </select>
+                </div>
+                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-2 form-group-sm">
+                    <label data-translate="prto"></label> <select data-ng-model="vm.model.prto.id"
+                        data-ng-options="prto.id as prto.etiqueta for prto in vm.prtoList" class="form-control">
+                        <option />
+                    </select>
+                </div>
+                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-2 form-group-sm">
+                    <label data-translate="orga"></label> <input class="form-control"
+                        data-ng-controller="ParametroTypeaheadController as ta" type="text" autocomplete="off"
+                        data-ng-model="vm.model.orga"
+                        data-uib-typeahead="prmt as prmt.etiqueta for prmt in ta.getLabelValues(vm.orgaEntiId, $viewValue, null, vm.fref)"
+                        data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
+                </div>
+            </div>
+        </fieldset>
 
-		<fieldset>
-			<legend data-translate="grpoList"></legend>
+        <fieldset>
+            <legend data-translate="grpoList"></legend>
 
-			<div class="row">
-				<div class="checkbox"
-					data-ng-repeat="grpo in vm.grpoList track by $index">
-					<label> <input type="checkbox"
-						data-ng-click="vm.updateGrupos($event, grpo.id)"
-						data-ng-checked="vm.model.grpoIds.indexOf(grpo.id) >= 0">
-						<span data-ng-bind="grpo.nombre"></span>
-					</label>
-				</div>
-			</div>
-		</fieldset>
+            <div class="row">
+                <div class="checkbox" data-ng-repeat="grpo in vm.grpoList track by $index">
+                    <label> <input type="checkbox" data-ng-click="vm.updateGrupos($event, grpo.id)"
+                        data-ng-checked="vm.model.grpoIds.indexOf(grpo.id) >= 0"> <span
+                        data-ng-bind="grpo.nombre"></span>
+                    </label>
+                </div>
+            </div>
+        </fieldset>
 
-		<div class="btn-group">
-			<button type="submit" class="btn btn-primary">
-				<i class="glyphicon glyphicon-ok"></i> <span
-					data-translate="btn_guardar"></span>
-			</button>
-			<button type="button" data-ng-click="vm.cancel()"
-				class="btn btn-default">
-				<i class="glyphicon glyphicon-remove"></i> <span
-					data-translate="btn_cancelar"></span>
-			</button>
-		</div>
-	</form>
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary">
+                <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar"></span>
+            </button>
+            <button type="button" data-ng-click="vm.cancel()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar"></span>
+            </button>
+        </div>
+    </form>
 </div>

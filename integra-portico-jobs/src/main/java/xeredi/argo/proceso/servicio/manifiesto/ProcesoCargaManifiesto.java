@@ -141,7 +141,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                     }
                     if (prbtData.getPrmnList().isEmpty()) {
                         final ManifiestoMensaje mensaje = fileImport.getMensaje();
-                        final ManifiestoBO srvcBO = new ManifiestoBO();
+                        final ManifiestoBO srvcBO = new ManifiestoBO(prbtData.getPrbt().getUsro().getId());
 
                         switch (mensaje) {
                         case MANIFIESTO_ALTA:
@@ -216,7 +216,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
                 if (prbtData.getPrmnList().isEmpty()) {
                     // Busqueda de la escala
-                    final EscalaBO escaBO = new EscalaBO();
+                    final EscalaBO escaBO = new EscalaBO(prbtData.getPrbt().getUsro().getId());
                     final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
 
                     srvcCriterioVO.setPrto(new PuertoCriterioVO());
@@ -232,8 +232,9 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                         try {
                             // Busqueda del buque de la escala
                             final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.BUQUE.getId());
-                            final ParametroVO buque = prmtBO.select(escala.getItdtMap().get(TipoDato.BUQUE.getId())
-                                    .getPrmt().getId(), null, fechaVigencia);
+                            final ParametroVO buque = prmtBO.select(
+                                    escala.getItdtMap().get(TipoDato.BUQUE.getId()).getPrmt().getId(), null,
+                                    fechaVigencia);
 
                             escala.getItdtMap().get(TipoDato.BUQUE.getId()).setPrmt(buque);
 

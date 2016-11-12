@@ -8,6 +8,7 @@ import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
+import xeredi.argo.model.maestro.vo.ParametroVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -39,6 +40,9 @@ public final class UsuarioVO implements Identifiable {
 
     /** The prto. */
     private PuertoVO prto;
+
+    /** The orga. */
+    private ParametroVO orga;
 
     /** The grpo ids. */
     private Set<Long> grpoIds;

@@ -39,6 +39,32 @@
     </sql>
 
     <sql id="SelectWhere">
+        <if test="usroOrgaId != null">
+        <![CDATA[
+            AND EXISTS (
+                SELECT 1 FROM tbl_servicio_actor_srac
+                WHERE
+                    srac_srvc_pk = ssrv_srvc_pk
+                    AND EXISTS (
+                        SELECT 1
+                        FROM tbl_usuario_usro
+                        WHERE
+                            usro_orga_pk = srac_actr_pk
+                            AND usro_pk = #{usroId}
+                    )
+            )
+        ]]>
+        </if>
+        <if test="usroPrtoId != null">
+        <![CDATA[
+            AND EXISTS (
+                SELECT 1 FROM tbl_servicio_srvc
+                WHERE srvc_pk = ssrv_srvc_pk
+                    AND srvc_subp_pk = #{usroPrtoId}
+            )
+        ]]>
+        </if>
+
         <if test="entiId != null">
             AND ssrv_tpss_pk = #{entiId}
         </if>

@@ -1,9 +1,10 @@
 package xeredi.argo.http.controller.action.item;
 
 import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
 
 import lombok.Data;
-import xeredi.argo.http.controller.action.comun.CrudDetailAction;
+import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.bo.ItemTramiteBO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
@@ -13,6 +14,7 @@ import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TramiteProxy;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
+import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
@@ -28,11 +30,22 @@ import xeredi.argo.model.servicio.vo.SubservicioVO;
 /**
  * The Class ItemTramiteDetailAction.
  */
+
+/**
+ * Instantiates a new item tramite detail action.
+ */
 @Data
-public final class ItemTramiteDetailAction extends CrudDetailAction<ItemTramiteVO> implements ProtectedItemAction {
+public final class ItemTramiteDetailAction extends BaseAction
+        implements ModelDriven<ItemTramiteVO>, ProtectedItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2680320980030804227L;
+
+    /** The accion. */
+    protected final AccionCodigo accion = AccionCodigo.ittrDetail;
+
+    /** The model. */
+    protected ItemTramiteVO model;
 
     /** The trmt. */
     protected TramiteDetailVO trmt;
@@ -47,7 +60,7 @@ public final class ItemTramiteDetailAction extends CrudDetailAction<ItemTramiteV
      * {@inheritDoc}
      */
     @Override
-    public void doDetail() throws ApplicationException {
+    public void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(model);
         Preconditions.checkNotNull(model.getId());
 
@@ -61,7 +74,7 @@ public final class ItemTramiteDetailAction extends CrudDetailAction<ItemTramiteV
         switch (tipoEntidad) {
         case T:
             final TipoServicioDetailVO tpsr = TipoServicioProxy.select(model.getTrmt().getEntiId());
-            final ServicioBO srvcBO = ServicioBOFactory.newInstance(tpsr.getEnti().getId());
+            final ServicioBO srvcBO = ServicioBOFactory.newInstance(tpsr.getEnti().getId(), usroId);
             final ServicioVO srvc = srvcBO.select(model.getItemId(), getIdioma());
 
             item = srvc;
@@ -70,7 +83,7 @@ public final class ItemTramiteDetailAction extends CrudDetailAction<ItemTramiteV
             break;
         case S:
             final TipoSubservicioDetailVO tpss = TipoSubservicioProxy.select(model.getTrmt().getEntiId());
-            final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getTrmt().getEntiId());
+            final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getTrmt().getEntiId(), usroId);
             final SubservicioVO ssrv = ssrvBO.select(model.getItemId(), getIdioma());
 
             item = ssrv;

@@ -29,6 +29,17 @@ import com.google.common.base.Preconditions;
  * The Class PartidaBO.
  */
 public final class PartidaBO extends SubservicioBO {
+
+    /**
+     * Instantiates a new partida BO.
+     *
+     * @param ausroId
+     *            the ausro id
+     */
+    private PartidaBO(Long ausroId) {
+        super(Entidad.PARTIDA.getId(), ausroId);
+    }
+
     /**
      * {@inheritDoc}
      */

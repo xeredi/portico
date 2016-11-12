@@ -2,15 +2,14 @@ package xeredi.argo.http.controller.action.comun;
 
 import java.util.Calendar;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
+
+import lombok.Data;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.comun.vo.Versionable;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-
-import com.google.common.base.Preconditions;
-import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -19,19 +18,16 @@ import com.opensymphony.xwork2.ModelDriven;
  * @param <T>
  *            the generic type
  */
+@Data
 public abstract class CrudEditAction<T> extends BaseAction implements ModelDriven<T>, ProtectedAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7147721554331909672L;
 
     /** The accion. */
-    @Getter
-    @Setter
     protected AccionCodigo accion;
 
     /** The model. */
-    @Getter
-    @Setter
     protected T model;
 
     /**

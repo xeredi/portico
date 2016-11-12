@@ -49,7 +49,7 @@ public final class ProcesoAmarreDeportivo extends ProcesoTemplate {
         if (prbtData.getPrmnList().isEmpty()) {
             final TipoServicioDetailVO enti = TipoServicioProxy.select(Entidad.AMARRE_DEP_SRV.getId());
 
-            final AmarreDeportivoServicioBO bo = new AmarreDeportivoServicioBO();
+            final AmarreDeportivoServicioBO bo = new AmarreDeportivoServicioBO(prbtData.getPrbt().getUsro().getId());
             final ServicioCriterioVO criterio = new ServicioCriterioVO();
 
             criterio.setFrefMax(ffin);
@@ -78,10 +78,10 @@ public final class ProcesoAmarreDeportivo extends ProcesoTemplate {
 
                     final ParametroVO embarcacion = new ParametroVO();
 
-                    embarcacion.setId(Long.parseLong(maestro.getItdtMap().get(TipoDato.EMBARCACION_DEP.name())
-                            .toString()));
-                    embarcacion.setParametro(maestro.getItdtMap().get(TipoDato.EMBARCACION_DEP.name() + "_prmt")
-                            .toString());
+                    embarcacion.setId(
+                            Long.parseLong(maestro.getItdtMap().get(TipoDato.EMBARCACION_DEP.name()).toString()));
+                    embarcacion.setParametro(
+                            maestro.getItdtMap().get(TipoDato.EMBARCACION_DEP.name() + "_prmt").toString());
 
                     srvc.addItdt(TipoDato.EMBARCACION_DEP.getId(), embarcacion);
 

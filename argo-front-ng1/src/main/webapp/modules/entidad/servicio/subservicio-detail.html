@@ -27,7 +27,7 @@
                 </div>
                 <div class="btn-group" data-ng-if="vm.enti.enti.tpdtEstado">
                     <a data-ng-repeat="trmt in vm.enti.trmtList track by $index"
-                        data-ng-if="(vm.item.estado == trmt.estadoOrig)"
+                        data-ng-if="(vm.item.estado == trmt.estadoOrig) && mc.hasFncdId(trmt.id)"
                         data-ng-href="#/item/item-tramite/edit/create/{{vm.item.entiId}}/{{vm.item.id}}/{{trmt.id}}"
                         class="btn btn-default" data-ng-bind="('trmt_' + trmt.id | translate)"></a>
                 </div>
@@ -39,7 +39,10 @@
                         <label data-translate="srvc"></label>
                         <p class="form-control-static">
                             <a data-ng-href="#/servicio/servicio/detail/{{vm.item.srvc.entiId}}/{{vm.item.srvc.id}}"
-                                data-ng-bind="vm.item.srvc.etiqueta"></a>
+                                data-ng-bind="vm.item.srvc.etiqueta"
+                                data-ng-if="mc.hasAcen(vm.item.srvc.entiId, 'detail')"></a> <span
+                                data-ng-bind="vm.item.srvc.etiqueta"
+                                data-ng-if="!mc.hasAcen(vm.item.srvc.entiId, 'detail')"></span>
                         </p>
                     </div>
                     <div class="col-sm-1 col-md-1 form-group-sm">
@@ -70,7 +73,10 @@
                         <label data-ng-bind="('enti_' + entiId | translate)"></label>
                         <p class="form-control-static">
                             <a
-                                data-ng-href="#/servicio/subservicio/detail/{{entiId}}/{{vm.itemPadresMap[entiId].value}}">{{vm.itemPadresMap[entiId].label}}</a>
+                                data-ng-href="#/servicio/subservicio/detail/{{entiId}}/{{vm.itemPadresMap[entiId].value}}"
+                                data-ng-bind="vm.itemPadresMap[entiId].label" data-ng-if="mc.hasAcen(entiId, 'detail')"></a>
+                            <span data-ng-bind="vm.itemPadresMap[entiId].label"
+                                data-ng-if="!mc.hasAcen(entiId, 'detail')"></span>
                         </p>
                     </div>
                 </div>

@@ -26,7 +26,7 @@ public final class SubservicioListAction extends
     public void doSpecificList() throws ApplicationException {
         enti = TipoSubservicioProxy.select(model.getEntiId());
 
-        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId());
+        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId(), usroId);
 
         resultList = ssrvBO.selectList(model, getOffset(), limit);
     }

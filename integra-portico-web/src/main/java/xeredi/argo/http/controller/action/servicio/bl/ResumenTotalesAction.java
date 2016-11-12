@@ -32,7 +32,7 @@ public final class ResumenTotalesAction extends CrudDetailAction<SubservicioVO> 
         Preconditions.checkNotNull(model.getSrvc());
         Preconditions.checkNotNull(model.getSrvc().getId());
 
-        final BlBO mablBO = new BlBO();
+        final BlBO mablBO = new BlBO(usroId);
 
         model = mablBO.select(model.getId(), idioma);
         resumen = mablBO.selectResumen(model.getSrvc().getId(), model.getId());

@@ -36,7 +36,7 @@ public final class ServicioEditAction extends ItemEditAction<ServicioVO, TipoSer
      */
     @Override
     public void doSpecificEdit() throws ApplicationException {
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId());
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId(), usroId);
 
         enti = TipoServicioProxy.select(model.getEntiId());
 

@@ -17,6 +17,9 @@ import xeredi.argo.model.item.vo.ItemCriterioVO;
 @ToString(callSuper = true)
 public final class ServicioCriterioVO extends ItemCriterioVO {
 
+    /** The usro id. */
+    private Long usroId;
+
     /** The subp id. */
     private PuertoCriterioVO prto;
 
@@ -46,4 +49,7 @@ public final class ServicioCriterioVO extends ItemCriterioVO {
 
     /** The ffin max. */
     private Date ffinMax;
+
+    /** The srvc dep id. */
+    private Long srvcDepId;
 }

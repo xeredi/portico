@@ -70,7 +70,8 @@ public final class ProcesoIfcsum {
 
             LOG.info("Alta de servicio");
 
-            final ServicioBO srvcBO = ServicioBOFactory.newInstance(Entidad.MANIFIESTO.getId());
+            // FIXME Hace falta un identificador de usuario
+            final ServicioBO srvcBO = ServicioBOFactory.newInstance(Entidad.MANIFIESTO.getId(), null);
 
             srvcBO.insert(servicioReader.getSrvc(), servicioReader.getSsrvList(), servicioReader.getSsssList(), null);
 

@@ -30,6 +30,17 @@ import xeredi.util.mybatis.SqlMapperLocator;
  * The Class AtraqueBO.
  */
 public final class AtraqueBO extends SubservicioBO {
+
+    /**
+     * Instantiates a new atraque BO.
+     *
+     * @param ausroId
+     *            the ausro id
+     */
+    private AtraqueBO(Long ausroId) {
+        super(Entidad.ATRAQUE.getId(), ausroId);
+    }
+
     /**
      * {@inheritDoc}
      */

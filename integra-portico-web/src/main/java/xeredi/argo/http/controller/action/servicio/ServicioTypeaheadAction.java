@@ -21,7 +21,7 @@ public final class ServicioTypeaheadAction extends ItemTypeaheadAction<ServicioT
      */
     @Override
     public void doSpecificTypeahead() throws ApplicationException {
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId());
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId(), usroId);
 
         resultList = srvcBO.selectTypeaheadList(model, limit);
     }

@@ -60,7 +60,7 @@ public final class ServicioSaveAction extends ItemSaveAction<ServicioVO> {
     @Override
     public void doSave() throws ApplicationException {
         // FIXME ACABAR
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId());
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId(), usroId);
 
         switch (accion) {
         case create:

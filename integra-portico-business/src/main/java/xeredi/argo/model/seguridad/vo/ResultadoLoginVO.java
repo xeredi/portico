@@ -7,21 +7,12 @@ import lombok.Data;
 import lombok.NonNull;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
+import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ResultadoLoginVO.
- */
-
-/*
- * (non-Javadoc)
- *
- * @see java.lang.Object#toString()
- */
-
-/**
- * {@inheritDoc}
  */
 @Data
 public final class ResultadoLoginVO {
@@ -37,6 +28,9 @@ public final class ResultadoLoginVO {
 
     /** The prto. */
     private final PuertoVO prto;
+
+    /** The orga. */
+    private final ParametroVO orga;
 
     /** The mdlo set. */
     private final Set<String> mdloSet;
@@ -61,6 +55,8 @@ public final class ResultadoLoginVO {
      *            the asprt
      * @param aprto
      *            the aprto
+     * @param aorga
+     *            the aorga
      * @param amdloSet
      *            the amdlo set
      * @param aacbsPaths
@@ -71,13 +67,15 @@ public final class ResultadoLoginVO {
      *            the afncd ids
      */
     public ResultadoLoginVO(final @NonNull Long ausroId, final @NonNull String anombre, final SuperpuertoVO asprt,
-            final PuertoVO aprto, final @NonNull Set<String> amdloSet, final @NonNull Set<String> aacbsPaths,
-            final @NonNull Map<Long, Set<AccionCodigo>> aacenMap, final @NonNull Set<Long> afncdIds) {
+            final PuertoVO aprto, final ParametroVO aorga, final @NonNull Set<String> amdloSet,
+            final @NonNull Set<String> aacbsPaths, final @NonNull Map<Long, Set<AccionCodigo>> aacenMap,
+            final @NonNull Set<Long> afncdIds) {
         super();
         usroId = ausroId;
         nombre = anombre;
         sprt = asprt;
         prto = aprto;
+        orga = aorga;
         mdloSet = amdloSet;
         acbsPaths = aacbsPaths;
         acenMap = aacenMap;

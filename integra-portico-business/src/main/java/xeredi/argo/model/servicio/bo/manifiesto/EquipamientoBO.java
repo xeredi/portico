@@ -29,6 +29,17 @@ import com.google.common.base.Preconditions;
  * The Class EquipamientoBO.
  */
 public final class EquipamientoBO extends SubservicioBO {
+
+    /**
+     * Instantiates a new equipamiento BO.
+     *
+     * @param ausroId
+     *            the ausro id
+     */
+    private EquipamientoBO(Long ausroId) {
+        super(Entidad.EQUIPAMIENTO.getId(), ausroId);
+    }
+
     /**
      * {@inheritDoc}
      */

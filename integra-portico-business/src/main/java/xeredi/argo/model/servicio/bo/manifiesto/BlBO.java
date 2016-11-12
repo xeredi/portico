@@ -33,13 +33,24 @@ import com.google.common.base.Preconditions;
  * The Class BlBO.
  */
 public final class BlBO extends SubservicioBO {
+
+    /**
+     * Instantiates a new bl BO.
+     *
+     * @param ausroId
+     *            the ausro id
+     */
+    public BlBO(Long ausroId) {
+        super(Entidad.BL.getId(), ausroId);
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void insertPostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv,
             final @NonNull TipoSubservicioDetailVO tpssDetail, final Set<Long> ssrvPadreIds)
-                    throws DuplicateInstanceException {
+            throws DuplicateInstanceException {
         Preconditions.checkNotNull(ssrv.getSrvc());
         Preconditions.checkNotNull(ssrv.getSrvc().getId());
 
@@ -150,7 +161,8 @@ public final class BlBO extends SubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ResumenTotalesVO selectResumen(final @NonNull Long maniId, final @NonNull Long blId) throws InstanceNotFoundException {
+    public ResumenTotalesVO selectResumen(final @NonNull Long maniId, final @NonNull Long blId)
+            throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ManifiestoResumenDAO resumenDAO = session.getMapper(ManifiestoResumenDAO.class);
 

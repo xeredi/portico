@@ -4,21 +4,21 @@
 
 <mapper namespace="xeredi.argo.model.servicio.dao.ServicioDAO">
     <resultMap type="ServicioVO" id="ResultMap">
-        <id column="srvc_pk" property="id" />
-        <result column="srvc_tpsr_pk" property="entiId" />
-        <result column="srvc_anno" property="anno" />
-        <result column="srvc_numero" property="numero" />
-        <result column="srvc_falta" property="falta" />
-        <result column="srvc_fref" property="fref" />
-        <result column="srvc_fini" property="fini" />
-        <result column="srvc_ffin" property="ffin" />
-        <result column="srvc_estado" property="estado" />
+        <id column="srvc_pk" property="id"/>
+        <result column="srvc_tpsr_pk" property="entiId"/>
+        <result column="srvc_anno" property="anno"/>
+        <result column="srvc_numero" property="numero"/>
+        <result column="srvc_falta" property="falta"/>
+        <result column="srvc_fref" property="fref"/>
+        <result column="srvc_fini" property="fini"/>
+        <result column="srvc_ffin" property="ffin"/>
+        <result column="srvc_estado" property="estado"/>
 
         <association property="prto" javaType="PuertoVO">
-            <result column="srvc_subp_pk" property="id" />
-            <result column="prto_codigo" property="codigo" />
-            <result column="prto_codigo_corto" property="codigoCorto" />
-            <result column="prto_nombre" property="nombre" />
+            <result column="srvc_subp_pk" property="id"/>
+            <result column="prto_codigo" property="codigo"/>
+            <result column="prto_codigo_corto" property="codigoCorto"/>
+            <result column="prto_nombre" property="nombre"/>
         </association>
     </resultMap>
 
@@ -57,6 +57,25 @@
     </sql>
 
     <sql id="SelectWhere">
+        <if test="usroOrgaId != null">
+        <![CDATA[
+            AND EXISTS (
+                SELECT 1 FROM tbl_servicio_actor_srac
+                WHERE
+                    srac_srvc_pk = srvc_pk
+                    AND EXISTS (
+                        SELECT 1
+                        FROM tbl_usuario_usro
+                        WHERE
+                            usro_orga_pk = srac_actr_pk
+                            AND usro_pk = #{usroId}
+                    )
+            )
+        ]]>
+        </if>
+        <if test="usroPrtoId != null">
+            AND srvc_subp_pk = #{usroPrtoId}
+        </if>
         <if test="id != null">
             AND srvc_pk = #{id}
         </if>
@@ -157,28 +176,29 @@
     </select>
 
     <select id="count" parameterType="ServicioCriterioVO" resultType="Integer">
-        <include refid="SelectCountPrefix" />
+        <include refid="SelectCountPrefix"/>
         <where>
-            <include refid="SelectWhere" />
+            <include refid="SelectWhere"/>
         </where>
     </select>
 
     <select id="selectList" parameterType="ServicioCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
+        <include refid="SelectPrefix"/>
         <where>
-            <include refid="SelectWhere" />
+            <include refid="SelectWhere"/>
         </where>
         ORDER BY srvc_pk DESC
     </select>
 
     <select id="selectObject" parameterType="ServicioCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
+        <include refid="SelectPrefix"/>
         <where>
-            <include refid="SelectWhere" />
+            <include refid="SelectWhere"/>
         </where>
     </select>
 
-    <select id="selectTypeaheadList" parameterType="ServicioTypeaheadCriterioVO" resultMap="ResultMap" fetchSize="10">
+    <select id="selectTypeaheadList" parameterType="ServicioTypeaheadCriterioVO" resultMap="ResultMap"
+        fetchSize="10">
         <![CDATA[
         select
             srvc_pk

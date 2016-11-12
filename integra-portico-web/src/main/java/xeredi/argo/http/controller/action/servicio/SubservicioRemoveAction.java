@@ -25,7 +25,7 @@ public final class SubservicioRemoveAction extends ItemRemoveAction<SubservicioV
         Preconditions.checkNotNull(model.getSrvc());
         Preconditions.checkNotNull(model.getSrvc().getId());
 
-        final SubservicioBO itemBO = SubservicioBOFactory.newInstance(model.getEntiId());
+        final SubservicioBO itemBO = SubservicioBOFactory.newInstance(model.getEntiId(), usroId);
 
         itemBO.delete(model);
     }

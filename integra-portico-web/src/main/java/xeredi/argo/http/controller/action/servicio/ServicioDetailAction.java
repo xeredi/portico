@@ -41,7 +41,7 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
     public void doSpecificDetail() throws ApplicationException {
         enti = TipoServicioProxy.select(model.getEntiId());
 
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId());
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId(), usroId);
 
         model = srvcBO.select(model.getId(), getIdioma());
 

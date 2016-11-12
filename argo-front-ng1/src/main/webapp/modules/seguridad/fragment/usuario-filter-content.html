@@ -36,6 +36,13 @@
                                     <option />
                                 </select>
                             </div>
+                            <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
+                                <label data-translate="orga"></label> <input class="form-control"
+                                    data-ng-controller="ParametroTypeaheadController as ta" type="text"
+                                    autocomplete="off" data-ng-model="vm.searchCriteria.orga"
+                                    data-uib-typeahead="prmt as prmt.etiqueta for prmt in ta.getLabelValues(vm.orgaEntiId, $viewValue, null, vm.fref)"
+                                    data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
+                            </div>
                         </div>
                     </fieldset>
                 </form>

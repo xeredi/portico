@@ -3,74 +3,94 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.argo.model.seguridad.dao.UsuarioDAO">
-	<resultMap type="UsuarioVO" id="ResultMap">
-		<id column="usro_pk" />
+    <resultMap type="UsuarioVO" id="ResultMap">
+        <id column="usro_pk"/>
 
-		<result column="usro_pk" property="id" />
-		<result column="usro_login" property="login" />
-		<result column="usro_contrasenia" property="contrasenia" />
-		<result column="usro_email" property="email" />
-		<result column="usro_nombre" property="nombre" />
+        <result column="usro_pk" property="id"/>
+        <result column="usro_login" property="login"/>
+        <result column="usro_contrasenia" property="contrasenia"/>
+        <result column="usro_email" property="email"/>
+        <result column="usro_nombre" property="nombre"/>
 
-		<association property="sprt" javaType="SuperpuertoVO">
-			<result column="usro_sprt_pk" property="id" />
-			<result column="sprt_codigo" property="codigo" />
-			<result column="sprt_nombre" property="nombre" />
-		</association>
+        <association property="sprt" javaType="SuperpuertoVO">
+            <result column="usro_sprt_pk" property="id"/>
+            <result column="sprt_codigo" property="codigo"/>
+            <result column="sprt_nombre" property="nombre"/>
+        </association>
 
-		<association property="prto" javaType="PuertoVO">
-			<result column="usro_prto_pk" property="id" />
-			<result column="prto_codigo" property="codigo" />
-			<result column="prto_nombre" property="nombre" />
-		</association>
-	</resultMap>
+        <association property="prto" javaType="PuertoVO">
+            <result column="usro_prto_pk" property="id"/>
+            <result column="prto_codigo" property="codigo"/>
+            <result column="prto_nombre" property="nombre"/>
+        </association>
 
-	<sql id="SelectPrefix">
+        <association property="orga" javaType="ParametroVO">
+            <result column="usro_orga_pk" property="id"/>
+            <result column="orga" property="parametro"/>
+            <result column="orga_texto" property="texto"/>
+        </association>
+    </resultMap>
+
+    <sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        usro_pk, usro_login, usro_contrasenia, usro_email, usro_nombre, usro_sprt_pk, usro_prto_pk
+        usro_pk, usro_login, usro_contrasenia, usro_email, usro_nombre, usro_sprt_pk, usro_prto_pk, usro_orga_pk
 
         , (SELECT sprt_codigo FROM tbl_superpuerto_sprt WHERE sprt_pk = usro_sprt_pk) AS sprt_codigo
         , (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = usro_prto_pk) AS prto_codigo
+        , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = usro_orga_pk) AS orga
     ]]>
-		<if test="idioma != null">
+        <if test="idioma != null">
 	    <![CDATA[
 	    , (SELECT i18n_text FROM tbl_i18n_i18n
 	    	WHERE i18n_ext_pk = usro_sprt_pk AND i18n_pref = 'sprt' AND i18n_lang = #{idioma}) AS sprt_nombre
 	    , (SELECT i18n_text FROM tbl_i18n_i18n
 	    	WHERE i18n_ext_pk = usro_prto_pk AND i18n_pref = 'prto' AND i18n_lang = #{idioma}) AS prto_nombre
+        , (SELECT prdt_cadena FROM tbl_parametro_dato_prdt
+            WHERE
+                prdt_tpdt_pk = (SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr WHERE tppr_pk = portico.getEntidad('ORGANIZACION'))
+                AND prdt_prvr_pk = (
+                    SELECT prvr_pk FROM tbl_parametro_version_prvr
+                    WHERE
+                        prvr_prmt_pk = usro_orga_pk
+                        AND SYSDATE BETWEEN prvr_fini AND COALESCE(prvr_ffin, SYSDATE)
+                )
+        ) AS orga_texto
 	    ]]>
-		</if>
+        </if>
     <![CDATA[
     FROM
         tbl_usuario_usro
     ]]>
-	</sql>
+    </sql>
 
-	<sql id="SelectCountPrefix">
+    <sql id="SelectCountPrefix">
     <![CDATA[
     SELECT
         COUNT(1)
     FROM
         tbl_usuario_usro
     ]]>
-	</sql>
+    </sql>
 
-	<sql id="SelectWhere">
-		<where>
-			<if test="id != null">
-				AND usro_pk = #{id}
-			</if>
-			<if test="login != null and !login.empty">
-				AND usro_login = #{login}
-			</if>
-			<if test="sprtId != null">
-				AND usro_sprt_pk = #{sprtId}
-			</if>
-			<if test="prtoId != null">
-				AND usro_prto_pk = #{prtoId}
-			</if>
-			<if test="grpoId != null">
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND usro_pk = #{id}
+            </if>
+            <if test="login != null and !login.empty">
+                AND usro_login = #{login}
+            </if>
+            <if test="sprtId != null">
+                AND usro_sprt_pk = #{sprtId}
+            </if>
+            <if test="prtoId != null">
+                AND usro_prto_pk = #{prtoId}
+            </if>
+            <if test="orga != null and orga.id != null">
+                AND usro_orga_pk = #{orga.id}
+            </if>
+            <if test="grpoId != null">
 	        <![CDATA[
 				AND EXISTS (
 					SELECT 1 FROM tbl_usuario_grupo_usgr
@@ -78,44 +98,42 @@
 						AND usgr_grpo_pk = #{grpoId}
 				)
 	        ]]>
-			</if>
-		</where>
-	</sql>
+            </if>
+        </where>
+    </sql>
 
-	<select id="count" parameterType="UsuarioCriterioVO" resultType="Integer">
-		<include refid="SelectCountPrefix" />
-		<include refid="SelectWhere" />
-	</select>
+    <select id="count" parameterType="UsuarioCriterioVO" resultType="Integer">
+        <include refid="SelectCountPrefix"/>
+        <include refid="SelectWhere"/>
+    </select>
 
-	<select id="selectList" parameterType="UsuarioCriterioVO"
-		resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-		ORDER BY usro_login
-	</select>
+    <select id="selectList" parameterType="UsuarioCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix"/>
+        <include refid="SelectWhere"/>
+        ORDER BY usro_login
+    </select>
 
-	<select id="selectObject" parameterType="UsuarioCriterioVO"
-		resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-	</select>
+    <select id="selectObject" parameterType="UsuarioCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix"/>
+        <include refid="SelectWhere"/>
+    </select>
 
-	<select id="exists" parameterType="UsuarioVO" resultType="Boolean">
+    <select id="exists" parameterType="UsuarioVO" resultType="Boolean">
         <![CDATA[
         SELECT COUNT(1)
         FROM tbl_usuario_usro
         WHERE usro_login = #{login}
         ]]>
-	</select>
+    </select>
 
-	<insert id="insert" parameterType="UsuarioVO">
+    <insert id="insert" parameterType="UsuarioVO">
         <![CDATA[
-        INSERT INTO tbl_usuario_usro (usro_pk, usro_login, usro_contrasenia, usro_email, usro_nombre, usro_sprt_pk, usro_prto_pk)
-        VALUES (#{id}, #{login}, #{contrasenia}, #{email}, #{nombre}, #{sprt.id}, #{prto.id})
+        INSERT INTO tbl_usuario_usro (usro_pk, usro_login, usro_contrasenia, usro_email, usro_nombre, usro_sprt_pk, usro_prto_pk, usro_orga_pk)
+        VALUES (#{id}, #{login}, #{contrasenia}, #{email}, #{nombre}, #{sprt.id}, #{prto.id}, #{orga.id})
         ]]>
-	</insert>
+    </insert>
 
-	<update id="update" parameterType="UsuarioVO">
+    <update id="update" parameterType="UsuarioVO">
         <![CDATA[
         UPDATE tbl_usuario_usro SET
             usro_login = #{login}
@@ -124,16 +142,17 @@
             , usro_nombre = #{nombre}
             , usro_sprt_pk = #{sprt.id}
             , usro_prto_pk = #{prto.id}
+            , usro_orga_pk = #{orga.id}
         WHERE
             usro_pk = #{id}
         ]]>
-	</update>
+    </update>
 
-	<delete id="delete" parameterType="UsuarioVO">
+    <delete id="delete" parameterType="UsuarioVO">
         <![CDATA[
         DELETE FROM tbl_usuario_usro
         WHERE
             usro_pk = #{id}
         ]]>
-	</delete>
+    </delete>
 </mapper>

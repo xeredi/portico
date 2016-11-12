@@ -107,39 +107,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_puerto_prto TO portico\
 
 
 
-
-
--- tbl_usuario_usro
-CREATE TABLE tbl_usuario_usro (
-	usro_pk NUMBER(19) NOT NULL
-	, usro_login VARCHAR2(50) NOT NULL
-	, usro_contrasenia VARCHAR2(50) NOT NULL
-	, usro_nombre VARCHAR2(100) NOT NULL
-	, usro_email VARCHAR2(100) NOT NULL
-	, usro_sprt_pk NUMBER(19)
-	, usro_prto_pk NUMBER(19)
-
-	, CONSTRAINT pk_usro PRIMARY KEY (usro_pk)
-	, CONSTRAINT uq_usro UNIQUE (usro_login)
-
-	, CONSTRAINT fk_usro_sprt_pk FOREIGN KEY (usro_sprt_pk)
-		REFERENCES tbl_superpuerto_sprt (sprt_pk)
-	, CONSTRAINT fk_usro_prto_pk FOREIGN KEY (usro_prto_pk)
-		REFERENCES tbl_puerto_prto (prto_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_usuario_usro FOR porticoadm.tbl_usuario_usro\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_usuario_usro TO portico\
-
-COMMENT ON TABLE tbl_usuario_usro IS 'Usuarios'\
-COMMENT ON COLUMN tbl_usuario_usro.usro_pk IS 'Identificador de usuario'\
-COMMENT ON COLUMN tbl_usuario_usro.usro_login IS 'Login'\
-COMMENT ON COLUMN tbl_usuario_usro.usro_contrasenia IS 'Contrasenia'\
-COMMENT ON COLUMN tbl_usuario_usro.usro_nombre IS 'Nombre Completo'\
-
-
-
 -- tbl_grupo_grpo
 CREATE TABLE tbl_grupo_grpo (
 	grpo_pk NUMBER(19) NOT NULL
@@ -156,31 +123,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_grupo_grpo TO portico\
 COMMENT ON TABLE tbl_grupo_grpo IS 'Grupos de usuarios'\
 COMMENT ON COLUMN tbl_grupo_grpo.grpo_pk IS 'Identificador de grupo'\
 COMMENT ON COLUMN tbl_grupo_grpo.grpo_nombre IS 'Nombre de grupo'\
-
-
-
--- tbl_usuario_grupo_usgr
-CREATE TABLE tbl_usuario_grupo_usgr (
-	usgr_usro_pk NUMBER(19) NOT NULL
-	, usgr_grpo_pk NUMBER(19) NOT NULL
-
-	, CONSTRAINT pk_usgr PRIMARY KEY (usgr_usro_pk, usgr_grpo_pk)
-
-	, CONSTRAINT fk_usgr_usro_pk FOREIGN KEY (usgr_usro_pk)
-		REFERENCES tbl_usuario_usro (usro_pk)
-	, CONSTRAINT fk_usgr_grpo_pk FOREIGN KEY (usgr_grpo_pk)
-		REFERENCES tbl_grupo_grpo (grpo_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_usuario_grupo_usgr FOR porticoadm.tbl_usuario_grupo_usgr\
-
-CREATE INDEX ix_usgr_grpo_pk ON tbl_usuario_grupo_usgr (usgr_grpo_pk)\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_usuario_grupo_usgr TO portico\
-
-COMMENT ON TABLE tbl_usuario_grupo_usgr IS 'Asociaciones de usuarios a grupos'\
-COMMENT ON COLUMN tbl_usuario_grupo_usgr.usgr_usro_pk IS 'Identificador de usuario'\
-COMMENT ON COLUMN tbl_usuario_grupo_usgr.usgr_grpo_pk IS 'Identificador de grupo de usuarios'\
 
 
 
@@ -757,6 +699,72 @@ COMMENT ON COLUMN tbl_subparametro_dato_spdt.spdt_cadena IS 'Valor de dato de Ti
 
 
 
+
+
+-- tbl_usuario_usro
+CREATE TABLE tbl_usuario_usro (
+	usro_pk NUMBER(19) NOT NULL
+	, usro_login VARCHAR2(50) NOT NULL
+	, usro_contrasenia VARCHAR2(50) NOT NULL
+	, usro_nombre VARCHAR2(100) NOT NULL
+	, usro_email VARCHAR2(100) NOT NULL
+	, usro_sprt_pk NUMBER(19)
+	, usro_prto_pk NUMBER(19)
+	, usro_orga_pk NUMBER(19)
+
+	, CONSTRAINT pk_usro PRIMARY KEY (usro_pk)
+	, CONSTRAINT uq_usro UNIQUE (usro_login)
+
+	, CONSTRAINT fk_usro_sprt_pk FOREIGN KEY (usro_sprt_pk)
+		REFERENCES tbl_superpuerto_sprt (sprt_pk)
+	, CONSTRAINT fk_usro_prto_pk FOREIGN KEY (usro_prto_pk)
+		REFERENCES tbl_puerto_prto (prto_pk)
+	, CONSTRAINT fk_usro_orga_pk FOREIGN KEY (usro_orga_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_usuario_usro FOR porticoadm.tbl_usuario_usro\
+
+CREATE INDEX ix_usro_orga_pk ON tbl_usuario_usro (usro_orga_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_usuario_usro TO portico\
+
+COMMENT ON TABLE tbl_usuario_usro IS 'Usuarios'\
+COMMENT ON COLUMN tbl_usuario_usro.usro_pk IS 'Identificador de usuario'\
+COMMENT ON COLUMN tbl_usuario_usro.usro_login IS 'Login'\
+COMMENT ON COLUMN tbl_usuario_usro.usro_contrasenia IS 'Contrasenia'\
+COMMENT ON COLUMN tbl_usuario_usro.usro_nombre IS 'Nombre Completo'\
+COMMENT ON COLUMN tbl_usuario_usro.usro_sprt_pk IS 'Autoridad Portuaria Asociada'\
+COMMENT ON COLUMN tbl_usuario_usro.usro_prto_pk IS 'Puerto Asociado'\
+COMMENT ON COLUMN tbl_usuario_usro.usro_orga_pk IS 'Cliente Asociado'\
+
+
+
+-- tbl_usuario_grupo_usgr
+CREATE TABLE tbl_usuario_grupo_usgr (
+	usgr_usro_pk NUMBER(19) NOT NULL
+	, usgr_grpo_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_usgr PRIMARY KEY (usgr_usro_pk, usgr_grpo_pk)
+
+	, CONSTRAINT fk_usgr_usro_pk FOREIGN KEY (usgr_usro_pk)
+		REFERENCES tbl_usuario_usro (usro_pk)
+	, CONSTRAINT fk_usgr_grpo_pk FOREIGN KEY (usgr_grpo_pk)
+		REFERENCES tbl_grupo_grpo (grpo_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_usuario_grupo_usgr FOR porticoadm.tbl_usuario_grupo_usgr\
+
+CREATE INDEX ix_usgr_grpo_pk ON tbl_usuario_grupo_usgr (usgr_grpo_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_usuario_grupo_usgr TO portico\
+
+COMMENT ON TABLE tbl_usuario_grupo_usgr IS 'Asociaciones de usuarios a grupos'\
+COMMENT ON COLUMN tbl_usuario_grupo_usgr.usgr_usro_pk IS 'Identificador de usuario'\
+COMMENT ON COLUMN tbl_usuario_grupo_usgr.usgr_grpo_pk IS 'Identificador de grupo de usuarios'\
+
+
+
 -- tbl_tipo_servicio_tpsr
 CREATE TABLE tbl_tipo_servicio_tpsr (
 	tpsr_pk NUMBER(19) NOT NULL
@@ -895,6 +903,28 @@ COMMENT ON COLUMN tbl_servicio_srvc.srvc_estado IS 'Estado en el que se encuentr
 
 
 
+-- tbl_servicio_actor_srac
+CREATE TABLE tbl_servicio_actor_srac (
+	srac_srvc_pk NUMBER(19) NOT NULL
+	, srac_actr_pk NUMBER(19) NOT NULL
+
+	, CONSTRAINT pk_srac PRIMARY KEY (srac_srvc_pk, srac_actr_pk)
+
+	, CONSTRAINT fk_srac_srvc_pk FOREIGN KEY (srac_srvc_pk)
+		REFERENCES tbl_servicio_srvc (srvc_pk)
+	, CONSTRAINT fk_srac_actr_pk FOREIGN KEY (srac_actr_pk)
+		REFERENCES tbl_parametro_prmt (prmt_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_servicio_actor_srac FOR porticoadm.tbl_servicio_actor_srac\
+
+CREATE INDEX ix_srac_actr_pk ON tbl_servicio_actor_srac (srac_actr_pk)\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_actor_srac TO portico\
+
+
+
+
 -- tbl_servicio_dato_srdt
 CREATE TABLE tbl_servicio_dato_srdt (
 	srdt_srvc_pk NUMBER(19) NOT NULL
@@ -919,6 +949,7 @@ CREATE TABLE tbl_servicio_dato_srdt (
 )\
 
 CREATE INDEX ix_srdt_prmt_pk ON tbl_servicio_dato_srdt (srdt_prmt_pk, srdt_tpdt_pk)\
+CREATE INDEX ix_srdt_srvc_dep_pk ON tbl_servicio_dato_srdt (srdt_srvc_dep_pk, srdt_tpdt_pk)\
 CREATE INDEX ix_srdt_cadena ON tbl_servicio_dato_srdt (srdt_tpdt_pk, srdt_cadena)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_servicio_dato_srdt FOR porticoadm.tbl_servicio_dato_srdt\
@@ -2308,6 +2339,7 @@ DROP TABLE tbl_subserv_subserv_ssss\
 DROP TABLE tbl_subservicio_dato_ssdt\
 DROP TABLE tbl_subservicio_ssrv\
 DROP TABLE tbl_servicio_dato_srdt\
+DROP TABLE tbl_servicio_actor_srac\
 DROP TABLE tbl_servicio_srvc\
 DROP TABLE tbl_tipo_subservicio_tpss\
 DROP TABLE tbl_tipo_servicio_tpsr\

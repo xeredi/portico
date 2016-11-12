@@ -58,6 +58,7 @@ public abstract class EntityImporterBO {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(EntityImporterBO.class);
 
+    /** The Constant ITEMS_PER_COMMIT. */
     public static final int ITEMS_PER_COMMIT = 5000;
 
     /**
@@ -451,7 +452,7 @@ public abstract class EntityImporterBO {
 
         };
 
-        saxParser.parse(MaestroImporterBO.class.getResourceAsStream(xmlFileName), handler);
+        saxParser.parse(EntityImporterBO.class.getResourceAsStream(xmlFileName), handler);
 
         return amaestrosList;
     }

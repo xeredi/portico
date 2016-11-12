@@ -27,7 +27,7 @@ public final class ResumenTotalesAction extends CrudDetailAction<ServicioVO> {
      */
     @Override
     public void doDetail() throws ApplicationException {
-        final ManifiestoBO maniBO = new ManifiestoBO();
+        final ManifiestoBO maniBO = new ManifiestoBO(usroId);
 
         model = maniBO.select(model.getId(), idioma);
         resumen = maniBO.selectResumen(model.getId());

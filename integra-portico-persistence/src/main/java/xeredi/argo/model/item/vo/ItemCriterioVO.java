@@ -13,11 +13,6 @@ import xeredi.argo.model.comun.vo.BaseCriterioVO;
 /**
  * The Class ItemCriterioVO.
  */
-
-/**
- * @author xeredi
- *
- */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
@@ -42,6 +37,18 @@ public abstract class ItemCriterioVO extends BaseCriterioVO {
 
     /** The itdt map. */
     private Map<Long, ItemDatoCriterioVO> itdtMap;
+
+    /** The usro id. */
+    private Long usroId;
+
+    /** The usro sprt id. */
+    private Long usroSprtId;
+
+    /** The usro prto id. */
+    private Long usroPrtoId;
+
+    /** The usro orga id. */
+    private Long usroOrgaId;
 
     /**
      * Instantiates a new item criterio vo.

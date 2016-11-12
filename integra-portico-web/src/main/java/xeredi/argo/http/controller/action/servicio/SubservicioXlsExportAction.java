@@ -31,7 +31,7 @@ public final class SubservicioXlsExportAction extends ItemXlsExportAction<Subser
         final TipoSubservicioDetailVO enti = TipoSubservicioProxy.select(criterio.getEntiId());
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            final SubservicioBO itemBO = SubservicioBOFactory.newInstance(criterio.getEntiId());
+            final SubservicioBO itemBO = SubservicioBOFactory.newInstance(criterio.getEntiId(), usroId);
             final SubservicioXls excelUtil = new SubservicioXls(getLocale());
 
             excelUtil.generarSubservicios(itemBO.selectList(criterio), enti, baos);

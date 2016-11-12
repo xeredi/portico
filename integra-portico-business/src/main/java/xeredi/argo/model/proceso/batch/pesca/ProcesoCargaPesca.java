@@ -133,7 +133,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
                     }
 
                     if (prbtData.getPrmnList().isEmpty()) {
-                        final ManifiestoPescaBO srvcBO = new ManifiestoPescaBO();
+                        final ManifiestoPescaBO srvcBO = new ManifiestoPescaBO(prbtData.getPrbt().getUsro().getId());
 
                         try {
                             // FIXME Verificar si ya se ha cargado el archivo

@@ -8,7 +8,7 @@
     ;
 
     /* @ngInject */
-    function CrudService($http, $q, $location, Upload) {
+    function CrudService($http, $q, $location, Upload, FileSaver) {
         function Crud() {
             var _uri;
             var _prefix;
@@ -132,7 +132,7 @@
                     });
 
                     setTimeout(function() {
-                        saveAs(file, filename + '.xls');
+                        FileSaver.saveAs(file, filename + '.xls');
                     }, 0);
 
                     return response.data;
@@ -202,7 +202,7 @@
                     });
 
                     setTimeout(function() {
-                        saveAs(file, filename + '.pdf');
+                        FileSaver.saveAs(file, filename + '.pdf');
                     }, 0);
 
                     return response.data;
@@ -230,7 +230,7 @@
                     var file = new Blob([ response.data ]);
 
                     setTimeout(function() {
-                        saveAs(file, filename);
+                        FileSaver.saveAs(file, filename);
                     }, 0);
 
                     return response.data;

@@ -57,7 +57,7 @@ public final class SubservicioSaveAction extends ItemSaveAction<SubservicioVO> {
     @Override
     public void doSave() throws ApplicationException {
         final TipoSubservicioDetailVO enti = TipoSubservicioProxy.select(model.getEntiId());
-        final SubservicioBO itemBO = SubservicioBOFactory.newInstance(model.getEntiId());
+        final SubservicioBO itemBO = SubservicioBOFactory.newInstance(model.getEntiId(), usroId);
 
         switch (accion) {
         case create:

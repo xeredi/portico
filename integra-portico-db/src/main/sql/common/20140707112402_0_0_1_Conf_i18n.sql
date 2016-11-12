@@ -29,6 +29,8 @@ INSERT INTO tbl_accion_entidad_base_aebs (aebs_pk, aebs_prefix, aebs_codigo) VAL
 INSERT INTO tbl_accion_entidad_base_aebs (aebs_pk, aebs_prefix, aebs_codigo) VALUES (2127, 'item', 'export')\
 INSERT INTO tbl_accion_entidad_base_aebs (aebs_pk, aebs_prefix, aebs_codigo) VALUES (2128, 'item', 'index')\
 INSERT INTO tbl_accion_entidad_base_aebs (aebs_pk, aebs_prefix, aebs_codigo) VALUES (2129, 'item', 'file_import')\
+INSERT INTO tbl_accion_entidad_base_aebs (aebs_pk, aebs_prefix, aebs_codigo) VALUES (2130, 'item', 'ittrList')\
+INSERT INTO tbl_accion_entidad_base_aebs (aebs_pk, aebs_prefix, aebs_codigo) VALUES (2131, 'item', 'ittrDetail')\
 
 INSERT INTO tbl_accion_entidad_base_aebs (aebs_pk, aebs_prefix, aebs_codigo) VALUES (2820, 'ittr', 'list')\
 INSERT INTO tbl_accion_entidad_base_aebs (aebs_pk, aebs_prefix, aebs_codigo) VALUES (2821, 'ittr', 'detail')\

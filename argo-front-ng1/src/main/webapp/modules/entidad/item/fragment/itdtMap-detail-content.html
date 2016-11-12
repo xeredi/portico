@@ -42,7 +42,10 @@
                 <p class="form-control-static">
                     <a
                         data-ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.item.itdtMap[tpdtId].prmt.id}}/{{vm.item.fref}}"
-                        data-ng-bind="vm.item.itdtMap[tpdtId].prmt.etiqueta"></a>
+                        data-ng-bind="vm.item.itdtMap[tpdtId].prmt.etiqueta"
+                        data-ng-if="mc.hasAcen(vm.enti.entdMap[tpdtId].tpdt.enti.id, 'detail')"></a> <span
+                        data-ng-bind="vm.item.itdtMap[tpdtId].prmt.etiqueta"
+                        data-ng-if="!mc.hasAcen(vm.enti.entdMap[tpdtId].tpdt.enti.id, 'detail')"></span>
                 </p>
             </div>
             <div data-ng-switch-when="SR" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
@@ -50,7 +53,10 @@
                 <p class="form-control-static">
                     <a
                         data-ng-href="#/servicio/servicio/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.item.itdtMap[tpdtId].srvc.id}}"
-                        data-ng-bind="vm.item.itdtMap[tpdtId].srvc.etiqueta"></a>
+                        data-ng-bind="vm.item.itdtMap[tpdtId].srvc.etiqueta"
+                        data-ng-if="mc.hasAcen(vm.enti.entdMap[tpdtId].tpdt.enti.id, 'detail')"></a> <span
+                        data-ng-bind="vm.item.itdtMap[tpdtId].srvc.etiqueta"
+                        data-ng-if="!mc.hasAcen(vm.enti.entdMap[tpdtId].tpdt.enti.id, 'detail')"></span>
                 </p>
             </div>
             <div data-ng-switch-when="TX">

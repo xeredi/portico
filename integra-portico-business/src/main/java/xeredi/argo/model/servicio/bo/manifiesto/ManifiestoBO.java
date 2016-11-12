@@ -34,6 +34,16 @@ import xeredi.util.mybatis.SqlMapperLocator;
 public final class ManifiestoBO extends ServicioBO {
 
     /**
+     * Instantiates a new manifiesto BO.
+     *
+     * @param ausroId
+     *            the ausro id
+     */
+    public ManifiestoBO(final @NonNull Long ausroId) {
+        super(Entidad.MANIFIESTO.getId(), ausroId);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -116,7 +126,7 @@ public final class ManifiestoBO extends ServicioBO {
             final ResumenTotalesVO totalVO = resumenDAO.selectObject(totalCriterioVO);
 
             if (totalVO == null) {
-                throw new InstanceNotFoundException(Entidad.MANIFIESTO.getId(), totalCriterioVO);
+                throw new InstanceNotFoundException(entiId, totalCriterioVO);
             }
 
             return totalVO;

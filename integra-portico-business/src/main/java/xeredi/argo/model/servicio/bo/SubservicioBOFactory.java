@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import lombok.NonNull;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 
@@ -61,29 +62,17 @@ public final class SubservicioBOFactory {
      *
      * @param entiId
      *            the enti id
+     * @param usroId
+     *            the usro id
      * @return the subservicio bo
      */
-    public static final SubservicioBO newInstance(final Long entiId) {
-        if (MAP.containsKey(entiId)) {
-            try {
-                return (SubservicioBO) MAP.get(entiId).newInstance();
-            } catch (final IllegalAccessException ex) {
-                throw new Error(ex);
-            } catch (final InstantiationException ex) {
-                throw new Error(ex);
-            }
+    public static final SubservicioBO newInstance(final @NonNull Long entiId, final @NonNull Long usroId) {
+        try {
+            return MAP.containsKey(entiId) ? (SubservicioBO) MAP.get(entiId)
+                    .getDeclaredConstructor(Long.class, Long.class).newInstance(entiId, usroId)
+                    : new SubservicioBO(entiId, usroId);
+        } catch (final Throwable ex) {
+            throw new Error(ex);
         }
-
-        return new SubservicioBO();
     }
-
-    /**
-     * New default instance.
-     *
-     * @return the subservicio bo
-     */
-    public static final SubservicioBO newDefaultInstance() {
-        return new SubservicioBO();
-    }
-
 }

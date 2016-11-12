@@ -3,11 +3,10 @@ package xeredi.argo.model.servicio.bo;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.NonNull;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import lombok.NonNull;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 
@@ -39,7 +38,7 @@ public final class ServicioBOFactory {
      */
     private static final void load() {
         if (LOG.isDebugEnabled()) {
-            LOG.info("Factory start");
+            LOG.debug("Factory start");
         }
 
         for (final TipoServicioDetailVO entiDetail : TipoServicioProxy.selectMap().values()) {
@@ -62,39 +61,18 @@ public final class ServicioBOFactory {
     /**
      * New instance.
      *
-     * @param entiId            the enti id
+     * @param entiId
+     *            the enti id
+     * @param usroId
+     *            the usro id
      * @return the servicio bo
      */
-    public static final ServicioBO newInstance(final @NonNull Long entiId/*, final @NonNull Long usroId*/) {
-        ServicioBO srvcBO = null;
-
-        if (MAP.containsKey(entiId)) {
-            try {
-                srvcBO = (ServicioBO) MAP.get(entiId).newInstance();
-            } catch (final IllegalAccessException ex) {
-                throw new Error(ex);
-            } catch (final InstantiationException ex) {
-                throw new Error(ex);
-            }
-        } else {
-            srvcBO = new ServicioBO();
+    public static final ServicioBO newInstance(final @NonNull Long entiId, final @NonNull Long usroId) {
+        try {
+            return MAP.containsKey(entiId) ? (ServicioBO) MAP.get(entiId).getDeclaredConstructor(Long.class, Long.class)
+                    .newInstance(entiId, usroId) : new ServicioBO(entiId, usroId);
+        } catch (final Throwable ex) {
+            throw new Error(ex);
         }
-
-        // srvcBO.setUsroId(usroId);
-
-        return srvcBO;
-    }
-
-    /**
-     * New default instance.
-     *
-     * @return the servicio BO
-     */
-    public static final ServicioBO newDefaultInstance(/*final @NonNull Long usroId*/) {
-        final ServicioBO srvcBO = new ServicioBO();
-
-        // srvcBO.setUsroId(usroId);
-
-        return srvcBO;
     }
 }

@@ -46,21 +46,24 @@ public final class SubservicioDetailAction extends ItemDetailAction<SubservicioV
 
         enti = TipoSubservicioProxy.select(model.getEntiId());
 
-        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId());
+        {
+            final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId(), usroId);
 
-        model = ssrvBO.select(model.getId(), idioma);
+            model = ssrvBO.select(model.getId(), idioma);
+        }
 
         if (enti.getEntiPadresList() != null) {
             itemPadresMap = new HashMap<Long, LabelValueVO>();
 
             for (final Long entiId : enti.getEntiPadresList()) {
                 if (!enti.getEnti().getTpsrId().equals(entiId)) {
+                    final SubservicioBO ssrvPadreBO = SubservicioBOFactory.newInstance(entiId, usroId);
                     final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
                     ssrvCriterioVO.setHijoId(model.getId());
                     ssrvCriterioVO.setEntiId(entiId);
 
-                    itemPadresMap.put(entiId, ssrvBO.selectLabelValueObject(ssrvCriterioVO));
+                    itemPadresMap.put(entiId, ssrvPadreBO.selectLabelValueObject(ssrvCriterioVO));
                 }
             }
         }

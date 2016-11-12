@@ -16,9 +16,8 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.google.common.base.Preconditions;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NonNull;
-import lombok.Setter;
 import xeredi.argo.model.auditoria.bo.Auditable;
 import xeredi.argo.model.auditoria.bo.EventoAuditoriaUtils;
 import xeredi.argo.model.auditoria.vo.AuditoriaAccion;
@@ -41,6 +40,10 @@ import xeredi.argo.model.metamodelo.proxy.TramiteProxy;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteDetailVO;
+import xeredi.argo.model.seguridad.dao.UsuarioDAO;
+import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
+import xeredi.argo.model.seguridad.vo.UsuarioVO;
+import xeredi.argo.model.servicio.dao.ServicioActorDAO;
 import xeredi.argo.model.servicio.dao.ServicioArchivoDAO;
 import xeredi.argo.model.servicio.dao.ServicioDAO;
 import xeredi.argo.model.servicio.dao.ServicioDatoDAO;
@@ -63,16 +66,28 @@ import xeredi.util.pagination.PaginatedList;
 /**
  * The Class AbstractServicioBO.
  */
+@Data
 public class ServicioBO implements Auditable {
-    @Getter
-    @Setter
-    private Long usroId;
+
+    /** The enti id. */
+    protected final transient Long entiId;
+
+    /** The usro id. */
+    protected final transient Long usroId;
 
     /**
      * Instantiates a new servicio bo.
+     *
+     * @param aentiId
+     *            the aenti id
+     * @param ausroId
+     *            the ausro id
      */
-    protected ServicioBO() {
+    protected ServicioBO(final @NonNull Long aentiId, final @NonNull Long ausroId) {
         super();
+
+        this.entiId = aentiId;
+        this.usroId = ausroId;
     }
 
     /**
@@ -95,45 +110,36 @@ public class ServicioBO implements Auditable {
      *             the instance not found exception
      */
     public final ServicioVO select(final @NonNull Long srvcId, final String idioma) throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+        final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
 
-            srvcCriterioVO.setId(srvcId);
-            srvcCriterioVO.setIdioma(idioma);
+        srvcCriterioVO.setId(srvcId);
+        srvcCriterioVO.setIdioma(idioma);
 
-            final ServicioVO srvcVO = srvcDAO.selectObject(srvcCriterioVO);
-
-            if (srvcVO == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.srvc, srvcId);
-            }
-
-            fillDependencies(session, Arrays.asList(new ServicioVO[] { srvcVO }), srvcCriterioVO, true);
-
-            return srvcVO;
-        }
+        return selectObject(srvcCriterioVO);
     }
 
     /**
      * Select object.
      *
-     * @param srvcCriterioVO
+     * @param srvcCriterio
      *            the srvc criterio vo
      * @return the servicio vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final ServicioVO selectObject(final @NonNull ServicioCriterioVO srvcCriterioVO)
+    public final ServicioVO selectObject(final @NonNull ServicioCriterioVO srvcCriterio)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            fillUserSpecificFilter(session, srvcCriterio);
+
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final ServicioVO srvcVO = srvcDAO.selectObject(srvcCriterioVO);
+            final ServicioVO srvcVO = srvcDAO.selectObject(srvcCriterio);
 
             if (srvcVO == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.srvc, srvcCriterioVO);
+                throw new InstanceNotFoundException(MessageI18nKey.srvc, srvcCriterio);
             }
 
-            fillDependencies(session, Arrays.asList(new ServicioVO[] { srvcVO }), srvcCriterioVO, true);
+            fillDependencies(session, Arrays.asList(new ServicioVO[] { srvcVO }), srvcCriterio, true);
 
             return srvcVO;
         }
@@ -142,7 +148,7 @@ public class ServicioBO implements Auditable {
     /**
      * Select list.
      *
-     * @param srvcCriterioVO
+     * @param srvcCriterio
      *            the srvc criterio vo
      * @param offset
      *            the offset
@@ -150,17 +156,19 @@ public class ServicioBO implements Auditable {
      *            the limit
      * @return the paginated list
      */
-    public final PaginatedList<ServicioVO> selectList(final @NonNull ServicioCriterioVO srvcCriterioVO,
-            final int offset, final int limit) {
+    public final PaginatedList<ServicioVO> selectList(final @NonNull ServicioCriterioVO srvcCriterio, final int offset,
+            final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            fillUserSpecificFilter(session, srvcCriterio);
+
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final int count = srvcDAO.count(srvcCriterioVO);
+            final int count = srvcDAO.count(srvcCriterio);
             final List<ServicioVO> srvcList = new ArrayList<>();
 
             if (count > offset) {
-                srvcList.addAll(srvcDAO.selectList(srvcCriterioVO, new RowBounds(offset, limit)));
+                srvcList.addAll(srvcDAO.selectList(srvcCriterio, new RowBounds(offset, limit)));
 
-                fillDependencies(session, srvcList, srvcCriterioVO, true);
+                fillDependencies(session, srvcList, srvcCriterio, true);
             }
 
             return new PaginatedList<>(srvcList, offset, limit, count);
@@ -170,16 +178,18 @@ public class ServicioBO implements Auditable {
     /**
      * Select list.
      *
-     * @param srvcCriterioVO
+     * @param srvcCriterio
      *            the srvc criterio vo
      * @return the list
      */
-    public final List<ServicioVO> selectList(final @NonNull ServicioCriterioVO srvcCriterioVO) {
+    public final List<ServicioVO> selectList(final @NonNull ServicioCriterioVO srvcCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final List<ServicioVO> srvcList = srvcDAO.selectList(srvcCriterioVO);
+            fillUserSpecificFilter(session, srvcCriterio);
 
-            fillDependencies(session, srvcList, srvcCriterioVO, false);
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+            final List<ServicioVO> srvcList = srvcDAO.selectList(srvcCriterio);
+
+            fillDependencies(session, srvcList, srvcCriterio, false);
 
             return srvcList;
         }
@@ -241,6 +251,7 @@ public class ServicioBO implements Auditable {
             final ServicioSecuenciaDAO srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
             final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
             final ServicioArchivoDAO srarDAO = session.getMapper(ServicioArchivoDAO.class);
+            final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
 
             final Map<Long, Long> ssrvDepsMap = new HashMap<Long, Long>();
 
@@ -330,8 +341,8 @@ public class ServicioBO implements Auditable {
 
             if (ssssList != null) {
                 for (final SubservicioSubservicioVO ssssVO : ssssList) {
-                    ssssDAO.insert(new SubservicioSubservicioVO(ssrvDepsMap.get(ssssVO.getSsrvPadreId()), ssrvDepsMap
-                            .get(ssssVO.getSsrvHijoId())));
+                    ssssDAO.insert(new SubservicioSubservicioVO(ssrvDepsMap.get(ssssVO.getSsrvPadreId()),
+                            ssrvDepsMap.get(ssssVO.getSsrvHijoId())));
                 }
             }
 
@@ -343,6 +354,8 @@ public class ServicioBO implements Auditable {
 
                 srarDAO.insert(srar);
             }
+
+            sracDAO.insert(srvc.getId());
 
             insertPostOperations(session, srvc, ssrvList, ssssList);
 
@@ -396,6 +409,7 @@ public class ServicioBO implements Auditable {
             final ServicioSecuenciaDAO srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
             final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
             final ServicioArchivoDAO srarDAO = session.getMapper(ServicioArchivoDAO.class);
+            final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
 
             final Map<Long, Long> ssrvDepsMap = new HashMap<Long, Long>();
 
@@ -504,6 +518,8 @@ public class ServicioBO implements Auditable {
                     srarDAO.insert(srar);
                 }
 
+                sracDAO.insert(srvc.getId());
+
                 insertPostOperations(session, srvc, ssrvList, ssssList);
             }
 
@@ -514,23 +530,27 @@ public class ServicioBO implements Auditable {
     /**
      * Update.
      *
-     * @param srvcVO
+     * @param srvc
      *            the srvc vo
      * @throws ModelException
      *             the model exception
      */
-    public final void update(final @NonNull ServicioVO srvcVO) throws ModelException {
+    public final void update(final @NonNull ServicioVO srvc) throws ModelException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
+            final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
 
-            for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
-                itdtVO.setItemId(srvcVO.getId());
-                srdtDAO.update(itdtVO);
+            for (final ItemDatoVO itdt : srvc.getItdtMap().values()) {
+                itdt.setItemId(srvc.getId());
+                srdtDAO.update(itdt);
             }
 
             // TODO Actualizar datos del servicio??
 
-            updatePostOperations(session, srvcVO);
+            sracDAO.deleteList(srvc.getId());
+            sracDAO.insert(srvc.getId());
+
+            updatePostOperations(session, srvc);
 
             session.commit();
         }
@@ -566,6 +586,7 @@ public class ServicioBO implements Auditable {
             final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
             final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
             final ServicioSecuenciaDAO srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
+            final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
 
             final Map<Long, Long> ssrvIds = new HashMap<>();
 
@@ -629,9 +650,11 @@ public class ServicioBO implements Auditable {
             }
 
             for (final SubservicioSubservicioVO ssssVO : ssssList) {
-                ssssDAO.insert(new SubservicioSubservicioVO(ssrvIds.get(ssssVO.getSsrvPadreId()), ssrvIds.get(ssssVO
-                        .getSsrvHijoId())));
+                ssssDAO.insert(new SubservicioSubservicioVO(ssrvIds.get(ssssVO.getSsrvPadreId()),
+                        ssrvIds.get(ssssVO.getSsrvHijoId())));
             }
+
+            sracDAO.insert(srvcVO.getId());
 
             duplicatePostOperations(session, srvcVO);
 
@@ -671,6 +694,7 @@ public class ServicioBO implements Auditable {
             final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
             final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
             final ServicioArchivoDAO srarDAO = session.getMapper(ServicioArchivoDAO.class);
+            final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
 
             final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
@@ -683,6 +707,7 @@ public class ServicioBO implements Auditable {
             ssrvDAO.deleteList(ssrvCriterioVO);
             srdtDAO.deleteList(srvcCriterioVO);
             srarDAO.deleteList(srvc.getId());
+            sracDAO.deleteList(srvc.getId());
 
             final int updated = srvcDAO.delete(srvc);
 
@@ -775,6 +800,11 @@ public class ServicioBO implements Auditable {
                 ittdDAO.insert(ittd);
             }
 
+            final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
+
+            sracDAO.deleteList(ittr.getItemId());
+            sracDAO.insert(ittr.getItemId());
+
             statechangePostOperations(session, srvc, ittr, trmtDetail);
 
             session.commit();
@@ -847,6 +877,36 @@ public class ServicioBO implements Auditable {
             if (useIds) {
                 srvcCriterioVO.setIds(null);
             }
+        }
+    }
+
+    private void fillUserSpecificFilter(final @NonNull SqlSession session,
+            final @NonNull ServicioCriterioVO srvcCriterio) {
+        srvcCriterio.setEntiId(entiId);
+
+        final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
+        final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
+
+        usroCriterio.setId(usroId);
+
+        final UsuarioVO usro = usroDAO.selectObject(usroCriterio);
+
+        if (usro == null) {
+            throw new Error("Usuario no encontrado: " + usroId);
+        }
+
+        srvcCriterio.setUsroId(usro.getId());
+
+        if (usro.getSprt() != null) {
+            srvcCriterio.setUsroSprtId(usro.getSprt().getId());
+        }
+
+        if (usro.getPrto() != null) {
+            srvcCriterio.setUsroPrtoId(usro.getPrto().getId());
+        }
+
+        if (usro.getOrga() != null) {
+            srvcCriterio.setUsroOrgaId(usro.getPrto().getId());
         }
     }
 }

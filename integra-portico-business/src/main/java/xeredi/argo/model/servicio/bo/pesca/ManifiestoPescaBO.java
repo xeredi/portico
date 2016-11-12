@@ -4,14 +4,30 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.exception.ModelException;
+import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.servicio.bo.ServicioBO;
 import xeredi.argo.model.servicio.dao.pesca.ManifiestoPescaDAO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ManifiestoPescaBO.
+ */
 public final class ManifiestoPescaBO extends ServicioBO {
+
+    /**
+     * Instantiates a new manifiesto pesca BO.
+     *
+     * @param ausroId
+     *            the ausro id
+     */
+    public ManifiestoPescaBO(final @NonNull Long ausroId) {
+        super(Entidad.MANIFIESTO_PESCA.getId(), ausroId);
+    }
 
     /**
      * {@inheritDoc}

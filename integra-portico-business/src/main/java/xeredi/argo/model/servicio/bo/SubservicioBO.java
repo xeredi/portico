@@ -30,6 +30,10 @@ import xeredi.argo.model.item.vo.ItemTramiteVO;
 import xeredi.argo.model.metamodelo.proxy.TramiteProxy;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteDetailVO;
+import xeredi.argo.model.seguridad.dao.UsuarioDAO;
+import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
+import xeredi.argo.model.seguridad.vo.UsuarioVO;
+import xeredi.argo.model.servicio.dao.ServicioActorDAO;
 import xeredi.argo.model.servicio.dao.SubservicioDAO;
 import xeredi.argo.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.argo.model.servicio.dao.SubservicioSubservicioDAO;
@@ -48,17 +52,31 @@ import xeredi.util.pagination.PaginatedList;
  */
 public class SubservicioBO {
 
+    /** The enti id. */
+    protected final transient Long entiId;
+
+    /** The usro id. */
+    protected final transient Long usroId;
+
     /**
      * Instantiates a new subservicio bo.
+     *
+     * @param aentiId
+     *            the aenti id
+     * @param ausroId
+     *            the ausro id
      */
-    protected SubservicioBO() {
+    protected SubservicioBO(final @NonNull Long aentiId, final @NonNull Long ausroId) {
         super();
+
+        this.entiId = aentiId;
+        this.usroId = ausroId;
     }
 
     /**
      * Select list.
      *
-     * @param ssrvCriterioVO
+     * @param ssrvCriterio
      *            the ssrv criterio vo
      * @param offset
      *            the offset
@@ -66,16 +84,18 @@ public class SubservicioBO {
      *            the limit
      * @return the paginated list
      */
-    public final PaginatedList<SubservicioVO> selectList(final @NonNull SubservicioCriterioVO ssrvCriterioVO,
+    public final PaginatedList<SubservicioVO> selectList(final @NonNull SubservicioCriterioVO ssrvCriterio,
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            fillUserSpecificFilter(session, ssrvCriterio);
+
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final int count = ssrvDAO.count(ssrvCriterioVO);
+            final int count = ssrvDAO.count(ssrvCriterio);
             final List<SubservicioVO> ssrvList = new ArrayList<>();
 
             if (count > offset) {
-                ssrvList.addAll(ssrvDAO.selectList(ssrvCriterioVO, new RowBounds(offset, limit)));
-                fillDependencies(session, ssrvList, ssrvCriterioVO, true);
+                ssrvList.addAll(ssrvDAO.selectList(ssrvCriterio, new RowBounds(offset, limit)));
+                fillDependencies(session, ssrvList, ssrvCriterio, true);
             }
 
             return new PaginatedList<>(ssrvList, offset, limit, count);
@@ -85,16 +105,18 @@ public class SubservicioBO {
     /**
      * Select list.
      *
-     * @param ssrvCriterioVO
+     * @param ssrvCriterio
      *            the ssrv criterio vo
      * @return the list
      */
-    public final List<SubservicioVO> selectList(final @NonNull SubservicioCriterioVO ssrvCriterioVO) {
+    public final List<SubservicioVO> selectList(final @NonNull SubservicioCriterioVO ssrvCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final List<SubservicioVO> ssrvList = ssrvDAO.selectList(ssrvCriterioVO);
+            fillUserSpecificFilter(session, ssrvCriterio);
 
-            fillDependencies(session, ssrvList, ssrvCriterioVO, false);
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+            final List<SubservicioVO> ssrvList = ssrvDAO.selectList(ssrvCriterio);
+
+            fillDependencies(session, ssrvList, ssrvCriterio, false);
 
             return ssrvList;
         }
@@ -103,20 +125,22 @@ public class SubservicioBO {
     /**
      * Select label value object.
      *
-     * @param ssrvCriterioVO
+     * @param ssrvCriterio
      *            the ssrv criterio vo
      * @return the label value vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final LabelValueVO selectLabelValueObject(final @NonNull SubservicioCriterioVO ssrvCriterioVO)
+    public final LabelValueVO selectLabelValueObject(final @NonNull SubservicioCriterioVO ssrvCriterio)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            fillUserSpecificFilter(session, ssrvCriterio);
+
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final SubservicioVO ssrv = ssrvDAO.selectObject(ssrvCriterioVO);
+            final SubservicioVO ssrv = ssrvDAO.selectObject(ssrvCriterio);
 
             if (ssrv == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.ssrv, ssrvCriterioVO);
+                throw new InstanceNotFoundException(MessageI18nKey.ssrv, ssrvCriterio);
             }
 
             return new LabelValueVO(ssrv.getEtiqueta(), ssrv.getId());
@@ -134,23 +158,26 @@ public class SubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final SubservicioVO select(final @NonNull Long ssrvId, final String idioma) throws InstanceNotFoundException {
+    public final SubservicioVO select(final @NonNull Long ssrvId, final String idioma)
+            throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+            final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
 
-            ssrvCriterioVO.setId(ssrvId);
-            ssrvCriterioVO.setIdioma(idioma);
+            ssrvCriterio.setId(ssrvId);
+            ssrvCriterio.setIdioma(idioma);
 
-            final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
+            fillUserSpecificFilter(session, ssrvCriterio);
 
-            if (ssrvVO == null) {
+            final SubservicioVO ssrv = ssrvDAO.selectObject(ssrvCriterio);
+
+            if (ssrv == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.ssrv, ssrvId);
             }
 
-            fillDependencies(session, Arrays.asList(new SubservicioVO[] { ssrvVO }), ssrvCriterioVO, true);
+            fillDependencies(session, Arrays.asList(new SubservicioVO[] { ssrv }), ssrvCriterio, true);
 
-            return ssrvVO;
+            return ssrv;
         }
     }
 
@@ -163,8 +190,8 @@ public class SubservicioBO {
      *            the limit
      * @return the list
      */
-    public final List<SubservicioVO> selectTypeaheadList(
-            final @NonNull SubservicioLupaCriterioVO ssrvTypeaheadCriterio, final int limit) {
+    public final List<SubservicioVO> selectTypeaheadList(final @NonNull SubservicioLupaCriterioVO ssrvTypeaheadCriterio,
+            final int limit) {
         ssrvTypeaheadCriterio.setNumero(Integer.valueOf(ssrvTypeaheadCriterio.getTextoBusqueda()));
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -188,6 +215,9 @@ public class SubservicioBO {
      */
     public final void insert(final @NonNull SubservicioVO ssrvVO, final @NonNull TipoSubservicioDetailVO tpssDetail,
             final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
+        Preconditions.checkNotNull(ssrvVO.getSrvc());
+        Preconditions.checkNotNull(ssrvVO.getSrvc().getId());
+
         // FIXME En entidades padre, NO debería estar el propio tipo de servicio
         // if (tpssDetail.getEntiPadresList() != null && !tpssDetail.getEntiPadresList().isEmpty()) {
         // Preconditions.checkNotNull(ssrvPadreIds);
@@ -234,6 +264,11 @@ public class SubservicioBO {
                 }
             }
 
+            final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
+
+            sracDAO.deleteList(ssrvVO.getSrvc().getId());
+            sracDAO.insert(ssrvVO.getSrvc().getId());
+
             insertPostOperations(session, ssrvVO, tpssDetail, ssrvPadreIds);
 
             session.commit();
@@ -266,6 +301,9 @@ public class SubservicioBO {
      *            the ssrv vo
      */
     public final void duplicate(final @NonNull SubservicioVO ssrvVO) {
+        Preconditions.checkNotNull(ssrvVO.getSrvc());
+        Preconditions.checkNotNull(ssrvVO.getSrvc().getId());
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
@@ -297,6 +335,11 @@ public class SubservicioBO {
                 ssrvCriterioHijoVO.setPadreIds(ssrvPadreIds);
             } while (!ssrvHijosStepList.isEmpty());
 
+            final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
+
+            sracDAO.deleteList(ssrvVO.getSrvc().getId());
+            sracDAO.insert(ssrvVO.getSrvc().getId());
+
             duplicatePostOperations(session, ssrvVO);
 
             session.commit();
@@ -326,6 +369,9 @@ public class SubservicioBO {
      *             the instance not found exception
      */
     public final void update(final @NonNull SubservicioVO ssrvVO) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(ssrvVO.getSrvc());
+        Preconditions.checkNotNull(ssrvVO.getSrvc().getId());
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
 
@@ -335,6 +381,11 @@ public class SubservicioBO {
                     ssdtDAO.update(itdtVO);
                 }
             }
+
+            final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
+
+            sracDAO.deleteList(ssrvVO.getSrvc().getId());
+            sracDAO.insert(ssrvVO.getSrvc().getId());
 
             updatePostOperations(session, ssrvVO);
 
@@ -443,6 +494,11 @@ public class SubservicioBO {
                 ssrvDAO.deleteList(ssrvCriterio);
             }
 
+            final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
+
+            sracDAO.deleteList(ssrv.getSrvc().getId());
+            sracDAO.insert(ssrv.getSrvc().getId());
+
             // FIXME Habria que pasar a deletePostOperations los padres del subservicio eliminado
             deletePostOperations(session, ssrv);
 
@@ -539,6 +595,11 @@ public class SubservicioBO {
                 ittdDAO.insert(ittd);
             }
 
+            final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
+
+            sracDAO.deleteList(ssrv.getSrvc().getId());
+            sracDAO.insert(ssrv.getSrvc().getId());
+
             statechangePostOperations(session, ssrv, ittr, trmtDetail);
 
             session.commit();
@@ -612,6 +673,36 @@ public class SubservicioBO {
             if (useIds) {
                 ssrvCriterioVO.setIds(null);
             }
+        }
+    }
+
+    private void fillUserSpecificFilter(final @NonNull SqlSession session,
+            final @NonNull SubservicioCriterioVO ssrvCriterio) {
+        ssrvCriterio.setEntiId(entiId);
+
+        final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
+        final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
+
+        usroCriterio.setId(usroId);
+
+        final UsuarioVO usro = usroDAO.selectObject(usroCriterio);
+
+        if (usro == null) {
+            throw new Error("Usuario no encontrado: " + usroId);
+        }
+
+        ssrvCriterio.setUsroId(usro.getId());
+
+        if (usro.getSprt() != null) {
+            ssrvCriterio.setUsroSprtId(usro.getSprt().getId());
+        }
+
+        if (usro.getPrto() != null) {
+            ssrvCriterio.setUsroPrtoId(usro.getPrto().getId());
+        }
+
+        if (usro.getOrga() != null) {
+            ssrvCriterio.setUsroOrgaId(usro.getPrto().getId());
         }
     }
 }

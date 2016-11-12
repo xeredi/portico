@@ -37,14 +37,14 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
      */
     @Override
     public void doSpecificEdit() throws ApplicationException {
-        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId());
-
         enti = TipoSubservicioProxy.select(model.getEntiId());
+
+        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId(), usroId);
 
         switch (accion) {
         case create:
             if (model.getSrvc() != null && model.getSrvc().getId() != null) {
-                final ServicioBO srvcBO = ServicioBOFactory.newInstance(enti.getEnti().getTpsrId());
+                final ServicioBO srvcBO = ServicioBOFactory.newInstance(enti.getEnti().getTpsrId(), usroId);
 
                 model.setSrvc(srvcBO.select(model.getSrvc().getId(), idioma));
                 model.setFref(model.getSrvc().getFref());
@@ -72,7 +72,9 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
                         ssrvCriterioVO.setHijoId(model.getId());
                         ssrvCriterioVO.setEntiId(entiId);
 
-                        itemPadresMap.put(entiId, ssrvBO.selectLabelValueObject(ssrvCriterioVO));
+                        final SubservicioBO ssrvPadreBO = SubservicioBOFactory.newInstance(entiId, usroId);
+
+                        itemPadresMap.put(entiId, ssrvPadreBO.selectLabelValueObject(ssrvCriterioVO));
                     }
                 }
             }
@@ -94,7 +96,9 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
                         ssrvCriterioVO.setHijoId(model.getId());
                         ssrvCriterioVO.setEntiId(entiId);
 
-                        itemPadresMap.put(entiId, ssrvBO.selectLabelValueObject(ssrvCriterioVO));
+                        final SubservicioBO ssrvPadreBO = SubservicioBOFactory.newInstance(entiId, usroId);
+
+                        itemPadresMap.put(entiId, ssrvPadreBO.selectLabelValueObject(ssrvCriterioVO));
                     }
                 }
             }
