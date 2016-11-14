@@ -74,6 +74,23 @@ public class SubservicioBO {
     }
 
     /**
+     * Count.
+     *
+     * @param ssrvCriterio
+     *            the ssrv criterio
+     * @return the int
+     */
+    public final int count(final @NonNull SubservicioCriterioVO ssrvCriterio) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            fillUserSpecificFilter(session, ssrvCriterio);
+
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+
+            return ssrvDAO.count(ssrvCriterio);
+        }
+    }
+
+    /**
      * Select list.
      *
      * @param ssrvCriterio
@@ -676,6 +693,14 @@ public class SubservicioBO {
         }
     }
 
+    /**
+     * Fill user specific filter.
+     *
+     * @param session
+     *            the session
+     * @param ssrvCriterio
+     *            the ssrv criterio
+     */
     private void fillUserSpecificFilter(final @NonNull SqlSession session,
             final @NonNull SubservicioCriterioVO ssrvCriterio) {
         ssrvCriterio.setEntiId(entiId);

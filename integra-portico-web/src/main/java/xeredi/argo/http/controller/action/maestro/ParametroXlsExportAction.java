@@ -32,9 +32,9 @@ public final class ParametroXlsExportAction extends ItemXlsExportAction<Parametr
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             final ParametroBO itemBO = ParametroBOFactory.newInstance(criterio.getEntiId());
-            final ParametroXls excelUtil = new ParametroXls(getLocale());
+            final ParametroXls excelUtil = new ParametroXls(getLocale(), baos, itemBO.selectList(criterio), enti);
 
-            excelUtil.generarMaestros(itemBO.selectList(criterio), enti, baos);
+            excelUtil.generate();
 
             stream = new ByteArrayInputStream(baos.toByteArray());
         }

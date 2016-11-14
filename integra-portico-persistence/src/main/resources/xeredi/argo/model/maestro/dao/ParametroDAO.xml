@@ -349,6 +349,123 @@
         </if>
     </select>
 
+    <select id="selectTypeaheadList" parameterType="ParametroCriterioVO" resultMap="ResultMap">
+    <![CDATA[
+    SELECT prmt_pk, prmt_parametro
+        , (
+            SELECT COALESCE(
+                (
+                    SELECT i18n_text FROM tbl_i18n_i18n
+                    WHERE i18n_ext_pk = prvr_pk
+                        AND i18n_pref = 'prvr'
+                        AND i18n_lang = #{idioma}
+                ), (
+                    SELECT prdt_cadena FROM tbl_parametro_dato_prdt
+                    WHERE prdt_prvr_pk = prvr_pk
+                        AND prdt_tpdt_pk = (
+                            SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr
+                            WHERE tppr_pk = #{entiId}
+                        )
+                )
+            )
+            FROM tbl_parametro_version_prvr
+            WHERE prvr_prmt_pk = prmt_pk
+                AND #{fechaVigencia} >= prvr_fini
+                AND (prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia})
+        ) AS p18n_texto
+    FROM tbl_parametro_prmt
+    WHERE
+        prmt_tppr_pk = (
+            SELECT tppr_pk FROM tbl_tipo_parametro_tppr
+            WHERE tppr_pk = #{entiId}
+        )
+        AND prmt_parametro LIKE #{textoBusqueda}
+        AND EXISTS (
+            SELECT 1 FROM tbl_parametro_version_prvr
+            WHERE prvr_prmt_pk = prmt_pk
+                AND #{fechaVigencia} >= prvr_fini
+                AND (prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia})
+        )
+
+    UNION
+
+    SELECT prmt_pk, prmt_parametro
+        , (
+            SELECT
+                (
+                    SELECT i18n_text FROM tbl_i18n_i18n
+                    WHERE i18n_ext_pk = prvr_pk
+                        AND i18n_pref = 'prvr'
+                        AND i18n_lang = #{idioma}
+                )
+            FROM tbl_parametro_version_prvr
+            WHERE prvr_prmt_pk = prmt_pk
+                AND #{fechaVigencia} >= prvr_fini
+                AND (prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia})
+        ) AS p18n_texto
+    FROM tbl_parametro_prmt
+    WHERE
+        prmt_tppr_pk = (
+            SELECT tppr_pk FROM tbl_tipo_parametro_tppr
+            WHERE tppr_es_i18n = 1
+                AND tppr_pk = #{entiId}
+        )
+        AND EXISTS (
+            SELECT 1 FROM tbl_parametro_version_prvr
+            WHERE prvr_prmt_pk = prmt_pk
+                AND #{fechaVigencia} >= prvr_fini
+                AND (prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia})
+                AND EXISTS (
+                        SELECT 1 FROM tbl_i18n_i18n
+                        WHERE i18n_ext_pk = prvr_pk
+                            AND i18n_pref = 'prvr'
+                            AND i18n_lang = #{idioma}
+                            AND i18n_text LIKE #{textoBusqueda}
+               )
+        )
+
+    UNION
+
+    SELECT prmt_pk, prmt_parametro
+        , (
+            SELECT (
+                    SELECT prdt_cadena FROM tbl_parametro_dato_prdt
+                    WHERE prdt_prvr_pk = prvr_pk
+                        AND prdt_tpdt_pk = (
+                            SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr
+                            WHERE tppr_pk = #{entiId}
+                        )
+            )
+            FROM tbl_parametro_version_prvr
+            WHERE prvr_prmt_pk = prmt_pk
+                AND #{fechaVigencia} >= prvr_fini
+                AND (prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia})
+        ) AS p18n_texto
+    FROM tbl_parametro_prmt
+    WHERE
+        prmt_tppr_pk = (
+            SELECT tppr_pk FROM tbl_tipo_parametro_tppr
+            WHERE tppr_es_i18n = 0
+                AND tppr_pk = #{entiId}
+        )
+        AND EXISTS (
+            SELECT 1 FROM tbl_parametro_version_prvr
+            WHERE prvr_prmt_pk = prmt_pk
+                AND #{fechaVigencia} >= prvr_fini
+                AND (prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia})
+                AND EXISTS (
+                        SELECT 1 FROM tbl_parametro_dato_prdt
+                        WHERE prdt_prvr_pk = prvr_pk
+                            AND prdt_cadena LIKE #{textoBusqueda}
+                            AND prdt_tpdt_pk = (
+                                SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr
+                                WHERE tppr_pk = #{entiId}
+                            )
+               )
+        )
+    ]]>
+    </select>
+
     <insert id="insert" parameterType="ParametroVO">
         <![CDATA[
         INSERT INTO tbl_parametro_prmt(prmt_pk, prmt_tppr_pk, prmt_parametro, prmt_prto_pk)

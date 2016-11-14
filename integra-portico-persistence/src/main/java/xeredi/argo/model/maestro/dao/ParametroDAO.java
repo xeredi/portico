@@ -1,8 +1,10 @@
 package xeredi.argo.model.maestro.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.MapKey;
+import org.apache.ibatis.session.RowBounds;
 
 import xeredi.argo.model.comun.dao.CrudDAO;
 import xeredi.argo.model.comun.dao.CrudVersionableDAO;
@@ -43,4 +45,15 @@ public interface ParametroDAO extends CrudDAO<ParametroVO, ParametroCriterioVO>,
      */
     @MapKey("id")
     Map<Long, ParametroVO> selectMap(final ParametroCriterioVO prmtCriterioVO);
+
+    /**
+     * Select typeahead list.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio VO
+     * @param bounds
+     *            the bounds
+     * @return the list
+     */
+    List<ParametroVO> selectTypeaheadList(final ParametroCriterioVO prmtCriterioVO, final RowBounds bounds);
 }

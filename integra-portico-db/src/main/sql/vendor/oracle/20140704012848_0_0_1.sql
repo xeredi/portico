@@ -29,6 +29,8 @@ CREATE TABLE tbl_i18n_i18n (
 	, CONSTRAINT pk_i18n PRIMARY KEY (i18n_pref, i18n_ext_pk, i18n_lang)
 )\
 
+CREATE INDEX ix_i18n_text ON tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_text)\
+
 CREATE OR REPLACE SYNONYM portico.tbl_i18n_i18n FOR tbl_i18n_i18n\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_i18n_i18n TO portico\

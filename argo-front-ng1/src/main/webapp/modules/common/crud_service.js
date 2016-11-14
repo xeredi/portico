@@ -98,6 +98,28 @@
                 }
             }
 
+            function listTabPage(searchCriteria, page, limit) {
+                // console.log('list page');
+
+                return $http.post(_uri + "-list.action", {
+                    model : searchCriteria,
+                    page : page,
+                    limit : limit,
+                    prefix : _prefix
+                }).then(success, fail);
+
+                function success(response) {
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'List Page failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
             function typeahead(searchCriteria) {
                 return $http.post(_uri + "-typeahead.action", {
                     model : searchCriteria,
@@ -414,6 +436,7 @@
             return {
                 index : index,
                 listPage : listPage,
+                listTabPage : listTabPage,
                 list : list,
                 typeahead : typeahead,
                 xlsExport : xlsExport,

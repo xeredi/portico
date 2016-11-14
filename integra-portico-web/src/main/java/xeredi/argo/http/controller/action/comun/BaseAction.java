@@ -83,7 +83,7 @@ public abstract class BaseAction extends ActionSupport {
      * {@inheritDoc}
      */
     @Override
-    public final String execute() throws ApplicationException {
+    public final String execute() {
         try {
             usroId = SessionManager.getUsroId();
             sprtId = SessionManager.getSprtId();

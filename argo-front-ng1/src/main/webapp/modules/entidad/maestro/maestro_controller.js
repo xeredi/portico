@@ -156,7 +156,7 @@
             ParametroService.tabSelected(tabNo);
         }
 
-        vm.tab = $routeParams.tab ? $routeParams.tab : $routeParams.entiId;
+        vm.tab = $routeParams.tab ? $routeParams.tab : 'e' + $routeParams.entiId;
 
         vm.search = {
             id : $routeParams.id,
@@ -190,7 +190,7 @@
                             fechaVigencia : vm.item.fref
                         };
 
-                        SubparametroService.listPage(sprmSearchCriteria).then(function(data) {
+                        SubparametroService.listTabPage(sprmSearchCriteria).then(function(data) {
                             vm.entiHijasMap[data.enti.enti.id] = data.enti;
                             vm.itemHijosMap[data.enti.enti.id] = data.resultList;
                         });

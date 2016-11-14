@@ -1,5 +1,7 @@
 package xeredi.argo.model.comun.report;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,9 +9,14 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import lombok.NonNull;
+import xeredi.argo.model.comun.exception.InternalErrorException;
 import xeredi.argo.model.comun.proxy.PorticoResourceBundle;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.item.vo.ItemDatoVO;
@@ -20,6 +27,9 @@ import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
  * The Class ExcelUtil.
  */
 public abstract class BaseXls {
+
+    /** The Constant LOG. */
+    private static final Log LOG = LogFactory.getLog(BaseXls.class);
 
     /** The locale. */
     private final Locale locale;
@@ -33,21 +43,59 @@ public abstract class BaseXls {
     /** The date format. */
     private final DateFormat dateFormat;
 
+    /** The stream. */
+    private final OutputStream stream;
+
     /**
      * Instantiates a new excel util.
      *
      * @param alocale
      *            the alocale
+     * @param astream
+     *            the astream
      */
-    public BaseXls(final Locale alocale) {
+    public BaseXls(final @NonNull Locale alocale, final @NonNull OutputStream astream) {
         super();
 
         locale = alocale;
+        stream = astream;
 
         bundle = PorticoResourceBundle.getBundle(locale);
         datetimeFormat = new SimpleDateFormat(bundle.getString(MessageI18nKey.format_datetime.name()));
         dateFormat = new SimpleDateFormat(bundle.getString(MessageI18nKey.format_date.name()));
     }
+
+    /**
+     * Generate.
+     *
+     * @throws InternalErrorException
+     *             the internal error exception
+     */
+    public final void generate() throws InternalErrorException {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("XLS Generation start");
+        }
+
+        try (final HSSFWorkbook workbook = new HSSFWorkbook()) {
+            doGenerate(workbook);
+
+            workbook.write(stream);
+        } catch (final IOException ex) {
+            throw new InternalErrorException(ex);
+        }
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("XLS Generation end");
+        }
+    }
+
+    /**
+     * Do generate.
+     *
+     * @param workbook
+     *            the workbook
+     */
+    public abstract void doGenerate(final HSSFWorkbook workbook);
 
     /**
      * Sets the cell value.
@@ -61,8 +109,8 @@ public abstract class BaseXls {
      * @param itdtVO
      *            the itdt vo
      */
-    protected void setCellValue(final HSSFRow row, final int position, final EntidadTipoDatoVO entdVO,
-            final ItemDatoVO itdtVO) {
+    protected final void setCellValue(final @NonNull HSSFRow row, final int position,
+            final @NonNull EntidadTipoDatoVO entdVO, final ItemDatoVO itdtVO) {
 
         if (itdtVO != null) {
             switch (entdVO.getTpdt().getTipoElemento()) {
@@ -134,7 +182,7 @@ public abstract class BaseXls {
      * @param value
      *            the value
      */
-    protected void setCellValue(final HSSFRow row, final int position, final Object value) {
+    protected final void setCellValue(final @NonNull HSSFRow row, final int position, final Object value) {
         if (value != null) {
             if (value instanceof String) {
                 row.createCell(position).setCellValue((String) value);
@@ -164,9 +212,17 @@ public abstract class BaseXls {
      * @param header
      *            the header
      */
-    protected void autoSizeColumns(final HSSFSheet sheet, final HSSFRow header) {
+    protected final void autoSizeColumns(final @NonNull HSSFSheet sheet, final @NonNull HSSFRow header) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("XLS Autosize start");
+        }
+
         for (int index = header.getFirstCellNum(); index < header.getLastCellNum(); index++) {
             sheet.autoSizeColumn(index, false);
+        }
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("XLS Autosize end");
         }
     }
 }

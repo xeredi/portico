@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.exception.InternalErrorException;
@@ -22,8 +23,11 @@ import com.google.common.base.Preconditions;
  * @param <C>
  *            the generic type
  */
-@Result(name = "success", type = "stream", params = { "contentType", "application/xls", "inputName", "stream",
-        "contentDisposition", "filename=${filename}.xls" })
+@Results({
+        @Result(name = "success", type = "stream", params = { "contentType", "application/xls", "inputName", "stream",
+                "contentDisposition", "filename=${filename}.xls" }),
+        @Result(name = "error", type = "json", params = { "excludeNullProperties", "true", "ignoreHierarchy", "false",
+                "enableGZIP", "true" }) })
 public abstract class GridXlsExportAction<C extends BaseCriterioVO> extends BaseAction implements ProtectedAction {
 
     /** The Constant serialVersionUID. */

@@ -88,9 +88,13 @@ public final class AppInterceptor extends AbstractInterceptor {
             LOG.fatal(ex, ex);
         }
 
+        if (action.hasErrors()) {
+            result = Action.ERROR;
+        }
+
         action.setResponseCode(result);
 
-        return Action.SUCCESS;
+        return action.hasErrors() ? Action.ERROR : Action.SUCCESS;
     }
 
 }

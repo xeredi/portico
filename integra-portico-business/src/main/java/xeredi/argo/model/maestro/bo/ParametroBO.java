@@ -240,8 +240,8 @@ public class ParametroBO {
 
                     prmtCriterioVO.setId(prmtActual.getId());
                     sprmCriterioVO.setPrmt(prmtCriterioVO);
-                    sprmCriterioVO.setFechaVigencia(prmtActual.getVersion().getFfin() == null ? Calendar.getInstance()
-                            .getTime() : prmtActual.getVersion().getFfin());
+                    sprmCriterioVO.setFechaVigencia(prmtActual.getVersion().getFfin() == null
+                            ? Calendar.getInstance().getTime() : prmtActual.getVersion().getFfin());
 
                     final List<SubparametroVO> sprmList = sprmDAO.selectList(sprmCriterioVO);
                     final Map<Long, SubparametroVO> sprmMap = new HashMap<>();
@@ -330,8 +330,8 @@ public class ParametroBO {
      *             the instance not found exception
      */
     protected void duplicatePostOperations(final SqlSession session, final ParametroVO prmt,
-            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap) throws OverlapException,
-            InstanceNotFoundException {
+            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+            throws OverlapException, InstanceNotFoundException {
         // noop
     }
 
@@ -439,8 +439,8 @@ public class ParametroBO {
      *             the instance not found exception
      */
     protected void duplicateVersionPostOperations(final SqlSession session, final ParametroVO prmt,
-            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap) throws OverlapException,
-            InstanceNotFoundException {
+            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+            throws OverlapException, InstanceNotFoundException {
         // noop
     }
 
@@ -529,8 +529,8 @@ public class ParametroBO {
      *             the instance not found exception
      */
     protected void updatePostOperations(final SqlSession session, final ParametroVO prmt,
-            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap) throws OverlapException,
-            InstanceNotFoundException {
+            final TipoParametroDetailVO tpprDetail, final Map<String, I18nVO> i18nMap)
+            throws OverlapException, InstanceNotFoundException {
         // noop
     }
 
@@ -836,6 +836,10 @@ public class ParametroBO {
      * @return the list
      */
     public final List<ParametroVO> selectTypeaheadList(final @NonNull ParametroCriterioVO criterio, final int limit) {
+        Preconditions.checkNotNull(criterio.getEntiId());
+        Preconditions.checkNotNull(criterio.getFechaVigencia());
+        Preconditions.checkNotNull(criterio.getIdioma());
+
         if (criterio.getTextoBusqueda() != null) {
             criterio.setTextoBusqueda(criterio.getTextoBusqueda() + '%');
         }
@@ -843,7 +847,7 @@ public class ParametroBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
 
-            return prmtDAO.selectList(criterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
+            return prmtDAO.selectTypeaheadList(criterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         }
     }
 

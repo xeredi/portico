@@ -32,9 +32,9 @@ public final class ProcesoXlsExportAction extends GridXlsExportAction<ProcesoCri
         final ProcesoBO prbtBO = new ProcesoBO();
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-            final ProcesoXls excelUtil = new ProcesoXls(getLocale());
+            final ProcesoXls excelUtil = new ProcesoXls(getLocale(), baos, prbtBO.selectList(criterio));
 
-            excelUtil.generarProcesos(prbtBO.selectList(criterio), baos);
+            excelUtil.generate();
 
             stream = new ByteArrayInputStream(baos.toByteArray());
         }

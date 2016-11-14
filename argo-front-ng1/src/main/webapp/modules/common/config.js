@@ -212,6 +212,10 @@
             $rootScope.actionErrors = null;
 
             if (res.data) {
+                if (res.data instanceof ArrayBuffer) {
+                    alert("Viene un ArrayBuffer");
+                }
+
                 if (res.data.responseCode) {
                     switch (res.data.responseCode) {
                     case "login":
@@ -220,16 +224,22 @@
                         return $q.reject(res);
 
                         break;
+                    case "error":
+                        // alert("Errores");
+
+                        $rootScope.actionErrors = res.data.actionErrors;
+
+                        return $q.reject(res.data.actionErrors);
+
+                        break;
                     default:
                         break;
                     }
                 }
 
-                if (res.data.accionesUsuario) {
-                    $rootScope.accionesUsuario = res.data.accionesUsuario;
-                }
-
                 if (res.data.actionErrors && res.data.actionErrors.length > 0) {
+                    // alert("Errores sin responseCode");
+
                     $rootScope.actionErrors = res.data.actionErrors;
 
                     return $q.reject(res.data.actionErrors);
@@ -240,6 +250,8 @@
         }
 
         function responseError(res) {
+            alert("Response Error");
+
             activeRequests--;
 
             if (activeRequests <= 0) {

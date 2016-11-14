@@ -32,9 +32,14 @@ public final class SubservicioXlsExportAction extends ItemXlsExportAction<Subser
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             final SubservicioBO itemBO = SubservicioBOFactory.newInstance(criterio.getEntiId(), usroId);
-            final SubservicioXls excelUtil = new SubservicioXls(getLocale());
 
-            excelUtil.generarSubservicios(itemBO.selectList(criterio), enti, baos);
+            if (itemBO.count(criterio) > 10000) {
+                throw new Error("No se pueden generar Excels de mas de 10.000 filas");
+            }
+
+            final SubservicioXls excelUtil = new SubservicioXls(getLocale(), baos, itemBO.selectList(criterio), enti);
+
+            excelUtil.generate();
 
             stream = new ByteArrayInputStream(baos.toByteArray());
         }
