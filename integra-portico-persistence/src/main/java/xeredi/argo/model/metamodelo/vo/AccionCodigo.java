@@ -43,6 +43,8 @@ public enum AccionCodigo {
     ittrList,
     /** The ittr detail. */
     ittrDetail,
+    /** The dep list. */
+    depList,
 
     ;
 }

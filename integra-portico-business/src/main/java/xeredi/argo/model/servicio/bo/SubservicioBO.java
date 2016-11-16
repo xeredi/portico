@@ -14,7 +14,6 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Sets;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
@@ -27,7 +26,9 @@ import xeredi.argo.model.item.dao.ItemTramiteDatoDAO;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
+import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TramiteProxy;
+import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.argo.model.seguridad.dao.UsuarioDAO;
@@ -40,8 +41,10 @@ import xeredi.argo.model.servicio.dao.SubservicioSubservicioDAO;
 import xeredi.argo.model.servicio.dao.SubservicioTramiteDAO;
 import xeredi.argo.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.argo.model.servicio.vo.SubservicioLupaCriterioVO;
+import xeredi.argo.model.servicio.vo.SubservicioSubservicioCriterioVO;
 import xeredi.argo.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
+import xeredi.argo.model.util.SetUtil;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
@@ -51,6 +54,7 @@ import xeredi.util.pagination.PaginatedList;
  * The Class AbstractSubservicioBO.
  */
 public class SubservicioBO {
+    private static final int SEGMENT_SIZE = 500;
 
     /** The enti id. */
     protected final transient Long entiId;
@@ -312,72 +316,6 @@ public class SubservicioBO {
     }
 
     /**
-     * Duplicate.
-     *
-     * @param ssrvVO
-     *            the ssrv vo
-     */
-    public final void duplicate(final @NonNull SubservicioVO ssrvVO) {
-        Preconditions.checkNotNull(ssrvVO.getSrvc());
-        Preconditions.checkNotNull(ssrvVO.getSrvc().getId());
-
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
-
-            // Depencias padre
-            final SubservicioCriterioVO ssrvCriterioPadreVO = new SubservicioCriterioVO();
-
-            ssrvCriterioPadreVO.setHijoId(ssrvVO.getId());
-
-            final List<SubservicioSubservicioVO> ssrvPadresList = ssssDAO.selectList(ssrvCriterioPadreVO);
-
-            // Dependencias hija hija
-            final List<SubservicioSubservicioVO> ssrvHijosList = new ArrayList<>();
-            final List<SubservicioSubservicioVO> ssrvHijosStepList = new ArrayList<>();
-            final SubservicioCriterioVO ssrvCriterioHijoVO = new SubservicioCriterioVO();
-
-            ssrvCriterioHijoVO.setPadreIds(Sets.newHashSet(ssrvVO.getId()));
-
-            do {
-                ssrvHijosStepList.clear();
-                ssrvHijosStepList.addAll(ssssDAO.selectList(ssrvCriterioHijoVO));
-
-                final Set<Long> ssrvPadreIds = new HashSet<>();
-
-                for (final SubservicioSubservicioVO ssssVO : ssrvHijosStepList) {
-                    ssrvPadreIds.add(ssssVO.getSsrvHijoId());
-                }
-
-                ssrvCriterioHijoVO.setPadreIds(ssrvPadreIds);
-            } while (!ssrvHijosStepList.isEmpty());
-
-            final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
-
-            sracDAO.deleteList(ssrvVO.getSrvc().getId());
-            sracDAO.insert(ssrvVO.getSrvc().getId());
-
-            duplicatePostOperations(session, ssrvVO);
-
-            session.commit();
-        }
-
-        throw new Error("No implementado");
-    }
-
-    /**
-     * Duplicate post operations.
-     *
-     * @param session
-     *            the session
-     * @param ssrvVO
-     *            the ssrv vo
-     */
-    protected void duplicatePostOperations(final SqlSession session, final SubservicioVO ssrvVO) {
-        // noop
-    }
-
-    /**
      * Update.
      *
      * @param ssrvVO
@@ -426,7 +364,210 @@ public class SubservicioBO {
     }
 
     /**
-     * Delete.
+     * Duplicado de un subservicio. Implica las siguientes operaciones:
+     * <ul>
+     * <li>Duplicado del subservicio y sus datos asociados.</li>
+     * <li>Duplicado de los subservicio dependientes (hijos, nietos, ...) y sus datos asociados.</li>
+     * <li>Duplicado de las relaciones entre los subservicio duplicados.</li>
+     * <li>Recálculo de los actores del servicio al que pertenece el subservicio duplicado.</li>
+     * </ul>
+     *
+     * @param ssrv
+     *            the ssrv vo
+     *
+     * @see SubservicioBO#duplicatePostOperations(SqlSession, SubservicioVO)
+     */
+    public final void duplicate(final @NonNull SubservicioVO ssrv) {
+        Preconditions.checkNotNull(ssrv.getId());
+        Preconditions.checkNotNull(ssrv.getEntiId());
+        Preconditions.checkNotNull(ssrv.getSrvc());
+        Preconditions.checkNotNull(ssrv.getSrvc().getId());
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+
+            // Identificadores de los subservicios a eliminar
+            final Set<Long> ssrvIds = new HashSet<>();
+
+            // Busqueda de los hijos sel servicio a duplicar
+            {
+                ssrvIds.add(ssrv.getId());
+
+                final Set<Long> ssrvPadreIds = new HashSet<>(ssrvIds);
+                final Set<Long> ssrvHijoIds = new HashSet<>();
+
+                do {
+                    ssrvHijoIds.clear();
+
+                    for (final Set<Long> division : SetUtil.divide(ssrvPadreIds, SEGMENT_SIZE)) {
+                        Preconditions.checkArgument(!division.isEmpty());
+
+                        final SubservicioSubservicioCriterioVO ssssCriterio = new SubservicioSubservicioCriterioVO();
+
+                        ssssCriterio.getSsrvPadreIds().addAll(division);
+
+                        for (final SubservicioSubservicioVO ssss : ssssDAO.selectList(ssssCriterio)) {
+                            ssrvHijoIds.add(ssss.getSsrvHijoId());
+                        }
+                    }
+
+                    ssrvPadreIds.clear();
+                    ssrvIds.addAll(ssrvHijoIds);
+                    ssrvPadreIds.addAll(ssrvHijoIds);
+                } while (!ssrvPadreIds.isEmpty());
+            }
+
+            // Traduccion de ids entre el subservicio a duplicar y el subservicio duplicado
+            final Map<Long, Long> translationIds = new HashMap<>();
+
+            // Alta del subservicio pasado como argumento y sus datos asociados
+            final Long oldId = new Long(ssrv.getId());
+
+            {
+                IgUtilBO.assignNextVal(ssrv);
+
+                translationIds.put(oldId, ssrv.getId());
+
+                ssrvDAO.insert(ssrv);
+
+                for (final Long tpdtId : ssrv.getItdtMap().keySet()) {
+                    final ItemDatoVO itdt = ssrv.getItdt(tpdtId);
+
+                    itdt.setItemId(ssrv.getId());
+                    itdt.setTpdtId(tpdtId);
+
+                    ssdtDAO.insert(itdt);
+                }
+            }
+
+            // Busqueda de los subservicios y duplicado de los mismos
+            {
+                Preconditions.checkArgument(!ssrvIds.isEmpty());
+
+                for (final Set<Long> division : SetUtil.divide(ssrvIds, SEGMENT_SIZE)) {
+                    Preconditions.checkArgument(!division.isEmpty());
+
+                    final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
+
+                    ssrvCriterio.setIds(division);
+
+                    for (final SubservicioVO oldSsrv : ssrvDAO.selectList(ssrvCriterio)) {
+                        // Si el subservicio tiene el id del subservicio pasado como argumento, no lo
+                        // insertamos (ya insertado)
+                        if (!oldSsrv.getId().equals(oldId)) {
+                            final TipoSubservicioDetailVO tpss = TipoSubservicioProxy.select(oldSsrv.getEntiId());
+                            final SubservicioVO newSsrv = new SubservicioVO();
+
+                            newSsrv.setEstado(tpss.getEnti().getEstadoDef());
+                            newSsrv.setEntiId(oldSsrv.getEntiId());
+                            newSsrv.setNumero(oldSsrv.getNumero());
+                            newSsrv.setSrvc(oldSsrv.getSrvc());
+                            newSsrv.setFini(oldSsrv.getFini());
+                            newSsrv.setFfin(oldSsrv.getFfin());
+                            newSsrv.setFref(oldSsrv.getFref());
+
+                            IgUtilBO.assignNextVal(newSsrv);
+
+                            translationIds.put(oldSsrv.getId(), newSsrv.getId());
+
+                            ssrvDAO.insert(newSsrv);
+                        }
+                    }
+                }
+            }
+
+            // Busqueda de los datos asociados a los subservicios y duplicado de los mismos
+            {
+                Preconditions.checkArgument(!ssrvIds.isEmpty());
+
+                for (final Set<Long> division : SetUtil.divide(ssrvIds, SEGMENT_SIZE)) {
+                    Preconditions.checkArgument(!division.isEmpty());
+
+                    final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
+
+                    ssrvCriterio.setIds(division);
+
+                    for (final ItemDatoVO oldItdt : ssdtDAO.selectList(ssrvCriterio)) {
+                        // Si el identificador del item es el del subservicio pasado como argumento, no lo
+                        // insertamos (ya insertado)
+                        if (!oldItdt.getItemId().equals(oldId)) {
+                            final ItemDatoVO newItdt = new ItemDatoVO();
+
+                            newItdt.setItemId(translationIds.get(oldItdt.getItemId()));
+
+                            newItdt.setTpdtId(oldItdt.getTpdtId());
+                            newItdt.setCadena(oldItdt.getCadena());
+                            newItdt.setCantidadDecimal(oldItdt.getCantidadDecimal());
+                            newItdt.setCantidadEntera(oldItdt.getCantidadEntera());
+                            newItdt.setFecha(oldItdt.getFecha());
+                            newItdt.setPrmt(oldItdt.getPrmt());
+                            newItdt.setSrvc(oldItdt.getSrvc());
+
+                            ssdtDAO.insert(newItdt);
+                        }
+                    }
+                }
+            }
+
+            // Busqueda de las relaciones de los subservicios a duplicar y duplicado de las mismas
+            {
+                Preconditions.checkArgument(!ssrvIds.isEmpty());
+
+                for (final Set<Long> division : SetUtil.divide(ssrvIds, SEGMENT_SIZE)) {
+                    Preconditions.checkArgument(!division.isEmpty());
+
+                    {
+                        // Duplicado como hijos
+                        final SubservicioSubservicioCriterioVO ssssCriterio = new SubservicioSubservicioCriterioVO();
+
+                        ssssCriterio.getSsrvHijoIds().addAll(division);
+
+                        for (final SubservicioSubservicioVO oldSsss : ssssDAO.selectList(ssssCriterio)) {
+                            final SubservicioSubservicioVO newSsss = new SubservicioSubservicioVO(
+                                    translationIds.containsKey(oldSsss.getSsrvPadreId())
+                                            ? translationIds.get(oldSsss.getSsrvPadreId()) : oldSsss.getSsrvPadreId(),
+                                    translationIds.get(oldSsss.getSsrvHijoId()));
+
+                            ssssDAO.insert(newSsss);
+                        }
+                    }
+                }
+            }
+
+            // Recalculo de los actores del servicio al que pertenece el subservicio eliminado
+            final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
+
+            sracDAO.deleteList(ssrv.getSrvc().getId());
+            sracDAO.insert(ssrv.getSrvc().getId());
+
+            duplicatePostOperations(session, ssrv);
+
+            session.commit();
+        }
+    }
+
+    /**
+     * Duplicate post operations.
+     *
+     * @param session
+     *            the session
+     * @param ssrvVO
+     *            the ssrv vo
+     */
+    protected void duplicatePostOperations(final SqlSession session, final SubservicioVO ssrvVO) {
+        // noop
+    }
+
+    /**
+     * Borrado de un subservicio. Implica las siguientes operaciones:
+     * <ul>
+     * <li>Borrado del subservicio y sus datos asociados.</li>
+     * <li>Borrado de los subservicio dependientes (hijos, nietos, ...) y sus datos asociados.</li>
+     * <li>Borrado de las relaciones entre los subservicio borrados.</li>
+     * <li>Recálculo de los actores del servicio al que pertenece el subservicio borrado.</li>
+     * </ul>
      *
      * @param ssrv
      *            the ssrv
@@ -439,78 +580,99 @@ public class SubservicioBO {
         Preconditions.checkNotNull(ssrv.getSrvc());
         Preconditions.checkNotNull(ssrv.getSrvc().getId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            // Busqueda de los padres del subservicio a borrar
-            {
-                final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-                final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
 
-                ssrvCriterio.setHijoId(ssrv.getId());
+            // Identificadores de los subservicios a eliminar
+            final Set<Long> ssrvIds = new HashSet<>();
 
-                final List<SubservicioVO> ssrvPadres = ssrvDAO.selectList(ssrvCriterio);
-            }
-
-            final Set<Long> ssrvIds = new HashSet<Long>();
-
+            // Busqueda de los hijos sel servicio a borrar
             ssrvIds.add(ssrv.getId());
 
-            // Busqueda de los hijos del Subservicio a borrar
             {
-                final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-                final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
+                final Set<Long> ssrvPadreIds = new HashSet<>(ssrvIds);
+                final Set<Long> ssrvHijoIds = new HashSet<>();
 
-                ssrvCriterio.setPadreIds(ssrvIds);
+                do {
+                    ssrvHijoIds.clear();
 
-                boolean process = true;
+                    for (final Set<Long> division : SetUtil.divide(ssrvPadreIds, SEGMENT_SIZE)) {
+                        Preconditions.checkArgument(!division.isEmpty());
 
-                while (process) {
-                    final List<SubservicioVO> ssrvHijos = ssrvDAO.selectList(ssrvCriterio);
+                        final SubservicioSubservicioCriterioVO ssssCriterio = new SubservicioSubservicioCriterioVO();
 
-                    if (ssrvHijos.isEmpty()) {
-                        process = false;
+                        ssssCriterio.getSsrvPadreIds().addAll(division);
+
+                        for (final SubservicioSubservicioVO ssss : ssssDAO.selectList(ssssCriterio)) {
+                            ssrvHijoIds.add(ssss.getSsrvHijoId());
+                        }
                     }
 
-                    final Set<Long> ssrvStepIds = new HashSet<Long>();
+                    ssrvPadreIds.clear();
+                    ssrvIds.addAll(ssrvHijoIds);
+                    ssrvPadreIds.addAll(ssrvHijoIds);
+                } while (!ssrvPadreIds.isEmpty());
+            }
 
-                    for (final SubservicioVO ssrvHijo : ssrvHijos) {
-                        ssrvStepIds.add(ssrvHijo.getId());
+            // Borrado de las relaciones de los subservicios a eliminar
+            {
+                Preconditions.checkArgument(!ssrvIds.isEmpty());
+
+                for (final Set<Long> division : SetUtil.divide(ssrvIds, SEGMENT_SIZE)) {
+                    Preconditions.checkArgument(!division.isEmpty());
+
+                    {
+                        // Borrado como hijos
+                        final SubservicioSubservicioCriterioVO ssssCriterio = new SubservicioSubservicioCriterioVO();
+
+                        ssssCriterio.getSsrvHijoIds().addAll(division);
+
+                        ssssDAO.deleteList(ssssCriterio);
                     }
 
-                    ssrvIds.addAll(ssrvStepIds);
-                    ssrvCriterio.setPadreIds(ssrvStepIds);
+                    {
+                        // Borrado como padres
+                        final SubservicioSubservicioCriterioVO ssssCriterio = new SubservicioSubservicioCriterioVO();
+
+                        ssssCriterio.getSsrvPadreIds().addAll(division);
+
+                        ssssDAO.deleteList(ssssCriterio);
+
+                    }
                 }
             }
 
-            Preconditions.checkArgument(!ssrvIds.isEmpty());
-
+            // Borrado de los datos asociados a los subservicios
             {
+                Preconditions.checkArgument(!ssrvIds.isEmpty());
 
-                final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
-                final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
+                for (final Set<Long> division : SetUtil.divide(ssrvIds, SEGMENT_SIZE)) {
+                    Preconditions.checkArgument(!division.isEmpty());
 
-                ssrvCriterio.setIds(ssrvIds);
+                    final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
 
-                ssdtDAO.deleteList(ssrvCriterio);
+                    ssrvCriterio.setIds(division);
+                    ssdtDAO.deleteList(ssrvCriterio);
+                }
             }
 
+            // Borrado de los subservicios
             {
-                final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
-                final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
+                Preconditions.checkArgument(!ssrvIds.isEmpty());
 
-                ssrvCriterio.setPadreIds(ssrvIds);
+                for (final Set<Long> division : SetUtil.divide(ssrvIds, SEGMENT_SIZE)) {
+                    Preconditions.checkArgument(!division.isEmpty());
 
-                ssssDAO.deleteList(ssrvCriterio);
+                    final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
+
+                    ssrvCriterio.setIds(division);
+                    ssrvDAO.deleteList(ssrvCriterio);
+                }
             }
 
-            {
-                final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-                final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
-
-                ssrvCriterio.setIds(ssrvIds);
-
-                ssrvDAO.deleteList(ssrvCriterio);
-            }
-
+            // Recalculo de los actores del servicio al que pertenece el subservicio eliminado
             final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
 
             sracDAO.deleteList(ssrv.getSrvc().getId());

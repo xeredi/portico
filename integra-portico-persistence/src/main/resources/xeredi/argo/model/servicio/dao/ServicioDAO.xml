@@ -73,6 +73,16 @@
             )
         ]]>
         </if>
+        <if test="srvcDepId != null">
+        <![CDATA[
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_servicio_dato_srdt
+                WHERE srdt_srvc_pk = srvc_pk
+                    AND srdt_srvc_dep_pk = #{srvcDepId}
+            )
+        ]]>
+        </if>
         <if test="usroPrtoId != null">
             AND srvc_subp_pk = #{usroPrtoId}
         </if>

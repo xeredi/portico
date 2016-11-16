@@ -320,14 +320,15 @@
     }
 
     /* @ngInject */
-    function ServicioDetailController($routeParams, pageTitleService, credentialService, ServicioService,
-            SubservicioService) {
+    function ServicioDetailController($routeParams, $location, pageTitleService, credentialService,
+            ServicioService, SubservicioService) {
         var vm = this;
 
         vm.remove = remove;
         vm.pdfExport = pdfExport;
         vm.tabSelected = tabSelected;
         vm.pageChanged = pageChanged;
+        vm.vlrcGrid = vlrcGrid;
 
         function remove() {
             ServicioService.remove(vm.item).then(function(data) {
@@ -356,7 +357,7 @@
                     entiId : subentiId
                 };
 
-                SubservicioService.listPage(ssrvSearchCriteria, page, vm.limit).then(function(data) {
+                SubservicioService.listTabPage(ssrvSearchCriteria, page, vm.limit).then(function(data) {
                     vm.entiHijasMap[data.enti.enti.id] = data.enti;
                     vm.itemHijosMap[data.enti.enti.id] = data.resultList;
                     vm.pageMap[data.enti.enti.id] = data.resultList.page;
@@ -364,6 +365,19 @@
                     ServicioService.pageMapChanged(vm.pageMap);
                 });
             }
+        }
+
+        function vlrcGrid() {
+            $location.path("/facturacion/valoracion/grid").search({
+                searchCriteria : JSON.stringify({
+                    tpsrId : vm.item.entiId,
+                    srvc : {
+                        id : vm.item.id,
+                        entiId : vm.item.entiId,
+                        etiqueta : vm.item.etiqueta
+                    }
+                })
+            });
         }
 
         vm.tabActive = {};

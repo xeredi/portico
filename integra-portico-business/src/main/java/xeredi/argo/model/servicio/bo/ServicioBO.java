@@ -57,6 +57,7 @@ import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioTypeaheadCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioCriterioVO;
+import xeredi.argo.model.servicio.vo.SubservicioSubservicioCriterioVO;
 import xeredi.argo.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -579,6 +580,8 @@ public class ServicioBO implements Auditable {
      *             the model exception
      */
     public final void duplicate(final @NonNull ServicioVO srvcVO) throws ModelException {
+        Preconditions.checkNotNull(srvcVO.getId());
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
@@ -593,13 +596,15 @@ public class ServicioBO implements Auditable {
             // Busqueda de los elementos a duplicar
             final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+            final SubservicioSubservicioCriterioVO ssssCriterio = new SubservicioSubservicioCriterioVO();
 
             srvcCriterioVO.setId(srvcVO.getId());
             ssrvCriterioVO.setSrvc(srvcCriterioVO);
+            ssssCriterio.setSrvcId(srvcVO.getId());
 
             final List<SubservicioVO> ssrvList = ssrvDAO.selectList(ssrvCriterioVO);
             final List<ItemDatoVO> ssdtList = ssdtDAO.selectList(ssrvCriterioVO);
-            final List<SubservicioSubservicioVO> ssssList = ssssDAO.selectList(ssrvCriterioVO);
+            final List<SubservicioSubservicioVO> ssssList = ssssDAO.selectList(ssssCriterio);
 
             // Duplicado del servicio. Se duplica el propio servicio y sus datos
             // asociados, los
@@ -696,16 +701,18 @@ public class ServicioBO implements Auditable {
             final ServicioArchivoDAO srarDAO = session.getMapper(ServicioArchivoDAO.class);
             final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
 
-            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+            final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
+            final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
+            final SubservicioSubservicioCriterioVO ssssCriterio = new SubservicioSubservicioCriterioVO();
 
-            srvcCriterioVO.setId(srvc.getId());
-            ssrvCriterioVO.setSrvc(srvcCriterioVO);
+            srvcCriterio.setId(srvc.getId());
+            ssrvCriterio.setSrvc(srvcCriterio);
+            ssssCriterio.setSrvcId(srvc.getId());
 
-            ssssDAO.deleteList(ssrvCriterioVO);
-            ssdtDAO.deleteList(ssrvCriterioVO);
-            ssrvDAO.deleteList(ssrvCriterioVO);
-            srdtDAO.deleteList(srvcCriterioVO);
+            ssssDAO.deleteList(ssssCriterio);
+            ssdtDAO.deleteList(ssrvCriterio);
+            ssrvDAO.deleteList(ssrvCriterio);
+            srdtDAO.deleteList(srvcCriterio);
             srarDAO.deleteList(srvc.getId());
             sracDAO.deleteList(srvc.getId());
 
@@ -880,6 +887,14 @@ public class ServicioBO implements Auditable {
         }
     }
 
+    /**
+     * Fill user specific filter.
+     *
+     * @param session
+     *            the session
+     * @param srvcCriterio
+     *            the srvc criterio
+     */
     private void fillUserSpecificFilter(final @NonNull SqlSession session,
             final @NonNull ServicioCriterioVO srvcCriterio) {
         srvcCriterio.setEntiId(entiId);

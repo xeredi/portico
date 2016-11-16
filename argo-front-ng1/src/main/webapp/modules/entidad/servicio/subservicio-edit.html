@@ -9,15 +9,13 @@
                         data-ng-selected="vm.prtoId = vm.item.srvc.prto.id"
                         data-uib-typeahead="srvc as srvc.etiqueta for srvc in ta.search(vm.enti.enti.tpsrId, $viewValue)"
                         data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
-                    <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
-                        data-ng-bind="vm.item.srvc.etiqueta"></p>
+                    <p data-ng-if="vm.accion == 'edit'" class="form-control-static" data-ng-bind="vm.item.srvc.etiqueta"></p>
                     <!-- data-ng-change="vm.prtoId = vm.item.srvc.prto.id"  -->
                 </div>
                 <div class="col-sm-1 col-md-1 form-group-sm">
-                    <label data-translate="ssrv_numero"></label> <input data-ng-if="vm.accion != 'edit'"
-                        type="text" data-ng-model="vm.item.numero" class="form-control" />
-                    <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
-                        data-ng-bind="vm.item.numero"></p>
+                    <label data-translate="ssrv_numero"></label> <input data-ng-if="vm.accion != 'edit'" type="text"
+                        data-ng-model="vm.item.numero" class="form-control" />
+                    <p data-ng-if="vm.accion == 'edit'" class="form-control-static" data-ng-bind="vm.item.numero"></p>
                 </div>
 
                 <div data-ng-if="vm.enti.enti.tpdtEstado" class="col-sm-3 col-md-2 form-group-sm">
@@ -27,8 +25,7 @@
                         class="form-control">
                         <option />
                     </select>
-                    <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
-                        data-ng-bind="vm.item.estado"></p>
+                    <p data-ng-if="vm.accion == 'edit'" class="form-control-static" data-ng-bind="vm.item.estado"></p>
                 </div>
 
                 <div data-ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
@@ -42,16 +39,14 @@
                 </div>
 
                 <div data-ng-repeat="entiId in vm.enti.entiPadresList track by $index"
-                    data-ng-if="entiId != vm.enti.enti.tpsrId"
-                    class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+                    data-ng-if="entiId != vm.enti.enti.tpsrId" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                     <label data-ng-bind="'enti_' + entiId | translate"></label>
                     <p class="form-control-static">
-                        <a data-ng-href="#/servicio/ssrv/detail/{{entiId}}/{{vm.itemPadresMap[entiId].value}}">{{vm.itemPadresMap[entiId].label}}</a>
+                        <a data-ng-href="#/servicio/subservicio/detail/{{entiId}}/{{vm.itemPadresMap[entiId].value}}">{{vm.itemPadresMap[entiId].label}}</a>
                     </p>
                 </div>
 
-                <div data-ng-if="vm.item.srvc.id"
-                    data-ng-repeat="entiPadre in vm.superentiList track by $index"
+                <div data-ng-if="vm.item.srvc.id" data-ng-repeat="entiPadre in vm.superentiList track by $index"
                     class="col-md-2 form-group-sm">
                     <label data-ng-bind="entiPadre.nombre"></label>
                     <div class="input-group-sm" data-ng-controller="SsrvLupaController">

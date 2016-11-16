@@ -157,11 +157,12 @@ td {
 .checkbox {
 	margin: 0px;
 }
-
+/*
 input[type=checkbox]:checked {
 	width: 18px;
 	height: 18px;
 }
+*/
 
 /* Bootstrap XL */
 /* Bootstrap XL */

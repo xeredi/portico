@@ -820,6 +820,9 @@ CREATE TABLE tbl_tipo_subservicio_tpss (
 		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
 )\
 
+CREATE INDEX ix_tpss_tpsr_pk ON tbl_tipo_subservicio_tpss (tpss_tpsr_pk)\
+CREATE INDEX ix_tpss_tpdt_estado_pk ON tbl_tipo_subservicio_tpss (tpss_tpdt_estado_pk)\
+
 CREATE OR REPLACE SYNONYM portico.tbl_tipo_subservicio_tpss FOR porticoadm.tbl_tipo_subservicio_tpss\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_tipo_subservicio_tpss TO portico\
@@ -1248,6 +1251,8 @@ CREATE TABLE tbl_proceso_batch_prbt (
 		REFERENCES tbl_usuario_usro (usro_pk)
 )\
 
+CREATE INDEX ix_prbt_usro_pk ON tbl_proceso_batch_prbt (prbt_usro_pk)\
+
 CREATE OR REPLACE SYNONYM portico.tbl_proceso_batch_prbt FOR porticoadm.tbl_proceso_batch_prbt\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_proceso_batch_prbt TO portico\
@@ -1423,9 +1428,9 @@ CREATE TABLE tbl_cargo_dep_version_crdv (
 		REFERENCES tbl_cargo_dep_crdp (crdp_pk)
 )\
 
-CREATE OR REPLACE SYNONYM portico.tbl_cargo_dep_version_crdv FOR porticoadm.tbl_cargo_dep_version_crdv\
+CREATE INDEX ix_crdv_crdp_pk ON tbl_cargo_dep_version_crdv (crdv_crdp_pk)\
 
-CREATE INDEX ix_crdv_crdp_pk ON tbl_cargo_dep_version_crdv(crdv_crdp_pk)\
+CREATE OR REPLACE SYNONYM portico.tbl_cargo_dep_version_crdv FOR porticoadm.tbl_cargo_dep_version_crdv\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_cargo_dep_version_crdv TO portico\
 
@@ -1447,6 +1452,8 @@ CREATE TABLE tbl_regla_rgla (
 	, CONSTRAINT fk_rgla_enti_pk FOREIGN KEY (rgla_enti_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
 )\
+
+CREATE INDEX ix_rgla_enti_pk ON tbl_regla_rgla (rgla_enti_pk)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_regla_rgla FOR porticoadm.tbl_regla_rgla\
 
@@ -1858,12 +1865,12 @@ CREATE TABLE tbl_valoracion_det_vlrd (
 		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
 )\
 
-CREATE OR REPLACE SYNONYM portico.tbl_valoracion_det_vlrd FOR porticoadm.tbl_valoracion_det_vlrd\
-
 CREATE INDEX ix_vlrd_vlrc_pk ON tbl_valoracion_det_vlrd (vlrd_vlrc_pk)\
 CREATE INDEX ix_vlrd_vlrl_pk ON tbl_valoracion_det_vlrd (vlrd_vlrl_pk)\
 CREATE INDEX ix_vlrd_padre_pk ON tbl_valoracion_det_vlrd (vlrd_padre_pk)\
 CREATE INDEX ix_vlrd_ssrv_pk ON tbl_valoracion_det_vlrd (vlrd_ssrv_pk)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_valoracion_det_vlrd FOR porticoadm.tbl_valoracion_det_vlrd\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_det_vlrd TO portico\
 
@@ -1926,11 +1933,13 @@ CREATE TABLE tbl_valoracion_tmp_vlrt (
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )\
 
-CREATE OR REPLACE SYNONYM portico.tbl_valoracion_tmp_vlrt FOR porticoadm.tbl_valoracion_tmp_vlrt\
-
 CREATE INDEX ix_vlrt ON tbl_valoracion_tmp_vlrt (
 	vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_tipo)\
 CREATE INDEX ix_vlrt_padre_pk ON tbl_valoracion_tmp_vlrt (vlrt_padre_pk)\
+CREATE INDEX ix_vlrt_srvc_pk ON tbl_valoracion_tmp_vlrt (vlrt_srvc_pk)\
+CREATE INDEX ix_vlrt_ssrv_pk ON tbl_valoracion_tmp_vlrt (vlrt_ssrv_pk)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_valoracion_tmp_vlrt FOR porticoadm.tbl_valoracion_tmp_vlrt\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_tmp_vlrt TO portico\
 
@@ -2187,9 +2196,9 @@ CREATE TABLE tbl_item_tramite_ittr (
 		REFERENCES tbl_tramite_trmt (trmt_pk)
 )\
 
-CREATE OR REPLACE SYNONYM portico.tbl_item_tramite_ittr FOR tbl_item_tramite_ittr\
-
 CREATE INDEX ix_ittr_item_pk ON tbl_item_tramite_ittr(ittr_item_pk)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_item_tramite_ittr FOR tbl_item_tramite_ittr\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_item_tramite_ittr TO portico\
 
@@ -2227,6 +2236,9 @@ CREATE TABLE tbl_item_trmt_dato_ittd (
 		REFERENCES tbl_servicio_srvc (srvc_pk)
 )\
 
+CREATE INDEX ix_ittd_o_srvc_pk ON tbl_item_trmt_dato_ittd(ittd_o_srvc_pk, ittd_tpdt_pk)\
+CREATE INDEX ix_ittd_d_srvc_pk ON tbl_item_trmt_dato_ittd(ittd_d_srvc_pk, ittd_tpdt_pk)\
+
 CREATE OR REPLACE SYNONYM portico.tbl_item_trmt_dato_ittd FOR tbl_item_trmt_dato_ittd\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_item_trmt_dato_ittd TO portico\
@@ -2244,6 +2256,8 @@ CREATE TABLE tbl_parametro_trmt_prtr (
 	, CONSTRAINT fk_prtr_prmt_pk FOREIGN KEY (prtr_prmt_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )\
+
+CREATE INDEX ix_prtr_prmt_pk ON tbl_parametro_trmt_prtr (prtr_prmt_pk)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_parametro_trmt_prtr FOR tbl_parametro_trmt_prtr\
 
@@ -2263,6 +2277,8 @@ CREATE TABLE tbl_servicio_trmt_srtr (
 		REFERENCES tbl_servicio_srvc (srvc_pk)
 )\
 
+CREATE INDEX ix_srtr_srvc_pk ON tbl_servicio_trmt_srtr (srtr_srvc_pk)\
+
 CREATE OR REPLACE SYNONYM portico.tbl_servicio_trmt_srtr FOR tbl_servicio_trmt_srtr\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_trmt_srtr TO portico\
@@ -2280,6 +2296,8 @@ CREATE TABLE tbl_subservicio_trmt_sstr (
 	, CONSTRAINT fk_sstr_ssrv_pk FOREIGN KEY (sstr_ssrv_pk)
 		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
 )\
+
+CREATE INDEX ix_sstr_ssrv_pk ON tbl_subservicio_trmt_sstr (sstr_ssrv_pk)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_subservicio_trmt_sstr FOR tbl_subservicio_trmt_sstr\
 

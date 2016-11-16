@@ -18,11 +18,11 @@
                     <a class="btn btn-default"
                         data-ng-if="mc.hasAcbsPath('vldr-create') && vm.enti.enti.estadosVlrcSet.indexOf(vm.item.estado) >= 0"
                         data-ng-href="#/servicio/valorador/edit/create/{{vm.item.entiId}}/{{vm.item.id}}"><i
-                        class="glyphicon glyphicon-euro"></i> <span data-translate="btn_valorar"></span> </a> <a
-                        data-ng-if="mc.hasAcbsPath('vlrc-list')" class="btn btn-default"
-                        data-ng-href="#/facturacion/valoracion/grid/?srvcId={{vm.item.id}}"> <span
-                        data-translate="btn_valoraciones"></span>
-                    </a>
+                        class="glyphicon glyphicon-euro"></i> <span data-translate="btn_valorar"></span> </a>
+                    <button data-ng-if="mc.hasAcbsPath('vlrc-list')" class="btn btn-default"
+                        data-ng-click="vm.vlrcGrid()">
+                        <span data-translate="btn_valoraciones"></span>
+                    </button>
                 </div>
                 <div class="btn-group">
                     <button data-ng-repeat="enac in vm.enti.enacList track by $index"
