@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.argo.model.seguridad.dao.UsuarioPermisoDAO">
+    <select id="exists" parameterType="UsuarioPermisoCriterioVO" resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_usuario_usro
+        WHERE usro_pk = #{usroId}
+            AND EXISTS (
+                SELECT 1 FROM tbl_usuario_grupo_usgr
+                WHERE usgr_usro_pk = usro_pk
+                    AND EXISTS (
+                        SELECT 1 FROM tbl_funcionalidad_grupo_fngr
+                        WHERE fngr_grpo_pk = usgr_grpo_pk
+        ]]>
+        <if test="fncdId != null">
+        <![CDATA[
+                            AND fngr_fncd_pk = #{fncdId}
+        ]]>
+        </if>
+        <if test="acbsPrefix != null or acbsCodigo != null">
+        <![CDATA[
+                            AND EXISTS (
+                                SELECT 1 FROM tbl_accion_base_acbs
+                                WHERE acbs_pk = fngr_fncd_pk
+                                    AND acbs_prefix = #{acbsPrefix}
+                                    AND acbs_codigo = #{acbsCodigo}
+                            )
+        ]]>
+        </if>
+        <if test="acenPrefix != null or acenCodigo != null">
+        <![CDATA[
+                            AND EXISTS (
+                                SELECT 1 FROM tbl_accion_entidad_acen
+                                WHERE acen_pk = fngr_fncd_pk
+                                    AND acen_enti_pk = #{entiId}
+                                    AND EXISTS (
+                                        SELECT 1 FROM tbl_accion_entidad_base_aebs
+                                        WHERE aebs_pk = acen_aebs_pk
+                                            AND aebs_codigo = #{acenCodigo}
+                                    )
+                            )
+        ]]>
+        </if>
+        <![CDATA[
+                    )
+            )
+        ]]>
+    </select>
+</mapper>

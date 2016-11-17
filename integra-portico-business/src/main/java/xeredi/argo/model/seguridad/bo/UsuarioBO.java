@@ -160,21 +160,6 @@ public final class UsuarioBO {
     }
 
     /**
-     * Select list.
-     *
-     * @param usroCriterio
-     *            the usro criterio
-     * @return the list
-     */
-    public List<UsuarioVO> selectList(final @NonNull UsuarioCriterioVO usroCriterio) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
-
-            return usroDAO.selectList(usroCriterio);
-        }
-    }
-
-    /**
      * Select object.
      *
      * @param usroCriterio

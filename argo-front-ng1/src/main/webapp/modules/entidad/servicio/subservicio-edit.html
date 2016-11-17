@@ -42,7 +42,7 @@
                     data-ng-if="entiId != vm.enti.enti.tpsrId" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                     <label data-ng-bind="'enti_' + entiId | translate"></label>
                     <p class="form-control-static">
-                        <a data-ng-href="#/servicio/subservicio/detail/{{entiId}}/{{vm.itemPadresMap[entiId].value}}">{{vm.itemPadresMap[entiId].label}}</a>
+                        <a data-ng-href="#/servicio/subservicio/detail/{{entiId}}/{{vm.itemPadresMap[entiId].value}}">{{vm.item.ssrvPadreMap[entiId].etiqueta}}</a>
                     </p>
                 </div>
 

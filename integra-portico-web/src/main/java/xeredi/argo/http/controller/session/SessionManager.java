@@ -8,11 +8,9 @@ import lombok.NonNull;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
-import xeredi.argo.model.metamodelo.bo.AccionBaseBO;
-import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
-import xeredi.argo.model.metamodelo.bo.FuncionalidadBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.bo.UsuarioAccesoBO;
+import xeredi.argo.model.seguridad.bo.UsuarioPermisoBO;
 import xeredi.argo.model.seguridad.vo.ResultadoLoginVO;
 
 // TODO: Auto-generated Javadoc
@@ -57,10 +55,9 @@ public final class SessionManager {
      * @return true, if successful
      */
     public static boolean hasPermission(final @NonNull ClassPrefix prefix, final @NonNull AccionCodigo codigo) {
-        final AccionBaseBO acbsBO = new AccionBaseBO();
+        final UsuarioPermisoBO usprBO = new UsuarioPermisoBO(getUsroId());
 
-        return acbsBO.isUserAllowed(prefix, codigo,
-                ((ResultadoLoginVO) getSession().get(ParamNames.loginResult.name())).getUsroId());
+        return usprBO.hasAcbs(prefix.name(), codigo.name());
     }
 
     /**
@@ -76,10 +73,9 @@ public final class SessionManager {
      */
     public static boolean hasPermission(final @NonNull ClassPrefix prefix, final @NonNull AccionCodigo codigo,
             final @NonNull Long entiId) {
-        final AccionEntidadBO acenBO = new AccionEntidadBO();
+        final UsuarioPermisoBO usprBO = new UsuarioPermisoBO(getUsroId());
 
-        return acenBO.isUserAllowed(prefix, codigo, entiId,
-                ((ResultadoLoginVO) getSession().get(ParamNames.loginResult.name())).getUsroId());
+        return usprBO.hasAcen(prefix.name(), codigo.name(), entiId);
     }
 
     /**
@@ -90,10 +86,9 @@ public final class SessionManager {
      * @return true, if successful
      */
     public static boolean hasPermission(final @NonNull Long fncdId) {
-        final FuncionalidadBO fncdBO = new FuncionalidadBO();
+        final UsuarioPermisoBO usprBO = new UsuarioPermisoBO(getUsroId());
 
-        return fncdBO.isUserAllowed(fncdId,
-                ((ResultadoLoginVO) getSession().get(ParamNames.loginResult.name())).getUsroId());
+        return usprBO.hasFncd(fncdId);
     }
 
     /**
@@ -132,10 +127,8 @@ public final class SessionManager {
      * Gets the usro id.
      *
      * @return the usro id
-     * @throws ApplicationException
-     *             the application exception
      */
-    public static Long getUsroId() throws ApplicationException {
+    public static Long getUsroId() {
         return getSession().containsKey(ParamNames.loginResult.name())
                 ? ((ResultadoLoginVO) getSession().get(ParamNames.loginResult.name())).getUsroId() : null;
     }
@@ -144,10 +137,8 @@ public final class SessionManager {
      * Gets the sprt id.
      *
      * @return the sprt id
-     * @throws ApplicationException
-     *             the application exception
      */
-    public static Long getSprtId() throws ApplicationException {
+    public static Long getSprtId() {
         return getSession().containsKey(ParamNames.loginResult.name())
                 ? ((ResultadoLoginVO) getSession().get(ParamNames.loginResult.name())).getSprt().getId() : null;
     }

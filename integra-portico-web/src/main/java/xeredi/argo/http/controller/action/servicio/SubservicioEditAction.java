@@ -1,10 +1,9 @@
 package xeredi.argo.http.controller.action.servicio;
 
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
-import lombok.Getter;
+import com.google.common.base.Preconditions;
+
 import xeredi.argo.http.controller.action.item.ItemEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
@@ -13,11 +12,7 @@ import xeredi.argo.model.servicio.bo.ServicioBO;
 import xeredi.argo.model.servicio.bo.ServicioBOFactory;
 import xeredi.argo.model.servicio.bo.SubservicioBO;
 import xeredi.argo.model.servicio.bo.SubservicioBOFactory;
-import xeredi.argo.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
-import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -27,10 +22,6 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3286199992331373729L;
-
-    /** The item padres map. */
-    @Getter
-    private Map<Long, LabelValueVO> itemPadresMap;
 
     /**
      * {@inheritDoc}
@@ -48,6 +39,14 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
 
                 model.setSrvc(srvcBO.select(model.getSrvc().getId(), idioma));
                 model.setFref(model.getSrvc().getFref());
+
+                // Si viene de un subservicio padre, lo buscamos
+                for (final Long entiId : model.getSsrvPadreMap().keySet()) {
+                    final SubservicioBO ssrvPadreBO = SubservicioBOFactory.newInstance(entiId, getUsroId());
+
+                    model.getSsrvPadreMap().put(entiId,
+                            ssrvPadreBO.select(model.getSsrvPadreMap().get(entiId).getId(), idioma));
+                }
             } else {
                 model.setFref(Calendar.getInstance().getTime());
             }
@@ -55,53 +54,12 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
             model.setEstado(enti.getEnti().getEstadoDef());
 
             break;
+        case edit:
         case duplicate:
             Preconditions.checkNotNull(model.getSrvc());
             Preconditions.checkNotNull(model.getSrvc().getId());
 
             model = ssrvBO.select(model.getId(), getIdioma());
-            model.setEstado(enti.getEnti().getEstadoDef());
-
-            if (enti.getEntiPadresList() != null) {
-                itemPadresMap = new HashMap<Long, LabelValueVO>();
-
-                for (final Long entiId : enti.getEntiPadresList()) {
-                    if (!enti.getEnti().getTpsrId().equals(entiId)) {
-                        final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-
-                        ssrvCriterioVO.setHijoId(model.getId());
-                        ssrvCriterioVO.setEntiId(entiId);
-
-                        final SubservicioBO ssrvPadreBO = SubservicioBOFactory.newInstance(entiId, usroId);
-
-                        itemPadresMap.put(entiId, ssrvPadreBO.selectLabelValueObject(ssrvCriterioVO));
-                    }
-                }
-            }
-
-            break;
-        case edit:
-            Preconditions.checkNotNull(model.getSrvc());
-            Preconditions.checkNotNull(model.getSrvc().getId());
-
-            model = ssrvBO.select(model.getId(), getIdioma());
-
-            if (enti.getEntiPadresList() != null) {
-                itemPadresMap = new HashMap<Long, LabelValueVO>();
-
-                for (final Long entiId : enti.getEntiPadresList()) {
-                    if (!enti.getEnti().getTpsrId().equals(entiId)) {
-                        final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-
-                        ssrvCriterioVO.setHijoId(model.getId());
-                        ssrvCriterioVO.setEntiId(entiId);
-
-                        final SubservicioBO ssrvPadreBO = SubservicioBOFactory.newInstance(entiId, usroId);
-
-                        itemPadresMap.put(entiId, ssrvPadreBO.selectLabelValueObject(ssrvCriterioVO));
-                    }
-                }
-            }
 
             break;
         default:

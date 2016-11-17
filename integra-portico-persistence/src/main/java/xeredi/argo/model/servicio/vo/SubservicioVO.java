@@ -1,6 +1,8 @@
 package xeredi.argo.model.servicio.vo;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,6 +13,10 @@ import xeredi.argo.model.item.vo.ItemVO;
 // TODO: Auto-generated Javadoc
 /**
  * The Class SubservicioVO.
+ */
+
+/**
+ * Instantiates a new subservicio VO.
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -31,6 +37,9 @@ public final class SubservicioVO extends ItemVO implements I18nable {
 
     /** The estado. */
     private String estado;
+
+    /** The ssrv padre map. */
+    private Map<Long, SubservicioVO> ssrvPadreMap = new HashMap<>();
 
     /**
      * {@inheritDoc}

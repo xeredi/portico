@@ -28,7 +28,6 @@ import xeredi.argo.model.item.vo.ItemTramiteDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TramiteProxy;
-import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.argo.model.seguridad.dao.UsuarioDAO;
@@ -54,6 +53,8 @@ import xeredi.util.pagination.PaginatedList;
  * The Class AbstractSubservicioBO.
  */
 public class SubservicioBO {
+
+    /** The Constant SEGMENT_SIZE. */
     private static final int SEGMENT_SIZE = 500;
 
     /** The enti id. */
@@ -154,18 +155,9 @@ public class SubservicioBO {
      */
     public final LabelValueVO selectLabelValueObject(final @NonNull SubservicioCriterioVO ssrvCriterio)
             throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            fillUserSpecificFilter(session, ssrvCriterio);
+        final SubservicioVO ssrv = selectObject(ssrvCriterio);
 
-            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final SubservicioVO ssrv = ssrvDAO.selectObject(ssrvCriterio);
-
-            if (ssrv == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.ssrv, ssrvCriterio);
-            }
-
-            return new LabelValueVO(ssrv.getEtiqueta(), ssrv.getId());
-        }
+        return new LabelValueVO(ssrv.getEtiqueta(), ssrv.getId());
     }
 
     /**
@@ -181,19 +173,45 @@ public class SubservicioBO {
      */
     public final SubservicioVO select(final @NonNull Long ssrvId, final String idioma)
             throws InstanceNotFoundException {
+        final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
+
+        ssrvCriterio.setId(ssrvId);
+        ssrvCriterio.setIdioma(idioma);
+
+        return selectObject(ssrvCriterio);
+    }
+
+    /**
+     * Select object.
+     *
+     * @param ssrvCriterio
+     *            the ssrv criterio
+     * @return the subservicio VO
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public final SubservicioVO selectObject(final @NonNull SubservicioCriterioVO ssrvCriterio)
+            throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
-
-            ssrvCriterio.setId(ssrvId);
-            ssrvCriterio.setIdioma(idioma);
 
             fillUserSpecificFilter(session, ssrvCriterio);
 
             final SubservicioVO ssrv = ssrvDAO.selectObject(ssrvCriterio);
 
             if (ssrv == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.ssrv, ssrvId);
+                throw new InstanceNotFoundException(MessageI18nKey.ssrv, ssrvCriterio);
+            }
+
+            // Busqueda de los padres (si tiene)
+            if (!TipoSubservicioProxy.select(ssrv.getEntiId()).getEntiPadresList().isEmpty()) {
+                final SubservicioCriterioVO ssrvPadreCriterio = new SubservicioCriterioVO();
+
+                ssrvPadreCriterio.setHijoId(ssrv.getId());
+
+                for (final SubservicioVO ssrvPadre : ssrvDAO.selectList(ssrvPadreCriterio)) {
+                    ssrv.getSsrvPadreMap().put(ssrvPadre.getEntiId(), ssrvPadre);
+                }
             }
 
             fillDependencies(session, Arrays.asList(new SubservicioVO[] { ssrv }), ssrvCriterio, true);

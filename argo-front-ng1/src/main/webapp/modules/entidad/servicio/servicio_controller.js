@@ -31,6 +31,8 @@
 
     .controller("SubservicioEditController", SubservicioEditController)
 
+    .controller("SubservicioDependienteCreateController", SubservicioDependienteCreateController)
+
     ;
 
     /* @ngInject */
@@ -100,6 +102,11 @@
         .when("/servicio/subservicio/edit/:accion/:entiId/:srvcId?/:id?", {
             templateUrl : "modules/entidad/servicio/subservicio-edit.html",
             controller : "SubservicioEditController as vm"
+        })
+
+        .when("/servicio/subservicio-dependiente/edit/create/:entiId/:srvcId/:padreEntiId/:padreSsrvId", {
+            templateUrl : "modules/entidad/servicio/subservicio-edit.html",
+            controller : "SubservicioDependienteCreateController as vm"
         })
 
         ;
@@ -664,11 +671,52 @@
         SubservicioService.edit(vm.accion, vm.search).then(function(data) {
             vm.fechaVigencia = data.fechaVigencia;
             vm.item = data.model;
-            vm.itemPadresMap = data.itemPadresMap;
             vm.labelValuesMap = data.labelValuesMap;
 
             vm.enti = data.enti;
-            vm.superentiList = data.superentiList;
+        });
+
+        pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);
+    }
+
+    /* @ngInject */
+    function SubservicioDependienteCreateController($routeParams, pageTitleService, SubservicioService) {
+        var vm = this;
+
+        vm.save = save;
+        vm.cancel = cancel;
+
+        function save() {
+            SubservicioService.save(vm.accion, vm.item).then(
+                    function(data) {
+                        SubservicioService.redirectAfterSave(vm.accion, '/servicio/subservicio/detail', [
+                                data.model.entiId, data.model.id ]);
+                    });
+        }
+
+        function cancel() {
+            window.history.back();
+        }
+
+        vm.accion = "create";
+        vm.search = {
+            id : $routeParams.id,
+            entiId : $routeParams.entiId,
+            srvc : {
+                id : $routeParams.srvcId
+            },
+            ssrvPadreMap : {}
+        };
+
+        vm.search.ssrvPadreMap[$routeParams.padreEntiId] = {
+            id : $routeParams.padreSsrvId
+        };
+
+        SubservicioService.edit(vm.accion, vm.search).then(function(data) {
+            vm.fechaVigencia = data.fechaVigencia;
+            vm.item = data.model;
+
+            vm.enti = data.enti;
         });
 
         pageTitleService.setTitleEnti($routeParams.entiId, "page_" + vm.accion);
