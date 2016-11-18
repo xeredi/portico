@@ -139,7 +139,8 @@ public enum ManifiestoSegmento {
      *            the segmento siguiente
      * @return true, if successful
      */
-    public static boolean segmentoValido(final ManifiestoSegmento segmento, final ManifiestoSegmento segmentoSiguiente) {
+    public static boolean segmentoValido(final ManifiestoSegmento segmento,
+            final ManifiestoSegmento segmentoSiguiente) {
         switch (segmento) {
         case IFC:
         case NAD:

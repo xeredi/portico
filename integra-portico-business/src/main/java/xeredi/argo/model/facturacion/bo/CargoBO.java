@@ -30,7 +30,7 @@ import xeredi.util.pagination.PaginatedList;
 /**
  * The Class CargoBO.
  */
-public class CargoBO {
+public final class CargoBO {
 
     /**
      * Select list.
@@ -43,7 +43,7 @@ public class CargoBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<CargoVO> selectList(final @NonNull CargoCriterioVO crgoCriterioVO, final int offset,
+    public PaginatedList<CargoVO> selectList(@NonNull final CargoCriterioVO crgoCriterioVO, final int offset,
             final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
@@ -64,7 +64,7 @@ public class CargoBO {
      *            the limit
      * @return the list
      */
-    public List<CargoVO> selectTypeaheadList(final @NonNull CargoCriterioVO crgoCriterio, final int limit) {
+    public List<CargoVO> selectTypeaheadList(@NonNull final CargoCriterioVO crgoCriterio, final int limit) {
         crgoCriterio.setTextoBusqueda("%" + crgoCriterio.getTextoBusqueda() + "%");
 
         if (crgoCriterio.getFechaVigencia() == null) {
@@ -85,7 +85,7 @@ public class CargoBO {
      *            the crgo criterio vo
      * @return the list
      */
-    public List<CargoVO> selectList(final @NonNull CargoCriterioVO crgoCriterioVO) {
+    public List<CargoVO> selectList(@NonNull final CargoCriterioVO crgoCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
 
@@ -106,7 +106,7 @@ public class CargoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public CargoVO select(final @NonNull Long id, final @NonNull Date fref, final String idioma)
+    public CargoVO select(@NonNull final Long id, @NonNull final Date fref, final String idioma)
             throws InstanceNotFoundException {
         final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
@@ -126,7 +126,7 @@ public class CargoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public CargoVO selectObject(final @NonNull CargoCriterioVO crgoCriterio) throws InstanceNotFoundException {
+    public CargoVO selectObject(@NonNull final CargoCriterioVO crgoCriterio) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
             final CargoVO crgo = crgoDAO.selectObject(crgoCriterio);
@@ -149,7 +149,7 @@ public class CargoBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void insert(final @NonNull CargoVO crgo, final Map<String, I18nVO> i18nMap) throws OverlapException {
+    public void insert(@NonNull final CargoVO crgo, final Map<String, I18nVO> i18nMap) throws OverlapException {
         Preconditions.checkNotNull(crgo.getVersion());
         Preconditions.checkNotNull(crgo.getVersion().getFini());
         Preconditions.checkNotNull(crgo.getTpsr());
@@ -195,7 +195,7 @@ public class CargoBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void update(final @NonNull CargoVO crgo, final Map<String, I18nVO> i18nMap)
+    public void update(@NonNull final CargoVO crgo, final Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(crgo.getVersion());
         Preconditions.checkNotNull(crgo.getVersion().getId());
@@ -230,7 +230,7 @@ public class CargoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull CargoVO crgo) throws InstanceNotFoundException {
+    public void delete(@NonNull final CargoVO crgo) throws InstanceNotFoundException {
         Preconditions.checkNotNull(crgo.getVersion());
         Preconditions.checkNotNull(crgo.getVersion().getId());
 

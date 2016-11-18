@@ -36,7 +36,7 @@ public final class EquipamientoBO extends SubservicioBO {
      * @param ausroId
      *            the ausro id
      */
-    private EquipamientoBO(Long ausroId) {
+    private EquipamientoBO(@NonNull final Long ausroId) {
         super(Entidad.EQUIPAMIENTO.getId(), ausroId);
     }
 
@@ -135,8 +135,8 @@ public final class EquipamientoBO extends SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void statechangePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv,
-            final @NonNull ItemTramiteVO ittr, final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
+    protected void statechangePostOperations(@NonNull final SqlSession session, @NonNull final SubservicioVO ssrv,
+            @NonNull final ItemTramiteVO ittr, @NonNull final TramiteDetailVO trmtDetail) throws ModelException {
         Preconditions.checkNotNull(ssrv.getId());
         Preconditions.checkNotNull(ssrv.getSrvc());
         Preconditions.checkNotNull(ssrv.getSrvc().getId());

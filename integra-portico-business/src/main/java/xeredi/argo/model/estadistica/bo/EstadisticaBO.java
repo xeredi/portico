@@ -27,7 +27,7 @@ import xeredi.util.pagination.PaginatedList;
 /**
  * The Class EstadisticaBO.
  */
-public class EstadisticaBO {
+public final class EstadisticaBO {
     /**
      * Select list.
      *
@@ -39,7 +39,7 @@ public class EstadisticaBO {
      *            the limit
      * @return the paginated list
      */
-    public final PaginatedList<EstadisticaVO> selectList(final @NonNull EstadisticaCriterioVO estdCriterioVO,
+    public PaginatedList<EstadisticaVO> selectList(@NonNull final EstadisticaCriterioVO estdCriterioVO,
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
@@ -63,7 +63,7 @@ public class EstadisticaBO {
      *            the estd criterio vo
      * @return the list
      */
-    public final List<EstadisticaVO> selectList(final @NonNull EstadisticaCriterioVO estdCriterioVO) {
+    public List<EstadisticaVO> selectList(@NonNull final EstadisticaCriterioVO estdCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
             final List<EstadisticaVO> estdList = estdDAO.selectList(estdCriterioVO);
@@ -85,7 +85,7 @@ public class EstadisticaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final EstadisticaVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+    public EstadisticaVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
         final EstadisticaCriterioVO estdCriterio = new EstadisticaCriterioVO();
 
         estdCriterio.setId(id);
@@ -103,7 +103,7 @@ public class EstadisticaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final EstadisticaVO selectObject(final @NonNull EstadisticaCriterioVO estdCriterio)
+    public EstadisticaVO selectObject(@NonNull final EstadisticaCriterioVO estdCriterio)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
@@ -133,8 +133,8 @@ public class EstadisticaBO {
      * @param useIds
      *            the use ids
      */
-    private final void fillDependencies(final @NonNull SqlSession session, final @NonNull List<EstadisticaVO> estdList,
-            final @NonNull EstadisticaCriterioVO estdCriterio, final boolean useIds) {
+    private void fillDependencies(@NonNull final SqlSession session, @NonNull final List<EstadisticaVO> estdList,
+            @NonNull final EstadisticaCriterioVO estdCriterio, final boolean useIds) {
         if (!estdList.isEmpty()) {
             if (useIds) {
                 final Set<Long> ids = new HashSet<>();

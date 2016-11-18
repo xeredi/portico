@@ -30,7 +30,7 @@ import xeredi.util.pagination.PaginatedList;
 /**
  * The Class ReglaBO.
  */
-public class ReglaBO {
+public final class ReglaBO {
     /**
      * Select list.
      *
@@ -42,7 +42,7 @@ public class ReglaBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<ReglaVO> selectList(final @NonNull ReglaCriterioVO rglaCriterioVO, final int offset,
+    public PaginatedList<ReglaVO> selectList(@NonNull final ReglaCriterioVO rglaCriterioVO, final int offset,
             final int limit) {
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
@@ -64,7 +64,7 @@ public class ReglaBO {
      *            the rgla criterio vo
      * @return the list
      */
-    public List<ReglaVO> selectList(final @NonNull ReglaCriterioVO rglaCriterioVO) {
+    public List<ReglaVO> selectList(@NonNull final ReglaCriterioVO rglaCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
 
@@ -81,7 +81,7 @@ public class ReglaBO {
      *            the limit
      * @return the list
      */
-    public List<ReglaVO> selectTypeaheadList(final @NonNull ReglaCriterioVO rglaCriterio, final int limit) {
+    public List<ReglaVO> selectTypeaheadList(@NonNull final ReglaCriterioVO rglaCriterio, final int limit) {
         rglaCriterio.setTextoBusqueda("%" + rglaCriterio.getTextoBusqueda() + "%");
 
         if (rglaCriterio.getFechaVigencia() == null) {
@@ -105,7 +105,7 @@ public class ReglaBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void insert(final @NonNull ReglaVO rgla, final Map<String, I18nVO> i18nMap) throws OverlapException {
+    public void insert(@NonNull final ReglaVO rgla, final Map<String, I18nVO> i18nMap) throws OverlapException {
         Preconditions.checkNotNull(rgla.getVersion());
         Preconditions.checkNotNull(rgla.getVersion().getFini());
         Preconditions.checkNotNull(rgla.getCrgo());
@@ -153,7 +153,7 @@ public class ReglaBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void update(final @NonNull ReglaVO rgla, final Map<String, I18nVO> i18nMap)
+    public void update(@NonNull final ReglaVO rgla, final Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(rgla.getVersion());
         Preconditions.checkNotNull(rgla.getVersion().getId());
@@ -188,7 +188,7 @@ public class ReglaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull ReglaVO rgla) throws InstanceNotFoundException {
+    public void delete(@NonNull final ReglaVO rgla) throws InstanceNotFoundException {
         Preconditions.checkNotNull(rgla.getVersion());
         Preconditions.checkNotNull(rgla.getVersion().getId());
 
@@ -219,7 +219,7 @@ public class ReglaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ReglaVO select(final @NonNull Long id, final @NonNull Date fref, final String idioma)
+    public ReglaVO select(@NonNull final Long id, @NonNull final Date fref, final String idioma)
             throws InstanceNotFoundException {
         final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
 
@@ -239,7 +239,7 @@ public class ReglaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ReglaVO selectObject(final @NonNull ReglaCriterioVO rglaCriterio) throws InstanceNotFoundException {
+    public ReglaVO selectObject(@NonNull final ReglaCriterioVO rglaCriterio) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
             final ReglaVO rgla = rglaDAO.selectObject(rglaCriterio);

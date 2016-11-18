@@ -23,7 +23,7 @@ public final class FuncionalidadBO {
      *            the usro id
      * @return true, if is user allowed
      */
-    public boolean isUserAllowed(final @NonNull Long fncdId, final @NonNull Long usroId) {
+    public boolean isUserAllowed(@NonNull final Long fncdId, @NonNull final Long usroId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
             final FuncionalidadCriterioVO fncdCriterio = new FuncionalidadCriterioVO();

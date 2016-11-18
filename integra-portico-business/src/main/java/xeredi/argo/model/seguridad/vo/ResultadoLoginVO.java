@@ -66,10 +66,10 @@ public final class ResultadoLoginVO {
      * @param afncdIds
      *            the afncd ids
      */
-    public ResultadoLoginVO(final @NonNull Long ausroId, final @NonNull String anombre, final SuperpuertoVO asprt,
-            final PuertoVO aprto, final ParametroVO aorga, final @NonNull Set<String> amdloSet,
-            final @NonNull Set<String> aacbsPaths, final @NonNull Map<Long, Set<AccionCodigo>> aacenMap,
-            final @NonNull Set<Long> afncdIds) {
+    public ResultadoLoginVO(@NonNull final Long ausroId, @NonNull final String anombre, final SuperpuertoVO asprt,
+            final PuertoVO aprto, final ParametroVO aorga, @NonNull final Set<String> amdloSet,
+            @NonNull final Set<String> aacbsPaths, @NonNull final Map<Long, Set<AccionCodigo>> aacenMap,
+            @NonNull final Set<Long> afncdIds) {
         super();
         usroId = ausroId;
         nombre = anombre;

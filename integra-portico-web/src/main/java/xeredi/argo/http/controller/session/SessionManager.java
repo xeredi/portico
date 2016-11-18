@@ -41,7 +41,7 @@ public final class SessionManager {
      *            the action
      * @return true, if is authenticated
      */
-    public static boolean isAuthenticated(final @NonNull BaseAction action) {
+    public static boolean isAuthenticated(@NonNull final BaseAction action) {
         return getSession().containsKey(ParamNames.loginResult.name());
     }
 
@@ -54,7 +54,7 @@ public final class SessionManager {
      *            the codigo
      * @return true, if successful
      */
-    public static boolean hasPermission(final @NonNull ClassPrefix prefix, final @NonNull AccionCodigo codigo) {
+    public static boolean hasPermission(@NonNull final ClassPrefix prefix, @NonNull final AccionCodigo codigo) {
         final UsuarioPermisoBO usprBO = new UsuarioPermisoBO(getUsroId());
 
         return usprBO.hasAcbs(prefix.name(), codigo.name());
@@ -71,8 +71,8 @@ public final class SessionManager {
      *            the enti id
      * @return true, if successful
      */
-    public static boolean hasPermission(final @NonNull ClassPrefix prefix, final @NonNull AccionCodigo codigo,
-            final @NonNull Long entiId) {
+    public static boolean hasPermission(@NonNull final ClassPrefix prefix, @NonNull final AccionCodigo codigo,
+            @NonNull final Long entiId) {
         final UsuarioPermisoBO usprBO = new UsuarioPermisoBO(getUsroId());
 
         return usprBO.hasAcen(prefix.name(), codigo.name(), entiId);
@@ -85,7 +85,7 @@ public final class SessionManager {
      *            the fncd id
      * @return true, if successful
      */
-    public static boolean hasPermission(final @NonNull Long fncdId) {
+    public static boolean hasPermission(@NonNull final Long fncdId) {
         final UsuarioPermisoBO usprBO = new UsuarioPermisoBO(getUsroId());
 
         return usprBO.hasFncd(fncdId);
@@ -102,7 +102,7 @@ public final class SessionManager {
      * @throws ApplicationException
      *             the application exception
      */
-    public static ResultadoLoginVO login(final @NonNull String login, final @NonNull String password)
+    public static ResultadoLoginVO login(@NonNull final String login, @NonNull final String password)
             throws ApplicationException {
         final UsuarioAccesoBO usacBO = new UsuarioAccesoBO();
 

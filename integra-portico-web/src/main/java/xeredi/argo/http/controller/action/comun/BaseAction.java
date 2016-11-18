@@ -116,7 +116,7 @@ public abstract class BaseAction extends ActionSupport {
      * @param key
      *            the key
      */
-    public final void addActionError(final @NonNull MessageI18nKey key) {
+    public final void addActionError(@NonNull final MessageI18nKey key) {
         addActionError(bundle.getString(key.name()));
     }
 
@@ -128,7 +128,7 @@ public abstract class BaseAction extends ActionSupport {
      * @param args
      *            the args
      */
-    public final void addActionError(final @NonNull MessageI18nKey key, final Object... args) {
+    public final void addActionError(@NonNull final MessageI18nKey key, final Object... args) {
         addActionError(MessageFormat.format(bundle.getString(key.name()), args));
     }
 
@@ -139,7 +139,7 @@ public abstract class BaseAction extends ActionSupport {
      *            the key
      * @return the text
      */
-    public final String getText(final @NonNull MessageI18nKey key) {
+    public final String getText(@NonNull final MessageI18nKey key) {
         return bundle.getString(key.name());
     }
 

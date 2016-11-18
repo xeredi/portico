@@ -53,7 +53,7 @@ public final class TipoEstadisticaBO {
      *            the tpes criterio
      * @return the list
      */
-    public List<TipoEstadisticaVO> selectList(final @NonNull TipoEstadisticaCriterioVO tpesCriterio) {
+    public List<TipoEstadisticaVO> selectList(@NonNull final TipoEstadisticaCriterioVO tpesCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoEstadisticaDAO tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
 
@@ -72,7 +72,7 @@ public final class TipoEstadisticaBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<TipoEstadisticaVO> selectList(final @NonNull TipoEstadisticaCriterioVO tpesCriterio,
+    public PaginatedList<TipoEstadisticaVO> selectList(@NonNull final TipoEstadisticaCriterioVO tpesCriterio,
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoEstadisticaDAO tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
@@ -95,7 +95,7 @@ public final class TipoEstadisticaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public TipoEstadisticaVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+    public TipoEstadisticaVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoEstadisticaDAO tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
             final TipoEstadisticaCriterioVO entiCriterio = new TipoEstadisticaCriterioVO();
@@ -123,7 +123,7 @@ public final class TipoEstadisticaBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final @NonNull TipoEstadisticaVO tpes, final @NonNull Map<String, I18nVO> i18nMap)
+    public void insert(@NonNull final TipoEstadisticaVO tpes, @NonNull final Map<String, I18nVO> i18nMap)
             throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoEstadisticaDAO tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
@@ -155,7 +155,7 @@ public final class TipoEstadisticaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @NonNull TipoEstadisticaVO tpes, final @NonNull Map<String, I18nVO> i18nMap)
+    public void update(@NonNull final TipoEstadisticaVO tpes, @NonNull final Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpes.getId());
 
@@ -180,7 +180,7 @@ public final class TipoEstadisticaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull TipoEstadisticaVO tpes) throws InstanceNotFoundException {
+    public void delete(@NonNull final TipoEstadisticaVO tpes) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpes.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

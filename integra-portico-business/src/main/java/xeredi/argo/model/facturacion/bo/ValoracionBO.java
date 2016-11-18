@@ -27,14 +27,14 @@ import xeredi.util.pagination.PaginatedList;
 /**
  * The Class ValoracionBO.
  */
-public class ValoracionBO {
+public final class ValoracionBO {
     /**
      * Insert.
      *
      * @param vlrc
      *            the vlrc
      */
-    public void insert(final @NonNull ValoracionVO vlrc) {
+    public void insert(@NonNull final ValoracionVO vlrc) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
 
@@ -55,7 +55,7 @@ public class ValoracionBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @NonNull ValoracionVO vlrc) throws InstanceNotFoundException {
+    public void update(@NonNull final ValoracionVO vlrc) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
 
@@ -77,7 +77,7 @@ public class ValoracionBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull Long id) throws InstanceNotFoundException {
+    public void delete(@NonNull final Long id) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
             final ValoracionDetalleCriterioVO vlrdCriterio = new ValoracionDetalleCriterioVO();
@@ -112,7 +112,7 @@ public class ValoracionBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ValoracionVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+    public ValoracionVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
         final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
         vlrcCriterio.setId(id);
@@ -141,7 +141,7 @@ public class ValoracionBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<ValoracionVO> selectList(final @NonNull ValoracionCriterioVO vlrcCriterioVO, final int offset,
+    public PaginatedList<ValoracionVO> selectList(@NonNull final ValoracionCriterioVO vlrcCriterioVO, final int offset,
             final int limit) {
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
@@ -163,7 +163,7 @@ public class ValoracionBO {
      *            the vlrc criterio vo
      * @return the list
      */
-    public List<ValoracionVO> selectList(final @NonNull ValoracionCriterioVO vlrcCriterioVO) {
+    public List<ValoracionVO> selectList(@NonNull final ValoracionCriterioVO vlrcCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
 

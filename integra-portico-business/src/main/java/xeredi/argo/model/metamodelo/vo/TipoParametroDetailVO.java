@@ -11,20 +11,7 @@ import xeredi.argo.model.maestro.vo.ParametroVO;
 /**
  * The Class TipoParametroDetailVO.
  */
-
-/**
- * Instantiates a new tipo parametro detail vo.
- */
-
-/**
- * Instantiates a new tipo parametro detail vo.
- */
 @Data
-/*
- * (non-Javadoc)
- * 
- * @see xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO#hashCode()
- */
 @EqualsAndHashCode(callSuper = true)
 public final class TipoParametroDetailVO extends AbstractEntidadDetailVO {
 

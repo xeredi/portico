@@ -43,7 +43,7 @@ public final class AspectoBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<AspectoVO> selectList(final @NonNull AspectoCriterioVO aspcCriterioVO, final int offset,
+    public PaginatedList<AspectoVO> selectList(@NonNull final AspectoCriterioVO aspcCriterioVO, final int offset,
             final int limit) {
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
@@ -65,7 +65,7 @@ public final class AspectoBO {
      *            the aspc criterio vo
      * @return the list
      */
-    public List<AspectoVO> selectList(final @NonNull AspectoCriterioVO aspcCriterioVO) {
+    public List<AspectoVO> selectList(@NonNull final AspectoCriterioVO aspcCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
 
@@ -82,7 +82,7 @@ public final class AspectoBO {
      *            the limit
      * @return the list
      */
-    public List<AspectoVO> selectTypeaheadList(final @NonNull AspectoCriterioVO criterio, final int limit) {
+    public List<AspectoVO> selectTypeaheadList(@NonNull final AspectoCriterioVO criterio, final int limit) {
         criterio.setTextoBusqueda("%" + criterio.getTextoBusqueda() + "%");
 
         if (criterio.getFechaVigencia() == null) {
@@ -109,7 +109,7 @@ public final class AspectoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public AspectoVO select(final @NonNull Long id, final @NonNull Date fref, final String idioma)
+    public AspectoVO select(@NonNull final Long id, @NonNull final Date fref, final String idioma)
             throws InstanceNotFoundException {
         final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
@@ -129,7 +129,7 @@ public final class AspectoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public AspectoVO selectObject(final @NonNull AspectoCriterioVO aspcCriterio) throws InstanceNotFoundException {
+    public AspectoVO selectObject(@NonNull final AspectoCriterioVO aspcCriterio) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
             final AspectoVO aspc = aspcDAO.selectObject(aspcCriterio);
@@ -152,7 +152,7 @@ public final class AspectoBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void insert(final @NonNull AspectoVO aspc, final @NonNull Map<String, I18nVO> i18nMap)
+    public void insert(@NonNull final AspectoVO aspc, @NonNull final Map<String, I18nVO> i18nMap)
             throws OverlapException {
         Preconditions.checkNotNull(aspc.getVersion());
         Preconditions.checkNotNull(aspc.getVersion().getFini());
@@ -197,7 +197,7 @@ public final class AspectoBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void duplicate(final @NonNull AspectoVO aspc, final @NonNull Map<String, I18nVO> i18nMap)
+    public void duplicate(@NonNull final AspectoVO aspc, @NonNull final Map<String, I18nVO> i18nMap)
             throws DuplicateInstanceException {
         Preconditions.checkNotNull(aspc.getVersion());
 
@@ -235,7 +235,7 @@ public final class AspectoBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void update(final @NonNull AspectoVO aspc, @NonNull final Map<String, I18nVO> i18nMap)
+    public void update(@NonNull final AspectoVO aspc, @NonNull final Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(aspc.getVersion());
         Preconditions.checkNotNull(aspc.getId());
@@ -271,7 +271,7 @@ public final class AspectoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull AspectoVO aspc) throws InstanceNotFoundException {
+    public void delete(@NonNull final AspectoVO aspc) throws InstanceNotFoundException {
         Preconditions.checkNotNull(aspc.getVersion().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

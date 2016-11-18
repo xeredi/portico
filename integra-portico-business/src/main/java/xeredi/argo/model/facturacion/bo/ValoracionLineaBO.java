@@ -50,7 +50,7 @@ public final class ValoracionLineaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ValoracionLineaVO selectObject(final @NonNull ValoracionLineaCriterioVO vlrlCriterio)
+    public ValoracionLineaVO selectObject(@NonNull final ValoracionLineaCriterioVO vlrlCriterio)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
@@ -71,7 +71,7 @@ public final class ValoracionLineaBO {
      *            the vlrl id
      * @return true, if successful
      */
-    public boolean existsHija(final @NonNull Long vlrlId) {
+    public boolean existsHija(@NonNull final Long vlrlId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
 
@@ -86,7 +86,7 @@ public final class ValoracionLineaBO {
      *            the vlrl criterio
      * @return the list
      */
-    public List<ValoracionLineaVO> selectList(final @NonNull ValoracionLineaCriterioVO vlrlCriterio) {
+    public List<ValoracionLineaVO> selectList(@NonNull final ValoracionLineaCriterioVO vlrlCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
 
@@ -105,7 +105,7 @@ public final class ValoracionLineaBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<ValoracionLineaVO> selectList(final @NonNull ValoracionLineaCriterioVO vlrlCriterio,
+    public PaginatedList<ValoracionLineaVO> selectList(@NonNull final ValoracionLineaCriterioVO vlrlCriterio,
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
@@ -137,7 +137,7 @@ public final class ValoracionLineaBO {
      * @param vlrl
      *            Datos de una linea de valoracion.
      */
-    public void insert(final @NonNull ValoracionLineaVO vlrl) {
+    public void insert(@NonNull final ValoracionLineaVO vlrl) {
         Preconditions.checkNotNull(vlrl.getVlrcId());
         Preconditions.checkNotNull(vlrl.getRgla());
         Preconditions.checkNotNull(vlrl.getRgla().getId());
@@ -229,7 +229,7 @@ public final class ValoracionLineaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @NonNull ValoracionLineaVO vlrl) throws InstanceNotFoundException {
+    public void update(@NonNull final ValoracionLineaVO vlrl) throws InstanceNotFoundException {
         Preconditions.checkNotNull(vlrl.getId());
         Preconditions.checkNotNull(vlrl.getVlrcId());
 
@@ -257,7 +257,7 @@ public final class ValoracionLineaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull ValoracionLineaVO vlrl) throws InstanceNotFoundException {
+    public void delete(@NonNull final ValoracionLineaVO vlrl) throws InstanceNotFoundException {
         Preconditions.checkNotNull(vlrl.getId());
         Preconditions.checkNotNull(vlrl.getVlrcId());
 

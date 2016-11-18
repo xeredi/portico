@@ -49,7 +49,7 @@ public final class TramiteProxy {
      *            the id
      * @return the tramite detail vo
      */
-    public static TramiteDetailVO select(final @NonNull Long id) {
+    public static TramiteDetailVO select(@NonNull final Long id) {
         if (!MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.trmt, id));
         }

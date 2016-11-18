@@ -95,8 +95,8 @@ public final class MaestroImporterV2BO extends EntityImporterBO {
      * @throws ClassNotFoundException
      *             the class not found exception
      */
-    private void importMaster(final @NonNull Connection con, final @NonNull SqlSession session,
-            final @NonNull EntityNodeV2VO entity) throws SQLException, ClassNotFoundException {
+    private void importMaster(@NonNull final Connection con, @NonNull final SqlSession session,
+            @NonNull final EntityNodeV2VO entity) throws SQLException, ClassNotFoundException {
         final TipoParametroDetailVO entityDetail = TipoParametroProxy.select(entity.getId().getId());
 
         final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
@@ -234,7 +234,7 @@ public final class MaestroImporterV2BO extends EntityImporterBO {
      * @throws ClassNotFoundException
      *             the class not found exception
      */
-    private void importSubmaster(final @NonNull Connection con, final @NonNull SqlSession session,
+    private void importSubmaster(@NonNull final Connection con, @NonNull final SqlSession session,
             final EntityNodeV2VO entity) throws SQLException, ClassNotFoundException {
         final TipoSubparametroDetailVO entityDetail = TipoSubparametroProxy.select(entity.getId().getId());
         final TipoParametroDetailVO tpprDetail = TipoParametroProxy.select(entityDetail.getEnti().getTpprId());

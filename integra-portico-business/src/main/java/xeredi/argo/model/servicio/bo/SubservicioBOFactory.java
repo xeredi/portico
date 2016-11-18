@@ -35,7 +35,7 @@ public final class SubservicioBOFactory {
     /**
      * Load.
      */
-    private static final void load() {
+    private static void load() {
         if (LOG.isDebugEnabled()) {
             LOG.info("Factory start");
         }
@@ -66,7 +66,7 @@ public final class SubservicioBOFactory {
      *            the usro id
      * @return the subservicio bo
      */
-    public static final SubservicioBO newInstance(final @NonNull Long entiId, final @NonNull Long usroId) {
+    public static SubservicioBO newInstance(@NonNull final Long entiId, @NonNull final Long usroId) {
         try {
             return MAP.containsKey(entiId) ? (SubservicioBO) MAP.get(entiId)
                     .getDeclaredConstructor(Long.class, Long.class).newInstance(entiId, usroId)

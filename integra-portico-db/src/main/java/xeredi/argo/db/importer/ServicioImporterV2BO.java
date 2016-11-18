@@ -55,8 +55,8 @@ public final class ServicioImporterV2BO extends EntityImporterBO {
      * {@inheritDoc}
      */
     @Override
-    protected void importEntity(final @NonNull Connection con, final @NonNull SqlSession session,
-            final @NonNull EntityNodeV2VO entiNode) throws SQLException, ClassNotFoundException {
+    protected void importEntity(@NonNull final Connection con, @NonNull final SqlSession session,
+            @NonNull final EntityNodeV2VO entiNode) throws SQLException, ClassNotFoundException {
         Preconditions.checkNotNull(entiNode.getId());
         Preconditions.checkNotNull(entiNode.getTable());
         Preconditions.checkNotNull(entiNode.getSql());
@@ -89,8 +89,8 @@ public final class ServicioImporterV2BO extends EntityImporterBO {
      * @throws SQLException
      *             the SQL exception
      */
-    private void importServiceType(final @NonNull Connection con, final @NonNull SqlSession session,
-            final @NonNull EntityNodeV2VO entiNode) throws SQLException {
+    private void importServiceType(@NonNull final Connection con, @NonNull final SqlSession session,
+            @NonNull final EntityNodeV2VO entiNode) throws SQLException {
         final TipoServicioDetailVO entityDetail = TipoServicioProxy.select(entiNode.getId().getId());
 
         final List<ServicioVO> srvcList = new ArrayList<>();
@@ -174,8 +174,8 @@ public final class ServicioImporterV2BO extends EntityImporterBO {
      * @throws SQLException
      *             the SQL exception
      */
-    private void importSubserviceType(final @NonNull Connection con, final @NonNull SqlSession session,
-            final @NonNull EntityNodeV2VO entiNode) throws SQLException {
+    private void importSubserviceType(@NonNull final Connection con, @NonNull final SqlSession session,
+            @NonNull final EntityNodeV2VO entiNode) throws SQLException {
         final TipoSubservicioDetailVO entityDetail = TipoSubservicioProxy.select(entiNode.getId().getId());
 
         final List<SubservicioVO> ssrvList = new ArrayList<>();

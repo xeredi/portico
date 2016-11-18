@@ -27,7 +27,7 @@ public final class EscalaBO extends ServicioBO {
      * @param ausroId
      *            the ausro id
      */
-    public EscalaBO(final @NonNull Long ausroId) {
+    public EscalaBO(@NonNull final Long ausroId) {
         super(Entidad.ESCALA.getId(), ausroId);
     }
 
@@ -35,7 +35,7 @@ public final class EscalaBO extends ServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected final void insertPostOperations(final SqlSession session, final ServicioVO srvcVO,
+    protected void insertPostOperations(final SqlSession session, final ServicioVO srvcVO,
             final List<SubservicioVO> ssrvList, final List<SubservicioSubservicioVO> ssssList) {
         Preconditions.checkNotNull(srvcVO.getId());
 
@@ -57,7 +57,7 @@ public final class EscalaBO extends ServicioBO {
      *            the srvc id
      * @return the string
      */
-    public final String obtenerNumeroManifiestoAeat(final Long srvcId) {
+    public String obtenerNumeroManifiestoAeat(final Long srvcId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession();) {
             final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);
 

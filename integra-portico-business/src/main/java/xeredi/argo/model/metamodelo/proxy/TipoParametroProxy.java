@@ -37,6 +37,13 @@ public final class TipoParametroProxy {
     }
 
     /**
+     * Instantiates a new tipo parametro proxy.
+     */
+    private TipoParametroProxy() {
+        super();
+    }
+
+    /**
      * Select label values.
      *
      * @return the list
@@ -61,7 +68,7 @@ public final class TipoParametroProxy {
      *            the id
      * @return the tipo parametro vo
      */
-    public static TipoParametroDetailVO select(final @NonNull Long id) {
+    public static TipoParametroDetailVO select(@NonNull final Long id) {
         if (!TIPO_PARAMETRO_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tppr, id));
         }

@@ -24,7 +24,7 @@ public final class ValoracionCargoBO {
      *            the vlrc criterio
      * @return the list
      */
-    public List<ValoracionCargoVO> selectList(final @NonNull ValoracionCriterioVO vlrcCriterio) {
+    public List<ValoracionCargoVO> selectList(@NonNull final ValoracionCriterioVO vlrcCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ValoracionCargoDAO vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
 

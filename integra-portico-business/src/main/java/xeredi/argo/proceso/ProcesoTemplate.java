@@ -206,7 +206,7 @@ public abstract class ProcesoTemplate {
      * @param codigo
      *            the codigo
      */
-    public final void addCodigoMaestro(final @NonNull Entidad entidad, final String codigo) {
+    public final void addCodigoMaestro(@NonNull final Entidad entidad, final String codigo) {
         if (!prbtData.getCodigoMaestroMap().containsKey(entidad)) {
             prbtData.getCodigoMaestroMap().put(entidad, new HashSet<String>());
         }
@@ -225,7 +225,7 @@ public abstract class ProcesoTemplate {
      *            the codigo
      * @return the parametro vo
      */
-    public final ParametroVO findMaestro(final @NonNull Entidad entidad, final String codigo) {
+    public final ParametroVO findMaestro(@NonNull final Entidad entidad, final String codigo) {
         if (codigo == null || codigo.isEmpty()) {
             return null;
         }
@@ -273,7 +273,7 @@ public abstract class ProcesoTemplate {
      *            the codigo
      * @return true, if successful
      */
-    public final boolean existsMaestro(final @NonNull Entidad entidad, final String codigo) {
+    public final boolean existsMaestro(@NonNull final Entidad entidad, final String codigo) {
         if (codigo == null || codigo.isEmpty()) {
             return false;
         }
@@ -320,7 +320,7 @@ public abstract class ProcesoTemplate {
      * @param mensaje
      *            the mensaje
      */
-    private final void addMensaje(final @NonNull MensajeCodigo codigo, final @NonNull MensajeNivel nivel,
+    private final void addMensaje(@NonNull final MensajeCodigo codigo, @NonNull final MensajeNivel nivel,
             final String mensaje) {
         final ProcesoMensajeVO prmnVO = new ProcesoMensajeVO();
 
@@ -342,7 +342,7 @@ public abstract class ProcesoTemplate {
      * @param mensaje
      *            the mensaje
      */
-    public final void addError(final @NonNull MensajeCodigo codigo, final String mensaje) {
+    public final void addError(@NonNull final MensajeCodigo codigo, final String mensaje) {
         addMensaje(codigo, MensajeNivel.E, mensaje);
     }
 
@@ -354,7 +354,7 @@ public abstract class ProcesoTemplate {
      * @param mensaje
      *            the mensaje
      */
-    protected final void addWarning(final @NonNull MensajeCodigo codigo, final String mensaje) {
+    protected final void addWarning(@NonNull final MensajeCodigo codigo, final String mensaje) {
         addMensaje(codigo, MensajeNivel.W, mensaje);
     }
 
@@ -366,7 +366,7 @@ public abstract class ProcesoTemplate {
      * @param mensaje
      *            the mensaje
      */
-    protected final void addInfo(final @NonNull MensajeCodigo codigo, final String mensaje) {
+    protected final void addInfo(@NonNull final MensajeCodigo codigo, final String mensaje) {
         addMensaje(codigo, MensajeNivel.I, mensaje);
     }
 
@@ -480,7 +480,7 @@ public abstract class ProcesoTemplate {
      * @param itemId
      *            the item id
      */
-    public final void addPritSalida(final @NonNull Long itemId) {
+    public final void addPritSalida(@NonNull final Long itemId) {
         prbtData.getItemSalidaList().add(itemId);
     }
 

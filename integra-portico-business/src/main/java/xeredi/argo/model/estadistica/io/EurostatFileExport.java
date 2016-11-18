@@ -38,7 +38,7 @@ public final class EurostatFileExport {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public void generateFile(final @NonNull OutputStream stream, final @NonNull List<EurostatVO> list)
+    public void generateFile(@NonNull final OutputStream stream, @NonNull final List<EurostatVO> list)
             throws IOException {
         for (final EurostatVO erst : list) {
             final StringBuffer buffer = new StringBuffer();

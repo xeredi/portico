@@ -41,7 +41,7 @@ public final class AccionEspecialBO {
      *            the usro id
      * @return true, if is user allowed
      */
-    public boolean isUserAllowed(final @NonNull Long acesId, final @NonNull Long usroId) {
+    public boolean isUserAllowed(@NonNull final Long acesId, @NonNull final Long usroId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AccionEspecialDAO acesDAO = session.getMapper(AccionEspecialDAO.class);
             final AccionEspecialCriterioVO acesCriterio = new AccionEspecialCriterioVO();
@@ -63,7 +63,7 @@ public final class AccionEspecialBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final @NonNull AccionEspecialVO aces, final Map<String, I18nVO> i18nMap)
+    public void insert(@NonNull final AccionEspecialVO aces, final Map<String, I18nVO> i18nMap)
             throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AccionEspecialDAO acesDAO = session.getMapper(AccionEspecialDAO.class);
@@ -94,7 +94,7 @@ public final class AccionEspecialBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @NonNull AccionEspecialVO aces, final Map<String, I18nVO> i18nMap)
+    public void update(@NonNull final AccionEspecialVO aces, final Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(aces.getId());
 
@@ -119,7 +119,7 @@ public final class AccionEspecialBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull AccionEspecialVO aces) throws InstanceNotFoundException {
+    public void delete(@NonNull final AccionEspecialVO aces) throws InstanceNotFoundException {
         Preconditions.checkNotNull(aces.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -155,7 +155,7 @@ public final class AccionEspecialBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<AccionEspecialVO> selectList(final @NonNull AccionEspecialCriterioVO acesCriterio,
+    public PaginatedList<AccionEspecialVO> selectList(@NonNull final AccionEspecialCriterioVO acesCriterio,
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AccionEspecialDAO acesDAO = session.getMapper(AccionEspecialDAO.class);
@@ -174,7 +174,7 @@ public final class AccionEspecialBO {
      *            the aces criterio
      * @return the list
      */
-    public List<AccionEspecialVO> selectList(final @NonNull AccionEspecialCriterioVO acesCriterio) {
+    public List<AccionEspecialVO> selectList(@NonNull final AccionEspecialCriterioVO acesCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AccionEspecialDAO acesDAO = session.getMapper(AccionEspecialDAO.class);
 
@@ -191,7 +191,7 @@ public final class AccionEspecialBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public AccionEspecialVO selectObject(final @NonNull AccionEspecialCriterioVO acesCriterio)
+    public AccionEspecialVO selectObject(@NonNull final AccionEspecialCriterioVO acesCriterio)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AccionEspecialDAO acesDAO = session.getMapper(AccionEspecialDAO.class);
@@ -216,7 +216,7 @@ public final class AccionEspecialBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public AccionEspecialVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+    public AccionEspecialVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
         final AccionEspecialCriterioVO acesCriterio = new AccionEspecialCriterioVO();
 
         acesCriterio.setId(id);

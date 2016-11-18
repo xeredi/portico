@@ -51,7 +51,7 @@ public final class ParametroPdf extends BasePdf {
     public ParametroPdf(final Locale alocale) {
         super(alocale);
 
-        bundle = PorticoResourceBundle.getBundle(locale);
+        bundle = PorticoResourceBundle.getBundle(getLocale());
     }
 
     /**
@@ -72,7 +72,7 @@ public final class ParametroPdf extends BasePdf {
      * @throws ApplicationException
      *             the ApplicationException
      */
-    public void imprimir(final @NonNull ParametroVO item, final @NonNull TipoParametroDetailVO entiDetail,
+    public void imprimir(@NonNull final ParametroVO item, @NonNull final TipoParametroDetailVO entiDetail,
             final Map<Long, TipoSubparametroDetailVO> entiHijasMap, final Map<Long, List<SubparametroVO>> itemHijosMap,
             final Map<String, I18nVO> i18nMap, final OutputStream stream) throws ApplicationException {
         try {
@@ -218,8 +218,8 @@ public final class ParametroPdf extends BasePdf {
      *            the item list
      * @return the data source
      */
-    private JasperReportBuilder getSubreport(final @NonNull TipoSubparametroDetailVO entiDetail,
-            final @NonNull List<SubparametroVO> itemList) {
+    private JasperReportBuilder getSubreport(@NonNull final TipoSubparametroDetailVO entiDetail,
+            @NonNull final List<SubparametroVO> itemList) {
         final String tpspLabel = bundle.getString("enti_" + entiDetail.getEnti().getId());
         final String tpprAsociadoLabel = bundle.getString("enti_" + entiDetail.getEnti().getTpprAsociado().getId());
         final String sprmFiniLabel = bundle.getString(MessageI18nKey.fini.name());

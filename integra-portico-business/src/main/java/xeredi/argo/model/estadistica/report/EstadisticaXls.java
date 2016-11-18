@@ -51,7 +51,7 @@ public final class EstadisticaXls extends BaseXls {
      * {@inheritDoc}
      */
     public void doGenerate(final HSSFWorkbook workbook) {
-        final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpesDetail.getEnti().getId()));
+        final HSSFSheet sheet = workbook.createSheet(getBundle().getString("enti_" + tpesDetail.getEnti().getId()));
 
         // Cabecera XLS
         int rownum = 0;
@@ -59,14 +59,14 @@ public final class EstadisticaXls extends BaseXls {
         final HSSFRow rowhead = sheet.createRow(rownum++);
         int i = 0;
 
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.tpes.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.pepr.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prto.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.tpes.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.pepr.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.prto.name()));
 
         for (final Long tpdtId : tpesDetail.getEntdList()) {
             final EntidadTipoDatoVO entd = tpesDetail.getEntdMap().get(tpdtId);
 
-            setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
+            setCellValue(rowhead, i++, getBundle().getString("entd_" + entd.getId()));
         }
 
         // Filas XLS
@@ -75,7 +75,7 @@ public final class EstadisticaXls extends BaseXls {
 
             int j = 0;
 
-            setCellValue(row, j++, bundle.getString("enti_" + tpesDetail.getEnti().getId()));
+            setCellValue(row, j++, getBundle().getString("enti_" + tpesDetail.getEnti().getId()));
             setCellValue(row, j++, estdVO.getPepr().getEtiqueta());
             setCellValue(row, j++, estdVO.getPrto().getEtiqueta());
 

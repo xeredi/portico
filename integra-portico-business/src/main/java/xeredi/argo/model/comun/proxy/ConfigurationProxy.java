@@ -26,6 +26,13 @@ public final class ConfigurationProxy {
     /** The configuration. */
     private static CombinedConfiguration configuration;
 
+    /**
+     * Instantiates a new configuration proxy.
+     */
+    private ConfigurationProxy() {
+        super();
+    }
+
     static {
         load();
     }
@@ -70,7 +77,7 @@ public final class ConfigurationProxy {
      *            the key
      * @return the string
      */
-    public static String getString(final @NonNull ConfigurationKey key) {
+    public static String getString(@NonNull final ConfigurationKey key) {
         return configuration.getString(key.name());
     }
 
@@ -81,7 +88,7 @@ public final class ConfigurationProxy {
      *            the key
      * @return the string array
      */
-    public static String[] getStringArray(final @NonNull ConfigurationKey key) {
+    public static String[] getStringArray(@NonNull final ConfigurationKey key) {
         return configuration.getStringArray(key.name());
     }
 
@@ -92,7 +99,7 @@ public final class ConfigurationProxy {
      *            the key
      * @return the int
      */
-    public static int getInt(final @NonNull ConfigurationKey key) {
+    public static int getInt(@NonNull final ConfigurationKey key) {
         return configuration.getInt(key.name());
     }
 
@@ -103,7 +110,7 @@ public final class ConfigurationProxy {
      *            the key
      * @return the boolean
      */
-    public static boolean getBoolean(final @NonNull ConfigurationKey key) {
+    public static boolean getBoolean(@NonNull final ConfigurationKey key) {
         return configuration.getBoolean(key.name());
     }
 

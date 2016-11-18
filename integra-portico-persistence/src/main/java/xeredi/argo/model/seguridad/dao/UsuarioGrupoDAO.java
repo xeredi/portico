@@ -16,7 +16,7 @@ public interface UsuarioGrupoDAO {
      * @param usgr
      *            the usgr
      */
-    void insert(final @NonNull UsuarioGrupoVO usgr);
+    void insert(@NonNull final UsuarioGrupoVO usgr);
 
     /**
      * Delete list.
@@ -25,5 +25,5 @@ public interface UsuarioGrupoDAO {
      *            the usgr criterio
      * @return the int
      */
-    int deleteList(final @NonNull UsuarioGrupoCriterioVO usgrCriterio);
+    int deleteList(@NonNull final UsuarioGrupoCriterioVO usgrCriterio);
 }

@@ -9,6 +9,7 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
@@ -27,13 +28,13 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
     /**
      * Instantiates a new message i18n resource bundle.
      *
-     * @param locale
+     * @param alocale
      *            the locale
      */
-    public MessageI18nResourceBundle(final Locale locale) {
+    public MessageI18nResourceBundle(@NonNull final Locale alocale) {
         super();
 
-        this.locale = locale;
+        this.locale = alocale;
     }
 
     /**

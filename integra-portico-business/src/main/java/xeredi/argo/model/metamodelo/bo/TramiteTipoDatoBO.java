@@ -23,130 +23,130 @@ import com.google.common.base.Preconditions;
  */
 public final class TramiteTipoDatoBO {
 
-	/**
-	 * Select list.
-	 *
-	 * @param criterio
-	 *            the criterio
-	 * @return the list
-	 */
-	public List<TramiteTipoDatoVO> selectList(final @NonNull TramiteTipoDatoCriterioVO criterio) {
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final TramiteTipoDatoDAO trtdDAO = session.getMapper(TramiteTipoDatoDAO.class);
+    /**
+     * Select list.
+     *
+     * @param criterio
+     *            the criterio
+     * @return the list
+     */
+    public List<TramiteTipoDatoVO> selectList(@NonNull final TramiteTipoDatoCriterioVO criterio) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final TramiteTipoDatoDAO trtdDAO = session.getMapper(TramiteTipoDatoDAO.class);
 
-			return trtdDAO.selectList(criterio);
-		}
-	}
+            return trtdDAO.selectList(criterio);
+        }
+    }
 
-	/**
-	 * Select.
-	 *
-	 * @param trmtId
-	 *            the trmt id
-	 * @param tpdtId
-	 *            the tpdt id
-	 * @param idioma
-	 *            the idioma
-	 * @return the tramite tipo dato vo
-	 * @throws InstanceNotFoundException
-	 *             the instance not found exception
-	 */
-	public TramiteTipoDatoVO select(final @NonNull Long trmtId, final @NonNull Long tpdtId, final String idioma)
-			throws InstanceNotFoundException {
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final TramiteTipoDatoDAO trtdDAO = session.getMapper(TramiteTipoDatoDAO.class);
-			final TramiteTipoDatoCriterioVO criterio = new TramiteTipoDatoCriterioVO();
+    /**
+     * Select.
+     *
+     * @param trmtId
+     *            the trmt id
+     * @param tpdtId
+     *            the tpdt id
+     * @param idioma
+     *            the idioma
+     * @return the tramite tipo dato vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public TramiteTipoDatoVO select(@NonNull final Long trmtId, @NonNull final Long tpdtId, final String idioma)
+            throws InstanceNotFoundException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final TramiteTipoDatoDAO trtdDAO = session.getMapper(TramiteTipoDatoDAO.class);
+            final TramiteTipoDatoCriterioVO criterio = new TramiteTipoDatoCriterioVO();
 
-			criterio.setTrmtId(trmtId);
-			criterio.setTpdtId(tpdtId);
-			criterio.setIdioma(idioma);
+            criterio.setTrmtId(trmtId);
+            criterio.setTpdtId(tpdtId);
+            criterio.setIdioma(idioma);
 
-			final TramiteTipoDatoVO trtd = trtdDAO.selectObject(criterio);
+            final TramiteTipoDatoVO trtd = trtdDAO.selectObject(criterio);
 
-			if (trtd == null) {
-				throw new InstanceNotFoundException(MessageI18nKey.trtd, criterio);
-			}
+            if (trtd == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.trtd, criterio);
+            }
 
-			return trtd;
-		}
-	}
+            return trtd;
+        }
+    }
 
-	/**
-	 * Insert.
-	 *
-	 * @param trtd
-	 *            the trtd
-	 * @throws DuplicateInstanceException
-	 *             the duplicate instance exception
-	 */
-	public void insert(final @NonNull TramiteTipoDatoVO trtd) throws DuplicateInstanceException {
-		Preconditions.checkNotNull(trtd.getTrmtId());
-		Preconditions.checkNotNull(trtd.getObligatorio());
-		Preconditions.checkNotNull(trtd.getEntd());
-		Preconditions.checkNotNull(trtd.getEntd().getTpdt());
-		Preconditions.checkNotNull(trtd.getEntd().getTpdt().getId());
+    /**
+     * Insert.
+     *
+     * @param trtd
+     *            the trtd
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
+     */
+    public void insert(@NonNull final TramiteTipoDatoVO trtd) throws DuplicateInstanceException {
+        Preconditions.checkNotNull(trtd.getTrmtId());
+        Preconditions.checkNotNull(trtd.getObligatorio());
+        Preconditions.checkNotNull(trtd.getEntd());
+        Preconditions.checkNotNull(trtd.getEntd().getTpdt());
+        Preconditions.checkNotNull(trtd.getEntd().getTpdt().getId());
 
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final TramiteTipoDatoDAO trtdDAO = session.getMapper(TramiteTipoDatoDAO.class);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final TramiteTipoDatoDAO trtdDAO = session.getMapper(TramiteTipoDatoDAO.class);
 
-			if (trtdDAO.exists(trtd)) {
-				throw new DuplicateInstanceException(MessageI18nKey.trtd, trtd);
-			}
+            if (trtdDAO.exists(trtd)) {
+                throw new DuplicateInstanceException(MessageI18nKey.trtd, trtd);
+            }
 
-			trtdDAO.insert(trtd);
+            trtdDAO.insert(trtd);
 
-			session.commit();
-		}
-	}
+            session.commit();
+        }
+    }
 
-	/**
-	 * Update.
-	 *
-	 * @param trtd
-	 *            the trtd
-	 * @throws InstanceNotFoundException
-	 *             the instance not found exception
-	 */
-	public void update(final @NonNull TramiteTipoDatoVO trtd) throws InstanceNotFoundException {
-		Preconditions.checkNotNull(trtd.getTrmtId());
-		Preconditions.checkNotNull(trtd.getObligatorio());
-		Preconditions.checkNotNull(trtd.getEntd());
-		Preconditions.checkNotNull(trtd.getEntd().getTpdt());
-		Preconditions.checkNotNull(trtd.getEntd().getTpdt().getId());
+    /**
+     * Update.
+     *
+     * @param trtd
+     *            the trtd
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public void update(@NonNull final TramiteTipoDatoVO trtd) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(trtd.getTrmtId());
+        Preconditions.checkNotNull(trtd.getObligatorio());
+        Preconditions.checkNotNull(trtd.getEntd());
+        Preconditions.checkNotNull(trtd.getEntd().getTpdt());
+        Preconditions.checkNotNull(trtd.getEntd().getTpdt().getId());
 
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final TramiteTipoDatoDAO trtdDAO = session.getMapper(TramiteTipoDatoDAO.class);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final TramiteTipoDatoDAO trtdDAO = session.getMapper(TramiteTipoDatoDAO.class);
 
-			if (trtdDAO.update(trtd) == 0) {
-				throw new InstanceNotFoundException(MessageI18nKey.trtd, trtd);
-			}
+            if (trtdDAO.update(trtd) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.trtd, trtd);
+            }
 
-			session.commit();
-		}
-	}
+            session.commit();
+        }
+    }
 
-	/**
-	 * Delete.
-	 *
-	 * @param trtd
-	 *            the trtd
-	 * @throws InstanceNotFoundException
-	 *             the instance not found exception
-	 */
-	public void delete(final @NonNull TramiteTipoDatoVO trtd) throws InstanceNotFoundException {
-		Preconditions.checkNotNull(trtd.getTrmtId());
-		Preconditions.checkNotNull(trtd.getEntd());
-		Preconditions.checkNotNull(trtd.getEntd().getTpdt());
-		Preconditions.checkNotNull(trtd.getEntd().getTpdt().getId());
+    /**
+     * Delete.
+     *
+     * @param trtd
+     *            the trtd
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public void delete(@NonNull final TramiteTipoDatoVO trtd) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(trtd.getTrmtId());
+        Preconditions.checkNotNull(trtd.getEntd());
+        Preconditions.checkNotNull(trtd.getEntd().getTpdt());
+        Preconditions.checkNotNull(trtd.getEntd().getTpdt().getId());
 
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final TramiteTipoDatoDAO trtdDAO = session.getMapper(TramiteTipoDatoDAO.class);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final TramiteTipoDatoDAO trtdDAO = session.getMapper(TramiteTipoDatoDAO.class);
 
-			if (trtdDAO.delete(trtd) == 0) {
-				throw new InstanceNotFoundException(MessageI18nKey.trtd, trtd);
-			}
+            if (trtdDAO.delete(trtd) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.trtd, trtd);
+            }
 
-			session.commit();
-		}
-	}
+            session.commit();
+        }
+    }
 }

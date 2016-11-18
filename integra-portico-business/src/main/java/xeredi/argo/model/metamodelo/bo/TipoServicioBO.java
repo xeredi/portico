@@ -38,7 +38,7 @@ public final class TipoServicioBO {
      *            the criterio vo
      * @return the list
      */
-    public List<LabelValueVO> selectLabelValues(final @NonNull TipoServicioCriterioVO criterioVO) {
+    public List<LabelValueVO> selectLabelValues(@NonNull final TipoServicioCriterioVO criterioVO) {
         final List<LabelValueVO> list = new ArrayList<>();
 
         for (final TipoServicioVO tpsr : selectList(criterioVO)) {
@@ -55,7 +55,7 @@ public final class TipoServicioBO {
      *            the tpsr criterio
      * @return the list
      */
-    public List<TipoServicioVO> selectList(final @NonNull TipoServicioCriterioVO tpsrCriterio) {
+    public List<TipoServicioVO> selectList(@NonNull final TipoServicioCriterioVO tpsrCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoServicioDAO tpsrDAO = session.getMapper(TipoServicioDAO.class);
 
@@ -74,7 +74,7 @@ public final class TipoServicioBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<TipoServicioVO> selectList(final @NonNull TipoServicioCriterioVO tpsrCriterio,
+    public PaginatedList<TipoServicioVO> selectList(@NonNull final TipoServicioCriterioVO tpsrCriterio,
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoServicioDAO tpsrDAO = session.getMapper(TipoServicioDAO.class);
@@ -97,7 +97,7 @@ public final class TipoServicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public TipoServicioVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+    public TipoServicioVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoServicioDAO tpsrDAO = session.getMapper(TipoServicioDAO.class);
             final TipoServicioCriterioVO entiCriterio = new TipoServicioCriterioVO();
@@ -125,7 +125,7 @@ public final class TipoServicioBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final @NonNull TipoServicioVO tpsr, final @NonNull Map<String, I18nVO> i18nMap)
+    public void insert(@NonNull final TipoServicioVO tpsr, @NonNull final Map<String, I18nVO> i18nMap)
             throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoServicioDAO tpsrDAO = session.getMapper(TipoServicioDAO.class);
@@ -156,7 +156,7 @@ public final class TipoServicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @NonNull TipoServicioVO tpsr, final @NonNull Map<String, I18nVO> i18nMap)
+    public void update(@NonNull final TipoServicioVO tpsr, @NonNull final Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpsr.getId());
 
@@ -183,7 +183,7 @@ public final class TipoServicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull TipoServicioVO tpsr) throws InstanceNotFoundException {
+    public void delete(@NonNull final TipoServicioVO tpsr) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpsr.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

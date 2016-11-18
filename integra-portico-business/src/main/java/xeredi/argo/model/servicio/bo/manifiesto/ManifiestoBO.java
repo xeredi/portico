@@ -39,7 +39,7 @@ public final class ManifiestoBO extends ServicioBO {
      * @param ausroId
      *            the ausro id
      */
-    public ManifiestoBO(final @NonNull Long ausroId) {
+    public ManifiestoBO(@NonNull final Long ausroId) {
         super(Entidad.MANIFIESTO.getId(), ausroId);
     }
 
@@ -47,7 +47,7 @@ public final class ManifiestoBO extends ServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected final void insertPostOperations(final @NonNull SqlSession session, final @NonNull ServicioVO srvc,
+    protected void insertPostOperations(@NonNull final SqlSession session, @NonNull final ServicioVO srvc,
             final List<SubservicioVO> ssrvList, final List<SubservicioSubservicioVO> ssssList) {
         Preconditions.checkNotNull(srvc.getId());
 
@@ -72,8 +72,8 @@ public final class ManifiestoBO extends ServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected final void statechangePostOperations(final @NonNull SqlSession session, final @NonNull ServicioVO srvc,
-            final @NonNull ItemTramiteVO ittr, final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
+    protected void statechangePostOperations(@NonNull final SqlSession session, @NonNull final ServicioVO srvc,
+            @NonNull final ItemTramiteVO ittr, @NonNull final TramiteDetailVO trmtDetail) throws ModelException {
         Preconditions.checkNotNull(srvc.getId());
         Preconditions.checkNotNull(trmtDetail.getTrmt());
         Preconditions.checkNotNull(trmtDetail.getTrmt().getEstadoDest());
@@ -116,7 +116,7 @@ public final class ManifiestoBO extends ServicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final ResumenTotalesVO selectResumen(final @NonNull Long maniId) throws InstanceNotFoundException {
+    public ResumenTotalesVO selectResumen(@NonNull final Long maniId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ManifiestoResumenDAO resumenDAO = session.getMapper(ManifiestoResumenDAO.class);
             final ResumenTotalesCriterioVO totalCriterioVO = new ResumenTotalesCriterioVO();

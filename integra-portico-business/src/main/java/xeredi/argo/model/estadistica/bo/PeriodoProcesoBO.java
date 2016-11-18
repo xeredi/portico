@@ -62,7 +62,7 @@ import xeredi.util.pagination.PaginatedList;
 /**
  * The Class PeriodoProcesoBO.
  */
-public class PeriodoProcesoBO {
+public final class PeriodoProcesoBO {
 
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(PeriodoProcesoBO.class);
@@ -74,7 +74,7 @@ public class PeriodoProcesoBO {
      *            the pepr vo
      * @return true, if successful
      */
-    public final boolean exists(final PeriodoProcesoVO peprVO) {
+    public boolean exists(final PeriodoProcesoVO peprVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
 
@@ -93,8 +93,7 @@ public class PeriodoProcesoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final PeriodoProcesoVO select(final @NonNull Long peprId, final String idioma)
-            throws InstanceNotFoundException {
+    public PeriodoProcesoVO select(@NonNull final Long peprId, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
             final PeriodoProcesoCriterioVO peprCriterio = new PeriodoProcesoCriterioVO();
@@ -119,7 +118,7 @@ public class PeriodoProcesoBO {
      *            the pepr criterio vo
      * @return the list
      */
-    public final List<PeriodoProcesoVO> selectList(final PeriodoProcesoCriterioVO peprCriterioVO) {
+    public List<PeriodoProcesoVO> selectList(final PeriodoProcesoCriterioVO peprCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
 
@@ -138,7 +137,7 @@ public class PeriodoProcesoBO {
      *            the limit
      * @return the paginated list
      */
-    public final PaginatedList<PeriodoProcesoVO> selectList(final @NonNull PeriodoProcesoCriterioVO peprCriterioVO,
+    public PaginatedList<PeriodoProcesoVO> selectList(@NonNull final PeriodoProcesoCriterioVO peprCriterioVO,
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
@@ -155,7 +154,7 @@ public class PeriodoProcesoBO {
      * @param pepr
      *            the pepr
      */
-    public final void delete(final @NonNull PeriodoProcesoVO pepr) {
+    public void delete(@NonNull final PeriodoProcesoVO pepr) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             delete(session, pepr);
 
@@ -171,7 +170,7 @@ public class PeriodoProcesoBO {
      * @param removeIfExists
      *            the remove if exists
      */
-    public final void generarCuadroMensual(final @NonNull Long peprId, final boolean removeIfExists) {
+    public void generarCuadroMensual(@NonNull final Long peprId, final boolean removeIfExists) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             generarCuadroMensual(session, peprId, removeIfExists);
 
@@ -187,7 +186,7 @@ public class PeriodoProcesoBO {
      * @param peprVO
      *            the pepr vo
      */
-    private final void delete(final @NonNull SqlSession session, final @NonNull PeriodoProcesoVO peprVO) {
+    private void delete(@NonNull final SqlSession session, @NonNull final PeriodoProcesoVO peprVO) {
         Preconditions.checkNotNull(peprVO.getAnio());
         Preconditions.checkNotNull(peprVO.getMes());
         Preconditions.checkNotNull(peprVO.getSprt());
@@ -256,8 +255,8 @@ public class PeriodoProcesoBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public final void cargarArchivo(final @NonNull PeriodoProcesoVO pepr, final @NonNull Map<String, PuertoVO> prtoMap,
-            final @NonNull List<EstadisticaVO> estdList, final boolean removeIfExists)
+    public void cargarArchivo(@NonNull final PeriodoProcesoVO pepr, @NonNull final Map<String, PuertoVO> prtoMap,
+            @NonNull final List<EstadisticaVO> estdList, final boolean removeIfExists)
             throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
@@ -338,7 +337,7 @@ public class PeriodoProcesoBO {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public final void agregarServicios(final @NonNull PeriodoProcesoVO pepr, final boolean removeIfExists)
+    public void agregarServicios(@NonNull final PeriodoProcesoVO pepr, final boolean removeIfExists)
             throws DuplicateInstanceException, IOException {
         Preconditions.checkNotNull(pepr.getSprt());
         Preconditions.checkNotNull(pepr.getSprt().getId());
@@ -556,8 +555,8 @@ public class PeriodoProcesoBO {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private byte[] generarArchivo(final @NonNull PeriodoProcesoVO pepr,
-            final @NonNull Map<Entidad, List<EstadisticaVO>> estdMap) throws IOException {
+    private byte[] generarArchivo(@NonNull final PeriodoProcesoVO pepr,
+            @NonNull final Map<Entidad, List<EstadisticaVO>> estdMap) throws IOException {
         final OppeFileExport export = new OppeFileExport();
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -609,8 +608,8 @@ public class PeriodoProcesoBO {
      *            the esag list
      * @return the list
      */
-    private final List<EstadisticaVO> obtenerEstadisticas(final @NonNull PeriodoProcesoVO pepr,
-            final @NonNull Long tpesId, final @NonNull List<EstadisticaAgregadoVO> esagList) {
+    private List<EstadisticaVO> obtenerEstadisticas(@NonNull final PeriodoProcesoVO pepr, @NonNull final Long tpesId,
+            @NonNull final List<EstadisticaAgregadoVO> esagList) {
 
         final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy.select(tpesId);
         final List<EstadisticaVO> estdList = new ArrayList<>();
@@ -724,7 +723,7 @@ public class PeriodoProcesoBO {
      * @param sobreescribir
      *            the sobreescribir
      */
-    private final void generarCuadroMensual(final @NonNull SqlSession session, final @NonNull Long peprId,
+    private void generarCuadroMensual(@NonNull final SqlSession session, @NonNull final Long peprId,
             final boolean sobreescribir) {
         final CuadroMesDAO cdmsDAO = session.getMapper(CuadroMesDAO.class);
 

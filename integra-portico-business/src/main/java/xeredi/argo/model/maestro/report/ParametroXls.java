@@ -56,7 +56,7 @@ public final class ParametroXls extends BaseXls {
      * {@inheritDoc}
      */
     public void doGenerate(final HSSFWorkbook workbook) {
-        final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + entiDetail.getEnti().getId()));
+        final HSSFSheet sheet = workbook.createSheet(getBundle().getString("enti_" + entiDetail.getEnti().getId()));
 
         // Cabecera XLS
         int rownum = 0;
@@ -65,28 +65,28 @@ public final class ParametroXls extends BaseXls {
         int i = 0;
 
         if (entiDetail.getEnti().getPuerto()) {
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prto.name()));
+            setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.prto.name()));
         }
 
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prmt_parametro.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.prmt_parametro.name()));
 
         if (entiDetail.getEnti().isI18n()) {
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.i18n_text.name()));
+            setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.i18n_text.name()));
         }
 
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.fini.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ffin.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.fini.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.ffin.name()));
 
         if (entiDetail.getEnti().getGis()) {
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prmt_lat.name()));
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prmt_lon.name()));
+            setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.prmt_lat.name()));
+            setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.prmt_lon.name()));
         }
 
         if (entiDetail.getEntdList() != null) {
             for (final Long tpdtId : entiDetail.getEntdList()) {
                 final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
 
-                setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
+                setCellValue(rowhead, i++, getBundle().getString("entd_" + entd.getId()));
             }
         }
 

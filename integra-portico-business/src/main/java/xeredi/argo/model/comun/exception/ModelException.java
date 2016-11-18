@@ -33,7 +33,7 @@ public abstract class ModelException extends ApplicationException {
      * @param aobjId
      *            the aobj id
      */
-    public ModelException(final @NonNull String message, final @NonNull MessageI18nKey aclassName,
+    public ModelException(@NonNull final String message, @NonNull final MessageI18nKey aclassName,
             final Object... aobjId) {
         super(message + " de la clase '" + aclassName + "' con identificador: " + aobjId[0]);
 

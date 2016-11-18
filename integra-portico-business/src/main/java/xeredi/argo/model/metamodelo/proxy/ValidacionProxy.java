@@ -16,6 +16,13 @@ import xeredi.argo.model.metamodelo.vo.ValidacionVO;
 public final class ValidacionProxy {
 
     /**
+     * Instantiates a new validacion proxy.
+     */
+    private ValidacionProxy() {
+        super();
+    }
+
+    /**
      * Generate.
      *
      * @param tipoElemento
@@ -24,7 +31,7 @@ public final class ValidacionProxy {
      *            the validacion string
      * @return the validacion VO
      */
-    public static ValidacionVO generate(final @NonNull TipoElemento tipoElemento, final String validacionString) {
+    public static ValidacionVO generate(@NonNull final TipoElemento tipoElemento, final String validacionString) {
         if (validacionString == null) {
             return null;
         }

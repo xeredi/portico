@@ -29,7 +29,7 @@ public final class EntidadBO {
      *            the idioma
      * @return the entidad vo
      */
-    public EntidadVO select(final @NonNull Long entiId, final String idioma) {
+    public EntidadVO select(@NonNull final Long entiId, final String idioma) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
             final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
@@ -48,7 +48,7 @@ public final class EntidadBO {
      *            the enti criterio vo
      * @return the list
      */
-    public List<EntidadVO> selectList(final @NonNull EntidadCriterioVO entiCriterio) {
+    public List<EntidadVO> selectList(@NonNull final EntidadCriterioVO entiCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
@@ -63,7 +63,7 @@ public final class EntidadBO {
      *            the enti criterio vo
      * @return the list
      */
-    public List<LabelValueVO> selectLabelValues(final @NonNull EntidadCriterioVO entiCriterio) {
+    public List<LabelValueVO> selectLabelValues(@NonNull final EntidadCriterioVO entiCriterio) {
         final List<LabelValueVO> list = new ArrayList<>();
 
         for (final EntidadVO enti : selectList(entiCriterio)) {

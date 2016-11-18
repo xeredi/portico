@@ -38,7 +38,7 @@ public final class SuperpuertoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public SuperpuertoVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+    public SuperpuertoVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
         final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
 
         sprtCriterio.setId(id);
@@ -56,7 +56,7 @@ public final class SuperpuertoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public SuperpuertoVO selectObject(final @NonNull SuperpuertoCriterioVO sprtCriterio)
+    public SuperpuertoVO selectObject(@NonNull final SuperpuertoCriterioVO sprtCriterio)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SuperpuertoDAO sprtDAO = session.getMapper(SuperpuertoDAO.class);
@@ -77,7 +77,7 @@ public final class SuperpuertoBO {
      *            the criterio
      * @return the list
      */
-    public List<SuperpuertoVO> selectList(final @NonNull SuperpuertoCriterioVO criterio) {
+    public List<SuperpuertoVO> selectList(@NonNull final SuperpuertoCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SuperpuertoDAO sprtDAO = session.getMapper(SuperpuertoDAO.class);
 
@@ -96,7 +96,7 @@ public final class SuperpuertoBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<SuperpuertoVO> selectList(final @NonNull SuperpuertoCriterioVO criterio, final int offset,
+    public PaginatedList<SuperpuertoVO> selectList(@NonNull final SuperpuertoCriterioVO criterio, final int offset,
             final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SuperpuertoDAO sprtDAO = session.getMapper(SuperpuertoDAO.class);
@@ -121,7 +121,7 @@ public final class SuperpuertoBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final @NonNull SuperpuertoVO sprt, final @NonNull Map<String, I18nVO> i18nMap)
+    public void insert(@NonNull final SuperpuertoVO sprt, @NonNull final Map<String, I18nVO> i18nMap)
             throws DuplicateInstanceException {
         Preconditions.checkNotNull(sprt.getCodigo());
 
@@ -150,7 +150,7 @@ public final class SuperpuertoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @NonNull SuperpuertoVO sprt, final @NonNull Map<String, I18nVO> i18nMap)
+    public void update(@NonNull final SuperpuertoVO sprt, @NonNull final Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(sprt.getId());
         Preconditions.checkNotNull(sprt.getCodigo());
@@ -176,7 +176,7 @@ public final class SuperpuertoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull SuperpuertoVO sprt) throws InstanceNotFoundException {
+    public void delete(@NonNull final SuperpuertoVO sprt) throws InstanceNotFoundException {
         Preconditions.checkNotNull(sprt.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

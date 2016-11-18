@@ -1,7 +1,6 @@
 package xeredi.argo.model.servicio.bo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;

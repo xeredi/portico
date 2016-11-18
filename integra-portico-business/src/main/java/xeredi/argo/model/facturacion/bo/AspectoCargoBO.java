@@ -32,7 +32,7 @@ public final class AspectoCargoBO {
      *            the criterio vo
      * @return the list
      */
-    public List<AspectoCargoVO> selectList(final @NonNull AspectoCargoCriterioVO criterioVO) {
+    public List<AspectoCargoVO> selectList(@NonNull final AspectoCargoCriterioVO criterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoCargoDAO ascrDAO = session.getMapper(AspectoCargoDAO.class);
 
@@ -53,7 +53,7 @@ public final class AspectoCargoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public AspectoCargoVO select(final @NonNull Long id, final @NonNull Date fref, final String idioma)
+    public AspectoCargoVO select(@NonNull final Long id, @NonNull final Date fref, final String idioma)
             throws InstanceNotFoundException {
         final AspectoCargoCriterioVO ascrCriterio = new AspectoCargoCriterioVO();
 
@@ -73,7 +73,7 @@ public final class AspectoCargoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public AspectoCargoVO selectObject(final @NonNull AspectoCargoCriterioVO ascrCriterio)
+    public AspectoCargoVO selectObject(@NonNull final AspectoCargoCriterioVO ascrCriterio)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoCargoDAO ascrDAO = session.getMapper(AspectoCargoDAO.class);
@@ -95,7 +95,7 @@ public final class AspectoCargoBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void insert(final @NonNull AspectoCargoVO ascr) throws OverlapException {
+    public void insert(@NonNull final AspectoCargoVO ascr) throws OverlapException {
         Preconditions.checkNotNull(ascr.getVersion());
         Preconditions.checkNotNull(ascr.getVersion().getFini());
         Preconditions.checkNotNull(ascr.getAspcId());
@@ -138,7 +138,7 @@ public final class AspectoCargoBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void update(final @NonNull AspectoCargoVO ascr) throws InstanceNotFoundException, OverlapException {
+    public void update(@NonNull final AspectoCargoVO ascr) throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(ascr.getId());
         Preconditions.checkNotNull(ascr.getVersion());
         Preconditions.checkNotNull(ascr.getVersion().getId());
@@ -170,7 +170,7 @@ public final class AspectoCargoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull AspectoCargoVO ascr) throws InstanceNotFoundException {
+    public void delete(@NonNull final AspectoCargoVO ascr) throws InstanceNotFoundException {
         Preconditions.checkNotNull(ascr.getVersion());
         Preconditions.checkNotNull(ascr.getVersion().getId());
 

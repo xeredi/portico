@@ -36,7 +36,7 @@ public final class AccionBaseBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final @NonNull AccionBaseVO acbs) throws DuplicateInstanceException {
+    public void insert(@NonNull final AccionBaseVO acbs) throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
             final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
@@ -61,7 +61,7 @@ public final class AccionBaseBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @NonNull AccionBaseVO acbs) throws InstanceNotFoundException {
+    public void update(@NonNull final AccionBaseVO acbs) throws InstanceNotFoundException {
         Preconditions.checkNotNull(acbs.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -83,7 +83,7 @@ public final class AccionBaseBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull AccionBaseVO acbs) throws InstanceNotFoundException {
+    public void delete(@NonNull final AccionBaseVO acbs) throws InstanceNotFoundException {
         Preconditions.checkNotNull(acbs.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -117,7 +117,7 @@ public final class AccionBaseBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<AccionBaseVO> selectList(final @NonNull AccionBaseCriterioVO acbsCriterio, final int offset,
+    public PaginatedList<AccionBaseVO> selectList(@NonNull final AccionBaseCriterioVO acbsCriterio, final int offset,
             final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
@@ -136,7 +136,7 @@ public final class AccionBaseBO {
      *            the acbs criterio
      * @return the list
      */
-    public List<AccionBaseVO> selectList(final @NonNull AccionBaseCriterioVO acbsCriterio) {
+    public List<AccionBaseVO> selectList(@NonNull final AccionBaseCriterioVO acbsCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
 
@@ -153,7 +153,7 @@ public final class AccionBaseBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public AccionBaseVO selectObject(final @NonNull AccionBaseCriterioVO acbsCriterio)
+    public AccionBaseVO selectObject(@NonNull final AccionBaseCriterioVO acbsCriterio)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);

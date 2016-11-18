@@ -64,7 +64,7 @@ public final class IgUtilBO {
      *            the nombre
      * @return the long
      */
-    private static synchronized Long nextVal(final @NonNull String nombre) {
+    private static synchronized Long nextVal(@NonNull final String nombre) {
         IgVO vo = MAP.get(nombre);
 
         if (vo == null) {

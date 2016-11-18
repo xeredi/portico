@@ -32,7 +32,7 @@ public final class SetUtil {
      *            the size
      * @return the list
      */
-    public static List<Set<Long>> divide(final @NonNull Collection<Long> set, final int size) {
+    public static List<Set<Long>> divide(@NonNull final Collection<Long> set, final int size) {
         Preconditions.checkArgument(size > 0);
 
         final List<Set<Long>> dividedSet = new ArrayList<>();

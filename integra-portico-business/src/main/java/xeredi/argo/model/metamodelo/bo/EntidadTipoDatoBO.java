@@ -122,7 +122,7 @@ public final class EntidadTipoDatoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public EntidadTipoDatoVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+    public EntidadTipoDatoVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadTipoDatoDAO entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
             final EntidadTipoDatoCriterioVO entdCriterioVO = new EntidadTipoDatoCriterioVO();

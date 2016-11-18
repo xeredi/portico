@@ -47,7 +47,7 @@ public final class FacturaAnulacionBO {
      * @throws ApplicationException
      *             the application exception
      */
-    public void anular(final @NonNull FacturaAnulacionVO fcan) throws ApplicationException {
+    public void anular(@NonNull final FacturaAnulacionVO fcan) throws ApplicationException {
         Preconditions.checkNotNull(fcan.getFctrId());
         Preconditions.checkNotNull(fcan.getFecha());
         Preconditions.checkNotNull(fcan.getFcsrId());

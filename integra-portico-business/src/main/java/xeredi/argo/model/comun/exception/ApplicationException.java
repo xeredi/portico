@@ -2,8 +2,6 @@ package xeredi.argo.model.comun.exception;
 
 import java.util.Locale;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ApplicationException.

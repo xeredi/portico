@@ -26,7 +26,7 @@ public final class ConfigurationBO {
      *
      * @return the list
      */
-    public final List<ConfigurationVO> selectList() {
+    public List<ConfigurationVO> selectList() {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
             final ConfigurationCriterioVO confCriterio = new ConfigurationCriterioVO();
@@ -44,7 +44,7 @@ public final class ConfigurationBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final ConfigurationVO select(final @NonNull ConfigurationKey key) throws InstanceNotFoundException {
+    public ConfigurationVO select(@NonNull final ConfigurationKey key) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
             final ConfigurationCriterioVO confCriterio = new ConfigurationCriterioVO();
@@ -69,7 +69,7 @@ public final class ConfigurationBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void update(final @NonNull ConfigurationVO vo) throws InstanceNotFoundException {
+    public void update(@NonNull final ConfigurationVO vo) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
 

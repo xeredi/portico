@@ -213,9 +213,7 @@ public enum ManifiestoKeyword {
     EQD_NumeroVacios_2(11, 12, true),
 
     /** The SE l_ precinto. */
-    SEL_Precinto(3, 10, true),
-
-    ;
+    SEL_Precinto(3, 10, true);
 
     /** The offset. */
     private final int offset;
@@ -236,7 +234,7 @@ public enum ManifiestoKeyword {
      * @param arequired
      *            the arequired
      */
-    private ManifiestoKeyword(final int aoffset, final int alength, final boolean arequired) {
+    ManifiestoKeyword(final int aoffset, final int alength, final boolean arequired) {
         offset = aoffset;
         length = alength;
         required = arequired;

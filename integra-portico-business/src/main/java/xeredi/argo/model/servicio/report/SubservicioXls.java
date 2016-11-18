@@ -8,6 +8,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.report.BaseXls;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.item.vo.ItemDatoVO;
@@ -30,29 +31,29 @@ public final class SubservicioXls extends BaseXls {
     /**
      * Instantiates a new subservicio xls.
      *
-     * @param locale
+     * @param alocale
      *            the locale
-     * @param stream
+     * @param astream
      *            the stream
-     * @param ssrvList
+     * @param assrvList
      *            the ssrv list
-     * @param tpssDetail
+     * @param atpssDetail
      *            the tpss detail
      */
-    public SubservicioXls(final Locale locale, final OutputStream stream, final List<SubservicioVO> ssrvList,
-            final TipoSubservicioDetailVO tpssDetail) {
-        super(locale, stream);
+    public SubservicioXls(@NonNull final Locale alocale, @NonNull final OutputStream astream,
+            @NonNull final List<SubservicioVO> assrvList, @NonNull final TipoSubservicioDetailVO atpssDetail) {
+        super(alocale, astream);
 
-        this.ssrvList = ssrvList;
-        this.tpssDetail = tpssDetail;
+        this.ssrvList = assrvList;
+        this.tpssDetail = atpssDetail;
 
     }
 
     /**
      * {@inheritDoc}
      */
-    public void doGenerate(final HSSFWorkbook workbook) {
-        final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpssDetail.getEnti().getId()));
+    public void doGenerate(@NonNull final HSSFWorkbook workbook) {
+        final HSSFSheet sheet = workbook.createSheet(getBundle().getString("enti_" + tpssDetail.getEnti().getId()));
 
         // Cabecera XLS
         int rownum = 0;
@@ -60,23 +61,23 @@ public final class SubservicioXls extends BaseXls {
         final HSSFRow rowhead = sheet.createRow(rownum++);
         int i = 0;
 
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.tpss.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_numero.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.tpss.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.srvc.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.ssrv_numero.name()));
 
         if (tpssDetail.getEnti().getTpdtEstado() != null) {
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_estado.name()));
+            setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.ssrv_estado.name()));
         }
 
         if (tpssDetail.getEnti().isTemporal()) {
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.fini.name()));
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ffin.name()));
+            setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.fini.name()));
+            setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.ffin.name()));
         }
 
         for (final Long tpdtId : tpssDetail.getEntdList()) {
             final EntidadTipoDatoVO entd = tpssDetail.getEntdMap().get(tpdtId);
 
-            setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
+            setCellValue(rowhead, i++, getBundle().getString("entd_" + entd.getId()));
         }
 
         // Filas XLS
@@ -85,7 +86,7 @@ public final class SubservicioXls extends BaseXls {
 
             int j = 0;
 
-            setCellValue(row, j++, bundle.getString("enti_" + tpssDetail.getEnti().getId()));
+            setCellValue(row, j++, getBundle().getString("enti_" + tpssDetail.getEnti().getId()));
             setCellValue(row, j++, ssrvVO.getSrvc().getEtiqueta());
             setCellValue(row, j++, ssrvVO.getNumero());
 

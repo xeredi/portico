@@ -8,6 +8,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.report.BaseXls;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.item.vo.ItemDatoVO;
@@ -30,28 +31,28 @@ public final class ServicioXls extends BaseXls {
     /**
      * Instantiates a new servicio xls.
      *
-     * @param locale
+     * @param alocale
      *            the locale
-     * @param stream
+     * @param astream
      *            the stream
-     * @param srvcList
+     * @param asrvcList
      *            the srvc list
-     * @param tpsrDetail
+     * @param atpsrDetail
      *            the tpsr detail
      */
-    public ServicioXls(final Locale locale, final OutputStream stream, final List<ServicioVO> srvcList,
-            final TipoServicioDetailVO tpsrDetail) {
-        super(locale, stream);
+    public ServicioXls(@NonNull final Locale alocale, @NonNull final OutputStream astream,
+            @NonNull final List<ServicioVO> asrvcList, @NonNull final TipoServicioDetailVO atpsrDetail) {
+        super(alocale, astream);
 
-        this.srvcList = srvcList;
-        this.tpsrDetail = tpsrDetail;
+        this.srvcList = asrvcList;
+        this.tpsrDetail = atpsrDetail;
     }
 
     /**
      * {@inheritDoc}
      */
-    public void doGenerate(final HSSFWorkbook workbook) {
-        final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpsrDetail.getEnti().getId()));
+    public void doGenerate(@NonNull final HSSFWorkbook workbook) {
+        final HSSFSheet sheet = workbook.createSheet(getBundle().getString("enti_" + tpsrDetail.getEnti().getId()));
 
         // Cabecera XLS
         int rownum = 0;
@@ -59,26 +60,26 @@ public final class ServicioXls extends BaseXls {
         final HSSFRow rowhead = sheet.createRow(rownum++);
         int i = 0;
 
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.tpsr.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prto.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_anno.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_numero.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_falta.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.fref.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.tpsr.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.prto.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.srvc_anno.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.srvc_numero.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.srvc_falta.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.fref.name()));
 
         if (tpsrDetail.getEnti().getTpdtEstado() != null) {
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.srvc_estado.name()));
+            setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.srvc_estado.name()));
         }
 
         if (tpsrDetail.getEnti().isTemporal()) {
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.fini.name()));
-            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ffin.name()));
+            setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.fini.name()));
+            setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.ffin.name()));
         }
 
         for (final Long tpdtId : tpsrDetail.getEntdList()) {
             final EntidadTipoDatoVO entd = tpsrDetail.getEntdMap().get(tpdtId);
 
-            setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
+            setCellValue(rowhead, i++, getBundle().getString("entd_" + entd.getId()));
         }
 
         // Filas XLS
@@ -87,7 +88,7 @@ public final class ServicioXls extends BaseXls {
 
             int j = 0;
 
-            setCellValue(row, j++, bundle.getString("enti_" + tpsrDetail.getEnti().getId()));
+            setCellValue(row, j++, getBundle().getString("enti_" + tpsrDetail.getEnti().getId()));
             setCellValue(row, j++, srvcVO.getPrto().getCodigo());
             setCellValue(row, j++, srvcVO.getAnno());
             setCellValue(row, j++, srvcVO.getNumero());

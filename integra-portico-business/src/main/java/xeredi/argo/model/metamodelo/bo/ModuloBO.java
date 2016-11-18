@@ -41,7 +41,7 @@ public final class ModuloBO {
      *            the usro id
      * @return true, if is user allowed
      */
-    public boolean isUserAllowed(final @NonNull Long mdloId, final @NonNull Long usroId) {
+    public boolean isUserAllowed(@NonNull final Long mdloId, @NonNull final Long usroId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ModuloDAO mdloDAO = session.getMapper(ModuloDAO.class);
             final ModuloCriterioVO mdloCriterio = new ModuloCriterioVO();
@@ -63,7 +63,7 @@ public final class ModuloBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final @NonNull ModuloVO mdlo, final @NonNull Map<String, I18nVO> i18nMap)
+    public void insert(@NonNull final ModuloVO mdlo, @NonNull final Map<String, I18nVO> i18nMap)
             throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ModuloDAO mdloDAO = session.getMapper(ModuloDAO.class);
@@ -93,7 +93,7 @@ public final class ModuloBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @NonNull ModuloVO mdlo, final @NonNull Map<String, I18nVO> i18nMap)
+    public void update(@NonNull final ModuloVO mdlo, @NonNull final Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(mdlo.getId());
 
@@ -118,7 +118,7 @@ public final class ModuloBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull ModuloVO mdlo) throws InstanceNotFoundException {
+    public void delete(@NonNull final ModuloVO mdlo) throws InstanceNotFoundException {
         Preconditions.checkNotNull(mdlo.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -154,7 +154,7 @@ public final class ModuloBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<ModuloVO> selectList(final @NonNull ModuloCriterioVO mdloCriterio, final int offset,
+    public PaginatedList<ModuloVO> selectList(@NonNull final ModuloCriterioVO mdloCriterio, final int offset,
             final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ModuloDAO mdloDAO = session.getMapper(ModuloDAO.class);
@@ -173,7 +173,7 @@ public final class ModuloBO {
      *            the mdlo criterio
      * @return the list
      */
-    public List<ModuloVO> selectList(final @NonNull ModuloCriterioVO mdloCriterio) {
+    public List<ModuloVO> selectList(@NonNull final ModuloCriterioVO mdloCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ModuloDAO mdloDAO = session.getMapper(ModuloDAO.class);
 
@@ -190,7 +190,7 @@ public final class ModuloBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ModuloVO selectObject(final @NonNull ModuloCriterioVO mdloCriterio) throws InstanceNotFoundException {
+    public ModuloVO selectObject(@NonNull final ModuloCriterioVO mdloCriterio) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ModuloDAO mdloDAO = session.getMapper(ModuloDAO.class);
             final ModuloVO mdlo = mdloDAO.selectObject(mdloCriterio);
@@ -214,7 +214,7 @@ public final class ModuloBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ModuloVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+    public ModuloVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
         final ModuloCriterioVO mdloCriterio = new ModuloCriterioVO();
 
         mdloCriterio.setId(id);

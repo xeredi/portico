@@ -9,7 +9,5 @@ public enum ChartType {
     /** The Pie chart. */
     PieChart,
     /** The Gauge. */
-    Gauge,
-
-    ;
+    Gauge;
 }

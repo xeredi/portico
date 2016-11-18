@@ -41,7 +41,7 @@ public final class GrupoBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final @NonNull GrupoVO grpo) throws DuplicateInstanceException {
+    public void insert(@NonNull final GrupoVO grpo) throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final GrupoDAO grpoDAO = session.getMapper(GrupoDAO.class);
             final FuncionalidadGrupoDAO fngrDAO = session.getMapper(FuncionalidadGrupoDAO.class);
@@ -77,7 +77,7 @@ public final class GrupoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @NonNull GrupoVO grpo) throws InstanceNotFoundException {
+    public void update(@NonNull final GrupoVO grpo) throws InstanceNotFoundException {
         Preconditions.checkNotNull(grpo.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -119,7 +119,7 @@ public final class GrupoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull GrupoVO grpo) throws InstanceNotFoundException {
+    public void delete(@NonNull final GrupoVO grpo) throws InstanceNotFoundException {
         Preconditions.checkNotNull(grpo.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -195,7 +195,7 @@ public final class GrupoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public GrupoVO select(final @NonNull Long id) throws InstanceNotFoundException {
+    public GrupoVO select(@NonNull final Long id) throws InstanceNotFoundException {
         final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
 
         grpoCriterio.setId(id);

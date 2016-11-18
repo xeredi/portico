@@ -42,10 +42,10 @@ public abstract class BasePdf {
     private static final DecimalFormat CURRENCY_FORMAT = new DecimalFormat("###,###,##0.00");
 
     /** The locale. */
-    protected final Locale locale;
+    private final Locale locale;
 
     /** The bundle. */
-    protected final ResourceBundle bundle;
+    private final ResourceBundle bundle;
 
     /**
      * Instantiates a new pdf util.
@@ -53,11 +53,29 @@ public abstract class BasePdf {
      * @param alocale
      *            the alocale
      */
-    public BasePdf(final Locale alocale) {
+    public BasePdf(@NonNull final Locale alocale) {
         super();
 
         locale = alocale;
         bundle = PorticoResourceBundle.getBundle(locale);
+    }
+
+    /**
+     * Gets the locale.
+     *
+     * @return the locale
+     */
+    protected final Locale getLocale() {
+        return locale;
+    }
+
+    /**
+     * Gets the bundle.
+     *
+     * @return the bundle
+     */
+    protected final ResourceBundle getBundle() {
+        return bundle;
     }
 
     /**
@@ -107,11 +125,13 @@ public abstract class BasePdf {
     /**
      * Gets the form.
      *
-     * @param title the title
-     * @param listCells            the list cells
+     * @param title
+     *            the title
+     * @param listCells
+     *            the list cells
      * @return the form
      */
-    public final ComponentBuilder<?, ?> getForm(final String title, final @NonNull List<List<PdfCell>> listCells) {
+    public final ComponentBuilder<?, ?> getForm(final String title, @NonNull final List<List<PdfCell>> listCells) {
         final HorizontalListBuilder list = DynamicReports.cmp.horizontalList();
 
         for (final List<PdfCell> row : listCells) {
@@ -128,17 +148,18 @@ public abstract class BasePdf {
             list.newRow();
         }
 
-        return title == null ? DynamicReports.cmp.verticalList(list) : DynamicReports.cmp.verticalList(
-                DynamicReports.cmp.text(title), list);
+        return title == null ? DynamicReports.cmp.verticalList(list)
+                : DynamicReports.cmp.verticalList(DynamicReports.cmp.text(title), list);
     }
 
     /**
      * Gets the form.
      *
-     * @param listCells the list cells
+     * @param listCells
+     *            the list cells
      * @return the form
      */
-    public final ComponentBuilder<?, ?> getForm(final @NonNull List<List<PdfCell>> listCells) {
+    public final ComponentBuilder<?, ?> getForm(@NonNull final List<List<PdfCell>> listCells) {
         return getForm(null, listCells);
     }
 

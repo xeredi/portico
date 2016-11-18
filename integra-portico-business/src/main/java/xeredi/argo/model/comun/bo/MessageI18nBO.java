@@ -81,7 +81,7 @@ public final class MessageI18nBO {
      *            the key
      * @return the map
      */
-    public Map<String, MessageI18nVO> selectKeyMap(final @NonNull MessageI18nKey key) {
+    public Map<String, MessageI18nVO> selectKeyMap(@NonNull final MessageI18nKey key) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
             final Map<String, MessageI18nVO> map = new HashMap<>();
@@ -105,7 +105,7 @@ public final class MessageI18nBO {
      * @param map
      *            the map
      */
-    public void updateKeyMap(final @NonNull MessageI18nKey key, final @NonNull Map<String, MessageI18nVO> map) {
+    public void updateKeyMap(@NonNull final MessageI18nKey key, @NonNull final Map<String, MessageI18nVO> map) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
             final MessageI18nCriterioVO criterio = new MessageI18nCriterioVO();

@@ -11,7 +11,5 @@ public enum ChartColumnType {
     /** The number. */
     number,
     /** The string. */
-    string,
-
-    ;
+    string;
 }

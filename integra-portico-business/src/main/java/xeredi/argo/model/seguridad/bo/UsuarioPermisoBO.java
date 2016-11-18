@@ -23,7 +23,7 @@ public final class UsuarioPermisoBO {
      * @param ausroId
      *            the ausro id
      */
-    public UsuarioPermisoBO(final @NonNull Long ausroId) {
+    public UsuarioPermisoBO(@NonNull final Long ausroId) {
         super();
 
         this.usroId = ausroId;
@@ -36,7 +36,7 @@ public final class UsuarioPermisoBO {
      *            the fncd id
      * @return true, if successful
      */
-    public boolean hasFncd(final @NonNull Long fncdId) {
+    public boolean hasFncd(@NonNull final Long fncdId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final UsuarioPermisoDAO usprDAO = session.getMapper(UsuarioPermisoDAO.class);
 
@@ -58,7 +58,7 @@ public final class UsuarioPermisoBO {
      *            the codigo
      * @return true, if successful
      */
-    public boolean hasAcbs(final @NonNull String prefix, final @NonNull String codigo) {
+    public boolean hasAcbs(@NonNull final String prefix, @NonNull final String codigo) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final UsuarioPermisoDAO usprDAO = session.getMapper(UsuarioPermisoDAO.class);
 
@@ -83,7 +83,7 @@ public final class UsuarioPermisoBO {
      *            the enti id
      * @return true, if successful
      */
-    public boolean hasAcen(final @NonNull String prefix, final @NonNull String codigo, final @NonNull Long entiId) {
+    public boolean hasAcen(@NonNull final String prefix, @NonNull final String codigo, @NonNull final Long entiId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final UsuarioPermisoDAO usprDAO = session.getMapper(UsuarioPermisoDAO.class);
 

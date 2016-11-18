@@ -173,8 +173,8 @@ public final class PescaFileImport {
             ssrv.addItdt(TipoDato.DECIMAL_01.getId(), getTokenDouble(PescaKeyword.PAR_Cajas, line, i));
             ssrv.addItdt(TipoDato.DECIMAL_02.getId(), getTokenDouble(PescaKeyword.PAR_Peso, line, i));
             ssrv.addItdt(TipoDato.DECIMAL_04.getId(), getTokenDouble(PescaKeyword.PAR_Importe, line, i));
-            ssrv.addItdt(TipoDato.DECIMAL_03.getId(), getTokenDouble(PescaKeyword.PAR_Importe, line, i)
-                    / getTokenDouble(PescaKeyword.PAR_Peso, line, i));
+            ssrv.addItdt(TipoDato.DECIMAL_03.getId(),
+                    getTokenDouble(PescaKeyword.PAR_Importe, line, i) / getTokenDouble(PescaKeyword.PAR_Peso, line, i));
 
             ssrvList.add(ssrv);
         }
@@ -212,7 +212,8 @@ public final class PescaFileImport {
             proceso.addCodigoMaestro(Entidad.ORGANIZACION, getTokenString(PescaKeyword.MAN_ClienteAdicional, line, i));
             proceso.addCodigoMaestro(Entidad.COMPRADOR_PESCA, getTokenString(PescaKeyword.PAR_Comprador, line, i));
             proceso.addCodigoMaestro(Entidad.ESPECIE_PESCA, getTokenString(PescaKeyword.PAR_Especie, line, i));
-            proceso.addCodigoMaestro(Entidad.PRESENTACION_PESCA, getTokenString(PescaKeyword.PAR_Presentacion, line, i));
+            proceso.addCodigoMaestro(Entidad.PRESENTACION_PESCA,
+                    getTokenString(PescaKeyword.PAR_Presentacion, line, i));
         }
 
         proceso.addCodigoMaestro(Entidad.TIPO_IVA, TIPO_IVA);
@@ -263,8 +264,8 @@ public final class PescaFileImport {
         final ParametroVO prmt = proceso.findMaestro(entidad, codigo);
 
         if (prmt == null) {
-            proceso.addError(MensajeCodigo.G_001, "linea: " + lineNumber + ", entidad: " + entidad.name()
-                    + ", codigo: " + codigo);
+            proceso.addError(MensajeCodigo.G_001,
+                    "linea: " + lineNumber + ", entidad: " + entidad.name() + ", codigo: " + codigo);
         }
 
         return prmt;
@@ -319,8 +320,8 @@ public final class PescaFileImport {
         final TipoDatoVO tpdtVO = TipoDatoProxy.select(tipoDato.getId());
 
         if (!tpdtVO.getCdrfCodeSet().contains(codigo)) {
-            proceso.addError(MensajeCodigo.G_004, "linea: " + lineNumber + ", CR: " + tipoDato.name() + ", codigo: "
-                    + codigo);
+            proceso.addError(MensajeCodigo.G_004,
+                    "linea: " + lineNumber + ", CR: " + tipoDato.name() + ", codigo: " + codigo);
         }
 
         return codigo;
@@ -377,8 +378,8 @@ public final class PescaFileImport {
         try {
             return new SimpleDateFormat(dateFormat).parse(codigo);
         } catch (final ParseException ex) {
-            proceso.addError(MensajeCodigo.G_002, "linea: " + lineNumber + ", valor: " + codigo + ", formato: "
-                    + dateFormat);
+            proceso.addError(MensajeCodigo.G_002,
+                    "linea: " + lineNumber + ", valor: " + codigo + ", formato: " + dateFormat);
 
             return null;
         }

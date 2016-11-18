@@ -187,7 +187,7 @@ public final class FacturaPdf extends BasePdf {
      *            the vlrc map
      * @return the component builder
      */
-    private ComponentBuilder<?, ?> createServiciosComponent(final @NonNull Map<Long, ValoracionVO> vlrcMap) {
+    private ComponentBuilder<?, ?> createServiciosComponent(@NonNull final Map<Long, ValoracionVO> vlrcMap) {
         final HorizontalListBuilder content = DynamicReports.cmp.horizontalList();
 
         content.add(DynamicReports.cmp.text("Servicios:"));
@@ -244,8 +244,8 @@ public final class FacturaPdf extends BasePdf {
      *            the vlrl mods
      * @return the component builder
      */
-    private ComponentBuilder<?, ?> createInfoLineasComponent(final @NonNull ValoracionLineaVO vlrl,
-            final @NonNull List<ValoracionLineaVO> vlrlMods) {
+    private ComponentBuilder<?, ?> createInfoLineasComponent(@NonNull final ValoracionLineaVO vlrl,
+            @NonNull final List<ValoracionLineaVO> vlrlMods) {
         final VerticalListBuilder linea = DynamicReports.cmp.verticalList();
 
         linea.add(DynamicReports.cmp.horizontalFlowList(

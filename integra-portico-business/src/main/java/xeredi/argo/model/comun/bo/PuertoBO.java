@@ -38,7 +38,7 @@ public final class PuertoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public PuertoVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+    public PuertoVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
         final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
         prtoCriterio.setId(id);
@@ -56,7 +56,7 @@ public final class PuertoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public PuertoVO selectObject(final @NonNull PuertoCriterioVO prtoCriterio) throws InstanceNotFoundException {
+    public PuertoVO selectObject(@NonNull final PuertoCriterioVO prtoCriterio) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PuertoDAO prtoDAO = session.getMapper(PuertoDAO.class);
             final PuertoVO prto = prtoDAO.selectObject(prtoCriterio);
@@ -76,7 +76,7 @@ public final class PuertoBO {
      *            the criterio
      * @return the list
      */
-    public List<PuertoVO> selectList(final @NonNull PuertoCriterioVO criterio) {
+    public List<PuertoVO> selectList(@NonNull final PuertoCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PuertoDAO prtoDAO = session.getMapper(PuertoDAO.class);
 
@@ -95,7 +95,7 @@ public final class PuertoBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<PuertoVO> selectList(final @NonNull PuertoCriterioVO criterio, final int offset,
+    public PaginatedList<PuertoVO> selectList(@NonNull final PuertoCriterioVO criterio, final int offset,
             final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PuertoDAO prtoDAO = session.getMapper(PuertoDAO.class);
@@ -120,7 +120,7 @@ public final class PuertoBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final @NonNull PuertoVO prto, final @NonNull Map<String, I18nVO> i18nMap)
+    public void insert(@NonNull final PuertoVO prto, @NonNull final Map<String, I18nVO> i18nMap)
             throws DuplicateInstanceException {
         Preconditions.checkNotNull(prto.getCodigo());
         Preconditions.checkNotNull(prto.getCodigoCorto());
@@ -152,7 +152,7 @@ public final class PuertoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @NonNull PuertoVO prto, final @NonNull Map<String, I18nVO> i18nMap)
+    public void update(@NonNull final PuertoVO prto, @NonNull final Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(prto.getId());
         Preconditions.checkNotNull(prto.getCodigoCorto());
@@ -180,7 +180,7 @@ public final class PuertoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull PuertoVO prto) throws InstanceNotFoundException {
+    public void delete(@NonNull final PuertoVO prto) throws InstanceNotFoundException {
         Preconditions.checkNotNull(prto.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

@@ -140,7 +140,7 @@ public enum EstadisticaFileKeyword {
     /** The EM t_ numero buques. */
     EMT_NumeroBuques(EstadisticaFileType.EMT, 12, 6, true),
     /** The EM t_ numero g ts. */
-    EMT_NumeroGTs(EstadisticaFileType.EMT, 18, 9, true), ;
+    EMT_NumeroGTs(EstadisticaFileType.EMT, 18, 9, true);
 
     /** The file type. */
     private final EstadisticaFileType fileType;
@@ -166,7 +166,7 @@ public enum EstadisticaFileKeyword {
      * @param arequired
      *            the arequired
      */
-    private EstadisticaFileKeyword(final EstadisticaFileType afileType, final int aoffset, final int alength,
+    EstadisticaFileKeyword(final EstadisticaFileType afileType, final int aoffset, final int alength,
             final boolean arequired) {
         fileType = afileType;
         offset = aoffset;
@@ -238,7 +238,7 @@ public enum EstadisticaFileKeyword {
 
     /**
      * Generate string value.
-     * 
+     *
      * @param object
      *            the object
      * @param padChar
@@ -261,7 +261,7 @@ public enum EstadisticaFileKeyword {
 
     /**
      * Generate string value.
-     * 
+     *
      * @param object
      *            the object
      * @return the string

@@ -40,7 +40,7 @@ public final class UsuarioBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final @NonNull UsuarioVO usro) throws DuplicateInstanceException {
+    public void insert(@NonNull final UsuarioVO usro) throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
 
@@ -74,7 +74,7 @@ public final class UsuarioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @NonNull UsuarioVO usro) throws InstanceNotFoundException {
+    public void update(@NonNull final UsuarioVO usro) throws InstanceNotFoundException {
         Preconditions.checkNotNull(usro.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -111,7 +111,7 @@ public final class UsuarioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull UsuarioVO usro) throws InstanceNotFoundException {
+    public void delete(@NonNull final UsuarioVO usro) throws InstanceNotFoundException {
         Preconditions.checkNotNull(usro.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -143,7 +143,7 @@ public final class UsuarioBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<UsuarioVO> selectList(final @NonNull UsuarioCriterioVO usroCriterio, final int offset,
+    public PaginatedList<UsuarioVO> selectList(@NonNull final UsuarioCriterioVO usroCriterio, final int offset,
             final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
@@ -164,7 +164,7 @@ public final class UsuarioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public UsuarioVO selectObject(final @NonNull UsuarioCriterioVO usroCriterio) throws InstanceNotFoundException {
+    public UsuarioVO selectObject(@NonNull final UsuarioCriterioVO usroCriterio) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
 
@@ -189,7 +189,7 @@ public final class UsuarioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public UsuarioVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+    public UsuarioVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
         final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
 
         usroCriterio.setId(id);

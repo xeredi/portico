@@ -43,7 +43,7 @@ public final class FacturaRectificacionBO {
      * @throws ApplicationException
      *             the application exception
      */
-    public void rectificar(final @NonNull FacturaRectificacionVO fcrc) throws ApplicationException {
+    public void rectificar(@NonNull final FacturaRectificacionVO fcrc) throws ApplicationException {
         Preconditions.checkNotNull(fcrc.getFctrId());
         Preconditions.checkNotNull(fcrc.getVlrcId());
         Preconditions.checkNotNull(fcrc.getDuplicar());

@@ -20,7 +20,5 @@ public enum FunctionName {
     /** The acumulado teus. */
     acumuladoTeus,
     /** The valor servicio. */
-    valorServicio,
-
-    ;
+    valorServicio;
 }

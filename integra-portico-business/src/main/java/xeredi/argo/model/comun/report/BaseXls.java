@@ -35,7 +35,7 @@ public abstract class BaseXls {
     private final Locale locale;
 
     /** The bundle. */
-    protected final ResourceBundle bundle;
+    private final ResourceBundle bundle;
 
     /** The datetime format. */
     private final DateFormat datetimeFormat;
@@ -54,7 +54,7 @@ public abstract class BaseXls {
      * @param astream
      *            the astream
      */
-    public BaseXls(final @NonNull Locale alocale, final @NonNull OutputStream astream) {
+    public BaseXls(@NonNull final Locale alocale, @NonNull final OutputStream astream) {
         super();
 
         locale = alocale;
@@ -63,6 +63,24 @@ public abstract class BaseXls {
         bundle = PorticoResourceBundle.getBundle(locale);
         datetimeFormat = new SimpleDateFormat(bundle.getString(MessageI18nKey.format_datetime.name()));
         dateFormat = new SimpleDateFormat(bundle.getString(MessageI18nKey.format_date.name()));
+    }
+
+    /**
+     * Gets the locale.
+     *
+     * @return the locale
+     */
+    protected final Locale getLocale() {
+        return locale;
+    }
+
+    /**
+     * Gets the bundle.
+     *
+     * @return the bundle
+     */
+    protected final ResourceBundle getBundle() {
+        return bundle;
     }
 
     /**
@@ -109,8 +127,8 @@ public abstract class BaseXls {
      * @param itdtVO
      *            the itdt vo
      */
-    protected final void setCellValue(final @NonNull HSSFRow row, final int position,
-            final @NonNull EntidadTipoDatoVO entdVO, final ItemDatoVO itdtVO) {
+    protected final void setCellValue(@NonNull final HSSFRow row, final int position,
+            @NonNull final EntidadTipoDatoVO entdVO, final ItemDatoVO itdtVO) {
 
         if (itdtVO != null) {
             switch (entdVO.getTpdt().getTipoElemento()) {
@@ -182,7 +200,7 @@ public abstract class BaseXls {
      * @param value
      *            the value
      */
-    protected final void setCellValue(final @NonNull HSSFRow row, final int position, final Object value) {
+    protected final void setCellValue(@NonNull final HSSFRow row, final int position, final Object value) {
         if (value != null) {
             if (value instanceof String) {
                 row.createCell(position).setCellValue((String) value);
@@ -212,7 +230,7 @@ public abstract class BaseXls {
      * @param header
      *            the header
      */
-    protected final void autoSizeColumns(final @NonNull HSSFSheet sheet, final @NonNull HSSFRow header) {
+    protected final void autoSizeColumns(@NonNull final HSSFSheet sheet, @NonNull final HSSFRow header) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("XLS Autosize start");
         }

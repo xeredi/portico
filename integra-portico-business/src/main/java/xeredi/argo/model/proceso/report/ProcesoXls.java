@@ -49,16 +49,16 @@ public final class ProcesoXls extends BaseXls {
         final HSSFRow rowhead = sheet.createRow(rownum++);
         int i = 0;
 
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_modulo.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_tipo.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_estado.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_falta.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.fini.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ffin.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_duracion.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_erroresCnt.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_alertasCnt.name()));
-        setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_mensajesCnt.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.prbt_modulo.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.prbt_tipo.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.prbt_estado.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.prbt_falta.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.fini.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.ffin.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.prbt_duracion.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.prbt_erroresCnt.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.prbt_alertasCnt.name()));
+        setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.prbt_mensajesCnt.name()));
 
         // Filas XLS
         for (final ProcesoVO prbtVO : prbtList) {

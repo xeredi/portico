@@ -26,16 +26,16 @@ public final class OperacionNoPermitidaException extends ModelException {
      *
      * @param aclassName
      *            the aclass name
-     * @param operacion
+     * @param aoperacion
      *            the operacion
      * @param aobjId
      *            the aobj id
      */
-    public OperacionNoPermitidaException(final MessageI18nKey aclassName, final MessageI18nKey operacion,
+    public OperacionNoPermitidaException(final MessageI18nKey aclassName, final MessageI18nKey aoperacion,
             final Object aobjId) {
-        super("No se puede realizar la operacion " + operacion.name(), aclassName, aobjId);
+        super("No se puede realizar la operacion " + aoperacion.name(), aclassName, aobjId);
 
-        this.operacion = operacion;
+        this.operacion = aoperacion;
     }
 
     /**
@@ -43,15 +43,15 @@ public final class OperacionNoPermitidaException extends ModelException {
      *
      * @param aclassId
      *            the aclass id
-     * @param operacion
+     * @param aoperacion
      *            the operacion
      * @param aobjId
      *            the aobj id
      */
-    public OperacionNoPermitidaException(final Long aclassId, final MessageI18nKey operacion, final Object aobjId) {
-        super("No se puede realizar la operacion " + operacion.name(), aclassId, aobjId);
+    public OperacionNoPermitidaException(final Long aclassId, final MessageI18nKey aoperacion, final Object aobjId) {
+        super("No se puede realizar la operacion " + aoperacion.name(), aclassId, aobjId);
 
-        this.operacion = operacion;
+        this.operacion = aoperacion;
     }
 
     /**

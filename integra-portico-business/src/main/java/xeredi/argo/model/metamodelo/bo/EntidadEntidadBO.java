@@ -153,7 +153,7 @@ public final class EntidadEntidadBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public EntidadEntidadVO select(final @NonNull Long entipId, final @NonNull Long entihId)
+    public EntidadEntidadVO select(@NonNull final Long entipId, @NonNull final Long entihId)
             throws InstanceNotFoundException {
         final EntidadEntidadCriterioVO enenCriterio = new EntidadEntidadCriterioVO();
 
@@ -172,7 +172,7 @@ public final class EntidadEntidadBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public EntidadEntidadVO selectObject(final @NonNull EntidadEntidadCriterioVO enenCriterioVO)
+    public EntidadEntidadVO selectObject(@NonNull final EntidadEntidadCriterioVO enenCriterioVO)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(enenCriterioVO.getEntiPadreId());
         Preconditions.checkNotNull(enenCriterioVO.getEntiHijaId());

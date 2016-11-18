@@ -44,7 +44,7 @@ public abstract class ItemVO implements Identifiable {
      *            the tpdt id
      * @return the itdt
      */
-    public final ItemDatoVO getItdt(final @NonNull Long tpdtId) {
+    public final ItemDatoVO getItdt(@NonNull final Long tpdtId) {
         return itdtMap.get(tpdtId);
     }
 
@@ -56,7 +56,7 @@ public abstract class ItemVO implements Identifiable {
      * @param value
      *            the value
      */
-    public final void addItdt(final @NonNull Long tpdtId, final Long value) {
+    public final void addItdt(@NonNull final Long tpdtId, final Long value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -73,7 +73,7 @@ public abstract class ItemVO implements Identifiable {
      * @param value
      *            the value
      */
-    public final void addItdt(final @NonNull Long tpdtId, final Double value) {
+    public final void addItdt(@NonNull final Long tpdtId, final Double value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -90,7 +90,7 @@ public abstract class ItemVO implements Identifiable {
      * @param value
      *            the value
      */
-    public final void addItdt(final @NonNull Long tpdtId, final String value) {
+    public final void addItdt(@NonNull final Long tpdtId, final String value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -107,7 +107,7 @@ public abstract class ItemVO implements Identifiable {
      * @param value
      *            the value
      */
-    public final void addItdt(final @NonNull Long tpdtId, final ParametroVO value) {
+    public final void addItdt(@NonNull final Long tpdtId, final ParametroVO value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -124,7 +124,7 @@ public abstract class ItemVO implements Identifiable {
      * @param value
      *            the value
      */
-    public final void addItdt(final @NonNull Long tpdtId, final ServicioVO value) {
+    public final void addItdt(@NonNull final Long tpdtId, final ServicioVO value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -141,7 +141,7 @@ public abstract class ItemVO implements Identifiable {
      * @param value
      *            the value
      */
-    public final void addItdt(final @NonNull Long tpdtId, final Date value) {
+    public final void addItdt(@NonNull final Long tpdtId, final Date value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -156,7 +156,7 @@ public abstract class ItemVO implements Identifiable {
      * @param itdt
      *            the itdt
      */
-    private final void addItdt(final @NonNull ItemDatoVO itdt) {
+    private final void addItdt(@NonNull final ItemDatoVO itdt) {
         itdtMap.put(itdt.getTpdtId(), itdt);
     }
 
@@ -167,7 +167,7 @@ public abstract class ItemVO implements Identifiable {
      *            the tpdt id
      * @return the itdt fecha
      */
-    public final Date getItdtFecha(final @NonNull Long tpdtId) {
+    public final Date getItdtFecha(@NonNull final Long tpdtId) {
         return itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getFecha() : null;
     }
 
@@ -178,7 +178,7 @@ public abstract class ItemVO implements Identifiable {
      *            the tpdt id
      * @return the itdt prmt
      */
-    public final ParametroVO getItdtPrmt(final @NonNull Long tpdtId) {
+    public final ParametroVO getItdtPrmt(@NonNull final Long tpdtId) {
         return itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getPrmt() : null;
     }
 
@@ -189,7 +189,7 @@ public abstract class ItemVO implements Identifiable {
      *            the tpdt id
      * @return the itdt srvc
      */
-    public final ServicioVO getItdtSrvc(final @NonNull Long tpdtId) {
+    public final ServicioVO getItdtSrvc(@NonNull final Long tpdtId) {
         return itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getSrvc() : null;
     }
 
@@ -200,7 +200,7 @@ public abstract class ItemVO implements Identifiable {
      *            the tpdt id
      * @return the itdt entero
      */
-    public final Long getItdtEntero(final @NonNull Long tpdtId) {
+    public final Long getItdtEntero(@NonNull final Long tpdtId) {
         return itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCantidadEntera() : null;
     }
 
@@ -211,7 +211,7 @@ public abstract class ItemVO implements Identifiable {
      *            the tpdt id
      * @return the itdt decimal
      */
-    public final Double getItdtDecimal(final @NonNull Long tpdtId) {
+    public final Double getItdtDecimal(@NonNull final Long tpdtId) {
         return itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCantidadDecimal() : null;
     }
 
@@ -222,7 +222,7 @@ public abstract class ItemVO implements Identifiable {
      *            the tpdt id
      * @return the itdt booleano
      */
-    public final Boolean getItdtBooleano(final @NonNull Long tpdtId) {
+    public final Boolean getItdtBooleano(@NonNull final Long tpdtId) {
         return itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCantidadEntera() == 1 : null;
     }
 
@@ -233,7 +233,7 @@ public abstract class ItemVO implements Identifiable {
      *            the tpdt id
      * @return the itdt cadena
      */
-    public final String getItdtCadena(final @NonNull Long tpdtId) {
+    public final String getItdtCadena(@NonNull final Long tpdtId) {
         return itdtMap.containsKey(tpdtId) ? itdtMap.get(tpdtId).getCadena() : null;
     }
 }

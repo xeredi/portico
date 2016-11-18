@@ -36,6 +36,13 @@ public final class TipoSubparametroProxy {
     }
 
     /**
+     * Instantiates a new tipo subparametro proxy.
+     */
+    private TipoSubparametroProxy() {
+        super();
+    }
+
+    /**
      * Select label values.
      *
      * @return the list
@@ -60,7 +67,7 @@ public final class TipoSubparametroProxy {
      *            the id
      * @return the tipo subparametro vo
      */
-    public static TipoSubparametroDetailVO select(final @NonNull Long id) {
+    public static TipoSubparametroDetailVO select(@NonNull final Long id) {
         if (!TIPO_SUBPARAMETRO_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tpsp, id));
         }

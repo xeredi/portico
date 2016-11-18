@@ -20,6 +20,13 @@ import xeredi.argo.model.seguridad.vo.UsuarioVO;
 public final class EventoAuditoriaUtils {
 
     /**
+     * Instantiates a new evento auditoria utils.
+     */
+    private EventoAuditoriaUtils() {
+        super();
+    }
+
+    /**
      * Insert.
      *
      * @param session
@@ -30,8 +37,8 @@ public final class EventoAuditoriaUtils {
      *            the accion
      * @return the evento auditoria VO
      */
-    public static final EventoAuditoriaVO insert(final @NonNull SqlSession session, final @NonNull Auditable auditable,
-            final @NonNull AuditoriaAccion accion) {
+    public static EventoAuditoriaVO insert(@NonNull final SqlSession session, @NonNull final Auditable auditable,
+            @NonNull final AuditoriaAccion accion) {
         Preconditions.checkNotNull(auditable.getPrefijoEntidad());
         Preconditions.checkNotNull(auditable.getUsroId());
 

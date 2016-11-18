@@ -22,80 +22,80 @@ import com.google.common.base.Preconditions;
  */
 public final class EmailUtil {
 
-	/** The Constant LOG. */
-	private static final Log LOG = LogFactory.getLog(EmailUtil.class);
+    /** The Constant LOG. */
+    private static final Log LOG = LogFactory.getLog(EmailUtil.class);
 
-	/** The Constant EMAIL_HOST. */
-	private static final String EMAIL_HOST;
+    /** The Constant EMAIL_HOST. */
+    private static final String EMAIL_HOST;
 
-	/** The Constant EMAIL_PORT. */
-	private static final Integer EMAIL_PORT;
+    /** The Constant EMAIL_PORT. */
+    private static final Integer EMAIL_PORT;
 
-	/** The Constant EMAIL_SSL. */
-	private static final Boolean EMAIL_SSL;
+    /** The Constant EMAIL_SSL. */
+    private static final Boolean EMAIL_SSL;
 
-	/** The Constant EMAIL_USER. */
-	private static final String EMAIL_USER;
+    /** The Constant EMAIL_USER. */
+    private static final String EMAIL_USER;
 
-	/** The Constant EMAIL_PASSWORD. */
-	private static final String EMAIL_PASSWORD;
+    /** The Constant EMAIL_PASSWORD. */
+    private static final String EMAIL_PASSWORD;
 
-	/** The Constant EMAIL_ACCOUNT. */
-	private static final String EMAIL_ACCOUNT;
+    /** The Constant EMAIL_ACCOUNT. */
+    private static final String EMAIL_ACCOUNT;
 
-	static {
-		LOG.info("Loading email configuration");
+    static {
+        LOG.info("Loading email configuration");
 
-		EMAIL_HOST = ConfigurationProxy.getString(ConfigurationKey.email_host);
-		EMAIL_PORT = ConfigurationProxy.getInt(ConfigurationKey.email_port);
-		EMAIL_SSL = ConfigurationProxy.getBoolean(ConfigurationKey.email_ssl);
-		EMAIL_USER = ConfigurationProxy.getString(ConfigurationKey.email_user);
-		EMAIL_PASSWORD = ConfigurationProxy.getString(ConfigurationKey.email_password);
-		EMAIL_ACCOUNT = ConfigurationProxy.getString(ConfigurationKey.email_account);
-	}
+        EMAIL_HOST = ConfigurationProxy.getString(ConfigurationKey.email_host);
+        EMAIL_PORT = ConfigurationProxy.getInt(ConfigurationKey.email_port);
+        EMAIL_SSL = ConfigurationProxy.getBoolean(ConfigurationKey.email_ssl);
+        EMAIL_USER = ConfigurationProxy.getString(ConfigurationKey.email_user);
+        EMAIL_PASSWORD = ConfigurationProxy.getString(ConfigurationKey.email_password);
+        EMAIL_ACCOUNT = ConfigurationProxy.getString(ConfigurationKey.email_account);
+    }
 
-	/**
-	 * Instantiates a new email util.
-	 */
-	private EmailUtil() {
-		super();
-	}
+    /**
+     * Instantiates a new email util.
+     */
+    private EmailUtil() {
+        super();
+    }
 
-	/**
-	 * Send.
-	 *
-	 * @param to
-	 *            the to
-	 * @param subject
-	 *            the subject
-	 * @param text
-	 *            the text
-	 * @throws ApplicationException
-	 *             the application exception
-	 */
-	public static void send(final @NonNull String to, final @NonNull String subject, final @NonNull String text)
-			throws ApplicationException {
-		Preconditions.checkNotNull(EMAIL_HOST);
-		Preconditions.checkNotNull(EMAIL_PORT);
-		Preconditions.checkNotNull(EMAIL_SSL);
-		Preconditions.checkNotNull(EMAIL_USER);
-		Preconditions.checkNotNull(EMAIL_PASSWORD);
-		Preconditions.checkNotNull(EMAIL_ACCOUNT);
+    /**
+     * Send.
+     *
+     * @param to
+     *            the to
+     * @param subject
+     *            the subject
+     * @param text
+     *            the text
+     * @throws ApplicationException
+     *             the application exception
+     */
+    public static void send(@NonNull final String to, @NonNull final String subject, @NonNull final String text)
+            throws ApplicationException {
+        Preconditions.checkNotNull(EMAIL_HOST);
+        Preconditions.checkNotNull(EMAIL_PORT);
+        Preconditions.checkNotNull(EMAIL_SSL);
+        Preconditions.checkNotNull(EMAIL_USER);
+        Preconditions.checkNotNull(EMAIL_PASSWORD);
+        Preconditions.checkNotNull(EMAIL_ACCOUNT);
 
-		try {
-			final Email email = new SimpleEmail();
+        try {
+            final Email email = new SimpleEmail();
 
-			email.setHostName(EMAIL_HOST);
-			email.setSmtpPort(EMAIL_PORT);
-			email.setAuthenticator(new DefaultAuthenticator(EMAIL_USER, EMAIL_PASSWORD));
-			email.setSSLOnConnect(EMAIL_SSL);
-			email.setFrom(EMAIL_ACCOUNT);
-			email.setSubject(subject);
-			email.setMsg(text);
-			email.addTo(to);
-			email.send();
-		} catch (final EmailException ex) {
-			throw new InternalErrorException(ex);
-		}
-	}
+            email.setHostName(EMAIL_HOST);
+            email.setSmtpPort(EMAIL_PORT);
+            email.setAuthenticator(new DefaultAuthenticator(EMAIL_USER, EMAIL_PASSWORD));
+            email.setSSLOnConnect(EMAIL_SSL);
+            email.setFrom(EMAIL_ACCOUNT);
+            email.setSubject(subject);
+            email.setMsg(text);
+            email.addTo(to);
+            email.send();
+        } catch (final EmailException ex) {
+            throw new InternalErrorException(ex);
+        }
+    }
 }

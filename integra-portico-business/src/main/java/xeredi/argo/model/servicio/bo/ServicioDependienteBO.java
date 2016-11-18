@@ -26,12 +26,12 @@ public final class ServicioDependienteBO {
     /**
      * Instantiates a new servicio dependiente BO.
      *
-     * @param usroId
+     * @param ausroId
      *            the usro id
      */
-    public ServicioDependienteBO(Long usroId) {
+    public ServicioDependienteBO(@NonNull final Long ausroId) {
         super();
-        this.usroId = usroId;
+        this.usroId = ausroId;
     }
 
     /**
@@ -43,7 +43,7 @@ public final class ServicioDependienteBO {
      *            the idioma
      * @return the list
      */
-    public List<ServicioVO> selectList(final @NonNull Long srvcDeoId, final String idioma) {
+    public List<ServicioVO> selectList(@NonNull final Long srvcDeoId, final String idioma) {
         final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
 
         srvcCriterio.setSrvcDepId(srvcDeoId);
@@ -66,8 +66,8 @@ public final class ServicioDependienteBO {
      * @param srvcCriterio
      *            the srvc criterio
      */
-    private void fillUserSpecificFilter(final @NonNull SqlSession session,
-            final @NonNull ServicioCriterioVO srvcCriterio) {
+    private void fillUserSpecificFilter(@NonNull final SqlSession session,
+            @NonNull final ServicioCriterioVO srvcCriterio) {
         final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
         final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
 

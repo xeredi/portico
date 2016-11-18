@@ -20,10 +20,6 @@ import com.google.common.base.Preconditions;
 /**
  * The Class FacturaImpresionVO.
  */
-
-/* (non-Javadoc)
- * @see java.lang.Object#hashCode()
- */
 @Data
 public final class FacturaImpresionVO {
 
@@ -54,9 +50,9 @@ public final class FacturaImpresionVO {
      * @param avlrlList the avlrl list
      * @param avlrcMap the avlrc map
      */
-    public FacturaImpresionVO(final @NonNull FacturaVO afctr, final @NonNull List<ValoracionCargoVO> avlrgList,
-            final @NonNull List<ValoracionImpuestoVO> avlriList, final @NonNull List<ValoracionLineaVO> avlrlList,
-            final @NonNull Map<Long, ValoracionVO> avlrcMap) {
+    public FacturaImpresionVO(@NonNull final FacturaVO afctr, @NonNull final List<ValoracionCargoVO> avlrgList,
+            @NonNull final List<ValoracionImpuestoVO> avlriList, @NonNull final List<ValoracionLineaVO> avlrlList,
+            @NonNull final Map<Long, ValoracionVO> avlrcMap) {
         super();
 
         Preconditions.checkArgument(!avlrgList.isEmpty());

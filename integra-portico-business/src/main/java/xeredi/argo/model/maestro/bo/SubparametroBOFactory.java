@@ -64,7 +64,7 @@ public final class SubparametroBOFactory {
      *            the enti id
      * @return the subparametro bo
      */
-    public static SubparametroBO newInstance(final @NonNull Long entiId) {
+    public static SubparametroBO newInstance(@NonNull final Long entiId) {
         if (MAP.containsKey(entiId)) {
             try {
                 return (SubparametroBO) MAP.get(entiId).newInstance();

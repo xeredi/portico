@@ -61,9 +61,12 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
     enum ElementoActual {
 
         /** The mani. */
-        mani, /** The mabl. */
-        mabl, /** The part. */
-        part, /** The equi. */
+        mani,
+        /** The mabl. */
+        mabl,
+        /** The part. */
+        part,
+        /** The equi. */
         equi
     };
 
@@ -218,8 +221,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
             final String nif = ctx.c082().f3039().getText().substring(2);
 
             if (!macoMap.containsKey(nif)) {
-                final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(Entidad.MANIFIESTO_CONSIGNATARIO
-                        .getId());
+                final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy
+                        .select(Entidad.MANIFIESTO_CONSIGNATARIO.getId());
 
                 macoActual = tpssDetail.createItem();
 
@@ -463,8 +466,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
             break;
         case "ZTC":
             final ParametroVO terminal = getMaestro(Entidad.TERMINAL, ctx.c506().f1154().getText());
-            final ParametroVO instalacionEspecial = getMaestro(Entidad.INSTALACION_ESPECIAL, ctx.c506().f1154()
-                    .getText());
+            final ParametroVO instalacionEspecial = getMaestro(Entidad.INSTALACION_ESPECIAL,
+                    ctx.c506().f1154().getText());
 
             if (terminal != null) {
                 switch (elementoActual) {
@@ -523,7 +526,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
             break;
         case "ZLS":
-            srvc.addItdt(TipoDato.SERV_TRAF.getId(), getMaestro(Entidad.SERVICIO_TRAFICO, ctx.c506().f1154().getText()));
+            srvc.addItdt(TipoDato.SERV_TRAF.getId(),
+                    getMaestro(Entidad.SERVICIO_TRAFICO, ctx.c506().f1154().getText()));
 
             // FIXME Como saber si es de Manifiesto, Bl, partida...
 
@@ -601,10 +605,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
             final String tipoOperacionBl = null;
 
             // FIXME Convertir en CR
-            blActual.addItdt(
-                    TipoDato.TIPO_OP_BL.getId(),
-                    calcularTipoOperacionBl(srvc.getItdt(TipoDato.TIPO_MANIF.getId()).getCadena(),
-                            modoTransporteEdi.getParametro()));
+            blActual.addItdt(TipoDato.TIPO_OP_BL.getId(), calcularTipoOperacionBl(
+                    srvc.getItdt(TipoDato.TIPO_MANIF.getId()).getCadena(), modoTransporteEdi.getParametro()));
 
             break;
         default:
@@ -732,8 +734,7 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
         pampActual.setNumero(contador++);
 
-        pampActual.addItdt(
-                TipoDato.MERC_PELIG.getId(),
+        pampActual.addItdt(TipoDato.MERC_PELIG.getId(),
                 getMaestro(Entidad.MERCANCIAS_PELIGROSAS, ctx.c234().f7124().getText() + '-'
                         + ctx.c205().f8351().getText() + '-' + ctx.c205().f8092().getText()));
 
@@ -761,12 +762,12 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
 
         equiActual.addItdt(TipoDato.COD_EXEN.getId(), "0"); // FIXME Calcular
 
-        final ParametroVO tipoEquipamiento = getMaestro(Entidad.TIPO_EQUIPAMIENTO, ctx.f8053().getText()
-                + ctx.c224().f8155().getText());
+        final ParametroVO tipoEquipamiento = getMaestro(Entidad.TIPO_EQUIPAMIENTO,
+                ctx.f8053().getText() + ctx.c224().f8155().getText());
 
         equiActual.addItdt(TipoDato.TIPO_EQUI.getId(), tipoEquipamiento);
-        equiActual.addItdt(TipoDato.UNIDAD_CARGA.getId(), tipoEquipamiento.getItdt(TipoDato.UNIDAD_CARGA.getId())
-                .getPrmt());
+        equiActual.addItdt(TipoDato.UNIDAD_CARGA.getId(),
+                tipoEquipamiento.getItdt(TipoDato.UNIDAD_CARGA.getId()).getPrmt());
 
         final String matricula = ctx.c237().f8260().getText();
 
@@ -854,7 +855,7 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
      * @param ssrvHijo
      *            the ssrv hijo
      */
-    private void addSsss(final @NonNull SubservicioVO ssrvPadre, final @NonNull SubservicioVO ssrvHijo) {
+    private void addSsss(@NonNull final SubservicioVO ssrvPadre, @NonNull final SubservicioVO ssrvHijo) {
         Preconditions.checkNotNull(ssrvPadre.getId());
         Preconditions.checkNotNull(ssrvHijo.getId());
 
@@ -875,7 +876,8 @@ public final class IfcsumServicioReader extends IfcsumD14bBaseVisitor {
      *            the modo transporte edi
      * @return the string
      */
-    private String calcularTipoOperacionBl(final @NonNull String tipoManifiesto, final @NonNull String modoTransporteEdi) {
+    private String calcularTipoOperacionBl(@NonNull final String tipoManifiesto,
+            @NonNull final String modoTransporteEdi) {
         switch (tipoManifiesto) {
         case "DE":
         case "CL":

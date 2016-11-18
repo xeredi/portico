@@ -25,7 +25,7 @@ public final class ManifiestoPescaBO extends ServicioBO {
      * @param ausroId
      *            the ausro id
      */
-    public ManifiestoPescaBO(final @NonNull Long ausroId) {
+    public ManifiestoPescaBO(@NonNull final Long ausroId) {
         super(Entidad.MANIFIESTO_PESCA.getId(), ausroId);
     }
 

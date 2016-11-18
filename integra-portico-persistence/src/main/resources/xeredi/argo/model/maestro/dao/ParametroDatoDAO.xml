@@ -22,63 +22,6 @@
         </association>
     </resultMap>
 
-    <sql id="SelectPrefix">
-    <![CDATA[
-		SELECT
-		    prdt_prvr_pk, prdt_tpdt_pk, prdt_nentero, prdt_ndecimal, prdt_fecha, prdt_prmt_pk, prdt_cadena
-
-		    , prmt_parametro, prmt_tppr_pk, prmt_prto_pk
-
-    ]]>
-        <if test="idioma != null and fechaVigencia != null">
-        <![CDATA[
-		    , (
-		        CASE
-		            WHEN EXISTS (
-		                SELECT 1 FROM tbl_tipo_parametro_tppr
-		                WHERE tppr_pk = prmt_tppr_pk
-		                    AND tppr_es_i18n = 1
-		            )
-		            THEN (
-		                SELECT i18n_text FROM tbl_i18n_i18n
-		                WHERE i18n_pref = 'prvr'
-		                    AND i18n_lang = #{idioma}
-		                    AND i18n_ext_pk = (
-		                        SELECT prvr_pk FROM tbl_parametro_version_prvr
-		                        WHERE prvr_prmt_pk = prmt_pk
-		                            AND ( #{fechaVigencia} >= prvr_fini AND ( prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia} ) )
-		                    )
-		            )
-		            WHEN EXISTS (
-		                SELECT 1 FROM tbl_tipo_parametro_tppr
-		                WHERE tppr_pk = prmt_tppr_pk
-		                    AND tppr_tpdt_pk IS NOT NULL
-		            )
-		            THEN (
-		                SELECT prdt_cadena FROM tbl_parametro_dato_prdt
-		                WHERE
-		                    prdt_prvr_pk = (
-		                        SELECT prvr_pk FROM tbl_parametro_version_prvr
-		                        WHERE prvr_prmt_pk = prmt_pk
-		                            AND ( #{fechaVigencia} >= prvr_fini AND ( prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia} ) )
-		                    )
-		                    AND prdt_tpdt_pk = (
-		                        SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr
-		                        WHERE tppr_pk = prmt_tppr_pk
-		                    )
-		            )
-		        END
-		    ) AS p18n_texto
-        ]]>
-        </if>
-    <![CDATA[
-		FROM
-		    tbl_parametro_dato_prdt
-		    LEFT JOIN tbl_parametro_prmt ON
-		        prmt_pk = prdt_prmt_pk
-    ]]>
-    </sql>
-
     <sql id="SelectWhere">
         <where>
             <if test="versionId == null and versionIds == null">
@@ -110,12 +53,10 @@
 
             <if test="entiId != null and soloDatosGrid">
                 <![CDATA[
-                    AND EXISTS (
-                        SELECT 1
+                    AND prdt_tpdt_pk = ANY (
+                        SELECT entd_tpdt_pk
                         FROM tbl_entidad_tipo_dato_entd
-                        WHERE
-                            entd_tpdt_pk = prdt_tpdt_pk
-                            AND entd_enti_pk = #{entiId}
+                        WHERE entd_enti_pk = #{entiId}
                             AND entd_gridable = 1
                     )
                 ]]>
@@ -124,8 +65,41 @@
     </sql>
 
     <select id="selectList" parameterType="ParametroCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
+    <![CDATA[
+        WITH sql AS (
+            SELECT prdt_prvr_pk, prdt_tpdt_pk, prdt_nentero, prdt_ndecimal, prdt_fecha, prdt_prmt_pk, prdt_cadena , prmt_parametro, prmt_prto_pk , tppr_es_i18n, tppr_tpdt_pk
+    ]]>
+        <if test="idioma != null and fechaVigencia != null">
+        <![CDATA[
+                , ( SELECT prvr_pk FROM tbl_parametro_version_prvr
+                    WHERE prvr_prmt_pk = prmt_pk
+                        AND prvr_fini <= #{fechaVigencia}
+                        AND (prvr_ffin IS NULL OR prvr_ffin > #{fechaVigencia})
+                  ) AS prvr_pk
+        ]]>
+        </if>
+    <![CDATA[
+            FROM tbl_parametro_dato_prdt
+                LEFT JOIN tbl_parametro_prmt ON prmt_pk = prdt_prmt_pk
+                LEFT JOIN tbl_tipo_parametro_tppr ON tppr_pk = prmt_tppr_pk
+    ]]>
         <include refid="SelectWhere" />
+    <![CDATA[
+        )
+        SELECT prdt_prvr_pk, prdt_tpdt_pk, prdt_nentero, prdt_ndecimal, prdt_fecha, prdt_prmt_pk, prdt_cadena , prmt_parametro, prmt_prto_pk
+    ]]>
+        <if test="idioma != null and fechaVigencia != null">
+        <![CDATA[
+            , (CASE
+                WHEN tppr_es_i18n = 1
+                THEN ( SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref = 'prvr' AND i18n_lang = #{idioma} AND i18n_ext_pk = prvr_pk )
+                ELSE ( SELECT prdt_cadena FROM tbl_parametro_dato_prdt WHERE prdt_tpdt_pk = tppr_tpdt_pk AND prdt_prvr_pk = prvr_pk )
+            END) AS p18n_texto
+        ]]>
+        </if>
+    <![CDATA[
+        FROM sql
+    ]]>
     </select>
 
     <insert id="insert" parameterType="ItemDatoVO">

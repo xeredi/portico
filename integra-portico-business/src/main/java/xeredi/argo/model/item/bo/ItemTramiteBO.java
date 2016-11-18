@@ -33,7 +33,7 @@ public final class ItemTramiteBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ItemTramiteVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+    public ItemTramiteVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ItemTramiteDAO ittrDAO = session.getMapper(ItemTramiteDAO.class);
             final ItemTramiteCriterioVO ittrCriterio = new ItemTramiteCriterioVO();
@@ -66,7 +66,7 @@ public final class ItemTramiteBO {
      *            the criterio
      * @return the list
      */
-    public List<ItemTramiteVO> selectList(final @NonNull ItemTramiteCriterioVO criterio) {
+    public List<ItemTramiteVO> selectList(@NonNull final ItemTramiteCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ItemTramiteDAO ittrDAO = session.getMapper(ItemTramiteDAO.class);
 

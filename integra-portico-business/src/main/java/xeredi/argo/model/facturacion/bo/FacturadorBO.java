@@ -30,7 +30,7 @@ import xeredi.util.mybatis.SqlMapperLocator;
 /**
  * The Class FacturadorBO.
  */
-public class FacturadorBO {
+public final class FacturadorBO {
 
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(FacturadorBO.class);
@@ -59,8 +59,8 @@ public class FacturadorBO {
      * @param fechaFacturacion
      *            the fecha facturacion
      */
-    public void facturarValoraciones(final @NonNull ValoracionGrupoCriterioVO vgrpCriterio, final @NonNull Long fcsrId,
-            final @NonNull Date fechaFacturacion) {
+    public void facturarValoraciones(@NonNull final ValoracionGrupoCriterioVO vgrpCriterio, @NonNull final Long fcsrId,
+            @NonNull final Date fechaFacturacion) {
         LOG.info("Facturacion de las valoraciones: " + vgrpCriterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

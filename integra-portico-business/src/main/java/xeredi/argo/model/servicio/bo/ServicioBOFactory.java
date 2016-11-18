@@ -36,7 +36,7 @@ public final class ServicioBOFactory {
     /**
      * Load.
      */
-    private static final void load() {
+    private static void load() {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Factory start");
         }
@@ -67,7 +67,7 @@ public final class ServicioBOFactory {
      *            the usro id
      * @return the servicio bo
      */
-    public static final ServicioBO newInstance(final @NonNull Long entiId, final @NonNull Long usroId) {
+    public static ServicioBO newInstance(@NonNull final Long entiId, @NonNull final Long usroId) {
         try {
             return MAP.containsKey(entiId) ? (ServicioBO) MAP.get(entiId).getDeclaredConstructor(Long.class, Long.class)
                     .newInstance(entiId, usroId) : new ServicioBO(entiId, usroId);

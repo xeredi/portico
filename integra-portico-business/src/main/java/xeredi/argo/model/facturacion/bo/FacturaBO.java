@@ -38,7 +38,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class FacturaBO.
  */
-public class FacturaBO {
+public final class FacturaBO {
 
     /**
      * Select imprimir.
@@ -49,7 +49,7 @@ public class FacturaBO {
      *            the idioma
      * @return the list
      */
-    public List<FacturaImpresionVO> selectImprimir(final @NonNull Set<Long> fctrIds, final String idioma) {
+    public List<FacturaImpresionVO> selectImprimir(@NonNull final Set<Long> fctrIds, final String idioma) {
         Preconditions.checkArgument(!fctrIds.isEmpty());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
@@ -109,7 +109,7 @@ public class FacturaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public FacturaVO select(final @NonNull Long fctrId, final String idioma) throws InstanceNotFoundException {
+    public FacturaVO select(@NonNull final Long fctrId, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
             final FacturaCriterioVO fctrCriterio = new FacturaCriterioVO();
@@ -138,7 +138,7 @@ public class FacturaBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<FacturaVO> selectList(final @NonNull FacturaCriterioVO fctrCriterio, final int offset,
+    public PaginatedList<FacturaVO> selectList(@NonNull final FacturaCriterioVO fctrCriterio, final int offset,
             final int limit) {
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
@@ -162,7 +162,7 @@ public class FacturaBO {
      *            the limit
      * @return the list
      */
-    public List<FacturaVO> selectTypeaheadList(final @NonNull FacturaTypeaheadCriterioVO criterio, final int limit) {
+    public List<FacturaVO> selectTypeaheadList(@NonNull final FacturaTypeaheadCriterioVO criterio, final int limit) {
         Preconditions.checkNotNull(criterio.getTextoBusqueda());
 
         final StringTokenizer tokenizer = new StringTokenizer(criterio.getTextoBusqueda(), "/");

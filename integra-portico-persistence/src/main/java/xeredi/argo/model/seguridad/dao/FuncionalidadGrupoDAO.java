@@ -19,7 +19,7 @@ public interface FuncionalidadGrupoDAO {
      *            the fngr criterio
      * @return the list
      */
-    List<FuncionalidadGrupoVO> selectList(final @NonNull FuncionalidadGrupoCriterioVO fngrCriterio);
+    List<FuncionalidadGrupoVO> selectList(@NonNull final FuncionalidadGrupoCriterioVO fngrCriterio);
 
     /**
      * Insert.
@@ -27,7 +27,7 @@ public interface FuncionalidadGrupoDAO {
      * @param fngr
      *            the fngr
      */
-    void insert(final @NonNull FuncionalidadGrupoVO fngr);
+    void insert(@NonNull final FuncionalidadGrupoVO fngr);
 
     /**
      * Delete list.
@@ -36,5 +36,5 @@ public interface FuncionalidadGrupoDAO {
      *            the fngr criterio
      * @return the int
      */
-    int deleteList(final @NonNull FuncionalidadGrupoCriterioVO fngrCriterio);
+    int deleteList(@NonNull final FuncionalidadGrupoCriterioVO fngrCriterio);
 }

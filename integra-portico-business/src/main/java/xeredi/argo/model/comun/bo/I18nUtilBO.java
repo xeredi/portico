@@ -44,8 +44,8 @@ public final class I18nUtilBO {
      *            the language
      * @return the list
      */
-    static final List<LabelValueVO> selectLabelValueList(final @NonNull Set<ClassPrefix> prefixSet,
-            final @NonNull String language) {
+    static List<LabelValueVO> selectLabelValueList(@NonNull final Set<ClassPrefix> prefixSet,
+            @NonNull final String language) {
         Preconditions.checkArgument(!prefixSet.isEmpty());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -66,7 +66,7 @@ public final class I18nUtilBO {
      *            the i 18 nable
      * @return the map
      */
-    public final static Map<String, I18nVO> selectMap(final @NonNull I18nable i18nable) {
+    public static Map<String, I18nVO> selectMap(@NonNull final I18nable i18nable) {
         ClassPrefix prefix = null;
         Long externalId = null;
 
@@ -112,7 +112,7 @@ public final class I18nUtilBO {
      * @param i18nMap
      *            the i 18 n map
      */
-    public final static void insertMap(final @NonNull SqlSession session, final @NonNull I18nable i18nable,
+    public static void insertMap(@NonNull final SqlSession session, @NonNull final I18nable i18nable,
             @NonNull final Map<String, I18nVO> i18nMap) {
         ClassPrefix prefix = null;
         Long externalId = null;
@@ -156,8 +156,8 @@ public final class I18nUtilBO {
      * @param i18nMap
      *            the i 18 n map
      */
-    public final static void updateMap(final @NonNull SqlSession session, final @NonNull I18nable i18nable,
-            final @NonNull Map<String, I18nVO> i18nMap) {
+    public static void updateMap(@NonNull final SqlSession session, @NonNull final I18nable i18nable,
+            @NonNull final Map<String, I18nVO> i18nMap) {
         ClassPrefix prefix = null;
         Long externalId = null;
 
@@ -205,7 +205,7 @@ public final class I18nUtilBO {
      *            the i 18 nable
      * @return the int
      */
-    public final static int deleteMap(final @NonNull SqlSession session, final @NonNull I18nable i18nable) {
+    public static int deleteMap(@NonNull final SqlSession session, @NonNull final I18nable i18nable) {
         ClassPrefix prefix = null;
         Long externalId = null;
 

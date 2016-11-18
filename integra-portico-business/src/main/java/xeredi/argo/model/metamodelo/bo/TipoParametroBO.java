@@ -53,7 +53,7 @@ public final class TipoParametroBO {
      *            the tppr criterio vo
      * @return the list
      */
-    public List<TipoParametroVO> selectList(final @NonNull TipoParametroCriterioVO tpprCriterioVO) {
+    public List<TipoParametroVO> selectList(@NonNull final TipoParametroCriterioVO tpprCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoParametroDAO tpprDAO = session.getMapper(TipoParametroDAO.class);
 
@@ -72,7 +72,7 @@ public final class TipoParametroBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<TipoParametroVO> selectList(final @NonNull TipoParametroCriterioVO tpprCriterioVO,
+    public PaginatedList<TipoParametroVO> selectList(@NonNull final TipoParametroCriterioVO tpprCriterioVO,
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoParametroDAO tpprDAO = session.getMapper(TipoParametroDAO.class);
@@ -94,7 +94,7 @@ public final class TipoParametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public TipoParametroVO select(final @NonNull Long id, final String idioma) throws InstanceNotFoundException {
+    public TipoParametroVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoParametroDAO tpprDAO = session.getMapper(TipoParametroDAO.class);
             final TipoParametroCriterioVO entiCriterio = new TipoParametroCriterioVO();
@@ -122,7 +122,7 @@ public final class TipoParametroBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final @NonNull TipoParametroVO tppr, final @NonNull Map<String, I18nVO> i18nMap)
+    public void insert(@NonNull final TipoParametroVO tppr, @NonNull final Map<String, I18nVO> i18nMap)
             throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoParametroDAO tpprDAO = session.getMapper(TipoParametroDAO.class);
@@ -154,7 +154,7 @@ public final class TipoParametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final @NonNull TipoParametroVO tppr, final @NonNull Map<String, I18nVO> i18nMap)
+    public void update(@NonNull final TipoParametroVO tppr, @NonNull final Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(tppr.getId());
 
@@ -181,7 +181,7 @@ public final class TipoParametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull TipoParametroVO tppr) throws InstanceNotFoundException {
+    public void delete(@NonNull final TipoParametroVO tppr) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tppr.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

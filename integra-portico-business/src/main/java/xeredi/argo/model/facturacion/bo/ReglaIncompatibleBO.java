@@ -24,7 +24,7 @@ import xeredi.util.mybatis.SqlMapperLocator;
 /**
  * The Class ReglaIncompatibleBO.
  */
-public class ReglaIncompatibleBO {
+public final class ReglaIncompatibleBO {
 
     /**
      * Insert.
@@ -34,7 +34,7 @@ public class ReglaIncompatibleBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void insert(final @NonNull ReglaIncompatibleVO rgin) throws OverlapException {
+    public void insert(@NonNull final ReglaIncompatibleVO rgin) throws OverlapException {
         Preconditions.checkNotNull(rgin.getRgla1Id());
         Preconditions.checkNotNull(rgin.getRgla2());
         Preconditions.checkNotNull(rgin.getRgla2().getId());
@@ -75,7 +75,7 @@ public class ReglaIncompatibleBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void update(final @NonNull ReglaIncompatibleVO rgin) throws InstanceNotFoundException, OverlapException {
+    public void update(@NonNull final ReglaIncompatibleVO rgin) throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(rgin.getVersion());
         Preconditions.checkNotNull(rgin.getVersion().getId());
         Preconditions.checkNotNull(rgin.getVersion().getFini());
@@ -108,7 +108,7 @@ public class ReglaIncompatibleBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull ReglaIncompatibleVO rgin) throws InstanceNotFoundException {
+    public void delete(@NonNull final ReglaIncompatibleVO rgin) throws InstanceNotFoundException {
         Preconditions.checkNotNull(rgin.getVersion());
         Preconditions.checkNotNull(rgin.getVersion().getId());
 
@@ -135,7 +135,7 @@ public class ReglaIncompatibleBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ReglaIncompatibleVO select(final @NonNull Long id, final @NonNull Date fref)
+    public ReglaIncompatibleVO select(@NonNull final Long id, @NonNull final Date fref)
             throws InstanceNotFoundException {
         final ReglaIncompatibleCriterioVO rginCriterio = new ReglaIncompatibleCriterioVO();
 
@@ -154,7 +154,7 @@ public class ReglaIncompatibleBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ReglaIncompatibleVO selectObject(final @NonNull ReglaIncompatibleCriterioVO rginCriterio)
+    public ReglaIncompatibleVO selectObject(@NonNull final ReglaIncompatibleCriterioVO rginCriterio)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaIncompatibleDAO rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
@@ -175,7 +175,7 @@ public class ReglaIncompatibleBO {
      *            the rgin criterio
      * @return the list
      */
-    public List<ReglaIncompatibleVO> selectList(final @NonNull ReglaIncompatibleCriterioVO rginCriterio) {
+    public List<ReglaIncompatibleVO> selectList(@NonNull final ReglaIncompatibleCriterioVO rginCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaIncompatibleDAO rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
 

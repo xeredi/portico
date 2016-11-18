@@ -21,7 +21,7 @@ public interface UsuarioDAO {
      *            the usro
      * @return true, if successful
      */
-    boolean exists(final @NonNull UsuarioVO usro);
+    boolean exists(@NonNull final UsuarioVO usro);
 
     /**
      * Insert.
@@ -29,7 +29,7 @@ public interface UsuarioDAO {
      * @param usro
      *            the usro
      */
-    void insert(final @NonNull UsuarioVO usro);
+    void insert(@NonNull final UsuarioVO usro);
 
     /**
      * Update.
@@ -38,7 +38,7 @@ public interface UsuarioDAO {
      *            the usro
      * @return the int
      */
-    int update(final @NonNull UsuarioVO usro);
+    int update(@NonNull final UsuarioVO usro);
 
     /**
      * Delete.
@@ -47,7 +47,7 @@ public interface UsuarioDAO {
      *            the usro
      * @return the int
      */
-    int delete(final @NonNull UsuarioVO usro);
+    int delete(@NonNull final UsuarioVO usro);
 
     /**
      * Count.
@@ -56,7 +56,7 @@ public interface UsuarioDAO {
      *            the usro criterio
      * @return the int
      */
-    int count(final @NonNull UsuarioCriterioVO usroCriterio);
+    int count(@NonNull final UsuarioCriterioVO usroCriterio);
 
     /**
      * Select list.
@@ -67,7 +67,7 @@ public interface UsuarioDAO {
      *            the bounds
      * @return the list
      */
-    List<UsuarioVO> selectList(final @NonNull UsuarioCriterioVO usroCriterio, final @NonNull RowBounds bounds);
+    List<UsuarioVO> selectList(@NonNull final UsuarioCriterioVO usroCriterio, @NonNull final RowBounds bounds);
 
     /**
      * Select object.
@@ -76,5 +76,5 @@ public interface UsuarioDAO {
      *            the usro criterio
      * @return the usuario VO
      */
-    UsuarioVO selectObject(final @NonNull UsuarioCriterioVO usroCriterio);
+    UsuarioVO selectObject(@NonNull final UsuarioCriterioVO usroCriterio);
 }

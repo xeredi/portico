@@ -40,7 +40,7 @@ public final class BlBO extends SubservicioBO {
      * @param ausroId
      *            the ausro id
      */
-    public BlBO(Long ausroId) {
+    public BlBO(@NonNull final Long ausroId) {
         super(Entidad.BL.getId(), ausroId);
     }
 
@@ -48,8 +48,8 @@ public final class BlBO extends SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void insertPostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv,
-            final @NonNull TipoSubservicioDetailVO tpssDetail, final Set<Long> ssrvPadreIds)
+    protected void insertPostOperations(@NonNull final SqlSession session, @NonNull final SubservicioVO ssrv,
+            @NonNull final TipoSubservicioDetailVO tpssDetail, final Set<Long> ssrvPadreIds)
             throws DuplicateInstanceException {
         Preconditions.checkNotNull(ssrv.getSrvc());
         Preconditions.checkNotNull(ssrv.getSrvc().getId());
@@ -63,7 +63,7 @@ public final class BlBO extends SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void duplicatePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv) {
+    protected void duplicatePostOperations(@NonNull final SqlSession session, @NonNull final SubservicioVO ssrv) {
         Preconditions.checkNotNull(ssrv.getSrvc());
         Preconditions.checkNotNull(ssrv.getSrvc().getId());
 
@@ -76,7 +76,7 @@ public final class BlBO extends SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void updatePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv)
+    protected void updatePostOperations(@NonNull final SqlSession session, @NonNull final SubservicioVO ssrv)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(ssrv.getSrvc());
         Preconditions.checkNotNull(ssrv.getSrvc().getId());
@@ -90,7 +90,7 @@ public final class BlBO extends SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void deletePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv)
+    protected void deletePostOperations(@NonNull final SqlSession session, @NonNull final SubservicioVO ssrv)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(ssrv.getSrvc());
         Preconditions.checkNotNull(ssrv.getSrvc().getId());
@@ -104,8 +104,8 @@ public final class BlBO extends SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void statechangePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv,
-            final @NonNull ItemTramiteVO ittr, final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
+    protected void statechangePostOperations(@NonNull final SqlSession session, @NonNull final SubservicioVO ssrv,
+            @NonNull final ItemTramiteVO ittr, @NonNull final TramiteDetailVO trmtDetail) throws ModelException {
         Preconditions.checkNotNull(ssrv.getId());
         Preconditions.checkNotNull(ssrv.getSrvc());
         Preconditions.checkNotNull(ssrv.getSrvc().getId());
@@ -161,7 +161,7 @@ public final class BlBO extends SubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ResumenTotalesVO selectResumen(final @NonNull Long maniId, final @NonNull Long blId)
+    public ResumenTotalesVO selectResumen(@NonNull final Long maniId, @NonNull final Long blId)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ManifiestoResumenDAO resumenDAO = session.getMapper(ManifiestoResumenDAO.class);

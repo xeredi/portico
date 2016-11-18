@@ -51,9 +51,7 @@ public enum PescaKeyword {
     /** The MA n_ zona. */
     MAN_Zona(120, 4, false),
     /** The MA n_ cod exencion. */
-    MAN_CodExencion(124, 1, false),
-
-    ;
+    MAN_CodExencion(124, 1, false);
 
     /** The offset. */
     private final int offset;
@@ -66,7 +64,7 @@ public enum PescaKeyword {
 
     /**
      * Instantiates a new pesca keyword.
-     * 
+     *
      * @param aoffset
      *            the aoffset
      * @param alength
@@ -74,7 +72,7 @@ public enum PescaKeyword {
      * @param arequired
      *            the arequired
      */
-    private PescaKeyword(final int aoffset, final int alength, final boolean arequired) {
+    PescaKeyword(final int aoffset, final int alength, final boolean arequired) {
         offset = aoffset;
         length = alength;
         required = arequired;
@@ -82,7 +80,7 @@ public enum PescaKeyword {
 
     /**
      * Gets the offset.
-     * 
+     *
      * @return the offset
      */
     public int getOffset() {
@@ -91,7 +89,7 @@ public enum PescaKeyword {
 
     /**
      * Gets the length.
-     * 
+     *
      * @return the length
      */
     public int getLength() {
@@ -100,11 +98,10 @@ public enum PescaKeyword {
 
     /**
      * Checks if is required.
-     * 
+     *
      * @return true, if is required
      */
     public boolean isRequired() {
         return required;
     }
-
 }

@@ -198,8 +198,8 @@ public abstract class EntityImporterBO {
      * @throws ClassNotFoundException
      *             the class not found exception
      */
-    protected abstract void importEntity(final @NonNull Connection con, final @NonNull SqlSession session,
-            final @NonNull EntityNodeV2VO entiNode) throws SQLException, ClassNotFoundException;
+    protected abstract void importEntity(@NonNull final Connection con, @NonNull final SqlSession session,
+            @NonNull final EntityNodeV2VO entiNode) throws SQLException, ClassNotFoundException;
 
     /**
      * Gets the remote connection.
@@ -228,7 +228,7 @@ public abstract class EntityImporterBO {
      * @throws SQLException
      *             the SQL exception
      */
-    private final void translateEntity(final @NonNull Connection con, final EntityNodeV2VO entiNode)
+    private final void translateEntity(@NonNull final Connection con, final EntityNodeV2VO entiNode)
             throws SQLException {
         // Los submaestros no es necesario traducirlos
         if (EntidadProxy.select(entiNode.getId().getId()).getEnti().getTipo() != TipoEntidad.B) {
@@ -266,7 +266,7 @@ public abstract class EntityImporterBO {
      * @throws SQLException
      *             the SQL exception
      */
-    private final void deleteTranslations(final @NonNull Connection con, final @NonNull String tableName)
+    private final void deleteTranslations(@NonNull final Connection con, @NonNull final String tableName)
             throws SQLException {
         try (final PreparedStatement stmt = con
                 .prepareStatement("DELETE FROM tbl_traduccion_ids_trid WHERE trid_table_name = ?")) {
@@ -306,7 +306,7 @@ public abstract class EntityImporterBO {
      * @throws SQLException
      *             the SQL exception
      */
-    protected final ItemDatoVO createItdt(final @NonNull Entidad entity, final @NonNull EntidadTipoDatoVO entd,
+    protected final ItemDatoVO createItdt(@NonNull final Entidad entity, @NonNull final EntidadTipoDatoVO entd,
             final Object value) throws SQLException {
         try {
             final ItemDatoVO itdt = new ItemDatoVO();

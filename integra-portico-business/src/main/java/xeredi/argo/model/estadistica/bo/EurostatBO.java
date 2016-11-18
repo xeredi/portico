@@ -25,7 +25,7 @@ public final class EurostatBO {
      *            the criterio
      * @return the list
      */
-    public List<EurostatVO> selectA1List(final @NonNull EurostatCriterioVO criterio) {
+    public List<EurostatVO> selectA1List(@NonNull final EurostatCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EurostatDAO erstDAO = session.getMapper(EurostatDAO.class);
 
@@ -40,7 +40,7 @@ public final class EurostatBO {
      *            the criterio
      * @return the list
      */
-    public List<EurostatVO> selectA2List(final @NonNull EurostatCriterioVO criterio) {
+    public List<EurostatVO> selectA2List(@NonNull final EurostatCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EurostatDAO erstDAO = session.getMapper(EurostatDAO.class);
 
@@ -55,7 +55,7 @@ public final class EurostatBO {
      *            the criterio
      * @return the list
      */
-    public List<EurostatVO> selectA3List(final @NonNull EurostatCriterioVO criterio) {
+    public List<EurostatVO> selectA3List(@NonNull final EurostatCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EurostatDAO erstDAO = session.getMapper(EurostatDAO.class);
 
@@ -70,7 +70,7 @@ public final class EurostatBO {
      *            the criterio
      * @return the list
      */
-    public List<EurostatVO> selectB1List(final @NonNull EurostatCriterioVO criterio) {
+    public List<EurostatVO> selectB1List(@NonNull final EurostatCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EurostatDAO erstDAO = session.getMapper(EurostatDAO.class);
 
@@ -85,7 +85,7 @@ public final class EurostatBO {
      *            the criterio
      * @return the list
      */
-    public List<EurostatVO> selectC1List(final @NonNull EurostatCriterioVO criterio) {
+    public List<EurostatVO> selectC1List(@NonNull final EurostatCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EurostatDAO erstDAO = session.getMapper(EurostatDAO.class);
 
@@ -100,7 +100,7 @@ public final class EurostatBO {
      *            the criterio
      * @return the list
      */
-    public List<EurostatVO> selectD1List(final @NonNull EurostatCriterioVO criterio) {
+    public List<EurostatVO> selectD1List(@NonNull final EurostatCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EurostatDAO erstDAO = session.getMapper(EurostatDAO.class);
 
@@ -115,7 +115,7 @@ public final class EurostatBO {
      *            the criterio
      * @return the list
      */
-    public List<EurostatVO> selectE1List(final @NonNull EurostatCriterioVO criterio) {
+    public List<EurostatVO> selectE1List(@NonNull final EurostatCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EurostatDAO erstDAO = session.getMapper(EurostatDAO.class);
 
@@ -130,7 +130,7 @@ public final class EurostatBO {
      *            the criterio
      * @return the list
      */
-    public List<EurostatVO> selectF1List(final @NonNull EurostatCriterioVO criterio) {
+    public List<EurostatVO> selectF1List(@NonNull final EurostatCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EurostatDAO erstDAO = session.getMapper(EurostatDAO.class);
 
@@ -145,7 +145,7 @@ public final class EurostatBO {
      *            the criterio
      * @return the list
      */
-    public List<EurostatVO> selectF2List(final @NonNull EurostatCriterioVO criterio) {
+    public List<EurostatVO> selectF2List(@NonNull final EurostatCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EurostatDAO erstDAO = session.getMapper(EurostatDAO.class);
 

@@ -36,6 +36,13 @@ public final class TipoServicioProxy {
     }
 
     /**
+     * Instantiates a new tipo servicio proxy.
+     */
+    private TipoServicioProxy() {
+        super();
+    }
+
+    /**
      * Select label values.
      *
      * @return the list
@@ -60,7 +67,7 @@ public final class TipoServicioProxy {
      *            the id
      * @return the tipo parametro vo
      */
-    public static TipoServicioDetailVO select(final @NonNull Long id) {
+    public static TipoServicioDetailVO select(@NonNull final Long id) {
         if (!TIPO_SERVICIO_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tpsr, id));
         }

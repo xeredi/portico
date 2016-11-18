@@ -12,6 +12,13 @@ import xeredi.argo.model.comun.bo.MessageI18nControl;
 public final class PorticoResourceBundle {
 
     /**
+     * Instantiates a new portico resource bundle.
+     */
+    private PorticoResourceBundle() {
+        super();
+    }
+
+    /**
      * Gets the bundle.
      *
      * @param locale

@@ -35,6 +35,13 @@ public final class TipoDatoProxy {
     }
 
     /**
+     * Instantiates a new tipo dato proxy.
+     */
+    private TipoDatoProxy() {
+        super();
+    }
+
+    /**
      * Select map.
      *
      * @return the map
@@ -59,7 +66,7 @@ public final class TipoDatoProxy {
      *            the id
      * @return the tipo dato vo
      */
-    public static TipoDatoVO select(final @NonNull Long id) {
+    public static TipoDatoVO select(@NonNull final Long id) {
         if (!TIPO_DATO_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tpdt, id));
         }

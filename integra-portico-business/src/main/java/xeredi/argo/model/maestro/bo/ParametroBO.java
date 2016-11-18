@@ -835,7 +835,7 @@ public class ParametroBO {
      *            the limit
      * @return the list
      */
-    public final List<ParametroVO> selectTypeaheadList(final @NonNull ParametroCriterioVO criterio, final int limit) {
+    public final List<ParametroVO> selectTypeaheadList(@NonNull final ParametroCriterioVO criterio, final int limit) {
         Preconditions.checkNotNull(criterio.getEntiId());
         Preconditions.checkNotNull(criterio.getFechaVigencia());
         Preconditions.checkNotNull(criterio.getIdioma());
@@ -864,7 +864,7 @@ public class ParametroBO {
      * @param useIds
      *            the use ids
      */
-    private final void fillDependencies(final SqlSession session, final Collection<ParametroVO> prmtList,
+    private void fillDependencies(final SqlSession session, final Collection<ParametroVO> prmtList,
             final ParametroCriterioVO prmtCriterioVO, final boolean useIds) {
         final ParametroDatoDAO prdtDAO = session.getMapper(ParametroDatoDAO.class);
 

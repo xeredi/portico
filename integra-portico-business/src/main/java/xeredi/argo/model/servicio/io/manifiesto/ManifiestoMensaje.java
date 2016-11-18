@@ -23,26 +23,24 @@ public enum ManifiestoMensaje {
     /** The partida baja. */
     PARTIDA_BAJA(3),
     /** The partida modificacion. */
-    PARTIDA_MODIFICACION(36),
-
-    ;
+    PARTIDA_MODIFICACION(36);
 
     /** The id. */
     private final int id;
 
     /**
      * Instantiates a new manifiesto mensaje.
-     * 
+     *
      * @param aid
      *            the aid
      */
-    private ManifiestoMensaje(final int aid) {
+    ManifiestoMensaje(final int aid) {
         id = aid;
     }
 
     /**
      * Gets the id.
-     * 
+     *
      * @return the id
      */
     public int getId() {
@@ -51,7 +49,7 @@ public enum ManifiestoMensaje {
 
     /**
      * Value of.
-     * 
+     *
      * @param id
      *            the id
      * @return the manifiesto mensaje

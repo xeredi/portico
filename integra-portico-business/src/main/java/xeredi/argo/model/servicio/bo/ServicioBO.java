@@ -84,7 +84,7 @@ public class ServicioBO implements Auditable {
      * @param ausroId
      *            the ausro id
      */
-    protected ServicioBO(final @NonNull Long aentiId, final @NonNull Long ausroId) {
+    protected ServicioBO(@NonNull final Long aentiId, @NonNull final Long ausroId) {
         super();
 
         this.entiId = aentiId;
@@ -95,7 +95,7 @@ public class ServicioBO implements Auditable {
      * {@inheritDoc}
      */
     @Override
-    public AuditoriaPrefijoEntidad getPrefijoEntidad() {
+    public final AuditoriaPrefijoEntidad getPrefijoEntidad() {
         return AuditoriaPrefijoEntidad.srvc;
     }
 
@@ -110,7 +110,7 @@ public class ServicioBO implements Auditable {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final ServicioVO select(final @NonNull Long srvcId, final String idioma) throws InstanceNotFoundException {
+    public final ServicioVO select(@NonNull final Long srvcId, final String idioma) throws InstanceNotFoundException {
         final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
 
         srvcCriterioVO.setId(srvcId);
@@ -128,7 +128,7 @@ public class ServicioBO implements Auditable {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final ServicioVO selectObject(final @NonNull ServicioCriterioVO srvcCriterio)
+    public final ServicioVO selectObject(@NonNull final ServicioCriterioVO srvcCriterio)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             fillUserSpecificFilter(session, srvcCriterio);
@@ -157,7 +157,7 @@ public class ServicioBO implements Auditable {
      *            the limit
      * @return the paginated list
      */
-    public final PaginatedList<ServicioVO> selectList(final @NonNull ServicioCriterioVO srvcCriterio, final int offset,
+    public final PaginatedList<ServicioVO> selectList(@NonNull final ServicioCriterioVO srvcCriterio, final int offset,
             final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             fillUserSpecificFilter(session, srvcCriterio);
@@ -183,7 +183,7 @@ public class ServicioBO implements Auditable {
      *            the srvc criterio vo
      * @return the list
      */
-    public final List<ServicioVO> selectList(final @NonNull ServicioCriterioVO srvcCriterio) {
+    public final List<ServicioVO> selectList(@NonNull final ServicioCriterioVO srvcCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             fillUserSpecificFilter(session, srvcCriterio);
 
@@ -205,7 +205,7 @@ public class ServicioBO implements Auditable {
      *            the limit
      * @return the list
      */
-    public final List<ServicioVO> selectTypeaheadList(final @NonNull ServicioTypeaheadCriterioVO criterio,
+    public final List<ServicioVO> selectTypeaheadList(@NonNull final ServicioTypeaheadCriterioVO criterio,
             final int limit) {
         Preconditions.checkNotNull(criterio.getTextoBusqueda());
 
@@ -242,7 +242,7 @@ public class ServicioBO implements Auditable {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public final void insert(final @NonNull ServicioVO srvc, final List<SubservicioVO> ssrvList,
+    public final void insert(@NonNull final ServicioVO srvc, final List<SubservicioVO> ssrvList,
             final List<SubservicioSubservicioVO> ssssList, final Long archId) throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
@@ -399,7 +399,7 @@ public class ServicioBO implements Auditable {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public final void insertList(final @NonNull Map<String, ServicioVO> srvcMap,
+    public final void insertList(@NonNull final Map<String, ServicioVO> srvcMap,
             final Map<String, List<SubservicioVO>> ssrvMap, final Map<String, List<SubservicioSubservicioVO>> ssssMap,
             final Long archId) throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
@@ -536,7 +536,7 @@ public class ServicioBO implements Auditable {
      * @throws ModelException
      *             the model exception
      */
-    public final void update(final @NonNull ServicioVO srvc) throws ModelException {
+    public final void update(@NonNull final ServicioVO srvc) throws ModelException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
             final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
@@ -579,7 +579,7 @@ public class ServicioBO implements Auditable {
      * @throws ModelException
      *             the model exception
      */
-    public final void duplicate(final @NonNull ServicioVO srvcVO) throws ModelException {
+    public final void duplicate(@NonNull final ServicioVO srvcVO) throws ModelException {
         Preconditions.checkNotNull(srvcVO.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
@@ -689,7 +689,7 @@ public class ServicioBO implements Auditable {
      * @throws ModelException
      *             the model exception
      */
-    public final void delete(final @NonNull ServicioVO srvc) throws ModelException {
+    public final void delete(@NonNull final ServicioVO srvc) throws ModelException {
         Preconditions.checkNotNull(srvc.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -750,7 +750,7 @@ public class ServicioBO implements Auditable {
      * @throws ModelException
      *             the model exception
      */
-    public final void statechange(final @NonNull ItemTramiteVO ittr) throws ModelException {
+    public final void statechange(@NonNull final ItemTramiteVO ittr) throws ModelException {
         Preconditions.checkNotNull(ittr.getItemId());
         Preconditions.checkNotNull(ittr.getTrmt());
         Preconditions.checkNotNull(ittr.getTrmt().getId());
@@ -849,8 +849,8 @@ public class ServicioBO implements Auditable {
      * @param useIds
      *            the use ids
      */
-    private final void fillDependencies(final @NonNull SqlSession session, final @NonNull List<ServicioVO> srvcList,
-            final @NonNull ServicioCriterioVO srvcCriterioVO, final boolean useIds) {
+    private final void fillDependencies(@NonNull final SqlSession session, @NonNull final List<ServicioVO> srvcList,
+            @NonNull final ServicioCriterioVO srvcCriterioVO, final boolean useIds) {
         final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
 
         if (!srvcList.isEmpty()) {
@@ -895,8 +895,8 @@ public class ServicioBO implements Auditable {
      * @param srvcCriterio
      *            the srvc criterio
      */
-    private void fillUserSpecificFilter(final @NonNull SqlSession session,
-            final @NonNull ServicioCriterioVO srvcCriterio) {
+    private void fillUserSpecificFilter(@NonNull final SqlSession session,
+            @NonNull final ServicioCriterioVO srvcCriterio) {
         srvcCriterio.setEntiId(entiId);
 
         final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);

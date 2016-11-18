@@ -21,7 +21,7 @@ public interface GrupoDAO {
      *            the grpo
      * @return true, if successful
      */
-    boolean exists(final @NonNull GrupoVO grpo);
+    boolean exists(@NonNull final GrupoVO grpo);
 
     /**
      * Insert.
@@ -29,7 +29,7 @@ public interface GrupoDAO {
      * @param grpo
      *            the grpo
      */
-    void insert(final @NonNull GrupoVO grpo);
+    void insert(@NonNull final GrupoVO grpo);
 
     /**
      * Update.
@@ -38,7 +38,7 @@ public interface GrupoDAO {
      *            the grpo
      * @return the int
      */
-    int update(final @NonNull GrupoVO grpo);
+    int update(@NonNull final GrupoVO grpo);
 
     /**
      * Delete.
@@ -47,7 +47,7 @@ public interface GrupoDAO {
      *            the grpo
      * @return the int
      */
-    int delete(final @NonNull GrupoVO grpo);
+    int delete(@NonNull final GrupoVO grpo);
 
     /**
      * Count.
@@ -56,7 +56,7 @@ public interface GrupoDAO {
      *            the grpo criterio
      * @return the int
      */
-    int count(final @NonNull GrupoCriterioVO grpoCriterio);
+    int count(@NonNull final GrupoCriterioVO grpoCriterio);
 
     /**
      * Select list.
@@ -67,7 +67,7 @@ public interface GrupoDAO {
      *            the bounds
      * @return the list
      */
-    List<GrupoVO> selectList(final @NonNull GrupoCriterioVO grpoCriterio, final @NonNull RowBounds bounds);
+    List<GrupoVO> selectList(@NonNull final GrupoCriterioVO grpoCriterio, @NonNull final RowBounds bounds);
 
     /**
      * Select list.
@@ -76,7 +76,7 @@ public interface GrupoDAO {
      *            the grpo criterio
      * @return the list
      */
-    List<GrupoVO> selectList(final @NonNull GrupoCriterioVO grpoCriterio);
+    List<GrupoVO> selectList(@NonNull final GrupoCriterioVO grpoCriterio);
 
     /**
      * Select object.
@@ -85,5 +85,5 @@ public interface GrupoDAO {
      *            the grpo criterio
      * @return the grupo VO
      */
-    GrupoVO selectObject(final @NonNull GrupoCriterioVO grpoCriterio);
+    GrupoVO selectObject(@NonNull final GrupoCriterioVO grpoCriterio);
 }

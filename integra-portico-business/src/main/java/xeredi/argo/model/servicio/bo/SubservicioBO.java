@@ -71,7 +71,7 @@ public class SubservicioBO {
      * @param ausroId
      *            the ausro id
      */
-    protected SubservicioBO(final @NonNull Long aentiId, final @NonNull Long ausroId) {
+    protected SubservicioBO(@NonNull final Long aentiId, @NonNull final Long ausroId) {
         super();
 
         this.entiId = aentiId;
@@ -85,7 +85,7 @@ public class SubservicioBO {
      *            the ssrv criterio
      * @return the int
      */
-    public final int count(final @NonNull SubservicioCriterioVO ssrvCriterio) {
+    public final int count(@NonNull final SubservicioCriterioVO ssrvCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             fillUserSpecificFilter(session, ssrvCriterio);
 
@@ -106,7 +106,7 @@ public class SubservicioBO {
      *            the limit
      * @return the paginated list
      */
-    public final PaginatedList<SubservicioVO> selectList(final @NonNull SubservicioCriterioVO ssrvCriterio,
+    public final PaginatedList<SubservicioVO> selectList(@NonNull final SubservicioCriterioVO ssrvCriterio,
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             fillUserSpecificFilter(session, ssrvCriterio);
@@ -129,7 +129,7 @@ public class SubservicioBO {
      *            the ssrv criterio vo
      * @return the list
      */
-    public final List<SubservicioVO> selectList(final @NonNull SubservicioCriterioVO ssrvCriterio) {
+    public final List<SubservicioVO> selectList(@NonNull final SubservicioCriterioVO ssrvCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             fillUserSpecificFilter(session, ssrvCriterio);
 
@@ -151,7 +151,7 @@ public class SubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final LabelValueVO selectLabelValueObject(final @NonNull SubservicioCriterioVO ssrvCriterio)
+    public final LabelValueVO selectLabelValueObject(@NonNull final SubservicioCriterioVO ssrvCriterio)
             throws InstanceNotFoundException {
         final SubservicioVO ssrv = selectObject(ssrvCriterio);
 
@@ -169,7 +169,7 @@ public class SubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final SubservicioVO select(final @NonNull Long ssrvId, final String idioma)
+    public final SubservicioVO select(@NonNull final Long ssrvId, final String idioma)
             throws InstanceNotFoundException {
         final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
 
@@ -188,7 +188,7 @@ public class SubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final SubservicioVO selectObject(final @NonNull SubservicioCriterioVO ssrvCriterio)
+    public final SubservicioVO selectObject(@NonNull final SubservicioCriterioVO ssrvCriterio)
             throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
@@ -227,7 +227,7 @@ public class SubservicioBO {
      *            the limit
      * @return the list
      */
-    public final List<SubservicioVO> selectTypeaheadList(final @NonNull SubservicioLupaCriterioVO ssrvTypeaheadCriterio,
+    public final List<SubservicioVO> selectTypeaheadList(@NonNull final SubservicioLupaCriterioVO ssrvTypeaheadCriterio,
             final int limit) {
         ssrvTypeaheadCriterio.setNumero(Integer.valueOf(ssrvTypeaheadCriterio.getTextoBusqueda()));
 
@@ -250,7 +250,7 @@ public class SubservicioBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public final void insert(final @NonNull SubservicioVO ssrvVO, final @NonNull TipoSubservicioDetailVO tpssDetail,
+    public final void insert(@NonNull final SubservicioVO ssrvVO, @NonNull final TipoSubservicioDetailVO tpssDetail,
             final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
         Preconditions.checkNotNull(ssrvVO.getSrvc());
         Preconditions.checkNotNull(ssrvVO.getSrvc().getId());
@@ -339,7 +339,7 @@ public class SubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void update(final @NonNull SubservicioVO ssrvVO) throws InstanceNotFoundException {
+    public final void update(@NonNull final SubservicioVO ssrvVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(ssrvVO.getSrvc());
         Preconditions.checkNotNull(ssrvVO.getSrvc().getId());
 
@@ -393,7 +393,7 @@ public class SubservicioBO {
      *
      * @see SubservicioBO#duplicatePostOperations(SqlSession, SubservicioVO)
      */
-    public final void duplicate(final @NonNull SubservicioVO ssrv) {
+    public final void duplicate(@NonNull final SubservicioVO ssrv) {
         Preconditions.checkNotNull(ssrv.getId());
         Preconditions.checkNotNull(ssrv.getEntiId());
         Preconditions.checkNotNull(ssrv.getSrvc());
@@ -590,7 +590,7 @@ public class SubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void delete(final @NonNull SubservicioVO ssrv) throws InstanceNotFoundException {
+    public final void delete(@NonNull final SubservicioVO ssrv) throws InstanceNotFoundException {
         Preconditions.checkNotNull(ssrv.getId());
         Preconditions.checkNotNull(ssrv.getEntiId());
         Preconditions.checkNotNull(ssrv.getSrvc());
@@ -724,7 +724,7 @@ public class SubservicioBO {
      * @throws ModelException
      *             the model exception
      */
-    public final void statechange(final @NonNull ItemTramiteVO ittr) throws ModelException {
+    public final void statechange(@NonNull final ItemTramiteVO ittr) throws ModelException {
         Preconditions.checkNotNull(ittr.getItemId());
         Preconditions.checkNotNull(ittr.getTrmt());
         Preconditions.checkNotNull(ittr.getTrmt().getId());
@@ -832,8 +832,8 @@ public class SubservicioBO {
      * @param useIds
      *            the use ids
      */
-    private final void fillDependencies(final @NonNull SqlSession session, final @NonNull List<SubservicioVO> ssrvList,
-            final @NonNull SubservicioCriterioVO ssrvCriterioVO, final boolean useIds) {
+    private final void fillDependencies(@NonNull final SqlSession session, @NonNull final List<SubservicioVO> ssrvList,
+            @NonNull final SubservicioCriterioVO ssrvCriterioVO, final boolean useIds) {
         final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
 
         // Datos asociados
@@ -879,8 +879,8 @@ public class SubservicioBO {
      * @param ssrvCriterio
      *            the ssrv criterio
      */
-    private void fillUserSpecificFilter(final @NonNull SqlSession session,
-            final @NonNull SubservicioCriterioVO ssrvCriterio) {
+    private void fillUserSpecificFilter(@NonNull final SqlSession session,
+            @NonNull final SubservicioCriterioVO ssrvCriterio) {
         ssrvCriterio.setEntiId(entiId);
 
         final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);

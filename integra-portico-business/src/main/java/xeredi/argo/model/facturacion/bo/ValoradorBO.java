@@ -63,7 +63,7 @@ import xeredi.util.mybatis.SqlMapperLocator;
 /**
  * The Class ValoracionBO.
  */
-public class ValoradorBO {
+public final class ValoradorBO {
 
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ValoradorBO.class);
@@ -579,7 +579,7 @@ public class ValoradorBO {
      * @param rgla
      *            the rgla
      */
-    private void generateSql(final @NonNull ReglaVO rgla) {
+    private void generateSql(@NonNull final ReglaVO rgla) {
         Preconditions.checkNotNull(rgla.getEnti());
         Preconditions.checkNotNull(rgla.getEnti().getId());
         Preconditions.checkNotNull(rgla.getVersion());
@@ -616,7 +616,7 @@ public class ValoradorBO {
      * @param aspc
      *            the aspc
      */
-    private void generateSql(final @NonNull AspectoVO aspc) {
+    private void generateSql(@NonNull final AspectoVO aspc) {
         Preconditions.checkNotNull(aspc.getTpsr());
         Preconditions.checkNotNull(aspc.getTpsr().getId());
         Preconditions.checkNotNull(aspc.getVersion());
@@ -643,7 +643,7 @@ public class ValoradorBO {
      *            the path type
      * @return the string
      */
-    private String generateSqlExpression(final @NonNull Long entiId, final String expression, final PathType pathType) {
+    private String generateSqlExpression(@NonNull final Long entiId, final String expression, final PathType pathType) {
         if (expression == null || expression.isEmpty()) {
             return null;
         }

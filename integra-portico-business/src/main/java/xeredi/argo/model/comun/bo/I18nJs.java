@@ -24,7 +24,7 @@ import xeredi.util.applicationobjects.LabelValueVO;
 /**
  * The Class I18nJs.
  */
-public class I18nJs {
+public final class I18nJs {
 
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(I18nJs.class);
@@ -73,12 +73,10 @@ public class I18nJs {
                 }
             }
 
-            final String jsTemplate = "angular.module('argo.i18n', [ 'pascalprecht.translate' ]).config(function($translateProvider) { $translateProvider.translations('"
-                    + language
-                    + "', {"
-                    + i18nParams.toString()
-                    + "}); $translateProvider.preferredLanguage('"
-                    + defaultLanguage + "'); });";
+            final String jsTemplate = "angular.module('argo.i18n', [ 'pascalprecht.translate' ])"
+                    + ".config(function($translateProvider) { $translateProvider.translations('" + language + "', {"
+                    + i18nParams.toString() + "}); $translateProvider.preferredLanguage('" + defaultLanguage
+                    + "'); });";
 
             final String filename = webappInstallPath + "/modules/i18n/i18n_messages_" + language + ".js";
 

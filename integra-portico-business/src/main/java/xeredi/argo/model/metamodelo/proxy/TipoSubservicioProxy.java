@@ -36,6 +36,13 @@ public final class TipoSubservicioProxy {
     }
 
     /**
+     * Instantiates a new tipo subservicio proxy.
+     */
+    private TipoSubservicioProxy() {
+        super();
+    }
+
+    /**
      * Select label values.
      *
      * @return the list
@@ -60,7 +67,7 @@ public final class TipoSubservicioProxy {
      *            the id
      * @return the tipo subservicio vo
      */
-    public static TipoSubservicioDetailVO select(final @NonNull Long id) {
+    public static TipoSubservicioDetailVO select(@NonNull final Long id) {
         if (!TIPO_SUBSERVICIO_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tpss, id));
         }

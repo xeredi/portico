@@ -25,7 +25,7 @@ public final class BuquePescaServicioBO extends ServicioBO {
      * @param ausroId
      *            the ausro id
      */
-    public BuquePescaServicioBO(final @NonNull Long ausroId) {
+    public BuquePescaServicioBO(@NonNull final Long ausroId) {
         super(Entidad.BUQUE_PESCA_SRV.getId(), ausroId);
     }
 
@@ -36,7 +36,7 @@ public final class BuquePescaServicioBO extends ServicioBO {
      *            the criterio
      * @return the list
      */
-    public List<ServicioMaestroVO> selectGenerate(final @NonNull ServicioCriterioVO criterio) {
+    public List<ServicioMaestroVO> selectGenerate(@NonNull final ServicioCriterioVO criterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final BuquePescaServicioDAO sbupDAO = session.getMapper(BuquePescaServicioDAO.class);
 

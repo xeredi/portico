@@ -11,6 +11,13 @@ import net.sf.dynamicreports.report.builder.style.StyleBuilder;
  */
 public final class PdfConstants {
 
+    /**
+     * Instantiates a new pdf constants.
+     */
+    private PdfConstants() {
+        super();
+    }
+
     /** The Constant MAX_SPAN. */
     public static final int MAX_SPAN = 12;
 

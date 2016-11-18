@@ -25,7 +25,7 @@ public final class AmarreDeportivoServicioBO extends ServicioBO {
      * @param ausroId
      *            the ausro id
      */
-    public AmarreDeportivoServicioBO(final @NonNull Long ausroId) {
+    public AmarreDeportivoServicioBO(@NonNull final Long ausroId) {
         super(Entidad.AMARRE_DEP_SRV.getId(), ausroId);
     }
 

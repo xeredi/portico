@@ -39,6 +39,13 @@ public final class TipoEstadisticaProxy {
     }
 
     /**
+     * Instantiates a new tipo estadistica proxy.
+     */
+    private TipoEstadisticaProxy() {
+        super();
+    }
+
+    /**
      * Select label values.
      *
      * @return the list
@@ -63,7 +70,7 @@ public final class TipoEstadisticaProxy {
      *            the id
      * @return the tipo parametro vo
      */
-    public static TipoEstadisticaDetailVO select(final @NonNull long id) {
+    public static TipoEstadisticaDetailVO select(@NonNull final long id) {
         if (!TIPO_ESTADISTICA_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tpes, id));
         }

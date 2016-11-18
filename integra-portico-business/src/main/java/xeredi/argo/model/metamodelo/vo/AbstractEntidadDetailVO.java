@@ -65,7 +65,7 @@ public abstract class AbstractEntidadDetailVO {
      * @param item
      *            the item
      */
-    protected final void fillItem(final @NonNull ItemVO item) {
+    protected final void fillItem(@NonNull final ItemVO item) {
         item.setEntiId(getEnti().getId());
 
         for (final EntidadTipoDatoVO entd : entdMap.values()) {

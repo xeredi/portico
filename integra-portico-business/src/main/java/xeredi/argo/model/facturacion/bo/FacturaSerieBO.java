@@ -81,7 +81,7 @@ public final class FacturaSerieBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final @NonNull FacturaSerieVO fcsr) throws InstanceNotFoundException {
+    public void delete(@NonNull final FacturaSerieVO fcsr) throws InstanceNotFoundException {
         Preconditions.checkNotNull(fcsr.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

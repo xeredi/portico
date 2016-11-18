@@ -36,7 +36,7 @@ public final class PartidaBO extends SubservicioBO {
      * @param ausroId
      *            the ausro id
      */
-    private PartidaBO(Long ausroId) {
+    private PartidaBO(@NonNull final Long ausroId) {
         super(Entidad.PARTIDA.getId(), ausroId);
     }
 
@@ -44,8 +44,8 @@ public final class PartidaBO extends SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void insertPostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrvVO,
-            final @NonNull TipoSubservicioDetailVO tpssSubservicioDetail, final Set<Long> ssrvPadreIds)
+    protected void insertPostOperations(@NonNull final SqlSession session, @NonNull final SubservicioVO ssrvVO,
+            @NonNull final TipoSubservicioDetailVO tpssSubservicioDetail, final Set<Long> ssrvPadreIds)
             throws DuplicateInstanceException {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -68,7 +68,7 @@ public final class PartidaBO extends SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void duplicatePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrvVO) {
+    protected void duplicatePostOperations(@NonNull final SqlSession session, @NonNull final SubservicioVO ssrvVO) {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
 
@@ -90,7 +90,7 @@ public final class PartidaBO extends SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void updatePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrvVO)
+    protected void updatePostOperations(@NonNull final SqlSession session, @NonNull final SubservicioVO ssrvVO)
             throws InstanceNotFoundException {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -113,7 +113,7 @@ public final class PartidaBO extends SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void deletePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv)
+    protected void deletePostOperations(@NonNull final SqlSession session, @NonNull final SubservicioVO ssrv)
             throws InstanceNotFoundException {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -136,8 +136,8 @@ public final class PartidaBO extends SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void statechangePostOperations(final @NonNull SqlSession session, final @NonNull SubservicioVO ssrv,
-            final @NonNull ItemTramiteVO ittr, final @NonNull TramiteDetailVO trmtDetail) throws ModelException {
+    protected void statechangePostOperations(@NonNull final SqlSession session, @NonNull final SubservicioVO ssrv,
+            @NonNull final ItemTramiteVO ittr, @NonNull final TramiteDetailVO trmtDetail) throws ModelException {
         Preconditions.checkNotNull(ssrv.getId());
         Preconditions.checkNotNull(ssrv.getSrvc());
         Preconditions.checkNotNull(ssrv.getSrvc().getId());

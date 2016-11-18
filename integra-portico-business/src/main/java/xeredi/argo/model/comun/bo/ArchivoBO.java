@@ -42,7 +42,7 @@ public final class ArchivoBO {
      * @throws ApplicationException
      *             the application exception
      */
-    public ArchivoVO create(final @NonNull File file, final @NonNull ArchivoSentido sentido)
+    public ArchivoVO create(@NonNull final File file, @NonNull final ArchivoSentido sentido)
             throws ApplicationException {
         final ArchivoVO arch = new ArchivoVO();
 
@@ -74,7 +74,7 @@ public final class ArchivoBO {
      * @param arch
      *            the arch
      */
-    public void insert(final @NonNull ArchivoVO arch) {
+    public void insert(@NonNull final ArchivoVO arch) {
         Preconditions.checkNotNull(arch.getArin());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -96,7 +96,7 @@ public final class ArchivoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public InputStream selectStream(final @NonNull Long archId) throws InstanceNotFoundException {
+    public InputStream selectStream(@NonNull final Long archId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
             final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
@@ -122,7 +122,7 @@ public final class ArchivoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ArchivoInfoVO select(final @NonNull Long archId) throws InstanceNotFoundException {
+    public ArchivoInfoVO select(@NonNull final Long archId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
             final ArchivoCriterioVO arinCriterio = new ArchivoCriterioVO();
@@ -146,7 +146,7 @@ public final class ArchivoBO {
      *            the arch criterio
      * @return the list
      */
-    public List<ArchivoInfoVO> selectList(final @NonNull ArchivoCriterioVO archCriterio) {
+    public List<ArchivoInfoVO> selectList(@NonNull final ArchivoCriterioVO archCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
 
