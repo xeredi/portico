@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module("maestro_controller", [ "maestro_service" ])
+    angular.module("argo.maestro.controller", [ "argo.maestro.service" ])
 
     .config(maestro_config)
 

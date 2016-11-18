@@ -80,13 +80,10 @@ public final class TipoSubservicioBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoSubservicioDAO tpssDAO = session.getMapper(TipoSubservicioDAO.class);
             final int count = tpssDAO.count(tpssCriterio);
-            final List<TipoSubservicioVO> list = new ArrayList<>();
 
-            if (count > offset) {
-                list.addAll(tpssDAO.selectList(tpssCriterio, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<>(list, offset, limit, count);
+            return new PaginatedList<>(
+                    count > offset ? tpssDAO.selectList(tpssCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+                    offset, limit, count);
         }
     }
 

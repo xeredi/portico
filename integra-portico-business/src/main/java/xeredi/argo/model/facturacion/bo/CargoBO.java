@@ -48,13 +48,10 @@ public class CargoBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
             final int count = crgoDAO.count(crgoCriterioVO);
-            final List<CargoVO> crgoList = new ArrayList<>();
 
-            if (count >= offset) {
-                crgoList.addAll(crgoDAO.selectList(crgoCriterioVO, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<CargoVO>(crgoList, offset, limit, count);
+            return new PaginatedList<CargoVO>(count > offset
+                    ? crgoDAO.selectList(crgoCriterioVO, new RowBounds(offset, limit)) : new ArrayList<>(), offset,
+                    limit, count);
         }
     }
 

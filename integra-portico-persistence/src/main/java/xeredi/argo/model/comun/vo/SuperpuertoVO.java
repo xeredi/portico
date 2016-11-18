@@ -1,5 +1,7 @@
 package xeredi.argo.model.comun.vo;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 // TODO: Auto-generated Javadoc
@@ -7,7 +9,7 @@ import lombok.Data;
  * The Class SuperpuertoVO.
  */
 @Data
-public final class SuperpuertoVO implements Identifiable, I18nable {
+public final class SuperpuertoVO implements Identifiable, I18nable, Serializable {
 
     /** The prefix. */
     private final transient ClassPrefix prefix = ClassPrefix.sprt;

@@ -73,7 +73,7 @@ public class I18nJs {
                 }
             }
 
-            final String jsTemplate = "angular.module('i18n', [ 'pascalprecht.translate' ]).config(function($translateProvider) { $translateProvider.translations('"
+            final String jsTemplate = "angular.module('argo.i18n', [ 'pascalprecht.translate' ]).config(function($translateProvider) { $translateProvider.translations('"
                     + language
                     + "', {"
                     + i18nParams.toString()

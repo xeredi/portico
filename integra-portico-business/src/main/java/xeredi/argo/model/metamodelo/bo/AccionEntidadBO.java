@@ -13,11 +13,9 @@ import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.AccionEntidadDAO;
 import xeredi.argo.model.metamodelo.dao.FuncionalidadDAO;
-import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 import xeredi.argo.model.seguridad.dao.FuncionalidadGrupoDAO;
@@ -30,35 +28,6 @@ import xeredi.util.pagination.PaginatedList;
  * The Class AccionEntidadBO.
  */
 public final class AccionEntidadBO {
-
-    /**
-     * Checks if is user allowed.
-     *
-     * @param prefix
-     *            the prefix
-     * @param codigo
-     *            the codigo
-     * @param entiId
-     *            the enti id
-     * @param usroId
-     *            the usro id
-     * @return true, if is user allowed
-     */
-    public boolean isUserAllowed(final @NonNull ClassPrefix prefix, final @NonNull AccionCodigo codigo,
-            final @NonNull Long entiId, final @NonNull Long usroId) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
-            final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
-
-            acenCriterio.setCodigo(codigo);
-            acenCriterio.setPrefix(prefix);
-            acenCriterio.setEntiId(entiId);
-            acenCriterio.setUsroId(usroId);
-
-            return acenDAO.count(acenCriterio) > 0;
-        }
-    }
-
     /**
      * Insert.
      *
@@ -153,10 +122,10 @@ public final class AccionEntidadBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
             final int count = acenDAO.count(acenCriterio);
-            final List<AccionEntidadVO> acenList = (count > offset)
-                    ? acenDAO.selectList(acenCriterio, new RowBounds(offset, limit)) : new ArrayList<>();
 
-            return new PaginatedList<AccionEntidadVO>(acenList, offset, limit, count);
+            return new PaginatedList<AccionEntidadVO>(
+                    count > offset ? acenDAO.selectList(acenCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+                    offset, limit, count);
         }
     }
 

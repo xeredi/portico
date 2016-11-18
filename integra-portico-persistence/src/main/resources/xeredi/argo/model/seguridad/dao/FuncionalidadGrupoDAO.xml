@@ -3,6 +3,8 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.argo.model.seguridad.dao.FuncionalidadGrupoDAO">
+    <cache-ref namespace="xeredi.argo.model.seguridad.dao.UsuarioPermisoDAO"/>
+
     <resultMap type="FuncionalidadGrupoVO" id="ResultMap">
         <id column="fngr_fncd_pk" />
         <id column="fngr_grpo_pk" />
@@ -32,14 +34,14 @@
         <include refid="SelectWhere" />
     </select>
 
-    <insert id="insert" parameterType="FuncionalidadGrupoVO">
+    <insert id="insert" parameterType="FuncionalidadGrupoVO" flushCache="true">
         <![CDATA[
         INSERT INTO tbl_funcionalidad_grupo_fngr (fngr_fncd_pk, fngr_grpo_pk)
         VALUES (#{fncdId}, #{grpoId})
         ]]>
     </insert>
 
-    <delete id="deleteList" parameterType="FuncionalidadGrupoCriterioVO">
+    <delete id="deleteList" parameterType="FuncionalidadGrupoCriterioVO" flushCache="true">
         DELETE FROM tbl_funcionalidad_grupo_fngr
         <include refid="SelectWhere" />
     </delete>

@@ -302,13 +302,9 @@ public class ProcesoBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final int count = prbtDAO.count(prbtCriterioVO);
-            final List<ProcesoVO> prbtList = new ArrayList<>();
 
-            if (count > offset) {
-                prbtList.addAll(prbtDAO.selectList(prbtCriterioVO, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<>(prbtList, offset, limit, count);
+            return new PaginatedList<>(count > offset ? prbtDAO.selectList(prbtCriterioVO, new RowBounds(offset, limit))
+                    : new ArrayList<>(), offset, limit, count);
         }
     }
 
@@ -370,14 +366,11 @@ public class ProcesoBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoMensajeDAO prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
-            final List<ProcesoMensajeVO> prmnList = new ArrayList<>();
             final int count = prmnDAO.count(criterio);
 
-            if (count >= offset) {
-                prmnList.addAll(prmnDAO.selectList(criterio, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<ProcesoMensajeVO>(prmnList, offset, limit, count);
+            return new PaginatedList<ProcesoMensajeVO>(
+                    count > offset ? prmnDAO.selectList(criterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+                    offset, limit, count);
         }
     }
 

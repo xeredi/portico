@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module("seguridad_controller", [ "seguridad_service" ])
+    angular.module("argo.seguridad.controller", [ "argo.seguridad.service" ])
 
     .config(seguridad_config)
 

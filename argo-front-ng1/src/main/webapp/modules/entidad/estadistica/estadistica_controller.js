@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module("estadistica_controller", [ "estadistica_service" ])
+    angular.module("argo.estadistica.controller", [ "argo.estadistica.service" ])
 
     .config(estadistica_config)
 

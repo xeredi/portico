@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module("administracion_controller", [ "administracion_service" ])
+    angular.module("argo.administracion.controller", [ "argo.administracion.service" ])
 
     .config(administracion_config)
 

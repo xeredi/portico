@@ -77,13 +77,10 @@ public final class TipoEstadisticaBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoEstadisticaDAO tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
             final int count = tpesDAO.count(tpesCriterio);
-            final List<TipoEstadisticaVO> list = new ArrayList<>();
 
-            if (count > offset) {
-                list.addAll(tpesDAO.selectList(tpesCriterio, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<>(list, offset, limit, count);
+            return new PaginatedList<>(
+                    count > offset ? tpesDAO.selectList(tpesCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+                    offset, limit, count);
         }
     }
 

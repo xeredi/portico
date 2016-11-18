@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module("proceso_controller", [ "proceso_service" ])
+    angular.module("argo.proceso.controller", [ "argo.proceso.service" ])
 
     .config(proceso_config)
 

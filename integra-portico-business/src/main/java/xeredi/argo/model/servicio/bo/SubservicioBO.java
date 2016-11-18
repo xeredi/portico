@@ -113,12 +113,10 @@ public class SubservicioBO {
 
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final int count = ssrvDAO.count(ssrvCriterio);
-            final List<SubservicioVO> ssrvList = new ArrayList<>();
+            final List<SubservicioVO> ssrvList = count > offset
+                    ? ssrvDAO.selectList(ssrvCriterio, new RowBounds(offset, limit)) : new ArrayList<>();
 
-            if (count > offset) {
-                ssrvList.addAll(ssrvDAO.selectList(ssrvCriterio, new RowBounds(offset, limit)));
-                fillDependencies(session, ssrvList, ssrvCriterio, true);
-            }
+            fillDependencies(session, ssrvList, ssrvCriterio, true);
 
             return new PaginatedList<>(ssrvList, offset, limit, count);
         }

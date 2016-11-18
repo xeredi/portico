@@ -2,14 +2,15 @@
     'use strict';
 
     angular.module(
-            "config",
+            "argo.common.config",
             [ "ngRoute", "mgcrea.ngStrap", "mgcrea.ngStrap.aside", "ui.bootstrap.tpls", "ui.bootstrap.tabs",
                     "ui.bootstrap.pagination", "ui.bootstrap.dropdown", "ui.bootstrap.typeahead",
-                    "ui.bootstrap.tooltip", "ui.bootstrap.modal", "pascalprecht.translate", "angularSpinner",
-                    "uiGmapgoogle-maps", "ngFileUpload", "ngFileSaver", "LocalStorageModule", "i18n",
-                    "administracion_controller", "metamodelo_controller", "facturacion_controller",
-                    "item_controller", "maestro_controller", "servicio_controller", "estadistica_controller",
-                    "proceso_controller", "seguridad_controller" ])
+                    "ui.bootstrap.tooltip", "pascalprecht.translate", "angularSpinner", "uiGmapgoogle-maps",
+                    "ngFileUpload", "ngFileSaver", "LocalStorageModule", "argo.i18n",
+                    "argo.administracion.controller", "argo.metamodelo.controller",
+                    "argo.facturacion.controller", "argo.item.controller", "argo.maestro.controller",
+                    "argo.servicio.controller", "argo.estadistica.controller", "argo.proceso.controller",
+                    "argo.seguridad.controller" ])
 
     .config(routeProvider_config)
 

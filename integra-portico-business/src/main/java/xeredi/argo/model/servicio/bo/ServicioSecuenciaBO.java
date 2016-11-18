@@ -122,13 +122,10 @@ public final class ServicioSecuenciaBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioSecuenciaDAO srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
             final int count = srscDAO.count(srscCriterio);
-            final List<ServicioSecuenciaVO> srscList = new ArrayList<>();
 
-            if (count >= offset) {
-                srscList.addAll(srscDAO.selectList(srscCriterio, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<ServicioSecuenciaVO>(srscList, offset, limit, count);
+            return new PaginatedList<>(
+                    count > offset ? srscDAO.selectList(srscCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+                    offset, limit, count);
         }
     }
 }

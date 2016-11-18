@@ -79,13 +79,10 @@ public final class TipoSubparametroBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
             final int count = tpspDAO.count(tpspCriterio);
-            final List<TipoSubparametroVO> list = new ArrayList<>();
 
-            if (count > offset) {
-                list.addAll(tpspDAO.selectList(tpspCriterio, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<>(list, offset, limit, count);
+            return new PaginatedList<>(
+                    count > offset ? tpspDAO.selectList(tpspCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+                    offset, limit, count);
         }
     }
 

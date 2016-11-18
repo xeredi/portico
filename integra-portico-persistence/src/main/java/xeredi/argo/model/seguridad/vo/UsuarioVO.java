@@ -1,5 +1,6 @@
 package xeredi.argo.model.seguridad.vo;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,8 +15,15 @@ import xeredi.argo.model.maestro.vo.ParametroVO;
 /**
  * The Class UsuarioVO.
  */
+
+/**
+ * {@inheritDoc}
+ */
 @Data
-public final class UsuarioVO implements Identifiable {
+public final class UsuarioVO implements Identifiable, Serializable {
+
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = 1393605997535392428L;
 
     /** The prefix. */
     private final transient ClassPrefix prefix = ClassPrefix.usro;

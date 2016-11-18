@@ -13,13 +13,11 @@ import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.AccionBaseDAO;
 import xeredi.argo.model.metamodelo.dao.FuncionalidadDAO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseVO;
-import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.seguridad.dao.FuncionalidadGrupoDAO;
 import xeredi.argo.model.seguridad.vo.FuncionalidadGrupoCriterioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -30,170 +28,143 @@ import xeredi.util.pagination.PaginatedList;
  * The Class AccionBaseBO.
  */
 public final class AccionBaseBO {
+    /**
+     * Insert.
+     *
+     * @param acbs
+     *            the acbs
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
+     */
+    public void insert(final @NonNull AccionBaseVO acbs) throws DuplicateInstanceException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
+            final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
 
-	/**
-	 * Checks if is user allowed.
-	 *
-	 * @param prefix
-	 *            the prefix
-	 * @param codigo
-	 *            the codigo
-	 * @param usroId
-	 *            the usro id
-	 * @return true, if is user allowed
-	 */
-	public boolean isUserAllowed(final @NonNull ClassPrefix prefix, final @NonNull AccionCodigo codigo,
-			final @NonNull Long usroId) {
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
-			final AccionBaseCriterioVO acbsCriterio = new AccionBaseCriterioVO();
+            if (acbsDAO.exists(acbs)) {
+                throw new DuplicateInstanceException(MessageI18nKey.acbs, acbs);
+            }
 
-			acbsCriterio.setCodigo(codigo);
-			acbsCriterio.setPrefix(prefix);
-			acbsCriterio.setUsroId(usroId);
+            IgUtilBO.assignNextVal(acbs);
+            fncdDAO.insert(acbs);
+            acbsDAO.insert(acbs);
 
-			return acbsDAO.count(acbsCriterio) > 0;
-		}
-	}
+            session.commit();
+        }
+    }
 
-	/**
-	 * Insert.
-	 *
-	 * @param acbs
-	 *            the acbs
-	 * @throws DuplicateInstanceException
-	 *             the duplicate instance exception
-	 */
-	public void insert(final @NonNull AccionBaseVO acbs) throws DuplicateInstanceException {
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
-			final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
+    /**
+     * Update.
+     *
+     * @param acbs
+     *            the acbs
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public void update(final @NonNull AccionBaseVO acbs) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(acbs.getId());
 
-			if (acbsDAO.exists(acbs)) {
-				throw new DuplicateInstanceException(MessageI18nKey.acbs, acbs);
-			}
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
 
-			IgUtilBO.assignNextVal(acbs);
-			fncdDAO.insert(acbs);
-			acbsDAO.insert(acbs);
+            if (acbsDAO.update(acbs) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.acbs, acbs);
+            }
 
-			session.commit();
-		}
-	}
+            session.commit();
+        }
+    }
 
-	/**
-	 * Update.
-	 *
-	 * @param acbs
-	 *            the acbs
-	 * @throws InstanceNotFoundException
-	 *             the instance not found exception
-	 */
-	public void update(final @NonNull AccionBaseVO acbs) throws InstanceNotFoundException {
-		Preconditions.checkNotNull(acbs.getId());
+    /**
+     * Delete.
+     *
+     * @param acbs
+     *            the acbs
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public void delete(final @NonNull AccionBaseVO acbs) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(acbs.getId());
 
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
+            final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
+            final FuncionalidadGrupoDAO fngrDAO = session.getMapper(FuncionalidadGrupoDAO.class);
 
-			if (acbsDAO.update(acbs) == 0) {
-				throw new InstanceNotFoundException(MessageI18nKey.acbs, acbs);
-			}
+            final FuncionalidadGrupoCriterioVO fngrCriterio = new FuncionalidadGrupoCriterioVO();
 
-			session.commit();
-		}
-	}
+            fngrCriterio.setFncdId(acbs.getId());
 
-	/**
-	 * Delete.
-	 *
-	 * @param acbs
-	 *            the acbs
-	 * @throws InstanceNotFoundException
-	 *             the instance not found exception
-	 */
-	public void delete(final @NonNull AccionBaseVO acbs) throws InstanceNotFoundException {
-		Preconditions.checkNotNull(acbs.getId());
+            if (acbsDAO.delete(acbs) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.acbs, acbs);
+            }
 
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
-			final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
-			final FuncionalidadGrupoDAO fngrDAO = session.getMapper(FuncionalidadGrupoDAO.class);
+            fngrDAO.deleteList(fngrCriterio);
+            fncdDAO.delete(acbs);
 
-			final FuncionalidadGrupoCriterioVO fngrCriterio = new FuncionalidadGrupoCriterioVO();
+            session.commit();
+        }
+    }
 
-			fngrCriterio.setFncdId(acbs.getId());
+    /**
+     * Select list.
+     *
+     * @param acbsCriterio
+     *            the acbs criterio
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
+     */
+    public PaginatedList<AccionBaseVO> selectList(final @NonNull AccionBaseCriterioVO acbsCriterio, final int offset,
+            final int limit) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
+            final int count = acbsDAO.count(acbsCriterio);
 
-			if (acbsDAO.delete(acbs) == 0) {
-				throw new InstanceNotFoundException(MessageI18nKey.acbs, acbs);
-			}
+            return new PaginatedList<AccionBaseVO>((count > offset)
+                    ? acbsDAO.selectList(acbsCriterio, new RowBounds(offset, limit)) : new ArrayList<>(), offset, limit,
+                    count);
+        }
+    }
 
-			fngrDAO.deleteList(fngrCriterio);
-			fncdDAO.delete(acbs);
+    /**
+     * Select list.
+     *
+     * @param acbsCriterio
+     *            the acbs criterio
+     * @return the list
+     */
+    public List<AccionBaseVO> selectList(final @NonNull AccionBaseCriterioVO acbsCriterio) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
 
-			session.commit();
-		}
-	}
+            return acbsDAO.selectList(acbsCriterio);
+        }
+    }
 
-	/**
-	 * Select list.
-	 *
-	 * @param acbsCriterio
-	 *            the acbs criterio
-	 * @param offset
-	 *            the offset
-	 * @param limit
-	 *            the limit
-	 * @return the paginated list
-	 */
-	public PaginatedList<AccionBaseVO> selectList(final @NonNull AccionBaseCriterioVO acbsCriterio, final int offset,
-			final int limit) {
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
-			final int count = acbsDAO.count(acbsCriterio);
+    /**
+     * Select object.
+     *
+     * @param acbsCriterio
+     *            the acbs criterio
+     * @return the accion base VO
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public AccionBaseVO selectObject(final @NonNull AccionBaseCriterioVO acbsCriterio)
+            throws InstanceNotFoundException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
+            final AccionBaseVO acbs = acbsDAO.selectObject(acbsCriterio);
 
-			final List<AccionBaseVO> acbsList = (count > offset)
-					? acbsDAO.selectList(acbsCriterio, new RowBounds(offset, limit)) : new ArrayList<>();
+            if (acbs == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.acbs, acbsCriterio);
+            }
 
-			return new PaginatedList<AccionBaseVO>(acbsList, offset, limit, count);
-		}
-	}
-
-	/**
-	 * Select list.
-	 *
-	 * @param acbsCriterio
-	 *            the acbs criterio
-	 * @return the list
-	 */
-	public List<AccionBaseVO> selectList(final @NonNull AccionBaseCriterioVO acbsCriterio) {
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
-
-			return acbsDAO.selectList(acbsCriterio);
-		}
-	}
-
-	/**
-	 * Select object.
-	 *
-	 * @param acbsCriterio
-	 *            the acbs criterio
-	 * @return the accion base VO
-	 * @throws InstanceNotFoundException
-	 *             the instance not found exception
-	 */
-	public AccionBaseVO selectObject(final @NonNull AccionBaseCriterioVO acbsCriterio)
-			throws InstanceNotFoundException {
-		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-			final AccionBaseDAO acbsDAO = session.getMapper(AccionBaseDAO.class);
-			final AccionBaseVO acbs = acbsDAO.selectObject(acbsCriterio);
-
-			if (acbs == null) {
-				throw new InstanceNotFoundException(MessageI18nKey.acbs, acbsCriterio);
-			}
-
-			return acbs;
-		}
-	}
+            return acbs;
+        }
+    }
 
 }

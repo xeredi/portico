@@ -77,13 +77,9 @@ public final class TipoParametroBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoParametroDAO tpprDAO = session.getMapper(TipoParametroDAO.class);
             final int count = tpprDAO.count(tpprCriterioVO);
-            final List<TipoParametroVO> list = new ArrayList<>();
 
-            if (count > offset) {
-                list.addAll(tpprDAO.selectList(tpprCriterioVO, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<>(list, offset, limit, count);
+            return new PaginatedList<>(count > offset ? tpprDAO.selectList(tpprCriterioVO, new RowBounds(offset, limit))
+                    : new ArrayList<>(), offset, limit, count);
         }
     }
 

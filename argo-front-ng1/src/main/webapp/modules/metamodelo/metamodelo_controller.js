@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module("metamodelo_controller", [ "metamodelo_service" ])
+    angular.module("argo.metamodelo.controller", [ "argo.metamodelo.service" ])
 
     .config(metamodelo_config)
 

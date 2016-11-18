@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module("maestro_service", [ "crud_service" ])
+    angular.module("argo.maestro.service", [ "argo.common.crud.service" ])
 
     .factory("MaestroService", MaestroService)
 

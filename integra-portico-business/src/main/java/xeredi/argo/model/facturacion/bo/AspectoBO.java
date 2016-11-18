@@ -51,13 +51,10 @@ public final class AspectoBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
             final int count = aspcDAO.count(aspcCriterioVO);
-            final List<AspectoVO> aspcList = new ArrayList<>();
 
-            if (count >= offset) {
-                aspcList.addAll(aspcDAO.selectList(aspcCriterioVO, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<AspectoVO>(aspcList, offset, limit, count);
+            return new PaginatedList<AspectoVO>(count > offset
+                    ? aspcDAO.selectList(aspcCriterioVO, new RowBounds(offset, limit)) : new ArrayList<>(), offset,
+                    limit, count);
         }
     }
 

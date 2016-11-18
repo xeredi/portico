@@ -79,13 +79,10 @@ public final class TipoServicioBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoServicioDAO tpsrDAO = session.getMapper(TipoServicioDAO.class);
             final int count = tpsrDAO.count(tpsrCriterio);
-            final List<TipoServicioVO> list = new ArrayList<>();
 
-            if (count > offset) {
-                list.addAll(tpsrDAO.selectList(tpsrCriterio, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<>(list, offset, limit, count);
+            return new PaginatedList<>(
+                    count > offset ? tpsrDAO.selectList(tpsrCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+                    offset, limit, count);
         }
     }
 

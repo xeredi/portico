@@ -110,13 +110,10 @@ public final class ValoracionLineaBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
             final int count = vlrlDAO.count(vlrlCriterio);
-            final List<ValoracionLineaVO> vlrlList = new ArrayList<>();
 
-            if (count >= offset) {
-                vlrlList.addAll(vlrlDAO.selectList(vlrlCriterio, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<ValoracionLineaVO>(vlrlList, offset, limit, count);
+            return new PaginatedList<ValoracionLineaVO>(
+                    count > offset ? vlrlDAO.selectList(vlrlCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+                    offset, limit, count);
         }
     }
 

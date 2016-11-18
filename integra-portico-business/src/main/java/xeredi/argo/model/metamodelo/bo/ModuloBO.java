@@ -160,10 +160,9 @@ public final class ModuloBO {
             final ModuloDAO mdloDAO = session.getMapper(ModuloDAO.class);
             final int count = mdloDAO.count(mdloCriterio);
 
-            final List<ModuloVO> mdloList = (count > offset)
-                    ? mdloDAO.selectList(mdloCriterio, new RowBounds(offset, limit)) : new ArrayList<>();
-
-            return new PaginatedList<ModuloVO>(mdloList, offset, limit, count);
+            return new PaginatedList<ModuloVO>(
+                    count > offset ? mdloDAO.selectList(mdloCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+                    offset, limit, count);
         }
     }
 

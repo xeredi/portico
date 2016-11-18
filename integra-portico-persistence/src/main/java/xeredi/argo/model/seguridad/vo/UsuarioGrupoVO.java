@@ -1,5 +1,7 @@
 package xeredi.argo.model.seguridad.vo;
 
+import java.io.Serializable;
+
 import lombok.Data;
 import xeredi.argo.model.comun.vo.ClassPrefix;
 
@@ -8,7 +10,7 @@ import xeredi.argo.model.comun.vo.ClassPrefix;
  * The Class UsuarioGrupoVO.
  */
 @Data
-public final class UsuarioGrupoVO {
+public final class UsuarioGrupoVO implements Serializable {
 
     /** The prefix. */
     private final transient ClassPrefix prefix = ClassPrefix.usgr;

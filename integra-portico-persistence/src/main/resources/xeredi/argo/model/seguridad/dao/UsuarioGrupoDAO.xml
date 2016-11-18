@@ -3,6 +3,8 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.argo.model.seguridad.dao.UsuarioGrupoDAO">
+    <cache-ref namespace="xeredi.argo.model.seguridad.dao.UsuarioPermisoDAO"/>
+
     <sql id="SelectWhere">
         <where>
             <if test="usroId != null">
@@ -14,15 +16,15 @@
         </where>
     </sql>
 
-    <insert id="insert" parameterType="UsuarioGrupoVO">
+    <insert id="insert" parameterType="UsuarioGrupoVO" flushCache="true">
         <![CDATA[
         INSERT INTO tbl_usuario_grupo_usgr (usgr_usro_pk, usgr_grpo_pk)
         VALUES (#{usroId}, #{grpoId})
         ]]>
     </insert>
 
-    <delete id="deleteList" parameterType="UsuarioGrupoCriterioVO">
-        DELETE FROM tbl_usuario_grupo_usgr
+    <delete id="deleteList" parameterType="UsuarioGrupoCriterioVO" flushCache="true">
+    DELETE FROM tbl_usuario_grupo_usgr
         <include refid="SelectWhere"/>
     </delete>
 </mapper>

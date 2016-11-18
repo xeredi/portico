@@ -50,13 +50,10 @@ public class ReglaBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
             final int count = rglaDAO.count(rglaCriterioVO);
-            final List<ReglaVO> rglaList = new ArrayList<>();
 
-            if (count >= offset) {
-                rglaList.addAll(rglaDAO.selectList(rglaCriterioVO, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<ReglaVO>(rglaList, offset, limit, count);
+            return new PaginatedList<ReglaVO>(count > offset
+                    ? rglaDAO.selectList(rglaCriterioVO, new RowBounds(offset, limit)) : new ArrayList<>(), offset,
+                    limit, count);
         }
     }
 

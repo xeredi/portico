@@ -140,15 +140,11 @@ public final class FacturaSerieBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final FacturaSerieDAO fcsrDAO = session.getMapper(FacturaSerieDAO.class);
-
             final int count = fcsrDAO.count(fcsrCriterio);
-            final List<FacturaSerieVO> list = new ArrayList<>();
 
-            if (count > offset) {
-                list.addAll(fcsrDAO.selectList(fcsrCriterio, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<FacturaSerieVO>(list, offset, limit, count);
+            return new PaginatedList<FacturaSerieVO>(
+                    count > offset ? fcsrDAO.selectList(fcsrCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+                    offset, limit, count);
         }
     }
 

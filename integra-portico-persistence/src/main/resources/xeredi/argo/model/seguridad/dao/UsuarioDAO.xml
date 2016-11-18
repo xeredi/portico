@@ -3,6 +3,8 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.argo.model.seguridad.dao.UsuarioDAO">
+    <cache />
+
     <resultMap type="UsuarioVO" id="ResultMap">
         <id column="usro_pk"/>
 
@@ -113,7 +115,7 @@
         ORDER BY usro_login
     </select>
 
-    <select id="selectObject" parameterType="UsuarioCriterioVO" resultMap="ResultMap">
+    <select id="selectObject" parameterType="UsuarioCriterioVO" resultMap="ResultMap" useCache="true">
         <include refid="SelectPrefix"/>
         <include refid="SelectWhere"/>
     </select>
@@ -126,14 +128,14 @@
         ]]>
     </select>
 
-    <insert id="insert" parameterType="UsuarioVO">
+    <insert id="insert" parameterType="UsuarioVO" flushCache="true">
         <![CDATA[
         INSERT INTO tbl_usuario_usro (usro_pk, usro_login, usro_contrasenia, usro_email, usro_nombre, usro_sprt_pk, usro_prto_pk, usro_orga_pk)
         VALUES (#{id}, #{login}, #{contrasenia}, #{email}, #{nombre}, #{sprt.id}, #{prto.id}, #{orga.id})
         ]]>
     </insert>
 
-    <update id="update" parameterType="UsuarioVO">
+    <update id="update" parameterType="UsuarioVO" flushCache="true">
         <![CDATA[
         UPDATE tbl_usuario_usro SET
             usro_login = #{login}
@@ -148,7 +150,7 @@
         ]]>
     </update>
 
-    <delete id="delete" parameterType="UsuarioVO">
+    <delete id="delete" parameterType="UsuarioVO" flushCache="true">
         <![CDATA[
         DELETE FROM tbl_usuario_usro
         WHERE

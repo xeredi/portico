@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module("item_controller", [ "item_service" ])
+    angular.module("argo.item.controller", [ "argo.item.service" ])
 
     .config(item_config)
 

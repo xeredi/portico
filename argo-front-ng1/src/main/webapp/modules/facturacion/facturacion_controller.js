@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module("facturacion_controller", [ "facturacion_service" ])
+    angular.module("argo.facturacion.controller", [ "argo.facturacion.service" ])
 
     .config(facturacion_config)
 

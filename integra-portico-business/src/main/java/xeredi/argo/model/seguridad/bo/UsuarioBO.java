@@ -2,7 +2,6 @@ package xeredi.argo.model.seguridad.bo;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
@@ -149,13 +148,10 @@ public final class UsuarioBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
             final int count = usroDAO.count(usroCriterio);
-            final List<UsuarioVO> usroList = new ArrayList<UsuarioVO>();
 
-            if (count > offset) {
-                usroList.addAll(usroDAO.selectList(usroCriterio, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<UsuarioVO>(usroList, offset, limit, count);
+            return new PaginatedList<>(
+                    count > offset ? usroDAO.selectList(usroCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+                    offset, limit, count);
         }
     }
 

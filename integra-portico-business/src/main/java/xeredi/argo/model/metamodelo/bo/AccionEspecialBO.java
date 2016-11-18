@@ -161,10 +161,9 @@ public final class AccionEspecialBO {
             final AccionEspecialDAO acesDAO = session.getMapper(AccionEspecialDAO.class);
             final int count = acesDAO.count(acesCriterio);
 
-            final List<AccionEspecialVO> acesList = (count > offset)
-                    ? acesDAO.selectList(acesCriterio, new RowBounds(offset, limit)) : new ArrayList<>();
-
-            return new PaginatedList<AccionEspecialVO>(acesList, offset, limit, count);
+            return new PaginatedList<AccionEspecialVO>(
+                    count > offset ? acesDAO.selectList(acesCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+                    offset, limit, count);
         }
     }
 

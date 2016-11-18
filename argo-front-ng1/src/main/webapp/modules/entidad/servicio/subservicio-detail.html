@@ -73,7 +73,7 @@
                         <label data-ng-bind="('enti_' + entiId | translate)"></label>
                         <p class="form-control-static">
                             <a
-                                data-ng-href="#/servicio/subservicio/detail/{{entiId}}/{{vm.item.ssrvPadreMap[entiId].value}}"
+                                data-ng-href="#/servicio/subservicio/detail/{{entiId}}/{{vm.item.ssrvPadreMap[entiId].id}}"
                                 data-ng-bind="vm.item.ssrvPadreMap[entiId].etiqueta"
                                 data-ng-if="mc.hasAcen(entiId, 'detail')"></a> <span
                                 data-ng-bind="vm.item.ssrvPadreMap[entiId].etiqueta"

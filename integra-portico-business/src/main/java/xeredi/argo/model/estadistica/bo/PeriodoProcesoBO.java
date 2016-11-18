@@ -143,13 +143,9 @@ public class PeriodoProcesoBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
             final int count = peprDAO.count(peprCriterioVO);
-            final List<PeriodoProcesoVO> peprList = new ArrayList<>();
 
-            if (count > offset) {
-                peprList.addAll(peprDAO.selectList(peprCriterioVO, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<>(peprList, offset, limit, count);
+            return new PaginatedList<>(count > offset ? peprDAO.selectList(peprCriterioVO, new RowBounds(offset, limit))
+                    : new ArrayList<>(), offset, limit, count);
         }
     }
 

@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module("metamodelo_service", [ "crud_service" ])
+    angular.module("argo.metamodelo.service", [ "argo.common.crud.service" ])
 
     .factory("TipoDatoService", TipoDatoService)
 

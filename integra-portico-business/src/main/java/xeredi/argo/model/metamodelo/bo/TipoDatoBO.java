@@ -203,13 +203,10 @@ public final class TipoDatoBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
             final int count = tpdtDAO.count(tpdtCriterio);
-            final List<TipoDatoVO> tpdtList = new ArrayList<>();
 
-            if (count > offset) {
-                tpdtList.addAll(tpdtDAO.selectList(tpdtCriterio, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<>(tpdtList, offset, limit, count);
+            return new PaginatedList<>(
+                    count > offset ? tpdtDAO.selectList(tpdtCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+                    offset, limit, count);
         }
     }
 

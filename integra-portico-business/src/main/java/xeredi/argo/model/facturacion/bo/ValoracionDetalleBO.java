@@ -74,15 +74,11 @@ public final class ValoracionDetalleBO {
             final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-
             final int count = vlrdDAO.count(vlrdCriterio);
-            final List<ValoracionDetalleVO> vlrdList = new ArrayList<>();
 
-            if (count >= offset) {
-                vlrdList.addAll(vlrdDAO.selectList(vlrdCriterio, new RowBounds(offset, limit)));
-            }
-
-            return new PaginatedList<ValoracionDetalleVO>(vlrdList, offset, limit, count);
+            return new PaginatedList<ValoracionDetalleVO>(
+                    count > offset ? vlrdDAO.selectList(vlrdCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+                    offset, limit, count);
         }
     }
 

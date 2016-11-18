@@ -56,11 +56,9 @@
 
             <if test="soloDatosGrid">
 	        <![CDATA[
-			    AND EXISTS (
-			        SELECT 1 FROM tbl_entidad_tipo_dato_entd
-			        WHERE
-			            entd_tpdt_pk = srdt_tpdt_pk
-			            AND entd_enti_pk = #{entiId} AND entd_gridable = 1
+			    AND srdt_tpdt_pk = ANY (
+			        SELECT entd_tpdt_pk FROM tbl_entidad_tipo_dato_entd
+			        WHERE entd_enti_pk = #{entiId} AND entd_gridable = 1
 			    )
     	    ]]>
             </if>
@@ -69,78 +67,61 @@
 
     <select id="selectList" parameterType="ServicioCriterioVO" resultMap="ResultMap">
     <![CDATA[
-		SELECT srdt_srvc_pk, srdt_tpdt_pk, srdt_nentero, srdt_ndecimal, srdt_fecha, srdt_cadena, srdt_prmt_pk, srdt_srvc_dep_pk
-		    , prmt_parametro, prmt_prto_pk
-		    , srvc_subp_pk, srvc_anno, srvc_numero
-
-		    , (
-		        SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk
-		    ) AS prto_codigo
+        WITH sql AS (
+            SELECT
+                srdt_srvc_pk, srdt_tpdt_pk, srdt_nentero, srdt_ndecimal, srdt_fecha, srdt_prmt_pk, srdt_cadena, srdt_srvc_dep_pk
+                , prmt_parametro, prmt_prto_pk
+                , tppr_es_i18n, tppr_tpdt_pk
+                , srvc_subp_pk, srvc_anno, srvc_numero
+                , (
+                    SELECT prvr_pk
+                    FROM tbl_parametro_version_prvr
+                    WHERE
+                        prvr_prmt_pk = prmt_pk
+                        AND EXISTS (
+                            SELECT 1 FROM tbl_servicio_srvc
+                            WHERE srvc_fref >= prvr_fini
+                                AND (prvr_ffin IS NULL OR srvc_fref < prvr_ffin)
+                                AND srvc_pk = srdt_srvc_pk
+                        )
+                ) AS prvr_pk
+            FROM tbl_servicio_dato_srdt
+                LEFT JOIN tbl_parametro_prmt ON prmt_pk = srdt_prmt_pk
+                LEFT JOIN tbl_tipo_parametro_tppr ON tppr_pk = prmt_tppr_pk
+                LEFT JOIN tbl_servicio_srvc ON srvc_pk = srdt_srvc_dep_pk
+    ]]>
+        <include refid="SelectWhere"/>
+    <![CDATA[
+        )
+        SELECT
+            srdt_srvc_pk, srdt_tpdt_pk, srdt_nentero, srdt_ndecimal, srdt_fecha, srdt_prmt_pk, srdt_cadena, srdt_srvc_dep_pk
+            , prmt_parametro, prmt_prto_pk
+            , srvc_subp_pk, srvc_anno, srvc_numero
+            , (SELECT prto_codigo FROM tbl_puerto_prto WHERE prto_pk = srvc_subp_pk) AS prto_codigo
         ]]>
         <if test="idioma != null">
         <![CDATA[
-		    , (
-		        CASE
-		            WHEN
-		                EXISTS (
-		                    SELECT 1 FROM tbl_tipo_parametro_tppr
-		                    WHERE tppr_pk = prmt_tppr_pk AND tppr_es_i18n = 1
-		                )
-		            THEN (
-		                SELECT i18n_text
-		                FROM tbl_i18n_i18n
-		                WHERE
-		                    i18n_lang = 'es'
-		                    AND i18n_pref = 'prvr'
-		                    AND i18n_ext_pk = (
-		                        SELECT prvr_pk
-		                        FROM tbl_parametro_version_prvr
-		                        WHERE
-		                            prvr_prmt_pk = srdt_prmt_pk
-		                            AND EXISTS (
-		                                SELECT 1
-		                                FROM tbl_servicio_srvc
-		                                WHERE prvr_fini <= srvc_fref
-		                                    AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
-		                                    AND srvc_pk = srdt_srvc_pk
-		                            )
-		                    )
-		            )
-		            ELSE (
-		                SELECT prdt_cadena
-		                FROM tbl_parametro_dato_prdt
-		                WHERE
-		                    prdt_tpdt_pk = (
-		                        SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr
-		                        WHERE tppr_pk = prmt_tppr_pk
-		                    )
-		                    AND prdt_prvr_pk = (
-		                        SELECT prvr_pk
-		                        FROM tbl_parametro_version_prvr
-		                        WHERE
-		                            prvr_prmt_pk = srdt_prmt_pk
-		                            AND EXISTS (
-		                                SELECT 1
-		                                FROM tbl_servicio_srvc
-		                                WHERE prvr_fini <= srvc_fref
-		                                    AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
-		                                    AND srvc_pk = srdt_srvc_pk
-		                            )
-		                    )
-		            )
-		        END
-		    ) AS p18n_texto
+            , (CASE
+                  WHEN tppr_es_i18n = 1
+                  THEN (
+                      SELECT i18n_text FROM tbl_i18n_i18n
+                      WHERE
+                          i18n_pref = 'prvr'
+                          AND i18n_lang = #{idioma}
+                          AND i18n_ext_pk = prvr_pk
+                  )
+                  ELSE (
+                      SELECT prdt_cadena FROM tbl_parametro_dato_prdt
+                      WHERE
+                          prdt_tpdt_pk = tppr_tpdt_pk
+                          AND prdt_prvr_pk = prvr_pk
+                  )
+            END) AS p18n_texto
         ]]>
         </if>
     <![CDATA[
-		FROM
-		    tbl_servicio_dato_srdt
-		    LEFT JOIN tbl_parametro_prmt ON
-		        prmt_pk = srdt_prmt_pk
-		    LEFT JOIN tbl_servicio_srvc ON
-		        srvc_pk = srdt_srvc_dep_pk
+        FROM sql
     ]]>
-        <include refid="SelectWhere" />
     </select>
 
     <insert id="insert" parameterType="ItemDatoVO">

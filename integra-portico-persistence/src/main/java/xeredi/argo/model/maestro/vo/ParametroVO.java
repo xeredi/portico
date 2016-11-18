@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import xeredi.argo.model.comun.vo.ClassPrefix;
@@ -19,7 +21,7 @@ import xeredi.argo.model.item.vo.ItemVO;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public final class ParametroVO extends ItemVO implements Versionable<ParametroVersionVO>, I18nable {
+public final class ParametroVO extends ItemVO implements Versionable<ParametroVersionVO>, I18nable, Serializable {
 
     /** The prefix. */
     private final transient ClassPrefix prefix = ClassPrefix.prmt;

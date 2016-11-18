@@ -1,5 +1,5 @@
 (function() {
     'use strict';
 
-    angular.module("argoApp", [ "config", "manifiesto", "bl" ]);
+    angular.module("argo.app", [ "argo.common.config", "manifiesto", "bl" ]);
 })();
