@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -59,6 +61,14 @@ public final class MaestroImporterV2BO extends EntityImporterBO {
      * {@inheritDoc}
      */
     @Override
+    protected void prepareImport(Connection con, SqlSession session) throws SQLException {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected void importEntity(Connection con, SqlSession session, EntityNodeV2VO entiNode)
             throws SQLException, ClassNotFoundException {
         Preconditions.checkNotNull(entiNode.getId());
@@ -103,8 +113,9 @@ public final class MaestroImporterV2BO extends EntityImporterBO {
         final ParametroDatoDAO prdtDAO = session.getMapper(ParametroDatoDAO.class);
         final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
 
-        try (final PreparedStatement stmt = con.prepareStatement(entity.getSql());) {
+        final Map<Long, Long> translationMap = new HashMap<>();
 
+        try (final PreparedStatement stmt = con.prepareStatement(entity.getSql());) {
             int i = 1;
 
             if (entityDetail.getEnti().isI18n()) {
@@ -126,7 +137,8 @@ public final class MaestroImporterV2BO extends EntityImporterBO {
 
                 i = 1;
 
-                prmt.setId(rs.getLong(i++));
+                final Long oldId = rs.getLong(i++);
+
                 prmt.setEntiId(entityDetail.getEnti().getId());
 
                 if (entityDetail.getEnti().getPuerto()) {
@@ -175,11 +187,14 @@ public final class MaestroImporterV2BO extends EntityImporterBO {
                         prmtDAO.insertVersion(prmt);
                     }
                 } else {
+                    IgUtilBO.assignNextVal(prmt);
                     prmtDAO.insert(prmt);
 
                     IgUtilBO.assignNextVal(prmt.getVersion());
                     prmtDAO.insertVersion(prmt);
                 }
+
+                translationMap.put(oldId, prmt.getId());
 
                 if (prmt.getVersion().getId() != null) {
                     for (final Long tpdtId : entityDetail.getEntdList()) {
@@ -218,6 +233,9 @@ public final class MaestroImporterV2BO extends EntityImporterBO {
                 }
             }
         }
+
+        // Guardar las traducciones
+        createTranslations(con, entity.getTable(), translationMap);
     }
 
     /**

@@ -87,6 +87,9 @@ public abstract class EntityImporterBO {
     /** The fecha inicio. */
     protected Date fechaInicio;
 
+    /** The sprt. */
+    protected SuperpuertoVO sprt;
+
     /** The prto map. */
     protected final Map<String, PuertoVO> prtoMap = new HashMap<>();
 
@@ -119,7 +122,7 @@ public abstract class EntityImporterBO {
         fechaInicio = calendar.getTime();
 
         try (final Connection con = getRemoteConnection();
-                final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+                final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             con.setAutoCommit(false);
 
             LOG.info("Start process");
@@ -129,7 +132,7 @@ public abstract class EntityImporterBO {
 
             sprtCriterio.setCodigo(sprtCode);
 
-            final SuperpuertoVO sprt = sprtBO.selectObject(sprtCriterio);
+            sprt = sprtBO.selectObject(sprtCriterio);
 
             final PuertoBO prtoBO = new PuertoBO();
             final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
@@ -143,6 +146,10 @@ public abstract class EntityImporterBO {
             final String xmlFilename = getXmlFilename();
             final List<EntityNodeV2VO> entiList = readEntities(xmlFilename);
 
+            LOG.info("Operaciones previas a la importacion");
+
+            prepareImport(con, session);
+
             LOG.info("Translations delete");
 
             for (final EntityNodeV2VO entiNode : entiList) {
@@ -154,10 +161,11 @@ public abstract class EntityImporterBO {
             for (final EntityNodeV2VO entiNode : entiList) {
                 LOG.info("Import: " + entiNode.getId());
 
-                translateEntity(con, entiNode);
-                con.commit();
+                // translateEntity(con, entiNode);
+                // con.commit();
 
                 importEntity(con, session, entiNode);
+                con.commit();
                 session.commit();
             }
         } catch (final InstanceNotFoundException ex) {
@@ -183,6 +191,19 @@ public abstract class EntityImporterBO {
      * @return the xml filename
      */
     protected abstract String getXmlFilename();
+
+    /**
+     * Prepare import.
+     *
+     * @param con
+     *            the con
+     * @param session
+     *            the session
+     * @throws SQLException
+     *             the SQL exception
+     */
+    protected abstract void prepareImport(@NonNull final Connection con, @NonNull final SqlSession session)
+            throws SQLException;
 
     /**
      * Import entity.
@@ -218,43 +239,23 @@ public abstract class EntityImporterBO {
                 ConfigurationProxy.getString(ConfigurationKey.db_migration_dataSource_password));
     }
 
-    /**
-     * Translate entity.
-     *
-     * @param con
-     *            the con
-     * @param entiNode
-     *            the enti node
-     * @throws SQLException
-     *             the SQL exception
-     */
-    private final void translateEntity(@NonNull final Connection con, final EntityNodeV2VO entiNode)
-            throws SQLException {
-        // Los submaestros no es necesario traducirlos
-        if (EntidadProxy.select(entiNode.getId().getId()).getEnti().getTipo() != TipoEntidad.B) {
-            try (final PreparedStatement stmtInsert = con.prepareStatement(
-                    "INSERT INTO tbl_traduccion_ids_trid (trid_table_name, trid_old_id, trid_new_id) values (?, ?, ?)");) {
-                try (final Statement stmtSelect = con.createStatement();
-                        final ResultSet rsSelect = stmtSelect.executeQuery(entiNode.getSqlId());) {
-                    while (rsSelect.next()) {
-                        final Long oldId = rsSelect.getLong(1);
-
-                        final ParametroVO prmt = new ParametroVO();
-
-                        IgUtilBO.assignNextVal(prmt);
-
-                        stmtInsert.setString(1, entiNode.getTable());
-                        stmtInsert.setLong(2, oldId);
-                        stmtInsert.setLong(3, prmt.getId());
-
-                        stmtInsert.addBatch();
-                    }
-
-                    stmtInsert.executeBatch();
-                }
-            }
-        }
-    }
+    // /**
+    // * Translate entity.
+    // *
+    // * @param con
+    // * the con
+    // * @param entiNode
+    // * the enti node
+    // * @throws SQLException
+    // * the SQL exception
+    // */
+    // private final void translateEntity(@NonNull final Connection con, final EntityNodeV2VO entiNode)
+    // throws SQLException {
+    // // Los submaestros no es necesario traducirlos
+    // if (EntidadProxy.select(entiNode.getId().getId()).getEnti().getTipo() != TipoEntidad.B) {
+    // createTranslations(con, entiNode.getTable(), entiNode.getSqlId());
+    // }
+    // }
 
     /**
      * Delete translations.
@@ -266,13 +267,78 @@ public abstract class EntityImporterBO {
      * @throws SQLException
      *             the SQL exception
      */
-    private final void deleteTranslations(@NonNull final Connection con, @NonNull final String tableName)
+    protected final void deleteTranslations(@NonNull final Connection con, @NonNull final String tableName)
             throws SQLException {
         try (final PreparedStatement stmt = con
                 .prepareStatement("DELETE FROM tbl_traduccion_ids_trid WHERE trid_table_name = ?")) {
             stmt.setString(1, tableName);
 
             stmt.executeUpdate();
+        }
+    }
+
+    // /**
+    // * Creates the translations.
+    // *
+    // * @param con
+    // * the con
+    // * @param tableName
+    // * the table name
+    // * @param sqlId
+    // * the sql id
+    // * @throws SQLException
+    // * the SQL exception
+    // */
+    // protected final void createTranslations(@NonNull final Connection con, @NonNull final String tableName,
+    // @NonNull final String sqlId) throws SQLException {
+    // try (final PreparedStatement stmtInsert = con.prepareStatement(
+    // "INSERT INTO tbl_traduccion_ids_trid (trid_table_name, trid_old_id, trid_new_id) values (?, ?, ?)");) {
+    // try (final Statement stmtSelect = con.createStatement();
+    // final ResultSet rsSelect = stmtSelect.executeQuery(sqlId);) {
+    // while (rsSelect.next()) {
+    // final Long oldId = rsSelect.getLong(1);
+    //
+    // final ParametroVO prmt = new ParametroVO();
+    //
+    // IgUtilBO.assignNextVal(prmt);
+    //
+    // stmtInsert.setString(1, tableName);
+    // stmtInsert.setLong(2, oldId);
+    // stmtInsert.setLong(3, prmt.getId());
+    //
+    // stmtInsert.addBatch();
+    // }
+    //
+    // stmtInsert.executeBatch();
+    // }
+    // }
+    // }
+
+    /**
+     * Creates the translations.
+     *
+     * @param con
+     *            the con
+     * @param tableName
+     *            the table name
+     * @param translationMap
+     *            the translation map
+     * @throws SQLException
+     *             the SQL exception
+     */
+    protected final void createTranslations(@NonNull final Connection con, @NonNull final String tableName,
+            @NonNull final Map<Long, Long> translationMap) throws SQLException {
+        try (final PreparedStatement stmtInsert = con.prepareStatement(
+                "INSERT INTO tbl_traduccion_ids_trid (trid_table_name, trid_old_id, trid_new_id) values (?, ?, ?)");) {
+            for (final Long oldId : translationMap.keySet()) {
+                stmtInsert.setString(1, tableName);
+                stmtInsert.setLong(2, oldId);
+                stmtInsert.setLong(3, translationMap.get(oldId));
+
+                stmtInsert.addBatch();
+            }
+
+            stmtInsert.executeBatch();
         }
     }
 
@@ -388,7 +454,7 @@ public abstract class EntityImporterBO {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private List<EntityNodeV2VO> readEntities(final String xmlFileName)
+    private List<EntityNodeV2VO> readEntities(@NonNull final String xmlFileName)
             throws ParserConfigurationException, SAXException, IOException {
         LOG.info("Xml parse: " + xmlFileName);
 

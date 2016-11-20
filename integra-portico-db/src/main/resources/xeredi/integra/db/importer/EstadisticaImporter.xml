@@ -1,0 +1,172 @@
+<importer>
+    <sql id="AGREGACION_ESCALA" table="IEST_AGREGACIONESCALA_AGES"
+        sqlId="SELECT ages_id FROM iest_agregacionescala_ages">
+    <![CDATA[
+        SELECT
+            (SELECT pepr_autp_id FROM iest_periodoproceso_pepr
+                WHERE pepr_id = ages_pepr_id) AS pepr_autp_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = ages_pepr_id
+                    AND trid_table_name = 'IEST_PERIODOPROCESO_PEPR') AS ages_pepr_id
+            , ages_id
+
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = ages_actt_id
+                    AND trid_table_name = 'IESC_ACTIVIDADTIPO_ACTT') AS ages_actt_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = ages_bugt_id
+                    AND trid_table_name = 'IEST_BUQUETIPOGT_BUGT') AS ages_bugt_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = ages_buqt_id
+                    AND trid_table_name = 'IGEN_BUQUETIPO_BUQT') AS ages_buqt_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = ages_entrada_navt_id
+                    AND trid_table_name = 'IGEN_NAVEGACIONTIPO_NAVT') AS ages_entrada_navt_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = ages_salida_navt_id
+                    AND trid_table_name = 'IGEN_NAVEGACIONTIPO_NAVT') AS ages_salida_navt_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = ages_bandera_buque_pais_id
+                    AND trid_table_name = 'IGEN_PAIS_PAIS') AS ages_bandera_buque_pais_id
+            , ages_num_escalas
+            , ages_num_gts
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = ages_buque_id
+                    AND trid_table_name = 'IESC_BUQUE_BUQU') AS ages_buque_id
+            , ages_tipo_estancia
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = ages_traf_id
+                    AND trid_table_name = 'IESC_TRAFICO_TRAF') AS ages_traf_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = ages_acue_id
+                    AND trid_table_name = 'IESC_ACUERDO_ACUE') AS ages_acue_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = ages_consig_orga_id
+                    AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS ages_consig_orga_id
+        FROM
+            iest_agregacionescala_ages
+    ]]>
+    </sql>
+
+    <sql id="MOVIMIENTO_TIPO_BUQUE_EEE" table="IEST_MOVIMIENTOTBUQUEEEE_MTBE"
+        sqlId="SELECT mtbe_id FROM iest_movimientotbuqueeee_mtbe">
+    <![CDATA[
+        SELECT
+            (SELECT pepr_autp_id FROM iest_periodoproceso_pepr
+                WHERE pepr_id = mtbe_pepr_id) AS pepr_autp_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mtbe_pepr_id
+                    AND trid_table_name = 'IEST_PERIODOPROCESO_PEPR') AS mtbe_pepr_id
+            , mtbe_id
+
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mtbe_buqt_id
+                    AND trid_table_name = 'IEST_BUQUETIPOEEE_BUQT') AS mtbe_buqt_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mtbe_bgte_id
+                    AND trid_table_name = 'IEST_BUQUETIPOGTEEE_BGTE') AS mtbe_bgte_id
+            , mtbe_num_buques, mtbe_num_gts
+        FROM
+            iest_movimientotbuqueeee_mtbe
+    ]]>
+    </sql>
+
+    <sql id="MOVIMIENTO_MERCANCIA_EEE" table="IEST_MOVIMIENTOMERCEEE_MMEE"
+        sqlId="SELECT mmee_id FROM iest_movimientomerceee_mmee">
+    <![CDATA[
+        SELECT
+            (SELECT pepr_autp_id FROM iest_periodoproceso_pepr
+                WHERE pepr_id = mmee_pepr_id) AS pepr_autp_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mmee_pepr_id
+                    AND trid_table_name = 'IEST_PERIODOPROCESO_PEPR') AS mmee_pepr_id
+            , mmee_id
+
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mmee_unlo_id
+                    AND trid_table_name = 'IGEN_UNLOCODE_UNLO') AS mmee_unlo_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mmee_merc_id
+                    AND trid_table_name = 'IMAN_MERCANCIA_MERC') AS mmee_merc_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mmee_unic_id
+                    AND trid_table_name = 'IMAN_UNIDADCARGA_UNIC') AS mmee_unic_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mmee_gnst_id
+                    AND trid_table_name = 'IEST_GRUPONST_GNST') AS mmee_gnst_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mmee_buet_id
+                    AND trid_table_name = 'IEST_REGISTROBUQUEEEETIPO_BUET') AS mmee_buet_id
+            , mmee_direccion_mercancia, mmee_es_roro, mmee_toneladas
+            , mmee_pax, mmee_pax_crucero, mmee_pax_ini_fin, mmee_unidadcarga_llenas, mmee_unidadcarga_vacias
+        FROM
+            iest_movimientomerceee_mmee
+    ]]>
+    </sql>
+
+    <sql id="MOVIMIENTO_MERCANCIA" table="IEST_MOVIMIENTOMERC_MOME"
+        sqlId="SELECT mome_id FROM iest_movimientomerc_mome">
+    <![CDATA[
+        SELECT
+            (SELECT pepr_autp_id FROM iest_periodoproceso_pepr
+                WHERE pepr_id = mome_pepr_id) AS pepr_autp_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_pepr_id
+                    AND trid_table_name = 'IEST_PERIODOPROCESO_PEPR') AS mome_pepr_id
+            , mome_id
+
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_opet_id
+                    AND trid_table_name = 'IMAN_TIPOOPERACION_TOBL') AS mome_opet_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_carga_unlo_id
+                    AND trid_table_name = 'IGEN_UNLOCODE_UNLO') AS mome_carga_unlo_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_descarga_unlo_id
+                    AND trid_table_name = 'IGEN_UNLOCODE_UNLO') AS mome_descarga_unlo_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_alin_id
+                    AND trid_table_name = 'IGEN_ALINEACION_ALIN') AS mome_alin_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_origen_unlo_id
+                    AND trid_table_name = 'IGEN_UNLOCODE_UNLO') AS mome_origen_unlo_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_destino_unlo_id
+                    AND trid_table_name = 'IGEN_UNLOCODE_UNLO') AS mome_destino_unlo_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_merc_id
+                    AND trid_table_name = 'IMAN_MERCANCIA_MERC') AS mome_merc_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_navt_id
+                    AND trid_table_name = 'IGEN_NAVEGACIONTIPO_NAVT') AS mome_navt_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_unic_id
+                    AND trid_table_name = 'IMAN_UNIDADCARGA_UNIC') AS mome_unic_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_iesp_id
+                    AND trid_table_name = 'IMAN_INSTESPECIAL_IESP') AS mome_iesp_id
+            , mome_tipo_transporte, mome_es_roro, mome_toneladas, mome_unidades, mome_teus
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_estibador_orga_id
+                    AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS mome_estibador_orga_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_consig_orga_id
+                    AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS mome_consig_orga_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_buque_id
+                    AND trid_table_name = 'IESC_BUQUE_BUQU') AS mome_buque_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_traf_id
+                    AND trid_table_name = 'IESC_TRAFICO_TRAF') AS mome_traf_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_acue_id
+                    AND trid_table_name = 'IESC_ACUERDO_ACUE') AS mome_acue_id
+            , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+                WHERE trid_old_id = mome_term_id
+                    AND trid_table_name = 'IMAN_TERMINAL_TERM') AS mome_term_id
+            , mome_tipo_equipamiento
+        FROM
+            iest_movimientomerc_mome
+    ]]>
+    </sql>
+</importer>

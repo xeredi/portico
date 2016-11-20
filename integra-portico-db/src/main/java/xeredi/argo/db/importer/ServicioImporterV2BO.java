@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,6 +17,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
+import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
@@ -49,6 +52,14 @@ public final class ServicioImporterV2BO extends EntityImporterBO {
     @Override
     protected String getXmlFilename() {
         return SERVICIO_FILENAME;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void prepareImport(Connection con, SqlSession session) throws SQLException {
+        // noop
     }
 
     /**
@@ -96,6 +107,8 @@ public final class ServicioImporterV2BO extends EntityImporterBO {
         final List<ServicioVO> srvcList = new ArrayList<>();
         final List<ItemDatoVO> srdtList = new ArrayList<>();
 
+        final Map<Long, Long> translationMap = new HashMap<>();
+
         try (final PreparedStatement stmt = con.prepareStatement(entiNode.getSql());
                 final ResultSet rs = stmt.executeQuery();) {
             final int columnCount = rs.getMetaData().getColumnCount();
@@ -105,7 +118,12 @@ public final class ServicioImporterV2BO extends EntityImporterBO {
 
                 int i = 1;
 
-                srvc.setId(rs.getLong(i++));
+                final Long oldId = rs.getLong(i++);
+
+                IgUtilBO.assignNextVal(srvc);
+
+                translationMap.put(oldId, srvc.getId());
+
                 srvc.setEntiId(entityDetail.getEnti().getId());
                 srvc.setFalta(rs.getDate(i++));
 
@@ -159,6 +177,8 @@ public final class ServicioImporterV2BO extends EntityImporterBO {
             for (final ItemDatoVO srdt : srdtList) {
                 srdtDAO.insert(srdt);
             }
+
+            createTranslations(con, entiNode.getTable(), translationMap);
         }
     }
 
@@ -182,6 +202,8 @@ public final class ServicioImporterV2BO extends EntityImporterBO {
         final List<ItemDatoVO> ssdtList = new ArrayList<>();
         final List<SubservicioSubservicioVO> ssssList = new ArrayList<>();
 
+        final Map<Long, Long> translationMap = new HashMap<>();
+
         try (final PreparedStatement stmt = con.prepareStatement(entiNode.getSql());
                 final ResultSet rs = stmt.executeQuery();) {
             final int columnCount = rs.getMetaData().getColumnCount();
@@ -199,7 +221,12 @@ public final class ServicioImporterV2BO extends EntityImporterBO {
                     ssrv.setSrvc(srvc);
                 }
 
-                ssrv.setId(rs.getLong(i++));
+                final Long oldId = rs.getLong(i++);
+
+                IgUtilBO.assignNextVal(ssrv);
+
+                translationMap.put(oldId, ssrv.getId());
+
                 ssrv.setNumero(rs.getInt(i++));
                 ssrv.setEntiId(entityDetail.getEnti().getId());
 
@@ -288,6 +315,8 @@ public final class ServicioImporterV2BO extends EntityImporterBO {
         ssrvList.clear();
         ssdtList.clear();
         ssssList.clear();
+
+        createTranslations(con, entiNode.getTable(), translationMap);
     }
 
     /**

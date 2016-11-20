@@ -6,9 +6,7 @@
 		sqlId="SELECT ageo_id FROM iest_areageografica_ageo">
     <![CDATA[
         SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.ageo_id
-	            	AND trid_table_name = 'IEST_AREAGEOGRAFICA_AGEO') AS ageo_id
+	        maes.ageo_id
         	, maes.ageo_codigo
          	, (SELECT i18n.ageo_nombre FROM iest_areageograficai18n_ageo i18n
             	WHERE i18n.ageo_id = maes.ageo_id
@@ -24,9 +22,7 @@
 		sqlId="SELECT amun_id FROM iest_areamundial_amun">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.amun_id
-	            	AND trid_table_name = 'IEST_AREAMUNDIAL_AMUN') AS amun_id
+	        maes.amun_id
 			, maes.amun_codigo
 		 	, (SELECT i18n.amun_nombre FROM iest_areamundiali18n_amun i18n
 		    	WHERE i18n.amun_id = maes.amun_id
@@ -42,9 +38,7 @@
 		sqlId="SELECT arpe_id FROM ipes_artepesca_arpe">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.arpe_id
-	            	AND trid_table_name = 'IPES_ARTEPESCA_ARPE') AS arpe_id
+	        maes.arpe_id
 			, maes.arpe_codigo
 		    , (SELECT i18n.arpe_nombre FROM ipes_artepescai18n_arpe i18n
 		        WHERE i18n.arpe_id = maes.arpe_id
@@ -60,9 +54,7 @@
 		sqlId="SELECT cope_id FROM ipes_comprador_cope">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.cope_id
-	            	AND trid_table_name = 'IPES_COMPRADOR_COPE') AS cope_id
+	        maes.cope_id
 		    , MAES.COPE_CODIGO
 		    , MAES.COPE_NIF
 		    , MAES.COPE_DESCRIPCION
@@ -75,9 +67,7 @@
 		tempImp="false" sqlId="SELECT dead_id FROM igen_descuentoadic_dead">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.dead_id
-	            	AND trid_table_name = 'IGEN_DESCUENTOADIC_DEAD') AS dead_id
+	        maes.dead_id
 			, MAES.DEAD_CODIGO
 		    , (SELECT I18N.DEAD_NOMBRE FROM IGEN_DESCUENTOADICi18n_DEAD I18N
 		        WHERE I18N.DEAD_ID = MAES.DEAD_ID
@@ -93,9 +83,7 @@
 		sqlId="SELECT gara_id FROM iman_grupoarancel_gara">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.gara_id
-	            	AND trid_table_name = 'IMAN_GRUPOARANCEL_GARA') AS gara_id
+	        maes.gara_id
 			, MAES.GARA_CODIGO
 		 , (SELECT I18N.GARA_NOMBRE FROM IMAN_GRUPOARANCELi18n_GARA I18N
 		     WHERE I18N.GARA_ID = MAES.GARA_ID
@@ -111,9 +99,7 @@
 		tempImp="false" sqlId="SELECT gfpe_id FROM ipes_grupofamilia_gfpe">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.gfpe_id
-	            	AND trid_table_name = 'IPES_GRUPOFAMILIA_GFPE') AS gfpe_id
+	        maes.gfpe_id
 			, MAES.GFPE_CODIGO
 		    , (SELECT I18N.GFPE_NOMBRE FROM IPES_GRUPOFAMILIAi18n_GFPE I18N
 		        WHERE I18N.GFPE_ID = MAES.GFPE_ID
@@ -129,9 +115,7 @@
 		tempImp="false" sqlId="SELECT gnat_id FROM iest_gruponaturaleza_gnat">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.gnat_id
-	            	AND trid_table_name = 'IEST_GRUPONATURALEZA_GNAT') AS gnat_id
+	        maes.gnat_id
 			, MAES.GNAT_CODIGO
 		 , (SELECT I18N.GNAT_NOMBRE FROM IEST_GRUPONATURALEZAi18n_GNAT I18N
 		     WHERE I18N.GNAT_ID = MAES.GNAT_ID
@@ -147,9 +131,7 @@
 		sqlId="SELECT gnst_id FROM iest_gruponst_gnst">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.gnst_id
-	            	AND trid_table_name = 'IEST_GRUPONST_GNST') AS gnst_id
+	        maes.gnst_id
 			, MAES.GNST_CODIGO
 		 , (SELECT I18N.GNST_NOMBRE FROM IEST_GRUPONSTi18n_GNST I18N
 		     WHERE I18N.GNST_ID = MAES.GNST_ID
@@ -165,9 +147,7 @@
 		sqlId="SELECT gzsu_id FROM isup_grupozona_gzsu">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.gzsu_id
-	            	AND trid_table_name = 'ISUP_GRUPOZONA_GZSU') AS gzsu_id
+	        maes.gzsu_id
 			, MAES.GZSU_CODIGO
 		    , (SELECT I18N.GZSU_NOMBRE FROM ISUP_GRUPOZONAi18n_GZSU I18N
 		        WHERE I18N.GZSU_ID = MAES.GZSU_ID
@@ -183,9 +163,7 @@
 		tempImp="false" sqlId="SELECT imar_id FROM iman_instruccmarcaje_imar">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.imar_id
-	            	AND trid_table_name = 'IMAN_INSTRUCCMARCAJE_IMAR') AS imar_id
+	        maes.imar_id
 			, MAES.IMAR_CODIGO
 		    , (SELECT I18N.IMAR_NOMBRE FROM IMAN_INSTRUCCMARCAJEi18n_IMAR I18N
 		        WHERE I18N.IMAR_ID = MAES.IMAR_ID
@@ -201,9 +179,7 @@
 		sqlId="SELECT modb_id FROM icon_modulobatch_modb">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.modb_id
-	            	AND trid_table_name = 'ICON_MODULOBATCH_MODB') AS modb_id
+	        maes.modb_id
 			, MAES.MODB_COD
 		    , (SELECT I18N.MODB_NOMBRE FROM ICON_MODULOBATCHi18n_MODB I18N
 		        WHERE I18N.MODB_ID = MAES.MODB_ID
@@ -219,9 +195,7 @@
 		tempImp="false" sqlId="SELECT prpe_id FROM ipes_presentacion_prpe">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.prpe_id
-	            	AND trid_table_name = 'IPES_PRESENTACION_PRPE') AS prpe_id
+	        maes.prpe_id
 			, MAES.PRPE_CODIGO
 		    , (SELECT I18N.PRPE_NOMBRE FROM IPES_PRESENTACIONi18n_PRPE I18N
 		        WHERE I18N.PRPE_ID = MAES.PRPE_ID
@@ -237,9 +211,7 @@
 		sqlId="SELECT sdep_id FROM iemd_serviciodep_sdep">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.sdep_id
-	            	AND trid_table_name = 'IEMD_SERVICIODEP_SDEP') AS sdep_id
+	        maes.sdep_id
 			, MAES.SDEP_CODIGO
 		    , (SELECT I18N.SDEP_NOMBRE FROM IEMD_SERVICIODEPi18n_SDEP I18N
 		        WHERE I18N.SDEP_ID = MAES.SDEP_ID
@@ -255,9 +227,7 @@
 		tempImp="false" sqlId="SELECT subg_id FROM iest_subgrupo_subg">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.subg_id
-	            	AND trid_table_name = 'IEST_SUBGRUPO_SUBG') AS subg_id
+	        maes.subg_id
 			, MAES.SUBG_CODIGO
 		 , (SELECT I18N.SUBG_NOMBRE FROM IEST_SUBGRUPOi18n_SUBG I18N
 		     WHERE I18N.SUBG_ID = MAES.SUBG_ID
@@ -273,9 +243,7 @@
 		tempImp="false" sqlId="SELECT mpst_id FROM ipes_manifiestostipo_mpst">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.mpst_id
-	            	AND trid_table_name = 'IPES_MANIFIESTOSTIPO_MPST') AS mpst_id
+	        maes.mpst_id
 			, MAES.MPST_CODIGO
 		 , (SELECT I18N.MPST_NOMBRE FROM IPES_MANIFIESTOSTIPOi18n_MPST I18N
 		     WHERE I18N.MPST_ID = MAES.MPST_ID
@@ -291,9 +259,7 @@
 		tempImp="false" sqlId="SELECT tage_id FROM iexp_tipoactividadg_tage">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.tage_id
-	            	AND trid_table_name = 'IEXP_TIPOACTIVIDADG_TAGE') AS tage_id
+	        maes.tage_id
 			, MAES.TAGE_CODIGO
 		 , (SELECT I18N.TAGE_NOMBRE FROM IEXP_TIPOACTIVIDADGi18n_TAGE I18N
 		     WHERE I18N.TAGE_ID = MAES.TAGE_ID
@@ -309,9 +275,7 @@
 		sqlId="SELECT alit_id FROM iesc_alineaciontipo_alit">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.alit_id
-	            	AND trid_table_name = 'IESC_ALINEACIONTIPO_ALIT') AS alit_id
+	        maes.alit_id
 			, MAES.ALIT_CODIGO
 		 , (SELECT I18N.ALIT_NOMBRE FROM IESC_ALINEACIONTIPOi18n_ALIT I18N
 		     WHERE I18N.ALIT_ID = MAES.ALIT_ID
@@ -327,9 +291,7 @@
 		sqlId="SELECT tamd_id FROM iemd_tipoamarre_tamd">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.tamd_id
-	            	AND trid_table_name = 'IEMD_TIPOAMARRE_TAMD') AS tamd_id
+	        maes.tamd_id
 			, MAES.TAMD_CODIGO
 		 , (SELECT I18N.TAMD_NOMBRE FROM IEMD_TIPOAMARREi18n_TAMD I18N
 		     WHERE I18N.TAMD_ID = MAES.TAMD_ID
@@ -345,9 +307,7 @@
 		sqlId="SELECT atrt_id FROM iesc_atraquetipo_atrt">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.atrt_id
-	            	AND trid_table_name = 'IESC_ATRAQUETIPO_ATRT') AS atrt_id
+	        maes.atrt_id
 			, MAES.ATRT_CODIGO
 		 , (SELECT I18N.ATRT_NOMBRE FROM IESC_ATRAQUETIPOi18n_ATRT I18N
 		     WHERE I18N.ATRT_ID = MAES.ATRT_ID
@@ -363,9 +323,7 @@
 		sqlId="SELECT tbie_id FROM iexp_tipobien_tbie">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.tbie_id
-	            	AND trid_table_name = 'IEXP_TIPOBIEN_TBIE') AS tbie_id
+	        maes.tbie_id
 			, MAES.TBIE_CODIGO
 		 , (SELECT I18N.TBIE_NOMBRE FROM IEXP_TIPOBIENi18n_TBIE I18N
 		     WHERE I18N.TBIE_ID = MAES.TBIE_ID
@@ -381,9 +339,7 @@
 		sqlId="SELECT tbul_id FROM iman_tipobulto_tbul">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.tbul_id
-	            	AND trid_table_name = 'IMAN_TIPOBULTO_TBUL') AS tbul_id
+	        maes.tbul_id
 			, MAES.TBUL_CODIGO
 		 , (SELECT I18N.TBUL_NOMBRE FROM IMAN_TIPOBULTOi18n_TBUL I18N
 		     WHERE I18N.TBUL_ID = MAES.TBUL_ID
@@ -399,9 +355,7 @@
 		sqlId="SELECT btpe_id FROM ipes_buquetipo_btpe">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.btpe_id
-	            	AND trid_table_name = 'IPES_BUQUETIPO_BTPE') AS btpe_id
+	        maes.btpe_id
 			, MAES.BTPE_CODIGO
 		 , (SELECT I18N.BTPE_NOMBRE FROM IPES_BUQUETIPOi18n_BTPE I18N
 		     WHERE I18N.BTPE_ID = MAES.BTPE_ID
@@ -417,9 +371,7 @@
 		sqlId="SELECT BUQT_id FROM iest_buquetipoeee_buqt">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.buqt_id
-	            	AND trid_table_name = 'IEST_BUQUETIPOEEE_BUQT') AS buqt_id
+	        maes.buqt_id
 			, MAES.BUQT_CODIGO
 		 , (SELECT I18N.BUQT_NOMBRE FROM IEST_BUQUETIPOEEEi18n_BUQT I18N
 		     WHERE I18N.BUQT_ID = MAES.BUQT_ID
@@ -435,9 +387,7 @@
 		sqlId="SELECT cati_id FROM ipes_capturatipo_cati">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.cati_id
-	            	AND trid_table_name = 'IPES_CAPTURATIPO_CATI') AS cati_id
+	        maes.cati_id
 			, MAES.CATI_CODIGO
 		 , (SELECT I18N.CATI_NOMBRE FROM IPES_CAPTURATIPOi18n_CATI I18N
 		     WHERE I18N.CATI_ID = MAES.CATI_ID
@@ -453,9 +403,7 @@
 		sqlId="SELECT tcsu_id FROM isum_tipocontador_tcsu">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.tcsu_id
-	            	AND trid_table_name = 'ISUM_TIPOCONTADOR_TCSU') AS tcsu_id
+	        maes.tcsu_id
 			, MAES.TCSU_CODIGO
 		 , (SELECT I18N.TCSU_NOMBRE FROM ISUM_TIPOCONTADORi18n_TCSU I18N
 		     WHERE I18N.TCSU_ID = MAES.TCSU_ID
@@ -471,9 +419,7 @@
 		tempImp="false" sqlId="SELECT attd_id FROM iman_tipodocaeat_attd">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.attd_id
-	            	AND trid_table_name = 'IMAN_TIPODOCAEAT_ATTD') AS attd_id
+	        maes.attd_id
 			, MAES.ATTD_CODIGO
 		 , (SELECT I18N.ATTD_NOMBRE FROM IMAN_TIPODOCAEATi18n_ATTD I18N
 		     WHERE I18N.ATTD_ID = MAES.ATTD_ID
@@ -489,9 +435,7 @@
 		tempImp="false" sqlId="SELECT temd_id FROM iemd_tipoembarcacion_temd">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.temd_id
-	            	AND trid_table_name = 'IEMD_TIPOEMBARCACION_TEMD') AS temd_id
+	        maes.temd_id
 			, MAES.TEMD_CODIGO
 		 , (SELECT I18N.TEMD_NOMBRE FROM IEMD_TIPOEMBARCACIONi18n_TEMD I18N
 		     WHERE I18N.TEMD_ID = MAES.TEMD_ID
@@ -507,9 +451,7 @@
 		sqlId="SELECT exet_id FROM igen_exenciontipo_exet">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.exet_id
-	            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') AS exet_id
+	        maes.exet_id
 			, MAES.EXET_CODIGO
 		 , (SELECT I18N.EXET_NOMBRE FROM IGEN_EXENCIONTIPOi18n_EXET I18N
 		     WHERE I18N.EXET_ID = MAES.EXET_ID
@@ -525,9 +467,7 @@
 		tempImp="false" sqlId="SELECT mpti_id FROM ipes_manifiestotipo_mpti">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.mpti_id
-	            	AND trid_table_name = 'IPES_MANIFIESTOTIPO_MPTI') AS mpti_id
+	        maes.mpti_id
 			, MAES.MPTI_CODIGO
 		 , (SELECT I18N.MPTI_NOMBRE FROM IPES_MANIFIESTOTIPOi18n_MPTI I18N
 		     WHERE I18N.MPTI_ID = MAES.MPTI_ID
@@ -543,9 +483,7 @@
 		tempImp="false" sqlId="SELECT prat_id FROM ipra_maniobratipo_prat">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.prat_id
-	            	AND trid_table_name = 'IPRA_MANIOBRATIPO_PRAT') AS prat_id
+	        maes.prat_id
 			, MAES.PRAT_CODIGO
 		 , (SELECT I18N.PRAT_NOMBRE FROM IPRA_MANIOBRATIPOi18n_PRAT I18N
 		     WHERE I18N.PRAT_ID = MAES.PRAT_ID
@@ -561,9 +499,7 @@
 		tempImp="false" sqlId="SELECT amat_id FROM iama_amarremediotipo_amat">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.amat_id
-	            	AND trid_table_name = 'IAMA_AMARREMEDIOTIPO_AMAT') AS amat_id
+	        maes.amat_id
 			, MAES.AMAT_CODIGO
 		 , (SELECT I18N.AMAT_NOMBRE FROM IAMA_AMARREMEDIOTIPOi18n_AMAT I18N
 		     WHERE I18N.AMAT_ID = MAES.AMAT_ID
@@ -579,9 +515,7 @@
 		sqlId="SELECT mert_id FROM iesc_mercanciatipo_mert">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.mert_id
-	            	AND trid_table_name = 'IESC_MERCANCIATIPO_MERT') AS mert_id
+	        maes.mert_id
 		    , MAES.MERT_CODIGO
 		    , (SELECT I18N.mert_NOMBRE FROM IESC_MERCANCIATIPOi18n_MERT I18N
 		        WHERE I18N.mert_ID = MAES.mert_ID
@@ -598,9 +532,7 @@
 		tempImp="false" sqlId="SELECT emet_id FROM iest_mercanciatipo_emet">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.emet_id
-	            	AND trid_table_name = 'IEST_MERCANCIATIPO_EMET') AS emet_id
+	        maes.emet_id
 			, MAES.EMET_CODIGO
 		 , (SELECT I18N.EMET_NOMBRE FROM IEST_MERCANCIATIPOi18n_EMET I18N
 		     WHERE I18N.EMET_ID = MAES.EMET_ID
@@ -616,9 +548,7 @@
 		tempImp="false" sqlId="SELECT ammt_id FROM iama_movimientotipo_ammt">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.ammt_id
-	            	AND trid_table_name = 'IAMA_MOVIMIENTOTIPO_AMMT') AS ammt_id
+	        maes.ammt_id
 			, MAES.AMMT_CODIGO
 		 , (SELECT I18N.AMMT_NOMBRE FROM IAMA_MOVIMIENTOTIPOi18n_AMMT I18N
 		     WHERE I18N.AMMT_ID = MAES.AMMT_ID
@@ -634,9 +564,7 @@
 		tempImp="false" sqlId="SELECT remt_id FROM irem_movimientotipo_remt">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.remt_id
-	            	AND trid_table_name = 'IREM_MOVIMIENTOTIPO_REMT') AS remt_id
+	        maes.remt_id
 			, MAES.REMT_CODIGO
 		 , (SELECT I18N.REMT_NOMBRE FROM IREM_MOVIMIENTOTIPOi18n_REMT I18N
 		     WHERE I18N.REMT_ID = MAES.REMT_ID
@@ -652,9 +580,7 @@
 		tempImp="false" sqlId="SELECT tosu_id FROM isup_tipooperacion_tosu">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.tosu_id
-	            	AND trid_table_name = 'ISUP_TIPOOPERACION_TOSU') AS tosu_id
+	        maes.tosu_id
 			, MAES.TOSU_CODIGO
 		 , (SELECT I18N.TOSU_NOMBRE FROM ISUP_TIPOOPERACIONi18n_TOSU I18N
 		     WHERE I18N.TOSU_ID = MAES.TOSU_ID
@@ -670,9 +596,7 @@
 		tempImp="false" sqlId="SELECT orgt_id FROM icom_organizaciontipo_orgt">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.orgt_id
-	            	AND trid_table_name = 'ICOM_ORGANIZACIONTIPO_ORGT') AS orgt_id
+	        maes.orgt_id
 		    , I18N.ORGT_descripcion
 		    , MAES.ORGT_TIPO_BASE
 		    , I18N.ORGT_NOMBRE
@@ -689,9 +613,7 @@
 		tempImp="false" sqlId="SELECT pret_id FROM icom_prestadortipo_pret">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.pret_id
-	            	AND trid_table_name = 'ICOM_PRESTADORTIPO_PRET') AS pret_id
+	        maes.pret_id
 			, MAES.PRET_TIPO_BASE
 		 , (SELECT I18N.PRET_NOMBRE FROM ICOM_PRESTADORTIPOi18n_PRET I18N
 		     WHERE I18N.PRET_ID = MAES.PRET_ID
@@ -707,9 +629,7 @@
 		tempImp="false" sqlId="SELECT sett_id FROM iesc_serviciotipo_sett">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.sett_id
-	            	AND trid_table_name = 'IESC_SERVICIOTIPO_SETT') AS sett_id
+	        maes.sett_id
 			, MAES.SETT_CODIGO
 		 , (SELECT I18N.SETT_NOMBRE FROM IESC_SERVICIOTIPOi18n_SETT I18N
 		     WHERE I18N.SETT_ID = MAES.SETT_ID
@@ -725,9 +645,7 @@
 		sqlId="SELECT tsup_id FROM isup_tiposuperficie_tsup">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.tsup_id
-	            	AND trid_table_name = 'ISUP_TIPOSUPERFICIE_TSUP') AS tsup_id
+	        maes.tsup_id
 			, MAES.TSUP_CODIGO
 		 , (SELECT I18N.TSUP_NOMBRE FROM ISUP_TIPOSUPERFICIEi18n_TSUP I18N
 		     WHERE I18N.TSUP_ID = MAES.TSUP_ID
@@ -743,9 +661,7 @@
 		tempImp="false" sqlId="SELECT tsex_id FROM iexp_tiposuperficieb_tsex">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.tsex_id
-	            	AND trid_table_name = 'IEXP_TIPOSUPERFICIEB_TSEX') AS tsex_id
+	        maes.tsex_id
 			, MAES.TSEX_CODIGO
 		 , (SELECT I18N.TSEX_NOMBRE FROM IEXP_TIPOSUPERFICIEBi18n_TSEX I18N
 		     WHERE I18N.TSEX_ID = MAES.TSEX_ID
@@ -761,9 +677,7 @@
 		sqlId="SELECT unis_id FROM isup_unidad_unis">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.unis_id
-	            	AND trid_table_name = 'ISUP_UNIDAD_UNIS') AS unis_id
+	        maes.unis_id
 			, MAES.UNIS_CODIGO
 		 , (SELECT I18N.UNIS_NOMBRE FROM ISUP_UNIDADi18n_UNIS I18N
 		     WHERE I18N.UNIS_ID = MAES.UNIS_ID
@@ -779,9 +693,7 @@
 		sqlId="SELECT zope_id FROM ipes_zonapesca_zope">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.zope_id
-	            	AND trid_table_name = 'IPES_ZONAPESCA_ZOPE') AS zope_id
+	        maes.zope_id
 			, MAES.ZOPE_CODIGO
 		 , (SELECT I18N.ZOPE_NOMBRE FROM IPES_ZONAPESCAi18n_ZOPE I18N
 		     WHERE I18N.ZOPE_ID = MAES.ZOPE_ID
@@ -801,9 +713,7 @@
 		tempImp="false" sqlId="SELECT bgte_id FROM iest_buquetipogteee_bgte">
     <![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.bgte_id
-	            	AND trid_table_name = 'IEST_BUQUETIPOGTEEE_BGTE') AS bgte_id
+	        maes.bgte_id
 		    , MAES.BGTE_CODIGO
 		    , MAES.BGTE_LIMITE_INFERIOR
 		FROM iest_buquetipogteee_bgte MAES
@@ -815,9 +725,7 @@
 		sqlId="SELECT acue_id FROM iesc_acuerdo_acue">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.acue_id
-	            	AND trid_table_name = 'IESC_ACUERDO_ACUE') AS acue_id
+	        maes.acue_id
 		    , MAES.ACUE_CODIGO
 		    , maes.acue_fecha_comienzo
 		    , MAES.ACUE_FECHA_FINAL
@@ -841,9 +749,7 @@
 		sqlId="SELECT conv_id FROM iesc_convenio_conv">
     <![CDATA[
         SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.conv_id
-	            	AND trid_table_name = 'IESC_CONVENIO_CONV') AS conv_id
+	        maes.conv_id
             , maes.conv_codigo
             , temp.conv_fecha_inicio_convenio
             , temp.conv_fecha_fin_convenio
@@ -867,9 +773,7 @@
 		sqlId="SELECT vmar_id FROM iman_marcavehiculo_vmar">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.vmar_id
-	            	AND trid_table_name = 'IMAN_MARCAVEHICULO_VMAR') AS vmar_id
+	        maes.vmar_id
 			, MAES.vmar_codigo
 			, MAES.vmar_marca
 		FROM iman_marcavehiculo_vmar MAES
@@ -881,9 +785,7 @@
 		sqlId="SELECT mmpp_id FROM iman_mmpp_mmpp">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.mmpp_id
-	            	AND trid_table_name = 'IMAN_MMPP_MMPP') AS mmpp_id
+	        maes.mmpp_id
 		    , MAES.MMPP_NUMERO_ONU || '-' || MAES.MMPP_CLASE || '-' || MAES.MMPP_numero_version as maes_codigo
 		    , MAES.MMPP_NUMERO_ONU
 		    , MAES.MMPP_CLASE
@@ -902,9 +804,7 @@
 		tempImp="false" sqlId="SELECT tedi_id FROM iman_modotranspedi_tedi">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.tedi_id
-	            	AND trid_table_name = 'IMAN_MODOTRANSPEDI_TEDI') AS tedi_id
+	        maes.tedi_id
 		    , MAES.TEDI_codigo
 		    , MAES.TEDI_tipo
 		    , (SELECT I18N.TEDI_NOMBRE FROM IMAN_MODOTRANSPEDIi18n_TEDI I18N
@@ -921,9 +821,7 @@
 		sqlId="SELECT navi_id FROM iesc_naviera_navi">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.navi_id
-	            	AND trid_table_name = 'IESC_NAVIERA_NAVI') AS navi_id
+	        maes.navi_id
 			, MAES.NAVI_CODIGO
 			, MAES.NAVI_DESCRIPCION
 		FROM iesc_naviera_navi MAES
@@ -935,9 +833,7 @@
 		sqlId="SELECT rece_id FROM iman_receptor_rece">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.rece_id
-	            	AND trid_table_name = 'IMAN_RECEPTOR_RECE') AS rece_id
+	        maes.rece_id
 			, MAES.RECE_CODIGO
 			, MAES.RECE_DESCRIPCION
 		FROM iman_receptor_rece MAES
@@ -949,9 +845,7 @@
 		sqlId="SELECT actt_id FROM iesc_actividadtipo_actt">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.actt_id
-	            	AND trid_table_name = 'IESC_ACTIVIDADTIPO_ACTT') AS actt_id
+	        maes.actt_id
 		    , MAES.ACTT_CODIGO
 		    , MAES.ACTT_codigo_est
 		    , (SELECT I18N.ACTT_NOMBRE FROM IESC_ACTIVIDADTIPOi18n_ACTT I18N
@@ -968,9 +862,7 @@
 		sqlId="SELECT bugt_id FROM iest_buquetipogt_bugt">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.bugt_id
-	            	AND trid_table_name = 'IEST_BUQUETIPOGT_BUGT') AS bugt_id
+	        maes.bugt_id
 		    , MAES.BUGT_CODIGO
 		    , MAES.BUGT_LIMITE_SUPERIOR
 		    , (SELECT I18N.BUGT_NOMBRE FROM IEST_BUQUETIPOGTI18N_BUGT I18N
@@ -987,9 +879,7 @@
 		tempImp="false" sqlId="SELECT cert_id FROM iesc_certificadotipo_cert">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.cert_id
-	            	AND trid_table_name = 'IESC_CERTIFICADOTIPO_CERT') AS cert_id
+	        maes.cert_id
 			, MAES.CERT_CODIGO
 			, MAES.CERT_CODIGO_edi
 			, (SELECT I18N.CERT_NOMBRE
@@ -1007,9 +897,7 @@
 		sqlId="SELECT eted_id FROM igen_erroreditipo_eted">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.eted_id
-	            	AND trid_table_name = 'IGEN_ERROREDITIPO_ETED') AS eted_id
+	        maes.eted_id
 		    , MAES.ETED_CODIGO
 		    , MAES.ETED_NIVEL
 		    , (SELECT I18N.ETED_NOMBRE FROM IGEN_ERROREDITIPOI18N_ETED I18N
@@ -1026,9 +914,7 @@
 		sqlId="SELECT ivat_id FROM ifac_ivatipo_ivat">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.ivat_id
-	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') AS ivat_id
+	        maes.ivat_id
 		    , MAES.IVAT_CODIGO
 		    , MAES.IVAT_FECHA_INICIO
 		    , MAES.IVAT_FECHA_FIN
@@ -1047,9 +933,7 @@
 		tempImp="false" sqlId="SELECT topp_id FROM ipes_operaciontipo_topp">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.topp_id
-	            	AND trid_table_name = 'IPES_OPERACIONTIPO_TOPP') AS topp_id
+	        maes.topp_id
 		    , MAES.TOPP_CODIGO
 		    , MAES.TOPP_ES_GENERADA_TASA
 		    , to_char(MAES.TOPP_CODIGO_EXENCION)
@@ -1068,9 +952,7 @@
 		sqlId="SELECT rest_id FROM iesc_residuostipo_rest">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.rest_id
-	            	AND trid_table_name = 'IESC_RESIDUOSTIPO_REST') AS rest_id
+	        maes.rest_id
 		    , MAES.REST_CODIGO
 		    , MAES.REST_ES_FACTURACION
 		    , MAES.REST_ANEXO_MARPOL
@@ -1096,9 +978,7 @@
 		sqlId="SELECT tgsu_id FROM isum_tipogasto_tgsu">
     <![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.tgsu_id
-	            	AND trid_table_name = 'ISUM_TIPOGASTO_TGSU') AS tgsu_id
+	        maes.tgsu_id
 	        , maes.TGSU_codigo
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.tgsu_ivat_id
@@ -1117,9 +997,7 @@
 		sqlId="SELECT navt_id FROM igen_navegaciontipo_navt">
     <![CDATA[
         SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.navt_id
-	            	AND trid_table_name = 'IGEN_NAVEGACIONTIPO_NAVT') AS navt_id
+	        maes.navt_id
 	        , maes.navt_codigo
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.navt_ivat_id
@@ -1138,9 +1016,7 @@
 		sqlId="SELECT pais_id FROM igen_pais_pais">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.pais_id
-	            	AND trid_table_name = 'IGEN_PAIS_PAIS') AS pais_id
+	        maes.pais_id
 			, MAES.PAIS_ISO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.pais_amun_id
@@ -1162,9 +1038,7 @@
 		sqlId="SELECT prov_id FROM igen_provincia_prov">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.prov_id
-	            	AND trid_table_name = 'IGEN_PROVINCIA_PROV') AS prov_id
+	        maes.prov_id
 			, maes.prov_codigo
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.prov_pais_id
@@ -1183,9 +1057,7 @@
 		sqlId="SELECT muni_id FROM igen_municipio_muni">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.muni_id
-	            	AND trid_table_name = 'IGEN_MUNICIPIO_MUNI') AS muni_id
+	        maes.muni_id
 		    , (
 		        SELECT MAES.PROV_CODIGO
 		        FROM IGEN_PROVINCIA_PROV MAES
@@ -1210,9 +1082,7 @@
 		tempImp="false" sqlId="SELECT ratt_id FROM iesc_relacionatraquetipo_ratt">
     <![CDATA[
         select
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = ratt_id
-	            	AND trid_table_name = 'IESC_RELACIONATRAQUETIPO_RATT') AS ratt_id
+	        ratt_id
             , (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_1)
               || (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_2)
               || (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_3)
@@ -1240,9 +1110,7 @@
 		tempImp="false" sqlId="SELECT ress_id FROM iesc_residuossubtipo_ress">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.ress_id
-	            	AND trid_table_name = 'IESC_RESIDUOSSUBTIPO_RESS') AS ress_id
+	        maes.ress_id
 		    , (SELECT REST_CODIGO FROM IESC_RESIDUOSTIPO_REST
 		        WHERE REST_ID = RESS_REST_ID) ||
 		    MAES.RESS_CODIGO AS CODIGO
@@ -1265,9 +1133,7 @@
 		tempImp="false" sqlId="SELECT opet_id FROM igen_operaciontipo_opet">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.opet_id
-	            	AND trid_table_name = 'IGEN_OPERACIONTIPO_OPET') AS opet_id
+	        maes.opet_id
 		    , MAES.OPET_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.opet_ivat_id
@@ -1287,9 +1153,7 @@
 		tempImp="false" sqlId="SELECT acet_id FROM iesc_actividadeditipo_acet">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.acet_id
-	            	AND trid_table_name = 'IESC_ACTIVIDADEDITIPO_ACET') AS acet_id
+	        maes.acet_id
 		    , MAES.ACET_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.acet_actt_id
@@ -1309,9 +1173,7 @@
 		sqlId="SELECT fape_id FROM ipes_familia_fape">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.fape_id
-	            	AND trid_table_name = 'IPES_FAMILIA_FAPE') AS fape_id
+	        maes.fape_id
       		, MAES.FAPE_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.fape_gfpe_id
@@ -1332,9 +1194,7 @@
 		sqlId="SELECT espe_id FROM ipes_especiepesca_espe">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.espe_id
-	            	AND trid_table_name = 'IPES_ESPECIEPESCA_ESPE') AS espe_id
+	        maes.espe_id
       		, MAES.ESPE_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.espe_familia_id
@@ -1358,9 +1218,7 @@
 		sqlId="SELECT term_id FROM iman_terminal_term">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.term_id
-	            	AND trid_table_name = 'IMAN_TERMINAL_TERM') AS term_id
+	        maes.term_id
 			, SUBSTR(MAES.TERM_CODIGO, 1, 1)
 			, SUBSTR(MAES.TERM_CODIGO, 2)
 		    , TEMP.TERM_ES_CONCESION
@@ -1386,9 +1244,7 @@
 		sqlId="SELECT buqt_id FROM iest_buquetipoest_buqt">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.buqt_id
-	            	AND trid_table_name = 'IEST_BUQUETIPOEST_BUQT') AS buqt_id
+	        maes.buqt_id
 		    , MAES.BUQT_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.buqt_tipo_eee_id
@@ -1407,9 +1263,7 @@
 		sqlId="SELECT buqt_id FROM igen_buquetipo_buqt">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.buqt_id
-	            	AND trid_table_name = 'IGEN_BUQUETIPO_BUQT') AS buqt_id
+	        maes.buqt_id
 		    , MAES.BUQT_CODIGO
 		    , coalesce(MAES.BUQT_ES_RORO, 0)
 		    , coalesce(MAES.BUQT_ES_COMERCIAL, 0)
@@ -1430,9 +1284,7 @@
 		sqlId="SELECT bqte_id FROM iesc_buquetipoedi_bqte">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.bqte_id
-	            	AND trid_table_name = 'IESC_BUQUETIPOEDI_BQTE') AS bqte_id
+	        maes.bqte_id
 		    , MAES.bqte_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.bqte_tipo_id
@@ -1452,9 +1304,7 @@
 		sqlId="SELECT tsum_id FROM isum_tiposuministro_tsum">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.tsum_id
-	            	AND trid_table_name = 'ISUM_TIPOSUMINISTRO_TSUM') AS tsum_id
+	        maes.tsum_id
 		    , MAES.TSUM_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.tsum_ivat_id
@@ -1474,9 +1324,7 @@
 		sqlId="SELECT natu_id FROM iest_naturaleza_natu">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.natu_id
-	            	AND trid_table_name = 'IEST_NATURALEZA_NATU') AS natu_id
+	        maes.natu_id
 			, MAES.NATU_codigo
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.natu_grupo_id
@@ -1496,9 +1344,7 @@
 		sqlId="SELECT DISTINCT maes.unic_id FROM iman_unidadcarga_unic maes JOIN iman_unidadcargatemp_unic temp ON temp.unic_id = maes.unic_id WHERE temp.unic_merc_id IS NULL">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.unic_id
-	            	AND trid_table_name = 'IMAN_UNIDADCARGA_UNIC') AS unic_id
+	        maes.unic_id
 			, MAES.UNIC_CODIGO
 			, TEMP.UNIC_TIPO_EEE, TEMP.UNIC_ES_EEE, TEMP.UNIC_TEUS
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -1527,9 +1373,7 @@
 		sqlId="SELECT merc_id FROM iman_mercancia_merc">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.merc_id
-	            	AND trid_table_name = 'IMAN_MERCANCIA_MERC') AS merc_id
+	        maes.merc_id
 			, MAES.merc_CODIGO
 			, MAES.merc_fecha_comienzo
 		 	, MAES.merc_fecha_finalizacion
@@ -1586,9 +1430,7 @@
 		sqlId="SELECT DISTINCT maes.unic_id FROM iman_unidadcarga_unic maes JOIN iman_unidadcargatemp_unic temp ON temp.unic_id = maes.unic_id WHERE temp.unic_merc_id IS NOT NULL">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.unic_id
-	            	AND trid_table_name = 'IMAN_UNIDADCARGA_UNIC') AS unic_id
+	        maes.unic_id
 			, MAES.UNIC_CODIGO
 			, TEMP.UNIC_TIPO_EEE, TEMP.UNIC_ES_EEE, TEMP.UNIC_TEUS
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -1629,9 +1471,7 @@
 		tempImp="false" sqlId="SELECT zcos_id FROM iest_zonacosteraeee_zcos">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.zcos_id
-	            	AND trid_table_name = 'IEST_ZONACOSTERAEEE_ZCOS') AS zcos_id
+	        maes.zcos_id
 			, (
 				SELECT PAIS_ISO
 				FROM IGEN_PAIS_PAIS
@@ -1657,9 +1497,7 @@
 		sqlId="SELECT unlo_id FROM igen_unlocode_unlo">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.unlo_id
-	            	AND trid_table_name = 'IGEN_UNLOCODE_UNLO') AS unlo_id
+	        maes.unlo_id
 			, (SELECT PAIS_ISO FROM IGEN_PAIS_PAIS WHERE pais_id = maes.unlo_pais_id) || UNLO_CODIGO AS unlo_codigo
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.unlo_pais_id
@@ -1699,9 +1537,7 @@
 		tempImp="false" sqlId="SELECT radu_id FROM iman_recintoaduanero_radu">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.radu_id
-	            	AND trid_table_name = 'IMAN_RECINTOADUANERO_RADU') AS radu_id
+	        maes.radu_id
 		    , MAES.radu_codigo
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.radu_unlocode_id
@@ -1722,9 +1558,7 @@
 		sqlId="SELECT subp_id FROM igen_subpuerto_subp">
     <![CDATA[
         SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.subp_id
-	            	AND trid_table_name = 'IGEN_SUBPUERTO_SUBP') AS subp_id
+	        maes.subp_id
             , MAES.SUBP_CODIGO
             , MAES.SUBP_CODIGO_EDI
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -1759,9 +1593,7 @@
 		sqlId="SELECT zons_id FROM isup_zona_zons">
     <![CDATA[
 		 select
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.zons_id
-	            	AND trid_table_name = 'ISUP_ZONA_ZONS') AS zons_id
+	        maes.zons_id
 		    , (select SUBP_CODIGO from IGEN_SUBPUERTO_SUBP where SUBP_ID = maes.ZONS_SUBP_ID) AS SUBP_CODIGO
 		    , maes.ZONS_CODIGO as codigo
 
@@ -1795,9 +1627,7 @@
 		sqlId="SELECT traf_id FROM iesc_trafico_traf">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.traf_id
-	            	AND trid_table_name = 'IESC_TRAFICO_TRAF') AS traf_id
+	        maes.traf_id
 	        , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP
 	            WHERE SUBP_ID = TRAF_SUBP_ID) AS SUBP_CODIGO
 	        , MAES.TRAF_CODIGO AS CODIGO
@@ -1816,9 +1646,7 @@
 		sqlId="SELECT muel_id FROM iesc_muelle_muel">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.muel_id
-	            	AND trid_table_name = 'IESC_MUELLE_MUEL') AS muel_id
+	        maes.muel_id
 	        , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = TEMP.MUEL_SUBP_ID) AS SUBP_CODIGO
 	        , MAES.MUEL_CODIGO
 	        , (SELECT I18N.MUEL_NOMBRE
@@ -1840,9 +1668,7 @@
 		tempImp="false" sqlId="SELECT inda_id FROM iemd_instalaciondepa_inda">
     <![CDATA[
         SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.inda_id
-	            	AND trid_table_name = 'IEMD_INSTALACIONDEPA_INDA') AS inda_id
+	        maes.inda_id
             , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDA_SUBPUERTO_ID) AS SUBP_CODIGO
             , INDA_CODIGO as codigo
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -1864,9 +1690,7 @@
 		sqlId="SELECT indp_id FROM iemd_instalaciondep_indp">
     <![CDATA[
         SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.indp_id
-	            	AND trid_table_name = 'IEMD_INSTALACIONDEP_INDP') AS indp_id
+	        maes.indp_id
             , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDP_SUBPUERTO_ID) AS SUBP_CODIGO
             , MAES.INDP_CODIGO AS MAES_CODIGO
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -1905,9 +1729,7 @@
 		sqlId="SELECT amad_id FROM iemd_amarre_amad">
     <![CDATA[
         SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.amad_id
-	            	AND trid_table_name = 'IEMD_AMARRE_AMAD') AS amad_id
+	        maes.amad_id
             , (
             	select subp_codigo
             	from IGEN_SUBPUERTO_SUBP
@@ -1948,9 +1770,7 @@
 		sqlId="SELECT alin_id FROM igen_alineacion_alin">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.alin_id
-	            	AND trid_table_name = 'IGEN_ALINEACION_ALIN') AS alin_id
+	        maes.alin_id
 	          , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP
 	              WHERE
 	                  subp_id = (
@@ -1995,9 +1815,7 @@
 		sqlId="SELECT orga_id FROM icom_organizacion_orga">
     <![CDATA[
         SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.orga_id
-	            	AND trid_table_name = 'ICOM_ORGANIZACION_ORGA') AS orga_id
+	        maes.orga_id
             , MAES.ORGA_COD
             , MAES.orga_nombre
             , MAES.ORGA_TIPO_DOC_FISCAL
@@ -2026,9 +1844,7 @@
 		sqlId="SELECT embd_id FROM iemd_embarcacion_embd">
     <![CDATA[
         select
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.embd_id
-	            	AND trid_table_name = 'IEMD_EMBARCACION_EMBD') AS embd_id
+	        maes.embd_id
             , maes.EMBD_CODIGO
             , maes.EMBD_MATRICULA
             , maes.EMBD_NOMBRE
@@ -2061,9 +1877,7 @@
 		tempImp="true" sqlId="SELECT emba_id FROM iemd_embarcacionaut_emba">
     <![CDATA[
         SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.emba_id
-	            	AND trid_table_name = 'IEMD_EMBARCACIONAUT_EMBA') AS emba_id
+	        maes.emba_id
             , maes.EMBA_CODIGO
             , maes.EMBA_MATRICULA
             , maes.EMBA_NOMBRE
@@ -2107,9 +1921,7 @@
 		tempImp="true" sqlId="SELECT iesp_id FROM iman_instespecial_iesp">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.iesp_id
-	            	AND trid_table_name = 'IMAN_INSTESPECIAL_IESP') AS iesp_id
+	        maes.iesp_id
 	          , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP
 	              WHERE
 	                  subp_id = (
@@ -2152,9 +1964,7 @@
 		sqlId="SELECT bupe_id FROM ipes_buque_bupe">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.bupe_id
-	            	AND trid_table_name = 'IPES_BUQUE_BUPE') AS bupe_id
+	        maes.bupe_id
 	        , MAES.BUPE_CODIGO
 
 	        , TEMP.bupe_nombre
@@ -2202,9 +2012,7 @@
 		sqlId="SELECT reds_id FROM isum_red_reds">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.reds_id
-	            	AND trid_table_name = 'ISUM_RED_REDS') AS reds_id
+	        maes.reds_id
 		    , (
 		        SELECT SUBP_CODIGO
 		        FROM IGEN_SUBPUERTO_SUBP
@@ -2231,9 +2039,7 @@
 		sqlId="SELECT cosu_id FROM isum_contador_cosu">
 	<![CDATA[
 	SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.cosu_id
-	            	AND trid_table_name = 'ISUM_CONTADOR_COSU') AS cosu_id
+	        maes.cosu_id
 		  , (
 		    SELECT subp_codigo
 		    FROM IGEN_SUBPUERTO_SUBP
@@ -2265,9 +2071,7 @@
 		sqlId="SELECT prsu_id FROM isum_puntored_prsu">
     <![CDATA[
         SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.prsu_id
-	            	AND trid_table_name = 'ISUM_PUNTORED_PRSU') AS prsu_id
+	        maes.prsu_id
             , (
             	SELECT
             		SUBP_CODIGO
@@ -2341,9 +2145,7 @@
 		tempImp="false" sqlId="SELECT buet_id FROM iest_registrobuqueeeetipo_buet">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.buet_id
-	            	AND trid_table_name = 'IEST_REGISTROBUQUEEEETIPO_BUET') AS buet_id
+	        maes.buet_id
 		    , (
 		        SELECT PAIS_ISO
 		        FROM IGEN_PAIS_PAIS
@@ -2362,9 +2164,7 @@
 		tempImp="false" sqlId="SELECT burt_id FROM iest_registrobuquetipo_burt">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.burt_id
-	            	AND trid_table_name = 'IEST_REGISTROBUQUETIPO_BURT') AS burt_id
+	        maes.burt_id
 		    , (
 		        SELECT PAIS_ISO
 		        FROM IGEN_PAIS_PAIS
@@ -2387,9 +2187,7 @@
 		sqlId="SELECT buqu_buque_id FROM iesc_buque_buqu">
 	<![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maes.buqu_buque_id
-	            	AND trid_table_name = 'IESC_BUQUE_BUQU') AS buqu_buque_id
+	        maes.buqu_buque_id
 			, coalesce(MAES.BUqu_CODIGO_imo, concat('bb', MAES.BUqu_buque_id)) as BUqu_CODIGO_imo
 			, TEMP.BUQU_nombre_buque
 			, TEMP.BUQU_CALLSIGN

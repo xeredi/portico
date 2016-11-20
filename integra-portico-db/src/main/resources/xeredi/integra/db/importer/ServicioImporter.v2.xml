@@ -1,12 +1,11 @@
 <importer>
 <!--
+-->
 	<sql id="ASIGNACION_AMARRE" table="IEMD_ASIGNACIONAMARRE_ASAM"
 		sqlId="SELECT asam_id FROM IEMD_ASIGNACIONAMARRE_ASAM">
     <![CDATA[
         SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = asam_id
-	            	AND trid_table_name = 'IEMD_ASIGNACIONAMARRE_ASAM') AS asam_id
+	        asam_id
             , serv.serv_fecha_creacion
             , serv.serv_fecha_baja
             , serv.serv_fecha_modificacion
@@ -71,9 +70,7 @@
 	<sql id="ESCALA" table="IESC_ESCALA_ESCA" sqlId="SELECT esca_id FROM iesc_escala_esca">
     <![CDATA[
 	    SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = esca_id
-	            	AND trid_table_name = 'IESC_ESCALA_ESCA') AS esca_id
+	        esca_id
 	        , serv.serv_fecha_creacion
 	        , serv.serv_fecha_baja
 	        , serv.serv_fecha_modificacion
@@ -196,9 +193,7 @@
         (SELECT trid_new_id FROM tbl_traduccion_ids_trid
             WHERE trid_old_id = atra_escala_id
             	AND trid_table_name = 'IESC_ESCALA_ESCA') AS atra_escala_id
-        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-            WHERE trid_old_id = atra_id
-            	AND trid_table_name = 'IESC_ATRAQUE_ATRA') AS atra_id
+        , atra_id
         , atra.atra_numero
         , COALESCE(rea.atrd_fecha_inicio, aut.atrd_fecha_inicio, sol.atrd_fecha_inicio) AS finicio
         , COALESCE(rea.atrd_fecha_finalizacion, rea.atrd_fecha_finalizacion, sol.atrd_fecha_finalizacion) AS ffin
@@ -278,9 +273,7 @@
         (SELECT trid_new_id FROM tbl_traduccion_ids_trid
             WHERE trid_old_id = serv_id
             	AND trid_table_name = 'IESC_ESCALA_ESCA') AS serv_id
-        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-            WHERE trid_old_id = atop_id
-            	AND trid_table_name = 'IESC_ATRAQUEOPERACION_ATOP') AS atop_id
+        , atop_id
 
         , ATOP_ORDEN
 
@@ -326,9 +319,7 @@
         (SELECT trid_new_id FROM tbl_traduccion_ids_trid
             WHERE trid_old_id = coes_esca_id
             	AND trid_table_name = 'IESC_ESCALA_ESCA') AS coes_esca_id
-        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-            WHERE trid_old_id = coes_id
-            	AND trid_table_name = 'IFAC_CONTADORESCALA_COES') AS coes_id
+        , coes_id
     	, ROWNUM
 
     	, coes_tipo
@@ -344,9 +335,7 @@
         (SELECT trid_new_id FROM tbl_traduccion_ids_trid
             WHERE trid_old_id = escr_esca_id
             	AND trid_table_name = 'IESC_ESCALA_ESCA') AS coes_esca_id
-        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-            WHERE trid_old_id = escr_id
-            	AND trid_table_name = 'IESC_ESCALARESIDUO_ESCR') AS escr_id
+        , escr_id
     	, ROWNUM
 
         , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -367,9 +356,7 @@
 		sqlId="SELECT suoc_id FROM isup_superficie_suoc">
     <![CDATA[
 		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = suoc_id
-	            	AND trid_table_name = 'ISUP_SUPERFICIE_SUOC') AS suoc_id
+	        suoc_id
 		    , serv.serv_fecha_creacion
 		    , serv.serv_fecha_baja
 		    , serv.serv_fecha_modificacion
@@ -452,9 +439,7 @@
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = serv_id
 	            	AND trid_table_name = 'ISUP_SUPERFICIE_SUOC') AS serv_id
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = sulo_id
-	            	AND trid_table_name = 'ISUP_LINEAOCUPACION_SULO') AS sulo_id
+	        , sulo_id
 		    , sulo.sulo_orden
 
 		    , sulo.sulo_fecha_inicio
@@ -482,9 +467,7 @@
 		sqlId="SELECT mape_id FROM ipes_manifiesto_mape">
     <![CDATA[
 	    select
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = mape_id
-	            	AND trid_table_name = 'IPES_MANIFIESTO_MAPE') AS mape_id
+	        mape_id
 	        , SERV.SERV_FECHA_CREACION
 	        , SERV.SERV_FECHA_BAJA
 	        , SERV.SERV_FECHA_modificacion
@@ -562,9 +545,7 @@
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = serv_id
 	            	AND trid_table_name = 'IPES_MANIFIESTO_MAPE') AS serv_id
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = pape_id
-	            	AND trid_table_name = 'IPES_PARTIDA_PAPE') AS pape_id
+	        , pape_id
 	        , pape.PAPE_ORDEN
 
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -595,9 +576,7 @@
 		sqlId="SELECT suco_id FROM isum_consumo_suco">
     <![CDATA[
 	    select
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = suco_id
-	            	AND trid_table_name = 'ISUM_CONSUMO_SUCO') AS suco_id
+	        suco_id
 	        , SERV.SERV_FECHA_CREACION
 	        , SERV.SERV_FECHA_BAJA
 	        , SERV.SERV_FECHA_modificacion
@@ -664,9 +643,7 @@
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = serv_id
 	            	AND trid_table_name = 'ISUM_CONSUMO_SUCO') AS serv_id
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = gcsu_id
-	            	AND trid_table_name = 'ISUM_GASTOCONSUMO_GCSU') AS gcsu_id
+	        , gcsu_id
 
 	        , ROWNUM as numero
 	    	, gcsu.GCSU_FECHA_INICIO
@@ -701,9 +678,7 @@
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = serv_id
 	            	AND trid_table_name = 'ISUM_CONSUMO_SUCO') AS serv_id
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = lcsu_id
-	            	AND trid_table_name = 'ISUM_LECTURACONSUMO_LCSU') AS lcsu_id
+	        , lcsu_id
 
 	        , LCSU.LCSU_ORDEN as numero
 	    	, LCSU.LCSU_FECHA_INICIO
@@ -740,9 +715,7 @@
 		sqlId="SELECT mani_id FROM iman_manifiesto_mani">
     <![CDATA[
 	    SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = mani_id
-	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS mani_id
+	        mani_id
 	        , SERV.SERV_FECHA_CREACION
 	        , SERV.SERV_FECHA_BAJA
 	        , SERV.SERV_FECHA_modificacion
@@ -832,9 +805,7 @@
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maco_mani_id
 	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS maco_mani_id
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = maco_id
-	            	AND trid_table_name = 'IMAN_CONSIGNATARIO_MACO') AS maco_id
+	        , maco_id
             , maco.MACO_ORDEN as numero
 
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -857,9 +828,7 @@
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = mabl_mani_id
 	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS mabl_mani_id
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = mabl_id
-	            	AND trid_table_name = 'IMAN_BL_MABL') AS mabl_id
+	        , mabl_id
 			, MABL.MABL_ORDEN
  		    , MABL.MABL_ESTADO
 
@@ -953,9 +922,7 @@
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = serv_id
 	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS serv_id
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = part_id
-	            	AND trid_table_name = 'IMAN_PARTIDA_PART') AS part_id
+	        , part_id
 		  , part.part_orden
 	      , PART.PART_ESTADO
 
@@ -1025,7 +992,7 @@
 	        )
     ]]>
 	</sql>
--->
+
 	<sql id="EQUIPAMIENTO" table="IMAN_EQUIPAMIENTO_EQUI"
 		sqlId="SELECT equi_id FROM iman_equipamiento_equi">
     <![CDATA[
@@ -1033,9 +1000,7 @@
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = serv_id
 	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS serv_id
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = equi_id
-	            	AND trid_table_name = 'IMAN_EQUIPAMIENTO_EQUI') AS equi_id
+	        , equi_id
 		    , EQUI.EQUI_ORDEN
 	        , EQUI.EQUI_ESTADO
 
@@ -1083,9 +1048,7 @@
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = serv_id
 	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS serv_id
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = paeq_id
-	            	AND trid_table_name = 'IMAN_PARTIDAEQUIP_PAEQ') AS paeq_id
+	        , paeq_id
 		    , rownum as numero
 
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -1126,9 +1089,7 @@
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = serv_id
 	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS serv_id
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = preq_id
-	            	AND trid_table_name = 'IMAN_PRECINTOEQUIP_PREQ') AS preq_id
+	        , preq_id
 		    , rownum as numero
 
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -1164,9 +1125,7 @@
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = serv_id
 	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS serv_id
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = paim_id
-	            	AND trid_table_name = 'IMAN_PARTIDAIM_PAIM') AS paim_id
+	        , paim_id
 		    , PAIM.PAIM_NUMERO
 
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -1205,9 +1164,7 @@
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = serv_id
 	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS serv_id
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = pamp_id
-	            	AND trid_table_name = 'IMAN_PARTIDAMMPP_PAMP') AS pamp_id
+	        , pamp_id
 		    , PAMP.PAMP_orden
 
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid

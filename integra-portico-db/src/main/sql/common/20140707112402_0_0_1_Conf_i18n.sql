@@ -474,7 +474,7 @@ INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (5005)\
 -- Grupos
 INSERT INTO tbl_grupo_grpo (grpo_pk, grpo_nombre) VALUES (4000, 'Administradores')\
 INSERT INTO tbl_funcionalidad_grupo_fngr (fngr_fncd_pk, fngr_grpo_pk)
-	SELECT acbs_pk, 4000 FROM tbl_accion_base_acbs
+	SELECT fncd_pk, 4000 FROM tbl_funcionalidad_fncd
 \
 
 -- Usuarios
