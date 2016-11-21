@@ -122,7 +122,7 @@ public abstract class EntityImporterBO {
         fechaInicio = calendar.getTime();
 
         try (final Connection con = getRemoteConnection();
-                final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+                final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             con.setAutoCommit(false);
 
             LOG.info("Start process");
@@ -168,6 +168,10 @@ public abstract class EntityImporterBO {
                 con.commit();
                 session.commit();
             }
+
+            finalizeImport(con, session);
+            con.commit();
+            session.commit();
         } catch (final InstanceNotFoundException ex) {
             LOG.fatal(ex, ex);
         } catch (final ClassNotFoundException ex) {
@@ -203,6 +207,19 @@ public abstract class EntityImporterBO {
      *             the SQL exception
      */
     protected abstract void prepareImport(@NonNull final Connection con, @NonNull final SqlSession session)
+            throws SQLException;
+
+    /**
+     * Finalize import.
+     *
+     * @param con
+     *            the con
+     * @param session
+     *            the session
+     * @throws SQLException
+     *             the SQL exception
+     */
+    protected abstract void finalizeImport(@NonNull final Connection con, @NonNull final SqlSession session)
             throws SQLException;
 
     /**

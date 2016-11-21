@@ -25,11 +25,13 @@ import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
+import xeredi.argo.model.servicio.dao.ServicioActorDAO;
 import xeredi.argo.model.servicio.dao.ServicioDAO;
 import xeredi.argo.model.servicio.dao.ServicioDatoDAO;
 import xeredi.argo.model.servicio.dao.SubservicioDAO;
 import xeredi.argo.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.argo.model.servicio.dao.SubservicioSubservicioDAO;
+import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
@@ -60,6 +62,21 @@ public final class ServicioImporterV2BO extends EntityImporterBO {
     @Override
     protected void prepareImport(Connection con, SqlSession session) throws SQLException {
         // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void finalizeImport(Connection con, SqlSession session) throws SQLException {
+        LOG.info("Actualizacion de actores de los servicios");
+
+        final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+        final ServicioActorDAO sracDAO = session.getMapper(ServicioActorDAO.class);
+
+        for (final ServicioVO srvc : srvcDAO.selectList(new ServicioCriterioVO())) {
+            sracDAO.insert(srvc.getId());
+        }
     }
 
     /**

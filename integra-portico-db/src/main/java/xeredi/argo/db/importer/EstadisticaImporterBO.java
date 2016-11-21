@@ -21,10 +21,12 @@ import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
+import xeredi.argo.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.argo.model.estadistica.dao.EstadisticaDAO;
 import xeredi.argo.model.estadistica.dao.EstadisticaDatoDAO;
 import xeredi.argo.model.estadistica.dao.PeriodoProcesoDAO;
 import xeredi.argo.model.estadistica.vo.EstadisticaVO;
+import xeredi.argo.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.metamodelo.proxy.TipoEstadisticaProxy;
@@ -118,6 +120,22 @@ public final class EstadisticaImporterBO extends EntityImporterBO {
         }
 
         createTranslations(con, PEPR_TABLENAME, translationMap);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void finalizeImport(Connection con, SqlSession session) throws SQLException {
+        LOG.info("Generacion de cuadros mensuales");
+
+        final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
+
+        for (final PeriodoProcesoVO pepr : peprBO.selectList(new PeriodoProcesoCriterioVO())) {
+            LOG.debug("pepr: " + pepr);
+
+            peprBO.generarCuadroMensual(pepr.getId(), false);
+        }
     }
 
     /**

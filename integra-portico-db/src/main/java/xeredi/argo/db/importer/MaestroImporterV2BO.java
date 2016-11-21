@@ -69,6 +69,14 @@ public final class MaestroImporterV2BO extends EntityImporterBO {
      * {@inheritDoc}
      */
     @Override
+    protected void finalizeImport(Connection con, SqlSession session) throws SQLException {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected void importEntity(Connection con, SqlSession session, EntityNodeV2VO entiNode)
             throws SQLException, ClassNotFoundException {
         Preconditions.checkNotNull(entiNode.getId());

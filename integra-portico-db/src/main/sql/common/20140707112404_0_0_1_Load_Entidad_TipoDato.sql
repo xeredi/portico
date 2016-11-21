@@ -320,8 +320,10 @@ INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpd
 	INSERT INTO tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (50901, portico.getTipoDato('DEST_PART_PESCA'), 'I',  2)\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (43100, 'S', 'CR', NULL , 'TIPO_MANIF')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 43100, 'Tipo de Manifiesto')\
-	INSERT INTO tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (50950, portico.getTipoDato('TIPO_MANIF'), 'M',  1)\
-	INSERT INTO tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (50951, portico.getTipoDato('TIPO_MANIF'), 'P',  2)\
+	INSERT INTO tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (50950, portico.getTipoDato('TIPO_MANIF'), 'CA',  1)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('cdrf', 'es', 50950, 'Carga')\
+	INSERT INTO tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (50951, portico.getTipoDato('TIPO_MANIF'), 'DE',  2)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('cdrf', 'es', 50951, 'Descarga')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (43105, 'S', 'CR', NULL , 'TIPO_MANIF_EDI')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 43105, 'Tipo de Manifiesto EDI')\
 	INSERT INTO tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (51000, portico.getTipoDato('TIPO_MANIF_EDI'), 'DE',  1)\

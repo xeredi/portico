@@ -843,9 +843,8 @@
 	            WHERE trid_old_id = mabl_tipo_exencion_id
 	            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') AS mabl_tipo_exencion_id
 			, MABL.MABL_NOMBRE
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = mabl_tipo_operacion_id
-	            	AND trid_table_name = 'IMAN_TIPOOPERACION_TOBL') AS mabl_tipo_operacion_id
+            , (SELECT tobl_codigo FROM iman_tipooperacion_tobl
+                WHERE tobl_id = mabl_tipo_operacion_id) AS mabl_tipo_operacion_id
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = mabl_origen_unlo_id
 	            	AND trid_table_name = 'IGEN_UNLOCODE_UNLO') AS mabl_origen_unlo_id
