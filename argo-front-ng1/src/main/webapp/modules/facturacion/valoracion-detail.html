@@ -95,26 +95,29 @@
                             <i class="glyphicon glyphicon-{{vm.model.sujPasivo ? 'ok' : 'remove'}}"></i>
                         </p>
                     </div>
-                    <div class="col-md-2 form-group-sm">
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 col-xl-1 form-group-sm">
                         <label data-translate="vlrc_falta"></label>
                         <p class="form-control-static"
                             data-ng-bind="vm.model.falta | date: ('format_datetime' | translate)"></p>
                     </div>
-                    <div class="col-md-2 form-group-sm">
+                    <div class="col-md-2 col-xl-1 form-group-sm">
                         <label data-translate="vlrc_fliq"></label>
                         <p class="form-control-static" data-ng-bind="vm.model.fliq | date: ('format_date' | translate)"></p>
                     </div>
-                    <div class="col-md-2 form-group-sm">
+                    <div class="col-md-2 col-xl-1 form-group-sm">
                         <label data-translate="fref"></label>
                         <p class="form-control-static"
                             data-ng-bind="vm.model.fref | date: ('format_datetime' | translate)"></p>
                     </div>
-                    <div class="col-md-2 form-group-sm" data-ng-if="vm.model.fini">
+                    <div class="col-md-2 col-xl-1 form-group-sm" data-ng-if="vm.model.fini">
                         <label data-translate="fini"></label>
                         <p class="form-control-static"
                             data-ng-bind="vm.model.fini | date: ('format_datetime' | translate)"></p>
                     </div>
-                    <div class="col-md-2 form-group-sm" data-ng-if="vm.model.ffin">
+                    <div class="col-md-2 col-xl-1 form-group-sm" data-ng-if="vm.model.ffin">
                         <label data-translate="ffin"></label>
                         <p class="form-control-static"
                             data-ng-bind="vm.model.ffin | date: ('format_datetime' | translate)"></p>
@@ -262,8 +265,10 @@
                             <td><span data-ng-bind="vlrl.impuesto.parametro"
                                 data-uib-tooltip="{{vlrl.impuesto.etiqueta}}"></span></td>
                             <td data-ng-bind="vlrl.ssrv.numero"></td>
-                            <td data-ng-bind="vlrl.fini | date:'short'"></td>
-                            <td data-ng-bind="vlrl.ffin | date:'short'"></td>
+                            <td><span data-ng-if="vlrl.rgla.tipo == 'T'"
+                                data-ng-bind="vlrl.fini | date: ('format_datetime' | translate)"></span></td>
+                            <td><span data-ng-if="vlrl.rgla.tipo == 'T'"
+                                data-ng-bind="vlrl.ffin | date: ('format_datetime' | translate)"></span></td>
 
                             <td>
                                 <table>

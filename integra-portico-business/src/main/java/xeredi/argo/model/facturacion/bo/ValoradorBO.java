@@ -264,6 +264,9 @@ public final class ValoradorBO {
             vlra.getVlrc().setAspc(vldrContexto.getAspc());
             vlra.getVlrc().setFalta(Calendar.getInstance().getTime());
 
+            vlra.getVlrc().setFini(vldrContexto.getFini());
+            vlra.getVlrc().setFfin(vldrContexto.getFfin());
+
             LOG.info("vlrc: " + vlra.getVlrc());
 
             proceso.addPritSalida(vlra.getVlrc().getId());
@@ -415,11 +418,6 @@ public final class ValoradorBO {
                         vlrt.setFreferencia(vldrContexto.getFref());
                         vlrt.setFliquidacion(vldrContexto.getFliquidacion());
 
-                        if (vldrContexto.getCrgo().getVersion().getTemporal()) {
-                            vlrt.setFinicio(vldrContexto.getFini());
-                            vlrt.setFfin(vldrContexto.getFfin());
-                        }
-
                         if (vlrt.getImporte() == -0.0) {
                             vlrt.setImporte(+0.0);
                         }
@@ -480,11 +478,6 @@ public final class ValoradorBO {
                         vlrt.setRgla(rgla);
                         vlrt.setFreferencia(vldrContexto.getFref());
                         vlrt.setFliquidacion(vldrContexto.getFliquidacion());
-
-                        if (vldrContexto.getCrgo().getVersion().getTemporal()) {
-                            vlrt.setFinicio(vldrContexto.getFini());
-                            vlrt.setFfin(vldrContexto.getFfin());
-                        }
 
                         if (vlrt.getImporte() == -0.0) {
                             vlrt.setImporte(+0.0);
@@ -552,11 +545,6 @@ public final class ValoradorBO {
                         vlrt.setRgla(rgla);
                         vlrt.setFreferencia(vldrContexto.getFref());
                         vlrt.setFliquidacion(vldrContexto.getFliquidacion());
-
-                        if (vldrContexto.getCrgo().getVersion().getTemporal()) {
-                            vlrt.setFinicio(vldrContexto.getFini());
-                            vlrt.setFfin(vldrContexto.getFfin());
-                        }
 
                         if (vlrt.getImporte() == -0.0) {
                             vlrt.setImporte(+0.0);

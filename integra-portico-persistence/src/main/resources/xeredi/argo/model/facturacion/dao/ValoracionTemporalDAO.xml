@@ -273,6 +273,12 @@
         , (${rgla.version.formulaSql}) AS vlrt_importe
         , importe_inc AS vlrt_importe_inc
     ]]>
+        <if test="crgo.version.temporal">
+        <![CDATA[
+            , GREATEST(ssrv_fini, #{fini}) AS vlrt_fini
+            , LEAST(COALESCE(ssrv_ffin, #{ffin}), #{ffin}) AS vlrt_ffin
+        ]]>
+        </if>
 
         <if test="rgla.version.pathCuant1Sql != null">
             , (${rgla.version.pathCuant1Sql}) AS vlrt_cuant1

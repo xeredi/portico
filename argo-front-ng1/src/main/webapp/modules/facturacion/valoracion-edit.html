@@ -17,8 +17,8 @@
                         data-translate="{{'enti_' + vm.model.srvc.entiId}}"></p>
                 </div>
                 <div class="col-md-2 col-lg-1 form-group-sm" data-ng-if="vm.tpsrId">
-                    <label data-translate="srvc"></label> <input type="text"
-                        data-ng-if="vm.accion == 'create'" autocomplete="off" data-ng-model="vm.model.srvc"
+                    <label data-translate="srvc"></label> <input type="text" data-ng-if="vm.accion == 'create'"
+                        autocomplete="off" data-ng-model="vm.model.srvc"
                         data-ng-controller="ServicioTypeaheadController as ta"
                         data-uib-typeahead="srvc as srvc.etiqueta for srvc in ta.search(vm.tpsrId, $viewValue)"
                         data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
@@ -30,8 +30,8 @@
                         data-ng-model="vm.model.fliq" data-bs-datepicker />
                 </div>
                 <div class="col-md-2 col-lg-1 form-group-sm">
-                    <label data-translate="fref"></label> <input data-ng-if="vm.accion == 'create'"
-                        type="text" class="form-control" data-ng-model="vm.model.fref" data-bs-datepicker />
+                    <label data-translate="fref"></label> <input data-ng-if="vm.accion == 'create'" type="text"
+                        class="form-control" data-ng-model="vm.model.fref" data-bs-datepicker />
                     <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
                         data-ng-bind="vm.model.fref | date: ('format_date' | translate)"></p>
                 </div>
@@ -60,8 +60,7 @@
                     </p>
                 </div>
                 <div class="col-sm-4 col-md-3 form-group-sm">
-                    <label data-translate="vlrc_codExencion"></label> <select
-                        data-ng-model="vm.model.codExencion"
+                    <label data-translate="vlrc_codExencion"></label> <select data-ng-model="vm.model.codExencion"
                         data-ng-options="cdrf.valor as ('cdrf_' + vm.tpdtCodExencion.id + '_' + cdrf.valor | translate) for cdrf in vm.tpdtCodExencion.cdrfList"
                         class="form-control">
                         <option />
@@ -72,8 +71,7 @@
             <div class="row">
                 <div class="col-sm-4 col-md-3 col-xl-2 form-group-sm">
                     <label data-translate="vlrc_pagador"></label> <input type="text" autocomplete="off"
-                        data-ng-model="vm.model.pagador"
-                        data-ng-controller="ParametroTypeaheadController as prmtTa"
+                        data-ng-model="vm.model.pagador" data-ng-controller="ParametroTypeaheadController as prmtTa"
                         data-uib-typeahead="prmt as prmt.etiqueta for prmt in prmtTa.getLabelValues(vm.pagadorEntiId, $viewValue, vm.model.srvc.prto.id, vm.model.fref)"
                         data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
                 </div>
@@ -84,20 +82,22 @@
                         <option />
                     </select>
                 </div>
+            </div>
+
+            <div class="row">
                 <div class="col-md-2 col-xl-1 form-group-sm">
                     <label data-translate="vlrc_falta"></label>
-                    <p class="form-control-static"
-                        data-ng-bind="vm.model.falta | date: ('format_datetime' | translate)"></p>
+                    <p class="form-control-static" data-ng-bind="vm.model.falta | date: ('format_datetime' | translate)"></p>
                 </div>
                 <div class="col-md-2 col-xl-1 form-group-sm">
-                    <label data-translate="fini"></label> <input data-ng-if="vm.accion == 'create'"
-                        type="text" class="form-control" data-ng-model="vm.model.fini" data-bs-datepicker />
+                    <label data-translate="fini"></label> <input data-ng-if="vm.accion == 'create'" type="text"
+                        class="form-control" data-ng-model="vm.model.fini" data-bs-datepicker />
                     <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
                         data-ng-bind="vm.model.fini | date: ('format_date' | translate)"></p>
                 </div>
                 <div class="col-md-2 col-xl-1 form-group-sm">
-                    <label data-translate="ffin"></label> <input data-ng-if="vm.accion == 'create'"
-                        type="text" class="form-control" data-ng-model="vm.model.ffin" data-bs-datepicker />
+                    <label data-translate="ffin"></label> <input data-ng-if="vm.accion == 'create'" type="text"
+                        class="form-control" data-ng-model="vm.model.ffin" data-bs-datepicker />
                     <p data-ng-if="vm.accion == 'edit'" class="form-control-static"
                         data-ng-bind="vm.model.ffin | date: ('format_date' | translate)"></p>
                 </div>

@@ -139,9 +139,6 @@
 
         ValoradorService.edit(vm.accion, vm.model).then(function(data) {
             vm.model = data.model;
-            vm.srvc = data.srvc;
-            vm.fliq = data.fliq;
-            vm.crgoList = data.crgoList;
 
             vm.crgoList = data.crgoList;
         });

@@ -1325,7 +1325,11 @@ INSERT INTO tbl_aspecto_aspc (aspc_pk,aspc_codigo,aspc_tpsr_pk) VALUES (140000, 
 		,aspv_lsum_cuant1,aspv_lsum_cuant2,aspv_lsum_cuant3,aspv_lsum_cuant4,aspv_lsum_cuant5,aspv_lsum_cuant6
 		,aspv_lgrp_info1,aspv_lgrp_info2,aspv_lgrp_info3,aspv_lgrp_info4,aspv_lgrp_info5,aspv_lgrp_info6)
 	VALUES ('140001','140000',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'1'
-		,'dato(ORGA_2)','dato(ALIN)','dato(ACUERDO)',null,null,null,'Consignatario','Alineaciï¿œn','Acuerdo',null,null,null,'1','1','1',null,null,null,'1','1','1','1','1','1','1','1','1','1','1','1')\
+		,'dato(ORGA_2)','dato(ALIN)','dato(ACUERDO)',null,null,null
+		,'Consignatario','Alineación','Acuerdo',null,null,null
+		, 1, 1, 1, null, null, null
+		, 1, 1, 1, 1, 1, 1
+		, 1, 1, 1, 1, 1, 1)\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('aspv', 'es', 140001, 'TASA AL PASAJE')\
 	INSERT INTO tbl_aspecto_cargo_ascr (ascr_pk,ascr_aspc_pk,ascr_crgo_pk) VALUES ('66001','140000','100200')\
 		INSERT INTO tbl_aspecto_cargo_version_ascv (ascv_pk,ascv_ascr_pk,ascv_fini,ascv_ffin) VALUES ('67001','66001',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null)\
@@ -1340,7 +1344,7 @@ INSERT INTO tbl_aspecto_aspc (aspc_pk,aspc_codigo,aspc_tpsr_pk) VALUES (140002, 
 		,aspv_lgrp_info1,aspv_lgrp_info2,aspv_lgrp_info3,aspv_lgrp_info4,aspv_lgrp_info5,aspv_lgrp_info6)
 	VALUES (140003, 140002,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 2
 		,'dato(ORGA_2)','dato(ALIN)','dato(ACUERDO)',null,null,null
-		,'Consignatario','Alineaciï¿œn','Acuerdo',null,null,null
+		,'Consignatario','Alineación','Acuerdo',null,null,null
 		, 1, 1, 1, null, null, null
 		, 1, 1, 1, 1, 1, 1
 		, 1, 1, 1, 1, 1, 1)\

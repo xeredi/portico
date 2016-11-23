@@ -70,7 +70,7 @@
                                     AND crgv_es_temporal = 1
                             )
                     )
-                    THEN LEAST(srvc_fini, #{fref})
+                    THEN LEAST(srvc_fini, #{fliquidacion})
 
                     ELSE srvc_fref
                 END
@@ -99,7 +99,7 @@
                                     AND crgv_es_temporal = 1
                             )
                     )
-                    THEN LEAST(COALESCE(srvc_ffin, #{fref}), #{fref})
+                    THEN LEAST(COALESCE(srvc_ffin, #{fliquidacion}), #{fliquidacion})
 
                     ELSE srvc_fref
                 END
