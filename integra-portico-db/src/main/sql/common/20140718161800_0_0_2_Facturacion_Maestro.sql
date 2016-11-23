@@ -5,6 +5,7 @@
 -- crgo y crgv - 100000
 -- rgla y rglv - 120000
 -- aspc y aspv - 140000
+-- ascr y ascv - 160000
 
 
 INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','B3','21002')\
@@ -586,8 +587,8 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES ('120097','120096',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'27','20','padre(BL).dato(TIPO_OP_BL) IN (''E'',''D'')
-		AND valorServicio(''TM'', padre(BL).atributo(PK)) = ''S''
-		AND valorServicio(''RE'', padre(BL).atributo(PK)) = ''S''
+		AND valorServicio(''TM'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
+		AND valorServicio(''RE'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 		AND padre(BL).dato(UNLOCODE_5) IS NULL
 		AND (
 		    dato(BOOLEANO_02) IS NULL
@@ -601,8 +602,8 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES ('120099','120098',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'28','20','padre(BL).dato(TIPO_OP_BL) IN (''E'',''D'')
-		AND valorServicio(''TM'', padre(BL).atributo(PK)) = ''S''
-		AND valorServicio(''RE'', padre(BL).atributo(PK)) = ''S''
+		AND valorServicio(''TM'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
+		AND valorServicio(''RE'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 		AND padre(BL).dato(UNLOCODE_5) IS NULL
 		AND (
 		    dato(BOOLEANO_01) IS NULL
@@ -616,8 +617,8 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES ('120101','120100',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'29','40','padre(BL).dato(TIPO_OP_BL) IN (''E'',''D'')
-		AND valorServicio(''TM'', padre(BL).atributo(PK)) = ''S''
-		AND valorServicio(''RE'', padre(BL).atributo(PK)) = ''S''
+		AND valorServicio(''TM'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
+		AND valorServicio(''RE'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 		AND padre(BL).dato(UNLOCODE_5) IS NULL
 		AND dato(BOOLEANO_02) = 1','40',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120101, 'Art.216.b')\
@@ -628,8 +629,8 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES ('120103','120102',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'30','40','padre(BL).dato(TIPO_OP_BL) IN (''E'',''D'')
-		AND valorServicio(''TM'', padre(BL).atributo(PK)) = ''S''
-		AND valorServicio(''RE'', padre(BL).atributo(PK)) = ''S''
+		AND valorServicio(''TM'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
+		AND valorServicio(''RE'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 		AND padre(BL).dato(UNLOCODE_5) IS NULL
 		AND dato(BOOLEANO_01) = 1','40',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120103, 'Art.216.b')\
@@ -640,7 +641,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES ('120105','120104',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'31','80','padre(BL).dato(TIPO_OP_BL) IN (''E'',''D'')
-		AND valorServicio(''II'', padre(BL).atributo(PK)) = ''S''','80',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
+		AND valorServicio(''II'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''','80',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120105, 'Art.216.c')\
 
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES ('120106','100000','B3_B32','22005','D')\
@@ -649,7 +650,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES ('120107','120106',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'32','80','padre(BL).dato(TIPO_OP_BL) IN (''E'',''D'')
-		AND valorServicio(''II'', padre(BL).atributo(PK)) = ''S''','80',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
+		AND valorServicio(''II'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''','80',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120107, 'Art.216.c')\
 
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES ('120108','100000','B3_B33','22004','D')\
@@ -677,7 +678,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES ('120113','120112',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'40','40','padre(BL).dato(TIPO_OP_BL) IN (''E'',''D'')
 		AND padre(BL).dato(TIPO_NAV) <> ''CI''
-		AND valorServicio(''UP'', padre(BL).atributo(PK)) = ''S''','40',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
+		AND valorServicio(''UP'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''','40',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120113, 'Art.245.5')\
 
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES ('120114','100000','B3_B41','22005','D')\
@@ -687,7 +688,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES ('120115','120114',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'41','40','padre(BL).dato(TIPO_OP_BL) IN (''E'',''D'')
 		AND padre(BL).dato(TIPO_NAV) <> ''CI''
-		AND valorServicio(''UP'', padre(BL).atributo(PK)) = ''S''','40',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
+		AND valorServicio(''UP'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''','40',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120115, 'Art.245.5')\
 
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES ('120116','100000','B3_B42','22004','D')\
@@ -722,7 +723,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base,rglv_condicion,rglv_formula,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
 			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('120123','120122',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'48','20','valorServicio(''RE'', padre(BL).atributo(PK)) = ''S''
+		VALUES ('120123','120122',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'48','20','valorServicio(''RE'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 		dato(CADENA_02) = ''4''
 		AND servicio.dato(ESCALA).dato(BUQUE).dato(TIPO_BUQUE) = ''C''
 		AND dato(UNIDAD_CARGA) LIKE ''3%''','20',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
@@ -733,7 +734,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base,rglv_condicion,rglv_formula,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
 			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1519035','1519034',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'83','10','valorServicio(''RE'', padre(BL).atributo(PK)) = ''S''
+		VALUES ('1519035','1519034',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'83','10','valorServicio(''RE'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 		AND acumuladoTeus(
 			   padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)
 			   , CONCAT(''0101'', servicio.atributo(ANNO))
@@ -748,7 +749,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base,rglv_condicion,rglv_formula,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
 			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1519033','1519032',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'84','20','valorServicio(''RE'', padre(BL).atributo(PK)) = ''S''
+		VALUES ('1519033','1519032',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'84','20','valorServicio(''RE'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 		AND acumuladoTeus(
 			   padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)
 			   , CONCAT(''0101'', servicio.atributo(ANNO))
@@ -763,7 +764,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base,rglv_condicion,rglv_formula,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
 			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1519031','1519030',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'85','30','valorServicio(''RE'', padre(BL).atributo(PK)) = ''S''
+		VALUES ('1519031','1519030',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'85','30','valorServicio(''RE'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 		AND acumuladoTeus(
 			   padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)
 			   , CONCAT(''0101'', servicio.atributo(ANNO))
@@ -779,7 +780,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES ('1645005','1645004',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'86','10','dato(UNIDAD_CARGA) LIKE ''3%''
-		AND valorServicio(''RE'', padre(BL).atributo(PK)) = ''S''
+		AND valorServicio(''RE'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 		AND acumuladoTeus(
 			   padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)
 			   , CONCAT(''0101'', servicio.atributo(ANNO))
@@ -794,7 +795,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES ('1645007','1645006',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'87','20','dato(UNIDAD_CARGA) LIKE ''3%''
-		AND valorServicio(''RE'', padre(BL).atributo(PK)) = ''S''
+		AND valorServicio(''RE'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 		AND acumuladoTeus(
 			   padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)
 			   , CONCAT(''0101'', servicio.atributo(ANNO))
@@ -809,7 +810,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES ('1645009','1645008',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'88','30','dato(UNIDAD_CARGA) LIKE ''3%''
-		AND valorServicio(''RE'', padre(BL).atributo(PK)) = ''S''
+		AND valorServicio(''RE'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 		AND acumuladoTeus(
 			   padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)
 			   , CONCAT(''0101'', servicio.atributo(ANNO))
@@ -1155,7 +1156,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			padre(BL).dato(TERMINAL).dato(BOOLEANO_01) = 1
 		    )
 		)
-		AND valorServicio(''RE'', padre(BL).atributo(PK)) = ''S''','0.80',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
+		AND valorServicio(''RE'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''','0.80',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 1645087, 'Art.208.d')\
 
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES ('1645089','100200','B2_C91','22004','C')\
@@ -1187,7 +1188,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			)
 		    )
 		)
-		AND valorServicio(''II'', padre(BL).atributo(PK)) = ''S''',0.2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
+		AND valorServicio(''II'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''',0.2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 1645090, 'Art.208.e')\
 
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES ('1645112','100200','B2_B01','22004','D')\
@@ -1220,6 +1221,85 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 
 
 
+-- ====================== ESCALAS =========================
+INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES (100400,'B1',21003)\
+	INSERT INTO tbl_cargo_version_crgv (crgv_pk,crgv_crgo_pk,crgv_fini,crgv_ffin,crgv_codigo_norm,crgv_es_principal,crgv_es_temporal,crgv_tipo)
+	VALUES (100401,100400,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'B1',1,1,'B')\
+    	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('crgv', 'es', 100401, 'TASA AL BUQUE')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120400,100400,'B1_001',22011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base,rglv_condicion,rglv_formula,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120401,120400,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,1,1.43,'dato(TIPO_ESTAN_ATR) = ''C''
+AND (
+	(
+		valorServicio(''TM'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
+		AND servicio.dato(BUQUE).dato(TIPO_BUQUE) NOT LIKE ''R%''
+	)
+	OR (
+		dato(TIPO_ACT) IN (''DS'', ''VA'')
+		AND esPrimerAtraque(atributo(PK)) = 1
+	)
+	OR servicio.dato(BUQUE).dato(TIPO_BUQUE) = ''UC''
+)','1.43 * unidadesGtsAtraque(atributo(PK)) * periodosFacturablesAtraque(atributo(PK))','servicio.dato(TIPO_IVA)','dato(ORGA_2)','dato(BOOLEANO_01)','dato(COD_EXEN)'
+		,'dato(TIPO_ESTAN_ATR)',null,null,null,null,null,'Tipo Estancia',null,null,null,null,null
+		,'unidadesGtsAtraque(atributo(PK))','periodosFacturablesAtraque(atributo(PK))',null,null,null,null,'Unidades','Periodos',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120401, 'Cuantía básica B para estancias Cortas')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120402,100400,'B1_002',22011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base,rglv_condicion,rglv_formula,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120403,120402,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,2,1.2,'dato(TIPO_ESTAN_ATR) = ''C''
+AND (
+	(
+		valorServicio(''TM'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
+		AND (
+			dato(TIPO_ACT) NOT IN (''DS'', ''VA'')
+			OR esPrimerAtraque(atributo(PK)) = 0
+		)
+		AND (
+			servicio.dato(BUQUE).dato(TIPO_BUQUE) <> ''UC''
+		)
+	)
+	OR servicio.dato(BUQUE).dato(TIPO_BUQUE) LIKE ''R%''
+)', '1.2 * unidadesGtsAtraque(atributo(PK)) * periodosFacturablesAtraque(atributo(PK))','servicio.dato(TIPO_IVA)','dato(ORGA_2)','dato(BOOLEANO_01)','dato(COD_EXEN)'
+		,'dato(TIPO_ESTAN_ATR)',null,null,null,null,null,'Tipo Estancia',null,null,null,null,null
+		,'unidadesGtsAtraque(atributo(PK))','periodosFacturablesAtraque(atributo(PK))',null,null,null,null,'Unidades','Periodos',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120403, 'Cuantía básica S para estancias Cortas')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120404,100400,'B1_003',22011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base,rglv_condicion,rglv_formula,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120405,120404,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,3,1.43,'dato(TIPO_ESTAN_ATR) = ''L'''
+		, '1.43 * unidadesGtsAtraque(atributo(PK)) * periodosFacturablesAtraque(atributo(PK))','servicio.dato(TIPO_IVA)','dato(ORGA_2)','dato(BOOLEANO_01)','dato(COD_EXEN)'
+		,'dato(TIPO_ESTAN_ATR)',null,null,null,null,null,'Tipo Estancia',null,null,null,null,null
+		,'unidadesGtsAtraque(atributo(PK))','periodosFacturablesAtraque(atributo(PK))',null,null,null,null,'Unidades','Periodos',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120405, 'Cuantía básica B para estancias Largas')\
+
+
+
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120406,100400,'B1_C01',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base,rglv_condicion,rglv_formula,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120407,120406,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 1, 1.2, '1 = 1', '1.2', null, null, null, null, null, null, null, null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120407, 'Coef. Corrector de la A.P.')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120408,100400,'B1_C02',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base,rglv_condicion,rglv_formula,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120409,120408,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 2, 1,'dato(ALIN).dato(BOOLEANO_01) <> 1 AND dato(TIPO_ATR) = ''C''','1',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120409, 'No Concesión - Atracados Costado')\
 
 
 
@@ -1236,7 +1316,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 
 
 
-INSERT INTO tbl_aspecto_aspc (aspc_pk,aspc_codigo,aspc_tpsr_pk) VALUES ('140000','B2','21002')\
+INSERT INTO tbl_aspecto_aspc (aspc_pk,aspc_codigo,aspc_tpsr_pk) VALUES (140000, 'B2', 21002)\
 	INSERT INTO tbl_aspecto_version_aspv (
 		aspv_pk,aspv_aspc_pk,aspv_fini,aspv_ffin,aspv_prioridad
 		,aspv_cpath_info1,aspv_cpath_info2,aspv_cpath_info3,aspv_cpath_info4,aspv_cpath_info5,aspv_cpath_info6
@@ -1250,7 +1330,7 @@ INSERT INTO tbl_aspecto_aspc (aspc_pk,aspc_codigo,aspc_tpsr_pk) VALUES ('140000'
 	INSERT INTO tbl_aspecto_cargo_ascr (ascr_pk,ascr_aspc_pk,ascr_crgo_pk) VALUES ('66001','140000','100200')\
 		INSERT INTO tbl_aspecto_cargo_version_ascv (ascv_pk,ascv_ascr_pk,ascv_fini,ascv_ffin) VALUES ('67001','66001',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null)\
 
-INSERT INTO tbl_aspecto_aspc (aspc_pk,aspc_codigo,aspc_tpsr_pk) VALUES ('140002','B3','21002')\
+INSERT INTO tbl_aspecto_aspc (aspc_pk,aspc_codigo,aspc_tpsr_pk) VALUES (140002, 'B3', 21002)\
 	INSERT INTO tbl_aspecto_version_aspv (
 		aspv_pk,aspv_aspc_pk,aspv_fini,aspv_ffin,aspv_prioridad
 		,aspv_cpath_info1,aspv_cpath_info2,aspv_cpath_info3,aspv_cpath_info4,aspv_cpath_info5,aspv_cpath_info6
@@ -1258,17 +1338,34 @@ INSERT INTO tbl_aspecto_aspc (aspc_pk,aspc_codigo,aspc_tpsr_pk) VALUES ('140002'
 		,aspv_cgrp_info1,aspv_cgrp_info2,aspv_cgrp_info3,aspv_cgrp_info4,aspv_cgrp_info5,aspv_cgrp_info6
 		,aspv_lsum_cuant1,aspv_lsum_cuant2,aspv_lsum_cuant3,aspv_lsum_cuant4,aspv_lsum_cuant5,aspv_lsum_cuant6
 		,aspv_lgrp_info1,aspv_lgrp_info2,aspv_lgrp_info3,aspv_lgrp_info4,aspv_lgrp_info5,aspv_lgrp_info6)
-	VALUES ('140003','140002',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'2'
-		,'dato(ORGA_2)','dato(ALIN)','dato(ACUERDO)',null,null,null,'Consignatario','Alineaciï¿œn','Acuerdo',null,null,null,'1','1','1',null,null,null,'1','1','1','1','1','1','1','1','1','1','1','1')\
+	VALUES (140003, 140002,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 2
+		,'dato(ORGA_2)','dato(ALIN)','dato(ACUERDO)',null,null,null
+		,'Consignatario','Alineaciï¿œn','Acuerdo',null,null,null
+		, 1, 1, 1, null, null, null
+		, 1, 1, 1, 1, 1, 1
+		, 1, 1, 1, 1, 1, 1)\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('aspv', 'es', 140003, 'TASA A LA MERCANCIA')\
-	INSERT INTO tbl_aspecto_cargo_ascr (ascr_pk,ascr_aspc_pk,ascr_crgo_pk) VALUES ('66002','140002','100200')\
-	INSERT INTO tbl_aspecto_cargo_ascr (ascr_pk,ascr_aspc_pk,ascr_crgo_pk) VALUES ('1075003','140002','100000')\
-		INSERT INTO tbl_aspecto_cargo_version_ascv (ascv_pk,ascv_ascr_pk,ascv_fini,ascv_ffin) VALUES ('1075004','1075003',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null)\
+	INSERT INTO tbl_aspecto_cargo_ascr (ascr_pk,ascr_aspc_pk,ascr_crgo_pk) VALUES (66002, 140002, 100200)\
+	INSERT INTO tbl_aspecto_cargo_ascr (ascr_pk,ascr_aspc_pk,ascr_crgo_pk) VALUES (1075003, 140002, 100000)\
+		INSERT INTO tbl_aspecto_cargo_version_ascv (ascv_pk,ascv_ascr_pk,ascv_fini,ascv_ffin) VALUES (1075004, 1075003, TO_DATE('2013-01-01', 'yyyy-mm-dd'),null)\
 
-
-
-
-
+INSERT INTO tbl_aspecto_aspc (aspc_pk,aspc_codigo,aspc_tpsr_pk) VALUES (140004, 'B1', 21003)\
+	INSERT INTO tbl_aspecto_version_aspv (
+		aspv_pk,aspv_aspc_pk,aspv_fini,aspv_ffin,aspv_prioridad
+		,aspv_cpath_info1,aspv_cpath_info2,aspv_cpath_info3,aspv_cpath_info4,aspv_cpath_info5,aspv_cpath_info6
+		,aspv_cetiq_info1,aspv_cetiq_info2,aspv_cetiq_info3,aspv_cetiq_info4,aspv_cetiq_info5,aspv_cetiq_info6
+		,aspv_cgrp_info1,aspv_cgrp_info2,aspv_cgrp_info3,aspv_cgrp_info4,aspv_cgrp_info5,aspv_cgrp_info6
+		,aspv_lsum_cuant1,aspv_lsum_cuant2,aspv_lsum_cuant3,aspv_lsum_cuant4,aspv_lsum_cuant5,aspv_lsum_cuant6
+		,aspv_lgrp_info1,aspv_lgrp_info2,aspv_lgrp_info3,aspv_lgrp_info4,aspv_lgrp_info5,aspv_lgrp_info6)
+	VALUES (140005, 140004,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 2
+		,'dato(BUQUE)','dato(ORGA_3)','dato(TIPO_ESTAN_ESC)',null,null,null
+		,'Buque','Consignatario','Tipo Estancia',null,null,null
+		, 1, 1, 1, null, null, null
+		, 0, 0, 0, 0, 0, 0
+		, 0, 0, 0, 0, 0, 0)\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('aspv', 'es', 140005, 'TASA AL BUQUE')\
+	INSERT INTO tbl_aspecto_cargo_ascr (ascr_pk,ascr_aspc_pk,ascr_crgo_pk) VALUES (160400, 140004, 100400)\
+		INSERT INTO tbl_aspecto_cargo_version_ascv (ascv_pk,ascv_ascr_pk,ascv_fini,ascv_ffin) VALUES (160401, 160400, TO_DATE('2013-01-01', 'yyyy-mm-dd'),null)\
 
 
 
@@ -1285,9 +1382,11 @@ BEGIN
 	-- Aspectos
 	eraseAspc(140000);
 	eraseAspc(140002);
+	eraseAspc(140004);
 
 	-- Cargos
 	eraseCrgo(100000);
 	eraseCrgo(100200);
+	eraseCrgo(100400);
 END;
 \

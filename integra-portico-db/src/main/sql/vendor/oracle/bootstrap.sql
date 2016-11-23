@@ -58,3 +58,23 @@ TO portico;
 
 -- DROP USER portico CASCADE;
 -- DROP USER porticoadm CASCADE;
+
+-- TRUNCATE TABLE tbl_cuadro_mes_cdms;
+-- TRUNCATE TABLE tbl_estadistica_dato_esdt;
+-- DELETE FROM tbl_estadistica_estd;
+-- DELETE FROM tbl_periodo_proceso_pepr;
+
+-- TRUNCATE TABLE tbl_subservicio_dato_ssdt;
+-- TRUNCATE TABLE tbl_subserv_subserv_ssss;
+-- DELETE FROM tbl_subservicio_ssrv;
+-- TRUNCATE TABLE tbl_servicio_dato_srdt;
+-- DELETE FROM tbl_servicio_srvc;
+
+-- TRUNCATE TABLE tbl_subparametro_dato_spdt;
+-- DELETE FROM tbl_subparametro_version_spvr;
+-- DELETE FROM tbl_subparametro_sprm;
+-- TRUNCATE TABLE tbl_parametro_dato_prdt;
+-- DELETE FROM tbl_parametro_version_prvr;
+-- DELETE FROM tbl_parametro_prmt;
+-- DELETE FROM tbl_i18n_i18n WHERE i18n_pref = 'prvr';
+

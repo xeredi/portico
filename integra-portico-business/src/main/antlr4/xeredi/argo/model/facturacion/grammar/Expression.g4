@@ -67,14 +67,18 @@ formula
 	| fn = 'COALESCE' '(' f1 = formula ',' f2 = formula ')'
 	| fn = 'ROUND' '(' f1 = formula ',' n1 = NUMBER_CONSTANT ')'
 	| fn = 'CONCAT' '(' f1 = formula ',' f2 = formula ')'
+	| fn = 'GREATEST' '(' f1 = formula ',' f2 = formula ')'
+	| fn = 'LEAST' '(' f1 = formula ',' f2 = formula ')'
 	| fn = 'DECODE' '(' f1 = formula decodeBranch* ',' f2 = formula ')'
-	| fn =
-	(
-		'GREATEST'
-		| 'LEAST'
-	) '(' fList = formulaList ')'
+
 	| fn = 'acumuladoTeus' '(' f1 = formula ',' f2 = formula ',' f3 = formula ')'
-	| fn = 'valorServicio' '(' f1 = formula ',' f2 = formula ')'
+	| fn = 'valorServicio' '(' f1 = formula ',' f2 = formula ',' f3 = formula ')'
+	| fn = 'periodosFacturablesAtraque' '(' f1 = formula ')'
+	| fn = 'esPrimerAtraque' '(' f1 = formula ')'
+	| fn = 'fechaUltimaTR' '(' f1 = formula ')'
+	| fn = 'unidadesGtsEscala' '(' f1 = formula ')'
+	| fn = 'unidadesGtsAtraque' '(' f1 = formula ')'
+	| fn = 'generaBOEscala' '(' f1 = formula ')'
 ;
 
 decodeBranch

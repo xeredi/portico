@@ -184,6 +184,21 @@ public final class ValoradorBO {
 
                 LOG.info("fref: " + fref);
 
+                if (crgo.getVersion().getTemporal()) {
+                    vldrContexto.setFini(contextoDAO.selectFini(vldrContexto));
+                    vldrContexto.setFfin(contextoDAO.selectFfin(vldrContexto));
+
+                    LOG.info("fini: " + vldrContexto.getFini());
+                    LOG.info("ffin: " + vldrContexto.getFfin());
+
+                    if (vldrContexto.getFini() == null) {
+                        throw new Error("No se encuentra fecha de inicio para el contexto: " + vldrContexto);
+                    }
+                    if (vldrContexto.getFfin() == null) {
+                        throw new Error("No se encuentra fecha de fin para el contexto: " + vldrContexto);
+                    }
+                }
+
                 crgoList.addAll(crgoDAO.selectList(crgoDepCriterio));
 
                 for (final CargoVO crgoServicio : crgoList) {

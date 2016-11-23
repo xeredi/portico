@@ -207,45 +207,54 @@ GRANT EXECUTE ON acumuladoToneladas TO portico\
 
 
 
-create or replace FUNCTION valorServicio(tipoServTraf VARCHAR, blId INTEGER) RETURN VARCHAR RESULT_CACHE IS
+create or replace FUNCTION valorServicio(tipoServTraf VARCHAR, servTraf VARCHAR, srvcId INTEGER) RETURN VARCHAR RESULT_CACHE IS
 	resultValue VARCHAR(100);
 BEGIN
-SELECT spdt_cadena INTO resultValue
-FROM tbl_subparametro_dato_spdt
-WHERE
-    spdt_tpdt_pk = portico.getTipoDato('CADENA_01')
-    AND spdt_spvr_pk = (
-        SELECT spvr_pk
-        FROM tbl_subparametro_version_spvr
-        WHERE
-            spvr_sprm_pk = (
-                SELECT sprm_pk
-                FROM tbl_subparametro_sprm
-                WHERE
-                    sprm_tpsp_pk = portico.getEntidad('TIPO_SERV_TIPO_TRAF')
-                    AND sprm_prmt_pk = (
-                        SELECT prmt_pk FROM tbl_parametro_prmt
-                        WHERE prmt_tppr_pk = portico.getEntidad('TIPO_SERVICIO_TRAFICO')
-                            AND prmt_parametro = tipoServTraf
-                    )
-                    AND sprm_prmt_dep_pk = (
-                        SELECT ssdt_prmt_pk FROM tbl_subservicio_dato_ssdt
-                        WHERE ssdt_tpdt_pk = portico.getTipoDato('SERV_TRAF')
-                            AND ssdt_ssrv_pk = blId
-                    )
-            )
-            AND EXISTS (
-                SELECT 1
-                FROM tbl_servicio_srvc
-                WHERE
-                    srvc_pk = (
-                        SELECT ssrv_srvc_pk
-                        FROM tbl_subservicio_ssrv
-                        WHERE ssrv_pk = blId
-                    )
-                    AND srvc_fref BETWEEN spvr_fini AND COALESCE(spvr_ffin, srvc_fref)
-            )
-    );
+	SELECT (
+	    SELECT spdt_cadena
+	    FROM tbl_subparametro_dato_spdt
+	    WHERE
+	        spdt_tpdt_pk = portico.getTipoDato('CADENA_01')
+	        AND spdt_spvr_pk = (
+	            SELECT spvr_pk FROM tbl_subparametro_version_spvr
+	            WHERE
+	                spvr_fini <= srvc_fref
+	                AND (spvr_ffin IS NULL OR spvr_ffin > srvc_fref)
+	                AND spvr_sprm_pk = (
+	                    SELECT sprm_pk FROM tbl_subparametro_sprm
+	                    WHERE
+	                        sprm_tpsp_pk = portico.getEntidad('TIPO_SERV_TIPO_TRAF')
+	                        AND sprm_prmt_dep_pk = (
+	                            SELECT prmt_pk FROM tbl_parametro_prmt
+	                            WHERE
+	                                prmt_tppr_pk = portico.getEntidad('SERVICIO_TRAFICO')
+	                                AND prmt_parametro = servTraf
+	                                AND srvc_subp_pk = prmt_prto_pk
+	                                AND EXISTS (
+	                                    SELECT 1 FROM tbl_parametro_version_prvr
+	                                    WHERE prvr_prmt_pk = prmt_pk
+	                                        AND prvr_fini <= srvc_fref
+	                                        AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+	                                )
+	                        )
+	                        AND sprm_prmt_pk = (
+	                            SELECT prmt_pk FROM tbl_parametro_prmt
+	                            WHERE
+	                                prmt_tppr_pk = portico.getEntidad('TIPO_SERVICIO_TRAFICO')
+	                                AND prmt_parametro = tipoServTraf
+	                                AND EXISTS (
+	                                    SELECT 1 FROM tbl_parametro_version_prvr
+	                                    WHERE prvr_prmt_pk = prmt_pk
+	                                        AND prvr_fini <= srvc_fref
+	                                        AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+	                                )
+	                        )
+	                )
+	        )
+	) INTO resultValue
+	FROM tbl_servicio_srvc
+	WHERE srvc_pk = srvcId
+    ;
 
     RETURN resultValue;
 END;
@@ -260,10 +269,400 @@ GRANT EXECUTE ON valorServicio TO portico\
 
 
 
+
+
+
+
+create or replace FUNCTION generaBOEscala(srvcId INTEGER) RETURN INTEGER RESULT_CACHE IS
+	resultValue INTEGER;
+BEGIN
+    SELECT (
+        CASE
+          WHEN
+              EXISTS (
+                  SELECT 1 FROM tbl_valoracion_vlrc
+                  WHERE vlrc_srvc_pk = srvc_pk
+                      AND EXISTS (
+                          SELECT 1
+                          FROM tbl_valoracion_lin_vlrl
+                          WHERE vlrl_vlrc_pk = vlrc_pk
+                              AND EXISTS (
+                                  SELECT 1 FROM tbl_regla_rgla
+                                  WHERE rgla_pk = vlrl_pk
+                                      AND EXISTS (
+                                          SELECT 1 FROM tbl_cargo_crgo
+                                          WHERE crgo_pk = rgla_crgo_pk
+                                              AND crgo_codigo = 'B0'
+                                      )
+                              )
+                      )
+              )
+          THEN 0
+          WHEN (
+              SELECT COUNT(1)
+              FROM tbl_valoracion_vlrc
+              WHERE
+                  vlrc_srvc_pk = ANY (
+                      SELECT srvc_pk
+                      FROM tbl_servicio_srvc
+                      WHERE
+                          srvc_tpsr_pk = portico.getEntidad('ESCALA')
+                          AND srvc_anno = (
+                              SELECT srvc_anno
+                              FROM tbl_servicio_srvc
+                              WHERE
+                                  srvc_tpsr_pk = portico.getEntidad('ESCALA')
+                                  AND srvc_pk = srvcId
+                          )
+                          AND EXISTS (
+                              SELECT 1
+                              FROM tbl_servicio_dato_srdt
+                              WHERE srdt_srvc_pk = srvc_pk
+                                  AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+                                  AND srdt_prmt_pk = (
+                                      SELECT srdt_prmt_pk
+                                      FROM tbl_servicio_dato_srdt
+                                      WHERE
+                                          srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+                                          AND srdt_srvc_pk = srvcId
+                                  )
+                          )
+                  )
+
+                  AND EXISTS (
+                      SELECT 1
+                      FROM tbl_valoracion_lin_vlrl
+                      WHERE vlrl_vlrc_pk = vlrc_pk
+                          AND EXISTS (
+                              SELECT 1 FROM tbl_regla_rgla
+                              WHERE rgla_pk = vlrl_pk
+                                  AND EXISTS (
+                                      SELECT 1 FROM tbl_cargo_crgo
+                                      WHERE crgo_pk = rgla_crgo_pk
+                                          AND crgo_codigo = 'B0'
+                                  )
+                          )
+                  )
+          ) > 2
+          THEN 0
+          ELSE 1
+        END
+        ) INTO resultValue
+    FROM tbl_servicio_srvc
+    WHERE srvc_tpsr_pk = portico.getEntidad('ESCALA')
+        AND srvc_pk = srvcId
+    ;
+
+    RETURN resultValue;
+END;
+\
+
+CREATE OR REPLACE SYNONYM portico.generaBOEscala FOR generaBOEscala\
+
+GRANT EXECUTE ON generaBOEscala TO portico\
+
+
+
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION unidadesGtsEscala(srvcId INTEGER) RETURN INTEGER RESULT_CACHE IS
+	resultValue INTEGER;
+BEGIN
+	WITH sql AS (
+	    SELECT (
+	        SELECT
+	            COALESCE(
+	                (
+	                    SELECT prdt_nentero
+	                    FROM tbl_parametro_dato_prdt
+	                    WHERE prdt_prvr_pk = prvr_pk
+	                        AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_02')
+	                )
+	                , (
+	                    SELECT prdt_nentero
+	                    FROM tbl_parametro_dato_prdt
+	                    WHERE prdt_prvr_pk = prvr_pk
+	                        AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+	                )
+	            )
+	        FROM tbl_parametro_version_prvr
+	        WHERE
+	            prvr_prmt_pk = (
+	                SELECT srdt_prmt_pk
+	                FROM tbl_servicio_dato_srdt
+	                WHERE
+	                    srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+	                    AND srdt_srvc_pk = srvc_pk
+	            )
+	            AND prvr_fini <= srvc_fref
+	            AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+	    ) AS unidades
+	    FROM tbl_servicio_srvc
+	    WHERE
+	        srvc_tpsr_pk = portico.getEntidad('ESCALA')
+	        AND srvc_pk = srvcId
+	)
+	SELECT
+	    (
+	        CASE
+	            WHEN unidades < 100
+	            THEN 100
+	            ELSE unidades
+	        END
+	    ) INTO resultValue
+	FROM sql
+    ;
+
+    RETURN resultValue;
+END;
+\
+
+CREATE OR REPLACE SYNONYM portico.unidadesGtsEscala FOR unidadesGtsEscala\
+
+GRANT EXECUTE ON unidadesGtsEscala TO portico\
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION unidadesGtsAtraque(ssrvId INTEGER) RETURN DOUBLE PRECISION RESULT_CACHE IS
+	resultValue DOUBLE PRECISION;
+BEGIN
+    WITH sql AS (
+    SELECT
+        (
+            SELECT
+                COALESCE(
+                    (
+                        SELECT prdt_nentero
+                        FROM tbl_parametro_dato_prdt
+                        WHERE prdt_prvr_pk = prvr_pk
+                            AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_02')
+                    )
+                    , (
+                        SELECT prdt_nentero
+                        FROM tbl_parametro_dato_prdt
+                        WHERE prdt_prvr_pk = prvr_pk
+                            AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+                    )
+                )
+            FROM tbl_parametro_version_prvr
+            WHERE
+                prvr_prmt_pk = (
+                    SELECT srdt_prmt_pk
+                    FROM tbl_servicio_dato_srdt
+                    WHERE
+                        srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+                        AND srdt_srvc_pk = ssrv_srvc_pk
+                )
+                AND EXISTS (
+                    SELECT 1 FROM tbl_servicio_srvc
+                    WHERE srvc_pk = ssrv_srvc_pk
+                        AND prvr_fini <= srvc_fref
+                        AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fref)
+                )
+        ) AS unidadesGTs
+        , (
+            SELECT ssdt_cadena
+            FROM tbl_subservicio_dato_ssdt
+            WHERE
+                ssdt_tpdt_pk = portico.getTipoDato('TIPO_ESTAN_ATR')
+                AND ssdt_ssrv_pk = ssrv_pk
+        ) AS tipoEstancia
+    FROM tbl_subservicio_ssrv
+    WHERE ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+        AND ssrv_pk = 8274289
+    )
+    SELECT (
+        CASE tipoEstancia
+            WHEN 'C' THEN
+                CASE WHEN unidadesGTs < 100 THEN 1
+                ELSE ROUND(unidadesGTs/100, 2) END
+            WHEN 'L' THEN
+                CASE WHEN unidadesGTs < 50 THEN 0.50
+                ELSE ROUND(unidadesGTs/100, 2) END
+        END
+    ) INTO resultValue
+    FROM sql
+    ;
+
+    RETURN resultValue;
+END;
+\
+
+CREATE OR REPLACE SYNONYM portico.unidadesGtsAtraque FOR unidadesGtsAtraque\
+
+GRANT EXECUTE ON unidadesGtsAtraque TO portico\
+
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION fechaUltimaTR(srvcId INTEGER) RETURN TIMESTAMP RESULT_CACHE IS
+	resultValue TIMESTAMP;
+BEGIN
+    SELECT MAX(vlrl_ffin) INTO resultValue
+    FROM tbl_valoracion_lin_vlrl
+    WHERE
+        EXISTS (
+            SELECT 1 FROM tbl_valoracion_vlrc
+            WHERE vlrc_pk = vlrl_vlrc_pk
+                AND vlrc_srvc_pk = ANY (
+                    SELECT srvc_pk
+                    FROM tbl_servicio_srvc
+                    WHERE
+                        srvc_tpsr_pk = portico.getEntidad('ESCALA')
+                        AND srvc_subp_pk = (
+                            SELECT srvc_subp_pk
+                            FROM tbl_servicio_srvc
+                            WHERE
+                                srvc_tpsr_pk = portico.getEntidad('ESCALA')
+                                AND srvc_pk = srvcId
+                        )
+                        AND EXISTS (
+                            SELECT 1 FROM tbl_servicio_dato_srdt
+                            WHERE srdt_srvc_pk = srvc_pk
+                                AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+                                AND srdt_prmt_pk = (
+                                    SELECT srdt_prmt_pk
+                                    FROM tbl_servicio_dato_srdt
+                                    WHERE srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+                                        AND srdt_srvc_pk = srvcId
+                                )
+                        )
+                )
+        )
+        AND EXISTS (
+            SELECT 1
+            FROM tbl_regla_rgla
+            WHERE rgla_pk = vlrl_rgla_pk
+                AND EXISTS (
+                    SELECT 1 FROM tbl_cargo_crgo
+                    WHERE crgo_pk = rgla_crgo_pk
+                        AND crgo_codigo = 'TR'
+                )
+        )
+    ;
+
+    RETURN resultValue;
+END;
+\
+
+CREATE OR REPLACE SYNONYM portico.fechaUltimaTR FOR fechaUltimaTR\
+
+GRANT EXECUTE ON fechaUltimaTR TO portico\
+
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION esPrimerAtraque(ssrvId INTEGER) RETURN INTEGER RESULT_CACHE IS
+	resultValue INTEGER;
+BEGIN
+    SELECT
+        (
+            CASE
+                WHEN
+                    EXISTS (
+                        SELECT 1 FROM tbl_subservicio_ssrv ssrvAux
+                        WHERE
+                            ssrvAux.ssrv_srvc_pk = ssrv.ssrv_srvc_pk
+                            AND ssrvAux.ssrv_tpss_pk = ssrv.ssrv_tpss_pk
+                            AND ssrvAux.ssrv_estado IN ('I', 'F')
+                            AND ssrvAux.ssrv_numero < ssrv.ssrv_numero
+                    )
+                THEN 0
+                ELSE 1
+            END
+        ) INTO resultValue
+    FROM
+        tbl_subservicio_ssrv ssrv
+    WHERE
+        ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+        AND ssrv_estado IN ('I', 'F')
+        AND ssrv_pk = ssrvId
+    ;
+
+    RETURN resultValue;
+END;
+\
+
+CREATE OR REPLACE SYNONYM portico.esPrimerAtraque FOR esPrimerAtraque\
+
+GRANT EXECUTE ON esPrimerAtraque TO portico\
+
+
+
+
+
+CREATE OR REPLACE FUNCTION periodosFacturablesAtraque(ssrvId INTEGER) RETURN INTEGER RESULT_CACHE IS
+	resultValue INTEGER;
+BEGIN
+    WITH sql AS (
+        SELECT ssrv_estado, ssrv_fini, ssrv_ffin
+            , GREATEST(ssrv_fini, COALESCE((SELECT MAX(vlrl_ffin) FROM tbl_valoracion_lin_vlrl WHERE vlrl_ssrv_pk = ssrv_pk), ssrv_fini)) AS ssrv_fini_liq
+            , LEAST(COALESCE(ssrv_ffin, SYSDATE), SYSDATE) AS ssrv_ffin_liq
+            , LEAST(COALESCE(ssrv_ffin, SYSDATE), SYSDATE)
+              - GREATEST(ssrv_fini, COALESCE((SELECT MAX(vlrl_ffin) FROM tbl_valoracion_lin_vlrl WHERE vlrl_ssrv_pk = ssrv_pk), ssrv_fini)) AS ssrv_intervalo_liq
+            , (SELECT ssdt_cadena FROM tbl_subservicio_dato_ssdt
+                WHERE ssdt_ssrv_pk = ssrv_pk AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ESTAN_ATR')) AS ssrv_tipo_estancia
+        FROM
+            tbl_subservicio_ssrv ssrv
+        WHERE
+            ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+            AND ssrv_estado IN ('I', 'F')
+            AND EXISTS (
+                SELECT 1 FROM tbl_subservicio_dato_ssdt
+                WHERE ssdt_ssrv_pk = ssrv_pk
+                    AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+                    AND ssdt_cadena IN ('0', '1')
+            )
+            AND ssrv_pk = ssrvId
+    )
+    SELECT
+        (CASE ssrv_tipo_estancia
+            WHEN 'L'
+            THEN EXTRACT(DAY FROM ssrv_intervalo_liq) + LEAST(EXTRACT(HOUR FROM ssrv_intervalo_liq), 1)
+            ELSE
+                EXTRACT(DAY FROM ssrv_intervalo_liq) * 15
+                + LEAST(
+                    EXTRACT(HOUR FROM ssrv_intervalo_liq)
+                    + LEAST(EXTRACT(MINUTE FROM ssrv_intervalo_liq), 1)
+                , 15)
+         END) INTO resultValue
+    FROM sql
+    ;
+
+    RETURN resultValue;
+END;
+\
+
+CREATE OR REPLACE SYNONYM portico.periodosFacturablesAtraque FOR periodosFacturablesAtraque\
+
+GRANT EXECUTE ON periodosFacturablesAtraque TO portico\
+
+
+
+
 -- //@UNDO
 -- SQL to undo the change goes here.
 
 
+DROP FUNCTION periodosFacturablesAtraque\
+DROP FUNCTION esPrimerAtraque\
+DROP FUNCTION fechaUltimaTR\
+DROP FUNCTION unidadesGtsAtraque\
+DROP FUNCTION unidadesGtsEscala\
+DROP FUNCTION generaBOEscala\
 DROP FUNCTION valorServicio\
 DROP FUNCTION acumuladoToneladas\
 DROP FUNCTION acumuladoTeus\

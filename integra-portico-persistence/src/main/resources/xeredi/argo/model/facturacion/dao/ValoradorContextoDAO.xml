@@ -70,7 +70,7 @@
                                     AND crgv_es_temporal = 1
                             )
                     )
-                    THEN srvc_fini
+                    THEN LEAST(srvc_fini, #{fref})
 
                     ELSE srvc_fref
                 END
@@ -99,7 +99,7 @@
                                     AND crgv_es_temporal = 1
                             )
                     )
-                    THEN srvc_ffin
+                    THEN LEAST(COALESCE(srvc_ffin, #{fref}), #{fref})
 
                     ELSE srvc_fref
                 END

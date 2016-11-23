@@ -293,7 +293,7 @@ public enum TipoDato {
     /** The tipo amarre. */
     TIPO_AMA(45200L),
     /** The tipo atraque. */
-    TIPO_ATR(45280L),
+    TIPO_ATR(45380L),
     /** The tipo atraque edi. */
     TIPO_ATR_EDI(45410L),
     /** The tipo bien concesional. */

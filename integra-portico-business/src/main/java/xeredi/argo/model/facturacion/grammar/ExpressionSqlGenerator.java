@@ -64,12 +64,8 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
         }
 
         if (ctx.relationalOP != null) {
-            return visitFormula(ctx.f1)
-                    + ' '
-                    + ctx.relationalOP.getText()
-                    + ' '
-                    + (ctx.allAnyOp == null ? visitFormula(ctx.f2) : ctx.allAnyOp.getText() + ' '
-                            + ctx.cteList.getText());
+            return visitFormula(ctx.f1) + ' ' + ctx.relationalOP.getText() + ' ' + (ctx.allAnyOp == null
+                    ? visitFormula(ctx.f2) : ctx.allAnyOp.getText() + ' ' + ctx.cteList.getText());
         }
 
         if (ctx.nullOp != null) {
@@ -123,6 +119,10 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
                 return " ROUND(" + visitFormula(ctx.f1) + ", " + ctx.NUMBER_CONSTANT().getText() + ")";
             case CONCAT:
                 return " CONCAT(" + visitFormula(ctx.f1) + ", " + visitFormula(ctx.f2) + ")";
+            case GREATEST:
+                return " GREATEST(" + visitFormula(ctx.f1) + ", " + visitFormula(ctx.f2) + ")";
+            case LEAST:
+                return " LEAST(" + visitFormula(ctx.f1) + ", " + visitFormula(ctx.f2) + ")";
             case DECODE:
                 String sqlCase = " CASE " + visitFormula(ctx.f1);
 
@@ -144,10 +144,22 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
                 return sqlCase;
             case acumuladoTeus:
                 return " portico.acumuladoTeus(" + visitFormula(ctx.f1) + ", " + visitFormula(ctx.f2) + ", "
-                + visitFormula(ctx.f3) + ")";
+                        + visitFormula(ctx.f3) + ")";
             case valorServicio:
-                return " portico.valorServicio(" + visitFormula(ctx.f1) + ", " + visitFormula(ctx.f2) + ")";
-
+                return " portico.valorServicio(" + visitFormula(ctx.f1) + ", " + visitFormula(ctx.f2) + ", "
+                        + visitFormula(ctx.f3) + ")";
+            case periodosFacturablesAtraque:
+                return " portico.periodosFacturablesAtraque(" + visitFormula(ctx.f1) + ")";
+            case esPrimerAtraque:
+                return " portico.esPrimerAtraque(" + visitFormula(ctx.f1) + ")";
+            case fechaUltimaTR:
+                return " portico.fechaUltimaTR(" + visitFormula(ctx.f1) + ")";
+            case unidadesGtsEscala:
+                return " portico.unidadesGtsEscala(" + visitFormula(ctx.f1) + ")";
+            case unidadesGtsAtraque:
+                return " portico.unidadesGtsAtraque(" + visitFormula(ctx.f1) + ")";
+            case generaBOEscala:
+                return " portico.generaBOEscala(" + visitFormula(ctx.f1) + ")";
             default:
                 throw new Error("Funcion '" + functionName.name() + "' no implementada!");
             }
@@ -186,14 +198,14 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
                         throw new Error("Solo se puede llegar al servicio desde un subservicio");
                     }
 
-                    final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(entiDetailElem.getEnti()
-                            .getId());
+                    final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy
+                            .select(entiDetailElem.getEnti().getId());
 
                     entiDetailElem = EntidadProxy.select(tpssDetail.getEnti().getTpsrId());
 
-                    sqlElement += "SELECT "
-                            + (isLast && pathType == PathType.LABEL ? "CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero)))"
-                                    : "srvc_pk") + " FROM tbl_servicio_srvc WHERE srvc_pk = ";
+                    sqlElement += "SELECT " + (isLast && pathType == PathType.LABEL
+                            ? "CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero)))"
+                            : "srvc_pk") + " FROM tbl_servicio_srvc WHERE srvc_pk = ";
                     sqlElement += isFirst ? "item.ssrv_srvc_pk" : "#{any}";
                 }
                 if (pathElementCtx.parent != null) {
@@ -214,7 +226,7 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
                     switch (entiDetailElem.getEnti().getTipo()) {
                     case P:
                         sqlElement += " SELECT prmt_" + attribute.name()
-                        + " FROM tbl_parametro_prmt WHERE prmt_pk = (#{any})";
+                                + " FROM tbl_parametro_prmt WHERE prmt_pk = (#{any})";
                         break;
                     case T:
                         sqlElement += " SELECT srvc_" + attribute.name() + " FROM tbl_servicio_srvc WHERE srvc_pk = ";
@@ -225,7 +237,7 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
                         break;
                     case S:
                         sqlElement += " SELECT ssrv_" + attribute.name()
-                        + " FROM tbl_subservicio_ssrv WHERE ssrv_pk = ";
+                                + " FROM tbl_subservicio_ssrv WHERE ssrv_pk = ";
 
                         sqlElement += isFirst ? "item.ssrv_pk" : "(#{any})";
 
@@ -296,10 +308,11 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
 
                         break;
                     case CR:
-                        sqlElement += isLast && pathType == PathType.LABEL ? "(SELECT CONCAT(cdrf_valor, CONCAT(' - ', i18n_text))"
-                                + " FROM tbl_codigo_ref_cdrf INNER JOIN tbl_i18n_i18n ON i18n_ext_pk = cdrf_pk"
-                                + " WHERE i18n_pref = 'cdrf' AND i18n_lang = 'es' AND cdrf_tpdt_pk = "
-                                + entd.getTpdt().getId() + " AND cdrf_valor = " + fieldPrefix + "cadena)"
+                        sqlElement += isLast && pathType == PathType.LABEL
+                                ? "(SELECT CONCAT(cdrf_valor, CONCAT(' - ', i18n_text))"
+                                        + " FROM tbl_codigo_ref_cdrf INNER JOIN tbl_i18n_i18n ON i18n_ext_pk = cdrf_pk"
+                                        + " WHERE i18n_pref = 'cdrf' AND i18n_lang = 'es' AND cdrf_tpdt_pk = "
+                                        + entd.getTpdt().getId() + " AND cdrf_valor = " + fieldPrefix + "cadena)"
                                 : fieldPrefix + "cadena";
 
                         break;
@@ -316,8 +329,7 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
 
                                 break;
                             case LABEL:
-                                sqlElement += "(SELECT CONCAT("
-                                        + "         CONCAT(prmt_parametro, ' - ')"
+                                sqlElement += "(SELECT CONCAT(" + "         CONCAT(prmt_parametro, ' - ')"
                                         + "         , COALESCE ("
                                         + "             (SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_ext_pk = prvr_pk AND i18n_pref = 'prvr' AND i18n_lang = 'es')"
                                         + "             , (SELECT prdt_cadena FROM tbl_parametro_dato_prdt WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = ("
@@ -328,9 +340,12 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
 
                                 // "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE("
                                 // +
-                                // "(SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = ("
+                                // "(SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang
+                                // = 'es' AND i18n_ext_pk = ("
                                 // +
-                                // "SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!'))"
+                                // "SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk =
+                                // prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO
+                                // i18n!!!'))"
                                 // + " FROM tbl_parametro_prmt WHERE prmt_pk = " + fieldPrefix + "prmt_pk)";
 
                                 break;
@@ -344,8 +359,9 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
 
                         break;
                     case SR:
-                        sqlElement += isLast && pathType == PathType.LABEL ? "(SELECT CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero))) FROM tbl_servicio_srvc WHERE srvc_pk = "
-                                + fieldPrefix + "srvc_dep_pk)"
+                        sqlElement += isLast && pathType == PathType.LABEL
+                                ? "(SELECT CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero))) FROM tbl_servicio_srvc WHERE srvc_pk = "
+                                        + fieldPrefix + "srvc_dep_pk)"
                                 : fieldPrefix + "srvc_dep_pk";
 
                         break;

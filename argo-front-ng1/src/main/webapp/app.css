@@ -49,10 +49,6 @@ legend {
 	margin-bottom: 5px;
 }
 
-a {
-	color: orange;
-}
-
 .number {
 	text-align: right;
 }
@@ -79,19 +75,6 @@ a {
 	height: 31px;
 }
 
-.form-control-static {
-	background-color: #4E5D6C;
-}
-
-.form-control:FOCUS {
-	background-color: orange;
-}
-
-.form-control {
-	background-color: lightgray;
-	color: black;
-}
-
 .form-group-sm .form-control, .form-group-sm .form-control-static {
 	padding-left: 3px;
 	padding-right: 3px;
@@ -116,7 +99,6 @@ fieldset {
 	display: block;
 	width: 100%;
 	text-decoration: none;
-	color: orange;
 }
 
 .table-condensed>thead>tr>th, .table-condensed>tbody>tr>th,
@@ -146,10 +128,6 @@ td {
 	color: black;
 }
 
-.error {
-	background-color: red;
-}
-
 .list-group {
 	margin-bottom: 5px;
 }
@@ -157,11 +135,33 @@ td {
 .checkbox {
 	margin: 0px;
 }
-/*
-input[type=checkbox]:checked {
-	width: 18px;
-	height: 18px;
+
+/* Colors */
+.form-control:FOCUS {
+	background-color: orange;
 }
+
+.form-control-static {
+	background-color: #4E5D6C;
+}
+
+.form-control {
+	background-color: lightgray;
+	color: black;
+}
+
+.table-condensed>tbody>tr>td>a {
+	color: orange;
+}
+
+a {
+	color: orange;
+}
+
+.error {
+	background-color: red;
+}
+/*
 */
 
 /* Bootstrap XL */
