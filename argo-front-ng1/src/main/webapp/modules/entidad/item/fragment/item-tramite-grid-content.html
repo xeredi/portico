@@ -12,7 +12,7 @@
 
         <tbody>
             <tr data-ng-repeat="ittr in vm.ittrList track by $index">
-                <td><a data-ng-href="#/item/item-tramite/detail/{{ittr.trmt.entiId}}/{{ittr.id}}"> <span
+                <td><a data-ng-href="#!/item/item-tramite/detail/{{ittr.trmt.entiId}}/{{ittr.id}}"> <span
                         class="glyphicon glyphicon-search"></span>
                 </a></td>
                 <td data-ng-bind="(ittr.fecha | date: ('format_datetime' | translate))"></td>

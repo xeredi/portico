@@ -15,7 +15,7 @@
                 <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
             </button>
             <a data-ng-if="mc.hasAcbsPath('mdlo-create')" class="btn btn-default"
-                data-ng-href="#/metamodelo/modulo/edit/create"><i class="glyphicon glyphicon-file"></i> <span
+                data-ng-href="#!/metamodelo/modulo/edit/create"><i class="glyphicon glyphicon-file"></i> <span
                 data-translate="btn_crear"></span> </a>
         </div>
     </div>
@@ -36,7 +36,7 @@
             <tbody data-ng-init="vm.mdloDetailAllowed = mc.hasAcbsPath('mdlo-detail')">
                 <tr data-ng-repeat="mdlo in vm.resultList.list track by $index">
                     <td><a data-ng-if="vm.mdloDetailAllowed"
-                        data-ng-href="#/metamodelo/modulo/detail/{{mdlo.id}}"><i
+                        data-ng-href="#!/metamodelo/modulo/detail/{{mdlo.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="mdlo.codigo"></td>
                     <td data-ng-bind="mdlo.etiqueta"></td>

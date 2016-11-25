@@ -12,7 +12,7 @@
                 <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
             </button>
             <a data-ng-if="mc.hasAcbsPath('crgo-create')" class="btn btn-default"
-                data-ng-href="#/facturacion/cargo/edit/create"><i class="glyphicon glyphicon-file"></i> <span
+                data-ng-href="#!/facturacion/cargo/edit/create"><i class="glyphicon glyphicon-file"></i> <span
                 data-translate="btn_crear"></span> </a>
         </div>
     </div>
@@ -24,7 +24,7 @@
         <table class="table-bordered table-condensed table-hover">
             <thead>
                 <tr>
-                    <th nowrap="nowrap" />
+                    <th data-ng-if="mc.hasAcbsPath('crgo-detail')" nowrap="nowrap" />
                     <th nowrap="nowrap" data-translate="crgo_codigo"></th>
                     <th data-translate="crgo_descripcion"></th>
                     <th nowrap="nowrap" data-translate="crgo_codigoNormalizado"></th>
@@ -39,8 +39,10 @@
 
             <tbody>
                 <tr data-ng-repeat="crgo in vm.resultList.list track by $index">
-                    <td><a data-ng-if="mc.hasAcbsPath('crgo-detail')"
-                        data-ng-href="#/facturacion/cargo/detail/{{crgo.id}}/{{crgo.fref}}"><i
+                    <td data-ng-if="mc.hasAcbsPath('crgo-detail')"><a data-ng-if="crgo.fref != null"
+                        data-ng-href="#!/facturacion/cargo/detail/{{crgo.id}}/{{crgo.fref}}"><i
+                            class="glyphicon glyphicon-search"></i></a><a data-ng-if="crgo.fref == null"
+                        data-ng-href="#!/facturacion/cargo-version/detail/{{crgo.id}}/{{crgo.version.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="crgo.codigo"></td>
                     <td data-ng-bind="crgo.version.descripcion"></td>

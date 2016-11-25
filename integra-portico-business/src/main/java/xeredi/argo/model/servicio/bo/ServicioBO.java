@@ -207,7 +207,9 @@ public class ServicioBO implements Auditable {
      */
     public final List<ServicioVO> selectTypeaheadList(@NonNull final ServicioTypeaheadCriterioVO criterio,
             final int limit) {
-        Preconditions.checkNotNull(criterio.getTextoBusqueda());
+        if (criterio.getTextoBusqueda() == null) {
+            criterio.setTextoBusqueda("");
+        }
 
         final StringTokenizer tokenizer = new StringTokenizer(criterio.getTextoBusqueda(), "/");
 

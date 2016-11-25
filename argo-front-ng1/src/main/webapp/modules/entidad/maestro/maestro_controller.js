@@ -251,10 +251,6 @@
         vm.getLabelValues = getLabelValues;
 
         function getLabelValues(entiId, textoBusqueda, prtoId, fechaVigencia) {
-            if (textoBusqueda.length <= 0) {
-                return null;
-            }
-
             vm.search = {
                 entiId : entiId,
                 textoBusqueda : textoBusqueda,

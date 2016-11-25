@@ -2,7 +2,7 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a data-ng-if="mc.hasAcbsPath('rgin-edit')" class="btn btn-default"
-                data-ng-href="#/facturacion/regla-incompatible/edit/edit/{{vm.model.rgla1Id}}/{{vm.model.fref}}/{{vm.model.id}}"><i
+                data-ng-href="#!/facturacion/regla-incompatible/edit/edit/{{vm.model.rgla1Id}}/{{vm.model.fref}}/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
             <button data-ng-if="mc.hasAcbsPath('rgin-remove')" data-ng-click="vm.remove()"
                 class="btn btn-default">
@@ -16,7 +16,7 @@
             <div class="col-md-2 form-group-sm">
                 <label data-translate="rgin_rgla2"></label>
                 <p class="form-control-static">
-                    <a data-ng-href="#/facturacion/regla/detail/{{vm.model.rgla2.id}}/{{vm.model.fref}}"
+                    <a data-ng-href="#!/facturacion/regla/detail/{{vm.model.rgla2.id}}/{{vm.model.fref}}"
                         data-ng-bind="vm.model.rgla2.codigo"></a>
                 </p>
             </div>

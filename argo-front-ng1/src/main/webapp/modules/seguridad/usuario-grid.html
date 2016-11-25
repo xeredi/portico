@@ -15,7 +15,7 @@
                 <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
             </button>
             <a data-ng-if="mc.hasAcbsPath('usro-create')" class="btn btn-default"
-                data-ng-href="#/seguridad/usuario/edit/create"><i class="glyphicon glyphicon-file"></i> <span
+                data-ng-href="#!/seguridad/usuario/edit/create"><i class="glyphicon glyphicon-file"></i> <span
                 data-translate="btn_crear"></span> </a>
         </div>
     </div>
@@ -39,7 +39,7 @@
             <tbody>
                 <tr data-ng-repeat="usro in vm.resultList.list track by $index">
                     <td><a data-ng-if="mc.hasAcbsPath('usro-detail')"
-                        data-ng-href="#/seguridad/usuario/detail/{{usro.id}}"><i
+                        data-ng-href="#!/seguridad/usuario/detail/{{usro.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td nowrap="nowrap" data-ng-bind="usro.login"></td>
                     <td nowrap="nowrap" data-ng-bind="usro.email"></td>

@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.opensymphony.xwork2.ModelDriven;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.comun.vo.Versionable;
@@ -17,6 +18,7 @@ import xeredi.argo.model.metamodelo.vo.AccionCodigo;
  *            the generic type
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public abstract class CrudDetailAction<T> extends BaseAction implements ModelDriven<T>, ProtectedAction {
 
     /** The Constant serialVersionUID. */
@@ -35,12 +37,12 @@ public abstract class CrudDetailAction<T> extends BaseAction implements ModelDri
     public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(model);
 
-        if (model instanceof Versionable<?>) {
-            Preconditions.checkNotNull(((Versionable<?>) model).getFref());
-        }
-
         if (model instanceof Identifiable) {
             Preconditions.checkNotNull(((Identifiable) model).getId());
+        }
+
+        if (model instanceof Versionable<?>) {
+            Preconditions.checkNotNull(((Versionable<?>) model).getFref());
         }
 
         doDetail();

@@ -2,7 +2,7 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a data-ng-if="mc.hasAcbsPath('tpdt-edit')" class="btn btn-default"
-                data-ng-href="#/metamodelo/tipo-dato/edit/edit/{{vm.model.id}}"><i
+                data-ng-href="#!/metamodelo/tipo-dato/edit/edit/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
             <button data-ng-if="mc.hasAcbsPath('tpdt-remove')" data-ng-click="vm.remove()"
                 class="btn btn-default">
@@ -30,15 +30,15 @@
                 <label data-translate="enti"></label>
                 <p class="form-control-static">
                     <a data-ng-if="vm.model.enti.tipo == 'T'"
-                        data-ng-href="#/metamodelo/tipo-servicio/detail/{{vm.model.enti.id}}"
+                        data-ng-href="#!/metamodelo/tipo-servicio/detail/{{vm.model.enti.id}}"
                         data-ng-bind="vm.model.enti.nombre"></a><a data-ng-if="vm.model.enti.tipo == 'S'"
-                        data-ng-href="#/metamodelo/tipo-subservicio/detail/{{vm.model.enti.id}}"
+                        data-ng-href="#!/metamodelo/tipo-subservicio/detail/{{vm.model.enti.id}}"
                         data-ng-bind="vm.model.enti.nombre"></a><a data-ng-if="vm.model.enti.tipo == 'P'"
-                        data-ng-href="#/metamodelo/tipo-parametro/detail/{{vm.model.enti.id}}"
+                        data-ng-href="#!/metamodelo/tipo-parametro/detail/{{vm.model.enti.id}}"
                         data-ng-bind="vm.model.enti.nombre"></a><a data-ng-if="vm.model.enti.tipo == 'B'"
-                        data-ng-href="#/metamodelo/tipo-subparametro/detail/{{vm.model.enti.id}}"
+                        data-ng-href="#!/metamodelo/tipo-subparametro/detail/{{vm.model.enti.id}}"
                         data-ng-bind="vm.model.enti.nombre"></a> <a data-ng-if="vm.model.enti.tipo == 'E'"
-                        data-ng-href="#/metamodelo/tipo-estadistica/detail/{{vm.model.enti.id}}"
+                        data-ng-href="#!/metamodelo/tipo-estadistica/detail/{{vm.model.enti.id}}"
                         data-ng-bind="vm.model.enti.nombre"></a>
                 </p>
             </div>
@@ -53,7 +53,7 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <a data-ng-if="mc.hasAcbsPath('cdrf-create')" class="btn btn-default"
-                    data-ng-href="#/metamodelo/codigo-referencia/edit/create/{{vm.model.id}}"><i
+                    data-ng-href="#!/metamodelo/codigo-referencia/edit/create/{{vm.model.id}}"><i
                     class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
             </div>
         </div>
@@ -70,7 +70,7 @@
             <tbody>
                 <tr data-ng-repeat="cdrf in vm.model.cdrfList track by $index">
                     <td><a data-ng-if="mc.hasAcbsPath('cdrf-detail')"
-                        data-ng-href="#/metamodelo/codigo-referencia/detail/{{cdrf.id}}"><i
+                        data-ng-href="#!/metamodelo/codigo-referencia/detail/{{cdrf.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="cdrf.valor"></td>
                     <td data-ng-bind="cdrf.texto"></td>

@@ -2,7 +2,7 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a data-ng-if="mc.hasAcbsPath('mdlo-edit')" class="btn btn-default"
-                data-ng-href="#/metamodelo/modulo/edit/edit/{{vm.model.id}}"><i
+                data-ng-href="#!/metamodelo/modulo/edit/edit/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
             <button data-ng-if="mc.hasAcbsPath('mdlo-remove')" data-ng-click="vm.remove()"
                 class="btn btn-default">
@@ -26,7 +26,7 @@
         <legend data-translate="grpoList"></legend>
 
         <div class="list-group">
-            <a data-ng-href="#/seguridad/grupo/detail/{{grpo.id}}"
+            <a data-ng-href="#!/seguridad/grupo/detail/{{grpo.id}}"
                 class="list-group-item col-sm-6 col-md-4 col-lg-3"
                 data-ng-repeat="grpo in vm.grpoList track by $index" data-ng-bind="grpo.nombre"></a>
         </div>

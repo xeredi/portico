@@ -120,6 +120,26 @@ public final class CargoBO {
     /**
      * Select.
      *
+     * @param versionId
+     *            the version id
+     * @param idioma
+     *            the idioma
+     * @return the cargo VO
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public CargoVO select(@NonNull final Long versionId, final String idioma) throws InstanceNotFoundException {
+        final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
+
+        crgoCriterio.setVersionId(versionId);
+        crgoCriterio.setIdioma(idioma);
+
+        return selectObject(crgoCriterio);
+    }
+
+    /**
+     * Select.
+     *
      * @param crgoCriterio
      *            the crgo criterio
      * @return the cargo vo

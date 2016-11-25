@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -19,6 +20,7 @@ import xeredi.argo.model.facturacion.vo.ReglaVO;
  * The Class CargoDetailAction.
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public final class CargoDetailAction extends CrudDetailAction<CargoVO> {
 
     /** The Constant serialVersionUID. */

@@ -4,7 +4,7 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a data-ng-if="mc.hasAcbsPath('entd-create')" class="btn btn-default"
-                data-ng-href="#/metamodelo/entidad-tipo-dato/edit/create/{{vm.model.id}}"><i
+                data-ng-href="#!/metamodelo/entidad-tipo-dato/edit/create/{{vm.model.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
         </div>
     </div>
@@ -33,7 +33,7 @@
         <tbody>
             <tr data-ng-repeat="entd in vm.entdList track by $index">
                 <td><a data-ng-if="mc.hasAcbsPath('entd-detail')"
-                    data-ng-href="#/metamodelo/entidad-tipo-dato/detail/{{entd.id}}"><i
+                    data-ng-href="#!/metamodelo/entidad-tipo-dato/detail/{{entd.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="entd.grupo" class="number"></td>
                 <td data-ng-bind="entd.fila" class="number"></td>

@@ -44,7 +44,7 @@
 
         <tbody>
             <tr data-ng-repeat="item in vm.resultList.list track by $index">
-                <td><a data-ng-href="#/facturacion/factura/detail/{{item.id}}"><i
+                <td><a data-ng-href="#!/facturacion/factura/detail/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="item.etiqueta"></td>
                 <td nowrap="nowrap" data-ng-bind="item.falta | date: ('format_datetime' | translate)"></td>

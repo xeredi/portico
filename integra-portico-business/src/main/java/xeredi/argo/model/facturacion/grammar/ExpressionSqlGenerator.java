@@ -160,6 +160,10 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
                 return " portico.unidadesGtsAtraque(" + visitFormula(ctx.f1) + ")";
             case generaBOEscala:
                 return " portico.generaBOEscala(" + visitFormula(ctx.f1) + ")";
+            case esAvituallamientoEscala:
+                return " portico.esAvituallamientoEscala(" + visitFormula(ctx.f1) + ")";
+            case esBaseEnPuertoEscala:
+                return " portico.esBaseEnPuertoEscala(" + visitFormula(ctx.f1) + ")";
             default:
                 throw new Error("Funcion '" + functionName.name() + "' no implementada!");
             }

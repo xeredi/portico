@@ -1,27 +1,8 @@
-
-select pais_iso, unlo_codigo 
-from 
-    igen_unlocode_unlo
-    inner join igen_pais_pais on pais_id = unlo_pais_id
-where 
-    not exists (
-        select 1 from M_PUERTO 
-        where codpais = pais_iso and codpue = unlo_codigo
-    )
-    and pais_es_activo = 1
-    and unlo_es_activo = 1
-order by pais_iso, unlo_codigo 
-;
-
-select * from M_PUERTO 
-where codpais = 'ES'
-order by codpais, codpue;
-
-select * from G3_TIPOMOVMERC;
-select * from TIPO_BUQUE order by codtipobuque;
-select * from iman_manifiesto_mani;
-
-select * from iesc_trafico_traf traf inner join iesc_traficoi18n_traf i18n on i18n.traf_id = traf.traf_id;
+DELETE FROM G3_EQUIPAMIENTO;
+DELETE FROM G3_PARTIDA;
+DELETE FROM G3_CONOCIMIENTO;
+DELETE FROM G3_TRAMO;
+DELETE FROM g3_cabecera;
 
 INSERT INTO G3_CABECERA (
     CODPUE, ANYO, CODSER, NUMDECLARACION, TIPODECLARACION, NUMVIAJE, NOMBUQUE, IDENTBUQUE, CODPAIBUQUE, IDCONSIGNATARIO, FECENTSAL, CODMUELLE
@@ -76,7 +57,6 @@ FROM icom_servicio_serv serv
     left join iesc_escala_esca on
         esca_id = mani_escala_id
 where serv_fecha_baja is null
-    and serv_numero > '00001' 
 -- order by codpue, anyo, codser
 ;
 
@@ -152,48 +132,48 @@ INSERT INTO G3_TRAMO (
     , CODPUEESC
     , ANYOESC
     , CODESC
-    , CODESTADIA
-    , INDEXENTOT2
-    , INDEXENTOT3
-    , JUSTIFEXENTOT2
-    , JUSTIFEXENTOT3
-    , CODTIPOIVAT2
-    , CODTIPOIVAT3
-    , IND215
-    , IND2453
-    , CODBON2453
-    , PORC2453
-    , CODPROCESOCARGA
-    , NIFCSGMERCANCIA
-    , CARDIFTRAMO
-    , CODTIPCONCT2
-    , OBSERVACIONESFACT
-    , TOTALKGGRUPO1
-    , TOTALKGGRUPO2
-    , TOTALKGGRUPO3
-    , TOTALKGGRUPO4
-    , TOTALKGGRUPO5
-    , TOTALVEHREGMERC
-    , TOTAL0001
-    , TOTAL0001C
-    , TOTAL0001X
-    , TOTAL0001D
-    , TOTAL0004
-    , TOTAL0005
-    , TOTAL0005L
-    , TOTAL0006
-    , TOTAL0007
-    , TOTAL0008
-    , TOTALCN20LLENO
-    , TOTALCN40LLENO
-    , TOTALCN20VACIO
-    , TOTALCN40VACIO
-    , TOTALOTRPEQLLENO
-    , TOTALOTRPEQVACIO
-    , INDMIGRACION
-    , TRAMUECODMUELLE
-    , TRAMUECODTRAMO
-    , REVISADO
+--    , CODESTADIA
+--    , INDEXENTOT2
+--    , INDEXENTOT3
+--    , JUSTIFEXENTOT2
+--    , JUSTIFEXENTOT3
+--    , CODTIPOIVAT2
+--    , CODTIPOIVAT3
+--    , IND215
+--    , IND2453
+--    , CODBON2453
+--    , PORC2453
+--    , CODPROCESOCARGA
+--    , NIFCSGMERCANCIA
+--    , CARDIFTRAMO
+--    , CODTIPCONCT2
+--    , OBSERVACIONESFACT
+--    , TOTALKGGRUPO1
+--    , TOTALKGGRUPO2
+--    , TOTALKGGRUPO3
+--    , TOTALKGGRUPO4
+--    , TOTALKGGRUPO5
+--    , TOTALVEHREGMERC
+--    , TOTAL0001
+--    , TOTAL0001C
+--    , TOTAL0001X
+--    , TOTAL0001D
+--    , TOTAL0004
+--    , TOTAL0005
+--    , TOTAL0005L
+--    , TOTAL0006
+--    , TOTAL0007
+--    , TOTAL0008
+--    , TOTALCN20LLENO
+--    , TOTALCN40LLENO
+--    , TOTALCN20VACIO
+--    , TOTALCN40VACIO
+--    , TOTALOTRPEQLLENO
+--    , TOTALOTRPEQVACIO
+--    , INDMIGRACION
+--    , TRAMUECODMUELLE
+--    , TRAMUECODTRAMO
+--    , REVISADO
 )
 SELECT 
     (select subp_codigo from IGEN_subpuerto_subp where subp_ID = serv_subp_id) AS CODPUE
@@ -265,48 +245,48 @@ SELECT
     , (SELECT subp_codigo FROM igen_subpuerto_subp WHERE subp_id = (SELECT serv_subp_id from icom_servicio_serv where serv_id = esca_id)) AS CODPUEESC
     , (SELECT serv_anno from icom_servicio_serv where serv_id = esca_id) AS ANYOESC
     , (SELECT serv_numero from icom_servicio_serv where serv_id = esca_id) AS CODESC
-    , NULL AS CODESTADIA
-    , 1 AS INDEXENTOT2 -- NOTA: TODOS LOS INDICADORES DE EXENTO HAN DE PONERSE A 1
-    , 1 AS INDEXENTOT3
-    , NULL AS JUSTIFEXENTOT2
-    , NULL AS JUSTIFEXENTOT3
-    , NULL AS CODTIPOIVAT2
-    , NULL AS CODTIPOIVAT3
-    , NULL AS IND215
-    , NULL AS IND2453
-    , NULL AS CODBON2453
-    , NULL AS PORC2453
-    , NULL AS CODPROCESOCARGA
-    , NULL AS NIFCSGMERCANCIA
-    , NULL AS CARDIFTRAMO
-    , NULL AS CODTIPCONCT2
-    , NULL AS OBSERVACIONESFACT
-    , NULL AS TOTALKGGRUPO1
-    , NULL AS TOTALKGGRUPO2
-    , NULL AS TOTALKGGRUPO3
-    , NULL AS TOTALKGGRUPO4
-    , NULL AS TOTALKGGRUPO5
-    , NULL AS TOTALVEHREGMERC
-    , NULL AS TOTAL0001
-    , NULL AS TOTAL0001C
-    , NULL AS TOTAL0001X
-    , NULL AS TOTAL0001D
-    , NULL AS TOTAL0004
-    , NULL AS TOTAL0005
-    , NULL AS TOTAL0005L
-    , NULL AS TOTAL0006
-    , NULL AS TOTAL0007
-    , NULL AS TOTAL0008
-    , NULL AS TOTALCN20LLENO
-    , NULL AS TOTALCN40LLENO
-    , NULL AS TOTALCN20VACIO
-    , NULL AS TOTALCN40VACIO
-    , NULL AS TOTALOTRPEQLLENO
-    , NULL AS TOTALOTRPEQVACIO
-    , 1 AS INDMIGRACION
-    , NULL AS TRAMUECODMUELLE
-    , NULL AS TRAMUECODTRAMO
-    , NULL AS REVISADO
+--    , NULL AS CODESTADIA
+--    , 1 AS INDEXENTOT2 -- NOTA: TODOS LOS INDICADORES DE EXENTO HAN DE PONERSE A 1
+--    , 1 AS INDEXENTOT3
+--    , NULL AS JUSTIFEXENTOT2
+--    , NULL AS JUSTIFEXENTOT3
+--    , NULL AS CODTIPOIVAT2
+--    , NULL AS CODTIPOIVAT3
+--    , NULL AS IND215
+--    , NULL AS IND2453
+--    , NULL AS CODBON2453
+--    , NULL AS PORC2453
+--    , NULL AS CODPROCESOCARGA
+--    , NULL AS NIFCSGMERCANCIA
+--    , NULL AS CARDIFTRAMO
+--    , NULL AS CODTIPCONCT2
+--    , NULL AS OBSERVACIONESFACT
+--    , NULL AS TOTALKGGRUPO1
+--    , NULL AS TOTALKGGRUPO2
+--    , NULL AS TOTALKGGRUPO3
+--    , NULL AS TOTALKGGRUPO4
+--    , NULL AS TOTALKGGRUPO5
+--    , NULL AS TOTALVEHREGMERC
+--    , NULL AS TOTAL0001
+--    , NULL AS TOTAL0001C
+--    , NULL AS TOTAL0001X
+--    , NULL AS TOTAL0001D
+--    , NULL AS TOTAL0004
+--    , NULL AS TOTAL0005
+--    , NULL AS TOTAL0005L
+--    , NULL AS TOTAL0006
+--    , NULL AS TOTAL0007
+--    , NULL AS TOTAL0008
+--    , NULL AS TOTALCN20LLENO
+--    , NULL AS TOTALCN40LLENO
+--    , NULL AS TOTALCN20VACIO
+--    , NULL AS TOTALCN40VACIO
+--    , NULL AS TOTALOTRPEQLLENO
+--    , NULL AS TOTALOTRPEQVACIO
+--    , 1 AS INDMIGRACION
+--    , NULL AS TRAMUECODMUELLE
+--    , NULL AS TRAMUECODTRAMO
+--    , NULL AS REVISADO
 FROM icom_servicio_serv serv
     INNER JOIN iman_manifiesto_mani mani ON
         mani_id = serv_id
@@ -322,7 +302,6 @@ FROM icom_servicio_serv serv
         and (buqut.BUQU_FECHA_fin is null or buqut.BUQU_FECHA_fin > ESCA_FECHA_ENTRADA)
         and buqut.buqu_es_activo = 1
 where serv_fecha_baja is null
-    and serv_numero > '00001' 
 ;
 
 INSERT INTO G3_CONOCIMIENTO (
@@ -449,7 +428,6 @@ FROM icom_servicio_serv serv
         maco_mani_id = serv_id
         AND mabl_consignatario_id = maco_id
 where serv_fecha_baja is null
-    and serv_numero > '00001' 
     and mabl_es_activo = 1 
 /*
 ) sql
@@ -465,6 +443,7 @@ where
 
 
 /* correccion de numeros de partida duplicados */
+/*
 select * 
 from iman_partida_part part
 where 
@@ -481,6 +460,7 @@ where
         SELECT 1 FROM IMAN_BL_MABL WHERE MABL_ID = PART_MABL_ID AND MABL_ES_ACTIVO = 1
     )
 ;
+*/
 
 update iman_partida_part part set
     part.part_orden = 
@@ -507,8 +487,6 @@ where
         SELECT 1 FROM IMAN_BL_MABL WHERE MABL_ID = PART_MABL_ID AND MABL_ES_ACTIVO = 1
     )
 ;
-
-
 
 
 
@@ -642,9 +620,8 @@ FROM iman_partida_part
         maco_mani_id = serv_id
         AND mabl_consignatario_id = maco_id
 where serv_fecha_baja is null
-    and serv_numero > '00001' 
-    and part_es_activo = 1 
     and mabl_es_activo = 1 
+    and part_es_activo = 1 
 /*
 ) sql
 group by CODPUE, ANYO, CODSER, CODTRAMO, NUMORDEN, TIPOCONOC, NUMPARTIDA
@@ -698,7 +675,7 @@ INSERT INTO G3_EQUIPAMIENTO (
     , NUMPRECINTO4
     , NUMPRECINTO5
     , CODTIPCONCB3
-    , CODTERMINAL
+--    , CODTERMINAL
 )
 /*
 ;
@@ -751,7 +728,7 @@ SELECT
     , (select preq_precinto from IMAN_PRECINTOEQUIP_PREQ where preq_equi_id = equi_id and preq_es_activo = 1 and rownum = 4) AS NUMPRECINTO4
     , (select preq_precinto from IMAN_PRECINTOEQUIP_PREQ where preq_equi_id = equi_id and preq_es_activo = 1 and rownum = 5) AS NUMPRECINTO5
     , NULL AS CODTIPCONCB3
-    , NULL AS CODTERMINAL
+--    , NULL AS CODTERMINAL
 FROM iman_equipamiento_equi
     INNER JOIN iman_bl_mabl ON
         mabl_id = equi_mabl_id
@@ -763,7 +740,6 @@ FROM iman_equipamiento_equi
         maco_mani_id = serv_id
         AND mabl_consignatario_id = maco_id
 where serv_fecha_baja is null
-    and serv_numero > '00001' 
     and equi_es_activo = 1 
     and mabl_es_activo = 1 
 /*
@@ -778,68 +754,3 @@ order by CODTIPOTAMANYO
 ;
 
 
-SELECT preq_equi_id, count(1) 
-FROM IMAN_PRECINTOEQUIP_PREQ
-where preq_es_activo = 1
-group by PREQ_EQUI_ID
-having count(1) > 1;
-
-SELECT PAEQ_equi_id, sum(PAEQ_NUMERO_BULTOS)
-FROM INTEGRA.IMAN_PARTIDAEQUIP_PAEQ
-where paeq_es_activo = 1
-group by PAEQ_equi_id
-having sum(PAEQ_NUMERO_BULTOS) > 99999
-;
-
-select max(equi_tara) from IMAN_EQUIPAMIENTO_EQUI;
-
-
-SELECT * FROM EST_TIPO_OPECONOC	;
-
-CA	Carga                               E, ET
-DE	Descarga                            D, DT
-TR	Tránsito marítimo
-TB	Transbordo                          
-TT	Tránsito terrestre
-
-SELECT tobl_codigo, tobl_nombre FROM IMAN_TIPOOPERACION_TOBL maes INNER JOIN IMAN_TIPOOPERACIONI18N_TOBL i18n on i18n.tobl_id = maes.tobl_id ;
-
-**	OPERACION GENERICA
-AC	REC. ADUAN. > 5%
-AS	REC. ADUAN. < 5%
-AV	AVITUALLAMIENTO
-CA	CTRL. ADUANERO TERR.
-D	DESEMBARQUE
-DT	DESEMB. EN TRANSITO
-E	EMBARQUE
-ET	EMBARQUE EN TRANSITO
-T	TRANSBORDO
-TD	TRANSBORDO DESCARGA
-TE	TRANSBORDO EMBARQUE
-
-select * from EST_TIPO_NAVEGACION;
-select * from IGEN_NAVEGACIONTIPO_NAVT;
-
-select * from G3_partida;
-select * from G3_CONOCIMIENTO;
-select * from G3_tramo;
-select * from G3_CABECERA;
-
-delete from G3_partida;
-delete from G3_equipamiento;
-delete from G3_CONOCIMIENTO;
-delete from G3_TRAMO;
-delete from G3_CABeceralog;
-delete from G3_CABECERA;
-
-
-select * from 
-G3_TIPOBULTO;
-
-
-select tbul_codigo, tbul_nombre
-from iman_tipobulto_tbul maes
-    LEFT JOIN iman_tipobultoi18n_tbul i18n on i18n.tbul_id = maes.tbul_id
-where not exists (select 1 from G3_TIPOBULTO where codigo = maes.tbul_codigo)
-    and i18n.tbul_es_activo = 1
-    order by tbul_codigo;

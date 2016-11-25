@@ -1,1 +1,0 @@
-java -jar schemaspy.jar -t  orathin_servicename -db INTDES -port 1521 -s INTEGRADOSALICANTE -u INTEGRADOSALICANTE -p Alicante2016 -o target/integra2-sch-pro -host praim4 -dp jdbc-ora.jar

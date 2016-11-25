@@ -13,22 +13,29 @@
                                 <label data-translate="crgo_codigo"></label> <input type="text"
                                     data-ng-model="vm.searchCriteria.codigo" class="form-control" />
                             </div>
-                            <div class="col-sm-2 col-md-2 form-group-sm">
+                            <div class="col-sm-2 col-md-1 form-group-sm">
                                 <label data-translate="crgo_codigoNormalizado"></label> <input type="text"
                                     data-ng-model="vm.searchCriteria.codigoNormalizado" class="form-control" />
                             </div>
                             <div class="col-sm-3 col-md-2 form-group-sm">
-                                <label data-translate="tpsr"></label> <select
-                                    data-ng-model="vm.searchCriteria.tpsrId"
+                                <label data-translate="tpsr"></label> <select data-ng-model="vm.searchCriteria.tpsrId"
                                     data-ng-options="labelValue.value as ('enti_' + labelValue.value | translate) for labelValue in vm.tpsrList"
                                     class="form-control">
                                     <option />
                                 </select>
                             </div>
-                            <div class="col-sm-2 col-md-2 form-group-sm">
+                            <div class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
                                 <label data-translate="crgo_fechaVigencia"></label><input type="text"
                                     class="form-control" data-container=".modal-body"
                                     data-ng-model="vm.searchCriteria.fechaVigencia" data-bs-datepicker />
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
+                                <label data-translate="crgo_mostrarHistorico"></label><select
+                                    data-ng-model="vm.searchCriteria.mostrarHistorico"
+                                    data-ng-options="item as ('format_' + item | translate) for item in [true , false]"
+                                    class="form-control">
+                                    <option />
+                                </select>
                             </div>
                         </div>
                     </fieldset>

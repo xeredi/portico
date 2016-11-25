@@ -17,6 +17,8 @@
 
     .controller("CargoTypeaheadController", CargoTypeaheadController)
 
+    .controller("CargoVersionDetailController", CargoVersionDetailController)
+
     .controller("ReglaDetailController", ReglaDetailController)
 
     .controller("ReglaEditController", ReglaEditController)
@@ -104,6 +106,11 @@
         .when("/facturacion/cargo/edit/:accion/:id?/:fref?", {
             templateUrl : "modules/facturacion/cargo-edit.html",
             controller : "CargoEditController as vm"
+        })
+
+        .when("/facturacion/cargo-version/detail/:versionId", {
+            templateUrl : "modules/facturacion/cargo-detail.html",
+            controller : "CargoVersionDetailController as vm"
         })
 
         .when("/facturacion/regla/detail/:id/:fref", {
@@ -290,6 +297,7 @@
                 vm.page = data.resultList.page;
                 vm.limit = data.resultList.limit;
                 vm.resultList = data.resultList;
+                vm.searchCriteria = data.model;
             });
         }
 
@@ -416,6 +424,34 @@
                 return data.resultList;
             });
         }
+    }
+
+    /* @ngInject */
+    function CargoVersionDetailController($routeParams, pageTitleService, CargoService) {
+        var vm = this;
+
+        vm.remove = remove;
+
+        function remove() {
+            CargoService.remove(vm.model).then(function(data) {
+                window.history.back();
+            });
+        }
+
+        vm.search = {
+            version : {
+                id : $routeParams.versionId
+            }
+        };
+
+        CargoService.versionDetail(vm.search).then(function(data) {
+            vm.model = data.model;
+            vm.i18nMap = data.i18nMap;
+
+            vm.rglaList = data.rglaList;
+        });
+
+        pageTitleService.setTitle("crgo", "page_detail");
     }
 
     /* @ngInject */

@@ -1301,9 +1301,349 @@ AND (
 		VALUES (120409,120408,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 2, 1,'dato(ALIN).dato(BOOLEANO_01) <> 1 AND dato(TIPO_ATR) = ''C''','1',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120409, 'No Concesión - Atracados Costado')\
 
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120410,100400,'B1_C03',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120411,120410,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 3, 0.8
+			,'dato(ALIN).dato(BOOLEANO_01) <> 1 AND dato(TIPO_ATR) IN (''P'', ''A'', ''B'')','0.8'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120411, 'No Concesión - Atracados de Punta, Abarloado o a Boya')\
 
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120412,100400,'B1_C04',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120413,120412,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 4, 0.6
+			,'dato(ALIN).dato(BOOLEANO_01) = 1 AND dato(ALIN).dato(BOOLEANO_03) = 1 AND dato(TIPO_ATR) = ''C''','0.6'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120413, 'Concesión - Espacio agua en Concesión - Atracados Costado')\
 
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120414,100400,'B1_C05',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120415,120414,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 5, 0.5
+			,'dato(ALIN).dato(BOOLEANO_01) = 1 AND dato(ALIN).dato(BOOLEANO_03) = 1 AND dato(TIPO_ATR) IN (''P'', ''A'', ''B'')','0.5'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120415, 'Concesión - Espacio agua concesionado - Atracados de Punta, Abarloados o a Boya')\
 
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120416,100400,'B1_C06',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120417,120416,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 6, 0.7
+			,'dato(ALIN).dato(BOOLEANO_01) = 1 AND dato(ALIN).dato(BOOLEANO_03) = 0 AND dato(TIPO_ATR) = ''C''','0.7'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120417, 'Concesión - Espacio agua no concesionado - Atracados Costado')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120418,100400,'B1_C07',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120419,120418,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 7, 0.6
+			,'dato(ALIN).dato(BOOLEANO_01) = 1 AND dato(ALIN).dato(BOOLEANO_03) = 0 AND dato(TIPO_ATR) IN (''P'', ''A'', ''B'')','0.6'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120419, 'Concesión - Espacio agua no concesionado - Atracados de Punta, Abarloados o a Boya')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120420,100400,'B1_C08',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120421,120420,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 8, 0.25
+			,'esAvituallamientoEscala(servicio.atributo(PK)) = 1','0.25'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120421, 'Zona I - Avituallamiento, aprovisionamiento o reparación (< 48 h)')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120422,100400,'B1_C09',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120423,120422,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 9, 4
+			,'dato(TIPO_ESTAN_ATR) = ''L''
+AND servicio.dato(TIPO_NAV) = ''I''
+AND servicio.dato(TIPO_NAV_2) = ''I''','4'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120423, 'Estancia Prolongada - Tráfico interior')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120424,100400,'B1_C10',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120425,120424,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 10, 4.67
+			,'dato(TIPO_ESTAN_ATR) = ''L''
+AND dato(TIPO_ACT) IN (''FE'',''DR'',''AB'',''AF'',''AR'',''AT'')','4.67'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120425, 'Estancia Prolongada - Dragado y Avituallamiento')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120426,100400,'B1_C11',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120427,120426,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 11, 1.33
+			,'dato(TIPO_ESTAN_ATR) = ''L''
+AND dato(TIPO_ACT) IN (''CO'',''RF'',''RT'',''TF'',''DE'')','1.33'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120427, 'Estancia Prolongada - Construcción, gran reparación, transforamción, desguace fuera de astillero')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120428,100400,'B1_C12',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120429,120428,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 12, 0.50
+			,'dato(TIPO_ESTAN_ATR) = ''L''
+AND dato(TIPO_ACT) IN (''CA'',''RA'',''TA'',''DA'')','0.50'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120429, 'Estancia Prolongada - Construcción, gran reparación, transforamción, desguace en astillero')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120430,100400,'B1_C13',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120431,120430,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 13, 0.45
+			,'dato(TIPO_ESTAN_ATR) = ''L''
+AND dato(TIPO_ACT) IN (''CL'')','0.45'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120431, 'Estancia Prolongada - Paro biológico, veda o sin licencia')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120432,100400,'B1_C14',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120433,120432,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 14, 1
+			,'dato(TIPO_ESTAN_ATR) = ''L''
+AND dato(TIPO_ACT) IN (''DJ'')','1'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120433, 'Estancia Prolongada - Deposito judicial')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120434,100400,'B1_C15',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120435,120434,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 15, 4.67
+			,'dato(TIPO_ESTAN_ATR) = ''L''
+AND dato(TIPO_ACT) IN (''IN'', ''IP'')','4.67'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120435, 'Estancia Prolongada - Inactivos')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120436,100400,'B1_C16',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120437,120436,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 16, 2.33
+			,'dato(TIPO_ESTAN_ATR) = ''L''
+AND dato(TIPO_ACT) IN (''RE'', ''MR'', ''PR'')','2.33'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120437, 'Estancia Prolongada - Destinados a remolque, amarre, practicaje')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120438,100400,'B1_C17',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120439,120438,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 17, 4.67
+			,'dato(TIPO_ESTAN_ATR) = ''L''
+AND (
+	servicio.dato(TIPO_NAV) <> ''I''
+	OR servicio.dato(TIPO_NAV_2) <> ''I''
+)
+AND dato(TIPO_ACT) NOT IN (''DR'',''AF'',''AT'',''AR'',''AB'',''FE'',''CO'',''RF'',''RT'',''TF'',''DE'',''CA'',''RA'',''TA'',''DA'',''PB'',''CL'',''DJ'',''IN'',''IP'',''RE'',''MR'',''PR'')','4.67'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120439, 'Estancia Prolongada - Otros buques')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120440,100400,'B1_C18',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120441,120440,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 18, 0.70
+			,'dato(TIPO_ESTAN_ATR) = ''L''
+AND dato(ALIN).dato(BOOLEANO_01) = 1
+AND dato(ALIN).dato(BOOLEANO_03) = 0','0.70'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120441, 'Estancia Prolongada - Atraque en concesión (sin espacio de agua en concesión)')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120442,100400,'B1_C19',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120443,120442,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 19, 0.60
+			,'dato(TIPO_ESTAN_ATR) = ''L''
+AND dato(ALIN).dato(BOOLEANO_01) = 1
+AND dato(ALIN).dato(BOOLEANO_03) = 1','0.60'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120443, 'Estancia Prolongada - Atraque en concesión (con espacio de agua en concesión)')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120444,100400,'B1_C20',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120445,120444,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 20, 0.70
+			,'servicio.dato(BUQUE).dato(TIPO_BUQUE) = ''UC''
+AND esBaseEnPuertoEscala(servicio.atributo(PK)) <> 1
+AND valorServicio(''CU'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''','0.70'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120445, 'Crucero turístico')\
 
 
 

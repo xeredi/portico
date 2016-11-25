@@ -44,7 +44,7 @@
             </thead>
             <tbody>
                 <tr data-ng-repeat="prbt in vm.resultList.list track by $index">
-                    <td><a data-ng-href="#/proceso/proceso/detail/{{prbt.id}}"><i
+                    <td><a data-ng-href="#!/proceso/proceso/detail/{{prbt.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="('ProcesoModulo_' + prbt.modulo | translate)"></td>
                     <td data-ng-bind="('ProcesoTipo_' + prbt.tipo | translate)"></td>

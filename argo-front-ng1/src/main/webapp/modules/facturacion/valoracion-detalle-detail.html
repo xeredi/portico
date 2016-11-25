@@ -4,7 +4,7 @@
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
                     <a class="btn btn-default"
-                        data-ng-href="#/facturacion/valoracion-detalle/edit/edit/{{vm.model.vlrcId}}/{{vm.model.vlrlId}}/{{vm.model.id}}"><i
+                        data-ng-href="#!/facturacion/valoracion-detalle/edit/edit/{{vm.model.vlrcId}}/{{vm.model.vlrlId}}/{{vm.model.id}}"><i
                         class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
                     <button data-ng-click="vm.remove()" class="btn btn-default">
                         <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
@@ -17,7 +17,7 @@
                     <div class="col-md-3 form-group-sm">
                         <label data-translate="rgla"></label>
                         <p class="form-control-static">
-                            <a data-ng-href="#/facturacion/regla/detail/{{vm.model.rgla.id}}/{{vm.model.fref}}"
+                            <a data-ng-href="#!/facturacion/regla/detail/{{vm.model.rgla.id}}/{{vm.model.fref}}"
                                 data-ng-bind="vm.model.rgla.etiqueta"></a>
                         </p>
                     </div>
@@ -41,7 +41,7 @@
                         <label data-translate="vlrd_impuesto"></label>
                         <p class="form-control-static">
                             <a
-                                data-ng-href="#/maestro/parametro/detail/{{vm.vlrlPadre.impuesto.entiId}}/{{vm.vlrlPadre.impuesto.id}}/{{vm.model.fref}}"
+                                data-ng-href="#!/maestro/parametro/detail/{{vm.vlrlPadre.impuesto.entiId}}/{{vm.vlrlPadre.impuesto.id}}/{{vm.model.fref}}"
                                 data-ng-bind="vm.vlrlPadre.impuesto.etiqueta"></a>
                         </p>
                     </div>
@@ -52,7 +52,7 @@
                         <label data-ng-bind="'enti_' + vm.vlrl.rgla.enti.id | translate"></label>
                         <p class="form-control-static">
                             <a data-ng-if="vm.model.ssrv.id"
-                                data-ng-href="#/servicio/subservicio/detail/{{vm.model.ssrv.entiId}}/{{vm.model.ssrv.id}}"
+                                data-ng-href="#!/servicio/subservicio/detail/{{vm.model.ssrv.entiId}}/{{vm.model.ssrv.id}}"
                                 data-ng-bind="vm.model.ssrv.numero"></a>
                         </p>
                     </div>
@@ -158,7 +158,7 @@
 
                         <tbody>
                             <tr data-ng-repeat="vlrd in vm.vlrdHijosList track by $index">
-                                <td><a data-ng-href="#/facturacion/valoracion-detalle/detail/{{vlrd.id}}"><i
+                                <td><a data-ng-href="#!/facturacion/valoracion-detalle/detail/{{vlrd.id}}"><i
                                         class="glyphicon glyphicon-search"></i></a></td>
                                 <td nowrap="nowrap"><span data-ng-bind="vlrd.rgla.texto"
                                     data-uib-tooltip="{{vlrd.rgla.codigo}}"></span></td>

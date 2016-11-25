@@ -71,14 +71,18 @@
 				#{fechaVigencia})
 			</if>
 
-			<if test="id != null">
-				AND crgo_pk = #{id}
-			</if>
+            <if test="id != null">
+                AND crgo_pk = #{id}
+            </if>
 
 			<if test="ids != null">
 				AND crgo_pk IN
 				<foreach collection="ids" open="(" close=")" separator="," item="value">#{value}</foreach>
 			</if>
+
+            <if test="versionId != null">
+                AND crgv_pk = #{versionId}
+            </if>
 
 			<if test="tpsrId != null">
 				AND crgo_tpsr_pk = #{tpsrId}

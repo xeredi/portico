@@ -30,10 +30,10 @@
                     </select>
                     <p data-ng-switch-when="edit" class="form-control-static">
                         <a data-ng-if="vm.model.enti.tipo == 'T'"
-                            data-ng-href="#/metamodelo/tipo-servicio/detail/{{vm.model.enti.id}}"
+                            data-ng-href="#!/metamodelo/tipo-servicio/detail/{{vm.model.enti.id}}"
                             data-ng-bind="'enti_' + vm.model.enti.id | translate"></a> <a
                             data-ng-if="vm.model.enti.tipo == 'S'"
-                            data-ng-href="#/metamodelo/tipo-subservicio/detail/{{vm.model.enti.id}}"
+                            data-ng-href="#!/metamodelo/tipo-subservicio/detail/{{vm.model.enti.id}}"
                             data-ng-bind="'enti_' + vm.model.enti.id | translate"></a>
                     </p>
                 </div>

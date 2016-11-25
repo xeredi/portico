@@ -20,5 +20,5 @@ public enum FunctionName {
     /** The acumulado teus. */
     acumuladoTeus,
     /** The valor servicio. */
-    valorServicio, periodosFacturablesAtraque, esPrimerAtraque, fechaUltimaTR, unidadesGtsEscala, unidadesGtsAtraque, generaBOEscala;
+    valorServicio, periodosFacturablesAtraque, esPrimerAtraque, fechaUltimaTR, unidadesGtsEscala, unidadesGtsAtraque, generaBOEscala, esAvituallamientoEscala, esBaseEnPuertoEscala;
 }

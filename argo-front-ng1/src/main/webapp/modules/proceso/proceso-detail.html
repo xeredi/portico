@@ -26,7 +26,7 @@
                     <div class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
                         <label data-translate="usro"></label>
                         <p class="form-control-static">
-                            <a data-ng-href="#/seguridad/usuario/detail/{{vm.model.usro.id}}"
+                            <a data-ng-href="#!/seguridad/usuario/detail/{{vm.model.usro.id}}"
                                 data-ng-bind="vm.model.usro.login"></a>
                         </p>
                     </div>
@@ -133,13 +133,13 @@
                                 <tbody>
                                     <tr data-ng-repeat="prit in vm.pritEntradaList track by $index">
                                         <td data-ng-switch="prit.tipo"><a data-ng-switch-when="srvc"
-                                            data-ng-href="#/servicio/servicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
+                                            data-ng-href="#!/servicio/servicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a><a data-ng-switch-when="ssrv"
-                                            data-ng-href="#/servicio/subservicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
+                                            data-ng-href="#!/servicio/subservicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a><a data-ng-switch-when="pepr"
-                                            data-ng-href="#/estadistica/pepr/detail/{{prit.itemId}}"><span
+                                            data-ng-href="#!/estadistica/pepr/detail/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a><a data-ng-switch-when="vlrc"
-                                            data-ng-href="#/facturacion/valoracion/detail/{{prit.itemId}}"><span
+                                            data-ng-href="#!/facturacion/valoracion/detail/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a></td>
                                         <td data-ng-switch data-on="prit.tipo"><span data-ng-switch-when="srvc"
                                             data-ng-bind="('enti_' + prit.entiId | translate)"></span><span
@@ -197,15 +197,15 @@
                                 <tbody>
                                     <tr data-ng-repeat="prit in vm.pritSalidaList track by $index">
                                         <td data-ng-switch="prit.tipo"><a data-ng-switch-when="srvc"
-                                            data-ng-href="#/servicio/servicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
+                                            data-ng-href="#!/servicio/servicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a><a data-ng-switch-when="ssrv"
-                                            data-ng-href="#/servicio/subservicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
+                                            data-ng-href="#!/servicio/subservicio/detail/{{prit.entiId}}/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a><a data-ng-switch-when="pepr"
-                                            data-ng-href="#/estadistica/periodo-proceso/detail/{{prit.itemId}}"><span
+                                            data-ng-href="#!/estadistica/periodo-proceso/detail/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a><a data-ng-switch-when="vlrc"
-                                            data-ng-href="#/facturacion/valoracion/detail/{{prit.itemId}}"><span
+                                            data-ng-href="#!/facturacion/valoracion/detail/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a><a data-ng-switch-when="fctr"
-                                            data-ng-href="#/facturacion/factura/detail/{{prit.itemId}}"><span
+                                            data-ng-href="#!/facturacion/factura/detail/{{prit.itemId}}"><span
                                                 class="glyphicon glyphicon-search"></span></a></td>
                                         <td data-ng-switch data-on="prit.tipo"><span data-ng-switch-when="srvc"
                                             data-ng-bind="('enti_' + prit.entiId | translate)"></span><span

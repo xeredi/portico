@@ -56,9 +56,9 @@
                         data-ng-bind="'cdrf_' + tpdtId + '_' + vm.model.ittdMap[tpdtId].ocadena | translate"></span> <span
                         data-ng-switch-when="TX" data-ng-bind="vm.model.ittdMap[tpdtId].ocadena"></span> <a
                         data-ng-switch-when="PR"
-                        data-ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].oprmt.id}}/{{vm.item.fref}}"
+                        data-ng-href="#!/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].oprmt.id}}/{{vm.item.fref}}"
                         data-ng-bind="vm.model.ittdMap[tpdtId].oprmt.etiqueta"></a> <a data-ng-switch-when="SR"
-                        data-ng-href="#/servicio/servicio/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].osrvc.id}}"
+                        data-ng-href="#!/servicio/servicio/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].osrvc.id}}"
                         data-ng-bind="vm.model.ittdMap[tpdtId].osrvc.etiqueta"></a></td>
                     <td data-ng-switch data-on="vm.trmt.trtdMap[tpdtId].entd.tpdt.tipoElemento" class="form-group-sm"><i
                         data-ng-switch-when="BO" class="glyphicon"
@@ -73,9 +73,9 @@
                         data-ng-bind="'cdrf_' + tpdtId + '_' + vm.model.ittdMap[tpdtId].dcadena | translate"></span> <span
                         data-ng-switch-when="TX" data-ng-bind="vm.model.ittdMap[tpdtId].dcadena"></span> <a
                         data-ng-switch-when="PR"
-                        data-ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].dprmt.id}}/{{vm.item.fref}}"
+                        data-ng-href="#!/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].dprmt.id}}/{{vm.item.fref}}"
                         data-ng-bind="vm.model.ittdMap[tpdtId].dprmt.etiqueta"></a> <a data-ng-switch-when="SR"
-                        data-ng-href="#/servicio/servicio/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].dsrvc.id}}"
+                        data-ng-href="#!/servicio/servicio/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].dsrvc.id}}"
                         data-ng-bind="vm.model.ittdMap[tpdtId].dsrvc.etiqueta"></a></td>
                 </tr>
             </tbody>

@@ -75,9 +75,9 @@
                             data-ng-bind="'cdrf_' + tpdtId + '_' + vm.model.ittdMap[tpdtId].ocadena | translate"></span>
                             <span data-ng-switch-when="TX" data-ng-bind="vm.model.ittdMap[tpdtId].ocadena"></span> <a
                             data-ng-switch-when="PR"
-                            data-ng-href="#/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].oprmt.id}}/{{vm.item.fref}}"
+                            data-ng-href="#!/maestro/parametro/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].oprmt.id}}/{{vm.item.fref}}"
                             data-ng-bind="vm.model.ittdMap[tpdtId].oprmt.etiqueta"></a> <a data-ng-switch-when="SR"
-                            data-ng-href="#/servicio/srvc/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].osrvc.id}}"
+                            data-ng-href="#!/servicio/srvc/detail/{{vm.enti.entdMap[tpdtId].tpdt.enti.id}}/{{vm.model.ittdMap[tpdtId].osrvc.id}}"
                             data-ng-bind="vm.model.ittdMap[tpdtId].osrvc.etiqueta"></a></td>
                         <td data-ng-switch data-on="vm.trmt.trtdMap[tpdtId].entd.tpdt.tipoElemento"
                             class="form-group-sm"><select data-ng-switch-when="BO"

@@ -13,7 +13,7 @@
                 <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
             </button>
             <a class="btn btn-default" data-ng-if="mc.hasAcen(vm.enti.enti.id, 'create')"
-                data-ng-href="#/maestro/parametro/edit/create/{{vm.enti.enti.id}}"><i
+                data-ng-href="#!/maestro/parametro/edit/create/{{vm.enti.enti.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span> </a>
         </div>
 
@@ -54,7 +54,7 @@
             <tbody data-ng-init="vm.entiDetailAllowed = mc.hasAcen(vm.enti.enti.id, 'detail')">
                 <tr data-ng-repeat="item in vm.itemList.list track by $index">
                     <td><a data-ng-if="vm.entiDetailAllowed"
-                        data-ng-href="#/maestro/parametro/detail/{{item.entiId}}/{{item.id}}/{{item.fref}}"><i
+                        data-ng-href="#!/maestro/parametro/detail/{{item.entiId}}/{{item.id}}/{{item.fref}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-if="vm.enti.enti.puerto" nowrap="nowrap" data-ng-bind="item.prto.etiqueta"></td>
                     <td nowrap="nowrap" data-ng-bind="item.parametro"></td>

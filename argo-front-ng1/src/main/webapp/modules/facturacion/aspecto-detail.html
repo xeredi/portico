@@ -2,10 +2,10 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a data-ng-if="mc.hasAcbsPath('aspc-edit')" class="btn btn-default"
-                data-ng-href="#/facturacion/aspecto/edit/edit/{{vm.model.id}}/{{vm.model.fref}}"><i
+                data-ng-href="#!/facturacion/aspecto/edit/edit/{{vm.model.id}}/{{vm.model.fref}}"><i
                 class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a> <a
                 data-ng-if="mc.hasAcbsPath('aspc-duplicate')" class="btn btn-default"
-                data-ng-href="#/facturacion/aspecto/edit/duplicate/{{vm.model.id}}/{{vm.model.fref}}"><i
+                data-ng-href="#!/facturacion/aspecto/edit/duplicate/{{vm.model.id}}/{{vm.model.fref}}"><i
                 class="glyphicon glyphicon-tags"></i> <span data-translate="btn_duplicar"></span></a>
             <button data-ng-if="mc.hasAcbsPath('aspc-remove')" data-ng-click="vm.remove()"
                 class="btn btn-default">
@@ -19,7 +19,7 @@
             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                 <label data-translate="tpsr"></label>
                 <p class="form-control-static">
-                    <a data-ng-href="#/metamodelo/tipo-servicio/detail/{{vm.model.tpsr.id}}"
+                    <a data-ng-href="#!/metamodelo/tipo-servicio/detail/{{vm.model.tpsr.id}}"
                         data-ng-bind="('enti_' + vm.model.tpsr.id | translate)"></a>
                 </p>
             </div>
@@ -215,7 +215,7 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <a data-ng-if="mc.hasAcbsPath('ascr-create')" class="btn btn-default"
-                    data-ng-href="#/facturacion/aspecto-cargo/edit/create/{{vm.model.id}}/{{vm.model.fref}}"><i
+                    data-ng-href="#!/facturacion/aspecto-cargo/edit/create/{{vm.model.id}}/{{vm.model.fref}}"><i
                     class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
             </div>
         </div>
@@ -234,7 +234,7 @@
                 <tbody>
                     <tr data-ng-repeat="ascr in vm.ascrList track by $index">
                         <td><a data-ng-if="mc.hasAcbsPath('ascr-detail')"
-                            data-ng-href="#/facturacion/aspecto-cargo/detail/{{ascr.id}}/{{ascr.fref}}"><i
+                            data-ng-href="#!/facturacion/aspecto-cargo/detail/{{ascr.id}}/{{ascr.fref}}"><i
                                 class="glyphicon glyphicon-search"></i></a></td>
                         <td data-ng-bind="ascr.crgo.etiqueta"></td>
                         <td data-ng-bind="ascr.version.fini | date: dateFormat"></td>

@@ -171,14 +171,18 @@
 
     /* @ngInject */
     function HomeController($http, pageTitleService) {
-        $http.post("index.action").success(function(data) {
-        });
+        $http.post("index.action").then(successCallback, errorCallback);
+
+        function successCallback(data) {
+        }
+        function errorCallback(data) {
+        }
 
         pageTitleService.setTitle("page_home", "page_home");
     }
 
     /* @ngInject */
-    function httpInterceptor($q, $rootScope, $injector, $location, usSpinnerService) {
+    function httpInterceptor($q, $rootScope, $location, usSpinnerService) {
         var activeRequests = 0;
         var startTimeMs;
 

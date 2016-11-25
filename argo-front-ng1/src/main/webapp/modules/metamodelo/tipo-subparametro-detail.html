@@ -5,7 +5,7 @@
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
                     <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('tpsp-edit')"
-                        data-ng-href="#/metamodelo/tipo-subparametro/edit/edit/{{vm.model.tpprId}}/{{vm.model.id}}"><i
+                        data-ng-href="#!/metamodelo/tipo-subparametro/edit/edit/{{vm.model.tpprId}}/{{vm.model.id}}"><i
                         class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
                     <button data-ng-if="mc.hasAcbsPath('tpsp-remove')" data-ng-click="vm.remove()"
                         class="btn btn-default">
@@ -23,7 +23,7 @@
                     <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                         <label data-translate="enti_tpprAsociado"></label>
                         <p class="form-control-static">
-                            <a data-ng-href="#/metamodelo/tipo-parametro/detail/{{vm.model.tpprAsociado.id}}"
+                            <a data-ng-href="#!/metamodelo/tipo-parametro/detail/{{vm.model.tpprAsociado.id}}"
                                 data-ng-bind="vm.model.tpprAsociado.nombre"></a>
                         </p>
                     </div>

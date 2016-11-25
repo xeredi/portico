@@ -208,6 +208,26 @@
                 }
             }
 
+            function versionDetail(id) {
+                // console.log('detail');
+
+                return $http.post(_uri + "-version-detail.action", {
+                    model : id,
+                    prefix : _prefix
+                }).then(success, fail);
+
+                function success(response) {
+                    return response.data;
+                }
+
+                function fail(error) {
+                    var msg = 'Version Detail failed. ' + error;
+                    console.log(msg);
+
+                    return $q.reject(msg);
+                }
+            }
+
             function pdfExport(id, filename) {
                 // console.log('Pdf export');
 
@@ -442,6 +462,7 @@
                 xlsExport : xlsExport,
                 filter : filter,
                 detail : detail,
+                versionDetail : versionDetail,
                 pdfExport : pdfExport,
                 fileExport : fileExport,
                 remove : remove,

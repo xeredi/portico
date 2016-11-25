@@ -26,7 +26,7 @@
         </thead>
         <tbody>
             <tr data-ng-repeat="item in (vm.confList | filter:confSearch) track by $index">
-                <td><a data-ng-href="#/administracion/configuration/configuration/detail/{{item.key}}"><i
+                <td><a data-ng-href="#!/administracion/configuration/configuration/detail/{{item.key}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap" data-ng-bind="item.key"></td>
                 <td nowrap="nowrap" data-ng-bind="'ConfigurationValueType_' + item.valueType | translate"></td>

@@ -79,6 +79,8 @@ formula
 	| fn = 'unidadesGtsEscala' '(' f1 = formula ')'
 	| fn = 'unidadesGtsAtraque' '(' f1 = formula ')'
 	| fn = 'generaBOEscala' '(' f1 = formula ')'
+	| fn = 'esAvituallamientoEscala' '(' f1 = formula ')'
+	| fn = 'esBaseEnPuertoEscala' '(' f1 = formula ')'
 ;
 
 decodeBranch

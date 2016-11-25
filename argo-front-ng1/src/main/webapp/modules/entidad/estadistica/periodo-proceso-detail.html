@@ -47,10 +47,10 @@
 
     <div class="list-group col-sm-4 col-md-3">
         <a data-ng-if="mc.hasAcbsPath('cdms-detail')"
-            data-ng-href="#/estadistica/cuadro-mes/detail/{{vm.model.id}}" class="list-group-item"
+            data-ng-href="#!/estadistica/cuadro-mes/detail/{{vm.model.id}}" class="list-group-item"
             data-ng-bind="'cdms' | translate | uppercase"></a> <a
             data-ng-if="mc.hasAcen(enti.value, 'list')"
-            data-ng-href="#/estadistica/estadistica/grid/{{enti.value}}/{{vm.model.id}}/{{vm.model.sprt.id}}"
+            data-ng-href="#!/estadistica/estadistica/grid/{{enti.value}}/{{vm.model.id}}/{{vm.model.sprt.id}}"
             class="list-group-item" data-ng-repeat="enti in vm.tpesList track by $index"
             data-ng-bind="'enti_' + enti.value | translate | uppercase"></a>
     </div>

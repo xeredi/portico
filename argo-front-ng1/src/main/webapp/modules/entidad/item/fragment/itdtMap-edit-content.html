@@ -73,7 +73,8 @@
                         class="form-control" data-ng-controller="ParametroTypeaheadController as ta" type="text"
                         autocomplete="off" data-ng-model="vm.item.itdtMap[tpdtId].prmt"
                         data-uib-typeahead="prmt as prmt.etiqueta for prmt in ta.getLabelValues(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue, vm.prtoId, vm.fechaVigencia)"
-                        data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
+                        data-typeahead-editable="false" data-typeahead-wait-ms="250" data-typeahead-min-length="0"
+                        class="form-control">
                 </div>
                 <div data-ng-switch-when="SR" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
                     <label data-ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></label> <input

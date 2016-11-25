@@ -2,10 +2,10 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default" data-ng-if="mc.hasAcen(vm.item.entiId, 'edit')"
-                data-ng-href="#/maestro/subparametro/edit/edit/{{vm.item.entiId}}/{{vm.item.prmtId}}/{{vm.item.id}}/{{vm.item.fref}}"><i
+                data-ng-href="#!/maestro/subparametro/edit/edit/{{vm.item.entiId}}/{{vm.item.prmtId}}/{{vm.item.id}}/{{vm.item.fref}}"><i
                 class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a> <a
                 class="btn btn-default" data-ng-if="mc.hasAcen(vm.item.entiId, 'duplicate')"
-                data-ng-href="#/maestro/subparametro/edit/duplicate/{{vm.item.entiId}}/{{vm.item.prmtId}}/{{vm.item.id}}/{{vm.item.fref}}"><i
+                data-ng-href="#!/maestro/subparametro/edit/duplicate/{{vm.item.entiId}}/{{vm.item.prmtId}}/{{vm.item.id}}/{{vm.item.fref}}"><i
                 class="glyphicon glyphicon-tags"></i> <span data-translate="btn_duplicar"></span></a>
             <button data-ng-if="mc.hasAcen(vm.item.entiId, 'remove')" data-ng-click="vm.remove()"
                 class="btn btn-default">
@@ -26,7 +26,7 @@
                 <label data-ng-bind="'enti_' + vm.enti.enti.tpprAsociado.id | translate"></label>
                 <p class="form-control-static">
                     <a
-                        data-ng-href="#/maestro/parametro/detail/{{vm.enti.enti.tpprAsociado.id}}/{{vm.item.prmtAsociado.id}}/{{vm.item.fref}}"
+                        data-ng-href="#!/maestro/parametro/detail/{{vm.enti.enti.tpprAsociado.id}}/{{vm.item.prmtAsociado.id}}/{{vm.item.fref}}"
                         data-ng-bind="vm.item.prmtAsociado.etiqueta"></a>
                 </p>
             </div>

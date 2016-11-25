@@ -13,7 +13,7 @@
             <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
         </button>
         <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('sprt-create')"
-            data-ng-href="#/administracion/puerto/superpuerto/edit/create"><i
+            data-ng-href="#!/administracion/puerto/superpuerto/edit/create"><i
             class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
     </div>
 </div>
@@ -33,7 +33,7 @@
         <tbody>
             <tr data-ng-repeat="item in vm.sprtList.list track by $index">
                 <td><a data-ng-if="mc.hasAcbsPath('sprt-detail')"
-                    data-ng-href="#/administracion/puerto/superpuerto/detail/{{item.id}}"><i
+                    data-ng-href="#!/administracion/puerto/superpuerto/detail/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="item.codigo"></td>
                 <td data-ng-bind="item.nombre"></td>

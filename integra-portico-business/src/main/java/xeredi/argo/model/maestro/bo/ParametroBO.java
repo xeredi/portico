@@ -840,9 +840,11 @@ public class ParametroBO {
         Preconditions.checkNotNull(criterio.getFechaVigencia());
         Preconditions.checkNotNull(criterio.getIdioma());
 
-        if (criterio.getTextoBusqueda() != null) {
-            criterio.setTextoBusqueda(criterio.getTextoBusqueda() + '%');
+        if (criterio.getTextoBusqueda() == null) {
+            criterio.setTextoBusqueda("");
         }
+
+        criterio.setTextoBusqueda(criterio.getTextoBusqueda() + '%');
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);

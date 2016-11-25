@@ -2,7 +2,7 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a data-ng-if="mc.hasAcbsPath('grpo-edit')" class="btn btn-default"
-                data-ng-href="#/seguridad/grupo/edit/edit/{{vm.model.id}}"><i class="glyphicon glyphicon-edit"></i>
+                data-ng-href="#!/seguridad/grupo/edit/edit/{{vm.model.id}}"><i class="glyphicon glyphicon-edit"></i>
                 <span data-translate="btn_editar"></span></a>
             <button data-ng-if="mc.hasAcbsPath('grpo-remove')" data-ng-click="vm.remove()" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
@@ -26,7 +26,7 @@
             <fieldset>
                 <div class="row">
                     <div class="list-group col-sm-12">
-                        <a data-ng-repeat="mdlo in vm.mdloList" data-ng-href="#/metamodelo/modulo/detail/{{mdlo.id}}"
+                        <a data-ng-repeat="mdlo in vm.mdloList" data-ng-href="#!/metamodelo/modulo/detail/{{mdlo.id}}"
                             class="col-sm-4 col-md-3 col-lg-2 list-group-item" class="list-group-item"
                             data-ng-bind="mdlo.codigo"></a>
                     </div>
@@ -42,7 +42,7 @@
                         <p class="list-group-item active" data-ng-bind="prefix | translate"></p>
                     </div>
                     <div class="list-group col-sm-8 col-md-9 col-lg-10">
-                        <a data-ng-href="#/metamodelo/accion-base/detail/{{acbs.id}}"
+                        <a data-ng-href="#!/metamodelo/accion-base/detail/{{acbs.id}}"
                             class="col-sm-4 col-md-3 col-lg-2 list-group-item"
                             data-ng-repeat="acbs in vm.acbsMap[prefix] track by $index" class="list-group-item"
                             data-ng-bind="acbs.codigo"></a>
@@ -59,7 +59,7 @@
                         <p class="list-group-item active" data-ng-bind="'enti_' + entiId | translate"></p>
                     </div>
                     <div class="list-group col-sm-8 col-md-9 col-lg-10">
-                        <a data-ng-href="#/metamodelo/accion-entidad/detail/{{acen.id}}"
+                        <a data-ng-href="#!/metamodelo/accion-entidad/detail/{{acen.id}}"
                             class="col-sm-4 col-md-3 col-lg-2 list-group-item"
                             data-ng-repeat="acen in vm.acenMap[entiId] track by $index" class="list-group-item"
                             data-ng-bind="acen.aebs.codigo"></a>
@@ -75,7 +75,7 @@
                         <p class="list-group-item active" data-ng-bind="'enti_' + entiId | translate"></p>
                     </div>
                     <div class="list-group col-sm-8 col-md-9 col-lg-10">
-                        <a data-ng-href="#/metamodelo/accion-especial/detail/{{aces.id}}"
+                        <a data-ng-href="#!/metamodelo/accion-especial/detail/{{aces.id}}"
                             class="col-sm-4 col-md-3 col-lg-2 list-group-item"
                             data-ng-repeat="aces in vm.acesMap[entiId] track by $index" class="list-group-item"
                             data-ng-bind="aces.path"></a>
@@ -91,7 +91,7 @@
                         <p class="list-group-item active" data-ng-bind="'enti_' + entiId | translate"></p>
                     </div>
                     <div class="list-group col-sm-8 col-md-9 col-lg-10">
-                        <a data-ng-href="#/metamodelo/tramite/detail/{{trmt.id}}"
+                        <a data-ng-href="#!/metamodelo/tramite/detail/{{trmt.id}}"
                             class="col-sm-4 col-md-3 col-lg-2 list-group-item"
                             data-ng-repeat="trmt in vm.trmtMap[entiId] track by $index" class="list-group-item"><span
                             data-ng-bind="trmt.etiqueta"></span> ({{trmt.estadoOrig}} -> {{trmt.estadoDest}})</a>

@@ -498,10 +498,6 @@
         ta.search = search;
 
         function search(entiId, textoBusqueda) {
-            if (textoBusqueda.length <= 0) {
-                return null;
-            }
-
             return ServicioService.typeahead({
                 entiId : entiId,
                 textoBusqueda : textoBusqueda

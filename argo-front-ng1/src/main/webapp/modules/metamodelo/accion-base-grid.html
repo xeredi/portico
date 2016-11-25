@@ -15,7 +15,7 @@
                 <i class="glyphicon glyphicon-search"></i> <span data-translate="btn_filtrar"></span>
             </button>
             <a data-ng-if="mc.hasAcbsPath('acbs-create')" class="btn btn-default"
-                data-ng-href="#/metamodelo/accion-base/edit/create"><i class="glyphicon glyphicon-file"></i>
+                data-ng-href="#!/metamodelo/accion-base/edit/create"><i class="glyphicon glyphicon-file"></i>
                 <span data-translate="btn_crear"></span> </a>
         </div>
     </div>
@@ -36,7 +36,7 @@
             <tbody data-ng-init="vm.acbsDetailAllowed = mc.hasAcbsPath('acbs-detail')">
                 <tr data-ng-repeat="acbs in vm.resultList.list track by $index">
                     <td><a data-ng-if="vm.acbsDetailAllowed"
-                        data-ng-href="#/metamodelo/accion-base/detail/{{acbs.id}}"><i
+                        data-ng-href="#!/metamodelo/accion-base/detail/{{acbs.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td data-ng-bind="acbs.prefix"></td>
                     <td data-ng-bind="acbs.codigo"></td>

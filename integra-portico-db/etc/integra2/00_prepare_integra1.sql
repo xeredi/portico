@@ -16,7 +16,7 @@ select 'INSERT INTO tbl_traduccion_ids_trid (trid_old_id, trid_new_id, trid_tabl
 from user_tables order by table_name;
 
 -- Generacion de grants al usuario 'integra2'
-select 'GRANT SELECT ON '|| table_name|| ' TO INTEGRADOSMELILLA' || ';' AS sql
+select 'GRANT SELECT ON '|| table_name|| ' TO &int2schema' || ';' AS sql
 from user_tables order by table_name;
 
 /*
@@ -43,7 +43,7 @@ DROP TABLE tbl_traduccion_ids_trid;
 DROP SEQUENCE seq_migracion;
 
 -- Quitar permisos de select al usuario 'integra2'
-select 'REVOKE SELECT ON '|| table_name|| ' FROM INTEGRADOSMELILLA' || ';' AS sql
+select 'REVOKE SELECT ON '|| table_name|| ' FROM &int2schema;' AS sql
 from user_tables order by table_name;
 
 

@@ -16,6 +16,9 @@ import xeredi.argo.model.comun.vo.Typeahead;
 @EqualsAndHashCode(callSuper = true)
 public final class CargoCriterioVO extends BaseCriterioVO implements Typeahead {
 
+    /** The mostrar historico. */
+    private boolean mostrarHistorico;
+
     /** The texto busqueda. */
     private String textoBusqueda;
 
@@ -27,6 +30,8 @@ public final class CargoCriterioVO extends BaseCriterioVO implements Typeahead {
 
     /** The ids. */
     private Set<Long> ids;
+
+    private Long versionId;
 
     /** The padre id. */
     private Long padreId;

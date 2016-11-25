@@ -4,10 +4,10 @@
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
                     <a class="btn btn-default" data-ng-if="mc.hasAcen(vm.item.entiId, 'edit')"
-                        data-ng-href="#/servicio/servicio/edit/edit/{{vm.item.entiId}}/{{vm.item.id}}"><i
+                        data-ng-href="#!/servicio/servicio/edit/edit/{{vm.item.entiId}}/{{vm.item.id}}"><i
                         class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span> </a> <a
                         class="btn btn-default" data-ng-if="mc.hasAcen(vm.item.entiId, 'duplicate')"
-                        data-ng-href="#/servicio/servicio/edit/duplicate/{{vm.item.entiId}}/{{vm.item.id}}"><i
+                        data-ng-href="#!/servicio/servicio/edit/duplicate/{{vm.item.entiId}}/{{vm.item.id}}"><i
                         class="glyphicon glyphicon-tags"></i> <span data-translate="btn_duplicar"></span> </a>
                     <button data-ng-if="mc.hasAcen(vm.item.entiId, 'remove')" data-ng-click="vm.remove()"
                         class="btn btn-default">
@@ -17,7 +17,7 @@
                 <div class="btn-group" data-ng-if="vm.enti.enti.facturable">
                     <a class="btn btn-default"
                         data-ng-if="mc.hasAcbsPath('vldr-create') && vm.enti.enti.estadosVlrcSet.indexOf(vm.item.estado) >= 0"
-                        data-ng-href="#/servicio/valorador/edit/create/{{vm.item.entiId}}/{{vm.item.id}}"><i
+                        data-ng-href="#!/servicio/valorador/edit/create/{{vm.item.entiId}}/{{vm.item.id}}"><i
                         class="glyphicon glyphicon-euro"></i> <span data-translate="btn_valorar"></span> </a>
                     <button data-ng-if="mc.hasAcbsPath('vlrc-list')" class="btn btn-default"
                         data-ng-click="vm.vlrcGrid()">
@@ -32,13 +32,13 @@
                 <div class="btn-group">
                     <a data-ng-repeat="acen in vm.enti.acenList track by $index"
                         data-ng-if="!acen.accn.core && !acen.accn.multiple"
-                        data-ng-href="#/servicio/{{acen.accn.codigo}}/{{vm.item.id}}" class="btn btn-default"
+                        data-ng-href="#!/servicio/{{acen.accn.codigo}}/{{vm.item.id}}" class="btn btn-default"
                         data-ng-bind="acen.accn.codigo"></a>
                 </div>
                 <div class="btn-group">
                     <a data-ng-repeat="trmt in vm.enti.trmtList track by $index"
                         data-ng-if="(vm.item.estado == trmt.estadoOrig) && mc.hasFncdId(trmt.id)"
-                        data-ng-href="#/item/item-tramite/edit/create/{{vm.item.entiId}}/{{vm.item.id}}/{{trmt.id}}"
+                        data-ng-href="#!/item/item-tramite/edit/create/{{vm.item.entiId}}/{{vm.item.id}}/{{trmt.id}}"
                         class="btn btn-default" data-ng-bind="('trmt_' + trmt.id | translate)"></a>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                     <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                         <label data-translate="prto"></label>
                         <p class="form-control-static">
-                            <a data-ng-href="#/administracion/puerto/puerto/detail/{{vm.item.prto.id}}"
+                            <a data-ng-href="#!/administracion/puerto/puerto/detail/{{vm.item.prto.id}}"
                                 data-ng-bind="vm.item.prto.etiqueta" data-ng-if="mc.hasAcbsPath('prto-detail')"></a> <span
                                 data-ng-bind="vm.item.prto.etiqueta" data-ng-if="!mc.hasAcbsPath('prto-detail')"></span>
                         </p>
@@ -138,7 +138,7 @@
 
                     <div class="btn-group">
                         <a class="btn btn-default" data-ng-if="mc.hasAcen(entiHijaId, 'create')"
-                            data-ng-href="#/servicio/subservicio/edit/create/{{entiHijaId}}/{{vm.item.id}}"><i
+                            data-ng-href="#!/servicio/subservicio/edit/create/{{entiHijaId}}/{{vm.item.id}}"><i
                             class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
                     </div>
                 </div>
@@ -165,7 +165,7 @@
                         <tbody data-ng-init="vm.ssrvDetailAllowed[entiHijaId] = mc.hasAcen(entiHijaId, 'detail')">
                             <tr data-ng-repeat="itemHijo in vm.itemHijosMap[entiHijaId].list track by $index">
                                 <td><a data-ng-if="vm.ssrvDetailAllowed[entiHijaId]"
-                                    data-ng-href="#/servicio/subservicio/detail/{{itemHijo.entiId}}/{{itemHijo.id}}"><span
+                                    data-ng-href="#!/servicio/subservicio/detail/{{itemHijo.entiId}}/{{itemHijo.id}}"><span
                                         class="glyphicon glyphicon-search"></span></a></td>
                                 <td data-ng-bind="itemHijo.numero" class="number"></td>
                                 <td data-ng-if="vm.entiHijasMap[entiHijaId].enti.tpdtEstado" nowrap="nowrap"><span

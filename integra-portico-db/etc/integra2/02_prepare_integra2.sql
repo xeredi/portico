@@ -1,9 +1,8 @@
 -- Creacion del dblink
 create database link dblinkIntegra
-connect to integra identified by integra
--- using 'localhost:1521/orcl';
- using 'praim4:1521/INTDES';
-
+connect to INTEGRA identified by INTEGRA
+ using 'localhost:1521/orcl.localdomain';
+ -- using 'praim4:1521/INTDES';
 
 
 
@@ -39,9 +38,7 @@ from user_tables@dblinkIntegra order by table_name;
 
 
 
-
-
-
+-- DROP database link dblinkIntegra;
 
 
 

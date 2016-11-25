@@ -4,7 +4,7 @@
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
                     <a data-ng-if="vm.model.fctr.id == null && mc.hasAcbsPath('vlrc-edit')" class="btn btn-default"
-                        data-ng-href="#/facturacion/valoracion/edit/edit/{{vm.model.id}}"><i
+                        data-ng-href="#!/facturacion/valoracion/edit/edit/{{vm.model.id}}"><i
                         class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
                     <button data-ng-if="vm.model.fctr.id == null && mc.hasAcbsPath('vlrc-remove')"
                         data-ng-click="vm.remove()" class="btn btn-default">
@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="btn-group">
-                    <a class="btn btn-default" data-ng-href="#/facturacion/facturador/edit/create/{{vm.model.id}}"
+                    <a class="btn btn-default" data-ng-href="#!/facturacion/facturador/edit/create/{{vm.model.id}}"
                         data-ng-if="vm.model.fctr.id == null"><i class="glyphicon glyphicon-euro"></i> <span
                         data-translate="btn_facturar"></span></a>
                 </div>
@@ -34,28 +34,28 @@
                     <div class="col-md-2 form-group-sm">
                         <label data-translate="tpsr"></label>
                         <p class="form-control-static">
-                            <a data-ng-href="#/metamodelo/tipo-servicio/detail/{{vm.model.srvc.entiId}}"
+                            <a data-ng-href="#!/metamodelo/tipo-servicio/detail/{{vm.model.srvc.entiId}}"
                                 data-ng-bind="'enti_' + vm.model.srvc.entiId | translate"></a>
                         </p>
                     </div>
                     <div class="col-md-2 col-lg-1 form-group-sm">
                         <label data-translate="srvc"></label>
                         <p class="form-control-static">
-                            <a data-ng-href="#/servicio/servicio/detail/{{vm.model.srvc.entiId}}/{{vm.model.srvc.id}}"
+                            <a data-ng-href="#!/servicio/servicio/detail/{{vm.model.srvc.entiId}}/{{vm.model.srvc.id}}"
                                 data-ng-bind="vm.model.srvc.etiqueta"></a>
                         </p>
                     </div>
                     <div class="col-md-3 form-group-sm">
                         <label data-translate="aspc"></label>
                         <p class="form-control-static">
-                            <a data-ng-href="#/facturacion/aspecto/detail/{{vm.model.aspc.id}}/{{vm.model.aspc.fref}}"
+                            <a data-ng-href="#!/facturacion/aspecto/detail/{{vm.model.aspc.id}}/{{vm.model.aspc.fref}}"
                                 data-ng-bind="vm.model.aspc.etiqueta"></a>
                         </p>
                     </div>
                     <div class="col-md-2 form-group-sm">
                         <label data-translate="fctr_rectificada"></label>
                         <p class="form-control-static">
-                            <a data-ng-href="#/facturacion/factura/detail/{{vm.model.fctrRectificada.id}}"
+                            <a data-ng-href="#!/facturacion/factura/detail/{{vm.model.fctrRectificada.id}}"
                                 data-ng-bind="vm.model.fctrRectificada.etiqueta"></a>
                         </p>
                     </div>
@@ -85,7 +85,7 @@
                         <label data-translate="vlrc_pagador"></label>
                         <p class="form-control-static">
                             <a
-                                data-ng-href="#/maestro/parametro/detail/{{vm.model.pagador.entiId}}/{{vm.model.pagador.id}}/{{vm.model.pagador.fref}}"
+                                data-ng-href="#!/maestro/parametro/detail/{{vm.model.pagador.entiId}}/{{vm.model.pagador.id}}/{{vm.model.pagador.fref}}"
                                 data-ng-bind="vm.model.pagador.etiqueta"></a>
                         </p>
                     </div>
@@ -167,7 +167,7 @@
                         <tbody>
                             <tr data-ng-repeat="vlrg in vm.vlrgList track by $index">
                                 <td><a
-                                    data-ng-href="#/facturacion/cargo/detail/{{vlrg.crgo.id}}/{{vlrg.crgo.fref}}"
+                                    data-ng-href="#!/facturacion/cargo/detail/{{vlrg.crgo.id}}/{{vlrg.crgo.fref}}"
                                     data-ng-bind="vlrg.crgo.etiqueta"></a></td>
                                 <td nowrap="nowrap" class="number">{{vlrg.importe | number:2}} &euro;</td>
                             </tr>
@@ -191,7 +191,7 @@
                         <tbody>
                             <tr data-ng-repeat="vlri in vm.vlriList track by $index">
                                 <td><a
-                                    data-ng-href="#/maestro/parametro/detail/{{vlri.impuesto.entiId}}/{{vlri.impuesto.id}}/{{vlri.impuesto.fref}}"
+                                    data-ng-href="#!/maestro/parametro/detail/{{vlri.impuesto.entiId}}/{{vlri.impuesto.id}}/{{vlri.impuesto.fref}}"
                                     data-ng-bind="vlri.impuesto.etiqueta"></a></td>
                                 <td class="number" data-ng-bind="vlri.porcentaje | number:2"></td>
                                 <td nowrap="nowrap" class="number">{{vlri.importeBase | number:2}} &euro;</td>
@@ -213,7 +213,7 @@
                 </div>
 
                 <div class="btn-group">
-                    <a class="btn btn-default" data-ng-href="#/facturacion/valoracion-linea/edit/create/{{vm.model.id}}"><i
+                    <a class="btn btn-default" data-ng-href="#!/facturacion/valoracion-linea/edit/create/{{vm.model.id}}"><i
                         class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span> </a>
                 </div>
             </div>
@@ -246,7 +246,7 @@
 
                     <tbody>
                         <tr data-ng-repeat="vlrl in vm.vlrlList.list track by $index">
-                            <td><a data-ng-href="#/facturacion/valoracion-linea/detail/{{vlrl.id}}"><i
+                            <td><a data-ng-href="#!/facturacion/valoracion-linea/detail/{{vlrl.id}}"><i
                                     class="glyphicon glyphicon-search"></i></a></td>
                             <td nowrap="nowrap"><span data-ng-if="vlrl.rgla.tipo == 'T'"
                                 data-ng-bind="'enti_' + vlrl.rgla.enti.id | translate"></span></td>

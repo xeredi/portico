@@ -1,46 +1,7 @@
 DELETE FROM OPERACION;
-DELETE FROM ESTADIA esta
-where 
-    not exists (
-        select * from g3_tramo tram
-        where 
-            tram.CODPUEESC = esta.CODPUE
-            AND tram.ANYOESC = esta.ANYO
-            AND tram.CODESC = esta.CODESCALA
-            AND tram.CODESTADIA = esta.CODESTADIA
-    )
-;
+DELETE FROM ESTADIA;
 delete from ESCALA_FTBUQUE;
-DELETE FROM ESCALA esca
-where 
-    not exists (
-        select 1 from g3_tramo tram
-        where 
-            tram.CODPUEESC = esca.CODPUE
-            AND tram.ANYOESC = esca.ANYO
-            AND tram.CODESC = esca.CODESCALA
-    )
-    and not exists (
-        select 1 from LQ_BORRADOR Borr
-        where 
-            Borr.CODPUEESC = esca.CODPUE
-            AND Borr.ANYOESC = esca.ANYO
-            AND Borr.CODESC = esca.CODESCALA
-    )
-;
-
-SELECT * FROM OPERACION;
-SELECT * FROM ESTADIA
-where estindexenta = '0';
-select * from ESCALA_FTBUQUE;
-SELECT * FROM ESCALA
-where codpue = 'A' and anyo = '2016' and codescala > 500
-;
-select * from g3_tramo;
-
-A201600512
-
-SELECT * FROM v_est_escala;
+DELETE FROM ESCALA esca;
 
 
 INSERT INTO ESCALA (
@@ -192,7 +153,7 @@ INSERT INTO ESCALA (
     , CODBON24534
     , PORC24534
     , OBSERVACIONESFACT
-    , INDMIGRACION
+--    , INDMIGRACION
 )
 SELECT * FROM (
     SELECT 
@@ -351,7 +312,7 @@ SELECT * FROM (
         , NULL AS CODBON24534
         , NULL AS PORC24534
         , ESCA_OBSERV_FACTURACION AS OBSERVACIONESFACT
-        , 1 AS INDMIGRACION
+--        , 1 AS INDMIGRACION
     FROM iesc_escala_esca 
         INNER JOIN ICOM_SERVICIO_SERV on serv_id = esca_id
         left join iesc_buque_buqu buqu on esca_buque_id = buqu.BUQU_BUQUE_ID 
@@ -458,12 +419,6 @@ insert into escala_ftbuque (
     , DESCNAVIERAPORTEL
     , CODTIPBUQUEEDI
 )
-/*
-;
-select * from escala;
-
-;
-*/
 SELECT 
     CODPUE AS CODPUE
     , ANYO AS ANYO
@@ -553,7 +508,7 @@ FROM ESCALA esc
 
 
 
-
+/*
 SELECT codpue, anyo, codescala, count(1) FROM (
     SELECT 
         (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = serv_subp_id) AS CODPUE
@@ -572,7 +527,7 @@ SELECT codpue, anyo, codescala, count(1) FROM (
 group by codpue, anyo, codescala
 having count(1) > 1
 ;
-
+*/
 
 
 
@@ -820,35 +775,6 @@ WHERE SERV_FECHA_BAJA IS NULL
 
 
 
-/*
-AA	    Tráfico Terrestre
-E	  ZE  Embarque
-D	  ZD  Desembarque
-ET	    Embarque en tránsito
-DT	DT  Desembarque en tránsito
-T	  ZT  Transbordo
-TE	    Transbordo Embarque
-TD	    Transbordo Desembarque
-**	    Operación Genérica
-R	      Residuos
-
-ZD	Desembarque
-ZE	Embarque
-ZT	Trasbordo
-ZR	Residuos
-AV	Avituallamiento
-DT	Desembarque en transito
-RE	Reestiba
-*/
-
-select * from TIPO_OPERACION;
-select * from TIPO_CARGA_OPERACION;
-select * from TIPO_UNIDAD_OPERACION;
-select * from m_usuario;
-
-select * from operacion;
-
-delete from operacion;
 
 INSERT INTO OPERACION (
   CODPUE

@@ -24,7 +24,7 @@
         </thead>
         <tbody>
             <tr data-ng-repeat="key in vm.keyList | filter:m18nSearch track by $index">
-                <td><a data-ng-href="#/administracion/messagei18n/messagei18n/detail/{{key}}"><i
+                <td><a data-ng-href="#!/administracion/messagei18n/messagei18n/detail/{{key}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td data-ng-bind="key"></td>
                 <td data-ng-repeat="language in vm.availableLanguages track by $index"

@@ -476,7 +476,7 @@ BEGIN
         ) AS tipoEstancia
     FROM tbl_subservicio_ssrv
     WHERE ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
-        AND ssrv_pk = 8274289
+        AND ssrv_pk = ssrvId
     )
     SELECT (
         CASE tipoEstancia
@@ -653,10 +653,165 @@ GRANT EXECUTE ON periodosFacturablesAtraque TO portico\
 
 
 
+CREATE OR REPLACE FUNCTION esAvituallamientoEscala(srvcId INTEGER) RETURN INTEGER RESULT_CACHE IS
+	resultValue INTEGER;
+BEGIN
+    SELECT (
+        CASE
+            WHEN
+                EXISTS (
+                    SELECT 1 FROM tbl_subservicio_ssrv
+                    WHERE
+                        ssrv_srvc_pk = srvc_pk
+                        AND ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+                        AND EXISTS (
+                            SELECT 1
+                            FROM tbl_subservicio_dato_ssdt
+                            WHERE ssdt_ssrv_pk = ssrv_pk
+                                AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ACT')
+                                AND ssdt_prmt_pk = ANY (
+                                    SELECT prmt_pk FROM tbl_parametro_prmt
+                                    WHERE prmt_tppr_pk = portico.getEntidad('TIPO_ACTIVIDAD')
+                                        AND prmt_parametro = ANY ('AR','AB','AF','AT', 'AP','RF','RT','RA')
+                                )
+                        )
+                )
+                AND NOT EXISTS (
+                    SELECT 1 FROM tbl_subservicio_ssrv
+                    WHERE
+                        ssrv_srvc_pk = srvc_pk
+                        AND ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+                        AND EXISTS (
+                            SELECT 1
+                            FROM tbl_subservicio_dato_ssdt
+                            WHERE ssdt_ssrv_pk = ssrv_pk
+                                AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ACT')
+                                AND ssdt_prmt_pk <> ALL (
+                                    SELECT prmt_pk FROM tbl_parametro_prmt
+                                    WHERE prmt_tppr_pk = portico.getEntidad('TIPO_ACTIVIDAD')
+                                        AND prmt_parametro = ANY ('AR','AB','AF','AT', 'AP','RF','RT','RA','FE')
+                                )
+                        )
+                )
+                AND NOT EXISTS (
+                    SELECT 1 FROM tbl_subservicio_ssrv
+                    WHERE ssrv_srvc_pk = srvc_pk
+                        AND EXISTS (
+                            SELECT 1 FROM tbl_subservicio_dato_ssdt
+                            WHERE ssdt_ssrv_pk = ssrv_pk
+                                AND ssdt_tpdt_pk = portico.getTipoDato('ALIN')
+                                AND ssdt_prmt_pk = ANY (
+                                    SELECT prmt_pk FROM tbl_parametro_prmt
+                                    WHERE prmt_tppr_pk = portico.getEntidad('ALINEACION')
+                                        AND EXISTS (
+                                            SELECT 1 FROM tbl_parametro_version_prvr
+                                            WHERE prvr_prmt_pk = prmt_pk
+                                                AND prvr_fini <= SYSDATE
+                                                AND (prvr_ffin IS NULL OR prvr_ffin > SYSDATE)
+                                                AND EXISTS (
+                                                    SELECT 1 FROM tbl_parametro_dato_prdt
+                                                    WHERE prdt_prvr_pk = prvr_pk
+                                                        AND prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_04')
+                                                        AND prdt_nentero = 1
+                                                )
+                                        )
+                                )
+                        )
+                )
+                AND EXISTS (
+                    SELECT 1 FROM tbl_servicio_dato_srdt
+                    WHERE srdt_srvc_pk = srvc_pk
+                        AND srdt_tpdt_pk = portico.getTipoDato('TIPO_ESTAN_ESC')
+                        AND srdt_cadena = 'C'
+                )
+                AND srvc_fini + 2 <= srvc_ffin
+            THEN 1
+            ELSE 0
+        END
+    ) INTO resultValue
+    FROM tbl_servicio_srvc
+    WHERE srvc_tpsr_pk = portico.getEntidad('ESCALA')
+        AND srvc_pk = srvcId
+    ;
+
+    RETURN resultValue;
+END;
+\
+
+CREATE OR REPLACE SYNONYM portico.esAvituallamientoEscala FOR esAvituallamientoEscala\
+
+GRANT EXECUTE ON esAvituallamientoEscala TO portico\
+
+
+
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION esBaseEnPuertoEscala(srvcId INTEGER) RETURN INTEGER RESULT_CACHE IS
+	resultValue INTEGER;
+BEGIN
+    SELECT (
+        SELECT
+            spdt_nentero
+        FROM tbl_subparametro_dato_spdt
+        WHERE
+            spdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+            AND spdt_spvr_pk = (
+                SELECT spvr_pk
+                FROM tbl_subparametro_version_spvr
+                WHERE
+                    spvr_fini <= SYSDATE
+                    AND (spvr_ffin IS NULL OR spvr_ffin > SYSDATE)
+                    AND spvr_sprm_pk = (
+                        SELECT sprm_pk
+                        FROM tbl_subparametro_sprm
+                        WHERE sprm_tpsp_pk = portico.getEntidad('BUQUE_SUBPUERTO')
+                            AND sprm_prmt_pk = (
+                                SELECT srdt_prmt_pk
+                                FROM tbl_servicio_dato_srdt
+                                WHERE srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+                                    AND srdt_srvc_pk = srvc_pk
+                            )
+                            AND sprm_prmt_dep_pk = (
+                                SELECT prmt_pk
+                                FROM tbl_parametro_prmt
+                                WHERE
+                                    prmt_tppr_pk = portico.getEntidad('SUBPUERTO')
+                                    AND prmt_parametro = (
+                                        SELECT prto_codigo_corto
+                                        FROM tbl_puerto_prto
+                                        WHERE prto_pk = srvc_subp_pk
+                                    )
+                            )
+                    )
+            )
+      ) INTO resultValue
+      FROM tbl_servicio_srvc
+      WHERE
+          srvc_tpsr_pk = portico.getEntidad('ESCALA')
+          AND srvc_pk = srvcId
+    ;
+
+    RETURN resultValue;
+END;
+\
+
+CREATE OR REPLACE SYNONYM portico.esBaseEnPuertoEscala FOR esBaseEnPuertoEscala\
+
+GRANT EXECUTE ON esBaseEnPuertoEscala TO portico\
+
+
+
+
+
+
 -- //@UNDO
 -- SQL to undo the change goes here.
-
-
+DROP FUNCTION esBaseEnPuertoEscala\
+DROP FUNCTION esAvituallamientoEscala\
 DROP FUNCTION periodosFacturablesAtraque\
 DROP FUNCTION esPrimerAtraque\
 DROP FUNCTION fechaUltimaTR\

@@ -5,7 +5,7 @@
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
                     <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('tpsr-edit')"
-                        data-ng-href="#/metamodelo/tipo-servicio/edit/edit/{{vm.model.id}}"><i
+                        data-ng-href="#!/metamodelo/tipo-servicio/edit/edit/{{vm.model.id}}"><i
                         class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a>
                     <button data-ng-if="mc.hasAcbsPath('tpsr-remove')" data-ng-click="vm.remove()"
                         class="btn btn-default">
@@ -28,7 +28,7 @@
                         <label data-translate="enti_tpdtEstado"></label>
                         <p class="form-control-static">
                             <a data-ng-if="vm.model.tpdtEstado"
-                                data-ng-href="#/metamodelo/tipo-dato/detail/{{vm.model.tpdtEstado.id}}"
+                                data-ng-href="#!/metamodelo/tipo-dato/detail/{{vm.model.tpdtEstado.id}}"
                                 data-ng-bind="vm.model.tpdtEstado.nombre"></a>
                         </p>
                     </div>
@@ -108,7 +108,7 @@
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group">
                         <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('tpss-create')"
-                            data-ng-href="#/metamodelo/tipo-subservicio/edit/create/{{vm.model.id}}"><i
+                            data-ng-href="#!/metamodelo/tipo-subservicio/edit/create/{{vm.model.id}}"><i
                             class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
                     <tbody>
                         <tr data-ng-repeat="subenti in vm.subentiList track by $index">
                             <td><a data-ng-if="mc.hasAcbsPath('tpss-detail')"
-                                data-ng-href="#/metamodelo/tipo-subservicio/detail/{{subenti.id}}"><i
+                                data-ng-href="#!/metamodelo/tipo-subservicio/detail/{{subenti.id}}"><i
                                     class="glyphicon glyphicon-search"></i></a></td>
                             <td data-ng-bind="subenti.codigo"></td>
                             <td data-ng-bind="subenti.nombre"></td>
@@ -164,7 +164,7 @@
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group">
                         <a class="btn btn-default" data-ng-if="mc.hasAcbsPath('enen-create')"
-                            data-ng-href="#/metamodelo/entidad-entidad/edit/create/{{vm.model.id}}"><i
+                            data-ng-href="#!/metamodelo/entidad-entidad/edit/create/{{vm.model.id}}"><i
                             class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
                     </div>
                 </div>
@@ -180,7 +180,7 @@
                     <tbody>
                         <tr data-ng-repeat="entiHija in vm.entiHijasList">
                             <td><a data-ng-if="mc.hasAcbsPath('tpss-detail')"
-                                data-ng-href="#/metamodelo/tipo-subservicio/detail/{{entiHija.id}}"><i
+                                data-ng-href="#!/metamodelo/tipo-subservicio/detail/{{entiHija.id}}"><i
                                     class="glyphicon glyphicon-search"></i></a></td>
                             <td data-ng-bind="entiHija.codigo"></td>
                             <td data-ng-bind="entiHija.nombre"></td>
