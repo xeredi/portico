@@ -164,6 +164,12 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
                 return " portico.esAvituallamientoEscala(" + visitFormula(ctx.f1) + ")";
             case esBaseEnPuertoEscala:
                 return " portico.esBaseEnPuertoEscala(" + visitFormula(ctx.f1) + ")";
+            case contadorEscala:
+                return " portico.contadorEscala(" + visitFormula(ctx.f1) + ", " + visitFormula(ctx.f2) + ")";
+            case contadorEscala2:
+                return " portico.contadorEscala2(" + visitFormula(ctx.f1) + ", " + visitFormula(ctx.f2) + ")";
+            case tieneConvenioEscala:
+                return " portico.tieneConvenioEscala(" + visitFormula(ctx.f1) + ", " + visitFormula(ctx.f2) + ")";
             default:
                 throw new Error("Funcion '" + functionName.name() + "' no implementada!");
             }

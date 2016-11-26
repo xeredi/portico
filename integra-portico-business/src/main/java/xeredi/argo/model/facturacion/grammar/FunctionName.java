@@ -20,5 +20,23 @@ public enum FunctionName {
     /** The acumulado teus. */
     acumuladoTeus,
     /** The valor servicio. */
-    valorServicio, periodosFacturablesAtraque, esPrimerAtraque, fechaUltimaTR, unidadesGtsEscala, unidadesGtsAtraque, generaBOEscala, esAvituallamientoEscala, esBaseEnPuertoEscala;
+    valorServicio,
+    /** The periodos facturables atraque. */
+    periodosFacturablesAtraque,
+    /** The es primer atraque. */
+    esPrimerAtraque,
+    /** The fecha ultima TR. */
+    fechaUltimaTR,
+    /** The unidades gts escala. */
+    unidadesGtsEscala,
+    /** The unidades gts atraque. */
+    unidadesGtsAtraque,
+    /** The genera BO escala. */
+    generaBOEscala,
+    /** The es avituallamiento escala. */
+    esAvituallamientoEscala,
+    /** The es base en puerto escala. */
+    esBaseEnPuertoEscala,
+    /** The contador escala. */
+    contadorEscala, contadorEscala2, tieneConvenioEscala;
 }

@@ -81,6 +81,9 @@ formula
 	| fn = 'generaBOEscala' '(' f1 = formula ')'
 	| fn = 'esAvituallamientoEscala' '(' f1 = formula ')'
 	| fn = 'esBaseEnPuertoEscala' '(' f1 = formula ')'
+	| fn = 'contadorEscala' '(' f1 = formula ',' f2 = formula ')'
+	| fn = 'contadorEscala2' '(' f1 = formula ',' f2 = formula ')'
+	| fn = 'tieneConvenioEscala' '(' f1 = formula ',' f2 = formula ')'
 ;
 
 decodeBranch

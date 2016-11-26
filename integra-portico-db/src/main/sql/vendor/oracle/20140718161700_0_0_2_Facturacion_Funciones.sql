@@ -1,7 +1,7 @@
 -- // 0 0 2 Facturacion Funciones
 -- Migration SQL that makes the change goes here.
 
-create or replace FUNCTION acumuladoTeus(consignatario VARCHAR, fini VARCHAR, ffin DATE) RETURN integer RESULT_CACHE IS
+create or replace FUNCTION acumuladoTeus(consignatario VARCHAR, fini VARCHAR, ffin DATE) RETURN integer IS
 	resultValue integer;
 BEGIN
 SELECT
@@ -135,7 +135,7 @@ GRANT EXECUTE ON acumuladoTeus TO portico\
 
 
 
-create or replace FUNCTION acumuladoToneladas(consignatario VARCHAR, fini VARCHAR, ffin DATE) RETURN integer RESULT_CACHE IS
+create or replace FUNCTION acumuladoToneladas(consignatario VARCHAR, fini VARCHAR, ffin DATE) RETURN integer IS
 	resultValue integer;
 BEGIN
     SELECT SUM(ssdt_nentero) / 1000 INTO resultValue
@@ -188,7 +188,7 @@ BEGIN
         )
     ;
 
-    RETURN resultValue;
+    RETURN COALESCE(resultValue, 0);
 END;
 \
 
@@ -207,7 +207,7 @@ GRANT EXECUTE ON acumuladoToneladas TO portico\
 
 
 
-create or replace FUNCTION valorServicio(tipoServTraf VARCHAR, servTraf VARCHAR, srvcId INTEGER) RETURN VARCHAR RESULT_CACHE IS
+create or replace FUNCTION valorServicio(tipoServTraf VARCHAR, servTraf VARCHAR, srvcId INTEGER) RETURN VARCHAR IS
 	resultValue VARCHAR(100);
 BEGIN
 	SELECT (
@@ -256,7 +256,7 @@ BEGIN
 	WHERE srvc_pk = srvcId
     ;
 
-    RETURN resultValue;
+    RETURN COALESCE(resultValue, 'N');
 END;
 \
 
@@ -273,7 +273,7 @@ GRANT EXECUTE ON valorServicio TO portico\
 
 
 
-create or replace FUNCTION generaBOEscala(srvcId INTEGER) RETURN INTEGER RESULT_CACHE IS
+create or replace FUNCTION generaBOEscala(srvcId INTEGER) RETURN INTEGER IS
 	resultValue INTEGER;
 BEGIN
     SELECT (
@@ -353,7 +353,7 @@ BEGIN
         AND srvc_pk = srvcId
     ;
 
-    RETURN resultValue;
+    RETURN COALESCE(resultValue, 0);
 END;
 \
 
@@ -369,7 +369,7 @@ GRANT EXECUTE ON generaBOEscala TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION unidadesGtsEscala(srvcId INTEGER) RETURN INTEGER RESULT_CACHE IS
+CREATE OR REPLACE FUNCTION unidadesGtsEscala(srvcId INTEGER) RETURN INTEGER IS
 	resultValue INTEGER;
 BEGIN
 	WITH sql AS (
@@ -417,7 +417,7 @@ BEGIN
 	FROM sql
     ;
 
-    RETURN resultValue;
+    RETURN COALESCE(resultValue, 0);
 END;
 \
 
@@ -430,7 +430,7 @@ GRANT EXECUTE ON unidadesGtsEscala TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION unidadesGtsAtraque(ssrvId INTEGER) RETURN DOUBLE PRECISION RESULT_CACHE IS
+CREATE OR REPLACE FUNCTION unidadesGtsAtraque(ssrvId INTEGER) RETURN DOUBLE PRECISION IS
 	resultValue DOUBLE PRECISION;
 BEGIN
     WITH sql AS (
@@ -491,7 +491,7 @@ BEGIN
     FROM sql
     ;
 
-    RETURN resultValue;
+    RETURN COALESCE(resultValue, 0);
 END;
 \
 
@@ -505,7 +505,7 @@ GRANT EXECUTE ON unidadesGtsAtraque TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION fechaUltimaTR(srvcId INTEGER) RETURN TIMESTAMP RESULT_CACHE IS
+CREATE OR REPLACE FUNCTION fechaUltimaTR(srvcId INTEGER) RETURN TIMESTAMP IS
 	resultValue TIMESTAMP;
 BEGIN
     SELECT MAX(vlrl_ffin) INTO resultValue
@@ -565,7 +565,7 @@ GRANT EXECUTE ON fechaUltimaTR TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION esPrimerAtraque(ssrvId INTEGER) RETURN INTEGER RESULT_CACHE IS
+CREATE OR REPLACE FUNCTION esPrimerAtraque(ssrvId INTEGER) RETURN INTEGER IS
 	resultValue INTEGER;
 BEGIN
     SELECT
@@ -592,7 +592,7 @@ BEGIN
         AND ssrv_pk = ssrvId
     ;
 
-    RETURN resultValue;
+    RETURN COALESCE(resultValue, 0);
 END;
 \
 
@@ -604,7 +604,7 @@ GRANT EXECUTE ON esPrimerAtraque TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION periodosFacturablesAtraque(ssrvId INTEGER) RETURN INTEGER RESULT_CACHE IS
+CREATE OR REPLACE FUNCTION periodosFacturablesAtraque(ssrvId INTEGER) RETURN INTEGER IS
 	resultValue INTEGER;
 BEGIN
     WITH sql AS (
@@ -642,7 +642,7 @@ BEGIN
     FROM sql
     ;
 
-    RETURN resultValue;
+    RETURN COALESCE(resultValue, 0);
 END;
 \
 
@@ -653,7 +653,7 @@ GRANT EXECUTE ON periodosFacturablesAtraque TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION esAvituallamientoEscala(srvcId INTEGER) RETURN INTEGER RESULT_CACHE IS
+CREATE OR REPLACE FUNCTION esAvituallamientoEscala(srvcId INTEGER) RETURN INTEGER IS
 	resultValue INTEGER;
 BEGIN
     SELECT (
@@ -734,7 +734,7 @@ BEGIN
         AND srvc_pk = srvcId
     ;
 
-    RETURN resultValue;
+    RETURN COALESCE(resultValue, 0);
 END;
 \
 
@@ -750,7 +750,7 @@ GRANT EXECUTE ON esAvituallamientoEscala TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION esBaseEnPuertoEscala(srvcId INTEGER) RETURN INTEGER RESULT_CACHE IS
+CREATE OR REPLACE FUNCTION esBaseEnPuertoEscala(srvcId INTEGER) RETURN INTEGER IS
 	resultValue INTEGER;
 BEGIN
     SELECT (
@@ -795,7 +795,7 @@ BEGIN
           AND srvc_pk = srvcId
     ;
 
-    RETURN resultValue;
+    RETURN COALESCE(resultValue, 0);
 END;
 \
 
@@ -808,8 +808,179 @@ GRANT EXECUTE ON esBaseEnPuertoEscala TO portico\
 
 
 
+
+CREATE OR REPLACE FUNCTION contadorEscala2(srvcId INTEGER, tipoContador VARCHAR2) RETURN INTEGER IS
+	resultValue INTEGER;
+BEGIN
+	SELECT
+	    (
+	        SELECT ssdt_nentero
+	        FROM tbl_subservicio_dato_ssdt
+	        WHERE
+	            ssdt_tpdt_pk = portico.getTipoDato('ENTERO_01')
+	            AND ssdt_ssrv_pk = (
+	                SELECT ssrv_pk
+	                FROM tbl_subservicio_ssrv
+	                WHERE ssrv_tpss_pk = portico.getEntidad('ESCALA_CONTADOR')
+	                    AND EXISTS (
+	                        SELECT 1 FROM tbl_subservicio_dato_ssdt
+	                        WHERE
+	                            ssdt_ssrv_pk = ssrv_pk
+	                            AND ssdt_tpdt_pk = portico.getTipoDato('CONT_ESCALA')
+	                            AND ssdt_cadena = tipoContador
+	                    )
+	                    AND ssrv_srvc_pk = srvc_pk
+	            )
+	    ) INTO resultValue
+	FROM tbl_servicio_srvc
+	WHERE
+	    srvc_tpsr_pk = portico.getEntidad('ESCALA')
+	    AND srvc_pk = srvcId
+    ;
+
+    RETURN COALESCE(resultValue, 0);
+END;
+\
+
+CREATE OR REPLACE SYNONYM portico.contadorEscala2 FOR contadorEscala\
+
+GRANT EXECUTE ON contadorEscala2 TO portico\
+
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION contadorEscala(srvcId INTEGER, tipoContador VARCHAR2) RETURN INTEGER IS
+	resultValue INTEGER;
+BEGIN
+	WITH sql AS (
+	    SELECT srvc_pk, srvc_tpsr_pk, srvc_fini, srvc_anno, srvc_subp_pk, srvc_estado
+			, (
+			      SELECT srdt_prmt_pk
+			      FROM tbl_servicio_dato_srdt
+			      WHERE srdt_tpdt_pk = portico.getTipoDato('SERV_TRAF')
+			          AND srdt_srvc_pk = srvc_pk
+	                  AND EXISTS (
+	                      SELECT 1 FROM tbl_parametro_version_prvr
+	                      WHERE prvr_prmt_pk = srdt_prmt_pk
+	                          AND prvr_fini <= srvc_fini
+	                          AND (prvr_ffin IS NULL OR prvr_ffin > srvc_fini)
+	                          AND EXISTS (
+	                              SELECT 1 FROM tbl_parametro_dato_prdt
+	                              WHERE prdt_prvr_pk = prvr_pk
+	                                  AND prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+	                                  AND prdt_nentero = 1
+	                          )
+	                  )
+			) AS servicio
+	    FROM tbl_servicio_srvc
+	    WHERE
+	        srvc_tpsr_pk = portico.getEntidad('ESCALA')
+            AND srvc_estado IN ('I', 'F')
+	        AND srvc_pk = srvcId
+	)
+	SELECT (
+	        SELECT
+	            COUNT(1)
+	        FROM tbl_servicio_srvc srvc
+	        WHERE
+	            srvc.srvc_tpsr_pk = sql.srvc_tpsr_pk
+	            AND srvc.srvc_estado IN ('I', 'F')
+	            AND srvc.srvc_fini <= sql.srvc_fini
+	            AND srvc.srvc_anno = sql.srvc_anno
+	            AND srvc.srvc_subp_pk = sql.srvc_subp_pk
+	            AND EXISTS (
+                    SELECT 1
+                    FROM tbl_servicio_dato_srdt
+                    WHERE srdt_tpdt_pk = portico.getTipoDato('SERV_TRAF')
+                        AND srdt_srvc_pk = srvc.srvc_pk
+                      AND srdt_prmt_pk = sql.servicio
+	            )
+	    ) INTO resultValue
+	FROM sql
+    ;
+
+    RETURN COALESCE(resultValue, 0);
+END;
+\
+
+CREATE OR REPLACE SYNONYM portico.contadorEscala FOR contadorEscala2\
+
+GRANT EXECUTE ON contadorEscala TO portico\
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION tieneConvenioEscala(srvcId INTEGER, convenio VARCHAR2) RETURN INTEGER IS
+	resultValue INTEGER;
+BEGIN
+    SELECT
+        (
+            CASE
+                WHEN EXISTS (
+                    SELECT 1
+                    FROM tbl_subparametro_version_spvr
+                    WHERE
+                        spvr_fini <= srvc_fini
+                        AND (spvr_ffin IS NULL OR spvr_ffin > srvc_fini)
+                        AND spvr_sprm_pk = (
+                            SELECT sprm_pk
+                            FROM tbl_subparametro_sprm
+                            WHERE
+                                sprm_tpsp_pk = portico.getEntidad('BUQUE_CONVENIO')
+                                AND sprm_prmt_pk = (
+                                    SELECT srdt_prmt_pk
+                                    FROM tbl_servicio_dato_srdt
+                                    WHERE
+                                        srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+                                        AND srdt_srvc_pk = srvc_pk
+                                )
+                                AND sprm_prmt_dep_pk = (
+                                    SELECT prmt_pk
+                                    FROM tbl_parametro_prmt
+                                    WHERE
+                                        prmt_tppr_pk = portico.getEntidad('CONVENIO')
+                                        AND prmt_parametro = convenio
+                                )
+
+                        )
+                )
+                THEN 1
+                ELSE 0
+            END
+        ) INTO resultValue
+    FROM tbl_servicio_srvc
+    WHERE
+        srvc_tpsr_pk = portico.getEntidad('ESCALA')
+        AND srvc_pk = srvcId
+    ;
+
+    RETURN COALESCE(resultValue, 0);
+END;
+\
+
+CREATE OR REPLACE SYNONYM portico.tieneConvenioEscala FOR tieneConvenioEscala\
+
+GRANT EXECUTE ON tieneConvenioEscala TO portico\
+
+
+
+
+
+
+
+
+
+
 -- //@UNDO
 -- SQL to undo the change goes here.
+DROP FUNCTION tieneConvenioEscala\
+DROP FUNCTION contadorEscala\
+DROP FUNCTION contadorEscala2\
 DROP FUNCTION esBaseEnPuertoEscala\
 DROP FUNCTION esAvituallamientoEscala\
 DROP FUNCTION periodosFacturablesAtraque\

@@ -1244,8 +1244,10 @@ AND (
 	)
 	OR servicio.dato(BUQUE).dato(TIPO_BUQUE) = ''UC''
 )','1.43 * unidadesGtsAtraque(atributo(PK)) * periodosFacturablesAtraque(atributo(PK))','servicio.dato(TIPO_IVA)','dato(ORGA_2)','dato(BOOLEANO_01)','dato(COD_EXEN)'
-		,'dato(TIPO_ESTAN_ATR)',null,null,null,null,null,'Tipo Estancia',null,null,null,null,null
-		,'unidadesGtsAtraque(atributo(PK))','periodosFacturablesAtraque(atributo(PK))',null,null,null,null,'Unidades','Periodos',null,null,null,null)\
+		,'dato(TIPO_ESTAN_ATR)',null,null,null,null,null
+		,'Tipo Estancia',null,null,null,null,null
+		,'unidadesGtsAtraque(atributo(PK))','periodosFacturablesAtraque(atributo(PK))','contadorEscala(servicio.atributo(PK), ''ES'')',null,null,null
+		,'Unidades','Periodos','Cnt. Entradas',null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120401, 'Cuantía básica B para estancias Cortas')\
 
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120402,100400,'B1_002',22011,'T')\
@@ -1267,8 +1269,10 @@ AND (
 	)
 	OR servicio.dato(BUQUE).dato(TIPO_BUQUE) LIKE ''R%''
 )', '1.2 * unidadesGtsAtraque(atributo(PK)) * periodosFacturablesAtraque(atributo(PK))','servicio.dato(TIPO_IVA)','dato(ORGA_2)','dato(BOOLEANO_01)','dato(COD_EXEN)'
-		,'dato(TIPO_ESTAN_ATR)',null,null,null,null,null,'Tipo Estancia',null,null,null,null,null
-		,'unidadesGtsAtraque(atributo(PK))','periodosFacturablesAtraque(atributo(PK))',null,null,null,null,'Unidades','Periodos',null,null,null,null)\
+		,'dato(TIPO_ESTAN_ATR)',null,null,null,null,null
+		,'Tipo Estancia',null,null,null,null,null
+		,'unidadesGtsAtraque(atributo(PK))','periodosFacturablesAtraque(atributo(PK))','contadorEscala(servicio.atributo(PK), ''ES'')',null,null,null
+		,'Unidades','Periodos','Cnt. Entradas',null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120403, 'Cuantía básica S para estancias Cortas')\
 
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120404,100400,'B1_003',22011,'T')\
@@ -1278,8 +1282,10 @@ AND (
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES (120405,120404,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,3,1.43,'dato(TIPO_ESTAN_ATR) = ''L'''
 		, '1.43 * unidadesGtsAtraque(atributo(PK)) * periodosFacturablesAtraque(atributo(PK))','servicio.dato(TIPO_IVA)','dato(ORGA_2)','dato(BOOLEANO_01)','dato(COD_EXEN)'
-		,'dato(TIPO_ESTAN_ATR)',null,null,null,null,null,'Tipo Estancia',null,null,null,null,null
-		,'unidadesGtsAtraque(atributo(PK))','periodosFacturablesAtraque(atributo(PK))',null,null,null,null,'Unidades','Periodos',null,null,null,null)\
+		,'dato(TIPO_ESTAN_ATR)',null,null,null,null,null
+		,'Tipo Estancia',null,null,null,null,null
+		,'unidadesGtsAtraque(atributo(PK))','periodosFacturablesAtraque(atributo(PK))','contadorEscala(servicio.atributo(PK), ''ES'')',null,null,null
+		,'Unidades','Periodos','Cnt. Entradas',null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120405, 'Cuantía básica B para estancias Largas')\
 
 
@@ -1645,7 +1651,602 @@ AND valorServicio(''CU'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''
 			,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120445, 'Crucero turístico')\
 
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120446,100400,'B1_C21',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120447,120446,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 21, 0.56
+			,'servicio.dato(BUQUE).dato(TIPO_BUQUE) = ''UC''
+AND esBaseEnPuertoEscala(servicio.atributo(PK)) = 1','0.56'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120447, 'Crucero turístico - Base en puerto')\
 
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120448,100400,'B1_C22',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120449,120448,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 22, 0.50
+			,'servicio.dato(BUQUE).dato(TIPO_BUQUE) = ''UC''
+AND valorServicio(''CU'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''','0.50'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120449, 'Crucero turístico - Compañía cruceros (12 escalas en puerto base u 8 tráfico estacional)')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120450,100400,'B1_C23',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120451,120450,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 23, 0.90
+			,'servicio.dato(BUQUE).dato(TIPO_BUQUE) LIKE ''R%''
+AND valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''','0.90'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120451, 'Buques carga/descarga mercancía por rodadura')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120452,100400,'B1_C24',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120453,120452,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 24, 0.60
+			,'servicio.dato(BUQUE).dato(TIPO_BUQUE) LIKE ''R%''
+AND valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''','0.60'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120453, 'Buques carga/descarga mercancía por rodadura - Servicio regular')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120454,100400,'B1_C25',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120455,120454,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 25, 0.25
+			,'valorServicio(''II'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''','0.25'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120455, 'Servicios Marítimos Interinsulares')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120456,100400,'B1_C26',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120457,120456,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 26, 0.80
+			,'dato(ALIN).dato(BOOLEANO_04) = 0
+AND dato(TIPO_ATR) = ''F''
+AND dato(ALIN).dato(BOOLEANO_03) = 0
+AND dato(TIPO_ACT) NOT IN (''RT'', ''AR'', ''AB'', ''AF'', ''AT'', ''AP'')','0.80'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120457, 'Zona II - Buques fondeados - Aguas no concesionadas')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120458,100400,'B1_C27',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120459,120458,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 27, 0.48
+			,'dato(ALIN).dato(BOOLEANO_04) = 0
+AND dato(TIPO_ATR) = ''F''
+AND dato(ALIN).dato(BOOLEANO_03) = 0
+AND dato(TIPO_ACT) IN (''RT'', ''AR'', ''AB'', ''AF'', ''AT'', ''AP'')','0.48'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120459, 'Zona II - Buques fondeados - Aguas no concesionadas - Reparación')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120460,100400,'B1_C28',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120461,120460,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 28, 0.40
+			,'dato(ALIN).dato(BOOLEANO_04) = 0
+AND dato(TIPO_ATR) = ''F''
+AND dato(ALIN).dato(BOOLEANO_03) = 1
+AND dato(TIPO_ACT) NOT IN (''RT'', ''AR'', ''AB'', ''AF'', ''AT'', ''AP'')','0.40'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120461, 'Zona II - Buques fondeados - Aguas concesionadas')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120462,100400,'B1_C29',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120463,120462,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 29, 0.24
+			,'dato(ALIN).dato(BOOLEANO_04) = 0
+AND dato(TIPO_ATR) = ''F''
+AND dato(ALIN).dato(BOOLEANO_03) = 1
+AND dato(TIPO_ACT) IN (''RT'', ''AR'', ''AB'', ''AF'', ''AT'', ''AP'')','0.24'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120463, 'Zona II - Buques fondeados - Aguas concesionadas - Reparación')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120464,100400,'B1_C30',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120465,120464,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 30, 1
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 1 AND 12','1'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120465, 'Desde la escala 1 hasta la 12')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120466,100400,'B1_C31',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120467,120466,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 31, 0.95
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 1 AND 12','0.95'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120467, 'Desde la escala 1 hasta la 12 - Regular')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120468,100400,'B1_C32',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120469,120468,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 32, 0.95
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 13 AND 26','0.95'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120469, 'Desde la escala 13 hasta la 26')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120470,100400,'B1_C33',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120471,120470,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 33, 0.90
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 13 AND 26','0.90'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120471, 'Desde la escala 13 hasta la 26 - Regular')\
+
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120472,100400,'B1_C34',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120473,120472,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 34, 0.85
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 27 AND 52','0.85'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120473, 'Desde la escala 27 hasta la 52')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120474,100400,'B1_C35',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120475,120474,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 35, 0.80
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 27 AND 52','0.80'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120475, 'Desde la escala 27 hasta la 52 - Regular')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120476,100400,'B1_C36',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120477,120476,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 36, 0.75
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 53 AND 104','0.75'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120477, 'Desde la escala 53 hasta la 104')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120478,100400,'B1_C37',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120479,120478,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 37, 0.70
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 53 AND 104','0.70'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120479, 'Desde la escala 53 hasta la 104 - Regular')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120480,100400,'B1_C38',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120481,120480,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 38, 0.65
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 105 AND 156','0.65'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120481, 'Desde la escala 105 hasta la 156')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120482,100400,'B1_C39',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120483,120482,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 39, 0.60
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 105 AND 156','0.60'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120483, 'Desde la escala 105 hasta la 156 - Regular')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120484,100400,'B1_C40',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120485,120484,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 40, 0.55
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 157 AND 312','0.55'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120485, 'Desde la escala 157 hasta la 312')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120486,100400,'B1_C41',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120487,120486,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 41, 0.50
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 157 AND 312','0.50'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120487, 'Desde la escala 157 hasta la 312 - Regular')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120488,100400,'B1_C42',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120489,120488,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 42, 0.45
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 313 AND 365','0.45'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120489, 'Desde la escala 313 hasta la 365')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120490,100400,'B1_C43',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120491,120490,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 43, 0.40
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 313 AND 365','0.40'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120491, 'Desde la escala 313 hasta la 365 - Regular')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120492,100400,'B1_C44',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120493,120492,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 44, 0.35
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') > 365','0.35'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120493, 'Desde la escala 366')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120494,100400,'B1_C45',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120495,120494,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 45, 0.30
+			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
+AND contadorEscala(servicio.atributo(PK), ''ES'') > 365','0.30'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120495, 'Desde la escala 366 - Regular')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120496,100400,'B1_C46',22011,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120497,120496,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 46, 2
+			,'dato(TIPO_ACT) IN (''DS'', ''VA'')
+AND esPrimerAtraque(atributo(PK)) = 1','2'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120497, 'Sin utilización de puesto de atraque o fondeo')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120498,100400,'B1_B1',22011,'D')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120499,120498,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 1, 30
+			,'dato(ALIN).dato(BOOLEANO_04) = 0
+AND dato(TIPO_ATR) <> ''F''','30'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120499, 'Zona II o exterior (excepto fondeos)')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120500,100400,'B1_B2',22011,'D')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120501,120500,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 2, 5
+			,'tieneConvenioEscala(servicio.atributo(PK), ''MEDAMB'') = 1','5'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120501, 'Bonificación Prácticas Medioambientales')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120502,100400,'B1_B3',22011,'D')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120503,120502,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 3, 5
+			,'tieneConvenioEscala(servicio.atributo(PK), ''CALIDAD'') = 1','5'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120503, 'Bonificación Calidad prestación servicios')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120504,100400,'B1_B4',22011,'D')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120505,120504,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 4, 40
+			,'valorServicio(''II'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
+AND (
+	servicio.dato(TIPO_NAV) <> ''CI''
+	OR servicio.dato(TIPO_NAV_2) <> ''CI''
+)','40'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120505, 'Bonificación insularidad, especial aislamiento o ultraperificidad')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120506,100400,'B1_B5',22011,'D')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120507,120506,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 5, 40
+			,'servicio.dato(BUQUE).dato(TIPO_BUQUE) = ''UC''','40'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120507, 'Bonificación cruceros turísticos')\
 
 
 
