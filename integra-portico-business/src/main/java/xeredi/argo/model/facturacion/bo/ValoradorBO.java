@@ -120,12 +120,13 @@ public final class ValoradorBO {
 
             if (crgoIds.isEmpty()) {
                 final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
-                final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
+                final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
-                crgoCriterioVO.setFechaVigencia(fechaLiquidacion);
-                crgoCriterioVO.setSrvcId(srvcId);
+                crgoCriterio.setFechaVigencia(fechaLiquidacion);
+                crgoCriterio.setSrvcId(srvcId);
+                crgoCriterio.setSoloPrincipales(true);
 
-                for (final CargoVO crgo : crgoDAO.selectList(crgoCriterioVO)) {
+                for (final CargoVO crgo : crgoDAO.selectList(crgoCriterio)) {
                     crgoIds.add(crgo.getId());
                 }
             }
@@ -152,7 +153,6 @@ public final class ValoradorBO {
 
                 crgoCriterio.setId(crgoId);
                 crgoCriterio.setFechaVigencia(fechaLiquidacion);
-                crgoCriterio.setSoloPrincipales(true);
 
                 final CargoVO crgo = crgoDAO.selectObject(crgoCriterio);
 
@@ -165,12 +165,6 @@ public final class ValoradorBO {
                 final List<CargoVO> crgoList = new ArrayList<>();
 
                 crgoList.add(crgo);
-
-                final CargoCriterioVO crgoDepCriterio = new CargoCriterioVO();
-
-                crgoDepCriterio.setPadreId(crgoId);
-                crgoDepCriterio.setFechaVigencia(fechaLiquidacion);
-                crgoDepCriterio.setSoloDependientes(true);
 
                 vldrContexto.setCrgo(crgo);
 
@@ -199,9 +193,19 @@ public final class ValoradorBO {
                     }
                 }
 
+                LOG.info("Busqueda de cargos dependientes de: " + crgo.getCodigo());
+
+                final CargoCriterioVO crgoDepCriterio = new CargoCriterioVO();
+
+                crgoDepCriterio.setPadreId(crgoId);
+                crgoDepCriterio.setFechaVigencia(fechaLiquidacion);
+                crgoDepCriterio.setSoloDependientes(true);
+
                 crgoList.addAll(crgoDAO.selectList(crgoDepCriterio));
 
                 for (final CargoVO crgoServicio : crgoList) {
+                    LOG.info("Cargo: " + crgoServicio.getCodigo());
+
                     vldrContexto.setCrgo(crgoServicio);
                     valorarCargoServicio(session, vldrContexto);
                 }
@@ -302,7 +306,7 @@ public final class ValoradorBO {
                     Preconditions.checkNotNull(vlrd.getId());
                     Preconditions.checkNotNull(vlrd.getPadreId());
 
-                    // LOG.debug("vlrd: " + vlrd);
+                    LOG.debug("vlrd: " + vlrd);
 
                     final ValoracionDetalleVO vlrdNew = new ValoracionDetalleVO();
 
@@ -361,8 +365,6 @@ public final class ValoradorBO {
         final ValoradorContextoDAO contextoDAO = session.getMapper(ValoradorContextoDAO.class);
         final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
         final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
-
-        LOG.info("Cargo: " + vldrContexto.getCrgo().getCodigo());
 
         if (LOG.isDebugEnabled()) {
             LOG.debug("Contexto: " + vldrContexto);

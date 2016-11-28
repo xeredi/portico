@@ -191,16 +191,17 @@
             , COALESCE(
                 (
                     SELECT SUM(vlrt_importe)
-                    FROM tbl_valoracion_tmp_vlrt
+                    FROM tbl_valoracion_tmp_vlrt vlrtAux
                     WHERE
-                        vlrt_prbt_pk = #{prbt.id}
-                        AND vlrt_srvc_pk = srvc_pk
-                        AND vlrt_crgo_pk = rgla_crgo_pk
+                        vlrtAux.vlrt_prbt_pk = #{prbt.id}
+                        AND vlrtAux.vlrt_srvc_pk = srvc_pk
+                        AND vlrtAux.vlrt_crgo_pk = rgla_crgo_pk
+                        AND vlrtAux.vlrt_padre_pk = vlrt.vlrt_pk
                         AND NOT EXISTS (
                             SELECT 1
                             FROM tbl_regla_inc_rgin
                             WHERE
-                                rgin_rgla1_pk = vlrt_rgla_pk
+                                rgin_rgla1_pk = vlrtAux.vlrt_rgla_pk
                                 AND rgin_rgla2_pk = rgla_pk
                                 AND EXISTS (
                                     SELECT 1 FROM tbl_regla_inc_version_rgiv
@@ -212,16 +213,17 @@
                 , 0) AS importe_base
             , (
                 SELECT SUM(vlrt_importe)
-                FROM tbl_valoracion_tmp_vlrt
+                FROM tbl_valoracion_tmp_vlrt vlrtAux
                 WHERE
-                    vlrt_prbt_pk = #{prbt.id}
-                    AND vlrt_srvc_pk = srvc_pk
-                    AND vlrt_crgo_pk = rgla_crgo_pk
+                    vlrtAux.vlrt_prbt_pk = #{prbt.id}
+                    AND vlrtAux.vlrt_srvc_pk = srvc_pk
+                    AND vlrtAux.vlrt_crgo_pk = rgla_crgo_pk
+                    AND vlrtAux.vlrt_padre_pk = vlrt.vlrt_pk
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_regla_inc_rgin
                         WHERE
-                            rgin_rgla1_pk = vlrt_rgla_pk
+                            rgin_rgla1_pk = vlrtAux.vlrt_rgla_pk
                             AND rgin_rgla2_pk = rgla_pk
                             AND EXISTS (
                                 SELECT 1 FROM tbl_regla_inc_version_rgiv
@@ -232,7 +234,7 @@
                 ) AS importe_inc
             , (${rgla.version.formulaSql}) AS valor_base
         FROM tbl_servicio_srvc item
-            JOIN tbl_regla_rgla ON
+            JOIN tbl_regla_rgla rgla ON
                 rgla_enti_pk = srvc_tpsr_pk
                 AND rgla_pk = #{rgla.id}
             JOIN tbl_valoracion_tmp_vlrt vlrt ON
@@ -431,17 +433,18 @@
             , COALESCE(
                 (
                     SELECT SUM(vlrt_importe)
-                    FROM tbl_valoracion_tmp_vlrt
+                    FROM tbl_valoracion_tmp_vlrt vlrtAux
                     WHERE
-                        vlrt_prbt_pk = #{prbt.id}
-                        AND vlrt_srvc_pk = ssrv_srvc_pk
-                        AND vlrt_ssrv_pk = ssrv_pk
-                        AND vlrt_crgo_pk = rgla_crgo_pk
+                        vlrtAux.vlrt_prbt_pk = #{prbt.id}
+                        AND vlrtAux.vlrt_srvc_pk = ssrv_srvc_pk
+                        AND vlrtAux.vlrt_ssrv_pk = ssrv_pk
+                        AND vlrtAux.vlrt_crgo_pk = rgla_crgo_pk
+                        AND vlrtAux.vlrt_padre_pk = vlrt.vlrt_pk
                         AND NOT EXISTS (
                             SELECT 1
                             FROM tbl_regla_inc_rgin
                             WHERE
-                                rgin_rgla1_pk = vlrt_rgla_pk
+                                rgin_rgla1_pk = vlrtAux.vlrt_rgla_pk
                                 AND rgin_rgla2_pk = rgla_pk
                                 AND EXISTS (
                                     SELECT 1 FROM tbl_regla_inc_version_rgiv
@@ -453,17 +456,18 @@
             , 0) AS importe_base
             , (
                 SELECT SUM(vlrt_importe)
-                FROM tbl_valoracion_tmp_vlrt
+                FROM tbl_valoracion_tmp_vlrt vlrtAux
                 WHERE
-                    vlrt_prbt_pk = #{prbt.id}
-                    AND vlrt_srvc_pk = ssrv_srvc_pk
-                    AND vlrt_ssrv_pk = ssrv_pk
-                    AND vlrt_crgo_pk = rgla_crgo_pk
+                    vlrtAux.vlrt_prbt_pk = #{prbt.id}
+                    AND vlrtAux.vlrt_srvc_pk = ssrv_srvc_pk
+                    AND vlrtAux.vlrt_ssrv_pk = ssrv_pk
+                    AND vlrtAux.vlrt_crgo_pk = rgla_crgo_pk
+                    AND vlrtAux.vlrt_padre_pk = vlrt.vlrt_pk
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_regla_inc_rgin
                         WHERE
-                            rgin_rgla1_pk = vlrt_rgla_pk
+                            rgin_rgla1_pk = vlrtAux.vlrt_rgla_pk
                             AND rgin_rgla2_pk = rgla_pk
                             AND EXISTS (
                                 SELECT 1 FROM tbl_regla_inc_version_rgiv

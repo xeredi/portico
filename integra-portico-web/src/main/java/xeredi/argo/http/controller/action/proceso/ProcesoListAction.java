@@ -4,8 +4,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.OrderByElement.OrderByType;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ProcesoCriterioVO;
+import xeredi.argo.model.proceso.vo.ProcesoCriterioVO.OrderByColumn;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
 
 // TODO: Auto-generated Javadoc
@@ -25,6 +27,8 @@ public final class ProcesoListAction extends GridListAction<ProcesoCriterioVO, P
     @Override
     public void doList() throws ApplicationException {
         final ProcesoBO prbtBO = new ProcesoBO();
+
+        model.addOrderBy(OrderByColumn.prbt_falta.name(), OrderByType.DESC);
 
         resultList = prbtBO.selectList(model, getOffset(), limit);
     }

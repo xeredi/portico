@@ -36,7 +36,10 @@
 		</association>
 
 		<collection property="vlrlList" ofType="ValoracionLineaAgregadaVO" javaType="ArrayList">
-			<id column="vlrl_ssrv_pk" />
+            <id column="vlrl_padre_pk" />
+            <id column="vlrl_pk" />
+
+            <id column="vlrl_ssrv_pk" />
 			<id column="vlrl_rgla_pk" />
 
 			<id column="vlrl_info1" />
@@ -207,6 +210,9 @@
 
 		<if test="aspc.version.agrupaDetalles">
         <![CDATA[
+                , NULL AS vlrl_padre_pk
+                , NULL AS vlrl_pk
+
                 , vlrt_ssrv_pk AS vlrd_ssrv_pk
                 , vlrt_fini AS vlrd_fini
                 , vlrt_ffin AS vlrd_ffin
@@ -215,6 +221,9 @@
 
 		<if test="!aspc.version.agrupaDetalles">
         <![CDATA[
+                , vlrt_padre_pk AS vlrl_padre_pk
+                , vlrt_pk AS vlrl_pk
+
                 , vlrt_ssrv_pk AS vlrl_ssrv_pk
                 , vlrt_fini AS vlrl_fini
                 , vlrt_ffin AS vlrl_ffin
@@ -271,7 +280,7 @@
     ]]>
 
 		<if test="!aspc.version.agrupaDetalles">
-			, ssrv_numero
+			, vlrt_padre_pk, vlrt_pk
 		</if>
 
     <![CDATA[

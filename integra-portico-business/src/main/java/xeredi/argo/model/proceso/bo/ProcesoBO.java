@@ -20,6 +20,7 @@ import xeredi.argo.model.comun.vo.ArchivoCriterioVO;
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
 import xeredi.argo.model.comun.vo.ArchivoSentido;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.comun.vo.OrderByElement.OrderByType;
 import xeredi.argo.model.proceso.dao.ProcesoDAO;
 import xeredi.argo.model.proceso.dao.ProcesoItemDAO;
 import xeredi.argo.model.proceso.dao.ProcesoMensajeDAO;
@@ -27,6 +28,7 @@ import xeredi.argo.model.proceso.dao.ProcesoParametroDAO;
 import xeredi.argo.model.proceso.vo.ItemSentido;
 import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.ProcesoCriterioVO;
+import xeredi.argo.model.proceso.vo.ProcesoCriterioVO.OrderByColumn;
 import xeredi.argo.model.proceso.vo.ProcesoEstado;
 import xeredi.argo.model.proceso.vo.ProcesoItemCriterioVO;
 import xeredi.argo.model.proceso.vo.ProcesoItemVO;
@@ -131,6 +133,7 @@ public final class ProcesoBO {
             prbtCriterioVO.setEstado(ProcesoEstado.C);
             prbtCriterioVO.setModulo(tipo.getModulo());
             prbtCriterioVO.setTipo(tipo);
+            prbtCriterioVO.addOrderBy(OrderByColumn.prbt_falta.name(), OrderByType.ASC);
 
             final List<ProcesoVO> prbtList = prbtDAO.selectList(prbtCriterioVO,
                     new RowBounds(RowBounds.NO_ROW_OFFSET, 1));

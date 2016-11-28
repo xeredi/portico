@@ -6,6 +6,7 @@
 -- rgla y rglv - 120000
 -- aspc y aspv - 140000
 -- ascr y ascv - 160000
+-- crdp y crdv - 170000
 
 
 INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','B3','21002')\
@@ -2781,7 +2782,66 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') > 40','20'
 			,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120511, 'Bonificación contenedores/rodadura > 40')\
 
+-- **************** B0
+INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES (100600,'B0',21003)\
+	INSERT INTO tbl_cargo_version_crgv (crgv_pk,crgv_crgo_pk,crgv_fini,crgv_ffin,crgv_codigo_norm,crgv_es_principal,crgv_es_temporal,crgv_tipo)
+	VALUES (100601,100600,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'B0',0,0,'B')\
+    	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('crgv', 'es', 100601, 'TASA DE SEÑALIZACION MARITIMA')\
 
+    INSERT INTO tbl_cargo_dep_crdp (crdp_pk, crdp_crgop_pk, crdp_crgoh_pk) VALUES (170600, 100400, 100600)\
+	    INSERT INTO tbl_cargo_dep_version_crdv (crdv_pk, crdv_crdp_pk, crdv_fini, crdv_ffin) VALUES (170601, 170600, TO_DATE('2013-01-01', 'yyyy-mm-dd'),null)\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120600,100600,'B0_001',21003,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120601,120600,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,1,0.29,'generaBOEscala(atributo(PK)) = 1','0.29 * unidadesGtsEscala(atributo(PK))'
+		,'dato(TIPO_IVA)','COALESCE(dato(ORGA), dato(ORGA_3))','0','dato(COD_EXEN)'
+		,null,null,null,null,null,null
+		,null,null,null,null,null,null
+		,'unidadesGtsEscala(atributo(PK))',null,null,null,null,null
+		,'Unidades',null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120601, 'Cuantía Básica A')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120602,100600,'B0_002',21003,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120603,120602,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,2,0.28,'generaBOEscala(atributo(PK)) = 1','0.28 * unidadesGtsEscala(atributo(PK))'
+		,'dato(TIPO_IVA)','COALESCE(dato(ORGA), dato(ORGA_3))','dato(BOOLEANO_06)','dato(COD_EXEN)'
+		,null,null,null,null,null,null
+		,null,null,null,null,null,null
+		,'unidadesGtsEscala(atributo(PK))',null,null,null,null,null
+		,'Unidades',null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120603, 'Cuantía Básica B')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120604,100600,'B0_C1',21003,'C')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (120605,120604,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 1, 0.035
+			,'1 = 1','0.035'
+			,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null
+			,null,null,null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120605, 'Buques mercantes, pesqueros congeladores ')\
 
 
 
@@ -2845,6 +2905,12 @@ INSERT INTO tbl_aspecto_aspc (aspc_pk,aspc_codigo,aspc_tpsr_pk) VALUES (140004, 
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('aspv', 'es', 140005, 'TASA AL BUQUE')\
 	INSERT INTO tbl_aspecto_cargo_ascr (ascr_pk,ascr_aspc_pk,ascr_crgo_pk) VALUES (160400, 140004, 100400)\
 		INSERT INTO tbl_aspecto_cargo_version_ascv (ascv_pk,ascv_ascr_pk,ascv_fini,ascv_ffin) VALUES (160401, 160400, TO_DATE('2013-01-01', 'yyyy-mm-dd'),null)\
+	INSERT INTO tbl_aspecto_cargo_ascr (ascr_pk,ascr_aspc_pk,ascr_crgo_pk) VALUES (160600, 140004, 100600)\
+		INSERT INTO tbl_aspecto_cargo_version_ascv (ascv_pk,ascv_ascr_pk,ascv_fini,ascv_ffin) VALUES (160601, 160600, TO_DATE('2013-01-01', 'yyyy-mm-dd'),null)\
+
+
+
+
 
 
 
@@ -2864,8 +2930,9 @@ BEGIN
 	eraseAspc(140004);
 
 	-- Cargos
-	eraseCrgo(100000);
-	eraseCrgo(100200);
+	eraseCrgo(100600);
 	eraseCrgo(100400);
+	eraseCrgo(100200);
+	eraseCrgo(100000);
 END;
 \

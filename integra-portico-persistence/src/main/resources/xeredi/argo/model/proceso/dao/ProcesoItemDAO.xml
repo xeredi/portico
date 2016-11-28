@@ -145,6 +145,7 @@
 	<select id="selectList" parameterType="ProcesoItemCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
+        ORDER BY prit_item_pk
 	</select>
 
 	<insert id="insert" parameterType="ProcesoItemVO">
