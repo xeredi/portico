@@ -273,84 +273,102 @@ GRANT EXECUTE ON valorServicio TO portico\
 
 
 
-create or replace FUNCTION generaBOEscala(srvcId INTEGER) RETURN INTEGER IS
+CREATE OR REPLACE FUNCTION generaBOEscala(srvcId INTEGER) RETURN INTEGER IS
 	resultValue INTEGER;
 BEGIN
+    WITH sql AS (
+        SELECT srvc_pk, srvc_anno, srvc_tpsr_pk
+            , (
+                SELECT srdt_prmt_pk
+                FROM tbl_servicio_dato_srdt
+                WHERE
+                    srdt_srvc_pk = srvc_pk
+                    AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+            ) AS buque
+            , (
+                SELECT COUNT(1)
+                FROM tbl_valoracion_vlrc
+                WHERE
+                    vlrc_srvc_pk = srvc_pk
+                    AND EXISTS (
+                        SELECT 1
+                        FROM tbl_valoracion_lin_vlrl
+                        WHERE
+                            vlrl_vlrc_pk = vlrc_pk
+                            AND EXISTS (
+                                SELECT 1
+                                FROM tbl_regla_rgla
+                                WHERE rgla_pk = vlrl_rgla_pk
+                                    AND EXISTS (
+                                        SELECT 1
+                                        FROM tbl_cargo_crgo
+                                        WHERE crgo_pk = rgla_crgo_pk
+                                            AND crgo_tpsr_pk = srvc_tpsr_pk
+                                            AND crgo_codigo = 'B0'
+    /*
+    */
+                                    )
+                            )
+                    )
+            ) AS b0Valorada
+        FROM tbl_servicio_srvc
+        WHERE
+            srvc_tpsr_pk = portico.getEntidad('ESCALA')
+            AND srvc_pk = srvcId
+    )
     SELECT (
         CASE
-          WHEN
-              EXISTS (
-                  SELECT 1 FROM tbl_valoracion_vlrc
-                  WHERE vlrc_srvc_pk = srvc_pk
-                      AND EXISTS (
-                          SELECT 1
-                          FROM tbl_valoracion_lin_vlrl
-                          WHERE vlrl_vlrc_pk = vlrc_pk
+            WHEN b0Valorada > 0
+            THEN 0
+            ELSE
+                CASE
+                    WHEN
+                        (
+                          SELECT COUNT(1)
+                          FROM tbl_servicio_srvc srvc
+                          WHERE
+                              srvc.srvc_tpsr_pk = sql.srvc_tpsr_pk
+                              AND srvc.srvc_anno = sql.srvc_anno
                               AND EXISTS (
-                                  SELECT 1 FROM tbl_regla_rgla
-                                  WHERE rgla_pk = vlrl_pk
+                                  SELECT 1
+                                  FROM tbl_servicio_dato_srdt
+                                  WHERE
+                                      srdt_srvc_pk = srvc.srvc_pk
+                                      AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+                                      AND srdt_prmt_pk = sql.buque
+                              )
+                              AND EXISTS (
+                                  SELECT 1
+                                  FROM tbl_valoracion_vlrc
+                                  WHERE
+                                      vlrc_srvc_pk = srvc.srvc_pk
                                       AND EXISTS (
-                                          SELECT 1 FROM tbl_cargo_crgo
-                                          WHERE crgo_pk = rgla_crgo_pk
-                                              AND crgo_codigo = 'B0'
+                                          SELECT 1
+                                          FROM tbl_valoracion_lin_vlrl
+                                          WHERE
+                                              vlrl_vlrc_pk = vlrc_pk
+                                              AND EXISTS (
+                                                  SELECT 1
+                                                  FROM tbl_regla_rgla
+                                                  WHERE rgla_pk = vlrl_rgla_pk
+                                                      AND EXISTS (
+                                                          SELECT 1
+                                                          FROM tbl_cargo_crgo
+                                                          WHERE crgo_pk = rgla_crgo_pk
+                                                              AND crgo_tpsr_pk = srvc_tpsr_pk
+                                                              AND crgo_codigo = 'B0'
+                                                      )
+                                              )
                                       )
                               )
-                      )
-              )
-          THEN 0
-          WHEN (
-              SELECT COUNT(1)
-              FROM tbl_valoracion_vlrc
-              WHERE
-                  vlrc_srvc_pk = ANY (
-                      SELECT srvc_pk
-                      FROM tbl_servicio_srvc
-                      WHERE
-                          srvc_tpsr_pk = portico.getEntidad('ESCALA')
-                          AND srvc_anno = (
-                              SELECT srvc_anno
-                              FROM tbl_servicio_srvc
-                              WHERE
-                                  srvc_tpsr_pk = portico.getEntidad('ESCALA')
-                                  AND srvc_pk = srvcId
-                          )
-                          AND EXISTS (
-                              SELECT 1
-                              FROM tbl_servicio_dato_srdt
-                              WHERE srdt_srvc_pk = srvc_pk
-                                  AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
-                                  AND srdt_prmt_pk = (
-                                      SELECT srdt_prmt_pk
-                                      FROM tbl_servicio_dato_srdt
-                                      WHERE
-                                          srdt_tpdt_pk = portico.getTipoDato('BUQUE')
-                                          AND srdt_srvc_pk = srvcId
-                                  )
-                          )
-                  )
 
-                  AND EXISTS (
-                      SELECT 1
-                      FROM tbl_valoracion_lin_vlrl
-                      WHERE vlrl_vlrc_pk = vlrc_pk
-                          AND EXISTS (
-                              SELECT 1 FROM tbl_regla_rgla
-                              WHERE rgla_pk = vlrl_pk
-                                  AND EXISTS (
-                                      SELECT 1 FROM tbl_cargo_crgo
-                                      WHERE crgo_pk = rgla_crgo_pk
-                                          AND crgo_codigo = 'B0'
-                                  )
-                          )
-                  )
-          ) > 2
-          THEN 0
-          ELSE 1
+                      ) > 2
+                  THEN 0
+                  ELSE 1
+              END
         END
-        ) INTO resultValue
-    FROM tbl_servicio_srvc
-    WHERE srvc_tpsr_pk = portico.getEntidad('ESCALA')
-        AND srvc_pk = srvcId
+    ) INTO resultValue
+    FROM sql
     ;
 
     RETURN COALESCE(resultValue, 0);
