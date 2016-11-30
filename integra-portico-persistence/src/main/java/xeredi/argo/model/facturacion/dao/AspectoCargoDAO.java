@@ -1,7 +1,7 @@
 package xeredi.argo.model.facturacion.dao;
 
-import xeredi.argo.model.comun.dao.CrudDAO;
-import xeredi.argo.model.comun.dao.CrudVersionableDAO;
+import java.util.List;
+
 import xeredi.argo.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoCargoVO;
 
@@ -9,8 +9,77 @@ import xeredi.argo.model.facturacion.vo.AspectoCargoVO;
 /**
  * The Interface AspectoCargoDAO.
  */
-public interface AspectoCargoDAO extends CrudDAO<AspectoCargoVO, AspectoCargoCriterioVO>,
-CrudVersionableDAO<AspectoCargoVO> {
+public interface AspectoCargoDAO {
+
+    /**
+     * Select list.
+     *
+     * @param ascrCriterio
+     *            the ascr criterio
+     * @return the list
+     */
+    List<AspectoCargoVO> selectList(final AspectoCargoCriterioVO ascrCriterio);
+
+    /**
+     * Select object.
+     *
+     * @param ascrCriterio
+     *            the ascr criterio
+     * @return the aspecto cargo VO
+     */
+    AspectoCargoVO selectObject(final AspectoCargoCriterioVO ascrCriterio);
+
+    /**
+     * Exists.
+     *
+     * @param ascr
+     *            the ascr
+     * @return true, if successful
+     */
+    boolean exists(final AspectoCargoVO ascr);
+
+    /**
+     * Exists overlap.
+     *
+     * @param ascr
+     *            the ascr
+     * @return true, if successful
+     */
+    boolean existsOverlap(final AspectoCargoVO ascr);
+
+    /**
+     * Insert.
+     *
+     * @param ascr
+     *            the ascr
+     */
+    void insert(final AspectoCargoVO ascr);
+
+    /**
+     * Insert version.
+     *
+     * @param ascr
+     *            the ascr
+     */
+    void insertVersion(final AspectoCargoVO ascr);
+
+    /**
+     * Update version.
+     *
+     * @param ascr
+     *            the ascr
+     * @return the int
+     */
+    int updateVersion(final AspectoCargoVO ascr);
+
+    /**
+     * Delete version.
+     *
+     * @param ascr
+     *            the ascr
+     * @return the int
+     */
+    int deleteVersion(final AspectoCargoVO ascr);
 
     /**
      * Select id.

@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-sm-5 col-md-4 col-lg-3 form-group-sm">
                     <label data-translate="accn"></label> <select data-ng-model="vm.model.aebs.id"
-                        data-ng-options="aebs.id as aebs.path for aebs in vm.aebsList | orderBy: codigo"
+                        data-ng-options="aebs.id as aebs.codigo for aebs in vm.aebsList | orderBy: codigo"
                         class="form-control">
                         <option />
                     </select>

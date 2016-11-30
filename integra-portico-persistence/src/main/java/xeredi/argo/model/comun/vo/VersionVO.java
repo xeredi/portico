@@ -8,10 +8,6 @@ import lombok.Data;
 /**
  * The Class ItemVersionVO.
  */
-
-/**
- * Instantiates a new version VO.
- */
 @Data
 public abstract class VersionVO {
     /**

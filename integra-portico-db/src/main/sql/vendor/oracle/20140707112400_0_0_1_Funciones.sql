@@ -75,75 +75,73 @@ GRANT EXECUTE ON daysBetween TO portico\
 
 
 
-CREATE OR REPLACE PROCEDURE eraseTpsp(entiId NUMBER) IS
+CREATE OR REPLACE PROCEDURE eraseEnti(entiId NUMBER) IS
 BEGIN
-	DELETE FROM tbl_funcionalidad_grupo_fngr
-	WHERE
-		EXISTS (
-			SELECT 1 FROM tbl_funcionalidad_fncd
-			WHERE fncd_pk = fngr_fncd_pk
-				AND (
-					EXISTS (
-						SELECT 1 FROM tbl_accion_entidad_acen
-						WHERE acen_pk = fncd_pk
-							AND acen_enti_pk = entiId
-					)
-					OR EXISTS (
-						SELECT 1 FROM tbl_accion_especial_aces
-						WHERE aces_pk = fncd_pk
-							AND aces_enti_pk = entiId
-					)
-				)
-		)
+
+	DELETE FROM tbl_tramite_tipo_dato_trtd
+	WHERE EXISTS (
+		SELECT 1 FROM tbl_tramite_trmt
+		WHERE trmt_pk = trtd_trmt_pk
+			AND trmt_enti_pk = entiId
+	)
 	;
 
-	DELETE FROM tbl_funcionalidad_fncd
-	WHERE
-		(
-			EXISTS (
-				SELECT 1 FROM tbl_accion_entidad_acen
-				WHERE acen_pk = fncd_pk
-					AND acen_enti_pk = entiId
-			)
-			OR EXISTS (
-				SELECT 1 FROM tbl_accion_especial_aces
-				WHERE aces_pk = fncd_pk
-					AND aces_enti_pk = entiId
-			)
-		)
-	;
-
-	DELETE FROM tbl_subparametro_dato_spdt
-	WHERE
-	    EXISTS (
-	        SELECT 1 FROM tbl_subparametro_version_spvr
-	        WHERE spvr_pk = spdt_spvr_pk
-	            AND EXISTS (
-	                SELECT 1 FROM tbl_subparametro_sprm
-	                WHERE sprm_pk = spvr_sprm_pk
-	                    AND sprm_tpsp_pk = entiId
-	            )
+	DELETE FROM tbl_i18n_i18n
+	WHERE i18n_pref = 'trmt'
+	    AND EXISTS (
+	        SELECT 1 FROM tbl_tramite_trmt
+	        WHERE trmt_pk = i18n_ext_pk
+	            AND trmt_enti_pk = entiId
 	    )
 	;
 
-	DELETE FROM tbl_subparametro_version_spvr
-	WHERE
-	    EXISTS (
-	        SELECT 1 FROM tbl_subparametro_sprm
-	        WHERE sprm_pk = spvr_sprm_pk
-	            AND sprm_tpsp_pk = entiId
-	    )
-	;
+	FOR item IN (
+		SELECT fncd_pk FROM tbl_funcionalidad_fncd
+		WHERE EXISTS (
+			SELECT 1 FROM tbl_accion_entidad_acen
+			WHERE acen_pk = fncd_pk
+				AND acen_enti_pk = entiId
+		)
+	)
+	LOOP
+		DELETE FROM tbl_funcionalidad_grupo_fngr WHERE fngr_fncd_pk = item.fncd_pk;
+		DELETE FROM tbl_accion_entidad_acen WHERE acen_pk = item.fncd_pk;
+		DELETE FROM tbl_funcionalidad_fncd WHERE fncd_pk = item.fncd_pk;
+	END LOOP;
 
-	DELETE FROM tbl_subparametro_sprm
-	WHERE sprm_tpsp_pk = entiId
-	;
+	FOR item IN (
+		SELECT fncd_pk FROM tbl_funcionalidad_fncd
+		WHERE EXISTS (
+			SELECT 1 FROM tbl_accion_especial_aces
+			WHERE aces_pk = fncd_pk
+				AND aces_enti_pk = entiId
+		)
+	)
+	LOOP
+		DELETE FROM tbl_funcionalidad_grupo_fngr WHERE fngr_fncd_pk = item.fncd_pk;
+		DELETE FROM tbl_accion_especial_aces WHERE aces_pk = item.fncd_pk;
+		DELETE FROM tbl_funcionalidad_fncd WHERE fncd_pk = item.fncd_pk;
+	END LOOP;
+
+	FOR item IN (
+		SELECT fncd_pk FROM tbl_funcionalidad_fncd
+		WHERE EXISTS (
+			SELECT 1 FROM tbl_tramite_trmt
+			WHERE trmt_pk = fncd_pk
+				AND trmt_enti_pk = entiId
+		)
+	)
+	LOOP
+		DELETE FROM tbl_funcionalidad_grupo_fngr WHERE fngr_fncd_pk = item.fncd_pk;
+		DELETE FROM tbl_tramite_trmt WHERE trmt_pk = item.fncd_pk;
+		DELETE FROM tbl_funcionalidad_fncd WHERE fncd_pk = item.fncd_pk;
+	END LOOP;
 
 	DELETE FROM tbl_entidad_entidad_enen
 	WHERE enen_entih_pk = entiId
 	;
-
-	DELETE FROM tbl_tipo_subparametro_tpsp WHERE tpsp_pk = entiId
+	DELETE FROM tbl_entidad_entidad_enen
+	WHERE enen_entip_pk = entiId
 	;
 
 	DELETE FROM tbl_i18n_i18n
@@ -187,8 +185,48 @@ BEGIN
 	            AND enti_pk = entiId
 	    )
 	;
+
 	DELETE FROM tbl_entidad_enti WHERE enti_pk = entiId
 	;
+END;
+\
+
+
+
+
+
+CREATE OR REPLACE PROCEDURE eraseTpsp(entiId NUMBER) IS
+BEGIN
+	DELETE FROM tbl_subparametro_dato_spdt
+	WHERE
+	    EXISTS (
+	        SELECT 1 FROM tbl_subparametro_version_spvr
+	        WHERE spvr_pk = spdt_spvr_pk
+	            AND EXISTS (
+	                SELECT 1 FROM tbl_subparametro_sprm
+	                WHERE sprm_pk = spvr_sprm_pk
+	                    AND sprm_tpsp_pk = entiId
+	            )
+	    )
+	;
+
+	DELETE FROM tbl_subparametro_version_spvr
+	WHERE
+	    EXISTS (
+	        SELECT 1 FROM tbl_subparametro_sprm
+	        WHERE sprm_pk = spvr_sprm_pk
+	            AND sprm_tpsp_pk = entiId
+	    )
+	;
+
+	DELETE FROM tbl_subparametro_sprm
+	WHERE sprm_tpsp_pk = entiId
+	;
+
+	DELETE FROM tbl_tipo_subparametro_tpsp WHERE tpsp_pk = entiId
+	;
+
+	eraseEnti(entiId);
 END;
 \
 
@@ -225,68 +263,6 @@ BEGIN
 				AND prmt_tppr_pk = entiId
 		)
 	;
-	DELETE FROM tbl_tramite_tipo_dato_trtd
-	WHERE EXISTS (
-		SELECT 1 FROM tbl_tramite_trmt
-		WHERE trmt_pk = trtd_trmt_pk
-			AND trmt_enti_pk = entiId
-	)
-	;
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'trmt'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_tramite_trmt
-	        WHERE trmt_pk = i18n_ext_pk
-	            AND trmt_enti_pk = entiId
-	    )
-	;
-
-	DELETE FROM tbl_funcionalidad_grupo_fngr
-	WHERE
-		EXISTS (
-			SELECT 1 FROM tbl_funcionalidad_fncd
-			WHERE fncd_pk = fngr_fncd_pk
-				AND (
-					EXISTS (
-						SELECT 1 FROM tbl_tramite_trmt
-						WHERE trmt_pk = fncd_pk
-							AND trmt_enti_pk = entiId
-					)
-					OR EXISTS (
-						SELECT 1 FROM tbl_accion_entidad_acen
-						WHERE acen_pk = fncd_pk
-							AND acen_enti_pk = entiId
-					)
-					OR EXISTS (
-						SELECT 1 FROM tbl_accion_especial_aces
-						WHERE aces_pk = fncd_pk
-							AND aces_enti_pk = entiId
-					)
-				)
-		)
-	;
-
-	DELETE FROM tbl_funcionalidad_fncd
-	WHERE
-		(
-			EXISTS (
-				SELECT 1 FROM tbl_tramite_trmt
-				WHERE trmt_pk = fncd_pk
-					AND trmt_enti_pk = entiId
-			)
-			OR EXISTS (
-				SELECT 1 FROM tbl_accion_entidad_acen
-				WHERE acen_pk = fncd_pk
-					AND acen_enti_pk = entiId
-			)
-			OR EXISTS (
-				SELECT 1 FROM tbl_accion_especial_aces
-				WHERE aces_pk = fncd_pk
-					AND aces_enti_pk = entiId
-			)
-		)
-	;
 
 	DELETE FROM tbl_i18n_i18n
 	WHERE i18n_pref = 'prvr'
@@ -319,49 +295,7 @@ BEGIN
 	DELETE FROM tbl_tipo_parametro_tppr WHERE tppr_pk = entiId
 	;
 
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'entd'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_entidad_tipo_dato_entd
-	        WHERE entd_pk = i18n_ext_pk
-	            AND entd_enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk = entiId
-	;
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'engd'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_entidad_grupo_dato_engd
-	        WHERE engd_pk = i18n_ext_pk
-	            AND engd_enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk = entiId
-	;
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'tpdt'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_tipo_dato_tpdt
-	        WHERE tpdt_pk = i18n_ext_pk
-	            AND tpdt_enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_tipo_dato_tpdt WHERE tpdt_enti_pk = entiId
-	;
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'enti'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_entidad_enti
-	        WHERE enti_pk = i18n_ext_pk
-	            AND enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_entidad_enti WHERE enti_pk = entiId
-	;
+	eraseEnti(entiId);
 END;
 \
 
@@ -399,68 +333,6 @@ BEGIN
 				AND ssrv_tpss_pk = entiId
 		)
 	;
-	DELETE FROM tbl_tramite_tipo_dato_trtd
-	WHERE EXISTS (
-		SELECT 1 FROM tbl_tramite_trmt
-		WHERE trmt_pk = trtd_trmt_pk
-			AND trmt_enti_pk = entiId
-	)
-	;
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'trmt'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_tramite_trmt
-	        WHERE trmt_pk = i18n_ext_pk
-	            AND trmt_enti_pk = entiId
-	    )
-	;
-
-	DELETE FROM tbl_funcionalidad_grupo_fngr
-	WHERE
-		EXISTS (
-			SELECT 1 FROM tbl_funcionalidad_fncd
-			WHERE fncd_pk = fngr_fncd_pk
-				AND (
-					EXISTS (
-						SELECT 1 FROM tbl_tramite_trmt
-						WHERE trmt_pk = fncd_pk
-							AND trmt_enti_pk = entiId
-					)
-					OR EXISTS (
-						SELECT 1 FROM tbl_accion_entidad_acen
-						WHERE acen_pk = fncd_pk
-							AND acen_enti_pk = entiId
-					)
-					OR EXISTS (
-						SELECT 1 FROM tbl_accion_especial_aces
-						WHERE aces_pk = fncd_pk
-							AND aces_enti_pk = entiId
-					)
-				)
-		)
-	;
-
-	DELETE FROM tbl_funcionalidad_fncd
-	WHERE
-		(
-			EXISTS (
-				SELECT 1 FROM tbl_tramite_trmt
-				WHERE trmt_pk = fncd_pk
-					AND trmt_enti_pk = entiId
-			)
-			OR EXISTS (
-				SELECT 1 FROM tbl_accion_entidad_acen
-				WHERE acen_pk = fncd_pk
-					AND acen_enti_pk = entiId
-			)
-			OR EXISTS (
-				SELECT 1 FROM tbl_accion_especial_aces
-				WHERE aces_pk = fncd_pk
-					AND aces_enti_pk = entiId
-			)
-		)
-	;
 
 	DELETE FROM tbl_subserv_subserv_ssss
 	WHERE
@@ -494,59 +366,10 @@ BEGIN
 	WHERE ssrv_tpss_pk = entiId
 	;
 
-	DELETE FROM tbl_entidad_entidad_enen
-	WHERE enen_entih_pk = entiId
-	;
-	DELETE FROM tbl_entidad_entidad_enen
-	WHERE enen_entip_pk = entiId
-	;
-
 	DELETE FROM tbl_tipo_subservicio_tpss WHERE tpss_pk = entiId
 	;
 
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'entd'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_entidad_tipo_dato_entd
-	        WHERE entd_pk = i18n_ext_pk
-	            AND entd_enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk = entiId
-	;
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'engd'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_entidad_grupo_dato_engd
-	        WHERE engd_pk = i18n_ext_pk
-	            AND engd_enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk = entiId
-	;
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'tpdt'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_tipo_dato_tpdt
-	        WHERE tpdt_pk = i18n_ext_pk
-	            AND tpdt_enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_tipo_dato_tpdt WHERE tpdt_enti_pk = entiId
-	;
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'enti'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_entidad_enti
-	        WHERE enti_pk = i18n_ext_pk
-	            AND enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_entidad_enti WHERE enti_pk = entiId
-	;
+	eraseEnti(entiId);
 END;
 \
 
@@ -584,68 +407,6 @@ BEGIN
 				AND srvc_tpsr_pk = entiId
 		)
 	;
-	DELETE FROM tbl_tramite_tipo_dato_trtd
-	WHERE EXISTS (
-		SELECT 1 FROM tbl_tramite_trmt
-		WHERE trmt_pk = trtd_trmt_pk
-			AND trmt_enti_pk = entiId
-	)
-	;
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'trmt'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_tramite_trmt
-	        WHERE trmt_pk = i18n_ext_pk
-	            AND trmt_enti_pk = entiId
-	    )
-	;
-
-	DELETE FROM tbl_funcionalidad_grupo_fngr
-	WHERE
-		EXISTS (
-			SELECT 1 FROM tbl_funcionalidad_fncd
-			WHERE fncd_pk = fngr_fncd_pk
-				AND (
-					EXISTS (
-						SELECT 1 FROM tbl_tramite_trmt
-						WHERE trmt_pk = fncd_pk
-							AND trmt_enti_pk = entiId
-					)
-					OR EXISTS (
-						SELECT 1 FROM tbl_accion_entidad_acen
-						WHERE acen_pk = fncd_pk
-							AND acen_enti_pk = entiId
-					)
-					OR EXISTS (
-						SELECT 1 FROM tbl_accion_especial_aces
-						WHERE aces_pk = fncd_pk
-							AND aces_enti_pk = entiId
-					)
-				)
-		)
-	;
-
-	DELETE FROM tbl_funcionalidad_fncd
-	WHERE
-		(
-			EXISTS (
-				SELECT 1 FROM tbl_tramite_trmt
-				WHERE trmt_pk = fncd_pk
-					AND trmt_enti_pk = entiId
-			)
-			OR EXISTS (
-				SELECT 1 FROM tbl_accion_entidad_acen
-				WHERE acen_pk = fncd_pk
-					AND acen_enti_pk = entiId
-			)
-			OR EXISTS (
-				SELECT 1 FROM tbl_accion_especial_aces
-				WHERE aces_pk = fncd_pk
-					AND aces_enti_pk = entiId
-			)
-		)
-	;
 
 	DELETE FROM tbl_servicio_dato_srdt
 	WHERE
@@ -667,50 +428,7 @@ BEGIN
 	DELETE FROM tbl_tipo_servicio_tpsr WHERE tpsr_pk = entiId
 	;
 
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'entd'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_entidad_tipo_dato_entd
-	        WHERE entd_pk = i18n_ext_pk
-	            AND entd_enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk = entiId
-	;
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'engd'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_entidad_grupo_dato_engd
-	        WHERE engd_pk = i18n_ext_pk
-	            AND engd_enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk = entiId
-	;
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'tpdt'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_tipo_dato_tpdt
-	        WHERE tpdt_pk = i18n_ext_pk
-	            AND tpdt_enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_tipo_dato_tpdt WHERE tpdt_enti_pk = entiId
-	;
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'enti'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_entidad_enti
-	        WHERE enti_pk = i18n_ext_pk
-	            AND enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_entidad_enti WHERE enti_pk = entiId
-	;
+	eraseEnti(entiId);
 END;
 \
 
@@ -719,42 +437,6 @@ END;
 
 CREATE OR REPLACE PROCEDURE eraseTpes(entiId NUMBER) IS
 BEGIN
-	DELETE FROM tbl_funcionalidad_grupo_fngr
-	WHERE
-		EXISTS (
-			SELECT 1 FROM tbl_funcionalidad_fncd
-			WHERE fncd_pk = fngr_fncd_pk
-				AND (
-					EXISTS (
-						SELECT 1 FROM tbl_accion_entidad_acen
-						WHERE acen_pk = fncd_pk
-							AND acen_enti_pk = entiId
-					)
-					OR EXISTS (
-						SELECT 1 FROM tbl_accion_especial_aces
-						WHERE aces_pk = fncd_pk
-							AND aces_enti_pk = entiId
-					)
-				)
-		)
-	;
-
-	DELETE FROM tbl_funcionalidad_fncd
-	WHERE
-		(
-			EXISTS (
-				SELECT 1 FROM tbl_accion_entidad_acen
-				WHERE acen_pk = fncd_pk
-					AND acen_enti_pk = entiId
-			)
-			OR EXISTS (
-				SELECT 1 FROM tbl_accion_especial_aces
-				WHERE aces_pk = fncd_pk
-					AND aces_enti_pk = entiId
-			)
-		)
-	;
-
 	DELETE FROM tbl_estadistica_dato_esdt
 	WHERE
 	    EXISTS (
@@ -774,49 +456,7 @@ BEGIN
 	DELETE FROM tbl_tipo_estadistica_tpes WHERE tpes_pk = entiId
 	;
 
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'entd'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_entidad_tipo_dato_entd
-	        WHERE entd_pk = i18n_ext_pk
-	            AND entd_enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk = entiId
-	;
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'engd'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_entidad_grupo_dato_engd
-	        WHERE engd_pk = i18n_ext_pk
-	            AND engd_enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk = entiId
-	;
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'tpdt'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_tipo_dato_tpdt
-	        WHERE tpdt_pk = i18n_ext_pk
-	            AND tpdt_enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_tipo_dato_tpdt WHERE tpdt_enti_pk = entiId
-	;
-
-	DELETE FROM tbl_i18n_i18n
-	WHERE i18n_pref = 'enti'
-	    AND EXISTS (
-	        SELECT 1 FROM tbl_entidad_enti
-	        WHERE enti_pk = i18n_ext_pk
-	            AND enti_pk = entiId
-	    )
-	;
-	DELETE FROM tbl_entidad_enti WHERE enti_pk = entiId
-	;
+	eraseEnti(entiId);
 END;
 \
 
@@ -1003,6 +643,7 @@ DROP PROCEDURE eraseTpsr\
 DROP PROCEDURE eraseTpss\
 DROP PROCEDURE eraseTppr\
 DROP PROCEDURE eraseTpsp\
+DROP PROCEDURE eraseEnti\
 DROP FUNCTION daysBetween\
 DROP FUNCTION concatenate\
 DROP FUNCTION getTipoDato\

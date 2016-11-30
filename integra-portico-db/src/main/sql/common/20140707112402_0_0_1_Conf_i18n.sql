@@ -1837,8 +1837,12 @@ DELETE FROM tbl_funcionalidad_grupo_fngr\
 DELETE FROM tbl_grupo_grpo\
 
 -- Acciones Base
-DELETE FROM tbl_funcionalidad_fncd\
+DELETE FROM tbl_i18n_i18n WHERE i18n_pref = 'mdlo'\
+DELETE FROM tbl_modulo_mdlo\
+DELETE FROM tbl_accion_base_acbs\
+DELETE FROM tbl_accion_entidad_acen\
 DELETE FROM tbl_accion_entidad_base_aebs\
+DELETE FROM tbl_funcionalidad_fncd\
 
 
 -- AP y Puertos

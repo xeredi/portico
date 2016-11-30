@@ -1,0 +1,101 @@
+-- Servicio de suministro de red
+WITH clientes AS (
+    SELECT
+        prmt_pk AS punto_red_pk
+        , prmt_parametro AS punto_red
+        , prmt_prto_pk AS punto_red_prto_pk
+        , sprm_prmt_dep_pk AS cliente_pk
+        , (
+            SELECT prmt_parametro FROM tbl_parametro_prmt
+            WHERE prmt_pk = sprm_prmt_dep_pk
+        ) AS cliente
+        , COALESCE(
+                (
+                    SELECT MAX(srvc_ffin) FROM tbl_servicio_srvc
+                    WHERE
+                        srvc_tpsr_pk = portico.getEntidad('SUMINISTRO_RED')
+                        AND EXISTS (
+                            SELECT 1 FROM tbl_servicio_dato_srdt
+                            WHERE srdt_srvc_pk = srvc_pk
+                                AND srdt_tpdt_pk = portico.getTipoDato('ORGA')
+                                AND srdt_prmt_pk = sprm_prmt_dep_pk
+                        )
+                        AND EXISTS (
+                            SELECT 1 FROM tbl_servicio_dato_srdt
+                            WHERE srdt_srvc_pk = srvc_pk
+                                AND srdt_tpdt_pk = portico.getTipoDato('PUNTO_RED')
+                                AND srdt_prmt_pk = prmt_pk
+                        )
+                )
+            , spvr_fini
+        ) AS cliente_fini
+        , LEAST(
+                COALESCE(spvr_ffin, SYSDATE)
+                , SYSDATE
+        ) AS cliente_ffin
+        , (SELECT spdt_cadena FROM tbl_subparametro_dato_spdt
+            WHERE spdt_spvr_pk = spvr_pk AND spdt_tpdt_pk = portico.getTipoDato('COD_EXEN')) AS cliente_cod_exen
+        , (SELECT spdt_ndecimal FROM tbl_subparametro_dato_spdt
+            WHERE spdt_spvr_pk = spvr_pk AND spdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')) AS cliente_participacion
+    FROM tbl_parametro_prmt
+        INNER JOIN tbl_subparametro_sprm clie ON
+            sprm_prmt_pk = prmt_pk
+        INNER JOIN tbl_subparametro_version_spvr cliev ON spvr_sprm_pk = sprm_pk
+    WHERE
+        prmt_tppr_pk = portico.getEntidad('PUNTO_RED')
+        AND sprm_tpsp_pk = portico.getEntidad('PUNTO_RED_ORGANIZACION')
+)
+SELECT
+    clientes.punto_red_pk
+    , clientes.punto_red
+    , clientes.punto_red_prto_pk
+    , clientes.cliente_pk
+    , clientes.cliente
+    , clientes.cliente_fini
+    , clientes.cliente_ffin
+    , (
+        SELECT MIN(spvr_fini)
+        FROM tbl_subparametro_sprm lect
+            INNER JOIN tbl_subparametro_version_spvr ON spvr_sprm_pk = sprm_pk
+        WHERE
+            sprm_tpsp_pk = portico.getEntidad('PUNTO_RED_TIPO_LECTURA')
+            AND sprm_prmt_pk = punto_red_pk
+            AND spvr_ffin > cliente_fini
+            AND spvr_ffin < cliente_ffin
+    ) AS lectura_fini_min
+    , (
+        SELECT MAX(spvr_ffin)
+        FROM tbl_subparametro_sprm lect
+            INNER JOIN tbl_subparametro_version_spvr ON spvr_sprm_pk = sprm_pk
+        WHERE
+            sprm_tpsp_pk = portico.getEntidad('PUNTO_RED_TIPO_LECTURA')
+            AND sprm_prmt_pk = punto_red_pk
+            AND spvr_ffin > cliente_fini
+            AND spvr_ffin < cliente_ffin
+    ) AS lectura_ffin_max
+    , (
+            SELECT
+                SUM(
+                    (
+                        SELECT spdt_ndecimal FROM tbl_subparametro_dato_spdt
+                        WHERE spdt_tpdt_pk = portico.getTipoDato('DECIMAL_02')
+                            AND spdt_spvr_pk = spvr_pk
+                    ) - (
+                        SELECT spdt_ndecimal FROM tbl_subparametro_dato_spdt
+                        WHERE spdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
+                            AND spdt_spvr_pk = spvr_pk
+                    )
+                )
+            FROM tbl_subparametro_sprm lect
+                INNER JOIN tbl_subparametro_version_spvr ON spvr_sprm_pk = sprm_pk
+            WHERE
+                sprm_tpsp_pk = portico.getEntidad('PUNTO_RED_TIPO_LECTURA')
+                AND sprm_prmt_pk = punto_red_pk
+                AND spvr_ffin > cliente_fini
+                AND spvr_ffin < cliente_ffin
+    ) AS cliente_consumo
+    , clientes.cliente_participacion
+    , clientes.cliente_cod_exen
+FROM clientes
+ORDER BY lectura_fini_min, lectura_ffin_max
+;

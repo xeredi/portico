@@ -179,9 +179,14 @@
         WHERE
             sprm_pk = #{id}
             AND (
-                #{version.fini} BETWEEN spvr_fini AND COALESCE(spvr_ffin, #{version.fini})
-                OR COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
-                    BETWEEN spvr_fini AND COALESCE(spvr_ffin, COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
+                (
+                    #{version.fini} >= spvr_fini
+                    AND #{version.fini} < COALESCE(spvr_ffin, #{version.fini})
+                )
+                OR (
+                    COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()) >= spvr_fini
+                    AND COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()) < COALESCE(spvr_ffin, COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
+                )
             )
     ]]>
         <if test="version.id != null">

@@ -177,7 +177,7 @@ public final class MaestroImporterV2BO extends EntityImporterBO {
                     if (ffin != null) {
                         DateUtil.truncTime(ffin, Calendar.HOUR_OF_DAY);
 
-                        prmt.getVersion().setFini(fini);
+                        prmt.getVersion().setFfin(ffin);
                     }
                 } else {
                     prmt.getVersion().setFini(fechaInicio);
@@ -322,7 +322,7 @@ public final class MaestroImporterV2BO extends EntityImporterBO {
                         if (ffin != null) {
                             DateUtil.truncTime(ffin, Calendar.HOUR_OF_DAY);
 
-                            sprm.getVersion().setFini(fini);
+                            sprm.getVersion().setFfin(ffin);
                         }
                     } else {
                         sprm.getVersion().setFini(fechaInicio);

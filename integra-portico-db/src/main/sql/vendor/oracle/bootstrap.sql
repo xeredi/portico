@@ -59,6 +59,10 @@ TO portico;
 -- DROP USER portico CASCADE;
 -- DROP USER porticoadm CASCADE;
 
+-- TRUNCATE TABLE tbl_valoracion_det_vlrd;
+-- DELETE FROM tbl_valoracion_lin_vlrl;
+-- DELETE FROM tbl_valoracion_vlrc;
+
 -- TRUNCATE TABLE tbl_cuadro_mes_cdms;
 -- TRUNCATE TABLE tbl_estadistica_dato_esdt;
 -- DELETE FROM tbl_estadistica_estd;
@@ -68,6 +72,7 @@ TO portico;
 -- TRUNCATE TABLE tbl_subserv_subserv_ssss;
 -- DELETE FROM tbl_subservicio_ssrv;
 -- TRUNCATE TABLE tbl_servicio_dato_srdt;
+-- DELETE FROM tbl_servicio_actor_srac;
 -- DELETE FROM tbl_servicio_srvc;
 
 -- TRUNCATE TABLE tbl_subparametro_dato_spdt;
