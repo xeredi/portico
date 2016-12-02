@@ -8,10 +8,10 @@ import java.util.Map;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**

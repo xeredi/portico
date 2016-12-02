@@ -417,6 +417,15 @@ BEGIN
 	    )
 	;
 
+	DELETE FROM tbl_servicio_actor_srac
+	WHERE
+	    EXISTS (
+          SELECT 1 FROM tbl_servicio_srvc
+          WHERE srvc_pk = srac_srvc_pk
+              AND srvc_tpsr_pk = entiId
+	    )
+	;
+
 	DELETE FROM tbl_servicio_srvc
 	WHERE srvc_tpsr_pk = entiId
 	;

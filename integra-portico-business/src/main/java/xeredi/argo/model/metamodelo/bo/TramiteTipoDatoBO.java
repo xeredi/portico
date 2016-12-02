@@ -2,20 +2,19 @@ package xeredi.argo.model.metamodelo.bo;
 
 import java.util.List;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import com.google.common.base.Preconditions;
+
+import lombok.NonNull;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.TramiteTipoDatoDAO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
-import xeredi.util.mybatis.SqlMapperLocator;
-
-import com.google.common.base.Preconditions;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

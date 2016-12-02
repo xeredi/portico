@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import lombok.NonNull;
 import xeredi.argo.model.seguridad.dao.UsuarioPermisoDAO;
 import xeredi.argo.model.seguridad.vo.UsuarioPermisoCriterioVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

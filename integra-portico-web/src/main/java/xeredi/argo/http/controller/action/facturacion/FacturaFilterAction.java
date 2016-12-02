@@ -5,10 +5,10 @@ import java.util.List;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaEstado;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**

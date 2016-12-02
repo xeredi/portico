@@ -21,7 +21,7 @@ import xeredi.argo.model.metamodelo.vo.TramiteCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
 import xeredi.argo.model.seguridad.dao.FuncionalidadGrupoDAO;
 import xeredi.argo.model.seguridad.vo.FuncionalidadGrupoCriterioVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

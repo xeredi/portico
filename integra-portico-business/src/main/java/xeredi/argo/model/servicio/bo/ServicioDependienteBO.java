@@ -12,7 +12,7 @@ import xeredi.argo.model.seguridad.vo.UsuarioVO;
 import xeredi.argo.model.servicio.dao.ServicioDAO;
 import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

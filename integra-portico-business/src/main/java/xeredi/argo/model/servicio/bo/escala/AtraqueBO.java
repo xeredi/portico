@@ -23,7 +23,7 @@ import xeredi.argo.model.servicio.dao.escala.AtraqueDAO;
 import xeredi.argo.model.servicio.dao.escala.EscalaDAO;
 import xeredi.argo.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

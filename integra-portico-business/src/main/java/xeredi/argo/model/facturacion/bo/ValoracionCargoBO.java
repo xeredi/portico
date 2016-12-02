@@ -2,15 +2,14 @@ package xeredi.argo.model.facturacion.bo;
 
 import java.util.List;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import lombok.NonNull;
 import xeredi.argo.model.facturacion.dao.ValoracionCargoDAO;
 import xeredi.argo.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

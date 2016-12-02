@@ -11,7 +11,7 @@ import xeredi.argo.model.servicio.bo.ServicioBO;
 import xeredi.argo.model.servicio.dao.buquepesca.BuquePescaServicioDAO;
 import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioMaestroVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -1,7 +1,9 @@
 package xeredi.argo.model.comun.vo;
 
 import lombok.Data;
+import lombok.NonNull;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class OrderByElement.
  */
@@ -19,8 +21,8 @@ public final class OrderByElement {
     };
 
     /** The column name. */
-    private final String columnName;
+    private final @NonNull String columnName;
 
     /** The order by type. */
-    private final OrderByType orderByType;
+    private final @NonNull OrderByType orderByType;
 }

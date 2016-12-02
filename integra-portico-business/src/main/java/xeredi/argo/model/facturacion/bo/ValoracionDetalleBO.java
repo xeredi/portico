@@ -21,8 +21,8 @@ import xeredi.argo.model.facturacion.vo.ValoracionDetalleCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
-import xeredi.util.mybatis.SqlMapperLocator;
-import xeredi.util.pagination.PaginatedList;
+import xeredi.argo.model.util.PaginatedList;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

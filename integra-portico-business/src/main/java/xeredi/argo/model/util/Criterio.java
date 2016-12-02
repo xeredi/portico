@@ -1,4 +1,6 @@
-package xeredi.util.pagination;
+package xeredi.argo.model.util;
+
+import java.util.Map;
 
 // TODO: Auto-generated Javadoc
 /**

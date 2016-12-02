@@ -23,8 +23,8 @@ import xeredi.argo.model.facturacion.vo.ValoracionGrupoCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionGrupoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
+import xeredi.argo.model.util.SqlMapperLocator;
 import xeredi.argo.proceso.ProcesoTemplate;
-import xeredi.util.mybatis.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -60,8 +60,8 @@ import xeredi.argo.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.argo.model.servicio.vo.SubservicioSubservicioCriterioVO;
 import xeredi.argo.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
-import xeredi.util.mybatis.SqlMapperLocator;
-import xeredi.util.pagination.PaginatedList;
+import xeredi.argo.model.util.PaginatedList;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

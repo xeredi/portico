@@ -17,8 +17,8 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.dao.FacturaSerieDAO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
-import xeredi.util.mybatis.SqlMapperLocator;
-import xeredi.util.pagination.PaginatedList;
+import xeredi.argo.model.util.PaginatedList;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

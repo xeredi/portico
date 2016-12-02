@@ -8,6 +8,7 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
@@ -15,7 +16,6 @@ import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**

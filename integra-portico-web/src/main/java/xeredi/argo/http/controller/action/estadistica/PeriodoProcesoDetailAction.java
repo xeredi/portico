@@ -7,10 +7,10 @@ import com.google.common.base.Preconditions;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.argo.model.metamodelo.proxy.TipoEstadisticaProxy;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**

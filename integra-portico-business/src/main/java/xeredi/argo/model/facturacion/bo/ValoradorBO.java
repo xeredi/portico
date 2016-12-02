@@ -56,8 +56,8 @@ import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.servicio.dao.ServicioDAO;
 import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
+import xeredi.argo.model.util.SqlMapperLocator;
 import xeredi.argo.proceso.ProcesoTemplate;
-import xeredi.util.mybatis.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

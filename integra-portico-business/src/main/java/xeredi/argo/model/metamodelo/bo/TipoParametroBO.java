@@ -16,15 +16,15 @@ import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.I18nVO;
+import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.EntidadDAO;
 import xeredi.argo.model.metamodelo.dao.TipoParametroDAO;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
 import xeredi.argo.model.metamodelo.vo.TipoParametroCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
-import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.mybatis.SqlMapperLocator;
-import xeredi.util.pagination.PaginatedList;
+import xeredi.argo.model.util.PaginatedList;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

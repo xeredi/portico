@@ -2,11 +2,10 @@ package xeredi.argo.model.item.bo;
 
 import java.util.List;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.item.dao.ItemTramiteDAO;
@@ -14,7 +13,7 @@ import xeredi.argo.model.item.dao.ItemTramiteDatoDAO;
 import xeredi.argo.model.item.vo.ItemTramiteCriterioVO;
 import xeredi.argo.model.item.vo.ItemTramiteDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

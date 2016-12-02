@@ -20,8 +20,8 @@ import xeredi.argo.model.estadistica.dao.EstadisticaDatoDAO;
 import xeredi.argo.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.argo.model.estadistica.vo.EstadisticaVO;
 import xeredi.argo.model.item.vo.ItemDatoVO;
-import xeredi.util.mybatis.SqlMapperLocator;
-import xeredi.util.pagination.PaginatedList;
+import xeredi.argo.model.util.PaginatedList;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

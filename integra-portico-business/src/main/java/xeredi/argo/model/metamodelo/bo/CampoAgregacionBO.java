@@ -11,7 +11,7 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.CampoAgregacionDAO;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionCriterioVO;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

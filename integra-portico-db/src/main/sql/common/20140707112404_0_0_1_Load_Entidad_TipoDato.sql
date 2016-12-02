@@ -79,46 +79,45 @@ INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpd
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41034, 'Cadena 15')\
 
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41040,  'T', 'ND', NULL , 'DECIMAL_01')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41040, 'Decimal 01')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41041,  'T', 'ND', NULL , 'DECIMAL_02')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41041, 'Decimal 02')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41042,  'T', 'ND', NULL , 'DECIMAL_03')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41042, 'Decimal 03')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41043,  'T', 'ND', NULL , 'DECIMAL_04')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41043, 'Decimal 04')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41044,  'T', 'ND', NULL , 'DECIMAL_05')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41044, 'Decimal 05')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41045,  'T', 'ND', NULL , 'DECIMAL_06')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41045, 'Decimal 06')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41046,  'T', 'ND', NULL , 'DECIMAL_07')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41046, 'Decimal 07')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41047,  'T', 'ND', NULL , 'DECIMAL_08')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41047, 'Decimal 08')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41048,  'T', 'ND', NULL , 'DECIMAL_09')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41048, 'Decimal 09')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41049,  'T', 'ND', NULL , 'DECIMAL_10')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41049, 'Decimal 10')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41050,  'T', 'ND', NULL , 'DECIMAL_11')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41050, 'Decimal 11')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41051,  'T', 'ND', NULL , 'DECIMAL_12')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41051, 'Decimal 12')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41052,  'T', 'ND', NULL , 'DECIMAL_13')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41052, 'Decimal 13')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41053,  'T', 'ND', NULL , 'DECIMAL_14')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41053, 'Decimal 14')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41054,  'T', 'ND', NULL , 'DECIMAL_15')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41054, 'Decimal 15')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41055,  'T', 'ND', NULL , 'DECIMAL_16')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41055, 'Decimal 16')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41056,  'T', 'ND', NULL , 'DECIMAL_17')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41056, 'Decimal 17')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41057,  'T', 'ND', NULL , 'DECIMAL_18')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41057, 'Decimal 18')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41058,  'T', 'ND', NULL , 'DECIMAL_19')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41058, 'Decimal 19')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41059,  'T', 'ND', NULL , 'DECIMAL_20')\
-
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41040, 'Decimal 01')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41041, 'Decimal 02')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41042, 'Decimal 03')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41043, 'Decimal 04')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41044, 'Decimal 05')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41045, 'Decimal 06')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41046, 'Decimal 07')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41047, 'Decimal 08')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41048, 'Decimal 09')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41049, 'Decimal 10')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41050, 'Decimal 11')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41051, 'Decimal 12')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41052, 'Decimal 13')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41053, 'Decimal 14')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41054, 'Decimal 15')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41055, 'Decimal 16')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41056, 'Decimal 17')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41057, 'Decimal 18')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41058, 'Decimal 19')\
-INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41059, 'Decimal 20')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 41059, 'Decimal 20')\
 
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41060,  'T', 'NE', NULL , 'ENTERO_01')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (41061,  'T', 'NE', NULL , 'ENTERO_02')\
@@ -1027,6 +1026,12 @@ INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpd
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('cdrf', 'es', 55574, 'Cruceros (nº)')\
 	INSERT INTO tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55575, portico.getTipoDato('CONC_CUAD_MES'), 'BUQUNI',  20)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('cdrf', 'es', 55575, 'Buques mercantes entrados (nº)')\
+INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (43565, 'S', 'CR', NULL , 'ESTADO_SUM_RED')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 43565, 'Estado de Suministro de Red')\
+	INSERT INTO tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55600, portico.getTipoDato('ESTADO_SUM_RED'), 'F',  1)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('cdrf', 'es', 55600, 'Finalizado')\
+	INSERT INTO tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (55601, portico.getTipoDato('ESTADO_SUM_RED'), 'A',  2)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('cdrf', 'es', 55601, 'Anulado')\
 
 
 -- Codigo de Referencia - i18n
@@ -1924,6 +1929,12 @@ INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES 
 INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable
 	, tpsr_tpdt_estado_pk, tpsr_estados_vlrc, tpsr_estado_def) VALUES (21010, 1, 1, 1, 43200, NULL, NULL)\
 
+-- Suministro de Red
+INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
+	, enti_max_grid, enti_gis, enti_puerto, enti_codigo) VALUES (21011, 'T', 1, 1, 1, 1, 10000, 0, 0, 'SUMINISTRO_RED')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 21011, 'Suministro de Red')\
+	INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable
+		, tpsr_tpdt_estado_pk, tpsr_estados_vlrc, tpsr_estado_def) VALUES (21011, 1, 1, 1, 43565, 'F', 'F')\
 
 
 -- Permisos
@@ -2470,6 +2481,8 @@ BEGIN
 	eraseTpsr(21009);
 	-- Asignacion Amarre
 	eraseTpsr(21010);
+	-- Suministro Red
+	eraseTpsr(21011);
 
 	-- Tipos de subparametro
 	eraseTpsp(24000);
@@ -2739,6 +2752,7 @@ BEGIN
 	eraseTpdt(43550);
 	eraseTpdt(43555);
 	eraseTpdt(43560);
+	eraseTpdt(43565);
 
 	-- Tipos de dato Simples
 	eraseTpdt(41000);

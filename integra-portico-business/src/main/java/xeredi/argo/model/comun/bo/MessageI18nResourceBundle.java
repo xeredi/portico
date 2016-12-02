@@ -13,8 +13,8 @@ import lombok.NonNull;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
+import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**

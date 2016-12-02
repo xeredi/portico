@@ -13,13 +13,11 @@
     </settings>
 
     <typeAliases>
-        <typeAlias type="xeredi.util.applicationobjects.LabelValueVO" alias="LabelValueVO" />
-
         <package name="xeredi.argo.model" />
     </typeAliases>
 
     <typeHandlers>
-        <typeHandler handler="xeredi.util.mybatis.BooleanTypeHandler" javaType="java.lang.Boolean"
+        <typeHandler handler="xeredi.argo.model.util.mybatis.BooleanTypeHandler" javaType="java.lang.Boolean"
             jdbcType="INTEGER" />
     </typeHandlers>
 

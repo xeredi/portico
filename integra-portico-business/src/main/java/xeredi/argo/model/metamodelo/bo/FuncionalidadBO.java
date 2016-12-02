@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import lombok.NonNull;
 import xeredi.argo.model.metamodelo.dao.FuncionalidadDAO;
 import xeredi.argo.model.metamodelo.vo.FuncionalidadCriterioVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

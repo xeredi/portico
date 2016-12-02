@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.ModelDriven;
 import lombok.Data;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
@@ -34,7 +35,6 @@ import xeredi.argo.model.servicio.bo.SubservicioBO;
 import xeredi.argo.model.servicio.bo.SubservicioBOFactory;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**

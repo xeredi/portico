@@ -38,8 +38,8 @@ import xeredi.argo.model.proceso.vo.ProcesoParametroVO;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
-import xeredi.util.mybatis.SqlMapperLocator;
-import xeredi.util.pagination.PaginatedList;
+import xeredi.argo.model.util.PaginatedList;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

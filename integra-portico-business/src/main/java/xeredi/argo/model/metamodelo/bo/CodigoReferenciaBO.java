@@ -18,7 +18,7 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.CodigoReferenciaDAO;
 import xeredi.argo.model.metamodelo.vo.CodigoReferenciaCriterioVO;
 import xeredi.argo.model.metamodelo.vo.CodigoReferenciaVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -3,16 +3,15 @@ package xeredi.argo.model.metamodelo.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import lombok.NonNull;
+import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.metamodelo.dao.EntidadDAO;
 import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
-import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

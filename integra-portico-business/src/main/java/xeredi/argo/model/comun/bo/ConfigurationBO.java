@@ -2,18 +2,17 @@ package xeredi.argo.model.comun.bo;
 
 import java.util.List;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.dao.ConfigurationDAO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.ConfigurationCriterioVO;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.ConfigurationVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

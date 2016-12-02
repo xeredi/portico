@@ -18,7 +18,7 @@ import xeredi.argo.model.facturacion.dao.ReglaIncompatibleDAO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.argo.model.util.DateUtil;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

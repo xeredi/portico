@@ -23,7 +23,7 @@ import xeredi.argo.model.comun.vo.ArchivoSentido;
 import xeredi.argo.model.comun.vo.ArchivoVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.util.GzipUtil;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -24,8 +24,8 @@ import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
 import xeredi.argo.model.seguridad.vo.UsuarioGrupoCriterioVO;
 import xeredi.argo.model.seguridad.vo.UsuarioGrupoVO;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
-import xeredi.util.mybatis.SqlMapperLocator;
-import xeredi.util.pagination.PaginatedList;
+import xeredi.argo.model.util.PaginatedList;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

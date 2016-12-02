@@ -11,6 +11,7 @@ import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.I18nVO;
+import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.facturacion.bo.CargoBO;
 import xeredi.argo.model.facturacion.bo.ReglaBO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
@@ -21,7 +22,6 @@ import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioCriterioVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -2850,6 +2850,563 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES (100600,'B0
 
 
 
+-- ====================== PUNTOS DE RED =========================
+INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES (101000,'TC',21011)\
+	INSERT INTO tbl_cargo_version_crgv (crgv_pk,crgv_crgo_pk,crgv_fini,crgv_ffin,crgv_codigo_norm,crgv_es_principal,crgv_es_temporal,crgv_tipo)
+	VALUES (101001,101000,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'TC',1,0,'T')\
+    	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('crgv', 'es', 101001, 'TARIFA SUMINISTRO RED')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121000,101000,'TCE001',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121001,121000,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,1,0.132824,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'')
+AND dato(DECIMAL_01) > 0'
+		,'0.132824 * (dato(DECIMAL_01) * dato(DECIMAL_02) * dato(PUNTO_RED).dato(DECIMAL_02)) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(DECIMAL_02)',null,null,null
+		,'Consumo','%','Secc. Cable',null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121001, 'Suministro Eléctrico')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121002,101000,'TCE002',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121003,121002,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,2,2.849489,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'')'
+		,'2.849489 * (dato(DECIMAL_02) * dato(PUNTO_RED).dato(ENTERO_07)) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_07)',null,null,null,null
+		,'%','Potencia',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121003, 'Cuota por Potencia Contratada')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121004,101000,'TCE004',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121005,121004,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2015-01-01', 'yyyy-mm-dd'),4,37.613258
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'') AND dato(PUNTO_RED).dato(ENTERO_07) = 1.1'
+		,'37.613258 * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_07)',null,null,null,null
+		,'%','Potencia',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121005, 'Cuota por Potencia Contratada 1.1 KW')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121006,101000,'TCE005',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121007,121006,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2015-01-01', 'yyyy-mm-dd'),5,75.226509
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'') AND dato(PUNTO_RED).dato(ENTERO_07) = 2.2'
+		,'75.226509 * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_07)',null,null,null,null
+		,'%','Potencia',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121007, 'Cuota por Potencia Contratada 2.2 KW')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121010,101000,'TCE015',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121011,121010,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2015-01-01', 'yyyy-mm-dd'),15,17.666832
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'') AND dato(PUNTO_RED).dato(ENTERO_07) = 6.2'
+		,'17.666832 * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_07)',null,null,null,null
+		,'%','Potencia',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121011, 'Cuota por Potencia Contratada 6.2 KW')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121014,101000,'TCE018',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121015,121014,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2015-01-01', 'yyyy-mm-dd'),18,22.795913
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'') AND dato(PUNTO_RED).dato(ENTERO_07) = 8'
+		,'22.795913 * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_07)',null,null,null,null
+		,'%','Potencia',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121015, 'Cuota por Potencia Contratada 8 KW')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121016,101000,'TCE019',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121017,121016,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2015-01-01', 'yyyy-mm-dd'),19,26.215299
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'') AND dato(PUNTO_RED).dato(ENTERO_07) = 9.2'
+		,'26.215299 * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_07)',null,null,null,null
+		,'%','Potencia',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121017, 'Cuota por Potencia Contratada 9.2 KW')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121018,101000,'TCA001',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121019,121018,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,101,0.02
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 0'
+		,'0.02 * LEAST(dato(DECIMAL_01), 5) * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'Consumo','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121019, 'Suministro de Agua por Consumo hasta 5')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121020,101000,'TCA008',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121021,121020,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),108,1.21
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 5'
+		,'1.21 * LEAST(dato(DECIMAL_01)-5,15 -5) * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'Consumo','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121021, 'Suministro de Agua por Consumo hasta 15')\
+
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121023,121020,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,108,1.27
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 5'
+		,'1.27 * LEAST(dato(DECIMAL_01)-5,15 -5) * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'Consumo','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121023, 'Suministro de Agua por Consumo hasta 15')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121024,101000,'TCA009',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121025,121024,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),109,1.77
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 15'
+		,'1.77 * (dato(DECIMAL_01)-15) * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'Consumo','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121025, 'Suministro de Agua por Consumo más de 15')\
+
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121027,121024,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,109,1.87
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 15'
+		,'1.87 * (dato(DECIMAL_01)-15) * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'Consumo','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121027, 'Suministro de Agua por Consumo más de 15')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121028,101000,'TCA002',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121029,121028,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,102,0.02
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 0'
+		,'0.02 * LEAST(dato(DECIMAL_01), 5) * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'Consumo','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121029, 'Alcantarillado por Consumo hasta 5')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121030,101000,'TCA010',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121031,121030,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),110,0.24
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 5'
+		,'0.24 * LEAST(dato(DECIMAL_01)-5,15 -5) * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'Consumo','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121031, 'Alcantarillado por Consumo hasta 15')\
+
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121033,121030,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,110,0.26
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 5'
+		,'0.26 * LEAST(dato(DECIMAL_01)-5,15 -5) * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'Consumo','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121033, 'Alcantarillado por Consumo hasta 15')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121034,101000,'TCA011',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121035,121034,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),111,0.35
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 15'
+		,'0.35 * (dato(DECIMAL_01)-15) * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'Consumo','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121035, 'Alcantarillado por Consumo más de 15')\
+
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121037,121034,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,111,0.38
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 15'
+		,'0.38 * (dato(DECIMAL_01)-15) * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'Consumo','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121037, 'Alcantarillado por Consumo más de 15')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121038,101000,'TCA003',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121039,121038,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),103,0.503
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 0'
+		,'0.503 * dato(DECIMAL_01) * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'Consumo','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121039, 'Saneamiento por Consumo')\
+
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121041,121038,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,103,0.57
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 0'
+		,'0.57 * dato(DECIMAL_01) * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'Consumo','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121041, 'Saneamiento por Consumo')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121042,101000,'TCA004',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121043,121042,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),104,7.32
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 13'
+		,'7.32 * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
+		,'Consumo','%','Diámetro Ent.',null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121043, 'Suministro de Agua Cuota por Calibre (13)')\
+
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121045,121042,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,104,7.67
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 13'
+		,'7.67 * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
+		,'Consumo','%','Diámetro Ent.',null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121045, 'Suministro de Agua Cuota por Calibre (13)')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121046,101000,'TCA048',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121047,121046,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),148,30.99
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 15'
+		,'30.99 * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
+		,'Consumo','%','Diámetro Ent.',null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121047, 'Suministro de Agua Cuota por Calibre (15)')\
+
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121049,121046,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,148,32.59
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 15'
+		,'32.59 * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
+		,'Consumo','%','Diámetro Ent.',null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121049, 'Suministro de Agua Cuota por Calibre (15)')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121050,101000,'TCA049',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121051,121050,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),149,61.72
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 20'
+		,'61.72 * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
+		,'Consumo','%','Diámetro Ent.',null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121051, 'Suministro de Agua Cuota por Calibre (20)')\
+
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121053,121050,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,149,64.96
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 20'
+		,'64.96 * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
+		,'Consumo','%','Diámetro Ent.',null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121053, 'Suministro de Agua Cuota por Calibre (20)')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121054,101000,'TCA050',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121055,121054,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),150,77.49
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 25'
+		,'77.49 * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
+		,'Consumo','%','Diámetro Ent.',null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121055, 'Suministro de Agua Cuota por Calibre (25)')\
+
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121057,121054,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,150,81.53
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 25'
+		,'81.53 * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
+		,'Consumo','%','Diámetro Ent.',null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121057, 'Suministro de Agua Cuota por Calibre (25)')\
+
+
+-- TCA050
+-- 25
+-- 77.49
+-- 81.53
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 INSERT INTO tbl_aspecto_aspc (aspc_pk,aspc_codigo,aspc_tpsr_pk) VALUES (140000, 'B2', 21002)\
 	INSERT INTO tbl_aspecto_version_aspv (
@@ -2908,7 +3465,23 @@ INSERT INTO tbl_aspecto_aspc (aspc_pk,aspc_codigo,aspc_tpsr_pk) VALUES (140004, 
 	INSERT INTO tbl_aspecto_cargo_ascr (ascr_pk,ascr_aspc_pk,ascr_crgo_pk) VALUES (160600, 140004, 100600)\
 		INSERT INTO tbl_aspecto_cargo_version_ascv (ascv_pk,ascv_ascr_pk,ascv_fini,ascv_ffin) VALUES (160601, 160600, TO_DATE('2013-01-01', 'yyyy-mm-dd'),null)\
 
-
+INSERT INTO tbl_aspecto_aspc (aspc_pk,aspc_codigo,aspc_tpsr_pk) VALUES (140006, 'TC', 21011)\
+	INSERT INTO tbl_aspecto_version_aspv (
+		aspv_pk,aspv_aspc_pk,aspv_fini,aspv_ffin,aspv_prioridad
+		,aspv_cpath_info1,aspv_cpath_info2,aspv_cpath_info3,aspv_cpath_info4,aspv_cpath_info5,aspv_cpath_info6
+		,aspv_cetiq_info1,aspv_cetiq_info2,aspv_cetiq_info3,aspv_cetiq_info4,aspv_cetiq_info5,aspv_cetiq_info6
+		,aspv_cgrp_info1,aspv_cgrp_info2,aspv_cgrp_info3,aspv_cgrp_info4,aspv_cgrp_info5,aspv_cgrp_info6
+		,aspv_lsum_cuant1,aspv_lsum_cuant2,aspv_lsum_cuant3,aspv_lsum_cuant4,aspv_lsum_cuant5,aspv_lsum_cuant6
+		,aspv_lgrp_info1,aspv_lgrp_info2,aspv_lgrp_info3,aspv_lgrp_info4,aspv_lgrp_info5,aspv_lgrp_info6)
+	VALUES (140007, 140006,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 2
+		,'dato(PUNTO_RED)','dato(PUNTO_RED).dato(TIPO_SUM)','dato(DECIMAL_01)','dato(DECIMAL_02)',null,null
+		,'Pto. Red','Tipo Suministro','Consumo','% Participación',null,null
+		, 0, 0, 0, null, null, null
+		, 0, 0, 0, 0, 0, 0
+		, 0, 0, 0, 0, 0, 0)\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('aspv', 'es', 140007, 'TARIFA SUMINISTRO RED')\
+	INSERT INTO tbl_aspecto_cargo_ascr (ascr_pk,ascr_aspc_pk,ascr_crgo_pk) VALUES (161000, 140006, 101000)\
+		INSERT INTO tbl_aspecto_cargo_version_ascv (ascv_pk,ascv_ascr_pk,ascv_fini,ascv_ffin) VALUES (161001, 161000, TO_DATE('2013-01-01', 'yyyy-mm-dd'),null)\
 
 
 
@@ -2928,8 +3501,10 @@ BEGIN
 	eraseAspc(140000);
 	eraseAspc(140002);
 	eraseAspc(140004);
+	eraseAspc(140006);
 
 	-- Cargos
+	eraseCrgo(101000);
 	eraseCrgo(100600);
 	eraseCrgo(100400);
 	eraseCrgo(100200);

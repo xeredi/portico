@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoEstadisticaProxy;
@@ -22,7 +23,6 @@ import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**

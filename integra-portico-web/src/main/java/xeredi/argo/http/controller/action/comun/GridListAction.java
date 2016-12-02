@@ -1,14 +1,14 @@
 package xeredi.argo.http.controller.action.comun;
 
+import com.google.common.base.Preconditions;
+import com.opensymphony.xwork2.ModelDriven;
+
 import lombok.Getter;
 import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
-import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
-import com.opensymphony.xwork2.ModelDriven;
+import xeredi.argo.model.util.PaginatedList;
 
 // TODO: Auto-generated Javadoc
 /**

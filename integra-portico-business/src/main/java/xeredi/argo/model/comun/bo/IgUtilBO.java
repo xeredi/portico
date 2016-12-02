@@ -13,7 +13,7 @@ import xeredi.argo.model.comun.dao.IgDAO;
 import xeredi.argo.model.comun.vo.Identifiable;
 import xeredi.argo.model.comun.vo.IgVO;
 import xeredi.argo.model.comun.vo.VersionVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

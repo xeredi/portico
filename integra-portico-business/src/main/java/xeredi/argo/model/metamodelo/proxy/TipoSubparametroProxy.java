@@ -10,12 +10,12 @@ import org.apache.commons.logging.LogFactory;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
+import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**

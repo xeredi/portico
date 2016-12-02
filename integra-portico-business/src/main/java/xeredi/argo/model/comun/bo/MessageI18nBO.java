@@ -6,11 +6,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import lombok.NonNull;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.dao.MessageDAO;
 import xeredi.argo.model.comun.dao.MessageI18nDAO;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
@@ -20,7 +19,7 @@ import xeredi.argo.model.comun.vo.MessageI18nCriterioVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.MessageI18nVO;
 import xeredi.argo.model.comun.vo.MessageVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

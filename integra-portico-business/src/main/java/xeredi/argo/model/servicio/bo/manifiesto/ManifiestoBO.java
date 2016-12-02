@@ -25,7 +25,7 @@ import xeredi.argo.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 import xeredi.argo.model.servicio.vo.manifiesto.ResumenTotalesCriterioVO;
 import xeredi.argo.model.servicio.vo.manifiesto.ResumenTotalesVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

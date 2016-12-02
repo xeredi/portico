@@ -7,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,7 +28,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import lombok.NonNull;
 import oracle.sql.TIMESTAMP;
-import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
@@ -41,14 +39,12 @@ import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
-import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
-import xeredi.argo.model.metamodelo.vo.TipoEntidad;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.util.DateUtil;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

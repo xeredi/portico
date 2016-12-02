@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.argo.model.comun.vo.BaseCriterioVO;
-import xeredi.util.applicationobjects.LabelValueVO;
+import xeredi.argo.model.comun.vo.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**

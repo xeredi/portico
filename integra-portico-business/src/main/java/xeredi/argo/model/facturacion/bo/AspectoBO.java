@@ -24,8 +24,8 @@ import xeredi.argo.model.facturacion.dao.AspectoDAO;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.util.DateUtil;
-import xeredi.util.mybatis.SqlMapperLocator;
-import xeredi.util.pagination.PaginatedList;
+import xeredi.argo.model.util.PaginatedList;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

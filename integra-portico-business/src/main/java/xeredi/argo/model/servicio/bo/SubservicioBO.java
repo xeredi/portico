@@ -20,6 +20,7 @@ import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.ModelException;
+import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.item.dao.ItemTramiteDAO;
 import xeredi.argo.model.item.dao.ItemTramiteDatoDAO;
@@ -43,10 +44,9 @@ import xeredi.argo.model.servicio.vo.SubservicioLupaCriterioVO;
 import xeredi.argo.model.servicio.vo.SubservicioSubservicioCriterioVO;
 import xeredi.argo.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
+import xeredi.argo.model.util.PaginatedList;
 import xeredi.argo.model.util.SetUtil;
-import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.mybatis.SqlMapperLocator;
-import xeredi.util.pagination.PaginatedList;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

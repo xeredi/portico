@@ -32,7 +32,7 @@ import xeredi.argo.model.seguridad.dao.UsuarioDAO;
 import xeredi.argo.model.seguridad.vo.ResultadoLoginVO;
 import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

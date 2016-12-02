@@ -11,7 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.argo.model.estadistica.dao.CuadroMesDAO;
 import xeredi.argo.model.estadistica.vo.CuadroMesVO;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoCriterioVO;
-import xeredi.util.mybatis.SqlMapperLocator;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

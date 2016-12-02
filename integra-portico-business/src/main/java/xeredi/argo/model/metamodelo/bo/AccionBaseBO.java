@@ -20,8 +20,8 @@ import xeredi.argo.model.metamodelo.vo.AccionBaseCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseVO;
 import xeredi.argo.model.seguridad.dao.FuncionalidadGrupoDAO;
 import xeredi.argo.model.seguridad.vo.FuncionalidadGrupoCriterioVO;
-import xeredi.util.mybatis.SqlMapperLocator;
-import xeredi.util.pagination.PaginatedList;
+import xeredi.argo.model.util.PaginatedList;
+import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**

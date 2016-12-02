@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
+import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
 import xeredi.argo.model.metamodelo.bo.TipoEstadisticaBO;
@@ -17,7 +18,6 @@ import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
