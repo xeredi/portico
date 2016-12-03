@@ -19,7 +19,10 @@ public final class ReglaVersionVO extends VersionVO {
     private Integer orden;
 
     /** The importe base. */
-    private Double valorBase;
+    private String valorBase;
+
+    /** The valor base sql. */
+    private String valorBaseSql;
 
     /** The condicion. */
     private String condicion;

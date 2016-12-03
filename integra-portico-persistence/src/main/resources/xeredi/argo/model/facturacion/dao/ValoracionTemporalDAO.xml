@@ -54,7 +54,7 @@
         , rgla_crgo_pk AS vlrt_crgo_pk
         , rgla_pk AS vlrt_rgla_pk
         , NULL AS vlrt_padre_pk
-        , (SELECT rglv_valor_base FROM tbl_regla_version_rglv WHERE rglv_pk = #{rgla.version.id}) AS vlrt_valor_base
+        , ${rgla.version.valorBaseSql} AS vlrt_valor_base
         , 0 AS vlrt_importe_base
         , (${rgla.version.formulaSql}) AS vlrt_importe
         , importe_inc AS vlrt_importe_inc
@@ -113,7 +113,7 @@
 
     <![CDATA[
     FROM (
-        SELECT item.*, rgla.*, srvc_fref AS fref
+        SELECT item.*, rgla.*, #{fref} AS fref
             , NULL AS importe_inc
         FROM
             tbl_servicio_srvc item
@@ -174,13 +174,13 @@
         , (
             CASE
                 WHEN rgla_tipo = 'C'
-                THEN importe_base * (valor_base - 1)
+                THEN importe_base * (${rgla.version.valorBaseSql} - 1)
                 WHEN rgla_tipo = 'D'
-                THEN importe_base * (- valor_base) / 100
+                THEN importe_base * (- ${rgla.version.valorBaseSql}) / 100
                 ELSE 0
             END
         ) AS vlrt_importe
-        , valor_base AS vlrt_valor_base
+        , ${rgla.version.valorBaseSql} AS vlrt_valor_base
         , importe_inc AS vlrt_importe_inc
 
         , vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6
@@ -270,7 +270,7 @@
         , rgla_pk AS vlrt_rgla_pk
         , NULL AS vlrt_padre_pk
         , ssrv_numero AS vlrt_orden
-        , (SELECT rglv_valor_base FROM tbl_regla_version_rglv WHERE rglv_pk = #{rgla.version.id}) AS vlrt_valor_base
+        , ${rgla.version.valorBaseSql} AS vlrt_valor_base
         , 0 AS vlrt_importe_base
         , (${rgla.version.formulaSql}) AS vlrt_importe
         , importe_inc AS vlrt_importe_inc
@@ -335,7 +335,7 @@
 
     <![CDATA[
     FROM (
-        SELECT item.*, rgla.*, rglv.*, srvc.*, srvc_fref AS fref
+        SELECT item.*, rgla.*, rglv.*, srvc.*, #{fref} AS fref
             , NULL AS importe_inc
         FROM
             tbl_subservicio_ssrv item
@@ -416,13 +416,13 @@
         , (
             CASE
                 WHEN rgla_tipo = 'C'
-                THEN importe_base * (valor_base - 1)
+                THEN importe_base * (${rgla.version.valorBaseSql} - 1)
                 WHEN rgla_tipo = 'D'
-                THEN importe_base * (- valor_base) / 100
+                THEN importe_base * (- ${rgla.version.valorBaseSql}) / 100
                 ELSE 0
             END
         ) AS vlrt_importe
-        , valor_base AS vlrt_valor_base
+        , ${rgla.version.valorBaseSql} AS vlrt_valor_base
         , importe_inc AS vlrt_importe_inc
 
         , vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6

@@ -479,9 +479,9 @@ INSERT INTO tbl_funcionalidad_grupo_fngr (fngr_fncd_pk, fngr_grpo_pk)
 
 -- Usuarios
 INSERT INTO tbl_usuario_usro (usro_pk, usro_login, usro_contrasenia, usro_email, usro_nombre, usro_sprt_pk, usro_prto_pk) VALUES (
-	1000, 'admin', 'admin', 'xeredi@gmail.com', 'Administrador', NULL, NULL)\
+	1000, 'admin', 'admin', 'xeredi@gmail.com', 'Administrador', 36001, NULL)\
 INSERT INTO tbl_usuario_usro (usro_pk, usro_login, usro_contrasenia, usro_email, usro_nombre, usro_sprt_pk, usro_prto_pk) VALUES (
-	1001, 'batch', 'batch', 'xeredi@gmail.com', 'Procesos Batch', NULL, NULL)\
+	1001, 'batch', 'batch', 'xeredi@gmail.com', 'Procesos Batch', 36001, NULL)\
 
 INSERT INTO tbl_usuario_grupo_usgr (usgr_usro_pk, usgr_grpo_pk) VALUES (1000, 4000)\
 

@@ -69,7 +69,7 @@ formula
 	| fn = 'CONCAT' '(' f1 = formula ',' f2 = formula ')'
 	| fn = 'GREATEST' '(' f1 = formula ',' f2 = formula ')'
 	| fn = 'LEAST' '(' f1 = formula ',' f2 = formula ')'
-	| fn = 'DECODE' '(' f1 = formula decodeBranch* ',' f2 = formula ')'
+	| fn = 'DECODE' '(' f1 = formula decodeBranch* (',' f2 = formula)? ')'
 
 	| fn = 'acumuladoTeus' '(' f1 = formula ',' f2 = formula ',' f3 = formula ')'
 	| fn = 'valorServicio' '(' f1 = formula ',' f2 = formula ',' f3 = formula ')'
@@ -140,12 +140,20 @@ BOOLEAN_CONSTANT
 	| 'FALSE'
 ;
 
+fragment DOT
+:   '.'
+;
+
+fragment DIGIT
+:   '0'..'9'
+;
+
+fragment INTEGER
+:   DIGIT+
+;
+
 NUMBER_CONSTANT
-:
-	[0-9]+
-	(
-		. [0-9]+
-	)?
+:   INTEGER (DOT INTEGER)?
 ;
 
 NULL_CONSTANT

@@ -1468,7 +1468,7 @@ CREATE TABLE tbl_regla_version_rglv (
 	, rglv_fini TIMESTAMP NOT NULL
 	, rglv_ffin TIMESTAMP
 	, rglv_orden INT NOT NULL
-	, rglv_valor_base NUMERIC(10, 4) NOT NULL
+	, rglv_valor_base VARCHAR2(1000) NOT NULL
 	, rglv_condicion VARCHAR2(2000) NOT NULL
 	, rglv_formula VARCHAR2(2000) NOT NULL
 
@@ -1791,6 +1791,7 @@ CREATE TABLE tbl_valoracion_lin_vlrl (
 	, vlrl_vlrc_pk NUMBER(19) NOT NULL
 	, vlrl_rgla_pk NUMBER(19) NOT NULL
 	, vlrl_impuesto_prmt_pk NUMBER(19)
+	, vlrl_valor_base NUMERIC(12, 6) NOT NULL
 	, vlrl_ssrv_pk NUMBER(19)
 	, vlrl_fini TIMESTAMP
 	, vlrl_ffin TIMESTAMP
@@ -1832,7 +1833,7 @@ CREATE TABLE tbl_valoracion_det_vlrd (
 	, vlrd_vlrc_pk NUMBER(19) NOT NULL
 	, vlrd_padre_pk NUMBER(19) NOT NULL
 	, vlrd_vlrl_pk NUMBER(19) NOT NULL
-	, vlrd_valor_base NUMERIC(10, 4) NOT NULL
+	, vlrd_valor_base NUMERIC(12, 6) NOT NULL
 	, vlrd_importe_base NUMERIC(10, 2) NOT NULL
 	, vlrd_importe NUMERIC(10, 2) NOT NULL
 	, vlrd_ssrv_pk NUMBER(19)
@@ -2363,6 +2364,8 @@ DROP TABLE tbl_servicio_actor_srac\
 DROP TABLE tbl_servicio_srvc\
 DROP TABLE tbl_tipo_subservicio_tpss\
 DROP TABLE tbl_tipo_servicio_tpsr\
+DROP TABLE tbl_usuario_grupo_usgr\
+DROP TABLE tbl_usuario_usro\
 DROP TABLE tbl_subparametro_dato_spdt\
 DROP TABLE tbl_subparametro_version_spvr\
 DROP TABLE tbl_subparametro_sprm\
@@ -2383,9 +2386,7 @@ DROP TABLE tbl_modulo_mdlo\
 DROP TABLE tbl_accion_base_acbs\
 DROP TABLE tbl_funcionalidad_grupo_fngr\
 DROP TABLE tbl_funcionalidad_fncd\
-DROP TABLE tbl_usuario_grupo_usgr\
 DROP TABLE tbl_grupo_grpo\
-DROP TABLE tbl_usuario_usro\
 DROP TABLE tbl_puerto_prto\
 DROP TABLE tbl_superpuerto_sprt\
 DROP TABLE tbl_ig\

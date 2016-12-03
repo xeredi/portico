@@ -33,6 +33,9 @@ public final class ValoracionLineaVO implements Identifiable {
     /** The rgla. */
     private ReglaVO rgla;
 
+    /** The valor base. */
+    private Double valorBase;
+
     /** The importe base. */
     private Double importeBase;
 

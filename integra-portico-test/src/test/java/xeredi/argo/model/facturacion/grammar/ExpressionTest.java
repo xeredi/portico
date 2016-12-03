@@ -26,6 +26,7 @@ public final class ExpressionTest {
     @Test
     public void test() throws IOException, InstanceNotFoundException {
         for (int i = 0; i < 1; i++) {
+            test(Entidad.PARTIDA.getId(), "0.456", PathType.ID);
             test(Entidad.PARTIDA.getId(), "-0.4 + 2 * 3 * (4 + 1)", PathType.ID);
             test(Entidad.PARTIDA.getId(), "3 >= 2 + 1", PathType.ID);
             test(Entidad.PARTIDA.getId(), "2 BETWEEN 1 AND 3", PathType.ID);

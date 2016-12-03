@@ -1,7 +1,7 @@
 -- // 0 0 2 Facturacion Funciones
 -- Migration SQL that makes the change goes here.
 
-create or replace FUNCTION acumuladoTeus(consignatario VARCHAR, fini VARCHAR, ffin DATE) RETURN integer IS
+create or replace FUNCTION acumuladoTeus(consignatario VARCHAR, fini VARCHAR, ffin DATE) RETURN integer  RESULT_CACHE RELIES_ON (tbl_valoracion_det_vlrd) IS
 	resultValue integer;
 BEGIN
 SELECT

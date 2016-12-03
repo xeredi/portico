@@ -55,6 +55,8 @@
 				<result column="vlrl_fini" property="fini" />
 				<result column="vlrl_ffin" property="ffin" />
 
+				<result column="vlrl_valor_base" property="valorBase" />
+
 				<result column="vlrl_info1" property="info1" />
 				<result column="vlrl_info2" property="info2" />
 				<result column="vlrl_info3" property="info3" />
@@ -169,6 +171,7 @@
                 , vlrt_impuesto_prmt_pk AS vlrl_impuesto_prmt_pk
                 , vlrt_fref AS fref
                 , vlrt_srvc_pk AS srvc_pk
+                , vlrt_valor_base AS vlrl_valor_base
     ]]>
 
 		<if test="aspc.version.lgrpInfo1">

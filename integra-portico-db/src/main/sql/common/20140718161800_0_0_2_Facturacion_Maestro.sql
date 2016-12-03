@@ -17,15 +17,22 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES ('120000','100000','B3_001','22004','T')\
 		INSERT INTO tbl_regla_version_rglv (
 			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
-			,rglv_condicion,rglv_formula
+			,rglv_condicion
+			,rglv_formula
 			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
 			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('120001','120000',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,1,2.95,'padre(BL).dato(TIPO_BL) = ''M''
-		AND padre(BL).dato(BOOLEANO_02) = 0','2.95 * dato(ENTERO_04) / 1000','padre(BL).dato(TIPO_IVA)','padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)','padre(BL).dato(BOOLEANO_01)','padre(BL).dato(COD_EXEN)'
-		,'padre(BL).dato(TIPO_BL)',null,null,null,null,null,'Tipo BL',null,null,null,null,null,'dato(ENTERO_04) / 1000',null,null,null,null,null,'Peso (Tm)',null,null,null,null,null)\
+		VALUES ('120001','120000',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,1,'2.95'
+		,'padre(BL).dato(TIPO_BL) = ''M''
+		AND padre(BL).dato(BOOLEANO_02) = 0'
+		,'2.95 * dato(ENTERO_04) / 1000'
+		,'padre(BL).dato(TIPO_IVA)','padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)','padre(BL).dato(BOOLEANO_01)','padre(BL).dato(COD_EXEN)'
+		,'padre(BL).dato(TIPO_BL)',null,null,null,null,null
+		,'Tipo BL',null,null,null,null,null
+		,'dato(ENTERO_04) / 1000',null,null,null,null,null
+		,'Peso (Tm)',null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120001, 'RDL 2/2011 Tasa Mercancï¿œa - Art.217')\
 
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES ('120002','100000','B3_002','22005','T')\
@@ -37,7 +44,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120003,120002,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,2,2.95,'(
+		VALUES (120003,120002,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,2,'2.95','(
 		    padre(BL).dato(TIPO_BL) = ''M''
 		    AND padre(BL).dato(BOOLEANO_02) = 0
 		)
@@ -54,7 +61,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120005,120004,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,3,2.95,'padre(BL).dato(TIPO_BL) = ''M''
+		VALUES (120005,120004,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,3,'2.95','padre(BL).dato(TIPO_BL) = ''M''
 		AND padre(BL).dato(BOOLEANO_02) = 1
 		AND dato(MERCANCIA).dato(BOOLEANO_01) = 1
 		AND dato(UNIDAD_CARGA).dato(MERCANCIA) IS NULL','2.95 * dato(ENTERO_01)','padre(BL).dato(TIPO_IVA)','padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)','padre(BL).dato(BOOLEANO_01)','padre(BL).dato(COD_EXEN)','padre(BL).dato(TIPO_BL)',null,null,null,null,null,'Tipo BL',null,null,null,null,null,'dato(ENTERO_01)',null,null,null,null,null,'Nï¿œ Bultos',null,null,null,null,null)\
@@ -69,7 +76,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120007,120006,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,4,2.95,'padre(BL).dato(TIPO_BL) = ''M''
+		VALUES (120007,120006,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,4,'2.95','padre(BL).dato(TIPO_BL) = ''M''
 		AND padre(BL).dato(BOOLEANO_02) = 1','2.95 * DECODE(dato(ENTERO_01), NULL, 1, 0, 1, dato(ENTERO_01))','padre(BL).dato(TIPO_IVA)','padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)','padre(BL).dato(BOOLEANO_01)','padre(BL).dato(COD_EXEN)','padre(BL).dato(TIPO_BL)','padre(BL).dato(TIPO_OP_BL)','padre(BL).dato(TIPO_TRANSPORTE)','dato(UNIDAD_CARGA)','dato(CADENA_02)',null,'Tipo BL','Tipo Op. BL','Tipo Transp.','U.C.','Ind. Lleno-Vacï¿œo',null,'DECODE(dato(ENTERO_01), NULL, 1, 0, 1, dato(ENTERO_01))',null,null,null,null,null,'Nï¿œ U.C.',null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120007, 'RDL 2/2011 Tasa MercancÃ­a - Art.217')\
 
@@ -82,7 +89,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120009,120008,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,6,2.95,'padre(BL).dato(TIPO_BL) = ''M''
+		VALUES (120009,120008,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,6,'2.95','padre(BL).dato(TIPO_BL) = ''M''
 		AND padre(BL).dato(BOOLEANO_02) = 0
 		AND dato(UNIDAD_CARGA) NOT IN (''31'', ''P3'', ''M-'', ''P1'', ''P2'', ''TA'', ''32'', ''33'', ''34'', ''P4'', ''M+'', ''P4'', ''TR'')','2.95 * dato(ENTERO_02) / 1000','padre(BL).dato(TIPO_IVA)','padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)','padre(BL).dato(BOOLEANO_01)','padre(BL).dato(COD_EXEN)','padre(BL).dato(TIPO_BL)','padre(BL).dato(TIPO_OP_BL)','padre(BL).dato(TIPO_TRANSPORTE)','dato(UNIDAD_CARGA)','dato(CADENA_02)',null,'Tipo BL','Tipo Op. BL','Tipo Transp.','U.C.','Ind. Lleno-Vacï¿œo',null,'dato(ENTERO_02) / 1000',null,null,null,null,null,'Tara (Tm)',null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120009, 'RDL 2/2011 Tasa MercancÃ­a - Art.217')\
@@ -97,7 +104,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('120011','120010',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'1',1.25,'1 = 1','1.25',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
+		VALUES ('120011','120010',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'1','1.25','1 = 1','1.25',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120011, 'Art.166')\
 
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES ('120012','100000','B3_C02','22005','C')\
@@ -109,7 +116,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('120013','120012',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'2',1.25,'1 = 1','1.25',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
+		VALUES ('120013','120012',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'2','1.25','1 = 1','1.25',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120013, 'Art.166')\
 
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES ('120014','100000','B3_C03','22005','C')\
@@ -121,7 +128,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('120015','120014',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'3',10,'dato(UNIDAD_CARGA) IN (''31'', ''P3'', ''M-'', ''P1'')
+		VALUES ('120015','120014',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'3','10','dato(UNIDAD_CARGA) IN (''31'', ''P3'', ''M-'', ''P1'')
 		AND (
 		    padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'',''TE'',''TD'',''AA'',''CA'',''ET'',''DT'')
 		    OR (
@@ -181,7 +188,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('120021','120020',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'6',0.5,'(
+		VALUES ('120021','120020',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'6','0.5','(
 		    padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'',''TE'',''TD'',''AA'',''CA'',''ET'',''DT'')
 		    OR (
 			padre(BL).dato(TIPO_OP_BL) = ''DT''
@@ -223,7 +230,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('120025','120024',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'8',0.9,'dato(UNIDAD_CARGA) IN (''31'', ''P3'', ''M-'', ''P1'', ''P2'')
+		VALUES ('120025','120024',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'8','0.9','dato(UNIDAD_CARGA) IN (''31'', ''P3'', ''M-'', ''P1'', ''P2'')
 		AND (
 		    padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'',''TE'',''TD'',''AA'',''CA'',''ET'',''DT'')
 		    OR (
@@ -246,7 +253,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('120027','120026',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'9',1.8,'dato(UNIDAD_CARGA) IN (''32'', ''33'', ''34'', ''P4'', ''M+'', ''P4'')
+		VALUES ('120027','120026',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'9','1.8','dato(UNIDAD_CARGA) IN (''32'', ''33'', ''34'', ''P4'', ''M+'', ''P4'')
 		AND (
 		    padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'',''TE'',''TD'',''AA'',''CA'',''ET'',''DT'')
 		    OR (
@@ -269,7 +276,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('120029','120028',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'10',0.6,'dato(UNIDAD_CARGA) = ''TR''
+		VALUES ('120029','120028',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'10','0.6','dato(UNIDAD_CARGA) = ''TR''
 		AND (
 		    padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'',''TE'',''TD'',''AA'',''CA'',''ET'',''DT'')
 		    OR (
@@ -292,7 +299,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('120031','120030',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'11',2.9,'dato(UNIDAD_CARGA) = ''TA''
+		VALUES ('120031','120030',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'11','2.9','dato(UNIDAD_CARGA) = ''TA''
 		AND (
 		    padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'',''TE'',''TD'',''AA'',''CA'',''ET'',''DT'')
 		    OR (
@@ -315,7 +322,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('120033','120032',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'12',0.5,'dato(UNIDAD_CARGA) NOT IN (''31'', ''P3'', ''M-'', ''P1'', ''P2'', ''TA'', ''32'', ''33'', ''34'', ''P4'', ''M+'', ''P4'', ''TR'')
+		VALUES ('120033','120032',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'12','0.5','dato(UNIDAD_CARGA) NOT IN (''31'', ''P3'', ''M-'', ''P1'', ''P2'', ''TA'', ''32'', ''33'', ''34'', ''P4'', ''M+'', ''P4'', ''TR'')
 		AND (
 		    padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'',''TE'',''TD'',''AA'',''CA'',''ET'',''DT'')
 		    OR (
@@ -338,7 +345,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('120035','120034',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'13',0.16,'(
+		VALUES ('120035','120034',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'13','0.16','(
 		    padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'',''TE'',''TD'',''AA'',''CA'',''ET'',''DT'')
 		    OR (
 			padre(BL).dato(TIPO_OP_BL) = ''DT''
@@ -357,7 +364,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('120037','120036',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'14',0.27,'(
+		VALUES ('120037','120036',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'14','0.27','(
 		    padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'',''TE'',''TD'',''AA'',''CA'',''ET'',''DT'')
 		    OR (
 			padre(BL).dato(TIPO_OP_BL) = ''DT''
@@ -376,7 +383,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('120039','120038',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'15',0.43,'(
+		VALUES ('120039','120038',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'15','0.43','(
 		    padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'',''TE'',''TD'',''AA'',''CA'',''ET'',''DT'')
 		    OR (
 			padre(BL).dato(TIPO_OP_BL) = ''DT''
@@ -395,7 +402,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100000','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('120041','120040',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'16',0.72,'(
+		VALUES ('120041','120040',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'16','0.72','(
 		    padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'',''TE'',''TD'',''AA'',''CA'',''ET'',''DT'')
 		    OR (
 			padre(BL).dato(TIPO_OP_BL) = ''DT''
@@ -1108,7 +1115,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645052','1645051',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'1',3.23,'(padre(BL).dato(TIPO_BL) = ''P'' )
+		VALUES ('1645052','1645051',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'1','3.23','(padre(BL).dato(TIPO_BL) = ''P'' )
 		AND dato(MERCANCIA) NOT IN (''0001D'', ''0001C'', ''0002C'')','3.23 * dato(ENTERO_03)','padre(BL).dato(TIPO_IVA)','padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)','padre(BL).dato(BOOLEANO_01)','padre(BL).dato(COD_EXEN)','padre(BL).dato(TIPO_BL)','dato(MERCANCIA)',null,null,null,null,'Tipo BL','Mercancï¿œa',null,null,null,null,'dato(ENTERO_03)',null,null,null,null,null,'Nï¿œ Pasajeros',null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 1645052, 'RDL 2/2011 Tasa Pasaje - Art.208')\
 
@@ -1121,7 +1128,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645054','1645053',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'2',3.23,'(padre(BL).dato(TIPO_BL) = ''P'')
+		VALUES ('1645054','1645053',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'2','3.23','(padre(BL).dato(TIPO_BL) = ''P'')
 		AND dato(MERCANCIA) IN (''0001C'',''0002C'')','3.23 * dato(ENTERO_03) * COALESCE(servicio.dato(ENTERO_02), 1)','padre(BL).dato(TIPO_IVA)','padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)','padre(BL).dato(BOOLEANO_01)','padre(BL).dato(COD_EXEN)','padre(BL).dato(TIPO_BL)','dato(MERCANCIA)','servicio.dato(ENTERO_02)',null,null,null,'Tipo BL','Mercancia','Dï¿œas en Puerto',null,null,null,'dato(ENTERO_03)',null,null,null,null,null,'Nï¿œ Pasajeros',null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 1645054, 'RDL 2/2011 Tasa Pasaje - Art.208.a.1.4/5')\
 
@@ -1147,7 +1154,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645062','1645061',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'1',1.1,'1 = 1',1.1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
+		VALUES ('1645062','1645061',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'1','1.1','1 = 1',1.1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 1645062, 'Art.166')\
 
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES ('1645105','100200','B2_C02','22004','C')\
@@ -1159,7 +1166,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645106','1645105',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'2',0.75,'(
+		VALUES ('1645106','1645105',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'2','0.75','(
 		    (
 			padre(BL).dato(TIPO_OP_BL) = ''E''
 			AND padre(BL).dato(UNLOCODE_3).dato(PAIS).dato(BOOLEANO_02) = 1
@@ -1204,7 +1211,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645104','1645103',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'4',1.2,'padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
+		VALUES ('1645104','1645103',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'4','1.2','padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
 		AND dato(MERCANCIA) = ''0001X''
 		AND padre(BL).dato(TIPO_NAV) <> ''I''','1.20',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 1645104, 'Art.208.a.1.3')\
@@ -1218,7 +1225,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645102','1645101',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'5',0.75,'padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
+		VALUES ('1645102','1645101',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'5','0.75','padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
 		AND dato(MERCANCIA) = ''0001X''
 		AND padre(BL).dato(TIPO_NAV) <> ''I''
 		AND servicio.dato(ENTERO_02) > 1','0.75',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
@@ -1233,7 +1240,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645083','1645082',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'6',0.75,'padre(BL).dato(TIPO_OP_BL) IN (''ET'', ''DT'')
+		VALUES ('1645083','1645082',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'6','0.75','padre(BL).dato(TIPO_OP_BL) IN (''ET'', ''DT'')
 		AND dato(MERCANCIA) = ''0001C''
 		AND padre(BL).dato(TIPO_NAV) <> ''I''','0.75',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 1645083, 'Art.208.a.1.5')\
@@ -1247,7 +1254,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645081','1645080',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'7',1.3,'padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
+		VALUES ('1645081','1645080',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'7','1.3','padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
 		AND dato(MERCANCIA) = ''0004''
 		AND padre(BL).dato(TIPO_NAV) <> ''I''','1.30'
 			,null,null,null,null
@@ -1266,7 +1273,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645100','1645099',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'8',2.9,'padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
+		VALUES ('1645100','1645099',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'8','2.9','padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
 		AND dato(MERCANCIA) = ''0005''
 		AND padre(BL).dato(TIPO_NAV) <> ''I''','2.90'
 			,null,null,null,null
@@ -1285,7 +1292,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645098','1645097',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'9',5.8,'padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
+		VALUES ('1645098','1645097',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'9','5.8','padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
 		AND dato(MERCANCIA) = ''0005L''
 		AND padre(BL).dato(TIPO_NAV) <> ''I''','5.80'
 			,null,null,null,null
@@ -1304,7 +1311,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645079','1645078',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'10',15.6,'padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
+		VALUES ('1645079','1645078',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'10','15.6','padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
 		AND dato(MERCANCIA) = ''0007''
 		AND padre(BL).dato(TIPO_NAV) <> ''I''','15.60'
 			,null,null,null,null
@@ -1323,7 +1330,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645092','1645091',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'11',0.02,'padre(BL).dato(ALIN).dato(BOOLEANO_01) = 0
+		VALUES ('1645092','1645091',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'11','0.02','padre(BL).dato(ALIN).dato(BOOLEANO_01) = 0
 		AND padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
 		AND dato(MERCANCIA) IN (''0001'',''0002'')
 		AND padre(BL).dato(TIPO_NAV) = ''I''
@@ -1344,7 +1351,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645096','1645095',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'12',0.4,'padre(BL).dato(ALIN).dato(BOOLEANO_01) = 0
+		VALUES ('1645096','1645095',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'12','0.4','padre(BL).dato(ALIN).dato(BOOLEANO_01) = 0
 		AND padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
 		AND dato(MERCANCIA) = ''0004''
 		AND padre(BL).dato(TIPO_NAV) = ''I''','0.40'
@@ -1364,7 +1371,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645077','1645076',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'13',0.9,'padre(BL).dato(ALIN).dato(BOOLEANO_01) = 0
+		VALUES ('1645077','1645076',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'13','0.9','padre(BL).dato(ALIN).dato(BOOLEANO_01) = 0
 		AND padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
 		AND dato(MERCANCIA) = ''0005''
 		AND padre(BL).dato(TIPO_NAV) = ''I''','0.90'
@@ -1384,7 +1391,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645075','1645074',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'14',1.8,'padre(BL).dato(ALIN).dato(BOOLEANO_01) = 0
+		VALUES ('1645075','1645074',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'14','1.8','padre(BL).dato(ALIN).dato(BOOLEANO_01) = 0
 		AND padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
 		AND dato(MERCANCIA) = ''0005L''
 		AND padre(BL).dato(TIPO_NAV) = ''I''','1.80'
@@ -1424,7 +1431,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645094','1645093',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'16',0.2,'padre(BL).dato(ALIN).dato(BOOLEANO_01) = 0
+		VALUES ('1645094','1645093',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'16','0.2','padre(BL).dato(ALIN).dato(BOOLEANO_01) = 0
 		AND padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
 		AND servicio.dato(ESCALA).dato(SERV_TRAF) = ''C22''','0.20'
 			,null,null,null,null
@@ -1443,7 +1450,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645073','1645072',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'17',0.04,'padre(BL).dato(ALIN).dato(BOOLEANO_01) = 0
+		VALUES ('1645073','1645072',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'17','0.04','padre(BL).dato(ALIN).dato(BOOLEANO_01) = 0
 		AND padre(BL).dato(TIPO_OP_BL) IN (''E'', ''D'')
 		AND servicio.dato(ESCALA).dato(SERV_TRAF) = ''C04''','0.04'
 			,null,null,null,null
@@ -1462,7 +1469,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645070','1645069',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'18',0.5,'padre(BL).dato(TERMINAL).dato(BOOLEANO_01) = 1
+		VALUES ('1645070','1645069',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'18','0.5','padre(BL).dato(TERMINAL).dato(BOOLEANO_01) = 1
 		AND padre(BL).dato(ALIN).dato(BOOLEANO_01) = 1
 		AND  padre(BL).dato(TIPO_NAV) <> ''I''
 		AND (
@@ -1511,7 +1518,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645064','1645063',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'34',0.75,'padre(BL).dato(TERMINAL).dato(BOOLEANO_01) = 1
+		VALUES ('1645064','1645063',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'34','0.75','padre(BL).dato(TERMINAL).dato(BOOLEANO_01) = 1
 		AND padre(BL).dato(ALIN).dato(BOOLEANO_01) = 0
 		AND padre(BL).dato(TIPO_NAV) <> ''I''
 		AND (
@@ -1551,7 +1558,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645087','1645086',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'50',0.8,'(
+		VALUES ('1645087','1645086',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'50','0.8','(
 		    (
 			padre(BL).dato(ALIN).dato(BOOLEANO_01) = 0
 			AND padre(BL).dato(TIPO_NAV) <> ''I''
@@ -1603,7 +1610,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES ('1645090','1645089',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'91',0.2,'padre(BL).dato(TIPO_NAV) <> ''I''
+		VALUES ('1645090','1645089',TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,'91','0.2','padre(BL).dato(TIPO_NAV) <> ''I''
 		AND padre(BL).dato(ALIN).dato(BOOLEANO_01) = 0
 		AND (
 		    dato(MERCANCIA) IN (''0001C'',''0002C'')
@@ -1627,7 +1634,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES ('100200','
 			)
 		    )
 		)
-		AND valorServicio(''II'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''',0.2
+		AND valorServicio(''II'', padre(BL).dato(SERV_TRAF), servicio.atributo(PK)) = ''S''','0.2'
 			,null,null,null,null
 			,null,null,null,null,null,null
 			,null,null,null,null,null,null
@@ -1698,7 +1705,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES (100400,'B1
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120401,120400,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,1,1.43,'dato(TIPO_ESTAN_ATR) = ''C''
+		VALUES (120401,120400,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,1,'1.43','dato(TIPO_ESTAN_ATR) = ''C''
 AND (
 	(
 		valorServicio(''TM'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
@@ -1725,7 +1732,7 @@ AND (
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120403,120402,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,2,1.2,'dato(TIPO_ESTAN_ATR) = ''C''
+		VALUES (120403,120402,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,2,'1.2','dato(TIPO_ESTAN_ATR) = ''C''
 AND (
 	(
 		valorServicio(''TM'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
@@ -1754,7 +1761,7 @@ AND (
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120405,120404,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,3,1.43,'dato(TIPO_ESTAN_ATR) = ''L'''
+		VALUES (120405,120404,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,3,'1.43','dato(TIPO_ESTAN_ATR) = ''L'''
 		, '1.43 * unidadesGtsAtraque(atributo(PK)) * periodosFacturablesAtraque(atributo(PK))','servicio.dato(TIPO_IVA)','COALESCE(dato(ORGA), dato(ORGA_2))','dato(BOOLEANO_01)','dato(COD_EXEN)'
 		,'dato(TIPO_ESTAN_ATR)',null,null,null,null,null
 		,'Tipo Estancia',null,null,null,null,null
@@ -1774,7 +1781,7 @@ AND (
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120407,120406,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 1, 1.2, '1 = 1', '1.2', null, null, null, null, null, null, null, null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
+		VALUES (120407,120406,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 1, '1.2', '1 = 1', '1.2', null, null, null, null, null, null, null, null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120407, 'Coef. Corrector de la A.P.')\
 
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120408,100400,'B1_C02',22011,'C')\
@@ -1786,7 +1793,7 @@ AND (
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120409,120408,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 2, 1,'dato(ALIN).dato(BOOLEANO_01) <> 1 AND dato(TIPO_ATR) = ''C''','1',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
+		VALUES (120409,120408,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 2, '1','dato(ALIN).dato(BOOLEANO_01) <> 1 AND dato(TIPO_ATR) = ''C''','1',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 120409, 'No Concesión - Atracados Costado')\
 
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (120410,100400,'B1_C03',22011,'C')\
@@ -1798,7 +1805,7 @@ AND (
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120411,120410,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 3, 0.8
+		VALUES (120411,120410,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 3, '0.8'
 			,'dato(ALIN).dato(BOOLEANO_01) <> 1 AND dato(TIPO_ATR) IN (''P'', ''A'', ''B'')','0.8'
 			,null,null,null,null
 			,null,null,null,null,null,null
@@ -1816,7 +1823,7 @@ AND (
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120413,120412,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 4, 0.6
+		VALUES (120413,120412,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 4, '0.6'
 			,'dato(ALIN).dato(BOOLEANO_01) = 1 AND dato(ALIN).dato(BOOLEANO_03) = 1 AND dato(TIPO_ATR) = ''C''','0.6'
 			,null,null,null,null
 			,null,null,null,null,null,null
@@ -1834,7 +1841,7 @@ AND (
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120415,120414,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 5, 0.5
+		VALUES (120415,120414,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 5, '0.5'
 			,'dato(ALIN).dato(BOOLEANO_01) = 1 AND dato(ALIN).dato(BOOLEANO_03) = 1 AND dato(TIPO_ATR) IN (''P'', ''A'', ''B'')','0.5'
 			,null,null,null,null
 			,null,null,null,null,null,null
@@ -1852,7 +1859,7 @@ AND (
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120417,120416,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 6, 0.7
+		VALUES (120417,120416,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 6, '0.7'
 			,'dato(ALIN).dato(BOOLEANO_01) = 1 AND dato(ALIN).dato(BOOLEANO_03) = 0 AND dato(TIPO_ATR) = ''C''','0.7'
 			,null,null,null,null
 			,null,null,null,null,null,null
@@ -1870,7 +1877,7 @@ AND (
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120419,120418,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 7, 0.6
+		VALUES (120419,120418,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 7, '0.6'
 			,'dato(ALIN).dato(BOOLEANO_01) = 1 AND dato(ALIN).dato(BOOLEANO_03) = 0 AND dato(TIPO_ATR) IN (''P'', ''A'', ''B'')','0.6'
 			,null,null,null,null
 			,null,null,null,null,null,null
@@ -1888,7 +1895,7 @@ AND (
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120421,120420,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 8, 0.25
+		VALUES (120421,120420,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 8, '0.25'
 			,'esAvituallamientoEscala(servicio.atributo(PK)) = 1','0.25'
 			,null,null,null,null
 			,null,null,null,null,null,null
@@ -1906,7 +1913,7 @@ AND (
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120423,120422,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 9, 4
+		VALUES (120423,120422,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 9, '4'
 			,'dato(TIPO_ESTAN_ATR) = ''L''
 AND servicio.dato(TIPO_NAV) = ''I''
 AND servicio.dato(TIPO_NAV_2) = ''I''','4'
@@ -1926,7 +1933,7 @@ AND servicio.dato(TIPO_NAV_2) = ''I''','4'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120425,120424,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 10, 4.67
+		VALUES (120425,120424,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 10, '4.67'
 			,'dato(TIPO_ESTAN_ATR) = ''L''
 AND dato(TIPO_ACT) IN (''FE'',''DR'',''AB'',''AF'',''AR'',''AT'')','4.67'
 			,null,null,null,null
@@ -1945,7 +1952,7 @@ AND dato(TIPO_ACT) IN (''FE'',''DR'',''AB'',''AF'',''AR'',''AT'')','4.67'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120427,120426,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 11, 1.33
+		VALUES (120427,120426,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 11, '1.33'
 			,'dato(TIPO_ESTAN_ATR) = ''L''
 AND dato(TIPO_ACT) IN (''CO'',''RF'',''RT'',''TF'',''DE'')','1.33'
 			,null,null,null,null
@@ -1964,7 +1971,7 @@ AND dato(TIPO_ACT) IN (''CO'',''RF'',''RT'',''TF'',''DE'')','1.33'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120429,120428,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 12, 0.50
+		VALUES (120429,120428,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 12, '0.50'
 			,'dato(TIPO_ESTAN_ATR) = ''L''
 AND dato(TIPO_ACT) IN (''CA'',''RA'',''TA'',''DA'')','0.50'
 			,null,null,null,null
@@ -1983,7 +1990,7 @@ AND dato(TIPO_ACT) IN (''CA'',''RA'',''TA'',''DA'')','0.50'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120431,120430,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 13, 0.45
+		VALUES (120431,120430,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 13, '0.45'
 			,'dato(TIPO_ESTAN_ATR) = ''L''
 AND dato(TIPO_ACT) IN (''CL'')','0.45'
 			,null,null,null,null
@@ -2002,7 +2009,7 @@ AND dato(TIPO_ACT) IN (''CL'')','0.45'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120433,120432,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 14, 1
+		VALUES (120433,120432,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 14, '1'
 			,'dato(TIPO_ESTAN_ATR) = ''L''
 AND dato(TIPO_ACT) IN (''DJ'')','1'
 			,null,null,null,null
@@ -2021,7 +2028,7 @@ AND dato(TIPO_ACT) IN (''DJ'')','1'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120435,120434,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 15, 4.67
+		VALUES (120435,120434,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 15, '4.67'
 			,'dato(TIPO_ESTAN_ATR) = ''L''
 AND dato(TIPO_ACT) IN (''IN'', ''IP'')','4.67'
 			,null,null,null,null
@@ -2040,7 +2047,7 @@ AND dato(TIPO_ACT) IN (''IN'', ''IP'')','4.67'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120437,120436,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 16, 2.33
+		VALUES (120437,120436,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 16, '2.33'
 			,'dato(TIPO_ESTAN_ATR) = ''L''
 AND dato(TIPO_ACT) IN (''RE'', ''MR'', ''PR'')','2.33'
 			,null,null,null,null
@@ -2059,7 +2066,7 @@ AND dato(TIPO_ACT) IN (''RE'', ''MR'', ''PR'')','2.33'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120439,120438,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 17, 4.67
+		VALUES (120439,120438,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 17, '4.67'
 			,'dato(TIPO_ESTAN_ATR) = ''L''
 AND (
 	servicio.dato(TIPO_NAV) <> ''I''
@@ -2082,7 +2089,7 @@ AND dato(TIPO_ACT) NOT IN (''DR'',''AF'',''AT'',''AR'',''AB'',''FE'',''CO'',''RF
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120441,120440,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 18, 0.70
+		VALUES (120441,120440,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 18, '0.70'
 			,'dato(TIPO_ESTAN_ATR) = ''L''
 AND dato(ALIN).dato(BOOLEANO_01) = 1
 AND dato(ALIN).dato(BOOLEANO_03) = 0','0.70'
@@ -2102,7 +2109,7 @@ AND dato(ALIN).dato(BOOLEANO_03) = 0','0.70'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120443,120442,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 19, 0.60
+		VALUES (120443,120442,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 19, '0.60'
 			,'dato(TIPO_ESTAN_ATR) = ''L''
 AND dato(ALIN).dato(BOOLEANO_01) = 1
 AND dato(ALIN).dato(BOOLEANO_03) = 1','0.60'
@@ -2122,7 +2129,7 @@ AND dato(ALIN).dato(BOOLEANO_03) = 1','0.60'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120445,120444,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 20, 0.70
+		VALUES (120445,120444,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 20, '0.70'
 			,'servicio.dato(BUQUE).dato(TIPO_BUQUE) = ''UC''
 AND esBaseEnPuertoEscala(servicio.atributo(PK)) <> 1
 AND valorServicio(''CU'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''','0.70'
@@ -2142,7 +2149,7 @@ AND valorServicio(''CU'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120447,120446,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 21, 0.56
+		VALUES (120447,120446,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 21, '0.56'
 			,'servicio.dato(BUQUE).dato(TIPO_BUQUE) = ''UC''
 AND esBaseEnPuertoEscala(servicio.atributo(PK)) = 1','0.56'
 			,null,null,null,null
@@ -2161,7 +2168,7 @@ AND esBaseEnPuertoEscala(servicio.atributo(PK)) = 1','0.56'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120449,120448,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 22, 0.50
+		VALUES (120449,120448,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 22, '0.50'
 			,'servicio.dato(BUQUE).dato(TIPO_BUQUE) = ''UC''
 AND valorServicio(''CU'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''','0.50'
 			,null,null,null,null
@@ -2180,7 +2187,7 @@ AND valorServicio(''CU'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120451,120450,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 23, 0.90
+		VALUES (120451,120450,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 23, '0.90'
 			,'servicio.dato(BUQUE).dato(TIPO_BUQUE) LIKE ''R%''
 AND valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''','0.90'
 			,null,null,null,null
@@ -2199,7 +2206,7 @@ AND valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120453,120452,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 24, 0.60
+		VALUES (120453,120452,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 24, '0.60'
 			,'servicio.dato(BUQUE).dato(TIPO_BUQUE) LIKE ''R%''
 AND valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''','0.60'
 			,null,null,null,null
@@ -2218,7 +2225,7 @@ AND valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120455,120454,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 25, 0.25
+		VALUES (120455,120454,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 25, '0.25'
 			,'valorServicio(''II'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''','0.25'
 			,null,null,null,null
 			,null,null,null,null,null,null
@@ -2236,7 +2243,7 @@ AND valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120457,120456,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 26, 0.80
+		VALUES (120457,120456,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 26, '0.80'
 			,'dato(ALIN).dato(BOOLEANO_04) = 1
 AND dato(TIPO_ATR) = ''F''
 AND dato(ALIN).dato(BOOLEANO_03) = 0
@@ -2257,7 +2264,7 @@ AND dato(TIPO_ACT) NOT IN (''RT'', ''AR'', ''AB'', ''AF'', ''AT'', ''AP'')','0.8
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120459,120458,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 27, 0.48
+		VALUES (120459,120458,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 27, '0.48'
 			,'dato(ALIN).dato(BOOLEANO_04) = 1
 AND dato(TIPO_ATR) = ''F''
 AND dato(ALIN).dato(BOOLEANO_03) = 0
@@ -2278,7 +2285,7 @@ AND dato(TIPO_ACT) IN (''RT'', ''AR'', ''AB'', ''AF'', ''AT'', ''AP'')','0.48'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120461,120460,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 28, 0.40
+		VALUES (120461,120460,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 28, '0.40'
 			,'dato(ALIN).dato(BOOLEANO_04) = 1
 AND dato(TIPO_ATR) = ''F''
 AND dato(ALIN).dato(BOOLEANO_03) = 1
@@ -2299,7 +2306,7 @@ AND dato(TIPO_ACT) NOT IN (''RT'', ''AR'', ''AB'', ''AF'', ''AT'', ''AP'')','0.4
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120463,120462,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 29, 0.24
+		VALUES (120463,120462,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 29, '0.24'
 			,'dato(ALIN).dato(BOOLEANO_04) = 1
 AND dato(TIPO_ATR) = ''F''
 AND dato(ALIN).dato(BOOLEANO_03) = 1
@@ -2320,7 +2327,7 @@ AND dato(TIPO_ACT) IN (''RT'', ''AR'', ''AB'', ''AF'', ''AT'', ''AP'')','0.24'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120465,120464,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 30, 1
+		VALUES (120465,120464,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 30, '1'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 1 AND 12','1'
 			,null,null,null,null
@@ -2339,7 +2346,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 1 AND 12','1'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120467,120466,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 31, 0.95
+		VALUES (120467,120466,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 31, '0.95'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 1 AND 12','0.95'
 			,null,null,null,null
@@ -2358,7 +2365,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 1 AND 12','0.95'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120469,120468,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 32, 0.95
+		VALUES (120469,120468,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 32, '0.95'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 13 AND 26','0.95'
 			,null,null,null,null
@@ -2377,7 +2384,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 13 AND 26','0.95'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120471,120470,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 33, 0.90
+		VALUES (120471,120470,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 33, '0.90'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 13 AND 26','0.90'
 			,null,null,null,null
@@ -2397,7 +2404,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 13 AND 26','0.90'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120473,120472,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 34, 0.85
+		VALUES (120473,120472,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 34, '0.85'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 27 AND 52','0.85'
 			,null,null,null,null
@@ -2416,7 +2423,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 27 AND 52','0.85'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120475,120474,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 35, 0.80
+		VALUES (120475,120474,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 35, '0.80'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 27 AND 52','0.80'
 			,null,null,null,null
@@ -2435,7 +2442,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 27 AND 52','0.80'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120477,120476,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 36, 0.75
+		VALUES (120477,120476,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 36, '0.75'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 53 AND 104','0.75'
 			,null,null,null,null
@@ -2454,7 +2461,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 53 AND 104','0.75'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120479,120478,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 37, 0.70
+		VALUES (120479,120478,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 37, '0.70'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 53 AND 104','0.70'
 			,null,null,null,null
@@ -2473,7 +2480,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 53 AND 104','0.70'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120481,120480,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 38, 0.65
+		VALUES (120481,120480,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 38, '0.65'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 105 AND 156','0.65'
 			,null,null,null,null
@@ -2492,7 +2499,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 105 AND 156','0.65'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120483,120482,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 39, 0.60
+		VALUES (120483,120482,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 39, '0.60'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 105 AND 156','0.60'
 			,null,null,null,null
@@ -2511,7 +2518,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 105 AND 156','0.60'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120485,120484,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 40, 0.55
+		VALUES (120485,120484,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 40, '0.55'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 157 AND 312','0.55'
 			,null,null,null,null
@@ -2530,7 +2537,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 157 AND 312','0.55'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120487,120486,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 41, 0.50
+		VALUES (120487,120486,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 41, '0.50'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 157 AND 312','0.50'
 			,null,null,null,null
@@ -2549,7 +2556,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 157 AND 312','0.50'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120489,120488,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 42, 0.45
+		VALUES (120489,120488,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 42, '0.45'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 313 AND 365','0.45'
 			,null,null,null,null
@@ -2568,7 +2575,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 313 AND 365','0.45'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120491,120490,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 43, 0.40
+		VALUES (120491,120490,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 43, '0.40'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 313 AND 365','0.40'
 			,null,null,null,null
@@ -2587,7 +2594,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 313 AND 365','0.40'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120493,120492,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 44, 0.35
+		VALUES (120493,120492,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 44, '0.35'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) <> ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') > 365','0.35'
 			,null,null,null,null
@@ -2606,7 +2613,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') > 365','0.35'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120495,120494,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 45, 0.30
+		VALUES (120495,120494,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 45, '0.30'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 AND contadorEscala(servicio.atributo(PK), ''ES'') > 365','0.30'
 			,null,null,null,null
@@ -2625,7 +2632,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') > 365','0.30'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120497,120496,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 46, 2
+		VALUES (120497,120496,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 46, '2'
 			,'dato(TIPO_ACT) IN (''DS'', ''VA'')
 AND esPrimerAtraque(atributo(PK)) = 1','2'
 			,null,null,null,null
@@ -2644,7 +2651,7 @@ AND esPrimerAtraque(atributo(PK)) = 1','2'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120499,120498,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 1, 30
+		VALUES (120499,120498,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 1, '30'
 			,'dato(ALIN).dato(BOOLEANO_04) = 1
 AND dato(TIPO_ATR) <> ''F''','30'
 			,null,null,null,null
@@ -2663,7 +2670,7 @@ AND dato(TIPO_ATR) <> ''F''','30'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120501,120500,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 2, 5
+		VALUES (120501,120500,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 2, '5'
 			,'tieneConvenioEscala(servicio.atributo(PK), ''MEDAMB'') = 1','5'
 			,null,null,null,null
 			,null,null,null,null,null,null
@@ -2681,7 +2688,7 @@ AND dato(TIPO_ATR) <> ''F''','30'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120503,120502,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 3, 5
+		VALUES (120503,120502,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 3, '5'
 			,'tieneConvenioEscala(servicio.atributo(PK), ''CALIDAD'') = 1','5'
 			,null,null,null,null
 			,null,null,null,null,null,null
@@ -2699,7 +2706,7 @@ AND dato(TIPO_ATR) <> ''F''','30'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120505,120504,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 4, 40
+		VALUES (120505,120504,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 4, '40'
 			,'valorServicio(''II'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 AND (
 	servicio.dato(TIPO_NAV) <> ''CI''
@@ -2721,7 +2728,7 @@ AND (
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120507,120506,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 5, 40
+		VALUES (120507,120506,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 5, '40'
 			,'servicio.dato(BUQUE).dato(TIPO_BUQUE) = ''UC''','40'
 			,null,null,null,null
 			,null,null,null,null,null,null
@@ -2739,7 +2746,7 @@ AND (
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120509,120508,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 8, 10
+		VALUES (120509,120508,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 8, '10'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 AND (
 	servicio.dato(TIPO_BUQUE) = ''C''
@@ -2765,7 +2772,7 @@ AND contadorEscala(servicio.atributo(PK), ''ES'') BETWEEN 10 AND 40','10'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120511,120510,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 9, 20
+		VALUES (120511,120510,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 9, '20'
 			,'valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S''
 AND (
 	servicio.dato(TIPO_BUQUE) = ''C''
@@ -2800,7 +2807,8 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES (100600,'B0
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120601,120600,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,1,0.29,'generaBOEscala(atributo(PK)) = 1','0.29 * unidadesGtsEscala(atributo(PK))'
+		VALUES (120601,120600,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,1,'0.29'
+		,'generaBOEscala(atributo(PK)) = 1','0.29 * unidadesGtsEscala(atributo(PK))'
 		,'dato(TIPO_IVA)','COALESCE(dato(ORGA), dato(ORGA_3))','0','dato(COD_EXEN)'
 		,null,null,null,null,null,null
 		,null,null,null,null,null,null
@@ -2817,7 +2825,8 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES (100600,'B0
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120603,120602,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,2,0.28,'generaBOEscala(atributo(PK)) = 1','0.28 * unidadesGtsEscala(atributo(PK))'
+		VALUES (120603,120602,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,2,'0.28'
+		,'generaBOEscala(atributo(PK)) = 1','0.28 * unidadesGtsEscala(atributo(PK))'
 		,'dato(TIPO_IVA)','COALESCE(dato(ORGA), dato(ORGA_3))','dato(BOOLEANO_06)','dato(COD_EXEN)'
 		,null,null,null,null,null,null
 		,null,null,null,null,null,null
@@ -2834,7 +2843,7 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES (100600,'B0
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (120605,120604,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 1, 0.035
+		VALUES (120605,120604,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 1, '0.035'
 			,'1 = 1','0.035'
 			,null,null,null,null
 			,null,null,null,null,null,null
@@ -2866,7 +2875,8 @@ INSERT INTO tbl_cargo_crgo (crgo_pk,crgo_codigo,crgo_tpsr_pk) VALUES (101000,'TC
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121001,121000,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,1,0.132824,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'')
+		VALUES (121001,121000,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,1,'0.132824'
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'')
 AND dato(DECIMAL_01) > 0'
 		,'0.132824 * (dato(DECIMAL_01) * dato(DECIMAL_02) * dato(PUNTO_RED).dato(DECIMAL_02)) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
@@ -2886,7 +2896,8 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121003,121002,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,2,2.849489,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'')'
+		VALUES (121003,121002,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,2,'2.849489'
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'')'
 		,'2.849489 * (dato(DECIMAL_02) * dato(PUNTO_RED).dato(ENTERO_07)) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
@@ -2905,7 +2916,7 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121005,121004,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2015-01-01', 'yyyy-mm-dd'),4,37.613258
+		VALUES (121005,121004,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2015-01-01', 'yyyy-mm-dd'),4,'37.613258'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'') AND dato(PUNTO_RED).dato(ENTERO_07) = 1.1'
 		,'37.613258 * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
@@ -2925,7 +2936,7 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121007,121006,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2015-01-01', 'yyyy-mm-dd'),5,75.226509
+		VALUES (121007,121006,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2015-01-01', 'yyyy-mm-dd'),5,'75.226509'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'') AND dato(PUNTO_RED).dato(ENTERO_07) = 2.2'
 		,'75.226509 * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
@@ -2945,7 +2956,7 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121011,121010,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2015-01-01', 'yyyy-mm-dd'),15,17.666832
+		VALUES (121011,121010,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2015-01-01', 'yyyy-mm-dd'),15,'17.666832'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'') AND dato(PUNTO_RED).dato(ENTERO_07) = 6.2'
 		,'17.666832 * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
@@ -2965,7 +2976,7 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121015,121014,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2015-01-01', 'yyyy-mm-dd'),18,22.795913
+		VALUES (121015,121014,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2015-01-01', 'yyyy-mm-dd'),18,'22.795913'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'') AND dato(PUNTO_RED).dato(ENTERO_07) = 8'
 		,'22.795913 * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
@@ -2985,7 +2996,7 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121017,121016,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2015-01-01', 'yyyy-mm-dd'),19,26.215299
+		VALUES (121017,121016,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2015-01-01', 'yyyy-mm-dd'),19,'26.215299'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''20'', ''21'', ''22'') AND dato(PUNTO_RED).dato(ENTERO_07) = 9.2'
 		,'26.215299 * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
@@ -3005,13 +3016,13 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121019,121018,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,101,0.02
+		VALUES (121019,121018,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,101,'0.02'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 0'
 		,'0.02 * LEAST(dato(DECIMAL_01), 5) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'LEAST(dato(DECIMAL_01), 5)','dato(DECIMAL_02)',null,null,null,null
 		,'Consumo','%',null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121019, 'Suministro de Agua por Consumo hasta 5')\
 
@@ -3025,13 +3036,13 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121021,121020,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),108,1.21
+		VALUES (121021,121020,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),108,'1.21'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 5'
 		,'1.21 * LEAST(dato(DECIMAL_01)-5,15 -5) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'LEAST(dato(DECIMAL_01)-5,15 -5)','dato(DECIMAL_02)',null,null,null,null
 		,'Consumo','%',null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121021, 'Suministro de Agua por Consumo hasta 15')\
 
@@ -3044,13 +3055,13 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121023,121020,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,108,1.27
+		VALUES (121023,121020,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,108,'1.27'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 5'
 		,'1.27 * LEAST(dato(DECIMAL_01)-5,15 -5) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'LEAST(dato(DECIMAL_01)-5,15 -5)','dato(DECIMAL_02)',null,null,null,null
 		,'Consumo','%',null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121023, 'Suministro de Agua por Consumo hasta 15')\
 
@@ -3064,13 +3075,13 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121025,121024,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),109,1.77
+		VALUES (121025,121024,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),109,'1.77'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 15'
 		,'1.77 * (dato(DECIMAL_01)-15) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'dato(DECIMAL_01)-15','dato(DECIMAL_02)',null,null,null,null
 		,'Consumo','%',null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121025, 'Suministro de Agua por Consumo más de 15')\
 
@@ -3083,13 +3094,13 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121027,121024,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,109,1.87
+		VALUES (121027,121024,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,109,'1.87'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 15'
 		,'1.87 * (dato(DECIMAL_01)-15) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'dato(DECIMAL_01)-15','dato(DECIMAL_02)',null,null,null,null
 		,'Consumo','%',null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121027, 'Suministro de Agua por Consumo más de 15')\
 
@@ -3103,13 +3114,13 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121029,121028,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,102,0.02
+		VALUES (121029,121028,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,102,'0.02'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 0'
 		,'0.02 * LEAST(dato(DECIMAL_01), 5) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'LEAST(dato(DECIMAL_01), 5)','dato(DECIMAL_02)',null,null,null,null
 		,'Consumo','%',null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121029, 'Alcantarillado por Consumo hasta 5')\
 
@@ -3123,13 +3134,13 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121031,121030,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),110,0.24
+		VALUES (121031,121030,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),110,'0.24'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 5'
 		,'0.24 * LEAST(dato(DECIMAL_01)-5,15 -5) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'LEAST(dato(DECIMAL_01)-5,15 -5)','dato(DECIMAL_02)',null,null,null,null
 		,'Consumo','%',null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121031, 'Alcantarillado por Consumo hasta 15')\
 
@@ -3142,13 +3153,13 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121033,121030,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,110,0.26
+		VALUES (121033,121030,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,110,'0.26'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 5'
 		,'0.26 * LEAST(dato(DECIMAL_01)-5,15 -5) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'LEAST(dato(DECIMAL_01)-5,15 -5)','dato(DECIMAL_02)',null,null,null,null
 		,'Consumo','%',null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121033, 'Alcantarillado por Consumo hasta 15')\
 
@@ -3162,13 +3173,13 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121035,121034,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),111,0.35
+		VALUES (121035,121034,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),111,'0.35'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 15'
 		,'0.35 * (dato(DECIMAL_01)-15) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'dato(DECIMAL_01)-15','dato(DECIMAL_02)',null,null,null,null
 		,'Consumo','%',null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121035, 'Alcantarillado por Consumo más de 15')\
 
@@ -3181,13 +3192,13 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121037,121034,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,111,0.38
+		VALUES (121037,121034,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,111,'0.38'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 15'
 		,'0.38 * (dato(DECIMAL_01)-15) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)',null,null,null,null
+		,'dato(DECIMAL_01)-15','dato(DECIMAL_02)',null,null,null,null
 		,'Consumo','%',null,null,null,null)\
 		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121037, 'Alcantarillado por Consumo más de 15')\
 
@@ -3201,7 +3212,7 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121039,121038,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),103,0.503
+		VALUES (121039,121038,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),103,'0.503'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 0'
 		,'0.503 * dato(DECIMAL_01) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
@@ -3220,7 +3231,7 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121041,121038,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,103,0.57
+		VALUES (121041,121038,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,103,'0.57'
 		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(DECIMAL_01) > 0'
 		,'0.57 * dato(DECIMAL_01) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
@@ -3232,7 +3243,8 @@ AND dato(DECIMAL_01) > 0'
 
 	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121042,101000,'TCA004',21011,'T')\
 		INSERT INTO tbl_regla_version_rglv (
-			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden
+			,rglv_valor_base
 			,rglv_condicion
 			,rglv_formula
 			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
@@ -3240,18 +3252,20 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121043,121042,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),104,7.32
-		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 13'
-		,'7.32 * dato(DECIMAL_02) / 100'
+		VALUES (121043,121042,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),104
+		,'DECODE(dato(PUNTO_RED).dato(ENTERO_02), 13, 7.32, 15, 30.99, 20, 61.72, 25, 77.49, 30, 116.08, 40, 232.82, 50, 349.56, 65, 465.26, 70, 542.26, 80, 776.80, 100, 1084.41, 125, 1704.10, 150, 2198.34, 200, 2844.78)'
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) IN (13, 15, 20, 25, 30, 40, 50, 65, 70, 80, 100, 125, 150, 200)'
+		,'DECODE(dato(PUNTO_RED).dato(ENTERO_02), 13, 7.32, 15, 30.99, 20, 61.72, 25, 77.49, 30, 116.08, 40, 232.82, 50, 349.56, 65, 465.26, 70, 542.26, 80, 776.80, 100, 1084.41, 125, 1704.10, 150, 2198.34, 200, 2844.78) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
-		,'Consumo','%','Diámetro Ent.',null,null,null)\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121043, 'Suministro de Agua Cuota por Calibre (13)')\
+		,'dato(PUNTO_RED).dato(ENTERO_02)','dato(DECIMAL_02)',null,null,null,null
+		,'Diámetro Ent.','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121043, 'Suministro de Agua Cuota por Calibre')\
 
 		INSERT INTO tbl_regla_version_rglv (
-			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden
+			,rglv_valor_base
 			,rglv_condicion
 			,rglv_formula
 			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
@@ -3259,19 +3273,21 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121045,121042,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,104,7.67
-		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 13'
-		,'7.67 * dato(DECIMAL_02) / 100'
+		VALUES (121045,121042,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,104
+		,'DECODE(dato(PUNTO_RED).dato(ENTERO_02), 13, 7.67, 15, 32.59, 20, 64.96, 25, 81.53, 30, 122.12, 40, 244.94, 50, 367.74, 65, 489.46, 70, 570.55, 80, 817.17, 100, 1140.82, 125, 1792.71, 150, 2312.62, 200, 2992.74)'
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) IN (13, 15, 20, 25, 30, 40, 50, 65, 70, 80, 100, 125, 150, 200)'
+		,'DECODE(dato(PUNTO_RED).dato(ENTERO_02), 13, 7.67, 15, 32.59, 20, 64.96, 25, 81.53, 30, 122.12, 40, 244.94, 50, 367.74, 65, 489.46, 70, 570.55, 80, 817.17, 100, 1140.82, 125, 1792.71, 150, 2312.62, 200, 2992.74) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
-		,'Consumo','%','Diámetro Ent.',null,null,null)\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121045, 'Suministro de Agua Cuota por Calibre (13)')\
+		,'dato(PUNTO_RED).dato(ENTERO_02)','dato(DECIMAL_02)',null,null,null,null
+		,'Diámetro Ent.','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121045, 'Suministro de Agua Cuota por Calibre')\
 
-	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121046,101000,'TCA048',21011,'T')\
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121046,101000,'TCA005',21011,'T')\
 		INSERT INTO tbl_regla_version_rglv (
-			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden
+			,rglv_valor_base
 			,rglv_condicion
 			,rglv_formula
 			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
@@ -3279,57 +3295,20 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121047,121046,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),148,30.99
-		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 15'
-		,'30.99 * dato(DECIMAL_02) / 100'
+		VALUES (121047,121046,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),105
+		,'DECODE(dato(PUNTO_RED).dato(ENTERO_02), 13, 2.08, 15, 4.24, 20, 8.65, 25, 17.5, 30, 21.99, 40, 33.03, 50, 65.98, 65, 99.90, 70, 133.31, 80, 222.45, 100, 311.69, 125, 490.39, 150, 668.67, 200, 802.43)'
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) IN (13, 15, 20, 25, 30, 40, 50, 65, 70, 80, 100, 125, 150, 200)'
+		,'DECODE(dato(PUNTO_RED).dato(ENTERO_02), 13, 2.08, 15, 4.24, 20, 8.65, 25, 17.5, 30, 21.99, 40, 33.03, 50, 65.98, 65, 99.90, 70, 133.31, 80, 222.45, 100, 311.69, 125, 490.39, 150, 668.67, 200, 802.43) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
-		,'Consumo','%','Diámetro Ent.',null,null,null)\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121047, 'Suministro de Agua Cuota por Calibre (15)')\
-
-		INSERT INTO tbl_regla_version_rglv (
-			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
-			,rglv_condicion
-			,rglv_formula
-			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
-			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
-			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
-			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
-			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121049,121046,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,148,32.59
-		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 15'
-		,'32.59 * dato(DECIMAL_02) / 100'
-		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
-		,'dato(PUNTO_RED)',null,null,null,null,null
-		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
-		,'Consumo','%','Diámetro Ent.',null,null,null)\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121049, 'Suministro de Agua Cuota por Calibre (15)')\
-
-	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121050,101000,'TCA049',21011,'T')\
-		INSERT INTO tbl_regla_version_rglv (
-			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
-			,rglv_condicion
-			,rglv_formula
-			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
-			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
-			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
-			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
-			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121051,121050,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),149,61.72
-		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 20'
-		,'61.72 * dato(DECIMAL_02) / 100'
-		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
-		,'dato(PUNTO_RED)',null,null,null,null,null
-		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
-		,'Consumo','%','Diámetro Ent.',null,null,null)\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121051, 'Suministro de Agua Cuota por Calibre (20)')\
+		,'dato(PUNTO_RED).dato(ENTERO_02)','dato(DECIMAL_02)',null,null,null,null
+		,'Diámetro Ent.','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121047, 'Alcantarillado Cuota por Calibre')\
 
 		INSERT INTO tbl_regla_version_rglv (
-			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden
+			,rglv_valor_base
 			,rglv_condicion
 			,rglv_formula
 			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
@@ -3337,19 +3316,21 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121053,121050,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,149,64.96
-		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 20'
-		,'64.96 * dato(DECIMAL_02) / 100'
+		VALUES (121049,121046,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,105
+		,'DECODE(dato(PUNTO_RED).dato(ENTERO_02), 13, 2.30, 15, 4.67, 20, 9.55, 25, 19.30, 30, 24.35, 40, 36.55, 50, 72.70, 65, 110.48, 70, 147.43, 80, 246.01, 100, 344.75, 125, 542.38, 150, 739.54, 200, 887.49)'
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) IN (13, 15, 20, 25, 30, 40, 50, 65, 70, 80, 100, 125, 150, 200)'
+		,'DECODE(dato(PUNTO_RED).dato(ENTERO_02), 13, 2.30, 15, 4.67, 20, 9.55, 25, 19.30, 30, 24.35, 40, 36.55, 50, 72.70, 65, 110.48, 70, 147.43, 80, 246.01, 100, 344.75, 125, 542.38, 150, 739.54, 200, 887.49) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
-		,'Consumo','%','Diámetro Ent.',null,null,null)\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121053, 'Suministro de Agua Cuota por Calibre (20)')\
+		,'dato(PUNTO_RED).dato(ENTERO_02)','dato(DECIMAL_02)',null,null,null,null
+		,'Diámetro Ent.','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121049, 'Alcantarillado Cuota por Calibre')\
 
-	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121054,101000,'TCA050',21011,'T')\
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121050,101000,'TCA006',21011,'T')\
 		INSERT INTO tbl_regla_version_rglv (
-			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden
+			,rglv_valor_base
 			,rglv_condicion
 			,rglv_formula
 			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
@@ -3357,18 +3338,20 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121055,121054,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),150,77.49
-		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 25'
-		,'77.49 * dato(DECIMAL_02) / 100'
+		VALUES (121051,121050,TO_DATE('2013-01-01', 'yyyy-mm-dd'),TO_DATE('2016-01-01', 'yyyy-mm-dd'),106
+		,'DECODE(dato(PUNTO_RED).dato(ENTERO_02), 13, 8.56, 15, 12.83, 20, 21.37, 25, 29.94, 30, 42.78, 40, 85.56, 50, 128.34, 65, 171.11, 80, 213.91, 150, 299.46, 200, 299.46)'
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) IN (13, 15, 20, 25, 30, 40, 50, 65, 80, 150, 200)'
+		,'DECODE(dato(PUNTO_RED).dato(ENTERO_02), 13, 8.56, 15, 12.83, 20, 21.37, 25, 29.94, 30, 42.78, 40, 85.56, 50, 128.34, 65, 171.11, 80, 213.91, 150, 299.46, 200, 299.46) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
-		,'Consumo','%','Diámetro Ent.',null,null,null)\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121055, 'Suministro de Agua Cuota por Calibre (25)')\
+		,'dato(PUNTO_RED).dato(ENTERO_02)','dato(DECIMAL_02)',null,null,null,null
+		,'Diámetro Ent.','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121051, 'Saneamiento Cuota por Calibre')\
 
 		INSERT INTO tbl_regla_version_rglv (
-			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden,rglv_valor_base
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden
+			,rglv_valor_base
 			,rglv_condicion
 			,rglv_formula
 			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
@@ -3376,21 +3359,45 @@ AND dato(DECIMAL_01) > 0'
 			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
-		VALUES (121057,121054,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,150,81.53
-		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) = 25'
-		,'81.53 * dato(DECIMAL_02) / 100'
+		VALUES (121053,121050,TO_DATE('2016-01-01', 'yyyy-mm-dd'),null,106
+		,'DECODE(dato(PUNTO_RED).dato(ENTERO_02), 13, 9.70, 15, 14.54, 20, 24.22, 25, 33.92, 30, 48.47, 40, 96.95, 50, 145.42, 65, 193.87, 80, 242.36, 150, 339.29, 200, 339.29)'
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) IN (13, 15, 20, 25, 30, 40, 50, 65, 80, 150, 200)'
+		,'DECODE(dato(PUNTO_RED).dato(ENTERO_02), 13, 9.70, 15, 14.54, 20, 24.22, 25, 33.92, 30, 48.47, 40, 96.95, 50, 145.42, 65, 193.87, 80, 242.36, 150, 339.29, 200, 339.29) * dato(DECIMAL_02) / 100'
 		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
 		,'dato(PUNTO_RED)',null,null,null,null,null
 		,'Punto Red',null,null,null,null,null
-		,'dato(DECIMAL_01)','dato(DECIMAL_02)','dato(PUNTO_RED).dato(ENTERO_02)',null,null,null
-		,'Consumo','%','Diámetro Ent.',null,null,null)\
-		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121057, 'Suministro de Agua Cuota por Calibre (25)')\
+		,'dato(PUNTO_RED).dato(ENTERO_02)','dato(DECIMAL_02)',null,null,null,null
+		,'Diámetro Ent.','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121053, 'Saneamiento Cuota por Calibre')\
+
+	INSERT INTO tbl_regla_rgla (rgla_pk,rgla_crgo_pk,rgla_codigo,rgla_enti_pk,rgla_tipo) VALUES (121054,101000,'TCA007',21011,'T')\
+		INSERT INTO tbl_regla_version_rglv (
+			rglv_pk,rglv_rgla_pk,rglv_fini,rglv_ffin,rglv_orden
+			,rglv_valor_base
+			,rglv_condicion
+			,rglv_formula
+			,rglv_path_impuesto,rglv_path_pagador,rglv_path_es_suj_pasivo,rglv_path_cod_exen
+			,rglv_path_info1,rglv_path_info2,rglv_path_info3,rglv_path_info4,rglv_path_info5,rglv_path_info6
+			,rglv_etiq_info1,rglv_etiq_info2,rglv_etiq_info3,rglv_etiq_info4,rglv_etiq_info5,rglv_etiq_info6
+			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
+			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
+		VALUES (121055,121054,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null,107
+		,'DECODE(dato(PUNTO_RED).dato(ENTERO_02), 13, 0.93, 15, 1.67, 20, 1.81, 25, 2.87, 30, 8.69, 40, 10.42, 50, 15.15, 65, 20.23, 80, 22.76, 100, 32.00, 125, 32.45, 150, 32.45, 200, 32.45)'
+		,'dato(PUNTO_RED).dato(TIPO_SUM) IN (''11'', ''12'', ''13'') AND dato(PUNTO_RED).dato(ENTERO_02) IN (13, 15, 20, 25, 30, 40, 50, 65, 80, 100, 125, 150, 200)'
+		,'DECODE(dato(PUNTO_RED).dato(ENTERO_02), 13, 0.93, 15, 1.67, 20, 1.81, 25, 2.87, 30, 8.69, 40, 10.42, 50, 15.15, 65, 20.23, 80, 22.76, 100, 32.00, 125, 32.45, 150, 32.45, 200, 32.45) * dato(DECIMAL_02) / 100'
+		,'dato(PUNTO_RED).dato(TIPO_IVA)','dato(ORGA)','0','dato(COD_EXEN)'
+		,'dato(PUNTO_RED)',null,null,null,null,null
+		,'Punto Red',null,null,null,null,null
+		,'dato(PUNTO_RED).dato(ENTERO_02)','dato(DECIMAL_02)',null,null,null,null
+		,'Diámetro Ent.','%',null,null,null,null)\
+		INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('rglv', 'es', 121055, 'Contador: Alquiler, Mantenimiento Cuota por Calibre')\
 
 
--- TCA050
--- 25
--- 77.49
--- 81.53
+
+
+
+
+
 
 
 

@@ -14,6 +14,7 @@
 		<result column="vlrl_ffin" property="ffin" />
 		<result column="vlrc_srvc_pk" property="srvcId" />
 
+		<result column="vlrl_valor_base" property="valorBase" />
 		<result column="vlrl_importe_base" property="importeBase" />
 		<result column="vlrl_importe" property="importe" />
 		<result column="vlrl_subtotal" property="subtotal" />
@@ -88,7 +89,7 @@
 	<sql id="SelectPrefix">
     <![CDATA[
 		SELECT
-		    vlrl_pk, vlrl_padre_pk, vlrl_vlrc_pk, vlrl_rgla_pk
+		    vlrl_pk, vlrl_padre_pk, vlrl_vlrc_pk, vlrl_rgla_pk, vlrl_valor_base
 		    , CASE
 		        WHEN vlrl_pk = vlrl_padre_pk THEN vlrl_impuesto_prmt_pk
 		        ELSE (SELECT vlrl_impuesto_prmt_pk FROM tbl_valoracion_lin_vlrl vlrlPadre WHERE vlrlPadre.vlrl_pk = vlrl.vlrl_padre_pk)
@@ -323,12 +324,12 @@
     <![CDATA[
         INSERT INTO tbl_valoracion_lin_vlrl (
             vlrl_pk, vlrl_padre_pk, vlrl_vlrc_pk, vlrl_rgla_pk
-            , vlrl_impuesto_prmt_pk, vlrl_ssrv_pk, vlrl_fini, vlrl_ffin
+            , vlrl_impuesto_prmt_pk, vlrl_ssrv_pk, vlrl_fini, vlrl_ffin, vlrl_valor_base
             , vlrl_info1, vlrl_info2, vlrl_info3, vlrl_info4, vlrl_info5, vlrl_info6
         )
         VALUES (
             #{id}, #{padreId}, #{vlrcId}, #{rgla.id}
-            , #{impuesto.id}, #{ssrv.id}, #{fini}, #{ffin}
+            , #{impuesto.id}, #{ssrv.id}, #{fini}, #{ffin}, #{valorBase}
             , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
         )
     ]]>
@@ -337,7 +338,8 @@
 	<update id="update" parameterType="ValoracionLineaVO">
     <![CDATA[
         UPDATE tbl_valoracion_lin_vlrl SET
-            vlrl_info1 = #{info1}
+            vlrl_valor_base = #{valorBase}
+            , vlrl_info1 = #{info1}
             , vlrl_info2 = #{info2}
             , vlrl_info3 = #{info3}
             , vlrl_info4 = #{info4}

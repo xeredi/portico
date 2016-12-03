@@ -103,7 +103,7 @@ public final class ValoradorBO {
         Preconditions.checkNotNull(crgoIds);
         Preconditions.checkNotNull(fechaLiquidacion);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
             final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
 
@@ -306,7 +306,7 @@ public final class ValoradorBO {
                     Preconditions.checkNotNull(vlrd.getId());
                     Preconditions.checkNotNull(vlrd.getPadreId());
 
-                    LOG.debug("vlrd: " + vlrd);
+                    // LOG.debug("vlrd: " + vlrd);
 
                     final ValoracionDetalleVO vlrdNew = new ValoracionDetalleVO();
 
@@ -612,6 +612,7 @@ public final class ValoradorBO {
         rglv.setPathCuant6Sql(generateSqlExpression(entiId, rglv.getPathCuant6(), PathType.ID));
 
         rglv.setCondicionSql(generateSqlExpression(entiId, rglv.getCondicion(), PathType.CODE));
+        rglv.setValorBaseSql(generateSqlExpression(entiId, rglv.getValorBase(), PathType.ID));
         rglv.setFormulaSql(generateSqlExpression(entiId, rglv.getFormula(), PathType.ID));
     }
 
