@@ -17,39 +17,61 @@ import xeredi.argo.model.item.vo.ItemCriterioVO;
 @ToString(callSuper = true)
 public final class ServicioCriterioVO extends ItemCriterioVO {
 
-    /** The usro id. */
-    private Long usroId;
+	/**
+	 * The Enum OrderByColumn.
+	 */
+	public enum OrderByColumn {
+		/** The srvc pk. */
+		srvc_pk,
+		/** The srvc subp pk. */
+		srvc_subp_pk,
+		/** The srvc anno. */
+		srvc_anno,
+		/** The srvc numero. */
+		srvc_numero,
+		/** The srvc estado. */
+		srvc_estado,
+		/** The srvc fref. */
+		srvc_fref,
+		/** The srvc fini. */
+		srvc_fini,
+		/** The srvc ffin. */
+		srvc_ffin
+	}
 
-    /** The subp id. */
-    private PuertoCriterioVO prto;
+	/** The usro id. */
+	private Long usroId;
 
-    /** The anno. */
-    private String anno;
+	/** The subp id. */
+	private PuertoCriterioVO prto;
 
-    /** The numero. */
-    private String numero;
+	/** The anno. */
+	private String anno;
 
-    /** The estado. */
-    private String estado;
+	/** The numero. */
+	private String numero;
 
-    /** The fref min. */
-    private Date frefMin;
+	/** The estado. */
+	private String estado;
 
-    /** The fref max. */
-    private Date frefMax;
+	/** The fref min. */
+	private Date frefMin;
 
-    /** The fini min. */
-    private Date finiMin;
+	/** The fref max. */
+	private Date frefMax;
 
-    /** The fini max. */
-    private Date finiMax;
+	/** The fini min. */
+	private Date finiMin;
 
-    /** The ffin min. */
-    private Date ffinMin;
+	/** The fini max. */
+	private Date finiMax;
 
-    /** The ffin max. */
-    private Date ffinMax;
+	/** The ffin min. */
+	private Date ffinMin;
 
-    /** The srvc dep id. */
-    private Long srvcDepId;
+	/** The ffin max. */
+	private Date ffinMax;
+
+	/** The srvc dep id. */
+	private Long srvcDepId;
 }

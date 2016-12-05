@@ -18,18 +18,20 @@ import xeredi.argo.model.proceso.vo.ProcesoVO;
 @EqualsAndHashCode(callSuper = true)
 public final class ProcesoListAction extends GridListAction<ProcesoCriterioVO, ProcesoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -4892003930947515760L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -4892003930947515760L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doList() throws ApplicationException {
-        final ProcesoBO prbtBO = new ProcesoBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doList() throws ApplicationException {
+		final ProcesoBO prbtBO = new ProcesoBO();
 
-        model.addOrderBy(OrderByColumn.prbt_falta.name(), OrderByType.DESC);
+		if (model.getOrderByList().isEmpty()) {
+			model.addOrderBy(OrderByColumn.prbt_falta.name(), OrderByType.DESC);
+		}
 
-        resultList = prbtBO.selectList(model, getOffset(), limit);
-    }
+		resultList = prbtBO.selectList(model, getOffset(), limit);
+	}
 }

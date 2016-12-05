@@ -125,6 +125,9 @@
         WHERE
             tpsr_es_facturable = 1
     ]]>
+    	<if test="estadosVlrcSet != null">
+    		<foreach collection="estadosVlrcSet" separator="," open=" AND srvc_estado IN (" close=")" item="item">#{item}</foreach>
+    	</if>
         <if test="rgla.version.condicionSql != null">
     <![CDATA[
             AND (${rgla.version.condicionSql})
@@ -355,6 +358,9 @@
             tpsr_es_facturable = 1
             AND tpss_es_facturable = 1
     ]]>
+    	<if test="estadosVlrcSet != null">
+    		<foreach collection="estadosVlrcSet" separator="," open=" AND ssrv_estado IN (" close=")" item="item">#{item}</foreach>
+    	</if>
         <if test="rgla.version.condicionSql != null">
     <![CDATA[
             AND (${rgla.version.condicionSql})

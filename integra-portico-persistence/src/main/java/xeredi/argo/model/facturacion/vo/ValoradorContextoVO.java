@@ -1,6 +1,7 @@
 package xeredi.argo.model.facturacion.vo;
 
 import java.util.Date;
+import java.util.Set;
 
 import lombok.Data;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
@@ -40,6 +41,9 @@ public final class ValoradorContextoVO {
 
     /** The rgla. */
     private ReglaVO rgla;
+
+    /** The estados vlrc set. */
+    private Set<String> estadosVlrcSet;
 
     /** The aspc. */
     private AspectoVO aspc;

@@ -197,7 +197,11 @@
         <where>
             <include refid="SelectWhere"/>
         </where>
-        ORDER BY srvc_pk DESC
+
+        <if test="!orderByList.empty">
+            <foreach collection="orderByList" item="item" open="ORDER BY" separator=",">${item.columnName} ${item.orderByType}
+            </foreach>
+        </if>
     </select>
 
     <select id="selectObject" parameterType="ServicioCriterioVO" resultMap="ResultMap">

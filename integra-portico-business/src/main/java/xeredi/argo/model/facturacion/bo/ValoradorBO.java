@@ -51,7 +51,10 @@ import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaAgregadaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionTemporalVO;
 import xeredi.argo.model.facturacion.vo.ValoradorContextoVO;
+import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.metamodelo.proxy.TipoSubparametroProxy;
+import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.servicio.dao.ServicioDAO;
 import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
@@ -65,603 +68,609 @@ import xeredi.argo.proceso.ProcesoTemplate;
  */
 public final class ValoradorBO {
 
-    /** The Constant LOG. */
-    private static final Log LOG = LogFactory.getLog(ValoradorBO.class);
-
-    /** The prbt. */
-    private final ProcesoTemplate proceso;
+	/** The Constant LOG. */
+	private static final Log LOG = LogFactory.getLog(ValoradorBO.class);
+
+	/** The prbt. */
+	private final ProcesoTemplate proceso;
 
-    /**
-     * Instantiates a new valorador bo.
-     *
-     * @param aproceso
-     *            the aproceso
-     */
-    public ValoradorBO(final ProcesoTemplate aproceso) {
-        super();
-        proceso = aproceso;
-    }
+	/**
+	 * Instantiates a new valorador bo.
+	 *
+	 * @param aproceso
+	 *            the aproceso
+	 */
+	public ValoradorBO(final ProcesoTemplate aproceso) {
+		super();
+		proceso = aproceso;
+	}
 
-    /**
-     * Valorar servicio.
-     *
-     * @param srvcId
-     *            the srvc id
-     * @param crgoIds
-     *            the crgo ids
-     * @param fechaLiquidacion
-     *            the fecha liquidacion
-     * @throws ModelException
-     *             the model exception
-     */
-    public void valorarServicio(final Long srvcId, final Set<Long> crgoIds, final Date fechaLiquidacion)
-            throws ModelException {
-        LOG.info(
-                "Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion);
+	/**
+	 * Valorar servicio.
+	 *
+	 * @param srvcId
+	 *            the srvc id
+	 * @param crgoIds
+	 *            the crgo ids
+	 * @param fechaLiquidacion
+	 *            the fecha liquidacion
+	 * @throws ModelException
+	 *             the model exception
+	 */
+	public void valorarServicio(final Long srvcId, final Set<Long> crgoIds, final Date fechaLiquidacion)
+			throws ModelException {
+		LOG.info(
+				"Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion);
 
-        Preconditions.checkNotNull(srvcId);
-        Preconditions.checkNotNull(crgoIds);
-        Preconditions.checkNotNull(fechaLiquidacion);
+		Preconditions.checkNotNull(srvcId);
+		Preconditions.checkNotNull(crgoIds);
+		Preconditions.checkNotNull(fechaLiquidacion);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
-            final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
+			final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
 
-            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
+			final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+			final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
 
-            srvcCriterio.setId(srvcId);
+			srvcCriterio.setId(srvcId);
 
-            final ServicioVO srvc = srvcDAO.selectObject(srvcCriterio);
+			final ServicioVO srvc = srvcDAO.selectObject(srvcCriterio);
 
-            if (srvc == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.srvc, srvcId);
-            }
+			if (srvc == null) {
+				throw new InstanceNotFoundException(MessageI18nKey.srvc, srvcId);
+			}
 
-            if (crgoIds.isEmpty()) {
-                final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
-                final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
+			if (crgoIds.isEmpty()) {
+				final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
+				final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
-                crgoCriterio.setFechaVigencia(fechaLiquidacion);
-                crgoCriterio.setSrvcId(srvcId);
-                crgoCriterio.setSoloPrincipales(true);
+				crgoCriterio.setFechaVigencia(fechaLiquidacion);
+				crgoCriterio.setSrvcId(srvcId);
+				crgoCriterio.setSoloPrincipales(true);
 
-                for (final CargoVO crgo : crgoDAO.selectList(crgoCriterio)) {
-                    crgoIds.add(crgo.getId());
-                }
-            }
+				for (final CargoVO crgo : crgoDAO.selectList(crgoCriterio)) {
+					crgoIds.add(crgo.getId());
+				}
+			}
 
-            final TipoServicioDetailVO tpsr = TipoServicioProxy.select(srvc.getEntiId());
+			final TipoServicioDetailVO tpsr = TipoServicioProxy.select(srvc.getEntiId());
 
-            if (!tpsr.getEnti().getEstadosVlrcSet().contains(srvc.getEstado())) {
-                throw new Error("Servicio en estado no facturable: " + srvc.getEstado());
-            }
+			if (!tpsr.getEnti().getEstadosVlrcSet().contains(srvc.getEstado())) {
+				throw new Error("Servicio en estado no facturable: " + srvc.getEstado());
+			}
 
-            final ValoradorContextoDAO contextoDAO = session.getMapper(ValoradorContextoDAO.class);
-            final ValoradorContextoVO vldrContexto = new ValoradorContextoVO();
+			final ValoradorContextoDAO contextoDAO = session.getMapper(ValoradorContextoDAO.class);
+			final ValoradorContextoVO vldrContexto = new ValoradorContextoVO();
 
-            vldrContexto.setFliquidacion(fechaLiquidacion);
-            vldrContexto.setPrbt(proceso.getPrbtData().getPrbt());
-            vldrContexto.setSrvc(srvc);
-            vldrContexto.setTpsr(tpsr.getEnti());
+			vldrContexto.setFliquidacion(fechaLiquidacion);
+			vldrContexto.setPrbt(proceso.getPrbtData().getPrbt());
+			vldrContexto.setSrvc(srvc);
+			vldrContexto.setTpsr(tpsr.getEnti());
 
-            final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
+			final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
 
-            for (final Long crgoId : crgoIds) {
-                // Obtencion de los cargos, y los cargos dependientes
-                final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
+			for (final Long crgoId : crgoIds) {
+				// Obtencion de los cargos, y los cargos dependientes
+				final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
-                crgoCriterio.setId(crgoId);
-                crgoCriterio.setFechaVigencia(fechaLiquidacion);
+				crgoCriterio.setId(crgoId);
+				crgoCriterio.setFechaVigencia(fechaLiquidacion);
 
-                final CargoVO crgo = crgoDAO.selectObject(crgoCriterio);
+				final CargoVO crgo = crgoDAO.selectObject(crgoCriterio);
 
-                if (crgo == null) {
-                    throw new InstanceNotFoundException(MessageI18nKey.crgo, crgoId);
-                }
+				if (crgo == null) {
+					throw new InstanceNotFoundException(MessageI18nKey.crgo, crgoId);
+				}
 
-                LOG.info("Cargo principal: " + crgo.getCodigo());
+				LOG.info("Cargo principal: " + crgo.getCodigo());
 
-                final List<CargoVO> crgoList = new ArrayList<>();
+				final List<CargoVO> crgoList = new ArrayList<>();
 
-                crgoList.add(crgo);
+				crgoList.add(crgo);
 
-                vldrContexto.setCrgo(crgo);
+				vldrContexto.setCrgo(crgo);
 
-                final Date fref = contextoDAO.selectFref(vldrContexto);
+				final Date fref = contextoDAO.selectFref(vldrContexto);
 
-                if (fref == null) {
-                    throw new Error("No se encuentra fecha de referencia para el contexto: " + vldrContexto);
-                }
+				if (fref == null) {
+					throw new Error("No se encuentra fecha de referencia para el contexto: " + vldrContexto);
+				}
 
-                vldrContexto.setFref(fref);
+				vldrContexto.setFref(fref);
 
-                LOG.info("fref: " + fref);
+				LOG.info("fref: " + fref);
 
-                if (crgo.getVersion().getTemporal()) {
-                    vldrContexto.setFini(contextoDAO.selectFini(vldrContexto));
-                    vldrContexto.setFfin(contextoDAO.selectFfin(vldrContexto));
+				if (crgo.getVersion().getTemporal()) {
+					vldrContexto.setFini(contextoDAO.selectFini(vldrContexto));
+					vldrContexto.setFfin(contextoDAO.selectFfin(vldrContexto));
 
-                    LOG.info("fini: " + vldrContexto.getFini());
-                    LOG.info("ffin: " + vldrContexto.getFfin());
+					LOG.info("fini: " + vldrContexto.getFini());
+					LOG.info("ffin: " + vldrContexto.getFfin());
 
-                    if (vldrContexto.getFini() == null) {
-                        throw new Error("No se encuentra fecha de inicio para el contexto: " + vldrContexto);
-                    }
-                    if (vldrContexto.getFfin() == null) {
-                        throw new Error("No se encuentra fecha de fin para el contexto: " + vldrContexto);
-                    }
-                }
+					if (vldrContexto.getFini() == null) {
+						throw new Error("No se encuentra fecha de inicio para el contexto: " + vldrContexto);
+					}
+					if (vldrContexto.getFfin() == null) {
+						throw new Error("No se encuentra fecha de fin para el contexto: " + vldrContexto);
+					}
+				}
 
-                LOG.info("Busqueda de cargos dependientes de: " + crgo.getCodigo());
+				LOG.info("Busqueda de cargos dependientes de: " + crgo.getCodigo());
 
-                final CargoCriterioVO crgoDepCriterio = new CargoCriterioVO();
+				final CargoCriterioVO crgoDepCriterio = new CargoCriterioVO();
 
-                crgoDepCriterio.setPadreId(crgoId);
-                crgoDepCriterio.setFechaVigencia(fechaLiquidacion);
-                crgoDepCriterio.setSoloDependientes(true);
+				crgoDepCriterio.setPadreId(crgoId);
+				crgoDepCriterio.setFechaVigencia(fechaLiquidacion);
+				crgoDepCriterio.setSoloDependientes(true);
 
-                crgoList.addAll(crgoDAO.selectList(crgoDepCriterio));
+				crgoList.addAll(crgoDAO.selectList(crgoDepCriterio));
 
-                for (final CargoVO crgoServicio : crgoList) {
-                    LOG.info("Cargo: " + crgoServicio.getCodigo());
+				for (final CargoVO crgoServicio : crgoList) {
+					LOG.info("Cargo: " + crgoServicio.getCodigo());
 
-                    vldrContexto.setCrgo(crgoServicio);
-                    valorarCargoServicio(session, vldrContexto);
-                }
+					vldrContexto.setCrgo(crgoServicio);
+					valorarCargoServicio(session, vldrContexto);
+				}
 
-                final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
+				final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
-                aspcCriterio.setFechaVigencia(fref);
-                aspcCriterio.setSrvcId(srvcId);
+				aspcCriterio.setFechaVigencia(fref);
+				aspcCriterio.setSrvcId(srvcId);
 
-                final List<AspectoVO> aspcList = aspcDAO.selectList(aspcCriterio);
+				final List<AspectoVO> aspcList = aspcDAO.selectList(aspcCriterio);
 
-                if (aspcList.isEmpty()) {
-                    throw new InstanceNotFoundException(MessageI18nKey.aspc, aspcCriterio);
-                }
+				if (aspcList.isEmpty()) {
+					throw new InstanceNotFoundException(MessageI18nKey.aspc, aspcCriterio);
+				}
 
-                for (final AspectoVO aspc : aspcList) {
-                    vldrContexto.setAspc(aspc);
+				for (final AspectoVO aspc : aspcList) {
+					vldrContexto.setAspc(aspc);
 
-                    aplicarAspecto(session, vldrContexto);
-                }
+					aplicarAspecto(session, vldrContexto);
+				}
 
-                if (vlrtDAO.existsPendiente(vldrContexto)) {
-                    throw new Error("No se ha podido aplicar aspecto a todos los elementos del servicio valorado: "
-                            + vldrContexto);
-                }
+				if (vlrtDAO.existsPendiente(vldrContexto)) {
+					throw new Error("No se ha podido aplicar aspecto a todos los elementos del servicio valorado: "
+							+ vldrContexto);
+				}
 
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Fin Valoracion");
-                }
-            }
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("Fin Valoracion");
+				}
+			}
 
-            session.commit();
-        }
-    }
+			session.commit();
+		}
+	}
 
-    /**
-     * Aplicar aspecto.
-     *
-     * @param session
-     *            the session
-     * @param vldrContexto
-     *            the contexto vo
-     */
-    private void aplicarAspecto(final SqlSession session, final ValoradorContextoVO vldrContexto) {
-        final ValoracionAgregadaDAO vlraDAO = session.getMapper(ValoracionAgregadaDAO.class);
-        final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
-        final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-        final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-        final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
+	/**
+	 * Aplicar aspecto.
+	 *
+	 * @param session
+	 *            the session
+	 * @param vldrContexto
+	 *            the contexto vo
+	 */
+	private void aplicarAspecto(final SqlSession session, final ValoradorContextoVO vldrContexto) {
+		final ValoracionAgregadaDAO vlraDAO = session.getMapper(ValoracionAgregadaDAO.class);
+		final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
+		final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+		final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+		final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
 
-        generateSql(vldrContexto.getAspc());
+		generateSql(vldrContexto.getAspc());
 
-        final List<ValoracionAgregadaVO> vlraList = vlraDAO.selectList(vldrContexto);
-        final Set<Long> vlrcIds = new HashSet<Long>();
-        final Map<Long, Long> vlrtIdMap = new HashMap<>();
+		final List<ValoracionAgregadaVO> vlraList = vlraDAO.selectList(vldrContexto);
+		final Set<Long> vlrcIds = new HashSet<Long>();
+		final Map<Long, Long> vlrtIdMap = new HashMap<>();
 
-        for (final ValoracionAgregadaVO vlra : vlraList) {
-            IgUtilBO.assignNextVal(vlra.getVlrc());
+		for (final ValoracionAgregadaVO vlra : vlraList) {
+			IgUtilBO.assignNextVal(vlra.getVlrc());
 
-            vlra.getVlrc().setAspc(vldrContexto.getAspc());
-            vlra.getVlrc().setFalta(Calendar.getInstance().getTime());
+			vlra.getVlrc().setAspc(vldrContexto.getAspc());
+			vlra.getVlrc().setFalta(Calendar.getInstance().getTime());
 
-            vlra.getVlrc().setFini(vldrContexto.getFini());
-            vlra.getVlrc().setFfin(vldrContexto.getFfin());
+			vlra.getVlrc().setFini(vldrContexto.getFini());
+			vlra.getVlrc().setFfin(vldrContexto.getFfin());
 
-            LOG.info("vlrc: " + vlra.getVlrc());
+			LOG.info("vlrc: " + vlra.getVlrc());
 
-            proceso.addPritSalida(vlra.getVlrc().getId());
+			proceso.addPritSalida(vlra.getVlrc().getId());
 
-            vlrcIds.add(vlra.getVlrc().getId());
+			vlrcIds.add(vlra.getVlrc().getId());
 
-            Long vlrlPadreId = null;
+			Long vlrlPadreId = null;
 
-            for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
-                vlrl.getVlrl().setVlrcId(vlra.getVlrc().getId());
+			for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
+				vlrl.getVlrl().setVlrcId(vlra.getVlrc().getId());
 
-                IgUtilBO.assignNextVal(vlrl.getVlrl());
+				IgUtilBO.assignNextVal(vlrl.getVlrl());
 
-                if (vlrl.getVlrl().getRgla().getTipo() == ReglaTipo.T) {
-                    vlrlPadreId = vlrl.getVlrl().getId();
-                } else {
-                    vlrl.getVlrl().setInfo1(null);
-                    vlrl.getVlrl().setInfo2(null);
-                    vlrl.getVlrl().setInfo3(null);
-                    vlrl.getVlrl().setInfo4(null);
-                    vlrl.getVlrl().setInfo5(null);
-                    vlrl.getVlrl().setInfo6(null);
+				if (vlrl.getVlrl().getRgla().getTipo() == ReglaTipo.T) {
+					vlrlPadreId = vlrl.getVlrl().getId();
+				} else {
+					vlrl.getVlrl().setInfo1(null);
+					vlrl.getVlrl().setInfo2(null);
+					vlrl.getVlrl().setInfo3(null);
+					vlrl.getVlrl().setInfo4(null);
+					vlrl.getVlrl().setInfo5(null);
+					vlrl.getVlrl().setInfo6(null);
 
-                    vlrl.getVlrl().setImpuesto(null);
-                    vlrl.getVlrl().setSsrv(null);
-                }
+					vlrl.getVlrl().setImpuesto(null);
+					vlrl.getVlrl().setSsrv(null);
+				}
 
-                vlrl.getVlrl().setPadreId(vlrlPadreId);
+				vlrl.getVlrl().setPadreId(vlrlPadreId);
 
-                // LOG.debug("vlrl: " + vlrl.getVlrl());
+				// LOG.debug("vlrl: " + vlrl.getVlrl());
 
-                for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
-                    Preconditions.checkNotNull(vlrd.getId());
-                    Preconditions.checkNotNull(vlrd.getPadreId());
+				for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
+					Preconditions.checkNotNull(vlrd.getId());
+					Preconditions.checkNotNull(vlrd.getPadreId());
 
-                    // LOG.debug("vlrd: " + vlrd);
+					// LOG.debug("vlrd: " + vlrd);
 
-                    final ValoracionDetalleVO vlrdNew = new ValoracionDetalleVO();
+					final ValoracionDetalleVO vlrdNew = new ValoracionDetalleVO();
 
-                    IgUtilBO.assignNextVal(vlrdNew);
+					IgUtilBO.assignNextVal(vlrdNew);
 
-                    final Long vlrtId = vlrd.getId();
-                    final Long vlrtPadreId = vlrd.getPadreId();
+					final Long vlrtId = vlrd.getId();
+					final Long vlrtPadreId = vlrd.getPadreId();
 
-                    vlrtIdMap.put(vlrtId, vlrdNew.getId());
+					vlrtIdMap.put(vlrtId, vlrdNew.getId());
 
-                    Preconditions.checkNotNull(vlrtIdMap.get(vlrd.getId()));
-                    Preconditions.checkNotNull(vlrtIdMap.get(vlrd.getPadreId()));
+					Preconditions.checkNotNull(vlrtIdMap.get(vlrd.getId()));
+					Preconditions.checkNotNull(vlrtIdMap.get(vlrd.getPadreId()));
 
-                    vlrd.setVlrcId(vlra.getVlrc().getId());
-                    vlrd.setVlrlId(vlrl.getVlrl().getId());
-                    vlrd.setId(vlrtIdMap.get(vlrtId));
-                    vlrd.setPadreId(vlrtIdMap.get(vlrtPadreId));
-                }
-            }
-        }
+					vlrd.setVlrcId(vlra.getVlrc().getId());
+					vlrd.setVlrlId(vlrl.getVlrl().getId());
+					vlrd.setId(vlrtIdMap.get(vlrtId));
+					vlrd.setPadreId(vlrtIdMap.get(vlrtPadreId));
+				}
+			}
+		}
 
-        for (final ValoracionAgregadaVO vlra : vlraList) {
-            vlrcDAO.insert(vlra.getVlrc());
-        }
+		for (final ValoracionAgregadaVO vlra : vlraList) {
+			vlrcDAO.insert(vlra.getVlrc());
+		}
 
-        for (final ValoracionAgregadaVO vlra : vlraList) {
-            for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
-                vlrlDAO.insert(vlrl.getVlrl());
-            }
-        }
+		for (final ValoracionAgregadaVO vlra : vlraList) {
+			for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
+				vlrlDAO.insert(vlrl.getVlrl());
+			}
+		}
 
-        for (final ValoracionAgregadaVO vlra : vlraList) {
-            for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
-                for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
-                    vlrdDAO.insert(vlrd);
-                }
-            }
+		for (final ValoracionAgregadaVO vlra : vlraList) {
+			for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
+				for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
+					vlrdDAO.insert(vlrd);
+				}
+			}
 
-            vlrcDAO.updateImporte(vlra.getVlrc().getId());
-        }
+			vlrcDAO.updateImporte(vlra.getVlrc().getId());
+		}
 
-        if (!vlrcIds.isEmpty()) {
-            vlrtDAO.deleteList(vldrContexto);
-        }
-    }
+		if (!vlrcIds.isEmpty()) {
+			vlrtDAO.deleteList(vldrContexto);
+		}
+	}
 
-    /**
-     * Valorar cargo servicio.
-     *
-     * @param session
-     *            the session
-     * @param vldrContexto
-     *            the contexto vo
-     */
-    private void valorarCargoServicio(final SqlSession session, final ValoradorContextoVO vldrContexto) {
-        final ValoradorContextoDAO contextoDAO = session.getMapper(ValoradorContextoDAO.class);
-        final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
-        final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
+	/**
+	 * Valorar cargo servicio.
+	 *
+	 * @param session
+	 *            the session
+	 * @param vldrContexto
+	 *            the contexto vo
+	 */
+	private void valorarCargoServicio(final SqlSession session, final ValoradorContextoVO vldrContexto) {
+		final ValoradorContextoDAO contextoDAO = session.getMapper(ValoradorContextoDAO.class);
+		final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
+		final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Contexto: " + vldrContexto);
-        }
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Contexto: " + vldrContexto);
+		}
 
-        final Date fini = contextoDAO.selectFini(vldrContexto);
-        final Date ffin = contextoDAO.selectFfin(vldrContexto);
+		final Date fini = contextoDAO.selectFini(vldrContexto);
+		final Date ffin = contextoDAO.selectFfin(vldrContexto);
 
-        vldrContexto.setFini(fini);
-        vldrContexto.setFfin(ffin);
+		vldrContexto.setFini(fini);
+		vldrContexto.setFfin(ffin);
 
-        // Obtener Reglas de Tipo Precio
+		// Obtener Reglas de Tipo Precio
 
-        final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
+		final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
 
-        rglaCriterio.setCrgoId(vldrContexto.getCrgo().getId());
-        rglaCriterio.setFechaVigencia(vldrContexto.getFref());
+		rglaCriterio.setCrgoId(vldrContexto.getCrgo().getId());
+		rglaCriterio.setFechaVigencia(vldrContexto.getFref());
 
-        {
-            // Aplicar procedimientos de tipo precio
-            rglaCriterio.setTipo(ReglaTipo.T);
+		{
+			// Aplicar procedimientos de tipo precio
+			rglaCriterio.setTipo(ReglaTipo.T);
 
-            final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterio);
+			final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterio);
 
-            for (final ReglaVO rgla : rglaList) {
-                try {
-                    LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
+			for (final ReglaVO rgla : rglaList) {
+				try {
+					LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
 
-                    generateSql(rgla);
-                    vldrContexto.setRgla(rgla);
+					generateSql(rgla);
+					vldrContexto.setRgla(rgla);
 
-                    final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
+					final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
 
-                    switch (rgla.getEnti().getTipo()) {
-                    case T:
-                        vlrtList.addAll(vlrtDAO.selectAplicarReglaServicio(vldrContexto));
+					switch (rgla.getEnti().getTipo()) {
+					case T:
+						vldrContexto.setEstadosVlrcSet(
+								TipoServicioProxy.select(rgla.getEnti().getId()).getEnti().getEstadosVlrcSet());
 
-                        break;
-                    default:
-                        vlrtList.addAll(vlrtDAO.selectAplicarReglaSubservicio(vldrContexto));
+						vlrtList.addAll(vlrtDAO.selectAplicarReglaServicio(vldrContexto));
 
-                        break;
-                    }
+						break;
+					default:
+						vldrContexto.setEstadosVlrcSet(
+								TipoSubservicioProxy.select(rgla.getEnti().getId()).getEnti().getEstadosVlrcSet());
 
-                    final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
+						vlrtList.addAll(vlrtDAO.selectAplicarReglaSubservicio(vldrContexto));
 
-                    for (final ValoracionTemporalVO vlrt : vlrtList) {
-                        IgUtilBO.assignNextVal(vlrt);
+						break;
+					}
 
-                        vlrt.setPadreId(vlrt.getId());
+					final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
 
-                        vlrt.setRgla(rgla);
-                        vlrt.setFreferencia(vldrContexto.getFref());
-                        vlrt.setFliquidacion(vldrContexto.getFliquidacion());
+					for (final ValoracionTemporalVO vlrt : vlrtList) {
+						IgUtilBO.assignNextVal(vlrt);
 
-                        if (vlrt.getImporte() == -0.0) {
-                            vlrt.setImporte(+0.0);
-                        }
+						vlrt.setPadreId(vlrt.getId());
 
-                        if (vlrt.getImporteInc() == null) {
-                            vlrtListGanadores.add(vlrt);
+						vlrt.setRgla(rgla);
+						vlrt.setFreferencia(vldrContexto.getFref());
+						vlrt.setFliquidacion(vldrContexto.getFliquidacion());
 
-                        } else if (vlrt.getImporte() < vlrt.getImporteInc()) {
-                            vlrtListGanadores.add(vlrt);
+						if (vlrt.getImporte() == -0.0) {
+							vlrt.setImporte(+0.0);
+						}
 
-                            vlrtDAO.deleteIncompatibilidadList(vlrt);
-                        }
-                    }
+						if (vlrt.getImporteInc() == null) {
+							vlrtListGanadores.add(vlrt);
 
-                    for (final ValoracionTemporalVO vlrt : vlrtListGanadores) {
-                        vlrtDAO.insert(vlrt);
-                    }
-                } catch (final Throwable ex) {
-                    throw new Error(rgla.getCodigo() + " - " + ex.getMessage(), ex);
-                }
-            }
-        }
+						} else if (vlrt.getImporte() < vlrt.getImporteInc()) {
+							vlrtListGanadores.add(vlrt);
 
-        {
-            // Aplicar procedimientos de tipo coeficiente
-            rglaCriterio.setTipo(ReglaTipo.C);
+							vlrtDAO.deleteIncompatibilidadList(vlrt);
+						}
+					}
 
-            final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterio);
+					for (final ValoracionTemporalVO vlrt : vlrtListGanadores) {
+						vlrtDAO.insert(vlrt);
+					}
+				} catch (final Throwable ex) {
+					throw new Error(rgla.getCodigo() + " - " + ex.getMessage(), ex);
+				}
+			}
+		}
 
-            for (final ReglaVO rgla : rglaList) {
-                try {
-                    LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
+		{
+			// Aplicar procedimientos de tipo coeficiente
+			rglaCriterio.setTipo(ReglaTipo.C);
 
-                    generateSql(rgla);
-                    vldrContexto.setRgla(rgla);
+			final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterio);
 
-                    final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
+			for (final ReglaVO rgla : rglaList) {
+				try {
+					LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
 
-                    switch (rgla.getEnti().getTipo()) {
-                    case T:
-                        vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(vldrContexto));
+					generateSql(rgla);
+					vldrContexto.setRgla(rgla);
 
-                        break;
+					final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
 
-                    default:
-                        vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorSubservicio(vldrContexto));
+					switch (rgla.getEnti().getTipo()) {
+					case T:
+						vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(vldrContexto));
 
-                        break;
-                    }
+						break;
 
-                    boolean incompatibilidadFound = false;
+					default:
+						vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorSubservicio(vldrContexto));
 
-                    final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
+						break;
+					}
 
-                    for (final ValoracionTemporalVO vlrt : vlrtList) {
-                        IgUtilBO.assignNextVal(vlrt);
+					boolean incompatibilidadFound = false;
 
-                        vlrt.setRgla(rgla);
-                        vlrt.setFreferencia(vldrContexto.getFref());
-                        vlrt.setFliquidacion(vldrContexto.getFliquidacion());
+					final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
 
-                        if (vlrt.getImporte() == -0.0) {
-                            vlrt.setImporte(+0.0);
-                        }
+					for (final ValoracionTemporalVO vlrt : vlrtList) {
+						IgUtilBO.assignNextVal(vlrt);
 
-                        if (vlrt.getImporteInc() == null) {
-                            vlrtListGanadores.add(vlrt);
-                        } else if (vlrt.getImporte() < vlrt.getImporteInc()) {
-                            incompatibilidadFound = true;
+						vlrt.setRgla(rgla);
+						vlrt.setFreferencia(vldrContexto.getFref());
+						vlrt.setFliquidacion(vldrContexto.getFliquidacion());
 
-                            vlrtListGanadores.add(vlrt);
-                            vlrtDAO.deleteIncompatibilidadList(vlrt);
-                        }
-                    }
+						if (vlrt.getImporte() == -0.0) {
+							vlrt.setImporte(+0.0);
+						}
 
-                    for (final ValoracionTemporalVO vlrt : vlrtListGanadores) {
-                        vlrtDAO.insert(vlrt);
-                    }
+						if (vlrt.getImporteInc() == null) {
+							vlrtListGanadores.add(vlrt);
+						} else if (vlrt.getImporte() < vlrt.getImporteInc()) {
+							incompatibilidadFound = true;
 
-                    if (incompatibilidadFound) {
-                        LOG.info("Incompatibilidades. Recalcular Importes!!");
+							vlrtListGanadores.add(vlrt);
+							vlrtDAO.deleteIncompatibilidadList(vlrt);
+						}
+					}
 
-                        vlrtDAO.updateRecalcularCargo(vldrContexto);
-                    }
-                } catch (final Throwable ex) {
-                    throw new Error(rgla.getCodigo() + " - " + ex.getMessage(), ex);
-                }
-            }
-        }
+					for (final ValoracionTemporalVO vlrt : vlrtListGanadores) {
+						vlrtDAO.insert(vlrt);
+					}
 
-        {
-            // Aplicar procedimientos de tipo bonificacion
-            rglaCriterio.setTipo(ReglaTipo.D);
+					if (incompatibilidadFound) {
+						LOG.info("Incompatibilidades. Recalcular Importes!!");
 
-            final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterio);
+						vlrtDAO.updateRecalcularCargo(vldrContexto);
+					}
+				} catch (final Throwable ex) {
+					throw new Error(rgla.getCodigo() + " - " + ex.getMessage(), ex);
+				}
+			}
+		}
 
-            for (final ReglaVO rgla : rglaList) {
-                try {
-                    LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
+		{
+			// Aplicar procedimientos de tipo bonificacion
+			rglaCriterio.setTipo(ReglaTipo.D);
 
-                    generateSql(rgla);
-                    vldrContexto.setRgla(rgla);
+			final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterio);
 
-                    final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
+			for (final ReglaVO rgla : rglaList) {
+				try {
+					LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
 
-                    switch (rgla.getEnti().getTipo()) {
-                    case T:
-                        vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(vldrContexto));
+					generateSql(rgla);
+					vldrContexto.setRgla(rgla);
 
-                        break;
+					final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
 
-                    default:
-                        vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorSubservicio(vldrContexto));
+					switch (rgla.getEnti().getTipo()) {
+					case T:
+						vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(vldrContexto));
 
-                        break;
-                    }
+						break;
 
-                    boolean incompatibilidadFound = false;
+					default:
+						vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorSubservicio(vldrContexto));
 
-                    final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
+						break;
+					}
 
-                    for (final ValoracionTemporalVO vlrt : vlrtList) {
-                        IgUtilBO.assignNextVal(vlrt);
+					boolean incompatibilidadFound = false;
 
-                        vlrt.setRgla(rgla);
-                        vlrt.setFreferencia(vldrContexto.getFref());
-                        vlrt.setFliquidacion(vldrContexto.getFliquidacion());
+					final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
 
-                        if (vlrt.getImporte() == -0.0) {
-                            vlrt.setImporte(+0.0);
-                        }
+					for (final ValoracionTemporalVO vlrt : vlrtList) {
+						IgUtilBO.assignNextVal(vlrt);
 
-                        if (vlrt.getImporteInc() == null) {
-                            vlrtListGanadores.add(vlrt);
-                        } else if (vlrt.getImporte() < vlrt.getImporteInc()) {
-                            incompatibilidadFound = true;
+						vlrt.setRgla(rgla);
+						vlrt.setFreferencia(vldrContexto.getFref());
+						vlrt.setFliquidacion(vldrContexto.getFliquidacion());
 
-                            vlrtListGanadores.add(vlrt);
-                            vlrtDAO.deleteIncompatibilidadList(vlrt);
-                        }
-                    }
+						if (vlrt.getImporte() == -0.0) {
+							vlrt.setImporte(+0.0);
+						}
 
-                    for (final ValoracionTemporalVO vlrt : vlrtListGanadores) {
-                        vlrtDAO.insert(vlrt);
-                    }
+						if (vlrt.getImporteInc() == null) {
+							vlrtListGanadores.add(vlrt);
+						} else if (vlrt.getImporte() < vlrt.getImporteInc()) {
+							incompatibilidadFound = true;
 
-                    if (incompatibilidadFound) {
-                        LOG.info("Incompatibilidades. Recalcular Importes!!");
+							vlrtListGanadores.add(vlrt);
+							vlrtDAO.deleteIncompatibilidadList(vlrt);
+						}
+					}
 
-                        vlrtDAO.updateRecalcularCargo(vldrContexto);
-                    }
-                } catch (final Throwable ex) {
-                    throw new Error(rgla.getCodigo() + " - " + ex.getMessage(), ex);
-                }
-            }
-        }
-    }
+					for (final ValoracionTemporalVO vlrt : vlrtListGanadores) {
+						vlrtDAO.insert(vlrt);
+					}
 
-    /**
-     * Generate sql.
-     *
-     * @param rgla
-     *            the rgla
-     */
-    private void generateSql(@NonNull final ReglaVO rgla) {
-        Preconditions.checkNotNull(rgla.getEnti());
-        Preconditions.checkNotNull(rgla.getEnti().getId());
-        Preconditions.checkNotNull(rgla.getVersion());
+					if (incompatibilidadFound) {
+						LOG.info("Incompatibilidades. Recalcular Importes!!");
 
-        final Long entiId = rgla.getEnti().getId();
-        final ReglaVersionVO rglv = rgla.getVersion();
+						vlrtDAO.updateRecalcularCargo(vldrContexto);
+					}
+				} catch (final Throwable ex) {
+					throw new Error(rgla.getCodigo() + " - " + ex.getMessage(), ex);
+				}
+			}
+		}
+	}
 
-        rglv.setPathImpuestoSql(generateSqlExpression(entiId, rglv.getPathImpuesto(), PathType.ID));
-        rglv.setPathPagadorSql(generateSqlExpression(entiId, rglv.getPathPagador(), PathType.ID));
-        rglv.setPathEsSujPasivoSql(generateSqlExpression(entiId, rglv.getPathEsSujPasivo(), PathType.ID));
-        rglv.setPathCodExenSql(generateSqlExpression(entiId, rglv.getPathCodExen(), PathType.ID));
+	/**
+	 * Generate sql.
+	 *
+	 * @param rgla
+	 *            the rgla
+	 */
+	private void generateSql(@NonNull final ReglaVO rgla) {
+		Preconditions.checkNotNull(rgla.getEnti());
+		Preconditions.checkNotNull(rgla.getEnti().getId());
+		Preconditions.checkNotNull(rgla.getVersion());
 
-        rglv.setPathInfo1Sql(generateSqlExpression(entiId, rglv.getPathInfo1(), PathType.LABEL));
-        rglv.setPathInfo2Sql(generateSqlExpression(entiId, rglv.getPathInfo2(), PathType.LABEL));
-        rglv.setPathInfo3Sql(generateSqlExpression(entiId, rglv.getPathInfo3(), PathType.LABEL));
-        rglv.setPathInfo4Sql(generateSqlExpression(entiId, rglv.getPathInfo4(), PathType.LABEL));
-        rglv.setPathInfo5Sql(generateSqlExpression(entiId, rglv.getPathInfo5(), PathType.LABEL));
-        rglv.setPathInfo6Sql(generateSqlExpression(entiId, rglv.getPathInfo6(), PathType.LABEL));
+		final Long entiId = rgla.getEnti().getId();
+		final ReglaVersionVO rglv = rgla.getVersion();
 
-        rglv.setPathCuant1Sql(generateSqlExpression(entiId, rglv.getPathCuant1(), PathType.ID));
-        rglv.setPathCuant2Sql(generateSqlExpression(entiId, rglv.getPathCuant2(), PathType.ID));
-        rglv.setPathCuant3Sql(generateSqlExpression(entiId, rglv.getPathCuant3(), PathType.ID));
-        rglv.setPathCuant4Sql(generateSqlExpression(entiId, rglv.getPathCuant4(), PathType.ID));
-        rglv.setPathCuant5Sql(generateSqlExpression(entiId, rglv.getPathCuant5(), PathType.ID));
-        rglv.setPathCuant6Sql(generateSqlExpression(entiId, rglv.getPathCuant6(), PathType.ID));
+		rglv.setPathImpuestoSql(generateSqlExpression(entiId, rglv.getPathImpuesto(), PathType.ID));
+		rglv.setPathPagadorSql(generateSqlExpression(entiId, rglv.getPathPagador(), PathType.ID));
+		rglv.setPathEsSujPasivoSql(generateSqlExpression(entiId, rglv.getPathEsSujPasivo(), PathType.ID));
+		rglv.setPathCodExenSql(generateSqlExpression(entiId, rglv.getPathCodExen(), PathType.ID));
 
-        rglv.setCondicionSql(generateSqlExpression(entiId, rglv.getCondicion(), PathType.CODE));
-        rglv.setValorBaseSql(generateSqlExpression(entiId, rglv.getValorBase(), PathType.ID));
-        rglv.setFormulaSql(generateSqlExpression(entiId, rglv.getFormula(), PathType.ID));
-    }
+		rglv.setPathInfo1Sql(generateSqlExpression(entiId, rglv.getPathInfo1(), PathType.LABEL));
+		rglv.setPathInfo2Sql(generateSqlExpression(entiId, rglv.getPathInfo2(), PathType.LABEL));
+		rglv.setPathInfo3Sql(generateSqlExpression(entiId, rglv.getPathInfo3(), PathType.LABEL));
+		rglv.setPathInfo4Sql(generateSqlExpression(entiId, rglv.getPathInfo4(), PathType.LABEL));
+		rglv.setPathInfo5Sql(generateSqlExpression(entiId, rglv.getPathInfo5(), PathType.LABEL));
+		rglv.setPathInfo6Sql(generateSqlExpression(entiId, rglv.getPathInfo6(), PathType.LABEL));
 
-    /**
-     * Generate sql.
-     *
-     * @param aspc
-     *            the aspc
-     */
-    private void generateSql(@NonNull final AspectoVO aspc) {
-        Preconditions.checkNotNull(aspc.getTpsr());
-        Preconditions.checkNotNull(aspc.getTpsr().getId());
-        Preconditions.checkNotNull(aspc.getVersion());
+		rglv.setPathCuant1Sql(generateSqlExpression(entiId, rglv.getPathCuant1(), PathType.ID));
+		rglv.setPathCuant2Sql(generateSqlExpression(entiId, rglv.getPathCuant2(), PathType.ID));
+		rglv.setPathCuant3Sql(generateSqlExpression(entiId, rglv.getPathCuant3(), PathType.ID));
+		rglv.setPathCuant4Sql(generateSqlExpression(entiId, rglv.getPathCuant4(), PathType.ID));
+		rglv.setPathCuant5Sql(generateSqlExpression(entiId, rglv.getPathCuant5(), PathType.ID));
+		rglv.setPathCuant6Sql(generateSqlExpression(entiId, rglv.getPathCuant6(), PathType.ID));
 
-        final AspectoVersionVO aspv = aspc.getVersion();
-        final Long entiId = aspc.getTpsr().getId();
+		rglv.setCondicionSql(generateSqlExpression(entiId, rglv.getCondicion(), PathType.CODE));
+		rglv.setValorBaseSql(generateSqlExpression(entiId, rglv.getValorBase(), PathType.ID));
+		rglv.setFormulaSql(generateSqlExpression(entiId, rglv.getFormula(), PathType.ID));
+	}
 
-        aspv.setCpathInfo1Sql(generateSqlExpression(entiId, aspv.getCpathInfo1(), PathType.LABEL));
-        aspv.setCpathInfo2Sql(generateSqlExpression(entiId, aspv.getCpathInfo2(), PathType.LABEL));
-        aspv.setCpathInfo3Sql(generateSqlExpression(entiId, aspv.getCpathInfo3(), PathType.LABEL));
-        aspv.setCpathInfo4Sql(generateSqlExpression(entiId, aspv.getCpathInfo4(), PathType.LABEL));
-        aspv.setCpathInfo5Sql(generateSqlExpression(entiId, aspv.getCpathInfo5(), PathType.LABEL));
-        aspv.setCpathInfo6Sql(generateSqlExpression(entiId, aspv.getCpathInfo6(), PathType.LABEL));
-    }
+	/**
+	 * Generate sql.
+	 *
+	 * @param aspc
+	 *            the aspc
+	 */
+	private void generateSql(@NonNull final AspectoVO aspc) {
+		Preconditions.checkNotNull(aspc.getTpsr());
+		Preconditions.checkNotNull(aspc.getTpsr().getId());
+		Preconditions.checkNotNull(aspc.getVersion());
 
-    /**
-     * Generate sql expression.
-     *
-     * @param entiId
-     *            the enti id
-     * @param expression
-     *            the expression
-     * @param pathType
-     *            the path type
-     * @return the string
-     */
-    private String generateSqlExpression(@NonNull final Long entiId, final String expression, final PathType pathType) {
-        if (expression == null || expression.isEmpty()) {
-            return null;
-        }
+		final AspectoVersionVO aspv = aspc.getVersion();
+		final Long entiId = aspc.getTpsr().getId();
 
-        final ExpressionSqlGenerator sqlGenerator = new ExpressionSqlGenerator(entiId, pathType);
+		aspv.setCpathInfo1Sql(generateSqlExpression(entiId, aspv.getCpathInfo1(), PathType.LABEL));
+		aspv.setCpathInfo2Sql(generateSqlExpression(entiId, aspv.getCpathInfo2(), PathType.LABEL));
+		aspv.setCpathInfo3Sql(generateSqlExpression(entiId, aspv.getCpathInfo3(), PathType.LABEL));
+		aspv.setCpathInfo4Sql(generateSqlExpression(entiId, aspv.getCpathInfo4(), PathType.LABEL));
+		aspv.setCpathInfo5Sql(generateSqlExpression(entiId, aspv.getCpathInfo5(), PathType.LABEL));
+		aspv.setCpathInfo6Sql(generateSqlExpression(entiId, aspv.getCpathInfo6(), PathType.LABEL));
+	}
 
-        final ANTLRInputStream input = new ANTLRInputStream(expression);
-        final ExpressionLexer lexer = new ExpressionLexer(input);
-        final CommonTokenStream tokens = new CommonTokenStream(lexer);
-        final ExpressionParser parser = new ExpressionParser(tokens);
-        final ParseTree tree = parser.expression();
+	/**
+	 * Generate sql expression.
+	 *
+	 * @param entiId
+	 *            the enti id
+	 * @param expression
+	 *            the expression
+	 * @param pathType
+	 *            the path type
+	 * @return the string
+	 */
+	private String generateSqlExpression(@NonNull final Long entiId, final String expression, final PathType pathType) {
+		if (expression == null || expression.isEmpty()) {
+			return null;
+		}
 
-        return sqlGenerator.visit(tree).toString();
-    }
+		final ExpressionSqlGenerator sqlGenerator = new ExpressionSqlGenerator(entiId, pathType);
+
+		final ANTLRInputStream input = new ANTLRInputStream(expression);
+		final ExpressionLexer lexer = new ExpressionLexer(input);
+		final CommonTokenStream tokens = new CommonTokenStream(lexer);
+		final ExpressionParser parser = new ExpressionParser(tokens);
+		final ParseTree tree = parser.expression();
+
+		return sqlGenerator.visit(tree).toString();
+	}
 }

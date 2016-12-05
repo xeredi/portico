@@ -161,6 +161,11 @@
             <version>${argo-business.version}</version>
         </dependency>
         <dependency>
+            <groupId>argo</groupId>
+            <artifactId>argo-jobs</artifactId>
+            <version>${argo-jobs.version}</version>
+        </dependency>
+        <dependency>
             <groupId>commons-dbutils</groupId>
             <artifactId>commons-dbutils</artifactId>
             <version>${commons-dbutils.version}</version>

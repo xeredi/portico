@@ -2244,7 +2244,7 @@ AND valorServicio(''RE'', servicio.dato(SERV_TRAF), servicio.atributo(PK)) = ''S
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES (120457,120456,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 26, '0.80'
-			,'dato(ALIN).dato(BOOLEANO_04) = 1
+			,'dato(ALIN).dato(ZONA) = ''II''
 AND dato(TIPO_ATR) = ''F''
 AND dato(ALIN).dato(BOOLEANO_03) = 0
 AND dato(TIPO_ACT) NOT IN (''RT'', ''AR'', ''AB'', ''AF'', ''AT'', ''AP'')','0.80'
@@ -2265,7 +2265,7 @@ AND dato(TIPO_ACT) NOT IN (''RT'', ''AR'', ''AB'', ''AF'', ''AT'', ''AP'')','0.8
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES (120459,120458,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 27, '0.48'
-			,'dato(ALIN).dato(BOOLEANO_04) = 1
+			,'dato(ALIN).dato(ZONA) = ''II''
 AND dato(TIPO_ATR) = ''F''
 AND dato(ALIN).dato(BOOLEANO_03) = 0
 AND dato(TIPO_ACT) IN (''RT'', ''AR'', ''AB'', ''AF'', ''AT'', ''AP'')','0.48'
@@ -2286,7 +2286,7 @@ AND dato(TIPO_ACT) IN (''RT'', ''AR'', ''AB'', ''AF'', ''AT'', ''AP'')','0.48'
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES (120461,120460,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 28, '0.40'
-			,'dato(ALIN).dato(BOOLEANO_04) = 1
+			,'dato(ALIN).dato(ZONA) = ''II''
 AND dato(TIPO_ATR) = ''F''
 AND dato(ALIN).dato(BOOLEANO_03) = 1
 AND dato(TIPO_ACT) NOT IN (''RT'', ''AR'', ''AB'', ''AF'', ''AT'', ''AP'')','0.40'
@@ -2307,7 +2307,7 @@ AND dato(TIPO_ACT) NOT IN (''RT'', ''AR'', ''AB'', ''AF'', ''AT'', ''AP'')','0.4
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES (120463,120462,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 29, '0.24'
-			,'dato(ALIN).dato(BOOLEANO_04) = 1
+			,'dato(ALIN).dato(ZONA) = ''II''
 AND dato(TIPO_ATR) = ''F''
 AND dato(ALIN).dato(BOOLEANO_03) = 1
 AND dato(TIPO_ACT) IN (''RT'', ''AR'', ''AB'', ''AF'', ''AT'', ''AP'')','0.24'
@@ -2652,7 +2652,7 @@ AND esPrimerAtraque(atributo(PK)) = 1','2'
 			,rglv_path_cuant1,rglv_path_cuant2,rglv_path_cuant3,rglv_path_cuant4,rglv_path_cuant5,rglv_path_cuant6
 			,rglv_etiq_cuant1,rglv_etiq_cuant2,rglv_etiq_cuant3,rglv_etiq_cuant4,rglv_etiq_cuant5,rglv_etiq_cuant6)
 		VALUES (120499,120498,TO_DATE('2013-01-01', 'yyyy-mm-dd'),null, 1, '30'
-			,'dato(ALIN).dato(BOOLEANO_04) = 1
+			,'dato(ALIN).dato(ZONA) = ''II''
 AND dato(TIPO_ATR) <> ''F''','30'
 			,null,null,null,null
 			,null,null,null,null,null,null

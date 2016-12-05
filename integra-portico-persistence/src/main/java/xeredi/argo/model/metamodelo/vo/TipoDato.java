@@ -472,6 +472,8 @@ public enum TipoDato {
 	UNID_MED_SBT(43060L),
 	/** The unidad medida berman. */
 	UNID_MED_BERMAN(43315L),
+	/** The zona. */
+	ZONA(43310L),
 
 	// Tipos de Servicio
 	/** The manifiesto. */
