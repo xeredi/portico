@@ -36,6 +36,7 @@
         <js>/modules/entidad/servicio/*.js</js>
         <js>/modules/entidad/servicio/bl/*.js</js>
         <js>/modules/entidad/servicio/manifiesto/*.js</js>
+        <js>/modules/entidad/servicio/suministrored/*.js</js>
         <js>/modules/metamodelo/*.js</js>
         <js>/modules/seguridad/*.js</js>
         <js>/modules/proceso/*.js</js>

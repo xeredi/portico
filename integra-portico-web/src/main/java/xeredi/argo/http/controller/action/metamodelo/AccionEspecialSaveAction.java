@@ -60,5 +60,6 @@ public final class AccionEspecialSaveAction extends CrudSaveAction<AccionEspecia
 
 		FieldValidator.validateRequired(this, MessageI18nKey.aces_orden, model.getOrden());
 		FieldValidator.validateRequired(this, MessageI18nKey.aces_path, model.getPath());
+		FieldValidator.validateRequired(this, MessageI18nKey.aces_multiple, model.getMultiple());
 	}
 }

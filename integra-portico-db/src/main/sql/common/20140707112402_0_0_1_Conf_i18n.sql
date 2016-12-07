@@ -1792,6 +1792,8 @@ INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'aces_orden')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'aces_orden', 'Orden')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'aces_path')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'aces_path', 'Path')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'aces_multiple')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'aces_multiple', 'Múltiple?')\
 
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fncd')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fncd', 'Funcionalidad')\

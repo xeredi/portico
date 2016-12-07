@@ -285,6 +285,16 @@ public final class ValoradorBO {
 			for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
 				vlrl.getVlrl().setVlrcId(vlra.getVlrc().getId());
 
+				// Asignacion de fechas
+				if (vlrl.getVlrl().getFini() != null && (vlra.getVlrc().getFini() == null
+						|| vlrl.getVlrl().getFini().before(vlra.getVlrc().getFini()))) {
+					vlra.getVlrc().setFini(vlrl.getVlrl().getFini());
+				}
+				if (vlrl.getVlrl().getFfin() != null && (vlra.getVlrc().getFfin() == null
+						|| vlrl.getVlrl().getFfin().after(vlra.getVlrc().getFfin()))) {
+					vlra.getVlrc().setFfin(vlrl.getVlrl().getFfin());
+				}
+
 				IgUtilBO.assignNextVal(vlrl.getVlrl());
 
 				if (vlrl.getVlrl().getRgla().getTipo() == ReglaTipo.T) {

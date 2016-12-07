@@ -10,6 +10,7 @@
 		<result column="aces_enti_pk" property="entiId" />
 		<result column="aces_path" property="path" />
 		<result column="aces_orden" property="orden" />
+		<result column="aces_multiple" property="multiple" />
 
 		<result column="aces_etiqueta" property="etiqueta" />
 	</resultMap>
@@ -17,7 +18,19 @@
 	<sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        aces_pk, aces_path, aces_enti_pk, aces_orden
+        aces_pk, aces_path, aces_enti_pk, aces_orden, aces_multiple
+    ]]>
+		<if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'fncd'
+                    AND i18n_ext_pk = aces_pk
+                    AND i18n_lang = #{idioma}
+            ) AS aces_etiqueta
+        ]]>
+		</if>
+    <![CDATA[
     FROM
         tbl_accion_especial_aces
     ]]>
@@ -69,21 +82,18 @@
 		</where>
 	</sql>
 
-	<select id="count" parameterType="AccionEspecialCriterioVO"
-		resultType="Integer">
+	<select id="count" parameterType="AccionEspecialCriterioVO" resultType="Integer">
 		<include refid="SelectCountPrefix" />
 		<include refid="SelectWhere" />
 	</select>
 
-	<select id="selectList" parameterType="AccionEspecialCriterioVO"
-		resultMap="ResultMap">
+	<select id="selectList" parameterType="AccionEspecialCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 		ORDER BY aces_enti_pk, aces_path
 	</select>
 
-	<select id="selectObject" parameterType="AccionEspecialCriterioVO"
-		resultMap="ResultMap">
+	<select id="selectObject" parameterType="AccionEspecialCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 	</select>
@@ -97,28 +107,20 @@
         ]]>
 	</select>
 
-	<select id="existsCriterio" parameterType="AccionEspecialCriterioVO"
-		resultType="Boolean">
-        <![CDATA[
-        SELECT COUNT(1)
-        FROM tbl_accion_especial_aces
-        ]]>
-		<include refid="SelectWhere" />
-	</select>
-
 	<insert id="insert" parameterType="AccionEspecialVO">
         <![CDATA[
-        INSERT INTO tbl_accion_especial_aces (aces_pk, aces_path, aces_enti_pk, aces_orden)
-        VALUES (#{id}, #{path}, #{entiId}, #{orden})
+        INSERT INTO tbl_accion_especial_aces (aces_pk, aces_path, aces_enti_pk, aces_orden, aces_multiple)
+        VALUES (#{id}, #{path}, #{entiId}, #{orden}, #{multiple})
         ]]>
 	</insert>
 
 	<update id="update" parameterType="AccionEspecialVO">
         <![CDATA[
         UPDATE tbl_accion_especial_aces SET
-            , aces_path = #{path}
+            aces_path = #{path}
             , aces_enti_pk = #{entiId}
             , aces_orden = #{orden}
+            , aces_multiple = #{multiple}
         WHERE
             aces_pk = #{id}
         ]]>

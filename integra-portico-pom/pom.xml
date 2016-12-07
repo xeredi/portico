@@ -77,7 +77,7 @@
 
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
         <struts2.version>2.3.31</struts2.version>
-        <jackson.version>2.8.4</jackson.version>
+        <jackson.version>2.8.5</jackson.version>
         <commons-validator.version>1.5.1</commons-validator.version>
     </properties>
 

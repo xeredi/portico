@@ -45,7 +45,7 @@ public final class I18nJs {
         final MessageI18nBO mesgBO = new MessageI18nBO();
 
         final Set<ClassPrefix> i18nPrefixSet = Sets.newHashSet(ClassPrefix.enti, ClassPrefix.engd, ClassPrefix.entd,
-                ClassPrefix.trmt, ClassPrefix.tpdt, ClassPrefix.cdrf);
+                ClassPrefix.trmt, ClassPrefix.tpdt, ClassPrefix.cdrf, ClassPrefix.fncd);
 
         for (final String language : languages) {
             LOG.info("Language: " + language);

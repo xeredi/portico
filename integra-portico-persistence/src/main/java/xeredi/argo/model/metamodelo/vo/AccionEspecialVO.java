@@ -20,6 +20,9 @@ public final class AccionEspecialVO extends FuncionalidadVO implements I18nable 
     /** The orden. */
     private Integer orden;
 
+    /** The multiple. */
+    private Boolean multiple;
+
     /** The etiqueta. */
     private String etiqueta;
 }

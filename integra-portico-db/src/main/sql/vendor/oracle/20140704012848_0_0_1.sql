@@ -282,12 +282,12 @@ COMMENT ON COLUMN tbl_entidad_enti.enti_puerto IS 'Entidad Asociada a Puerto?'\
 CREATE TABLE tbl_accion_especial_aces (
 	aces_pk NUMBER(19) NOT NULL
 	, aces_enti_pk NUMBER(19) NOT NULL
-	, aces_prefix VARCHAR2(4) NOT NULL
 	, aces_orden NUMBER(3) NOT NULL
 	, aces_path VARCHAR2(100) NOT NULL
+	, aces_multiple INT NOT NULL
 
 	, CONSTRAINT pk_aces PRIMARY KEY (aces_pk)
-	, CONSTRAINT uq_aces UNIQUE (aces_enti_pk, aces_prefix, aces_path)
+	, CONSTRAINT uq_aces UNIQUE (aces_enti_pk, aces_path)
 
 	, CONSTRAINT fk_aces_pk FOREIGN KEY (aces_pk)
 		REFERENCES tbl_funcionalidad_fncd (fncd_pk)

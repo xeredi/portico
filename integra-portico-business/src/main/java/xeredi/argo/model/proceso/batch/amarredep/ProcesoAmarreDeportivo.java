@@ -58,7 +58,7 @@ public final class ProcesoAmarreDeportivo extends ProcesoTemplate {
                 final ServicioVO srvc = enti.createItem();
 
                 try {
-                    srvc.setPrto(maestro.getPrto());
+                    srvc.setPrto(maestro.getPrmt().getPrto());
                     srvc.setFini(maestro.getFini());
                     srvc.setFfin(maestro.getFfin());
                     srvc.setFref(maestro.getFini());

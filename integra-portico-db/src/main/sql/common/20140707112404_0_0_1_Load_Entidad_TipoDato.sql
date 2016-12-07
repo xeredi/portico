@@ -1789,7 +1789,7 @@ INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES 
 INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable
 	, tpsr_tpdt_estado_pk, tpsr_estados_vlrc, tpsr_estado_def) VALUES (21002, 0, 1, 1, portico.getTipoDato('ESTADO_MAN_MERC'), 'C, I', NULL)\
 	INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (27004)\
-		INSERT INTO tbl_accion_especial_aces (aces_pk, aces_enti_pk, aces_prefix, aces_orden, aces_path) VALUES (27004, 21002, 'aces', 1, 'mani-totales')\
+		INSERT INTO tbl_accion_especial_aces (aces_pk, aces_enti_pk, aces_orden, aces_path, aces_multiple) VALUES (27004, 21002, 1, 'mani-totales', 0)\
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (22002, 'S', 1, 1, 1, 1, 'MANIFIESTO_CONSIGNATARIO')\
 INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 22002, 'Consignatario de Manifiesto')\
 INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable
@@ -1802,7 +1802,7 @@ INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, t
 	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21002, 22003, 2)\
 	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (22002, 22003, 1)\
 	INSERT INTO tbl_funcionalidad_fncd (fncd_pk) VALUES (27054)\
-		INSERT INTO tbl_accion_especial_aces (aces_pk, aces_enti_pk, aces_prefix, aces_orden, aces_path) VALUES (27054, 22003, 'aces', 1, 'mabl-totales')\
+		INSERT INTO tbl_accion_especial_aces (aces_pk, aces_enti_pk, aces_orden, aces_path, aces_multiple) VALUES (27054, 22003, 1, 'mabl-totales', 0)\
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (22004, 'S', 1, 1, 1, 1, 'PARTIDA')\
 INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 22004, 'Partida')\
 INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable
