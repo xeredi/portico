@@ -1,6 +1,7 @@
 package xeredi.argo.model.maestro.dao;
 
-import xeredi.argo.model.comun.dao.CrudDAO;
+import java.util.List;
+
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.maestro.vo.SubparametroCriterioVO;
 
@@ -8,5 +9,40 @@ import xeredi.argo.model.maestro.vo.SubparametroCriterioVO;
 /**
  * The Interface SubparametroDatoDAO.
  */
-public interface SubparametroDatoDAO extends CrudDAO<ItemDatoVO, SubparametroCriterioVO> {
+public interface SubparametroDatoDAO {
+
+	/**
+	 * Insert.
+	 *
+	 * @param vo
+	 *            the vo
+	 */
+	void insert(final ItemDatoVO vo);
+
+	/**
+	 * Update.
+	 *
+	 * @param vo
+	 *            the vo
+	 * @return the int
+	 */
+	int update(final ItemDatoVO vo);
+
+	/**
+	 * Select list.
+	 *
+	 * @param criterio
+	 *            the criterio
+	 * @return the list
+	 */
+	List<ItemDatoVO> selectList(final SubparametroCriterioVO criterio);
+
+	/**
+	 * Delete list.
+	 *
+	 * @param criterio
+	 *            the criterio
+	 * @return the int
+	 */
+	int deleteList(final SubparametroCriterioVO criterio);
 }

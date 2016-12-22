@@ -4,6 +4,9 @@
 
 <mapper namespace="xeredi.argo.model.servicio.dao.suministrored.SuministroRedDAO">
 	<resultMap type="ServicioMaestroVO" id="ResultMap">
+		<id column="srvc_prmt_pk" />
+		<id column="srvc_cliente_pk" />
+
 		<result column="srvc_fini" property="fini" />
 		<result column="srvc_ffin" property="ffin" />
 
@@ -125,6 +128,16 @@
 		    , clientes.cliente_participacion AS srvc_uso
 		    , clientes.cliente_cod_exen AS srvc_cod_exen
 		FROM clientes
+		WHERE
+		    EXISTS (
+		        SELECT 1
+		        FROM tbl_subparametro_sprm lect
+		            INNER JOIN tbl_subparametro_version_spvr ON spvr_sprm_pk = sprm_pk
+		        WHERE sprm_tpsp_pk = portico.getEntidad('PUNTO_RED_TIPO_LECTURA')
+		            AND sprm_prmt_pk = punto_red_pk
+		            AND spvr_ffin > cliente_fini
+		            AND spvr_ffin < cliente_ffin
+		    )
 		ORDER BY srvc_fini, srvc_ffin
     ]]>
 	</select>

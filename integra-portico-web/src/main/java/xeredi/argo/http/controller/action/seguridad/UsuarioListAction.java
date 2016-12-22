@@ -4,9 +4,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.seguridad.bo.UsuarioBO;
+import xeredi.argo.model.seguridad.service.UsuarioService;
 import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
+import xeredi.argo.model.util.GuiceInjector;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -16,16 +17,16 @@ import xeredi.argo.model.seguridad.vo.UsuarioVO;
 @EqualsAndHashCode(callSuper = true)
 public final class UsuarioListAction extends GridListAction<UsuarioCriterioVO, UsuarioVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -3750518542645128408L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -3750518542645128408L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doList() throws ApplicationException {
-        final UsuarioBO usroBO = new UsuarioBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doList() throws ApplicationException {
+		final UsuarioService usroService = GuiceInjector.getInjector().getInstance(UsuarioService.class);
 
-        resultList = usroBO.selectList(model, getOffset(), limit);
-    }
+		resultList = usroService.selectList(model, getOffset(), limit);
+	}
 }

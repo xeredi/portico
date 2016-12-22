@@ -101,7 +101,8 @@
         <where>
             <if test="fechaVigencia != null">
             <![CDATA[
-                AND #{fechaVigencia} BETWEEN aspv_fini AND COALESCE(aspv_ffin, #{fechaVigencia})
+                AND #{fechaVigencia} >= aspv_fini
+                AND (aspv_ffin IS NULL OR aspv_ffin > #{fechaVigencia})
             ]]>
             </if>
 
@@ -127,7 +128,8 @@
             		SELECT 1
             		FROM tbl_valoracion_vlrc
             		WHERE vlrc_aspc_pk = aspc_pk
-		                AND vlrc_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, vlrc_fref)
+		                AND vlrc_fref >= aspv_fini
+		                AND (aspv_ffin IS NULL OR aspv_ffin > vlrc_fref)
             			AND vlrc_pk = #{vlrcId}
             	)
             ]]>

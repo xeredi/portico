@@ -1816,6 +1816,9 @@ INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'mdloList')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'mdlo_codigo')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'mdlo_codigo', 'Código')\
 
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'srms_ffin')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'srms_ffin', 'Fecha Fin')\
+
 
 
 

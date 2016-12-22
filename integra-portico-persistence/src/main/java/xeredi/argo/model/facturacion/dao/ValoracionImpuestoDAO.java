@@ -1,6 +1,7 @@
 package xeredi.argo.model.facturacion.dao;
 
-import xeredi.argo.model.comun.dao.CrudDAO;
+import java.util.List;
+
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
 
@@ -8,5 +9,14 @@ import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
 /**
  * The Interface ValoracionImpuestoDAO.
  */
-public interface ValoracionImpuestoDAO extends CrudDAO<ValoracionImpuestoVO, ValoracionCriterioVO> {
+public interface ValoracionImpuestoDAO {
+
+	/**
+	 * Select list.
+	 *
+	 * @param criterio
+	 *            the criterio
+	 * @return the list
+	 */
+	List<ValoracionImpuestoVO> selectList(final ValoracionCriterioVO criterio);
 }

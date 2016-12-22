@@ -117,7 +117,10 @@
 			</if>
 
             <if test="fechaVigencia != null">
-                AND #{fechaVigencia} BETWEEN rglv_fini AND COALESCE(rglv_ffin, #{fechaVigencia})
+		    <![CDATA[
+                AND #{fechaVigencia} >= rglv_fini
+                AND (rglv_ffin IS NULL OR rglv_ffin > #{fechaVigencia})
+		    ]]>
             </if>
 
             <if test="id != null">
@@ -143,7 +146,8 @@
             				SELECT 1
             				FROM tbl_regla_inc_version_rgiv
             				WHERE rgiv_rgin_pk = rgin_pk
-            					AND #{fechaVigencia} BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, #{fechaVigencia})
+				                AND #{fechaVigencia} >= rgiv_fini
+				                AND (rgiv_ffin IS NULL OR rgiv_ffin > #{fechaVigencia})
             			)
                 ]]>
                 </if>
@@ -163,7 +167,8 @@
 	            		FROM tbl_cargo_version_crgv
 	            		WHERE
 	            			crgv_crgo_pk = rgla_crgo_pk
-	            			AND #{fechaVigencia} BETWEEN crgv_fini AND COALESCE(crgv_ffin, #{fechaVigencia})
+			                AND #{fechaVigencia} >= crgv_fini
+			                AND (crgv_ffin IS NULL OR crgv_ffin > #{fechaVigencia})
 	            	)
 	            ]]>
                 </if>
@@ -186,7 +191,8 @@
        							ascr_aspc_pk = vlrc_aspc_pk
        							AND ascr_crgo_pk = rgla_crgo_pk
             			)
-            			AND vlrc_fref BETWEEN rglv_fini AND COALESCE(rglv_ffin, vlrc_fref)
+		                AND vlrc_fref >= rglv_fini
+		                AND (rglv_ffin IS NULL OR rglv_ffin > vlrc_fref)
             			AND vlrc_pk = #{vlrcId}
             	)
             ]]>

@@ -915,6 +915,54 @@
     ]]>
 	</sql>
 
+	<sql id="EQUIPAMIENTO" table="IMAN_EQUIPAMIENTO_EQUI"
+		sqlId="SELECT equi_id FROM iman_equipamiento_equi">
+    <![CDATA[
+		SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = serv_id
+	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS serv_id
+	        , equi_id
+		    , EQUI.EQUI_ORDEN
+	        , EQUI.EQUI_ESTADO
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = equi_mabl_id
+	            	AND trid_table_name = 'IMAN_BL_MABL') AS equi_mabl_id
+
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = equi_tipo_id
+	            	AND trid_table_name = 'IMAN_TIPOEQUIPAMIENTO_TEQU') AS equi_tipo_id
+		    , EQUI.EQUI_MATRICULA
+		    , to_char(EQUI.EQUI_CODIGO_EXENCION)
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = equi_tipo_exencion_id
+	            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') AS equi_tipo_exencion_id
+		    , EQUI.EQUI_LLENO_VACIO
+		    , EQUI.EQUI_NUMERO_VACIOS
+		    , EQUI.EQUI_ES_RORO
+		    , EQUI.EQUI_TARA
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = equi_unidad_carga_id
+	            	AND trid_table_name = 'IMAN_UNIDADCARGA_UNIC') AS equi_unidad_carga_id
+		    , EQUI.EQUI_OBSERVACIONES
+		FROM IMAN_EQUIPAMIENTO_EQUI EQUI
+		    JOIN IMAN_BL_MABL MABL ON
+		        MABL_ID = EQUI_MABL_ID
+		    JOIN ICOM_SERVICIO_SERV SERV ON
+		        SERV_ID = MABL_MANI_ID
+		where equi_es_activo = 1
+	        AND MABL_ES_ACTIVO = 1
+	        and serv_fecha_baja is null
+	        AND EXISTS (
+	            SELECT 1
+	            FROM iman_consignatario_maco
+	            WHERE maco_ID = MABL_consignatario_ID
+	                AND maco_es_activo = 1
+	        )
+    ]]>
+	</sql>
+
 	<sql id="PARTIDA" table="IMAN_PARTIDA_PART" sqlId="SELECT part_id FROM iman_partida_part">
     <![CDATA[
 		SELECT
@@ -982,54 +1030,6 @@
 		where
 	        part_es_activo = 1
 		    AND MABL_ES_ACTIVO = 1
-	        and serv_fecha_baja is null
-	        AND EXISTS (
-	            SELECT 1
-	            FROM iman_consignatario_maco
-	            WHERE maco_ID = MABL_consignatario_ID
-	                AND maco_es_activo = 1
-	        )
-    ]]>
-	</sql>
-
-	<sql id="EQUIPAMIENTO" table="IMAN_EQUIPAMIENTO_EQUI"
-		sqlId="SELECT equi_id FROM iman_equipamiento_equi">
-    <![CDATA[
-		SELECT
-	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = serv_id
-	            	AND trid_table_name = 'IMAN_MANIFIESTO_MANI') AS serv_id
-	        , equi_id
-		    , EQUI.EQUI_ORDEN
-	        , EQUI.EQUI_ESTADO
-
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = equi_mabl_id
-	            	AND trid_table_name = 'IMAN_BL_MABL') AS equi_mabl_id
-
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = equi_tipo_id
-	            	AND trid_table_name = 'IMAN_TIPOEQUIPAMIENTO_TEQU') AS equi_tipo_id
-		    , EQUI.EQUI_MATRICULA
-		    , to_char(EQUI.EQUI_CODIGO_EXENCION)
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = equi_tipo_exencion_id
-	            	AND trid_table_name = 'IGEN_EXENCIONTIPO_EXET') AS equi_tipo_exencion_id
-		    , EQUI.EQUI_LLENO_VACIO
-		    , EQUI.EQUI_NUMERO_VACIOS
-		    , EQUI.EQUI_ES_RORO
-		    , EQUI.EQUI_TARA
-	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
-	            WHERE trid_old_id = equi_unidad_carga_id
-	            	AND trid_table_name = 'IMAN_UNIDADCARGA_UNIC') AS equi_unidad_carga_id
-		    , EQUI.EQUI_OBSERVACIONES
-		FROM IMAN_EQUIPAMIENTO_EQUI EQUI
-		    JOIN IMAN_BL_MABL MABL ON
-		        MABL_ID = EQUI_MABL_ID
-		    JOIN ICOM_SERVICIO_SERV SERV ON
-		        SERV_ID = MABL_MANI_ID
-		where equi_es_activo = 1
-	        AND MABL_ES_ACTIVO = 1
 	        and serv_fecha_baja is null
 	        AND EXISTS (
 	            SELECT 1

@@ -3,11 +3,11 @@
     xsi:schemaLocation="http://www.isdc.ro/wro wro.xsd">
 
     <group name="dependencies">
-        <js>https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.2/angular.min.js</js>
-        <js>https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.2/angular-route.min.js</js>
-        <js>https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.6.0-rc.2/angular-locale_es-es.min.js</js>
-        <js>https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.3.0/ui-bootstrap-tpls.min.js</js>
-        <js>https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.13.0/angular-translate.min.js</js>
+        <js>https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js</js>
+        <js>https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular-route.min.js</js>
+        <js>https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.6.0/angular-locale_es-es.min.js</js>
+        <js>https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.3.1/ui-bootstrap-tpls.min.js</js>
+        <js>https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.13.1/angular-translate.min.js</js>
         <js>https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.5.0/angular-local-storage.min.js
         </js>
         <js>https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.2.13/ng-file-upload.min.js
@@ -34,7 +34,6 @@
         <js>/modules/entidad/estadistica/*.js</js>
         <js>/modules/entidad/maestro/*.js</js>
         <js>/modules/entidad/servicio/*.js</js>
-        <js>/modules/entidad/servicio/bl/*.js</js>
         <js>/modules/entidad/servicio/manifiesto/*.js</js>
         <js>/modules/entidad/servicio/suministrored/*.js</js>
         <js>/modules/metamodelo/*.js</js>

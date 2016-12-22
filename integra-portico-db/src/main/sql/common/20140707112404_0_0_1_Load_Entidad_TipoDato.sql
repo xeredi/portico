@@ -1063,7 +1063,8 @@ UPDATE tbl_entidad_enti SET enti_puerto = 1 WHERE enti_pk = 20086\ -- SERVICIO_T
 UPDATE tbl_entidad_enti SET enti_puerto = 1 WHERE enti_pk = 20078\ -- SUPRABIEN
 UPDATE tbl_entidad_enti SET enti_puerto = 1 WHERE enti_pk = 20055\ -- TERMINAL
 UPDATE tbl_entidad_enti SET enti_puerto = 1 WHERE enti_pk = 20111\ -- ZONA_DEPOSITO
-UPDATE tbl_entidad_enti SET enti_puerto = 1 WHERE enti_pk = 20072\ -- ZONA_PORTUARIA
+UPDATE tbl_entidad_enti SET enti_puerto = 1 WHERE enti_pk = 20072\ -- ZONA_PORTUARIA_DP
+
 
 
 -- Entidades - Tipos de parametro
@@ -1349,13 +1350,13 @@ INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, e
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20071, 'Baremo de FP')\
 	INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('BAREMO_FP'), 1, 1, NULL)\
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
-	, enti_puerto, enti_codigo) VALUES (20072, 'P', 1, 1, 1, 1, 1, 'ZONA_PORTUARIA')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20072, 'Zona Portuaria')\
-	INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('ZONA_PORTUARIA'), 1, 1, NULL)\
+	, enti_puerto, enti_codigo) VALUES (20072, 'P', 1, 1, 1, 1, 1, 'ZONA_PORTUARIA_DP')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20072, 'Zona Portuaria D.P.')\
+	INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('ZONA_PORTUARIA_DP'), 1, 1, NULL)\
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
-	, enti_puerto, enti_codigo) VALUES (20073, 'P', 1, 1, 1, 1, 0, 'TIPO_SUPERFICIE_BIEN')\
-	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20073, 'Tipo de Superficie de Bien')\
-	INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_SUPERFICIE_BIEN'), 1, 0, NULL)\
+	, enti_puerto, enti_codigo) VALUES (20073, 'P', 1, 1, 1, 1, 0, 'TIPO_SUPERFICIE_DP')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20073, 'Tipo de Superficie D.P.')\
+	INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('TIPO_SUPERFICIE_DP'), 1, 0, NULL)\
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
 	, enti_puerto, enti_codigo) VALUES (20074, 'P', 1, 1, 1, 1, 0, 'TIPO_EXPEDIENTE')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20074, 'Tipo de Expediente')\
@@ -1547,6 +1548,14 @@ INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, e
 	, enti_puerto, enti_codigo) VALUES (20121, 'P', 1, 1, 1, 1, 0, 'EMBARCACION_DEP_AUT')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20121, 'Embarcación Dep. Aut.')\
 	INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (portico.getEntidad('EMBARCACION_DEP_AUT'), 0, 0, 41021)\
+INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
+	, enti_puerto, enti_codigo) VALUES (20122, 'P', 1, 1, 1, 1, 1, 'SUPERFICIE_DP')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20122, 'Superficie D.P.')\
+	INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (20122, 0, 1, NULL)\
+INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
+	, enti_puerto, enti_codigo) VALUES (20123, 'P', 1, 1, 1, 1, 1, 'BIEN_DP')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 20123, 'Bien D.P.')\
+	INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (20123, 0, 1, NULL)\
 
 -- Permisos
 INSERT INTO tbl_funcionalidad_fncd (fncd_pk)
@@ -1614,6 +1623,8 @@ SELECT
     , tppr_pk AS acen_enti_pk
 		, (SELECT aebs_pk FROM tbl_accion_entidad_base_aebs WHERE aebs_prefix = 'item' AND aebs_codigo = 'duplicate') AS acen_aebs_pk
 FROM tbl_tipo_parametro_tppr\
+
+
 
 
 
@@ -1695,6 +1706,20 @@ INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, e
 INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 24020, 'Tráfico')\
 INSERT INTO tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24020, 20087, 20086, 0, 1)\
 	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20087, 24020, 1)\
+
+-- Tipo de Actividad General Concesional
+-- Tipo de Superficie
+INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (24025, 'B', 1, 1, 1, 1, 'GRAVAMEN_TO')\
+INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 24025, 'Gravamen T.O.')\
+INSERT INTO tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24025, 20076, 20073, 0, 1)\
+	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20076, 24025, 1)\
+
+-- Bien D.P.
+-- Superficie de Bien
+INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo) VALUES (24030, 'B', 1, 1, 1, 1, 'SUPERFICIE_BIEN_DP')\
+INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enti', 'es', 24030, 'Superficie de Bien')\
+INSERT INTO tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24030, 20123, 20122, 0, 1)\
+	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20123, 24030, 1)\
 
 
 -- Permisos
@@ -2193,6 +2218,11 @@ FROM tbl_tipo_estadistica_tpes\
 
 
 
+-- Permisos entidades
+INSERT INTO tbl_funcionalidad_grupo_fngr (fngr_fncd_pk, fngr_grpo_pk)
+	SELECT acen_pk, 4000 FROM tbl_accion_entidad_acen
+\
+
 
 
 
@@ -2403,7 +2433,10 @@ INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpd
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45470, 'Embarcación Dep.')\
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45475, 'F', 'PR', 20121, 'EMBARCACION_DEP_AUT')\
 	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45475, 'Embarcación Dep. Aut.')\
-
+INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45480, 'F', 'PR', 20073, 'TIPO_SUPERFICIE_DP')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45480, 'Tipo de Superficie D.P.')\
+INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo) VALUES (45485, 'F', 'PR', 20072, 'ZONA_PORTUARIA_DP')\
+	INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('tpdt', 'es', 45485, 'Zona Portuaria D.P.')\
 
 
 
@@ -2498,6 +2531,8 @@ BEGIN
 	eraseTpsp(24015);
 	eraseTpsp(24016);
 	eraseTpsp(24020);
+	eraseTpsp(24025);
+	eraseTpsp(24030);
 
 	/* FIXME Super chapu mercancia-UC dependencia circular */
 	DELETE FROM tbl_parametro_dato_prdt
@@ -2523,6 +2558,8 @@ BEGIN
 	;
 
 	-- Tipos de Parametro
+	eraseTppr(20123);
+	eraseTppr(20122);
 	eraseTppr(20121);
 	eraseTppr(20120);
 	eraseTppr(20119);

@@ -40,6 +40,8 @@ public enum Entidad {
 	AVITUALLAMIENTO(23003L),
 	/** The baremo fp. */
 	BAREMO_FP(20071L),
+	/** The bien dp. */
+	BIEN_DP(20123L),
 	/** The bl. */
 	BL(22003L),
 	/** The bonificacion fp. */
@@ -60,7 +62,6 @@ public enum Entidad {
 	BUQUE_FONDEADO_ATRACADO(23004L),
 	/** The buque pesca. */
 	BUQUE_PESCA(20040L),
-
 	/** The buque pesca srv. */
 	BUQUE_PESCA_SRV(21020L),
 	/** The comprador pesca. */
@@ -93,6 +94,8 @@ public enum Entidad {
 	FASE_EXPEDIENTE(20080L),
 	/** The garantia expediente. */
 	GARANTIA_EXPEDIENTE(20079L),
+	/** The gravamen to. */
+	GRAVAMEN_TO(24025L),
 	/** The grupo arancelario. */
 	GRUPO_ARANCELARIO(20045L),
 	/** The grupo familia especie pesca. */
@@ -215,6 +218,10 @@ public enum Entidad {
 	SUMINISTRO_CONSUMO_LECTURA(22014L),
 	/** The servicio red. */
 	SUMINISTRO_RED(21011L),
+	/** The superficie dp. */
+	SUPERFICIE_DP(20122L),
+	/** The superficie bien dp. */
+	SUPERFICIE_BIEN_DP(24030L),
 	/** The suprabien. */
 	SUPRABIEN(20078L),
 	/** The terminal. */
@@ -320,7 +327,7 @@ public enum Entidad {
 	/** The tipo superficie. */
 	TIPO_SUPERFICIE(20020L),
 	/** The tipo superficie bien. */
-	TIPO_SUPERFICIE_BIEN(20073L),
+	TIPO_SUPERFICIE_DP(20073L),
 	/** The tipo usuario. */
 	TIPO_USUARIO(20019L),
 	/** The tipo via. */
@@ -338,7 +345,7 @@ public enum Entidad {
 	/** The zona pesca. */
 	ZONA_PESCA(20030L),
 	/** The zona portuaria. */
-	ZONA_PORTUARIA(20072L),;
+	ZONA_PORTUARIA_DP(20072L),;
 
 	/** The id. */
 	private final long id;

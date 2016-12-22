@@ -38,8 +38,8 @@ public final class SuministroRedBO extends ServicioBO {
 	/**
 	 * Select list.
 	 *
-	 * @param ffin
-	 *            the ffin
+	 * @param srmsCriterio
+	 *            the srms criterio
 	 * @return the list
 	 */
 	public List<ServicioMaestroVO> selectGenerateList(final @NonNull ServicioMaestroCriterioVO srmsCriterio) {
@@ -72,10 +72,10 @@ public final class SuministroRedBO extends ServicioBO {
 		Preconditions.checkArgument(srms.getFini().before(srms.getFfin()));
 
 		Preconditions.checkNotNull(srms.getItdtMap());
-		Preconditions.checkNotNull(srms.getItdtMap().get(TipoDato.ORGA.getId()));
-		Preconditions.checkNotNull(srms.getItdtMap().get(TipoDato.DECIMAL_01.getId()));
-		Preconditions.checkNotNull(srms.getItdtMap().get(TipoDato.DECIMAL_02.getId()));
-		Preconditions.checkNotNull(srms.getItdtMap().get(TipoDato.COD_EXEN.getId()));
+		Preconditions.checkNotNull(srms.getItdtMap().get(TipoDato.ORGA.name()));
+		Preconditions.checkNotNull(srms.getItdtMap().get(TipoDato.DECIMAL_01.name()));
+		Preconditions.checkNotNull(srms.getItdtMap().get(TipoDato.DECIMAL_02.name()));
+		Preconditions.checkNotNull(srms.getItdtMap().get(TipoDato.COD_EXEN.name()));
 
 		final ServicioVO srvc = new ServicioVO();
 		final Calendar calendar = Calendar.getInstance();
@@ -90,10 +90,11 @@ public final class SuministroRedBO extends ServicioBO {
 		srvc.setEstado("F");
 		srvc.setAnno(String.valueOf(calendar.get(Calendar.YEAR)));
 
+		srvc.addItdt(TipoDato.PUNTO_RED.getId(), srms.getPrmt());
 		srvc.addItdt(TipoDato.ORGA.getId(), srms.getItdtPrmt(TipoDato.ORGA.name()));
 		srvc.addItdt(TipoDato.DECIMAL_01.getId(), srms.getItdtDouble(TipoDato.DECIMAL_01.name()));
 		srvc.addItdt(TipoDato.DECIMAL_02.getId(), srms.getItdtDouble(TipoDato.DECIMAL_02.name()));
-		srvc.addItdt(TipoDato.COD_EXEN.getId(), srms.getItdtDouble(TipoDato.COD_EXEN.name()));
+		srvc.addItdt(TipoDato.COD_EXEN.getId(), srms.getItdtString(TipoDato.COD_EXEN.name()));
 
 		insert(srvc, null, null, null);
 

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.13" icons="true" automaticImage="PNG">  
+  <object id="1" language="java" 
+    name="xeredi.argo.http.controller.action.administracion.configuration.ConfigurationListAction" 
+    project="integra-portico-web" 
+    file="/integra-portico-web/src/main/java/xeredi/argo/http/controller/action/administracion/configuration/ConfigurationListAction.java" 
+    binary="false" label="configurationListAction" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="382" y="0"/>    
+    <execution id="2">      
+      <position height="630" width="261" x="5" y="136"/>    
+    </execution>    
+    <execution id="4">      
+      <position height="576" width="261" x="5" y="172"/>    
+    </execution>    
+    <execution id="10">      
+      <position height="270" width="0" x="0" y="289"/>    
+    </execution>    
+    <execution id="12">      
+      <position height="18" width="0" x="0" y="586"/>    
+    </execution>    
+    <execution id="16">      
+      <position height="18" width="0" x="0" y="667"/>    
+    </execution>    
+    <execution id="18">      
+      <position height="18" width="0" x="0" y="712"/>    
+    </execution>    
+    <execution id="20">      
+      <position height="207" width="0" x="0" y="334"/>    
+    </execution>  
+  </object>  
+  <object id="25" language="java" name="xeredi.argo.model.comun.bo.ConfigurationBO" project="integra-portico-business" 
+    file="/integra-portico-business/src/main/java/xeredi/argo/model/comun/bo/ConfigurationBO.java" binary="false" 
+    label="confBO" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="22">      
+      <position height="18" width="0" x="0" y="361"/>    
+    </execution>    
+    <execution id="24">      
+      <position height="126" width="0" x="0" y="397"/>    
+    </execution>  
+  </object>  
+  <object id="32" language="java" name="org.apache.ibatis.session.SqlSession" project="freedb" 
+    file="/home/xeredi/.m2/repository/org/mybatis/mybatis/3.4.1/mybatis-3.4.1.jar" binary="true" label="sqlSession1" 
+    type="interface" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="27">      
+      <position height="18" width="0" x="0" y="415"/>    
+    </execution>  
+  </object>  
+  <object id="33" language="java" name="xeredi.argo.model.comun.dao.ConfigurationDAO" 
+    project="integra-portico-persistence" 
+    file="/integra-portico-persistence/src/main/java/xeredi/argo/model/comun/dao/ConfigurationDAO.java" binary="false" 
+    label="confDAO" type="interface" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="31">      
+      <position height="18" width="0" x="0" y="487"/>    
+    </execution>  
+  </object>  
+  <object id="34" language="java" name="xeredi.argo.model.comun.vo.ConfigurationCriterioVO" 
+    project="integra-portico-persistence" 
+    file="/integra-portico-persistence/src/main/java/xeredi/argo/model/comun/vo/ConfigurationCriterioVO.java" 
+    binary="false" label="confCriterio" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="29">      
+      <position height="18" width="0" x="0" y="451"/>    
+    </execution>  
+  </object>  
+  <object id="35" language="java" name="xeredi.argo.http.controller.session.SessionManager" 
+    project="integra-portico-web" 
+    file="/integra-portico-web/src/main/java/xeredi/argo/http/controller/session/SessionManager.java" binary="false" 
+    label="&lt;static&gt;" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="6">      
+      <position height="18" width="0" x="0" y="199"/>    
+    </execution>    
+    <execution id="8">      
+      <position height="18" width="0" x="0" y="235"/>    
+    </execution>  
+  </object>  
+  <object id="36" language="java" name="xeredi.argo.model.comun.exception.ApplicationException" 
+    project="integra-portico-business" 
+    file="/integra-portico-business/src/main/java/xeredi/argo/model/comun/exception/ApplicationException.java" 
+    binary="false" label="applicationException" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="14">      
+      <position height="18" width="0" x="0" y="613"/>    
+    </execution>  
+  </object>  
+  <message id="3" operation="execute():java.lang.String" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="5" operation="getUsroId():java.lang.Long" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="6"/>  
+  </message>  
+  <message id="7" operation="getSprtId():java.lang.Long" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
+  </message>  
+  <message id="9" operation="doExecute():void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="10"/>  
+  </message>  
+  <message id="11" operation="addActionError(java.lang.String):void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="12"/>  
+  </message>  
+  <message id="13" operation="getMessage(java.util.Locale):java.lang.String" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="14"/>  
+  </message>  
+  <message id="15" operation="getLocale():java.util.Locale" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="16"/>  
+  </message>  
+  <message id="17" operation="addActionError(xeredi.argo.model.comun.vo.MessageI18nKey,java.lang.Object[]):void" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="18"/>  
+  </message>  
+  <message id="19" operation="doList():void" asynchronous="false">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="20"/>  
+  </message>  
+  <message id="21" operation="ConfigurationBO()" asynchronous="false">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="22"/>  
+  </message>  
+  <message id="23" operation="selectList():java.util.List&lt;ConfigurationVO&gt;" asynchronous="false">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="24"/>  
+  </message>  
+  <message id="26" operation="getMapper(java.lang.Class&lt;T&gt;):T" asynchronous="false">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="27"/>  
+  </message>  
+  <message id="28" operation="ConfigurationCriterioVO()" asynchronous="false">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="29"/>  
+  </message>  
+  <message id="30" 
+    operation="selectList(xeredi.argo.model.comun.vo.ConfigurationCriterioVO):java.util.List&lt;ConfigurationVO&gt;" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="31"/>  
+  </message>
+</sequence-diagram>

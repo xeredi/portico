@@ -7,5 +7,22 @@ import xeredi.argo.model.comun.vo.ArchivoVO;
 /**
  * The Interface ArchivoDAO.
  */
-public interface ArchivoDAO extends CrudDAO<ArchivoVO, ArchivoCriterioVO> {
+public interface ArchivoDAO {
+
+	/**
+	 * Select object.
+	 *
+	 * @param criterio
+	 *            the criterio
+	 * @return the archivo VO
+	 */
+	ArchivoVO selectObject(final ArchivoCriterioVO criterio);
+
+	/**
+	 * Insert.
+	 *
+	 * @param vo
+	 *            the vo
+	 */
+	void insert(final ArchivoVO vo);
 }

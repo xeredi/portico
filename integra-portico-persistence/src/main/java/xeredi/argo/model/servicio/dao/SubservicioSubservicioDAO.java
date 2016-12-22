@@ -1,6 +1,7 @@
 package xeredi.argo.model.servicio.dao;
 
-import xeredi.argo.model.comun.dao.CrudDAO;
+import java.util.List;
+
 import xeredi.argo.model.servicio.vo.SubservicioSubservicioCriterioVO;
 import xeredi.argo.model.servicio.vo.SubservicioSubservicioVO;
 
@@ -8,5 +9,31 @@ import xeredi.argo.model.servicio.vo.SubservicioSubservicioVO;
 /**
  * The Interface SubservicioSubservicioDAO.
  */
-public interface SubservicioSubservicioDAO extends CrudDAO<SubservicioSubservicioVO, SubservicioSubservicioCriterioVO> {
+public interface SubservicioSubservicioDAO {
+
+	/**
+	 * Select list.
+	 *
+	 * @param criterio
+	 *            the criterio
+	 * @return the list
+	 */
+	List<SubservicioSubservicioVO> selectList(final SubservicioSubservicioCriterioVO criterio);
+
+	/**
+	 * Insert.
+	 *
+	 * @param vo
+	 *            the vo
+	 */
+	void insert(final SubservicioSubservicioVO vo);
+
+	/**
+	 * Delete list.
+	 *
+	 * @param vo
+	 *            the vo
+	 * @return the int
+	 */
+	int deleteList(final SubservicioSubservicioCriterioVO vo);
 }

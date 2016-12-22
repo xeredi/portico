@@ -77,7 +77,10 @@
 	<sql id="SelectWhere">
 		<where>
 			<if test="fechaVigencia != null">
-				AND #{fechaVigencia} BETWEEN ascv_fini AND COALESCE(ascv_ffin, #{fechaVigencia})
+		    <![CDATA[
+				AND #{fechaVigencia} >= ascv_fini
+				AND (ascv_ffin IS NULL OR ascv_ffin > #{fechaVigencia})
+		    ]]>
 			</if>
 
 			<if test="id != null">
@@ -121,9 +124,17 @@
         WHERE
             ascr_pk = #{id}
             AND (
-                #{version.fini} BETWEEN ascv_fini AND COALESCE(ascv_ffin, #{version.fini})
-                OR COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
-                    BETWEEN ascv_fini AND COALESCE(ascv_ffin, COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
+                (
+                	#{version.fini} >= ascv_fini
+                	AND (ascv_ffin IS NULL OR ascv_ffin > #{version.fini})
+                )
+                OR (
+                	COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()) >= ascv_fini
+                	AND (
+                		ascv_ffin IS NULL
+                		OR ascv_ffin > COALESCE(#{version.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
+                	)
+                )
             )
     ]]>
 		<if test="version.id != null">

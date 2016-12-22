@@ -22,45 +22,45 @@ import xeredi.argo.model.maestro.vo.ParametroVO;
 @Data
 public final class UsuarioVO implements Identifiable, Serializable {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 1393605997535392428L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1393605997535392428L;
 
-    /** The prefix. */
-    private final transient ClassPrefix prefix = ClassPrefix.usro;
+	/** The prefix. */
+	private final transient ClassPrefix prefix = ClassPrefix.usro;
 
-    /** The id. */
-    private Long id;
+	/** The id. */
+	private Long id;
 
-    /** The login. */
-    private String login;
+	/** The login. */
+	private String login;
 
-    /** The contrasenia. */
-    private String contrasenia;
+	/** The contrasenia. */
+	private String contrasenia;
 
-    /** The email. */
-    private String email;
+	/** The email. */
+	private String email;
 
-    /** The nombre. */
-    private String nombre;
+	/** The nombre. */
+	private String nombre;
 
-    /** The sprt. */
-    private SuperpuertoVO sprt;
+	/** The sprt. */
+	private SuperpuertoVO sprt;
 
-    /** The prto. */
-    private PuertoVO prto;
+	/** The prto. */
+	private PuertoVO prto;
 
-    /** The orga. */
-    private ParametroVO orga;
+	/** The orga. */
+	private ParametroVO orga;
 
-    /** The grpo ids. */
-    private Set<Long> grpoIds;
+	/** The grpo ids. */
+	private Set<Long> grpoIds;
 
-    /**
-     * Instantiates a new usuario vo.
-     */
-    public UsuarioVO() {
-        super();
+	/**
+	 * Instantiates a new usuario vo.
+	 */
+	public UsuarioVO() {
+		super();
 
-        grpoIds = new HashSet<>();
-    }
+		grpoIds = new HashSet<>();
+	}
 }

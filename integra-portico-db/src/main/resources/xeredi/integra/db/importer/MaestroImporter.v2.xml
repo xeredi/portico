@@ -1,9 +1,9 @@
 <importer>
-    <!-- // MAESTROS SIN DEPENDENCIAS // MAESTROS SIN DEPENDENCIAS // -->
-    <!-- // MAESTROS SIN DEPENDENCIAS // MAESTROS SIN DEPENDENCIAS // -->
+	<!-- // MAESTROS SIN DEPENDENCIAS // MAESTROS SIN DEPENDENCIAS // -->
+	<!-- // MAESTROS SIN DEPENDENCIAS // MAESTROS SIN DEPENDENCIAS // -->
 
-    <sql id="AREA_GEOGRAFICA" table="IEST_AREAGEOGRAFICA_AGEO" tempImp="false"
-        sqlId="SELECT ageo_id FROM iest_areageografica_ageo">
+	<sql id="AREA_GEOGRAFICA" table="IEST_AREAGEOGRAFICA_AGEO" tempImp="false"
+		sqlId="SELECT ageo_id FROM iest_areageografica_ageo">
     <![CDATA[
         SELECT
 	        maes.ageo_id
@@ -16,10 +16,9 @@
         FROM iest_areageografica_ageo maes
         ORDER BY maes.ageo_es_activo DESC
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="AREA_MUNDIAL" table="IEST_AREAMUNDIAL_AMUN" tempImp="false"
-        sqlId="SELECT amun_id FROM iest_areamundial_amun">
+	<sql id="AREA_MUNDIAL" table="IEST_AREAMUNDIAL_AMUN" tempImp="false" sqlId="SELECT amun_id FROM iest_areamundial_amun">
 	<![CDATA[
 		SELECT
 	        maes.amun_id
@@ -32,9 +31,9 @@
 		FROM iest_areamundial_amun maes
 		ORDER BY maes.amun_es_activo DESC
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="ARTE_PESCA" table="IPES_ARTEPESCA_ARPE" tempImp="false" sqlId="SELECT arpe_id FROM ipes_artepesca_arpe">
+	<sql id="ARTE_PESCA" table="IPES_ARTEPESCA_ARPE" tempImp="false" sqlId="SELECT arpe_id FROM ipes_artepesca_arpe">
 	<![CDATA[
 		SELECT
 	        maes.arpe_id
@@ -47,10 +46,9 @@
 		FROM ipes_artepesca_arpe maes
 		ORDER BY maes.arpe_es_activo DESC
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="COMPRADOR_PESCA" table="IPES_COMPRADOR_COPE" tempImp="false"
-        sqlId="SELECT cope_id FROM ipes_comprador_cope">
+	<sql id="COMPRADOR_PESCA" table="IPES_COMPRADOR_COPE" tempImp="false" sqlId="SELECT cope_id FROM ipes_comprador_cope">
 	<![CDATA[
 		SELECT
 	        maes.cope_id
@@ -60,10 +58,10 @@
 		FROM IPES_COMPRADOR_COPE MAES
 		order by MAES.cope_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="DESCUENTO_ADICIONAL" table="IGEN_DESCUENTOADIC_DEAD" tempImp="false"
-        sqlId="SELECT dead_id FROM igen_descuentoadic_dead">
+	<sql id="DESCUENTO_ADICIONAL" table="IGEN_DESCUENTOADIC_DEAD" tempImp="false"
+		sqlId="SELECT dead_id FROM igen_descuentoadic_dead">
 	<![CDATA[
 		SELECT
 	        maes.dead_id
@@ -76,10 +74,10 @@
 		FROM igen_descuentoadic_dead MAES
 		order by MAES.DEAD_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="GRUPO_ARANCELARIO" table="IMAN_GRUPOARANCEL_GARA" tempImp="false"
-        sqlId="SELECT gara_id FROM iman_grupoarancel_gara">
+	<sql id="GRUPO_ARANCELARIO" table="IMAN_GRUPOARANCEL_GARA" tempImp="false"
+		sqlId="SELECT gara_id FROM iman_grupoarancel_gara">
 	<![CDATA[
 		SELECT
 	        maes.gara_id
@@ -92,10 +90,10 @@
 		FROM IMAN_GRUPOARANCEL_GARA MAES
 		order by MAES.GARA_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="GRUPO_FAMILIA_ESPECIE_PESCA" table="IPES_GRUPOFAMILIA_GFPE" tempImp="false"
-        sqlId="SELECT gfpe_id FROM ipes_grupofamilia_gfpe">
+	<sql id="GRUPO_FAMILIA_ESPECIE_PESCA" table="IPES_GRUPOFAMILIA_GFPE" tempImp="false"
+		sqlId="SELECT gfpe_id FROM ipes_grupofamilia_gfpe">
 	<![CDATA[
 		SELECT
 	        maes.gfpe_id
@@ -108,10 +106,10 @@
 		FROM ipes_grupofamilia_gfpe MAES
 		order by MAES.GFPE_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="GRUPO_NATURALEZA" table="IEST_GRUPONATURALEZA_GNAT" tempImp="false"
-        sqlId="SELECT gnat_id FROM iest_gruponaturaleza_gnat">
+	<sql id="GRUPO_NATURALEZA" table="IEST_GRUPONATURALEZA_GNAT" tempImp="false"
+		sqlId="SELECT gnat_id FROM iest_gruponaturaleza_gnat">
 	<![CDATA[
 		SELECT
 	        maes.gnat_id
@@ -124,9 +122,9 @@
 		FROM iest_gruponaturaleza_gnat MAES
 		order by MAES.GNAT_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="GRUPO_NST" table="IEST_GRUPONST_GNST" tempImp="false" sqlId="SELECT gnst_id FROM iest_gruponst_gnst">
+	<sql id="GRUPO_NST" table="IEST_GRUPONST_GNST" tempImp="false" sqlId="SELECT gnst_id FROM iest_gruponst_gnst">
 	<![CDATA[
 		SELECT
 	        maes.gnst_id
@@ -139,9 +137,9 @@
 		FROM iest_gruponst_gnst MAES
 		order by MAES.GNST_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="GRUPO_ZONA" table="ISUP_GRUPOZONA_GZSU" tempImp="false" sqlId="SELECT gzsu_id FROM isup_grupozona_gzsu">
+	<sql id="GRUPO_ZONA" table="ISUP_GRUPOZONA_GZSU" tempImp="false" sqlId="SELECT gzsu_id FROM isup_grupozona_gzsu">
 	<![CDATA[
 		SELECT
 	        maes.gzsu_id
@@ -154,10 +152,10 @@
 		FROM isup_grupozona_gzsu MAES
 		order by MAES.GZSU_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="INSTRUCCION_MARCAJE" table="IMAN_INSTRUCCMARCAJE_IMAR" tempImp="false"
-        sqlId="SELECT imar_id FROM iman_instruccmarcaje_imar">
+	<sql id="INSTRUCCION_MARCAJE" table="IMAN_INSTRUCCMARCAJE_IMAR" tempImp="false"
+		sqlId="SELECT imar_id FROM iman_instruccmarcaje_imar">
 	<![CDATA[
 		SELECT
 	        maes.imar_id
@@ -170,10 +168,9 @@
 		FROM iman_instruccmarcaje_imar MAES
 		order by MAES.IMAR_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="MODULO_BATCH" table="ICON_MODULOBATCH_MODB" tempImp="false"
-        sqlId="SELECT modb_id FROM icon_modulobatch_modb">
+	<sql id="MODULO_BATCH" table="ICON_MODULOBATCH_MODB" tempImp="false" sqlId="SELECT modb_id FROM icon_modulobatch_modb">
 	<![CDATA[
 		SELECT
 	        maes.modb_id
@@ -186,10 +183,10 @@
 		FROM icon_modulobatch_modb MAES
 		order by MAES.MODB_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="PRESENTACION_PESCA" table="IPES_PRESENTACION_PRPE" tempImp="false"
-        sqlId="SELECT prpe_id FROM ipes_presentacion_prpe">
+	<sql id="PRESENTACION_PESCA" table="IPES_PRESENTACION_PRPE" tempImp="false"
+		sqlId="SELECT prpe_id FROM ipes_presentacion_prpe">
 	<![CDATA[
 		SELECT
 	        maes.prpe_id
@@ -202,10 +199,10 @@
 		FROM ipes_presentacion_prpe MAES
 		order by MAES.PRPE_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="SERVICIO_DEPORTIVO" table="IEMD_SERVICIODEP_SDEP" tempImp="false"
-        sqlId="SELECT sdep_id FROM iemd_serviciodep_sdep">
+	<sql id="SERVICIO_DEPORTIVO" table="IEMD_SERVICIODEP_SDEP" tempImp="false"
+		sqlId="SELECT sdep_id FROM iemd_serviciodep_sdep">
 	<![CDATA[
 		SELECT
 	        maes.sdep_id
@@ -218,10 +215,10 @@
 		FROM iemd_serviciodep_sdep MAES
 		order by MAES.SDEP_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="SUBGRUPO_MERCANCIA_EST" table="IEST_SUBGRUPO_SUBG" tempImp="false"
-        sqlId="SELECT subg_id FROM iest_subgrupo_subg">
+	<sql id="SUBGRUPO_MERCANCIA_EST" table="IEST_SUBGRUPO_SUBG" tempImp="false"
+		sqlId="SELECT subg_id FROM iest_subgrupo_subg">
 	<![CDATA[
 		SELECT
 	        maes.subg_id
@@ -234,10 +231,10 @@
 		FROM iest_subgrupo_subg MAES
 		order by MAES.SUBG_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="SUBTIPO_MANIFIESTO_PESCA" table="IPES_MANIFIESTOSTIPO_MPST" tempImp="false"
-        sqlId="SELECT mpst_id FROM ipes_manifiestostipo_mpst">
+	<sql id="SUBTIPO_MANIFIESTO_PESCA" table="IPES_MANIFIESTOSTIPO_MPST" tempImp="false"
+		sqlId="SELECT mpst_id FROM ipes_manifiestostipo_mpst">
 	<![CDATA[
 		SELECT
 	        maes.mpst_id
@@ -250,10 +247,10 @@
 		FROM ipes_manifiestostipo_mpst MAES
 		order by MAES.MPST_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_ACT_GRAL_CONCESIONAL" table="IEXP_TIPOACTIVIDADG_TAGE" tempImp="false"
-        sqlId="SELECT tage_id FROM iexp_tipoactividadg_tage">
+	<sql id="TIPO_ACT_GRAL_CONCESIONAL" table="IEXP_TIPOACTIVIDADG_TAGE" tempImp="false"
+		sqlId="SELECT tage_id FROM iexp_tipoactividadg_tage">
 	<![CDATA[
 		SELECT
 	        maes.tage_id
@@ -266,10 +263,10 @@
 		FROM iexp_tipoactividadg_tage MAES
 		order by MAES.TAGE_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_ALINEACION" table="IESC_ALINEACIONTIPO_ALIT" tempImp="false"
-        sqlId="SELECT alit_id FROM iesc_alineaciontipo_alit">
+	<sql id="TIPO_ALINEACION" table="IESC_ALINEACIONTIPO_ALIT" tempImp="false"
+		sqlId="SELECT alit_id FROM iesc_alineaciontipo_alit">
 	<![CDATA[
 		SELECT
 	        maes.alit_id
@@ -282,9 +279,9 @@
 		FROM iesc_alineaciontipo_alit MAES
 		order by MAES.ALIT_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_AMARRE" table="IEMD_TIPOAMARRE_TAMD" tempImp="false" sqlId="SELECT tamd_id FROM iemd_tipoamarre_tamd">
+	<sql id="TIPO_AMARRE" table="IEMD_TIPOAMARRE_TAMD" tempImp="false" sqlId="SELECT tamd_id FROM iemd_tipoamarre_tamd">
 	<![CDATA[
 		SELECT
 	        maes.tamd_id
@@ -297,10 +294,9 @@
 		FROM iemd_tipoamarre_tamd MAES
 		order by MAES.TAMD_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_ATRAQUE" table="IESC_ATRAQUETIPO_ATRT" tempImp="false"
-        sqlId="SELECT atrt_id FROM iesc_atraquetipo_atrt">
+	<sql id="TIPO_ATRAQUE" table="IESC_ATRAQUETIPO_ATRT" tempImp="false" sqlId="SELECT atrt_id FROM iesc_atraquetipo_atrt">
 	<![CDATA[
 		SELECT
 	        maes.atrt_id
@@ -313,10 +309,10 @@
 		FROM IESC_ATRAQUETIPO_ATRT MAES
 		order by MAES.ATRT_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_BIEN_CONCESIONAL" table="IEXP_TIPOBIEN_TBIE" tempImp="false"
-        sqlId="SELECT tbie_id FROM iexp_tipobien_tbie">
+	<sql id="TIPO_BIEN_CONCESIONAL" table="IEXP_TIPOBIEN_TBIE" tempImp="false"
+		sqlId="SELECT tbie_id FROM iexp_tipobien_tbie">
 	<![CDATA[
 		SELECT
 	        maes.tbie_id
@@ -329,9 +325,9 @@
 		FROM iexp_tipobien_tbie MAES
 		order by MAES.TBIE_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_BULTO" table="IMAN_TIPOBULTO_TBUL" tempImp="false" sqlId="SELECT tbul_id FROM iman_tipobulto_tbul">
+	<sql id="TIPO_BULTO" table="IMAN_TIPOBULTO_TBUL" tempImp="false" sqlId="SELECT tbul_id FROM iman_tipobulto_tbul">
 	<![CDATA[
 		SELECT
 	        maes.tbul_id
@@ -344,10 +340,9 @@
 		FROM iman_tipobulto_tbul MAES
 		order by MAES.TBUL_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_BUQUE_PESCA" table="IPES_BUQUETIPO_BTPE" tempImp="false"
-        sqlId="SELECT btpe_id FROM ipes_buquetipo_btpe">
+	<sql id="TIPO_BUQUE_PESCA" table="IPES_BUQUETIPO_BTPE" tempImp="false" sqlId="SELECT btpe_id FROM ipes_buquetipo_btpe">
 	<![CDATA[
 		SELECT
 	        maes.btpe_id
@@ -360,10 +355,10 @@
 		FROM ipes_buquetipo_btpe MAES
 		order by MAES.BTPE_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_BUQUE_EEE" table="IEST_BUQUETIPOEEE_BUQT" tempImp="false"
-        sqlId="SELECT BUQT_id FROM iest_buquetipoeee_buqt">
+	<sql id="TIPO_BUQUE_EEE" table="IEST_BUQUETIPOEEE_BUQT" tempImp="false"
+		sqlId="SELECT BUQT_id FROM iest_buquetipoeee_buqt">
 	<![CDATA[
 		SELECT
 	        maes.buqt_id
@@ -376,10 +371,10 @@
 		FROM iest_buquetipoeee_buqt MAES
 		order by MAES.BUQT_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_CAPTURA_PESCA" table="IPES_CAPTURATIPO_CATI" tempImp="false"
-        sqlId="SELECT cati_id FROM ipes_capturatipo_cati">
+	<sql id="TIPO_CAPTURA_PESCA" table="IPES_CAPTURATIPO_CATI" tempImp="false"
+		sqlId="SELECT cati_id FROM ipes_capturatipo_cati">
 	<![CDATA[
 		SELECT
 	        maes.cati_id
@@ -392,10 +387,10 @@
 		FROM ipes_capturatipo_cati MAES
 		order by MAES.CATI_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_CONTADOR" table="ISUM_TIPOCONTADOR_TCSU" tempImp="false"
-        sqlId="SELECT tcsu_id FROM isum_tipocontador_tcsu">
+	<sql id="TIPO_CONTADOR" table="ISUM_TIPOCONTADOR_TCSU" tempImp="false"
+		sqlId="SELECT tcsu_id FROM isum_tipocontador_tcsu">
 	<![CDATA[
 		SELECT
 	        maes.tcsu_id
@@ -408,10 +403,10 @@
 		FROM isum_tipocontador_tcsu MAES
 		order by MAES.TCSU_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_DOCUMENTO_AEAT" table="IMAN_TIPODOCAEAT_ATTD" tempImp="false"
-        sqlId="SELECT attd_id FROM iman_tipodocaeat_attd">
+	<sql id="TIPO_DOCUMENTO_AEAT" table="IMAN_TIPODOCAEAT_ATTD" tempImp="false"
+		sqlId="SELECT attd_id FROM iman_tipodocaeat_attd">
 	<![CDATA[
 		SELECT
 	        maes.attd_id
@@ -424,10 +419,10 @@
 		FROM iman_tipodocaeat_attd MAES
 		order by MAES.ATTD_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_EMBARCACION" table="IEMD_TIPOEMBARCACION_TEMD" tempImp="false"
-        sqlId="SELECT temd_id FROM iemd_tipoembarcacion_temd">
+	<sql id="TIPO_EMBARCACION" table="IEMD_TIPOEMBARCACION_TEMD" tempImp="false"
+		sqlId="SELECT temd_id FROM iemd_tipoembarcacion_temd">
 	<![CDATA[
 		SELECT
 	        maes.temd_id
@@ -440,10 +435,10 @@
 		FROM iemd_tipoembarcacion_temd MAES
 		order by MAES.TEMD_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_EXENCION" table="IGEN_EXENCIONTIPO_EXET" tempImp="false"
-        sqlId="SELECT exet_id FROM igen_exenciontipo_exet">
+	<sql id="TIPO_EXENCION" table="IGEN_EXENCIONTIPO_EXET" tempImp="false"
+		sqlId="SELECT exet_id FROM igen_exenciontipo_exet">
 	<![CDATA[
 		SELECT
 	        maes.exet_id
@@ -456,10 +451,10 @@
 		FROM igen_exenciontipo_exet MAES
 		order by MAES.EXET_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_MANIFIESTO_PESCA" table="IPES_MANIFIESTOTIPO_MPTI" tempImp="false"
-        sqlId="SELECT mpti_id FROM ipes_manifiestotipo_mpti">
+	<sql id="TIPO_MANIFIESTO_PESCA" table="IPES_MANIFIESTOTIPO_MPTI" tempImp="false"
+		sqlId="SELECT mpti_id FROM ipes_manifiestotipo_mpti">
 	<![CDATA[
 		SELECT
 	        maes.mpti_id
@@ -472,10 +467,10 @@
 		FROM ipes_manifiestotipo_mpti MAES
 		order by MAES.MPTI_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_MANIOBRA_REMOLQUE" table="IPRA_MANIOBRATIPO_PRAT" tempImp="false"
-        sqlId="SELECT prat_id FROM ipra_maniobratipo_prat">
+	<sql id="TIPO_MANIOBRA_REMOLQUE" table="IPRA_MANIOBRATIPO_PRAT" tempImp="false"
+		sqlId="SELECT prat_id FROM ipra_maniobratipo_prat">
 	<![CDATA[
 		SELECT
 	        maes.prat_id
@@ -488,10 +483,10 @@
 		FROM ipra_maniobratipo_prat MAES
 		order by MAES.PRAT_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_MEDIO_AMARRE" table="IAMA_AMARREMEDIOTIPO_AMAT" tempImp="false"
-        sqlId="SELECT amat_id FROM iama_amarremediotipo_amat">
+	<sql id="TIPO_MEDIO_AMARRE" table="IAMA_AMARREMEDIOTIPO_AMAT" tempImp="false"
+		sqlId="SELECT amat_id FROM iama_amarremediotipo_amat">
 	<![CDATA[
 		SELECT
 	        maes.amat_id
@@ -504,10 +499,10 @@
 		FROM iama_amarremediotipo_amat MAES
 		order by MAES.AMAT_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_MERCANCIA" table="IESC_MERCANCIATIPO_MERT" tempImp="false"
-        sqlId="SELECT mert_id FROM iesc_mercanciatipo_mert">
+	<sql id="TIPO_MERCANCIA" table="IESC_MERCANCIATIPO_MERT" tempImp="false"
+		sqlId="SELECT mert_id FROM iesc_mercanciatipo_mert">
 	<![CDATA[
 		SELECT
 	        maes.mert_id
@@ -521,10 +516,10 @@
 		    iesc_mercanciatipo_mert MAES
 		order by MAES.mert_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_MERCANCIA_EST" table="IEST_MERCANCIATIPO_EMET" tempImp="false"
-        sqlId="SELECT emet_id FROM iest_mercanciatipo_emet">
+	<sql id="TIPO_MERCANCIA_EST" table="IEST_MERCANCIATIPO_EMET" tempImp="false"
+		sqlId="SELECT emet_id FROM iest_mercanciatipo_emet">
 	<![CDATA[
 		SELECT
 	        maes.emet_id
@@ -537,10 +532,10 @@
 		FROM iest_mercanciatipo_emet MAES
 		order by MAES.EMET_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_MOVIMIENTO_AMARRE" table="IAMA_MOVIMIENTOTIPO_AMMT" tempImp="false"
-        sqlId="SELECT ammt_id FROM iama_movimientotipo_ammt">
+	<sql id="TIPO_MOVIMIENTO_AMARRE" table="IAMA_MOVIMIENTOTIPO_AMMT" tempImp="false"
+		sqlId="SELECT ammt_id FROM iama_movimientotipo_ammt">
 	<![CDATA[
 		SELECT
 	        maes.ammt_id
@@ -553,10 +548,10 @@
 		FROM iama_movimientotipo_ammt MAES
 		order by MAES.AMMT_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_MOVIMIENTO_REMOLQUE" table="IREM_MOVIMIENTOTIPO_REMT" tempImp="false"
-        sqlId="SELECT remt_id FROM irem_movimientotipo_remt">
+	<sql id="TIPO_MOVIMIENTO_REMOLQUE" table="IREM_MOVIMIENTOTIPO_REMT" tempImp="false"
+		sqlId="SELECT remt_id FROM irem_movimientotipo_remt">
 	<![CDATA[
 		SELECT
 	        maes.remt_id
@@ -569,10 +564,10 @@
 		FROM irem_movimientotipo_remt MAES
 		order by MAES.REMT_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_OPERACION_SUPERFICIE" table="ISUP_TIPOOPERACION_TOSU" tempImp="false"
-        sqlId="SELECT tosu_id FROM isup_tipooperacion_tosu">
+	<sql id="TIPO_OPERACION_SUPERFICIE" table="ISUP_TIPOOPERACION_TOSU" tempImp="false"
+		sqlId="SELECT tosu_id FROM isup_tipooperacion_tosu">
 	<![CDATA[
 		SELECT
 	        maes.tosu_id
@@ -585,10 +580,10 @@
 		FROM isup_tipooperacion_tosu MAES
 		order by MAES.TOSU_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_ORGANIZACION" table="ICOM_ORGANIZACIONTIPO_ORGT" tempImp="false"
-        sqlId="SELECT orgt_id FROM icom_organizaciontipo_orgt">
+	<sql id="TIPO_ORGANIZACION" table="ICOM_ORGANIZACIONTIPO_ORGT" tempImp="false"
+		sqlId="SELECT orgt_id FROM icom_organizaciontipo_orgt">
 	<![CDATA[
 		SELECT
 	        maes.orgt_id
@@ -602,10 +597,10 @@
 		        AND ? BETWEEN ORGT_FECHA_CREACION AND COALESCE(ORGT_FECHA_FIN, ?)
 		order by MAES.ORGT_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_PRESTADOR_SERVICIO" table="ICOM_PRESTADORTIPO_PRET" tempImp="false"
-        sqlId="SELECT pret_id FROM icom_prestadortipo_pret">
+	<sql id="TIPO_PRESTADOR_SERVICIO" table="ICOM_PRESTADORTIPO_PRET" tempImp="false"
+		sqlId="SELECT pret_id FROM icom_prestadortipo_pret">
 	<![CDATA[
 		SELECT
 	        maes.pret_id
@@ -618,10 +613,10 @@
 		FROM icom_prestadortipo_pret MAES
 		order by MAES.PRET_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_SERVICIO_TRAFICO" table="IESC_SERVICIOTIPO_SETT" tempImp="false"
-        sqlId="SELECT sett_id FROM iesc_serviciotipo_sett">
+	<sql id="TIPO_SERVICIO_TRAFICO" table="IESC_SERVICIOTIPO_SETT" tempImp="false"
+		sqlId="SELECT sett_id FROM iesc_serviciotipo_sett">
 	<![CDATA[
 		SELECT
 	        maes.sett_id
@@ -634,10 +629,10 @@
 		FROM iesc_serviciotipo_sett MAES
 		order by MAES.SETT_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_SUPERFICIE" table="ISUP_TIPOSUPERFICIE_TSUP" tempImp="false"
-        sqlId="SELECT tsup_id FROM isup_tiposuperficie_tsup">
+	<sql id="TIPO_SUPERFICIE" table="ISUP_TIPOSUPERFICIE_TSUP" tempImp="false"
+		sqlId="SELECT tsup_id FROM isup_tiposuperficie_tsup">
 	<![CDATA[
 		SELECT
 	        maes.tsup_id
@@ -650,10 +645,10 @@
 		FROM isup_tiposuperficie_tsup MAES
 		order by MAES.TSUP_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_SUPERFICIE_BIEN" table="IEXP_TIPOSUPERFICIEB_TSEX" tempImp="false"
-        sqlId="SELECT tsex_id FROM iexp_tiposuperficieb_tsex">
+	<sql id="TIPO_SUPERFICIE_DP" table="IEXP_TIPOSUPERFICIEB_TSEX" tempImp="false"
+		sqlId="SELECT tsex_id FROM iexp_tiposuperficieb_tsex">
 	<![CDATA[
 		SELECT
 	        maes.tsex_id
@@ -666,9 +661,9 @@
 		FROM iexp_tiposuperficieb_tsex MAES
 		order by MAES.TSEX_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="UNIDAD_SUPERFICIE" table="ISUP_UNIDAD_UNIS" tempImp="false" sqlId="SELECT unis_id FROM isup_unidad_unis">
+	<sql id="UNIDAD_SUPERFICIE" table="ISUP_UNIDAD_UNIS" tempImp="false" sqlId="SELECT unis_id FROM isup_unidad_unis">
 	<![CDATA[
 		SELECT
 	        maes.unis_id
@@ -681,9 +676,9 @@
 		FROM isup_unidad_unis MAES
 		order by MAES.UNIS_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="ZONA_PESCA" table="IPES_ZONAPESCA_ZOPE" tempImp="false" sqlId="SELECT zope_id FROM ipes_zonapesca_zope">
+	<sql id="ZONA_PESCA" table="IPES_ZONAPESCA_ZOPE" tempImp="false" sqlId="SELECT zope_id FROM ipes_zonapesca_zope">
 	<![CDATA[
 		SELECT
 	        maes.zope_id
@@ -696,12 +691,12 @@
 		FROM ipes_zonapesca_zope MAES
 		order by MAES.ZOPE_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <!-- // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS // -->
-    <!-- // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS // -->
-    <sql id="TIPO_BUQUE_GT_EEE" table="IEST_BUQUETIPOGTEEE_BGTE" tempImp="false"
-        sqlId="SELECT bgte_id FROM iest_buquetipogteee_bgte">
+	<!-- // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS // -->
+	<!-- // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS // MAESTROS SIN DEPENDENCIAS CON DATOS ASOCIADOS // -->
+	<sql id="TIPO_BUQUE_GT_EEE" table="IEST_BUQUETIPOGTEEE_BGTE" tempImp="false"
+		sqlId="SELECT bgte_id FROM iest_buquetipogteee_bgte">
     <![CDATA[
 		SELECT
 	        maes.bgte_id
@@ -710,9 +705,9 @@
 		FROM iest_buquetipogteee_bgte MAES
 		order by MAES.BGTE_es_activo desc
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="ACUERDO" table="IESC_ACUERDO_ACUE" tempImp="true" sqlId="SELECT acue_id FROM iesc_acuerdo_acue">
+	<sql id="ACUERDO" table="IESC_ACUERDO_ACUE" tempImp="false" sqlId="SELECT acue_id FROM iesc_acuerdo_acue">
 	<![CDATA[
 		SELECT
 	        maes.acue_id
@@ -730,12 +725,11 @@
 		FROM iesc_acuerdo_acue MAES
 		    INNER JOIN IESC_ACUERDOTEMP_ACUE TEMP ON
 				TEMP.ACUE_ID = MAES.ACUE_ID
-				AND ? BETWEEN TEMP.acue_FECHA_CREACION AND COALESCE(TEMP.acue_FECHA_FIN, ?)
 		order by MAES.ACUE_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="CONVENIO" table="IESC_CONVENIO_CONV" tempImp="false" sqlId="SELECT conv_id FROM iesc_convenio_conv">
+	<sql id="CONVENIO" table="IESC_CONVENIO_CONV" tempImp="false" sqlId="SELECT conv_id FROM iesc_convenio_conv">
     <![CDATA[
         SELECT
 	        maes.conv_id
@@ -756,10 +750,10 @@
                 temp.conv_id = maes.conv_id
         ORDER BY maes.conv_es_activo DESC, temp.conv_fecha_inicio_convenio DESC
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="MARCA_VEHICULO" table="IMAN_MARCAVEHICULO_VMAR" tempImp="false"
-        sqlId="SELECT vmar_id FROM iman_marcavehiculo_vmar">
+	<sql id="MARCA_VEHICULO" table="IMAN_MARCAVEHICULO_VMAR" tempImp="false"
+		sqlId="SELECT vmar_id FROM iman_marcavehiculo_vmar">
 	<![CDATA[
 		SELECT
 	        maes.vmar_id
@@ -768,9 +762,9 @@
 		FROM iman_marcavehiculo_vmar MAES
 		order by MAES.VMAR_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="MERCANCIAS_PELIGROSAS" table="IMAN_MMPP_MMPP" tempImp="false" sqlId="SELECT mmpp_id FROM iman_mmpp_mmpp">
+	<sql id="MERCANCIAS_PELIGROSAS" table="IMAN_MMPP_MMPP" tempImp="false" sqlId="SELECT mmpp_id FROM iman_mmpp_mmpp">
 	<![CDATA[
 		SELECT
 	        maes.mmpp_id
@@ -786,10 +780,10 @@
 		FROM iman_mmpp_mmpp MAES
 		order by MAES.MMPP_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="MODO_TRANSPORTE_EDI" table="IMAN_MODOTRANSPEDI_TEDI" tempImp="false"
-        sqlId="SELECT tedi_id FROM iman_modotranspedi_tedi">
+	<sql id="MODO_TRANSPORTE_EDI" table="IMAN_MODOTRANSPEDI_TEDI" tempImp="false"
+		sqlId="SELECT tedi_id FROM iman_modotranspedi_tedi">
 	<![CDATA[
 		SELECT
 	        maes.tedi_id
@@ -803,9 +797,9 @@
 		FROM iman_modotranspedi_tedi MAES
 		order by MAES.TEDI_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="NAVIERA" table="IESC_NAVIERA_NAVI" tempImp="false" sqlId="SELECT navi_id FROM iesc_naviera_navi">
+	<sql id="NAVIERA" table="IESC_NAVIERA_NAVI" tempImp="false" sqlId="SELECT navi_id FROM iesc_naviera_navi">
 	<![CDATA[
 		SELECT
 	        maes.navi_id
@@ -814,10 +808,9 @@
 		FROM iesc_naviera_navi MAES
 		order by MAES.NAVI_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="RECEPTOR_MERCANCIA" table="IMAN_RECEPTOR_RECE" tempImp="false"
-        sqlId="SELECT rece_id FROM iman_receptor_rece">
+	<sql id="RECEPTOR_MERCANCIA" table="IMAN_RECEPTOR_RECE" tempImp="false" sqlId="SELECT rece_id FROM iman_receptor_rece">
 	<![CDATA[
 		SELECT
 	        maes.rece_id
@@ -826,10 +819,10 @@
 		FROM iman_receptor_rece MAES
 		order by MAES.RECE_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_ACTIVIDAD" table="IESC_ACTIVIDADTIPO_ACTT" tempImp="false"
-        sqlId="SELECT actt_id FROM iesc_actividadtipo_actt">
+	<sql id="TIPO_ACTIVIDAD" table="IESC_ACTIVIDADTIPO_ACTT" tempImp="false"
+		sqlId="SELECT actt_id FROM iesc_actividadtipo_actt">
 	<![CDATA[
 		SELECT
 	        maes.actt_id
@@ -843,10 +836,9 @@
 		FROM iesc_actividadtipo_actt MAES
 		order by MAES.ACTT_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_BUQUE_GT" table="IEST_BUQUETIPOGT_BUGT" tempImp="false"
-        sqlId="SELECT bugt_id FROM iest_buquetipogt_bugt">
+	<sql id="TIPO_BUQUE_GT" table="IEST_BUQUETIPOGT_BUGT" tempImp="false" sqlId="SELECT bugt_id FROM iest_buquetipogt_bugt">
 	<![CDATA[
 		SELECT
 	        maes.bugt_id
@@ -860,10 +852,10 @@
 		FROM iest_buquetipogt_bugt MAES
 		order by MAES.BUGT_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_CERTIFICADO" table="IESC_CERTIFICADOTIPO_CERT" tempImp="false"
-        sqlId="SELECT cert_id FROM iesc_certificadotipo_cert">
+	<sql id="TIPO_CERTIFICADO" table="IESC_CERTIFICADOTIPO_CERT" tempImp="false"
+		sqlId="SELECT cert_id FROM iesc_certificadotipo_cert">
 	<![CDATA[
 		SELECT
 	        maes.cert_id
@@ -878,10 +870,10 @@
 			) AS I18N_NOMBRE
 		FROM iesc_certificadotipo_cert MAES
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_ERROR_EDI" table="IGEN_ERROREDITIPO_ETED" tempImp="false"
-        sqlId="SELECT eted_id FROM igen_erroreditipo_eted">
+	<sql id="TIPO_ERROR_EDI" table="IGEN_ERROREDITIPO_ETED" tempImp="false"
+		sqlId="SELECT eted_id FROM igen_erroreditipo_eted">
 	<![CDATA[
 		SELECT
 	        maes.eted_id
@@ -895,9 +887,9 @@
 		FROM igen_erroreditipo_eted MAES
 		order by MAES.ETED_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_IVA" table="IFAC_IVATIPO_IVAT" tempImp="false" sqlId="SELECT ivat_id FROM ifac_ivatipo_ivat">
+	<sql id="TIPO_IVA" table="IFAC_IVATIPO_IVAT" tempImp="false" sqlId="SELECT ivat_id FROM ifac_ivatipo_ivat">
 	<![CDATA[
 		SELECT
 	        maes.ivat_id
@@ -913,10 +905,10 @@
 		FROM ifac_ivatipo_ivat MAES
 		order by MAES.IVAT_CODIGO, MAES.IVAT_es_activo desc, MAES.IVAT_FECHA_INICIO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_OPERACION_PESCA" table="IPES_OPERACIONTIPO_TOPP" tempImp="false"
-        sqlId="SELECT topp_id FROM ipes_operaciontipo_topp">
+	<sql id="TIPO_OPERACION_PESCA" table="IPES_OPERACIONTIPO_TOPP" tempImp="false"
+		sqlId="SELECT topp_id FROM ipes_operaciontipo_topp">
 	<![CDATA[
 		SELECT
 	        maes.topp_id
@@ -932,10 +924,10 @@
 		FROM ipes_operaciontipo_topp MAES
 		order by MAES.TOPP_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_RESIDUO" table="IESC_RESIDUOSTIPO_REST" tempImp="false"
-        sqlId="SELECT rest_id FROM iesc_residuostipo_rest">
+	<sql id="TIPO_RESIDUO" table="IESC_RESIDUOSTIPO_REST" tempImp="false"
+		sqlId="SELECT rest_id FROM iesc_residuostipo_rest">
 	<![CDATA[
 		SELECT
 	        maes.rest_id
@@ -951,35 +943,53 @@
 		FROM iesc_residuostipo_rest MAES
 		order by MAES.REST_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
 
 
 
 
-    <!-- // MAESTROS CON DEPENDENCIAS // MAESTROS CON DEPENDENCIAS // -->
-    <!-- // MAESTROS CON DEPENDENCIAS // MAESTROS CON DEPENDENCIAS // -->
+	<!-- // MAESTROS CON DEPENDENCIAS // MAESTROS CON DEPENDENCIAS // -->
+	<!-- // MAESTROS CON DEPENDENCIAS // MAESTROS CON DEPENDENCIAS // -->
 
-    <sql id="TIPO_GASTO" table="ISUM_TIPOGASTO_TGSU" tempImp="false" sqlId="SELECT tgsu_id FROM isum_tipogasto_tgsu">
+	<sql id="TIPO_ACTIVIDAD_CONCESIONAL" table="IEXP_TIPOACTIVIDAD_TAEX" tempImp="false" sqlId="SELECT taex_id FROM iexp_tipoactividad_taex">
+    <![CDATA[
+		SELECT
+	        maes.taex_id
+	        , maes.taex_codigo
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.taex_tage_id
+	            	AND trid_table_name = 'IEXP_TIPOACTIVIDADG_TAGE') as taex_tage
+		    , (SELECT i18n.taex_nombre FROM iexp_tipoactividadi18n_taex i18n
+		        WHERE i18n.taex_id = maes.taex_id
+		            AND i18n.taex_idioma = ?
+		            AND ? BETWEEN taex_fecha_creacion AND COALESCE(taex_fecha_fin, ?)
+		    ) AS i18n_nombre
+		FROM iexp_tipoactividad_taex maes
+	    ORDER BY maes.taex_es_activo DESC
+    ]]>
+	</sql>
+
+	<sql id="TIPO_GASTO" table="ISUM_TIPOGASTO_TGSU" tempImp="false" sqlId="SELECT tgsu_id FROM isum_tipogasto_tgsu">
     <![CDATA[
 		SELECT
 	        maes.tgsu_id
-	        , maes.TGSU_codigo
+	        , maes.tgsu_codigo
 	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
 	            WHERE trid_old_id = maes.tgsu_ivat_id
 	            	AND trid_table_name = 'IFAC_IVATIPO_IVAT') as tgsu_ivat
-		    , (SELECT I18N.TGSU_NOMBRE FROM ISUM_TIPOGASTOI18N_TGSU I18N
-		        WHERE I18N.TGSU_ID = MAES.TGSU_ID
-		            AND I18N.TGSU_IDIOMA = ?
-		            AND ? BETWEEN TGSU_FECHA_CREACION and coalesce(TGSU_FECHA_FIN, ?)
-		    ) AS I18N_NOMBRE
-		FROM isum_tipogasto_tgsu MAES
-	    order by MAES.TGSU_ES_ACTIVO desc
+		    , (SELECT i18n.tgsu_nombre FROM isum_tipogastoi18n_tgsu i18n
+		        WHERE i18n.tgsu_id = maes.tgsu_id
+		            AND i18n.tgsu_idioma = ?
+		            AND ? BETWEEN tgsu_fecha_creacion AND COALESCE(tgsu_fecha_fin, ?)
+		    ) AS i18n_nombre
+		FROM isum_tipogasto_tgsu maes
+	    ORDER BY maes.tgsu_es_activo DESC
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_NAVEGACION" table="IGEN_NAVEGACIONTIPO_NAVT" tempImp="false"
-        sqlId="SELECT navt_id FROM igen_navegaciontipo_navt">
+	<sql id="TIPO_NAVEGACION" table="IGEN_NAVEGACIONTIPO_NAVT" tempImp="false"
+		sqlId="SELECT navt_id FROM igen_navegaciontipo_navt">
     <![CDATA[
         SELECT
 	        maes.navt_id
@@ -995,9 +1005,23 @@
         FROM igen_navegaciontipo_navt MAES
         order by MAES.NAVT_ES_ACTIVO desc
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="PAIS" table="IGEN_PAIS_PAIS" tempImp="false" sqlId="SELECT pais_id FROM igen_pais_pais">
+	<sql id="TIPO_EXPEDIENTE" table="IEXP_TIPOEXPEDIENTE_TEXP" tempImp="false" sqlId="SELECT texp_id FROM iexp_tipoexpediente_texp">
+	<![CDATA[
+		SELECT maes.TEXP_ID, maes.TEXP_CODIGO, maes.TEXP_TIPO_GENERAL
+		 	, (SELECT I18N.TEXP_NOMBRE
+		 		FROM IEXP_TIPOEXPEDIENTEI18N_TEXP I18N
+		     	WHERE I18N.TEXP_ID = MAES.TEXP_ID
+		        	AND I18N.TEXP_IDIOMA = ?
+		         	AND ? BETWEEN TEXP_FECHA_CREACION AND COALESCE(TEXP_FECHA_FIN, ?)
+		 	) AS I18N_NOMBRE
+		FROM IEXP_TIPOEXPEDIENTE_TEXP maes
+		ORDER BY maes.TEXP_ES_ACTIVO DESC
+	]]>
+	</sql>
+
+	<sql id="PAIS" table="IGEN_PAIS_PAIS" tempImp="false" sqlId="SELECT pais_id FROM igen_pais_pais">
 	<![CDATA[
 		SELECT
 	        maes.pais_id
@@ -1016,9 +1040,9 @@
 		FROM igen_pais_pais MAES
 		order by MAES.PAIS_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="PROVINCIA" table="IGEN_PROVINCIA_PROV" tempImp="false" sqlId="SELECT prov_id FROM igen_provincia_prov">
+	<sql id="PROVINCIA" table="IGEN_PROVINCIA_PROV" tempImp="false" sqlId="SELECT prov_id FROM igen_provincia_prov">
 	<![CDATA[
 		SELECT
 	        maes.prov_id
@@ -1034,9 +1058,9 @@
 		FROM igen_provincia_prov MAES
 		ORDER BY MAES.PROV_ES_ACTIVO DESC
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="MUNICIPIO" table="IGEN_MUNICIPIO_MUNI" tempImp="false" sqlId="SELECT muni_id FROM igen_municipio_muni">
+	<sql id="MUNICIPIO" table="IGEN_MUNICIPIO_MUNI" tempImp="false" sqlId="SELECT muni_id FROM igen_municipio_muni">
 	<![CDATA[
 		SELECT
 	        maes.muni_id
@@ -1058,10 +1082,10 @@
 		FROM igen_municipio_muni MAES
 		ORDER BY MAES.muni_ES_ACTIVO DESC
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_ATRAQUE_EDI" table="IESC_RELACIONATRAQUETIPO_RATT" tempImp="false"
-        sqlId="SELECT ratt_id FROM iesc_relacionatraquetipo_ratt">
+	<sql id="TIPO_ATRAQUE_EDI" table="IESC_RELACIONATRAQUETIPO_RATT" tempImp="false"
+		sqlId="SELECT ratt_id FROM iesc_relacionatraquetipo_ratt">
     <![CDATA[
         select
 	        ratt_id
@@ -1086,10 +1110,10 @@
             from iesc_relacionatraquetipo_ratt ratt
         ) sql
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="SUBTIPO_RESIDUO" table="IESC_RESIDUOSSUBTIPO_RESS" tempImp="false"
-        sqlId="SELECT ress_id FROM iesc_residuossubtipo_ress">
+	<sql id="SUBTIPO_RESIDUO" table="IESC_RESIDUOSSUBTIPO_RESS" tempImp="false"
+		sqlId="SELECT ress_id FROM iesc_residuossubtipo_ress">
 	<![CDATA[
 		SELECT
 	        maes.ress_id
@@ -1109,10 +1133,10 @@
 		    iesc_residuossubtipo_ress MAES
 		order by MAES.RESS_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_OPERACION_MERCANCIA" table="IGEN_OPERACIONTIPO_OPET" tempImp="false"
-        sqlId="SELECT opet_id FROM igen_operaciontipo_opet">
+	<sql id="TIPO_OPERACION_MERCANCIA" table="IGEN_OPERACIONTIPO_OPET" tempImp="false"
+		sqlId="SELECT opet_id FROM igen_operaciontipo_opet">
 	<![CDATA[
 		SELECT
 	        maes.opet_id
@@ -1129,10 +1153,10 @@
 		    igen_operaciontipo_opet MAES
 		order by MAES.OPET_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_ACTIVIDAD_EDI" table="IESC_ACTIVIDADEDITIPO_ACET" tempImp="false"
-        sqlId="SELECT acet_id FROM iesc_actividadeditipo_acet">
+	<sql id="TIPO_ACTIVIDAD_EDI" table="IESC_ACTIVIDADEDITIPO_ACET" tempImp="false"
+		sqlId="SELECT acet_id FROM iesc_actividadeditipo_acet">
 	<![CDATA[
 		SELECT
 	        maes.acet_id
@@ -1149,10 +1173,9 @@
 		    iesc_actividadeditipo_acet MAES
 		order by MAES.ACET_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="FAMILIA_ESPECIE_PESCA" table="IPES_FAMILIA_FAPE" tempImp="false"
-        sqlId="SELECT fape_id FROM ipes_familia_fape">
+	<sql id="FAMILIA_ESPECIE_PESCA" table="IPES_FAMILIA_FAPE" tempImp="false" sqlId="SELECT fape_id FROM ipes_familia_fape">
 	<![CDATA[
 		SELECT
 	        maes.fape_id
@@ -1170,10 +1193,10 @@
 			ipes_familia_fape MAES
 		order by MAES.FAPE_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="ESPECIE_PESCA" table="IPES_ESPECIEPESCA_ESPE" tempImp="false"
-        sqlId="SELECT espe_id FROM ipes_especiepesca_espe">
+	<sql id="ESPECIE_PESCA" table="IPES_ESPECIEPESCA_ESPE" tempImp="false"
+		sqlId="SELECT espe_id FROM ipes_especiepesca_espe">
 	<![CDATA[
 		SELECT
 	        maes.espe_id
@@ -1194,9 +1217,9 @@
 			ipes_especiepesca_espe MAES
 		order by MAES.ESPE_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TERMINAL" table="IMAN_TERMINAL_TERM" tempImp="true" sqlId="SELECT term_id FROM iman_terminal_term">
+	<sql id="TERMINAL" table="IMAN_TERMINAL_TERM" tempImp="false" sqlId="SELECT term_id FROM iman_terminal_term">
 	<![CDATA[
 		SELECT
 	        maes.term_id
@@ -1216,13 +1239,12 @@
 			iman_terminal_term MAES
 		 	JOIN IMAN_TERMINALTEMP_TERM TEMP ON
 		    	TEMP.TERM_ID = MAES.TERM_ID
-		     	AND ? BETWEEN TEMP.TERM_FECHA_CREACION AND COALESCE(TEMP.TERM_FECHA_FIN, ?)
 		order by maes.term_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_BUQUE_EST" table="IEST_BUQUETIPOEST_BUQT" tempImp="false"
-        sqlId="SELECT buqt_id FROM iest_buquetipoest_buqt">
+	<sql id="TIPO_BUQUE_EST" table="IEST_BUQUETIPOEST_BUQT" tempImp="false"
+		sqlId="SELECT buqt_id FROM iest_buquetipoest_buqt">
 	<![CDATA[
 		SELECT
 	        maes.buqt_id
@@ -1238,9 +1260,9 @@
 		FROM iest_buquetipoest_buqt MAES
 		order by maes.buqt_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_BUQUE" table="IGEN_BUQUETIPO_BUQT" tempImp="false" sqlId="SELECT buqt_id FROM igen_buquetipo_buqt">
+	<sql id="TIPO_BUQUE" table="IGEN_BUQUETIPO_BUQT" tempImp="false" sqlId="SELECT buqt_id FROM igen_buquetipo_buqt">
 	<![CDATA[
 		SELECT
 	        maes.buqt_id
@@ -1258,10 +1280,10 @@
 		FROM igen_buquetipo_buqt MAES
 		order by maes.buqt_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_BUQUE_EDI" table="IESC_BUQUETIPOEDI_BQTE" tempImp="false"
-        sqlId="SELECT bqte_id FROM iesc_buquetipoedi_bqte">
+	<sql id="TIPO_BUQUE_EDI" table="IESC_BUQUETIPOEDI_BQTE" tempImp="false"
+		sqlId="SELECT bqte_id FROM iesc_buquetipoedi_bqte">
 	<![CDATA[
 		SELECT
 	        maes.bqte_id
@@ -1278,10 +1300,10 @@
 		    iesc_buquetipoedi_bqte MAES
 		order by maes.BQTE_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_SUMINISTRO" table="ISUM_TIPOSUMINISTRO_TSUM" tempImp="false"
-        sqlId="SELECT tsum_id FROM isum_tiposuministro_tsum">
+	<sql id="TIPO_SUMINISTRO" table="ISUM_TIPOSUMINISTRO_TSUM" tempImp="false"
+		sqlId="SELECT tsum_id FROM isum_tiposuministro_tsum">
 	<![CDATA[
 		SELECT
 	        maes.tsum_id
@@ -1298,9 +1320,9 @@
 		FROM isum_tiposuministro_tsum MAES
 		order by MAES.TSUM_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="NATURALEZA" table="IEST_NATURALEZA_NATU" tempImp="false" sqlId="SELECT natu_id FROM iest_naturaleza_natu">
+	<sql id="NATURALEZA" table="IEST_NATURALEZA_NATU" tempImp="false" sqlId="SELECT natu_id FROM iest_naturaleza_natu">
 	<![CDATA[
 		SELECT
 	        maes.natu_id
@@ -1317,10 +1339,10 @@
 		FROM iest_naturaleza_natu MAES
 		order by MAES.NATU_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="UNIDAD_CARGA" table="IMAN_UNIDADCARGA_UNIC" tempImp="true"
-        sqlId="SELECT DISTINCT maes.unic_id FROM iman_unidadcarga_unic maes JOIN iman_unidadcargatemp_unic temp ON temp.unic_id = maes.unic_id WHERE temp.unic_merc_id IS NULL">
+	<sql id="UNIDAD_CARGA" table="IMAN_UNIDADCARGA_UNIC" tempImp="false"
+		sqlId="SELECT DISTINCT maes.unic_id FROM iman_unidadcarga_unic maes JOIN iman_unidadcargatemp_unic temp ON temp.unic_id = maes.unic_id WHERE temp.unic_merc_id IS NULL">
 	<![CDATA[
 		SELECT
 	        maes.unic_id
@@ -1342,13 +1364,12 @@
 			iman_unidadcarga_unic MAES
 		 	JOIN IMAN_UNIDADCARGATEMP_UNIC TEMP ON
 		    	TEMP.UNIC_ID = MAES.UNIC_ID
-		     	AND ? BETWEEN TEMP.UNIC_FECHA_CREACION AND COALESCE(TEMP.UNIC_FECHA_FIN, ?)
 	    WHERE TEMP.UNIC_MERC_ID IS NULL
 		order by MAES.UNIC_CODIGO, MAES.UNIC_es_activo desc, TEMP.UNIC_FECHA_CREACION desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="MERCANCIA" table="IMAN_MERCANCIA_MERC" tempImp="true" sqlId="SELECT merc_id FROM iman_mercancia_merc">
+	<sql id="MERCANCIA" table="IMAN_MERCANCIA_MERC" tempImp="false" sqlId="SELECT merc_id FROM iman_mercancia_merc">
 	<![CDATA[
 		SELECT
 	        maes.merc_id
@@ -1399,13 +1420,12 @@
 		    iman_mercancia_merc MAES
 		    JOIN IMAN_MERCANCIATEMP_MERC TEMP ON
 		    	TEMP.MERC_ID = maes.MERC_ID
-		        AND ? BETWEEN TEMP.MERC_FECHA_CREACION AND COALESCE(TEMP.MERC_FECHA_FIN, ?)
 		order by MAES.MERC_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="UNIDAD_CARGA" table="IMAN_UNIDADCARGA_UNIC" tempImp="true"
-        sqlId="SELECT DISTINCT maes.unic_id FROM iman_unidadcarga_unic maes JOIN iman_unidadcargatemp_unic temp ON temp.unic_id = maes.unic_id WHERE temp.unic_merc_id IS NOT NULL">
+	<sql id="UNIDAD_CARGA" table="IMAN_UNIDADCARGA_UNIC" tempImp="false"
+		sqlId="SELECT DISTINCT maes.unic_id FROM iman_unidadcarga_unic maes JOIN iman_unidadcargatemp_unic temp ON temp.unic_id = maes.unic_id WHERE temp.unic_merc_id IS NOT NULL">
 	<![CDATA[
 		SELECT
 	        maes.unic_id
@@ -1427,22 +1447,33 @@
 			iman_unidadcarga_unic MAES
 		 	JOIN IMAN_UNIDADCARGATEMP_UNIC TEMP ON
 		    	TEMP.UNIC_ID = MAES.UNIC_ID
-		     	AND ? BETWEEN TEMP.UNIC_FECHA_CREACION AND COALESCE(TEMP.UNIC_FECHA_FIN, ?)
 	    WHERE TEMP.UNIC_MERC_ID IS NOT NULL
 		order by MAES.UNIC_CODIGO, MAES.UNIC_es_activo desc, TEMP.UNIC_FECHA_CREACION desc
 	]]>
-    </sql>
+	</sql>
 
-    <!-- <sql id="TIPO_EQUIPAMIENTO" table="IMAN_TIPOEQUIPAMIENTO_TEQU" tempImp="false"> <![CDATA[ SELECT MAES.TEQU_id
-        , MAES.TEQU_CODIGO || MAES.TEQU_TAMANYO AS CODIGO , MAES.TEQU_ES_RORO , MAES.TEQU_TAMANYO , (SELECT UNIC_CODIGO
-        FROM IMAN_UNIDADCARGA_UNIC where unic_id = tequ_unidad_carga_id) as unic_codigo , (SELECT merc_codigo FROM IMAN_MERCANCIA_MERC
-        where exists ( select 1 from IMAN_UNIDADCARGATEMP_UNIC where unic_id = MAES.TEQU_UNIDAD_CARGA_ID and UNIC_MERC_ID
-        = merc_id ) and rownum <= 1 ) as merc_codigo , (SELECT I18N.TEQU_NOMBRE FROM IMAN_TIPOEQUIPAMIENTOi18n_TEQU I18N
-        WHERE I18N.TEQU_ID = MAES.TEQU_ID AND I18N.TEQU_IDIOMA = ? AND ? BETWEEN TEQU_FECHA_CREACION and coalesce(TEQU_FECHA_FIN,
-        ?) ) AS I18N_NOMBRE FROM IMAN_TIPOEQUIPAMIENTO_TEQU MAES order by MAES.TEQU_es_activo desc ]]> </sql> -->
+	<sql id="TIPO_EQUIPAMIENTO" table="IMAN_TIPOEQUIPAMIENTO_TEQU" tempImp="false">
+	<![CDATA[
+		SELECT
+			MAES.TEQU_id
+        	, MAES.TEQU_CODIGO || MAES.TEQU_TAMANYO AS CODIGO
+        	, MAES.TEQU_ES_RORO , MAES.TEQU_TAMANYO
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = tequ_unidad_carga_id
+	            	AND trid_table_name = 'IMAN_UNIDADCARGA_UNIC') as tequ_unidad_carga
+	        , NULL AS tequ_merc
+        	, (SELECT I18N.TEQU_NOMBRE FROM IMAN_TIPOEQUIPAMIENTOi18n_TEQU I18N
+        		WHERE I18N.TEQU_ID = MAES.TEQU_ID
+        			AND I18N.TEQU_IDIOMA = ?
+        			AND ? BETWEEN TEQU_FECHA_CREACION and coalesce(TEQU_FECHA_FIN, ?)
+        	) AS I18N_NOMBRE
+        FROM IMAN_TIPOEQUIPAMIENTO_TEQU MAES
+        order by MAES.TEQU_es_activo desc
+    ]]>
+	</sql>
 
-    <sql id="ZONA_COSTERA_EEE" table="IEST_ZONACOSTERAEEE_ZCOS" tempImp="false"
-        sqlId="SELECT zcos_id FROM iest_zonacosteraeee_zcos">
+	<sql id="ZONA_COSTERA_EEE" table="IEST_ZONACOSTERAEEE_ZCOS" tempImp="false"
+		sqlId="SELECT zcos_id FROM iest_zonacosteraeee_zcos">
 	<![CDATA[
 		SELECT
 	        maes.zcos_id
@@ -1465,9 +1496,9 @@
 			iest_zonacosteraeee_zcos MAES
 		order by MAES.ZCOS_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="UNLOCODE" table="IGEN_UNLOCODE_UNLO" tempImp="false" sqlId="SELECT unlo_id FROM igen_unlocode_unlo">
+	<sql id="UNLOCODE" table="IGEN_UNLOCODE_UNLO" tempImp="false" sqlId="SELECT unlo_id FROM igen_unlocode_unlo">
 	<![CDATA[
 		SELECT
 	        maes.unlo_id
@@ -1494,17 +1525,17 @@
 		FROM igen_unlocode_unlo MAES
 		order by MAES.UNLO_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <!-- <sql id="AUTORIDAD_PORTUARIA" tempImp="false"> <![CDATA[ SELECT MAES.AUTP_ID , ( SELECT ( SELECT PAIS_ISO
-        FROM IGEN_PAIS_PAIS where pais_id = unlo_pais_id ) || UNLO_CODIGO FROM IGEN_UNLOCODE_UNLO WHERE UNLO_ID = AUTP_UNLO_ID
-        ) as autp_unlo , MAES.AUTP_DEPENDENCIA_AUTP_ID , (SELECT I18N.AUTP_NOMBRE FROM IGEN_AUTORIDAD_PORTi18n_AUTP I18N
-        WHERE I18N.AUTP_ID = MAES.AUTP_ID AND I18N.AUTP_IDIOMA = ? AND ? BETWEEN AUTP_FECHA_CREACION and coalesce(AUTP_FECHA_FIN,
-        ?) ) AS I18N_NOMBRE FROM IGEN_AUTORIDAD_PORT_AUTP MAES WHERE (MAES.AUTP_DEPENDENCIA_AUTP_ID IS NULL OR MAES.AUTP_DEPENDENCIA_AUTP_ID
-        <= MAES.AUTP_ID) order by MAES.AUTP_ID, MAES.AUTP_ES_ACTIVO desc ]]> </sql> -->
+	<!-- <sql id="AUTORIDAD_PORTUARIA" tempImp="false"> <![CDATA[ SELECT MAES.AUTP_ID , ( SELECT ( SELECT PAIS_ISO
+		FROM IGEN_PAIS_PAIS where pais_id = unlo_pais_id ) || UNLO_CODIGO FROM IGEN_UNLOCODE_UNLO WHERE UNLO_ID = AUTP_UNLO_ID
+		) as autp_unlo , MAES.AUTP_DEPENDENCIA_AUTP_ID , (SELECT I18N.AUTP_NOMBRE FROM IGEN_AUTORIDAD_PORTi18n_AUTP I18N
+		WHERE I18N.AUTP_ID = MAES.AUTP_ID AND I18N.AUTP_IDIOMA = ? AND ? BETWEEN AUTP_FECHA_CREACION and coalesce(AUTP_FECHA_FIN,
+		?) ) AS I18N_NOMBRE FROM IGEN_AUTORIDAD_PORT_AUTP MAES WHERE (MAES.AUTP_DEPENDENCIA_AUTP_ID IS NULL OR MAES.AUTP_DEPENDENCIA_AUTP_ID
+		<= MAES.AUTP_ID) order by MAES.AUTP_ID, MAES.AUTP_ES_ACTIVO desc ]]> </sql> -->
 
-    <sql id="RECINTO_ADUANERO" table="IMAN_RECINTOADUANERO_RADU" tempImp="false"
-        sqlId="SELECT radu_id FROM iman_recintoaduanero_radu">
+	<sql id="RECINTO_ADUANERO" table="IMAN_RECINTOADUANERO_RADU" tempImp="false"
+		sqlId="SELECT radu_id FROM iman_recintoaduanero_radu">
 	<![CDATA[
 		SELECT
 	        maes.radu_id
@@ -1522,9 +1553,9 @@
 		    iman_recintoaduanero_radu MAES
 		order by MAES.RADU_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="SUBPUERTO" table="IGEN_SUBPUERTO_SUBP" tempImp="false" sqlId="SELECT subp_id FROM igen_subpuerto_subp">
+	<sql id="SUBPUERTO" table="IGEN_SUBPUERTO_SUBP" tempImp="false" sqlId="SELECT subp_id FROM igen_subpuerto_subp">
     <![CDATA[
         SELECT
 	        maes.subp_id
@@ -1556,9 +1587,36 @@
             igen_subpuerto_subp MAES
         order by MAES.SUBP_es_activo desc
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="ZONA_DEPOSITO" table="ISUP_ZONA_ZONS" tempImp="true" sqlId="SELECT zons_id FROM isup_zona_zons">
+	<sql id="ZONA_PORTUARIA_DP" table="IEXP_ZONAPORTUARIA_ZOPO" tempImp="false" sqlId="SELECT zopo_id FROM IEXP_ZONAPORTUARIA_ZOPO">
+    <![CDATA[
+		SELECT
+		    maes.zopo_id
+		    , (SELECT subp_codigo FROM igen_subpuerto_subp WHERE subp_id = maes.zopo_subp_id) AS subp_codigo
+		    , maes.zopo_codigo
+
+		    , temp.vzpc_fecha_inicio
+		    , temp.vzpc_fecha_fin
+
+		    , maes.zopo_sup_total
+		    , temp.vzpc_valor
+		    , temp.vzpc_sup_concesionable
+
+		    , (SELECT i18n.zopo_nombre
+		        FROM iexp_zonaportuariai18n_zopo i18n
+		        WHERE i18n.zopo_id = maes.zopo_id
+		            AND i18n.zopo_idioma = ?
+		            AND ? BETWEEN i18n.zopo_fecha_creacion AND COALESCE(i18n.zopo_fecha_fin, ?)
+		    ) AS i18n_nombre
+		FROM iexp_zonaportuaria_zopo maes
+		    INNER JOIN iexp_zonaportuariahist_vzpc temp ON
+		        temp.vzpc_zopo_id = maes.zopo_id
+		ORDER BY maes.zopo_codigo DESC, maes.zopo_es_activo DESC, temp.vzpc_es_activo DESC
+    ]]>
+	</sql>
+
+	<sql id="ZONA_DEPOSITO" table="ISUP_ZONA_ZONS" tempImp="false" sqlId="SELECT zons_id FROM isup_zona_zons">
     <![CDATA[
 		 select
 	        maes.zons_id
@@ -1587,11 +1645,10 @@
 	    from isup_zona_zons maes
 	        join ISUP_ZONATEMP_ZONS temp on
 	            temp.ZONS_ID = maes.ZONS_ID
-	            AND ? BETWEEN temp.ZONS_FECHA_CREACION AND COALESCE(temp.ZONS_FECHA_FIN, ?)
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="SERVICIO_TRAFICO" table="IESC_TRAFICO_TRAF" tempImp="false" sqlId="SELECT traf_id FROM iesc_trafico_traf">
+	<sql id="SERVICIO_TRAFICO" table="IESC_TRAFICO_TRAF" tempImp="false" sqlId="SELECT traf_id FROM iesc_trafico_traf">
 	<![CDATA[
 		SELECT
 	        maes.traf_id
@@ -1607,9 +1664,9 @@
 			FROM iesc_trafico_traf MAES
 	    order by MAES.TRAF_ES_ACTIVO desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="MUELLE" table="IESC_MUELLE_MUEL" tempImp="true" sqlId="SELECT muel_id FROM iesc_muelle_muel">
+	<sql id="MUELLE" table="IESC_MUELLE_MUEL" tempImp="false" sqlId="SELECT muel_id FROM iesc_muelle_muel">
 	<![CDATA[
 		SELECT
 	        maes.muel_id
@@ -1625,13 +1682,12 @@
 		    iesc_muelle_muel MAES
 		    JOIN IESC_MUELLEtemp_MUEL TEMP ON
 		    	TEMP.MUEL_ID = MAES.MUEL_ID
-		        AND ? BETWEEN TEMP.MUEL_FECHA_CREACION AND COALESCE(TEMP.MUEL_FECHA_FIN, ?)
 		order by MAES.MUEL_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="INSTALACION_DEP_AUT" table="IEMD_INSTALACIONDEPA_INDA" tempImp="false"
-        sqlId="SELECT inda_id FROM iemd_instalaciondepa_inda">
+	<sql id="INSTALACION_DEP_AUT" table="IEMD_INSTALACIONDEPA_INDA" tempImp="false"
+		sqlId="SELECT inda_id FROM iemd_instalaciondepa_inda">
     <![CDATA[
         SELECT
 	        maes.inda_id
@@ -1650,10 +1706,10 @@
         FROM iemd_instalaciondepa_inda MAES
         order by INDA_ES_ACTIVO desc
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="INSTALACION_DEP" table="IEMD_INSTALACIONDEP_INDP" tempImp="false"
-        sqlId="SELECT indp_id FROM iemd_instalaciondep_indp">
+	<sql id="INSTALACION_DEP" table="IEMD_INSTALACIONDEP_INDP" tempImp="false"
+		sqlId="SELECT indp_id FROM iemd_instalaciondep_indp">
     <![CDATA[
         SELECT
 	        maes.indp_id
@@ -1689,9 +1745,9 @@
             iemd_instalaciondep_indp MAES
         order by MAES.INDP_es_activo desc
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="AMARRE_DEP" table="IEMD_AMARRE_AMAD" tempImp="false" sqlId="SELECT amad_id FROM iemd_amarre_amad">
+	<sql id="AMARRE_DEP" table="IEMD_AMARRE_AMAD" tempImp="false" sqlId="SELECT amad_id FROM iemd_amarre_amad">
     <![CDATA[
         SELECT
 	        maes.amad_id
@@ -1729,9 +1785,9 @@
             , maes.amad_observaciones
         FROM iemd_amarre_amad maes
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="ALINEACION" table="IGEN_ALINEACION_ALIN" tempImp="true" sqlId="SELECT alin_id FROM igen_alineacion_alin">
+	<sql id="ALINEACION" table="IGEN_ALINEACION_ALIN" tempImp="false" sqlId="SELECT alin_id FROM igen_alineacion_alin">
 	<![CDATA[
 		SELECT
 	        maes.alin_id
@@ -1774,13 +1830,12 @@
 		    igen_alineacion_alin MAES
 		    JOIN IGEN_ALINEACIONTEMP_ALIN TEMP ON
 		    	TEMP.ALIN_ID = MAES.ALIN_ID
-		        AND ? BETWEEN TEMP.ALIN_FECHA_CREACION AND COALESCE(TEMP.ALIN_FECHA_FIN, ?)
 		order by MAES.ALIN_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="ORGANIZACION" table="ICOM_ORGANIZACION_ORGA" tempImp="false"
-        sqlId="SELECT orga_id FROM icom_organizacion_orga">
+	<sql id="ORGANIZACION" table="ICOM_ORGANIZACION_ORGA" tempImp="false"
+		sqlId="SELECT orga_id FROM icom_organizacion_orga">
     <![CDATA[
         SELECT
 	        maes.orga_id
@@ -1806,10 +1861,10 @@
                 DIRC_ID_ORGANIZACION = ORGA_ID
         order by MAES.ORGA_ES_ACTIVO desc
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="EMBARCACION_DEP" table="IEMD_EMBARCACION_EMBD" tempImp="false"
-        sqlId="SELECT embd_id FROM iemd_embarcacion_embd">
+	<sql id="EMBARCACION_DEP" table="IEMD_EMBARCACION_EMBD" tempImp="false"
+		sqlId="SELECT embd_id FROM iemd_embarcacion_embd">
     <![CDATA[
         select
 	        maes.embd_id
@@ -1839,10 +1894,10 @@
         from iemd_embarcacion_embd maes
         order by maes.EMBD_ES_ACTIVO desc
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="EMBARCACION_DEP_AUT" table="IEMD_EMBARCACIONAUT_EMBA" tempImp="true"
-        sqlId="SELECT emba_id FROM iemd_embarcacionaut_emba">
+	<sql id="EMBARCACION_DEP_AUT" table="IEMD_EMBARCACIONAUT_EMBA" tempImp="false"
+		sqlId="SELECT emba_id FROM iemd_embarcacionaut_emba">
     <![CDATA[
         SELECT
 	        maes.emba_id
@@ -1880,13 +1935,12 @@
         FROM iemd_embarcacionaut_emba maes
             JOIN IEMD_EMBARCACIONAUTCLI_EACL EACL ON
                 EACL_EMBARCACIONAUT_ID = EMBA_ID
-                AND ? BETWEEN EACL_FECHA_INICIO AND COALESCE(EACL_FECHA_FIN, ?)
         order by maes.EMBA_ES_ACTIVO desc, EACL.EACL_ES_ACTIVO desc
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="INSTALACION_ESPECIAL" table="IMAN_INSTESPECIAL_IESP" tempImp="true"
-        sqlId="SELECT iesp_id FROM iman_instespecial_iesp">
+	<sql id="INSTALACION_ESPECIAL" table="IMAN_INSTESPECIAL_IESP" tempImp="false"
+		sqlId="SELECT iesp_id FROM iman_instespecial_iesp">
 	<![CDATA[
 		SELECT
 	        maes.iesp_id
@@ -1923,12 +1977,11 @@
 		    iman_instespecial_iesp MAES
 		    JOIN IMAN_INSTESPECIALtemp_IESP TEMP ON
 		    	TEMP.IESP_ID = MAES.IESP_ID
-		        AND ? BETWEEN TEMP.IESP_FECHA_CREACION AND COALESCE(TEMP.IESP_FECHA_FIN, ?)
 		order by MAES.IESP_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="BUQUE_PESCA" table="IPES_BUQUE_BUPE" tempImp="true" sqlId="SELECT bupe_id FROM ipes_buque_bupe">
+	<sql id="BUQUE_PESCA" table="IPES_BUQUE_BUPE" tempImp="false" sqlId="SELECT bupe_id FROM ipes_buque_bupe">
 	<![CDATA[
 		SELECT
 	        maes.bupe_id
@@ -1970,12 +2023,11 @@
 		    ipes_buque_bupe MAES
 		    JOIN IPES_BUQUEtemp_BUPE TEMP ON
 		    	TEMP.BUPE_ID = MAES.BUPE_ID
-		        AND ? BETWEEN TEMP.BUPE_FECHA_CREACION AND COALESCE(TEMP.BUPE_FECHA_FIN, ?)
 		order by MAES.BUPE_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="REDES" table="ISUM_RED_REDS" tempImp="false" sqlId="SELECT reds_id FROM isum_red_reds">
+	<sql id="REDES" table="ISUM_RED_REDS" tempImp="false" sqlId="SELECT reds_id FROM isum_red_reds">
 	<![CDATA[
 		SELECT
 	        maes.reds_id
@@ -1999,9 +2051,9 @@
 		FROM isum_red_reds MAES
 		order by MAES.REDS_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="CONTADOR" table="ISUM_CONTADOR_COSU" tempImp="true" sqlId="SELECT cosu_id FROM isum_contador_cosu">
+	<sql id="CONTADOR" table="ISUM_CONTADOR_COSU" tempImp="false" sqlId="SELECT cosu_id FROM isum_contador_cosu">
 	<![CDATA[
 	SELECT
 	        maes.cosu_id
@@ -2028,11 +2080,10 @@
 		  , MAES.COSU_FECHA_INSTALACION
 		  , MAES.COSU_FECHA_VIDA_ESTIMADA
 	FROM isum_contador_cosu MAES
-	WHERE ? BETWEEN COSU_FECHA_INSTALACION AND COALESCE(COSU_FECHA_BAJA, ?)
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="PUNTO_RED" table="ISUM_PUNTORED_PRSU" tempImp="false" sqlId="SELECT prsu_id FROM isum_puntored_prsu">
+	<sql id="PUNTO_RED" table="ISUM_PUNTORED_PRSU" tempImp="false" sqlId="SELECT prsu_id FROM isum_puntored_prsu">
     <![CDATA[
         SELECT
 	        maes.prsu_id
@@ -2103,10 +2154,10 @@
             , prsu_seccion_cable, prsu_potencia, prsu_sec_repetidores
         FROM isum_puntored_prsu maes
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="REGISTRO_TIPO_BUQUE_EEE" table="IEST_REGISTROBUQUEEEETIPO_BUET" tempImp="false"
-        sqlId="SELECT buet_id FROM iest_registrobuqueeeetipo_buet">
+	<sql id="REGISTRO_TIPO_BUQUE_EEE" table="IEST_REGISTROBUQUEEEETIPO_BUET" tempImp="false"
+		sqlId="SELECT buet_id FROM iest_registrobuqueeeetipo_buet">
 	<![CDATA[
 		SELECT
 	        maes.buet_id
@@ -2122,10 +2173,10 @@
 		FROM iest_registrobuqueeeetipo_buet maes
 		order by MAES.BUET_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="REGISTRO_TIPO_BUQUE" table="IEST_REGISTROBUQUETIPO_BURT" tempImp="false"
-        sqlId="SELECT burt_id FROM iest_registrobuquetipo_burt">
+	<sql id="REGISTRO_TIPO_BUQUE" table="IEST_REGISTROBUQUETIPO_BURT" tempImp="false"
+		sqlId="SELECT burt_id FROM iest_registrobuquetipo_burt">
 	<![CDATA[
 		SELECT
 	        maes.burt_id
@@ -2145,9 +2196,80 @@
 		FROM iest_registrobuquetipo_burt MAES
 		ORDER BY MAES.BURT_ES_ACTIVO DESC
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="BUQUE" table="IESC_BUQUE_BUQU" tempImp="false" sqlId="SELECT buqu_buque_id FROM iesc_buque_buqu">
+	<sql id="SUPERFICIE_DP" table="IEXP_SUPERFICIEBIEN_SUBI" tempImp="false"
+		sqlId="SELECT subi_id FROM iexp_superficiebien_subi">
+	<![CDATA[
+		SELECT
+		    maes.subi_id
+		    , (
+		        SELECT subp_codigo
+		        FROM igen_subpuerto_subp
+		        WHERE subp_id = bien_subp_id
+		    ) AS subp_codigo
+		    , CONCAT(CONCAT(bien.bien_codigo, '-'), maes.subi_codigo_superficie) AS subi_codigo
+
+		    , maes.subi_fecha_inicio
+		    , maes.subi_fecha_fin
+
+		    , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+		        WHERE trid_old_id = maes.SUBI_tsex_id
+		          AND trid_table_name = 'IEXP_TIPOSUPERFICIEB_TSEX') AS subi_tsex
+		    , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+		        WHERE trid_old_id = maes.SUBI_ZOPO_id
+		          AND trid_table_name = 'IEXP_ZONAPORTUARIA_ZOPO') AS subi_zopo
+		    , maes.subi_unidades
+		    , maes.subi_unidad_medida
+		    , maes.subi_referencia
+		FROM iexp_superficiebien_subi maes
+		    INNER JOIN iexp_bien_bien bien ON bien.bien_id = maes.subi_bien_id
+		ORDER BY maes.subi_es_activo DESC, bien.bien_es_activo DESC
+	]]>
+	</sql>
+
+	<sql id="BIEN_DP" table="IEXP_BIEN_BIEN" tempImp="false"
+		sqlId="SELECT bien_id FROM iexp_bien_bien">
+	<![CDATA[
+		SELECT
+		    bien_id
+		    , (
+		        SELECT subp_codigo
+		        FROM igen_subpuerto_subp
+		        WHERE subp_id = bien_subp_id
+		    ) AS subp_codigo
+		    , bien_codigo
+
+		    , bieh_fecha_inicio
+		    , bieh_fecha_final
+
+		    , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+		        WHERE trid_old_id = bieh_tipo_bien_id
+		          AND trid_table_name = 'IEXP_TIPOBIEN_TBIE') AS bieh_tipo_bien
+		    , bieh_estado
+		    , bieh_referencia
+		    , bieh_es_obra_instalacion
+		    , bieh_valor_obra_instalacion
+		    , bieh_valor_d_obra_instalacion
+		    , bieh_vida_util
+		    , bieh_superficie_total
+		    , bieh_es_concesionable
+		    , bieh_tipo_propietario
+		    , bieh_fecha_reversion
+		    , bieh_proporcion_suprabien
+		    , bieh_referencia_catastral
+		    , bieh_valor_catastral
+		    , bieh_referencia_registral
+
+		    , bien_descripcion
+		FROM
+		    iexp_bien_bien maes
+		    INNER JOIN iexp_bienhistorico_bieh hist ON hist.bieh_bien_id = maes.bien_id
+		ORDER BY maes.bien_es_activo DESC, hist.bieh_es_activo DESC
+	]]>
+	</sql>
+
+	<sql id="BUQUE" table="IESC_BUQUE_BUQU" tempImp="false" sqlId="SELECT buqu_buque_id FROM iesc_buque_buqu">
 	<![CDATA[
 		SELECT
 	        maes.buqu_buque_id
@@ -2224,15 +2346,15 @@
 				TEMP.BUqu_buque_id = MAES.BUqu_buque_id
 		order by MAES.BUQU_es_activo desc
 	]]>
-    </sql>
+	</sql>
 
-    <!-- <sql id="BUQUE_CAPACIDAD" tempImp="false"> <![CDATA[ select maes.cabu_buque_codigo_imo , (SELECT REST_CODIGO
-        FROM IESC_RESIDUOSTIPO_REST WHERE REST_ID = RESS_REST_ID) || ress.ress_codigo AS codigo , temp.CABU_FECHA_CREACION
-        , temp.CABU_FECHA_FIN , temp.CABU_CAPACIDAD_MAXIMA from IESC_CAPACIDADBUQUE_CABU maes join IESC_CAPACIDADBUQUETEMP_CABU
-        temp on temp.CABU_ID = maes.CABU_ID join IESC_RESIDUOSSUBTIPO_RESS RESS on RESS.RESS_ID = maes.CABU_RESIDUO_SUBTIPO_ID
-        ]]> </sql> -->
+	<!-- <sql id="BUQUE_CAPACIDAD" tempImp="false"> <![CDATA[ select maes.cabu_buque_codigo_imo , (SELECT REST_CODIGO
+		FROM IESC_RESIDUOSTIPO_REST WHERE REST_ID = RESS_REST_ID) || ress.ress_codigo AS codigo , temp.CABU_FECHA_CREACION
+		, temp.CABU_FECHA_FIN , temp.CABU_CAPACIDAD_MAXIMA from IESC_CAPACIDADBUQUE_CABU maes join IESC_CAPACIDADBUQUETEMP_CABU
+		temp on temp.CABU_ID = maes.CABU_ID join IESC_RESIDUOSSUBTIPO_RESS RESS on RESS.RESS_ID = maes.CABU_RESIDUO_SUBTIPO_ID
+		]]> </sql> -->
 
-    <sql id="BUQUE_CERTIFICADO" table="IESC_CERTIFICADOBUQUE_CERB" tempImp="false">
+	<sql id="BUQUE_CERTIFICADO" table="IESC_CERTIFICADOBUQUE_CERB" tempImp="false">
     <![CDATA[
         SELECT
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -2246,9 +2368,9 @@
             , maes.CERB_FECHA_FIN_VALIDEZ
         FROM iesc_certificadobuque_cerb maes
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="BUQUE_CONVENIO" table="IESC_BUQUECONVENIO_BUCO" tempImp="false">
+	<sql id="BUQUE_CONVENIO" table="IESC_BUQUECONVENIO_BUCO" tempImp="false">
     <![CDATA[
         SELECT
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -2262,9 +2384,9 @@
             , maes.buqu_fecha_fin_adhesion
         FROM iesc_buqueconvenio_buco maes
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="BUQUE_SUBPUERTO" table="IESC_BUQUESUBPUERTO_BUSP" tempImp="false">
+	<sql id="BUQUE_SUBPUERTO" table="IESC_BUQUESUBPUERTO_BUSP" tempImp="false">
     <![CDATA[
         SELECT
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -2283,9 +2405,9 @@
             , maes.busp_observaciones
         FROM iesc_buquesubpuerto_busp maes
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="BUQUE_TRAFICO" table="IESC_TRAFICOBUQUE_TRBU" tempImp="false">
+	<sql id="BUQUE_TRAFICO" table="IESC_TRAFICOBUQUE_TRBU" tempImp="false">
     <![CDATA[
         select
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -2300,9 +2422,9 @@
             , coalesce(maes.trbu_numero_puertos, 0)
         FROM iesc_traficobuque_trbu maes
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_SERV_TIPO_TRAF" table="IESC_SERVICIOTIPOSERVICIO_STST" tempImp="false">
+	<sql id="TIPO_SERV_TIPO_TRAF" table="IESC_SERVICIOTIPOSERVICIO_STST" tempImp="false">
     <![CDATA[
         SELECT
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -2318,9 +2440,9 @@
         FROM iesc_serviciotiposervicio_stst maes
         ORDER BY stst_es_activo DESC
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="ORGANIZACION_SUBPUERTO" table="ICOM_ORGANIZACIONSUBP_ORSP" tempImp="false">
+	<sql id="ORGANIZACION_SUBPUERTO" table="ICOM_ORGANIZACIONSUBP_ORSP" tempImp="false">
     <![CDATA[
         SELECT
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -2346,9 +2468,9 @@
                 DIRN_SUBP_ID = ORSP_SUBPuerto_ID
                 and DIRN_orga_ID = orsp_organizacion_ID
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="ORGANIZACION_TIPO" table="ICOM_ORGANIZACIONORGT_OROT" tempImp="false">
+	<sql id="ORGANIZACION_TIPO" table="ICOM_ORGANIZACIONORGT_OROT" tempImp="false">
     <![CDATA[
         SELECT
 	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -2359,19 +2481,18 @@
 	            	AND trid_table_name = 'ICOM_ORGANIZACIONTIPO_ORGT') AS orot_tipo_organizacion
         FROM icom_organizacionorgt_orot maes
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="TIPO_LECTURA" table="ISUM_TIPOLECTURA_TPLC" tempImp="false"
-        sqlId="SELECT 1 FROM dual">
+	<sql id="TIPO_LECTURA" table="ISUM_TIPOLECTURA_TPLC" tempImp="false" sqlId="SELECT 1 FROM dual">
     <![CDATA[
         SELECT
             1
             , 'L'
         FROM dual
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="PUNTO_RED_ORGANIZACION" tempImp="false"> <![CDATA[
+	<sql id="PUNTO_RED_ORGANIZACION" tempImp="false"> <![CDATA[
         SELECT
             (SELECT trid_new_id FROM tbl_traduccion_ids_trid
                 WHERE trid_old_id = maes.clsu_prsu_id
@@ -2389,9 +2510,9 @@
         FROM isum_clientepuntored_clsu maes
         WHERE clsu_ES_ACTIVO = 1
         ]]>
-    </sql>
+	</sql>
 
-    <sql id="PUNTO_RED_TIPO_GASTO" tempImp="false"> <![CDATA[
+	<sql id="PUNTO_RED_TIPO_GASTO" tempImp="false"> <![CDATA[
         SELECT
             (SELECT trid_new_id FROM tbl_traduccion_ids_trid
                 WHERE trid_old_id = maes.gpsu_prsu_id
@@ -2407,10 +2528,10 @@
         FROM isum_gastopuntored_gpsu maes
         WHERE GPSU_ES_ACTIVO = 1
     ]]>
-    </sql>
+	</sql>
 
 
-    <sql id="PUNTO_RED_TIPO_LECTURA" tempImp="false"> <![CDATA[
+	<sql id="PUNTO_RED_TIPO_LECTURA" tempImp="false"> <![CDATA[
 		SELECT
             (SELECT trid_new_id FROM tbl_traduccion_ids_trid
                 WHERE trid_old_id = maes.lpsu_prsu_id
@@ -2424,9 +2545,9 @@
             , maes.lpsu_lectura_final
 		FROM isum_lecturapuntored_lpsu maes
         WHERE lpsu_es_activo = 1 ]]>
-    </sql>
+	</sql>
 
-    <sql id="AMARRE_PUNTO_RED" tempImp="false">
+	<sql id="AMARRE_PUNTO_RED" tempImp="false">
     <![CDATA[
         SELECT
             (SELECT trid_new_id FROM tbl_traduccion_ids_trid
@@ -2441,9 +2562,9 @@
             iemd_amarre_punto_red_adpr maes
         ORDER BY adpr_es_activo DESC
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="AMARRE_SERVICIO_DEPORTIVO" tempImp="false"> <![CDATA[
+	<sql id="AMARRE_SERVICIO_DEPORTIVO" tempImp="false"> <![CDATA[
 		SELECT
             (SELECT trid_new_id FROM tbl_traduccion_ids_trid
                 WHERE trid_old_id = maes.asde_amarredep_id
@@ -2454,5 +2575,39 @@
           , maes.asde_observaciones
 	   FROM iemd_amarre_serviciodep_asde maes
        ORDER BY asde_es_activo DESC ]]>
-    </sql>
+	</sql>
+
+	<sql id="GRAVAMEN_TO" tempImp="false"> <![CDATA[
+       SELECT
+	        (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.gtoe_tage_id
+	            	AND trid_table_name = 'IEXP_TIPOACTIVIDADG_TAGE') AS gtoe_tage
+	        , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+	            WHERE trid_old_id = maes.gtoe_tsex_id
+	            	AND trid_table_name = 'IEXP_TIPOSUPERFICIEB_TSEX') AS gtoe_tsex
+
+            , maes.gtoe_fecha_inicio
+            , maes.gtoe_fecha_fin
+
+            , maes.gtoe_gravamen
+       FROM iexp_gravamenttasaocup_gtoe maes
+       ORDER BY gtoe_es_activo DESC ]]>
+	</sql>
+
+	<sql id="SUPERFICIE_BIEN_DP" tempImp="false"> <![CDATA[
+		SELECT
+		    (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+		        WHERE trid_old_id = subi_bien_id
+		          AND trid_table_name = 'IEXP_BIEN_BIEN') AS subi_bien
+		    , (SELECT trid_new_id FROM tbl_traduccion_ids_trid
+		        WHERE trid_old_id = subi_id
+		          AND trid_table_name = 'IEXP_SUPERFICIEBIEN_SUBI') AS subi
+
+		    , subi_fecha_inicio
+		    , subi_fecha_fin
+		FROM iexp_superficiebien_subi
+		ORDER BY subi_es_activo DESC ]]>
+	</sql>
+
+
 </importer>

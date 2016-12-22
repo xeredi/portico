@@ -37,14 +37,14 @@ public final class ServicioValorador {
 	public static void main(final String[] args) {
 		final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		final Long usroId = 1000L;
-		final Long entiId = Entidad.ESCALA.getId();
+		final Long entiId = Entidad.SUMINISTRO_RED.getId();
 		final Date fliq = Calendar.getInstance().getTime();
 
 		final TipoServicioDetailVO tpsrDetail = TipoServicioProxy.select(entiId);
-		final ServicioBO srvcBO = ServicioBOFactory.newInstance(Entidad.ESCALA.getId(), usroId);
+		final ServicioBO srvcBO = ServicioBOFactory.newInstance(entiId, usroId);
 		final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
 
-		srvcCriterio.setEntiId(Entidad.ESCALA.getId());
+		srvcCriterio.setEntiId(entiId);
 		srvcCriterio.addOrderBy(ServicioCriterioVO.OrderByColumn.srvc_fref.name(), OrderByType.ASC);
 
 		for (final ServicioVO srvc : srvcBO.selectList(srvcCriterio)) {

@@ -352,6 +352,8 @@ public enum TipoDato {
 	TIPO_SUM(45275L),
 	/** The tipo superficie. */
 	TIPO_SUP(45250L),
+	/** The tipo superficie dp. */
+	TIPO_SUPERFICIE_DP(45480L),
 	/** The unidad carga. */
 	UNIDAD_CARGA(45145L),
 	/** The unidad superficie. */
@@ -372,6 +374,8 @@ public enum TipoDato {
 	ZONA_DEP(45260L),
 	/** The zona pesca. */
 	ZONA_PESCA(45065L),
+	/** The zona portuaria dp. */
+	ZONA_PORTUARIA_DP(45485L),
 
 	// Codigos de Referencia
 	/** The acc pet amarre. */

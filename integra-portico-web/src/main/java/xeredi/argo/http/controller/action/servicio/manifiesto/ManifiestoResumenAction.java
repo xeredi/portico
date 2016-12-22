@@ -14,7 +14,7 @@ import xeredi.argo.model.servicio.vo.manifiesto.ResumenTotalesVO;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public final class ResumenTotalesAction extends CrudDetailAction<ServicioVO> {
+public final class ManifiestoResumenAction extends CrudDetailAction<ServicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3964457625490510954L;
