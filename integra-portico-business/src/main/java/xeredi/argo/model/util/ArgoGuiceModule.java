@@ -32,6 +32,17 @@ import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
+import xeredi.argo.model.metamodelo.dao.CodigoReferenciaDAO;
+import xeredi.argo.model.metamodelo.dao.TipoDatoDAO;
+import xeredi.argo.model.metamodelo.service.CodigoReferenciaService;
+import xeredi.argo.model.metamodelo.service.CodigoReferenciaServiceImpl;
+import xeredi.argo.model.metamodelo.service.TipoDatoService;
+import xeredi.argo.model.metamodelo.service.TipoDatoServiceImpl;
+import xeredi.argo.model.metamodelo.vo.CodigoReferenciaCriterioVO;
+import xeredi.argo.model.metamodelo.vo.CodigoReferenciaVO;
+import xeredi.argo.model.metamodelo.vo.EntidadVO;
+import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
+import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.argo.model.seguridad.dao.FuncionalidadGrupoDAO;
 import xeredi.argo.model.seguridad.dao.GrupoDAO;
 import xeredi.argo.model.seguridad.dao.UsuarioDAO;
@@ -85,6 +96,11 @@ public final class ArgoGuiceModule extends MyBatisModule {
 		addSimpleAlias(PuertoCriterioVO.class);
 		addSimpleAlias(SuperpuertoVO.class);
 		addSimpleAlias(SuperpuertoCriterioVO.class);
+		addSimpleAlias(CodigoReferenciaVO.class);
+		addSimpleAlias(CodigoReferenciaCriterioVO.class);
+		addSimpleAlias(EntidadVO.class);
+		addSimpleAlias(TipoDatoVO.class);
+		addSimpleAlias(TipoDatoCriterioVO.class);
 		addSimpleAlias(FuncionalidadGrupoCriterioVO.class);
 		addSimpleAlias(FuncionalidadGrupoVO.class);
 		addSimpleAlias(GrupoCriterioVO.class);
@@ -100,6 +116,8 @@ public final class ArgoGuiceModule extends MyBatisModule {
 		addMapperClass(I18nDAO.class);
 		addMapperClass(PuertoDAO.class);
 		addMapperClass(SuperpuertoDAO.class);
+		addMapperClass(CodigoReferenciaDAO.class);
+		addMapperClass(TipoDatoDAO.class);
 		addMapperClass(FuncionalidadGrupoDAO.class);
 		addMapperClass(FuncionalidadGrupoDAO.class);
 		addMapperClass(GrupoDAO.class);
@@ -114,6 +132,8 @@ public final class ArgoGuiceModule extends MyBatisModule {
 		bind(I18nService.class).to(I18nServiceImpl.class);
 		bind(PuertoService.class).to(PuertoServiceImpl.class);
 		bind(SuperpuertoService.class).to(SuperpuertoServiceImpl.class);
+		bind(CodigoReferenciaService.class).to(CodigoReferenciaServiceImpl.class);
+		bind(TipoDatoService.class).to(TipoDatoServiceImpl.class);
 		bind(UsuarioService.class).to(UsuarioServiceImpl.class);
 		bind(GrupoService.class).to(GrupoServiceImpl.class);
 

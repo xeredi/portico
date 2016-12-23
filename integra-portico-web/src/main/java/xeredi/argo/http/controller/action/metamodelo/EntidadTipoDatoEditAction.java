@@ -6,17 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
-import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
-import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
+import xeredi.argo.model.metamodelo.service.TipoDatoService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
@@ -26,59 +26,68 @@ import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
 /**
  * The Class EntidadTipoDatoEditAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class EntidadTipoDatoEditAction extends CrudEditAction<EntidadTipoDatoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 3500048499586562595L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 3500048499586562595L;
 
-    /** The i18n map. */
-    private Map<String, I18nVO> i18nMap;
+	/** The i18n map. */
+	@Getter
+	private Map<String, I18nVO> i18nMap;
 
-    /** The engd list. */
-    private final List<LabelValueVO> engdList = new ArrayList<>();
+	/** The engd list. */
+	@Getter
+	private final List<LabelValueVO> engdList = new ArrayList<>();
 
-    /** The tpdt list. */
-    private final List<LabelValueVO> tpdtList = new ArrayList<>();
+	/** The tpdt list. */
+	@Getter
+	private final List<LabelValueVO> tpdtList = new ArrayList<>();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getEntiId());
+	/** The tpdt service. */
+	@Inject
+	private TipoDatoService tpdtService;
 
-        if (accion == AccionCodigo.create) {
-            i18nMap = new HashMap<>();
-        } else {
-            Preconditions.checkNotNull(model.getId());
+	@Inject
+	private I18nService i18nService;
 
-            final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		Preconditions.checkNotNull(model.getEntiId());
 
-            model = entdBO.select(model.getId(), getIdioma());
-            i18nMap = I18nUtilBO.selectMap(model);
-        }
-    }
+		if (accion == AccionCodigo.create) {
+			i18nMap = new HashMap<>();
+		} else {
+			Preconditions.checkNotNull(model.getId());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
-        final EntidadGrupoDatoCriterioVO engdCriterio = new EntidadGrupoDatoCriterioVO();
+			final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-        engdCriterio.setEntiId(model.getEntiId());
-        engdCriterio.setIdioma(getIdioma());
+			model = entdBO.select(model.getId(), getIdioma());
+			i18nMap = i18nService.selectMap(model);
+		}
+	}
 
-        engdList.addAll(engdBO.selectLabelValues(engdCriterio));
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		if (accion == AccionCodigo.create) {
+			final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+			final EntidadGrupoDatoCriterioVO engdCriterio = new EntidadGrupoDatoCriterioVO();
 
-        final TipoDatoBO tpdtBO = new TipoDatoBO();
-        final TipoDatoCriterioVO tpdtCriterioVO = new TipoDatoCriterioVO();
+			engdCriterio.setEntiId(model.getEntiId());
+			engdCriterio.setIdioma(getIdioma());
 
-        tpdtCriterioVO.setIdioma(getIdioma());
+			engdList.addAll(engdBO.selectLabelValues(engdCriterio));
 
-        tpdtList.addAll(tpdtBO.selectLabelValues(tpdtCriterioVO));
-    }
+			final TipoDatoCriterioVO tpdtCriterioVO = new TipoDatoCriterioVO();
+
+			tpdtCriterioVO.setIdioma(getIdioma());
+
+			tpdtList.addAll(tpdtService.selectLabelValues(tpdtCriterioVO));
+		}
+	}
 }

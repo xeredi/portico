@@ -5,16 +5,16 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
-import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
-import xeredi.argo.model.metamodelo.bo.TipoDatoBO;
 import xeredi.argo.model.metamodelo.bo.TipoParametroBO;
 import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
+import xeredi.argo.model.metamodelo.service.TipoDatoService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
@@ -28,66 +28,74 @@ import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
 /**
  * The Class TipoDatoEditAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class TipoDatoEditAction extends CrudEditAction<TipoDatoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 6202167642910897080L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 6202167642910897080L;
 
-    /** The i18n map. */
-    private Map<String, I18nVO> i18nMap;
+	/** The i18n map. */
+	@Getter
+	private Map<String, I18nVO> i18nMap;
 
-    /** The tpht list. */
-    private TipoHtml[] tphtList;
+	/** The tpht list. */
+	@Getter
+	private TipoHtml[] tphtList;
 
-    /** The tpel list. */
-    private TipoElemento[] tpelList;
+	/** The tpel list. */
+	@Getter
+	private TipoElemento[] tpelList;
 
-    /** The tppr list. */
-    private List<TipoParametroVO> tpprList;
+	/** The tppr list. */
+	@Getter
+	private List<TipoParametroVO> tpprList;
 
-    /** The tpsr list. */
-    private List<TipoServicioVO> tpsrList;
+	/** The tpsr list. */
+	@Getter
+	private List<TipoServicioVO> tpsrList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        if (accion == AccionCodigo.create) {
-            model = new TipoDatoVO();
-            i18nMap = new HashMap<>();
-        } else {
-            Preconditions.checkNotNull(model.getId());
+	/** The tpdt service. */
+	@Inject
+	private TipoDatoService tpdtService;
 
-            final TipoDatoBO tpdtBO = new TipoDatoBO();
+	@Inject
+	private I18nService i18nService;
 
-            model = tpdtBO.select(model.getId(), getIdioma());
-            i18nMap = I18nUtilBO.selectMap(model);
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		if (accion == AccionCodigo.create) {
+			model = new TipoDatoVO();
+			i18nMap = new HashMap<>();
+		} else {
+			Preconditions.checkNotNull(model.getId());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        tpelList = TipoElemento.values();
-        tphtList = TipoHtml.values();
+			model = tpdtService.select(model.getId(), getIdioma());
+			i18nMap = i18nService.selectMap(model);
+		}
+	}
 
-        final TipoParametroBO tpprBO = new TipoParametroBO();
-        final TipoParametroCriterioVO tpprCriterio = new TipoParametroCriterioVO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		tpelList = TipoElemento.values();
+		tphtList = TipoHtml.values();
 
-        tpprCriterio.setIdioma(getIdioma());
+		final TipoParametroBO tpprBO = new TipoParametroBO();
+		final TipoParametroCriterioVO tpprCriterio = new TipoParametroCriterioVO();
 
-        tpprList = tpprBO.selectList(tpprCriterio);
+		tpprCriterio.setIdioma(getIdioma());
 
-        final TipoServicioBO tpsrBO = new TipoServicioBO();
-        final TipoServicioCriterioVO tpsrCriterio = new TipoServicioCriterioVO();
+		tpprList = tpprBO.selectList(tpprCriterio);
 
-        tpsrCriterio.setIdioma(getIdioma());
+		final TipoServicioBO tpsrBO = new TipoServicioBO();
+		final TipoServicioCriterioVO tpsrCriterio = new TipoServicioCriterioVO();
 
-        tpsrList = tpsrBO.selectList(tpsrCriterio);
-    }
+		tpsrCriterio.setIdioma(getIdioma());
+
+		tpsrList = tpsrBO.selectList(tpsrCriterio);
+	}
 }
