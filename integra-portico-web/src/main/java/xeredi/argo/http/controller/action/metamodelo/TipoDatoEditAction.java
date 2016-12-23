@@ -63,7 +63,7 @@ public final class TipoDatoEditAction extends CrudEditAction<TipoDatoVO> {
 
             final TipoDatoBO tpdtBO = new TipoDatoBO();
 
-            model = tpdtBO.select(model.getId(), idioma);
+            model = tpdtBO.select(model.getId(), getIdioma());
             i18nMap = I18nUtilBO.selectMap(model);
         }
     }
@@ -79,14 +79,14 @@ public final class TipoDatoEditAction extends CrudEditAction<TipoDatoVO> {
         final TipoParametroBO tpprBO = new TipoParametroBO();
         final TipoParametroCriterioVO tpprCriterio = new TipoParametroCriterioVO();
 
-        tpprCriterio.setIdioma(idioma);
+        tpprCriterio.setIdioma(getIdioma());
 
         tpprList = tpprBO.selectList(tpprCriterio);
 
         final TipoServicioBO tpsrBO = new TipoServicioBO();
         final TipoServicioCriterioVO tpsrCriterio = new TipoServicioCriterioVO();
 
-        tpsrCriterio.setIdioma(idioma);
+        tpsrCriterio.setIdioma(getIdioma());
 
         tpsrList = tpsrBO.selectList(tpsrCriterio);
     }

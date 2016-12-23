@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
@@ -31,7 +31,7 @@ import xeredi.argo.model.metamodelo.vo.ModuloCriterioVO;
 import xeredi.argo.model.metamodelo.vo.ModuloVO;
 import xeredi.argo.model.metamodelo.vo.TramiteCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
-import xeredi.argo.model.seguridad.bo.GrupoBO;
+import xeredi.argo.model.seguridad.service.GrupoService;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
 
 // TODO: Auto-generated Javadoc
@@ -42,33 +42,41 @@ import xeredi.argo.model.seguridad.vo.GrupoVO;
 /**
  * Instantiates a new grupo edit action.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5574343207861340756L;
 
     /** The mdlo list. */
+    @Getter
     private List<ModuloVO> mdloList;
 
     /** The prefix list. */
+    @Getter
     private List<ClassPrefix> prefixList;
 
     /** The accn map. */
+    @Getter
     private Map<ClassPrefix, List<AccionBaseVO>> acbsMap;
 
     /** The enti list. */
+    @Getter
     private List<Long> entiList;
 
     /** The acen map. */
+    @Getter
     private Map<Long, List<AccionEntidadVO>> acenMap;
 
     /** The aces map. */
+    @Getter
     private Map<Long, List<AccionEspecialVO>> acesMap;
 
     /** The trmt map. */
+    @Getter
     private Map<Long, List<TramiteVO>> trmtMap;
+
+    @Inject
+	private GrupoService grpoService;
 
     /**
      * {@inheritDoc}
@@ -80,9 +88,7 @@ public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
         } else {
             Preconditions.checkNotNull(model.getId());
 
-            final GrupoBO grpoBO = new GrupoBO();
-
-            model = grpoBO.select(model.getId());
+            model = grpoService.select(model.getId());
         }
     }
 

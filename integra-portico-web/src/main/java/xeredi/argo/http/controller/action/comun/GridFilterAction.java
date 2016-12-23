@@ -37,7 +37,7 @@ ProtectedAction {
     public final void doExecute() throws ApplicationException {
         Preconditions.checkNotNull(model);
 
-        model.setIdioma(idioma);
+        model.setIdioma(getIdioma());
 
         doPrepareFilter();
         doLoadDependencies();

@@ -35,7 +35,7 @@ public final class TipoParametroEditAction extends EntidadEditAction<TipoParamet
         if (accion == AccionCodigo.edit) {
             final TipoParametroBO tpprBO = new TipoParametroBO();
 
-            model = tpprBO.select(model.getId(), idioma);
+            model = tpprBO.select(model.getId(), getIdioma());
         }
     }
 
@@ -48,7 +48,7 @@ public final class TipoParametroEditAction extends EntidadEditAction<TipoParamet
         final TipoDatoCriterioVO tpdtCriterio = new TipoDatoCriterioVO();
 
         tpdtCriterio.setTipoElemento(TipoElemento.TX);
-        tpdtCriterio.setIdioma(idioma);
+        tpdtCriterio.setIdioma(getIdioma());
 
         tpdtNombreList = tpdtBO.selectLabelValues(tpdtCriterio);
     }

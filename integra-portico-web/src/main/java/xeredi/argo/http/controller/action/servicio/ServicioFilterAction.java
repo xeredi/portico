@@ -54,7 +54,7 @@ public final class ServicioFilterAction extends ItemFilterAction<ServicioCriteri
         final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
         prtoCriterio.setSprtId(sprtId);
-        prtoCriterio.setIdioma(idioma);
+        prtoCriterio.setIdioma(getIdioma());
 
         prtoList = prtoBO.selectList(prtoCriterio);
     }

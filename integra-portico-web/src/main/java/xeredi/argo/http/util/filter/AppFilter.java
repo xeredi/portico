@@ -7,13 +7,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter;
 
+import com.google.inject.servlet.GuiceFilter;
+
 import xeredi.argo.model.comun.bo.I18nJs;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AppFilter.
  */
-public final class AppFilter extends StrutsPrepareAndExecuteFilter {
+public final class AppFilter extends /*StrutsPrepareAndExecuteFilter*/ GuiceFilter {
 
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(AppFilter.class);
@@ -34,5 +36,7 @@ public final class AppFilter extends StrutsPrepareAndExecuteFilter {
 
             throw new ServletException(ex);
         }
+
+
     }
 }

@@ -65,7 +65,7 @@ public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetai
         final EntidadTipoDatoCriterioVO entdCriterio = new EntidadTipoDatoCriterioVO();
 
         entdCriterio.setEntiId(model.getId());
-        entdCriterio.setIdioma(idioma);
+        entdCriterio.setIdioma(getIdioma());
 
         entdList = entdBO.selectList(entdCriterio);
 
@@ -73,7 +73,7 @@ public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetai
         final EntidadGrupoDatoCriterioVO engdCriterio = new EntidadGrupoDatoCriterioVO();
 
         engdCriterio.setEntiId(model.getId());
-        engdCriterio.setIdioma(idioma);
+        engdCriterio.setIdioma(getIdioma());
 
         engdList = engdBO.selectList(engdCriterio);
 

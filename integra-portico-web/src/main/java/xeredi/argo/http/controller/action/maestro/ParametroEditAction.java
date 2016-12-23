@@ -49,7 +49,7 @@ public final class ParametroEditAction extends ItemEditAction<ParametroVO, TipoP
         } else {
             final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
 
-            model = prmtBO.select(model.getId(), idioma, model.getFref());
+            model = prmtBO.select(model.getId(), getIdioma(), model.getFref());
 
             if (accion == AccionCodigo.duplicate_version) {
                 if (model.getVersion().getFfin() != null) {

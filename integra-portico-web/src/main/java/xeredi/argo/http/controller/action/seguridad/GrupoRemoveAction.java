@@ -1,33 +1,31 @@
 package xeredi.argo.http.controller.action.seguridad;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.seguridad.bo.GrupoBO;
+import xeredi.argo.model.seguridad.service.GrupoService;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
 
 /**
  * The Class GrupoRemoveAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class GrupoRemoveAction extends CrudRemoveAction<GrupoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 3464408300660789661L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 3464408300660789661L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doRemove() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
+	@Inject
+	private GrupoService grpoService;
 
-        final GrupoBO grpoBO = new GrupoBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doRemove() throws ApplicationException {
+		Preconditions.checkNotNull(model.getId());
 
-        grpoBO.delete(model);
-    }
+		grpoService.delete(model);
+	}
 }

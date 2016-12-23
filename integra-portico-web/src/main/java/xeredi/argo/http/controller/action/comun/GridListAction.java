@@ -55,7 +55,7 @@ public abstract class GridListAction<C extends BaseCriterioVO, R> extends BaseAc
         Preconditions.checkArgument(page > 0);
         Preconditions.checkArgument(limit > 0);
 
-        model.setIdioma(idioma);
+        model.setIdioma(getIdioma());
 
         doList();
     }

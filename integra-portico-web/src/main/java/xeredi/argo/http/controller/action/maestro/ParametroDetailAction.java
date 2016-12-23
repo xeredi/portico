@@ -35,7 +35,7 @@ public final class ParametroDetailAction extends ItemDetailAction<ParametroVO, T
 
         final ParametroBO itemBO = ParametroBOFactory.newInstance(model.getEntiId());
 
-        model = itemBO.select(model.getId(), idioma, model.getFref());
+        model = itemBO.select(model.getId(), getIdioma(), model.getFref());
 
         if (enti.getEnti().isI18n()) {
             i18nMap = I18nUtilBO.selectMap(model);

@@ -31,6 +31,6 @@ public final class CampoAgregacionDetailAction extends CrudDetailAction<CampoAgr
 
         final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
 
-        model = cmagBO.select(model.getTpesId(), model.getEntd().getId(), idioma);
+        model = cmagBO.select(model.getTpesId(), model.getEntd().getId(), getIdioma());
     }
 }

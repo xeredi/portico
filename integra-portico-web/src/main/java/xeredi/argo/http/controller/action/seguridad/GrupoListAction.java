@@ -1,10 +1,10 @@
 package xeredi.argo.http.controller.action.seguridad;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.seguridad.bo.GrupoBO;
+import xeredi.argo.model.seguridad.service.GrupoService;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
 
@@ -12,20 +12,20 @@ import xeredi.argo.model.seguridad.vo.GrupoVO;
 /**
  * The Class GrupoListAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class GrupoListAction extends GridListAction<GrupoCriterioVO, GrupoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -5074804383452913721L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -5074804383452913721L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doList() throws ApplicationException {
-        final GrupoBO grpoBO = new GrupoBO();
+	/** The grpo service. */
+	@Inject
+	private GrupoService grpoService;
 
-        resultList = grpoBO.selectList(model, getOffset(), limit);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doList() throws ApplicationException {
+		resultList = grpoService.selectList(model, getOffset(), limit);
+	}
 }

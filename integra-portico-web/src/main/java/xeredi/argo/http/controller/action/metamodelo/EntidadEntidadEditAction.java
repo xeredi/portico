@@ -60,7 +60,7 @@ public final class EntidadEntidadEditAction extends CrudEditAction<EntidadEntida
         final TipoSubservicioCriterioVO tpssCriterio = new TipoSubservicioCriterioVO();
 
         // FIXME Hay que buscar por el tipo de servicio, no por la entidad padre
-        tpssCriterio.setIdioma(idioma);
+        tpssCriterio.setIdioma(getIdioma());
         tpssCriterio.setTpsrId(model.getEntiPadreId());
 
         tpssList = tpssBO.selectList(tpssCriterio);

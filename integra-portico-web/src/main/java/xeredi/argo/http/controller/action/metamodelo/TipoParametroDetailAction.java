@@ -32,13 +32,13 @@ public final class TipoParametroDetailAction extends EntidadDetailAction<TipoPar
     public void doSpecificDetail() throws ApplicationException {
         final TipoParametroBO tpprBO = new TipoParametroBO();
 
-        model = tpprBO.select(model.getId(), idioma);
+        model = tpprBO.select(model.getId(), getIdioma());
 
         final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
         final TipoSubparametroCriterioVO tpspCriterio = new TipoSubparametroCriterioVO();
 
         tpspCriterio.setTpprId(model.getId());
-        tpspCriterio.setIdioma(idioma);
+        tpspCriterio.setIdioma(getIdioma());
 
         subentiList = tpspBO.selectList(tpspCriterio);
     }

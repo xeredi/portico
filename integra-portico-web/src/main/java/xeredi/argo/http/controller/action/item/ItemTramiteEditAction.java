@@ -166,7 +166,7 @@ public final class ItemTramiteEditAction extends BaseAction implements ModelDriv
         if (!tpprIds.isEmpty()) {
             final ParametroBO prmtBO = ParametroBOFactory.newDefaultInstance();
 
-            labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, model.getFref(), idioma));
+            labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, model.getFref(), getIdioma()));
         }
     }
 

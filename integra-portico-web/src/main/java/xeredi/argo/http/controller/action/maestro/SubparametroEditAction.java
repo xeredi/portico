@@ -45,7 +45,7 @@ public final class SubparametroEditAction extends ItemEditAction<SubparametroVO,
         if (accion == AccionCodigo.create) {
             final ParametroBO prmtBO = ParametroBOFactory.newInstance(enti.getEnti().getTpprId());
 
-            final ParametroVO prmt = prmtBO.select(model.getPrmtId(), idioma, model.getFref());
+            final ParametroVO prmt = prmtBO.select(model.getPrmtId(), getIdioma(), model.getFref());
 
             if (prmt.getPrto() != null) {
                 model.setPrtoId(prmt.getPrto().getId());

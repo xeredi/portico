@@ -54,7 +54,7 @@ public final class ValoracionDetalleEditAction extends CrudEditAction<Valoracion
         final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
         vlrlCriterio.setId(model.getVlrlId());
-        vlrlCriterio.setIdioma(idioma);
+        vlrlCriterio.setIdioma(getIdioma());
 
         vlrl = vlrlBO.selectObject(vlrlCriterio);
 
@@ -64,7 +64,7 @@ public final class ValoracionDetalleEditAction extends CrudEditAction<Valoracion
             final ValoracionLineaCriterioVO vlrlPadreCriterio = new ValoracionLineaCriterioVO();
 
             vlrlPadreCriterio.setId(vlrl.getPadreId());
-            vlrlPadreCriterio.setIdioma(idioma);
+            vlrlPadreCriterio.setIdioma(getIdioma());
 
             vlrlPadre = vlrlBO.selectObject(vlrlPadreCriterio);
         }

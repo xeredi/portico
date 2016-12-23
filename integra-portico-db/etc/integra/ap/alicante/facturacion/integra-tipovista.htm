@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='UTF8'>
+  
+  <title>Responsive Table</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <style>
+  * { 
+    margin: 0; 
+    padding: 0; 
+  }
+  body { 
+    font: 14px/1.4 Georgia, Serif; 
+  }
+  
+  /* 
+  Generic Styling, for Desktops/Laptops 
+  */
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  /* Zebra striping */
+  tr:nth-of-type(odd) { 
+    background: #eee; 
+  }
+  th { 
+    background: #333; 
+    color: white; 
+    font-weight: bold; 
+  }
+  td, th { 
+    padding: 6px; 
+    border: 1px solid #9B9B9B; 
+    text-align: left; 
+  }
+  @media 
+  only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px)  {
+    table, thead, tbody, th, td, tr { display: block; }
+    thead tr { position: absolute;top: -9999px;left: -9999px;}
+    tr { border: 1px solid #9B9B9B; }
+    td { border: none;border-bottom: 1px solid #9B9B9B; position: relative;padding-left: 50%; }
+    
+    td:before { position: absolute;top: 6px;left: 6px;width: 45%; padding-right: 10px; white-space: nowrap;}
+    
+    /*
+    Label the data
+    */
+td:nth-of-type(0):before { content: "TIVI_PREFIJO"; }
+td:nth-of-type(1):before { content: "TIVI_MODU"; }
+td:nth-of-type(2):before { content: "TIVI_PLANTILLA_SQL"; }
+td:nth-of-type(3):before { content: "TIVI_CONSULTA_LISTADO_1"; }
+td:nth-of-type(4):before { content: "TIVI_CONSULTA_LISTADO_2"; }
+  }
+  
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 480px) {
+    body { 
+      padding: 0; 
+      margin: 0; 
+      width: 320px; }
+    }
+  
+  /* iPads (portrait and landscape) ----------- */
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    body { 
+      width: 495px; 
+    }
+  }
+  
+  </style>
+  <!--<![endif]-->
+<script type="text/javascript">
+
+lsearch = function(){
+  //this.term = document.getElementById('S').value.toUpperCase();
+  var s = document.getElementById('search').value.toLowerCase();
+  rows = document.getElementById('data').getElementsByTagName('TR');
+  for(var i=0;i<rows.length;i++){
+    if (s =="" ){
+      rows[i].style.display ='';
+    } else if ( rows[i].innerText.toLowerCase().indexOf(s) != -1 ) {
+      rows[i].style.display ='';
+    } else {
+      rows[i].style.display ='none';
+    }
+  }
+  this.time = false;
+}
+
+</script>
+</head>
+
+<body>
+<div><input type="text" size="30" maxlength="1000" value="" id="search" onkeyup="lsearch();" /><input type="button" value="Go" onclick="lsearch();"/> </div>
+<table><thead><tr>	<th>TIVI_PREFIJO</th>
+	<th>TIVI_MODU</th>
+	<th>TIVI_PLANTILLA_SQL</th>
+	<th>TIVI_CONSULTA_LISTADO_1</th>
+	<th>TIVI_CONSULTA_LISTADO_2</th>
+</tr></thead>
+<tbody id="data">
+
+	<tr>
+<td>MERCANCIAS1</td>
+<td>MAN</td>
+<td>  SELECT    MANI.MANI_ID AS SMAN_ID    , sman.serv_subp_id AS sman_subp_id    , subpSman.subp_codigo AS sman_subp_codigo		       , sman.serv_anno AS sman_anno	    , SMAN.SERV_NUMERO AS sman_numero	    , MANI.MANI_FECHA_REFERENCIA AS sman_fecha	    , COALESCE(MABL_CLIENTE_SUBP_ID, MACO_CONSIGNATARIO_SUBP_ID) AS pagador_subp_is    , COALESCE(SUBPCLIEMABL.SUBP_CODIGO, SUBPMACO.SUBP_CODIGO) AS pagador_subp_codigo	    , COALESCE(MABL_CLIENTE_ID, MACO_CONSIGNATARIO_ID) AS pagador_id	    , COALESCE(ORGACLIEMABL.ORGA_COD, ORGAMACO.ORGA_COD) AS pagador_cod	    , COALESCE(ORGACLIEMABL.ORGA_NOMBRE, ORGAMACO.ORGA_NOMBRE) AS pagador_nombre	    , MABL.MABL_ID AS mabl_id	    , MABL.MABL_TIPO AS mabl_tipo	    , MABL.MABL_ORDEN AS mabl_orden	    , COALESCE(SUM(PART_PESO/1000), 0) AS partToneladas		      , COALESCE(SUM(part_unidades_carga), 0) AS partUnidades		 FROM	    IMAN_BL_MABL MABL	    JOIN IMAN_MANIFIESTO_MANI MANI ON MANI_ID = MABL_MANI_ID    JOIN ICOM_SERVICIO_SERV SMAN ON SERV_ID = MABL_MANI_ID	    JOIN IGEN_SUBPUERTO_SUBP SUBPSMAN ON SUBP_ID = SMAN.SERV_SUBP_ID	    LEFT JOIN IESC_ESCALA_ESCA ESCA ON MANI_ESCALA_ID = ESCA_ID	    LEFT JOIN IESC_ACUERDO_ACUE ACUESMAN ON ACUESMAN.ACUE_ID = MANI_ACUERDO_ID	    LEFT JOIN IGEN_ALINEACION_ALIN ALINSMAN ON ALIN_ID = MANI_ALINEACION_ID	    LEFT JOIN ICOM_ORGANIZACION_ORGA ORGAESTISMAN ON ORGAESTISMAN.ORGA_ID = MANI_ESTIBADOR_ID		      LEFT JOIN IGEN_SUBPUERTO_SUBP SUBPESTISMAN ON SUBPESTISMAN.SUBP_ID = MANI_ESTIBADOR_SUBP_ID	    JOIN ICOM_ORGANIZACION_ORGA ORGACONSSMAN ON ORGACONSSMAN.ORGA_ID = MANI_CONSIGNATARIO_ID	    JOIN IGEN_SUBPUERTO_SUBP SUBPCONSSMAN ON SUBPCONSSMAN.SUBP_ID = MANI_CONSIGNATARIO_SUBP_ID	    LEFT JOIN IMAN_TERMINAL_TERM TERMSMAN ON TERMSMAN.TERM_ID = MANI_TERMINAL_ID	    LEFT JOIN IESC_TRAFICO_TRAF TRAFSMAN ON TRAFSMAN.TRAF_ID = MANI_SERVICIO_ID	    JOIN IMAN_TIPOOPERACION_TOBL TOBLMABL ON TOBLMABL.TOBL_ID = MABL_TIPO_OPERACION_ID	    LEFT JOIN IGEN_UNLOCODE_UNLO UNLOORIGENMABL ON UNLOORIGENMABL.UNLO_ID = MABL_ORIGEN_UNLO_ID	    LEFT JOIN IGEN_UNLOCODE_UNLO UNLOCARGAMABL ON UNLOCARGAMABL.UNLO_ID = MABL_CARGA_UNLO_ID	    LEFT JOIN IGEN_UNLOCODE_UNLO UNLODESCARGAMABL ON UNLODESCARGAMABL.UNLO_ID = MABL_DESCARGA_UNLO_ID	    LEFT JOIN IGEN_UNLOCODE_UNLO UNLODESTINOMABL ON UNLODESTINOMABL.UNLO_ID = MABL_DESTINO_UNLO_ID	    LEFT JOIN IGEN_UNLOCODE_UNLO UNLOTRANSBORDOMABL ON UNLOTRANSBORDOMABL.UNLO_ID = MABL_TRANSBORDO_UNLO_ID	    LEFT JOIN IMAN_MODOTRANSPEDI_TEDI TEDIMABL ON TEDIMABL.TEDI_ID = MABL_MODO_TRANSP_EDI_ID	    LEFT JOIN IMAN_INSTESPECIAL_IESP IESPMABL ON IESPMABL.IESP_ID = MABL_INST_ESPECIAL_ID	    JOIN IGEN_ALINEACION_ALIN ALINMABL ON ALINMABL.ALIN_ID = MABL_ALINEACION_ID	    JOIN IMAN_CONSIGNATARIO_MACO MACOMABL ON MACOMABL.MACO_ID = MABL_CONSIGNATARIO_ID	    LEFT JOIN ICOM_ORGANIZACION_ORGA ORGACLIEMABL ON ORGACLIEMABL.ORGA_ID = MABL_CLIENTE_ID	    LEFT JOIN IGEN_SUBPUERTO_SUBP SUBPCLIEMABL ON SUBPCLIEMABL.SUBP_ID = MABL_CLIENTE_SUBP_ID	    JOIN IGEN_NAVEGACIONTIPO_NAVT NAVTMABL ON NAVTMABL.NAVT_ID = MABL_TIPO_NAVEGACION_ID	    LEFT JOIN IMAN_TERMINAL_TERM TERMMABL ON TERMMABL.TERM_ID = MABL_TERMINAL_ID	    LEFT JOIN IESC_ACUERDO_ACUE ACUEMABL ON ACUEMABL.ACUE_ID = MABL_ACUERDO_ID	    LEFT JOIN IESC_TRAFICO_TRAF TRAFMABL ON TRAFMABL.TRAF_ID = MABL_SERVICIO_ID	    LEFT JOIN ICOM_ORGANIZACION_ORGA ORGAESTIMABL ON ORGAESTIMABL.ORGA_ID = MABL_ESTIBADOR_ID	    LEFT JOIN IGEN_SUBPUERTO_SUBP SUBPESTIMABL ON SUBPESTIMABL.SUBP_ID = MABL_ESTIBADOR_SUBP_ID	    LEFT JOIN ICOM_ORGANIZACION_ORGA ORGAMACO ON ORGAMACO.ORGA_ID = MACO_CONSIGNATARIO_ID	    LEFT JOIN IGEN_SUBPUERTO_SUBP SUBPMACO ON SUBPMACO.SUBP_ID = MACO_CONSIGNATARIO_SUBP_ID	    JOIN IMAN_PARTIDA_PART PART ON PART_MABL_ID = MABL_ID AND PART_ES_ACTIVO = 1	    JOIN IMAN_MERCANCIA_MERC MERC ON MERC_ID = PART_MERCANCIA_ID	    JOIN iman_mercanciatemp_merc mercTemp ON		         MERCTEMP.MERC_ID = MERC.MERC_ID		         AND PART_FECHA_MODIFICACION &gt; MERCTEMP.MERC_FECHA_CREACION		         AND (mercTemp.merc_fecha_fin IS NUL</td>
+<td>SELECT pagador_subp_codigo, pagador_cod, pagador_nombre, SUM(partToneladas) as partToneladasSum, SUM(partUnidades) as partUnidadesSum FROM $SQLVIEW WHERE sman_fecha BETWEEN ? AND ?  GROUP BY pagador_subp_codigo , pagador_cod , pagador_nombre</td>
+<td>SELECT sman_subp_codigo , sman_anno , sman_numero, sman_fecha , pagador_subp_codigo , pagador_cod , pagador_nombre , mabl_tipo , mabl_orden , partToneladas , partUnidades FROM $SQLVIEW WHERE sman_fecha BETWEEN ? AND ?  AND pagador_subp_codigo = ? AND pagador_cod = ?  AND pagador_nombre= ?</td>
+	</tr>
+	<tr>
+<td>MERCANCIAS2</td>
+<td>MAN</td>
+<td>  SELECT		    MANI.MANI_ID AS sman_id	    , SMAN.SERV_SUBP_ID AS sman_subp_id		  	    , SUBPSMAN.SUBP_CODIGO AS sman_subp_codigo			    , SMAN.SERV_ANNO AS sman_anno			    , SMAN.SERV_NUMERO AS sman_numero			    , MANI.MANI_FECHA_REFERENCIA AS sman_fecha			    , COALESCE(MABL_CLIENTE_SUBP_ID, MACO_CONSIGNATARIO_SUBP_ID) AS pagador_subp_id	    , COALESCE(SUBPCLIEMABL.SUBP_CODIGO, SUBPMACO.SUBP_CODIGO) AS pagador_subp_codigo			    , COALESCE(MABL_CLIENTE_ID, MACO_CONSIGNATARIO_ID) AS pagador_id			    , COALESCE(ORGACLIEMABL.ORGA_COD, ORGAMACO.ORGA_COD) AS pagador_cod			    , COALESCE(ORGACLIEMABL.ORGA_NOMBRE, ORGAMACO.ORGA_NOMBRE) AS pagador_nombre			    , MABL.MABL_ID AS mabl_id		    , MABL.MABL_TIPO AS mabl_tipo		    , MABL.MABL_ORDEN AS mabl_orden			    , COALESCE(	        SUM(	            UNIC_TEUS * (	                CASE 	                    when EQUI_NUMERO_VACIOS is null or EQUI_NUMERO_VACIOS = 0	                    then 1	                    else EQUI_NUMERO_VACIOS	                END	            )	        ), 0) AS equiTeus			    , SUM(	        CASE	            WHEN EQUI_NUMERO_VACIOS IS NULL OR EQUI_NUMERO_VACIOS = 0	            THEN 1	            ELSE EQUI_NUMERO_VACIOS	        END	      ) AS equiUnidades	FROM			    IMAN_BL_MABL MABL			    JOIN IMAN_MANIFIESTO_MANI MANI ON MANI_ID = MABL_MANI_ID	    JOIN ICOM_SERVICIO_SERV SMAN ON SERV_ID = MABL_MANI_ID			    JOIN IGEN_SUBPUERTO_SUBP SUBPSMAN ON SUBP_ID = SMAN.SERV_SUBP_ID	    LEFT JOIN IESC_ESCALA_ESCA ESCA ON MANI_ESCALA_ID = ESCA_ID			    LEFT JOIN IESC_ACUERDO_ACUE ACUESMAN ON ACUESMAN.ACUE_ID = MANI_ACUERDO_ID			    LEFT JOIN IGEN_ALINEACION_ALIN ALINSMAN ON ALIN_ID = MANI_ALINEACION_ID			    LEFT JOIN ICOM_ORGANIZACION_ORGA ORGAESTISMAN ON ORGAESTISMAN.ORGA_ID = MANI_ESTIBADOR_ID		    LEFT JOIN IGEN_SUBPUERTO_SUBP SUBPESTISMAN ON SUBPESTISMAN.SUBP_ID = MANI_ESTIBADOR_SUBP_ID			    JOIN ICOM_ORGANIZACION_ORGA ORGACONSSMAN ON ORGACONSSMAN.ORGA_ID = MANI_CONSIGNATARIO_ID			    JOIN IGEN_SUBPUERTO_SUBP SUBPCONSSMAN ON SUBPCONSSMAN.SUBP_ID = MANI_CONSIGNATARIO_SUBP_ID			    LEFT JOIN IMAN_TERMINAL_TERM TERMSMAN ON TERMSMAN.TERM_ID = MANI_TERMINAL_ID			    LEFT JOIN IESC_TRAFICO_TRAF TRAFSMAN ON TRAFSMAN.TRAF_ID = MANI_SERVICIO_ID			    JOIN IMAN_TIPOOPERACION_TOBL TOBLMABL ON TOBLMABL.TOBL_ID = MABL_TIPO_OPERACION_ID			    LEFT JOIN IGEN_UNLOCODE_UNLO UNLOORIGENMABL ON UNLOORIGENMABL.UNLO_ID = MABL_ORIGEN_UNLO_ID			    LEFT JOIN IGEN_UNLOCODE_UNLO UNLOCARGAMABL ON UNLOCARGAMABL.UNLO_ID = MABL_CARGA_UNLO_ID			    LEFT JOIN IGEN_UNLOCODE_UNLO UNLODESCARGAMABL ON UNLODESCARGAMABL.UNLO_ID = MABL_DESCARGA_UNLO_ID			    LEFT JOIN igen_unlocode_unlo unloDestinoMabl ON unloDestinoMabl.unlo_id = mabl_destino_unlo_id			    LEFT JOIN IGEN_UNLOCODE_UNLO UNLOTRANSBORDOMABL ON UNLOTRANSBORDOMABL.UNLO_ID = MABL_TRANSBORDO_UNLO_ID			    LEFT JOIN IMAN_MODOTRANSPEDI_TEDI TEDIMABL ON TEDIMABL.TEDI_ID = MABL_MODO_TRANSP_EDI_ID			    LEFT JOIN IMAN_INSTESPECIAL_IESP IESPMABL ON IESPMABL.IESP_ID = MABL_INST_ESPECIAL_ID			    JOIN IGEN_ALINEACION_ALIN ALINMABL ON ALINMABL.ALIN_ID = MABL_ALINEACION_ID			    JOIN IMAN_CONSIGNATARIO_MACO MACOMABL ON MACOMABL.MACO_ID = MABL_CONSIGNATARIO_ID			    LEFT JOIN ICOM_ORGANIZACION_ORGA ORGACLIEMABL ON ORGACLIEMABL.ORGA_ID = MABL_CLIENTE_ID			    LEFT JOIN IGEN_SUBPUERTO_SUBP SUBPCLIEMABL ON SUBPCLIEMABL.SUBP_ID = MABL_CLIENTE_SUBP_ID			    JOIN IGEN_NAVEGACIONTIPO_NAVT NAVTMABL ON NAVTMABL.NAVT_ID = MABL_TIPO_NAVEGACION_ID			    LEFT JOIN IMAN_TERMINAL_TERM TERMMABL ON TERMMABL.TERM_ID = MABL_TERMINAL_ID			    LEFT JOIN IESC_ACUERDO_ACUE ACUEMABL ON ACUEMABL.ACUE_ID = MABL_ACUERDO_ID			    LEFT JOIN IESC_TRAFICO_TRAF TRAFMABL ON TRAFMABL.TRAF_ID = MABL_SERVICIO_ID			    LEFT JOIN ICOM_ORGANIZACION_ORGA ORGAESTIMABL ON ORGAESTIMABL.ORGA_ID = MABL_ESTIBADOR_ID			    LEFT JOIN IGEN_SUBPUERTO_SUBP SUBPESTIMABL ON SUBPESTIMABL.SUBP_ID = MABL_ESTIBADOR_SUBP_ID			    LEFT JOIN ICOM_ORGANIZACION_ORGA ORGAMACO ON ORGAMACO.ORGA_ID = MACO_CONSIGNATARIO_ID			   </td>
+<td>SELECT pagador_subp_codigo, pagador_cod, pagador_nombre, SUM(equiTeus) as equiTeusSum, SUM(equiUnidades) as equiUnidadesSum FROM $SQLVIEW WHERE sman_fecha BETWEEN ? AND ? GROUP BY pagador_subp_codigo , pagador_cod , pagador_nombre</td>
+<td>SELECT sman_subp_codigo, sman_anno, sman_numero, sman_fecha, pagador_subp_codigo, pagador_cod, pagador_nombre, mabl_tipo, mabl_orden, equiTeus, equiUnidades FROM $SQLVIEW WHERE sman_fecha BETWEEN ? AND ? AND pagador_subp_codigo = ? AND pagador_cod = ?  AND pagador_nombre=?</td>
+	</tr>
+	<tr>
+<td>PASAJEROS1</td>
+<td>MAN</td>
+<td>  SELECT		    MANI.MANI_ID AS sman_id	    , SMAN.SERV_SUBP_ID AS sman_subp_id		    , SUBPSMAN.SUBP_CODIGO AS sman_subp_codigo		    , SMAN.SERV_ANNO AS sman_anno		    , SMAN.SERV_NUMERO AS sman_numero		    , MANI.MANI_FECHA_REFERENCIA AS sman_fecha		    , COALESCE(mabl_cliente_subp_id, maco_consignatario_subp_id) AS pagador_subp_id    , COALESCE(SUBPCLIEMABL.SUBP_CODIGO, SUBPMACO.SUBP_CODIGO) AS pagador_subp_codigo		    , COALESCE(mabl_cliente_id, maco_consignatario_id) AS pagador_id		    , COALESCE(ORGACLIEMABL.ORGA_COD, ORGAMACO.ORGA_COD) AS pagador_cod		    , COALESCE(ORGACLIEMABL.ORGA_NOMBRE, ORGAMACO.ORGA_NOMBRE) AS pagador_nombre		    , MABL.MABL_ID AS mabl_id		    , MABL.MABL_TIPO AS mabl_tipo		    , MABL.MABL_ORDEN AS mabl_orden		    , COALESCE(SUM(part_numero_pasaje), 0) AS partPasajeros		    , COALESCE(SUM(part_unidades_carga), 0) AS partUnidades		 FROM		    IMAN_BL_MABL MABL		    JOIN iman_manifiesto_mani mani ON mani_id = mabl_mani_id    JOIN ICOM_SERVICIO_SERV SMAN ON SERV_ID = MABL_MANI_ID		    JOIN IGEN_SUBPUERTO_SUBP SUBPSMAN ON SUBP_ID = SMAN.SERV_SUBP_ID		    LEFT JOIN iesc_escala_esca esca ON mani_escala_id = esca_id		    LEFT JOIN IESC_ACUERDO_ACUE ACUESMAN ON ACUESMAN.ACUE_ID = MANI_ACUERDO_ID		    LEFT JOIN IGEN_ALINEACION_ALIN ALINSMAN ON ALIN_ID = MANI_ALINEACION_ID		    LEFT JOIN icom_organizacion_orga orgaEstiSman ON orgaEstiSman.orga_id = mani_estibador_id	    LEFT JOIN IGEN_SUBPUERTO_SUBP SUBPESTISMAN ON SUBPESTISMAN.SUBP_ID = MANI_ESTIBADOR_SUBP_ID		    JOIN ICOM_ORGANIZACION_ORGA ORGACONSSMAN ON ORGACONSSMAN.ORGA_ID = MANI_CONSIGNATARIO_ID		    JOIN igen_subpuerto_subp subpConsSman ON subpConsSman.subp_id = mani_consignatario_subp_id		    LEFT JOIN IMAN_TERMINAL_TERM TERMSMAN ON TERMSMAN.TERM_ID = MANI_TERMINAL_ID		    LEFT JOIN IESC_TRAFICO_TRAF TRAFSMAN ON TRAFSMAN.TRAF_ID = MANI_SERVICIO_ID		    JOIN IMAN_TIPOOPERACION_TOBL TOBLMABL ON TOBLMABL.TOBL_ID = MABL_TIPO_OPERACION_ID		    LEFT JOIN igen_unlocode_unlo unloOrigenMabl ON unloOrigenMabl.unlo_id = mabl_origen_unlo_id		    LEFT JOIN IGEN_UNLOCODE_UNLO UNLOCARGAMABL ON UNLOCARGAMABL.UNLO_ID = MABL_CARGA_UNLO_ID		    LEFT JOIN igen_unlocode_unlo unloDescargaMabl ON unloDescargaMabl.unlo_id = mabl_descarga_unlo_id		    LEFT JOIN IGEN_UNLOCODE_UNLO UNLODESTINOMABL ON UNLODESTINOMABL.UNLO_ID = MABL_DESTINO_UNLO_ID		    LEFT JOIN IGEN_UNLOCODE_UNLO UNLOTRANSBORDOMABL ON UNLOTRANSBORDOMABL.UNLO_ID = MABL_TRANSBORDO_UNLO_ID		    LEFT JOIN IMAN_MODOTRANSPEDI_TEDI TEDIMABL ON TEDIMABL.TEDI_ID = MABL_MODO_TRANSP_EDI_ID		    LEFT JOIN iman_instespecial_iesp iespMabl ON iespMabl.iesp_id = mabl_inst_especial_id		    JOIN IGEN_ALINEACION_ALIN ALINMABL ON ALINMABL.ALIN_ID = MABL_ALINEACION_ID		    JOIN iman_consignatario_maco macoMabl ON macoMabl.maco_id = mabl_consignatario_id		    LEFT JOIN ICOM_ORGANIZACION_ORGA ORGACLIEMABL ON ORGACLIEMABL.ORGA_ID = MABL_CLIENTE_ID		    LEFT JOIN IGEN_SUBPUERTO_SUBP SUBPCLIEMABL ON SUBPCLIEMABL.SUBP_ID = MABL_CLIENTE_SUBP_ID		    JOIN IGEN_NAVEGACIONTIPO_NAVT NAVTMABL ON NAVTMABL.NAVT_ID = MABL_TIPO_NAVEGACION_ID		    LEFT JOIN IMAN_TERMINAL_TERM TERMMABL ON TERMMABL.TERM_ID = MABL_TERMINAL_ID		    LEFT JOIN iesc_acuerdo_acue acueMabl ON acueMabl.acue_id = mabl_acuerdo_id		    LEFT JOIN iesc_trafico_traf trafMabl ON trafMabl.traf_id = mabl_servicio_id		    LEFT JOIN ICOM_ORGANIZACION_ORGA ORGAESTIMABL ON ORGAESTIMABL.ORGA_ID = MABL_ESTIBADOR_ID		    LEFT JOIN igen_subpuerto_subp subpEstiMabl ON subpEstiMabl.subp_id = mabl_estibador_subp_id		    LEFT JOIN ICOM_ORGANIZACION_ORGA ORGAMACO ON ORGAMACO.ORGA_ID = MACO_CONSIGNATARIO_ID		    LEFT JOIN igen_subpuerto_subp subpMaco ON subpMaco.subp_id = maco_consignatario_subp_id		    JOIN iman_partida_part part ON part_mabl_id = mabl_id AND part_es_activo = 1		    JOIN IMAN_MERCANCIA_MERC MERC ON MERC_ID = PART_MERCANCIA_ID		    JOIN iman_mercanciatemp_merc mercTemp ON		        MERCTEMP.MERC_ID = MERC.MERC_ID		        AND PART_FECHA_MODIFICACION &gt; MERCTEMP.MERC_FECHA_CREACION		 </td>
+<td>SELECT pagador_subp_codigo, pagador_cod, pagador_nombre, SUM(partPasajeros) as partPasajerosSum, SUM(partUnidades) as partUnidadesSum FROM $SQLVIEW WHERE sman_fecha BETWEEN ? AND ? GROUP BY pagador_subp_codigo , pagador_cod , pagador_nombre</td>
+<td>SELECT sman_subp_codigo , sman_anno , sman_numero, sman_fecha , pagador_subp_codigo , pagador_cod , pagador_nombre , mabl_tipo , mabl_orden , partPasajeros , partUnidades FROM $SQLVIEW WHERE sman_fecha BETWEEN ? AND ?  AND pagador_subp_codigo = ? AND pagador_cod = ?  AND pagador_nombre= ?</td>
+	</tr>
+	<tr>
+<td>PASAJEROS2A</td>
+<td>MAN</td>
+<td>  	SELECT 		    mani.mani_id AS sman_id		    , sman.serv_subp_id AS sman_subp_id		    , subpsman.subp_codigo AS sman_subp_codigo		    , sman.serv_anno AS sman_anno		    , sman.serv_numero AS sman_numero		    , mani.mani_fecha_referencia AS sman_fecha		    , esca.esca_buqu_id		    , buqutemp.buqu_nombre_buque		    , trafsman.traf_codigo		    , COUNT(1) AS escabuqucnt		FROM iman_manifiesto_mani mani		    JOIN icom_servicio_serv sman ON 		        serv_id = mani_id		        AND serv_fecha_baja IS NULL		    JOIN igen_subpuerto_subp subpsman ON 		        subp_id = sman.serv_subp_id		    LEFT JOIN iesc_escala_esca esca ON 		        mani_escala_id = esca_id		    LEFT JOIN iesc_buquetemp_buqu buqutemp ON 		        buqutemp.buqu_codigo_imo = esca_buqu_id 		        AND buqutemp.buqu_es_activo = 1		        AND buqutemp.buqu_fecha_creacion &lt;= mani_fecha_referencia		        AND (buqutemp.buqu_fecha_fin IS NULL OR buqutemp.buqu_fecha_fin &gt; mani_fecha_referencia)		    LEFT JOIN iesc_trafico_traf trafsman ON 		        trafsman.traf_id = mani_servicio_id		    JOIN iesc_escala_esca escacount ON		        escacount.esca_buqu_id = esca.esca_buqu_id		        AND escacount.esca_id &lt;&gt; esca.esca_id		        AND EXTRACT(YEAR FROM escacount.esca_fecha_inicio) = EXTRACT(YEAR FROM esca.esca_fecha_inicio)		        AND EXISTS (		            SELECT 1 FROM ifac_situacionesc_sies		            WHERE sies_servicio_id = escacount.esca_id		                AND sies_estado_tata_servicio IN ('V', 'T')		        )		    JOIN icom_servicio_serv servcount ON		        servcount.serv_id = escacount.esca_id 		        AND servcount.serv_fecha_baja IS NULL		    LEFT JOIN iesc_buque_buqu buqucount ON 		        buqucount.buqu_codigo_imo = escacount.esca_buqu_id		    LEFT JOIN igen_buquetipo_buqt buqtentcount ON 		        buqtentcount.buqt_id = escacount.esca_buqt_id_entrada		    LEFT JOIN igen_buquetipo_buqt buqtsalcount ON 		        buqtsalcount.buqt_id = escacount.esca_buqt_id_salida		    LEFT JOIN iesc_trafico_traf escatrafcount ON 		        escatrafcount.traf_id = escacount.esca_traf_id		    LEFT JOIN igen_navegaciontipo_navt navtentcount ON 		        navtentcount.navt_id = escacount.esca_navt_id_entrada		    LEFT JOIN igen_navegaciontipo_navt navtsalcount ON 		        navtsalcount.navt_id = escacount.esca_navt_id_salida		    LEFT JOIN igen_pais_pais paissigcount ON 		        paissigcount.pais_id = escacount.esca_pais_id_siguiente		    LEFT JOIN igen_unlocode_unlo unlosigcount ON 		        unlosigcount.unlo_id = escacount.esca_loco_id_siguiente		    LEFT JOIN igen_pais_pais paisantcount ON 		        paisantcount.pais_id = escacount.esca_pais_id_anterior		    LEFT JOIN igen_unlocode_unlo unloantcount ON 		        unloantcount.unlo_id = escacount.esca_loco_id_anterior		    LEFT JOIN icom_organizacion_orga orgaconscount ON 		        orgaconscount.orga_id = escacount.esca_orga_id_consignat		    LEFT JOIN igen_subpuerto_subp subpconscount ON 		        subpconscount.subp_id = escacount.esca_subp_id_consignat		    LEFT JOIN iesc_buquetemp_buqu buqutempcount ON 		        buqutempcount.buqu_codigo_imo = buqucount.buqu_codigo_imo		        AND buqutempcount.buqu_es_activo = 1		    LEFT JOIN igen_buquetipo_buqt buqtcount ON 		        buqtcount.buqt_id = buqutempcount.buqu_buqt_id		    LEFT JOIN igen_pais_pais paiscount ON 		        paiscount.pais_id = buqutempcount.buqu_bandera_pais_id		    LEFT JOIN icom_organizacion_orga orgaarmadorcount ON 		        orgaarmadorcount.orga_id = buqutempcount.buqu_armador_orga_id		    LEFT JOIN igen_subpuerto_subp subparmadorcount ON 		        subparmadorcount.subp_id = buqutempcount.buqu_armador_subp_id		    LEFT JOIN igen_pais_pais paismoucount ON 		        paismoucount.pais_id = buqutempcount.buqu_mou_psc_pais_id		    LEFT JOIN igen_unlocode_unlo unlomoucount ON 		        unlomoucount.unlo_id = buqutempcount.buqu_mou_psc_unlo_id		    LEFT JOIN igen_pais_pais paisregcount ON 		        paisregcount.pais_id = buqutempcount.buqu_registro_pais_id		    LEFT</td>
+<td>SELECT sman_subp_codigo , sman_anno , sman_numero , sman_fecha , esca_buqu_id , buqu_nombre_buque , traf_codigo , escabuqucnt FROM $SQLVIEW WHERE sman_fecha BETWEEN ? AND ? </td>
+<td>&nbsp;</td>
+	</tr>
+	<tr>
+<td>PASAJEROS2B</td>
+<td>MAN</td>
+<td>  	SELECT		    mani.mani_id AS sman_id		    , sman.serv_subp_id AS sman_subp_id		    , subpsman.subp_codigo AS sman_subp_codigo		    , sman.serv_anno AS sman_anno		    , sman.serv_numero AS sman_numero		    , mani.mani_fecha_referencia AS sman_fecha		    , esca.esca_buqu_id		    , buqutemp.buqu_nombre_buque		    , trafsman.traf_codigo		    , COUNT(1) AS escaservcnt		FROM iman_manifiesto_mani mani		    JOIN icom_servicio_serv sman ON		        serv_id = mani_id		        AND serv_fecha_baja IS NULL		    JOIN igen_subpuerto_subp subpsman ON		        subp_id = sman.serv_subp_id		    LEFT JOIN iesc_escala_esca esca ON		        mani_escala_id = esca_id		    LEFT JOIN iesc_buquetemp_buqu buqutemp ON		        buqutemp.buqu_codigo_imo = esca_buqu_id		        AND buqutemp.buqu_es_activo = 1		        AND buqutemp.buqu_fecha_creacion &lt;= mani_fecha_referencia		        AND (buqutemp.buqu_fecha_fin IS NULL OR buqutemp.buqu_fecha_fin &gt; mani_fecha_referencia)		    LEFT JOIN iesc_trafico_traf trafsman ON		        trafsman.traf_id = mani_servicio_id		    JOIN iesc_escala_esca escacount ON		        1=1		        AND (		            (		                mani_servicio_id IS NOT NULL AND mani_servicio_id = escacount.esca_traf_id		            )		            OR (		                esca.esca_traf_id = escacount.esca_traf_id		            )		        )		        AND EXTRACT(YEAR FROM escacount.esca_fecha_inicio) = EXTRACT(YEAR FROM esca.esca_fecha_inicio)		        AND escaCount.esca_id &lt;&gt; esca.esca_id		        AND EXISTS (		            SELECT 1 FROM ifac_situacionesc_sies		            WHERE sies_servicio_id = escacount.esca_id		                AND sies_estado_tata_servicio IN ('V', 'T')		        )		    JOIN icom_servicio_serv servcount ON		        servcount.serv_id = escacount.esca_id		        AND servcount.serv_fecha_baja IS NULL		    LEFT JOIN iesc_buque_buqu buqucount 		        ON buqucount.buqu_codigo_imo = escacount.esca_buqu_id		    LEFT JOIN igen_buquetipo_buqt buqtentcount 		        ON buqtentcount.buqt_id = escacount.esca_buqt_id_entrada		    LEFT JOIN igen_buquetipo_buqt buqtsalcount 		        ON buqtsalcount.buqt_id = escacount.esca_buqt_id_salida		    LEFT JOIN iesc_trafico_traf escatrafcount 		        ON escatrafcount.traf_id = escacount.esca_traf_id		    LEFT JOIN igen_navegaciontipo_navt navtentcount 		        ON navtentcount.navt_id = escacount.esca_navt_id_entrada		    LEFT JOIN igen_navegaciontipo_navt navtsalcount 		        ON navtsalcount.navt_id = escacount.esca_navt_id_salida		    LEFT JOIN igen_pais_pais paissigcount 		        ON paissigcount.pais_id = escacount.esca_pais_id_siguiente		    LEFT JOIN igen_unlocode_unlo unlosigcount 		        ON unlosigcount.unlo_id = escacount.esca_loco_id_siguiente		    LEFT JOIN igen_pais_pais paisantcount 		        ON paisantcount.pais_id = escacount.esca_pais_id_anterior		    LEFT JOIN igen_unlocode_unlo unloantcount 		        ON unloantcount.unlo_id = escacount.esca_loco_id_anterior		    LEFT JOIN icom_organizacion_orga orgaconscount 		        ON orgaconscount.orga_id = escacount.esca_orga_id_consignat		    LEFT JOIN igen_subpuerto_subp subpconscount 		        ON subpconscount.subp_id = escacount.esca_subp_id_consignat		    LEFT JOIN iesc_buquetemp_buqu buqutempcount ON		        buqutempcount.buqu_codigo_imo = buqucount.buqu_codigo_imo		        AND buqutempcount.buqu_es_activo = 1		    LEFT JOIN igen_buquetipo_buqt buqtcount 		        ON buqtcount.buqt_id = buqutempcount.buqu_buqt_id		    LEFT JOIN igen_pais_pais paiscount 		        ON paiscount.pais_id = buqutempcount.buqu_bandera_pais_id		    LEFT JOIN icom_organizacion_orga orgaarmadorcount 		        ON orgaarmadorcount.orga_id = buqutempcount.buqu_armador_orga_id		    LEFT JOIN igen_subpuerto_subp subparmadorcount 		        ON subparmadorcount.subp_id = buqutempcount.buqu_armador_subp_id		    LEFT JOIN igen_pais_pais paismoucount 		        ON paismoucount.pais_id = buqutempcount.buqu_mou_psc_pais_id		    LEFT JOIN igen_unlocode_unlo unlomoucount 		</td>
+<td>SELECT sman_subp_codigo , sman_anno , sman_numero , sman_fecha , esca_buqu_id , buqu_nombre_buque , traf_codigo , escaservcnt FROM $SQLVIEW WHERE sman_fecha BETWEEN ? AND ? </td>
+<td>&nbsp;</td>
+	</tr>
+	<tr>
+<td>ESCALAS</td>
+<td>ESC</td>
+<td>  	SELECT 		    esca.esca_id		    , servesca.serv_subp_id AS sesc_subp_id		    , subpesca.subp_codigo AS sesc_subp_codigo		    , servesca.serv_anno AS sesc_anno		    , servesca.serv_numero AS sesc_numero		    , esca.esca_fecha_inicio		    , esca.esca_fecha_finalizacion		    , esca.esca_buqu_id		    , buquesca.buqu_nombre_buque		    , buquesca.buqu_gt		    , COUNT(1) AS numEscalas		    , COUNT(1) * buquesca.buqu_gt AS sumGts		FROM iesc_escala_esca esca		    JOIN icom_servicio_serv servesca ON		      servesca.serv_id = esca.esca_id		    JOIN igen_subpuerto_subp subpesca ON 		        subpesca.subp_id = servesca.serv_subp_id		    JOIN iesc_buquetemp_buqu buquesca ON		        buquesca.buqu_codigo_imo = esca.esca_buqu_id		        AND buquesca.buqu_es_activo = 1		    LEFT JOIN iesc_trafico_traf trafesca ON		        trafesca.traf_id = esca.esca_traf_id		    JOIN iesc_escala_esca escacount ON		        escacount.esca_id &lt;&gt; esca.esca_id		        AND escacount.esca_buqu_id = esca.esca_buqu_id		        AND EXTRACT(YEAR FROM escacount.esca_fecha_inicio) = EXTRACT(YEAR FROM esca.esca_fecha_inicio)		        AND EXISTS (		            SELECT 1 FROM ifac_situacionesc_sies		            WHERE sies_servicio_id = escacount.esca_id		                AND sies_estado_tata_servicio IN ('V', 'T')		        )		    JOIN icom_servicio_serv servcount ON		        servcount.serv_id = escacount.esca_id 		        AND servcount.serv_fecha_baja IS NULL		    LEFT JOIN iesc_buque_buqu buqucount ON 		        buqucount.buqu_codigo_imo = escacount.esca_buqu_id		    LEFT JOIN igen_buquetipo_buqt buqtentcount ON 		        buqtentcount.buqt_id = escacount.esca_buqt_id_entrada		    LEFT JOIN igen_buquetipo_buqt buqtsalcount ON 		        buqtsalcount.buqt_id = escacount.esca_buqt_id_salida		    LEFT JOIN iesc_trafico_traf escatrafcount ON 		        escatrafcount.traf_id = escacount.esca_traf_id		    LEFT JOIN igen_navegaciontipo_navt navtentcount ON 		        navtentcount.navt_id = escacount.esca_navt_id_entrada		    LEFT JOIN igen_navegaciontipo_navt navtsalcount ON 		        navtsalcount.navt_id = escacount.esca_navt_id_salida		    LEFT JOIN igen_pais_pais paissigcount ON 		        paissigcount.pais_id = escacount.esca_pais_id_siguiente		    LEFT JOIN igen_unlocode_unlo unlosigcount ON 		        unlosigcount.unlo_id = escacount.esca_loco_id_siguiente		    LEFT JOIN igen_pais_pais paisantcount ON 		        paisantcount.pais_id = escacount.esca_pais_id_anterior		    LEFT JOIN igen_unlocode_unlo unloantcount ON 		        unloantcount.unlo_id = escacount.esca_loco_id_anterior		    LEFT JOIN icom_organizacion_orga orgaconscount ON 		        orgaconscount.orga_id = escacount.esca_orga_id_consignat		    LEFT JOIN igen_subpuerto_subp subpconscount ON 		        subpconscount.subp_id = escacount.esca_subp_id_consignat		    LEFT JOIN iesc_buquetemp_buqu buqutempcount ON 		        buqutempcount.buqu_codigo_imo = buqucount.buqu_codigo_imo		        AND buqutempcount.buqu_es_activo = 1		    LEFT JOIN igen_buquetipo_buqt buqtcount ON 		        buqtcount.buqt_id = buqutempcount.buqu_buqt_id		    LEFT JOIN igen_pais_pais paiscount ON 		        paiscount.pais_id = buqutempcount.buqu_bandera_pais_id		    LEFT JOIN icom_organizacion_orga orgaarmadorcount ON 		        orgaarmadorcount.orga_id = buqutempcount.buqu_armador_orga_id		    LEFT JOIN igen_subpuerto_subp subparmadorcount ON 		        subparmadorcount.subp_id = buqutempcount.buqu_armador_subp_id		    LEFT JOIN igen_pais_pais paismoucount ON 		        paismoucount.pais_id = buqutempcount.buqu_mou_psc_pais_id		    LEFT JOIN igen_unlocode_unlo unlomoucount ON 		        unlomoucount.unlo_id = buqutempcount.buqu_mou_psc_unlo_id		    LEFT JOIN igen_pais_pais paisregcount ON 		        paisregcount.pais_id = buqutempcount.buqu_registro_pais_id		    LEFT JOIN iest_registrobuquetipo_burt burtregcount ON 		        burtregcount.burt_id = buqutempcount.buqu_burt_id		WHERE 		    esca.esca_estado IN ('I', 'F')		    AND (		        esca.esca_traf_id IS N</td>
+<td>SELECT sesc_subp_codigo , sesc_anno , sesc_numero, esca_fecha_inicio , esca_fecha_finalizacion , esca_buqu_id , buqu_nombre_buque , buqu_gt , numEscalas , sumgts FROM $SQLVIEW WHERE esca_fecha_inicio BETWEEN ? AND ?</td>
+<td>&nbsp;</td>
+	</tr>
+</tbody></table><!-- SQL:
+select 
+    tivi_prefijo
+    , (select modu_cod from ICON_MODULO_MODU where modu_id = tivi_modu_id) AS tivi_modu 
+    , TIVI_PLANTILLA_SQL
+    , TIVI_CONSULTA_LISTADO_1
+    , TIVI_CONSULTA_LISTADO_2
+from IFAC_TIPOVISTA_TIVI
+where tivi_es_activo = 1--></body></html>

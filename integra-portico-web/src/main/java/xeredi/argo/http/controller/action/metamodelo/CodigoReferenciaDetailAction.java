@@ -32,7 +32,7 @@ public final class CodigoReferenciaDetailAction extends CrudDetailAction<CodigoR
     public void doDetail() throws ApplicationException {
         final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
-        model = cdrfBO.select(model.getId(), idioma);
+        model = cdrfBO.select(model.getId(), getIdioma());
         i18nMap = I18nUtilBO.selectMap(model);
     }
 }

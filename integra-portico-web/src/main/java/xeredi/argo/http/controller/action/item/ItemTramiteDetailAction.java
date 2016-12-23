@@ -66,7 +66,7 @@ public final class ItemTramiteDetailAction extends BaseAction
 
         final ItemTramiteBO ittrBO = new ItemTramiteBO();
 
-        model = ittrBO.select(model.getId(), idioma);
+        model = ittrBO.select(model.getId(), getIdioma());
         trmt = TramiteProxy.select(model.getTrmt().getId());
 
         final TipoEntidad tipoEntidad = EntidadProxy.select(model.getTrmt().getEntiId()).getEnti().getTipo();

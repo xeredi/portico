@@ -2,11 +2,13 @@ package xeredi.argo.http.controller.action.administracion.puerto;
 
 import java.util.Map;
 
-import lombok.Data;
+import com.google.inject.Inject;
+
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
-import xeredi.argo.model.comun.bo.I18nUtilBO;
-import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.I18nService;
+import xeredi.argo.model.comun.service.SuperpuertoService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 
@@ -14,23 +16,27 @@ import xeredi.argo.model.comun.vo.SuperpuertoVO;
 /**
  * The Class SuperpuertoDetailAction.
  */
-@Data
 public final class SuperpuertoDetailAction extends CrudDetailAction<SuperpuertoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 3768153475557841666L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 3768153475557841666L;
 
-    /** The i18n map. */
-    private Map<String, I18nVO> i18nMap;
+	/** The i18n map. */
+	@Getter
+	private Map<String, I18nVO> i18nMap;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doDetail() throws ApplicationException {
-        final SuperpuertoBO sprtBO = new SuperpuertoBO();
+	@Inject
+	private SuperpuertoService sprtService;
 
-        model = sprtBO.select(model.getId(), idioma);
-        i18nMap = I18nUtilBO.selectMap(model);
-    }
+	@Inject
+	private I18nService i18nService;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doDetail() throws ApplicationException {
+		model = sprtService.select(model.getId(), getIdioma());
+		i18nMap = i18nService.selectMap(model);
+	}
 }

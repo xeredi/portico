@@ -56,7 +56,7 @@ public final class ValoracionDetalleDetailAction extends CrudDetailAction<Valora
             final ValoracionDetalleCriterioVO vlrdCriterio = new ValoracionDetalleCriterioVO();
 
             vlrdCriterio.setPadreId(model.getId());
-            vlrdCriterio.setIdioma(idioma);
+            vlrdCriterio.setIdioma(getIdioma());
             vlrdCriterio.setSoloHijos(true);
 
             vlrdHijosList = vlrdBO.selectList(vlrdCriterio);
@@ -66,7 +66,7 @@ public final class ValoracionDetalleDetailAction extends CrudDetailAction<Valora
         final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
         vlrlCriterio.setId(model.getVlrlId());
-        vlrlCriterio.setIdioma(idioma);
+        vlrlCriterio.setIdioma(getIdioma());
 
         vlrl = vlrlBO.selectObject(vlrlCriterio);
 
@@ -76,7 +76,7 @@ public final class ValoracionDetalleDetailAction extends CrudDetailAction<Valora
             final ValoracionLineaCriterioVO vlrlPadreCriterio = new ValoracionLineaCriterioVO();
 
             vlrlPadreCriterio.setId(vlrl.getPadreId());
-            vlrlPadreCriterio.setIdioma(idioma);
+            vlrlPadreCriterio.setIdioma(getIdioma());
 
             vlrlPadre = vlrlBO.selectObject(vlrlPadreCriterio);
         }

@@ -52,7 +52,7 @@ public final class ServicioDependienteListAction extends BaseAction implements P
 
         final ServicioDependienteBO srdpBO = new ServicioDependienteBO(usroId);
 
-        resultList = srdpBO.selectList(model.getId(), idioma);
+        resultList = srdpBO.selectList(model.getId(), getIdioma());
     }
 
 }

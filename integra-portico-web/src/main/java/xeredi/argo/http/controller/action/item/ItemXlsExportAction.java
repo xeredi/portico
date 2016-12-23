@@ -29,7 +29,7 @@ public abstract class ItemXlsExportAction<C extends ItemCriterioVO> extends Grid
     public final void doXlsExport() throws ApplicationException, IOException {
         Preconditions.checkNotNull(criterio.getEntiId());
 
-        criterio.setIdioma(idioma);
+        criterio.setIdioma(getIdioma());
         criterio.setSoloDatosGrid(false);
 
         doSpecificXlsExport();

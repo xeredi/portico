@@ -39,7 +39,7 @@ extends GridListAction<C, I> implements ProtectedItemAction {
         Preconditions.checkNotNull(model.getEntiId());
 
         model.setSoloDatosGrid(true);
-        model.setIdioma(idioma);
+        model.setIdioma(getIdioma());
 
         doSpecificList();
     }

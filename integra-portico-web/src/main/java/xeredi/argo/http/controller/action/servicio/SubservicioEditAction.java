@@ -37,7 +37,7 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
             if (model.getSrvc() != null && model.getSrvc().getId() != null) {
                 final ServicioBO srvcBO = ServicioBOFactory.newInstance(enti.getEnti().getTpsrId(), usroId);
 
-                model.setSrvc(srvcBO.select(model.getSrvc().getId(), idioma));
+                model.setSrvc(srvcBO.select(model.getSrvc().getId(), getIdioma()));
                 model.setFref(model.getSrvc().getFref());
 
                 // Si viene de un subservicio padre, lo buscamos
@@ -45,7 +45,7 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
                     final SubservicioBO ssrvPadreBO = SubservicioBOFactory.newInstance(entiId, getUsroId());
 
                     model.getSsrvPadreMap().put(entiId,
-                            ssrvPadreBO.select(model.getSsrvPadreMap().get(entiId).getId(), idioma));
+                            ssrvPadreBO.select(model.getSsrvPadreMap().get(entiId).getId(), getIdioma()));
                 }
             } else {
                 model.setFref(Calendar.getInstance().getTime());

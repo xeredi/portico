@@ -35,7 +35,7 @@ public final class TipoDatoDetailAction extends CrudDetailAction<TipoDatoVO> {
 
         final TipoDatoBO tpdtBO = new TipoDatoBO();
 
-        model = tpdtBO.select(model.getId(), idioma);
+        model = tpdtBO.select(model.getId(), getIdioma());
         i18nMap = I18nUtilBO.selectMap(model);
     }
 }

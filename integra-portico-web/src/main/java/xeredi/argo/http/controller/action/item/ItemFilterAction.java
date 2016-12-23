@@ -76,7 +76,7 @@ public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends Abstr
             if (!tpprIds.isEmpty()) {
                 final ParametroBO prmtBO = ParametroBOFactory.newDefaultInstance();
 
-                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), idioma));
+                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()));
             }
         }
 

@@ -4,18 +4,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.inject.Inject;
+
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
-import xeredi.argo.model.comun.bo.PuertoBO;
-import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.I18nService;
+import xeredi.argo.model.comun.service.PuertoService;
+import xeredi.argo.model.comun.service.SuperpuertoService;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 import xeredi.argo.model.metamodelo.vo.Entidad;
-import xeredi.argo.model.seguridad.bo.GrupoBO;
+import xeredi.argo.model.seguridad.service.GrupoService;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
 import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
@@ -24,60 +26,72 @@ import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
 /**
  * The Class UsuarioFilterAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class UsuarioFilterAction extends GridFilterAction<UsuarioCriterioVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -6193819984435577729L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -6193819984435577729L;
 
-    /** The sprt list. */
-    private List<SuperpuertoVO> sprtList;
+	/** The sprt list. */
+	@Getter
+	private List<SuperpuertoVO> sprtList;
 
-    /** The prto list. */
-    private List<PuertoVO> prtoList;
+	/** The prto list. */
+	@Getter
+	private List<PuertoVO> prtoList;
 
-    /** The grpo list. */
-    private List<GrupoVO> grpoList;
+	/** The grpo list. */
+	@Getter
+	private List<GrupoVO> grpoList;
 
-    /** The orga enti id. */
-    private final Long orgaEntiId = Entidad.ORGANIZACION.getId();
+	/** The orga enti id. */
+	@Getter
+	private final Long orgaEntiId = Entidad.ORGANIZACION.getId();
 
-    /** The fref. */
-    private final Date fref = Calendar.getInstance().getTime();
+	/** The fref. */
+	@Getter
+	private final Date fref = Calendar.getInstance().getTime();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doPrepareFilter() throws ApplicationException {
-        // noop
-    }
+	@Inject
+	private GrupoService grpoService;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        final SuperpuertoBO sprtBO = new SuperpuertoBO();
-        final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
+	@Inject
+	private PuertoService prtoService;
 
-        sprtCriterio.setIdioma(getIdioma());
+	@Inject
+	private SuperpuertoService sprtService;
 
-        sprtList = sprtBO.selectList(sprtCriterio);
+	@Inject
+	private I18nService i18nService;
 
-        final PuertoBO prtoBO = new PuertoBO();
-        final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doPrepareFilter() throws ApplicationException {
+		// noop
+	}
 
-        prtoCriterio.setIdioma(getIdioma());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
 
-        prtoList = prtoBO.selectList(prtoCriterio);
+		sprtCriterio.setIdioma(getIdioma());
 
-        final GrupoBO grpoBO = new GrupoBO();
-        final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
+		sprtList = sprtService.selectList(sprtCriterio);
 
-        grpoCriterio.setIdioma(getIdioma());
+		final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-        grpoList = grpoBO.selectList(grpoCriterio);
-    }
+		prtoCriterio.setIdioma(getIdioma());
+
+		prtoList = prtoService.selectList(prtoCriterio);
+
+		final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
+
+		grpoCriterio.setIdioma(getIdioma());
+
+		grpoList = grpoService.selectList(grpoCriterio);
+	}
 }

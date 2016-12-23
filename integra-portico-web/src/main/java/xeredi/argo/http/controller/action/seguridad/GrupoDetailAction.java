@@ -5,8 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.inject.Inject;
+
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
@@ -28,49 +29,55 @@ import xeredi.argo.model.metamodelo.vo.ModuloCriterioVO;
 import xeredi.argo.model.metamodelo.vo.ModuloVO;
 import xeredi.argo.model.metamodelo.vo.TramiteCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
-import xeredi.argo.model.seguridad.bo.GrupoBO;
+import xeredi.argo.model.seguridad.service.GrupoService;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class GrupoDetailAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1779406545837488228L;
 
     /** The mdlo list. */
+    @Getter
     private List<ModuloVO> mdloList;
 
     /** The prefix list. */
+    @Getter
     private List<ClassPrefix> prefixList;
 
     /** The accn map. */
+    @Getter
     private Map<ClassPrefix, List<AccionBaseVO>> acbsMap;
 
     /** The enti list. */
+    @Getter
     private List<Long> entiList;
 
     /** The acen map. */
+    @Getter
     private Map<Long, List<AccionEntidadVO>> acenMap;
 
     /** The aces map. */
+    @Getter
     private Map<Long, List<AccionEspecialVO>> acesMap;
 
     /** The trmt map. */
+    @Getter
     private Map<Long, List<TramiteVO>> trmtMap;
+
+    @Inject
+	private GrupoService grpoService;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void doDetail() throws ApplicationException {
-        final GrupoBO grpoBO = new GrupoBO();
-
-        model = grpoBO.select(model.getId());
+        model = grpoService.select(model.getId());
 
         // Modulos
         final ModuloBO mdloBO = new ModuloBO();

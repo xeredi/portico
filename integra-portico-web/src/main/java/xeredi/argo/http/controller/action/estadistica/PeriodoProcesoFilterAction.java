@@ -41,7 +41,7 @@ public final class PeriodoProcesoFilterAction extends GridFilterAction<PeriodoPr
         final SuperpuertoBO sprtBO = new SuperpuertoBO();
         final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
 
-        sprtCriterio.setIdioma(idioma);
+        sprtCriterio.setIdioma(getIdioma());
 
         sprtList = sprtBO.selectList(sprtCriterio);
     }

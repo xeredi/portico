@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='UTF8'>
+  
+  <title>Responsive Table</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <style>
+  * { 
+    margin: 0; 
+    padding: 0; 
+  }
+  body { 
+    font: 14px/1.4 Georgia, Serif; 
+  }
+  
+  /* 
+  Generic Styling, for Desktops/Laptops 
+  */
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  /* Zebra striping */
+  tr:nth-of-type(odd) { 
+    background: #eee; 
+  }
+  th { 
+    background: #333; 
+    color: white; 
+    font-weight: bold; 
+  }
+  td, th { 
+    padding: 6px; 
+    border: 1px solid #9B9B9B; 
+    text-align: left; 
+  }
+  @media 
+  only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px)  {
+    table, thead, tbody, th, td, tr { display: block; }
+    thead tr { position: absolute;top: -9999px;left: -9999px;}
+    tr { border: 1px solid #9B9B9B; }
+    td { border: none;border-bottom: 1px solid #9B9B9B; position: relative;padding-left: 50%; }
+    
+    td:before { position: absolute;top: 6px;left: 6px;width: 45%; padding-right: 10px; white-space: nowrap;}
+    
+    /*
+    Label the data
+    */
+td:nth-of-type(0):before { content: "TATA_CODIGO_MODULO"; }
+td:nth-of-type(1):before { content: "TTHI_CODIGO_NORMALIZADO"; }
+td:nth-of-type(2):before { content: "TATA_CODIGO"; }
+td:nth-of-type(3):before { content: "TATA_CODIGO_SUB"; }
+td:nth-of-type(4):before { content: "TATA_CODIGO_EXTENSION"; }
+td:nth-of-type(5):before { content: "TTHI_FECHA_INI_VIGENCIA"; }
+td:nth-of-type(6):before { content: "TTHI_FECHA_FIN_VIGENCIA"; }
+td:nth-of-type(7):before { content: "TTHI_DESCRIPCION"; }
+td:nth-of-type(8):before { content: "TTHI_ES_OBLIGATORIA"; }
+td:nth-of-type(9):before { content: "TTHI_ES_MAESTRA"; }
+td:nth-of-type(10):before { content: "TTHI_ES_MULTIPLE"; }
+td:nth-of-type(11):before { content: "TTHI_ES_AFECTA_ESTADISTICAS"; }
+  }
+  
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 480px) {
+    body { 
+      padding: 0; 
+      margin: 0; 
+      width: 320px; }
+    }
+  
+  /* iPads (portrait and landscape) ----------- */
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    body { 
+      width: 495px; 
+    }
+  }
+  
+  </style>
+  <!--<![endif]-->
+<script type="text/javascript">
+
+lsearch = function(){
+  //this.term = document.getElementById('S').value.toUpperCase();
+  var s = document.getElementById('search').value.toLowerCase();
+  rows = document.getElementById('data').getElementsByTagName('TR');
+  for(var i=0;i<rows.length;i++){
+    if (s =="" ){
+      rows[i].style.display ='';
+    } else if ( rows[i].innerText.toLowerCase().indexOf(s) != -1 ) {
+      rows[i].style.display ='';
+    } else {
+      rows[i].style.display ='none';
+    }
+  }
+  this.time = false;
+}
+
+</script>
+</head>
+
+<body>
+<div><input type="text" size="30" maxlength="1000" value="" id="search" onkeyup="lsearch();" /><input type="button" value="Go" onclick="lsearch();"/> </div>
+<table><thead><tr>	<th>TATA_CODIGO_MODULO</th>
+	<th>TTHI_CODIGO_NORMALIZADO</th>
+	<th>TATA_CODIGO</th>
+	<th>TATA_CODIGO_SUB</th>
+	<th>TATA_CODIGO_EXTENSION</th>
+	<th>TTHI_FECHA_INI_VIGENCIA</th>
+	<th>TTHI_FECHA_FIN_VIGENCIA</th>
+	<th>TTHI_DESCRIPCION</th>
+	<th>TTHI_ES_OBLIGATORIA</th>
+	<th>TTHI_ES_MAESTRA</th>
+	<th>TTHI_ES_MULTIPLE</th>
+	<th>TTHI_ES_AFECTA_ESTADISTICAS</th>
+</tr></thead>
+<tbody id="data">
+
+	<tr>
+<td>EMA</td>
+<td>T0</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>01-JAN-13 11.59.59.999000000 PM</td>
+<td>Tasa Señalización Marítima (Emb. Deportivas)</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>T0</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>27-JAN-14 11.59.59.999000000 PM</td>
+<td>Tasa Señalización Marítima (Emb.Dep.) Sasemar</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>T5</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>01-JAN-13 11.59.59.999000000 PM</td>
+<td>Tasa Embarcaciones Deportivas</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>T0</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa Señalización Marítima (Escalas)</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>T0</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa Señalización Marítima (Escalas) Sasemar</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>T1</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa Buque (Estancias Cortas)</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>T1</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa Buque (Estancias Largas)</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>T1</td>
+<td>B1</td>
+<td>30</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa Buque (Estancias Mixtas)</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>TR</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tarifa de Residuos</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>FAP</td>
+<td>TA</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa de actividad</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>FAP</td>
+<td>TO</td>
+<td>BO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa de Ocupación</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>FAP</td>
+<td>TO</td>
+<td>TA</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Importe adicional a la Tasa de Ocupación</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>FAP</td>
+<td>TA</td>
+<td>TA</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Importe adicional a la Tasa de Actividad</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>FAP</td>
+<td>OT</td>
+<td>TC</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tarifa de Residuos Sólidos Urbanos</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>FAP</td>
+<td>OT</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>IBI Repercutido Clientes</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>FAP</td>
+<td>OT</td>
+<td>TD</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Cesión de uso</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>FAP</td>
+<td>OT</td>
+<td>TD</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>31-DEC-15 11.59.59.999000000 PM</td>
+<td>IBI Repercutido Clientes</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>MAN</td>
+<td>T2</td>
+<td>B2</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa Pasaje</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>MAN</td>
+<td>T3</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa Mercancía</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>T0</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa Señalización Marítima (Pesca)</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>T0</td>
+<td>B0</td>
+<td>04</td>
+<td>1000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa Señalización Marítima (Pesca) Sasemar</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>T4</td>
+<td>B4</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa Pesca</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>T0</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa Señalización Marítima (Escalas)</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>T0</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa Señalización Marítima (Escalas) Sasemar</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>T0</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa de Ayudas a la Navegación (Emb.Dep)</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>T0</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa de Ayudas a la Navegación (Emb.Dep) SASEMAR</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>T1</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa Buque (Estancias Cortas)</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>T3</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa Mercancía</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>T3</td>
+<td>B3</td>
+<td>11</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>01-JAN-14 11.59.59.999000000 PM</td>
+<td>Anulación E. C. Tasa de la Mercancía</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>T5</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa Embarcaciones Deportivas y de Recreo</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>TA</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tasa de Actividad</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>T8</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>TC - Suministro Eléctrico</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>T8</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>TC - Suministro de Agua</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>OT</td>
+<td>TC</td>
+<td>06</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tarifa Tickets Aparcamiento</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>OT</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Servicios Diversos</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>OT</td>
+<td>TD</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Anuncios Cuenta Terceros</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>TR</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tarifa de Residuos</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SUM</td>
+<td>T8</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tarifa SC Suministro Eléctrico</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>SUM</td>
+<td>T8</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tarifa SC Suministro de Agua</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>SUP</td>
+<td>TO</td>
+<td>B7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>31-DEC-13 11.59.59.999000000 PM</td>
+<td>Tasa Ocupación Superficies</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SUP</td>
+<td>T7</td>
+<td>TC</td>
+<td>05</td>
+<td>0001</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td>Tarifa Ocupación Superficie</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+	</tr>
+</tbody></table><!-- SQL:
+select 
+    tata_codigo_modulo, tthi_codigo_normalizado, tata_codigo, tata_codigo_sub, tata_codigo_extension
+    , tthi_fecha_ini_vigencia, tthi_fecha_fin_vigencia, tthi_descripcion, tthi_es_obligatoria
+    , tthi_es_maestra, tthi_es_multiple, tthi_es_afecta_estadisticas
+from 
+    IFAC_TASATARIFA_TATA
+    inner join IFAC_TATAHISTORICO_TTHI on
+        tthi_tata_id = tata_id
+where 
+    tata_es_activo = 1
+    and tthi_es_activo = 1
+order by tata_codigo_modulo, tata_tipo, tata_codigo, tata_codigo_sub, tata_codigo_extension--></body></html>

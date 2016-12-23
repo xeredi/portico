@@ -51,7 +51,7 @@ public final class EstadisticaFilterAction extends ItemFilterAction<EstadisticaC
         final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
         prtoCriterio.setSprtId(getSprtId());
-        prtoCriterio.setIdioma(idioma);
+        prtoCriterio.setIdioma(getIdioma());
 
         prtoList = prtoBO.selectList(prtoCriterio);
     }

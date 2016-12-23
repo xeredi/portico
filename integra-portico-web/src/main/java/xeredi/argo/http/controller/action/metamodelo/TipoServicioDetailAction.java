@@ -50,7 +50,7 @@ public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServ
         final TipoSubservicioCriterioVO tpssCriterio = new TipoSubservicioCriterioVO();
 
         tpssCriterio.setTpsrId(model.getId());
-        tpssCriterio.setIdioma(idioma);
+        tpssCriterio.setIdioma(getIdioma());
 
         subentiList = tpssBO.selectList(tpssCriterio);
 
@@ -59,7 +59,7 @@ public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServ
             final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
 
             entiCriterio.setEntiPadreId(model.getId());
-            entiCriterio.setIdioma(idioma);
+            entiCriterio.setIdioma(getIdioma());
 
             entiHijasList = entiBO.selectList(entiCriterio);
         }
@@ -68,7 +68,7 @@ public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServ
         final TramiteCriterioVO trmtCriterio = new TramiteCriterioVO();
 
         trmtCriterio.setEntiId(model.getId());
-        trmtCriterio.setIdioma(idioma);
+        trmtCriterio.setIdioma(getIdioma());
 
         trmtList = trmtBO.selectList(trmtCriterio);
     }

@@ -48,7 +48,7 @@ public final class TramiteDetailAction extends CrudDetailAction<TramiteVO> {
 
         final TramiteBO trmtBO = new TramiteBO();
 
-        model = trmtBO.select(model.getId(), idioma);
+        model = trmtBO.select(model.getId(), getIdioma());
         i18nMap = I18nUtilBO.selectMap(model);
 
         final EntidadBO entiBO = new EntidadBO();
@@ -59,7 +59,7 @@ public final class TramiteDetailAction extends CrudDetailAction<TramiteVO> {
         final TramiteTipoDatoCriterioVO trtdCriterio = new TramiteTipoDatoCriterioVO();
 
         trtdCriterio.setTrmtId(model.getId());
-        trtdCriterio.setIdioma(idioma);
+        trtdCriterio.setIdioma(getIdioma());
 
         trtdList = trtdBO.selectList(trtdCriterio);
     }

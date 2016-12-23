@@ -50,7 +50,7 @@ public final class TipoServicioEditAction extends EntidadEditAction<TipoServicio
         final TipoDatoCriterioVO tpdtCriterio = new TipoDatoCriterioVO();
 
         tpdtCriterio.setTipoElemento(TipoElemento.CR);
-        tpdtCriterio.setIdioma(idioma);
+        tpdtCriterio.setIdioma(getIdioma());
 
         tpdtEstadoList = tpdtBO.selectLabelValues(tpdtCriterio);
     }

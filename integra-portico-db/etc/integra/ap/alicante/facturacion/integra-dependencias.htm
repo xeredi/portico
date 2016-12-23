@@ -1,0 +1,6805 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='UTF8'>
+  
+  <title>Responsive Table</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <style>
+  * { 
+    margin: 0; 
+    padding: 0; 
+  }
+  body { 
+    font: 14px/1.4 Georgia, Serif; 
+  }
+  
+  /* 
+  Generic Styling, for Desktops/Laptops 
+  */
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  /* Zebra striping */
+  tr:nth-of-type(odd) { 
+    background: #eee; 
+  }
+  th { 
+    background: #333; 
+    color: white; 
+    font-weight: bold; 
+  }
+  td, th { 
+    padding: 6px; 
+    border: 1px solid #9B9B9B; 
+    text-align: left; 
+  }
+  @media 
+  only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px)  {
+    table, thead, tbody, th, td, tr { display: block; }
+    thead tr { position: absolute;top: -9999px;left: -9999px;}
+    tr { border: 1px solid #9B9B9B; }
+    td { border: none;border-bottom: 1px solid #9B9B9B; position: relative;padding-left: 50%; }
+    
+    td:before { position: absolute;top: 6px;left: 6px;width: 45%; padding-right: 10px; white-space: nowrap;}
+    
+    /*
+    Label the data
+    */
+td:nth-of-type(0):before { content: "TATA_CODIGO_MODULO"; }
+td:nth-of-type(1):before { content: "TATA_CODIGO"; }
+td:nth-of-type(2):before { content: "TATA_CODIGO_SUB"; }
+td:nth-of-type(3):before { content: "TATA_CODIGO_EXTENSION"; }
+td:nth-of-type(4):before { content: "TATA_CODIGO_MODULO_1"; }
+td:nth-of-type(5):before { content: "TATA_CODIGO_1"; }
+td:nth-of-type(6):before { content: "TATA_CODIGO_SUB_1"; }
+td:nth-of-type(7):before { content: "TATA_CODIGO_EXTENSION_1"; }
+td:nth-of-type(8):before { content: "TTCO_FECHA_INICIO"; }
+td:nth-of-type(9):before { content: "TTCO_FECHA_FIN"; }
+td:nth-of-type(10):before { content: "TTCO_ES_OBLIGATORIA_HIJA"; }
+  }
+  
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 480px) {
+    body { 
+      padding: 0; 
+      margin: 0; 
+      width: 320px; }
+    }
+  
+  /* iPads (portrait and landscape) ----------- */
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    body { 
+      width: 495px; 
+    }
+  }
+  
+  </style>
+  <!--<![endif]-->
+<script type="text/javascript">
+
+lsearch = function(){
+  //this.term = document.getElementById('S').value.toUpperCase();
+  var s = document.getElementById('search').value.toLowerCase();
+  rows = document.getElementById('data').getElementsByTagName('TR');
+  for(var i=0;i<rows.length;i++){
+    if (s =="" ){
+      rows[i].style.display ='';
+    } else if ( rows[i].innerText.toLowerCase().indexOf(s) != -1 ) {
+      rows[i].style.display ='';
+    } else {
+      rows[i].style.display ='none';
+    }
+  }
+  this.time = false;
+}
+
+</script>
+</head>
+
+<body>
+<div><input type="text" size="30" maxlength="1000" value="" id="search" onkeyup="lsearch();" /><input type="button" value="Go" onclick="lsearch();"/> </div>
+<table><thead><tr>	<th>TATA_CODIGO_MODULO</th>
+	<th>TATA_CODIGO</th>
+	<th>TATA_CODIGO_SUB</th>
+	<th>TATA_CODIGO_EXTENSION</th>
+	<th>TATA_CODIGO_MODULO_1</th>
+	<th>TATA_CODIGO_1</th>
+	<th>TATA_CODIGO_SUB_1</th>
+	<th>TATA_CODIGO_EXTENSION_1</th>
+	<th>TTCO_FECHA_INICIO</th>
+	<th>TTCO_FECHA_FIN</th>
+	<th>TTCO_ES_OBLIGATORIA_HIJA</th>
+</tr></thead>
+<tbody id="data">
+
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>EMA</td>
+<td>T8</td>
+<td>00</td>
+<td>3000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>30</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>ESC</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TC</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B2</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>PES</td>
+<td>B4</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>11</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>12</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>BS</td>
+<td>10</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>T9</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TB</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>06</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TT</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TV</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SUB</td>
+<td>CA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SUB</td>
+<td>T8</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SUP</td>
+<td>B7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SUP</td>
+<td>T7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SUP</td>
+<td>TC</td>
+<td>05</td>
+<td>0001</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>EMA</td>
+<td>T8</td>
+<td>00</td>
+<td>3000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>30</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TC</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B2</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>PES</td>
+<td>B4</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>11</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>12</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>BS</td>
+<td>10</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>T9</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TB</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>06</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TT</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TV</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SUB</td>
+<td>CA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SUB</td>
+<td>T8</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SUP</td>
+<td>B7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SUP</td>
+<td>T7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>SUP</td>
+<td>TC</td>
+<td>05</td>
+<td>0001</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>01</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>EMA</td>
+<td>T8</td>
+<td>00</td>
+<td>3000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>30</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>10</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>01</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>02</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TC</td>
+<td>04</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>04</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>05</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TO</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B2</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>1000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>PES</td>
+<td>B4</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>11</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>12</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>BS</td>
+<td>10</td>
+<td>1000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>T9</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TB</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>06</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>02</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TT</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TV</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SUB</td>
+<td>CA</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SUB</td>
+<td>T8</td>
+<td>00</td>
+<td>1000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SUP</td>
+<td>B7</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SUP</td>
+<td>T7</td>
+<td>00</td>
+<td>0000</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SUP</td>
+<td>TC</td>
+<td>05</td>
+<td>0001</td>
+<td>27-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>EMA</td>
+<td>T8</td>
+<td>00</td>
+<td>3000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>30</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>ESC</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TC</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B2</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>PES</td>
+<td>B4</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>11</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>12</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>BS</td>
+<td>10</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>T9</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TB</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>06</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TT</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TV</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SUB</td>
+<td>CA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SUB</td>
+<td>T8</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SUP</td>
+<td>B7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SUP</td>
+<td>T7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SUP</td>
+<td>TC</td>
+<td>05</td>
+<td>0001</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>EMA</td>
+<td>T8</td>
+<td>00</td>
+<td>3000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>30</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>ESC</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>FAP</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TC</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B2</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>PES</td>
+<td>B4</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>11</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>12</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>BS</td>
+<td>10</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>T9</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>TB</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>06</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>TT</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SER</td>
+<td>TV</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SUB</td>
+<td>CA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SUB</td>
+<td>T8</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SUP</td>
+<td>B7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SUP</td>
+<td>T7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>SUP</td>
+<td>TC</td>
+<td>05</td>
+<td>0001</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>EMA</td>
+<td>T8</td>
+<td>00</td>
+<td>3000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>30</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>ESC</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>FAP</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TC</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B2</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>PES</td>
+<td>B4</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>11</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>12</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>BS</td>
+<td>10</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>T9</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>TB</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>06</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>TT</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SER</td>
+<td>TV</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SUB</td>
+<td>CA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SUB</td>
+<td>T8</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SUP</td>
+<td>B7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SUP</td>
+<td>T7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>SUP</td>
+<td>TC</td>
+<td>05</td>
+<td>0001</td>
+<td>01-JAN-13 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>EMA</td>
+<td>T8</td>
+<td>00</td>
+<td>3000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>30</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>ESC</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TC</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B2</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>1000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>PES</td>
+<td>B4</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>11</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>12</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>BS</td>
+<td>10</td>
+<td>1000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>T9</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TB</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>06</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TT</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SER</td>
+<td>TV</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SUB</td>
+<td>CA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SUB</td>
+<td>T8</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SUP</td>
+<td>B7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SUP</td>
+<td>T7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>SUP</td>
+<td>TC</td>
+<td>05</td>
+<td>0001</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>01</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>EMA</td>
+<td>T8</td>
+<td>00</td>
+<td>3000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>30</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>ESC</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>10</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>01</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>02</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TC</td>
+<td>04</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>04</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>05</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B2</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>1000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>PES</td>
+<td>B4</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>11</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>12</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>BS</td>
+<td>10</td>
+<td>1000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>T9</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TB</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>06</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>02</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TT</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SER</td>
+<td>TV</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SUB</td>
+<td>CA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SUB</td>
+<td>T8</td>
+<td>00</td>
+<td>1000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SUP</td>
+<td>B7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SUP</td>
+<td>T7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>SUP</td>
+<td>TC</td>
+<td>05</td>
+<td>0001</td>
+<td>01-FEB-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>EMA</td>
+<td>B5</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>EMA</td>
+<td>T8</td>
+<td>00</td>
+<td>3000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>20</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>ESC</td>
+<td>B1</td>
+<td>30</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>ESC</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>BO</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TA</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TC</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TD</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>FAP</td>
+<td>TO</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B2</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>MAN</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>PES</td>
+<td>B0</td>
+<td>04</td>
+<td>1000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>PES</td>
+<td>B4</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B0</td>
+<td>05</td>
+<td>1000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>11</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B3</td>
+<td>12</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>B5</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>BA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>BS</td>
+<td>10</td>
+<td>1000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>T9</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TB</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TC</td>
+<td>06</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TD</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TR</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TT</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SER</td>
+<td>TV</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SUB</td>
+<td>CA</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SUB</td>
+<td>T8</td>
+<td>00</td>
+<td>1000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>01</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SUM</td>
+<td>TC</td>
+<td>02</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SUP</td>
+<td>B7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SUP</td>
+<td>T7</td>
+<td>00</td>
+<td>0000</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+	<tr>
+<td>SER</td>
+<td>B1</td>
+<td>10</td>
+<td>0000</td>
+<td>SUP</td>
+<td>TC</td>
+<td>05</td>
+<td>0001</td>
+<td>01-JAN-14 12.00.00.000000000 AM</td>
+<td>&nbsp;</td>
+<td align="right">0</td>
+	</tr>
+</tbody></table><!-- SQL:
+SELECT 
+    tatap.tata_codigo_modulo, tatap.tata_codigo, tatap.tata_codigo_sub, tatap.tata_codigo_extension
+    , tatah.tata_codigo_modulo, tatah.tata_codigo, tatah.tata_codigo_sub, tatah.tata_codigo_extension
+    , ttco_fecha_inicio, ttco_fecha_fin, ttco_es_obligatoria_hija
+FROM ifac_tatacompuesta_ttco ttco
+    INNER JOIN IFAC_TASATARIFA_TATA tatap ON tatap.tata_id = ttco_padre_tata_id
+    INNER JOIN IFAC_TASATARIFA_TATA tatah ON tatap.tata_id = ttco_hija_tata_id
+where 
+    ttco_es_activo = 1
+order by
+    tatap.tata_codigo_modulo, tatap.tata_codigo, tatap.tata_codigo_sub, tatap.tata_codigo_extension
+    , tatah.tata_codigo_modulo, tatah.tata_codigo, tatah.tata_codigo_sub, tatah.tata_codigo_extension--></body></html>

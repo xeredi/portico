@@ -24,7 +24,7 @@ public final class SubparametroDetailAction extends ItemDetailAction<Subparametr
     public void doSpecificDetail() throws ApplicationException {
         final SubparametroBO itemBO = SubparametroBOFactory.newInstance(model.getEntiId());
 
-        model = itemBO.selectObject(model.getId(), idioma, model.getFref());
+        model = itemBO.selectObject(model.getId(), getIdioma(), model.getFref());
         enti = TipoSubparametroProxy.select(model.getEntiId());
     }
 }

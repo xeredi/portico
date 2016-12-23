@@ -49,7 +49,7 @@ public final class AspectoDetailAction extends CrudDetailAction<AspectoVO> {
 
         ascrCriterio.setAspcId(model.getId());
         ascrCriterio.setFechaVigencia(model.getFref());
-        ascrCriterio.setIdioma(idioma);
+        ascrCriterio.setIdioma(getIdioma());
 
         ascrList = ascrBO.selectList(ascrCriterio);
     }

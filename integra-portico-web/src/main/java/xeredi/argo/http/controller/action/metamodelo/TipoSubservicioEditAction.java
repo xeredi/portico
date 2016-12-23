@@ -39,7 +39,7 @@ public final class TipoSubservicioEditAction extends EntidadEditAction<TipoSubse
         } else {
             final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
 
-            model = tpssBO.select(model.getId(), idioma);
+            model = tpssBO.select(model.getId(), getIdioma());
         }
     }
 
@@ -52,7 +52,7 @@ public final class TipoSubservicioEditAction extends EntidadEditAction<TipoSubse
         final TipoDatoCriterioVO tpdtCriterio = new TipoDatoCriterioVO();
 
         tpdtCriterio.setTipoElemento(TipoElemento.CR);
-        tpdtCriterio.setIdioma(idioma);
+        tpdtCriterio.setIdioma(getIdioma());
 
         tpdtEstadoList = tpdtBO.selectLabelValues(tpdtCriterio);
     }

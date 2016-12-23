@@ -47,7 +47,7 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
         final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
         final Map<Long, TipoSubparametroDetailVO> entiHijasMap = new HashMap<>();
 
-        model = prmtBO.select(model.getId(), idioma, model.getFref());
+        model = prmtBO.select(model.getId(), getIdioma(), model.getFref());
 
         final TipoParametroDetailVO entiDetail = TipoParametroProxy.select(model.getEntiId());
         final Map<Long, List<SubparametroVO>> itemHijosMap = new HashMap<>();
@@ -57,7 +57,7 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
 
             prmtCriterioVO.setId(model.getId());
             prmtCriterioVO.setFechaVigencia(model.getFref());
-            prmtCriterioVO.setIdioma(idioma);
+            prmtCriterioVO.setIdioma(getIdioma());
 
             for (final Long entiId : entiDetail.getEntiHijasList()) {
                 final SubparametroBO sprmBO = SubparametroBOFactory.newInstance(entiId);
@@ -66,7 +66,7 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
                 sprmCriterioVO.setPrmt(prmtCriterioVO);
                 sprmCriterioVO.setEntiId(entiId);
                 sprmCriterioVO.setFechaVigencia(model.getFref());
-                sprmCriterioVO.setIdioma(idioma);
+                sprmCriterioVO.setIdioma(getIdioma());
 
                 entiHijasMap.put(entiId, TipoSubparametroProxy.select(entiId));
                 itemHijosMap.put(entiId, sprmBO.selectList(sprmCriterioVO));

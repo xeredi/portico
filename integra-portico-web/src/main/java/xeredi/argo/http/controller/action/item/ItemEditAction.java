@@ -81,7 +81,7 @@ public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidad
             if (!tpprIds.isEmpty()) {
                 final ParametroBO prmtBO = ParametroBOFactory.newDefaultInstance();
 
-                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, model.getFref(), idioma));
+                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, model.getFref(), getIdioma()));
             }
         }
 

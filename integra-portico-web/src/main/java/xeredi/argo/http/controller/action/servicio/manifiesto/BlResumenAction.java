@@ -29,7 +29,7 @@ public final class BlResumenAction extends CrudDetailAction<SubservicioVO> {
     public void doDetail() throws ApplicationException {
         final BlBO mablBO = new BlBO(usroId);
 
-        model = mablBO.select(model.getId(), idioma);
+        model = mablBO.select(model.getId(), getIdioma());
         resumen = mablBO.selectResumen(model.getSrvc().getId(), model.getId());
     }
 }

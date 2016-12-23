@@ -53,7 +53,7 @@ public final class TipoSubparametroEditAction extends EntidadEditAction<TipoSubp
         final EntidadCriterioVO entiCriterioVO = new EntidadCriterioVO();
 
         entiCriterioVO.setTipo(TipoEntidad.P);
-        entiCriterioVO.setIdioma(idioma);
+        entiCriterioVO.setIdioma(getIdioma());
 
         tpprList = entiBO.selectLabelValues(entiCriterioVO);
     }

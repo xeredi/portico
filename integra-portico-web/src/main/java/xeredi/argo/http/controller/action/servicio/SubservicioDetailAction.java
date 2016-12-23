@@ -40,7 +40,7 @@ public final class SubservicioDetailAction extends ItemDetailAction<SubservicioV
 
         final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId(), usroId);
 
-        model = ssrvBO.select(model.getId(), idioma);
+        model = ssrvBO.select(model.getId(), getIdioma());
 
         if (enti.getEnti().getTpdtEstado() != null) {
             final ItemTramiteBO ittrBO = new ItemTramiteBO();

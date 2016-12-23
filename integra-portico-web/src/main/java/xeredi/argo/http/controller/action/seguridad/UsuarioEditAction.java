@@ -5,21 +5,21 @@ import java.util.Date;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
-import xeredi.argo.model.comun.bo.PuertoBO;
-import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.PuertoService;
+import xeredi.argo.model.comun.service.SuperpuertoService;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.Entidad;
-import xeredi.argo.model.seguridad.bo.GrupoBO;
-import xeredi.argo.model.seguridad.bo.UsuarioBO;
+import xeredi.argo.model.seguridad.service.GrupoService;
+import xeredi.argo.model.seguridad.service.UsuarioService;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
 import xeredi.argo.model.seguridad.vo.GrupoVO;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
@@ -28,66 +28,77 @@ import xeredi.argo.model.seguridad.vo.UsuarioVO;
 /**
  * The Class UsuarioEditAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class UsuarioEditAction extends CrudEditAction<UsuarioVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -4943518127497768526L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -4943518127497768526L;
 
-    /** The grpo list. */
-    private List<GrupoVO> grpoList;
+	/** The grpo list. */
+	@Getter
+	private List<GrupoVO> grpoList;
 
-    /** The sprt list. */
-    private List<SuperpuertoVO> sprtList;
+	/** The sprt list. */
+	@Getter
+	private List<SuperpuertoVO> sprtList;
 
-    /** The prto list. */
-    private List<PuertoVO> prtoList;
+	/** The prto list. */
+	@Getter
+	private List<PuertoVO> prtoList;
 
-    /** The orga enti id. */
-    private final Long orgaEntiId = Entidad.ORGANIZACION.getId();
+	/** The orga enti id. */
+	@Getter
+	private final Long orgaEntiId = Entidad.ORGANIZACION.getId();
 
-    /** The fref. */
-    private final Date fref = Calendar.getInstance().getTime();
+	/** The fref. */
+	@Getter
+	private final Date fref = Calendar.getInstance().getTime();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        if (accion == AccionCodigo.create) {
-            model = new UsuarioVO();
-        } else {
-            Preconditions.checkNotNull(model.getId());
+	/** The usro service. */
+	@Inject
+	private UsuarioService usroService;
 
-            final UsuarioBO usroBO = new UsuarioBO();
+	@Inject
+	private GrupoService grpoService;
 
-            model = usroBO.select(model.getId(), getIdioma());
-        }
-    }
+	@Inject
+	private PuertoService prtoService;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        final GrupoBO grpoBO = new GrupoBO();
-        final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
+	@Inject
+	private SuperpuertoService sprtService;
 
-        grpoList = grpoBO.selectList(grpoCriterio);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		if (accion == AccionCodigo.create) {
+			model = new UsuarioVO();
+		} else {
+			Preconditions.checkNotNull(model.getId());
 
-        final SuperpuertoBO sprtBO = new SuperpuertoBO();
-        final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
+			model = usroService.select(model.getId(), getIdioma());
+		}
+	}
 
-        sprtCriterio.setIdioma(getIdioma());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
 
-        sprtList = sprtBO.selectList(sprtCriterio);
+		grpoList = grpoService.selectList(grpoCriterio);
 
-        final PuertoBO prtoBO = new PuertoBO();
-        final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+		final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
 
-        prtoCriterio.setIdioma(getIdioma());
+		sprtCriterio.setIdioma(getIdioma());
 
-        prtoList = prtoBO.selectList(prtoCriterio);
-    }
+		sprtList = sprtService.selectList(sprtCriterio);
+
+		final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+
+		prtoCriterio.setIdioma(getIdioma());
+
+		prtoList = prtoService.selectList(prtoCriterio);
+	}
 }

@@ -32,13 +32,13 @@ public final class TipoEstadisticaDetailAction extends EntidadDetailAction<TipoE
     public void doSpecificDetail() throws ApplicationException {
         final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-        model = tpesBO.select(model.getId(), idioma);
+        model = tpesBO.select(model.getId(), getIdioma());
 
         final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
         final CampoAgregacionCriterioVO cmagCriterio = new CampoAgregacionCriterioVO();
 
         cmagCriterio.setTpesId(model.getId());
-        cmagCriterio.setIdioma(idioma);
+        cmagCriterio.setIdioma(getIdioma());
 
         cmagList = cmagBO.selectList(cmagCriterio);
     }

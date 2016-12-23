@@ -57,7 +57,7 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
             final ItemTramiteCriterioVO ittrCriterio = new ItemTramiteCriterioVO();
 
             ittrCriterio.setItemId(model.getId());
-            ittrCriterio.setIdioma(idioma);
+            ittrCriterio.setIdioma(getIdioma());
 
             ittrList = ittrBO.selectList(ittrCriterio);
         }

@@ -29,7 +29,7 @@ public final class ManifiestoResumenAction extends CrudDetailAction<ServicioVO> 
     public void doDetail() throws ApplicationException {
         final ManifiestoBO maniBO = new ManifiestoBO(usroId);
 
-        model = maniBO.select(model.getId(), idioma);
+        model = maniBO.select(model.getId(), getIdioma());
         resumen = maniBO.selectResumen(model.getId());
     }
 }

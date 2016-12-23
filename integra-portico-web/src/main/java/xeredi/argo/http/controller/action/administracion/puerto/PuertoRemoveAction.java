@@ -1,22 +1,24 @@
 package xeredi.argo.http.controller.action.administracion.puerto;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
-import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.PuertoService;
 import xeredi.argo.model.comun.vo.PuertoVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PuertoRemoveAction.
  */
-@Data
 public final class PuertoRemoveAction extends CrudRemoveAction<PuertoVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -635054006561119868L;
+
+	@Inject
+	private PuertoService prtoService;
 
     /**
      * {@inheritDoc}
@@ -25,8 +27,6 @@ public final class PuertoRemoveAction extends CrudRemoveAction<PuertoVO> {
     public void doRemove() throws ApplicationException {
         Preconditions.checkNotNull(model.getId());
 
-        final PuertoBO prtoBO = new PuertoBO();
-
-        prtoBO.delete(model);
+        prtoService.delete(model);
     }
 }

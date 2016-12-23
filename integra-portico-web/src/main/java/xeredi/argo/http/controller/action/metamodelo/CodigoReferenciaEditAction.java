@@ -42,7 +42,7 @@ public final class CodigoReferenciaEditAction extends CrudEditAction<CodigoRefer
 
             final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
-            model = cdrfBO.select(model.getId(), idioma);
+            model = cdrfBO.select(model.getId(), getIdioma());
             i18nMap = I18nUtilBO.selectMap(model);
         }
     }

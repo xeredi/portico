@@ -1,9 +1,10 @@
 package xeredi.argo.http.controller.action.administracion.puerto;
 
-import lombok.Data;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.GridListAction;
-import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.PuertoService;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 
@@ -11,19 +12,20 @@ import xeredi.argo.model.comun.vo.PuertoVO;
 /**
  * The Class PuertoListAction.
  */
-@Data
 public final class PuertoListAction extends GridListAction<PuertoCriterioVO, PuertoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 1750952015496111173L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1750952015496111173L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doList() throws ApplicationException {
-        final PuertoBO prtoBO = new PuertoBO();
+	/** The prto service. */
+	@Inject
+	private PuertoService prtoService;
 
-        resultList = prtoBO.selectList(model, getOffset(), limit);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doList() throws ApplicationException {
+		resultList = prtoService.selectList(model, getOffset(), limit);
+	}
 }
